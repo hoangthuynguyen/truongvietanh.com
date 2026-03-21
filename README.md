@@ -26,6 +26,7 @@ npm run dev
 ```
 
 Frontend mac dinh doc Directus tu `PUBLIC_DIRECTUS_URL`.
+Trong local development, Astro chay dev server thuong de co the goi Directus tren `localhost`. Khi build production, adapter Cloudflare se duoc bat lai.
 
 ## Chay Directus local
 

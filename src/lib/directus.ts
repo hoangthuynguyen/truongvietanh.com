@@ -1,4 +1,5 @@
 import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { getSecret } from 'astro:env/server';
 
 export type Post = {
   id: number | string;
@@ -27,7 +28,7 @@ function getDirectusUrl() {
 }
 
 function getServerToken() {
-  return import.meta.env.DIRECTUS_TOKEN?.trim() || '';
+  return getSecret('DIRECTUS_TOKEN')?.trim() || '';
 }
 
 export async function getHomepageState(): Promise<HomepageState> {
@@ -70,7 +71,17 @@ export async function getHomepageState(): Promise<HomepageState> {
       error: null,
     };
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Khong the doc du lieu tu Directus.';
+    const message = (() => {
+      if (error instanceof Error) {
+        return error.message;
+      }
+
+      try {
+        return JSON.stringify(error);
+      } catch {
+        return 'Khong the doc du lieu tu Directus.';
+      }
+    })();
 
     return {
       configured: true,

@@ -63,7 +63,13 @@ async function directusFetch(path, init = {}, accessToken) {
     return null;
   }
 
-  return response.json();
+  const text = await response.text();
+
+  if (!text) {
+    return null;
+  }
+
+  return JSON.parse(text);
 }
 
 async function login(adminEmail, adminPassword) {
@@ -78,32 +84,38 @@ async function login(adminEmail, adminPassword) {
   return response.data.access_token;
 }
 
-async function getCurrentUser(accessToken) {
-  const response = await directusFetch('/users/me', {}, accessToken);
+async function getSchemaSnapshot(accessToken) {
+  const response = await directusFetch('/schema/snapshot', {}, accessToken);
   return response.data;
 }
 
 async function setStaticToken(accessToken) {
-  const existingUser = await getCurrentUser(accessToken);
-  const staticToken = existingUser.token || `tva_${randomUUID().replace(/-/g, '')}`;
+  const staticToken = `tva_${randomUUID().replace(/-/g, '')}`;
 
-  if (!existingUser.token) {
-    await directusFetch(
-      '/users/me',
-      {
-        method: 'PATCH',
-        body: JSON.stringify({
-          token: staticToken,
-        }),
-      },
-      accessToken,
-    );
-  }
+  await directusFetch(
+    '/users/me',
+    {
+      method: 'PATCH',
+      body: JSON.stringify({
+        token: staticToken,
+      }),
+    },
+    accessToken,
+  );
 
   return staticToken;
 }
 
-async function ensureSchemaApplied() {
+async function ensureSchemaApplied(accessToken) {
+  const snapshot = await getSchemaSnapshot(accessToken);
+  const hasPostsCollection = Array.isArray(snapshot.collections)
+    && snapshot.collections.some((collection) => collection.collection === 'posts');
+
+  if (hasPostsCollection) {
+    process.stdout.write('Posts schema already exists\n');
+    return;
+  }
+
   const { stdout, stderr } = await execFileAsync('docker', [
     'exec',
     DIRECTUS_CONTAINER,
@@ -213,6 +225,29 @@ async function ensurePolicyPermissions(accessToken) {
   });
 }
 
+async function refreshAdminPolicy(accessToken) {
+  const policies = await getPolicies(accessToken);
+  const adminPolicy = policies.find((policy) => policy.admin_access === true);
+
+  if (!adminPolicy) {
+    throw new Error('Could not find the admin policy in Directus.');
+  }
+
+  await directusFetch(
+    `/policies/${adminPolicy.id}`,
+    {
+      method: 'PATCH',
+      body: JSON.stringify({
+        admin_access: true,
+        app_access: true,
+      }),
+    },
+    accessToken,
+  );
+
+  process.stdout.write('Refreshed admin policy cache\n');
+}
+
 async function ensureSeedPost(accessToken) {
   const response = await directusFetch('/items/posts?limit=1', {}, accessToken);
 
@@ -269,23 +304,14 @@ async function main() {
 
   await waitForHealth();
   let accessToken = await login(adminEmail, adminPassword);
-  await ensureSchemaApplied();
+  await ensureSchemaApplied(accessToken);
   await clearCache(accessToken);
   await ensurePolicyPermissions(accessToken);
+  await refreshAdminPolicy(accessToken);
   accessToken = await login(adminEmail, adminPassword);
   await clearCache(accessToken);
   const staticToken = await setStaticToken(accessToken);
-  try {
-    await ensureSeedPost(accessToken);
-  } catch (error) {
-    if (error instanceof Error && error.message.includes('GET /items/posts?limit=1 failed: 403')) {
-      throw new Error(
-        'Schema and permissions were written, but Directus has not reloaded the new collection yet. Restart Directus once, then rerun `npm run directus:setup`.',
-      );
-    }
-
-    throw error;
-  }
+  await ensureSeedPost(accessToken);
   await writeFrontendEnv(staticToken);
 
   process.stdout.write('\nDirectus setup complete.\n');

@@ -33,12 +33,25 @@ Frontend mac dinh doc Directus tu `PUBLIC_DIRECTUS_URL`.
 2. Khoi dong Directus:
 
 ```bash
-cd directus
-docker compose up -d
+npm run directus:up
 ```
 
 3. Mo `http://127.0.0.1:8055`
-4. Tao collection `posts` voi cac field:
+4. Tu dong tao collection `posts`, static token, du lieu mau va file `.env` cho frontend:
+
+```bash
+npm run directus:setup
+```
+
+Neu lan dau script bao can reload schema, chay them:
+
+```bash
+npm run directus:down
+npm run directus:up
+npm run directus:setup
+```
+
+5. Neu can tao thu cong, collection `posts` can cac field:
 
 - `slug` text, unique
 - `title` text
@@ -47,7 +60,9 @@ docker compose up -d
 - `published_at` datetime
 - `status` string
 
-Neu muon frontend doc bang quyen private, tao static token trong Directus va gan vao `DIRECTUS_TOKEN`.
+Script setup se cap nhat `.env` o root voi `PUBLIC_DIRECTUS_URL` va `DIRECTUS_TOKEN` de frontend co the doc du lieu private ngay.
+
+Directus local dang dung SQLite voi file database mac dinh tai `/directus/database/data.db`.
 
 ## Bien moi truong tren Cloudflare Pages
 

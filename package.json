@@ -6,7 +6,10 @@
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
-    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check"
+    "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "directus:up": "docker compose -f directus/docker-compose.yml up -d",
+    "directus:down": "docker compose -f directus/docker-compose.yml down",
+    "directus:setup": "node scripts/setup-directus.mjs"
   },
   "repository": {
     "type": "git",

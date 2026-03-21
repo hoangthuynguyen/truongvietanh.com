@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getHomepageState } from '../lib/directus';
+
+const state = await getHomepageState();
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://truongvietanh.com';
+---
+
+<BaseLayout
+  title="truongvietanh.com | Astro + Directus + Cloudflare Pages"
+  description="Frontend Astro tren Cloudflare Pages ket noi Directus backend bang bien moi truong."
+>
+  <main class="shell">
+    <section class="hero card">
+      <div class="eyebrow">Truong Viet Anh</div>
+      <h1>Astro frontend da san sang noi voi Directus backend tren Cloudflare Pages.</h1>
+      <p class="lede">
+        Frontend nay render tren Cloudflare Pages Functions va doc du lieu tu Directus qua SDK.
+        Backend Directus can chay o mot host rieng, sau do frontend se goi qua
+        <code>PUBLIC_DIRECTUS_URL</code>.
+      </p>
+
+      <div class="pill-row">
+        <span class={`pill ${state.configured ? 'pill-ok' : 'pill-warn'}`}>
+          {state.configured ? 'Directus URL da cau hinh' : 'Thieu Directus URL'}
+        </span>
+        <span class={`pill ${state.usingToken ? 'pill-ok' : 'pill-muted'}`}>
+          {state.usingToken ? 'Dang dung server token' : 'Dang dung public permissions'}
+        </span>
+        <span class="pill pill-muted">Site URL: {siteUrl}</span>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <h2>Trang thai ket noi</h2>
+        <dl class="meta">
+          <div>
+            <dt>Frontend</dt>
+            <dd>Astro + Cloudflare adapter</dd>
+          </div>
+          <div>
+            <dt>Backend</dt>
+            <dd>Directus REST API</dd>
+          </div>
+          <div>
+            <dt>Directus URL</dt>
+            <dd>{state.url ?? 'Chua cau hinh'}</dd>
+          </div>
+          <div>
+            <dt>So bai viet doc duoc</dt>
+            <dd>{state.posts.length}</dd>
+          </div>
+        </dl>
+
+        {
+          state.error && (
+            <p class="notice notice-warn">
+              {state.error}
+            </p>
+          )
+        }
+      </article>
+
+      <article class="card">
+        <h2>Checklist deploy</h2>
+        <ol class="steps">
+          <li>Chay Directus rieng bang Docker hoac Directus Cloud.</li>
+          <li>Bat CORS tren Directus cho domain Pages cua ban.</li>
+          <li>Set <code>PUBLIC_DIRECTUS_URL</code> va <code>DIRECTUS_TOKEN</code> trong Cloudflare Pages.</li>
+          <li>Build command: <code>npm run build</code>, output directory: <code>dist</code>.</li>
+        </ol>
+      </article>
+    </section>
+
+    <section class="card">
+      <div class="section-head">
+        <div>
+          <div class="eyebrow">Noi dung tu Directus</div>
+          <h2>Danh sach bai viet</h2>
+        </div>
+        <a class="ghost-link" href={state.url ?? '#'} target="_blank" rel="noreferrer">
+          Mo Directus
+        </a>
+      </div>
+
+      {
+        state.posts.length > 0 ? (
+          <div class="posts">
+            {state.posts.map((post) => (
+              <article class="post-card">
+                <p class="post-date">{post.published_at ? new Date(post.published_at).toLocaleDateString('vi-VN') : 'Chua co ngay dang'}</p>
+                <h3>{post.title}</h3>
+                <p>{post.excerpt || post.content || 'Them du lieu trong collection posts de hien thi tai day.'}</p>
+                <code>/{post.slug}</code>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="empty-state">
+            <p>Chua co bai viet nao hien len tu Directus.</p>
+            <p>Tao collection <code>posts</code> voi cac field <code>slug</code>, <code>title</code>, <code>excerpt</code>, <code>content</code>, <code>published_at</code>, <code>status</code>.</p>
+          </div>
+        )
+      }
+    </section>
+  </main>
+</BaseLayout>

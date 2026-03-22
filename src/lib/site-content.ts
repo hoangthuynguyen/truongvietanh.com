@@ -107,26 +107,30 @@ export type PageSpec = {
   sections: PageSection[];
 };
 
-export const siteName = 'Truong Viet Anh';
+export const siteName = 'Trường Việt Anh';
 export const defaultSiteUrl = 'https://staging.truongvietanh.com';
 export const adminUrl = 'https://admin.truongvietanh.com/admin';
 
 export const mainNav = [
-  { label: 'Trang Chu', href: '/' },
-  { label: 'Gioi Thieu', href: '/gioi-thieu' },
-  { label: 'Mam Non', href: '/mam-non' },
-  { label: 'Tieu Hoc', href: '/tieu-hoc' },
+  { label: 'Trang chủ', href: '/' },
+  { label: 'Giới thiệu', href: '/gioi-thieu' },
+  { label: 'Mầm non', href: '/mam-non' },
+  { label: 'Tiểu học', href: '/tieu-hoc' },
   { label: 'THCS', href: '/trung-hoc-co-so' },
   { label: 'THPT', href: '/trung-hoc-pho-thong' },
-  { label: 'Tuyen Sinh', href: '/tuyen-sinh' },
-  { label: 'Hoc Phi', href: '/hoc-phi' },
-  { label: 'Template Lab', href: '/mau-template/' },
+  { label: 'Tuyển sinh', href: '/tuyen-sinh' },
+  { label: 'Học phí', href: '/hoc-phi' },
 ];
 
 export const contactLinks = {
   phoneDisplay: '0916 961 409',
   phoneHref: 'tel:0916961409',
   zaloHref: 'https://zalo.me/0916961409',
+  email: 'info@truongvietanh.com',
+  contactHref: 'https://truongvietanh.com/lien-he/',
+  facebookHref: 'https://www.facebook.com/',
+  youtubeHref: 'https://www.youtube.com/',
+  instagramHref: 'https://www.instagram.com/',
   admissionsHref: '/tuyen-sinh',
   tuitionHref: '/hoc-phi',
 };

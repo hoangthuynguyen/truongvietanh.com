@@ -4,9 +4,11 @@ import { adminUrl, contactLinks, mainNav } from '../lib/site-content';
 type Props = {
   currentPath: string;
   siteUrl?: string;
+  navItems?: { label: string; href: string }[];
+  showCmsLink?: boolean;
 };
 
-const { currentPath, siteUrl = '/' } = Astro.props;
+const { currentPath, siteUrl = '/', navItems = mainNav, showCmsLink = false } = Astro.props;
 ---
 
 <header class="site-header">
@@ -14,17 +16,19 @@ const { currentPath, siteUrl = '/' } = Astro.props;
     <a class="brand-lockup" href={siteUrl}>
       <span class="brand-lockup__mark">VA</span>
       <span class="brand-lockup__text">
-        <strong>Truong Viet Anh</strong>
-        <small>Astro + Directus + Cloudflare Pages</small>
+        <strong>Trường Việt Anh</strong>
+        <small>Hệ thống giáo dục liên cấp song ngữ</small>
       </span>
     </a>
 
-    <nav class="primary-nav" aria-label="Dieu huong chinh">
-      {mainNav.map((item) => {
+    <nav class="primary-nav" aria-label="Điều hướng chính">
+      {navItems.map((item) => {
         const active =
           item.href === '/'
             ? currentPath === '/'
-            : currentPath === item.href || currentPath.startsWith(`${item.href}/`);
+            : item.href.startsWith('#')
+              ? false
+              : currentPath === item.href || currentPath.startsWith(`${item.href}/`);
 
         return (
           <a class={active ? 'is-active' : ''} href={item.href}>
@@ -39,9 +43,11 @@ const { currentPath, siteUrl = '/' } = Astro.props;
       <a class="link-pill link-pill--ghost" href={contactLinks.zaloHref} target="_blank" rel="noreferrer">
         Zalo
       </a>
-      <a class="link-pill link-pill--ghost" href={adminUrl} target="_blank" rel="noreferrer">
-        CMS
-      </a>
+      {showCmsLink && (
+        <a class="link-pill link-pill--ghost" href={adminUrl} target="_blank" rel="noreferrer" aria-label="Vào CMS Directus">
+          CMS
+        </a>
+      )}
     </div>
   </div>
 </header>

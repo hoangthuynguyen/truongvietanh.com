@@ -1,37 +1,48 @@
 ---
-import { contactLinks, launchPages } from '../lib/site-content';
-
-const footerPages = launchPages.slice(0, 6);
+import { adminUrl, contactLinks } from '../lib/site-content';
 ---
 
 <footer class="site-footer">
   <div class="site-footer__inner">
     <div class="footer-panel footer-panel--brand">
-      <p class="footer-eyebrow">Launch wave 1</p>
-      <h2>Mot front-end nhe, nhanh va de mo rong tiep sang campus + paid landing.</h2>
+      <p class="footer-eyebrow">Trường Việt Anh</p>
+      <h2>Một hành trình liên cấp giúp học sinh học tốt, sống vui vẻ và trưởng thành tự chủ hơn mỗi ngày.</h2>
       <p>
-        Dot build nay uu tien 10 URL dau tien de dung khung SEO, authority va conversion. Dot tiep theo co
-        the scale tiep campus pages, local intent landings va fee capture landings.
+        Website được tổ chức theo hướng rõ ràng hơn cho phụ huynh: hiểu nhanh triết lý giáo dục, chọn đúng cấp học,
+        tìm lộ trình tuyển sinh và bắt đầu tư vấn hoặc tham quan mà không bị loãng bởi nội dung phụ.
       </p>
     </div>
 
     <div class="footer-panel">
-      <p class="footer-eyebrow">Quick links</p>
+      <p class="footer-eyebrow">Liên kết chính</p>
       <div class="footer-links">
-        {footerPages.map((page) => (
-          <a href={page.href}>{page.title}</a>
-        ))}
+        <a href="/gioi-thieu">Giới thiệu</a>
+        <a href="/mam-non">Mầm non</a>
+        <a href="/tieu-hoc">Tiểu học</a>
+        <a href="/trung-hoc-co-so">THCS</a>
+        <a href="/trung-hoc-pho-thong">THPT</a>
+        <a href="/tuyen-sinh">Tuyển sinh</a>
+        <a href="/hoc-phi">Học phí</a>
       </div>
     </div>
 
     <div class="footer-panel">
-      <p class="footer-eyebrow">Admissions</p>
+      <p class="footer-eyebrow">Liên hệ nhanh</p>
       <div class="footer-links">
         <a href={contactLinks.phoneHref}>{contactLinks.phoneDisplay}</a>
-        <a href={contactLinks.zaloHref} target="_blank" rel="noreferrer">Nhan Zalo tu van</a>
-        <a href="/tuyen-sinh">Admissions hub</a>
-        <a href="/hoc-phi">Money page</a>
+        <a href={contactLinks.zaloHref} target="_blank" rel="noreferrer">Nhắn Zalo tư vấn</a>
+        <a href={contactLinks.admissionsHref}>Đăng ký tư vấn</a>
+        <a href={contactLinks.tuitionHref}>Xem học phí</a>
+        <a href={contactLinks.contactHref} target="_blank" rel="noreferrer">Trang liên hệ hiện tại</a>
       </div>
+    </div>
+  </div>
+
+  <div class="footer-utility">
+    <span>Bản staging đang đặt noindex để tránh bị index.</span>
+    <div class="footer-utility__links">
+      <a href="/mau-template/">Template Lab</a>
+      <a href={adminUrl} target="_blank" rel="noreferrer">CMS</a>
     </div>
   </div>
 </footer>

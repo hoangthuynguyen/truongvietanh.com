@@ -2,245 +2,414 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
-import { admissionsCards, defaultSiteUrl, levelCards, launchPages } from '../lib/site-content';
-import { getHomepageState } from '../lib/directus';
+import { contactLinks, defaultSiteUrl } from '../lib/site-content';
 
-const state = await getHomepageState();
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
-const posts = state.posts.slice(0, 3);
+
+const homepageNav = [
+  { label: 'Giới thiệu', href: '/gioi-thieu' },
+  { label: 'Cấp học', href: '#cap-hoc' },
+  { label: 'Cơ sở', href: '#co-so' },
+  { label: 'Tuyển sinh', href: '/tuyen-sinh' },
+  { label: 'Học phí', href: '/hoc-phi' },
+  { label: 'Cảm nhận', href: '#cam-nhan' },
+  { label: 'Tin tức & Sự kiện', href: '#tin-tuc' },
+  { label: 'Liên hệ', href: '#lien-he' },
+];
+
+const keyReasons = [
+  {
+    eyebrow: 'Chuyên Anh',
+    title: 'Lộ trình tiếng Anh hướng tới IELTS 6.0+',
+    body:
+      'Tiếng Anh được đặt trong một lộ trình học tập rõ ràng, gắn với khả năng sử dụng ngôn ngữ, sự tự tin và định hướng dài hạn của học sinh.',
+  },
+  {
+    eyebrow: 'Vui vẻ & thực dụng',
+    title: 'Môi trường học tập hạnh phúc nhưng không “ảo áp lực”',
+    body:
+      'Trường giữ tinh thần học vui, sống chất và tiến bộ đều, để phụ huynh nhìn thấy giá trị thật thay vì những lời hứa quá phô trương.',
+  },
+  {
+    eyebrow: '21st century skills',
+    title: 'Rèn 16 kỹ năng thế kỷ 21 cùng năng lực tự chủ',
+    body:
+      'Kỹ năng, PDR và năng lực lãnh đạo được kết nối thành một hành trình phát triển, không phải những thông điệp rời rạc.',
+  },
+  {
+    eyebrow: 'Minh bạch',
+    title: 'Tư vấn tuyển sinh và học phí theo hướng rõ ràng, dễ hiểu',
+    body:
+      'Từ trang chủ, phụ huynh có thể đi thẳng tới cấp học phù hợp, học phí, tuyển sinh hoặc liên hệ nhanh mà không cần dò tìm quá nhiều lớp menu.',
+  },
+];
+
+const levelCards = [
+  {
+    eyebrow: 'Mầm non',
+    title: 'Khởi đầu với sự thích nghi, thói quen và cảm xúc',
+    body:
+      'Ưu tiên môi trường an toàn, giao tiếp song ngữ và nhịp sinh hoạt giúp trẻ đi học tự tin hơn từ những ngày đầu.',
+    href: '/mam-non',
+    cta: 'Xem chương trình mầm non',
+  },
+  {
+    eyebrow: 'Tiểu học',
+    title: 'Xây nền học thuật, tiếng Anh và nề nếp tự học',
+    body:
+      'Giai đoạn cần cân bằng giữa học tốt, giữ hứng thú học tập và hình thành nhịp học rõ ràng cho con.',
+    href: '/tieu-hoc',
+    cta: 'Xem chương trình tiểu học',
+  },
+  {
+    eyebrow: 'THCS',
+    title: 'Tăng tốc học thuật, dự án và khả năng tự quản trị',
+    body:
+      'THCS tại Việt Anh nhấn mạnh tư duy chủ động, tiếng Anh và khả năng làm việc với mục tiêu học tập rõ ràng.',
+    href: '/trung-hoc-co-so',
+    cta: 'Xem chương trình THCS',
+  },
+  {
+    eyebrow: 'THPT',
+    title: 'Định hướng IELTS, đại học và sự trưởng thành bền vững',
+    body:
+      'THPT hướng tới đầu ra rõ hơn về ngoại ngữ, học thuật và khả năng tự học để học sinh đi xa hơn sau khi ra trường.',
+    href: '/trung-hoc-pho-thong',
+    cta: 'Xem chương trình THPT',
+  },
+];
+
+const campusCards = [
+  {
+    eyebrow: 'Gò Vấp',
+    title: 'Một trong những khu vực được phụ huynh quan tâm nhiều khi tìm trường cho con',
+    body:
+      'Phù hợp với gia đình muốn bắt đầu từ một cơ sở thuận tiện đưa đón, dễ tham quan và có lộ trình rõ ràng cho từng cấp học.',
+  },
+  {
+    eyebrow: 'Phú Nhuận',
+    title: 'Điểm chạm gần trung tâm, phù hợp phụ huynh cần vị trí kết nối tốt',
+    body:
+      'Phần giới thiệu cơ sở giúp phụ huynh hiểu khu vực phục vụ và chuyển nhanh sang bước tư vấn hoặc tham quan.',
+  },
+  {
+    eyebrow: 'Mở rộng hệ sinh thái',
+    title: 'Bình Tân cùng các điểm hiện diện khác giúp thương hiệu giữ chiều sâu liên cấp',
+    body:
+      'Khi hệ thống campus được trình bày rõ hơn, phụ huynh có thể chọn theo khu vực, cấp học và nhu cầu để tìm điểm chạm phù hợp nhanh hơn.',
+  },
+];
+
+const testimonials = [
+  {
+    name: 'Nguyễn Ngọc Thị Giang',
+    role: 'Học sinh lớp 7',
+    quote:
+      'Từ một học sinh còn rụt rè, em dần tự tin hơn khi được khuyến khích nói, trình bày và tìm ra điểm mạnh của mình.',
+  },
+  {
+    name: 'Nguyễn Chí Toàn',
+    role: 'Học sinh lớp 6',
+    quote:
+      'Điều tạo khác biệt là sự gần gũi của thầy cô. Khi gặp khó khăn, em biết mình luôn có người đồng hành để tiến bộ từng bước.',
+  },
+  {
+    name: 'Phụ huynh Hoàng Diễm',
+    role: 'Cảm nhận phụ huynh',
+    quote:
+      'Niềm tin không đến từ khẩu hiệu mà đến từ cách trường chăm học sinh, cách giao tiếp với phụ huynh và tiến bộ nhìn thấy được qua từng giai đoạn.',
+  },
+];
+
+const newsCards = [
+  {
+    eyebrow: 'Tuyển sinh 2026 - 2027',
+    title: 'Lộ trình tuyển sinh nên là một trong những đường đi rõ nhất từ trang chủ',
+    body:
+      'Phụ huynh cần biết quy trình, hồ sơ, lịch tuyển sinh và bước tiếp theo ngay từ trang chủ mà không phải lạc vào các bài nội dung phụ.',
+    href: '/tuyen-sinh',
+    cta: 'Xem lộ trình tuyển sinh',
+  },
+  {
+    eyebrow: 'Học phí & học bổng',
+    title: 'Học phí minh bạch nên đi cùng tư vấn rõ ràng và định vị giá trị thật',
+    body:
+      'Đây là nhóm nội dung có tác động chuyển đổi cao, nên được đặt đủ sớm để phụ huynh có thể tiếp tục hành trình mà không phải đoán.',
+    href: '/hoc-phi',
+    cta: 'Xem học phí',
+  },
+  {
+    eyebrow: 'Hoạt động & câu chuyện',
+    title: 'Tin tức nên ưu tiên hoạt động học sinh, sự kiện gần và câu chuyện tiến bộ',
+    body:
+      'Đây là nơi phù hợp để đưa phụ huynh tới những nội dung tạo niềm tin như hoạt động học sinh, ngày hội tuyển sinh và cảm nhận thật từ phụ huynh.',
+    href: 'https://truongvietanh.com/',
+    cta: 'Xem tin tức mới nhất',
+  },
+];
 ---
 
 <BaseLayout
-  title="Truong Viet Anh | Wave 1 tren staging"
-  description="Homepage wave 1 cua Truong Viet Anh tren Astro, duoc xay de dieu phoi traffic vao pillars, hoc phi va admissions hub."
+  title="Trường Liên cấp Việt Anh | Mầm non, Tiểu học, THCS, THPT tại TP.HCM"
+  description="Trường Việt Anh là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, nổi bật với tiếng Anh, môi trường học vui vẻ - thực dụng, kỹ năng thế kỷ 21 và lộ trình tuyển sinh rõ ràng."
   canonical={siteUrl}
 >
   <div class="site-shell site-shell--home">
-    <SiteHeader currentPath="/" siteUrl="/" />
+    <SiteHeader currentPath="/" siteUrl="/" navItems={homepageNav} />
 
     <main class="page-flow">
       <section class="hero-block hero-block--home">
         <div class="hero-block__main">
-          <p class="section-eyebrow">Class Homepage</p>
-          <h1>10 trang dau tien da duoc dong bo theo SEO architecture, launch tren staging truoc khi scale them campus va landings.</h1>
+          <p class="section-eyebrow">Hệ thống giáo dục liên cấp song ngữ tại TP.HCM</p>
+          <h1>Trường Việt Anh: nơi học sinh học tốt, sống hạnh phúc và trưởng thành tự chủ từ Mầm non đến THPT.</h1>
           <p class="hero-copy">
-            Homepage nay khong con la mot trang placeholder. No dong vai tro Grand Central Station: dieu phoi traffic
-            ve 4 pillar pages, trang admissions, money page va 3 trang brand authority de phuc vu ca SEO lan conversion.
+            Việt Anh phát triển một hành trình học tập liên cấp với trọng tâm là tiếng Anh, kỹ năng thế kỷ 21, môi trường học vui vẻ
+            và hệ thống PDR giúp học sinh biết lập kế hoạch, thực hiện và nhìn lại tiến bộ của mình.
           </p>
 
           <div class="badge-row">
-            <span class="badge">Wave 1 launch</span>
-            <span class="badge badge--soft">Homepage + 9 strategic pages</span>
-            <span class="badge badge--soft">Astro static + Cloudflare Pages</span>
+            <span class="badge">IELTS 6.0+ đầu ra</span>
+            <span class="badge badge--soft">99% học sinh vào đại học</span>
+            <span class="badge badge--soft">16 kỹ năng thế kỷ 21</span>
           </div>
 
           <div class="cta-row">
-            <a class="button button--primary" href="/tuyen-sinh">Bat dau tu Admissions Hub</a>
-            <a class="button button--ghost" href="/hoc-phi">Mo Money Page</a>
+            <a class="button button--primary" href="/tuyen-sinh">Tư vấn tuyển sinh</a>
+            <a class="button button--ghost" href="/hoc-phi">Xem học phí</a>
           </div>
         </div>
 
         <aside class="hero-block__aside">
-          <p class="aside-eyebrow">Quick routes</p>
-          <h2>3 duong vao co y nghia nhat tren staging hien tai.</h2>
+          <p class="aside-eyebrow">Bắt đầu từ nhu cầu của phụ huynh</p>
+          <h2>Chọn đúng cấp học, cơ sở phù hợp và bước tiếp theo rõ ràng.</h2>
           <div class="quick-stack">
-            {admissionsCards.map((card) => (
-              <a class="quick-card" href={card.href}>
-                <p class="card-eyebrow">{card.eyebrow}</p>
-                <h3>{card.title}</h3>
-                <p>{card.body}</p>
-              </a>
-            ))}
+            <article class="quick-card">
+              <p class="card-eyebrow">Chương trình</p>
+              <h3>4 cấp học với định hướng rõ từ Mầm non đến THPT.</h3>
+              <p>Phụ huynh có thể đi thẳng tới cấp học phù hợp để xem chương trình, triết lý và lộ trình phát triển của con.</p>
+            </article>
+            <article class="quick-card">
+              <p class="card-eyebrow">Cơ sở</p>
+              <h3>Tìm cơ sở thuận tiện cho gia đình tại TP.HCM và hệ sinh thái mở rộng.</h3>
+              <p>Khu vực, cấp học và nhu cầu đưa đón nên là các tiêu chí đầu tiên để phụ huynh bắt đầu hành trình tìm hiểu.</p>
+            </article>
+            <article class="quick-card">
+              <p class="card-eyebrow">Tuyển sinh</p>
+              <h3>Tư vấn, học phí, tham quan và liên hệ được đặt thành các CTA chính.</h3>
+              <p>Homepage mới ưu tiên những đường đi có ý nghĩa nhất để phụ huynh không bị mất thời gian với nội dung ít liên quan.</p>
+            </article>
           </div>
         </aside>
       </section>
 
-      <section class="section-block section-block--stats">
+      <section class="section-block section-block--stats anchor-section">
         <div class="section-heading">
-          <p class="section-eyebrow">Launch metrics</p>
-          <h2>Trang chu nay duoc viet de giai bai toan route traffic, khong chi de “gioi thieu trang web”.</h2>
+          <p class="section-eyebrow">Con số nổi bật</p>
+          <h2>Những chỉ dấu giúp phụ huynh hình dung nhanh quy mô, định hướng và kết quả học tập của Việt Anh.</h2>
         </div>
 
         <div class="stats-grid">
           <article class="stat-tile">
-            <strong>10</strong>
-            <span>URL core da len staging trong dot dau</span>
+            <strong>2011</strong>
+            <span>Năm hình thành và phát triển hệ thống giáo dục Việt Anh</span>
           </article>
           <article class="stat-tile">
-            <strong>4</strong>
-            <span>Pillar pages cho 4 cap hoc chinh</span>
+            <strong>6.0+</strong>
+            <span>IELTS là chuẩn đầu ra tiếng Anh được nhấn mạnh xuyên suốt trong thông điệp tuyển sinh</span>
           </article>
           <article class="stat-tile">
-            <strong>3</strong>
-            <span>Trang authority de neo trust truoc khi so sanh hoc phi</span>
+            <strong>99%</strong>
+            <span>Tỷ lệ học sinh vào đại học là chỉ số tạo niềm tin mạnh với nhiều phụ huynh</span>
           </article>
           <article class="stat-tile">
-            <strong>2</strong>
-            <span>Conversion hubs cho tuyen sinh va money intent</span>
+            <strong>16/16</strong>
+            <span>16 kỹ năng thế kỷ 21 cho thấy định hướng phát triển toàn diện, không chỉ tập trung điểm số</span>
           </article>
         </div>
       </section>
 
-      <section class="section-block">
+      <section class="section-block anchor-section" id="gioi-thieu">
         <div class="section-heading">
-          <p class="section-eyebrow">Wave 1 pages</p>
-          <h2>Ban do launch cho dot dau tien da co du route, du template logic va du internal links.</h2>
+          <p class="section-eyebrow">Chào mừng đến với Trường Việt Anh</p>
+          <h2>Một môi trường giáo dục liên cấp theo đuổi hạnh phúc, tính thực dụng và sự trưởng thành bền vững.</h2>
           <p class="section-intro">
-            Cac page duoi day duoc uu tien theo dung tinh than trong bo tai lieu: brand core, authority assets,
-            level pillars va conversion hubs.
+            Từ thông điệp gốc “môi trường học vui vẻ và thực dụng”, Việt Anh đặt mục tiêu giúp học sinh học thật, sống chất,
+            có năng lực tiếng Anh, kỹ năng thực tế và biết làm chủ hành trình của mình.
           </p>
         </div>
 
-        <div class="link-grid">
-          {launchPages.map((page) => (
-            <a class="link-card" href={page.href}>
-              <p class="card-eyebrow">{page.eyebrow}</p>
-              <h3>{page.title}</h3>
-              <p>{page.body}</p>
-              <span>Mo trang</span>
-            </a>
+        <div class="card-grid card-grid--2">
+          <article class="content-card">
+            <p class="card-eyebrow">Thông điệp cốt lõi</p>
+            <h3>Kiến tạo những công dân toàn cầu hạnh phúc.</h3>
+            <p>
+              Đây là lời hứa thương hiệu bao quát cho toàn website: học sinh không chỉ học tốt hơn mà còn trưởng thành tốt hơn
+              trong một môi trường giàu tính người, rõ mục tiêu và gần với thực tế.
+            </p>
+          </article>
+          <article class="content-card">
+            <p class="card-eyebrow">Lời chào thương hiệu</p>
+            <h3>“Một đứa trẻ hạnh phúc sẽ học tốt nhất, và một học sinh tự chủ sẽ đi xa nhất.”</h3>
+            <p>
+              Tinh thần này xuất hiện xuyên suốt từ chương trình đào tạo, PDR, hoạt động học sinh đến cách trường giao tiếp với
+              phụ huynh trên các trang tuyển sinh và học phí.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block anchor-section">
+        <div class="section-heading">
+          <p class="section-eyebrow">Tại sao chọn Việt Anh</p>
+          <h2>Những lý do cốt lõi khiến Việt Anh khác biệt trong mắt nhiều gia đình đang tìm trường tại TP.HCM.</h2>
+          <p class="section-intro">
+            Mỗi card dưới đây bám sát định vị thương hiệu: liên cấp, chuyên Anh, hạnh phúc, thực dụng và tự chủ.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid--2">
+          {keyReasons.map((reason) => (
+            <article class="content-card">
+              <p class="card-eyebrow">{reason.eyebrow}</p>
+              <h3>{reason.title}</h3>
+              <p>{reason.body}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      <section class="section-block">
+      <section class="section-block anchor-section" id="cap-hoc">
         <div class="section-heading">
-          <p class="section-eyebrow">Template library</p>
-          <h2>Toan bo 16 template classes da co 1 sample page rieng de review tren staging.</h2>
+          <p class="section-eyebrow">Chương trình đào tạo</p>
+          <h2>Chọn đúng cấp học để hiểu rõ hơn chương trình, phương pháp và lộ trình phát triển của con.</h2>
           <p class="section-intro">
-            Day la noi doi team co the xem tung class theo huong block order, brand guideline, SEO checklist va goi y nang cao truoc khi doi sang content that trong Directus.
+            Từ Mầm non đến THPT, mỗi cấp học tại Việt Anh có vai trò riêng trong hành trình phát triển về học thuật, tiếng Anh,
+            kỹ năng và khả năng tự chủ của học sinh.
           </p>
         </div>
 
-        <div class="card-grid card-grid--3">
-          <article class="content-card">
-            <p class="card-eyebrow">Performance</p>
-            <h3>Landing ads va local conversion</h3>
-            <p>Fee capture, campus tour, open day, hoc thu va TikTok mobile-first deu co sample rieng.</p>
-            <a class="card-link" href="/mau-template/">Mo thu vien template</a>
-          </article>
-          <article class="content-card">
-            <p class="card-eyebrow">Authority</p>
-            <h3>SEO / pillar / local trust</h3>
-            <p>Level pillar, campus profile va local intent pages duoc review theo dung vai tro trong architecture.</p>
-            <a class="card-link" href="/mau-template/class-level-pillar/">Xem sample authority</a>
-          </article>
-          <article class="content-card">
-            <p class="card-eyebrow">System</p>
-            <h3>Thank-you, objection, referral</h3>
-            <p>Nhung class thuong bi bo quen nay da co sample va checklist de doi team khong “lam cho co”.</p>
-            <a class="card-link" href="/mau-template/class-smart-thank-you/">Xem sample system</a>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-block">
-        <div class="section-heading">
-          <p class="section-eyebrow">Core SEO pillars</p>
-          <h2>Bon pillar pages duoc viet de bat keyword cap hoc va day user ve dung hanh dong.</h2>
-          <p class="section-intro">
-            Moi pillar page deu co vai tro ro: authority, internal link hub, FAQ support va CTA mem sang admissions
-            hoac money page.
-          </p>
-        </div>
-
-        <div class="link-grid">
+        <div class="card-grid card-grid--2">
           {levelCards.map((card) => (
-            <a class="link-card" href={card.href}>
+            <article class="content-card">
               <p class="card-eyebrow">{card.eyebrow}</p>
               <h3>{card.title}</h3>
               <p>{card.body}</p>
-              <span>Mo pillar</span>
-            </a>
+              <a class="card-link" href={card.href}>{card.cta}</a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block anchor-section" id="co-so">
+        <div class="section-heading">
+          <p class="section-eyebrow">Cơ sở & khu vực</p>
+          <h2>Phụ huynh cần biết khu vực trường hiện diện và đâu là điểm bắt đầu phù hợp nhất cho gia đình mình.</h2>
+          <p class="section-intro">
+            Với trang chủ, mục tiêu là tạo cảm giác tin cậy và định hướng đúng bước tiếp theo. Phần chi tiết về cơ sở, hình ảnh
+            và lịch tham quan nên được dẫn sang các trang campus hoặc tuyển sinh chuyên sâu hơn.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid--3">
+          {campusCards.map((campus) => (
+            <article class="content-card">
+              <p class="card-eyebrow">{campus.eyebrow}</p>
+              <h3>{campus.title}</h3>
+              <p>{campus.body}</p>
+            </article>
           ))}
         </div>
       </section>
 
       <section class="section-block">
         <div class="section-heading">
-          <p class="section-eyebrow">Brand authority</p>
-          <h2>Ba trang authority duoc dat canh nhau de homepage co du “do sau” truoc khi user sang conversion.</h2>
+          <p class="section-eyebrow">Đội ngũ & phương pháp</p>
+          <h2>Phụ huynh cần nhìn thấy phương pháp giáo dục và con người đứng sau trải nghiệm học tập.</h2>
           <p class="section-intro">
-            Cau truc nay giup homepage khong bi qua thương mai: phu huynh co du duong doc sâu truoc khi sang Hoc Phi
-            hay admissions.
+            Các trang chiều sâu dưới đây giúp nối thương hiệu với phương pháp giáo dục, hệ thống PDR và cách Việt Anh đồng hành
+            cùng học sinh trong suốt hành trình liên cấp.
           </p>
         </div>
 
         <div class="card-grid card-grid--3">
           <article class="content-card">
-            <p class="card-eyebrow">Brand Core</p>
-            <h3>Gioi Thieu</h3>
-            <p>Trang ke cau chuyen thuong hieu, giai thich vi sao Viet Anh ton tai va ai la doi tuong phu hop.</p>
-            <a class="card-link" href="/gioi-thieu">Xem trang Gioi Thieu</a>
+            <p class="card-eyebrow">Triết lý giáo dục</p>
+            <h3>Hạnh phúc, tính thực dụng và sự trưởng thành đi cùng nhau</h3>
+            <p>Triết lý này giúp website không chỉ kể về thành tích mà còn giải thích vì sao học sinh có thể học tốt trong một môi trường nhiều niềm vui và kỷ luật tích cực.</p>
+            <a class="card-link" href="/triet-ly-giao-duc">Đọc triết lý giáo dục</a>
           </article>
           <article class="content-card">
-            <p class="card-eyebrow">Thought Leadership</p>
-            <h3>Triet Ly Giao Duc</h3>
-            <p>Trang giai thich tinh than vui ve va thuc dung, dung de tang trust truoc giai doan so sanh.</p>
-            <a class="card-link" href="/triet-ly-giao-duc">Doc triet ly</a>
+            <p class="card-eyebrow">PDR</p>
+            <h3>Plan - Do - Review là cách học sinh rèn năng lực tự chủ mỗi ngày</h3>
+            <p>PDR là signature asset của Việt Anh, cho thấy học sinh không chỉ được dạy mà còn học cách lập kế hoạch, thực hiện và tự nhìn lại tiến bộ.</p>
+            <a class="card-link" href="/he-thong-pdr">Khám phá hệ thống PDR</a>
           </article>
           <article class="content-card">
-            <p class="card-eyebrow">Signature Asset</p>
-            <h3>He Thong PDR</h3>
-            <p>Trang moat quan trong nhat sau homepage, cho thay cach nha truong bien triet ly thanh he thong hoc tap.</p>
-            <a class="card-link" href="/he-thong-pdr">Kham pha PDR</a>
+            <p class="card-eyebrow">Giới thiệu thương hiệu</p>
+            <h3>Một hành trình liên cấp cần được kể bằng con người, giá trị và kết quả thật</h3>
+            <p>Phần giới thiệu giúp phụ huynh hiểu Việt Anh là ai, vì sao trường tồn tại và điều gì làm thương hiệu này đáng tin trong một thị trường giáo dục cạnh tranh.</p>
+            <a class="card-link" href="/gioi-thieu">Xem trang giới thiệu</a>
           </article>
         </div>
       </section>
 
-      <section class="section-block">
-        <div class="section-heading">
-          <p class="section-eyebrow">CMS pulse</p>
-          <h2>Khung build van giu ket noi Directus de doi bien tap co mot noi nhin noi dung moi nhat.</h2>
-          <p class="section-intro">
-            Day la strip nhe de giu lien ket voi CMS. No khong canh tranh vai tro voi homepage, ma giup kiem tra quy
-            trinh Directus khi can.
+      <section class="section-block anchor-section" id="cam-nhan">
+        <div>
+          <p class="section-eyebrow">Cảm nhận thật</p>
+          <h2>Lời chia sẻ từ học sinh và phụ huynh là một trong những bằng chứng thuyết phục nhất trên trang chủ.</h2>
+          <p>
+            Việt Anh đã có sẵn chất liệu cảm nhận thật trên website hiện tại. Phần này được rút gọn lại để mỗi lời chia sẻ đều
+            cụ thể hơn về trải nghiệm, sự tiến bộ và cảm giác an tâm của gia đình.
           </p>
         </div>
 
-        {
-          state.error ? (
-            <article class="notice-card">
-              <h3>Directus tam thoi chua tra du lieu</h3>
-              <p>{state.error}</p>
+        <div class="card-grid card-grid--3">
+          {testimonials.map((item) => (
+            <article class="content-card">
+              <p class="card-eyebrow">{item.role}</p>
+              <h3>{item.name}</h3>
+              <p>{item.quote}</p>
             </article>
-          ) : posts.length > 0 ? (
-            <div class="card-grid card-grid--3">
-              {posts.map((post) => (
-                <article class="content-card">
-                  <p class="card-eyebrow">Directus post</p>
-                  <h3>{post.title}</h3>
-                  <p>{post.excerpt || post.content || 'Bo sung excerpt trong Directus de strip nay day dan hon.'}</p>
-                  <span class="card-meta">
-                    {post.published_at
-                      ? new Date(post.published_at).toLocaleDateString('vi-VN')
-                      : 'Chua co ngay dang'}
-                  </span>
-                </article>
-              ))}
-            </div>
-          ) : (
-            <article class="notice-card">
-              <h3>Chua co bai viet duoc publish</h3>
-              <p>Strip nay se tu day len khi doi bien tap publish post trong Directus.</p>
-            </article>
-          )
-        }
+          ))}
+        </div>
       </section>
 
-      <section class="cta-banner">
+      <section class="section-block anchor-section" id="tin-tuc">
+        <div class="section-heading">
+          <p class="section-eyebrow">Tin tức & sự kiện</p>
+          <h2>Tin tức trên trang chủ nên phục vụ tuyển sinh, thương hiệu và cảm giác trường luôn vận động tích cực.</h2>
+          <p class="section-intro">
+            Trọng tâm nên là thông tin tuyển sinh, hoạt động học sinh, sự kiện sắp tới và các câu chuyện tạo niềm tin cho phụ huynh.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid--3">
+          {newsCards.map((item) => (
+            <article class="content-card">
+              <p class="card-eyebrow">{item.eyebrow}</p>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              <a class="card-link" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined}>
+                {item.cta}
+              </a>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="cta-banner anchor-section" id="lien-he">
         <div>
-          <p class="section-eyebrow">Next build wave</p>
-          <h2>Buoc tiep theo la them campus pages, fee capture landings va local SEO pages.</h2>
+          <p class="section-eyebrow">Liên hệ nhanh</p>
+          <h2>Bắt đầu từ một cuộc tư vấn ngắn để chọn đúng cấp học, cơ sở và lộ trình phù hợp cho gia đình.</h2>
           <p>
-            Nhưng trước mắt, staging đã có đủ khung để review structure, content direction và internal linking cho phase
-            launch đầu tiên.
+            Từ đây, phụ huynh có thể tiếp tục theo 3 hướng rõ nhất: tư vấn tuyển sinh, xem học phí hoặc liên hệ trực tiếp qua điện thoại và Zalo.
           </p>
         </div>
 
         <div class="cta-row">
-          <a class="button button--primary" href="/tuyen-sinh">Review Admissions Hub</a>
-          <a class="button button--ghost" href="/trung-hoc-pho-thong">Review THPT Pillar</a>
+          <a class="button button--primary" href="/tuyen-sinh">Đăng ký tư vấn</a>
+          <a class="button button--ghost" href="/hoc-phi">Xem học phí</a>
+          <a class="button button--ghost" href={contactLinks.phoneHref}>Gọi 0916 961 409</a>
         </div>
       </section>
     </main>

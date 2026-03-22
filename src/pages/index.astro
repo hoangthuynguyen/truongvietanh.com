@@ -4,7 +4,7 @@ import { getHomepageState } from '../lib/directus';
 
 const state = await getHomepageState();
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://staging.truongvietanh.com';
-const adminUrl = state.url ? `${state.url.replace(/\/$/, '')}/admin` : 'http://45.88.188.169:8055/admin';
+const adminUrl = import.meta.env.PUBLIC_DIRECTUS_ADMIN_URL?.trim() || 'https://admin.truongvietanh.com/admin';
 const posts = state.posts.slice(0, 3);
 
 const navItems = [
@@ -129,8 +129,8 @@ const programs = [
         <p class="eyebrow">Quản trị nội dung</p>
         <h2>Đăng bài trong Directus, redeploy staging để xem kết quả.</h2>
         <p>
-          URL quản trị hiện tại là <code>{adminUrl}</code>. Sau khi có DNS `admin`, ta có thể chuyển sang
-          <code>https://admin.truongvietanh.com/admin</code>.
+          URL quản trị hiện tại là <code>{adminUrl}</code>. Frontend staging sẽ dùng domain quản trị này
+          thay cho IP thô để biên tập nội dung thuận tiện hơn.
         </p>
       </article>
     </section>

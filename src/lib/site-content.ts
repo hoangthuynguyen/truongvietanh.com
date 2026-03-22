@@ -120,6 +120,7 @@ export const mainNav = [
   { label: 'THPT', href: '/trung-hoc-pho-thong' },
   { label: 'Tuyen Sinh', href: '/tuyen-sinh' },
   { label: 'Hoc Phi', href: '/hoc-phi' },
+  { label: 'Template Lab', href: '/mau-template/' },
 ];
 
 export const contactLinks = {

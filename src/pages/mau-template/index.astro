@@ -1,0 +1,146 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { defaultSiteUrl } from '../../lib/site-content';
+import { templateGroups, templateSamples } from '../../lib/template-library';
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+---
+
+<BaseLayout
+  title="Thu Vien Mau Template | Truong Viet Anh"
+  description="Thu vien 16 sample pages theo dung template classes cua Truong Viet Anh, dung de review UX, brand voice, CTA va SEO structure tren staging."
+  canonical={`${siteUrl}/mau-template/`}
+>
+  <div class="site-shell site-shell--system">
+    <SiteHeader currentPath="/mau-template" siteUrl="/" />
+
+    <main class="page-flow">
+      <section class="hero-block hero-block--home">
+        <div class="hero-block__main">
+          <p class="section-eyebrow">Template library</p>
+          <h1>16 sample pages, moi class 1 mau, de doi team review tren staging truoc khi scale content that.</h1>
+          <p class="hero-copy">
+            Thu vien nay giup nhin ro tung template class dang giai quyet muc tieu gi, CTA chinh la gi, block nao la bat
+            buoc va nen nang cap theo huong nao de vua giu brand guidelines, vua giu conversion va SEO quality.
+          </p>
+
+          <div class="badge-row">
+            <span class="badge">16 template classes</span>
+            <span class="badge badge--soft">Brand-safe copy</span>
+            <span class="badge badge--soft">SEO-friendly structure</span>
+          </div>
+
+          <div class="cta-row">
+            <a class="button button--primary" href="#template-groups">Xem danh muc template</a>
+            <a class="button button--ghost" href="/">Quay ve homepage</a>
+          </div>
+        </div>
+
+        <aside class="hero-block__aside">
+          <p class="aside-eyebrow">Review goals</p>
+          <h2>Moi sample page duoc danh gia tren 4 lop.</h2>
+          <ul class="aside-list">
+            <li>Template co phu hop vai tro kinh doanh / funnel hay khong.</li>
+            <li>Brand voice co giu duoc tinh am, ro, co bang chung hay khong.</li>
+            <li>Metadata, headings, internal links va CTA co dung chuan SEO-friendly hay khong.</li>
+            <li>Can nang cap tiep nhu the nao de vao production data-driven tu Directus.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section-block section-block--stats">
+        <div class="section-heading">
+          <p class="section-eyebrow">Coverage</p>
+          <h2>Library nay bao phu du 4 nhom templates trong he thong 16 classes cua Truong Viet Anh.</h2>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-tile">
+            <strong>5</strong>
+            <span>Performance templates</span>
+          </article>
+          <article class="stat-tile">
+            <strong>3</strong>
+            <span>SEO / authority templates</span>
+          </article>
+          <article class="stat-tile">
+            <strong>3</strong>
+            <span>Mid-funnel / nurturing templates</span>
+          </article>
+          <article class="stat-tile">
+            <strong>5</strong>
+            <span>System / utility templates</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block" id="template-groups">
+        <div class="section-heading">
+          <p class="section-eyebrow">Danh sach hien thi</p>
+          <h2>Moi template co 1 page sample rieng, co block order, brand rules, SEO checklist va goi y nang cao.</h2>
+          <p class="section-intro">
+            Doi content, design, SEO, admissions va growth co the cung review tren mot he quy chieu chung thay vi mo ta bang text roi rac.
+          </p>
+        </div>
+
+        <div class="group-stack">
+          {templateGroups.map((group) => (
+            <section class="group-panel">
+              <div class="group-panel__heading">
+                <p class="section-eyebrow">{group}</p>
+                <h3>{group}</h3>
+              </div>
+
+              <div class="sample-index-grid">
+                {templateSamples
+                  .filter((sample) => sample.group === group)
+                  .map((sample) => (
+                    <a class="sample-card" href={`/mau-template/${sample.slug}/`}>
+                      <div class="sample-card__top">
+                        <span class="badge">{sample.classCode}</span>
+                        <span class="sample-theme">{sample.theme}</span>
+                      </div>
+                      <h3>{sample.templateClass}</h3>
+                      <p>{sample.description}</p>
+                      <div class="sample-card__meta">
+                        <strong>CTA:</strong>
+                        <span>{sample.primaryCta}</span>
+                      </div>
+                      <div class="sample-card__meta">
+                        <strong>SEO:</strong>
+                        <span>{sample.seoRules[0]}</span>
+                      </div>
+                      <div class="sample-card__meta">
+                        <strong>Nang cap:</strong>
+                        <span>{sample.enhancementIdeas[0]}</span>
+                      </div>
+                    </a>
+                  ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </section>
+
+      <section class="cta-banner">
+        <div>
+          <p class="section-eyebrow">Next production step</p>
+          <h2>Buoc tiep theo la gan tung template sample voi Directus collections, block schemas va route that.</h2>
+          <p>
+            Library nay da giup doi team review duong huong. Buoc sau la data model hoa cac block va tao production pages
+            co content that, campus that, reviews that va CTA tracking that.
+          </p>
+        </div>
+
+        <div class="cta-row">
+          <a class="button button--primary" href="/tuyen-sinh">Review admissions live pages</a>
+          <a class="button button--ghost" href="/hoc-phi">Review money page live</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>

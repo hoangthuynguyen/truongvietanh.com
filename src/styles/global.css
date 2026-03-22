@@ -27,7 +27,7 @@
 }
 
 html {
-  font-family: "Avenir Next", "Segoe UI", sans-serif;
+  font-family: "Be Vietnam Pro", "Segoe UI", sans-serif;
   color: var(--text);
   background:
     radial-gradient(circle at top left, rgba(216, 163, 43, 0.18), transparent 28%),
@@ -58,8 +58,8 @@ h1,
 h2,
 h3 {
   margin: 0;
-  font-family: "Iowan Old Style", "Palatino Linotype", serif;
-  line-height: 1.05;
+  font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+  line-height: 1.08;
 }
 
 p {
@@ -368,7 +368,10 @@ p {
 .link-grid,
 .step-grid,
 .quick-stack,
-.site-footer__inner {
+.site-footer__inner,
+.group-stack,
+.sample-index-grid,
+.template-meta-grid {
   display: grid;
   gap: 1rem;
 }
@@ -456,6 +459,114 @@ p {
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.group-stack {
+  grid-template-columns: 1fr;
+}
+
+.group-panel {
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(18, 57, 103, 0.1);
+  background: rgba(255, 253, 246, 0.82);
+}
+
+.group-panel__heading {
+  display: grid;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.group-panel__heading h3 {
+  font-size: 1.5rem;
+}
+
+.sample-index-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sample-card {
+  display: grid;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(18, 57, 103, 0.1);
+  background: var(--surface-strong);
+  box-shadow: 0 10px 30px rgba(18, 57, 103, 0.05);
+}
+
+.sample-card__top,
+.sample-card__meta {
+  display: flex;
+  gap: 0.55rem;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.sample-card__meta {
+  flex-direction: column;
+}
+
+.sample-card__meta strong,
+.template-meta-card span {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--gold-deep);
+}
+
+.sample-theme {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(18, 57, 103, 0.06);
+  color: var(--primary);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.template-hero--performance {
+  background:
+    linear-gradient(135deg, rgba(255, 252, 244, 0.98), rgba(236, 244, 248, 0.94)),
+    radial-gradient(circle at top left, rgba(216, 163, 43, 0.18), transparent 28%);
+}
+
+.template-hero--authority {
+  background:
+    linear-gradient(135deg, rgba(255, 252, 244, 0.98), rgba(240, 235, 219, 0.94)),
+    radial-gradient(circle at top right, rgba(18, 57, 103, 0.08), transparent 24%);
+}
+
+.template-hero--nurture {
+  background:
+    linear-gradient(135deg, rgba(255, 252, 244, 0.98), rgba(244, 238, 228, 0.94)),
+    radial-gradient(circle at top left, rgba(220, 231, 215, 0.76), transparent 24%);
+}
+
+.template-hero--system {
+  background:
+    linear-gradient(135deg, rgba(255, 252, 244, 0.98), rgba(232, 239, 244, 0.94)),
+    radial-gradient(circle at top right, rgba(216, 163, 43, 0.16), transparent 22%);
+}
+
+.template-meta-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.template-meta-card {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.template-meta-card strong {
+  color: #fff;
+  line-height: 1.5;
+}
+
 .step-card {
   position: relative;
   padding-top: 3.4rem;
@@ -484,7 +595,7 @@ p {
 }
 
 .quote-block p {
-  font-family: "Iowan Old Style", "Palatino Linotype", serif;
+  font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
   font-size: clamp(1.35rem, 2.4vw, 2rem);
   line-height: 1.45;
   color: inherit;
@@ -590,7 +701,9 @@ p {
   .stats-grid,
   .card-grid--3,
   .link-grid,
-  .step-grid {
+  .step-grid,
+  .sample-index-grid,
+  .template-meta-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
@@ -634,7 +747,9 @@ p {
   .card-grid--3,
   .card-grid--4,
   .link-grid,
-  .step-grid {
+  .step-grid,
+  .sample-index-grid,
+  .template-meta-grid {
     grid-template-columns: 1fr;
   }
 

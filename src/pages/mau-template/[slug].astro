@@ -1,0 +1,195 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { defaultSiteUrl } from '../../lib/site-content';
+import { templateSamples } from '../../lib/template-library';
+
+export function getStaticPaths() {
+  return templateSamples.map((sample) => ({
+    params: { slug: sample.slug },
+    props: { sample },
+  }));
+}
+
+const { sample } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+---
+
+<BaseLayout
+  title={`${sample.classCode} | ${sample.templateClass} | Truong Viet Anh`}
+  description={sample.description}
+  canonical={`${siteUrl}/mau-template/${sample.slug}/`}
+>
+  <div class={`site-shell site-shell--${sample.theme === 'authority' ? 'pillar' : sample.theme === 'nurture' ? 'brand' : sample.theme === 'performance' ? 'admissions' : 'system'}`}>
+    <SiteHeader currentPath="/mau-template" siteUrl="/" />
+
+    <main class="page-flow">
+      <section class={`hero-block template-hero template-hero--${sample.theme}`}>
+        <div class="hero-block__main">
+          <p class="section-eyebrow">{sample.classCode} · {sample.group}</p>
+          <h1>{sample.sampleHeadline}</h1>
+          <p class="hero-copy">{sample.sampleBody}</p>
+
+          <div class="badge-row">
+            <span class="badge">{sample.templateClass}</span>
+            <span class="badge badge--soft">{sample.pageRole}</span>
+            <span class="badge badge--soft">CTA: {sample.primaryCta}</span>
+          </div>
+
+          <div class="cta-row">
+            <a class="button button--primary" href="/mau-template/">Quay ve danh sach</a>
+            <a class="button button--ghost" href={sample.internalLinks[0]?.href || '/'}>Xem route lien quan</a>
+          </div>
+        </div>
+
+        <aside class="hero-block__aside">
+          <p class="aside-eyebrow">Template summary</p>
+          <h2>Mau nay phuc vu muc tieu gi?</h2>
+          <div class="template-meta-grid">
+            <div class="template-meta-card">
+              <span>Audience</span>
+              <strong>{sample.audience}</strong>
+            </div>
+            <div class="template-meta-card">
+              <span>Funnel</span>
+              <strong>{sample.funnel}</strong>
+            </div>
+            <div class="template-meta-card">
+              <span>Traffic</span>
+              <strong>{sample.traffic}</strong>
+            </div>
+            <div class="template-meta-card">
+              <span>CVR benchmark</span>
+              <strong>{sample.cvr}</strong>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Sample preview</p>
+          <h2>Neu sample page nay duoc render that, day la 4 dieu nguoi dung phai cam thay ngay.</h2>
+        </div>
+
+        <div class="card-grid card-grid--2">
+          {sample.previewHighlights.map((item) => (
+            <article class="content-card">
+              <p class="card-eyebrow">Preview cue</p>
+              <p>{item}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Block order</p>
+          <h2>Thu tu block de giu dung logic template va dung conversion flow.</h2>
+          <p class="section-intro">
+            Thu tu nay la “khung xương” quan trọng nhất. Sau nay khi dua vao Directus, no giup team content khong vo tinh pha vo intent cua page.
+          </p>
+        </div>
+
+        <div class="step-grid">
+          {sample.blockOrder.map((block, index) => (
+            <article class="step-card">
+              <span class="step-index">0{index + 1}</span>
+              <h3>{block}</h3>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Brand guidelines applied</p>
+          <h2>Nhung quy tac thuong hieu bat buoc tren template nay.</h2>
+          <p class="section-intro">
+            Muc nay la lop “QA thuong hieu” de dam bao page van la Viet Anh, du la performance landing, FAQ hay retention flow.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid--2">
+          {sample.brandRules.map((rule) => (
+            <article class="content-card">
+              <p class="card-eyebrow">Brand rule</p>
+              <p>{rule}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">SEO-friendly checklist</p>
+          <h2>Mau nay duoc review theo chuan metadata, structure, internal links va crawlability.</h2>
+        </div>
+
+        <div class="card-grid card-grid--2">
+          {sample.seoRules.map((rule) => (
+            <article class="content-card">
+              <p class="card-eyebrow">SEO checkpoint</p>
+              <p>{rule}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Gop y nang cao</p>
+          <h2>Neu dua mau nay vao production, day la nhung nang cap nen uu tien tiep theo.</h2>
+          <p class="section-intro">
+            Cac goi y nay duoc viet de doi dev, content, SEO va growth co mot danh sach viec nang cap rat cu the sau khi mockup da duoc duyệt.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid--3">
+          {sample.enhancementIdeas.map((idea) => (
+            <article class="content-card">
+              <p class="card-eyebrow">Next improvement</p>
+              <p>{idea}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Internal links bat buoc</p>
+          <h2>Template nay can noi vao dau de phuc vu du ca SEO, trust va conversion.</h2>
+        </div>
+
+        <div class="link-grid">
+          {sample.internalLinks.map((link) => (
+            <a class="link-card" href={link.href}>
+              <p class="card-eyebrow">Related route</p>
+              <h3>{link.title}</h3>
+              <p>{link.body}</p>
+              <span>Mo trang</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="cta-banner">
+        <div>
+          <p class="section-eyebrow">Sample CTA pair</p>
+          <h2>CTA cua template nay nen giu tong “ro, thuc dung, khong pho truong”.</h2>
+          <p>
+            CTA chinh: <strong>{sample.primaryCta}</strong>. CTA phu: <strong>{sample.secondaryCta}</strong>. Day la cap CTA phu hop voi vai tro cua template va khong pha brand guidelines.
+          </p>
+        </div>
+
+        <div class="cta-row">
+          <a class="button button--primary" href="/mau-template/">Xem template khac</a>
+          <a class="button button--ghost" href="/">Quay ve staging homepage</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>

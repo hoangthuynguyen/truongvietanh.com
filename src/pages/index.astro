@@ -7,15 +7,16 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://truongvietanh.com';
 ---
 
 <BaseLayout
-  title="truongvietanh.com | Astro + Directus + Cloudflare Pages"
-  description="Frontend Astro tren Cloudflare Pages ket noi Directus backend bang bien moi truong."
+  title="truongvietanh.com | Astro + Directus + Cloudflare Workers"
+  description="Frontend Astro static build tren Cloudflare Workers ket noi Directus backend bang bien moi truong."
 >
   <main class="shell">
     <section class="hero card">
       <div class="eyebrow">Truong Viet Anh</div>
-      <h1>Astro frontend da san sang noi voi Directus backend tren Cloudflare Pages.</h1>
+      <h1>Astro frontend da san sang noi voi Directus backend tren Cloudflare Workers.</h1>
       <p class="lede">
-        Frontend nay build tren Cloudflare Pages va doc du lieu tu Directus qua SDK trong luc build.
+        Frontend nay build thanh static assets va deploy len Cloudflare Workers.
+        Astro doc du lieu tu Directus qua SDK trong luc build.
         Backend Directus can chay o mot host rieng, sau do frontend se goi qua
         <code>PUBLIC_DIRECTUS_URL</code> de render san noi dung.
       </p>
@@ -37,7 +38,7 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://truongvietanh.com';
         <dl class="meta">
           <div>
             <dt>Frontend</dt>
-            <dd>Astro + Cloudflare adapter</dd>
+            <dd>Astro static + Workers Static Assets</dd>
           </div>
           <div>
             <dt>Backend</dt>
@@ -66,9 +67,9 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://truongvietanh.com';
         <h2>Checklist deploy</h2>
         <ol class="steps">
           <li>Chay Directus rieng bang Docker hoac Directus Cloud.</li>
-          <li>Bat CORS tren Directus cho domain Pages cua ban.</li>
-          <li>Set <code>PUBLIC_DIRECTUS_URL</code> va <code>DIRECTUS_TOKEN</code> trong Cloudflare Pages.</li>
-          <li>Build command: <code>npm run build</code>, output directory: <code>dist</code>.</li>
+          <li>Set <code>PUBLIC_DIRECTUS_URL</code> va <code>DIRECTUS_TOKEN</code> trong Workers Builds build environment.</li>
+          <li>Worker staging dung file <code>wrangler.staging.jsonc</code> va gan domain <code>staging.truongvietanh.com</code>.</li>
+          <li>Worker production dung file <code>wrangler.jsonc</code> va gan domain <code>truongvietanh.com</code>, <code>www.truongvietanh.com</code>.</li>
         </ol>
       </article>
     </section>

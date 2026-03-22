@@ -1,12 +1,14 @@
 {
   "name": "truongvietanh.com",
   "version": "1.0.0",
-  "description": "Astro frontend for truongvietanh.com connected to a Directus backend and deployable on Cloudflare Workers.",
+  "description": "Astro static frontend for truongvietanh.com connected to a Directus backend and deployable on Cloudflare Workers Static Assets.",
   "scripts": {
     "dev": "ASTRO_TELEMETRY_DISABLED=1 astro dev",
     "build": "ASTRO_TELEMETRY_DISABLED=1 astro build",
     "preview": "ASTRO_TELEMETRY_DISABLED=1 astro preview",
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
+    "deploy:prod": "npm run build && npx wrangler deploy -c wrangler.jsonc",
+    "deploy:staging": "npm run build && npx wrangler deploy -c wrangler.staging.jsonc",
     "directus:up": "docker compose -f directus/docker-compose.yml up -d",
     "directus:down": "docker compose -f directus/docker-compose.yml down",
     "directus:setup": "node scripts/setup-directus.mjs"
@@ -24,7 +26,6 @@
   },
   "homepage": "https://github.com/hoangthuynguyen/truongvietanh.com#readme",
   "dependencies": {
-    "@astrojs/cloudflare": "^13.1.3",
     "@directus/sdk": "^21.2.0",
     "astro": "^6.0.8",
     "typescript": "^5.9.3",

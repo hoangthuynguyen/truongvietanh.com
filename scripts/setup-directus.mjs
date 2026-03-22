@@ -261,12 +261,12 @@ async function ensureSeedPost(accessToken) {
     {
       method: 'POST',
       body: JSON.stringify({
-        title: 'Astro, Directus, Cloudflare Pages',
-        slug: 'astro-directus-cloudflare-pages',
+        title: 'Astro, Directus, Cloudflare Workers',
+        slug: 'astro-directus-cloudflare-workers',
         status: 'published',
-        excerpt: 'Bo khung website da duoc ket noi voi CMS Directus va san sang deploy len Cloudflare Pages.',
+        excerpt: 'Bo khung website da duoc ket noi voi CMS Directus va san sang deploy len Cloudflare Workers.',
         content:
-          '<p>Website truongvietanh.com da co frontend Astro, backend Directus, va mot luong deploy phu hop cho Cloudflare Pages.</p>',
+          '<p>Website truongvietanh.com da co frontend Astro, backend Directus, va mot luong deploy phu hop cho Cloudflare Workers.</p>',
         published_at: new Date().toISOString(),
         sort: 1,
       }),

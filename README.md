@@ -1,14 +1,16 @@
 # truongvietanh.com
 
-Astro frontend deploy tren Cloudflare Pages va ket noi toi Directus backend thong qua REST API.
+Astro frontend cho `truongvietanh.com`, build tinh tu Directus va deploy len Cloudflare Workers Static Assets.
 
 ## Kien truc
 
-- Frontend: Astro static build
+- Frontend: Astro static build (`output: 'static'`)
 - Backend: Directus chay rieng bang Docker hoac Directus Cloud
-- Deploy frontend: Cloudflare Pages
+- Deploy frontend: Cloudflare Workers Static Assets
+- Worker production: `truongvietanh-com`
+- Worker staging: `truongvietanh-staging`
 
-Frontend se doc Directus trong luc build, sau do xuat trang tinh vao `dist`. Cach nay phu hop voi Cloudflare Pages va khong can chay Directus ben trong Cloudflare runtime.
+Frontend fetch du lieu tu Directus trong luc build, sau do xuat ra static assets trong `dist`. Cach nay van la Cloudflare Workers, nhung khong chay SSR runtime tren edge.
 
 ## Chay frontend local
 
@@ -25,8 +27,7 @@ npm install
 npm run dev
 ```
 
-Frontend mac dinh doc Directus tu `PUBLIC_DIRECTUS_URL`.
-Trong local development, Astro van co the goi Directus tren `localhost`. Khi build production, Astro se lay du lieu tu Directus va render san HTML/static JSON vao `dist`.
+Frontend mac dinh doc Directus tu `PUBLIC_DIRECTUS_URL`. Khi build production, Astro se lay du lieu tu Directus va render san HTML/static JSON vao `dist`.
 
 ## Chay Directus local
 
@@ -44,67 +45,67 @@ npm run directus:up
 npm run directus:setup
 ```
 
-Neu lan dau script bao can reload schema, chay them:
-
-```bash
-npm run directus:down
-npm run directus:up
-npm run directus:setup
-```
-
-5. Neu can tao thu cong, collection `posts` can cac field:
-
-- `slug` text, unique
-- `title` text
-- `excerpt` text
-- `content` text
-- `published_at` datetime
-- `status` string
-
-Script setup se cap nhat `.env` o root voi `PUBLIC_DIRECTUS_URL` va `DIRECTUS_TOKEN` de frontend co the doc du lieu private ngay.
-
-Directus local dang dung SQLite voi file database mac dinh tai `/directus/database/data.db`.
-
 ## Chay Directus production tren VPS
 
-Repo co san file `directus/docker-compose.prod.yml` de chay Directus tren VPS voi volume rieng va tham gia mang `n8n-contabo_internal` cho reverse proxy neu can.
+- Repo co san file `directus/docker-compose.prod.yml`
+- Tao file `directus/.env.prod` tren server tu `directus/.env.prod.example`
+- Public URL nen dung `https://admin.truongvietanh.com`
 
-Can mot file `directus/.env.prod` tren server, co the copy tu `directus/.env.prod.example`.
+## Bien moi truong cho Workers Builds
 
-## Bien moi truong tren Cloudflare Pages
+Can khai bao trong build environment cua moi Worker:
 
-Them cac bien sau trong project Pages:
+- `PUBLIC_SITE_URL`
+- `PUBLIC_DIRECTUS_URL`
+- `DIRECTUS_TOKEN`
 
-- `PUBLIC_SITE_URL=https://truongvietanh.com`
-- `PUBLIC_DIRECTUS_URL=https://your-directus-domain.example`
-- `DIRECTUS_TOKEN=...`
+Gia tri goi y:
 
-Build settings:
+- Staging Worker: `PUBLIC_SITE_URL=https://staging.truongvietanh.com`
+- Production Worker: `PUBLIC_SITE_URL=https://truongvietanh.com`
+- `PUBLIC_DIRECTUS_URL=https://admin.truongvietanh.com`
 
-- Build command: `npm run build`
-- Build output directory: `dist`
+## Cau hinh 2 Worker tach biet
 
-## Deploy len Cloudflare Pages
+- Production dung [wrangler.jsonc](/Users/nguyenhoang/Downloads/truongvietanh.com/wrangler.jsonc)
+- Staging dung [wrangler.staging.jsonc](/Users/nguyenhoang/Downloads/truongvietanh.com/wrangler.staging.jsonc)
 
-1. Vao Cloudflare dashboard > `Workers & Pages`.
-2. Chon project `truongvietanh-com` hoac tao moi neu can.
-3. Neu deploy tu GitHub:
+Lenh deploy local:
 
-   - Framework preset: `Astro`
-   - Build command: `npm run build`
-   - Build output directory: `dist`
+```bash
+npm run deploy:prod
+npm run deploy:staging
+```
 
-4. Them cac environment variables o tren.
-5. Deploy lai.
+Neu connect GitHub vao Workers Builds, moi Worker se tro cung repo nhung dung deploy command rieng:
 
-Ban cung co the deploy artifact local bang:
+- Production: `npx wrangler deploy -c wrangler.jsonc`
+- Staging: `npx wrangler deploy -c wrangler.staging.jsonc`
+
+Build command cho ca hai:
 
 ```bash
 npm run build
-npx wrangler pages deploy dist --project-name truongvietanh-com
 ```
+
+## Gan domain
+
+- Worker `truongvietanh-staging` -> `staging.truongvietanh.com`
+- Worker `truongvietanh-com` -> `truongvietanh.com`
+- Worker `truongvietanh-com` -> `www.truongvietanh.com`
+
+Gan trong Cloudflare dashboard tai `Workers & Pages` > Worker > `Domains & Routes`.
+
+## Webhook rebuild
+
+Sau khi Directus publish/sua bai:
+
+- goi deploy hook cua Worker staging de test
+- khi on dinh, goi deploy hook cua Worker production
+
+Co the dung Directus Flows/Webhook hoac GitHub Actions de trigger lai build/deploy.
 
 ## Kiem tra nhanh
 
-- Trang chu: hien danh sach `posts` neu Directus tra du lieu
-- API health: `/api/health.json`
+- Trang chu hien danh sach `posts` neu Directus tra du lieu
+- API health xuat file tinh tai `/api/health.json`

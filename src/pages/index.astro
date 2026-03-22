@@ -7,218 +7,151 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://staging.truongvietan
 const adminUrl = state.url ? `${state.url.replace(/\/$/, '')}/admin` : 'http://45.88.188.169:8055/admin';
 const posts = state.posts.slice(0, 3);
 
-const menuLeft = [
-  { label: 'Trang Chủ', href: siteUrl },
+const navItems = [
   { label: 'Giới Thiệu', href: 'https://truongvietanh.com/gioi-thieu/' },
-  { label: 'Mầm Non', href: 'https://truongvietanh.com/mam-non-viet-anh/' },
-  { label: 'Tiểu Học', href: 'https://truongvietanh.com/tieu-hoc-viet-anh/' },
-];
-
-const menuRight = [
-  { label: 'THCS', href: 'https://truongvietanh.com/trung-hoc-co-so-viet-anh/' },
-  { label: 'THPT', href: 'https://truongvietanh.com/trung-hoc-pho-thong/' },
+  { label: 'Chương Trình', href: 'https://truongvietanh.com/tieu-hoc-viet-anh/' },
   { label: 'Học Bổng', href: 'https://truongvietanh.com/hoc-bong/' },
   { label: 'Liên Hệ', href: 'https://truongvietanh.com/lien-he/' },
 ];
 
 const programs = [
   {
-    title: 'Mầm Non Việt Anh',
-    summary: 'Môi trường trải nghiệm song ngữ, chú trọng nền nếp, cảm xúc và khả năng giao tiếp tự tin ngay từ những năm đầu đời.',
-    href: 'https://truongvietanh.com/mam-non-viet-anh/',
+    title: 'Mầm non',
+    detail: 'Môi trường song ngữ, nền nếp và phát triển cảm xúc cho giai đoạn đầu đời.',
   },
   {
-    title: 'Tiểu Học Việt Anh',
-    summary: 'Lộ trình học tập cân bằng giữa tiếng Anh, tư duy học thuật và kỹ năng sống để học sinh phát triển bền vững.',
-    href: 'https://truongvietanh.com/tieu-hoc-viet-anh/',
+    title: 'Tiểu học',
+    detail: 'Cân bằng giữa học thuật, tiếng Anh và kỹ năng tự học hằng ngày.',
   },
   {
-    title: 'THCS - THPT Việt Anh',
-    summary: 'Định hướng chuyên Anh, tăng cường học thuật và đồng hành cùng học sinh trong giai đoạn bứt tốc vào đại học.',
-    href: 'https://truongvietanh.com/trung-hoc-pho-thong/',
+    title: 'THCS - THPT',
+    detail: 'Định hướng chuyên Anh, bứt tốc học thuật và chuẩn bị cho giai đoạn đại học.',
   },
-];
-
-const admissions = [
-  { title: 'Tư vấn tuyển sinh', text: 'Đăng ký để đội ngũ tuyển sinh liên hệ trong ngày và tư vấn lộ trình phù hợp theo từng cấp học.' },
-  { title: 'Học bổng', text: 'Tổng hợp các chính sách học bổng, ưu đãi nhập học và điều kiện xét tuyển mới nhất.' },
-  { title: 'Học phí', text: 'Xem thông tin học phí, các khoản dịch vụ đi kèm và phương án thanh toán theo năm học.' },
-];
-
-const highlights = [
-  'Đào tạo liên cấp từ mầm non đến THPT',
-  'Định hướng tiếng Anh học thuật và giao tiếp',
-  'Môi trường học tập kỷ luật, ấm áp và nhiều hoạt động',
-  'Chủ động truyền thông tuyển sinh trên nền tảng số',
 ];
 ---
 
 <BaseLayout
-  title="Trường Việt Anh | Bản Demo Trang Chủ Trên Cloudflare Workers"
-  description="Bản staging homepage của Trường Việt Anh chạy bằng Astro static, dữ liệu tin tức lấy từ Directus và deploy trên Cloudflare Workers."
+  title="Trường Việt Anh | Staging Trên Cloudflare Workers"
+  description="Bản staging nhẹ và nhanh cho trang chủ Trường Việt Anh, build tĩnh bằng Astro và lấy nội dung từ Directus."
 >
-  <main class="site-shell">
-    <section class="topbar">
-      <div class="topbar__inner">
-        <div class="topbar__contact">
-          <a href="tel:0916961409">Hotline: 0916 961 409</a>
-          <a href="https://zalo.me/0916961409" target="_blank" rel="noreferrer">Zalo: 0916 961 409</a>
-        </div>
-        <div class="topbar__actions">
-          <a class="topbar__link" href={adminUrl} target="_blank" rel="noreferrer">Đăng nhập CMS</a>
-          <a class="topbar__cta" href="https://truongvietanh.com/lien-he/" target="_blank" rel="noreferrer">Tư vấn tuyển sinh</a>
-        </div>
-      </div>
-    </section>
+  <main class="shell">
+    <header class="topbar panel">
+      <a class="brand" href={siteUrl}>
+        <span class="brand__mark">VA</span>
+        <span class="brand__text">
+          <strong>Trường Việt Anh</strong>
+          <small>Staging trên Cloudflare Workers</small>
+        </span>
+      </a>
 
-    <header class="masthead">
-      <div class="masthead__inner">
-        <nav class="desktop-nav">
-          <ul>
-            {menuLeft.map((item) => (
-              <li><a href={item.href} target="_blank" rel="noreferrer">{item.label}</a></li>
-            ))}
-          </ul>
-        </nav>
+      <nav class="nav">
+        {navItems.map((item) => (
+          <a href={item.href} target="_blank" rel="noreferrer">{item.label}</a>
+        ))}
+      </nav>
 
-        <a class="brand" href={siteUrl}>
-          <img
-            src="https://truongvietanh.com/wp-content/uploads/2024/12/Frame-2144770212.png"
-            alt="Trường Việt Anh"
-            width="164"
-            height="148"
-          />
-          <span>Trường Việt Anh</span>
-        </a>
-
-        <nav class="desktop-nav desktop-nav--right">
-          <ul>
-            {menuRight.map((item) => (
-              <li><a href={item.href} target="_blank" rel="noreferrer">{item.label}</a></li>
-            ))}
-          </ul>
-        </nav>
+      <div class="topbar__actions">
+        <a class="link-soft" href="tel:0916961409">0916 961 409</a>
+        <a class="button button--ghost" href={adminUrl} target="_blank" rel="noreferrer">CMS</a>
       </div>
     </header>
 
-    <section class="hero">
-      <div class="hero__content">
-        <p class="eyebrow">Bản staging đang live</p>
-        <h1>Trường Liên Cấp Việt Anh - demo trang chủ mới trên Cloudflare Workers.</h1>
-        <p class="hero__lede">
-          Đây là bản dựng thử cho homepage mới của Trường Việt Anh. Giao diện được lấy cảm hứng từ website hiện tại,
-          còn tin tức phía dưới đang đọc trực tiếp từ Directus để bạn có thể đăng bài và kiểm tra luồng xuất bản trên staging.
+    <section class="hero panel">
+      <div class="hero__copy">
+        <p class="eyebrow">Staging đã live</p>
+        <h1>Trang chủ nhẹ, nhanh và đủ sát tinh thần của truongvietanh.com.</h1>
+        <p class="lede">
+          Bản này ưu tiên tốc độ tải: không popup, không slider nặng, không script theo dõi phức tạp.
+          Nội dung tin tức vẫn lấy từ Directus ở bước build để bạn có thể đăng bài và xem kết quả ngay trên staging.
         </p>
 
-        <div class="hero__meta">
-          <span class={`status-chip ${state.configured ? 'is-ok' : 'is-warn'}`}>
+        <div class="badges">
+          <span class={`badge ${state.configured ? 'badge--ok' : 'badge--warn'}`}>
             {state.configured ? 'Directus đã kết nối' : 'Thiếu cấu hình Directus'}
           </span>
-          <span class="status-chip">{posts.length} bài viết đang hiển thị</span>
-          <span class="status-chip">Staging URL: {siteUrl}</span>
+          <span class="badge">{posts.length} bài viết</span>
+          <span class="badge">Static Astro + Workers</span>
         </div>
 
-        <div class="hero__buttons">
-          <a class="btn btn--primary" href="https://truongvietanh.com/lien-he/" target="_blank" rel="noreferrer">Tư vấn tuyển sinh</a>
-          <a class="btn btn--ghost" href={adminUrl} target="_blank" rel="noreferrer">Quản lý nội dung</a>
+        <div class="hero__actions">
+          <a class="button button--primary" href="https://truongvietanh.com/lien-he/" target="_blank" rel="noreferrer">Tư vấn tuyển sinh</a>
+          <a class="button button--ghost" href={adminUrl} target="_blank" rel="noreferrer">Đăng nhập quản trị</a>
         </div>
       </div>
 
-      <div class="hero__visual">
-        <div class="hero__card hero__card--quote">
-          <p class="hero__label">Thông điệp</p>
-          <p class="hero__quote">“Thước đo sự thành công của nhà trường là sự tiến bộ của từng học sinh.”</p>
+      <div class="hero__stats">
+        <div class="stat-card">
+          <span>Hotline</span>
+          <strong>0916 961 409</strong>
         </div>
-        <img
-          class="hero__image"
-          src="https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png"
-          alt="Giáo viên và học sinh Trường Việt Anh"
-          width="800"
-          height="670"
-        />
+        <div class="stat-card">
+          <span>URL staging</span>
+          <strong>staging.truongvietanh.com</strong>
+        </div>
+        <div class="stat-card">
+          <span>CMS</span>
+          <strong>Directus trên VPS Contabo</strong>
+        </div>
       </div>
     </section>
 
-    <section class="welcome">
-      <div class="section-heading">
-        <p class="eyebrow">Chào mừng đến với Trường Việt Anh</p>
-        <h2>Một homepage staging đủ gần bản live để bạn đánh giá giao diện, nội dung và tốc độ tải.</h2>
+    <section class="panel section">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Chương trình đào tạo</p>
+          <h2>Khối nội dung chính của trường được giữ lại theo phiên bản tối giản.</h2>
+        </div>
       </div>
 
-      <div class="welcome__grid">
-        <article class="welcome__panel">
-          <p>
-            Bản dựng này giữ lại tinh thần của homepage hiện tại: hotline nổi bật, logo trung tâm, tông vàng xanh,
-            khối tuyển sinh và phần tin tức phía dưới. Phần kỹ thuật đã chạy trên Cloudflare Workers với output static.
-          </p>
-          <ul class="check-list">
-            {highlights.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </article>
-
-        <article class="welcome__panel welcome__panel--image">
-          <img
-            src="https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg"
-            alt="Khuôn viên và hoạt động tại Trường Việt Anh"
-            width="1600"
-            height="1067"
-          />
-        </article>
-      </div>
-    </section>
-
-    <section class="programs">
-      <div class="section-heading">
-        <p class="eyebrow">Chương trình đào tạo</p>
-        <h2>Các khối học chính đang được mô phỏng lại trên trang chủ staging.</h2>
-      </div>
-
-      <div class="program-grid">
+      <div class="card-grid">
         {programs.map((program) => (
-          <article class="program-card">
+          <article class="card">
             <h3>{program.title}</h3>
-            <p>{program.summary}</p>
-            <a href={program.href} target="_blank" rel="noreferrer">Xem chi tiết</a>
+            <p>{program.detail}</p>
           </article>
         ))}
       </div>
     </section>
 
-    <section class="admissions">
-      <div class="section-heading">
-        <p class="eyebrow">Tuyển sinh & nhập học</p>
-        <h2>Những khối CTA quan trọng của homepage hiện tại đã có bản demo để bạn xem thử trên staging.</h2>
-      </div>
+    <section class="panel section section--split">
+      <article class="mini-panel">
+        <p class="eyebrow">Ưu tiên hiện tại</p>
+        <h2>Nhẹ và nhanh trước, mở rộng sau.</h2>
+        <ul class="checklist">
+          <li>Không tải ảnh lớn ở đầu trang</li>
+          <li>Không dùng JS client không cần thiết</li>
+          <li>HTML nhỏ, CSS gọn, ít request</li>
+          <li>Tin tức được build sẵn từ Directus</li>
+        </ul>
+      </article>
 
-      <div class="admissions__grid">
-        {admissions.map((item) => (
-          <article class="admissions__card">
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
-        ))}
-      </div>
+      <article class="mini-panel mini-panel--accent">
+        <p class="eyebrow">Quản trị nội dung</p>
+        <h2>Đăng bài trong Directus, redeploy staging để xem kết quả.</h2>
+        <p>
+          URL quản trị hiện tại là <code>{adminUrl}</code>. Sau khi có DNS `admin`, ta có thể chuyển sang
+          <code>https://admin.truongvietanh.com/admin</code>.
+        </p>
+      </article>
     </section>
 
-    <section class="news">
-      <div class="section-heading section-heading--split">
+    <section class="panel section">
+      <div class="section-head section-head--split">
         <div>
           <p class="eyebrow">Tin mới nhất</p>
-          <h2>Dữ liệu bài viết đang lấy từ Directus để bạn thử đăng bài trên staging.</h2>
+          <h2>Phần này đang lấy trực tiếp từ Directus để bạn thử quy trình biên tập.</h2>
         </div>
-        <a class="text-link" href={adminUrl} target="_blank" rel="noreferrer">Vào Directus Admin</a>
+        <a class="link-strong" href={adminUrl} target="_blank" rel="noreferrer">Vào Directus Admin</a>
       </div>
 
       {
         state.error ? (
           <p class="notice">{state.error}</p>
         ) : posts.length > 0 ? (
-          <div class="news__grid">
+          <div class="card-grid">
             {posts.map((post) => (
-              <article class="news-card">
-                <p class="news-card__date">
+              <article class="card card--post">
+                <p class="post-date">
                   {post.published_at ? new Date(post.published_at).toLocaleDateString('vi-VN') : 'Chưa có ngày đăng'}
                 </p>
                 <h3>{post.title}</h3>
@@ -231,18 +164,6 @@ const highlights = [
           <p class="notice">Hiện chưa có bài viết nào được publish trong Directus.</p>
         )
       }
-    </section>
-
-    <section class="footer-cta">
-      <div>
-        <p class="eyebrow">Trạng thái triển khai</p>
-        <h2>Staging đã live, có thể dùng để duyệt giao diện và thử quy trình đăng bài.</h2>
-      </div>
-      <div class="footer-cta__meta">
-        <p>Frontend: Astro static + Cloudflare Workers</p>
-        <p>CMS: Directus trên VPS Contabo</p>
-        <p>Admin hiện tại: {adminUrl}</p>
-      </div>
     </section>
   </main>
 </BaseLayout>

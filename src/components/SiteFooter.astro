@@ -1,0 +1,37 @@
+---
+import { contactLinks, launchPages } from '../lib/site-content';
+
+const footerPages = launchPages.slice(0, 6);
+---
+
+<footer class="site-footer">
+  <div class="site-footer__inner">
+    <div class="footer-panel footer-panel--brand">
+      <p class="footer-eyebrow">Launch wave 1</p>
+      <h2>Mot front-end nhe, nhanh va de mo rong tiep sang campus + paid landing.</h2>
+      <p>
+        Dot build nay uu tien 10 URL dau tien de dung khung SEO, authority va conversion. Dot tiep theo co
+        the scale tiep campus pages, local intent landings va fee capture landings.
+      </p>
+    </div>
+
+    <div class="footer-panel">
+      <p class="footer-eyebrow">Quick links</p>
+      <div class="footer-links">
+        {footerPages.map((page) => (
+          <a href={page.href}>{page.title}</a>
+        ))}
+      </div>
+    </div>
+
+    <div class="footer-panel">
+      <p class="footer-eyebrow">Admissions</p>
+      <div class="footer-links">
+        <a href={contactLinks.phoneHref}>{contactLinks.phoneDisplay}</a>
+        <a href={contactLinks.zaloHref} target="_blank" rel="noreferrer">Nhan Zalo tu van</a>
+        <a href="/tuyen-sinh">Admissions hub</a>
+        <a href="/hoc-phi">Money page</a>
+      </div>
+    </div>
+  </div>
+</footer>

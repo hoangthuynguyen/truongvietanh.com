@@ -1,169 +1,219 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { admissionsCards, defaultSiteUrl, levelCards, launchPages } from '../lib/site-content';
 import { getHomepageState } from '../lib/directus';
 
 const state = await getHomepageState();
-const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://staging.truongvietanh.com';
-const adminUrl = import.meta.env.PUBLIC_DIRECTUS_ADMIN_URL?.trim() || 'https://admin.truongvietanh.com/admin';
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 const posts = state.posts.slice(0, 3);
-
-const navItems = [
-  { label: 'Giới Thiệu', href: 'https://truongvietanh.com/gioi-thieu/' },
-  { label: 'Chương Trình', href: 'https://truongvietanh.com/tieu-hoc-viet-anh/' },
-  { label: 'Học Bổng', href: 'https://truongvietanh.com/hoc-bong/' },
-  { label: 'Liên Hệ', href: 'https://truongvietanh.com/lien-he/' },
-];
-
-const programs = [
-  {
-    title: 'Mầm non',
-    detail: 'Môi trường song ngữ, nền nếp và phát triển cảm xúc cho giai đoạn đầu đời.',
-  },
-  {
-    title: 'Tiểu học',
-    detail: 'Cân bằng giữa học thuật, tiếng Anh và kỹ năng tự học hằng ngày.',
-  },
-  {
-    title: 'THCS - THPT',
-    detail: 'Định hướng chuyên Anh, bứt tốc học thuật và chuẩn bị cho giai đoạn đại học.',
-  },
-];
 ---
 
 <BaseLayout
-  title="Trường Việt Anh | Staging Trên Cloudflare Workers"
-  description="Bản staging nhẹ và nhanh cho trang chủ Trường Việt Anh, build tĩnh bằng Astro và lấy nội dung từ Directus."
+  title="Truong Viet Anh | Wave 1 tren staging"
+  description="Homepage wave 1 cua Truong Viet Anh tren Astro, duoc xay de dieu phoi traffic vao pillars, hoc phi va admissions hub."
+  canonical={siteUrl}
 >
-  <main class="shell">
-    <header class="topbar panel">
-      <a class="brand" href={siteUrl}>
-        <span class="brand__mark">VA</span>
-        <span class="brand__text">
-          <strong>Trường Việt Anh</strong>
-          <small>Staging trên Cloudflare Workers</small>
-        </span>
-      </a>
+  <div class="site-shell site-shell--home">
+    <SiteHeader currentPath="/" siteUrl="/" />
 
-      <nav class="nav">
-        {navItems.map((item) => (
-          <a href={item.href} target="_blank" rel="noreferrer">{item.label}</a>
-        ))}
-      </nav>
+    <main class="page-flow">
+      <section class="hero-block hero-block--home">
+        <div class="hero-block__main">
+          <p class="section-eyebrow">Class Homepage</p>
+          <h1>10 trang dau tien da duoc dong bo theo SEO architecture, launch tren staging truoc khi scale them campus va landings.</h1>
+          <p class="hero-copy">
+            Homepage nay khong con la mot trang placeholder. No dong vai tro Grand Central Station: dieu phoi traffic
+            ve 4 pillar pages, trang admissions, money page va 3 trang brand authority de phuc vu ca SEO lan conversion.
+          </p>
 
-      <div class="topbar__actions">
-        <a class="link-soft" href="tel:0916961409">0916 961 409</a>
-        <a class="button button--ghost" href={adminUrl} target="_blank" rel="noreferrer">CMS</a>
-      </div>
-    </header>
+          <div class="badge-row">
+            <span class="badge">Wave 1 launch</span>
+            <span class="badge badge--soft">Homepage + 9 strategic pages</span>
+            <span class="badge badge--soft">Astro static + Cloudflare Pages</span>
+          </div>
 
-    <section class="hero panel">
-      <div class="hero__copy">
-        <p class="eyebrow">Staging đã live</p>
-        <h1>Trang chủ nhẹ, nhanh và đủ sát tinh thần của truongvietanh.com.</h1>
-        <p class="lede">
-          Bản này ưu tiên tốc độ tải: không popup, không slider nặng, không script theo dõi phức tạp.
-          Nội dung tin tức vẫn lấy từ Directus ở bước build để bạn có thể đăng bài và xem kết quả ngay trên staging.
-        </p>
-
-        <div class="badges">
-          <span class={`badge ${state.configured ? 'badge--ok' : 'badge--warn'}`}>
-            {state.configured ? 'Directus đã kết nối' : 'Thiếu cấu hình Directus'}
-          </span>
-          <span class="badge">{posts.length} bài viết</span>
-          <span class="badge">Static Astro + Workers</span>
+          <div class="cta-row">
+            <a class="button button--primary" href="/tuyen-sinh">Bat dau tu Admissions Hub</a>
+            <a class="button button--ghost" href="/hoc-phi">Mo Money Page</a>
+          </div>
         </div>
 
-        <div class="hero__actions">
-          <a class="button button--primary" href="https://truongvietanh.com/lien-he/" target="_blank" rel="noreferrer">Tư vấn tuyển sinh</a>
-          <a class="button button--ghost" href={adminUrl} target="_blank" rel="noreferrer">Đăng nhập quản trị</a>
-        </div>
-      </div>
-
-      <div class="hero__stats">
-        <div class="stat-card">
-          <span>Hotline</span>
-          <strong>0916 961 409</strong>
-        </div>
-        <div class="stat-card">
-          <span>URL staging</span>
-          <strong>staging.truongvietanh.com</strong>
-        </div>
-        <div class="stat-card">
-          <span>CMS</span>
-          <strong>Directus trên VPS Contabo</strong>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel section">
-      <div class="section-head">
-        <div>
-          <p class="eyebrow">Chương trình đào tạo</p>
-          <h2>Khối nội dung chính của trường được giữ lại theo phiên bản tối giản.</h2>
-        </div>
-      </div>
-
-      <div class="card-grid">
-        {programs.map((program) => (
-          <article class="card">
-            <h3>{program.title}</h3>
-            <p>{program.detail}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="panel section section--split">
-      <article class="mini-panel">
-        <p class="eyebrow">Ưu tiên hiện tại</p>
-        <h2>Nhẹ và nhanh trước, mở rộng sau.</h2>
-        <ul class="checklist">
-          <li>Không tải ảnh lớn ở đầu trang</li>
-          <li>Không dùng JS client không cần thiết</li>
-          <li>HTML nhỏ, CSS gọn, ít request</li>
-          <li>Tin tức được build sẵn từ Directus</li>
-        </ul>
-      </article>
-
-      <article class="mini-panel mini-panel--accent">
-        <p class="eyebrow">Quản trị nội dung</p>
-        <h2>Đăng bài trong Directus, redeploy staging để xem kết quả.</h2>
-        <p>
-          URL quản trị hiện tại là <code>{adminUrl}</code>. Frontend staging sẽ dùng domain quản trị này
-          thay cho IP thô để biên tập nội dung thuận tiện hơn.
-        </p>
-      </article>
-    </section>
-
-    <section class="panel section">
-      <div class="section-head section-head--split">
-        <div>
-          <p class="eyebrow">Tin mới nhất</p>
-          <h2>Phần này đang lấy trực tiếp từ Directus để bạn thử quy trình biên tập.</h2>
-        </div>
-        <a class="link-strong" href={adminUrl} target="_blank" rel="noreferrer">Vào Directus Admin</a>
-      </div>
-
-      {
-        state.error ? (
-          <p class="notice">{state.error}</p>
-        ) : posts.length > 0 ? (
-          <div class="card-grid">
-            {posts.map((post) => (
-              <article class="card card--post">
-                <p class="post-date">
-                  {post.published_at ? new Date(post.published_at).toLocaleDateString('vi-VN') : 'Chưa có ngày đăng'}
-                </p>
-                <h3>{post.title}</h3>
-                <p>{post.excerpt || post.content || 'Thêm mô tả ngắn trong Directus để card đẹp hơn.'}</p>
-                <code>/{post.slug}</code>
-              </article>
+        <aside class="hero-block__aside">
+          <p class="aside-eyebrow">Quick routes</p>
+          <h2>3 duong vao co y nghia nhat tren staging hien tai.</h2>
+          <div class="quick-stack">
+            {admissionsCards.map((card) => (
+              <a class="quick-card" href={card.href}>
+                <p class="card-eyebrow">{card.eyebrow}</p>
+                <h3>{card.title}</h3>
+                <p>{card.body}</p>
+              </a>
             ))}
           </div>
-        ) : (
-          <p class="notice">Hiện chưa có bài viết nào được publish trong Directus.</p>
-        )
-      }
-    </section>
-  </main>
+        </aside>
+      </section>
+
+      <section class="section-block section-block--stats">
+        <div class="section-heading">
+          <p class="section-eyebrow">Launch metrics</p>
+          <h2>Trang chu nay duoc viet de giai bai toan route traffic, khong chi de “gioi thieu trang web”.</h2>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-tile">
+            <strong>10</strong>
+            <span>URL core da len staging trong dot dau</span>
+          </article>
+          <article class="stat-tile">
+            <strong>4</strong>
+            <span>Pillar pages cho 4 cap hoc chinh</span>
+          </article>
+          <article class="stat-tile">
+            <strong>3</strong>
+            <span>Trang authority de neo trust truoc khi so sanh hoc phi</span>
+          </article>
+          <article class="stat-tile">
+            <strong>2</strong>
+            <span>Conversion hubs cho tuyen sinh va money intent</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Wave 1 pages</p>
+          <h2>Ban do launch cho dot dau tien da co du route, du template logic va du internal links.</h2>
+          <p class="section-intro">
+            Cac page duoi day duoc uu tien theo dung tinh than trong bo tai lieu: brand core, authority assets,
+            level pillars va conversion hubs.
+          </p>
+        </div>
+
+        <div class="link-grid">
+          {launchPages.map((page) => (
+            <a class="link-card" href={page.href}>
+              <p class="card-eyebrow">{page.eyebrow}</p>
+              <h3>{page.title}</h3>
+              <p>{page.body}</p>
+              <span>Mo trang</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Core SEO pillars</p>
+          <h2>Bon pillar pages duoc viet de bat keyword cap hoc va day user ve dung hanh dong.</h2>
+          <p class="section-intro">
+            Moi pillar page deu co vai tro ro: authority, internal link hub, FAQ support va CTA mem sang admissions
+            hoac money page.
+          </p>
+        </div>
+
+        <div class="link-grid">
+          {levelCards.map((card) => (
+            <a class="link-card" href={card.href}>
+              <p class="card-eyebrow">{card.eyebrow}</p>
+              <h3>{card.title}</h3>
+              <p>{card.body}</p>
+              <span>Mo pillar</span>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Brand authority</p>
+          <h2>Ba trang authority duoc dat canh nhau de homepage co du “do sau” truoc khi user sang conversion.</h2>
+          <p class="section-intro">
+            Cau truc nay giup homepage khong bi qua thương mai: phu huynh co du duong doc sâu truoc khi sang Hoc Phi
+            hay admissions.
+          </p>
+        </div>
+
+        <div class="card-grid card-grid--3">
+          <article class="content-card">
+            <p class="card-eyebrow">Brand Core</p>
+            <h3>Gioi Thieu</h3>
+            <p>Trang ke cau chuyen thuong hieu, giai thich vi sao Viet Anh ton tai va ai la doi tuong phu hop.</p>
+            <a class="card-link" href="/gioi-thieu">Xem trang Gioi Thieu</a>
+          </article>
+          <article class="content-card">
+            <p class="card-eyebrow">Thought Leadership</p>
+            <h3>Triet Ly Giao Duc</h3>
+            <p>Trang giai thich tinh than vui ve va thuc dung, dung de tang trust truoc giai doan so sanh.</p>
+            <a class="card-link" href="/triet-ly-giao-duc">Doc triet ly</a>
+          </article>
+          <article class="content-card">
+            <p class="card-eyebrow">Signature Asset</p>
+            <h3>He Thong PDR</h3>
+            <p>Trang moat quan trong nhat sau homepage, cho thay cach nha truong bien triet ly thanh he thong hoc tap.</p>
+            <a class="card-link" href="/he-thong-pdr">Kham pha PDR</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">CMS pulse</p>
+          <h2>Khung build van giu ket noi Directus de doi bien tap co mot noi nhin noi dung moi nhat.</h2>
+          <p class="section-intro">
+            Day la strip nhe de giu lien ket voi CMS. No khong canh tranh vai tro voi homepage, ma giup kiem tra quy
+            trinh Directus khi can.
+          </p>
+        </div>
+
+        {
+          state.error ? (
+            <article class="notice-card">
+              <h3>Directus tam thoi chua tra du lieu</h3>
+              <p>{state.error}</p>
+            </article>
+          ) : posts.length > 0 ? (
+            <div class="card-grid card-grid--3">
+              {posts.map((post) => (
+                <article class="content-card">
+                  <p class="card-eyebrow">Directus post</p>
+                  <h3>{post.title}</h3>
+                  <p>{post.excerpt || post.content || 'Bo sung excerpt trong Directus de strip nay day dan hon.'}</p>
+                  <span class="card-meta">
+                    {post.published_at
+                      ? new Date(post.published_at).toLocaleDateString('vi-VN')
+                      : 'Chua co ngay dang'}
+                  </span>
+                </article>
+              ))}
+            </div>
+          ) : (
+            <article class="notice-card">
+              <h3>Chua co bai viet duoc publish</h3>
+              <p>Strip nay se tu day len khi doi bien tap publish post trong Directus.</p>
+            </article>
+          )
+        }
+      </section>
+
+      <section class="cta-banner">
+        <div>
+          <p class="section-eyebrow">Next build wave</p>
+          <h2>Buoc tiep theo la them campus pages, fee capture landings va local SEO pages.</h2>
+          <p>
+            Nhưng trước mắt, staging đã có đủ khung để review structure, content direction và internal linking cho phase
+            launch đầu tiên.
+          </p>
+        </div>
+
+        <div class="cta-row">
+          <a class="button button--primary" href="/tuyen-sinh">Review Admissions Hub</a>
+          <a class="button button--ghost" href="/trung-hoc-pho-thong">Review THPT Pillar</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
 </BaseLayout>

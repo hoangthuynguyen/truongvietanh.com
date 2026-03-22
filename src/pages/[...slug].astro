@@ -1,0 +1,176 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import { defaultSiteUrl, pages } from '../lib/site-content';
+
+export function getStaticPaths() {
+  return pages.map((page) => ({
+    params: { slug: page.slug },
+    props: { page },
+  }));
+}
+
+const { page } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+---
+
+<BaseLayout title={page.title} description={page.description} canonical={`${siteUrl}/${page.slug}`}>
+  <div class={`site-shell site-shell--${page.theme}`}>
+    <SiteHeader currentPath={`/${page.slug}`} siteUrl="/" />
+
+    <main class="page-flow">
+      <section class="hero-block">
+        <div class="hero-block__main">
+          <p class="section-eyebrow">{page.hero.eyebrow}</p>
+          <h1>{page.hero.title}</h1>
+          <p class="hero-copy">{page.hero.body}</p>
+
+          <div class="badge-row">
+            <span class="badge">{page.templateClass}</span>
+            <span class="badge">{page.pageType}</span>
+            {page.hero.badges.map((badge) => (
+              <span class="badge badge--soft">{badge}</span>
+            ))}
+          </div>
+
+          <div class="cta-row">
+            <a class="button button--primary" href={page.hero.primaryCta.href}>
+              {page.hero.primaryCta.label}
+            </a>
+            <a class="button button--ghost" href={page.hero.secondaryCta.href}>
+              {page.hero.secondaryCta.label}
+            </a>
+          </div>
+        </div>
+
+        <aside class="hero-block__aside">
+          <p class="aside-eyebrow">Template note</p>
+          <h2>{page.hero.asideTitle}</h2>
+          <ul class="aside-list">
+            {page.hero.asideItems.map((item) => (
+              <li>{item}</li>
+            ))}
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section-block section-block--stats">
+        <div class="section-heading">
+          <p class="section-eyebrow">KPI support</p>
+          <h2>Trang nay duoc dong bo voi template class da chon, khong phai noi dung ngau hung.</h2>
+        </div>
+
+        <div class="stats-grid">
+          {page.stats.map((stat) => (
+            <article class="stat-tile">
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+              {stat.note && <small>{stat.note}</small>}
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {page.sections.map((section) => (
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="section-eyebrow">{section.eyebrow}</p>
+            <h2>{section.title}</h2>
+            {'intro' in section && <p class="section-intro">{section.intro}</p>}
+          </div>
+
+          {section.type === 'cards' && (
+            <div class={`card-grid card-grid--${section.columns || 3}`}>
+              {section.items.map((item) => (
+                <article class="content-card">
+                  {item.eyebrow && <p class="card-eyebrow">{item.eyebrow}</p>}
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                  {item.href && item.cta && (
+                    <a class="card-link" href={item.href}>
+                      {item.cta}
+                    </a>
+                  )}
+                </article>
+              ))}
+            </div>
+          )}
+
+          {section.type === 'steps' && (
+            <div class="step-grid">
+              {section.items.map((item, index) => (
+                <article class="step-card">
+                  <span class="step-index">0{index + 1}</span>
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {section.type === 'faq' && (
+            <div class="faq-list">
+              {section.items.map((item) => (
+                <article class="faq-item">
+                  <h3>{item.question}</h3>
+                  <p>{item.answer}</p>
+                </article>
+              ))}
+            </div>
+          )}
+
+          {section.type === 'links' && (
+            <div class="link-grid">
+              {section.items.map((item) => (
+                <a class="link-card" href={item.href}>
+                  {item.eyebrow && <p class="card-eyebrow">{item.eyebrow}</p>}
+                  <h3>{item.title}</h3>
+                  <p>{item.body}</p>
+                  <span>Mo trang</span>
+                </a>
+              ))}
+            </div>
+          )}
+
+          {section.type === 'quote' && (
+            <article class="quote-block">
+              <p>{section.quote}</p>
+              <strong>{section.attribution}</strong>
+            </article>
+          )}
+
+          {section.type === 'stats' && (
+            <div class="stats-grid">
+              {section.items.map((stat) => (
+                <article class="stat-tile">
+                  <strong>{stat.value}</strong>
+                  <span>{stat.label}</span>
+                  {stat.note && <small>{stat.note}</small>}
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+      ))}
+
+      <section class="cta-banner">
+        <div>
+          <p class="section-eyebrow">Next step</p>
+          <h2>Trang nay da san sang de nuoi SEO va day user sang hanh dong.</h2>
+          <p>
+            O wave tiep theo, phan noi dung nay co the duoc tach thanh campus pages, fee landings va FAQ engine
+            chi tiet hon trong Directus.
+          </p>
+        </div>
+
+        <div class="cta-row">
+          <a class="button button--primary" href="/tuyen-sinh">Vao Admissions Hub</a>
+          <a class="button button--ghost" href="/hoc-phi">Mo Money Page</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>

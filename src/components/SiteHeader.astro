@@ -1,0 +1,47 @@
+---
+import { adminUrl, contactLinks, mainNav } from '../lib/site-content';
+
+type Props = {
+  currentPath: string;
+  siteUrl?: string;
+};
+
+const { currentPath, siteUrl = '/' } = Astro.props;
+---
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="brand-lockup" href={siteUrl}>
+      <span class="brand-lockup__mark">VA</span>
+      <span class="brand-lockup__text">
+        <strong>Truong Viet Anh</strong>
+        <small>Astro + Directus + Cloudflare Pages</small>
+      </span>
+    </a>
+
+    <nav class="primary-nav" aria-label="Dieu huong chinh">
+      {mainNav.map((item) => {
+        const active =
+          item.href === '/'
+            ? currentPath === '/'
+            : currentPath === item.href || currentPath.startsWith(`${item.href}/`);
+
+        return (
+          <a class={active ? 'is-active' : ''} href={item.href}>
+            {item.label}
+          </a>
+        );
+      })}
+    </nav>
+
+    <div class="site-header__actions">
+      <a class="link-pill" href={contactLinks.phoneHref}>{contactLinks.phoneDisplay}</a>
+      <a class="link-pill link-pill--ghost" href={contactLinks.zaloHref} target="_blank" rel="noreferrer">
+        Zalo
+      </a>
+      <a class="link-pill link-pill--ghost" href={adminUrl} target="_blank" rel="noreferrer">
+        CMS
+      </a>
+    </div>
+  </div>
+</header>

@@ -1,14 +1,14 @@
 # truongvietanh.com
 
-Astro frontend deploy tren Cloudflare Pages va ket noi toi Directus backend thong qua REST API.
+Astro frontend deploy tren Cloudflare Workers va ket noi toi Directus backend thong qua REST API.
 
 ## Kien truc
 
 - Frontend: Astro + `@astrojs/cloudflare`
 - Backend: Directus chay rieng bang Docker hoac Directus Cloud
-- Deploy frontend: Cloudflare Pages
+- Deploy frontend: Cloudflare Workers
 
-Directus khong nen chay ben trong Cloudflare Pages. Pages phu hop cho frontend va Pages Functions, con Directus can mot runtime backend rieng.
+Directus khong nen chay ben trong Cloudflare Workers. Worker phu hop cho frontend SSR va API route nhe, con Directus can mot runtime backend rieng.
 
 ## Chay frontend local
 
@@ -65,37 +65,39 @@ Script setup se cap nhat `.env` o root voi `PUBLIC_DIRECTUS_URL` va `DIRECTUS_TO
 
 Directus local dang dung SQLite voi file database mac dinh tai `/directus/database/data.db`.
 
-## Bien moi truong tren Cloudflare Pages
+## Bien moi truong tren Cloudflare Workers
 
-Them cac bien sau trong project Pages:
+Them cac bien sau trong project Worker:
 
 - `PUBLIC_SITE_URL=https://truongvietanh.com`
 - `PUBLIC_DIRECTUS_URL=https://your-directus-domain.example`
 - `DIRECTUS_TOKEN=...`
 
-Build settings:
+Build settings trong Workers Builds:
 
 - Build command: `npm run build`
-- Build output directory: `dist`
+- Deploy command: `npx wrangler deploy`
 
-## Vi sao Cloudflare dang loi fetch repository
+## Luu y ve Cloudflare Pages
 
-Cloudflare Pages cua ban dang tro vao branch `main`, nhung GitHub repo hien tai dang rong va chua co commit nao. Khi repo chua co branch/commit thuc te, Pages co the loi ngay o buoc fetch repository.
+Project nay dang dung `@astrojs/cloudflare` v13 tren Astro 6. Adapter nay khong con ho tro deploy len Cloudflare Pages nua; no sinh cau hinh danh cho Cloudflare Workers. Neu import repo nay vao Pages, ban se gap cac loi nhu:
 
-Sau khi push commit dau tien len GitHub:
+- `The name 'ASSETS' is reserved in Pages projects`
+- `kv_namespaces[0] bindings should have a string "id" field`
+- `Expected "triggers" to be of type object, containing only properties crons, but got {}`
 
-```bash
-git add .
-git commit -m "Initial Astro + Directus + Cloudflare Pages setup"
-git push -u origin main
-```
+Vi vay, hay tao project trong Cloudflare theo duong dan `Workers & Pages` > `Create application` > `Import a repository`, sau do chon setup cho Worker thay vi Pages.
 
-Neu van loi fetch repository sau khi da co commit, hay vao Cloudflare Pages va:
+## Ket noi GitHub vao Workers Builds
 
-1. Ngat ket noi repo cu
-2. Ket noi lai GitHub repository `hoangthuynguyen/truongvietanh.com`
-3. Dam bao Cloudflare GitHub app duoc cap quyen truy cap repo nay
-4. Chon production branch la `main`
+1. Vao Cloudflare dashboard > `Workers & Pages`.
+2. Chon `Create application`.
+3. Chon `Import a repository`.
+4. Ket noi GitHub app neu Cloudflare chua co quyen vao repo `hoangthuynguyen/truongvietanh.com`.
+5. Chon production branch `main`.
+6. Dat build command la `npm run build`.
+7. Giu deploy command mac dinh `npx wrangler deploy`.
+8. Them cac environment variables o tren va deploy lai.
 
 ## Kiem tra nhanh
 

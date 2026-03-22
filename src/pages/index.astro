@@ -7,15 +7,15 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://truongvietanh.com';
 ---
 
 <BaseLayout
-  title="truongvietanh.com | Astro + Directus + Cloudflare Pages"
-  description="Frontend Astro tren Cloudflare Pages ket noi Directus backend bang bien moi truong."
+  title="truongvietanh.com | Astro + Directus + Cloudflare Workers"
+  description="Frontend Astro tren Cloudflare Workers ket noi Directus backend bang bien moi truong."
 >
   <main class="shell">
     <section class="hero card">
       <div class="eyebrow">Truong Viet Anh</div>
-      <h1>Astro frontend da san sang noi voi Directus backend tren Cloudflare Pages.</h1>
+      <h1>Astro frontend da san sang noi voi Directus backend tren Cloudflare Workers.</h1>
       <p class="lede">
-        Frontend nay render tren Cloudflare Pages Functions va doc du lieu tu Directus qua SDK.
+        Frontend nay render tren Cloudflare Workers va doc du lieu tu Directus qua SDK.
         Backend Directus can chay o mot host rieng, sau do frontend se goi qua
         <code>PUBLIC_DIRECTUS_URL</code>.
       </p>
@@ -66,9 +66,9 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || 'https://truongvietanh.com';
         <h2>Checklist deploy</h2>
         <ol class="steps">
           <li>Chay Directus rieng bang Docker hoac Directus Cloud.</li>
-          <li>Bat CORS tren Directus cho domain Pages cua ban.</li>
-          <li>Set <code>PUBLIC_DIRECTUS_URL</code> va <code>DIRECTUS_TOKEN</code> trong Cloudflare Pages.</li>
-          <li>Build command: <code>npm run build</code>, output directory: <code>dist</code>.</li>
+          <li>Bat CORS tren Directus cho domain Worker cua ban.</li>
+          <li>Set <code>PUBLIC_DIRECTUS_URL</code> va <code>DIRECTUS_TOKEN</code> trong Cloudflare Workers.</li>
+          <li>Neu dung Workers Builds tu GitHub: build command <code>npm run build</code>, deploy command <code>npx wrangler deploy</code>.</li>
         </ol>
       </article>
     </section>

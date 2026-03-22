@@ -6,5 +6,9 @@ const isBuildCommand = process.argv.includes('build');
 export default defineConfig({
   site: 'https://truongvietanh.com',
   output: 'server',
-  adapter: isBuildCommand ? cloudflare() : undefined,
+  adapter: isBuildCommand
+    ? cloudflare({
+        imageService: 'compile',
+      })
+    : undefined,
 });

@@ -1,5 +1,4 @@
 import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
-import { getSecret } from 'astro:env/server';
 
 export type Post = {
   id: number | string;
@@ -28,7 +27,7 @@ function getDirectusUrl() {
 }
 
 function getServerToken() {
-  return getSecret('DIRECTUS_TOKEN')?.trim() || '';
+  return import.meta.env.DIRECTUS_TOKEN?.trim() || '';
 }
 
 export async function getHomepageState(): Promise<HomepageState> {

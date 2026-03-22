@@ -1,14 +1,14 @@
 # truongvietanh.com
 
-Astro frontend deploy tren Cloudflare Workers va ket noi toi Directus backend thong qua REST API.
+Astro frontend deploy tren Cloudflare Pages va ket noi toi Directus backend thong qua REST API.
 
 ## Kien truc
 
-- Frontend: Astro + `@astrojs/cloudflare`
+- Frontend: Astro static build
 - Backend: Directus chay rieng bang Docker hoac Directus Cloud
-- Deploy frontend: Cloudflare Workers
+- Deploy frontend: Cloudflare Pages
 
-Directus khong nen chay ben trong Cloudflare Workers. Worker phu hop cho frontend SSR va API route nhe, con Directus can mot runtime backend rieng.
+Frontend se doc Directus trong luc build, sau do xuat trang tinh vao `dist`. Cach nay phu hop voi Cloudflare Pages va khong can chay Directus ben trong Cloudflare runtime.
 
 ## Chay frontend local
 
@@ -26,7 +26,7 @@ npm run dev
 ```
 
 Frontend mac dinh doc Directus tu `PUBLIC_DIRECTUS_URL`.
-Trong local development, Astro chay dev server thuong de co the goi Directus tren `localhost`. Khi build production, adapter Cloudflare se duoc bat lai.
+Trong local development, Astro van co the goi Directus tren `localhost`. Khi build production, Astro se lay du lieu tu Directus va render san HTML/static JSON vao `dist`.
 
 ## Chay Directus local
 
@@ -65,39 +65,44 @@ Script setup se cap nhat `.env` o root voi `PUBLIC_DIRECTUS_URL` va `DIRECTUS_TO
 
 Directus local dang dung SQLite voi file database mac dinh tai `/directus/database/data.db`.
 
-## Bien moi truong tren Cloudflare Workers
+## Chay Directus production tren VPS
 
-Them cac bien sau trong project Worker:
+Repo co san file `directus/docker-compose.prod.yml` de chay Directus tren VPS voi volume rieng va tham gia mang `n8n-contabo_internal` cho reverse proxy neu can.
+
+Can mot file `directus/.env.prod` tren server, co the copy tu `directus/.env.prod.example`.
+
+## Bien moi truong tren Cloudflare Pages
+
+Them cac bien sau trong project Pages:
 
 - `PUBLIC_SITE_URL=https://truongvietanh.com`
 - `PUBLIC_DIRECTUS_URL=https://your-directus-domain.example`
 - `DIRECTUS_TOKEN=...`
 
-Build settings trong Workers Builds:
+Build settings:
 
 - Build command: `npm run build`
-- Deploy command: `npx wrangler deploy`
+- Build output directory: `dist`
 
-## Luu y ve Cloudflare Pages
-
-Project nay dang dung `@astrojs/cloudflare` v13 tren Astro 6. Adapter nay khong con ho tro deploy len Cloudflare Pages nua; no sinh cau hinh danh cho Cloudflare Workers. Neu import repo nay vao Pages, ban se gap cac loi nhu:
-
-- `The name 'ASSETS' is reserved in Pages projects`
-- `kv_namespaces[0] bindings should have a string "id" field`
-- `Expected "triggers" to be of type object, containing only properties crons, but got {}`
-
-Vi vay, hay tao project trong Cloudflare theo duong dan `Workers & Pages` > `Create application` > `Import a repository`, sau do chon setup cho Worker thay vi Pages.
-
-## Ket noi GitHub vao Workers Builds
+## Deploy len Cloudflare Pages
 
 1. Vao Cloudflare dashboard > `Workers & Pages`.
-2. Chon `Create application`.
-3. Chon `Import a repository`.
-4. Ket noi GitHub app neu Cloudflare chua co quyen vao repo `hoangthuynguyen/truongvietanh.com`.
-5. Chon production branch `main`.
-6. Dat build command la `npm run build`.
-7. Giu deploy command mac dinh `npx wrangler deploy`.
-8. Them cac environment variables o tren va deploy lai.
+2. Chon project `truongvietanh-com` hoac tao moi neu can.
+3. Neu deploy tu GitHub:
+
+   - Framework preset: `Astro`
+   - Build command: `npm run build`
+   - Build output directory: `dist`
+
+4. Them cac environment variables o tren.
+5. Deploy lai.
+
+Ban cung co the deploy artifact local bang:
+
+```bash
+npm run build
+npx wrangler pages deploy dist --project-name truongvietanh-com
+```
 
 ## Kiem tra nhanh
 

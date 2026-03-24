@@ -17,6 +17,79 @@ Mục tiêu của tài liệu này:
 - giúp đội SEO, Content, Admissions, Brand, Operations và Dev dùng cùng một bản đồ
 - làm chuẩn cho cả navigation, XML sitemap, internal linking và rollout
 
+## 0. Vì sao sheet `MASTER` có hơn 1.000 trang nhưng sitemap cũ nhìn vẫn “ít”
+
+Lý do là vì bản trước mới đang mô tả:
+- kiến trúc lõi
+- nhóm trang chính
+- các URL đại diện
+
+Nó **chưa phản ánh đầy đủ inventory planning** của toàn bộ sheet `MASTER`.
+
+Theo tab `CONTENT GROUPS`, quy mô mục tiêu của toàn site hiện là:
+- `GR-01` Brand / Toàn hệ thống: `40`
+- `GR-02` Tuyển sinh & Học phí: `80`
+- `GR-03` Mầm non: `90`
+- `GR-04` Tiểu học: `90`
+- `GR-05` THCS: `90`
+- `GR-06` THPT: `100`
+- `GR-07` Liên cấp: `40`
+- `GR-08` Campus / Địa điểm: `80`
+- `GR-09` Phụ huynh / Learning Hub: `180`
+- `GR-10` Thành tích / đầu ra / social proof: `80`
+- `GR-11` Dịch vụ bổ trợ: `70`
+- `GR-12` Tin tức / sự kiện / utility / archive: `150+`
+
+Tổng quy mô kế hoạch:
+- `1.090+` URL
+
+Vì vậy, tài liệu này từ đây được hiểu là:
+- **lớp 1**: sitemap kiến trúc
+- **lớp 2**: sitemap inventory theo group và page family
+- **lớp 3**: quy tắc index, rollout, internal linking và governance
+
+Nói ngắn gọn:
+- `MASTER` là kho inventory vận hành
+- file này là bản đồ đọc được bằng mắt người để điều phối hơn `1.000` URL đó
+
+## 0.1. Ba lớp của sitemap
+
+### Lớp A — Core sitemap
+
+Bao gồm:
+- home
+- brand core
+- level pillars
+- admissions core
+- tuition core
+- campus core
+
+Đây là lớp thường được nhìn thấy đầu tiên vì là “xương sống” của site.
+
+### Lớp B — Expansion sitemap
+
+Bao gồm:
+- level support pages
+- local intent pages
+- comparison pages
+- parents hub pages
+- proof pages
+- service support pages
+
+Đây là lớp làm cho tổng inventory tăng rất nhanh.
+
+### Lớp C — Scale / utility / archive sitemap
+
+Bao gồm:
+- news
+- recap
+- gallery
+- utility
+- selected archive
+- local long-tail scale-out
+
+Đây là lớp dễ đẩy tổng số URL vượt `1.000+`.
+
 ## 1. Nguyên tắc điều hành sitemap
 
 Theo `MASTER` và `LISTS`, mọi URL mới phải có đủ tối thiểu các trường sau:
@@ -316,6 +389,163 @@ Ghi chú:
 - đây là nhóm dễ làm loãng index nhất
 - chỉ chọn lọc index các trang có giá trị SEO thực sự
 
+## 2.1. Breakdown chi tiết theo page family
+
+Phần dưới đây lấy trực tiếp từ tab `CONTENT GROUPS`, nhằm phản ánh đầy đủ hơn lý do vì sao tổng inventory lớn.
+
+### GR-01 — Brand / Toàn hệ thống
+
+Chi tiết family:
+- Giới thiệu thương hiệu: `10`
+- Chất lượng giáo dục tổng quan: `10`
+- Brand support content: `10`
+- Branded conversion: `10`
+
+Tổng:
+- `40`
+
+### GR-02 — Tuyển sinh & Học phí
+
+Chi tiết family:
+- Học phí tổng và theo năm: `15`
+- Tuyển sinh tổng và theo cấp: `20`
+- Học bổng: `15`
+- Comparison tuyển sinh: `15`
+- Conversion landing pages: `15`
+
+Tổng:
+- `80`
+
+### GR-03 — Mầm non
+
+Chi tiết family:
+- Trang trụ: `10`
+- Chương trình & phương pháp: `20`
+- Phụ huynh cân nhắc: `20`
+- Local / campus: `20`
+- Utility / retention: `20`
+
+Tổng:
+- `90`
+
+### GR-04 — Tiểu học
+
+Chi tiết family:
+- Trang trụ: `10`
+- Chương trình: `20`
+- Cân nhắc: `20`
+- Local / campus: `20`
+- Utility / retention: `20`
+
+Tổng:
+- `90`
+
+### GR-05 — THCS
+
+Chi tiết family:
+- Trang trụ: `10`
+- Chương trình: `20`
+- Cân nhắc: `20`
+- Local / campus: `20`
+- Utility / retention: `20`
+
+Tổng:
+- `90`
+
+### GR-06 — THPT
+
+Chi tiết family:
+- Trang trụ: `12`
+- Chương trình / học thuật: `25`
+- Comparison / cân nhắc: `20`
+- Đầu ra / đại học / du học: `18`
+- Local / campus: `15`
+- Utility / retention: `10`
+
+Tổng:
+- `100`
+
+### GR-07 — Liên cấp
+
+Chi tiết family:
+- Giải thích mô hình liên cấp: `10`
+- Comparison / có nên học liên cấp: `10`
+- Học phí / tuyển sinh liên cấp: `10`
+- Lộ trình xuyên suốt / social proof: `10`
+
+Tổng:
+- `40`
+
+### GR-08 — Campus / Địa điểm
+
+Chi tiết family:
+- Trang campus tổng: `4`
+- Campus + cấp học: `16`
+- Campus + học phí: `8`
+- Campus + tuyển sinh: `8`
+- Campus + school tour / học thử: `8`
+- Campus + review / testimonial: `8`
+- Campus + local comparison: `12`
+- Campus + FAQ / lead pages: `16`
+
+Tổng:
+- `80`
+
+### GR-09 — Phụ huynh / Learning Hub
+
+Chi tiết family:
+- Chọn trường: `20`
+- Chuyển cấp: `20`
+- Tâm lý học đường: `20`
+- Kỹ năng học tập: `20`
+- Tiếng Anh cho học sinh: `20`
+- Dinh dưỡng & sức khỏe: `20`
+- Kỹ năng thế kỷ 21: `20`
+- Giáo dục gia đình: `20`
+- FAQ / snippets / AIO library: `20`
+
+Tổng:
+- `180`
+
+### GR-10 — Thành tích / Đầu ra / Social proof
+
+Chi tiết family:
+- Thành tích học sinh: `10`
+- IELTS / chứng chỉ: `10`
+- Học sinh tiêu biểu: `10`
+- Tỷ lệ vào đại học: `10`
+- Giải thưởng / cuộc thi: `10`
+- Câu chuyện thành công: `10`
+- Testimonial phụ huynh: `10`
+- Testimonial học sinh / cựu học sinh: `10`
+
+Tổng:
+- `80`
+
+### GR-11 — Dịch vụ bổ trợ
+
+Chi tiết family:
+- Học bổng: `15`
+- School tour / open day / học thử: `15`
+- Bán trú / thực đơn / chăm sóc: `10`
+- Xe đưa đón: `10`
+- Ngoại khóa / CLB: `10`
+- Tư vấn du học / định hướng: `10`
+
+Tổng:
+- `70`
+
+### GR-12 — Tin tức / Sự kiện / Utility / Archive
+
+Chi tiết family:
+- Tin tức / thông báo: `40`
+- Sự kiện / recap: `40`
+- Gallery / media: `30`
+- Utility / thực đơn / thời khóa biểu / lịch: `40`
+
+Tổng:
+- `150+`
+
 ## 3. Cấu trúc sitemap production theo tầng
 
 ## 3.1. Tầng 1 — Trang điều phối và trust nền
@@ -527,6 +757,19 @@ Khuyến nghị:
   - `utility / thông báo / thực đơn`
 - không index hàng loạt các trang utility mỏng chỉ vì cùng nằm trong cluster
 
+Chi tiết inventory nhìn thấy từ `MASTER`:
+- nhóm bài giáo dục / parenting
+- nhóm bài chọn trường / comparison mềm
+- nhóm bài local mềm theo khu vực
+- nhóm bài school tour / học phí / tuyển sinh mềm
+- nhóm bài utility như thực đơn, hoạt động, thông báo, album
+
+Ví dụ các family đã xuất hiện:
+- `backlog-mam-non-001` đến `backlog-mam-non-024`: nội dung giáo dục, FAQ, chương trình
+- `backlog-mam-non-025` đến `backlog-mam-non-044`: chọn trường, local, checklist, objection
+- `backlog-mam-non-045` đến `backlog-mam-non-064`: local mềm theo cơ sở, học phí, tuyển sinh, school tour
+- `backlog-mam-non-065` đến `backlog-mam-non-080`: thực đơn, hoạt động, album, thông báo, tài nguyên
+
 ### `/blog/tieu-hoc/*`
 
 Từ `TVA-1601` trở đi có cấu trúc tương tự:
@@ -542,6 +785,12 @@ Khuyến nghị:
 - logic giống Mầm non
 - utility và archive cần kiểm soát index chặt
 
+Chi tiết inventory nhìn thấy từ `MASTER`:
+- `backlog-tieu-hoc-001` đến `backlog-tieu-hoc-026`: học phí, chương trình, FAQ, kỹ năng, học thuật
+- `backlog-tieu-hoc-027` đến `backlog-tieu-hoc-046`: chọn trường, comparison mềm, checklist, objection
+- `backlog-tieu-hoc-047` đến `backlog-tieu-hoc-066`: local mềm, học phí theo cơ sở, tuyển sinh, school tour
+- `backlog-tieu-hoc-067` đến `backlog-tieu-hoc-079`: thực đơn, hoạt động, album, thông báo, tài nguyên
+
 ### THCS / THPT blog clusters
 
 Trong các phần `MASTER` sau đó, logic dự kiến cũng sẽ tương tự:
@@ -550,6 +799,34 @@ Trong các phần `MASTER` sau đó, logic dự kiến cũng sẽ tương tự:
 - tiếng Anh / IELTS / đầu ra
 - comparison và objection
 - local / proof support
+
+Điểm khác:
+- THCS sẽ nghiêng về chuyển cấp, tự chủ, tiếng Anh sớm, chọn trường cấp 2
+- THPT sẽ nghiêng về lớp 10, IELTS, đại học, học bổng, định hướng nghề nghiệp
+
+## 3.7. Tầng 7 — Utility, retention và archive
+
+Đây là phần thường bị bỏ qua trong sitemap tài liệu nhưng lại là lý do số URL thực tế tăng rất mạnh.
+
+Theo `MASTER` và `CONTENT GROUPS`, lớp này bao gồm:
+- thông tin dành cho phụ huynh
+- thời khóa biểu và lịch hoạt động
+- thông báo phụ huynh
+- gallery hoạt động
+- utility theo từng khối
+- thực đơn tuần / tháng
+- recap sự kiện
+- archive chọn lọc
+
+Ví dụ đã thấy trong `MASTER`:
+- `TVA-1101` `/phu-huynh/thong-tin-danh-cho-phu-huynh`
+- `TVA-1104` `/phu-huynh/thong-bao-phu-huynh`
+- `TVA-1105` `/gallery/hoat-dong-truong-viet-anh`
+
+Rule rất quan trọng:
+- lớp này làm tổng số URL phình rất nhanh
+- nhưng không đồng nghĩa tất cả phải index
+- nhiều URL chỉ nên `mixed`, `pending`, hoặc noindex có chọn lọc
 
 ## 4. Main navigation nên bám sitemap nào
 
@@ -584,6 +861,11 @@ Không nên đưa lên main nav:
 
 Không nên gom toàn bộ URL vào một file `sitemap.xml` duy nhất.
 
+Với quy mô hơn `1.090+` URL, sitemap index bắt buộc phải phản ánh cả:
+- core pages
+- expansion pages
+- utility / archive được phép index
+
 Khuyến nghị:
 - `/sitemap.xml` là sitemap index
 - chia nhỏ theo cụm:
@@ -600,6 +882,19 @@ Khuyến nghị:
   - `/sitemaps/blog-primary.xml`
   - `/sitemaps/blog-secondary.xml`
   - `/sitemaps/news-events.xml`
+
+Có thể cần tách sâu hơn nữa khi triển khai thật:
+- `/sitemaps/blog-kindergarten-core.xml`
+- `/sitemaps/blog-kindergarten-local.xml`
+- `/sitemaps/blog-kindergarten-utility.xml`
+- `/sitemaps/blog-primary-core.xml`
+- `/sitemaps/blog-primary-local.xml`
+- `/sitemaps/proof-students.xml`
+- `/sitemaps/proof-testimonials.xml`
+- `/sitemaps/services.xml`
+- `/sitemaps/local-govap.xml`
+- `/sitemaps/local-phu-nhuan.xml`
+- `/sitemaps/local-binh-tan.xml`
 
 Không đưa vào production XML sitemap:
 - `/mau/*`
@@ -755,6 +1050,61 @@ Lý do:
 
 Lý do:
 - chỉ scale sau khi tầng money + trust đã ổn
+
+## 8.1. Cách đọc sitemap theo góc nhìn inventory
+
+Nếu nhìn từ sheet `MASTER`, sitemap không phải là:
+- 1 homepage
+- vài brand pages
+- 4 pillar pages
+
+Mà là:
+- 1 tầng spine rất ngắn
+- 1 tầng support rất rộng
+- 1 tầng local rất dày
+- 1 tầng learning hub cực lớn
+- 1 tầng utility / archive có thể chiếm hàng trăm URL
+
+Vì vậy khi hỏi “sitemap có bao nhiêu trang”, phải tách làm 3 con số:
+
+### Số 1 — Core sitemap
+
+Khoảng:
+- `50-80` URL
+
+Bao gồm:
+- home
+- brand core
+- pillars
+- admissions core
+- tuition core
+- campus core
+
+### Số 2 — Indexable production sitemap
+
+Khoảng:
+- `400-700` URL
+
+Bao gồm:
+- core sitemap
+- local pages đủ unique
+- proof pages
+- comparison pages
+- selected parents hub
+- selected clusters theo cấp
+
+### Số 3 — Full master inventory
+
+Khoảng:
+- `1.090+` URL
+
+Bao gồm thêm:
+- utility
+- archive
+- gallery
+- retention
+- long-tail local scale-out
+- content backlog chưa chắc đã publish ngay
 
 ## 9. Những route phải loại khỏi sitemap production
 

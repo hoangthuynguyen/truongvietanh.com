@@ -90,6 +90,8 @@ const campusCards = [
     body:
       'Phù hợp với gia đình muốn bắt đầu từ một cơ sở thuận tiện đưa đón, dễ tham quan và có lộ trình rõ ràng cho từng cấp học.',
     img: 'https://truongvietanh.com/wp-content/uploads/2024/12/Frame-2144770212.png',
+    href: '/co-so/go-vap-phan-huy-ich',
+    cta: 'Xem cơ sở Gò Vấp',
   },
   {
     eyebrow: 'Phú Nhuận',
@@ -97,6 +99,8 @@ const campusCards = [
     body:
       'Phần giới thiệu cơ sở giúp phụ huynh hiểu khu vực phục vụ và chuyển nhanh sang bước tư vấn hoặc tham quan.',
     img: 'https://truongvietanh.com/wp-content/uploads/2024/12/Website-Truongvietanh.com_-768x432.png',
+    href: '/co-so/phu-nhuan-nguyen-trong-tuyen',
+    cta: 'Xem cơ sở Phú Nhuận',
   },
   {
     eyebrow: 'Mở rộng hệ sinh thái',
@@ -104,6 +108,8 @@ const campusCards = [
     body:
       'Khi hệ thống campus được trình bày rõ hơn, phụ huynh có thể chọn theo khu vực, cấp học và nhu cầu để tìm điểm chạm phù hợp nhanh hơn.',
     img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img3-scaled.jpg',
+    href: '/co-so',
+    cta: 'Xem tổng quan cơ sở',
   },
 ];
 
@@ -328,6 +334,7 @@ const newsCards = [
               <p class="card-eyebrow">{campus.eyebrow}</p>
               <h3>{campus.title}</h3>
               <p>{campus.body}</p>
+              {campus.href && campus.cta && <a class="card-link" href={campus.href}>{campus.cta}</a>}
             </article>
           ))}
         </div>

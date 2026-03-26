@@ -520,7 +520,7 @@ function mapSectionToBlock(page: PageSpec, section: PageSection, index: number):
         intro: section.intro,
         columns: 3,
         items: section.items.map((item: StepItem, stepIndex) => ({
-          eyebrow: `Buoc ${stepIndex + 1}`,
+          eyebrow: `Bước ${stepIndex + 1}`,
           title: item.title,
           body: item.body,
         })),
@@ -593,9 +593,9 @@ export function pageSpecToContentPage(page: PageSpec): ContentPage {
     blocks.push({
       id: `${page.slug}-overview-stats`,
       type: 'stats',
-      eyebrow: 'KPI support',
-      title: 'Trang nay duoc dong bo voi template class da chon, khong phai noi dung ngau hung.',
-      intro: 'Cac chi so ben duoi la khung tam thoi de doi content co the thay the bang du lieu Directus sau khi migrate.',
+      eyebrow: 'KPI hỗ trợ',
+      title: 'Trang này được đồng bộ với template class đã chọn, không phải nội dung ngẫu hứng.',
+      intro: 'Các chỉ số bên dưới là khung tạm thời để đội content có thể thay thế bằng dữ liệu Directus sau khi migrate.',
       items: page.stats,
     });
   }
@@ -605,12 +605,12 @@ export function pageSpecToContentPage(page: PageSpec): ContentPage {
   blocks.push({
     id: `${page.slug}-next-step`,
     type: 'cta',
-    eyebrow: 'Next step',
-    title: 'Trang nay da san sang de nuoi SEO va day user sang hanh dong.',
-    body: 'Sau khi chuyen du lieu sang Directus, ban co the tiep tuc tach thanh campus pages, fee landings va FAQ chi tiet hon ma khong can sua route Astro.',
-    primaryCtaLabel: 'Vao Admissions Hub',
+    eyebrow: 'Bước tiếp theo',
+    title: 'Trang này đã sẵn sàng để nuôi SEO và đẩy người dùng sang hành động.',
+    body: 'Sau khi chuyển dữ liệu sang Directus, bạn có thể tiếp tục tách thành campus pages, fee landings và FAQ chi tiết hơn mà không cần sửa route Astro.',
+    primaryCtaLabel: 'Vào hub tuyển sinh',
     primaryCtaHref: '/tuyen-sinh',
-    secondaryCtaLabel: 'Mo Money Page',
+    secondaryCtaLabel: 'Mở trang học phí',
     secondaryCtaHref: '/hoc-phi',
   });
 
@@ -1057,7 +1057,7 @@ export async function getCmsPageBySlug(slug: string) {
     source: 'directus',
     slug: page.permalink || page.slug,
     title: page.seo_title || page.title || page.permalink || page.slug,
-    description: page.seo_description || page.description || 'Trang noi dung duoc dong bo tu Directus.',
+    description: page.seo_description || page.description || 'Trang nội dung được đồng bộ từ Directus.',
     seoTitle: page.seo_title,
     seoDescription: page.seo_description,
     ogImage: page.og_image,

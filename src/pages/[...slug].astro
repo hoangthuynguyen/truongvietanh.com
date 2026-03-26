@@ -23,11 +23,11 @@ if (!page) {
 }
 
 const canonical = page ? `${siteUrl.replace(/\/$/, '')}/${page.slug}` : undefined;
-const title = page?.seoTitle || page?.title || 'Khong tim thay trang';
+const title = page?.seoTitle || page?.title || 'Không tìm thấy trang';
 const description =
   page?.seoDescription ||
   page?.description ||
-  'Trang ban dang tim khong ton tai hoac chua duoc dong bo tu Directus.';
+  'Trang bạn đang tìm không tồn tại hoặc chưa được đồng bộ từ Directus.';
 ---
 
 <BaseLayout title={title} description={description} canonical={canonical} ogImage={page?.ogImage || undefined}>
@@ -41,18 +41,18 @@ const description =
         <section class="section-block empty-state">
           <div class="section-heading">
             <p class="section-eyebrow">404</p>
-            <h1>Trang nay chua co trong Directus hoac trong bo du lieu fallback.</h1>
+            <h1>Trang này chưa có trong Directus hoặc trong bộ dữ liệu fallback.</h1>
             <p class="section-intro">
-              Neu ban vua tao page trong CMS, hay kiem tra lai `slug`, `status=published`, va cac ban ghi `page_blocks`.
+              Nếu bạn vừa tạo page trong CMS, hãy kiểm tra lại `slug`, `status=published`, và các bản ghi `page_blocks`.
             </p>
           </div>
 
           <div class="cta-row">
             <a class="button button--primary" href="/">
-              Ve trang chu
+              Về trang chủ
             </a>
             <a class="button button--ghost" href="/api/health.json">
-              Kiem tra ket noi Directus
+              Kiểm tra kết nối Directus
             </a>
           </div>
         </section>

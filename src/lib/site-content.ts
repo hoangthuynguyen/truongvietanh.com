@@ -124,8 +124,39 @@ export const mainNav = [
       { label: 'THPT', href: '/trung-hoc-pho-thong' },
     ]
   },
-  { label: 'Tuyển sinh', href: '/tuyen-sinh' },
-  { label: 'Học phí', href: '/hoc-phi' },
+  {
+    label: 'Cơ sở',
+    href: '/co-so',
+    children: [
+      { label: 'Tổng quan cơ sở', href: '/co-so' },
+      { label: 'Gò Vấp Phan Huy Ích', href: '/co-so/go-vap-phan-huy-ich' },
+      { label: 'Mầm non Gò Vấp Lê Đức Thọ', href: '/co-so/mam-non-go-vap-le-duc-tho' },
+      { label: 'Phú Nhuận Nguyễn Trọng Tuyển', href: '/co-so/phu-nhuan-nguyen-trong-tuyen' },
+      { label: 'Bình Tân Tỉnh Lộ 10', href: '/co-so/binh-tan-tinh-lo-10' },
+    ]
+  },
+  {
+    label: 'Tuyển sinh',
+    href: '/tuyen-sinh',
+    children: [
+      { label: 'Tổng quan tuyển sinh', href: '/tuyen-sinh' },
+      { label: 'Quy trình tuyển sinh', href: '/tuyen-sinh/quy-trinh-tuyen-sinh' },
+      { label: 'Hồ sơ nhập học', href: '/tuyen-sinh/ho-so-nhap-hoc' },
+      { label: 'Lịch tuyển sinh', href: '/tuyen-sinh/lich-tuyen-sinh' },
+      { label: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van' },
+      { label: 'Tham quan trường', href: '/tuyen-sinh/tham-quan-truong' },
+      { label: 'Học thử', href: '/hoc-thu' },
+    ]
+  },
+  {
+    label: 'Học phí',
+    href: '/hoc-phi',
+    children: [
+      { label: 'Tổng quan học phí', href: '/hoc-phi' },
+      { label: 'Học bổng & ưu đãi', href: '/hoc-bong' },
+    ]
+  },
+  { label: 'Liên hệ', href: '/lien-he' },
 ];
 
 export const contactLinks = {
@@ -133,11 +164,11 @@ export const contactLinks = {
   phoneHref: 'tel:0916961409',
   zaloHref: 'https://zalo.me/0916961409',
   email: 'info@truongvietanh.com',
-  contactHref: 'https://truongvietanh.com/lien-he/',
+  contactHref: '/lien-he',
   facebookHref: 'https://www.facebook.com/',
   youtubeHref: 'https://www.youtube.com/',
   instagramHref: 'https://www.instagram.com/',
-  admissionsHref: '/tuyen-sinh',
+  admissionsHref: '/tuyen-sinh/dang-ky-tu-van',
   tuitionHref: '/hoc-phi',
 };
 
@@ -249,6 +280,1081 @@ export const admissionsCards: LinkItem[] = [
     title: 'Goi tu van ngay',
     href: contactLinks.phoneHref,
     body: 'Phu hop voi phu huynh dang o giai doan BOFU va can xac nhan thong tin nhanh.',
+  },
+];
+
+const priorityPages: PageSpec[] = [
+  {
+    slug: 'co-so',
+    title: 'Cơ Sở Trường Việt Anh',
+    description:
+      'Trang tổng hợp cơ sở của Trường Việt Anh, giúp phụ huynh chọn khu vực phù hợp, xem cấp học đang vận hành và đi tiếp sang tham quan hoặc tư vấn.',
+    templateClass: 'Campus Hub',
+    pageType: 'Local trust hub',
+    theme: 'brand',
+    hero: {
+      eyebrow: 'Campus Hub',
+      title: 'Chọn cơ sở phù hợp để bắt đầu hành trình tuyển sinh gần nhà, đúng cấp học và thuận tiện cho gia đình.',
+      body:
+        'Trang này gom các cơ sở trọng điểm của Việt Anh để phụ huynh nhìn nhanh khu vực phục vụ, cấp học đang mở và bước tiếp theo rõ ràng nhất: tham quan trường, nhận tư vấn hoặc xem học phí.',
+      primaryCta: { label: 'Đặt lịch tham quan', href: '/tuyen-sinh/tham-quan-truong' },
+      secondaryCta: { label: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van' },
+      badges: ['Local SEO', 'Campus trust', 'Admissions bridge'],
+      asideTitle: 'Phụ huynh thường bắt đầu từ 3 câu hỏi',
+      asideItems: [
+        'Cơ sở nào thuận tiện cho việc đưa đón mỗi ngày?',
+        'Cơ sở đó đang có những cấp học nào?',
+        'Bước tiếp theo nên là tham quan, học thử hay nhận tư vấn?',
+      ],
+    },
+    stats: [
+      { value: '4', label: 'Cơ sở trọng điểm đang được ưu tiên hiển thị trong đợt đầu' },
+      { value: '4 cấp học', label: 'Hành trình liên cấp từ Mầm non đến THPT' },
+      { value: '1 hub', label: 'Một điểm điều hướng cho local trust và tuyển sinh' },
+      { value: '2 CTA', label: 'Tập trung vào tham quan trường và tư vấn' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Cơ sở nổi bật',
+        title: 'Những điểm bắt đầu quan trọng nhất cho phụ huynh đang tìm trường tại TP.HCM.',
+        intro:
+          'Mỗi cơ sở nên có trang riêng để thể hiện rõ hình ảnh thật, khu vực phục vụ, cấp học đang mở và CTA phù hợp với địa phương.',
+        columns: 2,
+        items: [
+          {
+            eyebrow: 'Flagship campus',
+            title: 'Gò Vấp Phan Huy Ích',
+            body: 'Phù hợp với phụ huynh muốn xem một cơ sở có nhiều điểm chạm tuyển sinh, học phí và tham quan ngay từ đầu.',
+            href: '/co-so/go-vap-phan-huy-ich',
+            cta: 'Xem cơ sở Gò Vấp',
+          },
+          {
+            eyebrow: 'Mầm non chuyên sâu',
+            title: 'Mầm non Gò Vấp Lê Đức Thọ',
+            body: 'Điểm bắt đầu mạnh cho nhóm phụ huynh đang tìm môi trường mầm non gần nhà, cần cảm giác an tâm và nhịp sinh hoạt phù hợp.',
+            href: '/co-so/mam-non-go-vap-le-duc-tho',
+            cta: 'Xem cơ sở Lê Đức Thọ',
+          },
+          {
+            eyebrow: 'Kết nối trung tâm',
+            title: 'Phú Nhuận Nguyễn Trọng Tuyển',
+            body: 'Phù hợp với các gia đình cần vị trí kết nối thuận tiện, dễ tham quan và có đường vào rõ ràng sang tuyển sinh theo cấp học.',
+            href: '/co-so/phu-nhuan-nguyen-trong-tuyen',
+            cta: 'Xem cơ sở Phú Nhuận',
+          },
+          {
+            eyebrow: 'Khu Tây TP.HCM',
+            title: 'Bình Tân Tỉnh Lộ 10',
+            body: 'Cơ sở giúp Việt Anh có điểm hiện diện gần hơn với nhóm gia đình ở khu vực Bình Tân và vùng lân cận.',
+            href: '/co-so/binh-tan-tinh-lo-10',
+            cta: 'Xem cơ sở Bình Tân',
+          },
+        ],
+      },
+      {
+        type: 'steps',
+        eyebrow: 'Cách chọn cơ sở',
+        title: 'Ba tiêu chí nên xem trước khi quyết định cơ sở phù hợp.',
+        intro:
+          'Một trang cơ sở tốt không chỉ kể về địa điểm. Nó phải giúp phụ huynh nhìn ra cơ sở nào gần với nhịp sống và nhu cầu học tập của con.',
+        items: [
+          {
+            title: 'Bắt đầu từ quãng đường đưa đón',
+            body: 'Khoảng cách, hướng di chuyển và thời gian trong giờ cao điểm thường là yếu tố ảnh hưởng mạnh nhất tới trải nghiệm lâu dài của gia đình.',
+          },
+          {
+            title: 'Đối chiếu cơ sở với cấp học quan tâm',
+            body: 'Không phải cơ sở nào cũng có cùng điểm mạnh. Hãy xem rõ cấp học đang mở, các dịch vụ bổ trợ và trải nghiệm thực tế tại campus đó.',
+          },
+          {
+            title: 'Chuyển nhanh sang bước có giá trị hơn',
+            body: 'Nếu đã thấy cơ sở phù hợp, bước tiếp theo nên là tham quan trường hoặc tư vấn thay vì tiếp tục dò tìm quá nhiều nội dung rời rạc.',
+          },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Đường đi tiếp theo',
+        title: 'Sau khi chọn được cơ sở, đây là các trang nên đi tiếp.',
+        intro:
+          'Cụm campus chỉ thực sự mạnh khi được nối đúng sang các trang tuyển sinh, học phí và cấp học.',
+        items: [
+          {
+            eyebrow: 'Admissions',
+            title: 'Tham quan trường',
+            href: '/tuyen-sinh/tham-quan-truong',
+            body: 'Dành cho phụ huynh muốn chốt lịch đến campus thật để cảm nhận không gian, nề nếp và cách đội ngũ tiếp đón.',
+          },
+          {
+            eyebrow: 'Money page',
+            title: 'Xem học phí',
+            href: '/hoc-phi',
+            body: 'Khi phụ huynh muốn cân đối ngân sách và so sánh giá trị, học phí là bước tiếp theo hợp lý nhất.',
+          },
+          {
+            eyebrow: 'Consultation',
+            title: 'Đăng ký tư vấn',
+            href: '/tuyen-sinh/dang-ky-tu-van',
+            body: 'Nếu gia đình còn đang cân nhắc giữa nhiều cơ sở hoặc nhiều cấp học, tư vấn là bước đi tiết kiệm thời gian hơn cả.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'co-so/go-vap-phan-huy-ich',
+    title: 'Cơ Sở Gò Vấp Phan Huy Ích | Trường Việt Anh',
+    description:
+      'Trang campus profile cho cơ sở Gò Vấp Phan Huy Ích của Trường Việt Anh, tập trung local trust, tham quan trường và định hướng tuyển sinh theo cấp học.',
+    templateClass: 'Master Campus Profile',
+    pageType: 'Campus profile',
+    theme: 'brand',
+    hero: {
+      eyebrow: 'Campus profile',
+      title: 'Cơ sở Gò Vấp Phan Huy Ích là điểm chạm quan trọng cho phụ huynh muốn xem trường thật, hỏi kỹ và đi tiếp nhanh sang tuyển sinh.',
+      body:
+        'Trang này nên cho phụ huynh cảm giác rõ ràng về khu vực, cấp học, các điểm mạnh thực tế của campus và lý do nên đến tham quan thay vì chỉ đọc mô tả chung chung.',
+      primaryCta: { label: 'Đặt lịch tham quan cơ sở này', href: '/tuyen-sinh/tham-quan-truong' },
+      secondaryCta: { label: 'Tư vấn theo cấp học', href: '/tuyen-sinh/dang-ky-tu-van' },
+      badges: ['Gò Vấp', 'Campus trust', 'School tour'],
+      asideTitle: 'Điểm mạnh nên làm rõ trên campus page',
+      asideItems: [
+        'Khu vực phục vụ và tính thuận tiện khi đưa đón.',
+        'Cấp học đang vận hành và lộ trình học tập nổi bật.',
+        'Bằng chứng thực tế: hình ảnh, review, lịch tham quan và hotline.',
+      ],
+    },
+    stats: [
+      { value: 'Flagship', label: 'Một trong những campus tạo niềm tin mạnh nhất trên tuyến tuyển sinh' },
+      { value: 'Tour-ready', label: 'Phù hợp để đẩy phụ huynh sang bước tham quan' },
+      { value: 'Local intent', label: 'Bắt truy vấn trường tại Gò Vấp và khu vực lân cận' },
+      { value: 'Cross-link', label: 'Nối tốt sang cấp học, học phí và tuyển sinh' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Điểm phụ huynh quan tâm',
+        title: 'Những nội dung cần xuất hiện rõ trên trang cơ sở Gò Vấp.',
+        intro: 'Thay vì nói quá nhiều về thương hiệu, campus page nên trả lời những câu hỏi rất đời thường của phụ huynh.',
+        columns: 2,
+        items: [
+          {
+            title: 'Không gian học và trải nghiệm thực tế',
+            body: 'Hình ảnh, video và lịch tham quan giúp phụ huynh chuyển từ cảm giác tò mò sang niềm tin cụ thể.',
+          },
+          {
+            title: 'Cấp học đang mở tại campus',
+            body: 'Phụ huynh cần biết ngay cơ sở này phù hợp với giai đoạn nào của con để không phải dò nhiều lớp nội dung khác nhau.',
+          },
+          {
+            title: 'Nhịp di chuyển và đưa đón',
+            body: 'Địa chỉ rõ, chỉ dẫn rõ và ngữ cảnh khu vực là yếu tố quan trọng với local SEO và cả chuyển đổi thực tế.',
+          },
+          {
+            title: 'CTA tham quan và tư vấn',
+            body: 'Khi phụ huynh đã có thiện cảm với cơ sở, CTA phải đủ rõ để giữ được đà hành động.',
+          },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Liên kết theo nhu cầu',
+        title: 'Từ cơ sở Gò Vấp, phụ huynh nên đi tiếp theo các hướng nào.',
+        intro: 'Internal linking ở đây cần phục vụ quyết định thật, không phải chỉ để tăng số link trên trang.',
+        items: [
+          {
+            eyebrow: 'Mầm non',
+            title: 'Xem chương trình Mầm non',
+            href: '/mam-non',
+            body: 'Dành cho gia đình đang tìm môi trường đầu đời, cần ưu tiên sự thích nghi, giao tiếp và cảm xúc.',
+          },
+          {
+            eyebrow: 'Admissions',
+            title: 'Quy trình tuyển sinh',
+            href: '/tuyen-sinh/quy-trinh-tuyen-sinh',
+            body: 'Giúp phụ huynh nhìn rõ các bước sau khi đã chọn được campus quan tâm.',
+          },
+          {
+            eyebrow: 'Money page',
+            title: 'Học phí theo nhu cầu',
+            href: '/hoc-phi',
+            body: 'Một campus page mạnh nên luôn có đường đi ngắn sang học phí để giảm ma sát ở giai đoạn cân nhắc.',
+          },
+        ],
+      },
+      {
+        type: 'faq',
+        eyebrow: 'FAQ campus',
+        title: 'Những câu hỏi thường gặp trước khi phụ huynh quyết định ghé thăm.',
+        intro: 'FAQ ngắn, rõ và thực dụng sẽ có ích hơn nhiều so với những đoạn văn giới thiệu dài.',
+        items: [
+          {
+            question: 'Phụ huynh nên xem cơ sở này trước hay gọi tư vấn trước?',
+            answer: 'Nếu gia đình đã nghiêng về khu vực Gò Vấp, nên đặt lịch tham quan để tiết kiệm thời gian. Nếu còn đang so sánh nhiều phương án, hãy bắt đầu từ tư vấn.',
+          },
+          {
+            question: 'Trang campus này cần có gì để đủ tin cậy?',
+            answer: 'Điều quan trọng nhất là hình ảnh thật, review thật, địa chỉ rõ, cấp học rõ và CTA rõ. Các tín hiệu đó giúp campus page vừa mạnh về local SEO vừa hỗ trợ tuyển sinh.',
+          },
+          {
+            question: 'Sau khi xem trang cơ sở, bước tiếp theo là gì?',
+            answer: 'Bước tiếp theo tốt nhất thường là đặt lịch tham quan hoặc đăng ký tư vấn để đối chiếu campus với nhu cầu cụ thể của gia đình.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'co-so/mam-non-go-vap-le-duc-tho',
+    title: 'Mầm Non Gò Vấp Lê Đức Thọ | Trường Việt Anh',
+    description:
+      'Trang campus profile cho cơ sở Mầm non Gò Vấp Lê Đức Thọ của Trường Việt Anh, tập trung vào local trust, học thử và tham quan trường.',
+    templateClass: 'Master Campus Profile',
+    pageType: 'Campus profile',
+    theme: 'brand',
+    hero: {
+      eyebrow: 'Campus profile',
+      title: 'Cơ sở Mầm non Gò Vấp Lê Đức Thọ nên giúp phụ huynh nhìn thấy cảm giác an tâm, nhịp sinh hoạt và khả năng thích nghi của con.',
+      body:
+        'Với nhóm phụ huynh mầm non, campus page cần rất thực tế: con học ở đâu, nhịp sinh hoạt thế nào, không gian ra sao và làm sao để bắt đầu từ một bước nhẹ nhàng như tham quan hoặc học thử.',
+      primaryCta: { label: 'Đăng ký học thử', href: '/hoc-thu' },
+      secondaryCta: { label: 'Đặt lịch tham quan', href: '/tuyen-sinh/tham-quan-truong' },
+      badges: ['Mầm non', 'Gò Vấp', 'Học thử'],
+      asideTitle: 'Những tín hiệu tạo niềm tin cho phụ huynh mầm non',
+      asideItems: [
+        'Môi trường an toàn, sáng sủa và gần với nhịp sống của trẻ nhỏ.',
+        'Đội ngũ đồng hành biết cách giúp bé thích nghi từng bước.',
+        'Thông tin học phí, học thử và tham quan đi ra từ cùng một hành trình.',
+      ],
+    },
+    stats: [
+      { value: 'MN', label: 'Điểm chạm local SEO mạnh cho nhóm tìm trường mầm non tại Gò Vấp' },
+      { value: '2 CTA', label: 'Học thử và tham quan là hai hành động có ý nghĩa nhất' },
+      { value: 'Warm lead', label: 'Phù hợp với phụ huynh đang ở giai đoạn cân nhắc gần quyết định' },
+      { value: 'Trust-first', label: 'Campus page cần nhiều bằng chứng thực tế hơn lời hứa' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Điều phụ huynh cần thấy',
+        title: 'Trang mầm non nên làm rõ những chi tiết nhỏ nhưng quyết định rất nhiều tới cảm giác an tâm.',
+        intro: 'Ở giai đoạn đầu đời, phụ huynh thường đánh giá trường bằng cảm giác tin tưởng cụ thể hơn là lời giới thiệu lớn.',
+        columns: 2,
+        items: [
+          {
+            title: 'Không gian gần gũi với trẻ nhỏ',
+            body: 'Trang nên thể hiện rõ môi trường học, vui chơi và sinh hoạt hằng ngày thay vì chỉ nói về tầm nhìn chung.',
+          },
+          {
+            title: 'Lộ trình thích nghi nhẹ nhàng',
+            body: 'Học thử, tham quan và tư vấn cần được nối thành một chuỗi hành động tự nhiên cho phụ huynh.',
+          },
+          {
+            title: 'Giao tiếp rõ ràng với gia đình',
+            body: 'Khi trường giao tiếp bình tĩnh, thực dụng và giàu tính người, phụ huynh sẽ dễ tin hơn những câu cam kết quá mạnh.',
+          },
+          {
+            title: 'Thông tin đủ để ra quyết định tiếp theo',
+            body: 'Địa chỉ, cấp học, học phí và các bước đầu cần phải đủ rõ để phụ huynh không phải quay lại trang chủ quá nhiều lần.',
+          },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Liên kết hỗ trợ',
+        title: 'Những trang nên đi cùng campus mầm non này.',
+        intro: 'Đây là cụm link quan trọng cho cả SEO và chuyển đổi ở giai đoạn phụ huynh đang cân nhắc.',
+        items: [
+          {
+            eyebrow: 'Pillar',
+            title: 'Trang Mầm non',
+            href: '/mam-non',
+            body: 'Giúp phụ huynh nhìn rộng hơn về triết lý, chương trình và cách Việt Anh đồng hành với trẻ nhỏ.',
+          },
+          {
+            eyebrow: 'Action page',
+            title: 'Học thử',
+            href: '/hoc-thu',
+            body: 'Đây là bước hợp lý nhất nếu gia đình còn lo con nhút nhát hoặc chưa biết bé có phù hợp với môi trường mới hay không.',
+          },
+          {
+            eyebrow: 'Money page',
+            title: 'Học phí',
+            href: '/hoc-phi',
+            body: 'Khi đã cảm thấy campus phù hợp, phụ huynh thường muốn nhìn nhanh mức học phí và cách nhận tư vấn chi tiết.',
+          },
+        ],
+      },
+      {
+        type: 'faq',
+        eyebrow: 'FAQ mầm non',
+        title: 'Các câu hỏi ngắn nhưng có sức nặng lớn với phụ huynh ở giai đoạn đầu.',
+        intro: 'FAQ nên trả lời đúng điều phụ huynh đang băn khoăn thay vì lặp lại nội dung giới thiệu chung.',
+        items: [
+          {
+            question: 'Nếu bé còn nhút nhát thì nên bắt đầu thế nào?',
+            answer: 'Bắt đầu từ tham quan hoặc học thử là hợp lý nhất. Cách tiếp cận nhẹ giúp gia đình quan sát phản ứng của bé trước khi ra quyết định lớn hơn.',
+          },
+          {
+            question: 'Campus page có cần công khai toàn bộ học phí không?',
+            answer: 'Không nhất thiết. Campus page nên cho phụ huynh đường đi ngắn sang trang học phí và tư vấn, để thông tin được cá nhân hóa theo đúng nhu cầu.',
+          },
+          {
+            question: 'Phụ huynh nên gọi ngay hay đặt lịch trước?',
+            answer: 'Nếu gia đình đã xác định được khu vực và độ tuổi của con, đặt lịch trước sẽ giúp buổi tham quan có giá trị hơn và được chuẩn bị kỹ hơn.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'co-so/phu-nhuan-nguyen-trong-tuyen',
+    title: 'Cơ Sở Phú Nhuận Nguyễn Trọng Tuyển | Trường Việt Anh',
+    description:
+      'Trang cơ sở Phú Nhuận Nguyễn Trọng Tuyển của Trường Việt Anh, tập trung local trust, kết nối thuận tiện và chuyển đổi sang tư vấn hoặc tham quan.',
+    templateClass: 'Master Campus Profile',
+    pageType: 'Campus profile',
+    theme: 'brand',
+    hero: {
+      eyebrow: 'Campus profile',
+      title: 'Cơ sở Phú Nhuận cần mang lại cảm giác gần, thuận tiện và đủ tin cậy để phụ huynh muốn đến xem thật.',
+      body:
+        'Campus page này nên giúp phụ huynh nhanh chóng đối chiếu vị trí, cấp học, lịch tham quan và bước tuyển sinh tiếp theo mà không bị chìm trong mô tả thương hiệu chung.',
+      primaryCta: { label: 'Đăng ký tư vấn cho cơ sở này', href: '/tuyen-sinh/dang-ky-tu-van' },
+      secondaryCta: { label: 'Đặt lịch tham quan', href: '/tuyen-sinh/tham-quan-truong' },
+      badges: ['Phú Nhuận', 'Kết nối trung tâm', 'Local trust'],
+      asideTitle: 'Campus page này nên nhấn mạnh',
+      asideItems: [
+        'Tính thuận tiện về vị trí và quãng đường di chuyển.',
+        'Các cấp học phù hợp với nhóm gia đình ở khu vực trung tâm.',
+        'Liên kết rõ sang tư vấn, tham quan và học phí.',
+      ],
+    },
+    stats: [
+      { value: 'Central', label: 'Phù hợp với nhóm phụ huynh cần vị trí kết nối nhanh' },
+      { value: 'Local SEO', label: 'Bắt truy vấn trường tại Phú Nhuận và khu vực lân cận' },
+      { value: '2 hướng', label: 'Tập trung vào tham quan và tư vấn' },
+      { value: 'Brand bridge', label: 'Nối local trust với thương hiệu mẹ một cách nhất quán' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Nội dung cần rõ',
+        title: 'Một campus page tốt luôn nói rõ điều phụ huynh muốn kiểm tra nhanh nhất.',
+        intro: 'Trang này không cần nói quá nhiều, nhưng phải nói đúng và đủ để phụ huynh tự tin bấm sang bước tiếp.',
+        columns: 2,
+        items: [
+          { title: 'Địa chỉ và chỉ dẫn', body: 'Thông tin vị trí rõ ràng giúp local SEO mạnh hơn và cũng giảm ma sát cho quyết định tham quan.' },
+          { title: 'Chất lượng trải nghiệm', body: 'Review, hình ảnh thật và thông tin campus cụ thể tạo cảm giác đây là một nơi có thể đến thật, không phải một lời hứa chung.' },
+          { title: 'Cấp học phù hợp', body: 'Campus page nên cho phụ huynh biết ngay lộ trình nào phù hợp để tránh chuyển qua lại giữa nhiều trang.' },
+          { title: 'Bước tiếp theo rõ ràng', body: 'CTA tốt nhất thường là tham quan trường hoặc đăng ký tư vấn chứ không nên phân tán quá nhiều.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Đi tiếp từ Phú Nhuận',
+        title: 'Những trang nên được nối trực tiếp từ cơ sở này.',
+        intro: 'Đây là cụm link giúp local traffic đi sang các trang giàu ý định hơn.',
+        items: [
+          {
+            eyebrow: 'Admissions',
+            title: 'Đăng ký tư vấn',
+            href: '/tuyen-sinh/dang-ky-tu-van',
+            body: 'Bước đi phù hợp khi phụ huynh đã thấy campus thuận tiện nhưng còn cần chốt cấp học, học phí hoặc thời điểm nhập học.',
+          },
+          {
+            eyebrow: 'Visit',
+            title: 'Tham quan trường',
+            href: '/tuyen-sinh/tham-quan-truong',
+            body: 'Dành cho gia đình muốn kiểm chứng không gian, nề nếp và trải nghiệm thực tế trước khi nói sâu về hồ sơ.',
+          },
+          {
+            eyebrow: 'Hub',
+            title: 'Tổng quan các cơ sở',
+            href: '/co-so',
+            body: 'Nếu phụ huynh vẫn còn đang cân nhắc giữa các khu vực, trang hub là nơi phù hợp để so lại phương án.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'co-so/binh-tan-tinh-lo-10',
+    title: 'Cơ Sở Bình Tân Tỉnh Lộ 10 | Trường Việt Anh',
+    description:
+      'Trang cơ sở Bình Tân Tỉnh Lộ 10 của Trường Việt Anh, giúp phụ huynh ở khu Tây TP.HCM bắt đầu từ local trust, tư vấn và tham quan trường.',
+    templateClass: 'Master Campus Profile',
+    pageType: 'Campus profile',
+    theme: 'brand',
+    hero: {
+      eyebrow: 'Campus profile',
+      title: 'Cơ sở Bình Tân nên cho phụ huynh cảm giác gần gũi, rõ địa phương và đủ chắc chắn để mở một cuộc trao đổi thật.',
+      body:
+        'Đây là loại campus page rất cần local context: khu vực phục vụ, khoảng cách đưa đón, CTA tham quan và lộ trình học phù hợp để gia đình ra quyết định nhanh hơn.',
+      primaryCta: { label: 'Liên hệ tư vấn cơ sở này', href: '/tuyen-sinh/dang-ky-tu-van' },
+      secondaryCta: { label: 'Xem học phí', href: '/hoc-phi' },
+      badges: ['Bình Tân', 'Local intent', 'Admissions'],
+      asideTitle: 'Giá trị của campus page khu vực',
+      asideItems: [
+        'Tạo cảm giác trường đang hiện diện thật trong khu vực phụ huynh sống.',
+        'Giảm quãng đường giữa nhận biết thương hiệu và quyết định liên hệ.',
+        'Giúp local query có điểm hạ cánh rõ ràng thay vì dồn hết vào homepage.',
+      ],
+    },
+    stats: [
+      { value: 'Local', label: 'Trang đích cho nhóm phụ huynh khu Tây TP.HCM' },
+      { value: '1 bước', label: 'Từ local trust sang tư vấn chỉ nên cách nhau một cú nhấp' },
+      { value: 'SEO', label: 'Phù hợp để nuôi cụm truy vấn địa phương' },
+      { value: 'Bridge', label: 'Nối sang học phí, tuyển sinh và hub cơ sở' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Điều nên thể hiện',
+        title: 'Campus page Bình Tân cần ngắn gọn nhưng phải đúng điều phụ huynh đang cần kiểm tra.',
+        intro: 'Khi truy cập từ local search, người dùng thường muốn thấy ngay tính phù hợp về địa điểm và bước liên hệ tiếp theo.',
+        columns: 2,
+        items: [
+          { title: 'Vị trí và khu vực phục vụ', body: 'Nội dung nên nhấn mạnh sự thuận tiện và bối cảnh khu vực mà không phóng đại quá mức.' },
+          { title: 'Lộ trình học tập', body: 'Campus page cần nối rõ sang cấp học phù hợp để phụ huynh hiểu con sẽ đi theo hành trình nào.' },
+          { title: 'Minh bạch bước tiếp theo', body: 'CTA nên dẫn tới tư vấn, học phí hoặc tham quan tùy theo mức sẵn sàng của gia đình.' },
+          { title: 'Bằng chứng thật', body: 'Review, hình ảnh và thông tin liên hệ thật sẽ mạnh hơn nhiều so với các đoạn mô tả hoa mỹ.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Các trang nên đi kèm',
+        title: 'Những đường link hỗ trợ quyết định ở giai đoạn đầu.',
+        intro: 'Local page nên kéo được người dùng vào cụm tuyển sinh có giá trị cao hơn.',
+        items: [
+          { eyebrow: 'Hub', title: 'Tổng quan cơ sở', href: '/co-so', body: 'Để phụ huynh so sánh nhanh giữa các khu vực trước khi chốt cơ sở.' },
+          { eyebrow: 'Admissions', title: 'Quy trình tuyển sinh', href: '/tuyen-sinh/quy-trinh-tuyen-sinh', body: 'Giúp gia đình hình dung rõ hành trình sau khi đã chọn được campus.' },
+          { eyebrow: 'Action', title: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van', body: 'Bước đi phù hợp nhất nếu phụ huynh còn muốn xác nhận thêm về cấp học và thời điểm nhập học.' },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'tuyen-sinh/quy-trinh-tuyen-sinh',
+    title: 'Quy Trình Tuyển Sinh | Trường Việt Anh',
+    description:
+      'Trang quy trình tuyển sinh của Trường Việt Anh, giúp phụ huynh nhìn rõ các bước từ tư vấn, tham quan, hồ sơ đến thời điểm nhập học.',
+    templateClass: 'Admissions Support',
+    pageType: 'Process page',
+    theme: 'admissions',
+    hero: {
+      eyebrow: 'Admissions process',
+      title: 'Một quy trình tuyển sinh tốt cần giúp phụ huynh biết ngay mình đang ở bước nào và nên làm gì tiếp theo.',
+      body:
+        'Trang này được viết để giảm ma sát ở giữa funnel: ít mơ hồ hơn, ít vòng lặp hơn và ít cảm giác “phải tự đoán” hơn trong quá trình chuẩn bị hồ sơ cho con.',
+      primaryCta: { label: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van' },
+      secondaryCta: { label: 'Xem hồ sơ nhập học', href: '/tuyen-sinh/ho-so-nhap-hoc' },
+      badges: ['Admissions', 'Low friction', 'Parent clarity'],
+      asideTitle: 'Trang này phục vụ 3 nhu cầu chính',
+      asideItems: [
+        'Gia đình mới bắt đầu tìm hiểu và cần khung hành trình rõ ràng.',
+        'Gia đình đã chọn được cấp học nhưng chưa biết chuẩn bị gì trước.',
+        'Gia đình muốn chuyển nhanh sang tư vấn hoặc tham quan trường.',
+      ],
+    },
+    stats: [
+      { value: '4 bước', label: 'Từ tìm hiểu ban đầu đến hoàn tất hồ sơ' },
+      { value: '2 CTA', label: 'Tư vấn và hồ sơ là hai lối ra quan trọng nhất' },
+      { value: 'BOFU', label: 'Trang hỗ trợ quyết định gần chuyển đổi' },
+      { value: 'Bridge', label: 'Nối giữa tuyển sinh, học phí và campus' },
+    ],
+    sections: [
+      {
+        type: 'steps',
+        eyebrow: 'Quy trình',
+        title: 'Bốn bước nên được trình bày thật gọn để phụ huynh không bị quá tải.',
+        intro:
+          'Trong thực tế, phụ huynh chỉ cần nhìn ra bước hiện tại và bước tiếp theo. Một process page tốt không cần phức tạp hơn mức đó.',
+        items: [
+          {
+            title: 'Bước 1: Xác định cấp học và cơ sở phù hợp',
+            body: 'Gia đình có thể bắt đầu từ trang cấp học hoặc trang cơ sở để xem nhanh chương trình, vị trí và định hướng tuyển sinh.',
+          },
+          {
+            title: 'Bước 2: Tư vấn hoặc tham quan trường',
+            body: 'Đây là giai đoạn giúp phụ huynh kiểm chứng cảm giác phù hợp, học phí và lịch trình thực tế trước khi chuẩn bị giấy tờ.',
+          },
+          {
+            title: 'Bước 3: Chuẩn bị hồ sơ nhập học',
+            body: 'Khi gia đình đã chốt định hướng, danh sách hồ sơ rõ ràng giúp tiết kiệm thời gian và tránh quay lại nhiều lần.',
+          },
+          {
+            title: 'Bước 4: Xác nhận mốc thời gian và nhập học',
+            body: 'Lịch tuyển sinh nên cho phụ huynh biết hạn nộp, mốc phản hồi và các thời điểm quan trọng để chủ động hơn.',
+          },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Các trang đi kèm',
+        title: 'Quy trình tuyển sinh cần đi chung với những trang nào.',
+        intro:
+          'Để process page thực sự hữu ích, phụ huynh phải được dẫn tới đúng tài nguyên tiếp theo thay vì bị cắt ngang hành trình.',
+        items: [
+          {
+            eyebrow: 'Checklist',
+            title: 'Hồ sơ nhập học',
+            href: '/tuyen-sinh/ho-so-nhap-hoc',
+            body: 'Dành cho phụ huynh đã đi qua giai đoạn tìm hiểu và muốn chuẩn bị giấy tờ đúng ngay từ đầu.',
+          },
+          {
+            eyebrow: 'Timeline',
+            title: 'Lịch tuyển sinh',
+            href: '/tuyen-sinh/lich-tuyen-sinh',
+            body: 'Giúp gia đình nhìn nhanh mốc thời gian, đợt tuyển sinh và các bước cần sắp xếp.',
+          },
+          {
+            eyebrow: 'Action',
+            title: 'Đăng ký tư vấn',
+            href: '/tuyen-sinh/dang-ky-tu-van',
+            body: 'Phù hợp khi phụ huynh muốn đi từ đọc thông tin sang một cuộc trao đổi cụ thể hơn.',
+          },
+        ],
+      },
+      {
+        type: 'faq',
+        eyebrow: 'FAQ tuyển sinh',
+        title: 'Ba câu hỏi thường làm phụ huynh chậm quyết định nhất.',
+        intro:
+          'FAQ ở đây cần bình tĩnh, minh bạch và đủ cụ thể để phụ huynh cảm thấy quy trình nằm trong tầm kiểm soát.',
+        items: [
+          {
+            question: 'Nên đi tham quan trước hay chuẩn bị hồ sơ trước?',
+            answer: 'Thông thường, tham quan hoặc tư vấn nên đến trước để gia đình xác nhận sự phù hợp của cơ sở và cấp học rồi mới chuẩn bị hồ sơ theo hướng chắc chắn hơn.',
+          },
+          {
+            question: 'Nếu chưa chắc về cấp học hoặc campus thì sao?',
+            answer: 'Đăng ký tư vấn là bước phù hợp nhất. Đội tuyển sinh có thể giúp thu gọn phương án để gia đình không phải tự lọc quá nhiều lựa chọn.',
+          },
+          {
+            question: 'Trang này có thay cho tư vấn cá nhân không?',
+            answer: 'Không. Trang này chỉ giúp phụ huynh nhìn rõ hành trình. Tư vấn vẫn là bước cần thiết để chốt thời điểm, hồ sơ và các chi tiết cụ thể.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'tuyen-sinh/ho-so-nhap-hoc',
+    title: 'Hồ Sơ Nhập Học | Trường Việt Anh',
+    description:
+      'Trang hồ sơ nhập học của Trường Việt Anh, tổng hợp các nhóm giấy tờ phụ huynh cần chuẩn bị và cách phối hợp với đội tuyển sinh.',
+    templateClass: 'Admissions Utility',
+    pageType: 'Checklist page',
+    theme: 'admissions',
+    hero: {
+      eyebrow: 'Admissions checklist',
+      title: 'Trang hồ sơ nhập học nên giúp phụ huynh chuẩn bị đúng ngay từ lần đầu, thay vì phải bổ sung từng phần một.',
+      body:
+        'Đây là utility page rất quan trọng ở cuối funnel. Cách tốt nhất là nhóm hồ sơ theo logic dễ kiểm tra, dễ gửi và dễ đối chiếu với đội tuyển sinh.',
+      primaryCta: { label: 'Liên hệ đội tuyển sinh', href: '/tuyen-sinh/dang-ky-tu-van' },
+      secondaryCta: { label: 'Xem lịch tuyển sinh', href: '/tuyen-sinh/lich-tuyen-sinh' },
+      badges: ['Checklist', 'Admissions utility', 'Final step support'],
+      asideTitle: 'Trang này cần mang lại cảm giác',
+      asideItems: [
+        'Rõ ràng hơn về giấy tờ cần chuẩn bị.',
+        'Ít lo sót thông tin hơn.',
+        'Dễ biết nên hỏi ai khi cần xác nhận thêm.',
+      ],
+    },
+    stats: [
+      { value: 'Utility', label: 'Một trong những trang giảm ma sát mạnh nhất cuối funnel' },
+      { value: '2 link', label: 'Nên đi kèm lịch tuyển sinh và tư vấn' },
+      { value: 'Checklist', label: 'Nội dung nên ưu tiên tính rõ ràng hơn độ dài' },
+      { value: 'Trust', label: 'Minh bạch thủ tục là một phần của brand trust' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Nhóm giấy tờ',
+        title: 'Cách trình bày hồ sơ nên theo nhóm dễ kiểm tra, không nên dồn thành một danh sách dài khó nhớ.',
+        intro:
+          'Trong phiên bản nội dung hoàn chỉnh, mỗi nhóm có thể được cập nhật theo cấp học và năm tuyển sinh. Giai đoạn này, trang cần cho phụ huynh một khung chuẩn để chuẩn bị.',
+        columns: 2,
+        items: [
+          { title: 'Thông tin cá nhân của học sinh', body: 'Các giấy tờ nhận diện cơ bản cần được liệt kê rõ để phụ huynh biết mình cần chuẩn bị bản sao hay bản đối chiếu.' },
+          { title: 'Thông tin của phụ huynh', body: 'Nhóm giấy tờ liên quan đến người đại diện và thông tin liên lạc nên được ghi rõ từ đầu để tránh thiếu sót khi nhập học.' },
+          { title: 'Hồ sơ học tập trước đó', body: 'Tùy cấp học, gia đình có thể cần chuẩn bị thêm thông tin học tập, kết quả hoặc xác nhận từ trường cũ.' },
+          { title: 'Biểu mẫu tuyển sinh của trường', body: 'Trang nên hướng phụ huynh tới đội tuyển sinh để nhận đúng biểu mẫu, đúng phiên bản và đúng mốc thời gian.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Hành động đi kèm',
+        title: 'Hai trang luôn nên đi cùng checklist hồ sơ.',
+        intro: 'Trang utility tốt là trang giúp phụ huynh tiếp tục công việc của mình ngay sau khi đọc xong.',
+        items: [
+          {
+            eyebrow: 'Timeline',
+            title: 'Lịch tuyển sinh',
+            href: '/tuyen-sinh/lich-tuyen-sinh',
+            body: 'Để đối chiếu giấy tờ với các mốc quan trọng, hạn hoàn tất và thời điểm nhập học.',
+          },
+          {
+            eyebrow: 'Support',
+            title: 'Đăng ký tư vấn',
+            href: '/tuyen-sinh/dang-ky-tu-van',
+            body: 'Khi gia đình cần xác nhận hồ sơ phù hợp với cấp học hoặc trường hợp chuyển cấp cụ thể.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'tuyen-sinh/lich-tuyen-sinh',
+    title: 'Lịch Tuyển Sinh | Trường Việt Anh',
+    description:
+      'Trang lịch tuyển sinh của Trường Việt Anh, giúp phụ huynh nhìn nhanh các mốc thời gian quan trọng và sắp xếp kế hoạch theo năm học.',
+    templateClass: 'Admissions Timeline',
+    pageType: 'Timeline page',
+    theme: 'admissions',
+    hero: {
+      eyebrow: 'Admissions timeline',
+      title: 'Lịch tuyển sinh nên được trình bày như một bản đồ thời gian ngắn gọn để phụ huynh chủ động hơn trong việc sắp xếp.',
+      body:
+        'Trang này cần làm một việc rất rõ: giúp gia đình biết đâu là mốc cần quan tâm, khi nào nên tư vấn, khi nào nên tham quan và khi nào cần hoàn tất hồ sơ.',
+      primaryCta: { label: 'Đăng ký tư vấn tuyển sinh', href: '/tuyen-sinh/dang-ky-tu-van' },
+      secondaryCta: { label: 'Xem quy trình tuyển sinh', href: '/tuyen-sinh/quy-trinh-tuyen-sinh' },
+      badges: ['Timeline', 'Admissions clarity', 'Planning support'],
+      asideTitle: 'Lịch tuyển sinh cần trả lời',
+      asideItems: [
+        'Năm học đang mở tuyển sinh ở giai đoạn nào?',
+        'Gia đình nên đi tham quan và chuẩn bị hồ sơ vào lúc nào?',
+        'Những mốc nào cần ưu tiên để tránh bị động?',
+      ],
+    },
+    stats: [
+      { value: '4 mốc', label: 'Nhận biết, tư vấn, hồ sơ và nhập học' },
+      { value: '1 trang', label: 'Giúp giảm rất nhiều câu hỏi lặp trong giai đoạn cao điểm' },
+      { value: 'Planner', label: 'Hữu ích cho cả phụ huynh lẫn đội tuyển sinh' },
+      { value: 'SEO', label: 'Có thể bám intent tìm lịch tuyển sinh theo năm học' },
+    ],
+    sections: [
+      {
+        type: 'steps',
+        eyebrow: 'Mốc thời gian',
+        title: 'Khung thời gian tuyển sinh nên được đọc trong chưa đến hai phút.',
+        intro:
+          'Giai đoạn này trang đang đóng vai trò mẫu. Khi vào Directus, các mốc có thể được cập nhật linh hoạt theo năm học và từng chiến dịch.',
+        items: [
+          { title: 'Giai đoạn 1: Tìm hiểu và định hướng', body: 'Phụ huynh nên bắt đầu từ cấp học, cơ sở và một cuộc tư vấn ngắn để xác định hướng đi phù hợp.' },
+          { title: 'Giai đoạn 2: Tham quan hoặc học thử', body: 'Đây là giai đoạn quan trọng để chuyển từ cảm nhận online sang trải nghiệm thực tế tại trường.' },
+          { title: 'Giai đoạn 3: Chuẩn bị và nộp hồ sơ', body: 'Gia đình cần bám checklist hồ sơ và các mốc do đội tuyển sinh hướng dẫn.' },
+          { title: 'Giai đoạn 4: Xác nhận nhập học', body: 'Hoàn tất các bước cuối theo lịch trình đã thống nhất để tránh vội vàng sát ngày.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Trang liên quan',
+        title: 'Lịch tuyển sinh chỉ thật sự hữu ích khi đi cùng các trang hỗ trợ đúng bước.',
+        intro:
+          'Người xem timeline thường đang sẵn sàng hơn mức đọc tin tức thông thường, nên đường ra khỏi trang phải rõ và ít hơn.',
+        items: [
+          { eyebrow: 'Process', title: 'Quy trình tuyển sinh', href: '/tuyen-sinh/quy-trinh-tuyen-sinh', body: 'Giúp phụ huynh đối chiếu timeline với từng bước hành động cụ thể.' },
+          { eyebrow: 'Checklist', title: 'Hồ sơ nhập học', href: '/tuyen-sinh/ho-so-nhap-hoc', body: 'Dùng khi gia đình muốn chuẩn bị trước để không bị cập rập về sau.' },
+          { eyebrow: 'Action', title: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van', body: 'Phù hợp khi phụ huynh cần xác nhận mốc phù hợp với tình huống cụ thể của con.' },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'tuyen-sinh/dang-ky-tu-van',
+    title: 'Đăng Ký Tư Vấn | Trường Việt Anh',
+    description:
+      'Trang đăng ký tư vấn của Trường Việt Anh, giúp phụ huynh để lại nhu cầu theo cấp học, cơ sở quan tâm và bước tiếp theo phù hợp.',
+    templateClass: 'Consultation Page',
+    pageType: 'Lead capture',
+    theme: 'admissions',
+    hero: {
+      eyebrow: 'Lead capture',
+      title: 'Khi phụ huynh còn đang cân nhắc giữa cấp học, cơ sở và học phí, tư vấn là cách đi nhanh và nhẹ nhàng nhất.',
+      body:
+        'Trang này cần ngắn, rõ, lịch sự và thực dụng. Mục tiêu không phải ép chốt ngay, mà là thu gọn lựa chọn để gia đình có một cuộc trao đổi đáng giá với đội tuyển sinh.',
+      primaryCta: { label: 'Gọi ngay 0916 961 409', href: contactLinks.phoneHref },
+      secondaryCta: { label: 'Nhắn Zalo tư vấn', href: contactLinks.zaloHref },
+      badges: ['Lead capture', 'Admissions', 'Warm intent'],
+      asideTitle: 'Tư vấn đặc biệt hữu ích khi',
+      asideItems: [
+        'Gia đình chưa chắc nên bắt đầu từ cấp học nào.',
+        'Phụ huynh đang so sánh giữa nhiều cơ sở.',
+        'Gia đình muốn hỏi nhanh về học phí, học thử hoặc hồ sơ.',
+      ],
+    },
+    stats: [
+      { value: '1 cuộc gọi', label: 'Có thể rút ngắn nhiều ngày tự tìm hiểu rời rạc' },
+      { value: '4 nhóm hỏi', label: 'Cấp học, cơ sở, học phí và quy trình' },
+      { value: 'BOFU', label: 'Trang hỗ trợ chuyển đổi gần hành động' },
+      { value: 'CRM-ready', label: 'Phù hợp để nối sang form hoặc workflow ở giai đoạn sau' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Tư vấn cho ai',
+        title: 'Những trường hợp nên được dẫn thẳng tới trang tư vấn thay vì tiếp tục đọc thêm.',
+        intro: 'Nếu phụ huynh thuộc một trong các nhóm dưới đây, tư vấn thường là bước tiết kiệm thời gian nhất.',
+        columns: 2,
+        items: [
+          { title: 'Gia đình muốn so nhanh nhiều lựa chọn', body: 'Thay vì tự đối chiếu giữa nhiều cấp học, cơ sở và mốc tuyển sinh, một cuộc tư vấn ngắn có thể thu hẹp lựa chọn rõ rệt.' },
+          { title: 'Gia đình đã quan tâm học phí', body: 'Khi học phí bắt đầu trở thành câu hỏi chính, tư vấn giúp đặt nó trong đúng bối cảnh về cấp học, campus và dịch vụ.' },
+          { title: 'Gia đình muốn lên lịch tham quan', body: 'Đây là nơi phù hợp để chuyển từ nhu cầu online sang lịch hẹn cụ thể với campus hoặc đội tuyển sinh.' },
+          { title: 'Gia đình cần xác nhận hồ sơ', body: 'Một số trường hợp cần xác nhận hồ sơ theo cấp học hoặc chuyển trường; tư vấn là điểm vào tự nhiên nhất.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Các đường đi phù hợp',
+        title: 'Nếu phụ huynh chưa muốn gọi ngay, đây là ba trang nên xem tiếp.',
+        intro:
+          'Consultation page tốt không giữ người dùng lại bằng mọi giá, mà giúp họ đi đúng bước tiếp theo.',
+        items: [
+          {
+            eyebrow: 'Visit',
+            title: 'Tham quan trường',
+            href: '/tuyen-sinh/tham-quan-truong',
+            body: 'Dành cho phụ huynh muốn nhìn campus thật và kiểm chứng cảm giác phù hợp trước khi bàn sâu hơn.',
+          },
+          {
+            eyebrow: 'Money page',
+            title: 'Học phí',
+            href: '/hoc-phi',
+            body: 'Giúp gia đình nhìn nhanh khung học phí trước khi mở cuộc trao đổi chi tiết hơn.',
+          },
+          {
+            eyebrow: 'Process',
+            title: 'Quy trình tuyển sinh',
+            href: '/tuyen-sinh/quy-trinh-tuyen-sinh',
+            body: 'Phù hợp với phụ huynh muốn có cái nhìn tổng thể trước khi để lại thông tin.',
+          },
+        ],
+      },
+      {
+        type: 'faq',
+        eyebrow: 'FAQ tư vấn',
+        title: 'Ba câu hỏi thường khiến phụ huynh chần chừ trước khi bấm liên hệ.',
+        intro: 'Trả lời đúng những băn khoăn này thường giúp consultation page chuyển đổi tốt hơn rất nhiều.',
+        items: [
+          {
+            question: 'Nếu tôi chưa biết chọn cơ sở nào thì có nên đăng ký tư vấn không?',
+            answer: 'Có. Đây chính là một trong những lý do quan trọng nhất để tư vấn: đội tuyển sinh giúp đối chiếu nhu cầu gia đình với cơ sở và cấp học phù hợp hơn.',
+          },
+          {
+            question: 'Trang này có cần form dài không?',
+            answer: 'Không. Với intent hiện tại, trang chỉ cần đủ ngắn để mở cuộc trao đổi. Những trường dữ liệu chi tiết có thể được bổ sung sau trong CRM.',
+          },
+          {
+            question: 'Nếu tôi muốn xem trường trước thì sao?',
+            answer: 'Khi phụ huynh đã nghiêng về một khu vực hoặc một cơ sở cụ thể, tham quan trường có thể là bước tiếp theo tốt hơn so với tư vấn qua điện thoại.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'tuyen-sinh/tham-quan-truong',
+    title: 'Tham Quan Trường | Trường Việt Anh',
+    description:
+      'Trang đặt lịch tham quan Trường Việt Anh, giúp phụ huynh chọn cơ sở quan tâm và chuyển nhanh từ tìm hiểu online sang trải nghiệm thực tế.',
+    templateClass: 'Campus Tour / Local Admission Landing',
+    pageType: 'Visit booking',
+    theme: 'admissions',
+    hero: {
+      eyebrow: 'School tour',
+      title: 'Với nhiều gia đình, tham quan trường là khoảnh khắc chuyển từ cảm giác hứng thú sang niềm tin thật.',
+      body:
+        'Trang này nên rất rõ: chọn cơ sở nào, nên đi vào lúc nào, đi để xem điều gì và sau buổi tham quan phụ huynh có thể bước tiếp ra sao.',
+      primaryCta: { label: 'Gọi để đặt lịch tham quan', href: contactLinks.phoneHref },
+      secondaryCta: { label: 'Nhắn Zalo đặt lịch', href: contactLinks.zaloHref },
+      badges: ['School tour', 'Local conversion', 'High-quality lead'],
+      asideTitle: 'Một buổi tham quan tốt giúp phụ huynh',
+      asideItems: [
+        'Nhìn thấy campus thật thay vì chỉ đọc mô tả.',
+        'Cảm nhận nề nếp, không gian và cách đội ngũ làm việc.',
+        'Đặt câu hỏi đúng hơn về học phí, chương trình và hồ sơ.',
+      ],
+    },
+    stats: [
+      { value: 'High intent', label: 'Đây thường là nhóm lead chất lượng cao hơn lead đọc thông tin đơn thuần' },
+      { value: '4 cơ sở', label: 'Trang nên điều hướng tới campus phù hợp thay vì để chung chung' },
+      { value: 'Tour-first', label: 'Rất phù hợp cho local SEO và quảng cáo khu vực' },
+      { value: 'Next step', label: 'Sau tour có thể đi tiếp sang hồ sơ, học phí hoặc học thử' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Chọn cơ sở để tham quan',
+        title: 'Điểm bắt đầu của một buổi tham quan luôn là campus phù hợp với nhịp sống của gia đình.',
+        intro:
+          'Ở giai đoạn hoàn chỉnh, mỗi card có thể nối sang lịch riêng. Hiện tại, chúng đóng vai trò giúp phụ huynh chọn đúng ngữ cảnh trước khi liên hệ.',
+        columns: 2,
+        items: [
+          { title: 'Gò Vấp Phan Huy Ích', body: 'Phù hợp cho nhóm gia đình muốn xem một cơ sở có nhiều điểm chạm tuyển sinh và local trust.', href: '/co-so/go-vap-phan-huy-ich', cta: 'Xem campus này' },
+          { title: 'Mầm non Gò Vấp Lê Đức Thọ', body: 'Phù hợp cho gia đình có trẻ nhỏ, muốn bắt đầu từ cảm giác an tâm, sinh hoạt và sự thích nghi.', href: '/co-so/mam-non-go-vap-le-duc-tho', cta: 'Xem campus này' },
+          { title: 'Phú Nhuận Nguyễn Trọng Tuyển', body: 'Phù hợp cho gia đình cần vị trí kết nối thuận tiện và muốn kiểm chứng campus trước khi đi tiếp.', href: '/co-so/phu-nhuan-nguyen-trong-tuyen', cta: 'Xem campus này' },
+          { title: 'Bình Tân Tỉnh Lộ 10', body: 'Điểm vào phù hợp cho nhóm phụ huynh ở khu Tây TP.HCM đang tìm local option gần hơn.', href: '/co-so/binh-tan-tinh-lo-10', cta: 'Xem campus này' },
+        ],
+      },
+      {
+        type: 'steps',
+        eyebrow: 'Chuẩn bị tham quan',
+        title: 'Ba bước giúp buổi tham quan có giá trị hơn và ít cảm giác “đi xem cho biết”.',
+        intro:
+          'Khi phụ huynh được chuẩn bị đúng, chất lượng trao đổi tại campus sẽ tốt hơn rất nhiều.',
+        items: [
+          { title: 'Chốt trước cấp học và cơ sở', body: 'Điều này giúp đội tuyển sinh chuẩn bị tuyến nội dung phù hợp hơn cho gia đình.' },
+          { title: 'Mang theo câu hỏi thật sự quan trọng', body: 'Ví dụ về học phí, lịch sinh hoạt, nề nếp học tập, khả năng thích nghi hoặc bước nhập học tiếp theo.' },
+          { title: 'Xác định ngay hành động sau buổi tham quan', body: 'Sau khi xem trường, gia đình nên biết mình sẽ đi tiếp sang tư vấn, học phí, hồ sơ hay học thử.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Sau khi tham quan',
+        title: 'Những trang phụ huynh thường cần xem tiếp sau một buổi school tour.',
+        intro:
+          'Đây là cụm link nên xuất hiện rõ để giữ đà chuyển đổi sau khi gia đình đã đầu tư thời gian tới trường.',
+        items: [
+          { eyebrow: 'Money page', title: 'Học phí', href: '/hoc-phi', body: 'Khi campus đã tạo niềm tin, học phí thường là câu hỏi tiếp theo cần được đặt trong đúng bối cảnh.' },
+          { eyebrow: 'Checklist', title: 'Hồ sơ nhập học', href: '/tuyen-sinh/ho-so-nhap-hoc', body: 'Dành cho gia đình đã khá chắc về quyết định và muốn biết cần chuẩn bị gì tiếp theo.' },
+          { eyebrow: 'Trial', title: 'Học thử', href: '/hoc-thu', body: 'Đặc biệt phù hợp với nhóm phụ huynh mầm non hoặc tiểu học còn muốn kiểm chứng thêm mức độ hòa nhập của con.' },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'hoc-thu',
+    title: 'Học Thử | Trường Việt Anh',
+    description:
+      'Trang học thử của Trường Việt Anh, giúp phụ huynh bắt đầu từ một bước nhẹ nhàng để quan sát mức độ phù hợp, sự thích nghi và trải nghiệm thật của con.',
+    templateClass: 'Trial Class Landing',
+    pageType: 'Trial booking',
+    theme: 'admissions',
+    hero: {
+      eyebrow: 'Trial class',
+      title: 'Khi còn băn khoăn về sự hòa nhập, học thử là một bước rất nhẹ nhưng lại tạo ra niềm tin rất mạnh.',
+      body:
+        'Trang này nên chạm đúng nỗi lo thật của phụ huynh: con có hợp không, có nhút nhát không, có theo được nhịp học không và gia đình nên quan sát điều gì trong buổi trải nghiệm đầu tiên.',
+      primaryCta: { label: 'Đăng ký tư vấn học thử', href: '/tuyen-sinh/dang-ky-tu-van' },
+      secondaryCta: { label: 'Đặt lịch tham quan trước', href: '/tuyen-sinh/tham-quan-truong' },
+      badges: ['Trial class', 'Objection handling', 'Warm conversion'],
+      asideTitle: 'Học thử đặc biệt phù hợp khi',
+      asideItems: [
+        'Phụ huynh còn lo con nhút nhát hoặc khó thích nghi.',
+        'Gia đình muốn nhìn phản ứng thật của con trong môi trường mới.',
+        'Campus đã tạo thiện cảm nhưng quyết định cuối cùng vẫn cần thêm một bước nhẹ.',
+      ],
+    },
+    stats: [
+      { value: '1 buổi', label: 'Có thể giúp gia đình ra quyết định tự tin hơn nhiều so với chỉ đọc mô tả' },
+      { value: 'Warm lead', label: 'Nhóm phụ huynh này thường đã ở khá gần bước quyết định' },
+      { value: 'Pain-point', label: 'Trang phục vụ rất rõ cho nỗi lo về hòa nhập' },
+      { value: 'Bridge', label: 'Nối tốt sang campus, học phí và tư vấn' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Học thử theo nhu cầu',
+        title: 'Những tình huống mà học thử có thể giải quyết rất tốt.',
+        intro:
+          'Học thử không phải để kéo dài quyết định. Nó là bước giúp gia đình xác minh cảm giác phù hợp một cách nhẹ nhàng và thực tế.',
+        columns: 2,
+        items: [
+          { title: 'Con còn nhút nhát', body: 'Buổi trải nghiệm giúp phụ huynh quan sát cách đội ngũ đón trẻ và cách con phản ứng với môi trường mới.' },
+          { title: 'Gia đình đang so sánh hai lựa chọn', body: 'Học thử giúp chuyển cuộc so sánh từ lý thuyết sang trải nghiệm thật, từ đó ra quyết định chắc hơn.' },
+          { title: 'Phụ huynh muốn xem nề nếp lớp học', body: 'Thay vì chỉ nghe giới thiệu, gia đình có thể nhìn trực tiếp nhịp học, cách tương tác và năng lượng của lớp.' },
+          { title: 'Cần nối sang tuyển sinh chính thức', body: 'Sau buổi trải nghiệm, phụ huynh thường dễ đi tiếp sang tư vấn, học phí và hồ sơ hơn rất nhiều.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Các trang nên đi cùng',
+        title: 'Học thử mạnh nhất khi được nối đúng với campus và tuyển sinh.',
+        intro: 'Đây là cụm internal links giúp trang học thử vừa có ích cho phụ huynh vừa rõ vai trò trong toàn site.',
+        items: [
+          { eyebrow: 'Campus', title: 'Tổng quan cơ sở', href: '/co-so', body: 'Giúp phụ huynh chọn campus phù hợp trước khi chốt trải nghiệm cho con.' },
+          { eyebrow: 'Visit', title: 'Tham quan trường', href: '/tuyen-sinh/tham-quan-truong', body: 'Nếu gia đình vẫn cần nhìn không gian trước, đây là bước chuẩn bị rất hợp lý.' },
+          { eyebrow: 'Consultation', title: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van', body: 'Phù hợp khi phụ huynh muốn nhờ đội tuyển sinh định hướng luôn cấp học và cơ sở phù hợp.' },
+        ],
+      },
+      {
+        type: 'faq',
+        eyebrow: 'FAQ học thử',
+        title: 'Ba câu hỏi nên trả lời thật bình tĩnh và rõ ràng.',
+        intro: 'Đây là những băn khoăn xuất hiện rất thường xuyên ở nhóm phụ huynh gần quyết định.',
+        items: [
+          {
+            question: 'Có nên học thử trước khi đi tham quan không?',
+            answer: 'Nếu gia đình đã xác định khá rõ cơ sở và cấp học, học thử có thể diễn ra rất sớm. Nếu còn muốn nhìn campus trước, tham quan là bước chuẩn bị tốt hơn.',
+          },
+          {
+            question: 'Học thử có giúp biết con có phù hợp hay không không?',
+            answer: 'Một buổi trải nghiệm không thay thế toàn bộ hành trình nhập học, nhưng nó giúp phụ huynh quan sát rất rõ phản ứng ban đầu, mức độ thoải mái và cách con tương tác với môi trường.',
+          },
+          {
+            question: 'Sau học thử thì nên đi tiếp như thế nào?',
+            answer: 'Gia đình nên đi tiếp sang tư vấn, học phí hoặc hồ sơ tùy theo mức độ sẵn sàng. Quan trọng là luôn có một bước tiếp theo rõ ràng ngay sau trải nghiệm.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'hoc-bong',
+    title: 'Học Bổng & Ưu Đãi | Trường Việt Anh',
+    description:
+      'Trang học bổng và ưu đãi của Trường Việt Anh, giúp phụ huynh nhìn nhanh các hướng hỗ trợ chi phí và lý do nên liên hệ để được tư vấn theo trường hợp cụ thể.',
+    templateClass: 'Offer Page',
+    pageType: 'Scholarship page',
+    theme: 'tuition',
+    hero: {
+      eyebrow: 'Offer page',
+      title: 'Học bổng và ưu đãi nên được trình bày như một công cụ giảm ma sát, không phải một lớp quảng cáo quá tay.',
+      body:
+        'Trang này có nhiệm vụ rất rõ: cho phụ huynh biết Việt Anh có những hướng hỗ trợ nào về chi phí, những trường hợp nào nên hỏi kỹ hơn và bước tiếp theo cần làm để nhận tư vấn phù hợp.',
+      primaryCta: { label: 'Nhận tư vấn học bổng', href: '/tuyen-sinh/dang-ky-tu-van' },
+      secondaryCta: { label: 'Xem học phí', href: '/hoc-phi' },
+      badges: ['Offer page', 'Friction reducer', 'Commercial support'],
+      asideTitle: 'Trang này nên giữ đúng tinh thần thương hiệu',
+      asideItems: [
+        'Minh bạch nhưng không giật gân.',
+        'Giảm áp lực tài chính nhưng không làm rẻ thương hiệu.',
+        'Dẫn rõ sang tư vấn thay vì treo nhiều lời hứa mơ hồ.',
+      ],
+    },
+    stats: [
+      { value: '3 nhóm', label: 'Học bổng, ưu đãi sớm và hỗ trợ theo gia đình' },
+      { value: 'BOFU', label: 'Rất gần ý định chuyển đổi về tư vấn hoặc nhập học' },
+      { value: 'Value-led', label: 'Nội dung phải đặt học phí trong bối cảnh giá trị thật' },
+      { value: 'Bridge', label: 'Nối giữa học phí, tuyển sinh và campus' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Nhóm ưu đãi',
+        title: 'Ba hướng nội dung nên xuất hiện rõ trên trang học bổng.',
+        intro:
+          'Ở giai đoạn triển khai đầu, trang nên đóng vai trò định hướng và gom lead chất lượng, chưa cần trở thành kho thông tin quá chi tiết.',
+        columns: 3,
+        items: [
+          { title: 'Ưu đãi nhập học sớm', body: 'Phù hợp với nhóm phụ huynh đã khá chắc về quyết định và chỉ còn cần một cú hích nhẹ để chốt hành động.' },
+          { title: 'Chính sách theo năng lực hoặc định hướng tiếng Anh', body: 'Đây là nơi có thể làm rõ hơn những hỗ trợ phù hợp với học sinh có định hướng tiếng Anh nổi bật.' },
+          { title: 'Ưu đãi theo gia đình hoặc nhóm đặc thù', body: 'Những chính sách dạng anh chị em hoặc nhóm đối tượng rõ ràng sẽ giúp trang vừa thực dụng vừa có sức gợi mở.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Trang nên xem cùng',
+        title: 'Học bổng nên luôn đi cùng học phí và tuyển sinh.',
+        intro: 'Nếu tách riêng khỏi hai cụm này, trang dễ trở thành một “offer island” ít giá trị thật cho phụ huynh.',
+        items: [
+          { eyebrow: 'Money page', title: 'Học phí', href: '/hoc-phi', body: 'Giúp gia đình nhìn khung chi phí tổng thể trước khi bàn về ưu đãi cụ thể.' },
+          { eyebrow: 'Admissions', title: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van', body: 'Bước đi hợp lý nhất khi phụ huynh muốn biết trường hợp của mình có phù hợp với chính sách nào hay không.' },
+          { eyebrow: 'Process', title: 'Quy trình tuyển sinh', href: '/tuyen-sinh/quy-trinh-tuyen-sinh', body: 'Giúp đặt câu chuyện học bổng đúng vào hành trình tuyển sinh tổng thể, không bị tách rời.' },
+        ],
+      },
+      {
+        type: 'faq',
+        eyebrow: 'FAQ học bổng',
+        title: 'Ba câu hỏi nên xuất hiện để giữ sự minh bạch.',
+        intro: 'Với trang offer, minh bạch sẽ tạo niềm tin mạnh hơn rất nhiều so với sự phô trương.',
+        items: [
+          {
+            question: 'Trang này có cần công bố tất cả mức ưu đãi không?',
+            answer: 'Không nhất thiết. Điều quan trọng hơn là giúp phụ huynh hiểu có những nhóm chính sách nào và khi nào nên liên hệ để được tư vấn theo trường hợp cụ thể.',
+          },
+          {
+            question: 'Học bổng nên gắn với giá trị nào?',
+            answer: 'Học bổng nên được đặt trong bối cảnh chương trình, đầu ra, định hướng tiếng Anh và mức độ phù hợp với học sinh, không nên tách rời thành một thông điệp giảm giá đơn thuần.',
+          },
+          {
+            question: 'Sau khi xem học bổng, nên làm gì tiếp?',
+            answer: 'Bước tốt nhất thường là xem học phí tổng quan rồi đăng ký tư vấn để đội tuyển sinh hỗ trợ theo đúng cấp học, cơ sở và thời điểm nhập học.',
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: 'lien-he',
+    title: 'Liên Hệ Trường Việt Anh',
+    description:
+      'Trang liên hệ của Trường Việt Anh, tổng hợp các kênh tư vấn, đường dẫn tuyển sinh và các điểm chạm phù hợp cho phụ huynh đang cần hỗ trợ nhanh.',
+    templateClass: 'Contact / Utility Page',
+    pageType: 'Contact page',
+    theme: 'admissions',
+    hero: {
+      eyebrow: 'Liên hệ',
+      title: 'Khi phụ huynh đã sẵn sàng nói chuyện với nhà trường, trang liên hệ nên thật rõ, thật ngắn và đủ đáng tin.',
+      body:
+        'Trang này không cần quá nhiều lời giới thiệu. Nó cần gom đúng các kênh liên hệ, chỉ ra bước đi phù hợp và dẫn phụ huynh tới đúng campus hoặc đúng trang tuyển sinh khi cần.',
+      primaryCta: { label: 'Gọi 0916 961 409', href: contactLinks.phoneHref },
+      secondaryCta: { label: 'Nhắn Zalo', href: contactLinks.zaloHref },
+      badges: ['Contact page', 'Utility', 'Support'],
+      asideTitle: 'Những lý do phụ huynh thường vào trang này',
+      asideItems: [
+        'Cần hỏi nhanh về cấp học hoặc học phí.',
+        'Muốn đặt lịch tư vấn hoặc tham quan.',
+        'Muốn được điều hướng tới campus phù hợp hơn.',
+      ],
+    },
+    stats: [
+      { value: '3 kênh', label: 'Điện thoại, Zalo và tư vấn tuyển sinh' },
+      { value: '4 campus', label: 'Có thể được nối sang từng cơ sở nếu cần' },
+      { value: 'Fast path', label: 'Trang rút ngắn đường đi tới hỗ trợ thật' },
+      { value: 'Utility', label: 'Một trang nhỏ nhưng ảnh hưởng lớn đến trải nghiệm' },
+    ],
+    sections: [
+      {
+        type: 'cards',
+        eyebrow: 'Kênh liên hệ',
+        title: 'Mỗi kênh nên gắn với một nhu cầu rõ để phụ huynh chọn nhanh hơn.',
+        intro:
+          'Trang liên hệ tốt là trang khiến người dùng không phải suy nghĩ nhiều về việc nên bấm vào đâu tiếp theo.',
+        columns: 3,
+        items: [
+          { title: 'Gọi điện thoại', body: 'Phù hợp khi phụ huynh cần xác nhận thông tin nhanh, hỏi mốc tuyển sinh hoặc chốt bước tiếp theo trong ngày.' },
+          { title: 'Nhắn Zalo', body: 'Phù hợp với phụ huynh muốn trao đổi ngắn, gửi thông tin hoặc giữ một kênh liên lạc nhẹ và tiện.' },
+          { title: 'Đăng ký tư vấn', body: 'Phù hợp khi gia đình muốn một cuộc trao đổi có cấu trúc hơn về cấp học, cơ sở, học phí và hồ sơ.' },
+        ],
+      },
+      {
+        type: 'links',
+        eyebrow: 'Các trang nên đi cùng',
+        title: 'Trang liên hệ nên nối sang những điểm nào trong hệ tuyển sinh.',
+        intro:
+          'Đây là nơi contact page chuyển từ utility sang điều hướng thông minh.',
+        items: [
+          { eyebrow: 'Admissions', title: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van', body: 'Dành cho phụ huynh cần một cuộc trao đổi rõ hơn về lộ trình phù hợp.' },
+          { eyebrow: 'Visit', title: 'Tham quan trường', href: '/tuyen-sinh/tham-quan-truong', body: 'Dành cho gia đình muốn đi từ online sang trải nghiệm thực tế tại campus.' },
+          { eyebrow: 'Campus hub', title: 'Xem các cơ sở', href: '/co-so', body: 'Phù hợp khi phụ huynh chưa chắc campus nào là điểm bắt đầu đúng nhất.' },
+        ],
+      },
+      {
+        type: 'faq',
+        eyebrow: 'FAQ liên hệ',
+        title: 'Các câu hỏi đơn giản nhưng rất thường gặp trước khi phụ huynh bấm liên hệ.',
+        intro:
+          'Trang liên hệ càng gọn thì FAQ càng nên thực dụng và ít hơn.',
+        items: [
+          {
+            question: 'Nếu tôi chưa biết rõ cơ sở nào phù hợp thì sao?',
+            answer: 'Bạn có thể bắt đầu từ đăng ký tư vấn hoặc xem trang tổng quan cơ sở. Hai hướng này giúp thu gọn lựa chọn nhanh hơn việc tự đọc rời rạc nhiều trang.',
+          },
+          {
+            question: 'Trang liên hệ có thay cho trang tuyển sinh không?',
+            answer: 'Không. Trang liên hệ là điểm vào ngắn nhất tới hỗ trợ. Nếu bạn muốn hiểu đầy đủ hành trình, nên xem thêm cụm tuyển sinh và học phí.',
+          },
+          {
+            question: 'Nếu tôi muốn xem trường thật thì nên làm gì?',
+            answer: 'Hãy đi thẳng tới trang tham quan trường. Đây là bước phù hợp nhất khi gia đình muốn kiểm chứng campus và trải nghiệm thực tế.',
+          },
+        ],
+      },
+    ],
   },
 ];
 
@@ -1390,6 +2496,7 @@ export const pages: PageSpec[] = [
       },
     ],
   },
+  ...priorityPages,
 ];
 
 export function getPageBySlug(slug: string) {

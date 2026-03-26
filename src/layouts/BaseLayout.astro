@@ -6,14 +6,24 @@ type Props = {
   description?: string;
   canonical?: string;
   noindex?: boolean;
+  ogImage?: string;
+  robots?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 };
 
 const {
-  title = 'truongvietanh.com',
-  description = 'Astro frontend connected to Directus and ready for Cloudflare Workers.',
+  title = 'Trường Việt Anh',
+  description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.',
   canonical,
   noindex = canonical?.includes('staging.') || canonical?.includes('workers.dev'),
+  ogImage,
+  robots = noindex ? 'noindex, nofollow' : 'index, follow',
+  structuredData,
 } = Astro.props;
+
+const schemaPayload = structuredData
+  ? JSON.stringify(Array.isArray(structuredData) ? structuredData : [structuredData])
+  : null;
 ---
 
 <!doctype html>
@@ -31,11 +41,18 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="robots" content={robots} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Trường Việt Anh" />
     {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content={ogImage ? 'summary_large_image' : 'summary'} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    {ogImage && <meta name="twitter:image" content={ogImage} />}
+    {schemaPayload && <script is:inline type="application/ld+json" set:html={schemaPayload} />}
   </head>
   <body>
     <slot />

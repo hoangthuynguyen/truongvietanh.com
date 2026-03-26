@@ -52,6 +52,7 @@ const levelCards = [
       'Ưu tiên môi trường an toàn, giao tiếp song ngữ và nhịp sinh hoạt giúp trẻ đi học tự tin hơn từ những ngày đầu.',
     href: '/mam-non',
     cta: 'Xem chương trình mầm non',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg',
   },
   {
     eyebrow: 'Tiểu học',
@@ -60,6 +61,7 @@ const levelCards = [
       'Giai đoạn cần cân bằng giữa học tốt, giữ hứng thú học tập và hình thành nhịp học rõ ràng cho con.',
     href: '/tieu-hoc',
     cta: 'Xem chương trình tiểu học',
+    img: 'https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png',
   },
   {
     eyebrow: 'THCS',
@@ -68,6 +70,7 @@ const levelCards = [
       'THCS tại Việt Anh nhấn mạnh tư duy chủ động, tiếng Anh và khả năng làm việc với mục tiêu học tập rõ ràng.',
     href: '/trung-hoc-co-so',
     cta: 'Xem chương trình THCS',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png',
   },
   {
     eyebrow: 'THPT',
@@ -76,6 +79,7 @@ const levelCards = [
       'THPT hướng tới đầu ra rõ hơn về ngoại ngữ, học thuật và khả năng tự học để học sinh đi xa hơn sau khi ra trường.',
     href: '/trung-hoc-pho-thong',
     cta: 'Xem chương trình THPT',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img2-scaled.jpg',
   },
 ];
 
@@ -85,18 +89,21 @@ const campusCards = [
     title: 'Một trong những khu vực được phụ huynh quan tâm nhiều khi tìm trường cho con',
     body:
       'Phù hợp với gia đình muốn bắt đầu từ một cơ sở thuận tiện đưa đón, dễ tham quan và có lộ trình rõ ràng cho từng cấp học.',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/Frame-2144770212.png',
   },
   {
     eyebrow: 'Phú Nhuận',
     title: 'Điểm chạm gần trung tâm, phù hợp phụ huynh cần vị trí kết nối tốt',
     body:
       'Phần giới thiệu cơ sở giúp phụ huynh hiểu khu vực phục vụ và chuyển nhanh sang bước tư vấn hoặc tham quan.',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/Website-Truongvietanh.com_-768x432.png',
   },
   {
     eyebrow: 'Mở rộng hệ sinh thái',
     title: 'Bình Tân cùng các điểm hiện diện khác giúp thương hiệu giữ chiều sâu liên cấp',
     body:
       'Khi hệ thống campus được trình bày rõ hơn, phụ huynh có thể chọn theo khu vực, cấp học và nhu cầu để tìm điểm chạm phù hợp nhanh hơn.',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img3-scaled.jpg',
   },
 ];
 
@@ -129,6 +136,7 @@ const newsCards = [
       'Phụ huynh cần biết quy trình, hồ sơ, lịch tuyển sinh và bước tiếp theo ngay từ trang chủ mà không phải lạc vào các bài nội dung phụ.',
     href: '/tuyen-sinh',
     cta: 'Xem lộ trình tuyển sinh',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg',
   },
   {
     eyebrow: 'Học phí & học bổng',
@@ -137,6 +145,7 @@ const newsCards = [
       'Đây là nhóm nội dung có tác động chuyển đổi cao, nên được đặt đủ sớm để phụ huynh có thể tiếp tục hành trình mà không phải đoán.',
     href: '/hoc-phi',
     cta: 'Xem học phí',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img2-scaled.jpg',
   },
   {
     eyebrow: 'Hoạt động & câu chuyện',
@@ -145,6 +154,7 @@ const newsCards = [
       'Đây là nơi phù hợp để đưa phụ huynh tới những nội dung tạo niềm tin như hoạt động học sinh, ngày hội tuyển sinh và cảm nhận thật từ phụ huynh.',
     href: 'https://truongvietanh.com/',
     cta: 'Xem tin tức mới nhất',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img3-scaled.jpg',
   },
 ];
 ---
@@ -291,6 +301,7 @@ const newsCards = [
         <div class="card-grid card-grid--2">
           {levelCards.map((card) => (
             <article class="content-card">
+              {card.img && <img src={card.img} alt={card.title} class="card-img" />}
               <p class="card-eyebrow">{card.eyebrow}</p>
               <h3>{card.title}</h3>
               <p>{card.body}</p>
@@ -313,6 +324,7 @@ const newsCards = [
         <div class="card-grid card-grid--3">
           {campusCards.map((campus) => (
             <article class="content-card">
+              {campus.img && <img src={campus.img} alt={campus.title} class="card-img" />}
               <p class="card-eyebrow">{campus.eyebrow}</p>
               <h3>{campus.title}</h3>
               <p>{campus.body}</p>
@@ -386,6 +398,7 @@ const newsCards = [
         <div class="card-grid card-grid--3">
           {newsCards.map((item) => (
             <article class="content-card">
+              {item.img && <img src={item.img} alt={item.title} class="card-img" />}
               <p class="card-eyebrow">{item.eyebrow}</p>
               <h3>{item.title}</h3>
               <p>{item.body}</p>

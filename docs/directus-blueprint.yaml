@@ -1,0 +1,864 @@
+version: 1
+name: truongvietanh-directus-blueprint
+updated_at: 2026-03-22
+notes:
+  - Blueprint nay la schema spec de dung CMS nhanh, khong phai raw schema snapshot export tu Directus.
+  - Co the dung file nay de script hoa qua Directus API hoac dung tay trong Data Model.
+  - Uu tien phase 1 truoc, phase 2/3 mo rong sau.
+
+global:
+  id_strategy: uuid
+  statuses:
+    - draft
+    - review
+    - published
+    - archived
+  template_classes:
+    - class-homepage
+    - class-a-fee-capture
+    - class-b-campus-tour
+    - class-c-event
+    - class-d-trial-class
+    - class-f-tiktok-mobile
+    - class-level-pillar
+    - class-master-campus-profile
+    - class-local-intent
+    - class-parent-hub-article
+    - class-comparison-engine
+    - class-ai-faq
+    - class-smart-thank-you
+    - class-dynamic-comparison
+    - class-objection-handler
+    - class-retention-referral
+  seo_schema_types:
+    - organization
+    - educational-organization
+    - web-page
+    - article
+    - faq-page
+    - local-business
+    - event
+    - none
+  media_folder_types:
+    - branding
+    - campus
+    - page
+    - post
+    - landing
+    - event
+    - document
+
+build_order:
+  phase_1:
+    - site_settings
+    - categories
+    - faq_groups
+    - media_assets
+    - programs
+    - campuses
+    - pages
+    - landing_pages
+    - posts
+    - faqs
+    - redirects
+  phase_2:
+    - offers
+    - events
+    - comparison_pages
+    - objection_pages
+    - thank_you_pages
+    - menus
+    - menu_items
+  phase_3:
+    - staff_profiles
+    - testimonials
+    - retention_pages
+    - tags
+    - authors
+
+collections:
+  - collection: site_settings
+    group: core
+    phase: 1
+    singleton: true
+    icon: settings
+    note: Cau hinh toan site, contact, social, schema, footer.
+    fields:
+      - field: id
+        type: uuid
+        required: true
+        readonly: true
+      - field: site_name
+        type: string
+        required: true
+      - field: site_tagline
+        type: string
+      - field: primary_domain
+        type: string
+        required: true
+      - field: default_seo_title
+        type: string
+      - field: default_seo_description
+        type: text
+      - field: default_og_image
+        type: file
+        relation: directus_files
+      - field: contact_hotline
+        type: string
+      - field: contact_zalo_url
+        type: string
+      - field: contact_email
+        type: string
+      - field: footer_address
+        type: text
+      - field: social_links
+        type: json
+      - field: organization_schema_json
+        type: json
+      - field: created_at
+        type: datetime
+      - field: updated_at
+        type: datetime
+
+  - collection: categories
+    group: seo
+    phase: 1
+    icon: category
+    note: Dung cho blog, parent hub, review-so-sanh, FAQ topics.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, unique: true }
+      - field: category_type
+        type: enum
+        required: true
+        options:
+          - blog
+          - parent-hub
+          - review-so-sanh
+          - faq
+          - tin-tuc
+      - { field: description, type: text }
+      - { field: sort_order, type: integer }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+
+  - collection: faq_groups
+    group: conversion
+    phase: 1
+    icon: live_help
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - field: group_type
+        type: enum
+        required: true
+        options:
+          - global
+          - level
+          - campus
+          - tuition
+          - landing
+          - objection
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: media_assets
+    group: system
+    phase: 1
+    icon: image
+    note: Lop metadata rieng cho media tren R2; file that van co the nam trong directus_files neu can.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string }
+      - { field: r2_key, type: string, required: true, unique: true }
+      - { field: public_url, type: string, required: true }
+      - field: media_type
+        type: enum
+        required: true
+        options: [image, video, document, svg]
+      - field: folder_type
+        type: enum
+        required: true
+        options: [branding, campus, page, post, landing, event, document]
+      - { field: alt_text, type: string }
+      - { field: caption, type: text }
+      - field: source_type
+        type: enum
+        options: [wordpress, uploaded, generated]
+      - { field: source_url, type: string }
+      - { field: width, type: integer }
+      - { field: height, type: integer }
+      - { field: mime_type, type: string }
+      - { field: bytes, type: integer }
+      - { field: focal_point_x, type: decimal }
+      - { field: focal_point_y, type: decimal }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: programs
+    group: core
+    phase: 1
+    icon: school
+    note: 4 pillar pages cap hoc + co the mo rong song ngu / ngoai khoa.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: level_code
+        type: enum
+        required: true
+        options: [mam-non, tieu-hoc, trung-hoc-co-so, trung-hoc-pho-thong, song-ngu, ngoai-khoa]
+      - field: template_class
+        type: enum
+        required: true
+        default: class-level-pillar
+        options:
+          - class-level-pillar
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: hero_title, type: string }
+      - { field: hero_subtitle, type: text }
+      - { field: hero_media, type: m2o, relation: media_assets }
+      - { field: philosophy, type: rich-text }
+      - { field: curriculum_highlights, type: json }
+      - { field: outcomes, type: json }
+      - { field: signature_system_notes, type: rich-text }
+      - { field: faq_group, type: m2o, relation: faq_groups }
+      - { field: body_blocks, type: json }
+      - { field: primary_cta_text, type: string }
+      - { field: primary_cta_url, type: string }
+      - { field: secondary_cta_text, type: string }
+      - { field: secondary_cta_url, type: string }
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: canonical_url, type: string }
+      - { field: og_title, type: string }
+      - { field: og_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+      - field: schema_type
+        type: enum
+        default: web-page
+        options: [organization, educational-organization, web-page, article, faq-page, local-business, event, none]
+      - { field: schema_json_override, type: json }
+      - { field: noindex, type: boolean, default: false }
+      - { field: published_at, type: datetime }
+
+  - collection: campuses
+    group: core
+    phase: 1
+    icon: location_on
+    note: Trang co so chi tiet cho local trust va local SEO.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: template_class
+        type: enum
+        required: true
+        default: class-master-campus-profile
+        options: [class-master-campus-profile]
+      - field: campus_type
+        type: enum
+        options: [flagship, kindergarten, city-campus, province-campus]
+      - { field: address, type: text, required: true }
+      - { field: district, type: string }
+      - { field: city, type: string }
+      - { field: province, type: string }
+      - { field: google_map_embed, type: text }
+      - { field: google_map_url, type: string }
+      - { field: hotline, type: string }
+      - { field: zalo_url, type: string }
+      - { field: hero_title, type: string }
+      - { field: hero_subtitle, type: text }
+      - { field: hero_gallery, type: m2m, relation: media_assets }
+      - { field: features, type: json }
+      - { field: programs, type: m2m, relation: programs }
+      - { field: review_summary, type: text }
+      - { field: gallery, type: m2m, relation: media_assets }
+      - { field: transport_info, type: rich-text }
+      - { field: meal_info, type: rich-text }
+      - { field: visit_cta_text, type: string }
+      - { field: visit_cta_url, type: string }
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: canonical_url, type: string }
+      - { field: og_title, type: string }
+      - { field: og_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+      - field: schema_type
+        type: enum
+        default: local-business
+        options: [organization, educational-organization, web-page, article, faq-page, local-business, event, none]
+      - { field: schema_json_override, type: json }
+      - { field: noindex, type: boolean, default: false }
+
+  - collection: pages
+    group: core
+    phase: 1
+    icon: description
+    note: Trang thuong hieu, support, utility, legal, va mot phan admissions hub.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: page_type
+        type: enum
+        required: true
+        options:
+          - homepage
+          - pure-page
+          - admissions-hub
+          - tuition-page
+          - scholarship-page
+          - legal-page
+          - utility-page
+          - parent-hub
+      - field: template_class
+        type: enum
+        required: true
+        options:
+          - class-homepage
+          - class-level-pillar
+          - class-ai-faq
+          - class-parent-hub-article
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: hero_title, type: string }
+      - { field: hero_subtitle, type: text }
+      - { field: hero_media, type: m2o, relation: media_assets }
+      - { field: summary, type: text }
+      - { field: body_blocks, type: json }
+      - { field: primary_cta_text, type: string }
+      - { field: primary_cta_url, type: string }
+      - { field: secondary_cta_text, type: string }
+      - { field: secondary_cta_url, type: string }
+      - { field: related_program, type: m2o, relation: programs }
+      - { field: related_campus, type: m2o, relation: campuses }
+      - { field: related_offer, type: m2o, relation: offers, optional_phase: 2 }
+      - { field: show_in_navigation, type: boolean, default: false }
+      - { field: sort_order, type: integer }
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: canonical_url, type: string }
+      - { field: og_title, type: string }
+      - { field: og_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+      - field: schema_type
+        type: enum
+        default: web-page
+        options: [organization, educational-organization, web-page, article, faq-page, local-business, event, none]
+      - { field: schema_json_override, type: json }
+      - { field: noindex, type: boolean, default: false }
+      - { field: published_at, type: datetime }
+
+  - collection: landing_pages
+    group: conversion
+    phase: 1
+    icon: ads_click
+    note: Toan bo /tuyen-sinh/[slug] cho paid, local intent, event, trial, fee.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: landing_type
+        type: enum
+        required: true
+        options: [fee, tour, event, trial, tiktok, local-intent]
+      - field: template_class
+        type: enum
+        required: true
+        options:
+          - class-a-fee-capture
+          - class-b-campus-tour
+          - class-c-event
+          - class-d-trial-class
+          - class-f-tiktok-mobile
+          - class-local-intent
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: campaign_name, type: string }
+      - { field: ad_platforms, type: json }
+      - { field: target_audience, type: text }
+      - { field: hero_title, type: string }
+      - { field: hero_subtitle, type: text }
+      - { field: hero_media, type: m2o, relation: media_assets }
+      - { field: message_match_copy, type: text }
+      - { field: campus, type: m2o, relation: campuses }
+      - { field: program, type: m2o, relation: programs }
+      - { field: offer, type: m2o, relation: offers, optional_phase: 2 }
+      - { field: event, type: m2o, relation: events, optional_phase: 2 }
+      - { field: fee_snapshot, type: json }
+      - { field: trust_blocks, type: json }
+      - { field: faq_group, type: m2o, relation: faq_groups }
+      - field: form_type
+        type: enum
+        options: [fee, consult, tour, event, trial, zalo-click]
+      - { field: primary_cta_text, type: string }
+      - { field: primary_cta_url, type: string }
+      - { field: secondary_cta_text, type: string }
+      - { field: secondary_cta_url, type: string }
+      - { field: thank_you_page, type: m2o, relation: thank_you_pages, optional_phase: 2 }
+      - { field: pixel_event_name, type: string }
+      - { field: body_blocks, type: json }
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: canonical_url, type: string }
+      - { field: og_title, type: string }
+      - { field: og_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+      - field: schema_type
+        type: enum
+        default: web-page
+        options: [organization, educational-organization, web-page, article, faq-page, local-business, event, none]
+      - { field: schema_json_override, type: json }
+      - { field: noindex, type: boolean, default: false }
+      - { field: published_at, type: datetime }
+
+  - collection: authors
+    group: seo
+    phase: 3
+    icon: person
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: slug, type: string, unique: true }
+      - { field: role_title, type: string }
+      - { field: bio, type: text }
+      - { field: avatar, type: m2o, relation: media_assets }
+      - { field: social_links, type: json }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: tags
+    group: seo
+    phase: 3
+    icon: sell
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: posts
+    group: seo
+    phase: 1
+    icon: article
+    note: Blog, parent hub, comparison style articles, news.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: post_type
+        type: enum
+        required: true
+        options: [blog, parent-hub, comparison, objection, faq-article, news]
+      - field: template_class
+        type: enum
+        required: true
+        options:
+          - class-parent-hub-article
+          - class-comparison-engine
+          - class-dynamic-comparison
+          - class-objection-handler
+          - class-ai-faq
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: excerpt, type: text }
+      - { field: content, type: rich-text }
+      - { field: featured_image, type: m2o, relation: media_assets }
+      - { field: author, type: m2o, relation: authors, optional_phase: 3 }
+      - { field: primary_category, type: m2o, relation: categories }
+      - { field: categories, type: m2m, relation: categories }
+      - { field: tags, type: m2m, relation: tags, optional_phase: 3 }
+      - { field: pillar_program, type: m2o, relation: programs }
+      - { field: related_campus, type: m2o, relation: campuses }
+      - { field: primary_cta_text, type: string }
+      - { field: primary_cta_url, type: string }
+      - { field: reading_time, type: integer }
+      - { field: is_evergreen, type: boolean, default: true }
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: canonical_url, type: string }
+      - { field: og_title, type: string }
+      - { field: og_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+      - field: schema_type
+        type: enum
+        default: article
+        options: [organization, educational-organization, web-page, article, faq-page, local-business, event, none]
+      - { field: schema_json_override, type: json }
+      - { field: noindex, type: boolean, default: false }
+      - { field: published_at, type: datetime }
+      - { field: updated_at_override, type: datetime }
+
+  - collection: faqs
+    group: conversion
+    phase: 1
+    icon: quiz
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: question, type: string, required: true }
+      - { field: answer, type: rich-text, required: true }
+      - { field: faq_group, type: m2o, relation: faq_groups, required: true }
+      - { field: program, type: m2o, relation: programs }
+      - { field: campus, type: m2o, relation: campuses }
+      - { field: sort_order, type: integer }
+      - { field: featured, type: boolean, default: false }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: redirects
+    group: system
+    phase: 1
+    icon: route
+    note: Map URL cu tu WordPress sang URL moi.
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: old_path, type: string, required: true, unique: true }
+      - { field: new_path, type: string, required: true }
+      - field: redirect_type
+        type: enum
+        required: true
+        default: 301
+        options: [301, 302]
+      - { field: source_note, type: text }
+      - { field: is_active, type: boolean, default: true }
+
+  - collection: offers
+    group: conversion
+    phase: 2
+    icon: local_offer
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, unique: true }
+      - field: offer_type
+        type: enum
+        required: true
+        options: [scholarship, early-bird, sibling, seasonal]
+      - { field: summary, type: text }
+      - { field: details, type: rich-text }
+      - { field: start_date, type: datetime }
+      - { field: end_date, type: datetime }
+      - { field: applicable_programs, type: m2m, relation: programs }
+      - { field: applicable_campuses, type: m2m, relation: campuses }
+      - { field: cta_text, type: string }
+      - { field: cta_url, type: string }
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+
+  - collection: events
+    group: conversion
+    phase: 2
+    icon: event
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, unique: true }
+      - field: event_type
+        type: enum
+        required: true
+        options: [open-day, summer-camp, workshop, assessment-day]
+      - field: template_class
+        type: enum
+        default: class-c-event
+        options: [class-c-event]
+      - { field: campus, type: m2o, relation: campuses }
+      - { field: program, type: m2o, relation: programs }
+      - { field: start_at, type: datetime }
+      - { field: end_at, type: datetime }
+      - { field: location_text, type: string }
+      - { field: hero_title, type: string }
+      - { field: hero_subtitle, type: text }
+      - { field: countdown_enabled, type: boolean, default: true }
+      - { field: schedule_items, type: json }
+      - { field: guest_items, type: json }
+      - { field: video_url, type: string }
+      - { field: registration_limit, type: integer }
+      - field: form_type
+        type: enum
+        options: [event, consult]
+      - { field: thank_you_page, type: m2o, relation: thank_you_pages }
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+      - field: schema_type
+        type: enum
+        default: event
+        options: [organization, educational-organization, web-page, article, faq-page, local-business, event, none]
+
+  - collection: comparison_pages
+    group: conversion
+    phase: 2
+    icon: table_chart
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: template_class
+        type: enum
+        required: true
+        options: [class-comparison-engine, class-dynamic-comparison]
+      - field: comparison_type
+        type: enum
+        options: [vs-cong-lap, vs-song-ngu-khac, noi-bo-he-hoc]
+      - { field: hero_title, type: string }
+      - { field: hero_subtitle, type: text }
+      - { field: comparison_table, type: json }
+      - { field: unique_points, type: json }
+      - { field: faq_group, type: m2o, relation: faq_groups }
+      - { field: primary_cta_text, type: string }
+      - { field: primary_cta_url, type: string }
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+
+  - collection: objection_pages
+    group: conversion
+    phase: 2
+    icon: psychology
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: template_class
+        type: enum
+        required: true
+        default: class-objection-handler
+        options: [class-objection-handler]
+      - field: objection_key
+        type: enum
+        options: [hoc-phi-cao, be-nhut-nhat, nha-xa, chuong-trinh-nang]
+      - { field: hero_title, type: string }
+      - { field: hero_subtitle, type: text }
+      - { field: objections, type: json }
+      - { field: proof_blocks, type: json }
+      - { field: primary_cta_text, type: string }
+      - { field: primary_cta_url, type: string }
+      - { field: secondary_cta_text, type: string }
+      - { field: secondary_cta_url, type: string }
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+      - { field: seo_title, type: string }
+      - { field: seo_description, type: text }
+      - { field: og_image, type: m2o, relation: media_assets }
+
+  - collection: thank_you_pages
+    group: system
+    phase: 2
+    icon: task_alt
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: thank_you_type
+        type: enum
+        required: true
+        options: [fee, tour, event, trial, consultation]
+      - field: template_class
+        type: enum
+        default: class-smart-thank-you
+        options: [class-smart-thank-you]
+      - { field: headline, type: string }
+      - { field: message, type: text }
+      - { field: next_steps, type: json }
+      - { field: video_url, type: string }
+      - { field: pixel_event_name, type: string }
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+
+  - collection: menus
+    group: system
+    phase: 2
+    icon: menu
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - field: location
+        type: enum
+        required: true
+        options: [header-primary, header-secondary, footer, admissions, mobile]
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: menu_items
+    group: system
+    phase: 2
+    icon: subdirectory_arrow_right
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: menu, type: m2o, relation: menus, required: true }
+      - { field: label, type: string, required: true }
+      - field: item_type
+        type: enum
+        required: true
+        options: [internal, external]
+      - { field: internal_page, type: m2o, relation: pages }
+      - { field: internal_program, type: m2o, relation: programs }
+      - { field: internal_campus, type: m2o, relation: campuses }
+      - { field: internal_landing, type: m2o, relation: landing_pages }
+      - { field: external_url, type: string }
+      - { field: sort_order, type: integer }
+      - { field: parent_item, type: m2o, relation: menu_items }
+      - { field: open_in_new_tab, type: boolean, default: false }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: staff_profiles
+    group: core
+    phase: 3
+    icon: badge
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: slug, type: string, unique: true }
+      - { field: role_title, type: string }
+      - { field: bio, type: rich-text }
+      - { field: avatar, type: m2o, relation: media_assets }
+      - { field: campus, type: m2o, relation: campuses }
+      - { field: program, type: m2o, relation: programs }
+      - { field: featured, type: boolean, default: false }
+      - { field: sort_order, type: integer }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: testimonials
+    group: core
+    phase: 3
+    icon: format_quote
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: name, type: string, required: true }
+      - { field: role, type: string }
+      - { field: content, type: text, required: true }
+      - { field: avatar, type: m2o, relation: media_assets }
+      - { field: campus, type: m2o, relation: campuses }
+      - { field: program, type: m2o, relation: programs }
+      - { field: featured, type: boolean, default: false }
+      - { field: sort_order, type: integer }
+      - field: status
+        type: enum
+        default: published
+        options: [draft, review, published, archived]
+
+  - collection: retention_pages
+    group: system
+    phase: 3
+    icon: group_add
+    fields:
+      - { field: id, type: uuid, required: true, readonly: true }
+      - { field: title, type: string, required: true }
+      - { field: slug, type: string, required: true, unique: true }
+      - { field: full_path, type: string, required: true, unique: true }
+      - field: retention_type
+        type: enum
+        required: true
+        options: [referral, loyalty, parent-benefits]
+      - field: template_class
+        type: enum
+        default: class-retention-referral
+        options: [class-retention-referral]
+      - { field: headline, type: string }
+      - { field: summary, type: text }
+      - { field: referral_offer, type: rich-text }
+      - { field: primary_cta_text, type: string }
+      - { field: primary_cta_url, type: string }
+      - field: status
+        type: enum
+        default: draft
+        options: [draft, review, published, archived]
+
+recommended_initial_records:
+  categories:
+    - { name: Tin Tuc, slug: tin-tuc, category_type: tin-tuc, full_path: /blog/tin-tuc }
+    - { name: Mam Non, slug: mam-non, category_type: blog, full_path: /blog/mam-non }
+    - { name: Tieu Hoc, slug: tieu-hoc, category_type: blog, full_path: /blog/tieu-hoc }
+    - { name: Trung Hoc Co So, slug: trung-hoc-co-so, category_type: blog, full_path: /blog/trung-hoc-co-so }
+    - { name: Trung Hoc Pho Thong, slug: trung-hoc-pho-thong, category_type: blog, full_path: /blog/trung-hoc-pho-thong }
+    - { name: Kien Thuc Giao Duc, slug: kien-thuc-giao-duc, category_type: blog, full_path: /blog/kien-thuc-giao-duc }
+    - { name: Ky Nang Hoc Tap, slug: ky-nang-hoc-tap, category_type: blog, full_path: /blog/ky-nang-hoc-tap }
+    - { name: Nuoi Day Con, slug: nuoi-day-con, category_type: blog, full_path: /blog/nuoi-day-con }
+    - { name: Cam Nang Tuyen Sinh, slug: cam-nang-tuyen-sinh, category_type: blog, full_path: /blog/cam-nang-tuyen-sinh }
+    - { name: Review So Sanh, slug: review-so-sanh, category_type: review-so-sanh, full_path: /blog/review-so-sanh }
+  faq_groups:
+    - { name: FAQ Tong Hop, slug: faq-tong-hop, group_type: global }
+    - { name: FAQ Mam Non, slug: faq-mam-non, group_type: level }
+    - { name: FAQ Tieu Hoc, slug: faq-tieu-hoc, group_type: level }
+    - { name: FAQ THCS, slug: faq-thcs, group_type: level }
+    - { name: FAQ THPT, slug: faq-thpt, group_type: level }
+    - { name: FAQ Hoc Phi, slug: faq-hoc-phi, group_type: tuition }
+  programs:
+    - { name: Mam Non, slug: mam-non, full_path: /mam-non, level_code: mam-non, template_class: class-level-pillar }
+    - { name: Tieu Hoc, slug: tieu-hoc, full_path: /tieu-hoc, level_code: tieu-hoc, template_class: class-level-pillar }
+    - { name: Trung Hoc Co So, slug: trung-hoc-co-so, full_path: /trung-hoc-co-so, level_code: trung-hoc-co-so, template_class: class-level-pillar }
+    - { name: Trung Hoc Pho Thong, slug: trung-hoc-pho-thong, full_path: /trung-hoc-pho-thong, level_code: trung-hoc-pho-thong, template_class: class-level-pillar }
+
+implementation_notes:
+  - Phase 1 nen dung body_blocks dang json de di nhanh; phase sau moi nang cap sang M2A block builder neu can.
+  - Cac relation m2m nen co junction collections do Directus tao khi cau hinh trong App hoac qua API.
+  - Neu muon import tu schema endpoint cua Directus, can viet them mot script chuyen blueprint nay thanh schema snapshot JSON/YAML cua Directus 11.
+  - Cac collection lien quan toi tracking nhu thank_you_pages, offers, events co the them sau khi wave 1 da chay staging on dinh.

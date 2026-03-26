@@ -3,7 +3,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { defaultSiteUrl } from '../../lib/site-content';
-import { templateSamples } from '../../lib/template-library';
+import { getTemplateBlueprint, templateSamples } from '../../lib/template-library';
 
 export function getStaticPaths() {
   return templateSamples.map((sample) => ({
@@ -14,12 +14,49 @@ export function getStaticPaths() {
 
 const { sample } = Astro.props;
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+const blueprint = getTemplateBlueprint(sample);
+const canonical = `${siteUrl}/mau-template/${sample.slug}/`;
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: `${sample.classCode} - ${sample.templateClass}`,
+    description: sample.description,
+    url: canonical,
+    inLanguage: 'vi',
+    about: [
+      'SEO page structure',
+      'AI optimization',
+      'Template-driven growth',
+      'Trường Việt Anh',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Thư viện mẫu template',
+        item: `${siteUrl}/mau-template/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: sample.templateClass,
+        item: canonical,
+      },
+    ],
+  },
+];
 ---
 
 <BaseLayout
-  title={`${sample.classCode} | ${sample.templateClass} | Truong Viet Anh`}
+  title={`${sample.classCode} | ${sample.templateClass} | Trường Việt Anh`}
   description={sample.description}
-  canonical={`${siteUrl}/mau-template/${sample.slug}/`}
+  canonical={canonical}
+  structuredData={structuredData}
 >
   <div class={`site-shell site-shell--${sample.theme === 'authority' ? 'pillar' : sample.theme === 'nurture' ? 'brand' : sample.theme === 'performance' ? 'admissions' : 'system'}`}>
     <SiteHeader currentPath="/mau-template" siteUrl="/" />
@@ -38,17 +75,17 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
           </div>
 
           <div class="cta-row">
-            <a class="button button--primary" href="/mau-template/">Quay ve danh sach</a>
-            <a class="button button--ghost" href={sample.internalLinks[0]?.href || '/'}>Xem route lien quan</a>
+            <a class="button button--primary" href="/mau-template/">Quay về danh sách</a>
+            <a class="button button--ghost" href={sample.internalLinks[0]?.href || '/'}>Xem route liên quan</a>
           </div>
         </div>
 
         <aside class="hero-block__aside">
-          <p class="aside-eyebrow">Template summary</p>
-          <h2>Mau nay phuc vu muc tieu gi?</h2>
+          <p class="aside-eyebrow">Tổng quan template</p>
+          <h2>Template này giải quyết mục tiêu nào?</h2>
           <div class="template-meta-grid">
             <div class="template-meta-card">
-              <span>Audience</span>
+              <span>Đối tượng</span>
               <strong>{sample.audience}</strong>
             </div>
             <div class="template-meta-card">
@@ -69,14 +106,14 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
       <section class="section-block">
         <div class="section-heading">
-          <p class="section-eyebrow">Sample preview</p>
-          <h2>Neu sample page nay duoc render that, day la 4 dieu nguoi dung phai cam thay ngay.</h2>
+          <p class="section-eyebrow">Trải nghiệm chính</p>
+          <h2>Khi mở trang này, phụ huynh cần cảm thấy ngay những điều sau.</h2>
         </div>
 
         <div class="card-grid card-grid--2">
           {sample.previewHighlights.map((item) => (
             <article class="content-card">
-              <p class="card-eyebrow">Preview cue</p>
+              <p class="card-eyebrow">Tín hiệu cần có</p>
               <p>{item}</p>
             </article>
           ))}
@@ -85,10 +122,10 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
       <section class="section-block">
         <div class="section-heading">
-          <p class="section-eyebrow">Block order</p>
-          <h2>Thu tu block de giu dung logic template va dung conversion flow.</h2>
+          <p class="section-eyebrow">Cấu trúc gợi ý</p>
+          <h2>Thứ tự block đề xuất để giữ đúng intent, đúng nhịp đọc và đúng CTA.</h2>
           <p class="section-intro">
-            Thu tu nay la “khung xương” quan trọng nhất. Sau nay khi dua vao Directus, no giup team content khong vo tinh pha vo intent cua page.
+            Đây là khung xương production-ready của template. Khi đưa vào Directus, từng block có thể thay bằng dữ liệu thật nhưng không nên phá vỡ thứ tự logic này.
           </p>
         </div>
 
@@ -104,30 +141,20 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
       <section class="section-block">
         <div class="section-heading">
-          <p class="section-eyebrow">Brand guidelines applied</p>
-          <h2>Nhung quy tac thuong hieu bat buoc tren template nay.</h2>
+          <p class="section-eyebrow">SEO & AIO</p>
+          <h2>Những tín hiệu SEO, AIO và parseability cần xuất hiện trên template này.</h2>
           <p class="section-intro">
-            Muc nay la lop “QA thuong hieu” de dam bao page van la Viet Anh, du la performance landing, FAQ hay retention flow.
+            Phần này tập trung vào những lớp giúp trang vừa đúng search intent, vừa dễ được AI trích xuất, vừa không làm nặng trải nghiệm tải trang.
           </p>
         </div>
 
-        <div class="card-grid card-grid--2">
-          {sample.brandRules.map((rule) => (
+        <div class="card-grid card-grid--3">
+          {blueprint.answerFirst.map((item) => (
             <article class="content-card">
-              <p class="card-eyebrow">Brand rule</p>
-              <p>{rule}</p>
+              <p class="card-eyebrow">Answer-first</p>
+              <p>{item}</p>
             </article>
           ))}
-        </div>
-      </section>
-
-      <section class="section-block">
-        <div class="section-heading">
-          <p class="section-eyebrow">SEO-friendly checklist</p>
-          <h2>Mau nay duoc review theo chuan metadata, structure, internal links va crawlability.</h2>
-        </div>
-
-        <div class="card-grid card-grid--2">
           {sample.seoRules.map((rule) => (
             <article class="content-card">
               <p class="card-eyebrow">SEO checkpoint</p>
@@ -139,18 +166,18 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
       <section class="section-block">
         <div class="section-heading">
-          <p class="section-eyebrow">Gop y nang cao</p>
-          <h2>Neu dua mau nay vao production, day la nhung nang cap nen uu tien tiep theo.</h2>
+          <p class="section-eyebrow">HubSpot cluster logic</p>
+          <h2>Trang này nằm ở đâu trong topic cluster và nên liên kết như thế nào?</h2>
           <p class="section-intro">
-            Cac goi y nay duoc viet de doi dev, content, SEO va growth co mot danh sach viec nang cap rat cu the sau khi mockup da duoc duyệt.
+            Đây là lớp kiến trúc giúp template không chỉ đẹp và dễ chuyển đổi, mà còn hoạt động đúng trong hệ hub-spoke của toàn site.
           </p>
         </div>
 
-        <div class="card-grid card-grid--3">
-          {sample.enhancementIdeas.map((idea) => (
+        <div class="card-grid card-grid--2">
+          {blueprint.hubspotInspired.map((item) => (
             <article class="content-card">
-              <p class="card-eyebrow">Next improvement</p>
-              <p>{idea}</p>
+              <p class="card-eyebrow">Topic cluster</p>
+              <p>{item}</p>
             </article>
           ))}
         </div>
@@ -158,17 +185,39 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
       <section class="section-block">
         <div class="section-heading">
-          <p class="section-eyebrow">Internal links bat buoc</p>
-          <h2>Template nay can noi vao dau de phuc vu du ca SEO, trust va conversion.</h2>
+          <p class="section-eyebrow">Schema & tốc độ tải</p>
+          <h2>Những lớp dữ liệu có cấu trúc và guardrails hiệu năng nên đi kèm template này.</h2>
+        </div>
+
+        <div class="card-grid card-grid--2">
+          {blueprint.schema.map((item) => (
+            <article class="content-card">
+              <p class="card-eyebrow">Schema priority</p>
+              <p>{item}</p>
+            </article>
+          ))}
+          {blueprint.performance.map((item) => (
+            <article class="content-card">
+              <p class="card-eyebrow">Performance guardrail</p>
+              <p>{item}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Liên kết nên có</p>
+          <h2>Những route chính nên kết nối với template này để phục vụ SEO, trust và conversion.</h2>
         </div>
 
         <div class="link-grid">
           {sample.internalLinks.map((link) => (
             <a class="link-card" href={link.href}>
-              <p class="card-eyebrow">Related route</p>
+              <p class="card-eyebrow">Route liên quan</p>
               <h3>{link.title}</h3>
               <p>{link.body}</p>
-              <span>Mo trang</span>
+              <span>Mở trang</span>
             </a>
           ))}
         </div>
@@ -176,16 +225,16 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
       <section class="cta-banner">
         <div>
-          <p class="section-eyebrow">Sample CTA pair</p>
-          <h2>CTA cua template nay nen giu tong “ro, thuc dung, khong pho truong”.</h2>
+          <p class="section-eyebrow">CTA chính</p>
+          <h2>CTA của template này nên luôn giữ đúng tinh thần rõ, thực dụng và không phô trương.</h2>
           <p>
-            CTA chinh: <strong>{sample.primaryCta}</strong>. CTA phu: <strong>{sample.secondaryCta}</strong>. Day la cap CTA phu hop voi vai tro cua template va khong pha brand guidelines.
+            CTA chính: <strong>{sample.primaryCta}</strong>. CTA phụ: <strong>{sample.secondaryCta}</strong>. Đây là cặp CTA nên được giữ ổn định khi chuyển template sang page thật.
           </p>
         </div>
 
         <div class="cta-row">
-          <a class="button button--primary" href="/mau-template/">Xem template khac</a>
-          <a class="button button--ghost" href="/">Quay ve staging homepage</a>
+          <a class="button button--primary" href="/mau-template/">Xem template khác</a>
+          <a class="button button--ghost" href={blueprint.productionRoute}>Xem route production gần nhất</a>
         </div>
       </section>
     </main>

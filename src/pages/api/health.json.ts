@@ -1,8 +1,10 @@
 import type { APIRoute } from 'astro';
+import { getCmsPageSlugs } from '../../lib/content-pages';
 import { getHomepageState } from '../../lib/directus';
 
 export const GET: APIRoute = async () => {
   const state = await getHomepageState();
+  const cmsPageSlugs = await getCmsPageSlugs();
 
   return new Response(
     JSON.stringify(
@@ -14,6 +16,10 @@ export const GET: APIRoute = async () => {
           usingToken: state.usingToken,
           postsLoaded: state.posts.length,
           error: state.error,
+        },
+        cmsPages: {
+          count: cmsPageSlugs.length,
+          slugs: cmsPageSlugs.slice(0, 20),
         },
       },
       null,

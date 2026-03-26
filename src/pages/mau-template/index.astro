@@ -3,14 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import SiteFooter from '../../components/SiteFooter.astro';
 import SiteHeader from '../../components/SiteHeader.astro';
 import { defaultSiteUrl } from '../../lib/site-content';
-import { templateGroups, templateSamples } from '../../lib/template-library';
+import { getTemplateCheckLinks, templateGroups, templateSamples } from '../../lib/template-library';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+const checkLinks = getTemplateCheckLinks();
+const performanceCount = templateSamples.filter((sample) => sample.group === 'Performance').length;
+const authorityCount = templateSamples.filter((sample) => sample.group === 'SEO / Authority').length;
+const nurtureCount = templateSamples.filter((sample) => sample.group === 'Mid-funnel / Nurturing').length;
+const systemCount = templateSamples.filter((sample) => sample.group === 'System / Utility').length;
 ---
 
 <BaseLayout
-  title="Thu Vien Mau Template | Truong Viet Anh"
-  description="Thu vien 16 sample pages theo dung template classes cua Truong Viet Anh, dung de review UX, brand voice, CTA va SEO structure tren staging."
+  title="Thư viện 28 Template Classes | Trường Việt Anh"
+  description="Thư viện 28 template classes của Trường Việt Anh, tối ưu cho SEO, AI Overviews, tốc độ tải và route production-ready."
   canonical={`${siteUrl}/mau-template/`}
 >
   <div class="site-shell site-shell--system">
@@ -20,32 +25,31 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
       <section class="hero-block hero-block--home">
         <div class="hero-block__main">
           <p class="section-eyebrow">Template library</p>
-          <h1>16 sample pages, moi class 1 mau, de doi team review tren staging truoc khi scale content that.</h1>
+          <h1>28 template classes production-ready cho toàn bộ kiến trúc SEO, AIO và lead generation của Trường Việt Anh.</h1>
           <p class="hero-copy">
-            Thu vien nay giup nhin ro tung template class dang giai quyet muc tieu gi, CTA chinh la gi, block nao la bat
-            buoc va nen nang cap theo huong nao de vua giu brand guidelines, vua giu conversion va SEO quality.
+            Thư viện này dùng để xem nhanh từng template đang phục vụ vai trò gì, route production gần nhất là gì, cấu trúc trang ra sao và các tín hiệu SEO/AIO nào cần có trước khi scale bằng Directus.
           </p>
 
           <div class="badge-row">
-            <span class="badge">16 template classes</span>
-            <span class="badge badge--soft">Brand-safe copy</span>
-            <span class="badge badge--soft">SEO-friendly structure</span>
+            <span class="badge">28 template classes</span>
+            <span class="badge badge--soft">Blue + gold brand system</span>
+            <span class="badge badge--soft">SEO + AI parseable</span>
           </div>
 
           <div class="cta-row">
-            <a class="button button--primary" href="#template-groups">Xem danh muc template</a>
-            <a class="button button--ghost" href="/">Quay ve homepage</a>
+            <a class="button button--primary" href="#template-groups">Xem danh mục template</a>
+            <a class="button button--ghost" href="/">Quay về homepage</a>
           </div>
         </div>
 
         <aside class="hero-block__aside">
-          <p class="aside-eyebrow">Review goals</p>
-          <h2>Moi sample page duoc danh gia tren 4 lop.</h2>
+          <p class="aside-eyebrow">Tổng quan hệ</p>
+          <h2>Thư viện này được chia theo 4 nhóm template lớn.</h2>
           <ul class="aside-list">
-            <li>Template co phu hop vai tro kinh doanh / funnel hay khong.</li>
-            <li>Brand voice co giu duoc tinh am, ro, co bang chung hay khong.</li>
-            <li>Metadata, headings, internal links va CTA co dung chuan SEO-friendly hay khong.</li>
-            <li>Can nang cap tiep nhu the nao de vao production data-driven tu Directus.</li>
+            <li>Performance templates cho paid traffic và conversion trực tiếp.</li>
+            <li>SEO / authority templates cho pillar, local trust và topical coverage.</li>
+            <li>Mid-funnel templates cho comparison, FAQ, objection và parent hub.</li>
+            <li>System / utility templates cho homepage, contact, thank-you, retention và legal.</li>
           </ul>
         </aside>
       </section>
@@ -53,24 +57,24 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
       <section class="section-block section-block--stats">
         <div class="section-heading">
           <p class="section-eyebrow">Coverage</p>
-          <h2>Library nay bao phu du 4 nhom templates trong he thong 16 classes cua Truong Viet Anh.</h2>
+          <h2>Thư viện hiện bao phủ đầy đủ 28 classes theo kiến trúc mới của Trường Việt Anh.</h2>
         </div>
 
         <div class="stats-grid">
           <article class="stat-tile">
-            <strong>5</strong>
+            <strong>{performanceCount}</strong>
             <span>Performance templates</span>
           </article>
           <article class="stat-tile">
-            <strong>3</strong>
+            <strong>{authorityCount}</strong>
             <span>SEO / authority templates</span>
           </article>
           <article class="stat-tile">
-            <strong>3</strong>
+            <strong>{nurtureCount}</strong>
             <span>Mid-funnel / nurturing templates</span>
           </article>
           <article class="stat-tile">
-            <strong>5</strong>
+            <strong>{systemCount}</strong>
             <span>System / utility templates</span>
           </article>
         </div>
@@ -78,10 +82,10 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
       <section class="section-block" id="template-groups">
         <div class="section-heading">
-          <p class="section-eyebrow">Danh sach hien thi</p>
-          <h2>Moi template co 1 page sample rieng, co block order, brand rules, SEO checklist va goi y nang cao.</h2>
+          <p class="section-eyebrow">Danh sách hiển thị</p>
+          <h2>Mỗi template có một page mẫu riêng để kiểm tra cấu trúc, CTA, route liên quan và logic SEO/AIO.</h2>
           <p class="section-intro">
-            Doi content, design, SEO, admissions va growth co the cung review tren mot he quy chieu chung thay vi mo ta bang text roi rac.
+            Đây là nơi để team content, design, SEO, admissions và growth nhìn cùng một hệ quy chiếu trước khi chuyển template thành page thật trong CMS.
           </p>
         </div>
 
@@ -109,12 +113,12 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
                         <span>{sample.primaryCta}</span>
                       </div>
                       <div class="sample-card__meta">
-                        <strong>SEO:</strong>
-                        <span>{sample.seoRules[0]}</span>
+                        <strong>Vai trò:</strong>
+                        <span>{sample.pageRole}</span>
                       </div>
                       <div class="sample-card__meta">
-                        <strong>Nang cap:</strong>
-                        <span>{sample.enhancementIdeas[0]}</span>
+                        <strong>Funnel:</strong>
+                        <span>{sample.funnel}</span>
                       </div>
                     </a>
                   ))}
@@ -124,19 +128,43 @@ const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
         </div>
       </section>
 
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Routes để kiểm tra</p>
+          <h2>Mỗi template đều có sample route và route production gần nhất để đối chiếu khi build thật.</h2>
+          <p class="section-intro">
+            Dùng cặp route này để review nhanh: sample route xem cấu trúc chuẩn, production route xem mức độ sẵn sàng của hệ thống thật.
+          </p>
+        </div>
+
+        <div class="link-grid">
+          {checkLinks.map((item) => (
+            <article class="link-card">
+              <p class="card-eyebrow">{item.classCode}</p>
+              <h3>{item.templateClass}</h3>
+              <p>
+                <strong>Sample:</strong> <a href={item.sampleRoute}>{item.sampleRoute}</a>
+              </p>
+              <p>
+                <strong>Production-near:</strong> <a href={item.productionRoute}>{item.productionRoute}</a>
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section class="cta-banner">
         <div>
-          <p class="section-eyebrow">Next production step</p>
-          <h2>Buoc tiep theo la gan tung template sample voi Directus collections, block schemas va route that.</h2>
+          <p class="section-eyebrow">Bước tiếp theo</p>
+          <h2>Sau thư viện template, bước production là map từng class vào Directus collections, blocks và route thật.</h2>
           <p>
-            Library nay da giup doi team review duong huong. Buoc sau la data model hoa cac block va tao production pages
-            co content that, campus that, reviews that va CTA tracking that.
+            Khi một template đã ổn về SEO, AI parseability, tốc độ và brand, đội ngũ có thể dùng nó làm khung cho pages thật với content thật, campus thật và tracking thật.
           </p>
         </div>
 
         <div class="cta-row">
-          <a class="button button--primary" href="/tuyen-sinh">Review admissions live pages</a>
-          <a class="button button--ghost" href="/hoc-phi">Review money page live</a>
+          <a class="button button--primary" href="/tuyen-sinh">Xem admissions live pages</a>
+          <a class="button button--ghost" href="/hoc-phi">Xem money page live</a>
         </div>
       </section>
     </main>

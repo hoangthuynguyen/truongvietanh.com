@@ -1,0 +1,84 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { defaultSiteUrl } from '../../lib/site-content';
+import { templateGroups, templateSamples } from '../../lib/template-library';
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+---
+
+<BaseLayout
+  title="28 Trang mẫu hoàn chỉnh | Trường Việt Anh"
+  description="Xem 28 trang mẫu hoàn chỉnh của Trường Việt Anh — từ tuyển sinh, học phí, tham quan đến giới thiệu, đội ngũ và tin tức."
+  canonical={`${siteUrl}/mau/`}
+>
+  <div class="site-shell site-shell--brand">
+    <SiteHeader currentPath="/mau" siteUrl="/" />
+
+    <main class="page-flow">
+      <section class="hero-block hero-block--home">
+        <div class="hero-block__main">
+          <p class="section-eyebrow">Thư viện trang mẫu</p>
+          <h1>28 trang mẫu hoàn chỉnh cho toàn bộ hệ thống website Trường Việt Anh</h1>
+          <p class="hero-copy">
+            Mỗi trang được xây dựng theo đúng brand guidelines, tối ưu SEO và AI, sẵn sàng cho visitor bên ngoài trải nghiệm.
+          </p>
+          <div class="badge-row">
+            <span class="badge">28 trang mẫu</span>
+            <span class="badge badge--soft">SEO + AI Optimized</span>
+            <span class="badge badge--soft">Brand Compliant</span>
+          </div>
+        </div>
+        <aside class="hero-block__aside">
+          <p class="aside-eyebrow">4 nhóm chính</p>
+          <h2>Tổ chức theo vai trò và mục tiêu chuyển đổi</h2>
+          <ul class="aside-list">
+            <li>Performance — Landing pages chuyển đổi mạnh</li>
+            <li>SEO / Authority — Trang trụ cột và local trust</li>
+            <li>Mid-funnel — So sánh, FAQ, blog phụ huynh</li>
+            <li>System / Utility — Trang chủ, liên hệ, pháp lý</li>
+          </ul>
+        </aside>
+      </section>
+
+      {templateGroups.map((group) => (
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="section-eyebrow">{group}</p>
+            <h2>{group}</h2>
+          </div>
+          <div class="sample-index-grid">
+            {templateSamples
+              .filter((s) => s.group === group)
+              .map((s) => (
+                <a class="sample-card" href={`/mau/${s.slug}/`}>
+                  <div class="sample-card__top">
+                    <span class="badge">{s.classCode}</span>
+                    <span class="sample-theme">{s.theme}</span>
+                  </div>
+                  <h3>{s.templateClass}</h3>
+                  <p>{s.description}</p>
+                  <span class="card-link">Xem trang mẫu →</span>
+                </a>
+              ))}
+          </div>
+        </section>
+      ))}
+
+      <section class="cta-banner">
+        <div>
+          <p class="section-eyebrow">Trường Việt Anh</p>
+          <h2>Hệ thống giáo dục liên cấp song ngữ — sẵn sàng đồng hành cùng gia đình bạn</h2>
+          <p>Khám phá các trang mẫu phía trên, hoặc liên hệ trực tiếp để được tư vấn.</p>
+        </div>
+        <div class="cta-row">
+          <a class="button button--primary" href="/tuyen-sinh">Đăng ký tư vấn</a>
+          <a class="button button--ghost" href="/">Về trang chủ</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>

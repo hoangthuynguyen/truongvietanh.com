@@ -114,10 +114,16 @@ export const adminUrl = 'https://admin.truongvietanh.com/admin';
 export const mainNav = [
   { label: 'Trang chủ', href: '/' },
   { label: 'Giới thiệu', href: '/gioi-thieu' },
-  { label: 'Mầm non', href: '/mam-non' },
-  { label: 'Tiểu học', href: '/tieu-hoc' },
-  { label: 'THCS', href: '/trung-hoc-co-so' },
-  { label: 'THPT', href: '/trung-hoc-pho-thong' },
+  {
+    label: 'Cấp học',
+    href: '#',
+    children: [
+      { label: 'Mầm non', href: '/mam-non' },
+      { label: 'Tiểu học', href: '/tieu-hoc' },
+      { label: 'THCS', href: '/trung-hoc-co-so' },
+      { label: 'THPT', href: '/trung-hoc-pho-thong' },
+    ]
+  },
   { label: 'Tuyển sinh', href: '/tuyen-sinh' },
   { label: 'Học phí', href: '/hoc-phi' },
 ];

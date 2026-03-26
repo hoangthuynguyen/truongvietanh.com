@@ -22,881 +22,1601 @@ export type TemplateSample = {
   internalLinks: { title: string; href: string; body: string }[];
 };
 
-export const templateSamples: TemplateSample[] = [
+export type TemplateBlueprint = {
+  answerFirst: string[];
+  hubspotInspired: string[];
+  schema: string[];
+  performance: string[];
+  sampleRoute: string;
+  productionRoute: string;
+};
+
+type TemplateSeed = Omit<
+  TemplateSample,
+  'classCode' | 'brandRules' | 'seoRules' | 'enhancementIdeas'
+> & {
+  classNumber: number;
+  productionRoute: string;
+  schema: string[];
+  answerFirst: string[];
+  hubspotInspired: string[];
+  performance: string[];
+  brandRules?: string[];
+  seoRules?: string[];
+  enhancementIdeas?: string[];
+};
+
+const defaultBrandRules = (theme: TemplateSample['theme']) => {
+  const common = [
+    'Giữ giọng điệu ấm, rõ, có bằng chứng và không dùng khẩu hiệu rỗng.',
+    'Ưu tiên ảnh thật, campus thật, con người thật; không dùng stock photo.',
+    'CTA phải cụ thể, lịch sự, đúng bước tiếp theo của phụ huynh.',
+  ];
+
+  if (theme === 'performance') {
+    return [
+      ...common,
+      'Giữ landing ngắn, thẳng, ít nhiễu và không biến thành trang brochure.',
+    ];
+  }
+
+  if (theme === 'authority') {
+    return [
+      ...common,
+      'Thể hiện chiều sâu học thuật và local trust nhưng không nặng nề, khô cứng.',
+    ];
+  }
+
+  if (theme === 'nurture') {
+    return [
+      ...common,
+      'Nội dung phải giải thích và nuôi niềm tin trước khi đẩy sang CTA chuyển đổi.',
+    ];
+  }
+
+  return [
+    ...common,
+    'Ưu tiên tính hữu ích, tính định hướng và trải nghiệm hậu chuyển đổi rõ ràng.',
+  ];
+};
+
+const defaultSeoRules = (group: TemplateSample['group']) => {
+  const base = [
+    'Dùng H1 duy nhất, heading H2/H3 theo đúng search intent và semantic coverage.',
+    'Viết answer-first 40-60 từ đầu trang để tăng khả năng được AI trích xuất.',
+    'Dùng dữ liệu dạng text, list hoặc HTML table; không nhét thông tin quan trọng vào ảnh.',
+  ];
+
+  if (group === 'Performance') {
+    return [
+      ...base,
+      'Chỉ index khi landing có giá trị SEO thật; nếu không, để noindex và tối ưu cho tốc độ.',
+    ];
+  }
+
+  if (group === 'SEO / Authority') {
+    return [
+      ...base,
+      'Xây internal links theo mô hình pillar-cluster của HubSpot, có route hai chiều giữa hub và spoke.',
+    ];
+  }
+
+  if (group === 'Mid-funnel / Nurturing') {
+    return [
+      ...base,
+      'FAQ, comparison và objection pages phải khớp ý định tìm kiếm, tránh trộn nhiều intent trên một trang.',
+    ];
+  }
+
+  return [
+    ...base,
+    'Các trang utility cần robots, canonical và lifecycle rõ ràng để không làm loãng crawl budget.',
+  ];
+};
+
+const defaultEnhancementIdeas = (theme: TemplateSample['theme']) => {
+  if (theme === 'performance') {
+    return [
+      'Thêm tracking chuẩn theo CTA chính, CTA phụ và thank-you path.',
+      'A/B test headline, trust strip và biến thể CTA theo campus hoặc cấp học.',
+    ];
+  }
+
+  if (theme === 'authority') {
+    return [
+      'Bổ sung schema đầy đủ và route liên kết hai chiều với pillar, campus và money pages.',
+      'Chuẩn hóa block proof, review và author/source-of-truth để tăng E-E-A-T.',
+    ];
+  }
+
+  if (theme === 'nurture') {
+    return [
+      'Tăng khối FAQ, comparison table hoặc answer snippets cho cụm query AI Overview.',
+      'Dùng CTA mềm ở giữa bài và CTA chuyển đổi ở cuối hành trình đọc.',
+    ];
+  }
+
+  return [
+    'Tinh gọn UI và làm rõ next-step logic cho từng đối tượng truy cập.',
+    'Ràng buộc index/noindex, redirect và refresh cycle ngay từ đầu.',
+  ];
+};
+
+const seeds: TemplateSeed[] = [
   {
+    classNumber: 1,
     slug: 'class-a-fee-capture',
-    classCode: 'Class A',
-    templateClass: 'Fee Capture Landing',
+    templateClass: 'Class Fee Capture Landing (Nhận bảng học phí)',
     group: 'Performance',
     theme: 'performance',
-    pageRole: 'Doi bang hoc phi chi tiet lay lead chat luong',
+    pageRole: 'Đổi bảng học phí chi tiết lấy lead có chủ đích thương mại.',
     description:
-      'Sample nay minh hoa mot landing page performance nhung van giu brand tone cua Viet Anh: ro gia tri, ro buoc tiep theo, khong giat gan va khong lam re thuong hieu.',
-    audience: 'Phu huynh dang tim hoc phi theo cap hoc / khu vuc',
+      'Landing học phí phải cực rõ về lợi ích, range chi phí và bước tiếp theo; không được dài dòng hay làm phụ huynh phải đoán.',
+    audience: 'Phụ huynh đang tìm học phí theo cấp học, campus hoặc khu vực.',
     funnel: 'BOFU',
-    traffic: 'Google Search Ads, Meta Lead Ads, Zalo Ads, branded commercial queries',
+    traffic: 'Google Search Ads, SEO commercial, Meta retargeting, Zalo lead ads',
     cvr: '12-18%',
-    primaryCta: 'Nhan bang hoc phi',
-    secondaryCta: 'Nhan Zalo tu van',
-    sampleHeadline: 'Nhan bang hoc phi chi tiet de so sanh trong vai phut, khong can phai doan.',
+    primaryCta: 'Nhận bảng học phí',
+    secondaryCta: 'Nhắn Zalo tư vấn',
+    sampleHeadline: 'Nhận bảng học phí chi tiết trong vài phút để so sánh rõ và quyết định tự tin hơn.',
     sampleBody:
-      'Landing nay can noi dung ro, ngan, minh bach vua du va co trust that. Hero phai cho phu huynh thay ngay gia tri nhan duoc va CTA can rat cu the.',
+      'Trang này cần nói rõ gia đình sẽ nhận được gì, học phí bao gồm gì và nên làm bước tiếp theo nào sau khi để lại thông tin.',
     previewHighlights: [
-      'Headline khop voi intent hoc phi, khong khoa truong.',
-      'Fee snapshot chi nhan manh range, khong day user vao me cung thong tin.',
-      'Trust blocks phai la review that, proof that, hotline that.',
-      'Form ngan va follow-up ro rang qua thank-you page.',
+      'Có bảng học phí dạng text/table, không dùng ảnh chụp bảng giá.',
+      'Có trust strip ngắn: review, campus thật, số hotline thật.',
+      'Form rất ngắn và xuất hiện sớm trên mobile.',
+      'Có liên kết mềm sang campus và tuyển sinh cho người cần đọc thêm.',
     ],
     blockOrder: [
-      'Hero message match voi heading ngan, trust mini va CTA chinh.',
-      'Fee snapshot table de user co moc tham chieu ro rang.',
-      'Trust metrics + review phu huynh de tao niem tin truoc form.',
-      'Objection block ngan tra loi cau hoi “hoc phi co dang khong?”.',
-      'Form short 3-4 field + consent.',
-      'FAQ compact va sticky Zalo / hotline.',
-    ],
-    brandRules: [
-      'Dung giong thuc dung: noi ro nhan duoc gi sau khi submit.',
-      'Khong dung urgency gia tao, khong “co hoi duy nhat”.',
-      'Visual nen it nhung dung: trust, campus that, phu huynh that.',
-      'CTA phai lich su va ro nghia, khong ep mua.',
-    ],
-    seoRules: [
-      'Title va description phai match y dinh hoc phi + cap hoc / khu vuc.',
-      'Can co H1 duy nhat, schema FAQ neu co FAQ compact.',
-      'Internal links chi han che sang /hoc-phi, /tuyen-sinh va page campus lien quan.',
-      'Anh nhe, alt ro nghia va content khong qua dai o hero.',
-    ],
-    enhancementIdeas: [
-      'Them variant theo level va campus de dung message match hon.',
-      'Noi thank-you page voi PDF delivery va event tracking theo form type.',
-      'Test A/B giua CTA “Nhan bang hoc phi” va “Xem hoc phi chi tiet”.',
+      'Hero message-match với H1, subheadline và CTA học phí.',
+      'Bảng học phí tóm tắt bằng HTML table, có chú thích phạm vi áp dụng.',
+      'Khối “Học phí đã bao gồm những gì”.',
+      'Khối trust: review, số liệu, campus thật.',
+      'Form ngắn và FAQ tài chính ngay dưới form.',
+      'Sticky CTA gọi/Zalo và next-step sang tour hoặc tuyển sinh.',
     ],
     internalLinks: [
-      { title: 'Money Page', href: '/hoc-phi', body: 'Trang minh bach de user muon doc them truoc khi submit.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Diem re nhanh cho user muon goi / chat ngay.' },
-      { title: 'Template listing', href: '/mau-template/', body: 'Quay lai danh sach mau de review toan he thong.' },
+      { title: 'Trang học phí', href: '/hoc-phi', body: 'Money hub tổng để người dùng đọc sâu hơn về chính sách tài chính.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Admissions hub cho nhóm đã sẵn sàng bước sang quy trình tuyển sinh.' },
+      { title: 'Campus gần nhất', href: '/co-so/go-vap-phan-huy-ich', body: 'Trang cơ sở để tăng local trust trước khi chốt lịch tham quan.' },
+    ],
+    productionRoute: '/hoc-phi',
+    schema: ['WebPage', 'Offer', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu cần trả lời ngay phụ huynh sẽ nhận bảng học phí cho cấp nào, cơ sở nào và trong bao lâu.',
+      'Ngay dưới hero nên có 40-60 từ giải thích học phí đã bao gồm gì để AI không suy diễn sai.',
+    ],
+    hubspotInspired: [
+      'Fee landing là trang BOFU; chỉ một mục tiêu là đổi biểu phí lấy lead chất lượng.',
+      'Trang phải nhận link từ tuition hub, pillar page và campus page cùng intent.',
+    ],
+    performance: [
+      'LCP dưới 2.5s trên mobile, hero chỉ dùng một media nhẹ.',
+      'HTML table và form server-render; tránh widget nặng hoặc chat popup dày đặc.',
     ],
   },
   {
+    classNumber: 2,
     slug: 'class-b-campus-tour',
-    classCode: 'Class B',
-    templateClass: 'Campus Tour / Local Admission Landing',
+    templateClass: 'Class Campus Tour / Local Admission Landing (Đặt lịch tham quan)',
     group: 'Performance',
     theme: 'performance',
-    pageRole: 'Dat lich tham quan va tang lead quality',
+    pageRole: 'Đưa phụ huynh đến campus thật để tăng lead quality.',
     description:
-      'Template sample nay dua trust dia phuong, map, gallery va booking flow vao cung mot landing de rut ngan duong tu quan tam sang tham quan thuc te.',
-    audience: 'Phu huynh o gan campus muon xem truong that',
-    funnel: 'MOFU -> BOFU',
-    traffic: 'PMax local, Zalo radius ads, local search, Maps intent',
+      'Landing tham quan cơ sở phải làm rõ địa điểm, đường đi, điểm mạnh của campus và booking flow thật ngắn trên mobile.',
+    audience: 'Phụ huynh ở gần campus hoặc đang cần xem trường trực tiếp.',
+    funnel: 'MOFU → BOFU',
+    traffic: 'Local SEO, Google Maps intent, PMax local, Zalo bán kính',
     cvr: '8-14%',
-    primaryCta: 'Dat lich tham quan',
-    secondaryCta: 'Xem duong di den truong',
-    sampleHeadline: 'Neu gia dinh muon thay bang mat that, hay bat dau tu mot lich tham quan ro rang va de dat.',
+    primaryCta: 'Đặt lịch tham quan',
+    secondaryCta: 'Xem đường đi',
+    sampleHeadline: 'Muốn nhìn trường bằng mắt thật? Hãy bắt đầu bằng một lịch tham quan rõ ràng và rất dễ đặt.',
     sampleBody:
-      'Tour landing khong can noi qua nhieu tri ly. No can cho thay campus that, duong di that, review that va mot CTA dat lich rat de thao tac tren mobile.',
+      'Trang cần cho thấy campus thật, bản đồ thật, ảnh thật và lịch đặt hẹn thật nhanh. Tất cả phải phục vụ quyết định đi xem trường.',
     previewHighlights: [
-      'Hero phai dung anh hoac video campus that, khong dung stock photo.',
-      'Map va chi duong phai nam rat som tren trang.',
-      'Campus highlights phai cuc cu the theo dia diem.',
-      'Booking block can ngan, chot duoc ngay va gio.',
+      'NAP phải đồng nhất với Google Business Profile.',
+      'Có map nhúng thật và mô tả đường đi bằng chữ.',
+      'Có gallery campus thật và review của phụ huynh tại campus đó.',
+      'CTA booking luôn hiện rõ ở vùng dễ chạm trên mobile.',
     ],
     blockOrder: [
-      'Hero campus-specific voi dia chi, hotline va CTA dat lich.',
-      'Google Map + nut chi duong.',
-      'Campus highlights va gallery that.',
-      'Calendar booking block de chot hanh dong.',
-      'Review carousel rieng cho co so.',
-      'Final CTA + hotline / Zalo sticky.',
-    ],
-    brandRules: [
-      'Giong dieu can gan gui, nhieu bang chung va rat doi thuong.',
-      'Khong corporate qua muc, khong mo ta generic nhu moi campus deu giong nhau.',
-      'Phai giu brand me o navy/gold nhung noi dung van rat local.',
-      'Hinh anh va dia chi phai chinh truc tuyet doi.',
-    ],
-    seoRules: [
-      'Can title local ro rang, co ten co so va khu vuc.',
-      'Them local business cues, map, hotline, address vao content som.',
-      'Internal links toi pillar page va money page cua level lien quan.',
-      'Toi uu mobile va Core Web Vitals vi user thuong vao tu ads / maps.',
-    ],
-    enhancementIdeas: [
-      'Them Google review pull-in thuc te tu campus khi schema san sang.',
-      'Cho phep dat slot theo campus qua Directus + lich dong bo.',
-      'Them testimonial video ngan quay tai co so do de tang local trust.',
+      'Hero campus-specific với tên cơ sở, địa chỉ, hotline và CTA.',
+      'Khối quick facts: giờ mở cửa, cấp học, khoảng cách, tiện ích xung quanh.',
+      'Google Map + hướng dẫn đường đi bằng văn bản.',
+      'Gallery thực tế và điểm mạnh campus.',
+      'Calendar booking / form đặt lịch.',
+      'Review campus và CTA chốt lịch tham quan.',
     ],
     internalLinks: [
-      { title: 'Tuyen Sinh', href: '/tuyen-sinh', body: 'Admissions hub de tiep tuc hanh dong neu chua dat lich ngay.' },
-      { title: 'Mam Non', href: '/mam-non', body: 'Vi du ve pillar page co the dan ve tour landing.' },
-      { title: 'Hoc Phi', href: '/hoc-phi', body: 'Bo sung money intent neu phu huynh muon xac minh range chi phi.' },
+      { title: 'Campus profile', href: '/co-so/go-vap-phan-huy-ich', body: 'Trang hồ sơ cơ sở đầy đủ cho người muốn xem sâu hơn.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Trang quy trình tuyển sinh để hiểu các bước sau khi tham quan.' },
+      { title: 'Học phí', href: '/hoc-phi', body: 'Money page cho người cần đối chiếu chi phí sau khi xem cơ sở.' },
+    ],
+    productionRoute: '/tham-quan-truong',
+    schema: ['EducationalOrganization', 'Place', 'LocalBusiness', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu phải trả lời ngay campus nằm ở đâu, phù hợp cấp học nào và cách đặt lịch nhanh nhất.',
+      'Dùng câu văn mô tả đường đi hoặc mốc địa lý để hỗ trợ AI và voice search.',
+    ],
+    hubspotInspired: [
+      'Local landing này là nhánh chuyển đổi trực tiếp từ campus hub và local cluster.',
+      'Cần route hai chiều giữa campus profile, level pillar và admissions hub.',
+    ],
+    performance: [
+      'Map lazy-load sau khối thông tin chính.',
+      'Gallery chỉ tải thumb ở fold đầu; ảnh lớn lazy-load.',
     ],
   },
   {
+    classNumber: 3,
     slug: 'class-c-open-day',
-    classCode: 'Class C',
-    templateClass: 'Open Day / Event Landing',
+    templateClass: 'Class Open Day / Event Landing (Sự kiện / Ngày hội)',
     group: 'Performance',
     theme: 'performance',
-    pageRole: 'Gom dang ky su kien theo dot va tao FOMO co kiem soat',
+    pageRole: 'Gom lead sự kiện theo đợt bằng timeline và urgency có kiểm soát.',
     description:
-      'Sample nay cho thay mot event landing dung gi tinh than Viet Anh: urgency vua du, rat ro ve gia tri su kien, khong dung ki thuat ep mua re tien.',
-    audience: 'Phu huynh dang can ly do de den truong trong mot dip cu the',
+      'Landing sự kiện cần tạo cảm giác đáng đi, đáng đăng ký, nhưng vẫn giữ tone thương hiệu lịch sự và minh bạch.',
+    audience: 'Phụ huynh cần một dịp cụ thể để đến trường và trải nghiệm.',
     funnel: 'MOFU / BOFU',
-    traffic: 'Meta, Instagram, event promotion, email, retargeting',
+    traffic: 'Meta, Instagram, email, Zalo, retargeting',
     cvr: '10-16%',
-    primaryCta: 'Dang ky tham du',
-    secondaryCta: 'Xem lich chuong trinh',
-    sampleHeadline: 'Mot su kien tot khong chi gom lead, ma phai giup phu huynh cam thay “di den la dang”.',
+    primaryCta: 'Đăng ký tham dự',
+    secondaryCta: 'Xem lịch chương trình',
+    sampleHeadline: 'Một ngày hội tốt không chỉ đông người, mà phải khiến phụ huynh thấy “đi đến là đáng”.',
     sampleBody:
-      'Open Day page can gom du FOMO, du thong tin va du trust. Neu thieu timeline, thieu guest value hoac thieu visual thuc, conversion se rot du da co traffic.',
+      'Trang event cần trả lời rõ ai nên tham gia, diễn ra khi nào, có gì tại sự kiện và vì sao nên đăng ký ngay hôm nay.',
     previewHighlights: [
-      'Countdown can di kem ly do du de den, khong chi de dem nguoc.',
-      'Timeline phai cu the de phu huynh hinh dung duoc trai nghiem.',
-      'Video nam truoc neu co se nang trust rat manh.',
-      'Registration form ngan va phan hoi sau submit phai ro.',
+      'URL nên evergreen để tái dùng qua từng năm.',
+      'Có timeline chi tiết và hoạt động cụ thể cho phụ huynh, học sinh.',
+      'Có video hoặc recap năm trước để tăng trust.',
+      'Form ngắn và thank-you page điều hướng tốt sau đăng ký.',
     ],
     blockOrder: [
-      'Hero su kien + countdown.',
-      'Timeline va highlights cua event.',
-      'Guest speakers / hoat dong trai nghiem.',
-      'Video hoặc hinh anh event gan day.',
-      'Registration form + reminder note.',
-      'FAQ compact + final CTA.',
-    ],
-    brandRules: [
-      'Viet urgency mot cach lich su, khong “shock” hay “chot gap”.',
-      'Noi ro phu huynh va con nhan duoc gi khi tham gia.',
-      'Visual phai that, co khong khi hoc duong va gia dinh.',
-      'Giọng dieu am ap, ro rang, co bang chung.',
-    ],
-    seoRules: [
-      'Title can co ten event, year, campus neu co.',
-      'Meta description nen noi gia tri su kien va doi tuong phu hop.',
-      'URL gon, dung event slug on dinh.',
-      'Can internal links tu homepage, admissions va campus pages lien quan.',
-    ],
-    enhancementIdeas: [
-      'Them calendar save block va reminder consent flow.',
-      'Dung social proof theo so luong phu huynh da tham gia cac dot truoc.',
-      'Bo sung event FAQ schema neu page co nhiieu Q&A.',
+      'Hero sự kiện với ngày, địa điểm, số lượng giới hạn và CTA.',
+      'Khối quick answer: ai nên tham gia, nhận được gì.',
+      'Timeline chương trình trong ngày.',
+      'Guest speakers / hoạt động / khu trải nghiệm.',
+      'Form đăng ký và FAQ sự kiện.',
+      'CTA cuối trang + link sang campus hoặc tuyển sinh liên quan.',
     ],
     internalLinks: [
-      { title: 'Homepage', href: '/', body: 'Dieu huong campaign tu hero / events strip.' },
-      { title: 'Tuyen Sinh', href: '/tuyen-sinh', body: 'Hub de tiep tuc cho nhom chua san sang dang ky event ngay.' },
-      { title: 'Template listing', href: '/mau-template/', body: 'Quay lai library khi can review them class khac.' },
+      { title: 'Open Day hub', href: '/open-day', body: 'Hub sự kiện dùng để gom và điều phối các event chi tiết.' },
+      { title: 'Campus liên quan', href: '/co-so/go-vap-phan-huy-ich', body: 'Tăng local trust và xem trường trước/sau sự kiện.' },
+      { title: 'Thank-you event', href: '/thank-you/event', body: 'Bước tiếp theo sau khi đăng ký.' },
+    ],
+    productionRoute: '/open-day',
+    schema: ['Event', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Phải có đoạn 40-60 từ nêu rõ ngày, đối tượng tham gia và lợi ích lớn nhất.',
+      'Các mốc thời gian phải ở format text dễ parse và đúng chuẩn ngày giờ.',
+    ],
+    hubspotInspired: [
+      'Event landing là nhánh campaign nhưng vẫn phải link về campus và admissions hub.',
+      'Mọi block đều phải phục vụ một ý định: biến quan tâm thành đăng ký sự kiện.',
+    ],
+    performance: [
+      'Countdown dùng script rất nhẹ hoặc render server-side.',
+      'Video recap lazy-load; ưu tiên poster ở fold đầu.',
     ],
   },
   {
+    classNumber: 4,
     slug: 'class-d-trial-class',
-    classCode: 'Class D',
-    templateClass: 'Trial Class / Hoc Thu Landing',
+    templateClass: 'Class Trial Class / Học Thử Landing (Đăng ký học thử)',
     group: 'Performance',
     theme: 'performance',
-    pageRole: 'Go objection “con co hoa nhap duoc khong?”',
+    pageRole: 'Xử lý nỗi lo hòa nhập và chuyển phụ huynh sang trải nghiệm thật.',
     description:
-      'Template sample nay uu tien pain point, proof va booking flow. No phai rat manh ve tam ly phu huynh nhung khong doạ dan.',
-    audience: 'Warm audience da xem hoc phi / campus nhung chua submit',
+      'Landing học thử cần chạm đúng pain point, có proof cảm xúc và chốt một hành động rất gần với quyết định nhập học.',
+    audience: 'Phụ huynh còn lăn tăn về khả năng hòa nhập của con.',
     funnel: 'MOFU / BOFU',
-    traffic: 'Retargeting, Zalo follow-up, email, remarketing',
+    traffic: 'Retargeting, follow-up sales, Zalo, email',
     cvr: '9-15%',
-    primaryCta: 'Dang ky hoc thu',
-    secondaryCta: 'Nhan Zalo tu van',
-    sampleHeadline: 'Con nhut nhat khong phai la ly do de cham lai. Thu nghiem mot buoi hoc that moi giup gia dinh quyet dinh nhanh hon.',
+    primaryCta: 'Đăng ký học thử',
+    secondaryCta: 'Nhắn Zalo tư vấn',
+    sampleHeadline: 'Con còn nhút nhát? Một buổi học thật sẽ giúp gia đình thấy rõ hơn là đoán nhiều thêm.',
     sampleBody:
-      'Hoc thu landing phai xu ly noi so rat cu the. Neu hero noi chung chung, phu huynh se khong tin rang buoi thu nay thuc su giai quyet duoc van de cua con.',
+      'Trang cần giải tỏa lo lắng rất trực diện: có mất phí không, đi học thử ra sao, bé sẽ được hỗ trợ như thế nào và nên chuẩn bị gì.',
     previewHighlights: [
-      'Pain-point hero phai rat doi thuong va thong cam.',
-      'Video lop hoc that se quan trong hon 10 doan copy dai.',
-      'Calendar chon ngay / gio phai cuc de thao tac.',
-      'Testimonial nen la “sau buoi hoc thu con thay the nao”.',
+      'Hero nói thẳng pain point, không gây áp lực hay hù dọa.',
+      'Có video/lớp học thật và testimonial sau buổi học thử.',
+      'Có lịch chọn ngày giờ ngắn gọn, dễ thao tác.',
+      'Có FAQ về chi phí, người đi kèm, thời gian, chuẩn bị.',
     ],
     blockOrder: [
-      'Pain-point hero va CTA booking.',
-      'Video / visual lop hoc that.',
-      'Lich hoc thu va loi ich cua mot buoi trai nghiem.',
-      'Parent testimonial sau hoc thu.',
-      'Form chon ngay, gio, campus.',
-      'Hotline / Zalo sticky.',
-    ],
-    brandRules: [
-      'Khong doi pain point thanh copy giat gan gay lo lang qua muc.',
-      'Phai giu giong am va vung, cho thay su dong hanh that.',
-      'Proof can rat doi thuong va dang tin.',
-      'CTA phai goi dung next step, khong “chot sale”.',
-    ],
-    seoRules: [
-      'Can H1 cham dung intent hoc thu + level / campus neu co.',
-      'Description nen noi loi ich cua buoi trai nghiem, khong chi noi “dang ky ngay”.',
-      'Internal link toi campus, pillar va thank-you / next-step pages.',
-      'Video / media can toi uu nhe de khong giet mobile speed.',
-    ],
-    enhancementIdeas: [
-      'Them block “phu huynh can chuan bi gi truoc buoi hoc thu”.',
-      'Them FAQ ngan ve thoi gian, so nguoi di cung, dinh dang trang phuc.',
-      'Tao variant rieng cho “be nhut nhat” va “be moi di hoc lan dau”.',
+      'Pain-point hero + CTA học thử.',
+      'Khối answer-first: học thử có gì, có mất phí không.',
+      'Video/lớp học thật và lợi ích của buổi thử.',
+      'Lịch chọn ngày giờ / campus.',
+      'Testimonial sau trải nghiệm.',
+      'FAQ và CTA cuối trang.',
     ],
     internalLinks: [
-      { title: 'Mam Non pillar', href: '/mam-non', body: 'Phu hop neu user can doc sau hon truoc khi booking.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Diem lui an toan neu phu huynh muon xac nhan quy trinh.' },
-      { title: 'Money Page', href: '/hoc-phi', body: 'Cho nhom can lam ro hoc phi truoc khi quyet hoc thu.' },
+      { title: 'Học thử hub', href: '/hoc-thu', body: 'Trang tập trung toàn bộ luồng học thử của hệ thống.' },
+      { title: 'Campus profile', href: '/co-so/mam-non-go-vap-le-duc-tho', body: 'Xem cơ sở và môi trường thật trước khi đặt lịch.' },
+      { title: 'FAQ mầm non', href: '/mam-non/cau-hoi-thuong-gap', body: 'Giải đáp thêm cho nhóm phụ huynh còn nhiều băn khoăn.' },
+    ],
+    productionRoute: '/hoc-thu',
+    schema: ['WebPage', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Dùng BLUF ngay đầu trang: học thử có mất phí không, kéo dài bao lâu, mục tiêu là gì.',
+      'Câu trả lời đầu trang cần đủ ngắn để trở thành featured snippet hoặc AI extract.',
+    ],
+    hubspotInspired: [
+      'Trang này thường là “next-step CTA” đi từ bài Parent Hub hoặc objection page.',
+      'Internal links nên nối sang FAQ, campus và level pillar đúng cấp học.',
+    ],
+    performance: [
+      'Không dùng video auto-play nặng ở fold đầu.',
+      'Date/time picker nên càng nhẹ càng tốt, ưu tiên form ngắn.',
     ],
   },
   {
+    classNumber: 5,
     slug: 'class-f-tiktok-ugc',
-    classCode: 'Class F',
-    templateClass: 'TikTok / Reels Mobile-First UGC Landing',
+    templateClass: 'Class TikTok / Reels Mobile-First UGC Landing (Traffic Video ngắn)',
     group: 'Performance',
     theme: 'performance',
-    pageRole: 'Chuyen doi traffic video ngan tren mobile',
+    pageRole: 'Chuyển traffic video ngắn thành click Zalo hoặc click gọi.',
     description:
-      'Sample nay minh hoa mot page mobile-first rat gon, nhan manh call / Zalo, hook text ngan va visual that. No van giu tone thuong hieu, khong “giong landing ban khoa hoc”.',
-    audience: 'Phu huynh vao tu TikTok, Reels, story ads',
-    funnel: 'TOFU -> MOFU nhanh',
-    traffic: 'TikTok Ads, Reels Ads, social creators, mobile-only traffic',
+      'Trang này phải gần như chỉ dành cho mobile: ít chữ, nhiều tín hiệu tin cậy và CTA luôn nằm trong vùng ngón cái.',
+    audience: 'Phụ huynh vào từ TikTok, Reels, Stories hoặc creator content.',
+    funnel: 'TOFU → MOFU nhanh',
+    traffic: 'TikTok Ads, Reels Ads, social traffic',
     cvr: '7-12%',
-    primaryCta: 'Nhan Zalo ngay',
-    secondaryCta: 'Goi hotline',
-    sampleHeadline: 'Video ngan phai dan ve mot hanh dong cuc ngan. O day do la Zalo, call va niem tin nhanh.',
+    primaryCta: 'Nhắn Zalo ngay',
+    secondaryCta: 'Gọi hotline',
+    sampleHeadline: 'Một trang cho video ngắn phải ngắn đúng nghĩa: rõ, gọn và có đường đi cực nhanh.',
     sampleBody:
-      'Template nay khong duoc thu nho desktop page. No can duoc thiet ke nhu mot trang mobile-first that su: it chu, nhieu hook, CTA noi bat va trust rat co chon loc.',
+      'Đây là dạng page ưu tiên tốc độ tải, hook text 1-2 dòng, visual thật và micro-conversion thay vì form dài.',
     previewHighlights: [
-      'Hero video doc 9:16 la tam diem.',
-      'Text hook ngan, khong paragraph dai.',
-      'Floating Zalo CTA phai luon trong tam tay ngon cai.',
-      'Gallery ngan va call sticky gop y cho user hanh dong ngay.',
+      'Thông thường để noindex, chỉ dùng cho paid/social flows.',
+      'Vertical hero video là điểm nhấn chính.',
+      'CTA Zalo/call phải luôn nổi trên mobile.',
+      'Toàn bộ nội dung phải tải cực nhanh và rất ít script.',
     ],
     blockOrder: [
-      'Hero video vertical.',
-      'Hook text ngan 2-3 dong.',
-      'Floating Zalo CTA.',
-      'Mini gallery / short clips.',
-      'Call sticky va proof sieu ngan.',
-    ],
-    brandRules: [
-      'Van phai giu navy + gold va giong dieu lich su.',
-      'Khong dung visual “sale” qua tay, khong cham icon loan xa.',
-      'Hook duoc phep ngan nhung khong duoc re tien.',
-      'Proof phai la canh hoc sinh that / campus that.',
-    ],
-    seoRules: [
-      'Dau la paid page nhưng van can title / description ro nghia.',
-      'Anh, video va CSS phai toi uu cuc nhe.',
-      'Khong de internal links loang traffic qua nhieu.',
-      'Can event tracking cho Zalo click va call click.',
-    ],
-    enhancementIdeas: [
-      'Them variant theo creators / angle noi dung.',
-      'Test block proof 1 dong vs 3 bullet trust.',
-      'Neu co data du, ca nhan hoa campus gan nhat theo traffic source.',
+      'Vertical hero video + hook text siêu ngắn.',
+      'Trust micro copy: campus thật, hotline thật, review rất ngắn.',
+      'Mini gallery hoặc 2-3 clips cắt nhanh.',
+      'CTA Zalo và gọi ngay cố định.',
+      'Khối fallback sang tuyển sinh hoặc campus nếu cần.',
     ],
     internalLinks: [
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Fallback cho user muon doc sau hon sau khi click social.' },
-      { title: 'Homepage', href: '/', body: 'Trang thuong hieu me de xac nhan niem tin.' },
-      { title: 'Template listing', href: '/mau-template/', body: 'Xem them cac class performance khac.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Bước lui an toàn cho người dùng muốn xem kỹ hơn sau social.' },
+      { title: 'Campus gần nhất', href: '/co-so/go-vap-phan-huy-ich', body: 'Xác nhận trust sau khi xem clip ngắn.' },
+      { title: 'Homepage', href: '/', body: 'Trang thương hiệu mẹ nếu người dùng muốn kiểm tra toàn hệ thống.' },
+    ],
+    productionRoute: '/tuyen-sinh/mam-non-go-vap-video',
+    schema: ['WebPage'],
+    answerFirst: [
+      'Nếu page được index, vẫn cần một đoạn mô tả ngắn ở dưới hero để AI đọc được ngữ cảnh.',
+      'Hook 1-2 dòng phải nói ngay đây là trường gì, ở đâu, CTA là gì.',
+    ],
+    hubspotInspired: [
+      'Một page, một mục tiêu, một CTA chính; không nhồi thêm nhiều intent.',
+      'Đây là page cuối phễu paid, không phải cluster SEO.',
+    ],
+    performance: [
+      'Noindex mặc định nếu page chỉ phục vụ ads.',
+      'Không preload full video, chỉ preload metadata và poster.',
     ],
   },
   {
-    slug: 'class-level-pillar',
-    classCode: 'Class 6',
-    templateClass: 'Level Pillar',
-    group: 'SEO / Authority',
-    theme: 'authority',
-    pageRole: 'Xay topical authority cho tung cap hoc',
+    classNumber: 6,
+    slug: 'class-enrollment-registration-form',
+    templateClass: 'Class Enrollment / Registration Form Landing (Đăng ký nhập học trực tuyến)',
+    group: 'Performance',
+    theme: 'performance',
+    pageRole: 'Cho phép phụ huynh đi thẳng vào bước đăng ký nhập học trực tuyến.',
     description:
-      'Sample nay dai dien cho 4 pillar pages. No can co depth, internal linking, voice giai thich va CTA mem dung luc, khong bi bien thanh paid landing.',
-    audience: 'Phu huynh dang nghien cuu cap hoc va so sanh cac mo hinh',
-    funnel: 'TOFU / MOFU',
-    traffic: 'Organic search, branded search, assisted traffic',
-    cvr: '3-6%',
-    primaryCta: 'Xem cap hoc phu hop',
-    secondaryCta: 'Nhan tu van',
-    sampleHeadline: 'Pillar page phai giai thich du sau de rank, nhung van phai dan user den dung campus va dung CTA.',
-    sampleBody:
-      'Class nay la cot song SEO cua site. Neu viet qua ban hang, no se mat authority. Neu viet qua brochure, no se mat conversion support.',
-    previewHighlights: [
-      'Hero triet ly cap hoc + outcomes phai ro.',
-      'Curriculum, teacher, PDR, campus list va FAQ phai lien mach.',
-      'Internal links sang fee, admissions va campus pages la bat buoc.',
-      'Voice giai thich, am nhung co chuyen mon.',
-    ],
-    blockOrder: [
-      'Hero philosophy theo cap hoc.',
-      'Curriculum highlights va outcomes.',
-      'Teacher / environment proof.',
-      'PDR hoac signature asset block.',
-      'Campus list va internal link hub.',
-      'FAQ + CTA mem.',
-    ],
-    brandRules: [
-      'Khong bien pillar page thanh ad page.',
-      'Noi ro trai nghiem hoc sinh, khong chi liet ke chuong trinh.',
-      'Dung voice giai thich co chieu sau, khong khoa truong.',
-      'Phai the hien du “hanh phuc, thuc dung, tu chu”.',
-    ],
-    seoRules: [
-      'H1 ro, sections co heading logic, internal links day.',
-      'Meta title / desc dung intent cap hoc, khong nham voi admissions.',
-      'FAQ co the them schema. Content phai co proof va updated cadence.',
-      'Anh phai dung cap hoc, dung campus, alt co y nghia.',
-    ],
-    enhancementIdeas: [
-      'Them data-driven campus selector trong hero de route manh hon.',
-      'Bo sung author / expert cue cho trust SEO.',
-      'Them case studies hoc sinh theo cap hoc de tang depth.',
-    ],
-    internalLinks: [
-      { title: 'Mam Non', href: '/mam-non', body: 'Sample live cho pillar cap hoc o wave 1.' },
-      { title: 'Tieu Hoc', href: '/tieu-hoc', body: 'Sample live thu hai de xem cach route sang money page.' },
-      { title: 'THPT', href: '/trung-hoc-pho-thong', body: 'Sample live mang outcome / IELTS ro nhat.' },
-    ],
-  },
-  {
-    slug: 'class-master-campus-profile',
-    classCode: 'Class 7',
-    templateClass: 'Master Campus Profile',
-    group: 'SEO / Authority',
-    theme: 'authority',
-    pageRole: 'Local trust page cho tung campus',
-    description:
-      'Template campus profile can rat that, rat local va rat de book tham quan. Day la noi brand me gap local trust page.',
-    audience: 'Phu huynh dang tim truong gan nha va muon xem campus cu the',
-    funnel: 'MOFU',
-    traffic: 'Local SEO, Maps, branded + local queries',
-    cvr: '4-8%',
-    primaryCta: 'Dat lich tham quan',
-    secondaryCta: 'Goi campus',
-    sampleHeadline: 'Campus page khong duoc la “contact page keo dai”. No phai la mot micro-brand page co niem tin dia phuong that.',
-    sampleBody:
-      'Trang nay phai cho thay dia diem, duong di, anh that, review that va cac cap hoc dang van hanh. Day la “local trust engine” cua toan site.',
-    previewHighlights: [
-      'Map, address, hotline va campus highlights phai o rat som.',
-      'Gallery dung campus, dung cap hoc.',
-      'Review neu co phai theo campus, khong xai review tong.',
-      'CTA tham quan ro hon CTA doc them.',
-    ],
-    blockOrder: [
-      'Hero campus that.',
-      'Address + map + hotline.',
-      'Campus features + gallery.',
-      'Programs available.',
-      'Review carousel by campus.',
-      'Booking CTA + related local pages.',
-    ],
-    brandRules: [
-      'Rat that, rat cu the, khong copy-paste giua cac campus.',
-      'Giu voice brand me nhung phai co mau local.',
-      'Hinh anh phai la campus that va duoc consent.',
-      'So lieu, hotline, dia chi phai chinh truc tuyet doi.',
-    ],
-    seoRules: [
-      'Title va H1 can co ten campus + khu vuc.',
-      'Schema local/business cues nen san sang cho phase sau.',
-      'Internal links sang pillar page level, tuyen sinh va hoc phi.',
-      'Content can unique du de tranh duplicate local pages.',
-    ],
-    enhancementIdeas: [
-      'Them section xe dua don / practical information khi data day du.',
-      'Tich hop review tu Google neu co cache / moderation.',
-      'Them FAQ rieng theo campus khi volume traffic du lon.',
-    ],
-    internalLinks: [
-      { title: 'Homepage', href: '/', body: 'Homepage se dan traffic vao campus pages khi wave 2 live.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Route tiep theo cho user can quy trinh thay vi tour.' },
-      { title: 'Money Page', href: '/hoc-phi', body: 'Diem re cho nhom can xac nhan cost sau khi thay campus.' },
-    ],
-  },
-  {
-    slug: 'class-local-intent',
-    classCode: 'Class 8',
-    templateClass: 'Local Intent Landing',
-    group: 'SEO / Authority',
-    theme: 'authority',
-    pageRole: 'Bat local query dai va dan ve campus dung',
-    description:
-      'Sample nay minh hoa local SEO page khong bi bien thanh doorway page. Noi dung phai co enough unique local proof, enough utility va CTA ro rang.',
-    audience: 'Phu huynh tim truong gan khu vuc / landmark cu the',
-    funnel: 'MOFU / BOFU',
-    traffic: 'Local organic, adjacent-area queries, local ads',
-    cvr: '5-9%',
-    primaryCta: 'Xem co so phu hop',
-    secondaryCta: 'Tu van ngay',
-    sampleHeadline: 'Local intent page tot phai tra loi duoc “gan ai, gan dau, phu hop cho cap hoc nao” trong vai giay dau.',
-    sampleBody:
-      'Template nay can ket hop query-local match, proof local va routing chuan ve campus that. Neu chi thay slug va thay ten quan, no se thanh doorway page.',
-    previewHighlights: [
-      'Hero dynamic local phai co ten khu vuc / landmark ro.',
-      'Quick answer block giai quyet y dinh tim kiem ngay.',
-      'Review va proof can local hon homepage.',
-      'CTA phai dan ve campus that va money / admissions support.',
-    ],
-    blockOrder: [
-      'Dynamic local hero.',
-      'Quick answer block.',
-      'Program + facility summary.',
-      'Local proof / review.',
-      'Form short / CTA short.',
-      'Related campus va pillar links.',
-    ],
-    brandRules: [
-      'Giu gin chinh truc: khong tao local page ma khong co proof thuc.',
-      'Noi dung phai co chat luong utility, khong spin SEO vo hon.',
-      'Voice can ro, gan gui, binh tinh.',
-      'Van giu brand me, khong tach thanh “website khac”.',
-    ],
-    seoRules: [
-      'Can unique 15%+ noi dung va local proof ro rang.',
-      'Title / H1 nen chua level + area.',
-      'Internal links bat buoc toi campus page, pillar va money / admissions.',
-      'Can tranh duplicate mo ta giua cac local pages.',
-    ],
-    enhancementIdeas: [
-      'Them block “tu khu vuc nay den campus mat bao lau”.',
-      'Su dung landmark-aware copy va map snippet cho long-tail manh hon.',
-      'Scale programmatic sau khi da co bo local data du chat luong.',
-    ],
-    internalLinks: [
-      { title: 'Master Campus Profile', href: '/mau-template/class-master-campus-profile/', body: 'Template ban goc ma local page can route ve.' },
-      { title: 'Level Pillar', href: '/mau-template/class-level-pillar/', body: 'Authority layer phia sau local query.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Diem chot hanh dong neu phu huynh san sang.' },
-    ],
-  },
-  {
-    slug: 'class-parent-hub-article',
-    classCode: 'Class 9',
-    templateClass: 'Parent Hub Article',
-    group: 'Mid-funnel / Nurturing',
-    theme: 'nurture',
-    pageRole: 'Keo SEO thong tin va nuoi trust',
-    description:
-      'Template blog / parent hub phai co chieu sau, giup ich that va van giu duoc internal links + CTA mem. No la noi brand voice duoc the hien rat ro.',
-    audience: 'Phu huynh dang tim hieu mot van de giao duc cu the',
-    funnel: 'TOFU / MOFU',
-    traffic: 'Organic informational, PAA, social sharing',
-    cvr: '2-5%',
-    primaryCta: 'Xem chuong trinh phu hop',
-    secondaryCta: 'Nhan tu van mem',
-    sampleHeadline: 'Bai viet phu huynh hub tot phai giup truoc, ban sau. Neu khong, no se thanh content farm.',
-    sampleBody:
-      'Template nay duoc xay de co TOC, heading dang cau hoi, in-content CTA mem va authorial confidence. No phai giong mot tai lieu huu ich, khong phai bai PR dien hinh.',
-    previewHighlights: [
-      'TOC va heading question-based la bat buoc.',
-      'In-content CTA mem chi xuat hien khi da cho user du gia tri.',
-      'Author box va updated date giup trust hon.',
-      'Internal links nen dat ve pillar, campus va FAQ / admissions lien quan.',
-    ],
-    blockOrder: [
-      'Title + intro answer-first.',
-      'TOC.',
-      'Noi dung sau theo heading logic.',
-      'In-content CTA banner.',
-      'Related posts.',
-      'Author box + updated date.',
-    ],
-    brandRules: [
-      'Viet am, co chieu sau va khong phan xet phu huynh.',
-      'Khong spam ten truong qua muc trong moi doan.',
-      'Van phai cho thay triet ly hanh phuc, thuc dung, tu chu.',
-      'Khong dung fear-based copy de “ep” doc them.',
-    ],
-    seoRules: [
-      'Title phai dung intent cau hoi / guide.',
-      'Can TOC, heading ro, internal links va FAQ neu hop ly.',
-      'Anh ho tro vua du, alt dung nghia.',
-      'Meta description nen noi ro user se hoc duoc gi.',
-    ],
-    enhancementIdeas: [
-      'Them author entity that su tu doi ngu giao vien / co van.',
-      'Bo sung infographic / checklist download cho cluster quan trong.',
-      'Xay content clusters co related posts theo cap hoc va topic.',
-    ],
-    internalLinks: [
-      { title: 'Level Pillar', href: '/mau-template/class-level-pillar/', body: 'Dich den authority page phia sau bai viet.' },
-      { title: 'AI-Ready FAQ', href: '/mau-template/class-ai-ready-faq/', body: 'Bo sung answer engine cho long-tail va PAA.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'CTA mem co the route user ve admissions khi da du trust.' },
-    ],
-  },
-  {
-    slug: 'class-comparison-engine',
-    classCode: 'Class 10',
-    templateClass: 'Comparison Engine Page',
-    group: 'Mid-funnel / Nurturing',
-    theme: 'nurture',
-    pageRole: 'Xu ly giai doan can nhac va so sanh',
-    description:
-      'Sample comparison page phai binh tinh, logic va co proof. No khong duoc cong kich doi thu, nhung van phai giup phu huynh thay duoc khac biet cua Viet Anh.',
-    audience: 'Phu huynh dang can nhac giua cac mo hinh truong',
-    funnel: 'MOFU',
-    traffic: 'SEO comparison, retargeting, sales follow-up',
-    cvr: '4-7%',
-    primaryCta: 'Nhan tu van de chon phu hop',
-    secondaryCta: 'Xem hoc phi',
-    sampleHeadline: 'Comparison page tot giup phu huynh quyet dinh tinh tao hon, khong phai bi thuyet phuc bang slogan.',
-    sampleBody:
-      'Trang nay can co dynamic comparison table, unique points, FAQ va CTA mem. Voice phai calm confidence, minh bach va dung tinh than chinh truc cua brand.',
-    previewHighlights: [
-      'Bang so sanh phai de doc tren mobile.',
-      'Unique points cua Viet Anh can noi bang ngon ngu khong tu ton phong dai.',
-      'FAQ giup xu ly tu nhung objection hay gap.',
-      'CTA nen route ve consultation hoac money page, khong ep chot gap.',
-    ],
-    blockOrder: [
-      'Comparison hero.',
-      'Comparison table.',
-      'Unique points cua Viet Anh.',
-      'FAQ compact.',
-      'CTA + internal links.',
-    ],
-    brandRules: [
-      'Khong dung tu “so 1”, “tot nhat”, “duy nhat” neu khong co proof.',
-      'Khong viet theo huong bieu xau doi thu.',
-      'Nhan manh khac biet ve PDR, hanh phuc, tu chu, tieng Anh thuc chien.',
-      'Giữ giong logic, khong phong thu qua muc.',
-    ],
-    seoRules: [
-      'Title can match so-sanh intent ro rang.',
-      'Table co the duoc render bang HTML semantic de may tim kiem doc tot.',
-      'FAQ + internal links sang pillars, hoc phi, admissions la bat buoc.',
-      'Can unique opening copy, khong tao hang loat page nhan ban vo hon.',
-    ],
-    enhancementIdeas: [
-      'Them dynamic data source tu Directus de scale cac trang so sanh.',
-      'Cho phep hide / show cot tren mobile.',
-      'Co moderation layer cho competitor data de tranh stale.',
-    ],
-    internalLinks: [
-      { title: 'Dynamic Comparison', href: '/mau-template/class-dynamic-comparison/', body: 'Phien ban scale du lieu dong cua template so sanh.' },
-      { title: 'Objection Handler', href: '/mau-template/class-objection-handler/', body: 'Template tiep theo cho giai doan do du sau.' },
-      { title: 'Money Page', href: '/hoc-phi', body: 'Diem ve thuong mai phu hop sau khi so sanh.' },
-    ],
-  },
-  {
-    slug: 'class-ai-ready-faq',
-    classCode: 'Class 11',
-    templateClass: 'AI-Ready FAQ / Answer Engine',
-    group: 'Mid-funnel / Nurturing',
-    theme: 'nurture',
-    pageRole: 'Tra loi PAA, AI Overview va voice search',
-    description:
-      'FAQ engine phai de doc, de scan, de goi tiep khi can. No khong chi de giam call trung lap ma con de tro thanh mot lop discoverability rat manh.',
-    audience: 'Phu huynh can cau tra loi nhanh, ro va minh bach',
-    funnel: 'TOFU / MOFU / BOFU nhe',
-    traffic: 'Organic PAA, voice search, support traffic, AI citations',
-    cvr: '3-6%',
-    primaryCta: 'Goi ngay de duoc giai dap sau hon',
-    secondaryCta: 'Nhan Zalo tu van',
-    sampleHeadline: 'FAQ page khong duoc la bai chu da thich. No phai co cau truc, co tab va co CTA dung luc.',
-    sampleBody:
-      'Template nay phai giu tone calm confidence. Moi cau tra loi nen ngan, ro, khong ne cau hoi kho va co duong di tiep theo rat tu nhien.',
-    previewHighlights: [
-      'Tab theo chu de de giam tai nhan thuc.',
-      'Accordion ngan gon, de scan tren mobile.',
-      'CTA duoi moi nhom cau hoi giup chuyen doi mem.',
-      'FAQPage schema la lop SEO quan trong.',
-    ],
-    blockOrder: [
-      'Quick answer hero.',
-      'Tabbed accordion.',
-      'CTA duoi tung nhom cau hoi.',
-      'Short form / contact fallback.',
-      'Related hubs / pillars.',
-    ],
-    brandRules: [
-      'Tra loi bang giong minh bach, binh tinh va co logic.',
-      'Khong ne cau hoi hoc phi, khoang cach, hoa nhap, ap luc.',
-      'Khong do blame len phu huynh khi ho dang lo lang.',
-      'Van giu voice am ap va huu ich.',
-    ],
-    seoRules: [
-      'Can title ro nghia va heading theo y dinh tim kiem.',
-      'FAQPage schema la uu tien cao.',
-      'Internal links toi pillar, money page va admissions hub.',
-      'Accordion content can van nam trong HTML de crawl tot.',
-    ],
-    enhancementIdeas: [
-      'Them search noi bo cho FAQ hub lon.',
-      'Map cau hoi theo level, hoc phi, campus, admissions.',
-      'Lay data cau hoi tu admissions / Zalo de cap nhat dinh ky.',
-    ],
-    internalLinks: [
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Diem chot tiep theo khi FAQ khong du de giai quyet.' },
-      { title: 'Money Page', href: '/hoc-phi', body: 'Phu hop voi nhom FAQ xoay quanh hoc phi.' },
-      { title: 'Parent Hub Article', href: '/mau-template/class-parent-hub-article/', body: 'Layer noi dung sau hon cho nhung chu de can giai thich dai.' },
-    ],
-  },
-  {
-    slug: 'class-homepage',
-    classCode: 'Class 12',
-    templateClass: 'Homepage / Grand Central Station',
-    group: 'System / Utility',
-    theme: 'system',
-    pageRole: 'Dieu phoi traffic va dong bo positioning',
-    description:
-      'Homepage sample cho thay mot trang chu dung vai tro brand router. No khong phai mot banner dep, ma la trang sap xep user vao dung level, dung campus, dung CTA.',
-    audience: 'Moi phu huynh vao tu brand search, direct, referral',
-    funnel: 'All funnel',
-    traffic: 'Branded search, direct, referrals',
-    cvr: '2-4%',
-    primaryCta: 'Dang ky tu van',
-    secondaryCta: 'Chon cap hoc / khu vuc',
-    sampleHeadline: 'Homepage dung chuan se noi ro Viet Anh la ai trong 5-7 giay dau, roi dieu huong user den dung hanh dong.',
-    sampleBody:
-      'Class Homepage can gan toan bo positioning: lien cap, chuyen Anh, hanh phuc, thuc dung, tu chu. No phai co quick filter, proof, route cards va CTA nhe nhung ro.',
-    previewHighlights: [
-      'Hero ngan, ro positioning va co quick routing.',
-      'Stats / proof / level navigation phai dat som.',
-      'Khong duoc nhung qua nhieu thong diep cung luc.',
-      'Homepage phai giu duoc can bang brand va conversion.',
-    ],
-    blockOrder: [
-      'Hero + quick filter.',
-      'Stats / proof.',
-      'Level navigation.',
-      'Campus selector / route cards.',
-      'News / event highlights.',
-      'Main CTA + FAQ compact.',
-    ],
-    brandRules: [
-      'Homepage phai noi giong thuong hieu ro nhat.',
-      'Khong lam thanh brochure hay noi toan slogan rong.',
-      'Visual phai co sinh khi that, hoc sinh that, campus that.',
-      'CTA nhe ma ro, khong qua sale.',
-    ],
-    seoRules: [
-      'Title / description phai positioning dung thuong hieu.',
-      'Heading hierarchy can rat sach.',
-      'Internal links toi pillars, admissions, money page va template listing / campaigns.',
-      'Hero media phai nhe de homepage van nhanh.',
-    ],
-    enhancementIdeas: [
-      'Them quick filter that su theo level + location o production.',
-      'Them event strip dong tu Directus cho campaign theo mua.',
-      'Bo sung visual “student presenting to parents” nhu signature narrative asset.',
-    ],
-    internalLinks: [
-      { title: 'Homepage live', href: '/', body: 'Trang chu wave 1 dang live tren staging.' },
-      { title: 'Template listing', href: '/mau-template/', body: 'Danh muc 16 sample templates de doi team review.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Hub conversion chinh duoc homepage route vao.' },
-    ],
-  },
-  {
-    slug: 'class-smart-thank-you',
-    classCode: 'Class 13',
-    templateClass: 'Smart Thank-You Page',
-    group: 'System / Utility',
-    theme: 'system',
-    pageRole: 'Giu lead nong va day next-step sau submit',
-    description:
-      'Thank-you page sample cho thay cach giu nhiet lead, fire tracking va route sang hanh dong tiep theo. Day la page hay bi lam so sai nhat.',
-    audience: 'Nguoi vua submit form hoac vua dang ky',
-    funnel: 'Post-conversion',
-    traffic: 'Post-submit flows',
-    cvr: '15-25% next-step',
-    primaryCta: 'Dat lich tham quan',
-    secondaryCta: 'Nhan Zalo / tai tai lieu',
-    sampleHeadline: 'Thank-you page khong duoc ket thuc trai nghiem. No phai mo ra buoc tiep theo ro rang va huu ich.',
-    sampleBody:
-      'Class nay cuc ky quan trong cho performance va CRM. Neu lam tot, no tang quality cua lead ngay sau submit ma khong can spam. Neu lam kem, no bo roi user cho sales.',
-    previewHighlights: [
-      'Thank-you message can am, gon va ro buoc tiep theo.',
-      'Next-step blocks phai theo loai form vua submit.',
-      'Pixel fire va event tracking can chinh xac.',
-      'Nen co video / trust nhe de giu nhiet lead.',
-    ],
-    blockOrder: [
-      'Thank-you headline va dynamic context.',
-      'Next-step blocks theo form type.',
-      'Trust / video ngan.',
-      'Hidden tracking / conversion event block.',
-      'Optional support links.',
-    ],
-    brandRules: [
-      'Giong cham soc, khong spam, khong “ban tiep” qua gap.',
-      'Loi hua phan hoi phai thuc te.',
-      'Trang nay phai cho thay su chuyen nghiep va chu dao.',
-      'Khong bo trong man hinh voi chi 1 cau “cam on”.',
-    ],
-    seoRules: [
-      'Vi la page hau submit, production nen can nhac noindex.',
-      'Can tracking events ro rang hon la SEO traffic.',
-      'URL / title van nen ro nghia theo form type.',
-      'Khong can nhieu internal links lam loang next-step.',
-    ],
-    enhancementIdeas: [
-      'Ca nhan hoa theo campus, level, form type.',
-      'Them QR / deep link vao Zalo group theo campus.',
-      'Tieptuc dong bo voi GHL workflow de gui PDF / nhac lich tu dong.',
-    ],
-    internalLinks: [
-      { title: 'Campus Tour', href: '/mau-template/class-b-campus-tour/', body: 'Next-step rat hop ly cho lead fee / consultation.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Fallback khi user muon doc lai quy trinh.' },
-      { title: 'Homepage', href: '/', body: 'Chi nen cho phep ve homepage rat nhe, khong nen la CTA chinh.' },
-    ],
-  },
-  {
-    slug: 'class-dynamic-comparison',
-    classCode: 'Class 14',
-    templateClass: 'Dynamic Comparison Page',
-    group: 'System / Utility',
-    theme: 'system',
-    pageRole: 'Scale nhieu page so sanh bang data dong',
-    description:
-      'Template nay gan voi Comparison Engine nhung dat nang hon vao kha nang scale thong qua data tu CMS. No phai co narrative va governance, khong chi la table dong.',
-    audience: 'Phu huynh va doi team can mo rong nhieu page so sanh',
-    funnel: 'MOFU',
-    traffic: 'SEO comparison, internal linking, sales enablement',
-    cvr: '4-7%',
-    primaryCta: 'Nhan tu van de chon phu hop',
-    secondaryCta: 'Xem page so sanh gan',
-    sampleHeadline: 'So sanh dong chi huu ich khi du lieu duoc quan ly ky va moi page van giu duoc giong thuong hieu.',
-    sampleBody:
-      'Class nay duoc thiet ke cho giai doan scale. CMS se bom data vao table nhung page van can opening copy, unique points, FAQ va CTA ro rang de khong tro thanh table vo hon.',
-    previewHighlights: [
-      'Data-driven nhung van can narrative mo dau.',
-      'Table can responsive, co governance va cap nhat dinh ky.',
-      'Can unique angle cho tung page so sanh.',
-      'CTA va internal links phai ro nhu comparison engine thuong.',
-    ],
-    blockOrder: [
-      'Hero / opening narrative.',
-      'Dynamic comparison table.',
-      'Unique points / interpretation.',
-      'FAQ va CTA.',
-      'Related comparisons.',
-    ],
-    brandRules: [
-      'Chinh truc trong data la bat buoc.',
-      'Khong dung dynamic scale de xuat ban hang loat noi dung chat luong thap.',
-      'Voice van phai calm confidence.',
-      'Noi su khac biet bang proof, khong bang tu khoa truong.',
-    ],
-    seoRules: [
-      'Moi page dynamic van can title / meta / intro unique.',
-      'Tranh thin content va duplicate headings.',
-      'Internal links giua cluster comparison pages can co chu dich.',
-      'Schema / structured data co the them o phase sau neu table on dinh.',
-    ],
-    enhancementIdeas: [
-      'Them workflow review competitor data hang quy.',
-      'Cache / snapshot so sanh de tranh stale khong kiem soat.',
-      'Cho phep an hien rows tren mobile theo interest cua phu huynh.',
-    ],
-    internalLinks: [
-      { title: 'Comparison Engine', href: '/mau-template/class-comparison-engine/', body: 'Ban “manual” can bang giua narrative va comparison.' },
-      { title: 'Money Page', href: '/hoc-phi', body: 'Diem sang thuong mai hop ly sau khi so sanh.' },
-      { title: 'Admissions Hub', href: '/tuyen-sinh', body: 'Diem chot hanh dong tiep theo.' },
-    ],
-  },
-  {
-    slug: 'class-objection-handler',
-    classCode: 'Class 15',
-    templateClass: 'Objection Handler Page',
-    group: 'System / Utility',
-    theme: 'system',
-    pageRole: 'Go cac phan doi nhu hoc phi, nha xa, be nhut nhat',
-    description:
-      'Template nay giai quyet nhung cau hoi kho nhat bang giọng binh tinh, co logic va co proof. Day la noi thuong hieu the hien su chinh truc rat ro.',
-    audience: 'Phu huynh da gan ra quyet dinh nhung van con lo lang',
-    funnel: 'MOFU / BOFU',
-    traffic: 'Retargeting, sales follow-up, organic objection queries',
-    cvr: '6-10%',
-    primaryCta: 'Nhan tu van phu hop',
-    secondaryCta: 'Dang ky hoc thu / tham quan',
-    sampleHeadline: 'Objection page tot khong tranh cau hoi kho. No giup phu huynh binh tam hon va quyet dinh tinh tao hon.',
-    sampleBody:
-      'Template nay co the rat manh neu duoc viet dung giong: minh bach, logic, khong phong thu. Neu viet sai, no se tro thanh page “giai thich quanh co” va lam mat trust.',
-    previewHighlights: [
-      'Hero can goi dung noi lo that, khong nao long user.',
-      'Accordion objections nen co proof kem theo.',
-      'CTA phai dan sang buoc giai quyet phu hop nhat.',
-      'Sales co the gui link page nay trong qua trinh follow-up.',
-    ],
-    blockOrder: [
-      'Pain-point hero.',
-      'Objection accordion.',
-      'Proof block / testimonial.',
-      'CTA call / Zalo / trial / tour.',
-      'Related resources.',
-    ],
-    brandRules: [
-      'Binh tinh, minh bach va khong defensive.',
-      'Noi thang vao cau hoi kho, khong ne tranh.',
-      'Dung proof that, vi du that, khong khoe rong.',
-      'Van giu tone am va ton trong phu huynh.',
-    ],
-    seoRules: [
-      'Title / H1 co the bat objection intent ro rang.',
-      'Can internal links sang fee, trial, tour, campus tuong ung.',
-      'Structured FAQ co the huu ich neu page dung accordion.',
-      'Page nen co intro unique va khong qua ngan de tranh thin content.',
-    ],
-    enhancementIdeas: [
-      'Tao cluster objection pages theo 4-5 noi lo lon nhat.',
-      'Dong bo voi FAQ engine de tranh noi dung trung lap vo ich.',
-      'Them proof video ngan cho objection ve hoa nhap hoac ap luc hoc.',
-    ],
-    internalLinks: [
-      { title: 'Trial Class', href: '/mau-template/class-d-trial-class/', body: 'Giai phap tot cho objection “be nhut nhat”.' },
-      { title: 'Money Page', href: '/hoc-phi', body: 'Diem tiep theo cho objection lien quan hoc phi.' },
-      { title: 'Campus Tour', href: '/mau-template/class-b-campus-tour/', body: 'Giai phap hop ly cho objection “muon xem truong that”.' },
-    ],
-  },
-  {
-    slug: 'class-retention-referral',
-    classCode: 'Class 16',
-    templateClass: 'Retention & Referral Page',
-    group: 'System / Utility',
-    theme: 'system',
-    pageRole: 'Tang LTV qua referral, loyalty va event upsell',
-    description:
-      'Sample retention page nhac rang website khong chi dung o admissions. Sau khi nhap hoc, brand voice van can tiep tuc ro, am va chuyen nghiep.',
-    audience: 'Phu huynh hien tai trong he thong Viet Anh',
-    funnel: 'Post-enrollment / loyalty',
-    traffic: 'Email, Zalo CRM, internal communications',
+      'Trang form nhập học cần tối đa hóa độ rõ ràng, giảm friction và hỗ trợ phụ huynh hoàn tất hồ sơ mà không phải đoán bước tiếp theo.',
+    audience: 'Phụ huynh đã đủ tin tưởng và muốn đăng ký nhập học trực tiếp.',
+    funnel: 'BOFU',
+    traffic: 'Brand search, CRM follow-up, admissions, remarketing',
     cvr: '8-12%',
-    primaryCta: 'Gioi thieu ban be',
-    secondaryCta: 'Dang ky su kien / trai nghiem tiep',
-    sampleHeadline: 'Retention page tot giu duoc cam giac duoc cham soc, khong bien phu huynh hien tai thanh target bi ban hang.',
+    primaryCta: 'Bắt đầu đăng ký nhập học',
+    secondaryCta: 'Liên hệ tuyển sinh',
+    sampleHeadline: 'Khi gia đình đã sẵn sàng, trang đăng ký cần chỉ còn một việc: giúp hoàn tất hồ sơ thật dễ.',
     sampleBody:
-      'Template nay dung cho referral va loyalty. No phai rat ro phan thuong, rat ro loi ich va van giu duoc tinh te cua thuong hieu giao duc.',
+      'Nội dung phải làm rõ điều kiện, hồ sơ cần chuẩn bị, thời gian xử lý và nơi liên hệ nếu gặp vướng mắc giữa chừng.',
     previewHighlights: [
-      'Thong diep cam on va ghi nhan phai di truoc.',
-      'Referral form gon, khong doi qua nhieu thong tin.',
-      'Loyalty offer phai ro, khong mo ho.',
-      'CTA event / summer camp la huong mo rong LTV hop ly.',
+      'Có checklist hồ sơ rõ ràng trước form.',
+      'Có timeline các bước sau khi submit.',
+      'Có CTA liên hệ Admissions khi phụ huynh chưa đủ giấy tờ.',
+      'Có nhắc về bảo mật thông tin và xác nhận tiếp nhận hồ sơ.',
     ],
     blockOrder: [
-      'Retention thank-you hero.',
-      'Referral form block.',
-      'Loyalty offer / explanation.',
-      'Event CTA / summer camp CTA.',
-      'Support info / FAQ ngan.',
-    ],
-    brandRules: [
-      'Am, ro, chuyen nghiep va ton trong phu huynh hien tai.',
-      'Khong qua salesy vi day la giai doan loyalty.',
-      'Neu co phan thuong, phai noi ro va minh bach.',
-      'Van giu mot giong thong nhat voi homepage va admissions.',
-    ],
-    seoRules: [
-      'Phan lon traffic se den tu CRM nen SEO khong phai uu tien so 1.',
-      'Neu page public, van can title / description ro nghia.',
-      'Can can nhac noindex tuy theo role cua page.',
-      'CTA phai it va rat muc tieu.',
-    ],
-    enhancementIdeas: [
-      'Noi vao GHL workflow referral tracking va reward status.',
-      'Them history / dashboard nhe cho phu huynh neu san pham phat trien sau nay.',
-      'Phan tan theo campus neu loyalty offers khac nhau.',
+      'Hero xác nhận đây là bước đăng ký chính thức.',
+      'Checklist hồ sơ và điều kiện tối thiểu.',
+      'Timeline xử lý hồ sơ.',
+      'Form đăng ký trực tuyến / CRM embed.',
+      'FAQ về giấy tờ, thời gian, xác nhận.',
+      'Khối liên hệ admissions và thank-you path.',
     ],
     internalLinks: [
-      { title: 'Open Day / Event', href: '/mau-template/class-c-open-day/', body: 'Vi du ve event CTA co the noi vao retention.' },
-      { title: 'Smart Thank-You', href: '/mau-template/class-smart-thank-you/', body: 'Lien ket quan trong trong he thong post-conversion.' },
-      { title: 'Homepage', href: '/', body: 'Neu can quay lai trang thuong hieu me.' },
+      { title: 'Admissions hub', href: '/tuyen-sinh', body: 'Xem lại quy trình tuyển sinh tổng trước khi vào form.' },
+      { title: 'Điều kiện nhập học', href: '/tuyen-sinh/ho-so-nhap-hoc', body: 'Xác minh giấy tờ và yêu cầu trước khi nộp.' },
+      { title: 'Học phí', href: '/hoc-phi', body: 'Đối chiếu tài chính trước khi hoàn tất đăng ký.' },
+    ],
+    productionRoute: '/dang-ky-tu-van',
+    schema: ['WebPage', 'HowTo', 'BreadcrumbList'],
+    answerFirst: [
+      'Ngay đầu trang phải nói rõ ai nên dùng form này, cần chuẩn bị gì và thời gian phản hồi bao lâu.',
+      'Bước tiếp theo sau khi gửi hồ sơ cần được mô tả thật cụ thể để AI và người dùng hiểu giống nhau.',
+    ],
+    hubspotInspired: [
+      'Đây là conversion endpoint, nên nhận traffic chủ yếu từ admissions hub, fee pages và follow-up channels.',
+      'Mọi khối trên trang đều phải giảm friction cho hành động submit form.',
+    ],
+    performance: [
+      'Embed CRM phải lazy-load hoặc tối ưu, tránh làm chậm initial render.',
+      'Checklist và timeline nên render thuần HTML.',
+    ],
+  },
+  {
+    classNumber: 7,
+    slug: 'class-level-pillar',
+    templateClass: 'Class Level Pillar (Trang Trụ cột Cấp học)',
+    group: 'SEO / Authority',
+    theme: 'authority',
+    pageRole: 'Pillar page bao phủ toàn bộ một cấp học và điều phối traffic về cluster, campus, admissions.',
+    description:
+      'Đây là xương sống SEO của từng cấp học: đủ sâu để giữ authority, đủ rõ để dẫn phụ huynh sang campus, học phí và tuyển sinh.',
+    audience: 'Phụ huynh đang nghiên cứu cấp học và mô hình phù hợp.',
+    funnel: 'TOFU / MOFU',
+    traffic: 'Organic, brand search, AI Overviews, internal navigation',
+    cvr: '3-6%',
+    primaryCta: 'Xem cơ sở phù hợp',
+    secondaryCta: 'Nhận tư vấn',
+    sampleHeadline: 'Một pillar page tốt không chỉ để rank; nó còn phải giúp phụ huynh hiểu đúng cấp học và biết bước tiếp theo nên làm gì.',
+    sampleBody:
+      'Trang phải bao phủ triết lý, chương trình, outcomes, môi trường học tập, FAQ và route sang campus, học phí, tuyển sinh.',
+    previewHighlights: [
+      'Có answer-first intro và mục lục bám dính.',
+      'Cấu trúc H2/H3 theo ontology của cấp học.',
+      'Có internal links hai chiều tới cluster articles và campus.',
+      'Có FAQ cuối trang và CTA mềm đúng giai đoạn cân nhắc.',
+    ],
+    blockOrder: [
+      'Hero triết lý cấp học + answer-first intro.',
+      'Mục lục bám dính và quick facts.',
+      'Chương trình, outcomes, phương pháp và môi trường.',
+      'Khối giáo viên, PDR và điểm khác biệt.',
+      'Campus list, học phí, tuyển sinh, blog cluster links.',
+      'FAQ + CTA sang campus hoặc admissions.',
+    ],
+    internalLinks: [
+      { title: 'Mầm non', href: '/mam-non', body: 'Ví dụ production route của một pillar page.' },
+      { title: 'Học phí', href: '/hoc-phi/mam-non', body: 'Money page đi cùng pillar ở giai đoạn MOFU/BOFU.' },
+      { title: 'Campus profile', href: '/co-so/mam-non-go-vap-le-duc-tho', body: 'Trang local trust được pillar đẩy traffic xuống.' },
+    ],
+    productionRoute: '/mam-non',
+    schema: ['CollectionPage', 'EducationalOrganization', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Đoạn mở đầu 40-60 từ phải trả lời cấp học này dành cho ai, khác biệt gì và có những bước tiếp theo nào.',
+      'Ngay đầu trang nên có quick-answer box cho 3 truy vấn lớn: chương trình, học phí, tuyển sinh.',
+    ],
+    hubspotInspired: [
+      'Đây là pillar page đúng nghĩa: phải comprehensive và liên kết chặt với các cluster content cùng chủ đề.',
+      'Mỗi cluster article phải trỏ ngược về pillar bằng anchor text gần với keyword chính.',
+    ],
+    performance: [
+      'TOC nên dùng HTML/CSS hoặc JS cực nhẹ.',
+      'Giảm media ở fold đầu; ưu tiên text-first và proof blocks gọn.',
+    ],
+  },
+  {
+    classNumber: 8,
+    slug: 'class-curriculum-program-overview',
+    templateClass: 'Class Curriculum / Program Overview (Chương trình học chi tiết)',
+    group: 'SEO / Authority',
+    theme: 'authority',
+    pageRole: 'Đi sâu vào cấu trúc chương trình, môn học, outcomes và lộ trình học.',
+    description:
+      'Đây là trang support authority cho pillar, dùng để giải thích chi tiết chương trình học mà không làm loãng trang trụ cột.',
+    audience: 'Phụ huynh cần xem sâu hơn về học thuật và nội dung học tập.',
+    funnel: 'MOFU',
+    traffic: 'Organic informational, internal navigation, AI answers',
+    cvr: '2-5%',
+    primaryCta: 'Nhận tư vấn chương trình',
+    secondaryCta: 'Xem campus áp dụng',
+    sampleHeadline: 'Khi phụ huynh hỏi “con sẽ học gì ở đây?”, trang chương trình phải trả lời thật rõ và thật dễ hiểu.',
+    sampleBody:
+      'Trang cần trình bày lộ trình học, cấu trúc môn học, outcomes và cách đo tiến bộ, theo ngôn ngữ thực dụng chứ không chỉ là brochure học thuật.',
+    previewHighlights: [
+      'Có bảng lộ trình môn học hoặc outcomes theo giai đoạn.',
+      'Có giải thích “học gì, rèn gì, đầu ra gì”.',
+      'Có liên kết ngược về pillar và admissions/tuition liên quan.',
+      'Có schema phù hợp để AI hiểu đây là trang giải thích chương trình.',
+    ],
+    blockOrder: [
+      'Hero chương trình + quick answer.',
+      'Bảng overview chương trình hoặc roadmap học tập.',
+      'Môn học cốt lõi, kỹ năng, tiếng Anh, PDR.',
+      'Cách đánh giá tiến bộ và outcomes.',
+      'FAQ học thuật và CTA tư vấn.',
+      'Liên kết sang pillar, campus, học phí, tuyển sinh.',
+    ],
+    internalLinks: [
+      { title: 'Level pillar', href: '/mam-non', body: 'Trở lại pillar chính của cấp học để nhìn tổng quan hơn.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Xem bước tiếp theo nếu đã phù hợp về chương trình.' },
+      { title: 'FAQ', href: '/faq', body: 'Giải đáp thêm các câu hỏi học thuật và vận hành.' },
+    ],
+    productionRoute: '/mam-non/chuong-trinh',
+    schema: ['Course', 'ItemList', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu phải nói rõ chương trình này dành cho giai đoạn nào và khác biệt cốt lõi nằm ở đâu.',
+      'Bảng hoặc list summary đầu trang giúp AI và phụ huynh nắm cấu trúc chương trình rất nhanh.',
+    ],
+    hubspotInspired: [
+      'Đây là support page trong cluster “program / curriculum”; luôn phải trỏ ngược về pillar.',
+      'Các subtopic như tiếng Anh, kỹ năng, PDR nên được chia heading rõ ràng thay vì nhồi vào một khối dài.',
+    ],
+    performance: [
+      'Bảng curriculum phải là HTML semantic, không render bằng ảnh.',
+      'Không dùng slider cho phần nội dung học thuật dài.',
+    ],
+  },
+  {
+    classNumber: 9,
+    slug: 'class-master-campus-profile',
+    templateClass: 'Class Master Campus Profile (Trang Chi tiết Cơ sở)',
+    group: 'SEO / Authority',
+    theme: 'authority',
+    pageRole: 'Trang hồ sơ campus chuẩn cho local SEO, local trust và bridge sang tham quan / tư vấn.',
+    description:
+      'Trang campus phải cho thấy đây là một nơi thật, có đội ngũ thật, có địa chỉ thật và phụ huynh có thể đến thật.',
+    audience: 'Phụ huynh đang tìm trường theo khu vực hoặc campus cụ thể.',
+    funnel: 'MOFU',
+    traffic: 'Local search, branded local, Maps, referrals',
+    cvr: '4-8%',
+    primaryCta: 'Đặt lịch tham quan',
+    secondaryCta: 'Gọi campus',
+    sampleHeadline: 'Trang cơ sở không được chỉ là “contact page kéo dài”; nó phải là local trust page thực thụ.',
+    sampleBody:
+      'Trang cần có ảnh campus thật, map thật, review thật, cấp học đang vận hành và đường dẫn rõ sang tuyển sinh, học phí, school tour.',
+    previewHighlights: [
+      'Có NAP, map, review và gallery thật.',
+      'Có cấp học đang mở tại cơ sở này.',
+      'Có CTA tham quan / gọi / Zalo rõ ràng.',
+      'Có local keywords và landmarks xuất hiện tự nhiên trong nội dung.',
+    ],
+    blockOrder: [
+      'Hero cơ sở với tên campus, địa chỉ, hotline.',
+      'Khối quick facts: cấp học, giờ hoạt động, bản đồ, chỉ đường.',
+      'Gallery thực tế và điểm mạnh campus.',
+      'Review / testimonial địa phương.',
+      'Thông tin practical: xe đưa đón, ăn bán trú, liên hệ.',
+      'CTA tour + link sang học phí, tuyển sinh, FAQ.',
+    ],
+    internalLinks: [
+      { title: 'Tham quan trường', href: '/tham-quan-truong', body: 'Chuyển từ trust sang hành động tham quan thực tế.' },
+      { title: 'Học phí', href: '/hoc-phi', body: 'Điểm money intent sau khi đã xem campus.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Admissions hub cho giai đoạn quyết định.' },
+    ],
+    productionRoute: '/co-so/go-vap-phan-huy-ich',
+    schema: ['LocalBusiness', 'EducationalOrganization', 'AggregateRating', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu phải nói rõ cơ sở ở đâu, có các cấp học nào và phù hợp với nhóm phụ huynh nào.',
+      'Nên có một đoạn mô tả vị trí campus bằng landmarks thật để hỗ trợ local AI answers.',
+    ],
+    hubspotInspired: [
+      'Campus profile là local hub, cần nhận link từ pillar và local intent pages.',
+      'Nội dung local phải đủ unique để không biến thành phiên bản copy-paste của campus khác.',
+    ],
+    performance: [
+      'Map và review embed phải lazy-load.',
+      'Ảnh campus nên dùng gallery nhẹ, tránh carousel phức tạp ở mobile.',
+    ],
+  },
+  {
+    classNumber: 10,
+    slug: 'class-virtual-tour-360',
+    templateClass: 'Class Virtual Tour 360° / Interactive Campus Map (Tham quan thực tế ảo)',
+    group: 'SEO / Authority',
+    theme: 'authority',
+    pageRole: 'Cho phép phụ huynh xem campus theo hướng tương tác trước khi đến trực tiếp.',
+    description:
+      'Trang này giúp tăng trust và giảm khoảng cách trước tour thật, nhưng phải rất cẩn trọng với tốc độ tải và tính crawlable.',
+    audience: 'Phụ huynh ở xa, bận rộn hoặc muốn xem campus kỹ trước khi đến.',
+    funnel: 'MOFU',
+    traffic: 'Internal, local SEO support, follow-up sales',
+    cvr: '3-6%',
+    primaryCta: 'Khám phá campus',
+    secondaryCta: 'Đặt lịch tham quan thật',
+    sampleHeadline: 'Virtual tour tốt không phải là widget nặng; nó phải giúp phụ huynh hình dung không gian thật mà vẫn tải nhanh.',
+    sampleBody:
+      'Trang cần vừa có trải nghiệm khám phá campus, vừa có phiên bản text-first để AI và search engine hiểu bối cảnh, vị trí và tiện ích của cơ sở.',
+    previewHighlights: [
+      'Có map tương tác hoặc tour 360 nhưng vẫn có quick summary bằng text.',
+      'Có hotspots nêu rõ từng khu chức năng bằng ngôn ngữ dễ hiểu.',
+      'Có CTA chuyển sang tour thật và campus profile.',
+      'Có fallback nếu thiết bị không hỗ trợ trải nghiệm nặng.',
+    ],
+    blockOrder: [
+      'Hero campus + answer-first summary.',
+      'Quick facts về cơ sở và mục đích của virtual tour.',
+      'Interactive tour / map 360 với hotspots.',
+      'Giải thích từng khu vực bằng text, list hoặc card.',
+      'Khối FAQ / chuẩn bị cho school tour.',
+      'CTA book visit thật và xem campus profile đầy đủ.',
+    ],
+    internalLinks: [
+      { title: 'Campus profile', href: '/co-so/go-vap-phan-huy-ich', body: 'Xem toàn bộ hồ sơ cơ sở bên cạnh tour ảo.' },
+      { title: 'School tour', href: '/tham-quan-truong', body: 'Đi tiếp sang lịch tham quan thật.' },
+      { title: 'Liên hệ hệ thống', href: '/lien-he', body: 'Liên hệ nhanh nếu gia đình cần hỗ trợ chọn cơ sở.' },
+    ],
+    productionRoute: '/co-so/go-vap-phan-huy-ich',
+    schema: ['Place', 'ImageGallery', 'BreadcrumbList'],
+    answerFirst: [
+      'Ngay đầu trang cần nói rõ đây là virtual tour của cơ sở nào và phụ huynh sẽ xem được những gì.',
+      'Các khu vực trong tour phải có mô tả text vì AI không thể hiểu từ ảnh 360 đơn thuần.',
+    ],
+    hubspotInspired: [
+      'Trang này là proof support page; nhận traffic từ campus hub, local pages và follow-up channels.',
+      'Không nên đứng độc lập, luôn cần route sang campus profile và tour booking.',
+    ],
+    performance: [
+      'Chỉ tải tour 360 sau tương tác hoặc dưới fold đầu.',
+      'Luôn có fallback ảnh tĩnh + text cho mobile yếu.',
+    ],
+  },
+  {
+    classNumber: 11,
+    slug: 'class-local-intent',
+    templateClass: 'Class Local Intent Landing (Programmatic SEO Local)',
+    group: 'SEO / Authority',
+    theme: 'authority',
+    pageRole: 'Bắt truy vấn địa phương dài và dẫn đúng về campus thật.',
+    description:
+      'Đây là local landing dạng programmatic nhưng phải có local proof, copy unique và route đúng sang cơ sở chứ không được thành doorway page.',
+    audience: 'Phụ huynh tìm trường gần khu vực, landmark hoặc quận cụ thể.',
+    funnel: 'MOFU / BOFU',
+    traffic: 'Local organic, “near me”, adjacent-area queries',
+    cvr: '5-9%',
+    primaryCta: 'Xem cơ sở phù hợp',
+    secondaryCta: 'Tư vấn ngay',
+    sampleHeadline: 'Trang local tốt phải trả lời rất nhanh: gần ai, gần đâu, cấp học nào và campus nào phù hợp nhất.',
+    sampleBody:
+      'Local intent landing cần có đoạn giới thiệu riêng cho cộng đồng địa phương, landmarks, tiện ích lân cận và bằng chứng campus thật.',
+    previewHighlights: [
+      'Có intro local độc bản, không chỉ thay tên quận trong slug.',
+      'Có quick answer, khoảng cách, campus đề xuất và CTA rõ.',
+      'Có proof campus, review và link sang học phí/tuyển sinh.',
+      'Có local query coverage nhưng vẫn đủ chất lượng nội dung.',
+    ],
+    blockOrder: [
+      'Dynamic local hero với khu vực / landmark.',
+      'Quick answer block và campus đề xuất.',
+      'Khối local proof, review, tiện ích xung quanh.',
+      'Thông tin chương trình / cấp học liên quan.',
+      'Form ngắn hoặc CTA tư vấn.',
+      'Links sang campus, học phí, tuyển sinh, FAQ.',
+    ],
+    internalLinks: [
+      { title: 'Campus tổng', href: '/co-so', body: 'Hub campus để xem toàn bộ các cơ sở trong hệ thống.' },
+      { title: 'Campus profile', href: '/co-so/mam-non-go-vap-le-duc-tho', body: 'Trang đích local trust phía sau local intent.' },
+      { title: 'Học phí mầm non', href: '/hoc-phi/mam-non', body: 'Money page hỗ trợ nếu phụ huynh đang cân nhắc về chi phí.' },
+    ],
+    productionRoute: '/tuyen-sinh/mam-non-go-vap',
+    schema: ['WebPage', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Intro 40-60 từ phải nói rõ khu vực này gần campus nào và phù hợp cấp học nào.',
+      'Nếu có “near me” intent, nên mô tả campus theo landmarks xung quanh thay vì chỉ ghi địa chỉ khô.',
+    ],
+    hubspotInspired: [
+      'Đây là local cluster page; luôn trỏ về master campus profile và level pillar.',
+      'Mỗi trang phải unique đủ để tránh bị xem là doorway content.',
+    ],
+    performance: [
+      'Text-first, chỉ 1-2 ảnh proof cốt lõi.',
+      'Không nhúng quá nhiều maps hoặc widgets cho nhóm local pages hàng loạt.',
+    ],
+  },
+  {
+    classNumber: 12,
+    slug: 'class-parent-hub-article',
+    templateClass: 'Class Parent Hub Article (Blog Kiến thức Phụ huynh)',
+    group: 'Mid-funnel / Nurturing',
+    theme: 'nurture',
+    pageRole: 'Cluster content kéo traffic thông tin và nuôi trust cho phụ huynh.',
+    description:
+      'Bài Parent Hub phải giúp ích thực sự, có kết cấu dễ scan, có authorial confidence và route mềm sang chương trình, campus hoặc admissions.',
+    audience: 'Phụ huynh đang tìm giải pháp cho một câu hỏi giáo dục cụ thể.',
+    funnel: 'TOFU / MOFU',
+    traffic: 'Organic informational, AI answers, social sharing',
+    cvr: '2-5%',
+    primaryCta: 'Xem chương trình phù hợp',
+    secondaryCta: 'Nhận tư vấn nhẹ nhàng',
+    sampleHeadline: 'Một bài Parent Hub tốt phải giải quyết câu hỏi của phụ huynh trước, rồi mới xin quyền được đồng hành tiếp.',
+    sampleBody:
+      'Cấu trúc nên theo logic vấn đề → nguyên nhân → giải pháp → cách Việt Anh áp dụng, có TOC, bullets, FAQ và CTA rất mềm.',
+    previewHighlights: [
+      'Có BLUF ở mở bài và TOC rõ ràng.',
+      'Có list/bullets để AI parse tốt hơn.',
+      'Có author box và ngày cập nhật.',
+      'Có internal link trỏ về pillar, FAQ và campus liên quan.',
+    ],
+    blockOrder: [
+      'Title + answer-first intro.',
+      'Mục lục và summary points.',
+      'Các H2/H3 theo vấn đề, nguyên nhân, giải pháp.',
+      'In-content CTA mềm ở giữa bài.',
+      'FAQ hoặc snippets box.',
+      'Author box, related posts, CTA cuối bài.',
+    ],
+    internalLinks: [
+      { title: 'Pillar mầm non', href: '/mam-non', body: 'Trang trụ cột của cấp học liên quan đến bài viết.' },
+      { title: 'FAQ hub', href: '/faq', body: 'Tăng route sang answer engine khi người dùng cần câu trả lời nhanh hơn.' },
+      { title: 'Tư vấn tuyển sinh', href: '/dang-ky-tu-van', body: 'CTA mềm dành cho người đã đủ niềm tin.' },
+    ],
+    productionRoute: '/phu-huynh/cach-chon-truong-mam-non',
+    schema: ['Article', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở bài 40-60 từ phải trả lời ngắn gọn câu hỏi của phụ huynh trước khi đi vào diễn giải.',
+      'Dùng numbered lists hoặc bullets để tăng khả năng được AI tóm tắt đúng.',
+    ],
+    hubspotInspired: [
+      'Đây là spoke page trong topic cluster; bắt buộc phải trỏ ngược về pillar bằng anchor text gần từ khóa chính.',
+      'Nội dung phải giải một vấn đề thật, không viết lan man quanh thương hiệu.',
+    ],
+    performance: [
+      'Không dùng popup cản trở đọc bài.',
+      'Text-first, TOC HTML native, media tiết chế.',
+    ],
+  },
+  {
+    classNumber: 13,
+    slug: 'class-comparison-engine',
+    templateClass: 'Class Comparison Engine Page (So sánh minh bạch)',
+    group: 'Mid-funnel / Nurturing',
+    theme: 'nurture',
+    pageRole: 'Xử lý truy vấn so sánh và giúp phụ huynh ra quyết định khách quan hơn.',
+    description:
+      'Trang so sánh cần minh bạch, logic và có bảng HTML dễ đọc để AI cũng có thể parse và tổng hợp lại.',
+    audience: 'Phụ huynh đang ở giai đoạn cân nhắc giữa hai hoặc nhiều mô hình trường.',
+    funnel: 'MOFU / BOFU',
+    traffic: 'SEO comparison, sales follow-up, retargeting',
+    cvr: '4-7%',
+    primaryCta: 'Nhận tư vấn chọn trường',
+    secondaryCta: 'Xem học phí',
+    sampleHeadline: 'So sánh tốt không phải để “dìm” ai, mà để giúp phụ huynh nhìn đúng thứ gia đình mình thực sự cần.',
+    sampleBody:
+      'Cần dùng bảng so sánh HTML, diễn giải khách quan, nêu rõ điểm khác biệt của Việt Anh và đưa phụ huynh sang bước quyết định phù hợp.',
+    previewHighlights: [
+      'Có bảng so sánh HTML semantic và mobile-friendly.',
+      'Có phần diễn giải sau bảng, không chỉ để dữ liệu khô.',
+      'Có FAQ xử lý câu hỏi sau khi so sánh.',
+      'Có CTA sang học phí, tour hoặc tư vấn.',
+    ],
+    blockOrder: [
+      'Hero nêu bối cảnh so sánh.',
+      'Summary answer-first: khi nào nên chọn mô hình nào.',
+      'Bảng so sánh HTML.',
+      'Khối diễn giải ưu/nhược và fit theo nhu cầu.',
+      'FAQ sau so sánh.',
+      'CTA sang money page, tư vấn hoặc tour.',
+    ],
+    internalLinks: [
+      { title: 'Dynamic comparison', href: '/mau-template/class-dynamic-comparison/', body: 'Biến thể scale lớn của mô hình so sánh.' },
+      { title: 'Objection handler', href: '/mau-template/class-objection-handler/', body: 'Trang xử lý phản đối đi sau bước so sánh.' },
+      { title: 'Học phí', href: '/hoc-phi', body: 'Money page cho người muốn đối chiếu chi phí sau khi so sánh.' },
+    ],
+    productionRoute: '/so-sanh/viet-anh-va-truong-cong',
+    schema: ['Article', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở bài cần tóm tắt rất ngắn ai nên đọc trang này và 1-2 khác biệt lớn nhất.',
+      'Sau bảng nên có một đoạn “khi nào mô hình này phù hợp” để AI dễ hiểu ngữ cảnh hơn dữ liệu thô.',
+    ],
+    hubspotInspired: [
+      'Comparison page là cluster BOFU/MOFU; phải nối sang pillars, tuition, FAQ và admissions.',
+      'Trang chỉ nên tập trung một intent so sánh chính để tránh lệch search intent.',
+    ],
+    performance: [
+      'Bảng so sánh phải render bằng HTML/CSS, không dùng JS grid nặng.',
+      'Mobile có horizontal scroll hoặc stacked rows rõ ràng.',
+    ],
+  },
+  {
+    classNumber: 14,
+    slug: 'class-ai-ready-faq',
+    templateClass: 'Class AI-Ready FAQ / Answer Engine (Trung tâm Giải đáp)',
+    group: 'Mid-funnel / Nurturing',
+    theme: 'nurture',
+    pageRole: 'Bắt People Also Ask, AI Overviews và voice search bằng answer-first Q&A.',
+    description:
+      'FAQ hub là nơi gom các câu hỏi thật của phụ huynh thành một hệ thống dễ quét, dễ trích xuất và dễ đi tiếp sang campus, học phí, tuyển sinh.',
+    audience: 'Phụ huynh cần câu trả lời nhanh, rõ và có thể tin được.',
+    funnel: 'TOFU / MOFU / BOFU nhẹ',
+    traffic: 'PAA, voice search, AI engines, internal support',
+    cvr: '3-6%',
+    primaryCta: 'Gọi ngay để được giải đáp',
+    secondaryCta: 'Nhắn Zalo tư vấn',
+    sampleHeadline: 'Một FAQ tốt không phải danh sách câu hỏi cho có; nó là answer engine thật sự cho phụ huynh.',
+    sampleBody:
+      'Mỗi câu hỏi nên có câu trả lời trực diện 40-50 từ, chia theo chủ đề, có schema FAQPage và có đường dẫn đi tiếp thật hợp lý.',
+    previewHighlights: [
+      'Mỗi H2 là một câu hỏi thật của phụ huynh.',
+      'Mỗi câu trả lời mở đầu cực ngắn và rõ.',
+      'Có FAQPage schema và liên kết theo từng chủ đề.',
+      'Có CTA dưới mỗi nhóm nội dung thay vì chỉ ở cuối trang.',
+    ],
+    blockOrder: [
+      'Quick answer hero và phân nhóm FAQ.',
+      'Tabs hoặc nhóm chủ đề lớn.',
+      'Accordion Q&A với answer-first copy.',
+      'CTA dưới từng nhóm câu hỏi.',
+      'Short form hoặc contact fallback.',
+      'Liên kết sang tuition, admissions, campus, pillar.',
+    ],
+    internalLinks: [
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Giải đáp xong thì đẩy sang nơi phụ huynh có thể hành động.' },
+      { title: 'Học phí', href: '/hoc-phi', body: 'Dẫn các câu hỏi tài chính về money hub đúng chuẩn.' },
+      { title: 'Mầm non FAQ', href: '/mam-non/cau-hoi-thuong-gap', body: 'Ví dụ nhánh FAQ theo cấp học.' },
+    ],
+    productionRoute: '/faq',
+    schema: ['FAQPage', 'WebPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Mỗi câu trả lời đầu tiên nên đủ ngắn để có thể trở thành snippet hoặc AI extract.',
+      'Câu hỏi và câu trả lời phải match ngôn ngữ người dùng thật, không dùng cách đặt câu hỏi quá “marketing”.',
+    ],
+    hubspotInspired: [
+      'FAQ hub là answer-engine cluster; mỗi cụm FAQ nên nối sang page chuyển đổi tương ứng.',
+      'Không gom tất cả vào một danh sách vô tận; phải có nhóm chủ đề rõ ràng.',
+    ],
+    performance: [
+      'Dùng accordion nhẹ, có thể bằng details/summary.',
+      'Hạn chế media để page vẫn là answer engine siêu nhanh.',
+    ],
+  },
+  {
+    classNumber: 15,
+    slug: 'class-tuition-fee-structure',
+    templateClass: 'Class Tuition & Fee Structure Page (Minh bạch Học phí & Tài chính)',
+    group: 'Mid-funnel / Nurturing',
+    theme: 'nurture',
+    pageRole: 'Trang minh bạch tài chính evergreen, không quá landing nhưng vẫn rất gần chuyển đổi.',
+    description:
+      'Khác với fee capture landing, trang này dùng để trình bày logic học phí, khoản bao gồm, hỗ trợ tài chính và các câu hỏi thường gặp theo cách minh bạch hơn.',
+    audience: 'Phụ huynh muốn hiểu cấu trúc học phí trước khi để lại lead.',
+    funnel: 'MOFU / BOFU',
+    traffic: 'Organic commercial, internal navigation, AI answers',
+    cvr: '4-8%',
+    primaryCta: 'Nhận báo giá chi tiết',
+    secondaryCta: 'Tư vấn kế hoạch tài chính',
+    sampleHeadline: 'Minh bạch học phí không chỉ là công khai con số; đó còn là giải thích để phụ huynh hiểu tiền của mình đi vào đâu.',
+    sampleBody:
+      'Trang cần dùng text, list và bảng HTML để nêu rõ cấu trúc phí, khoản bao gồm, hỗ trợ tài chính, ưu đãi và câu hỏi tài chính phổ biến.',
+    previewHighlights: [
+      'Có khối “Học phí đã bao gồm gì”.',
+      'Có bảng cấu trúc phí theo cấp học hoặc hạng mục.',
+      'Có FAQ học phí và CTA nhận báo giá chi tiết.',
+      'Có route sang học bổng, tuyển sinh và fee capture landing.',
+    ],
+    blockOrder: [
+      'Hero minh bạch học phí + answer-first.',
+      'Khối cấu trúc phí / bảng học phí tổng quan.',
+      'Khối “bao gồm gì, chưa bao gồm gì”.',
+      'Hỗ trợ tài chính, ưu đãi, học bổng liên quan.',
+      'FAQ học phí và objection handling nhẹ.',
+      'CTA nhận báo giá / tư vấn tài chính.',
+    ],
+    internalLinks: [
+      { title: 'Fee capture', href: '/hoc-phi', body: 'CTA chuyển sang form nhận bảng học phí chi tiết.' },
+      { title: 'Học bổng', href: '/hoc-bong', body: 'Route sang ưu đãi và scholarship pages.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Admissions hub cho phụ huynh đã sẵn sàng đi tiếp.' },
+    ],
+    productionRoute: '/hoc-phi',
+    schema: ['WebPage', 'Offer', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu nên nói rõ học phí được cấu thành như thế nào và phụ huynh nên xem phần nào đầu tiên.',
+      'Các khoản mục phải hiển thị bằng text hoặc table, không được ẩn trong ảnh hoặc PDF duy nhất.',
+    ],
+    hubspotInspired: [
+      'Trang này là money-support hub, nhận link từ pillars, FAQ và campus.',
+      'Phải tách bạch với fee capture landing để tránh intent mismatch.',
+    ],
+    performance: [
+      'Ưu tiên text-first, HTML tables và FAQ nhẹ.',
+      'Không nhúng PDF viewer nặng ngay trên trang.',
+    ],
+  },
+  {
+    classNumber: 16,
+    slug: 'class-objection-handler',
+    templateClass: 'Class Objection Handler Page (Xử lý phản đối)',
+    group: 'Mid-funnel / Nurturing',
+    theme: 'nurture',
+    pageRole: 'Xử lý các câu hỏi phản đối lớn như học phí, khoảng cách, hòa nhập, áp lực học tập.',
+    description:
+      'Trang objection phải bình tĩnh, logic, có bằng chứng và dẫn phụ huynh sang bước tiếp theo đúng với mối lo họ đang có.',
+    audience: 'Phụ huynh đã quan tâm nhưng còn một hoặc hai rào cản lớn.',
+    funnel: 'MOFU / BOFU',
+    traffic: 'Retargeting, sales follow-up, SEO objection queries',
+    cvr: '6-10%',
+    primaryCta: 'Nhắn Zalo để được giải đáp',
+    secondaryCta: 'Đăng ký học thử / tham quan',
+    sampleHeadline: 'Một phản đối không cần slogan để xử lý; nó cần lập luận rõ, proof thật và bước đi tiếp phù hợp.',
+    sampleBody:
+      'Trang nên xoá nỗi lo bằng dữ liệu, ví dụ thực tế, FAQ, proof campus và một CTA rất gần với rào cản đang được giải quyết.',
+    previewHighlights: [
+      'Có opening trả lời trực tiếp objection trong 1-2 câu.',
+      'Có proof block sau từng objection lớn.',
+      'Có CTA gắn với next step phù hợp như học thử, tham quan, gọi.',
+      'Không dùng giọng phòng thủ hoặc khoe mẽ quá mức.',
+    ],
+    blockOrder: [
+      'Hero nêu thẳng objection.',
+      'Answer-first response và logic giải thích.',
+      'Proof blocks: số liệu, review, visual thật.',
+      'Accordion cho các câu hỏi phụ liên quan.',
+      'CTA theo next step phù hợp.',
+      'Links sang học phí, FAQ, trial hoặc tour.',
+    ],
+    internalLinks: [
+      { title: 'Học phí', href: '/hoc-phi', body: 'Nếu objection xoay quanh chi phí thì đây là money hub gốc.' },
+      { title: 'Học thử', href: '/hoc-thu', body: 'Phù hợp với objection về hòa nhập hoặc trải nghiệm thực tế.' },
+      { title: 'Tham quan trường', href: '/tham-quan-truong', body: 'Phù hợp với objection về cơ sở vật chất hoặc khoảng cách.' },
+    ],
+    productionRoute: '/giai-toa-lo-lang/hoc-phi-cao-co-dang-khong',
+    schema: ['FAQPage', 'WebPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Câu đầu tiên cần trả lời rất thẳng: “Có”, “Không”, hoặc “Tùy nhu cầu gia đình”, rồi mới giải thích.',
+      'Dùng logic phản biện rõ ràng để AI có thể trích xuất lập luận của nhà trường một cách công bằng.',
+    ],
+    hubspotInspired: [
+      'Trang này thuộc nhóm BOFU nurture, thường được gửi bởi sales hoặc ads retargeting.',
+      'Nó không thay admissions hub, mà đóng vai trò tháo nút thắt trước khi phụ huynh quay lại phễu chính.',
+    ],
+    performance: [
+      'Text-first, proof media nhẹ, accordion đơn giản.',
+      'Không chèn quá nhiều khối CTA cạnh tranh nhau.',
+    ],
+  },
+  {
+    classNumber: 17,
+    slug: 'class-homepage',
+    templateClass: 'Class Homepage (Trang chủ - Grand Central Station)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Trang điều phối toàn hệ thống, phân luồng traffic về cấp học, campus, tuyển sinh và học phí.',
+    description:
+      'Homepage phải nói rõ Việt Anh là ai, khác biệt gì, có những cấp học nào và phụ huynh nên bắt đầu từ đâu.',
+    audience: 'Toàn bộ phụ huynh, traffic direct, branded, referral, returning.',
+    funnel: 'Mọi tầng',
+    traffic: 'Direct, branded, referral, internal navigation',
+    cvr: '2-4%',
+    primaryCta: 'Đăng ký tư vấn',
+    secondaryCta: 'Chọn cấp học / cơ sở',
+    sampleHeadline: 'Trang chủ không phải banner đẹp; nó là trung tâm điều phối toàn bộ hành trình của phụ huynh.',
+    sampleBody:
+      'Cần cho thấy định vị thương hiệu, các cấp học, proof cốt lõi, campus và các đường đi nhanh nhất vào phễu chuyển đổi.',
+    previewHighlights: [
+      'Hero nói rõ brand + category.',
+      'Có quick filter theo cấp học hoặc khu vực.',
+      'Có route rõ sang pillars, học phí, tuyển sinh, school tour.',
+      'Có schema Organization + WebSite để hỗ trợ entity building.',
+    ],
+    blockOrder: [
+      'Hero brand + category + CTA điều hướng.',
+      'Quick filter theo cấp học / cơ sở.',
+      'Khối khác biệt cốt lõi và outcomes.',
+      'Các card cấp học, campus, money pages, admissions.',
+      'Review / social proof / news highlights.',
+      'CTA chính và footer điều hướng hệ thống.',
+    ],
+    internalLinks: [
+      { title: 'Mầm non', href: '/mam-non', body: 'Một trong các pillar chính phải xuất hiện rõ ở homepage.' },
+      { title: 'Học phí', href: '/hoc-phi', body: 'Money page là đích điều hướng quan trọng.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Admissions hub cho phụ huynh đã sẵn sàng hành động.' },
+    ],
+    productionRoute: '/',
+    schema: ['Organization', 'WebSite'],
+    answerFirst: [
+      'Hero nên trả lời ngay Việt Anh là hệ thống giáo dục gì, tại đâu và phục vụ nhóm gia đình nào.',
+      'Có quick-answer cho 4 cấp học hoặc 4 luồng chính để AI và người dùng hiểu kiến trúc site.',
+    ],
+    hubspotInspired: [
+      'Homepage là navigation hub, không phải pillar page nhưng phải route traffic vào các topic hubs đúng cách.',
+      'Các đường dẫn từ homepage nên phản ánh architecture thật: pillars, admissions, tuition, campus.',
+    ],
+    performance: [
+      'Không để hero video làm chậm trang; luôn có poster và fallback.',
+      'Các block điều hướng nên render thuần HTML/CSS càng nhiều càng tốt.',
+    ],
+  },
+  {
+    classNumber: 18,
+    slug: 'class-contact-multiple-locations',
+    templateClass: 'Class Contact / Multiple Locations Page (Liên hệ hệ thống)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Trang liên hệ hệ thống, tổng hợp nhiều cơ sở và nhiều kênh hỗ trợ.',
+    description:
+      'Trang liên hệ không chỉ là thông tin cuối trang; nó phải giúp phụ huynh chọn đúng cơ sở, đúng hotline và đúng cách liên hệ.',
+    audience: 'Phụ huynh cần liên hệ nhanh hoặc đang phân vân giữa nhiều cơ sở.',
+    funnel: 'MOFU / BOFU / Utility',
+    traffic: 'Branded, direct, internal navigation',
+    cvr: '3-7%',
+    primaryCta: 'Liên hệ tuyển sinh',
+    secondaryCta: 'Xem cơ sở phù hợp',
+    sampleHeadline: 'Một trang liên hệ tốt phải giúp phụ huynh tìm đúng nơi cần gọi, không phải chỉ liệt kê thật nhiều số điện thoại.',
+    sampleBody:
+      'Trang nên gom tổng đài, từng campus, giờ hỗ trợ, map, email và các đường dẫn nhanh sang admissions hoặc school tour.',
+    previewHighlights: [
+      'Có tổng đài chung và contact card theo cơ sở.',
+      'Có map hệ thống hoặc multiple location listing rõ.',
+      'Có route nhanh sang campus, school tour, tuyển sinh.',
+      'Có thông tin giờ làm việc, email và kênh chat.',
+    ],
+    blockOrder: [
+      'Hero liên hệ hệ thống + answer-first.',
+      'Tổng đài chính và CTA nhanh.',
+      'Danh sách nhiều cơ sở kèm map/card thông tin.',
+      'Giờ hỗ trợ, email, form liên hệ nhanh.',
+      'FAQ về cách liên hệ và chuyển campus.',
+      'Links sang campus pages và admissions.',
+    ],
+    internalLinks: [
+      { title: 'Campus hub', href: '/co-so', body: 'Điều hướng sang danh mục cơ sở chi tiết.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Admissions hub cho người cần hỗ trợ hồ sơ hoặc lộ trình.' },
+      { title: 'School tour', href: '/tham-quan-truong', body: 'Đặt lịch nếu gia đình muốn xem trường thay vì chỉ gọi điện.' },
+    ],
+    productionRoute: '/lien-he',
+    schema: ['Organization', 'Place', 'BreadcrumbList'],
+    answerFirst: [
+      'Ngay đầu trang cần nói rõ đây là nơi liên hệ toàn hệ thống và phụ huynh có thể chọn cơ sở nào.',
+      'Danh sách nhiều địa điểm phải ở dạng text/card rõ để AI hiểu hệ thống có nhiều cơ sở.',
+    ],
+    hubspotInspired: [
+      'Contact page là utility hub cho navigation và conversion nhẹ.',
+      'Nó phải nhận traffic từ footer, campus pages, admissions và thank-you flows.',
+    ],
+    performance: [
+      'Không nhúng quá nhiều map cùng lúc; dùng danh sách card và lazy-load map.',
+      'Giữ form liên hệ nhẹ và rõ.',
+    ],
+  },
+  {
+    classNumber: 19,
+    slug: 'class-dynamic-comparison',
+    templateClass: 'Class Dynamic Comparison (Bảng so sánh động)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Phiên bản scale của comparison page, dùng data-driven blocks để mở rộng nhiều biến thể so sánh.',
+    description:
+      'Trang này cho phép scale kho nội dung so sánh mà vẫn giữ logic minh bạch, dễ parse cho AI và dễ quản lý bằng dữ liệu.',
+    audience: 'Phụ huynh đang cần so sánh nhiều biến thể chương trình, campus hoặc mô hình giáo dục.',
+    funnel: 'MOFU / BOFU',
+    traffic: 'SEO comparison, internal, dynamic content routes',
+    cvr: '4-7%',
+    primaryCta: 'Xem lựa chọn phù hợp',
+    secondaryCta: 'Nhận tư vấn',
+    sampleHeadline: 'Khi số lượng trang so sánh tăng lên, dữ liệu phải được chuẩn hóa để vẫn giữ tính khách quan và dễ đọc.',
+    sampleBody:
+      'Trang cần có narrative mở đầu, bảng động chuẩn HTML, giải thích ngắn sau bảng và CTA theo mục tiêu so sánh cụ thể.',
+    previewHighlights: [
+      'Dữ liệu phải ra HTML table semantic, không render mù trong canvas/image.',
+      'Có opening copy riêng cho từng biến thể so sánh.',
+      'Có CTA và links riêng theo loại comparison.',
+      'Có quản trị freshness để không bị data stale.',
+    ],
+    blockOrder: [
+      'Hero nêu bối cảnh so sánh và đối tượng phù hợp.',
+      'Summary answer-first cho trang động.',
+      'Bảng so sánh data-driven.',
+      'Khối giải thích và key takeaways.',
+      'FAQ / links related comparisons.',
+      'CTA theo hướng tư vấn, học phí hoặc tuyển sinh.',
+    ],
+    internalLinks: [
+      { title: 'Comparison engine', href: '/mau-template/class-comparison-engine/', body: 'Bản biên tập tay, giàu narrative hơn của comparison pages.' },
+      { title: 'Học phí', href: '/hoc-phi', body: 'Dẫn tới money page nếu user muốn xem chênh lệch tài chính.' },
+      { title: 'Tuyển sinh', href: '/tuyen-sinh', body: 'Bước tiếp theo sau khi so sánh đủ.' },
+    ],
+    productionRoute: '/so-sanh/viet-anh-va-song-ngu-khac',
+    schema: ['WebPage', 'FAQPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Trang động vẫn phải có phần mở đầu riêng, không được chỉ là bảng dữ liệu trần.',
+      'Sau bảng cần có đoạn giải thích ngắn để AI có thể trích đúng luận điểm chính.',
+    ],
+    hubspotInspired: [
+      'Đây là hệ scale của comparison cluster; mỗi route vẫn phải gắn vào đúng topic graph.',
+      'Database-driven nhưng narrative và internal links vẫn cần unique cho từng page.',
+    ],
+    performance: [
+      'Bảng data render server-side, tránh hydrate lớn.',
+      'Chỉ tải cột cần thiết trên mobile.',
+    ],
+  },
+  {
+    classNumber: 20,
+    slug: 'class-smart-thank-you',
+    templateClass: 'Class Smart Thank-You Page (Trang cảm ơn thông minh)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Trang hậu submit để xác nhận, fire tracking và điều hướng sang bước tiếp theo thông minh.',
+    description:
+      'Thank-you page không được chỉ nói cảm ơn; nó phải giữ lead nóng và gợi ý next step sát với ý định vừa hoàn thành.',
+    audience: 'Phụ huynh vừa submit form, đăng ký event, nhận học phí hoặc đặt lịch.',
+    funnel: 'Post-conversion',
+    traffic: 'Form submits, campaign flows, CRM',
+    cvr: '15-25% next-step click',
+    primaryCta: 'Xem bước tiếp theo',
+    secondaryCta: 'Vào Zalo / đặt lịch',
+    sampleHeadline: 'Sau khi phụ huynh submit, trang cảm ơn phải giữ được nhịp hành động thay vì để họ rơi khỏi phễu.',
+    sampleBody:
+      'Trang cần xác nhận rõ việc đã nhận thông tin, nói rõ khi nào đội ngũ liên hệ và đề xuất một bước tiếp theo rất phù hợp với loại lead vừa gửi.',
+    previewHighlights: [
+      'Có dynamic next-step theo loại form.',
+      'Có video/review hoặc PDF nhẹ để giữ tương tác.',
+      'Có noindex mặc định và tracking sạch.',
+      'Có CTA rõ sang tour, Zalo, campus hoặc học phí.',
+    ],
+    blockOrder: [
+      'Thank-you hero xác nhận đã nhận thông tin.',
+      'Khối next-step chính theo loại lead.',
+      'Proof / video / campus review nhẹ.',
+      'Links sang campus, tour hoặc FAQ.',
+      'Hotline / Zalo fallback.',
+    ],
+    internalLinks: [
+      { title: 'Tour booking', href: '/tham-quan-truong', body: 'Bước tiếp theo phổ biến sau lead học phí hoặc tư vấn.' },
+      { title: 'Campus profile', href: '/co-so/go-vap-phan-huy-ich', body: 'Cho người muốn xem kỹ trường trong lúc chờ tư vấn.' },
+      { title: 'FAQ', href: '/faq', body: 'Giải đáp nhanh các câu hỏi thường nảy sinh sau submit.' },
+    ],
+    productionRoute: '/thank-you/fee',
+    schema: ['WebPage'],
+    answerFirst: [
+      'Ngay đầu trang cần xác nhận đã nhận thông tin gì và đội ngũ sẽ phản hồi trong bao lâu.',
+      'Chỉ nên có một next-step chính để giữ tập trung.',
+    ],
+    hubspotInspired: [
+      'Thank-you page là mắt xích chuyển đổi tiếp theo, không phải dead end.',
+      'Nội dung phải thay đổi theo loại conversion vừa hoàn thành nếu có thể.',
+    ],
+    performance: [
+      'Noindex mặc định.',
+      'Giữ trang cực nhẹ vì người dùng vừa hoàn thành form và chờ phản hồi ngay.',
+    ],
+  },
+  {
+    classNumber: 21,
+    slug: 'class-retention-referral',
+    templateClass: 'Class Retention & Referral Page (Giữ chân & Giới thiệu)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Trang loyalty, referral, parent benefits và mở rộng LTV.',
+    description:
+      'Trang này phục vụ phụ huynh hiện hữu hoặc nhóm đã nhập học, giúp referral rõ ràng và giữ gắn kết sau enrolment.',
+    audience: 'Phụ huynh hiện hữu, nhóm loyalty, CRM audiences.',
+    funnel: 'Retention',
+    traffic: 'CRM, email, Zalo, internal parent communications',
+    cvr: '8-12%',
+    primaryCta: 'Giới thiệu bạn bè',
+    secondaryCta: 'Xem ưu đãi phụ huynh',
+    sampleHeadline: 'Một chương trình referral tốt phải thật rõ về quyền lợi, cách tham gia và bước xác nhận sau đó.',
+    sampleBody:
+      'Trang cần giữ giọng cảm ơn, hữu ích, chuyên nghiệp và ưu tiên utility hơn là bán hàng. Nếu có offer, phải nói thật rõ điều kiện áp dụng.',
+    previewHighlights: [
+      'Có quyền lợi referral rõ ràng, không mập mờ.',
+      'Có form hoặc hướng dẫn tham gia đơn giản.',
+      'Có links sang summer camp, event hoặc parent benefits.',
+      'Thường nên noindex hoặc hạn chế public index.',
+    ],
+    blockOrder: [
+      'Hero cảm ơn và giới thiệu chương trình referral.',
+      'Quyền lợi / điều kiện / thời gian áp dụng.',
+      'Form referral hoặc các bước tham gia.',
+      'Ưu đãi cho phụ huynh hiện hữu.',
+      'Links sang event, summer camp hoặc parent hub nội bộ.',
+    ],
+    internalLinks: [
+      { title: 'Ưu đãi phụ huynh', href: '/phu-huynh-uu-dai', body: 'Trang lợi ích dành cho phụ huynh hiện hữu.' },
+      { title: 'Summer camp', href: '/summer-camp', body: 'CTA mở rộng engagement theo mùa.' },
+      { title: 'Sự kiện', href: '/open-day', body: 'Hoạt động tiếp tục nuôi gắn kết cộng đồng phụ huynh.' },
+    ],
+    productionRoute: '/gioi-thieu-ban-be',
+    schema: ['WebPage'],
+    answerFirst: [
+      'Đầu trang phải giải thích rất rõ referral này dành cho ai, được gì và làm thế nào để tham gia.',
+      'Nếu offer có điều kiện, điều kiện phải ở dạng list dễ parse.',
+    ],
+    hubspotInspired: [
+      'Đây là retention page, nên gắn với CRM lifecycle hơn là organic growth.',
+      'Luôn giữ một CTA chính rõ nhất, tránh biến trang thành nơi nhồi nhiều chiến dịch cùng lúc.',
+    ],
+    performance: [
+      'Giữ nhẹ, ít media, form referral ngắn.',
+      'Noindex hoặc hạn chế index nếu có thông tin nội bộ.',
+    ],
+  },
+  {
+    classNumber: 22,
+    slug: 'class-corporate-brand-leadership',
+    templateClass: 'Class Corporate Brand & Leadership (Câu chuyện Thương hiệu & BGH)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Trang kể câu chuyện thương hiệu, tầm nhìn, ban giám hiệu và nền tảng E-E-A-T.',
+    description:
+      'Trang này giúp AI và phụ huynh hiểu Việt Anh là tổ chức nào, ai dẫn dắt, triết lý giáo dục là gì và vì sao mô hình này tồn tại.',
+    audience: 'Phụ huynh branded, đối tác, ứng viên, báo chí, AI crawlers.',
+    funnel: 'TOFU / Trust',
+    traffic: 'Branded, direct, PR, AI answers',
+    cvr: '1-3%',
+    primaryCta: 'Tìm hiểu hệ thống',
+    secondaryCta: 'Xem đội ngũ / cơ sở',
+    sampleHeadline: 'Một câu chuyện thương hiệu tốt không làm trang trọng hóa mọi thứ; nó phải cho thấy tầm nhìn, con người và lý do tồn tại thật sự.',
+    sampleBody:
+      'Trang nên có câu chuyện thành lập, ban giám hiệu, định hướng, giá trị và các tín hiệu tin cậy như chứng nhận, cột mốc, quote lãnh đạo.',
+    previewHighlights: [
+      'Có founder/leadership quotes bằng text thật.',
+      'Có timeline hoặc milestones thương hiệu.',
+      'Có links sang đội ngũ, cơ sở và chương trình.',
+      'Có AboutPage/Organization schema để tăng E-E-A-T.',
+    ],
+    blockOrder: [
+      'Hero thương hiệu và answer-first brand statement.',
+      'Câu chuyện hình thành / milestones.',
+      'Tầm nhìn, sứ mệnh, giá trị, định vị.',
+      'Ban giám hiệu / leadership highlights.',
+      'Links sang chương trình, đội ngũ, campus.',
+      'CTA mềm về tìm hiểu hệ thống hoặc liên hệ.',
+    ],
+    internalLinks: [
+      { title: 'Giới thiệu', href: '/gioi-thieu', body: 'Trang thương hiệu production route gần nhất.' },
+      { title: 'Đội ngũ giáo viên', href: '/doi-ngu', body: 'Nối sang lớp trust về con người.' },
+      { title: 'Hệ sinh thái', href: '/he-sinh-thai-viet-anh', body: 'Làm rõ mối quan hệ brand house và các đơn vị liên quan.' },
+    ],
+    productionRoute: '/gioi-thieu',
+    schema: ['AboutPage', 'Organization', 'Person'],
+    answerFirst: [
+      'Mở đầu phải định nghĩa ngắn Việt Anh là ai, ở đâu, đang phục vụ nhóm gia đình nào.',
+      'Các chức danh và quote của lãnh đạo phải ở dạng text rõ, không nhét trong ảnh thiết kế.',
+    ],
+    hubspotInspired: [
+      'Trang này là authority support page cho toàn site, củng cố E-E-A-T cho mọi cluster.',
+      'Nó nên được link từ homepage, footer, career pages và PR content.',
+    ],
+    performance: [
+      'Giữ visual có chọn lọc; đừng biến trang thành album nặng.',
+      'Timeline và profile cards nên nhẹ, không dùng animation nặng.',
+    ],
+  },
+  {
+    classNumber: 23,
+    slug: 'class-teacher-faculty-profile',
+    templateClass: 'Class Teacher / Faculty Profile Page (Hồ sơ Đội ngũ Giáo viên)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Xây trust quanh đội ngũ giáo viên, chuyên môn và con người.',
+    description:
+      'Trang profile giáo viên cần vừa đủ chuyên môn, vừa đủ gần gũi, và giúp phụ huynh thấy chất lượng con người đứng sau trải nghiệm học tập.',
+    audience: 'Phụ huynh đang cân nhắc chất lượng đội ngũ, ứng viên, báo chí.',
+    funnel: 'MOFU / Trust',
+    traffic: 'Branded, internal, AI answers, trust flows',
+    cvr: '1-4%',
+    primaryCta: 'Xem đội ngũ',
+    secondaryCta: 'Đặt lịch tham quan',
+    sampleHeadline: 'Đội ngũ giáo viên là một trong những tín hiệu niềm tin mạnh nhất; profile page phải vừa chân thật vừa đủ chuyên môn.',
+    sampleBody:
+      'Trang nên cho thấy vai trò, chuyên môn, kinh nghiệm, cách dạy và sự gắn kết với triết lý giáo dục của trường; không cần văn phong khuếch đại.',
+    previewHighlights: [
+      'Có profile thật, ảnh thật, vai trò thật.',
+      'Có điểm nhấn chuyên môn hoặc môn/cấp học phụ trách.',
+      'Có trích dẫn ngắn hoặc teaching philosophy.',
+      'Có links sang chương trình, campus và career nếu phù hợp.',
+    ],
+    blockOrder: [
+      'Hero đội ngũ / faculty intro.',
+      'Danh sách profile giáo viên hoặc profile chi tiết.',
+      'Trích dẫn hoặc triết lý giảng dạy ngắn.',
+      'Proof chuyên môn, chứng chỉ, years of experience.',
+      'Liên kết sang chương trình / campus / career.',
+      'CTA mềm về tham quan hoặc tìm hiểu thêm.',
+    ],
+    internalLinks: [
+      { title: 'Đội ngũ', href: '/doi-ngu', body: 'Trang production route gần nhất về con người và giáo viên.' },
+      { title: 'Chương trình học', href: '/mam-non/chuong-trinh', body: 'Nối từ con người sang nội dung học tập.' },
+      { title: 'Tuyển dụng', href: '/tuyen-dung', body: 'Route hỗ trợ employer brand khi phù hợp.' },
+    ],
+    productionRoute: '/doi-ngu',
+    schema: ['ProfilePage', 'Person', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu nên nêu rõ đội ngũ có điểm mạnh gì và đang đồng hành với học sinh ra sao.',
+      'Các profile cần có dữ liệu text rõ để AI hiểu chuyên môn, vai trò, cấp học.',
+    ],
+    hubspotInspired: [
+      'Teacher profiles là trust-support content; không phải conversion hub nhưng phải gắn với pillar và campus pages.',
+      'Có thể scale theo campus hoặc cấp học nhưng vẫn cần thống nhất format để giữ quality.',
+    ],
+    performance: [
+      'Ảnh profile phải tối ưu kích thước, không dùng gallery quá nặng.',
+      'Profile cards render server-side, không cần lọc JS phức tạp ở bản đầu.',
+    ],
+  },
+  {
+    classNumber: 24,
+    slug: 'class-alumni-success-stories',
+    templateClass: 'Class Alumni & Success Stories (Cựu học sinh & Thành tựu)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Gom social proof, thành tích, câu chuyện học sinh và outcomes dài hạn.',
+    description:
+      'Trang này tạo trust layer mạnh cho BOFU bằng các câu chuyện thành công, thành tích và đầu ra có thể kiểm chứng.',
+    audience: 'Phụ huynh đang cần proof về đầu ra, thành tích và câu chuyện thật.',
+    funnel: 'MOFU / BOFU',
+    traffic: 'Organic branded, AI answers, internal trust flows',
+    cvr: '2-6%',
+    primaryCta: 'Xem hành trình học tập',
+    secondaryCta: 'Nhận tư vấn lộ trình',
+    sampleHeadline: 'Thành tựu không nên nằm rải rác; khi gom lại thành trust architecture, nó mới thực sự hỗ trợ chuyển đổi.',
+    sampleBody:
+      'Trang nên nhóm các câu chuyện cựu học sinh, IELTS, đại học, giải thưởng và testimonial theo cấu trúc dễ quét, dễ trích xuất, dễ liên kết.',
+    previewHighlights: [
+      'Có outcomes theo nhóm: IELTS, đại học, giải thưởng, câu chuyện cá nhân.',
+      'Có quote và profile thật của học sinh / phụ huynh khi được phép.',
+      'Có links sang THCS, THPT, tuyển sinh và học bổng.',
+      'Có schema Article/Review/Profile phù hợp từng cụm nội dung.',
+    ],
+    blockOrder: [
+      'Hero outcomes / success stories.',
+      'Summary answer-first về các tín hiệu đầu ra chính.',
+      'Nhóm thành tích, câu chuyện cựu học sinh, testimonial.',
+      'Case studies hoặc journeys ngắn.',
+      'Links sang chương trình, học bổng, tuyển sinh.',
+      'CTA tư vấn lộ trình / school tour.',
+    ],
+    internalLinks: [
+      { title: 'THPT pillar', href: '/trung-hoc-pho-thong', body: 'Đích quan trọng nhất của nhóm content outcomes.' },
+      { title: 'Học bổng', href: '/hoc-bong', body: 'Nối sang ưu đãi, học bổng và tuyển sinh theo đầu ra.' },
+      { title: 'Tuyển sinh lớp 10', href: '/tuyen-sinh', body: 'CTA chuyển đổi cho nhóm THPT.' },
+    ],
+    productionRoute: '/cam-ket-dau-ra-ielts-60',
+    schema: ['CollectionPage', 'Article', 'Review', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu cần tóm tắt các outcomes chính bằng dữ liệu text rõ ràng.',
+      'Các câu chuyện nên có “vấn đề → hành trình → kết quả” để AI hiểu được logic outcome.',
+    ],
+    hubspotInspired: [
+      'Đây là trust cluster; các mẩu thành tích lẻ nên quy về hub này để không phân mảnh authority.',
+      'Trang phải nối chặt với THCS, THPT, scholarship và admissions.',
+    ],
+    performance: [
+      'Tối ưu ảnh và quote cards; tránh biến trang thành media wall nặng.',
+      'Video testimonial chỉ lazy-load khi thật cần.',
+    ],
+  },
+  {
+    classNumber: 25,
+    slug: 'class-talent-acquisition',
+    templateClass: 'Class Talent Acquisition (Tuyển dụng / Career)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Employer brand và tuyển dụng, gắn thương hiệu với đội ngũ và văn hóa.',
+    description:
+      'Career page cần phục vụ ứng viên tốt, nhưng vẫn giữ sự liên hệ với triết lý giáo dục và hệ sinh thái Việt Anh.',
+    audience: 'Ứng viên giáo viên, nhân sự vận hành, đối tác tuyển dụng.',
+    funnel: 'Trust / Utility',
+    traffic: 'Branded, job search, referrals, LinkedIn',
+    cvr: '2-5%',
+    primaryCta: 'Xem vị trí tuyển dụng',
+    secondaryCta: 'Tìm hiểu văn hóa',
+    sampleHeadline: 'Trang tuyển dụng tốt phải khiến ứng viên hiểu họ sẽ gia nhập môi trường nào, chứ không chỉ nhìn thấy danh sách job title.',
+    sampleBody:
+      'Trang cần nói rõ văn hóa, đội ngũ, giá trị cốt lõi, cơ hội phát triển và danh sách vị trí đang tuyển theo cấu trúc dễ scan.',
+    previewHighlights: [
+      'Có employer brand story và values rõ.',
+      'Có danh sách vị trí, bộ lọc đơn giản, CTA ứng tuyển.',
+      'Có links sang brand story, faculty profiles và news.',
+      'Có dữ liệu text đủ để AI hiểu đây là môi trường giáo dục nào.',
+    ],
+    blockOrder: [
+      'Hero tuyển dụng + answer-first employer brand.',
+      'Văn hóa, giá trị, môi trường làm việc.',
+      'Khối vị trí tuyển dụng mở.',
+      'Quy trình ứng tuyển và FAQ ứng viên.',
+      'Links sang đội ngũ, leadership, tin tức hệ thống.',
+      'CTA ứng tuyển.',
+    ],
+    internalLinks: [
+      { title: 'Tuyển dụng', href: '/tuyen-dung', body: 'Production route dự kiến cho trang career.' },
+      { title: 'Leadership', href: '/gioi-thieu', body: 'Hiểu văn hóa và định hướng hệ thống.' },
+      { title: 'Đội ngũ giáo viên', href: '/doi-ngu', body: 'Xem con người và chất lượng chuyên môn phía sau môi trường làm việc.' },
+    ],
+    productionRoute: '/tuyen-dung',
+    schema: ['JobPosting', 'Organization', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu phải nói rõ ai phù hợp với môi trường này và Việt Anh đang tìm kiếm điều gì ở ứng viên.',
+      'Danh sách job openings nên là text thật, không nhúng dưới dạng ảnh hoặc PDF duy nhất.',
+    ],
+    hubspotInspired: [
+      'Career page củng cố E-E-A-T của toàn hệ thống, đặc biệt ở trục con người và tổ chức.',
+      'Nó nên nhận link từ footer, leadership pages và faculty profiles.',
+    ],
+    performance: [
+      'Bảng job openings nên nhẹ, server-render.',
+      'Không nhúng quá nhiều iframes hoặc ATS scripts ở fold đầu.',
+    ],
+  },
+  {
+    classNumber: 26,
+    slug: 'class-news-events-hub-pr',
+    templateClass: 'Class News & Events Hub / PR (Tin tức Báo chí & Hoạt động)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Hub tin tức, báo chí, hoạt động và PR của toàn hệ thống.',
+    description:
+      'Trang này dùng để nhóm những nội dung thời sự và truyền thông, nhưng phải kiểm soát indexation để không lấn át các tầng SEO quan trọng hơn.',
+    audience: 'Phụ huynh hiện hữu, báo chí, branded users, social traffic.',
+    funnel: 'Awareness / Retention',
+    traffic: 'Direct, social, referral, branded',
+    cvr: '1-3%',
+    primaryCta: 'Xem hoạt động nổi bật',
+    secondaryCta: 'Tìm hiểu chương trình',
+    sampleHeadline: 'Tin tức và hoạt động cần có chỗ đứng rõ ràng: hỗ trợ thương hiệu và retention, không tranh crawl budget với money pages.',
+    sampleBody:
+      'Hub này nên phân loại theo news, PR, recap và hoạt động học sinh; đồng thời đánh dấu rõ bài nào nên index, bài nào chỉ nên phục vụ archive.',
+    previewHighlights: [
+      'Có taxonomy rõ: tin tức, PR, hoạt động, recap.',
+      'Có featured stories thật sự nổi bật, không dồn mọi bài lên ngang nhau.',
+      'Có links mềm sang campus, chương trình, phụ huynh hub.',
+      'Có lifecycle rõ cho nội dung cũ: index/noindex/archive.',
+    ],
+    blockOrder: [
+      'Hero hub tin tức / hoạt động.',
+      'Featured stories / PR nổi bật.',
+      'Các nhóm category: tin tức, sự kiện, báo chí, hoạt động.',
+      'Archive / year filters nhẹ nhàng.',
+      'Links sang chương trình, campus, parent hub.',
+    ],
+    internalLinks: [
+      { title: 'Tin tức', href: '/tin-tuc', body: 'Route hub production gần nhất cho nhóm news và PR.' },
+      { title: 'Parent Hub', href: '/phu-huynh/cach-chon-truong-mam-non', body: 'Nối từ hoạt động sang nội dung hữu ích cho phụ huynh.' },
+      { title: 'Campus', href: '/co-so', body: 'Dẫn người đọc từ hoạt động về cơ sở thật.' },
+    ],
+    productionRoute: '/tin-tuc',
+    schema: ['CollectionPage', 'NewsArticle', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu phải giải thích đây là hub của loại nội dung nào và người đọc sẽ tìm thấy gì.',
+      'Các featured stories nên có summary text ngắn để AI nắm ngữ cảnh của hub.',
+    ],
+    hubspotInspired: [
+      'News hub là nhánh support/retention; không nên cạnh tranh với pillars và admissions về cấu trúc điều hướng chính.',
+      'Phải có quy tắc archive và noindex rõ cho bài cũ hoặc mỏng.',
+    ],
+    performance: [
+      'Listing page phải nhẹ, ảnh card tối ưu, không infinite scroll ở bản đầu.',
+      'Filter/category nav nên đơn giản, ưu tiên server-render.',
+    ],
+  },
+  {
+    classNumber: 27,
+    slug: 'class-legal-utility-info',
+    templateClass: 'Class Legal & Utility Info (Pháp lý & Tiện ích nội bộ)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Các trang pháp lý, chính sách, utility thông tin và nội dung phục vụ vận hành.',
+    description:
+      'Nhóm này giúp site hoàn chỉnh về pháp lý và utility, nhưng cần kiểm soát rõ indexation và độ ưu tiên crawl.',
+    audience: 'Phụ huynh, pháp lý, vận hành, CRM, người dùng cần thông tin hỗ trợ.',
+    funnel: 'Utility / Compliance',
+    traffic: 'Footer, direct, support traffic',
+    cvr: 'N/A',
+    primaryCta: 'Xem chính sách',
+    secondaryCta: 'Liên hệ hỗ trợ',
+    sampleHeadline: 'Trang pháp lý và utility phải rõ ràng, dễ tra cứu, dễ in và không gây rối trải nghiệm chính của site.',
+    sampleBody:
+      'Các trang này nên cực kỳ sạch, text-first, dễ scan, có cấu trúc heading chuẩn và robots/index rules phù hợp với từng loại utility.',
+    previewHighlights: [
+      'Có heading rõ, mục lục khi nội dung dài.',
+      'Có thông tin pháp lý hoặc utility ở dạng text, không chỉ file tải xuống.',
+      'Có liên hệ hỗ trợ nếu người dùng cần giải thích thêm.',
+      'Có noindex hoặc canonical khi cần cho utility pages ít giá trị SEO.',
+    ],
+    blockOrder: [
+      'Hero utility/legal đơn giản.',
+      'Mục lục hoặc quick links.',
+      'Nội dung pháp lý / chính sách / thông tin utility dạng text.',
+      'FAQ hoặc contact support nếu cần.',
+      'Footer utility links.',
+    ],
+    internalLinks: [
+      { title: 'Chính sách bảo mật', href: '/chinh-sach-bao-mat', body: 'Route pháp lý quan trọng nhất ở footer.' },
+      { title: 'Liên hệ', href: '/lien-he', body: 'Liên hệ hỗ trợ nếu người dùng cần làm rõ chính sách.' },
+      { title: 'Admissions', href: '/tuyen-sinh', body: 'Khi utility page liên quan đến quy trình hoặc hồ sơ nhập học.' },
+    ],
+    productionRoute: '/chinh-sach-bao-mat',
+    schema: ['WebPage', 'BreadcrumbList'],
+    answerFirst: [
+      'Mở đầu phải nói rõ đây là loại tài liệu gì và áp dụng cho ai.',
+      'Các điều khoản, chính sách, lịch, thực đơn nên ở dạng text thật để tìm kiếm nội bộ và AI đọc được.',
+    ],
+    hubspotInspired: [
+      'Utility pages không phải cluster tăng trưởng, nhưng phải sạch và đáng tin để hỗ trợ toàn hệ thống.',
+      'Nên nhận traffic chủ yếu từ footer và support flows, không cần quá nhiều internal links ở lớp trên.',
+    ],
+    performance: [
+      'Text-first, không dùng layout cầu kỳ.',
+      'Ưu tiên readability, in-print friendly và tải cực nhanh.',
+    ],
+  },
+  {
+    classNumber: 28,
+    slug: 'class-other',
+    templateClass: 'Other (Khác)',
+    group: 'System / Utility',
+    theme: 'system',
+    pageRole: 'Nhóm tạm cho những page chưa map được về 27 classes chính.',
+    description:
+      'Other chỉ là vùng chờ để review lại intent, owner và route phù hợp; không nên trở thành bãi chứa one-off pages.',
+    audience: 'Nội bộ vận hành và planning.',
+    funnel: 'N/A',
+    traffic: 'N/A',
+    cvr: 'N/A',
+    primaryCta: 'Review lại page role',
+    secondaryCta: 'Map về class phù hợp',
+    sampleHeadline: 'Nếu một page nằm ở “Other” quá lâu, đó thường là dấu hiệu kiến trúc đang bắt đầu lệch intent.',
+    sampleBody:
+      'Class này không dành để mở rộng production. Nó chỉ giúp đội ngũ giữ kỷ luật thông tin, rà lại vai trò của trang và map ngược về kiến trúc chuẩn.',
+    previewHighlights: [
+      'Chỉ dùng tạm thời trong planning.',
+      'Phải có owner, due date và lý do tồn tại.',
+      'Mặc định không ưu tiên index hoặc public release.',
+      'Nên quy về 27 classes chính càng sớm càng tốt.',
+    ],
+    blockOrder: [
+      'Context summary.',
+      'Business role clarification.',
+      'Search intent clarification.',
+      'Owner / next-step decision.',
+    ],
+    internalLinks: [
+      { title: 'Template library', href: '/mau-template/', body: 'Quay lại toàn bộ thư viện để map về class phù hợp.' },
+      { title: 'Homepage', href: '/', body: 'Trang gốc của kiến trúc hệ thống.' },
+      { title: 'Liên hệ hệ thống', href: '/lien-he', body: 'Fallback nếu page utility cần support contact.' },
+    ],
+    productionRoute: '/mau-template/',
+    schema: ['WebPage'],
+    answerFirst: [
+      'Nếu một page rơi vào đây, phải nói rõ ngay vì sao nó chưa khớp các class chuẩn.',
+      'Không nên public rộng rãi hay tối ưu SEO cho nhóm tạm này.',
+    ],
+    hubspotInspired: [
+      'Không dùng “Other” để phá vỡ mô hình topic cluster và intent mapping.',
+      'Mỗi page trong Other phải có kế hoạch chuyển lớp rõ ràng.',
+    ],
+    performance: [
+      'Giữ tối giản tuyệt đối.',
+      'Không thêm feature phức tạp cho class tạm.',
     ],
   },
 ];
+
+export const templateSamples: TemplateSample[] = seeds.map((seed) => ({
+  slug: seed.slug,
+  classCode: `Class ${seed.classNumber}`,
+  templateClass: seed.templateClass,
+  group: seed.group,
+  theme: seed.theme,
+  pageRole: seed.pageRole,
+  description: seed.description,
+  audience: seed.audience,
+  funnel: seed.funnel,
+  traffic: seed.traffic,
+  cvr: seed.cvr,
+  primaryCta: seed.primaryCta,
+  secondaryCta: seed.secondaryCta,
+  sampleHeadline: seed.sampleHeadline,
+  sampleBody: seed.sampleBody,
+  previewHighlights: seed.previewHighlights,
+  blockOrder: seed.blockOrder,
+  brandRules: seed.brandRules || defaultBrandRules(seed.theme),
+  seoRules: seed.seoRules || defaultSeoRules(seed.group),
+  enhancementIdeas: seed.enhancementIdeas || defaultEnhancementIdeas(seed.theme),
+  internalLinks: seed.internalLinks,
+}));
 
 export const templateGroups = [
   'Performance',
@@ -905,6 +1625,43 @@ export const templateGroups = [
   'System / Utility',
 ] as const;
 
+const blueprintBySlug: Record<string, TemplateBlueprint> = Object.fromEntries(
+  seeds.map((seed) => [
+    seed.slug,
+    {
+      answerFirst: seed.answerFirst,
+      hubspotInspired: seed.hubspotInspired,
+      schema: seed.schema,
+      performance: seed.performance,
+      sampleRoute: `/mau-template/${seed.slug}/`,
+      productionRoute: seed.productionRoute,
+    },
+  ]),
+);
+
 export function getTemplateSampleBySlug(slug: string) {
   return templateSamples.find((sample) => sample.slug === slug);
+}
+
+export function getTemplateBlueprint(sample: TemplateSample): TemplateBlueprint {
+  const blueprint = blueprintBySlug[sample.slug];
+
+  if (!blueprint) {
+    throw new Error(`Missing template blueprint for ${sample.slug}`);
+  }
+
+  return blueprint;
+}
+
+export function getTemplateCheckLinks() {
+  return templateSamples.map((sample) => {
+    const blueprint = getTemplateBlueprint(sample);
+
+    return {
+      classCode: sample.classCode,
+      templateClass: sample.templateClass,
+      sampleRoute: blueprint.sampleRoute,
+      productionRoute: blueprint.productionRoute,
+    };
+  });
 }

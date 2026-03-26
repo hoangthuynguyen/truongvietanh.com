@@ -11,7 +11,10 @@
     "deploy:staging": "npm run build && npx wrangler deploy -c wrangler.staging.jsonc",
     "directus:up": "docker compose -f directus/docker-compose.yml up -d",
     "directus:down": "docker compose -f directus/docker-compose.yml down",
-    "directus:setup": "node scripts/setup-directus.mjs"
+    "directus:setup": "node scripts/setup-directus.mjs",
+    "directus:setup:blocks": "node scripts/setup-directus-blocks.mjs",
+    "directus:setup:m2a": "node scripts/setup-directus-m2a-foundation.mjs",
+    "directus:seed:pages:m2a": "node scripts/seed-directus-static-pages-m2a.mjs"
   },
   "repository": {
     "type": "git",
@@ -28,6 +31,11 @@
   "dependencies": {
     "@directus/sdk": "^21.2.0",
     "astro": "^6.0.8",
+    "axios": "^1.13.6",
+    "cheerio": "^1.2.0",
+    "csv-parser": "^3.2.0",
+    "csv-writer": "^1.6.0",
+    "sharp": "^0.34.5",
     "typescript": "^5.9.3",
     "wrangler": "^4.76.0"
   },

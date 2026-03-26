@@ -1,0 +1,558 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Trang chủ Tuyển Sinh - Hệ thống giáo dục liên cấp Việt Anh",
+    "description": "Lộ trình giáo dục phát triển toàn diện cho con bạn từ Mầm Non đến THPT tại Trường Việt Anh."
+  }
+];
+
+const logoUrl = "/logo-vietanh.png";
+
+const stats = [
+  { val: '2011', label: 'Năm Thành Lập' },
+  { val: '6.0+', label: 'IELTS Đầu Ra' },
+  { val: '99%', label: 'Đỗ Đại Học' },
+  { val: '16/16', label: 'Kỹ Năng Cốt Lõi' }
+];
+
+const audiences = [
+  { id: 'mam-non', title: 'Mầm Non', age: 'Dưới 6 tuổi', desc: 'Môi trường an toàn, vui vẻ. Rèn sự tự lập, quen tiếng Anh bản xứ.', iconPath: 'M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: '#ff6b6b' },
+  { id: 'tieu-hoc', title: 'Tiểu Học', age: '6 – 9 tuổi', desc: 'Xây nền tảng học thuật, kỷ luật tích cực và tư duy ngoại ngữ tự nhiên.', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', color: '#0ea5e9' },
+  { id: 'thcs', title: 'THCS', age: '10 – 13 tuổi', desc: 'Bứt phá học thuật, làm dự án thực tế, chinh phục IELTS từ sớm.', iconPath: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z', color: '#8b5cf6' },
+  { id: 'thpt', title: 'THPT', age: '14 – 16 tuổi', desc: 'Đảm bảo IELTS 6.0+, rèn luyện tố chất lãnh đạo, sẵn sàng săn học bổng.', iconPath: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1v1H9V7zm5 0h1v1h-1V7zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1z', color: '#f59e0b' },
+  { id: 'ngoai-khoa', title: 'Ngoại Khóa', age: '6 – 16 tuổi', desc: 'Thể thao, nghệ thuật và 16 kỹ năng thế kỷ 21 qua thực tiễn sinh động.', iconPath: 'M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z M21 12a9 9 0 11-18 0 9 9 0 0118 0z', color: '#10b981' }
+];
+
+const skills = [
+  { n: "Giao tiếp", e: "Communication" },
+  { n: "Hợp tác", e: "Collaboration" },
+  { n: "Tư duy phản biện", e: "Critical Thinking" },
+  { n: "Sáng tạo", e: "Creativity" },
+  { n: "Kiến thức máy tính", e: "Tech Literacy" },
+  { n: "Tin học cơ sở", e: "Info Literacy" },
+  { n: "Truyền thông", e: "Media Literacy" },
+  { n: "Linh hoạt", e: "Flexibility" },
+  { n: "Lãnh đạo", e: "Leadership" },
+  { n: "Chủ động", e: "Initiative" },
+  { n: "Năng suất", e: "Productivity" },
+  { n: "Kỹ năng Xã hội", e: "Social Skills" },
+  { n: "Giải quyết vấn đề", e: "Problem Solving" },
+  { n: "Tự định hướng", e: "Self-Direction" },
+  { n: "Thích nghi văn hóa", e: "Global Awareness" },
+  { n: "Trách nhiệm", e: "Accountability" }
+];
+
+const tabsBenefit = {
+  'mam-non': 'Hình thành nền tảng vô thức qua các trò chơi tương tác, giúp bé tự tin trước đám đông và kiểm soát cảm xúc sớm.',
+  'tieu-hoc': 'Nhận thức vai trò cá nhân qua bài tập nhóm; bắt đầu xây dựng khả năng tự học và giải quyết tình huống độc lập.',
+  'thcs': 'Tranh biện mạnh mẽ, học cách lãnh đạo nhóm nhỏ, sử dụng sâu công nghệ thông tin vào nghiên cứu tài liệu.',
+  'thpt': 'Áp dụng vào đồ án thực tế; hoàn thiện hồ sơ lãnh đạo và giao tiếp đa văn hóa để tự tin săn học bổng du học.',
+  'ngoai-khoa': 'Chuyển hóa lý thuyết thành phản xạ sinh tồn. Rèn tính dẻo dai, sự phối hợp đồng đội và chịu trách nhiệm kỷ luật.'
+};
+
+const campuses = [
+  "Cơ sở Việt Anh Gò Vấp",
+  "Cơ sở Việt Anh Phú Nhuận",
+  "Cơ sở Việt Anh Bình Tân",
+  "Cơ sở Mầm Non Việt Anh - Lê Đức Thọ",
+  "Trường Mầm Non Long Hậu"
+];
+
+const testimonials = [
+  { name: 'Phụ huynh Hoàng Diễm', role: 'Phụ huynh học sinh', quote: 'Môi trường học tập rất tốt, đủ sự tin tưởng để cho con theo học. Quyết định đúng đắn khi chuyển trường cho bé!', avatar: 'https://i.pravatar.cc/100?img=47' },
+  { name: 'Nguyễn Chí Toàn', role: 'Học sinh lớp 6', quote: 'Thầy cô luôn ở bên khi em gặp khó khăn. Tiếng Anh và điểm số của em tiến bộ cực kỳ nhanh.', avatar: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80' },
+  { name: 'Thân Hương Giang', role: 'Học sinh lớp 11A3', quote: 'Quyết định học tại Việt Anh là điều đúng đắn nhất. Nơi đây giúp em hoàn toàn thay đổi và trưởng thành.', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&auto=format&fit=crop&w=100&q=80' }
+];
+---
+
+<BaseLayout
+  title="Nhận Lộ Trình Học Tập Toàn Diện | Trường Việt Anh"
+  description="Lộ trình học tập giúp con hạnh phúc & vươn tầm quốc tế. Đảm bảo đầu ra IELTS 6.0+ và 16 Kỹ năng thế kỷ 21."
+  canonical="https://staging.truongvietanh.com/staging-clickfunnels"
+  structuredData={structuredData}
+>
+  <div class="cf-layout">
+    
+    <!-- TOP BAR -->
+    <div class="top-bar">
+      <div class="cf-container top-bar-inner">
+        <div class="top-left">
+          <span class="icon-text text-nowrap">
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+             Hotline: 0916 961 409
+          </span>
+          <span class="icon-text d-none-mo text-nowrap" style="margin-left: 1.5rem;">
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+             Zalo: 0916 961 409
+          </span>
+        </div>
+        <div class="top-right d-none-mo">
+          <button aria-label="Tìm kiếm trên website" class="search-btn">
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          </button>
+          <button class="btn-yellow" onclick="document.getElementById('programs-section').scrollIntoView({behavior: 'smooth'})">Tư vấn tuyển sinh ↗</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAIN NAV -->
+    <header class="main-header">
+      <nav class="nav-grid">
+         <ul class="nav-links left-nav">
+           <li><a href="/">Trang Chủ</a></li>
+           <li class="has-dropdown"><a href="/gioi-thieu">Giới Thiệu</a></li>
+           <li class="has-dropdown">
+             <a href="#programs-section">Chương Trình ▾</a>
+             <ul class="dropdown-menu">
+               <li><a href="#programs-section" onclick="activateTab('mam-non')">Mầm Non</a></li>
+               <li><a href="#programs-section" onclick="activateTab('tieu-hoc')">Tiểu Học</a></li>
+               <li><a href="#programs-section" onclick="activateTab('thcs')">THCS</a></li>
+               <li><a href="#programs-section" onclick="activateTab('thpt')">THPT</a></li>
+               <li><a href="#programs-section" onclick="activateTab('ngoai-khoa')">Ngoại Khóa</a></li>
+             </ul>
+           </li>
+           <li><a href="/tuyen-sinh">Tuyển Sinh</a></li>
+         </ul>
+         
+         <!-- Logo Tăng Kích Thước -->
+         <div class="header-logo text-center">
+           <a href="/">
+              <img src={logoUrl} alt="Trường Liên Cấp Việt Anh" class="official-logo" />
+           </a>
+         </div>
+         
+         <ul class="nav-links right-nav">
+           <li><a href="/hoc-thuat">Học Thuật</a></li>
+           <li><a href="/dich-vu">Dịch Vụ</a></li>
+           <li><a href="/tin-tuc">Tin Tức</a></li>
+           <li><a href="/lien-he">Liên hệ</a></li>
+         </ul>
+      </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="cf-hero">
+      <div class="cf-container hero-center-wrapper">
+        <h1 class="hero-title text-center">
+           Lộ Trình Học Tập Giúp Con Bạn<br class="d-none-mo" />
+           <span class="highlight">Hạnh Phúc & Vươn Tầm</span>
+        </h1>
+        <p class="hero-desc text-center">
+           Không áp lực điểm số. Đảm bảo Tiếng Anh & trang bị 16 Kỹ năng thế kỷ 21.<br class="d-none-mo" />
+           Cho trẻ từ Mầm non đến THPT.
+        </p>
+
+        <div class="optin-blended-box">
+          <div class="optin-form-flat">
+             <div class="form-group text-center w-full">
+               <h2 class="font-bold text-dark text-lg" style="margin-bottom: 2rem; color: var(--cf-blue);">Chọn độ tuổi của con để xem lộ trình đào tạo phù hợp:</h2>
+               
+               <!-- NEW BEAUTIFUL LARGE BUTTONS (No nested boxes) -->
+               <div class="hero-age-buttons-wrap">
+                 {audiences.map(aud => (
+                   <button class="hero-age-btn" data-val={aud.id} style={`--hover-color: ${aud.color}`}>
+                     {aud.title}
+                   </button>
+                 ))}
+               </div>
+               
+             </div>
+          </div>
+        </div>
+
+        <!-- Trust Stats -->
+        <div class="trust-stats-row d-none-mo mt-4">
+           {stats.map(s => (
+             <div class="trust-stat">
+               <span class="stat-number">{s.val}</span>
+               <span class="stat-label text-nowrap">{s.label}</span>
+             </div>
+           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- PROBLEM & SOLUTION -->
+    <section class="cf-problem-solution">
+      <div class="cf-container text-center max-w-900">
+        <h2 class="section-title">Ba mẹ "Mệt Mỏi" vì đưa đón con quá nhiều nơi?</h2>
+        <p class="section-subtitle">Tiếng Anh chỗ này, Khóa lãnh đạo chỗ kia, Thể thao nơi khác...</p>
+        
+        <div class="solution-box">
+          <div class="solution-icon">♥</div>
+          <h3 class="solution-title-inline">Trường Việt Anh Tích Hợp TẤT CẢ Trong 1 Lộ Trình Duy Nhất!</h3>
+          <p class="solution-text">Tiết kiệm thời gian, con vẫn phát triển <strong>TOÀN DIỆN</strong> về học thuật, Thể chất & Kỹ năng ngay tại 1 ngôi trường.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- MERGED SECTION: CHƯƠNG TRÌNH ĐÀO TẠO & 16 KỸ NĂNG -->
+    <section id="programs-section" class="cf-merged-programs">
+       <div class="cf-container">
+          <h2 class="section-title text-center text-dark" style="margin-bottom: 2.5rem;">Cấp Độ Đào Tạo & 16 Kỹ Năng Thế Kỷ 21</h2>
+          
+          <div class="skills-tabs-wrap">
+             <!-- FULL WIDTH TABS -->
+             <div class="skills-tabs-header">
+                {audiences.map((aud, idx) => (
+                  <button class={`skill-tab-btn ${idx === 0 ? 'active' : ''}`} data-target={aud.id} style={`--tab-active-color: ${aud.color}`}>
+                     {aud.title}
+                  </button>
+                ))}
+             </div>
+             
+             <!-- TABS CONTENT: Generated for all 5 audiences -->
+             <div class="skills-tabs-body">
+                {audiences.map((aud, idx) => (
+                   <div class={`tab-pane ${idx === 0 ? 'active' : ''}`} id={`pane-${aud.id}`}>
+                      
+                      <!-- Part 1: Detailed Program Info -->
+                      <div class="aud-card-beautiful" style={`border-top-color: ${aud.color};`}>
+                         <div class="aud-header-inline">
+                           <div class="icon-small" style={`color: ${aud.color}; background: ${aud.color}15;`}>
+                             <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d={aud.iconPath}/></svg>
+                           </div>
+                           <div>
+                             <h3 class="aud-inline-title" style={`color: var(--cf-blue)`}>{aud.title}</h3>
+                             <div class="aud-inline-age" style={`color: ${aud.color}`}>{aud.age}</div>
+                           </div>
+                         </div>
+                         <p class="aud-desc-small mt-3" style="font-size: 1.15rem; color: var(--cf-blue); font-weight: 500; max-width: 800px;">
+                            {aud.desc}
+                         </p>
+                      </div>
+
+                      <!-- Part 2: 16 Skills specifically for this age -->
+                      <div class="skills-description-box" style={`border-left-color: ${aud.color};`}>
+                         <h4 style={`color: ${aud.color}; margin-bottom: 0.5rem; font-size: 1.25rem; font-weight: 800;`}>Kỹ năng thế kỷ 21 ở cấp độ {aud.title}:</h4>
+                         <p style="font-size: 1.05rem; color: var(--text-light); margin:0; line-height: 1.6;">
+                            {tabsBenefit[aud.id]}
+                         </p>
+                      </div>
+
+                      <!-- The 16 Skills Grid Display -->
+                      <div class="skills-grid-16">
+                         {skills.map((sk, index) => (
+                            <div class="skill-mini-card">
+                               <div class="sk-num" style={`background: ${aud.color}`}>{index + 1}</div>
+                               <div class="sk-content">
+                                  <span class="sk-vi">{sk.n}</span>
+                                  <span class="sk-en">{sk.e}</span>
+                               </div>
+                            </div>
+                         ))}
+                      </div>
+
+                   </div>
+                ))}
+             </div>
+          </div>
+       </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="cf-testimonials">
+      <div class="cf-container">
+        <h2 class="section-title text-center text-white" style="margin-bottom: 0.5rem;">Những Câu Chuyện Thành Công</h2>
+        <p class="section-subtitle text-center" style="color:#b2c5e5; margin-bottom: 2rem;">Góc nhìn chân thật từ chính học sinh và phụ huynh trường Việt Anh.</p>
+        
+        <div class="testimonial-grid">
+           {testimonials.map(t => (
+             <div class="testi-card-clean">
+                <div class="stars">★★★★★</div>
+                <p class="quote">"{t.quote}"</p>
+                <div class="author-block">
+                  <img src={t.avatar} alt={t.name} class="author-avatar-img" width="45" height="45" />
+                  <div class="author-info">
+                    <h4>{t.name}</h4>
+                    <span>{t.role}</span>
+                  </div>
+                </div>
+             </div>
+           ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="custom-footer">
+      <div class="cf-container footer-campuses">
+         <div class="campus-grid">
+            {campuses.map(c => (
+              <div class="campus-item">
+                 <h4>{c}</h4>
+                 <p class="hotline">Hotline: <span>0916 961 409</span></p>
+              </div>
+            ))}
+         </div>
+      </div>
+      
+      <div class="footer-divider"></div>
+
+      <div class="cf-container footer-links-grid">
+        <div class="footer-col brand-col">
+          <h3 class="footer-title">Giới thiệu</h3>
+          <p class="footer-desc">
+            Trường Việt Anh được thiết kế để chuẩn bị tốt tiếng Anh và các phẩm chất. Học sinh tự tin du học, đạt học bổng từ đại học hàng đầu thế giới.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-title">Phụ huynh</h3>
+          <ul class="footer-links">
+            <li><a href="#">Phụ huynh - Học sinh</a></li>
+            <li><a href="#">Thời khóa biểu</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-title">Thông tin</h3>
+          <ul class="footer-links">
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Câu hỏi thường gặp</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-title">Chương trình đào tạo</h3>
+          <ul class="footer-links">
+            <li><a href="#programs-section" onclick="activateTab('mam-non')">Mầm Non</a></li>
+            <li><a href="#programs-section" onclick="activateTab('tieu-hoc')">Tiểu Học</a></li>
+            <li><a href="#programs-section" onclick="activateTab('thpt')">THPT</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3 class="footer-title">Tập đoàn</h3>
+          <ul class="footer-links">
+            <li><a href="#">Hệ thống Major Education</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom text-center">
+        <p>© 2026 truongvietanh.com</p>
+      </div>
+    </footer>
+    
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  // GLOBAL FUNCTION TO ACTIVATE TAB
+  window.activateTab = function(targetId) {
+      document.querySelectorAll('.skill-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      
+      const tabToClick = document.querySelector(`.skill-tab-btn[data-target="${targetId}"]`);
+      if (tabToClick) tabToClick.classList.add('active');
+      
+      const paneToShow = document.getElementById(`pane-${targetId}`);
+      if (paneToShow) paneToShow.classList.add('active');
+  };
+
+  // TABS LOGIC EVENT LISTENER
+  document.querySelectorAll('.skill-tab-btn').forEach(btn => {
+     btn.addEventListener('click', (e) => {
+        const targetId = e.currentTarget.getAttribute('data-target');
+        window.activateTab(targetId);
+     });
+  });
+
+  // HERO AGE BUTTONS INTERACTION
+  document.querySelectorAll('.hero-age-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const targetId = e.currentTarget.getAttribute('data-val');
+      
+      // Smooth scroll to the programs section
+      const section = document.getElementById('programs-section');
+      if (section) {
+         section.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      // Activate the correct tab intelligently
+      window.activateTab(targetId);
+    });
+  });
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+  .cf-layout {
+    --pri-blue: #232252;
+    --highlight-blue: #1b1a41;
+    --bg-gray: #f8fafc;
+    --cf-blue: #1a193c;
+    --cf-blue-dark: #12112a;
+    --pri-yellow: #fde047; 
+    --text-yellow: #ca8a04;
+    --text-dark: #0f172a;
+    --text-light: #475569;
+    
+    font-family: 'Inter', system-ui, -apple-system, sans-serif !important;
+    color: var(--text-dark);
+    line-height: 1.5;
+    background: #ffffff;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, button, input { font-family: 'Inter', sans-serif !important; }
+  .font-bold { font-weight: 700; }
+  .text-dark { color: var(--text-dark); }
+  .text-md { font-size: 1.05rem; }
+  .text-lg { font-size: 1.25rem; }
+  .w-full { width: 100%; display: block; text-align: center; }
+
+  /* UTILS */
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .text-center { text-align: center; }
+  .text-white { color: #ffffff; }
+  .text-nowrap { white-space: nowrap; }
+  .mb-0 { margin-bottom: 0 !important; }
+  .mt-3 { margin-top: 1.5rem; }
+  .mt-4 { margin-top: 2rem; }
+  .max-w-900 { max-width: 900px; margin: 0 auto; }
+
+  .section-title { font-size: 2.15rem; font-weight: 900; line-height: 1.25; margin-bottom: 0.5rem; color: var(--cf-blue); letter-spacing: -0.5px; }
+  .section-subtitle { font-size: 1.15rem; color: var(--text-light); margin-bottom: 2rem; font-weight: 500; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+  /* HEADER */
+  .top-bar { background: var(--cf-blue); color: #e2e8f0; font-size: 0.85rem; padding: 0.4rem 0; font-weight: 400; }
+  .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
+  .top-left .icon-text { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .top-right { display: flex; align-items: center; gap: 1rem; }
+  .search-btn { background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; }
+  .btn-yellow { background: var(--pri-yellow); color: #000; font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius:3px; font-size: 0.8rem; border: none; cursor:pointer;}
+  .btn-yellow:hover { background: #fef08a; }
+
+  .main-header { background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+  .nav-grid { max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 80px; gap: 1rem; }
+  
+  .nav-links { list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; align-items: center; }
+  .right-nav { justify-content: flex-start; }
+  .left-nav { justify-content: flex-end; }
+  .nav-links li { position: relative; }
+  .nav-links a { text-decoration: none; color: var(--pri-blue); font-weight: 600; font-size: 0.9rem; white-space: nowrap; transition: color 0.2s; display: flex; align-items: center; padding: 1.5rem 0; }
+  
+  /* DROPDOWN */
+  .dropdown-menu { position: absolute; top: 100%; left: 0; background: #ffffff; min-width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; border: 1px solid #f1f5f9; padding: 0.5rem 0; display: flex; flex-direction: column; z-index: 200; }
+  .has-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+  .dropdown-menu a { padding: 0.6rem 1.25rem; font-weight: 500; font-size: 0.85rem; color: var(--text-dark); border-left: 3px solid transparent; }
+  .dropdown-menu a:hover { background: var(--bg-gray); color: var(--cf-blue); border-left-color: var(--cf-blue); }
+
+  /* LOGO ENLARGED */
+  .header-logo { display: flex; justify-content: center; width: 100%; }
+  .official-logo { height: 120px; object-fit: contain; } /* Increased from 95 to 120 */
+
+  /* HERO */
+  .cf-hero { background: radial-gradient(circle at center top, var(--bg-gray) 0%, #ffffff 100%); padding: 5rem 0 6rem; border-bottom: 1px solid #cbd5e1; }
+  .hero-center-wrapper { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+  .hero-title { font-size: clamp(2.25rem, 4.5vw, 3.5rem); font-weight: 900; line-height: 1.4 !important; color: var(--cf-blue); margin-bottom: 1.5rem; letter-spacing: -1px; }
+  .hero-title .highlight { color: #cc0000; }
+  .hero-desc { font-size: 1.25rem; color: var(--text-light); margin-bottom: 3.5rem; line-height: 1.6; font-weight: 500; }
+  
+  .optin-blended-box { width: 100%; max-width: 900px; margin: 0 auto; text-align: center; }
+  
+  /* HERO NEW LARGE AGE BUTTONS */
+  .hero-age-buttons-wrap { display: flex; justify-content: center; flex-wrap: wrap; gap: 1rem; width: 100%; }
+  .hero-age-btn { 
+    background: #ffffff; border: 2px solid var(--cf-blue); color: var(--cf-blue);
+    padding: 1.1rem 2.2rem; border-radius: 8px; font-weight: 800; font-size: 1.15rem; 
+    cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-transform: uppercase;
+  }
+  .hero-age-btn:hover { 
+    background: var(--hover-color, var(--cf-blue)); 
+    color: #ffffff; border-color: var(--hover-color, var(--cf-blue)); 
+    transform: translateY(-4px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); 
+  }
+
+  .trust-stats-row { display: flex; justify-content: space-around; flex-wrap: wrap; width: 100%; padding-top: 3rem; margin-top: 3rem; border-top: 1px solid #e2e8f0; }
+  .trust-stat { text-align: center; }
+  .stat-number { font-size: 2.25rem; font-weight: 900; color: var(--cf-blue); line-height: 1.1; margin-bottom: 0.25rem; }
+  .stat-label { font-size: 0.8rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; }
+
+  /* PROBLEM & SOLUTION */
+  .cf-problem-solution { padding: 5rem 0; background: #ffffff; border-bottom: 1px solid #e2e8f0; }
+  .solution-box { background: var(--bg-gray); border-radius: 8px; padding: 3rem 2rem; position: relative; margin-top: 3rem; border: 2px dashed #cbd5e1; }
+  .solution-icon { position: absolute; top: -25px; left: 50%; transform: translateX(-50%); width: 50px; height: 50px; background: var(--pri-yellow); color: #1e3a8a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 900; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+  .solution-title-inline { font-size: 1.45rem; font-weight: 800; color: var(--cf-blue); margin-bottom: 1rem; } 
+  .solution-text { font-size: 1.15rem; color: var(--text-light); }
+
+  /* MERGED SECTION: PROGRAMS & SKILLS */
+  .cf-merged-programs { padding: 5rem 0; background: var(--bg-gray); }
+  .skills-tabs-wrap { border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; max-width: 1100px; margin: 2rem auto 0; box-shadow: 0 15px 40px rgba(0,0,0,0.06); background: #ffffff;}
+  
+  /* FULL WIDTH TABS */
+  .skills-tabs-header { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; width: 100%; }
+  .skill-tab-btn { flex: 1; padding: 1.5rem 1rem; border: none; background: transparent; font-size: 1.15rem; font-weight: 800; color: var(--text-light); cursor: pointer; transition: all 0.2s; border-bottom: 4px solid transparent; text-align: center;}
+  .skill-tab-btn:hover { background: #f1f5f9; color: var(--cf-blue); }
+  .skill-tab-btn.active { color: #ffffff; background: var(--tab-active-color, var(--cf-blue)); border-bottom-color: var(--tab-active-color, var(--cf-blue)); pointer-events: none; }
+  
+  .skills-tabs-body { padding: 3rem 2.5rem; }
+  
+  .tab-pane { display: none; animation: fadeIn 0.4s ease; }
+  .tab-pane.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* Nested Detail Cards inside Pane */
+  .aud-card-beautiful { background: #f8fafc; border-radius: 12px; padding: 2.5rem 2rem; border-top: 6px solid; box-shadow: 0 4px 15px rgba(0,0,0,0.03); margin-bottom: 3rem; }
+  .aud-header-inline { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+  .aud-inline-title { font-size: 1.6rem; font-weight: 900; margin: 0; line-height: 1.2; }
+  .aud-inline-age { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-top: 0.25rem; }
+  .icon-small { width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  
+  .skills-description-box { background: #ffffff; border-left: 5px solid var(--cf-blue); padding: 1.5rem; border-radius: 0 8px 8px 0; margin-bottom: 2rem; box-shadow: 0 2px 10px rgba(0,0,0,0.02);}
+  
+  /* 16 skills layout */
+  .skills-grid-16 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .skill-mini-card { border: 1px solid #e2e8f0; border-radius: 8px; padding: 1rem; display: flex; gap: 0.75rem; align-items: center; transition: all 0.2s; background: #ffffff;}
+  .skill-mini-card:hover { border-color: var(--cf-blue); transform: translateY(-2px); box-shadow: 0 6px 15px rgba(0,0,0,0.06); }
+  .sk-num { color: #fff; font-size: 0.8rem; font-weight: 800; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .sk-content { display: flex; flex-direction: column; }
+  .sk-vi { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; line-height: 1.2; margin-bottom: 0.1rem; }
+  .sk-en { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  /* TESTIMONIALS */
+  .cf-testimonials { padding: 4rem 0 5rem; background: var(--cf-blue); position: relative; } 
+  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .testi-card-clean { background: #ffffff; border-radius: 12px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+  .stars { color: var(--text-yellow); font-size: 1.2rem; margin-bottom: 1rem; letter-spacing: 2px; }
+  .quote { color: var(--text-dark); font-size: 1.05rem; font-style: italic; margin-bottom: 2rem; line-height: 1.6; font-weight: 500; flex-grow: 1; }
+  .author-block { display: flex; align-items: center; gap: 1rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem; }
+  .author-avatar-img { border-radius: 50%; object-fit: cover; border: 2px solid #e2e8f0; }
+
+  /* FOOTER */
+  .custom-footer { background: var(--pri-blue); color: #cbd5e1; padding: 4rem 0 0; font-size: 0.85rem; }
+  .footer-campuses { padding-bottom: 3rem; }
+  .campus-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.5rem; text-align: left; }
+  .campus-item h4 { color: #ffffff; font-size: 0.85rem; margin-bottom: 0.5rem; font-weight: 700; line-height: 1.4; }
+  .footer-links li { margin-bottom: 0.75rem; list-style: none; }
+  .footer-links a { color: #cbd5e1; text-decoration: none; transition: color 0.2s; font-size: 0.85rem; font-weight: 500; }
+  .footer-links-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.2fr 1.5fr; gap: 2rem; margin-bottom: 2.5rem; }
+  .footer-title { color: #ffffff; font-size: 0.95rem; font-weight: 700; margin-bottom: 1.25rem; }
+  .footer-bottom { background: #1b1a41; padding: 1.5rem 0; color: #94a3b8; font-size: 0.85rem; font-weight: 500; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .testimonial-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .campus-grid { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .footer-links-grid, .skills-grid-16 { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .nav-grid { grid-template-columns: 1fr auto; justify-content: space-between; }
+    .left-nav, .right-nav { display: none; }
+    .skills-tabs-header { flex-wrap: wrap; }
+    .skill-tab-btn { flex: 1 1 33.33%; }
+  }
+
+  @media (max-width: 768px) {
+    .d-none-mo { display: none; }
+    .section-title { font-size: 1.8rem; }
+    .hero-title { font-size: 2rem; }
+    .hero-desc { font-size: 1.05rem; }
+    .hero-age-buttons-wrap { flex-direction: column; width: 100%; }
+    .skills-tabs-header { flex-direction: column; }
+    .skill-tab-btn { flex: 1 1 100%; text-align: left; border-bottom: none; border-left: 4px solid transparent; }
+    .skill-tab-btn.active { border-bottom: none; border-left-color: var(--tab-active-color); }
+    .skills-grid-16 { grid-template-columns: 1fr; gap: 1rem; }
+    .skills-tabs-body { padding: 1.5rem; }
+  }
+</style>

@@ -1,0 +1,920 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+
+const bentoGrid = [
+  {
+    type: 'stat',
+    title: 'Gần 50,000',
+    subtitle: 'Học sinh',
+    subtext: 'Trên toàn hệ thống',
+    img: '',
+    span: 1
+  },
+  {
+    type: 'image',
+    title: 'Hệ thống giáo dục số 1 Việt Nam',
+    subtitle: '',
+    subtext: '',
+    img: 'https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png',
+    span: 1
+  },
+  {
+    type: 'text',
+    title: 'Tự hào là hệ thống giáo dục lớn nhất Việt Nam',
+    subtitle: 'Được công nhận quốc tế',
+    subtext: 'Trường Việt Anh liên tục đổi mới để mang lại chương trình học toàn diện, hạnh phúc và phát huy sự tự chủ của từng học sinh.',
+    img: '',
+    span: 2
+  },
+  {
+    type: 'image',
+    title: 'Học sinh Việt Anh tự chủ',
+    subtitle: '',
+    subtext: '',
+    img: 'https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png',
+    span: 1
+  },
+  {
+    type: 'text',
+    title: 'Trải nghiệm đa dạng',
+    subtitle: 'Không chỉ là học thuật',
+    subtext: 'Từ thể thao, nghệ thuật đến các dự án cộng đồng, học sinh Việt Anh được trải nghiệm trọn vẹn.',
+    img: '',
+    span: 1
+  }
+];
+
+const programs = [
+  {
+    title: 'Chương trình Giáo dục Mầm non',
+    age: '(18 tháng - 5 tuổi)',
+    desc: 'Ưu tiên môi trường an toàn, giao tiếp song ngữ và nhịp sinh hoạt giúp trẻ đi học tự tin hơn. Chú trọng phát triển cá nhân hóa qua PDR.',
+    features: [
+      'Giao tiếp Tiếng Anh với giáo viên quốc tế',
+      'Chương trình nhận thức ngữ âm quốc tế',
+      'Chuẩn bị kỹ năng tiền tiểu học vững chắc'
+    ],
+    color: '#E74C3C',
+    link: '/mam-non'
+  },
+  {
+    title: 'Chương trình Giáo dục Phổ thông',
+    age: '(Tiểu học - THCS - THPT)',
+    desc: 'Hành trình liên cấp mạch lạc giúp trẻ làm chủ kiến thức và kỹ năng sống. Từ việc hình thành nề nếp ở Tiểu học, dự án ở THCS đến định hướng IELTS và Đại học ở THPT.',
+    features: [
+      'Lộ trình Tiếng Anh và IELTS chuyên sâu',
+      'Định vị công dân toàn cầu',
+      'Trang bị sự tự chủ và bộ kỹ năng tương lai'
+    ],
+    color: '#8E44AD',
+    link: '/tieu-hoc'
+  }
+];
+
+const achievements = [
+  { value: '20%', label: 'Học sinh đỗ vào các đại học Top đầu trong và ngoài nước', badge: '' },
+  { value: 'TOP 1', label: 'Thế giới', badge: 'Nhà vô địch The World Scholar\'s Cup' },
+  { value: '60%', label: 'Học sinh đạt IELTS 6.5+ trước khi tốt nghiệp', badge: '' },
+  { value: '1771', label: 'Điểm trung bình SAT của học sinh khóa mới', badge: '' }
+];
+
+const currentPath = '/samples/vinschool-homepage';
+---
+
+<BaseLayout title="Trang chủ - Hệ thống Giáo dục Việt Anh" description="Hệ thống Giáo dục Việt Anh - Kiến tạo công dân toàn cầu hạnh phúc. Nhấn mạnh sự tự chủ, chuyên Anh và lộ trình liên cấp từ Mần non đến THPT.">
+  <SiteHeader currentPath={currentPath} />
+
+  <main class="vs-home">
+    <!-- Hero Section -->
+    <header class="vs-hero">
+      <div class="vs-hero-bg">
+        <img src="https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg" alt="Trường Việt Anh Campus" />
+      </div>
+      <div class="vs-hero-overlay"></div>
+      <div class="vs-container vs-hero-content">
+        <h1>Chào mừng quý Phụ huynh đến với<br/>Hệ thống giáo dục Việt Anh</h1>
+        <p>Kiến tạo những công dân toàn cầu hạnh phúc. Nơi mỗi học sinh được rèn luyện sự tự chủ, học tiếng Anh thực chiến và trưởng thành trong một hệ thống liên cấp vững vàng.</p>
+        <div class="scroll-indicator">
+          <span>Khám phá</span>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+        </div>
+      </div>
+    </header>
+
+    <!-- Bento Grid Section -->
+    <section class="vs-bento">
+      <div class="vs-bento-grid">
+        <div class="bento-col vs-bento-images">
+          <div class="bento-box image-box" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png')">
+            <div class="box-text">Liền mạch & Yêu thương</div>
+          </div>
+          <div class="bento-box image-box" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png')">
+            <div class="box-text">Chuyên Anh thực chiến</div>
+          </div>
+        </div>
+        <div class="bento-col vs-bento-content">
+          <div class="bento-box text-box navy-box">
+            <span>Tự hào là hệ thống giáo dục</span>
+            <h3>Tiên phong về hạnh phúc và sự tự chủ của học sinh</h3>
+            <p>Trường Việt Anh liên tục đổi mới quy trình, tối ưu phương pháp giảng dạy để đem lại lộ trình học tập hiệu quả nhất, không áp lực ảo.</p>
+          </div>
+          <div class="bento-row">
+            <div class="bento-box stat-box gold-box">
+              <h3>Hơn 15</h3>
+              <span>Năm kinh nghiệm</span>
+              <p>Giáo dục liên cấp tại TP.HCM</p>
+            </div>
+            <div class="bento-box image-box square-box" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2024/12/Frame-2144770212.png')">
+              <div class="box-text">Cơ sở vật chất hiện đại</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Education Programs (Chương trình giáo dục) -->
+    <section class="vs-programs">
+      <div class="vs-container">
+        <div class="vs-section-header">
+          <h2>Chương trình Giáo dục</h2>
+          <div class="title-line"></div>
+        </div>
+        
+        <div class="vs-program-path">
+          <div class="path-line"></div>
+
+          {programs.map((prog, index) => (
+            <div class={`program-card ${index % 2 !== 0 ? 'program-card--right' : ''}`}>
+              <div class="prog-content">
+                <h3>{prog.title} <br/><small>{prog.age}</small></h3>
+                <p>{prog.desc}</p>
+                <div class="prog-buttons">
+                  <a href={prog.link} class="btn btn-navy">Xem chi tiết</a>
+                  <a href="/tuyen-sinh" class="btn btn-outline">Đăng ký tư vấn</a>
+                </div>
+              </div>
+              
+              <div class="prog-node" style={`--node-color: ${prog.color}`}>
+                <div class="node-inner"></div>
+              </div>
+              
+              <div class="prog-features">
+                <ul>
+                  {prog.features.map(f => (
+                    <li>
+                      <span class="dot" style={`--dot-color: ${prog.color}`}></span>
+                      {f}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- Ngoại khoá (Extracurricular) -->
+        <div class="vs-extracurricular">
+          <h3>Chương trình Ngoại khoá</h3>
+          <p>Thể thao, nghệ thuật, kỹ năng mềm và các dự án xã hội được trường Việt Anh lồng ghép vào hệ sinh thái giáo dục để phát triển toàn diện học sinh.</p>
+          <div class="extra-circles">
+            <div class="circle-item">
+              <div class="circle" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2024/12/big-img2-scaled.jpg')"></div>
+              <span>Sự kiện<br/>Nghệ thuật</span>
+            </div>
+            <div class="circle-item">
+              <div class="circle" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2024/12/big-img3-scaled.jpg')"></div>
+              <span>CLB Thể thao</span>
+            </div>
+            <div class="circle-item">
+              <div class="circle" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png')"></div>
+              <span>Phát triển<br/>Kỹ năng Giao tiếp</span>
+            </div>
+            <div class="circle-item">
+              <div class="circle" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png')"></div>
+              <span>Hoạt động<br/>Cộng đồng</span>
+            </div>
+          </div>
+          <a href="/truong-hoc-hanh-phuc" class="btn-extra">Khám phá hoạt động</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Achievements (Dark background) -->
+    <section class="vs-achievements">
+      <div class="vs-container">
+        <div class="vs-section-header light">
+          <h2>Thành tích Học sinh Việt Anh</h2>
+          <div class="title-line gold"></div>
+        </div>
+        
+        <div class="achieve-grid">
+          {achievements.map((item, i) => (
+            <div class={`achieve-item shape-${i+1}`}>
+              {item.badge && <div class="badge-text">{item.badge}</div>}
+              <div class="stat-num">{item.value}</div>
+              <p class="stat-label">{item.label}</p>
+            </div>
+          ))}
+        </div>
+        <div class="achieve-bg-images">
+             <img src="https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg" class="bg-img-1" alt="Thành tích" />
+             <img src="https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png" class="bg-img-2" alt="Học tập" />
+        </div>
+      </div>
+    </section>
+
+    <!-- News & Events -->
+    <section class="vs-news">
+      <div class="vs-container">
+        <div class="vs-section-header flex-header">
+          <h2>Tin tức <span class="divider">|</span> Sự kiện</h2>
+          <a href="/tin-tuc" class="view-all">Xem tất cả ›</a>
+        </div>
+        
+        <div class="news-cards">
+          <a href="#" class="news-card">
+            <div class="news-img" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2024/12/Website-Truongvietanh.com_-768x432.png')"></div>
+            <div class="news-content">
+              <span class="news-cat">SỰ KIỆN</span>
+              <span class="news-date">28.03.2026</span>
+              <h3>Tuyển sinh năm học mới: Lộ trình cho con tự tin hội nhập</h3>
+              <p>Trường Việt Anh chính thức công bố lộ trình tuyển sinh và học phí minh bạch...</p>
+              <span class="read-more">Xem thêm</span>
+            </div>
+          </a>
+          <a href="#" class="news-card">
+            <div class="news-img" style="background-image: url('https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png')"></div>
+            <div class="news-content">
+              <span class="news-cat">HOẠT ĐỘNG</span>
+              <span class="news-date">15.04.2026</span>
+              <h3>Hành trình phát triển sự Tự chủ qua các dự án lớp 9</h3>
+              <p>Học sinh được rèn luyện kỹ năng phân tích và giải quyết vấn đề bằng dự án thực tế...</p>
+              <span class="read-more">Xem thêm</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Variables used from global.css but extended locally for the snippet */
+  .vs-home {
+    --vs-navy: #033F85;
+    --vs-navy-dark: #022b5e;
+    --vs-gold: #C39953;
+    --vs-gold-light: #d8a32b;
+    --text-color: #333333;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    color: var(--text-color);
+  }
+
+  .vs-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  /* HEADINGS */
+  .vs-home h1, .vs-home h2, .vs-home h3, .vs-home h4 {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+  }
+  
+  .vs-section-header {
+    margin-bottom: 2.5rem;
+  }
+  .vs-section-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--vs-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .title-line {
+    height: 3px;
+    width: 60px;
+    background: var(--vs-navy);
+    margin-top: 0.75rem;
+  }
+  .vs-section-header.light h2 {
+    color: #fff;
+  }
+  .title-line.gold {
+    background: var(--vs-gold);
+  }
+  .flex-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 1rem;
+  }
+  .flex-header h2 {
+    font-size: 1.5rem;
+  }
+  .flex-header .divider {
+    font-weight: 300;
+    margin: 0 0.5rem;
+    color: #ccc;
+  }
+  .view-all {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--vs-navy);
+    text-decoration: none;
+  }
+
+  /* BUTTONS */
+  .btn {
+    display: inline-flex;
+    padding: 0.6rem 1.25rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+  .btn-navy {
+    background: var(--vs-navy);
+    color: #fff;
+  }
+  .btn-navy:hover {
+    background: var(--vs-navy-dark);
+  }
+  .btn-outline {
+    background: transparent;
+    border: 2px solid var(--vs-navy);
+    color: var(--vs-navy);
+  }
+  .btn-outline:hover {
+    background: var(--vs-navy);
+    color: #fff;
+  }
+
+  /* 1. HERO */
+  .vs-hero {
+    position: relative;
+    height: 90vh;
+    min-height: 600px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 4rem;
+    color: #fff;
+  }
+  .vs-hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+  }
+  .vs-hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .vs-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(3, 63, 133, 0.95) 0%, rgba(3, 63, 133, 0.4) 50%, rgba(0,0,0,0.2) 100%);
+    z-index: -1;
+  }
+  .vs-hero-content {
+    width: 100%;
+  }
+  .vs-hero-content h1 {
+    font-size: clamp(2.2rem, 4vw, 3.5rem);
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .vs-hero-content p {
+    font-size: 1.1rem;
+    max-width: 600px;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+  }
+  .scroll-indicator {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+  .scroll-indicator:hover {
+    opacity: 1;
+  }
+  .scroll-indicator svg {
+    animation: bounce 2s infinite ease-in-out;
+  }
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-8px);}
+    60% {transform: translateY(-4px);}
+  }
+
+  /* 2. BENTO GRID */
+  .vs-bento {
+    background: #f7f9fa;
+    padding: 4rem 0;
+  }
+  .vs-bento-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 1rem;
+    padding: 0 1.5rem;
+  }
+  .bento-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .bento-box {
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    padding: 2rem;
+  }
+  .image-box {
+    background-size: cover;
+    background-position: center;
+    min-height: 250px;
+    display: flex;
+    align-items: flex-end;
+    padding: 1.5rem;
+  }
+  .image-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%);
+  }
+  .box-text {
+    position: relative;
+    color: #fff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.2rem;
+    z-index: 1;
+  }
+  .navy-box {
+    background: var(--vs-navy);
+    color: #fff;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .navy-box h3 {
+    font-size: 2rem;
+    margin: 0.5rem 0 1rem;
+    line-height: 1.25;
+  }
+  .navy-box span {
+    font-weight: 600;
+    color: var(--vs-gold);
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+  .bento-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    flex: 1;
+  }
+  .bento-row .image-box {
+    min-height: 200px;
+  }
+  .stat-box {
+    background: var(--vs-gold);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .stat-box h3 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0 0 0.25rem;
+  }
+  .stat-box span {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .stat-box p {
+    font-size: 0.9rem;
+    margin: 0.5rem 0 0;
+    opacity: 0.9;
+  }
+
+  /* 3. PROGRAMS PATHWAY */
+  .vs-programs {
+    padding: 5rem 0;
+    background: #fff;
+  }
+  .vs-program-path {
+    position: relative;
+    max-width: 900px;
+    margin: 3rem auto;
+  }
+  .path-line {
+    position: absolute;
+    top: 50px;
+    bottom: 50px;
+    left: 50%;
+    width: 2px;
+    background: #e2e8f0;
+    transform: translateX(-50%);
+  }
+  .program-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+    position: relative;
+  }
+  .program-card:last-child {
+    margin-bottom: 0;
+  }
+  .prog-content, .prog-features {
+    width: 45%;
+    background: #fff;
+  }
+  .prog-content {
+    background: #f9fbfd;
+    padding: 2.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(3, 63, 133, 0.05);
+    border-left: 5px solid var(--vs-navy);
+  }
+  .prog-content h3 {
+    font-size: 1.4rem;
+    color: var(--vs-navy);
+    margin-bottom: 1rem;
+  }
+  .prog-content h3 small {
+    display: block;
+    font-size: 0.9rem;
+    color: #666;
+    margin-top: 0.25rem;
+    font-weight: 500;
+  }
+  .prog-content p {
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+  .prog-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  .prog-features {
+    padding: 1rem 0;
+  }
+  .prog-features ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .prog-features li {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+    font-size: 0.95rem;
+    font-weight: 500;
+    position: relative;
+    padding-left: 2.5rem;
+  }
+  .dot {
+    position: absolute;
+    left: 1rem;
+    top: 1.7rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--dot-color);
+  }
+  
+  .prog-node {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    border: 3px solid #e2e8f0;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 0 10px #fff;
+    z-index: 2;
+  }
+  .node-inner {
+    width: 18px;
+    height: 18px;
+    background: var(--node-color);
+    border-radius: 50%;
+  }
+
+  .program-card--right {
+    flex-direction: row-reverse;
+  }
+  .program-card--right .prog-content {
+    border-left: none;
+    border-right: 5px solid var(--vs-navy);
+  }
+
+  /* Extracurricular */
+  .vs-extracurricular {
+    background: #fdfaf6;
+    border-radius: 1.5rem;
+    padding: 3rem;
+    margin-top: 5rem;
+    text-align: center;
+    border: 1px solid rgba(195, 153, 83, 0.2);
+  }
+  .vs-extracurricular h3 {
+    font-size: 1.6rem;
+    color: var(--vs-navy);
+    margin-bottom: 1rem;
+  }
+  .vs-extracurricular p {
+    max-width: 650px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
+    color: #555;
+  }
+  .extra-circles {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+    flex-wrap: wrap;
+  }
+  .circle-item {
+    text-align: center;
+    width: 150px;
+  }
+  .circle {
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    margin: 0 auto 1.25rem;
+    background-size: cover;
+    background-position: center;
+    border: 4px solid #fff;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+  }
+  .circle-item:hover .circle {
+    transform: translateY(-5px) scale(1.05);
+  }
+  .circle-item span {
+    font-weight: 600;
+    color: var(--vs-navy);
+    line-height: 1.4;
+    display: block;
+  }
+  .btn-extra {
+    display: inline-block;
+    background: var(--vs-gold);
+    color: #fff;
+    padding: 0.8rem 2rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 4px 15px rgba(195, 153, 83, 0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn-extra:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(195, 153, 83, 0.5);
+  }
+
+  /* 4. ACHIEVEMENTS */
+  .vs-achievements {
+    background: var(--vs-navy);
+    padding: 6rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .achieve-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    position: relative;
+    z-index: 2;
+  }
+  .achieve-item {
+    padding: 2rem;
+    background: rgba(255,255,255,0.05);
+    border-radius: 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px);
+    text-align: center;
+  }
+  .badge-text {
+    display: inline-block;
+    background: rgba(195, 153, 83, 0.2);
+    color: var(--vs-gold);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.4rem 0.8rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .stat-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--vs-gold);
+    margin-bottom: 0.5rem;
+    line-height: 1;
+    text-shadow: 0 0 20px rgba(195, 153, 83, 0.4);
+  }
+  .stat-label {
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 500;
+    line-height: 1.5;
+    opacity: 0.9;
+    margin: 0;
+  }
+  .achieve-item.shape-2 {
+    grid-column: span 2;
+    background: rgba(195, 153, 83, 0.1);
+    border-color: rgba(195, 153, 83, 0.3);
+  }
+  .achieve-bg-images {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.2;
+    mix-blend-mode: luminosity;
+  }
+  .bg-img-1 {
+    position: absolute;
+    bottom: -10%;
+    left: 5%;
+    width: 300px;
+    filter: drop-shadow(0 0 30px rgba(0,0,0,0.5));
+  }
+  .bg-img-2 {
+    position: absolute;
+    right: 5%;
+    top: 10%;
+    width: 250px;
+    filter: drop-shadow(0 0 30px rgba(0,0,0,0.5));
+  }
+
+  /* 5. NEWS / EVENTS */
+  .vs-news {
+    padding: 5rem 0;
+    background: #fff;
+  }
+  .news-cards {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+  .news-card {
+    display: flex;
+    background: #f9fbfd;
+    border-radius: 1rem;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid #e2e8f0;
+  }
+  .news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(3, 63, 133, 0.08);
+  }
+  .news-img {
+    width: 250px;
+    background-size: cover;
+    background-position: center;
+  }
+  .news-content {
+    padding: 2rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .news-cat {
+    color: var(--vs-gold);
+    font-weight: 700;
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  .news-date {
+    font-size: 0.85rem;
+    color: #888;
+    margin-bottom: 1rem;
+  }
+  .news-card h3 {
+    font-size: 1.25rem;
+    line-height: 1.4;
+    color: var(--vs-navy);
+    margin-bottom: 1rem;
+  }
+  .news-card p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex: 1;
+  }
+  .read-more {
+    font-weight: 600;
+    color: var(--vs-navy);
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .read-more::after {
+    content: "›";
+    font-size: 1.2rem;
+    transition: transform 0.2s;
+  }
+  .news-card:hover .read-more::after {
+    transform: translateX(3px);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    .vs-bento-grid {
+      grid-template-columns: 1fr;
+    }
+    .bento-row {
+      grid-template-columns: 1fr;
+    }
+    .path-line {
+      left: 30px;
+    }
+    .prog-node {
+      left: 30px;
+    }
+    .program-card, .program-card--right {
+      flex-direction: column;
+      padding-left: 70px;
+      gap: 2rem;
+    }
+    .prog-content, .prog-features {
+      width: 100%;
+    }
+    .program-card--right .prog-content, .prog-content {
+      border: none;
+      border-top: 5px solid var(--vs-navy);
+    }
+    .achieve-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+    .achieve-item.shape-2 {
+      grid-column: span 1;
+    }
+    .news-cards {
+      grid-template-columns: 1fr;
+    }
+    .news-card {
+      flex-direction: column;
+    }
+    .news-img {
+      width: 100%;
+      height: 200px;
+    }
+  }
+  @media (max-width: 600px) {
+    .achieve-grid {
+      grid-template-columns: 1fr;
+    }
+    .extra-circles {
+      gap: 1.5rem;
+    }
+    .circle {
+      width: 100px;
+      height: 100px;
+    }
+    .vs-hero-content h1 {
+      font-size: 2rem;
+    }
+  }
+</style>

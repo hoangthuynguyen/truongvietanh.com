@@ -1,0 +1,321 @@
+---
+import type { ContentBlock } from '../lib/content-pages';
+
+type Props = {
+  blocks: ContentBlock[];
+};
+
+const { blocks } = Astro.props;
+---
+
+{blocks.map((block) => (
+  <>
+    {block.type === 'hero' && (
+      <section class="hero-block">
+        <div class="hero-block__main">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h1>{block.title}</h1>}
+          {block.body && <p class="hero-copy">{block.body}</p>}
+
+          {(block.badges.length > 0) && (
+            <div class="badge-row">
+              {block.badges.map((badge) => (
+                <span class="badge badge--soft">{badge}</span>
+              ))}
+            </div>
+          )}
+
+          {((block.primaryCtaLabel && block.primaryCtaHref) || (block.secondaryCtaLabel && block.secondaryCtaHref)) && (
+            <div class="cta-row">
+              {block.primaryCtaLabel && block.primaryCtaHref && (
+                <a class="button button--primary" href={block.primaryCtaHref}>
+                  {block.primaryCtaLabel}
+                </a>
+              )}
+              {block.secondaryCtaLabel && block.secondaryCtaHref && (
+                <a class="button button--ghost" href={block.secondaryCtaHref}>
+                  {block.secondaryCtaLabel}
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+
+        <aside class="hero-block__aside">
+          {block.asideTitle && <p class="aside-eyebrow">Tong quan</p>}
+          {block.asideTitle && <h2>{block.asideTitle}</h2>}
+          {block.asideItems.length > 0 && (
+            <ul class="aside-list">
+              {block.asideItems.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          )}
+        </aside>
+      </section>
+    )}
+
+    {block.type === 'rich_text' && (
+      <section class="section-block rich-text-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+        </div>
+        <div class="rich-text-content" set:html={block.content} />
+      </section>
+    )}
+
+    {block.type === 'text_with_image' && (
+      <section class={`section-block media-block media-block--${block.imagePosition}`}>
+        <div class="media-block__copy">
+          <div class="section-heading">
+            {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+            {block.title && <h2>{block.title}</h2>}
+            {block.body && <p class="section-intro">{block.body}</p>}
+          </div>
+
+          {block.primaryCtaLabel && block.primaryCtaHref && (
+            <div class="cta-row">
+              <a class="button button--primary" href={block.primaryCtaHref}>
+                {block.primaryCtaLabel}
+              </a>
+            </div>
+          )}
+        </div>
+
+        {block.image && (
+          <div class="media-block__visual">
+            <img class="media-block__image" src={block.image} alt={block.imageAlt || block.title || ''} loading="lazy" />
+          </div>
+        )}
+      </section>
+    )}
+
+    {block.type === 'cards' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        <div class={`card-grid card-grid--${block.columns}`}>
+          {block.items.map((item) => (
+            <article class="content-card">
+              {item.eyebrow && <p class="card-eyebrow">{item.eyebrow}</p>}
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              {item.href && item.cta && (
+                <a class="card-link" href={item.href}>
+                  {item.cta}
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {block.type === 'features' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        <div class="card-grid card-grid--3">
+          {block.items.map((item) => (
+            <article class="content-card">
+              {item.eyebrow && <p class="card-eyebrow">{item.eyebrow}</p>}
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {block.type === 'stats' && (
+      <section class="section-block section-block--stats">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        <div class="stats-grid">
+          {block.items.map((item) => (
+            <article class="stat-tile">
+              <strong>{item.value}</strong>
+              <span>{item.label}</span>
+              {item.note && <small>{item.note}</small>}
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {block.type === 'faq' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        <div class="link-grid">
+          {block.items.map((item) => (
+            <article class="faq-item">
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {block.type === 'quote' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+        </div>
+        <article class="quote-block">
+          <p>{block.quote}</p>
+          <strong>{block.attribution}</strong>
+        </article>
+      </section>
+    )}
+
+    {block.type === 'links' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        <div class="link-grid">
+          {block.items.map((item) => (
+            <a class="link-card" href={item.href}>
+              {item.eyebrow && <p class="card-eyebrow">{item.eyebrow}</p>}
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              <span>Mo trang</span>
+            </a>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {block.type === 'gallery' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        <div class="gallery-grid">
+          {block.items.map((item) => (
+            <figure class="gallery-card">
+              <img src={item.image} alt={item.alt || item.caption || block.title || ''} loading="lazy" />
+              {item.caption && <figcaption>{item.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {block.type === 'pricing_table' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        <div class="pricing-grid">
+          {block.plans.map((plan) => (
+            <article class="pricing-card">
+              <h3>{plan.title}</h3>
+              <strong class="pricing-card__price">{plan.price}</strong>
+              {plan.note && <p>{plan.note}</p>}
+              {plan.features && plan.features.length > 0 && (
+                <ul class="pricing-card__features">
+                  {plan.features.map((feature) => (
+                    <li>{feature}</li>
+                  ))}
+                </ul>
+              )}
+              {plan.ctaLabel && plan.ctaHref && (
+                <a class="button button--primary" href={plan.ctaHref}>
+                  {plan.ctaLabel}
+                </a>
+              )}
+            </article>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {block.type === 'form' && (
+      <section class="section-block">
+        <div class="section-heading">
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.intro && <p class="section-intro">{block.intro}</p>}
+        </div>
+
+        {block.embedHtml ? (
+          <div class="form-embed" set:html={block.embedHtml} />
+        ) : (
+          <form class="form-shell" action={block.formAction || '#'} method="post">
+            <div class="form-grid">
+              {block.fields.map((field) => (
+                <label class="form-field">
+                  <span>{field.label}</span>
+                  <input
+                    type="text"
+                    name={field.name}
+                    placeholder={field.placeholder || ''}
+                    required={field.required}
+                  />
+                </label>
+              ))}
+            </div>
+            <button class="button button--primary" type="submit">
+              {block.submitLabel || 'Gui thong tin'}
+            </button>
+          </form>
+        )}
+      </section>
+    )}
+
+    {block.type === 'cta' && (
+      <section class="cta-banner">
+        <div>
+          {block.eyebrow && <p class="section-eyebrow">{block.eyebrow}</p>}
+          {block.title && <h2>{block.title}</h2>}
+          {block.body && <p>{block.body}</p>}
+        </div>
+
+        {((block.primaryCtaLabel && block.primaryCtaHref) || (block.secondaryCtaLabel && block.secondaryCtaHref)) && (
+          <div class="cta-row">
+            {block.primaryCtaLabel && block.primaryCtaHref && (
+              <a class="button button--primary" href={block.primaryCtaHref}>
+                {block.primaryCtaLabel}
+              </a>
+            )}
+            {block.secondaryCtaLabel && block.secondaryCtaHref && (
+              <a class="button button--ghost" href={block.secondaryCtaHref}>
+                {block.secondaryCtaLabel}
+              </a>
+            )}
+          </div>
+        )}
+      </section>
+    )}
+  </>
+))}

@@ -1,0 +1,221 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { defaultSiteUrl } from '../../lib/site-content';
+import { templateSamples } from '../../lib/template-library';
+import { getVisitorContent } from '../../lib/template-visitor-content';
+
+export function getStaticPaths() {
+  return templateSamples.map((sample) => ({
+    params: { slug: sample.slug },
+    props: { sample },
+  }));
+}
+
+const { sample } = Astro.props;
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+const content = getVisitorContent(sample.slug);
+const canonical = `${siteUrl}/mau/${sample.slug}/`;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: content.heroTitle,
+    description: content.metaDescription,
+    url: canonical,
+    inLanguage: 'vi',
+    isPartOf: { '@type': 'WebSite', name: 'Trường Việt Anh', url: siteUrl },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: siteUrl },
+      { '@type': 'ListItem', position: 2, name: content.heroTitle, item: canonical },
+    ],
+  },
+  ...(content.faqItems.length > 0
+    ? [{
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: content.faqItems.map((faq) => ({
+          '@type': 'Question',
+          name: faq.question,
+          acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+        })),
+      }]
+    : []),
+];
+
+const shellClass = sample.theme === 'authority' ? 'site-shell--pillar'
+  : sample.theme === 'nurture' ? 'site-shell--brand'
+  : sample.theme === 'performance' ? 'site-shell--admissions'
+  : '';
+---
+
+<BaseLayout
+  title={`${content.heroTitle} | Trường Việt Anh`}
+  description={content.metaDescription}
+  canonical={canonical}
+  structuredData={structuredData}
+>
+  <div class={`site-shell ${shellClass}`}>
+    <SiteHeader currentPath={`/mau/${sample.slug}`} siteUrl="/" />
+
+    <main class="page-flow">
+      <!-- Hero -->
+      <section class={`hero-block template-hero template-hero--${sample.theme}`}>
+        <div class="hero-block__main">
+          {content.heroBadge && <p class="section-eyebrow">{content.heroBadge}</p>}
+          <h1>{content.heroTitle}</h1>
+          <p class="hero-copy">{content.heroCopy}</p>
+
+          <div class="cta-row">
+            <a class="button button--primary" href={content.ctaPrimaryHref}>{content.ctaPrimaryText}</a>
+            <a class="button button--ghost" href={content.ctaSecondaryHref}>{content.ctaSecondaryText}</a>
+          </div>
+        </div>
+
+        <aside class="hero-block__aside">
+          <p class="aside-eyebrow">{content.asideEyebrow}</p>
+          <h2>{content.asideTitle}</h2>
+          <ul class="aside-list">
+            {content.asidePoints.map((point) => <li>{point}</li>)}
+          </ul>
+        </aside>
+      </section>
+
+      <!-- Stats -->
+      {content.stats.length > 0 && (
+        <section class="section-block section-block--stats">
+          <div class="section-heading">
+            <p class="section-eyebrow">{content.statsEyebrow}</p>
+            <h2>{content.statsTitle}</h2>
+          </div>
+          <div class="stats-grid">
+            {content.stats.map((stat) => (
+              <article class="stat-tile">
+                <strong>{stat.value}</strong>
+                <span>{stat.label}</span>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Feature Cards -->
+      {content.features.length > 0 && (
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="section-eyebrow">{content.featuresEyebrow}</p>
+            <h2>{content.featuresTitle}</h2>
+            {content.featuresIntro && <p class="section-intro">{content.featuresIntro}</p>}
+          </div>
+          <div class={`card-grid card-grid--${content.features.length <= 2 ? '2' : '3'}`}>
+            {content.features.map((feat) => (
+              <article class="content-card">
+                <h3>{feat.title}</h3>
+                <p>{feat.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Content Sections -->
+      {content.sections.map((section) => (
+        <section class="section-block">
+          <div class="section-heading">
+            {section.eyebrow && <p class="section-eyebrow">{section.eyebrow}</p>}
+            <h2>{section.heading}</h2>
+            {section.intro && <p class="section-intro">{section.intro}</p>}
+          </div>
+          {section.cards && section.cards.length > 0 && (
+            <div class={`card-grid card-grid--${section.cards.length <= 2 ? '2' : '3'}`}>
+              {section.cards.map((card) => (
+                <article class="content-card">
+                  {card.eyebrow && <p class="card-eyebrow">{card.eyebrow}</p>}
+                  <h3>{card.title}</h3>
+                  <p>{card.body}</p>
+                </article>
+              ))}
+            </div>
+          )}
+          {section.steps && section.steps.length > 0 && (
+            <div class="step-grid">
+              {section.steps.map((step, i) => (
+                <article class="step-card">
+                  <span class="step-index">0{i + 1}</span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </article>
+              ))}
+            </div>
+          )}
+        </section>
+      ))}
+
+      <!-- FAQ -->
+      {content.faqItems.length > 0 && (
+        <section class="section-block" id="faq">
+          <div class="section-heading">
+            <p class="section-eyebrow">Câu hỏi thường gặp</p>
+            <h2>{content.faqTitle}</h2>
+          </div>
+          <div class="card-grid card-grid--2">
+            {content.faqItems.map((faq) => (
+              <article class="faq-item">
+                <h3>{faq.question}</h3>
+                <p>{faq.answer}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- Testimonial -->
+      {content.testimonial && (
+        <section class="quote-block">
+          <p>"{content.testimonial.quote}"</p>
+          <strong>— {content.testimonial.author}, {content.testimonial.role}</strong>
+        </section>
+      )}
+
+      <!-- Internal Links -->
+      {content.relatedLinks.length > 0 && (
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="section-eyebrow">Khám phá thêm</p>
+            <h2>Các trang liên quan có thể hữu ích cho ba mẹ</h2>
+          </div>
+          <div class="link-grid">
+            {content.relatedLinks.map((link) => (
+              <a class="link-card" href={link.href}>
+                <h3>{link.title}</h3>
+                <p>{link.body}</p>
+                <span>Xem trang →</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      )}
+
+      <!-- CTA Banner -->
+      <section class="cta-banner">
+        <div>
+          <p class="section-eyebrow">{content.ctaBannerEyebrow}</p>
+          <h2>{content.ctaBannerTitle}</h2>
+          <p>{content.ctaBannerCopy}</p>
+        </div>
+        <div class="cta-row">
+          <a class="button button--primary" href={content.ctaPrimaryHref}>{content.ctaPrimaryText}</a>
+          <a class="button button--ghost" href={content.ctaSecondaryHref}>{content.ctaSecondaryText}</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>

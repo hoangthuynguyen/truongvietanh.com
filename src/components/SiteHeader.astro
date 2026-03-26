@@ -4,7 +4,14 @@ import { adminUrl, contactLinks, mainNav } from '../lib/site-content';
 type Props = {
   currentPath: string;
   siteUrl?: string;
-  navItems?: { label: string; href: string }[];
+  navItems?: Array<{
+    label: string;
+    href: string;
+    children?: Array<{
+      label: string;
+      href: string;
+    }>;
+  }>;
   showCmsLink?: boolean;
 };
 
@@ -29,6 +36,27 @@ const { currentPath, siteUrl = '/', navItems = mainNav, showCmsLink = false } = 
             : item.href.startsWith('#')
               ? false
               : currentPath === item.href || currentPath.startsWith(`${item.href}/`);
+
+        if (item.children) {
+          const isChildActive = item.children.some(child => currentPath === child.href || currentPath.startsWith(`${child.href}/`));
+          return (
+            <div class={`nav-dropdown ${isChildActive ? 'is-active-dropdown' : ''}`}>
+              <span class="nav-dropdown-trigger">
+                {item.label}
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </span>
+              <div class="nav-dropdown-menu">
+                {item.children.map(child => (
+                  <a class={currentPath === child.href || currentPath.startsWith(`${child.href}/`) ? 'is-active' : ''} href={child.href}>
+                    {child.label}
+                  </a>
+                ))}
+              </div>
+            </div>
+          );
+        }
 
         return (
           <a class={active ? 'is-active' : ''} href={item.href}>

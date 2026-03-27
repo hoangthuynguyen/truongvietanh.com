@@ -20,7 +20,7 @@ const stats = [
 ];
 
 const audiences = [
-  { id: 'mam-non', title: 'Mầm Non', age: 'Dưới 6 tuổi', desc: 'Môi trường an toàn, vui vẻ. Rèn sự tự lập, quen tiếng Anh bản xứ.', iconPath: 'M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: '#ff6b6b' },
+  { id: 'mam-non', title: 'Mầm Non', age: 'Dưới 6 tuổi', desc: 'Môi trường an toàn, vui vẻ. Rèn sự tự lập, quen tiếng Anh bản xứ.', iconPath: 'M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z', color: '#e53e3e' },
   { id: 'tieu-hoc', title: 'Tiểu Học', age: '6 – 9 tuổi', desc: 'Xây nền tảng học thuật, kỷ luật tích cực và tư duy ngoại ngữ tự nhiên.', iconPath: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253', color: '#0ea5e9' },
   { id: 'thcs', title: 'THCS', age: '10 – 13 tuổi', desc: 'Bứt phá học thuật, làm dự án thực tế, chinh phục IELTS từ sớm.', iconPath: 'M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z', color: '#8b5cf6' },
   { id: 'thpt', title: 'THPT', age: '14 – 16 tuổi', desc: 'Đảm bảo IELTS 6.0+, rèn luyện tố chất lãnh đạo, sẵn sàng săn học bổng.', iconPath: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1v1H9V7zm5 0h1v1h-1V7zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1zm-5 4h1v1H9v-1zm5 0h1v1h-1v-1z', color: '#f59e0b' },
@@ -211,7 +211,7 @@ const testimonials = [
                 <div class="stars">★★★★★</div>
                 <p class="quote">"{t.quote}"</p>
                 <div class="author-block">
-                  <img src={t.avatar} alt={t.name} class="author-avatar-img" width="45" height="45" />
+                  <img src={t.avatar} alt={t.name} class="author-avatar-img" width="45" height="45" loading="lazy" decoding="async" />
                   <div class="author-info">
                     <h4>{t.name}</h4>
                     <span>{t.role}</span>
@@ -266,7 +266,6 @@ const testimonials = [
 </script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
   .cf-layout {
     --pri-blue: #232252;
@@ -372,7 +371,7 @@ const testimonials = [
   .sk-num { color: #fff; font-size: 0.8rem; font-weight: 800; width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .sk-content { display: flex; flex-direction: column; }
   .sk-vi { font-weight: 700; color: var(--text-dark); font-size: 0.95rem; line-height: 1.2; margin-bottom: 0.1rem; }
-  .sk-en { font-size: 0.75rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+  .sk-en { font-size: 0.75rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px; }
 
   /* TESTIMONIALS */
   .cf-testimonials { padding: 4rem 0 5rem; background: var(--cf-blue); position: relative; } 

@@ -1,0 +1,447 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường Liên Cấp Việt Anh",
+    "url": "https://truongvietanh.com",
+    "telephone": "+84916961409",
+    "description": "Hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT với chương trình tích hợp 16 kỹ năng thế kỷ 21.",
+    "address": [
+      {"@type": "PostalAddress", "streetAddress": "160/72 Phan Huy Ích, Phường 12", "addressLocality": "Quận Gò Vấp", "addressRegion": "TP.HCM"},
+      {"@type": "PostalAddress", "streetAddress": "269A Nguyễn Trọng Tuyển, Phường 10", "addressLocality": "Quận Phú Nhuận", "addressRegion": "TP.HCM"},
+      {"@type": "PostalAddress", "streetAddress": "951/7 Tỉnh lộ 10, Phường Tân Tạo", "addressLocality": "Quận Bình Tân", "addressRegion": "TP.HCM"}
+    ],
+    "foundingDate": "2011",
+    "numberOfEmployees": {"@type": "QuantitativeValue", "value": 200}
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {"@type": "Question", "name": "Học phí trường Việt Anh bao nhiêu?", "acceptedAnswer": {"@type": "Answer", "text": "Học phí trường Việt Anh dao động từ 3-8 triệu/tháng tùy cấp học, bao gồm tiếng Anh bản xứ, 16 kỹ năng thế kỷ 21, bán trú và ngoại khóa."}},
+      {"@type": "Question", "name": "Trường Việt Anh có những cơ sở nào?", "acceptedAnswer": {"@type": "Answer", "text": "Trường Việt Anh có 3 cơ sở chính tại TP.HCM: Gò Vấp (160/72 Phan Huy Ích), Phú Nhuận (269A Nguyễn Trọng Tuyển), Bình Tân (951/7 Tỉnh lộ 10), và các cơ sở mầm non tại Long An, Kiên Giang."}},
+      {"@type": "Question", "name": "Chương trình học có gì khác biệt?", "acceptedAnswer": {"@type": "Answer", "text": "Trường Việt Anh tích hợp chương trình Bộ GDĐT với tiếng Anh bản xứ và 16 kỹ năng thế kỷ 21 trong một lộ trình duy nhất, cam kết đầu ra IELTS 6.0+ cho cấp THPT."}},
+      {"@type": "Question", "name": "Trường Việt Anh có chương trình học bổng không?", "acceptedAnswer": {"@type": "Answer", "text": "Có. Trường cung cấp nhiều chương trình học bổng cho học sinh xuất sắc, học sinh có hoàn cảnh khó khăn, và ưu đãi nhập học sớm (early bird) mỗi mùa tuyển sinh."}},
+      {"@type": "Question", "name": "Quy trình tuyển sinh như thế nào?", "acceptedAnswer": {"@type": "Answer", "text": "Quy trình gồm 4 bước: Đăng ký tư vấn → Tham quan trường → Kiểm tra đầu vào → Nhập học. Phụ huynh có thể đặt lịch tham quan bất kỳ lúc nào qua hotline 0916 961 409."}}
+    ]
+  }
+];
+
+const stats = [
+  { val: '2011', label: 'Năm Thành Lập', icon: '🏫' },
+  { val: '6.0+', label: 'IELTS Đầu Ra', icon: '🎓' },
+  { val: '99%', label: 'Đỗ Đại Học', icon: '📊' },
+  { val: '16/16', label: 'Kỹ Năng Cốt Lõi', icon: '⭐' }
+];
+
+const audiences = [
+  { id: 'mam-non', title: 'Mầm Non', age: 'Dưới 6 tuổi', desc: 'Môi trường an toàn, vui vẻ. Rèn sự tự lập, quen tiếng Anh bản xứ.', color: '#e53e3e',
+    topSkills: [{n:'Giao tiếp',pct:60},{n:'Hợp tác',pct:55},{n:'Sáng tạo',pct:70},{n:'Kỹ năng Xã hội',pct:65},{n:'Linh hoạt',pct:50}]
+  },
+  { id: 'tieu-hoc', title: 'Tiểu Học', age: '6 – 9 tuổi', desc: 'Xây nền tảng học thuật, kỷ luật tích cực và tư duy ngoại ngữ tự nhiên.', color: '#0ea5e9',
+    topSkills: [{n:'Tư duy phản biện',pct:55},{n:'Giao tiếp',pct:70},{n:'Tin học cơ sở',pct:45},{n:'Năng suất',pct:60},{n:'Tự định hướng',pct:50}]
+  },
+  { id: 'thcs', title: 'THCS', age: '10 – 13 tuổi', desc: 'Bứt phá học thuật, làm dự án thực tế, chinh phục IELTS từ sớm.', color: '#8b5cf6',
+    topSkills: [{n:'Tư duy phản biện',pct:80},{n:'Lãnh đạo',pct:65},{n:'Giải quyết vấn đề',pct:75},{n:'Kiến thức máy tính',pct:70},{n:'Thích nghi văn hóa',pct:60}]
+  },
+  { id: 'thpt', title: 'THPT', age: '14 – 16 tuổi', desc: 'Đảm bảo IELTS 6.0+, rèn luyện tố chất lãnh đạo, sẵn sàng săn học bổng.', color: '#f59e0b',
+    topSkills: [{n:'Lãnh đạo',pct:90},{n:'Tư duy phản biện',pct:85},{n:'Thích nghi văn hóa',pct:80},{n:'Trách nhiệm',pct:85},{n:'Chủ động',pct:75}]
+  },
+  { id: 'ngoai-khoa', title: 'Ngoại Khóa', age: '6 – 16 tuổi', desc: 'Thể thao, nghệ thuật và kỹ năng thế kỷ 21 qua thực tiễn sinh động.', color: '#10b981',
+    topSkills: [{n:'Hợp tác',pct:85},{n:'Linh hoạt',pct:80},{n:'Sáng tạo',pct:75},{n:'Kỹ năng Xã hội',pct:70},{n:'Trách nhiệm',pct:65}]
+  }
+];
+
+const tabsBenefit: Record<string, string> = {
+  'mam-non': 'Hình thành nền tảng vô thức qua các trò chơi tương tác, giúp bé tự tin trước đám đông và kiểm soát cảm xúc sớm.',
+  'tieu-hoc': 'Nhận thức vai trò cá nhân qua bài tập nhóm; bắt đầu xây dựng khả năng tự học và giải quyết tình huống độc lập.',
+  'thcs': 'Tranh biện mạnh mẽ, học cách lãnh đạo nhóm nhỏ, sử dụng sâu công nghệ thông tin vào nghiên cứu tài liệu.',
+  'thpt': 'Áp dụng vào đồ án thực tế; hoàn thiện hồ sơ lãnh đạo và giao tiếp đa văn hóa để tự tin săn học bổng du học.',
+  'ngoai-khoa': 'Chuyển hóa lý thuyết thành phản xạ. Rèn tính dẻo dai, sự phối hợp đồng đội và kỷ luật bản thân.'
+};
+
+const testimonials = [
+  { name: 'Phụ huynh Hoàng Diễm', role: 'Phụ huynh học sinh lớp 3', quote: 'Môi trường học tập rất tốt, đủ sự tin tưởng để cho con theo học. Quyết định đúng đắn khi chuyển trường cho bé!', initials: 'HD', color: '#e53e3e' },
+  { name: 'Nguyễn Chí Toàn', role: 'Học sinh lớp 6', quote: 'Thầy cô luôn ở bên khi em gặp khó khăn. Tiếng Anh và điểm số của em tiến bộ cực kỳ nhanh.', initials: 'CT', color: '#0ea5e9' },
+  { name: 'Thân Hương Giang', role: 'Học sinh lớp 11A3', quote: 'Quyết định học tại Việt Anh là điều đúng đắn nhất. Nơi đây giúp em hoàn toàn thay đổi và trưởng thành.', initials: 'HG', color: '#8b5cf6' }
+];
+
+const faqs = [
+  { q: 'Học phí trường Việt Anh bao nhiêu?', a: 'Học phí dao động từ 3-8 triệu/tháng tùy cấp học, đã bao gồm tiếng Anh bản xứ, 16 kỹ năng thế kỷ 21, bán trú và toàn bộ hoạt động ngoại khóa.' },
+  { q: 'Trường Việt Anh có những cơ sở nào tại TP.HCM?', a: 'Trường có 3 cơ sở chính: Gò Vấp (160/72 Phan Huy Ích), Phú Nhuận (269A Nguyễn Trọng Tuyển), Bình Tân (951/7 Tỉnh lộ 10). Ngoài ra có các cơ sở mầm non tại Long An và Kiên Giang.' },
+  { q: 'Chương trình học có gì khác biệt?', a: 'Trường tích hợp chương trình Bộ GDĐT với tiếng Anh bản xứ và 16 kỹ năng thế kỷ 21 trong một lộ trình duy nhất, cam kết đầu ra IELTS 6.0+ cho cấp THPT.' },
+  { q: 'Có chương trình học bổng không?', a: 'Có nhiều chương trình: học bổng xuất sắc, ưu đãi nhập học sớm (early bird), và hỗ trợ tài chính cho học sinh có hoàn cảnh đặc biệt.' },
+  { q: 'Quy trình tuyển sinh gồm mấy bước?', a: 'Gồm 4 bước: Đăng ký tư vấn → Tham quan trường → Kiểm tra đầu vào → Nhập học. Phụ huynh có thể đặt lịch tham quan bất kỳ lúc nào.' },
+  { q: 'Con tôi có thể chuyển cấp liên thông không?', a: 'Hoàn toàn được. Hệ thống liên cấp cho phép học sinh theo một lộ trình nhất quán từ Mầm Non đến THPT mà không cần thay đổi trường.' }
+];
+---
+
+<BaseLayout
+  title="Trường Liên Cấp Việt Anh TP.HCM — Mầm Non, Tiểu Học, THCS, THPT Tư Thục"
+  description="Lộ trình học tập tích hợp từ Mầm Non đến THPT. Cam kết IELTS 6.0+, 16 kỹ năng thế kỷ 21, 99% đỗ Đại Học. Hotline: 0916 961 409."
+  canonical="https://truongvietanh.com"
+  structuredData={structuredData}
+>
+  <div class="cf-layout">
+    <HeaderBase />
+
+    <!-- URGENCY BANNER -->
+    <div class="urgency-bar">
+      <div class="cf-container urgency-inner">
+        <span class="urgency-icon">🔥</span>
+        <span><strong>Tuyển sinh 2026-2027:</strong> Ưu đãi nhập học sớm – Giảm đến 20% học phí kỳ đầu. <strong>Chỉ còn giới hạn suất.</strong></span>
+        <a href="#lead-form" class="urgency-cta">Đăng ký ngay →</a>
+      </div>
+    </div>
+
+    <!-- HERO SECTION WITH LEAD FORM -->
+    <section class="cf-hero">
+      <div class="cf-container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              Lộ Trình Học Tập Giúp Con Bạn<br class="d-none-mo" />
+              <span class="highlight">Hạnh Phúc & Vươn Tầm</span>
+            </h1>
+            <p class="hero-desc">
+              Không áp lực điểm số. Đảm bảo Tiếng Anh & trang bị 16 Kỹ năng thế kỷ 21.<br class="d-none-mo" />
+              Cho trẻ từ Mầm non đến THPT.
+            </p>
+            <div class="trust-stats-row">
+              {stats.map(s => (
+                <div class="trust-stat">
+                  <span class="stat-icon">{s.icon}</span>
+                  <span class="stat-number">{s.val}</span>
+                  <span class="stat-label">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div class="hero-form-col" id="lead-form">
+            <div class="lead-form-card">
+              <h2 class="form-title">Nhận tư vấn MIỄN PHÍ</h2>
+              <p class="form-subtitle">Chuyên viên gọi lại trong 30 phút</p>
+              <form class="lead-form" action="#" method="POST">
+                <div class="form-field">
+                  <label for="parent-name">Họ tên phụ huynh</label>
+                  <input type="text" id="parent-name" name="name" placeholder="Nguyễn Văn A" required />
+                </div>
+                <div class="form-field">
+                  <label for="phone">Số điện thoại</label>
+                  <input type="tel" id="phone" name="phone" placeholder="0916 xxx xxx" required />
+                </div>
+                <div class="form-field">
+                  <label for="level">Cấp học quan tâm</label>
+                  <select id="level" name="level" required>
+                    <option value="">-- Chọn cấp học --</option>
+                    <option value="mam-non">Mầm Non (Dưới 6 tuổi)</option>
+                    <option value="tieu-hoc">Tiểu Học (6-9 tuổi)</option>
+                    <option value="thcs">THCS (10-13 tuổi)</option>
+                    <option value="thpt">THPT (14-16 tuổi)</option>
+                  </select>
+                </div>
+                <button type="submit" class="form-submit">Đăng Ký Tư Vấn Ngay</button>
+                <p class="form-note">Hoặc gọi trực tiếp: <a href="tel:0916961409"><strong>0916 961 409</strong></a></p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISUAL PROBLEM-SOLUTION -->
+    <section class="cf-problem-solution">
+      <div class="cf-container text-center max-w-900">
+        <h2 class="section-title">Ba mẹ "Mệt Mỏi" vì đưa đón con quá nhiều nơi?</h2>
+        <div class="vs-comparison">
+          <div class="vs-card vs-problem">
+            <div class="vs-emoji">😫</div>
+            <h3>Hiện tại</h3>
+            <ul>
+              <li>📍 Tiếng Anh — Trung tâm A</li>
+              <li>📍 Kỹ năng — Trung tâm B</li>
+              <li>📍 Thể thao — CLB C</li>
+            </ul>
+            <p class="vs-note">3+ nơi • Tốn thời gian • Mệt mỏi</p>
+          </div>
+          <div class="vs-arrow">→</div>
+          <div class="vs-card vs-solution">
+            <div class="vs-emoji">😊</div>
+            <h3>Trường Việt Anh</h3>
+            <ul>
+              <li>✅ Tiếng Anh bản xứ</li>
+              <li>✅ 16 Kỹ năng thế kỷ 21</li>
+              <li>✅ Thể thao + Nghệ thuật</li>
+            </ul>
+            <p class="vs-note">1 trường duy nhất • Toàn diện • Tiết kiệm</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMS & SKILLS (COMPACT) -->
+    <section id="programs-section" class="cf-merged-programs">
+      <div class="cf-container">
+        <h2 class="section-title text-center" style="margin-bottom:2.5rem;">Cấp Độ Đào Tạo & Kỹ Năng Trọng Tâm</h2>
+        <div class="skills-tabs-wrap">
+          <div class="skills-tabs-header">
+            {audiences.map((aud, idx) => (
+              <button class={`skill-tab-btn ${idx === 0 ? 'active' : ''}`} data-target={aud.id} style={`--tab-active-color: ${aud.color}`}>
+                {aud.title}
+              </button>
+            ))}
+          </div>
+          <div class="skills-tabs-body">
+            {audiences.map((aud, idx) => (
+              <div class={`tab-pane ${idx === 0 ? 'active' : ''}`} id={`pane-${aud.id}`}>
+                <div class="aud-card-compact" style={`border-left-color: ${aud.color};`}>
+                  <h3 class="aud-title" style={`color: ${aud.color}`}>{aud.title} <span class="aud-age">({aud.age})</span></h3>
+                  <p class="aud-desc">{aud.desc}</p>
+                  <p class="aud-benefit">{tabsBenefit[aud.id]}</p>
+                </div>
+                <h4 class="skills-heading" style={`color: ${aud.color}`}>5 Kỹ năng trọng tâm cấp {aud.title}:</h4>
+                <div class="skills-bars">
+                  {aud.topSkills.map(sk => (
+                    <div class="skill-bar-item">
+                      <div class="skill-bar-label">{sk.n}</div>
+                      <div class="skill-bar-track">
+                        <div class="skill-bar-fill" style={`width:${sk.pct}%; background:${aud.color}`}></div>
+                      </div>
+                      <span class="skill-bar-pct">{sk.pct}%</span>
+                    </div>
+                  ))}
+                </div>
+                <div class="tab-cta-row">
+                  <a href="/tuyen-sinh" class="btn-cta-primary" style={`background:${aud.color}`}>Đặt lịch tham quan cơ sở →</a>
+                  <a href="#lead-form" class="btn-cta-secondary">Nhận lộ trình chi tiết</a>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS (NO STOCK PHOTOS) -->
+    <section class="cf-testimonials">
+      <div class="cf-container">
+        <h2 class="section-title text-center text-white" style="margin-bottom:0.5rem;">Câu Chuyện Thành Công</h2>
+        <p class="section-subtitle text-center" style="color:#b2c5e5; margin-bottom:2rem;">Góc nhìn chân thật từ chính học sinh và phụ huynh trường Việt Anh.</p>
+        <div class="testimonial-grid">
+          {testimonials.map(t => (
+            <div class="testi-card-clean">
+              <div class="stars">★★★★★</div>
+              <p class="quote">"{t.quote}"</p>
+              <div class="author-block">
+                <div class="author-avatar-initials" style={`background:${t.color}`}>{t.initials}</div>
+                <div class="author-info">
+                  <h4>{t.name}</h4>
+                  <span>{t.role}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div class="text-center" style="margin-top:2rem;">
+          <a href="#lead-form" class="btn-cta-white">Đăng ký tư vấn để trải nghiệm →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="cf-faq" id="faq">
+      <div class="cf-container max-w-900">
+        <h2 class="section-title text-center">Phụ Huynh Thường Hỏi</h2>
+        <p class="section-subtitle text-center">Những câu hỏi được quan tâm nhiều nhất về trường Việt Anh</p>
+        <div class="faq-list">
+          {faqs.map((faq, idx) => (
+            <details class="faq-item" open={idx === 0}>
+              <summary class="faq-q">{faq.q}</summary>
+              <p class="faq-a">{faq.a}</p>
+            </details>
+          ))}
+        </div>
+        <div class="text-center" style="margin-top:2rem;">
+          <p style="color:#64748b;margin-bottom:1rem;">Còn thắc mắc? Liên hệ ngay để được tư vấn chi tiết.</p>
+          <a href="#lead-form" class="btn-cta-primary" style="background:var(--cf-blue);">Đăng ký tư vấn miễn phí →</a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+
+    <!-- STICKY MOBILE CTA -->
+    <div class="sticky-mobile-cta">
+      <a href="tel:0916961409" class="sticky-btn sticky-call">📞 Gọi ngay</a>
+      <a href="#lead-form" class="sticky-btn sticky-register">📝 Nhận tư vấn</a>
+    </div>
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  document.querySelectorAll('.skill-tab-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const targetId = e.currentTarget.getAttribute('data-target');
+      document.querySelectorAll('.skill-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      e.currentTarget.classList.add('active');
+      const pane = document.getElementById(`pane-${targetId}`);
+      if (pane) pane.classList.add('active');
+    });
+  });
+</script>
+
+<style>
+  .cf-layout {
+    --pri-blue: #232252;
+    --cf-blue: #1a193c;
+    --cf-blue-dark: #12112a;
+    --pri-yellow: #fde047;
+    --text-dark: #0f172a;
+    --text-light: #475569;
+    --bg-gray: #f8fafc;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.5;
+    background: #fff;
+    overflow-x: hidden;
+  }
+  h1,h2,h3,h4,h5,button,input,select { font-family: 'Inter', sans-serif; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .text-center { text-align: center; }
+  .text-white { color: #fff; }
+  .max-w-900 { max-width: 900px; margin: 0 auto; }
+  .section-title { font-size: 2.15rem; font-weight: 900; line-height: 1.25; margin-bottom: 0.5rem; color: var(--cf-blue); letter-spacing: -0.5px; }
+  .section-subtitle { font-size: 1.1rem; color: var(--text-light); margin-bottom: 2rem; font-weight: 500; max-width: 700px; margin-left: auto; margin-right: auto; }
+
+  /* URGENCY BAR */
+  .urgency-bar { background: linear-gradient(90deg, #dc2626, #ea580c); color: #fff; padding: 0.6rem 0; font-size: 0.88rem; font-weight: 500; }
+  .urgency-inner { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; justify-content: center; }
+  .urgency-icon { font-size: 1.2rem; }
+  .urgency-cta { background: #fff; color: #dc2626; font-weight: 700; padding: 0.3rem 1rem; border-radius: 4px; text-decoration: none; font-size: 0.82rem; white-space: nowrap; }
+  .urgency-cta:hover { background: #fef2f2; }
+
+  /* HERO */
+  .cf-hero { background: var(--bg-gray); padding: 4rem 0 5rem; border-bottom: 1px solid #e2e8f0; }
+  .hero-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; }
+  .hero-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; line-height: 1.35; color: var(--cf-blue); margin-bottom: 1.5rem; letter-spacing: -1px; }
+  .hero-title .highlight { color: #cc0000; }
+  .hero-desc { font-size: 1.15rem; color: var(--text-light); margin-bottom: 2rem; line-height: 1.6; font-weight: 500; }
+  .trust-stats-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .trust-stat { text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .stat-icon { font-size: 1.5rem; margin-bottom: 0.25rem; }
+  .stat-number { font-size: 1.6rem; font-weight: 900; color: var(--cf-blue); line-height: 1.1; }
+  .stat-label { font-size: 0.72rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; }
+
+  /* LEAD FORM */
+  .lead-form-card { background: #fff; border-radius: 16px; padding: 2.5rem 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.12); border: 2px solid #e2e8f0; }
+  .form-title { font-size: 1.5rem; font-weight: 900; color: var(--cf-blue); margin: 0 0 0.25rem; text-align: center; }
+  .form-subtitle { font-size: 0.9rem; color: var(--text-light); margin: 0 0 1.5rem; text-align: center; }
+  .form-field { margin-bottom: 1rem; }
+  .form-field label { display: block; font-size: 0.85rem; font-weight: 600; color: var(--text-dark); margin-bottom: 0.3rem; }
+  .form-field input, .form-field select { width: 100%; padding: 0.85rem 1rem; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 1rem; transition: border-color 0.2s; box-sizing: border-box; }
+  .form-field input:focus, .form-field select:focus { border-color: var(--cf-blue); outline: none; }
+  .form-submit { width: 100%; padding: 1rem; background: #cc0000; color: #fff; border: none; border-radius: 8px; font-size: 1.1rem; font-weight: 800; cursor: pointer; transition: all 0.2s; }
+  .form-submit:hover { background: #b91c1c; transform: translateY(-2px); box-shadow: 0 8px 20px rgba(204,0,0,0.3); }
+  .form-note { text-align: center; font-size: 0.85rem; color: var(--text-light); margin-top: 1rem; }
+  .form-note a { color: var(--cf-blue); text-decoration: none; }
+
+  /* PROBLEM-SOLUTION */
+  .cf-problem-solution { padding: 4rem 0; background: #fff; border-bottom: 1px solid #e2e8f0; }
+  .vs-comparison { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1.5rem; align-items: center; margin-top: 2.5rem; }
+  .vs-card { background: var(--bg-gray); border-radius: 12px; padding: 2rem 1.5rem; text-align: center; }
+  .vs-card h3 { font-size: 1.3rem; font-weight: 800; margin: 0.5rem 0 1rem; }
+  .vs-card ul { list-style: none; padding: 0; margin: 0 0 1rem; text-align: left; }
+  .vs-card li { padding: 0.4rem 0; font-size: 0.95rem; }
+  .vs-problem { border: 2px dashed #fca5a5; }
+  .vs-solution { border: 2px solid #86efac; background: #f0fdf4; }
+  .vs-emoji { font-size: 2.5rem; }
+  .vs-note { font-size: 0.82rem; font-weight: 600; color: var(--text-light); margin: 0; }
+  .vs-arrow { font-size: 2.5rem; font-weight: 900; color: #10b981; }
+
+  /* PROGRAMS TABS */
+  .cf-merged-programs { padding: 5rem 0; background: var(--bg-gray); }
+  .skills-tabs-wrap { border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; max-width: 1000px; margin: 2rem auto 0; box-shadow: 0 10px 30px rgba(0,0,0,0.05); background: #fff; }
+  .skills-tabs-header { display: flex; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+  .skill-tab-btn { flex: 1; padding: 1.2rem 0.5rem; border: none; background: transparent; font-size: 1rem; font-weight: 800; color: var(--text-light); cursor: pointer; transition: all 0.2s; border-bottom: 4px solid transparent; text-align: center; }
+  .skill-tab-btn:hover { background: #f1f5f9; color: var(--cf-blue); }
+  .skill-tab-btn.active { color: #fff; background: var(--tab-active-color, var(--cf-blue)); border-bottom-color: var(--tab-active-color); pointer-events: none; }
+  .skills-tabs-body { padding: 2.5rem 2rem; }
+  .tab-pane { display: none; animation: fadeIn 0.3s ease; }
+  .tab-pane.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .aud-card-compact { border-left: 5px solid; border-radius: 0 8px 8px 0; padding: 1.5rem; background: var(--bg-gray); margin-bottom: 2rem; }
+  .aud-title { font-size: 1.4rem; font-weight: 900; margin: 0 0 0.5rem; }
+  .aud-age { font-weight: 600; font-size: 0.9rem; opacity: 0.8; }
+  .aud-desc { font-size: 1.05rem; color: var(--cf-blue); font-weight: 600; margin: 0 0 0.5rem; }
+  .aud-benefit { font-size: 0.95rem; color: var(--text-light); margin: 0; line-height: 1.6; }
+
+  .skills-heading { font-size: 1.1rem; font-weight: 800; margin: 0 0 1rem; }
+  .skills-bars { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 2rem; }
+  .skill-bar-item { display: grid; grid-template-columns: 140px 1fr 40px; gap: 0.75rem; align-items: center; }
+  .skill-bar-label { font-size: 0.88rem; font-weight: 600; color: var(--text-dark); }
+  .skill-bar-track { height: 10px; background: #e2e8f0; border-radius: 5px; overflow: hidden; }
+  .skill-bar-fill { height: 100%; border-radius: 5px; transition: width 0.6s ease; }
+  .skill-bar-pct { font-size: 0.8rem; font-weight: 700; color: var(--text-light); text-align: right; }
+
+  .tab-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-cta-primary { display: inline-block; padding: 0.85rem 1.5rem; color: #fff; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.2s; }
+  .btn-cta-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.15); filter: brightness(1.1); }
+  .btn-cta-secondary { display: inline-block; padding: 0.85rem 1.5rem; color: var(--cf-blue); border: 2px solid var(--cf-blue); border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.95rem; transition: all 0.2s; }
+  .btn-cta-secondary:hover { background: var(--cf-blue); color: #fff; }
+  .btn-cta-white { display: inline-block; padding: 0.85rem 2rem; background: #fff; color: var(--cf-blue); border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 1rem; transition: all 0.2s; }
+  .btn-cta-white:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(255,255,255,0.3); }
+
+  /* TESTIMONIALS */
+  .cf-testimonials { padding: 4rem 0 5rem; background: var(--cf-blue); }
+  .testimonial-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  .testi-card-clean { background: #fff; border-radius: 12px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.15); display: flex; flex-direction: column; }
+  .stars { color: #ca8a04; font-size: 1.1rem; margin-bottom: 0.75rem; letter-spacing: 2px; }
+  .quote { color: var(--text-dark); font-size: 1rem; font-style: italic; margin-bottom: 1.5rem; line-height: 1.6; font-weight: 500; flex-grow: 1; }
+  .author-block { display: flex; align-items: center; gap: 0.75rem; border-top: 1px solid #e2e8f0; padding-top: 1rem; }
+  .author-avatar-initials { width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1rem; flex-shrink: 0; }
+  .author-info h4 { margin: 0; font-size: 0.9rem; font-weight: 700; }
+  .author-info span { font-size: 0.8rem; color: var(--text-light); }
+
+  /* FAQ */
+  .cf-faq { padding: 5rem 0; background: #fff; }
+  .faq-list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .faq-item { border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
+  .faq-item[open] { border-color: var(--cf-blue); }
+  .faq-q { padding: 1.25rem 1.5rem; font-weight: 700; font-size: 1rem; cursor: pointer; color: var(--text-dark); list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .faq-q::after { content: '+'; font-size: 1.5rem; font-weight: 300; color: var(--text-light); transition: transform 0.2s; }
+  .faq-item[open] .faq-q::after { content: '−'; }
+  .faq-q::-webkit-details-marker { display: none; }
+  .faq-a { padding: 0 1.5rem 1.25rem; color: var(--text-light); font-size: 0.95rem; line-height: 1.7; margin: 0; }
+
+  /* STICKY MOBILE CTA */
+  .sticky-mobile-cta { display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999; background: var(--cf-blue); padding: 0.5rem; gap: 0.5rem; box-shadow: 0 -4px 20px rgba(0,0,0,0.2); }
+  .sticky-btn { flex: 1; text-align: center; padding: 0.85rem; border-radius: 6px; font-weight: 700; font-size: 0.9rem; text-decoration: none; }
+  .sticky-call { background: #10b981; color: #fff; }
+  .sticky-register { background: var(--pri-yellow); color: #000; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .testimonial-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  }
+  @media (max-width: 768px) {
+    .d-none-mo { display: none; }
+    .section-title { font-size: 1.7rem; }
+    .hero-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .hero-title { font-size: 1.8rem; }
+    .vs-comparison { grid-template-columns: 1fr; }
+    .vs-arrow { transform: rotate(90deg); text-align: center; }
+    .skills-tabs-header { flex-wrap: wrap; }
+    .skill-tab-btn { flex: 1 1 33.33%; font-size: 0.85rem; padding: 0.9rem 0.3rem; }
+    .skill-bar-item { grid-template-columns: 110px 1fr 35px; }
+    .tab-cta-row { flex-direction: column; }
+    .sticky-mobile-cta { display: flex; }
+    .site-footer { padding-bottom: 4rem; }
+  }
+</style>

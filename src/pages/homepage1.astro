@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
+import FooterBase from '../components/FooterBase.astro';
 
 // Replicating actual data to match the visual blocks
 const stats = [
@@ -255,90 +256,8 @@ const logoUrl = "https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.
       </div>
     </section>
 
-    <!-- COMPLETE CUSTOM FULL FOOTER -->
-    <footer class="custom-footer">
-      <div class="container footer-grid">
-        <!-- Brand & Intro Column -->
-        <div class="footer-col brand-col">
-          <img src={logoUrl} alt="Logo" class="footer-logo" />
-          <h3 class="footer-title">Giới thiệu</h3>
-          <p class="footer-desc">
-            Hầu hết học sinh Việt Nam vừa khao khát vừa sợ hãi cơ hội du học. Vì vậy, trường Việt Anh được thiết kế để chuẩn bị tốt tiếng Anh và các phẩm chất, năng lực cần có. Nhờ đó, học sinh tự tin du học, nhiều em đã nhận được những học bổng giá trị từ nhiều đại học hàng đầu thế giới.
-          </p>
-        </div>
-
-        <!-- Links Columns -->
-        <div class="footer-col">
-          <h3 class="footer-title">Phụ huynh</h3>
-          <ul class="footer-links">
-            <li><a href="#">Phụ huynh - Học sinh</a></li>
-            <li><a href="#">Thời khóa biểu</a></li>
-            <li><a href="#">Thực đơn</a></li>
-            <li><a href="#">Công Khai Thông tin</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Câu hỏi thường gặp</a></li>
-            <li><a href="#">Hình Ảnh</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h3 class="footer-title">Chương trình đào tạo</h3>
-          <ul class="footer-links">
-            <li><a href="/mam-non">Chương trình Mầm Non</a></li>
-            <li><a href="/tieu-hoc">Chương trình Tiểu Học</a></li>
-            <li><a href="/trung-hoc-co-so">Chương trình THCS</a></li>
-            <li><a href="/trung-hoc-pho-thong">Chương trình THPT</a></li>
-          </ul>
-          
-          <h3 class="footer-title mt-4">Hệ thống giáo dục Major Education</h3>
-          <ul class="footer-links">
-            <li><a href="#">Chương trình Mầm Non</a></li>
-            <li><a href="#">Chương trình Tiểu Học</a></li>
-            <li><a href="#">Chương trình THCS</a></li>
-            <li><a href="#">Chương trình THPT</a></li>
-          </ul>
-        </div>
-        
-        <!-- Contact & Campuses Column -->
-        <div class="footer-col contact-col">
-          <h3 class="footer-title">Hệ thống cơ sở</h3>
-          
-          <div class="campus-item">
-             <h4>Cơ sở Việt Anh Gò Vấp:</h4>
-             <p>160/72 Phan Huy Ích, phường An Hội Tây, Thành phố Hồ Chí Minh</p>
-             <p class="hotline">Hotline: <span>091 696 1409</span></p>
-          </div>
-          
-          <div class="campus-item">
-             <h4>Cơ sở Việt Anh Phú Nhuận:</h4>
-             <p>269A Nguyễn Trọng Tuyển, phường Phú Nhuận, Thành phố Hồ Chí Minh</p>
-             <p class="hotline">Hotline: <span>0916 961 409</span></p>
-          </div>
-          
-          <div class="campus-item">
-             <h4>Cơ sở Việt Anh Bình Tân:</h4>
-             <p>951/7 Tỉnh lộ 10, phường Bình Tân, Thành phố Hồ Chí Minh</p>
-             <p class="hotline">Hotline: <span>0916 961 409</span></p>
-          </div>
-          
-          <div class="campus-item">
-             <h4>Cơ sở Mầm Non Việt Anh - Lê Đức Thọ:</h4>
-             <p>573 Lê Đức Thọ, phường An Hội Đông, Thành phố Hồ Chí Minh</p>
-             <p class="hotline">Hotline: <span>0916 961 409</span></p>
-          </div>
-          
-          <div class="campus-item">
-             <h4>Trường Mầm Non Long Hậu:</h4>
-             <p>Khu dân cư Long Hậu, Tỉnh Tây Ninh.</p>
-             <p class="hotline">Hotline: <span>0916 961 409</span></p>
-          </div>
-        </div>
-      </div>
-      
-      <div class="footer-bottom text-center">
-        <p>© 2026 truongvietanh.com. All Rights Reserved.</p>
-      </div>
-    </footer>
+    <!-- TRUONG VIET ANH FOOTER (FROM COMPONENT) -->
+    <FooterBase />
   </div>
 
   <!-- GoHighLevel Script Stub -->

@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+<BaseLayout title="Học Phí & Chính Sách | Trường Liên Cấp Việt Anh" description="Thông tin học phí và các chính sách hỗ trợ tài chính tại Trường Việt Anh.">
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+    
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Học Phí & Chính Sách Tối Ưu</h1>
+        <p class="page-desc">Minh bạch, rõ ràng và nhiều ưu đãi hỗ trợ tài chính cho học sinh.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container max-w-900">
+        <h2 class="text-center">Bảng Học Phí Năm Học 2024 - 2025</h2>
+        <p class="text-center" style="margin-bottom: 2rem;">Học phí chính khóa bao gồm chi phí cho các môn học theo chương trình của Bộ GD&ĐT, cùng với các chương trình nâng cao kỹ năng và ngoại ngữ (IELTS). Học phí được tính theo năm học.</p>
+        
+        <div class="tuition-table-wrap">
+          <table class="tuition-table">
+            <thead>
+              <tr>
+                <th>Hạng Mục</th>
+                <th>Chi Phí (VNĐ)</th>
+                <th>Đơn Vị Tính</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Học Phí Chính Khóa (Trung bình)</strong></td>
+                <td>142,557,000</td>
+                <td>Năm học</td>
+              </tr>
+              <tr>
+                <td>Cơ sở vật chất</td>
+                <td>6,000,000</td>
+                <td>Cấp học</td>
+              </tr>
+              <tr>
+                <td>Tạm ứng tài liệu học tập (sách)</td>
+                <td>2,000,000</td>
+                <td>Năm học</td>
+              </tr>
+              <tr>
+                <td>Tạm ứng sự kiện, dã ngoại, lễ hội</td>
+                <td>4,000,000</td>
+                <td>Năm học</td>
+              </tr>
+              <tr>
+                <td>Đồng phục thể dục (3 bộ)</td>
+                <td>1,200,000</td>
+                <td>Bộ</td>
+              </tr>
+              <tr>
+                <td>Tạm ứng BHYT</td>
+                <td>572,000</td>
+                <td>Năm học</td>
+              </tr>
+              <tr>
+                <td>Giải mã tiềm năng</td>
+                <td>2,200,000</td>
+                <td>Báo cáo</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center" style="margin-top: 3rem;">
+           <a href="/tuyen-sinh" class="btn-yellow-large">Đăng Ký Nhận Báo Giá Theo Cấp Học</a>
+        </div>
+      </div>
+    </section>
+    
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .max-w-900 { max-width: 900px; }
+  .text-center { text-align: center; }
+  
+  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/07/20230311-DSC08552-scaled.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
+  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+
+  .page-content { padding: 5rem 0; background: #ffffff; min-height: 400px; }
+  .page-content h2 { color: #1a193c; font-size: 2.25rem; font-weight: 800; margin-bottom: 1rem; }
+  .page-content p { font-size: 1.1rem; line-height: 1.6; color: #475569; }
+
+  .tuition-table-wrap { overflow-x: auto; background: #fff; border-radius: 8px; border: 1px solid #e2e8f0; }
+  .tuition-table { width: 100%; border-collapse: collapse; text-align: left; }
+  .tuition-table th { background: #1a193c; color: #fff; padding: 1rem; font-size: 1.1rem; }
+  .tuition-table td { padding: 1rem; border-bottom: 1px solid #e2e8f0; color: #334155; font-size: 1.05rem; }
+  .tuition-table tbody tr:last-child td { border-bottom: none; }
+  .tuition-table tbody tr:hover { background: #f8fafc; }
+
+  .btn-yellow-large { display: inline-block; background: #fde047; color: #000; font-weight: 800; font-size: 1.25rem; padding: 1.2rem 3rem; border: none; border-radius: 8px; cursor: pointer; text-decoration: none; transition: all 0.2s; box-shadow: 0 4px 15px rgba(253, 224, 71, 0.4); }
+  .btn-yellow-large:hover { background: #fef08a; transform: translateY(-4px); box-shadow: 0 8px 25px rgba(253, 224, 71, 0.6); }
+</style>

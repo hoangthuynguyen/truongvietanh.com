@@ -1,0 +1,100 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+<BaseLayout title="Liên Hệ & Trụ Sở | Trường Liên Cấp Việt Anh" description="Danh sách các cơ sở của Hệ thống giáo dục trường Việt Anh.">
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+    
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Hệ Thống Cơ Sở Việt Anh</h1>
+        <p class="page-desc">Các cơ sở đào tạo trải dài tại TP.HCM và các tỉnh lân cận.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container max-w-900">
+        
+        <div class="campus-list">
+          <!-- Phú Nhuận -->
+           <div class="campus-card">
+             <div class="c-info">
+               <h2>Cơ Sở Phú Nhuận</h2>
+               <p><strong>Địa chỉ:</strong> 269A Nguyễn Trọng Tuyển, P. Phú Nhuận, TP.HCM</p>
+               <p><strong>Hotline:</strong> 0916 961 409</p>
+               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
+             </div>
+           </div>
+
+           <!-- Gò Vấp -->
+           <div class="campus-card">
+             <div class="c-info">
+               <h2>Cơ Sở Gò Vấp</h2>
+               <p><strong>Địa chỉ:</strong> 160/72 Phan Huy Ích, P.12, Q. Gò Vấp, TP.HCM</p>
+               <p><strong>Hotline:</strong> 0916 961 409</p>
+               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
+             </div>
+           </div>
+
+           <!-- Bình Tân -->
+           <div class="campus-card">
+             <div class="c-info">
+               <h2>Cơ Sở Bình Tân</h2>
+               <p><strong>Địa chỉ:</strong> 951/7 Tỉnh lộ 10, P. Tân Tạo, Q. Bình Tân, TP.HCM</p>
+               <p><strong>Hotline:</strong> 0916 961 409</p>
+               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
+             </div>
+           </div>
+
+           <!-- Mầm Non GV -->
+           <div class="campus-card">
+             <div class="c-info">
+               <h2>Mầm Non Việt Anh (Gò Vấp)</h2>
+               <p><strong>Địa chỉ:</strong> 573 Lê Đức Thọ, P.16, Q. Gò Vấp, TP.HCM</p>
+               <p><strong>Hotline:</strong> 0774 588 988</p>
+               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
+             </div>
+           </div>
+
+           <!-- Long Hậu -->
+           <div class="campus-card">
+             <div class="c-info">
+               <h2>Trường Mầm Non Long Hậu</h2>
+               <p><strong>Địa chỉ:</strong> KDC Long Hậu, Xã Cần Giuộc, Tỉnh Long An (Giáp ranh Nhà Bè)</p>
+               <p><strong>Hotline:</strong> 0774 588 988</p>
+               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
+             </div>
+           </div>
+        </div>
+
+      </div>
+    </section>
+    
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .max-w-900 { max-width: 900px; }
+  .text-center { text-align: center; }
+  
+  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/07/20230311-DSC08612-scaled.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
+  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+
+  .page-content { padding: 5rem 0; min-height: 400px; }
+  
+  .campus-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .campus-card { background: #ffffff; padding: 2rem; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+  .c-info h2 { color: #1a193c; font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
+  .c-info p { font-size: 1.05rem; color: #475569; margin-bottom: 0.5rem; }
+  .c-info strong { color: #0f172a; }
+
+  @media (max-width: 768px) {
+    .campus-card { flex-direction: column; align-items: flex-start; }
+  }
+</style>

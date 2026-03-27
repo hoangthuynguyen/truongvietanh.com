@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+<BaseLayout title="Cấp Học | Trường Liên Cấp Việt Anh" description="Tìm hiểu lộ trình giáo dục từ Mầm Non đến Trung Học Phổ Thông.">
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+    
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Các Cấp Học Đào Tạo</h1>
+        <p class="page-desc">Lộ trình học tập toàn diện từ Mầm Non đến THPT</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container max-w-900">
+        <h2>Mầm Non</h2>
+        <p>Môi trường vui vẻ tuyệt đối, các bé được quan tâm đặc biệt từ bữa ăn đến giấc ngủ. Học tiếng Anh qua các bài hát và trò chơi.</p>
+        
+        <h2>Tiểu Học</h2>
+        <p>Rèn luyện thói quen tự lập. Không giáo điều áp lực, học bằng phương pháp trực quan sinh động.</p>
+
+        <h2>Trung Học Cơ Sở (THCS)</h2>
+        <p>Phát triển tư duy độc lập. Rèn luyện sự tự tin qua các bài thuyết trình nhóm bằng cả Tiếng Việt và Tiếng Anh.</p>
+
+        <h2>Trung Học Phổ Thông (THPT)</h2>
+        <p>Cam kết đầu ra IELTS 6.0+, sẵn sàng hồ sơ du học và trang bị đầy đủ bộ kỹ năng mềm ứng dụng toàn cầu.</p>
+      </div>
+    </section>
+    
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .max-w-900 { max-width: 900px; }
+  .text-center { text-align: center; }
+  
+  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/12/giao-vien-va-hoc-sinh-2.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
+  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+
+  .page-content { padding: 5rem 0; background: #ffffff; min-height: 400px; }
+  .page-content h2 { color: #1a193c; font-size: 2rem; font-weight: 800; margin-top: 2.5rem; margin-bottom: 1rem; border-left: 4px solid #fde047; padding-left: 1rem; }
+  .page-content p { font-size: 1.1rem; line-height: 1.7; color: #475569; margin-bottom: 1.5rem; }
+</style>

@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+<BaseLayout title="Tuyển Sinh | Trường Liên Cấp Việt Anh" description="Cổng thông tin và đăng ký tuyển sinh chính thức trường Việt Anh.">
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+    
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Thông Tin Tuyển Sinh</h1>
+        <p class="page-desc">Chào đón năm học mới. Đăng ký để nhận ngay tư vấn lộ trình học tập miễn phí.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container max-w-900 text-center">
+        <h2>Đăng Ký Tư Vấn & Nhận Lộ Trình</h2>
+        <p>Vui lòng để lại thông tin, Bộ phận Tuyển sinh thuộc Hệ thống Trường Liên Cấp Việt Anh sẽ liên hệ với Ba/Mẹ trong thời gian sớm nhất.</p>
+        
+        <div class="form-box">
+          <form class="contact-form">
+             <input type="text" placeholder="Họ và tên Ba/Mẹ *" required />
+             <input type="tel" placeholder="Số điện thoại *" required />
+             <input type="email" placeholder="Email của Ba/Mẹ" />
+             <select required>
+               <option value="">-- Chọn Cấp học quan tâm --</option>
+               <option value="Mầm Non">Mầm Non</option>
+               <option value="Tiểu Học">Tiểu Học</option>
+               <option value="THCS">Trung Học Cơ Sở (THCS)</option>
+               <option value="THPT">Trung Học Phổ Thông (THPT)</option>
+             </select>
+             <button type="button" class="btn-submit" onclick="alert('Cảm ơn Ba/Mẹ. Thông tin đã được ghi nhận!')">Nhận Tư Vấn Ngay</button>
+          </form>
+        </div>
+      </div>
+    </section>
+    
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .max-w-900 { max-width: 900px; }
+  .text-center { text-align: center; }
+  
+  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/07/gal4.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
+  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+
+  .page-content { padding: 5rem 0; background: #ffffff; min-height: 400px; }
+  .page-content h2 { color: #1a193c; font-size: 2rem; font-weight: 800; margin-top: 1rem; margin-bottom: 1rem; }
+  .page-content p { font-size: 1.1rem; line-height: 1.7; color: #475569; margin-bottom: 2.5rem; }
+
+  .form-box { background: #f8fafc; border: 1px solid #e2e8f0; padding: 3rem; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+  .contact-form { display: flex; flex-direction: column; gap: 1.25rem; }
+  .contact-form input, .contact-form select { width: 100%; padding: 1.2rem; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 1.05rem; font-family: 'Inter'; outline: none; }
+  .contact-form input:focus, .contact-form select:focus { border-color: #1a193c; }
+  .btn-submit { background: #fde047; color: #000; font-weight: 800; font-size: 1.25rem; padding: 1.2rem; border: none; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-top: 1rem; }
+  .btn-submit:hover { background: #fef08a; transform: translateY(-2px); }
+</style>

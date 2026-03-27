@@ -1,0 +1,64 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+<BaseLayout title="Góc Phụ Huynh | Trường Liên Cấp Việt Anh" description="Cổng thông tin nội bộ và hướng dẫn đồng hành cùng con dành riêng cho Phụ huynh.">
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+    
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Góc Phụ Huynh</h1>
+        <p class="page-desc">Chuyên trang đồng hành, chia sẻ và kết nối sức mạnh gia đình cùng Nhà trường.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container max-w-900 text-center">
+        <h2>Tiện ích Phụ Huynh</h2>
+        
+        <div class="portal-grid">
+           <a href="#" class="portal-card">
+              <h3>Thực Đơn</h3>
+              <p>Chi tiết dinh dưỡng theo tuần.</p>
+           </a>
+           <a href="#" class="portal-card">
+              <h3>Thời Khóa Biểu</h3>
+              <p>Lịch học & hoạt động ngoại khóa.</p>
+           </a>
+           <a href="#" class="portal-card">
+              <h3>Sổ Liên Lạc Điện Tử</h3>
+              <p>Tra cứu kết quả và nhận xét.</p>
+           </a>
+           <a href="#" class="portal-card">
+              <h3>Đưa Rước School Bus</h3>
+              <p>Lộ trình và thông tin tài xế.</p>
+           </a>
+        </div>
+      </div>
+    </section>
+    
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .max-w-900 { max-width: 900px; }
+  .text-center { text-align: center; }
+  
+  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/07/Than-Huong-Giang-11A3.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
+  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+
+  .page-content { padding: 5rem 0; min-height: 400px; }
+  .page-content h2 { color: #1a193c; font-size: 2.25rem; font-weight: 800; margin-bottom: 3rem; }
+  
+  .portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  .portal-card { background: #ffffff; padding: 2.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-decoration: none; color: inherit; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+  .portal-card:hover { transform: translateY(-4px); border-color: #1a193c; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+  .portal-card h3 { color: #1a193c; font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; }
+  .portal-card p { color: #475569; font-size: 1.05rem; margin: 0; }
+</style>

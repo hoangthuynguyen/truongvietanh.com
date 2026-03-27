@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+<BaseLayout title="Giới Thiệu | Trường Liên Cấp Việt Anh" description="Sứ mệnh của trường Việt Anh là “Tạo ra môi trường học vui vẻ và thực dụng”.">
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+    
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Về Trường Việt Anh</h1>
+        <p class="page-desc">Tạo ra môi trường học tập vui vẻ và thực dụng kể từ năm 2011.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container max-w-900">
+        <div class="vision-box">
+          <h2>Tầm Nhìn & Sứ Mệnh</h2>
+          <p>
+            Trường Việt Anh được thành lập năm 2011 với sứ mệnh là: <strong>“Tạo ra môi trường học tập vui vẻ và thực dụng”</strong>.
+          </p>
+          <p>
+            Tầm nhìn của Trường Việt Anh: Tất cả học sinh hạnh phúc trong học tập, ra trường với 16 kỹ năng của thế kỷ 21 cùng nền tảng Tiếng Anh vững chắc đủ để du học và vươn tầm thế giới.
+          </p>
+        </div>
+
+        <div class="pillars-grid">
+           <div class="pillar">
+              <h3>Nội dung học thực dụng</h3>
+              <p>Chương trình được thiết kế loại bỏ lý thuyết hàn lâm, tập trung vào ứng dụng thực tiễn để học sinh giải quyết vấn đề.</p>
+           </div>
+           <div class="pillar">
+              <h3>Tiếng Anh đủ du học</h3>
+              <p>Lộ trình tiếng Anh cường độ cao cam kết tối thiểu IELTS 6.0 đầu ra THPT.</p>
+           </div>
+           <div class="pillar">
+              <h3>Sớm trưởng thành</h3>
+              <p>Rèn luyện 16 kỹ năng thế kỷ 21, giúp học sinh có phong thái tự tin, khả năng thuyết trình và lãnh đạo ngay từ ghế nhà trường.</p>
+           </div>
+        </div>
+      </div>
+    </section>
+    
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .max-w-900 { max-width: 900px; }
+  .text-center { text-align: center; }
+  
+  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/12/giao-vien-va-hoc-sinh-2.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
+  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+
+  .page-content { padding: 5rem 0; min-height: 400px; }
+  
+  .vision-box { background: #fff; padding: 3rem; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; margin-bottom: 3rem; box-shadow: 0 10px 25px rgba(0,0,0,0.02); }
+  .vision-box h2 { color: #1a193c; font-size: 2.25rem; font-weight: 800; margin-bottom: 1.5rem; }
+  .vision-box p { font-size: 1.15rem; color: #475569; line-height: 1.8; margin-bottom: 1rem; }
+
+  .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  @media (max-width: 768px) { .pillars-grid { grid-template-columns: 1fr; } }
+  .pillar { background: #fff; padding: 2rem; border-radius: 12px; border: 1px solid #e2e8f0; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+  .pillar h3 { color: #1a193c; font-size: 1.35rem; font-weight: 800; margin-bottom: 1rem; border-bottom: 2px solid #fde047; display: inline-block; padding-bottom: 0.5rem; }
+  .pillar p { color: #475569; font-size: 1.05rem; line-height: 1.6; }
+</style>

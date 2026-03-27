@@ -1,0 +1,69 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+<BaseLayout title="Thành Tích Kỷ Lục | Trường Liên Cấp Việt Anh" description="Những con số biết nói khẳng định chất lượng vượt trội của Giáo dục Việt Anh.">
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+    
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Bảng Vàng Thành Tích</h1>
+        <p class="page-desc">Sự nỗ lực của hơn một thập kỷ vun đắp nhân tài thế kỷ 21.</p>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container max-w-900 text-center">
+        <div class="stats-grid">
+           <div class="stat-box">
+             <div class="stat-num">99%</div>
+             <p>Tỷ lệ đỗ Đại học hàng năm</p>
+           </div>
+           <div class="stat-box">
+             <div class="stat-num">6.0+</div>
+             <p>IELTS trung bình đầu ra THPT</p>
+           </div>
+           <div class="stat-box">
+             <div class="stat-num">100+</div>
+             <p>Học bổng Du học Quốc tế</p>
+           </div>
+           <div class="stat-box">
+             <div class="stat-num">2011</div>
+             <p>Năm thành lập hệ thống</p>
+           </div>
+        </div>
+
+        <div style="margin-top: 5rem; text-align: left;">
+          <h2 style="color: #1a193c; font-size: 2rem; font-weight: 800; margin-bottom: 1.5rem; text-align: center;">Hệ Sinh Thái Học Sinh Khác Biệt</h2>
+          <p style="font-size: 1.1rem; line-height: 1.8; color: #475569;">
+            Trường Việt Anh không chỉ định danh thành công thông qua điểm số. Thành tích cốt lõi mà chúng tôi tự hào nhất chính là tỷ lệ học sinh đạt Tiếng Anh xuất sắc sớm hơn độ tuổi, cùng với 16 Kỹ năng làm việc chuyên nghiệp (Lãnh đạo, Thuyết trình, Tư duy Phản biện) được rèn luyện thực tế ngay từ bậc Tiểu học.
+          </p>
+        </div>
+      </div>
+    </section>
+    
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .max-w-900 { max-width: 900px; }
+  .text-center { text-align: center; }
+  
+  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/07/gal1.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
+  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
+  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+
+  .page-content { padding: 5rem 0; background: #ffffff; min-height: 400px; }
+  
+  .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+  @media (min-width: 768px) { .stats-grid { grid-template-columns: repeat(4, 1fr); } }
+  .stat-box { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 2.5rem 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.03); transition: all 0.2s; }
+  .stat-box:hover { transform: translateY(-5px); border-color: #fde047; }
+  .stat-num { font-size: 3rem; font-weight: 900; color: #1a193c; margin-bottom: 0.5rem; }
+  .stat-box p { font-size: 1.05rem; color: #475569; font-weight: 600; margin: 0; }
+</style>

@@ -1,0 +1,585 @@
+---
+type Props = {
+  formId?: string;
+  funnelCode?: string;
+  schoolLevel?: string;
+  submitText?: string;
+  successMessage?: string;
+};
+
+const {
+  formId = 'squeeze-form',
+  funnelCode = 'squeeze-landing',
+  schoolLevel = 'tieu-hoc',
+  submitText = 'ÄÄng kÃ½ ngay',
+  successMessage = 'Cáº£m Æ¡n báº¡n ÄÃ£ ÄÄng kÃ½! ChÃºng tÃ´i sáº½ liÃªn há» vá»i báº¡n trong 24 giá».',
+} = Astro.props;
+
+const formIdWithFunnel = `${formId}-${funnelCode}`;
+---
+
+<form
+  id={formIdWithFunnel}
+  class="lead-form"
+  novalidate
+>
+  <!-- Step 1: Email Only -->
+  <div class="form-step" data-step="1">
+    <div class="form-step-content">
+      <h3 class="form-step-title">BÆ°á»c 1: XÃ¡c nháº­n email</h3>
+      <p class="form-step-description">Äá» nháº­n thÃ´ng tin chi tiáº¿t vÃ  há» trá»£ miá»n phÃ­</p>
+
+      <div class="form-group">
+        <input
+          type="email"
+          id="email-{formIdWithFunnel}"
+          name="email"
+          class="form-input"
+          placeholder="Nháº­p email cá»§a báº¡n"
+          required
+          aria-label="Email cá»§a báº¡n"
+        />
+        <span class="form-error" role="alert"></span>
+      </div>
+
+      <button type="button" class="form-btn form-btn--next" data-action="next-step">
+        Tiáº¿p tá»¥c
+      </button>
+
+      <p class="form-consent">
+        <input
+          type="checkbox"
+          id="consent-{formIdWithFunnel}"
+          name="consent"
+          class="form-checkbox"
+          required
+        />
+        <label for="consent-{formIdWithFunnel}">
+          TÃ´i Äá»ng Ã½ nháº­n thÃ´ng tin vÃ  tÆ° váº¥n tá»« TrÆ°á»ng Viá»t Anh
+        </label>
+      </p>
+    </div>
+  </div>
+
+  <!-- Step 2: Full Information -->
+  <div class="form-step" data-step="2" hidden>
+    <div class="form-step-content">
+      <h3 class="form-step-title">BÆ°á»c 2: ThÃ´ng tin cá»§a báº¡n</h3>
+      <p class="form-step-description">GiÃºp chÃºng tÃ´i há» trá»£ tá»t hÆ¡n</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <input
+            type="text"
+            id="parent-name-{formIdWithFunnel}"
+            name="parent_name"
+            class="form-input"
+            placeholder="Há» vÃ  tÃªn phá»¥ huynh"
+            required
+            aria-label="TÃªn phá»¥ huynh"
+          />
+          <span class="form-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="tel"
+            id="phone-{formIdWithFunnel}"
+            name="phone"
+            class="form-input"
+            placeholder="Sá» Äiá»n thoáº¡i"
+            pattern="[0-9\+\-\s\(\)]+"
+            required
+            aria-label="Sá» Äiá»n thoáº¡i"
+          />
+          <span class="form-error" role="alert"></span>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <input
+            type="text"
+            id="child-name-{formIdWithFunnel}"
+            name="child_name"
+            class="form-input"
+            placeholder="TÃªn con em"
+            required
+            aria-label="TÃªn con em"
+          />
+          <span class="form-error" role="alert"></span>
+        </div>
+
+        <div class="form-group">
+          <select
+            id="school-level-{formIdWithFunnel}"
+            name="school_level"
+            class="form-input"
+            required
+            aria-label="Cáº¥p há»c"
+          >
+            <option value="">Chá»n cáº¥p há»c</option>
+            <option value="mau-non">Máº§m non</option>
+            <option value="tieu-hoc">Tiá»u há»c</option>
+            <option value="thcs">THCS</option>
+            <option value="thpt">THPT</option>
+          </select>
+          <span class="form-error" role="alert"></span>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="form-btn form-btn--back" data-action="prev-step">
+          â Quay láº¡i
+        </button>
+        <button type="submit" class="form-btn form-btn--submit">
+          {submitText}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success State -->
+  <div class="form-step form-success" data-step="success" hidden>
+    <div class="form-step-content">
+      <div class="success-icon">â</div>
+      <h3 class="form-step-title">ÄÄng kÃ½ thÃ nh cÃ´ng!</h3>
+      <p class="form-step-description">{successMessage}</p>
+      <button type="button" class="form-btn form-btn--new" data-action="reset-form">
+        ÄÄng kÃ½ khÃ¡c
+      </button>
+    </div>
+  </div>
+
+  <!-- Hidden fields for backend -->
+  <input type="hidden" name="funnel_code" value={funnelCode} />
+  <input type="hidden" name="school_level" value={schoolLevel} />
+  <input type="hidden" name="source" value="squeeze-landing" />
+</form>
+
+<style is:inline>
+  .lead-form {
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .form-step {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .form-step[hidden] {
+    display: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+
+  .form-step-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-step-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1F4E79;
+    margin: 0;
+  }
+
+  .form-step-description {
+    font-size: 0.95rem;
+    color: #666666;
+    margin: 0;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .form-input,
+  .form-checkbox {
+    font-family: "Open Sans", sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+
+  .form-input {
+    padding: 0.75rem 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background-color: white;
+    color: #1a1a1a;
+    transition: all 0.2s ease;
+  }
+
+  .form-input:focus {
+    outline: none;
+    border-color: #E8792B;
+    box-shadow: 0 0 0 3px rgba(232, 121, 43, 0.1);
+  }
+
+  .form-input.error {
+    border-color: #e74c3c;
+  }
+
+  .form-error {
+    font-size: 0.8rem;
+    color: #e74c3c;
+    min-height: 1.2em;
+    display: block;
+  }
+
+  .form-checkbox {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #E8792B;
+  }
+
+  .form-consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    font-size: 0.9rem;
+    color: #666666;
+    margin: 0;
+  }
+
+  .form-consent label {
+    cursor: pointer;
+    line-height: 1.4;
+  }
+
+  .form-btn {
+    padding: 0.875rem 2rem;
+    border: none;
+    border-radius: 6px;
+    font-family: "Montserrat", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .form-btn--next,
+  .form-btn--submit,
+  .form-btn--new {
+    width: 100%;
+    background-color: #E8792B;
+    color: white;
+  }
+
+  .form-btn--next:hover,
+  .form-btn--submit:hover,
+  .form-btn--new:hover {
+    background-color: #d1681f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(232, 121, 43, 0.3);
+  }
+
+  .form-btn--next:active,
+  .form-btn--submit:active,
+  .form-btn--new:active {
+    transform: translateY(0);
+  }
+
+  .form-actions {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 1rem;
+  }
+
+  .form-btn--back {
+    background-color: #f0f0f0;
+    color: #1a1a1a;
+  }
+
+  .form-btn--back:hover {
+    background-color: #e0e0e0;
+  }
+
+  .form-success {
+    text-align: center;
+  }
+
+  .success-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    margin-bottom: 1.5rem;
+    border-radius: 50%;
+    background-color: #27ae60;
+    color: white;
+    font-size: 3rem;
+    font-weight: 700;
+  }
+
+  .form-success .form-step-title {
+    color: #27ae60;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 480px) {
+    .form-row {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .form-actions {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .form-step-title {
+      font-size: 1.25rem;
+    }
+
+    .form-input {
+      padding: 0.7rem 0.9rem;
+      font-size: 16px; /* Prevents zoom on iOS */
+    }
+
+    .form-btn {
+      padding: 0.75rem 1rem;
+      font-size: 0.95rem;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ formIdWithFunnel, funnelCode }}>
+  const form = document.getElementById(formIdWithFunnel);
+  if (!form) {
+    console.error('Form not found:', formIdWithFunnel);
+  }
+
+  // Make.com Webhook URL (Custom Webhook trigger)
+  const MAKE_WEBHOOK_URL = 'https://hook.us2.make.com/2xnm31idzv2otvu5ump548nea04';
+
+  // Form state
+  let currentStep = 1;
+  let formData = {};
+
+  // Helper function to validate email
+  function isValidEmail(email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  }
+
+  // Helper function to validate phone
+  function isValidPhone(phone) {
+    return /^[0-9\+\-\s\(\)]{10,}$/.test(phone.replace(/\s/g, ''));
+  }
+
+  // Helper function to show/hide form steps
+  function showStep(stepNumber) {
+    document.querySelectorAll('[data-step]').forEach(step => {
+      step.hidden = parseInt(step.getAttribute('data-step')) !== stepNumber;
+    });
+    currentStep = stepNumber;
+  }
+
+  // Helper function to get form inputs for current step
+  function getStepInputs() {
+    if (currentStep === 1) {
+      return form.querySelectorAll('input[name="email"], input[name="consent"]');
+    } else if (currentStep === 2) {
+      return form.querySelectorAll('input[name="parent_name"], input[name="phone"], input[name="child_name"], select[name="school_level"]');
+    }
+    return [];
+  }
+
+  // Validate step
+  function validateStep() {
+    const inputs = getStepInputs();
+    let isValid = true;
+
+    inputs.forEach(input => {
+      const error = input.parentElement.querySelector('.form-error');
+      let errorMsg = '';
+
+      if (input.type === 'checkbox') {
+        if (!input.checked) {
+          errorMsg = 'Vui lÃ²ng Äá»ng Ã½ trÆ°á»c khi tiáº¿p tá»¥c';
+          isValid = false;
+        }
+      } else if (input.name === 'email') {
+        if (!input.value.trim()) {
+          errorMsg = 'Vui lÃ²ng nháº­p email';
+          isValid = false;
+        } else if (!isValidEmail(input.value)) {
+          errorMsg = 'Email khÃ´ng há»£p lá»';
+          isValid = false;
+        }
+      } else if (input.name === 'phone') {
+        if (!input.value.trim()) {
+          errorMsg = 'Vui lÃ²ng nháº­p sá» Äiá»n thoáº¡i';
+          isValid = false;
+        } else if (!isValidPhone(input.value)) {
+          errorMsg = 'Sá» Äiá»n thoáº¡i khÃ´ng há»£p lá»';
+          isValid = false;
+        }
+      } else {
+        if (!input.value.trim()) {
+          errorMsg = 'TrÆ°á»ng nÃ y báº¯t buá»c';
+          isValid = false;
+        }
+      }
+
+      if (error) {
+        error.textContent = errorMsg;
+        input.classList.toggle('error', !!errorMsg);
+      }
+    });
+
+    return isValid;
+  }
+
+  // Save form data
+  function saveFormData() {
+    const inputs = form.querySelectorAll('input, select');
+    inputs.forEach(input => {
+      if (input.type === 'checkbox') {
+        if (input.checked) {
+          formData[input.name] = true;
+        }
+      } else if (input.name && !input.name.startsWith('_')) {
+        formData[input.name] = input.value;
+      }
+    });
+  }
+
+  // Event listeners
+  const nextButtons = form.querySelectorAll('[data-action="next-step"]');
+  const backButtons = form.querySelectorAll('[data-action="prev-step"]');
+  const resetButtons = form.querySelectorAll('[data-action="reset-form"]');
+
+  nextButtons.forEach(btn => {
+    btn.addEventListener('click', async function(e) {
+      e.preventDefault();
+      if (validateStep()) {
+        saveFormData();
+        showStep(2);
+
+        // Track GTM event
+        if (window.dataLayer) {
+          window.dataLayer.push({
+            'event': 'form_step_complete',
+            'form_id': formIdWithFunnel,
+            'step': 1,
+            'email': formData.email
+          });
+        }
+
+        // Send partial_capture to Make.com webhook
+        try {
+          await fetch(MAKE_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              step: 'partial_capture',
+              email: formData.email,
+              source: funnelCode,
+              page: window.location.href,
+              timestamp: new Date().toISOString()
+            })
+          });
+        } catch (err) {
+          console.error('[LeadForm] Partial capture error:', err);
+        }
+      }
+    });
+  });
+
+  backButtons.forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      showStep(1);
+    });
+  });
+
+  form.addEventListener('submit', async function(e) {
+    e.preventDefault();
+
+    if (!validateStep()) {
+      return;
+    }
+
+    saveFormData();
+
+    // Track GTM event
+    if (window.dataLayer) {
+      window.dataLayer.push({
+        'event': 'form_submit',
+        'form_id': formIdWithFunnel,
+        'funnel_code': funnelCode,
+        'email': formData.email,
+        'phone': formData.phone,
+        'child_name': formData.child_name,
+        'school_level': formData.school_level
+      });
+    }
+
+    // Show success step
+    showStep('success');
+
+    // Send full_submit to Make.com webhook â Pancake CRM + GHL
+    try {
+      const webhookPayload = {
+        step: 'full_submit',
+        fullName: formData.parent_name || '',
+        email: formData.email || '',
+        phone: formData.phone || '',
+        childName: formData.child_name || '',
+        schoolLevel: formData.school_level || '',
+        source: funnelCode,
+        page: window.location.href,
+        timestamp: new Date().toISOString()
+      };
+
+      const response = await fetch(MAKE_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(webhookPayload)
+      });
+
+      if (!response.ok) {
+        console.error('Failed to submit form:', response.status);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+
+    // Reset form after 3 seconds
+    setTimeout(() => {
+      form.reset();
+      showStep(1);
+      formData = {};
+    }, 3000);
+  });
+
+  // Clear error on input
+  const inputs = form.querySelectorAll('.form-input');
+  inputs.forEach(input => {
+    input.addEventListener('focus', function() {
+      const error = this.parentElement.querySelector('.form-error');
+      if (error) {
+        error.textContent = '';
+        this.classList.remove('error');
+      }
+    });
+  });
+</script>

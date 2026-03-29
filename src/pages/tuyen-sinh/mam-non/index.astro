@@ -1,0 +1,225 @@
+---
+import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../components/USPGrid.astro';
+import TrustMetrics from '../../../components/TrustMetrics.astro';
+import FAQSection from '../../../components/FAQSection.astro';
+
+const pageTitle = 'Tuyá»n Sinh Máº§m Non - TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh';
+const pageDescription = 'ChÆ°Æ¡ng trÃ¬nh Máº§m Non quá»c táº¿ táº¡i TrÆ°á»ng Viá»t Anh - PhÃ¡t triá»n toÃ n diá»n cho bÃ© tá»« 18 thÃ¡ng Äáº¿n 6 tuá»i. ÄÄng kÃ½ tham quan trÆ°á»ng ngay.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non';
+
+const uspItems = [
+  { icon: 'ð', text: 'PhÆ°Æ¡ng phÃ¡p giÃ¡o dá»¥c Montessori káº¿t há»£p STEAM' },
+  { icon: 'ð©âð«', text: 'GiÃ¡o viÃªn nÆ°á»c ngoÃ i dáº¡y tiáº¿ng Anh hÃ ng ngÃ y' },
+  { icon: 'ð ', text: 'Lá»p há»c sÄ© sá» nhá», tá»i Äa 20-25 bÃ©/lá»p' },
+  { icon: 'ð', text: 'Bá»¯a Än dinh dÆ°á»¡ng theo chuáº©n cá»§a chuyÃªn gia' },
+  { icon: 'ðµ', text: 'ChÆ°Æ¡ng trÃ¬nh ngoáº¡i khÃ³a phong phÃº: nháº¡c, há»a, thá» cháº¥t' },
+  { icon: 'ð¡ï¸', text: 'CÆ¡ sá» váº­t cháº¥t an toÃ n, camera giÃ¡m sÃ¡t 24/7' }
+];
+
+const metrics = [
+  { number: '15+', label: 'NÄm kinh nghiá»m giÃ¡o dá»¥c' },
+  { number: '300+', label: 'BÃ© Máº§m Non Äang theo há»c' },
+  { number: '98%', label: 'Phá»¥ huynh hÃ i lÃ²ng' },
+  { number: '3', label: 'CÆ¡ sá» táº¡i TPHCM' }
+];
+
+const faqItems = [
+  {
+    question: 'TrÆ°á»ng Viá»t Anh nháº­n bÃ© tá»« máº¥y tuá»i?',
+    answer: 'TrÆ°á»ng nháº­n bÃ© tá»« 18 thÃ¡ng tuá»i (lá»p NhÃ  tráº») Äáº¿n 6 tuá»i (lá»p LÃ¡). CÃ¡c lá»p ÄÆ°á»£c chia theo Äá» tuá»i: NhÃ  tráº» (18-24 thÃ¡ng), Máº§m (3-4 tuá»i), Chá»i (4-5 tuá»i), LÃ¡ (5-6 tuá»i).'
+  },
+  {
+    question: 'ChÆ°Æ¡ng trÃ¬nh Máº§m Non cÃ³ gÃ¬ khÃ¡c biá»t?',
+    answer: 'TrÆ°á»ng Viá»t Anh Ã¡p dá»¥ng phÆ°Æ¡ng phÃ¡p Montessori káº¿t há»£p STEAM, giÃºp bÃ© phÃ¡t triá»n toÃ n diá»n vá» thá» cháº¥t, trÃ­ tuá», cáº£m xÃºc vÃ  xÃ£ há»i. BÃ© ÄÆ°á»£c há»c tiáº¿ng Anh vá»i giÃ¡o viÃªn báº£n ngá»¯ lá»i ngÃ y.'
+  },
+  {
+    question: 'Há»c phÃ­ Máº§m Non bao nhiÃªu?',
+    answer: 'Há»c phÃ­ khÃ¡c nhau tÃ¹y cÆ¡ sá» vÃ  Äá» tuá»i. Vui lÃ²ng Äá» láº¡i thÃ´ng tin qua form ÄÄng kÃ½ Äá» nháº­n bÃ¡o giÃ¡ chi tiáº¿t vÃ  cÃ¡c chÆ°Æ¡ng trÃ¬nh Æ°u ÄÃ£i hiá»n cÃ³.'
+  },
+  {
+    question: 'BÃ© cÃ³ ÄÆ°á»£c Än táº¡i trÆ°á»ng khÃ´ng?',
+    answer: 'CÃ³. TrÆ°á»ng cung cáº¥p 3 bá»¯a chÃ­nh vÃ  2 bá»¯a phá»¥ má»i ngÃ y, thá»±c ÄÆ¡n do chuyÃªn gia dinh dÆ°á»¡ng thiáº¿t káº¿, Äáº£m báº£o an toÃ n vá» sinh thá»±c pháº©m.'
+  },
+  {
+    question: 'TrÆ°á»ng cÃ³ xe ÄÆ°a ÄÃ³n khÃ´ng?',
+    answer: 'CÃ³. TrÆ°á»ng cÃ³ dá»ch vá»¥ xe ÄÆ°a ÄÃ³n há»c sinh vá»i tuyáº¿n ÄÆ°á»ng linh hoáº¡t, cÃ³ giÃ¡o viÃªn Äi kÃ¨m Äáº£m báº£o an toÃ n cho cÃ¡c bÃ©.'
+  },
+  {
+    question: 'LÃ m sao Äá» ÄÄng kÃ½ tham quan trÆ°á»ng?',
+    answer: 'Ba/Máº¹ cÃ³ thá» ÄÄng kÃ½ qua form bÃªn dÆ°á»i hoáº·c gá»i trá»±c tiáº¿p hotline 0916 961 409. NhÃ  trÆ°á»ng sáº½ sáº¯p xáº¿p lá»ch háº¹n tham quan phÃ¹ há»£p.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="máº§m non, tuyá»n sinh máº§m non, trÆ°á»ng máº§m non quá»c táº¿, trÆ°á»ng Viá»t Anh, mam non"
+  schoolLevel="mam-non"
+  funnelCode="tuyen-sinh-mam-non"
+  canonicalUrl={canonicalUrl}
+>
+  <!-- Hero Section -->
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Tuyá»n Sinh Máº§m Non<br/>TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh
+    </h1>
+    <p class="hero-subtitle">
+      Khá»i Äáº§u vá»¯ng cháº¯c cho hÃ nh trÃ¬nh giÃ¡o dá»¥c cá»§a con - PhÃ¡t triá»n toÃ n diá»n tá»« 18 thÃ¡ng tuá»i
+    </p>
+  </div>
+
+  <!-- USP Grid Section -->
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <!-- Trust Metrics Section -->
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <!-- Main Content Section -->
+  <div slot="content">
+    <div class="content-section">
+      <h2>Táº¡i sao Ba/Máº¹ chá»n Máº§m Non TrÆ°á»ng Viá»t Anh?</h2>
+
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>PhÆ°Æ¡ng phÃ¡p giÃ¡o dá»¥c tiÃªn tiáº¿n</h3>
+          <p>
+            Káº¿t há»£p Montessori vÃ  STEAM, giÃºp bÃ© há»c thÃ´ng qua tráº£i nghiá»m thá»±c táº¿, phÃ¡t triá»n tÆ° duy sÃ¡ng táº¡o vÃ  kháº£ nÄng giáº£i quyáº¿t váº¥n Äá» ngay tá»« nhá».
+          </p>
+        </div>
+
+        <div class="content-card">
+          <h3>Song ngá»¯ Anh-Viá»t tá»« Máº§m Non</h3>
+          <p>
+            BÃ© ÄÆ°á»£c tiáº¿p xÃºc tiáº¿ng Anh tá»± nhiÃªn má»i ngÃ y vá»i giÃ¡o viÃªn báº£n ngá»¯, xÃ¢y dá»±ng ná»n táº£ng ngÃ´n ngá»¯ vá»¯ng cháº¯c cho cÃ¡c cáº¥p há»c tiáº¿p theo.
+          </p>
+        </div>
+
+        <div class="content-card">
+          <h3>MÃ´i trÆ°á»ng an toÃ n & yÃªu thÆ°Æ¡ng</h3>
+          <p>
+            CÆ¡ sá» váº­t cháº¥t Äáº¡t chuáº©n quá»c táº¿, camera giÃ¡m sÃ¡t 24/7, Äá»i ngÅ© giÃ¡o viÃªn táº­n tÃ¢m chÄm sÃ³c bÃ© nhÆ° con em mÃ¬nh.
+          </p>
+        </div>
+
+        <div class="content-card">
+          <h3>Dinh dÆ°á»¡ng khoa há»c</h3>
+          <p>
+            Thá»±c ÄÆ¡n do chuyÃªn gia dinh dÆ°á»¡ng thiáº¿t káº¿, 3 bá»¯a chÃ­nh + 2 bá»¯a phá»¥ má»i ngÃ y, Äáº£m báº£o bÃ© phÃ¡t triá»n khá»e máº¡nh vÃ  cÃ¢n Äá»i.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form Section -->
+  <div slot="form">
+    <h2 class="form-heading">ÄÄng kÃ½ tham quan trÆ°á»ng & nháº­n tÆ° váº¥n</h2>
+    <p class="form-subheading">
+      Äá» láº¡i thÃ´ng tin Äá» nháº­n lá»ch tham quan trÆ°á»ng vÃ  tÆ° váº¥n chÆ°Æ¡ng trÃ¬nh Máº§m Non phÃ¹ há»£p cho bÃ©
+    </p>
+    <LeadFormTwoStepEmailFirst
+      formId="tuyen-sinh-form"
+      funnelCode="tuyen-sinh-mam-non"
+      schoolLevel="mam-non"
+      submitText="ÄÄng kÃ½ tham quan"
+      successMessage="Cáº£m Æ¡n Ba/Máº¹ ÄÃ£ ÄÄng kÃ½! Bá» pháº­n Tuyá»n sinh sáº½ liÃªn há» trong vÃ²ng 24h Äá» xáº¿p lá»ch tham quan trÆ°á»ng."
+    />
+  </div>
+
+  <!-- FAQ Section -->
+  <div slot="faq">
+    <FAQSection items={faqItems} title="CÃ¢u há»i thÆ°á»ng gáº·p vá» Máº§m Non Viá»t Anh" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1rem, 3vw, 1.25rem);
+    font-weight: 500;
+    opacity: 0.95;
+  }
+
+  .content-section h2 {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: #1F4E79;
+    text-align: center;
+  }
+
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .content-card {
+    padding: 2rem;
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+
+  .content-card:hover {
+    border-color: #E8792B;
+    box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12);
+    transform: translateY(-4px);
+  }
+
+  .content-card h3 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1F4E79;
+    margin-bottom: 1rem;
+  }
+
+  .content-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #666666;
+  }
+
+  .form-heading {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #1F4E79;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-subheading {
+    font-size: 1rem;
+    color: #666666;
+    margin-bottom: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    .content-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .content-card {
+      padding: 1.5rem;
+    }
+  }
+</style>

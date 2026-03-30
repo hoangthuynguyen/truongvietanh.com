@@ -5,6 +5,149 @@ import USPGrid from '../../../components/USPGrid.astro';
 import TrustMetrics from '../../../components/TrustMetrics.astro';
 import FAQSection from '../../../components/FAQSection.astro';
 
+const pageTitle = 'Tuyển Sinh Tiểu Học - Trường Liên Cấp Việt Anh';
+const pageDescription = 'Nền tảng 5 năm quyết định cả tương lai con em. Chương trình Tiểu Học song ngữ chuẩn quốc tế với giáo viên nước ngoài, Cambridge pathway, 20+ CLB ngoại khóa từ lớp 1.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc';
+
+const uspItems = [
+  { icon: '🎯', text: 'Song ngữ Anh-Việt chuẩn Cambridge từ lớp 1 — Không phải dạy lại lúc lớn' },
+  { icon: '👨‍🏫', text: 'Giáo viên nước ngoài bản ngữ dạy Tiếng Anh chuyên sâu từ buổi đầu tiên' },
+  { icon: '🏫', text: 'Lớp nhỏ 25 học sinh — Mỗi con được chú ý cá nhân hóa' },
+  { icon: '🔬', text: 'STEM từ lớp 1: Robotics, Coding, Khoa học thực nghiệm (không chỉ lý thuyết)' },
+  { icon: '🌟', text: '20+ CLB ngoại khóa: Thể thao, Âm nhạc, Robotics, Vẽ, Leadership' },
+  { icon: '✅', text: 'Lộ trình rõ ràng lên THCS + THPT: Không lo "ngỡ ngơ" cơ sở nào' }
+];
+
+const metrics = [
+  { number: '15+', label: 'Năm hành trình giáo dục đã chứng minh' },
+  { number: '500+', label: 'Cáu bé/gái đã vượt qua giai đoạn quan trọng này' },
+  { number: '98%', label: 'Phụ huynh hài lòng & tái nhập học' },
+  { number: '3', label: 'Cơ sở tiêu chuẩn tại TPHCM' }
+];
+
+const faqItems = [
+  {
+    question: 'Tại sao nên chọn song ngữ từ lớp 1 chứ không học Tiếng Anh lúc lớn?',
+    answer: 'Lớp 1-5 là giai đoạn vàng cho ngôn ngữ. Bé học Tiếng Anh như học Tiếng Việt — tự nhiên, không rụt rè. Nếu chờ lớn (THCS/THPT), con sẽ mất mấy năm để "bắt kịp", sợ phát âm, sợ nói. Tại Việt Anh, con chơi với bạn ngoại hàng ngày, nên sợ cái gì?"'
+  },
+  {
+    question: 'Con tôi chỉ nói Tiếng Việt ở nhà, có sợ học Tiếng Anh từ lớp 1 không?',
+    answer: 'Không. Giáo viên nước ngoài và cô Việt tại lớp sẽ hướng dẫn từng bước. Tuần đầu, bé chỉ nghe + nhìn hình ảnh. Tuần thứ hai, bé bắt đầu nói một vài từ đơn giản. Trong 1-2 tháng, bé tự tin "lê" câu đơn. Rất tự nhiên, không áp lực. Ba/Mẹ sẽ kinh ngạc với tốc độ học của con.'
+  },
+  {
+    question: 'Học phí Tiểu Học bao nhiêu? Có khó chi trả không?',
+    answer: 'Học phí khác nhau tùy cơ sở, từ 8-12 triệu/tháng. Vâng, cao hơn trường công — nhưng bạn đang đầu tư vào 5 năm vàng. Lớp 1-5 quyết định liệu con có tự tin nói Tiếng Anh, thích học, hay sợ môn ngoại ngữ suốt đời. Nhiều phụ huynh nói: "Nếu biết kết quả, tôi sẵn lòng trả gấp đôi".'
+  },
+  {
+    question: 'Con tôi hay "lười học", có tích cực hóa được không?',
+    answer: 'Thường đó là vì chương trình nhàm chán. Tại Việt Anh, bé học bằng Dự Án (Project), Trò chơi, Khám phá (không ngồi yên dưỡng lông). Tuần này: Bé làm Robot bằng LEGO + giải thích bằng Tiếng Anh. Tuần sau: Bé chỉ đạo một số bạn làm Kịch nước. Khi bé tự khám phá, bé sẽ thích học.'
+  },
+  {
+    question: 'Có bán trú không? An toàn không?',
+    answer: 'Có chế độ bán trú 7h30-17h00. Ăn trưa + bữa phụ chiều dưỡng chất cân bằng. Giám sát mặt 1-1 lúc ăn & cơ bản buổi chiều. Camera giám sát toàn trường, nhân viên bảo vệ 24/24. Phụ huynh có app IMBA để xem ảnh/video con từ nhà.'
+  },
+  {
+    question: 'Tôi muốn con lên THPT Việt Anh ngay từ Tiểu Học — được không?',
+    answer: 'Được! Học sinh Tiểu Học Việt Anh được ưu tiên chuyển cấp. Nếu hoàn thành Tiểu Học với GPA 7.5+, không cần thi đầu vào THCS — tự động lên. Phụ huynh quên đi nỗi lo "vào được trường nào rồi".'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="tiểu học, tuyển sinh tiểu học, song ngữ, trường Việt Anh, giáo dục quốc tế, Cambridge"
+  schoolLevel="tieu-hoc"
+  funnelCode="tuyen-sinh-tieu-hoc"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Nền tảng 5 năm quyết định cả tương lai — Ba/Mẹ đã chọn đúng trường cho con?
+    </h1>
+    <p class="hero-subtitle">
+      Chương trình Tiểu Học song ngữ Anh-Việt chuẩn quốc tế — Giúp con tự tin từ lớp 1
+    </p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section">
+      <h2>Tại sao Lớp 1-5 là giai đoạn "CẢM HỨNG" không thể bỏ lỡ?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Giai đoạn vàng cho song ngữ</h3>
+          <p>Con tuổi này học ngôn ngữ như hít thở — không cần "dạy" mà chỉ cần "cho tiếp xúc". Giáo viên nước ngoài hàng ngày + bạn học Tiếng Anh = Con nói Tiếng Anh tự nhiên đến lạ. Nếu bỏ lỡ giai đoạn này, lớp 7-12 con sẽ mất gấp 3 lần công sức để "bắt kịp".</p>
+        </div>
+        <div class="content-card">
+          <h3>Phương pháp học "Làm mà học" — không chỉ làm bài tập</h3>
+          <p>Robot tự chế, Khoa học thực nghiệm, Dự án Khám phá... Não trẻ được kích thích sáng tạo hàng ngày. Kết quả: Con không sợ môn học khó, mà muốn khám phá thêm. Ba/Mẹ sẽ bất ngừ khi con tự nguyện nói: "Con muốn làm dự án!""</p>
+        </div>
+        <div class="content-card">
+          <h3>Lớp nhỏ 25 em = Mỗi em được biết tên</h3>
+          <p>Cô giáo không chỉ dạy, mà cô "nhìn thấy" từng con. Nếu em lúng túng, cô sẽ chỉ ngay hôm đó — không để con ngồi "xương sống lạnh" cả năm. Mỗi con có lộ trình học riêng, không bị "xếp hạng" hay so sánh với bạn.</p>
+        </div>
+        <div class="content-card">
+          <h3>20+ CLB ngoại khóa = Con tìm được "Thứ mình thích"</h3>
+          <p>Có em thích Robot? Có em thích Âm nhạc? Có em muốn làm Lãnh đạo dự án? Tất cả đều có. Khi con tìm được "Thứ mình yêu", con sẽ chủ động, sáng tạo, tự tin không nhân tạo.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Lộ trình suôn sẻ lên THPT top</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 2rem;">
+        <strong>Không phải "lo lắng" ở mỗi cấp</strong> — Phụ huynh Việt Anh từ Tiểu Học đến THPT đều ở cùng một trường. Con không mất tập quán, giáo viên đã hiểu con như "bàn tay". THPT top (90%+ vào ĐH nguyện vọng 1) bắt đầu từ những quyết định đúng lớp 1-5.
+      </p>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Chỉ còn 30 suất cho năm học 2026-2027 — Đặt chỗ ngay hôm nay</h2>
+    <p class="form-subheading">Hàng năm, gần 100 phụ huynh muốn nhập học nhưng trường chỉ nhận 30 em. Số suất giới hạn để giữ chất lượng và lớp nhỏ. Ba/Mẹ quan tâm nên đăng ký tham quan & tư vấn sớm.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="tuyen-sinh-form"
+      funnelCode="tuyen-sinh-tieu-hoc"
+      schoolLevel="tieu-hoc"
+      submitText="Đăng ký tham quan ngay"
+      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để sắp xếp lịch tham quan phù hợp nhất."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Những câu hỏi Ba/Mẹ hay hỏi" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
+</style>---
+import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../components/USPGrid.astro';
+import TrustMetrics from '../../../components/TrustMetrics.astro';
+import FAQSection from '../../../components/FAQSection.astro';
+
 const pageTitle = 'Tuyá»n Sinh Tiá»u Há»c - TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh';
 const pageDescription = 'ChÆ°Æ¡ng trÃ¬nh Tiá»u Há»c song ngá»¯ chuáº©n quá»c táº¿ táº¡i TrÆ°á»ng Viá»t Anh. Ná»n táº£ng vá»¯ng cháº¯c cho tÆ°Æ¡ng lai con em. ÄÄng kÃ½ tham quan ngay.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc';

@@ -5,6 +5,208 @@ import USPGrid from '../../../components/USPGrid.astro';
 import TrustMetrics from '../../../components/TrustMetrics.astro';
 import FAQSection from '../../../components/FAQSection.astro';
 
+const pageTitle = 'Mầm Non Song Ngữ Việt Anh - Nền Tảng Vàng Cho Tương Lai';
+const pageDescription = 'Khám phá cách Montessori + STEAM + Song ngữ từ 18 tháng xây dựng nền tảng đúng từ bây giờ. 3 campus, 15+ năm kinh nghiệm, 98% phụ huynh hài lòng.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non';
+
+const uspItems = [
+  { icon: '🧠', text: 'Montessori + STEAM từ 18 tháng - Khoa học chứng minh cho phát triển tối ưu' },
+  { icon: '🌍', text: 'Song ngữ Anh-Việt mỗi ngày - Không bao giờ là quá sớm để bắt đầu' },
+  { icon: '👨‍👩‍👧', text: 'Max 20-25 bé/lớp - Cô giáo đủ thời gian chăm sóc từng con như em mình' },
+  { icon: '🥗', text: 'Bữa ăn do chuyên gia dinh dưỡng thiết kế - 3 chính + 2 phụ hàng ngày' },
+  { icon: '🎨', text: 'Mỹ thuật, âm nhạc, thể chất tích hợp - Phát triển sáng tạo & tự tin' },
+  { icon: '🔒', text: 'Camera 24/7 + Cơ sở quốc tế - Ba/Mẹ yên tâm từng giây bé ở trường' }
+];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm - Đã đồng hành với 3,000+ gia đình' },
+  { number: '300+', label: 'Trẻ Mầm Non hiện tại - Cộng đồng cha mẹ tin tưởng' },
+  { number: '98%', label: 'Phụ huynh hài lòng - Tình yêu từ các gia đình' },
+  { number: '3', label: 'Campus tại TPHCM - Chọn gần nhất với nhà mình' }
+];
+
+const faqItems = [
+  {
+    question: 'Con tôi mới 18 tháng - có sớm quá không?',
+    answer: 'Không, 18 tháng là độ tuổi lý tưởng! Thực tế, ngành neuropathology chứng minh 85% phát triển não bộ xảy ra từ 0-3 tuổi. Những năm đầu này quyết định sự tự tin, khám phá thế giới, và nền tảng ngôn ngữ của con.'
+  },
+  {
+    question: 'Học song ngữ có làm con bị nhầm lẫn tiếng Anh - Việt?',
+    answer: 'Không. Các nghiên cứu cho thấy trẻ em có khả năng phân biệt âm thanh từ 2 ngôn ngữ từ khi mới vài tháng tuổi. Tại Việt Anh, cô giáo nước ngoài dạy Anh mỗi ngày theo phương pháp tự nhiên (không dịch).'
+  },
+  {
+    question: 'Tại sao phải chọn Việt Anh mà không chọn trường khác gần nhà?',
+    answer: 'Rất công bằng! Bạn nên so sánh: (1) Phương pháp - Montessori + STEAM, không học vẹt; (2) Tỷ lệ cô giáo - 20-25 bé/lớp; (3) Tiếng Anh mỗi ngày với giáo viên bản ngữ; (4) Dinh dưỡng chuyên gia; (5) Camera 24/7. Hãy tham quan 2-3 trường rồi quyết định.'
+  },
+  {
+    question: 'Học phí có rất đắt không? Có gói ưu đãi không?',
+    answer: 'Học phí phù hợp với chất lượng dịch vụ. Hiện tại có: (1) Giảm 20% nếu đăng ký gói năm đầu; (2) Miễn phí đo mắt + khám sức khỏe định kỳ; (3) Tư vấn 1-1 về phát triển con trước khi đăng ký. Để lại email bên dưới để nhận báo giá.'
+  },
+  {
+    question: 'Con tôi xấu hộ, sợ không hòa hợp với các bé khác. Làm sao?',
+    answer: 'Tâm lý xấu hộ là bình thường ở tuổi này. Montessori tại Việt Anh được thiết kế để bé tự tin: (1) Lớp nhỏ giúp con quen dần; (2) Cô giáo chú ý đặc biệt; (3) Không áp lực, bé học qua chơi; (4) Quy trình "chia tách" từ từ. Sau 2-3 tuần, hầu hết trẻ đều yêu thích trường.'
+  },
+  {
+    question: 'Tôi không có thời gian tham quan - có thể làm sao?',
+    answer: 'Chúng tôi hiểu bạn bận rộn! Bạn có thể: (1) Để lại email - chúng tôi gửi video tour 15 phút; (2) Tham quan sau 17h hoặc cuối tuần; (3) Tham quan campus gần nhất nhà bạn.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="mầm non song ngữ, montessori mầm non, trường mầm non HCMC, tuyển sinh mầm non, trường Việt Anh"
+  schoolLevel="mam-non"
+  funnelCode="tuyen-sinh-mam-non"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      85% Phát Triển Não Con Xảy Ra Trước 3 Tuổi<br/><span class="hero-highlight">Con Bạn Sẽ Bỏ Lỡ Những Năm Vàng Này Không?</span>
+    </h1>
+    <p class="hero-subtitle">
+      Tại Việt Anh: Montessori + STEAM + Song ngữ từ 18 tháng = Nền tảng hoàn hảo cho tương lai con
+    </p>
+    <p class="hero-subtext">
+      3,000+ gia đình đã tin tưởng. 15+ năm kinh nghiệm. 3 campus tại TPHCM. <strong>Chỉ còn 8 chỗ trống mùa này.</strong>
+    </p>
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div class="social-proof-section">
+    <h2 class="social-proof-title">Tại Sao 3,000+ Phụ Huynh Chọn Việt Anh?</h2>
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="testimonial-text">"Con tôi không muốn ở nhà, chỉ muốn đi học. Thay đổi lớn nhất là con tự tin và thích thú hơn. Cô Linh giỏi lắm!"</p>
+        <p class="testimonial-author">— Chị Lan, Ba/Mẹ của Gia (4 tuổi), Campus Thảo Điền</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="testimonial-text">"Trước đây con sợ nước, nay tự tin trong bồn tắm. Được nuôi dạy bằng tình yêu, không cách dạy khắn khe."</p>
+        <p class="testimonial-author">— Anh Minh, Ba/Mẹ của Hùng (2.5 tuổi), Campus Tây Thạnh</p>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">⭐⭐⭐⭐⭐</div>
+        <p class="testimonial-text">"Con nói tiếng Anh rất tự nhiên, không bao giờ bị áp lực. Cô giáo nước ngoài luôn mỉm cười, bé yêu đến trường."</p>
+        <p class="testimonial-author">— Mẹ Hà, Ba/Mẹ của Bảo (3 tuổi), Campus An Phú</p>
+      </div>
+    </div>
+    <p class="social-proof-cta">Hơn 98% phụ huynh hài lòng. Tham gia cộng đồng ngay hôm nay.</p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section">
+      <h2>Con Bạn Nhận Được Gì Tại Mầm Non Việt Anh?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <div class="card-icon">🧠</div>
+          <h3>Montessori + STEAM: Nền tảng khoa học</h3>
+          <p>Không phải học vẹt. Con của bạn sẽ khám phá thế giới thông qua trải nghiệm thực tế - xếp chữ, nhân chia bằng tay, thí nghiệm khoa học. Phương pháp Montessori giúp bé phát triển tự lập, tập trung, và yêu thích học tập.</p>
+        </div>
+        <div class="content-card">
+          <div class="card-icon">🌍</div>
+          <h3>Song ngữ từ 18 tháng: Đầu tư sớm nhất</h3>
+          <p>Cô giáo bản ngữ dạy tiếng Anh mỗi ngày trong bối cảnh thực tế - chơi, hát, ăn cơm. Con sẽ phát âm như người bản xứ, và không bao giờ sợ nói tiếng Anh.</p>
+        </div>
+        <div class="content-card">
+          <div class="card-icon">👨‍👩‍👧</div>
+          <h3>Lớp nhỏ = Sự chú ý đặc biệt</h3>
+          <p>Tối đa 20-25 bé/lớp. Cô giáo không chỉ dạy - cô quan sát từng bé, hiểu tính cách, lợi ích, và nỗi sợ hãi. Kết quả: con bạn được chăm sóc như con em mình.</p>
+        </div>
+        <div class="content-card">
+          <div class="card-icon">🥗</div>
+          <h3>Dinh dưỡng: Chuyên gia thiết kế</h3>
+          <p>3 bữa chính + 2 bữa phụ mỗi ngày, do chuyên gia dinh dưỡng trẻ em thiết kế. Thực đơn đa dạng, đảm bảo đủ protein, canxi, sắt, DHA. An toàn vệ sinh thực phẩm cấp 1.</p>
+        </div>
+        <div class="content-card">
+          <div class="card-icon">🎨</div>
+          <h3>Sáng tạo không bị giới hạn</h3>
+          <p>Mỹ thuật, âm nhạc, thể chất được tích hợp tự nhiên trong chương trình. Con tự do sáng tạo, biểu hiện cảm xúc, phát triển tự tin.</p>
+        </div>
+        <div class="content-card">
+          <div class="card-icon">🔒</div>
+          <h3>An toàn tuyệt đối = Yên tâm tuyệt đối</h3>
+          <p>Camera giám sát 24/7 tất cả các phòng. Cơ sở vật chất đạt chuẩn quốc tế, được kiểm định định kỳ. Cô giáo được đào tạo sơ cứu.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div slot="form">
+    <div class="form-wrapper">
+      <div class="form-content">
+        <h2 class="form-heading">Chỉ Còn 8 Chỗ Trống Mùa Này</h2>
+        <p class="form-urgency">
+          <strong>Hạn chót tuyển sinh Q2:</strong> 15 tháng 4. Hơn 50 gia đình đang chờ danh sách chờ.
+        </p>
+        <p class="form-subheading">
+          Bước 1: Để lại email - Bạn sẽ nhận video tour 15 phút & báo giá chi tiết<br/>
+          Bước 2: Sắp xếp tham quan (sau 17h hoặc T7, CN cũng được)<br/>
+          Bước 3: Đặt chỗ & nhận ưu đãi mua năm (giảm tối đa 20%)
+        </p>
+      </div>
+      <LeadFormTwoStepEmailFirst
+        formId="tuyen-sinh-form"
+        funnelCode="tuyen-sinh-mam-non"
+        schoolLevel="mam-non"
+        submitText="Nhận Video Tour + Báo Giá Ngay"
+        successMessage="✓ Tuyệt vời! Chúng tôi vừa gửi video tour & báo giá vào email của bạn. Mở kiểm tra - bộ phận tuyển sinh sẽ gọi trong 2 giờ để sắp xếp tham quan. Hotline: 0916 961 409"
+      />
+    </div>
+  </div>
+
+  <div class="bonus-section">
+    <h2 class="bonus-title">🎁 Ưu Đãi Giới Hạn Cho 20 Gia Đình Đầu Tiên</h2>
+    <div class="bonus-grid">
+      <div class="bonus-item">
+        <div class="bonus-icon">📹</div>
+        <p><strong>Video tour toàn bộ 3 campus</strong> (tổng 45 phút, HD quality)</p>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-icon">📋</div>
+        <p><strong>Báo giá chi tiết + bảng so sánh</strong> với các trường khác (tư vấn miễn phí)</p>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-icon">💝</div>
+        <p><strong>Giảm 20%</strong> học phí năm đầu (áp dụng nếu đăng ký trước 15/4)</p>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-icon">🏥</div>
+        <p><strong>Miễn phí khám sức khỏe định kỳ</strong> & đo mắt toàn diện</p>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-icon">👨‍🏫</div>
+        <p><strong>Tư vấn 1-1 về phát triển con</strong> với giáo viên chủ nhiệm (mỗi tháng)</p>
+      </div>
+      <div class="bonus-item">
+        <div class="bonus-icon">🎓</div>
+        <p><strong>Hướng dẫn trọn vẹn</strong> từ lúc đăng ký đến ngày bé nhập học</p>
+      </div>
+    </div>
+    <p class="bonus-deadline">
+      ⏰ Ưu đãi này chỉ có hiệu lực đến <strong>15 tháng 4, 2026</strong>. Sau đó sẽ áp dụng mức giảm thường quy (10%).
+    </p>
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Những Lo Lắng Của Ba/Mẹ - Chúng Tôi Giải Đáp" />
+  </div>
+</SqueezePageLayout>---
+import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../components/USPGrid.astro';
+import TrustMetrics from '../../../components/TrustMetrics.astro';
+import FAQSection from '../../../components/FAQSection.astro';
+
 const pageTitle = 'Tuyá»n Sinh Máº§m Non - TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh';
 const pageDescription = 'ChÆ°Æ¡ng trÃ¬nh Máº§m Non quá»c táº¿ táº¡i TrÆ°á»ng Viá»t Anh - PhÃ¡t triá»n toÃ n diá»n cho bÃ© tá»« 18 thÃ¡ng Äáº¿n 6 tuá»i. ÄÄng kÃ½ tham quan trÆ°á»ng ngay.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non';
@@ -221,5 +423,61 @@ const faqItems = [
     .content-card {
       padding: 1.5rem;
     }
+  }
+</style>
+
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(2rem, 6vw, 3.25rem); font-weight: 900; line-height: 1.15; margin-bottom: 1.5rem; color: #1F4E79; }
+  .hero-highlight { color: #E8792B; display: block; font-size: clamp(1.75rem, 5vw, 2.75rem); }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.3rem); font-weight: 600; color: #333; margin-bottom: 1rem; }
+  .hero-subtext { font-size: 1rem; color: #666; line-height: 1.6; margin-bottom: 0; }
+  .social-proof-section { background: linear-gradient(135deg, #f8f9ff 0%, #fff5f0 100%); padding: 3rem 2rem; border-radius: 16px; margin: 3rem 0; }
+  .social-proof-title { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #1F4E79; text-align: center; margin-bottom: 2.5rem; }
+  .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+  .testimonial-card { background: white; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #E8792B; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); transition: all 0.3s ease; }
+  .testimonial-card:hover { transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12); }
+  .stars { font-size: 1.1rem; margin-bottom: 1rem; }
+  .testimonial-text { font-size: 0.95rem; line-height: 1.6; color: #333; margin-bottom: 1rem; font-style: italic; }
+  .testimonial-author { font-size: 0.85rem; color: #666; font-weight: 500; }
+  .social-proof-cta { text-align: center; font-size: 1rem; color: #1F4E79; font-weight: 600; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 700; margin-bottom: 2.5rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; max-width: 1300px; margin: 0 auto; }
+  .content-card { padding: 2.5rem 2rem; background: white; border: 2px solid #e8e8e8; border-radius: 16px; transition: all 0.3s ease; position: relative; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 12px 32px rgba(232, 121, 43, 0.15); transform: translateY(-6px); }
+  .card-icon { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #1F4E79; margin-bottom: 1rem; line-height: 1.4; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .form-wrapper { background: linear-gradient(135deg, #1F4E79 0%, #2d6ba8 100%); padding: 3rem 2rem; border-radius: 16px; color: white; }
+  .form-content { max-width: 800px; margin: 0 auto 2rem; text-align: center; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 4vw, 2.25rem); font-weight: 800; color: white; margin-bottom: 1rem; }
+  .form-urgency { font-size: 1.1rem; background: rgba(255, 255, 255, 0.15); padding: 1rem; border-left: 4px solid #E8792B; border-radius: 8px; margin-bottom: 1.5rem; color: #fff; }
+  .form-subheading { font-size: 0.95rem; color: #e0e0e0; line-height: 1.8; margin-bottom: 2rem; }
+  .bonus-section { background: #fff9f5; padding: 3rem 2rem; border-radius: 16px; border: 2px solid #E8792B; margin: 3rem 0; }
+  .bonus-title { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #1F4E79; text-align: center; margin-bottom: 2rem; }
+  .bonus-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+  .bonus-item { background: white; padding: 1.5rem; border-radius: 12px; border: 1px solid #ffe0cc; text-align: center; transition: all 0.3s ease; }
+  .bonus-item:hover { border-color: #E8792B; box-shadow: 0 6px 16px rgba(232, 121, 43, 0.12); transform: translateY(-3px); }
+  .bonus-icon { font-size: 2rem; margin-bottom: 0.75rem; display: block; }
+  .bonus-item p { font-size: 0.9rem; line-height: 1.6; color: #333; margin: 0; }
+  .bonus-deadline { text-align: center; font-size: 0.95rem; color: #d9534f; font-weight: 600; padding: 1.5rem; background: rgba(217, 83, 79, 0.08); border-radius: 8px; margin: 0; }
+  @media (max-width: 768px) {
+    .hero-h1 { margin-bottom: 1rem; }
+    .hero-highlight { display: inline; margin-left: 0.25rem; }
+    .content-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .content-card { padding: 1.75rem 1.5rem; }
+    .testimonial-grid { grid-template-columns: 1fr; }
+    .bonus-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .form-wrapper { padding: 2rem 1.5rem; }
+    .form-heading { margin-bottom: 0.75rem; }
+    .social-proof-section { padding: 2rem 1.5rem; }
+    .bonus-section { padding: 2rem 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    .hero-h1 { font-size: 1.5rem; }
+    .hero-subtitle { font-size: 0.9rem; }
+    .hero-subtext { font-size: 0.85rem; }
+    .content-card p, .testimonial-text { font-size: 0.9rem; }
+    .bonus-item p { font-size: 0.85rem; }
   }
 </style>

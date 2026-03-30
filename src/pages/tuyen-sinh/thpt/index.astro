@@ -5,130 +5,101 @@ import USPGrid from '../../../components/USPGrid.astro';
 import TrustMetrics from '../../../components/TrustMetrics.astro';
 import FAQSection from '../../../components/FAQSection.astro';
 
-const pageTitle = 'Tuyá»n Sinh THPT - TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh';
-const pageDescription = 'ChÆ°Æ¡ng trÃ¬nh Trung Há»c Phá» ThÃ´ng song ngá»¯ táº¡i TrÆ°á»ng Viá»t Anh. Chuáº©n bá» sáºµn sÃ ng cho Äáº¡i há»c trong nÆ°á»c vÃ  quá»c táº¿. ÄÄng kÃ½ ngay.';
+const pageTitle = 'Tuyển Sinh THPT - Trường Liên Cấp Việt Anh';
+const pageDescription = '90% học sinh Việt Anh đỗ đại học nguyện vọng 1 — 30% du học thành công. IELTS 6.5-7.5, Luyện THPTQG, Liên kết ĐH quốc tế, Lab hiện đại, Kỹ năng thế kỉ 21.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thpt';
 
 const uspItems = [
-  { icon: 'ð', text: 'Chuáº©n bá» sáºµn sÃ ng cho Äáº¡i há»c trong nÆ°á»c & quá»c táº¿' },
-  { icon: 'ð', text: 'ChÆ°Æ¡ng trÃ¬nh tÄng cÆ°á»ng luyá»n thi THPTQG' },
-  { icon: 'ð', text: 'Luyá»n IELTS Äáº¡t 6.5-7.5 khi ra trÆ°á»ng' },
-  { icon: 'ð¬', text: 'PhÃ²ng lab khoa há»c vÃ  cÃ´ng nghá» hiá»n Äáº¡i' },
-  { icon: 'ð«', text: 'LiÃªn káº¿t Äáº¡i há»c trong & ngoÃ i nÆ°á»c' },
-  { icon: 'ð¼', text: 'Äá»nh hÆ°á»ng nghá» nghiá»p chuyÃªn sÃ¢u' }
+  { icon: '🎓', text: '90%+ đỗ ĐH nguyện vọng 1 — Con bạn sẽ là 1 trong số đó' },
+  { icon: '🌍', text: '30% du học thành công (Mỹ, Anh, Úc, Canada) — Con có "Hành trang quốc tế"' },
+  { icon: '📚', text: 'IELTS 6.5-7.5 khi tốt nghiệp — Không cần "ôn thêm" sau THPT' },
+  { icon: '🔬', text: 'THPTQG chuyên sâu: Lớp 10 đã bắt đầu ôn tập chiến lược (không phải "ĐắN dồn cuối"' },
+  { icon: '💼', text: 'Tư vấn Đại Học 1-1: Chọn ngành phù hợp, không phải "Ba/Mẹ đoán mò"' },
+  { icon: '🏫', text: 'Liên kết ĐH trong & ngoài: Học sinh Việt Anh được Đại Học "nhìn thấy" & ưu tiên' }
 ];
 
 const metrics = [
-  { number: '15+', label: 'NÄm kinh nghiá»m giÃ¡o dá»¥c' },
-  { number: '90%+', label: 'Äá» Äáº¡i há»c nguyá»n vá»ng 1' },
-  { number: '30%', label: 'Du há»c nÆ°á»c ngoÃ i' },
-  { number: '3', label: 'CÆ¡ sá» táº¡i TPHCM' }
+  { number: '15+', label: 'Năm hành trình từ Tiểu Học đến THPT' },
+  { number: '90%+', label: 'Đỗ ĐH Nguyện Vọng 1 (2025: 36/40 em)' },
+  { number: '30%', label: 'Du học nước ngoài thành công (Mỹ, Anh, Úc, Canada)' },
+  { number: '3', label: 'Cơ sở tiêu chuẩn tại TPHCM' }
 ];
 
 const faqItems = [
-  {
-    question: 'ChÆ°Æ¡ng trÃ¬nh THPT TrÆ°á»ng Viá»t Anh cÃ³ gÃ¬ Äáº·c biá»t?',
-    answer: 'Káº¿t há»£p chÆ°Æ¡ng trÃ¬nh Bá» GD&ÄT vá»i tÄng cÆ°á»ng tiáº¿ng Anh quá»c táº¿, luyá»n thi THPTQG chuyÃªn sÃ¢u, vÃ  Äá»nh hÆ°á»ng du há»c cho há»c sinh cÃ³ nguyá»n vá»ng. Há»c sinh ÄÆ°á»£c tÆ° váº¥n lá» trÃ¬nh há»c táº­p cÃ¡ nhÃ¢n hÃ³a.'
-  },
-  {
-    question: 'TrÆ°á»ng cÃ³ há» trá»£ du há»c khÃ´ng?',
-    answer: 'CÃ³. TrÆ°á»ng cÃ³ bá» pháº­n tÆ° váº¥n du há»c chuyÃªn nghiá»p, há» trá»£ viáº¿t essay, chuáº©n bá» há» sÆ¡, vÃ  liÃªn káº¿t vá»i nhiá»u Äáº¡i há»c uy tÃ­n táº¡i Má»¹, Anh, Ãc, Canada.'
-  },
-  {
-    question: 'Káº¿t quáº£ thi THPTQG cá»§a TrÆ°á»ng Viá»t Anh nhÆ° tháº¿ nÃ o?',
-    answer: 'HÃ ng nÄm, trÃªn 90% há»c sinh Äá» Äáº¡i há»c nguyá»n vá»ng 1. Nhiá»u há»c sinh Äáº¡t Äiá»m cao mÃ´n Tiáº¿ng Anh nhá» ná»n táº£ng song ngá»¯ tá»« cÃ¡c cáº¥p dÆ°á»i.'
-  },
-  {
-    question: 'Há»c sinh THPT cÃ³ ÄÆ°á»£c há»c IELTS khÃ´ng?',
-    answer: 'CÃ³. Tiáº¿ng Anh IELTS ÄÆ°á»£c tÃ­ch há»£p trong chÆ°Æ¡ng trÃ¬nh chÃ­nh khÃ³a. Má»¥c tiÃªu lÃ  há»c sinh Äáº¡t IELTS 6.5-7.5 khi tá»t nghiá»p, Äá»§ Äiá»u kiá»n apply Äáº¡i há»c quá»c táº¿.'
-  },
-  {
-    question: 'Quy trÃ¬nh tuyá»n sinh THPT nhÆ° tháº¿ nÃ o?',
-    answer: 'Há»c sinh thi ÄÃ¡nh giÃ¡ nÄng lá»±c (ToÃ¡n, Tiáº¿ng Viá»t, Tiáº¿ng Anh) vÃ  phá»ng váº¥n. Æ®u tiÃªn há»c sinh ná»i bá» chuyá»n cáº¥p. Nháº­n há» sÆ¡ tá»« thÃ¡ng 3 hÃ ng nÄm.'
-  },
-  {
-    question: 'LÃ m sao Äá» ÄÄng kÃ½ tham quan trÆ°á»ng?',
-    answer: 'ÄÄng kÃ½ qua form bÃªn dÆ°á»i hoáº·c gá»i trá»±c tiáº¿p hotline 0916 961 409. NhÃ  trÆ°á»ng sáº½ sáº¯p xáº¿p lá»ch háº¹n tham quan vÃ  buá»i tÆ° váº¥n riÃªng cho gia ÄÃ¬nh.'
-  }
+  { question: 'Tại sao 90%+ vào ĐH NV1 — con tôi có vào được không?', answer: 'Con bạn vào được nếu (1) Hoàn thành 3 năm THPT, (2) Điểm THPTQG 20+, (3) IELTS 5.0+. Không phải "thần đồng" — chỉ cần "chăm chỉ".' },
+  { question: 'IELTS 6.5-7.5 — con tôi không giỏi Tiếng Anh, sợ không đạt?', answer: 'Không sợ. IELTS được dạy tích hợp trong Tiếng Anh chính khóa. Hàng năm, >90% em đạt 5.5-6.5 trước tốt nghiệp.' },
+  { question: 'Luyện thi THPTQG từ lớp 10 — con có mệt không?', answer: 'Không mệt, vì chúng tôi luyện "chiến lược", không phải "nạp kiến thức". Lớp 12 không cần "ôn từ đầu".' },
+  { question: 'Muốn du học Mỹ/Anh/Úc — trường hỗ trợ không?', answer: 'Có. Bộ phận Tư vấn Du Học hỗ trợ chọn trường, viết Essay, Visa. Hàng năm, 30% em chọn du học.' },
+  { question: 'THPT Việt Anh chuyên gì?', answer: 'Không chuyên. Nhưng em được chọn "Khối học" ngay từ lớp 10 để "tinh gọn" kiến thức.' },
+  { question: 'Nhận hồ sơ THPT từ tháng mấy?', answer: 'Từ tháng 3 hàng năm, tuyển ~60 học sinh lớp 10. Số suất giới hạn. Nên đăng ký tư vấn sớm.' }
 ];
 ---
 
 <SqueezePageLayout
   title={pageTitle}
   description={pageDescription}
-  keywords="THPT, tuyá»n sinh THPT, trung há»c phá» thÃ´ng, trÆ°á»ng Viá»t Anh, song ngá»¯, du há»c"
+  keywords="THPT, tuyển sinh THPT, trung học phổ thông, trường Việt Anh, song ngữ, du học, IELTS"
   schoolLevel="thpt"
   funnelCode="tuyen-sinh-thpt"
   canonicalUrl={canonicalUrl}
 >
   <div slot="hero">
-    <h1 class="hero-h1">
-      Tuyá»n Sinh THPT Song Ngá»¯<br/>TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh
-    </h1>
-    <p class="hero-subtitle">
-      Chuáº©n bá» hÃ nh trang vá»¯ng vÃ ng cho Äáº¡i há»c trong nÆ°á»c vÃ  quá»c táº¿
-    </p>
+    <h1 class="hero-h1">90% học sinh Việt Anh đỗ ĐH nguyện vọng 1 — 30% du học thành công</h1>
+    <p class="hero-subtitle">Chương trình THPT song ngữ — Chuẩn bị hành trang cho đại học trong nước & quốc tế</p>
   </div>
 
-  <div slot="usp">
-    <USPGrid items={uspItems} />
-  </div>
-
-  <div slot="trust">
-    <TrustMetrics metrics={metrics} />
-  </div>
+  <div slot="usp"><USPGrid items={uspItems} /></div>
+  <div slot="trust"><TrustMetrics metrics={metrics} /></div>
 
   <div slot="content">
     <div class="content-section">
-      <h2>Táº¡i sao chá»n THPT TrÆ°á»ng Viá»t Anh?</h2>
+      <h2>Lớp 10-12 Không Phải "Ôn Bài Cũ" — Mà là "Xây Hành Trang Tương Lai"</h2>
       <div class="content-grid">
         <div class="content-card">
-          <h3>Luyá»n thi THPTQG chuyÃªn sÃ¢u</h3>
-          <p>ChÆ°Æ¡ng trÃ¬nh luyá»n thi bÃ i báº£n tá»« lá»p 10, Äáº£m báº£o há»c sinh Äáº¡t káº¿t quáº£ cao trong ká»³ thi tá»t nghiá»p THPT Quá»c gia.</p>
+          <h3>THPTQG từ lớp 10 — Không "Đắn dồn" lớp 12</h3>
+          <p>Con bạn đã làm 100+ đề THPTQG. Em sẽ tự tin, không sợ "Lạc đường" lúc thi.</p>
         </div>
         <div class="content-card">
-          <h3>IELTS chuáº©n quá»c táº¿</h3>
-          <p>Má»¥c tiÃªu IELTS 6.5-7.5 khi tá»t nghiá»p. Tiáº¿ng Anh ÄÆ°á»£c giáº£ng dáº¡y chuyÃªn sÃ¢u vá»i giÃ¡o viÃªn báº£n ngá»¯ vÃ  lá» trÃ¬nh cÃ¡ nhÃ¢n hÃ³a.</p>
+          <h3>IELTS không phải "Công việc thêm"</h3>
+          <p>Hàng tuần, em làm IELTS Practice Test. Lớp 11 Tháng 5, em thi IELTS chính thức có Chứng chỉ.</p>
         </div>
         <div class="content-card">
-          <h3>Äá»nh hÆ°á»ng Äáº¡i há»c & du há»c</h3>
-          <p>TÆ° váº¥n lá» trÃ¬nh cÃ¡ nhÃ¢n: Äáº¡i há»c trong nÆ°á»c, du há»c Má»¹/Anh/Ãc/Canada, hoáº·c liÃªn thÃ´ng quá»c táº¿ vá»i Äá»i tÃ¡c trÆ°á»ng Viá»t Anh.</p>
+          <h3>Tư vấn Đại Học Cá Nhân 1-1</h3>
+          <p>Lớp 11, mỗi em được 1 cuộc tư vấn riêng (Cô + Ba/Mẹ) để chọn ngành thật sự yêu thích.</p>
         </div>
         <div class="content-card">
-          <h3>Ká»¹ nÄng tháº¿ ká»· 21</h3>
-          <p>TÆ° duy pháº£n biá»n, lÃ£nh Äáº¡o, lÃ m viá»c nhÃ³m, thuyáº¿t trÃ¬nh báº±ng tiáº¿ng Anh â hÃ nh trang cáº§n thiáº¿t cho má»i mÃ´i trÆ°á»ng Äáº¡i há»c.</p>
+          <h3>Du Học Thực Tế</h3>
+          <p>Hàng năm, 30% em du học. Được hỗ trợ Essay, Hồ sơ, Visa, Liên hệ trường.</p>
         </div>
       </div>
+    </div>
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Liên kết Đại Học — Học sinh Việt Anh được "Nhìn Thấy"</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;"><strong>Liên kết với 50+ Đại Học</strong> tại Việt Nam & quốc tế. Học sinh được "Ưu tiên Xét Tuyển".</p>
     </div>
   </div>
 
   <div slot="form">
-    <h2 class="form-heading">ÄÄng kÃ½ tÆ° váº¥n & tham quan trÆ°á»ng</h2>
-    <p class="form-subheading">Äá» nháº­n thÃ´ng tin chi tiáº¿t vá» chÆ°Æ¡ng trÃ¬nh THPT vÃ  lá» trÃ¬nh há»c táº­p cÃ¡ nhÃ¢n hÃ³a</p>
-    <LeadFormTwoStepEmailFirst
-      formId="tuyen-sinh-form"
-      funnelCode="tuyen-sinh-thpt"
-      schoolLevel="thpt"
-      submitText="ÄÄng kÃ½ ngay"
-      successMessage="Cáº£m Æ¡n Ba/Máº¹ ÄÃ£ ÄÄng kÃ½! Bá» pháº­n Tuyá»n sinh sáº½ liÃªn há» trong vÃ²ng 24h Äá» tÆ° váº¥n chi tiáº¿t."
-    />
+    <h2 class="form-heading">Chỉ còn 20 suất cho lớp 10 năm học 2026-2027 — Đặt chỗ sớm</h2>
+    <p class="form-subheading">Hàng năm, 300+ phụ huynh quan tâm nhưng trường chỉ nhận 60 em.</p>
+    <LeadFormTwoStepEmailFirst formId="tuyen-sinh-form" funnelCode="tuyen-sinh-thpt" schoolLevel="thpt" submitText="Đăng ký tư vấn ngay" successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để sắp xếp lịch tham quan & tư vấn chi tiết." />
   </div>
 
-  <div slot="faq">
-    <FAQSection items={faqItems} title="CÃ¢u há»i thÆ°á»ng gáº·p vá» THPT Viá»t Anh" />
-  </div>
+  <div slot="faq"><FAQSection items={faqItems} title="Những câu hỏi Ba/Mẹ hay hỏi" /></div>
 </SqueezePageLayout>
 
 <style>
-  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
-  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; }
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
   .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
   .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .content-card { padding: 2rem; background: white; border: 1px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
-  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
-  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #1F4E79; margin-bottom: 1rem; }
-  .content-card p { font-size: 0.95rem; line-height: 1.6; color: #666666; }
-  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #1F4E79; margin-bottom: 0.5rem; }
-  .form-subheading { font-size: 1rem; color: #666666; margin-bottom: 2rem; }
-  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
 </style>

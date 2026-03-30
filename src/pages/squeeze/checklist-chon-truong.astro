@@ -1,0 +1,84 @@
+---
+import SqueezePageLayout from '../../layouts/SqueezePageLayout.astro';
+import USPGrid from '../../components/USPGrid.astro';
+import TrustMetrics from '../../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../../components/FAQSection.astro';
+
+const pageTitle = 'Checklist Chọn Trường 2026: 15 Tiêu Chí Ba/Mẹ Phải Biết | Trường Việt Anh';
+const pageDescription = 'Tải miễn phí checklist 15 tiêu chí chọn trường cho con. Được sử dụng bởi 3,000+ phụ huynh tại TPHCM.';
+const pageCanonical = 'https://truongvietanh.com/squeeze/checklist-chon-truong';
+
+const uspItems = [
+  { icon: '✅', text: '15 tiêu chí đánh giá trường — không bỏ sót điều quan trọng' },
+  { icon: '📊', text: 'Bảng so sánh trường — đặt các trường cạnh nhau để chọn' },
+  { icon: '💡', text: '7 câu hỏi phải hỏi khi tham quan trường' },
+  { icon: '📅', text: 'Timeline tuyển sinh 2026 — không bỏ lỡ deadline' }
+];
+
+const metrics = [
+  { number: '3,000+', label: 'Phụ huynh đã dùng' },
+  { number: '15', label: 'Tiêu chí đánh giá' },
+  { number: '4.9/5', label: 'Đánh giá hữu ích' }
+];
+
+const faqItems = [
+  { question: 'Checklist này phù hợp cho cấp nào?', answer: 'Phù hợp cho phụ huynh chọn trường từ mầm non đến THPT.' },
+  { question: 'Tài liệu gồm những gì?', answer: 'Bao gồm: Checklist 15 tiêu chí, bảng so sánh trường, 7 câu hỏi phải hỏi, và timeline tuyển sinh 2026.' },
+  { question: 'Có phải trả phí không?', answer: 'Hoàn toàn miễn phí, không yêu cầu cam kết.' },
+  { question: 'Tôi nhận tài liệu bằng cách nào?', answer: 'Sau khi đăng ký, tài liệu sẽ được gửi qua email trong vòng 24 giờ.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="tieu-hoc"
+  funnelCode="squeeze-checklist"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Chọn Trường Cho Con: 15 Tiêu Chí Ba/Mẹ Không Được Bỏ Qua</h1>
+    <p class="squeeze-hero__subheading">Tải ngay checklist miễn phí được 3,000+ phụ huynh TPHCM tin dùng</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Trong checklist có gì?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Được tin tưởng bởi" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 style="font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center;">Tại sao cần checklist?</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0;">
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79;">🔍 Không bỏ sót</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Nhiều phụ huynh chỉ nhìn học phí và cơ sở vật chất mà bỏ sót 10+ tiêu chí quan trọng khác.</p>
+        </div>
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79;">📊 So sánh dễ dàng</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Bảng so sánh cho phép đặt 3-5 trường cạnh nhau, chấm điểm từng tiêu chí.</p>
+        </div>
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79;">⏰ Kịp thời gian</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Timeline tuyển sinh 2026 giúp Ba/Mẹ không bỏ lỡ các mốc quan trọng.</p>
+        </div>
+      </div>
+      <div style="background-color: #f0f8ff; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: #1a1a1a;"><strong>📣 Lưu ý:</strong> Mùa tuyển sinh 2026 sẽ bắt đầu từ tháng 3. Phụ huynh nên chuẩn bị từ bây giờ để có lựa chọn tốt nhất cho con.</p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Tải checklist miễn phí</h2>
+    <p class="squeeze-form-section__description">Điền thông tin để nhận checklist và bộ tài liệu chọn trường qua email</p>
+    <LeadFormTwoStepEmailFirst formId="squeeze-form" funnelCode="squeeze-checklist" schoolLevel="tieu-hoc" submitText="Tải ngay miễn phí" successMessage="Cảm ơn! Checklist sẽ được gửi qua email trong vòng 24 giờ." />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  @media (max-width: 768px) {
+    section[slot='content'] > div > div { grid-template-columns: 1fr !important; }
+  }
+</style>

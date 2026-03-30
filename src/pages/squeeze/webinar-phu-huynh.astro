@@ -1,0 +1,84 @@
+---
+import SqueezePageLayout from '../../layouts/SqueezePageLayout.astro';
+import USPGrid from '../../components/USPGrid.astro';
+import TrustMetrics from '../../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../../components/FAQSection.astro';
+
+const pageTitle = 'Webinar: 3 Sai Lầm Khiến Con Mất Cơ Hội Vào Trường Tốt | Trường Việt Anh';
+const pageDescription = 'Tham gia webinar miễn phí dành cho phụ huynh. Chuyên gia giáo dục với 15+ năm kinh nghiệm chia sẻ cách chọn trường, chuẩn bị hồ sơ, và định hướng tương lai cho con.';
+const pageCanonical = 'https://truongvietanh.com/squeeze/webinar-phu-huynh';
+
+const uspItems = [
+  { icon: '🎤', text: 'Chuyên gia 15+ năm kinh nghiệm chia sẻ trực tiếp' },
+  { icon: '⚠️', text: '3 sai lầm phổ biến khiến con mất cơ hội vào trường tốt' },
+  { icon: '📝', text: 'Hỏi đáp trực tiếp — giải đáp mọi thắc mắc của Ba/Mẹ' },
+  { icon: '🎁', text: 'Tặng tài liệu độc quyền cho người tham dự' }
+];
+
+const metrics = [
+  { number: '1,500+', label: 'Phụ huynh đã tham dự' },
+  { number: '4.8/5', label: 'Đánh giá trung bình' },
+  { number: '45 phút', label: 'Nội dung súc tích' }
+];
+
+const faqItems = [
+  { question: 'Webinar diễn ra khi nào?', answer: 'Webinar được tổ chức định kỳ. Sau khi đăng ký, bạn sẽ nhận email với lịch cụ thể và link tham dự.' },
+  { question: 'Tôi không tham dự được trực tiếp thì sao?', answer: 'Bạn sẽ nhận được bản ghi lại để xem bất cứ lúc nào thuận tiện.' },
+  { question: 'Có miễn phí không?', answer: 'Hoàn toàn miễn phí, không có bất kỳ chi phí nào.' },
+  { question: 'Webinar phù hợp với phụ huynh có con độ tuổi nào?', answer: 'Phù hợp cho phụ huynh có con từ lớp 3–9, đang cân nhắc chọn trường hoặc định hướng học tập.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="thcs"
+  funnelCode="squeeze-webinar"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">3 Sai Lầm Khiến Con Mất Cơ Hội Vào Trường Tốt</h1>
+    <p class="squeeze-hero__subheading">Webinar miễn phí dành cho phụ huynh có con lớp 3–9 — Chuyên gia 15+ năm chia sẻ trực tiếp</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Bạn sẽ học được gì?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Được phụ huynh tin tưởng" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 style="font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center;">Nội dung webinar</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0;">
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #E8792B;">Phần 1: 3 sai lầm phổ biến</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Những sai lầm mà 90% phụ huynh mắc phải khi chọn trường và chuẩn bị cho con.</p>
+        </div>
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #E8792B;">Phần 2: Lộ trình chuẩn bị</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Kế hoạch từng bước giúp con sẵn sàng cho kỳ thi đầu vào.</p>
+        </div>
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #E8792B;">Phần 3: Hỏi đáp trực tiếp</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Giải đáp mọi thắc mắc của Ba/Mẹ về chọn trường, học phí, chương trình.</p>
+        </div>
+      </div>
+      <div style="background-color: #FFF8F0; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: #1a1a1a;"><strong>🎁 Bonus:</strong> Tất cả người tham dự sẽ nhận tài liệu độc quyền: "Checklist chọn trường 2026" và "7 câu hỏi phải hỏi khi tham quan trường".</p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Đăng ký tham dự miễn phí</h2>
+    <p class="squeeze-form-section__description">Điền thông tin để nhận link tham dự và tài liệu độc quyền</p>
+    <LeadFormTwoStepEmailFirst formId="squeeze-form" funnelCode="squeeze-webinar" schoolLevel="thcs" submitText="Đăng ký ngay" successMessage="Cảm ơn! Bạn sẽ nhận email với link tham dự và tài liệu trong vòng 24 giờ." />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  @media (max-width: 768px) {
+    section[slot='content'] > div > div { grid-template-columns: 1fr !important; }
+  }
+</style>

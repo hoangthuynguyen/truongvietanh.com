@@ -1,0 +1,83 @@
+---
+type FAQItem = {
+  question: string;
+  answer: string;
+};
+
+type Props = {
+  items: FAQItem[];
+  title?: string;
+};
+
+const { items, title = 'Các câu hỏi thường gặp' } = Astro.props;
+const faqId = Math.random().toString(36).substring(7);
+---
+
+<div class="faq-container">
+  <h2 class="faq-title">{title}</h2>
+  <div class="faq-list">
+    {items.map((item, index) => (
+      <div class="faq-item" data-faq-index={index}>
+        <button class="faq-trigger" aria-expanded="false" aria-controls={`faq-content-${faqId}-${index}`} data-faq-id={`${faqId}-${index}`}>
+          <span class="faq-question">{item.question}</span>
+          <span class="faq-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg></span>
+        </button>
+        <div class="faq-content" id={`faq-content-${faqId}-${index}`} hidden>
+          <div class="faq-answer">{item.answer}</div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style is:inline>
+  .faq-container { width: 100%; }
+  .faq-title { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; text-align: center; color: #1F4E79; }
+  .faq-list { max-width: 800px; margin: 0 auto; display: flex; flex-direction: column; gap: 1rem; }
+  .faq-item { border: 1px solid #e0e0e0; border-radius: 8px; background-color: white; overflow: hidden; transition: box-shadow 0.3s ease, border-color 0.3s ease; }
+  .faq-item.is-open { border-color: #E8792B; box-shadow: 0 4px 12px rgba(232, 121, 43, 0.1); }
+  .faq-trigger { width: 100%; padding: 1.25rem 1.5rem; background-color: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 1rem; text-align: left; transition: background-color 0.2s ease; font-family: "Open Sans", sans-serif; }
+  .faq-trigger:hover { background-color: #f9f9f9; }
+  .faq-trigger[aria-expanded="true"] { color: #E8792B; }
+  .faq-question { font-size: 1rem; font-weight: 600; color: #1a1a1a; flex: 1; }
+  .faq-trigger[aria-expanded="true"] .faq-question { color: #1F4E79; }
+  .faq-icon { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; width: 24px; height: 24px; color: #E8792B; transition: transform 0.3s ease; }
+  .faq-trigger[aria-expanded="true"] .faq-icon { transform: rotate(180deg); }
+  .faq-content { overflow: hidden; transition: max-height 0.3s ease, opacity 0.3s ease; max-height: 0; opacity: 0; }
+  .faq-content:not([hidden]) { max-height: 500px; opacity: 1; }
+  .faq-answer { padding: 0 1.5rem 1.25rem 1.5rem; font-size: 0.95rem; line-height: 1.6; color: #666666; }
+  @media (max-width: 768px) { .faq-title { margin-bottom: 1.5rem; } .faq-trigger { padding: 1rem 1.25rem; } .faq-answer { padding: 0 1.25rem 1rem 1.25rem; font-size: 0.9rem; } }
+</style>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', function() {
+    const faqTriggers = document.querySelectorAll('.faq-trigger');
+    faqTriggers.forEach(trigger => {
+      trigger.addEventListener('click', function(e) {
+        e.preventDefault();
+        const isExpanded = this.getAttribute('aria-expanded') === 'true';
+        const contentId = this.getAttribute('aria-controls');
+        const content = document.getElementById(contentId);
+        const faqItem = this.closest('.faq-item');
+        document.querySelectorAll('.faq-trigger[aria-expanded="true"]').forEach(otherTrigger => {
+          if (otherTrigger !== this) {
+            otherTrigger.setAttribute('aria-expanded', 'false');
+            const otherContent = document.getElementById(otherTrigger.getAttribute('aria-controls'));
+            otherContent.setAttribute('hidden', '');
+            otherTrigger.closest('.faq-item').classList.remove('is-open');
+          }
+        });
+        if (isExpanded) {
+          this.setAttribute('aria-expanded', 'false');
+          content.setAttribute('hidden', '');
+          faqItem.classList.remove('is-open');
+        } else {
+          this.setAttribute('aria-expanded', 'true');
+          content.removeAttribute('hidden');
+          faqItem.classList.add('is-open');
+          if (window.dataLayer) { window.dataLayer.push({ 'event': 'faq_toggle', 'faq_id': this.getAttribute('data-faq-id'), 'action': 'open' }); }
+        }
+      });
+    });
+  });
+</script>

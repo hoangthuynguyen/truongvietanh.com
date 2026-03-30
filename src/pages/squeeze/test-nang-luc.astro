@@ -1,0 +1,84 @@
+---
+import SqueezePageLayout from '../../layouts/SqueezePageLayout.astro';
+import USPGrid from '../../components/USPGrid.astro';
+import TrustMetrics from '../../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../../components/FAQSection.astro';
+
+const pageTitle = 'Test Năng Lực Miễn Phí — Biết Con Đang Ở Đâu, Để Đưa Con Đi Đúng Hướng | Trường Việt Anh';
+const pageDescription = 'Đánh giá năng lực học tập của con miễn phí. Nhận báo cáo chi tiết về điểm mạnh, điểm yếu, và lộ trình cải thiện phù hợp.';
+const pageCanonical = 'https://truongvietanh.com/squeeze/test-nang-luc';
+
+const uspItems = [
+  { icon: '🧠', text: 'Đánh giá toàn diện: Toán, Tiếng Việt, Tiếng Anh, Tư duy' },
+  { icon: '📊', text: 'Báo cáo chi tiết với điểm mạnh/yếu & lộ trình cải thiện' },
+  { icon: '🎯', text: 'So sánh với chuẩn đầu vào các trường top TPHCM' },
+  { icon: '📝', text: 'Tư vấn 1-1 với chuyên gia giáo dục sau bài test' }
+];
+
+const metrics = [
+  { number: '2,000+', label: 'Học sinh đã làm test' },
+  { number: '95%', label: 'Phụ huynh hài lòng' },
+  { number: '15+', label: 'Năm kinh nghiệm đánh giá' }
+];
+
+const faqItems = [
+  { question: 'Bài test dành cho độ tuổi nào?', answer: 'Bài test được thiết kế cho học sinh từ lớp 1–9, với các cấp độ phù hợp từng lứa tuổi.' },
+  { question: 'Làm bài test mất bao lâu?', answer: 'Khoảng 45–60 phút tùy theo cấp lớp. Bài test được thiết kế không gây áp lực, giúp con thoải mái thể hiện năng lực.' },
+  { question: 'Kết quả được gửi khi nào?', answer: 'Báo cáo chi tiết sẽ được gửi qua email trong vòng 48 giờ sau khi hoàn thành bài test.' },
+  { question: 'Có phải trả phí gì không?', answer: 'Hoàn toàn miễn phí. Đây là chương trình hỗ trợ phụ huynh của Trường Việt Anh.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="tieu-hoc"
+  funnelCode="squeeze-test-nang-luc"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Con Bạn Đang Ở Đâu? — Làm Test Năng Lực Miễn Phí Để Biết Chính Xác</h1>
+    <p class="squeeze-hero__subheading">Bài đánh giá toàn diện giúp Ba/Mẹ hiểu rõ năng lực của con — từ đó có lộ trình phù hợp</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Bài test bao gồm" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Số liệu thực tế" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 style="font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center;">Tại sao cần đánh giá năng lực?</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0;">
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79;">🔍 Nhìn rõ điểm mạnh/yếu</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Biết chính xác con giỏi gì, yếu gì để đầu tư đúng hướng, không lãng phí thời gian.</p>
+        </div>
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79;">🎯 Chọn trường phù hợp</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">So sánh năng lực con với chuẩn đầu vào các trường, giúp chọn trường thực tế.</p>
+        </div>
+        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79;">📈 Lộ trình cải thiện</h3>
+          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Nhận kế hoạch học tập cá nhân hóa, giúp con tiến bộ nhanh nhất.</p>
+        </div>
+      </div>
+      <div style="background-color: #f0f8ff; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: #1a1a1a;"><strong>🌟 Đặc biệt:</strong> Sau bài test, Ba/Mẹ sẽ được tư vấn 1-1 với chuyên gia giáo dục của Trường Việt Anh để hiểu rõ báo cáo và lập kế hoạch cho con.</p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Đăng ký làm test miễn phí</h2>
+    <p class="squeeze-form-section__description">Điền thông tin để nhận liên kết làm bài test và lịch tư vấn cá nhân</p>
+    <LeadFormTwoStepEmailFirst formId="squeeze-form" funnelCode="squeeze-test-nang-luc" schoolLevel="tieu-hoc" submitText="Nhận link làm test ngay" successMessage="Cảm ơn! Link làm test sẽ được gửi qua email trong vòng 24 giờ." />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  @media (max-width: 768px) {
+    section[slot='content'] > div > div { grid-template-columns: 1fr !important; }
+  }
+</style>

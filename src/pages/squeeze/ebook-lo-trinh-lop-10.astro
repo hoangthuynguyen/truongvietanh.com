@@ -1,0 +1,85 @@
+---
+import SqueezePageLayout from '../../layouts/SqueezePageLayout.astro';
+import USPGrid from '../../components/USPGrid.astro';
+import TrustMetrics from '../../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../../components/FAQSection.astro';
+
+const pageTitle = 'Lộ trình giúp con vào TOP trường cấp 3 tại TP.HCM (MIỄN PHÍ) | Trường Việt Anh';
+const pageDescription = 'Dành riêng cho phụ huynh có con từ lớp 5–9 muốn định hướng đúng ngay từ đầu. Nhận ngay lộ trình học chi tiết, checklist chọn trường 2026, 7 sai lầm phụ huynh hay mắc, bộ đề test năng lực.';
+const pageCanonical = 'https://truongvietanh.com/squeeze/ebook-lo-trinh-lop-10';
+
+const uspItems = [
+  { icon: '📚', text: 'Lộ trình học chi tiết từ lớp 5 đến cấp 3' },
+  { icon: '✅', text: 'Checklist 15 tiêu chí chọn trường 2026' },
+  { icon: '⚠️', text: '7 sai lầm phụ huynh hay mắc phải' },
+  { icon: '📝', text: 'Bộ đề test năng lực chất lượng' }
+];
+
+const metrics = [
+  { number: '5,000+', label: 'Học sinh đã theo dõi' },
+  { number: '95%', label: 'Đỗ nguyện vọng 1' },
+  { number: '10+', label: 'Năm kinh nghiệm' }
+];
+
+const faqItems = [
+  { question: 'Lộ trình này có phù hợp với con tôi không?', answer: 'Lộ trình này được thiết kế cho phụ huynh có con từ lớp 5–9. Nếu con bạn hiện tại đang ở cấp 3, bạn vẫn có thể tham khảo các kinh nghiệm chọn trường và phương pháp học tập để cải thiện kết quả.' },
+  { question: 'Tài liệu được gửi qua hình thức nào?', answer: 'Sau khi bạn đăng ký, chúng tôi sẽ gửi lộ trình và tất cả tài liệu liên quan qua email trong vòng 24 giờ.' },
+  { question: 'Có phải tôi sẽ bị gửi quá nhiều email không?', answer: 'Không. Chúng tôi chỉ gửi những nội dung hữu ích và giá trị. Nếu bạn không muốn nhận thêm thông tin, bạn có thể hủy đăng ký bất cứ lúc nào.' },
+  { question: 'Có chi phí ẩn hay bất kỳ cam kết nào không?', answer: 'Hoàn toàn miễn phí. Không có chi phí ẩn, không cần cam kết mua gì.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="thcs"
+  funnelCode="squeeze-ebook-lo-trinh"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Lộ trình giúp con vào TOP trường cấp 3 tại TP.HCM</h1>
+    <p class="squeeze-hero__subheading">Dành riêng cho phụ huynh có con từ lớp 5–9 muốn định hướng đúng ngay từ đầu</p>
+    <div class="hero-cta"><p style="font-size: 1rem; margin-top: 1.5rem; opacity: 0.9;">📥 Tài liệu giá trị này sẽ được gửi ngay sau khi bạn đăng ký</p></div>
+  </section>
+
+  <section slot="usp"><USPGrid title="Bạn sẽ nhận được gì?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Được tin tưởng bởi hàng ngàn phụ huynh" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="content-wrapper">
+      <h2 style="font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center;">Tại sao con bạn cần lộ trình này?</h2>
+      <div class="benefit-grid">
+        <div class="benefit-card"><h3>🎯 Xác định mục tiêu rõ ràng</h3><p>Nhiều phụ huynh chỉ nhận ra cần lên kế hoạch khi đã quá muộn. Lộ trình này giúp bạn xác định mục tiêu và lập kế hoạch từ sớm, tăng khả năng thành công lên 95%.</p></div>
+        <div class="benefit-card"><h3>🚀 Tăng cơ hội đỗ nguyện vọng 1</h3><p>Với lộ trình chi tiết và phương pháp học tập hiệu quả, con bạn sẽ sẵn sàng hơn cho kỳ thi lớp 10.</p></div>
+        <div class="benefit-card"><h3>💡 Tránh 7 sai lầm phổ biến</h3><p>Chúng tôi đã tổng hợp 7 sai lầm mà phụ huynh thường mắc phải. Tài liệu này giúp bạn tránh các bẫy này.</p></div>
+        <div class="benefit-card"><h3>📊 Công cụ đánh giá chi tiết</h3><p>Bộ đề test năng lực giúp bạn biết con em hiện tại đang ở đâu.</p></div>
+      </div>
+      <div class="urgency-box" style="background-color: #f0f8ff; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+        <h3 style="font-family: Montserrat, sans-serif; color: #1F4E79; margin-bottom: 0.75rem;">⏰ Thời gian là vàng</h3>
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6;">Nếu con bạn đang ở lớp 5–7, bây giờ là thời điểm vàng để chuẩn bị. Đừng để sự chuẩn bị kéo dài đến tháng cuối cùng.</p>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;"><p style="font-size: 1rem; color: #1a1a1a;"><strong>Không spam. Chỉ gửi tài liệu giá trị.</strong></p></div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Nhận lộ trình miễn phí</h2>
+    <p class="squeeze-form-section__description">Điền thông tin dưới đây để nhận lộ trình chi tiết, bộ đề test, và tất cả tài liệu hữu ích khác trong 24 giờ</p>
+    <LeadFormTwoStepEmailFirst formId="squeeze-form" funnelCode="squeeze-ebook-lo-trinh" schoolLevel="thcs" submitText="Nhận ngay miễn phí" successMessage="Cảm ơn bạn! Vui lòng kiểm tra email. Tài liệu sẽ được gửi trong vòng 24 giờ." />
+  </section>
+
+  <section slot="faq"><FAQSection title="Những câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  .hero-cta { margin-top: 2rem; }
+  .content-wrapper { max-width: 900px; margin: 0 auto; }
+  .benefit-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
+  .benefit-card { background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
+  .benefit-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
+  .benefit-card h3 { font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79; }
+  .benefit-card p { font-size: 0.95rem; line-height: 1.6; color: #666666; margin: 0; }
+  .urgency-box p { color: #1a1a1a; }
+  @media (max-width: 768px) { .benefit-grid { grid-template-columns: 1fr; gap: 1.5rem; } }
+</style>

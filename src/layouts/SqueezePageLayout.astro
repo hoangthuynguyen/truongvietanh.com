@@ -1,0 +1,96 @@
+---
+import '../styles/global.css';
+type Props = { title?: string; description?: string; keywords?: string; schoolLevel?: 'mau-non' | 'tieu-hoc' | 'thcs' | 'thpt'; funnelCode?: string; ogImage?: string; canonicalUrl?: string; };
+const { title = 'Trường Việt Anh', description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.', keywords = 'trường, tiếng Anh, song ngữ, Việt Anh', schoolLevel = 'tieu-hoc', funnelCode = 'squeeze-landing', ogImage = 'https://truongvietanh.com/og-image.png', canonicalUrl = 'https://truongvietanh.com', } = Astro.props;
+const schemaData = { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: 'Trường Việt Anh', url: canonicalUrl, image: ogImage, description: description, sameAs: ['https://www.facebook.com/truongvietanh','https://www.youtube.com/@truongvietanh','https://www.instagram.com/truongvietanh'], contactPoint: { '@type': 'ContactPoint', contactType: 'Customer Service', telephone: '+84-916-961-409' } };
+const structuredData = JSON.stringify(schemaData);
+---
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#1F4E79" />
+<meta name="description" content={description} />
+<meta name="keywords" content={keywords} />
+<meta name="robots" content="index, follow" />
+{canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Trường Việt Anh" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<style is:inline>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap&subset=vietnamese');
+body,h1,h2,h3,h4,h5,h6,button,input,select,textarea{font-family:"Open Sans","Segoe UI",system-ui,-apple-system,BlinkMacSystemFont,sans-serif}h1,h2,h3,h4,h5,h6{font-family:"Montserrat",sans-serif}
+</style>
+<script is:inline type="application/ld+json" set:html={structuredData} />
+<script is:inline>
+window.dataLayer = window.dataLayer || [];
+window.dataLayer.push({ 'event': 'page_view', 'page_title': '{title}', 'page_url': '{canonicalUrl}', 'school_level': '{schoolLevel}', 'funnel_code': '{funnelCode}' });
+</script>
+<title>{title}</title>
+<style is:inline>
+:root{--nav-primary:#1F4E79;--nav-accent:#E8792B;--text-dark:#1a1a1a;--text-light:#666;--bg-light:#f9f9f9;--bg-white:#fff;--border-color:#e0e0e0;--success-color:#27ae60}
+*{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;scroll-behavior:smooth}body{font-family:"Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Helvetica","Arial",sans-serif;line-height:1.6;color:var(--text-dark);background-color:var(--bg-white)}main{width:100%}
+.squeeze-header{position:sticky;top:0;z-index:1000;background-color:var(--nav-primary);color:#fff;padding:.75rem 1rem;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.squeeze-header__inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.squeeze-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff;flex:1}.squeeze-brand__logo{font-size:1.2rem;font-weight:700;letter-spacing:-.5px}.squeeze-brand__text{font-size:.875rem;font-weight:500}
+.squeeze-header__actions{display:flex;align-items:center;gap:.5rem}
+.squeeze-header-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.5rem 1rem;border-radius:4px;font-size:.875rem;font-weight:500;text-decoration:none;border:none;cursor:pointer;transition:all .3s ease}
+.squeeze-header-btn--hotline{background-color:var(--nav-accent);color:#fff}.squeeze-header-btn--hotline:hover{background-color:#d1681f}
+.squeeze-header-btn--zalo{background-color:transparent;color:#fff;border:1px solid #fff}.squeeze-header-btn--zalo:hover{background-color:rgba(255,255,255,.1)}
+.squeeze-hero{background:linear-gradient(135deg,var(--nav-primary) 0%,#163d5f 100%);color:#fff;padding:3rem 1rem;text-align:center}
+.squeeze-hero__content{max-width:800px;margin:0 auto}
+.squeeze-usp{background-color:var(--bg-light);padding:2rem 1rem}.squeeze-usp__inner{max-width:1200px;margin:0 auto}
+.squeeze-trust{background-color:var(--nav-primary);color:#fff;padding:2rem 1rem}.squeeze-trust__inner{max-width:1200px;margin:0 auto}
+.squeeze-content{padding:2rem 1rem;max-width:1200px;margin:0 auto}
+.squeeze-form-section{background-color:var(--bg-light);padding:2.5rem 1rem;text-align:center}.squeeze-form-section__inner{max-width:600px;margin:0 auto}
+.squeeze-faq{padding:2.5rem 1rem;max-width:1200px;margin:0 auto}
+.squeeze-mobile-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background-color:var(--nav-accent);color:#fff;padding:1rem;text-align:center;box-shadow:0 -2px 8px rgba(0,0,0,.15)}
+.squeeze-mobile-cta__btn{display:inline-block;padding:.75rem 2rem;background-color:#fff;color:var(--nav-accent);text-decoration:none;border-radius:4px;font-weight:600;border:none;cursor:pointer;transition:all .3s ease;font-size:1rem}
+.squeeze-footer{background-color:#1a1a1a;color:#fff;padding:2rem 1rem;font-size:.875rem}.squeeze-footer__inner{max-width:1200px;margin:0 auto}
+.squeeze-footer__contact{margin-bottom:1.5rem}.squeeze-footer__contact-title{font-weight:600;margin-bottom:.5rem;color:var(--nav-accent)}
+.squeeze-footer__contact-item{margin-bottom:.35rem;opacity:.9}.squeeze-footer__contact-item a{color:var(--nav-accent);text-decoration:none}
+.squeeze-footer__copyright{border-top:1px solid rgba(255,255,255,.1);padding-top:1rem;text-align:center;opacity:.7}
+@media(max-width:768px){.squeeze-header__inner{flex-wrap:wrap}.squeeze-brand__text{display:none}.squeeze-hero{padding:2rem 1rem}.squeeze-mobile-cta{display:block}main{padding-bottom:80px}}
+@media(max-width:480px){.squeeze-header-btn{padding:.5rem .75rem;font-size:.75rem}.squeeze-hero{padding:1.5rem 1rem}}
+</style>
+</head>
+<body>
+<header class="squeeze-header"><div class="squeeze-header__inner">
+<a href="/" class="squeeze-brand"><span class="squeeze-brand__logo">VA</span><span class="squeeze-brand__text">Trường Việt Anh</span></a>
+<div class="squeeze-header__actions">
+<a href="tel:+84916961409" class="squeeze-header-btn squeeze-header-btn--hotline">📞 0916 961 409</a>
+<a href="https://zalo.me/0916961409" target="_blank" rel="noopener noreferrer" class="squeeze-header-btn squeeze-header-btn--zalo">💬 Zalo</a>
+</div></div></header>
+<main>
+<section class="squeeze-hero"><div class="squeeze-hero__content"><slot name="hero" /></div></section>
+<section class="squeeze-usp"><div class="squeeze-usp__inner"><slot name="usp" /></div></section>
+<section class="squeeze-trust"><div class="squeeze-trust__inner"><slot name="trust" /></div></section>
+<section class="squeeze-content"><slot name="content" /></section>
+<section class="squeeze-form-section"><div class="squeeze-form-section__inner"><slot name="form" /></div></section>
+<section class="squeeze-faq"><slot name="faq" /></section>
+<div class="squeeze-mobile-cta"><a href="#form-section" class="squeeze-mobile-cta__btn">Đăng ký ngay</a></div>
+</main>
+<footer class="squeeze-footer"><div class="squeeze-footer__inner">
+<div class="squeeze-footer__contact"><div class="squeeze-footer__contact-title">Cơ sở Gò Vấp</div><div class="squeeze-footer__contact-item">160/72 Phan Huy Ích, phường An Hội Tây, TP.HCM</div><div class="squeeze-footer__contact-item"><a href="tel:+84916961409">📞 0916 961 409</a></div></div>
+<div class="squeeze-footer__contact"><div class="squeeze-footer__contact-title">Cơ sở Phú Nhuận</div><div class="squeeze-footer__contact-item">269A Nguyễn Trọng Tuyển, Phú Nhuận, TP.HCM</div><div class="squeeze-footer__contact-item"><a href="tel:+84916961409">📞 0916 961 409</a></div></div>
+<div class="squeeze-footer__contact"><div class="squeeze-footer__contact-title">Cơ sở Bình Tân</div><div class="squeeze-footer__contact-item">951/7 Tỉnh lộ 10, Bình Tân, TP.HCM</div><div class="squeeze-footer__contact-item"><a href="tel:+84916961409">📞 0916 961 409</a></div></div>
+<div class="squeeze-footer__copyright"><p>&copy; {new Date().getFullYear()} Trường Việt Anh. All rights reserved.</p></div>
+</div></footer>
+<script is:inline>
+document.querySelector('.squeeze-mobile-cta__btn')?.addEventListener('click',function(){if(window.dataLayer){window.dataLayer.push({'event':'click_mobile_cta','section':'mobile_sticky'})}});
+let maxScroll=0;window.addEventListener('scroll',function(){const p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(p>maxScroll){maxScroll=p;if(maxScroll>25&&maxScroll<=50&&window.dataLayer){window.dataLayer.push({'event':'scroll_depth','depth':'25'})}else if(maxScroll>50&&maxScroll<=75&&window.dataLayer){window.dataLayer.push({'event':'scroll_depth','depth':'50'})}else if(maxScroll>75&&window.dataLayer){window.dataLayer.push({'event':'scroll_depth','depth':'75'})}}});
+</script>
+</body>
+</html>

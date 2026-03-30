@@ -36,6 +36,229 @@ const faqItems = [
   },
   {
     question: 'Tại sao phải chọn Việt Anh mà không chọn trường khác gần nhà?',
+    answer: 'Rất công bằng! Bạn nên so sánh: (1) Phương pháp - Montessori + STEAM; (2) Tỷ lệ cô giáo - 20-25 bé/lớp; (3) Tiếng Anh mỗi ngày với giáo viên bản ngữ; (4) Dinh dưỡng chuyên gia; (5) Camera 24/7.'
+  },
+  {
+    question: 'Học phí có rất đắt không? Có gói ưu đãi không?',
+    answer: 'Học phí phù hợp với chất lượng. Hiện có: (1) Giảm 20% gói năm đầu; (2) Miễn phí đo mắt + khám sức khỏe; (3) Tư vấn 1-1 về phát triển con. Để lại email bên dưới để nhận báo giá.'
+  },
+  {
+    question: 'Con tôi xấu hộ, sợ không hòa hợp. Làm sao?',
+    answer: 'Tâm lý xấu hộ là bình thường. Montessori giúp bé tự tin: (1) Lớp nhỏ giúp con quen dần; (2) Cô giáo chú ý đặc biệt; (3) Bé học qua chơi; (4) Quy trình "chia tách" từ từ. Sau 2-3 tuần, hầu hết trẻ yêu thích trường.'
+  },
+  {
+    question: 'Không có thời gian tham quan - làm sao?',
+    answer: 'Bạn có thể: (1) Để lại email - chúng tôi gửi video tour 15 phút; (2) Tham quan sau 17h hoặc cuối tuần; (3) Tham quan campus gần nhất nhà bạn.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="mầm non song ngữ, montessori mầm non, trường mầm non HCMC, tuyển sinh mầm non, trường Việt Anh"
+  schoolLevel="mam-non"
+  funnelCode="tuyen-sinh-mam-non"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      85% Phát Triển Não Con Xảy Ra Trước 3 Tuổi<br/><span class="hero-highlight">Con Bạn Sẽ Bỏ Lỡ Những Năm Vàng Này Không?</span>
+    </h1>
+    <p class="hero-subtitle">
+      Tại Việt Anh: Montessori + STEAM + Song ngữ từ 18 tháng = Nền tảng hoàn hảo cho tương lai con
+    </p>
+    <p class="hero-subtext">
+      3,000+ gia đình đã tin tưởng. 15+ năm kinh nghiệm. 3 campus tại TPHCM. <strong>Chỉ còn 8 chỗ trống mùa này.</strong>
+    </p>
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section">
+      <h2>Con Bạn Nhận Được Gì Tại Mầm Non Việt Anh?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Montessori + STEAM: Nền tảng khoa học</h3>
+          <p>Không phải học vẹt. Con sẽ khám phá thế giới qua trải nghiệm thực tế. Phương pháp Montessori giúp bé phát triển tự lập, tập trung, và yêu thích học tập.</p>
+        </div>
+        <div class="content-card">
+          <h3>Song ngữ từ 18 tháng: Đầu tư sớm nhất</h3>
+          <p>Cô giáo bản ngữ dạy tiếng Anh mỗi ngày. Con sẽ phát âm như người bản xứ và không bao giờ sợ nói tiếng Anh.</p>
+        </div>
+        <div class="content-card">
+          <h3>Lớp nhỏ = Sự chú ý đặc biệt</h3>
+          <p>Tối đa 20-25 bé/lớp. Cô giáo quan sát từng bé, hiểu tính cách. Con được chăm sóc như con em mình.</p>
+        </div>
+        <div class="content-card">
+          <h3>Dinh dưỡng: Chuyên gia thiết kế</h3>
+          <p>3 bữa chính + 2 bữa phụ mỗi ngày, do chuyên gia dinh dưỡng trẻ em thiết kế. An toàn vệ sinh thực phẩm cấp 1.</p>
+        </div>
+        <div class="content-card">
+          <h3>Sáng tạo không bị giới hạn</h3>
+          <p>Mỹ thuật, âm nhạc, thể chất tích hợp tự nhiên. Con tự do sáng tạo, phát triển tự tin.</p>
+        </div>
+        <div class="content-card">
+          <h3>An toàn tuyệt đối</h3>
+          <p>Camera 24/7, cơ sở đạt chuẩn quốc tế, cô giáo được đào tạo sơ cứu. Ba/mẹ yên tâm từng phút bé ở trường.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Chỉ Còn 8 Chỗ Trống Mùa Này</h2>
+    <p class="form-subheading">Hạn chót tuyển sinh Q2: 15 tháng 4. Hơn 50 gia đình đang chờ. Để lại email để nhận video tour 15 phút & báo giá chi tiết.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="tuyen-sinh-form"
+      funnelCode="tuyen-sinh-mam-non"
+      schoolLevel="mam-non"
+      submitText="Nhận Video Tour + Báo Giá Ngay"
+      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ gửi video tour & báo giá vào email của bạn và liên hệ trong 2 giờ. Hotline: 0916 961 409"
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Những Lo Lắng Của Ba/Mẹ - Chúng Tôi Giải Đáp" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(2rem, 6vw, 3.25rem);
+    font-weight: 900;
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+    color: #1F4E79;
+  }
+  .hero-highlight {
+    color: #E8792B;
+    display: block;
+    font-size: clamp(1.75rem, 5vw, 2.75rem);
+  }
+  .hero-subtitle {
+    font-size: clamp(1rem, 3vw, 1.3rem);
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  .hero-subtext {
+    font-size: 1rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 0;
+  }
+  .content-section h2 {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.25rem);
+    font-weight: 700;
+    margin-bottom: 2.5rem;
+    color: #1F4E79;
+    text-align: center;
+  }
+  .content-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .content-card {
+    padding: 2rem;
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+  }
+  .content-card:hover {
+    border-color: #E8792B;
+    box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15);
+    transform: translateY(-4px);
+  }
+  .content-card h3 {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #E8792B;
+    margin-bottom: 1rem;
+  }
+  .content-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #555;
+  }
+  .form-heading {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    color: #E8792B;
+    margin-bottom: 0.5rem;
+  }
+  .form-subheading {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 2rem;
+    font-weight: 500;
+    line-height: 1.8;
+  }
+  @media (max-width: 768px) {
+    .hero-h1 { margin-bottom: 1rem; }
+    .hero-highlight { display: inline; margin-left: 0.25rem; }
+    .content-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .content-card { padding: 1.5rem; }
+  }
+  @media (max-width: 480px) {
+    .hero-h1 { font-size: 1.5rem; }
+    .hero-subtitle { font-size: 0.9rem; }
+    .hero-subtext { font-size: 0.85rem; }
+    .content-card p { font-size: 0.9rem; }
+  }
+</style>---
+import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../components/USPGrid.astro';
+import TrustMetrics from '../../../components/TrustMetrics.astro';
+import FAQSection from '../../../components/FAQSection.astro';
+
+const pageTitle = 'Mầm Non Song Ngữ Việt Anh - Nền Tảng Vàng Cho Tương Lai';
+const pageDescription = 'Khám phá cách Montessori + STEAM + Song ngữ từ 18 tháng xây dựng nền tảng đúng từ bây giờ. 3 campus, 15+ năm kinh nghiệm, 98% phụ huynh hài lòng.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non';
+
+const uspItems = [
+  { icon: '🧠', text: 'Montessori + STEAM từ 18 tháng - Khoa học chứng minh cho phát triển tối ưu' },
+  { icon: '🌍', text: 'Song ngữ Anh-Việt mỗi ngày - Không bao giờ là quá sớm để bắt đầu' },
+  { icon: '👨‍👩‍👧', text: 'Max 20-25 bé/lớp - Cô giáo đủ thời gian chăm sóc từng con như em mình' },
+  { icon: '🥗', text: 'Bữa ăn do chuyên gia dinh dưỡng thiết kế - 3 chính + 2 phụ hàng ngày' },
+  { icon: '🎨', text: 'Mỹ thuật, âm nhạc, thể chất tích hợp - Phát triển sáng tạo & tự tin' },
+  { icon: '🔒', text: 'Camera 24/7 + Cơ sở quốc tế - Ba/Mẹ yên tâm từng giây bé ở trường' }
+];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm - Đã đồng hành với 3,000+ gia đình' },
+  { number: '300+', label: 'Trẻ Mầm Non hiện tại - Cộng đồng cha mẹ tin tưởng' },
+  { number: '98%', label: 'Phụ huynh hài lòng - Tình yêu từ các gia đình' },
+  { number: '3', label: 'Campus tại TPHCM - Chọn gần nhất với nhà mình' }
+];
+
+const faqItems = [
+  {
+    question: 'Con tôi mới 18 tháng - có sớm quá không?',
+    answer: 'Không, 18 tháng là độ tuổi lý tưởng! Thực tế, ngành neuropathology chứng minh 85% phát triển não bộ xảy ra từ 0-3 tuổi. Những năm đầu này quyết định sự tự tin, khám phá thế giới, và nền tảng ngôn ngữ của con.'
+  },
+  {
+    question: 'Học song ngữ có làm con bị nhầm lẫn tiếng Anh - Việt?',
+    answer: 'Không. Các nghiên cứu cho thấy trẻ em có khả năng phân biệt âm thanh từ 2 ngôn ngữ từ khi mới vài tháng tuổi. Tại Việt Anh, cô giáo nước ngoài dạy Anh mỗi ngày theo phương pháp tự nhiên (không dịch).'
+  },
+  {
+    question: 'Tại sao phải chọn Việt Anh mà không chọn trường khác gần nhà?',
     answer: 'Rất công bằng! Bạn nên so sánh: (1) Phương pháp - Montessori + STEAM, không học vẹt; (2) Tỷ lệ cô giáo - 20-25 bé/lớp; (3) Tiếng Anh mỗi ngày với giáo viên bản ngữ; (4) Dinh dưỡng chuyên gia; (5) Camera 24/7. Hãy tham quan 2-3 trường rồi quyết định.'
   },
   {

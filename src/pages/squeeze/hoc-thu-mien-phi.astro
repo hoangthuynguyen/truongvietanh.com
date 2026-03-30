@@ -1,0 +1,96 @@
+---
+import SqueezePageLayout from '../../layouts/SqueezePageLayout.astro';
+import USPGrid from '../../components/USPGrid.astro';
+import TrustMetrics from '../../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../../components/FAQSection.astro';
+
+const pageTitle = 'Học Thử Miễn Phí 1 Ngày Tại Trường Việt Anh | Đăng Ký Ngay';
+const pageDescription = 'Cho con trải nghiệm 1 ngày học thực tế tại Trường Việt Anh. Không cam kết, không phí. Con được học, chơi, kết bạn — Ba/Mẹ được tham quan trường.';
+const pageCanonical = 'https://truongvietanh.com/squeeze/hoc-thu-mien-phi';
+
+const uspItems = [
+  { icon: '🏫', text: 'Trải nghiệm 1 ngày học thực tế tại trường' },
+  { icon: '👨‍👩‍👧', text: 'Ba/Mẹ được tham quan cơ sở vật chất' },
+  { icon: '🌟', text: 'Con được học, chơi, kết bạn với bạn mới' },
+  { icon: '✅', text: 'Hoàn toàn miễn phí — Không cam kết' }
+];
+
+const metrics = [
+  { number: '500+', label: 'Gia đình đã tham gia' },
+  { number: '95%', label: 'Hài lòng sau trải nghiệm' },
+  { number: '3', label: 'Cơ sở tại TPHCM' }
+];
+
+const faqItems = [
+  { question: 'Chương trình học thử diễn ra như thế nào?', answer: 'Con sẽ tham gia 1 ngày học thực tế cùng lớp, bao gồm các tiết học chính khóa, ngoại khóa và giờ ăn trưa.' },
+  { question: 'Con tôi cần chuẩn bị gì?', answer: 'Chỉ cần mang theo bút và sách vở. Trường sẽ cung cấp đồng phục tạm thời và bữa ăn trưa miễn phí.' },
+  { question: 'Phụ huynh có được tham quan không?', answer: 'Có. Ba/Mẹ sẽ được hướng dẫn tham quan cơ sở và gặp Ban Giám Hiệu để tìm hiểu chương trình.' },
+  { question: 'Có phải đăng ký trước không?', answer: 'Có. Do số lượng giới hạn mỗi đợt (tối đa 10 em), Ba/Mẹ cần đăng ký trước để chúng tôi sắp xếp lớp phù hợp.' },
+  { question: 'Học thử có cam kết gì không?', answer: 'Không có bất kỳ cam kết nào. Đây là cơ hội để Ba/Mẹ và con trải nghiệm thực tế trước khi quyết định.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="tieu-hoc"
+  funnelCode="squeeze-hoc-thu"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Cho Con Trải Nghiệm 1 Ngày Học Thực Tế — Hoàn Toàn Miễn Phí</h1>
+    <p class="squeeze-hero__subheading">Con được học, chơi, kết bạn. Ba/Mẹ được tham quan và gặp Ban Giám Hiệu.</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Con sẽ được gì?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Trường Việt Anh" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div style="max-width: 900px; margin: 0 auto;">
+      <h2 style="font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center;">1 ngày học thử bao gồm</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin: 2rem 0;">
+        <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📚</div>
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #1F4E79;">Học chính khóa</h3>
+          <p style="font-size: 0.9rem; line-height: 1.5; color: #666;">Toán, Tiếng Việt, Tiếng Anh với giáo viên bản xứ và ngoại quốc</p>
+        </div>
+        <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🎨</div>
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #1F4E79;">Ngoại khóa</h3>
+          <p style="font-size: 0.9rem; line-height: 1.5; color: #666;">Mỹ thuật, Âm nhạc, Thể dục, STEM</p>
+        </div>
+        <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">🍜</div>
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #1F4E79;">Bữa trưa</h3>
+          <p style="font-size: 0.9rem; line-height: 1.5; color: #666;">Bữa ăn dinh dưỡng miễn phí cùng các bạn</p>
+        </div>
+        <div style="background: white; border: 2px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; text-align: center;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">👨‍👩‍👧</div>
+          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #1F4E79;">Tham quan</h3>
+          <p style="font-size: 0.9rem; line-height: 1.5; color: #666;">Ba/Mẹ tham quan trường, gặp BGH</p>
+        </div>
+      </div>
+      <div style="background-color: #FFF8F0; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
+        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: #1a1a1a;"><strong>⚠️ Giới hạn:</strong> Mỗi đợt học thử chỉ nhận tối đa 10 em để đảm bảo chất lượng trải nghiệm. Đăng ký sớm để giữ chỗ cho con.</p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Đăng ký học thử miễn phí</h2>
+    <p class="squeeze-form-section__description">Điền thông tin để chúng tôi sắp xếp ngày học thử phù hợp cho con</p>
+    <LeadFormTwoStepEmailFirst formId="squeeze-form" funnelCode="squeeze-hoc-thu" schoolLevel="tieu-hoc" submitText="Đăng ký học thử ngay" successMessage="Cảm ơn! Chúng tôi sẽ liên hệ trong 24 giờ để sắp xếp lịch học thử cho con." />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  @media (max-width: 768px) {
+    section[slot='content'] > div > div { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 480px) {
+    section[slot='content'] > div > div { grid-template-columns: 1fr !important; }
+  }
+</style>

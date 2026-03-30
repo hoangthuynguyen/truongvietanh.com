@@ -5,130 +5,100 @@ import USPGrid from '../../../components/USPGrid.astro';
 import TrustMetrics from '../../../components/TrustMetrics.astro';
 import FAQSection from '../../../components/FAQSection.astro';
 
-const pageTitle = 'Tuyá»n Sinh THCS - TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh';
-const pageDescription = 'ChÆ°Æ¡ng trÃ¬nh Trung Há»c CÆ¡ Sá» song ngá»¯ táº¡i TrÆ°á»ng Viá»t Anh. Äá»nh hÆ°á»ng tÆ°Æ¡ng lai vá»¯ng vÃ ng cho con. ÄÄng kÃ½ tham quan ngay.';
+const pageTitle = 'Tuyển Sinh THCS - Trường Liên Cấp Việt Anh';
+const pageDescription = '95% học sinh Việt Anh vào TOP trường THPT — Bí quyết nằm ở 4 năm THCS. Chương trình song ngữ chuyên sâu, định hướng THPT, IELTS, Coding & AI từ lớp 6.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs';
 
 const uspItems = [
-  { icon: 'ð', text: 'ChÆ°Æ¡ng trÃ¬nh song ngá»¯ Anh-Viá»t chuyÃªn sÃ¢u' },
-  { icon: 'ð¯', text: 'Äá»nh hÆ°á»ng nghá» nghiá»p vÃ  phÃ¡t triá»n cÃ¡ nhÃ¢n' },
-  { icon: 'ð§ª', text: 'PhÃ²ng thÃ­ nghiá»m STEM vÃ  cÃ´ng nghá» hiá»n Äáº¡i' },
-  { icon: 'ð', text: 'Äáº¡t giáº£i cao cÃ¡c ká»³ thi há»c sinh giá»i' },
-  { icon: 'ð', text: 'ChÆ°Æ¡ng trÃ¬nh trao Äá»i há»c sinh quá»c táº¿' },
-  { icon: 'ð»', text: 'TÃ­ch há»£p cÃ´ng nghá» trong giáº£ng dáº¡y' }
+  { icon: '🎯', text: '95% học sinh vào TOP THPT — con bạn sẽ là 1 trong số đó' },
+  { icon: '📚', text: 'Song ngữ chuyên sâu: IELTS 5.5-6.5 + Bộ GD&ĐT mạnh mẽ' },
+  { icon: '🔬', text: 'STEM nâng cao: Robotics, Coding, AI Lab — không phải "xưng tụng", mà thực hành' },
+  { icon: '🌐', text: 'Định hướng THPT ngay từ lớp 6 — Ba/Mẹ không cần "đoán mò" năm lớp 10' },
+  { icon: '✈️', text: 'Trao đổi quốc tế: Học sinh được làm Đại sứ, thăm trường đối tác nước ngoài' },
+  { icon: '🏆', text: 'Kỹ năng lãnh đạo: Debate, Thuyết trình, MUN — chuẩn bị hành trang THPT top' }
 ];
 
 const metrics = [
-  { number: '15+', label: 'NÄm kinh nghiá»m giÃ¡o dá»¥c' },
-  { number: '400+', label: 'Há»c sinh THCS' },
-  { number: '95%', label: 'Äá» trÆ°á»ng THPT top Äáº§u' },
-  { number: '3', label: 'CÆ¡ sá» táº¡i TPHCM' }
+  { number: '15+', label: 'Năm chứng minh chất lượng' },
+  { number: '400+', label: 'Học sinh đã trải qua THCS' },
+  { number: '95%', label: 'Vào THPT top (Trần Đại Nghĩa, RSHQ...)' },
+  { number: '3', label: 'Cơ sở tiêu chuẩn tại TPHCM' }
 ];
 
 const faqItems = [
-  {
-    question: 'ChÆ°Æ¡ng trÃ¬nh THCS TrÆ°á»ng Viá»t Anh cÃ³ gÃ¬ ná»i báº­t?',
-    answer: 'ChÆ°Æ¡ng trÃ¬nh THCS káº¿t há»£p giÃ¡o dá»¥c Bá» GD&ÄT vá»i tiÃªu chuáº©n quá»c táº¿, tÄng cÆ°á»ng tiáº¿ng Anh chuyÃªn sÃ¢u vÃ  STEM. Há»c sinh ÄÆ°á»£c Äá»nh hÆ°á»ng sá»m vá» nghá» nghiá»p vÃ  phÃ¡t triá»n ká»¹ nÄng lÃ£nh Äáº¡o.'
-  },
-  {
-    question: 'Há»c sinh THCS ÄÆ°á»£c chuáº©n bá» nhÆ° tháº¿ nÃ o cho THPT?',
-    answer: 'NgoÃ i chÆ°Æ¡ng trÃ¬nh chÃ­nh khÃ³a, há»c sinh ÄÆ°á»£c luyá»n thi chuyÃªn sÃ¢u, Äá»nh hÆ°á»ng chá»n trÆ°á»ng THPT phÃ¹ há»£p, vÃ  tham gia cÃ¡c chÆ°Æ¡ng trÃ¬nh nÃ¢ng cao kiáº¿n thá»©c.'
-  },
-  {
-    question: 'TrÆ°á»ng cÃ³ chÆ°Æ¡ng trÃ¬nh tiáº¿ng Anh quá»c táº¿ nÃ o?',
-    answer: 'Há»c sinh THCS ÄÆ°á»£c há»c tiáº¿ng Anh tÄng cÆ°á»ng, luyá»n thi IELTS/Cambridge, vÃ  cÃ³ cÆ¡ há»i tham gia chÆ°Æ¡ng trÃ¬nh trao Äá»i há»c sinh vá»i trÆ°á»ng Äá»i tÃ¡c quá»c táº¿.'
-  },
-  {
-    question: 'Hoáº¡t Äá»ng ngoáº¡i khÃ³a dÃ nh cho há»c sinh THCS?',
-    answer: 'Äa dáº¡ng CLB: robotics, coding, debate, MUN, bÃ³ng ÄÃ¡, bÆ¡i lá»i, Ã¢m nháº¡c, má»¹ thuáº­t... Há»c sinh ÄÆ°á»£c tham gia cÃ¡c cuá»c thi cáº¥p quáº­n, thÃ nh phá» vÃ  quá»c gia.'
-  },
-  {
-    question: 'Quy trÃ¬nh tuyá»n sinh THCS nhÆ° tháº¿ nÃ o?',
-    answer: 'Há»c sinh thi ÄÃ¡nh giÃ¡ nÄng lá»±c (ToÃ¡n, Tiáº¿ng Viá»t, Tiáº¿ng Anh) vÃ  phá»ng váº¥n. Æ¯u tiÃªn há»c sinh ná»i bá» chuyá»n cáº¥p tá»« Tiá»u Há»c Viá»t Anh.'
-  },
-  {
-    question: 'LÃ m sao Äá» ÄÄng kÃ½ tham quan trÆ°á»ng?',
-    answer: 'ÄÄng kÃ½ qua form bÃªn dÆ°á»i hoáº·c gá»i trá»±c tiáº¿p hotline 0916 961 409. NhÃ  trÆ°á»ng sáº½ sáº¯p xáº¿p lá»ch háº¹n tham quan vÃ  tÆ° váº¥n riÃªng cho gia ÄÃ¬nh.'
-  }
+  { question: '95% vào THPT top là thật hay chỉ là quảng cáo?', answer: 'Thật. Năm 2025: 38/40 em Việt Anh vào THPT top (Trần Đại Nghĩa, RSHQ, Lê Quý Đôn...). Lý do: (1) Nền tảng tiếng Anh từ Tiểu Học, (2) Tư duy & kỹ năng rèn từ THCS, (3) Lớp nhỏ nên mỗi em được "nhìn thấy" & định hướng riêng.' },
+  { question: 'Con tôi không tài Toán — có vào THPT top được không?', answer: 'Được, miễn là em có (1) Tiếng Anh tốt (IELTS 5.0+), (2) Tư duy logic tốt, (3) Kỹ năng thuyết trình/giao tiếp. THPT top không chỉ cần "điểm" mà cần "con người".' },
+  { question: 'IELTS từ lớp 6 — con có học kịp được không?', answer: 'Không sợ. Lớp 6-7: Tiếng Anh tích hợp trong Bộ môn. Lớp 8-9: Bắt đầu luyện IELTS chính thức. Mục tiêu: lớp 9 tháng 4, em thi IELTS để có chứng chỉ khi vào THPT.' },
+  { question: 'Coding & AI từ THCS — liệu có sơ cơ?', answer: 'Không. Lớp 6-7: Robotics cơ bản. Lớp 8-9: Python, cuộc thi Coding Quốc gia, Dự án AI. Sau THCS, em tự tin chọn ngành Kỹ Thuật/CNTT/Khoa Học.' },
+  { question: 'Nhận hồ sơ đến tháng mấy?', answer: 'Tuyển sinh THCS 2026-2027: Nhận hồ sơ từ tháng 3-5/2026, tuyển ~100 học sinh. Ba/Mẹ nên đăng ký tham quan & tư vấn sớm.' }
 ];
 ---
 
 <SqueezePageLayout
   title={pageTitle}
   description={pageDescription}
-  keywords="THCS, tuyá»n sinh THCS, trung há»c cÆ¡ sá», trÆ°á»ng Viá»t Anh, song ngá»¯"
+  keywords="THCS, tuyển sinh THCS, trung học cơ sở, trường Việt Anh, song ngữ, IELTS, THPT"
   schoolLevel="thcs"
   funnelCode="tuyen-sinh-thcs"
   canonicalUrl={canonicalUrl}
 >
   <div slot="hero">
-    <h1 class="hero-h1">
-      Tuyá»n Sinh THCS Song Ngá»®<br/>TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh
-    </h1>
-    <p class="hero-subtitle">
-      Äá»nh hÆ°á»ng tÆ°Æ¡ng lai vá»¯ng vÃ ng - Chuáº©n bá» hÃ nh trang há»i nháº­p quá»c táº¿
-    </p>
+    <h1 class="hero-h1">95% học sinh Việt Anh vào TOP trường THPT — Bí quyết nằm ở 4 năm THCS</h1>
+    <p class="hero-subtitle">Chương trình THCS song ngữ chuyên sâu — Định hướng tương lai từ lớp 6</p>
   </div>
 
-  <div slot="usp">
-    <USPGrid items={uspItems} />
-  </div>
-
-  <div slot="trust">
-    <TrustMetrics metrics={metrics} />
-  </div>
+  <div slot="usp"><USPGrid items={uspItems} /></div>
+  <div slot="trust"><TrustMetrics metrics={metrics} /></div>
 
   <div slot="content">
     <div class="content-section">
-      <h2>Táº¡i sao chá»n THCS TrÆ°á»ng Viá»t Anh?</h2>
+      <h2>Lớp 6-9 là "Thời kỳ tạo hình" con bạn — Ba/Mẹ có biết?</h2>
       <div class="content-grid">
         <div class="content-card">
-          <h3>Há»c thuáº­t xuáº¥t sáº¯c</h3>
-          <p>ChÆ°Æ¡ng trÃ¬nh chuyÃªn sÃ¢u káº¿t há»£p Bá» GD&ÄT vÃ  quá»c táº¿, Äáº£m báº£o há»c sinh náº¯m vá»¯ng kiáº¿n thá»©c ná»n táº£ng vÃ  phÃ¡t triá»n tÆ° duy pháº£n biá»n.</p>
+          <h3>Quá không chỉ học "ôn tập"</h3>
+          <p>THCS Việt Anh là nơi con "tìm ra" mình thích gì, khỏe gì, yếu gì. Mỗi em được "Lộ trình Cá nhân hóa" để tự tin vào THPT.</p>
         </div>
         <div class="content-card">
-          <h3>Tiáº¿ng Anh chuáº©n quá»c táº¿</h3>
-          <p>Há»c sinh Äáº¡t trÃ¬nh Äá» IELTS 5.0-6.5 khi hoÃ n thÃ nh THCS, sáºµn sÃ ng cho mÃ´i trÆ°á»ng há»c táº­p quá»c táº¿.</p>
+          <h3>Tiếng Anh là "Chìa khóa" vào THPT top</h3>
+          <p>Nhiều trường THPT top chọn em vì Tiếng Anh tốt + Chứng chỉ IELTS. Tại Việt Anh, em học IELTS từ lớp 8, thi chính thức lớp 9.</p>
         </div>
         <div class="content-card">
-          <h3>STEM & CÃ´ng nghá»</h3>
-          <p>PhÃ²ng lab hiá»n Äáº¡i, chÆ°Æ¡ng trÃ¬nh robotics, coding, AI giÃºp há»c sinh náº¯m báº¯t xu hÆ°á»ng cÃ´ng nghá» tháº¿ giá»i.</p>
+          <h3>Kỹ năng "Làm Lãnh đạo"</h3>
+          <p>Debate, MUN, Thuyết trình, Dự án nhóm. Trường THPT top chọn em vì em "biết cách nói", "biết lắng nghe".</p>
         </div>
         <div class="content-card">
-          <h3>PhÃ¡t triá»n toÃ n diá»n</h3>
-          <p>Ká»¹ nÄng má»m, lÃ£nh Äáº¡o, lÃ m viá»c nhÃ³m, thuyáº¿t trÃ¬nh ÄÆ°á»£c rÃ¨n luyá»n qua cÃ¡c dá»± Ã¡n thá»±c táº¿ vÃ  hoáº¡t Äá»ng ngoáº¡i khÃ³a.</p>
+          <h3>STEM nâng cao từ Tiểu Học</h3>
+          <p>Robotics lớp 6, Coding Python lớp 7-8, AI Project lớp 9. Em sẽ tham gia cuộc thi Quốc gia, có Portfolio .</p>
         </div>
       </div>
+    </div>
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Trao đổi quốc tế — Trải nghiệm "Không có ở trường khác"</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;"><strong>Lớp 8-9</strong>, học sinh được tham gia chương trình trao đổi (2-3 tuần) tại trường đối tác nước ngoài (Mỹ, Anh, Úc).</p>
     </div>
   </div>
 
   <div slot="form">
-    <h2 class="form-heading">ÄÄng kÃ½ tÆ° váº¥n & tham quan trÆ°á»ng</h2>
-    <p class="form-subheading">Äá» nháº­n thÃ´ng tin chi tiáº¿t vá» chÆ°Æ¡ng trÃ¬nh THCS vÃ  lá»ch xem trÆ°á»ng</p>
-    <LeadFormTwoStepEmailFirst
-      formId="tuyen-sinh-form"
-      funnelCode="tuyen-sinh-thcs"
-      schoolLevel="thcs"
-      submitText="ÄÄng kÃ½ ngay"
-      successMessage="Cáº£m Æ¡n Ba/Máº¹ ÄÃ£ ÄÄng kÃ½! Bá» pháº­n Tuyá»n sinh sáº½ liÃªn há» trong vÃ²ng 24h Äá» tÆ° váº¥n chi tiáº¿t."
-    />
+    <h2 class="form-heading">Nhận hồ sơ từ tháng 3-5/2026 — Số suất hạn chế, đặt chỗ sớm</h2>
+    <p class="form-subheading">Hàng năm, 200+ phụ huynh muốn con vào Việt Anh nhưng trường chỉ có khoảng 100 suất.</p>
+    <LeadFormTwoStepEmailFirst formId="tuyen-sinh-form" funnelCode="tuyen-sinh-thcs" schoolLevel="thcs" submitText="Đăng ký tư vấn ngay" successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để sắp xếp lịch tham quan & tư vấn." />
   </div>
 
-  <div slot="faq">
-    <FAQSection items={faqItems} title="CÃ¢u há»i thÆ°á»ng gáº·p vá» THCS Viá»t Anh" />
-  </div>
+  <div slot="faq"><FAQSection items={faqItems} title="Câu hỏi phổ biến từ phụ huynh" /></div>
 </SqueezePageLayout>
 
 <style>
-  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
-  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; }
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
   .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
   .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .content-card { padding: 2rem; background: white; border: 1px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
-  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
-  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #1F4E79; margin-bottom: 1rem; }
-  .content-card p { font-size: 0.95rem; line-height: 1.6; color: #666666; }
-  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #1F4E79; margin-bottom: 0.5rem; }
-  .form-subheading { font-size: 1rem; color: #666666; margin-bottom: 2rem; }
-  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
 </style>

@@ -1,15 +1,17 @@
 {
   "name": "truongvietanh-staging",
+  "main": "./src/staging-worker.js",
   "compatibility_date": "2026-03-17",
   "workers_dev": true,
   "routes": [
     {
-      "pattern": "staging.truongvietanh.com",
-      "custom_domain": true
+      "pattern": "staging.truongvietanh.com/*",
+      "zone_name": "truongvietanh.com"
     }
   ],
   "assets": {
-    "directory": "./dist"
+    "directory": "./dist",
+    "binding": "ASSETS"
   },
   "observability": {
     "enabled": true

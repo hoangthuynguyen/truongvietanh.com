@@ -1,0 +1,520 @@
+---
+/* Giá»i Thiá»u Báº¡n BÃ¨ â Referral Program Landing Page */
+const pageTitle = 'Giá»i Thiá»u Báº¡n BÃ¨ â Nháº­n Ngay Há»c Bá»ng 10 Triá»u + QuÃ  Táº·ng';
+const pageDescription = 'Giá»i thiá»u báº¡n bÃ¨ Äáº¿n Máº§m Non Viá»t Anh: Nháº­n há»c bá»ng 10 triá»u + quÃ  táº·ng cho cáº£ hai gia ÄÃ¬nh. KhÃ´ng giá»i háº¡n sá» lÆ°á»£t giá»i thiá»u. Ãp dá»¥ng táº¥t cáº£ cÆ¡ sá».';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/gioi-thieu';
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style is:inline>
+    :root {
+      --n: #0C1E38;
+      --p: #4F46E5;
+      --pd: #3F3AC0;
+      --w: #fff;
+      --g1: #F5F7FA;
+      --g2: #DFE3E8;
+      --g6: #5F6B7A;
+      --g8: #1C2A3A;
+      --gn: #1AAB6E;
+      --f: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      color: var(--w);
+      background: linear-gradient(165deg, #0A0E1A 0%, #1A1535 40%, var(--n) 100%);
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    /* Logo */
+    .logo-bar {
+      text-align: center;
+      padding: 20px 12px 0;
+    }
+    .logo-bar img {
+      height: 64px;
+      opacity: .9;
+    }
+
+    /* Layout */
+    .wrap {
+      display: flex;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 20px 16px 32px;
+      gap: 44px;
+      align-items: center;
+      min-height: calc(100vh - 84px);
+      min-height: calc(100dvh - 84px);
+    }
+    .L { flex: 1; }
+    .R { width: 480px; flex-shrink: 0; }
+
+    /* Badge */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(79,70,229,.2);
+      border: 1px solid rgba(79,70,229,.35);
+      color: var(--p);
+      padding: 6px 16px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .badge .dot {
+      width: 6px;
+      height: 6px;
+      background: var(--p);
+      border-radius: 50%;
+      animation: p 1.5s infinite;
+    }
+    @keyframes p {
+      0%, 100% { opacity: 1; }
+      50% { opacity: .3; }
+    }
+
+    /* Heading */
+    h1 {
+      font-family: 'Montserrat', var(--f);
+      font-size: clamp(28px, 4.5vw, 38px);
+      font-weight: 800;
+      line-height: 1.18;
+      margin-bottom: 20px;
+    }
+    h1 em {
+      color: var(--p);
+      font-style: normal;
+    }
+
+    /* Perks list */
+    .perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .perks li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+      color: rgba(255,255,255,.85);
+    }
+    .perks .ic {
+      width: 32px;
+      height: 32px;
+      background: rgba(255,255,255,.08);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      flex-shrink: 0;
+    }
+
+    /* Social proof */
+    .proof {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(255,255,255,.06);
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,.08);
+      margin-bottom: 16px;
+    }
+    .proof b {
+      font-size: 26px;
+      color: var(--p);
+      line-height: 1;
+    }
+    .proof span {
+      font-size: 14px;
+      color: rgba(255,255,255,.55);
+      line-height: 1.3;
+    }
+
+    /* Footer contact */
+    .foot {
+      font-size: 14px;
+      color: rgba(255,255,255,.5);
+      text-align: center;
+    }
+    .foot a {
+      color: var(--p);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    /* FORM CARD */
+    .F {
+      background: var(--w);
+      border-radius: 20px;
+      padding: 32px 28px;
+      box-shadow: 0 20px 60px rgba(0,0,0,.4);
+      color: var(--g8);
+    }
+    .F h2 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--n);
+      text-align: center;
+      line-height: 1.25;
+      margin-bottom: 4px;
+    }
+    .F .fd {
+      font-size: 16px;
+      color: var(--g6);
+      text-align: center;
+      margin-bottom: 18px;
+    }
+    .F .fd b { color: var(--p); }
+
+    /* Step dots */
+    .sd {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+    .sd i {
+      display: block;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--g2);
+      width: 30px;
+      transition: .3s;
+    }
+    .sd i.on { background: var(--p); width: 48px; }
+    .sd i.ok { background: var(--gn); }
+
+    /* Form fields */
+    .fg { margin-bottom: 14px; }
+    .fg label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--g8);
+      margin-bottom: 4px;
+    }
+    .fg input {
+      width: 100%;
+      padding: 14px 14px;
+      border: 2px solid var(--g2);
+      border-radius: 10px;
+      font-size: 16px;
+      font-family: var(--f);
+      background: var(--g1);
+      transition: .15s;
+    }
+    .fg input:focus {
+      outline: 0;
+      border-color: var(--p);
+      background: var(--w);
+      box-shadow: 0 0 0 3px rgba(79,70,229,.12);
+    }
+
+    /* Buttons */
+    .btn {
+      width: 100%;
+      padding: 18px;
+      border: none;
+      border-radius: 11px;
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      font-family: var(--f);
+      transition: all .2s;
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .bp {
+      background: var(--p);
+      color: var(--w);
+      box-shadow: 0 4px 16px rgba(79,70,229,.35);
+    }
+    .bp:hover {
+      background: var(--pd);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(79,70,229,.4);
+    }
+    .btn:disabled {
+      opacity: .5;
+      cursor: default;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* Form meta */
+    .fm {
+      text-align: center;
+      font-size: 12px;
+      color: var(--g6);
+      margin-top: 10px;
+    }
+    .fm a {
+      color: var(--p);
+      font-weight: 600;
+    }
+    .fb {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--g6);
+    }
+
+    /* Steps */
+    .s2, .sok { display: none; }
+    .sok {
+      text-align: center;
+      padding: 16px 0;
+    }
+    .sok .ck {
+      font-size: 40px;
+      margin-bottom: 8px;
+    }
+    .sok h3 {
+      font-size: 22px;
+      color: var(--n);
+      font-weight: 800;
+    }
+    .sok p {
+      font-size: 16px;
+      color: var(--g6);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+    .sok a {
+      color: var(--p);
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 17px;
+    }
+
+    /* Responsive */
+    @media (max-width: 800px) {
+      .wrap {
+        flex-direction: column;
+        padding: 16px 12px 24px;
+        gap: 24px;
+        min-height: auto;
+      }
+      .L {
+        text-align: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+      }
+      h1 { font-size: 26px; }
+      .perks {
+        align-items: flex-start;
+        max-width: 340px;
+      }
+      .proof { justify-content: center; }
+      .R { width: 100%; max-width: 380px; }
+      .F { padding: 26px 20px; }
+    }
+
+    /* Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');
+  </style>
+
+  <!-- GTM dataLayer -->
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'page_view',
+      'page_title': 'Giá»i Thiá»u Báº¡n BÃ¨ - Máº§m Non',
+      'page_url': 'https://truongvietanh.com/tuyen-sinh/mam-non/gioi-thieu',
+      'school_level': 'mam-non',
+      'funnel_code': 'referral-mn'
+    });
+  </script>
+</head>
+<body>
+
+  <div class="logo-bar">
+    <img src="/images/logo-viet-anh.png" alt="TrÆ°á»ng Viá»t Anh" loading="lazy" />
+  </div>
+
+  <div class="wrap">
+    <div class="L">
+      <div class="badge">
+        <span class="dot"></span>
+        ð ChÆ°Æ¡ng trÃ¬nh giá»i thiá»u
+      </div>
+      <h1>
+        Giá»i thiá»u báº¡n bÃ¨<br/>
+        <em>Nháº­n há»c bá»ng 10 triá»u</em><br/>
+        + QuÃ  táº·ng cho cáº£ hai
+      </h1>
+      <ul class="perks">
+        <li><div class="ic">ð°</div> Há»c bá»ng 10 triá»u cho báº¡n bÃ¨ ÄÆ°á»£c giá»i thiá»u</li>
+        <li><div class="ic">ð</div> QuÃ  táº·ng Äáº·c biá»t cho gia ÄÃ¬nh giá»i thiá»u</li>
+        <li><div class="ic">ð«</div> Ãp dá»¥ng cho táº¥t cáº£ cÆ¡ sá»</li>
+        <li><div class="ic">â¾ï¸</div> KhÃ´ng giá»i háº¡n sá» lÆ°á»£t giá»i thiá»u</li>
+        <li><div class="ic">â¡</div> Nháº­n thÆ°á»ng ngay khi báº¡n bÃ¨ ÄÄng kÃ½</li>
+      </ul>
+      <div class="proof">
+        <b>89</b>
+        <span>gia ÄÃ¬nh ÄÃ£ nháº­n thÆ°á»ng</span>
+      </div>
+      <div class="foot">
+        ð <a href="tel:0916961409">0916 961 409</a> Â· truongvietanh.com
+      </div>
+    </div>
+
+    <div class="R">
+      <div class="F">
+        <!-- Step 1: Email -->
+        <div class="s1" id="s1">
+          <div class="sd"><i class="on"></i><i></i></div>
+          <h2>Giá»i thiá»u báº¡n bÃ¨ ngay</h2>
+          <div class="fd">Nháº­n thÆ°á»ng <b>khÃ´ng giá»i háº¡n</b></div>
+          <form id="f1">
+            <div class="fg">
+              <label>Email cá»§a ba/máº¹</label>
+              <input type="email" id="email" placeholder="email@example.com" autocomplete="email" required />
+            </div>
+            <button type="submit" class="btn bp" id="b1">Báº¯t Äáº§u giá»i thiá»u â</button>
+          </form>
+          <div class="fm">ð Báº£o máº­t Â· TÆ° váº¥n trong 5 phÃºt</div>
+          <div class="fb">
+            <span>â Miá»n phÃ­</span>
+            <span>â KhÃ´ng rÃ ng buá»c</span>
+          </div>
+        </div>
+
+        <!-- Step 2: Name + Phone + Friend Info -->
+        <div class="s2" id="s2">
+          <div class="sd"><i class="ok"></i><i class="on"></i></div>
+          <h2>ThÃªm 1 bÆ°á»c â nháº­n quÃ¡!</h2>
+          <div class="fd">TÆ° váº¥n viÃªn gá»i trong <b>5 phÃºt</b></div>
+          <form id="f2">
+            <div class="fg">
+              <label>Há» tÃªn ba/máº¹</label>
+              <input type="text" id="nm" placeholder="Nguyá»n VÄn A" required />
+            </div>
+            <div class="fg">
+              <label>Sá» Äiá»n thoáº¡i (Zalo)</label>
+              <input type="tel" id="ph" placeholder="0912 345 678" required />
+            </div>
+            <div class="fg">
+              <label>TÃªn báº¡n giá»i thiá»u</label>
+              <input type="text" id="fnm" placeholder="Tráº§n Thá» B" required />
+            </div>
+            <div class="fg">
+              <label>SÄT báº¡n</label>
+              <input type="tel" id="fph" placeholder="0987 654 321" required />
+            </div>
+            <button type="submit" class="btn bp" id="b2">Gá»­i giá»i thiá»u ngay ð</button>
+          </form>
+          <div class="fm"><a href="#" id="sk">Bá» qua â</a></div>
+        </div>
+
+        <!-- Success -->
+        <div class="sok" id="sok">
+          <div class="ck">ð</div>
+          <h3>Giá»i thiá»u thÃ nh cÃ´ng!</h3>
+          <p>TÆ° váº¥n viÃªn gá»i trong 5 phÃºt<br/>ð <a href="tel:0916961409">0916 961 409</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline>
+    const WEBHOOK = 'https://hook.us2.make.com/2xnm31idzv2otvu5ump548nea04';
+    const $ = s => document.getElementById(s);
+
+    $('f1').onsubmit = async e => {
+      e.preventDefault();
+      const b = $('b1'), v = $('email').value.trim();
+      if (!v) return;
+      b.disabled = 1;
+      b.textContent = 'Äang gá»­i...';
+      try {
+        await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            step: 'partial_capture',
+            email: v,
+            source: 'referral_mn',
+            page: window.location.href,
+            utm_source: new URLSearchParams(location.search).get('utm_source') || '',
+            utm_medium: new URLSearchParams(location.search).get('utm_medium') || '',
+            utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (err) {
+        console.error('[LeadForm] Step 1 error:', err);
+      }
+      $('s1').style.display = 'none';
+      $('s2').style.display = 'block';
+      window.dataLayer?.push({ event: 'lead_s1', variant: 'referral', email: v });
+    };
+
+    $('f2').onsubmit = async e => {
+      e.preventDefault();
+      $('b2').disabled = 1;
+      try {
+        await fetch(WEBHOOK, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            step: 'full_submit',
+            email: $('email').value.trim(),
+            fullName: $('nm').value.trim(),
+            phone: $('ph').value.trim(),
+            friendName: $('fnm').value.trim(),
+            friendPhone: $('fph').value.trim(),
+            source: 'referral_mn',
+            page: window.location.href,
+            timestamp: new Date().toISOString()
+          })
+        });
+      } catch (err) {
+        console.error('[LeadForm] Step 2 error:', err);
+      }
+      ok();
+      window.dataLayer?.push({ event: 'lead_done', variant: 'referral' });
+    };
+
+    $('sk').onclick = e => { e.preventDefault(); ok(); };
+
+    function ok() {
+      const name = $('nm')?.value?.trim() || '';
+      const email = $('email')?.value?.trim() || '';
+      window.location.href = '/tuyen-sinh/mam-non/gioi-thieu/cam-on?name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,435 @@
+---
+/* Sales Page â ChÆ°Æ¡ng TrÃ¬nh Máº§m Non Viá»t Anh */
+const pageTitle = 'ChÆ°Æ¡ng TrÃ¬nh Máº§m Non Viá»t Anh â NÆ¡i Con YÃªu PhÃ¡t Triá»n ToÃ n Diá»n';
+const pageDescription = 'KhÃ¡m phÃ¡ chÆ°Æ¡ng trÃ¬nh máº§m non song ngá»¯ Cambridge táº¡i TrÆ°á»ng Viá»t Anh. MÃ´i trÆ°á»ng an toÃ n, yÃªu thÆ°Æ¡ng, phÃ¡t triá»n toÃ n diá»n cho bÃ© tá»« 18 thÃ¡ng.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/chuong-trinh';
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style is:inline>
+    :root {
+      --n: #0C1E38;
+      --b: #1A4D7C;
+      --o: #E8792B;
+      --od: #CF6A22;
+      --w: #fff;
+      --g1: #F5F7FA;
+      --g2: #DFE3E8;
+      --g6: #5F6B7A;
+      --g8: #1C2A3A;
+      --gn: #1AAB6E;
+      --f: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      color: var(--g8);
+      background: var(--w);
+    }
+
+    /* Nav */
+    .nav {
+      background: var(--w);
+      border-bottom: 1px solid var(--g2);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav img { height: 44px; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(165deg, #0A1628 0%, var(--n) 40%, var(--b) 100%);
+      color: var(--w);
+      text-align: center;
+      padding: 64px 24px 56px;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', var(--f);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero p {
+      font-size: 20px;
+      color: rgba(255,255,255,.75);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .hero .cta-btn {
+      display: inline-block;
+      background: var(--o);
+      color: var(--w);
+      padding: 16px 40px;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(232,121,43,.35);
+      transition: all .2s;
+    }
+    .hero .cta-btn:hover {
+      background: var(--od);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(232,121,43,.4);
+    }
+
+    /* Section */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+    .section h2 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--n);
+      text-align: center;
+      margin-bottom: 40px;
+      line-height: 1.3;
+    }
+
+    /* Feature grid */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--g1);
+      border-radius: 20px;
+      padding: 32px 24px;
+      transition: transform .2s;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-card .emoji { font-size: 36px; margin-bottom: 12px; }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--b);
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 16px;
+      color: var(--g6);
+      line-height: 1.6;
+    }
+
+    /* Benefits list */
+    .benefits {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .benefits li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .benefits .emoji { font-size: 32px; flex-shrink: 0; }
+    .benefits h4 {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--b);
+      margin-bottom: 4px;
+    }
+    .benefits p {
+      font-size: 16px;
+      color: var(--g6);
+      line-height: 1.5;
+    }
+
+    /* Stats */
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .stat-item {
+      background: var(--g1);
+      border-radius: 16px;
+      padding: 24px 32px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-item .num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--b);
+      display: block;
+    }
+    .stat-item .label {
+      font-size: 14px;
+      color: var(--g6);
+      margin-top: 4px;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--n) 0%, var(--b) 100%);
+      color: var(--w);
+      border-radius: 24px;
+      padding: 48px 36px;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 900px;
+    }
+    .cta-banner h3 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .cta-banner p {
+      font-size: 18px;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .cta-banner .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cta-banner a {
+      display: inline-block;
+      padding: 16px 32px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all .2s;
+      font-family: var(--f);
+    }
+    .cta-banner .btn-primary {
+      background: var(--o);
+      color: var(--w);
+      box-shadow: 0 4px 16px rgba(232,121,43,.35);
+    }
+    .cta-banner .btn-primary:hover {
+      background: var(--od);
+      transform: translateY(-2px);
+    }
+    .cta-banner .btn-secondary {
+      background: rgba(255,255,255,.15);
+      color: var(--w);
+      border: 2px solid rgba(255,255,255,.3);
+    }
+    .cta-banner .btn-secondary:hover {
+      background: rgba(255,255,255,.25);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--g6);
+      font-size: 14px;
+    }
+    .footer a {
+      color: var(--o);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* Divider */
+    .section-divider {
+      height: 1px;
+      background: var(--g2);
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 700px) {
+      .features { grid-template-columns: 1fr; }
+      .hero { padding: 48px 16px 40px; }
+      .hero p { font-size: 17px; }
+      .section { padding: 40px 16px; }
+      .section h2 { font-size: 24px; }
+      .cta-banner { padding: 36px 20px; margin: 0 16px; }
+      .cta-banner h3 { font-size: 22px; }
+      .cta-banner .btn-group { flex-direction: column; }
+      .cta-banner a { width: 100%; text-align: center; }
+      .stat-item { min-width: 100px; padding: 16px 20px; }
+      .stat-item .num { font-size: 26px; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');
+  </style>
+
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'page_view',
+      'page_title': 'ChÆ°Æ¡ng TrÃ¬nh Máº§m Non',
+      'page_url': 'https://truongvietanh.com/tuyen-sinh/mam-non/chuong-trinh',
+      'school_level': 'mam-non',
+      'funnel_code': 'sales-page-mn'
+    });
+  </script>
+</head>
+<body>
+
+  <div class="nav">
+    <img src="/images/logo-viet-anh.png" alt="TrÆ°á»ng Viá»t Anh" />
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>ChÆ°Æ¡ng trÃ¬nh Máº§m Non TrÆ°á»ng Viá»t Anh</h1>
+    <p>NÆ¡i con yÃªu ÄÆ°á»£c yÃªu thÆ°Æ¡ng vÃ  phÃ¡t triá»n toÃ n diá»n má»i ngÃ y</p>
+    <a href="/tuyen-sinh/mam-non/tham-quan-truong" class="cta-btn">
+      Äáº·t lá»ch School Tour cho con ngay
+    </a>
+  </div>
+
+  <!-- Stats -->
+  <div class="section">
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="num">15+</span>
+        <span class="label">NÄm kinh nghiá»m</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">5</span>
+        <span class="label">CÆ¡ sá» táº¡i TPHCM</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">2.000+</span>
+        <span class="label">Phá»¥ huynh tin tÆ°á»ng</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">100%</span>
+        <span class="label">PH hÃ i lÃ²ng</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Why Us -->
+  <div class="section">
+    <h2>Cha máº¹ tin tÆ°á»ng gá»­i con Äáº¿n ÄÃ¢y vÃ¬...</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="emoji">ð¡</div>
+        <h3>MÃ´i trÆ°á»ng yÃªu thÆ°Æ¡ng nhÆ° mÃ¡i nhÃ  thá»© hai</h3>
+        <p>Con ÄÆ°á»£c chÄm sÃ³c bá»i Äá»i ngÅ© cÃ´ giÃ¡o táº­n tÃ¢m, giÃ u kinh nghiá»m vÃ  luÃ´n Äáº·t tÃ¬nh yÃªu thÆ°Æ¡ng lÃªn hÃ ng Äáº§u. Má»i ngÃ y con Äáº¿n trÆ°á»ng Äá»u lÃ  má»t ngÃ y vui.</p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">ð</div>
+        <h3>ChÆ°Æ¡ng trÃ¬nh song ngá»¯ Cambridge</h3>
+        <p>PhÃ¡t triá»n toÃ n diá»n 5 lÄ©nh vá»±c: Thá» cháº¥t, NgÃ´n ngá»¯, Nháº­n thá»©c, Tháº©m má»¹ vÃ  TÃ¬nh cáº£m â XÃ£ há»i theo tiÃªu chuáº©n quá»c táº¿ phÃ¹ há»£p tráº» máº§m non.</p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">ð¡ï¸</div>
+        <h3>KhÃ´ng gian an toÃ n & sÃ¡ng táº¡o</h3>
+        <p>Lá»p há»c rá»ng rÃ£i, khu vui chÆ¡i ngoÃ i trá»i an toÃ n, khu vá»±c Än uá»ng sáº¡ch sáº½ vá»i thá»±c ÄÆ¡n dinh dÆ°á»¡ng cÃ¢n báº±ng thay Äá»i hÃ ng ngÃ y.</p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">ð¨</div>
+        <h3>Hoáº¡t Äá»ng ngoáº¡i khÃ³a phong phÃº</h3>
+        <p>Ãm nháº¡c, Má»¹ thuáº­t, Thá» thao, Ká»¹ nÄng sá»ng, Tráº£i nghiá»m thiÃªn nhiÃªn â giÃºp con phÃ¡t triá»n hÃ i hÃ²a vá» trÃ­ tuá» vÃ  cáº£m xÃºc.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Benefits -->
+  <div class="section">
+    <h2>Con sáº½ ÄÆ°á»£c gÃ¬ khi há»c táº¡i Máº§m Non Viá»t Anh?</h2>
+    <ul class="benefits">
+      <li>
+        <span class="emoji">ð±</span>
+        <div>
+          <h4>PhÃ¡t triá»n toÃ n diá»n</h4>
+          <p>Tá»« thá» cháº¥t, trÃ­ tuá» Äáº¿n cáº£m xÃºc vÃ  ká»¹ nÄng sá»ng â má»i ngÃ y con Äá»u tiáº¿n bá».</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">ð£ï¸</span>
+        <div>
+          <h4>Tiáº¿ng Anh song ngá»¯ tá»± nhiÃªn</h4>
+          <p>Há»c qua trÃ² chÆ¡i, bÃ i hÃ¡t vÃ  hoáº¡t Äá»ng thá»±c táº¿ hÃ ng ngÃ y vá»i giÃ¡o viÃªn báº£n ngá»¯.</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">â¤ï¸</span>
+        <div>
+          <h4>TÃ¬nh yÃªu thÆ°Æ¡ng & sá»± tá»± tin</h4>
+          <p>Con ÄÆ°á»£c tÃ´n trá»ng, ÄÆ°á»£c láº¯ng nghe vÃ  ÄÆ°á»£c khuyáº¿n khÃ­ch thá» hiá»n báº£n thÃ¢n.</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">ð</span>
+        <div>
+          <h4>Dinh dÆ°á»¡ng cÃ¢n báº±ng</h4>
+          <p>Thá»±c ÄÆ¡n ÄÆ°á»£c chuyÃªn gia dinh dÆ°á»¡ng thiáº¿t káº¿, thay Äá»i hÃ ng ngÃ y, Äáº£m báº£o con Än ngon vÃ  Äá»§ cháº¥t.</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">ð©âð«</span>
+        <div>
+          <h4>Äá»i ngÅ© giÃ¡o viÃªn táº­n tÃ¢m</h4>
+          <p>100% giÃ¡o viÃªn cÃ³ báº±ng sÆ° pháº¡m máº§m non, ÄÆ°á»£c ÄÃ o táº¡o chuyÃªn sÃ¢u vÃ  yÃªu tráº».</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CTA Banner -->
+  <div style="padding: 0 24px 56px;">
+    <div class="cta-banner">
+      <h3>Sáºµn sÃ ng Äá»ng hÃ nh cÃ¹ng con yÃªu trÃªn hÃ nh trÃ¬nh Äáº§u Äá»i?</h3>
+      <p>HÃ£y Äá» TrÆ°á»ng Viá»t Anh trá» thÃ nh nÆ¡i con báº¯t Äáº§u nhá»¯ng bÆ°á»c chÃ¢n Äáº§u tiÃªn má»t cÃ¡ch háº¡nh phÃºc vÃ  an toÃ n.</p>
+      <div class="btn-group">
+        <a href="/tuyen-sinh/mam-non/tham-quan-truong" class="btn-primary">
+          Äáº·t lá»ch School Tour cho con ngay
+        </a>
+        <a href="/tuyen-sinh/mam-non/dang-ky-som" class="btn-secondary">
+          Xem Æ°u ÄÃ£i ÄÄng kÃ½ sá»m â Giáº£m 15%
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    ð <a href="tel:0916961409">0916 961 409</a> Â·
+    <a href="https://zalo.me/0916961409" target="_blank">Zalo</a> Â·
+    truongvietanh.com
+  </div>
+
+</body>
+</html>

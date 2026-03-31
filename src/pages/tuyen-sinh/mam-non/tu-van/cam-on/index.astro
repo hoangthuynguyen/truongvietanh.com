@@ -1,0 +1,289 @@
+---
+/* Thank You â Pain Point / Consultation */
+const pageTitle = 'ÄÄng KÃ½ TÆ° Váº¥n ThÃ nh CÃ´ng â Máº§m Non Viá»t Anh';
+const pageDescription = 'Cáº£m Æ¡n anh/chá» ÄÃ£ ÄÄng kÃ½ tÆ° váº¥n. ChuyÃªn gia sáº½ gá»i tÆ° váº¥n trong 5 phÃºt.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/tu-van/cam-on';
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <style is:inline>
+    :root {
+      --n: #0C1E38;
+      --b: #1A4D7C;
+      --r: #E11D48;
+      --rd: #BE123C;
+      --w: #fff;
+      --g1: #F5F7FA;
+      --g6: #5F6B7A;
+      --g8: #1C2A3A;
+      --f: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      color: var(--g8);
+      background: linear-gradient(165deg, #FFF5F7 0%, #FFE4EA 40%, #FFD6DF 100%);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-bar {
+      text-align: center;
+      padding: 24px 16px 0;
+    }
+    .logo-bar img { height: 56px; opacity: .85; }
+
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .card {
+      background: var(--w);
+      border-radius: 24px;
+      padding: 48px 36px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 16px 60px rgba(0,0,0,.08);
+      text-align: center;
+    }
+
+    .icon { font-size: 56px; margin-bottom: 16px; }
+
+    h1 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--n);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .msg {
+      font-size: 18px;
+      color: var(--g6);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .msg strong { color: var(--n); }
+
+    .countdown-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(225,29,72,.1);
+      border: 1px solid rgba(225,29,72,.2);
+      color: var(--r);
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+
+    .contact-box {
+      background: var(--g1);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    .contact-box .label {
+      font-size: 14px;
+      color: var(--g6);
+      font-weight: 600;
+    }
+    .contact-box .phones {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .contact-box a {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--n);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .contact-box a:hover { color: var(--r); }
+    .zalo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #0068FF;
+      color: var(--w);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .divider {
+      height: 1px;
+      background: #E8ECF0;
+      margin: 0 0 28px;
+    }
+
+    .cta-label {
+      font-size: 14px;
+      color: var(--g6);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .ctas { display: flex; flex-direction: column; gap: 12px; }
+    .cta {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 800;
+      text-decoration: none;
+      text-align: center;
+      transition: all .2s;
+      font-family: var(--f);
+    }
+    .cta-primary {
+      background: var(--r);
+      color: var(--w);
+      box-shadow: 0 4px 16px rgba(225,29,72,.3);
+    }
+    .cta-primary:hover {
+      background: var(--rd);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(225,29,72,.35);
+    }
+    .cta-secondary {
+      background: var(--w);
+      color: var(--r);
+      border: 2px solid var(--r);
+    }
+    .cta-secondary:hover {
+      background: var(--g1);
+      transform: translateY(-1px);
+    }
+
+    .foot-note {
+      font-size: 13px;
+      color: var(--g6);
+      margin-top: 24px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 36px 20px; }
+      h1 { font-size: 24px; }
+      .msg { font-size: 16px; }
+      .contact-box a { font-size: 18px; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');
+  </style>
+
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'generate_lead',
+      'page_title': 'Thank You - TÆ° Váº¥n Máº§m Non',
+      'page_url': window.location.href,
+      'school_level': 'mam-non',
+      'funnel_code': 'pain-point-mn',
+      'conversion_type': 'thank_you_page'
+    });
+  </script>
+</head>
+<body>
+
+  <div class="logo-bar">
+    <img src="/images/logo-viet-anh.png" alt="TrÆ°á»ng Viá»t Anh" />
+  </div>
+
+  <div class="main">
+    <div class="card">
+      <div class="icon">ð¡</div>
+      <h1>ÄÄng kÃ½ tÆ° váº¥n thÃ nh cÃ´ng!</h1>
+      <p class="msg" id="msg">
+        Cáº£m Æ¡n anh/chá» ÄÃ£ ÄÄng kÃ½ tÆ° váº¥n vá»i Máº§m Non Viá»t Anh.<br/>
+        <strong>ChuyÃªn gia sáº½ gá»i tÆ° váº¥n trong 5 phÃºt</strong> qua Zalo hoáº·c Äiá»n thoáº¡i.
+      </p>
+
+      <div class="countdown-wrap">
+        â° ChuyÃªn gia gá»i trong <span id="cd">5:00</span>
+      </div>
+
+      <div class="contact-box">
+        <span class="label">LiÃªn há» ngay náº¿u cáº§n há» trá»£</span>
+        <div class="phones">
+          <a href="tel:0916961409">ð 0916 961 409</a>
+          <a href="https://zalo.me/0916961409" target="_blank">
+            <span class="zalo-badge">Zalo</span> 0916 961 409
+          </a>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="cta-label">Trong khi chá» chuyÃªn gia gá»i:</div>
+      <div class="ctas">
+        <a href="/tuyen-sinh/mam-non/chuong-trinh" class="cta cta-primary">
+          Xem chÆ°Æ¡ng trÃ¬nh há»c & hoáº¡t Äá»ng cá»§a bÃ©
+        </a>
+        <a href="/tuyen-sinh/mam-non/tham-quan-truong" class="cta cta-secondary">
+          Äáº·t lá»ch School Tour
+        </a>
+      </div>
+
+      <p class="foot-note">
+        ThÃ´ng tin cá»§a anh/chá» ÄÆ°á»£c báº£o máº­t tuyá»t Äá»i.<br/>
+        ChÃºng em ráº¥t mong ÄÆ°á»£c ÄÃ³n con yÃªu Äáº¿n thÄm trÆ°á»ng.
+      </p>
+    </div>
+  </div>
+
+  <script is:inline>
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    if (name) {
+      document.getElementById('msg').innerHTML =
+        'Cáº£m Æ¡n anh/chá» <strong style="color:#E11D48">' + name + '</strong> ÄÃ£ ÄÄng kÃ½ tÆ° váº¥n vá»i Máº§m Non Viá»t Anh.<br/>' +
+        '<strong>ChuyÃªn gia sáº½ gá»i tÆ° váº¥n trong 5 phÃºt</strong> qua Zalo hoáº·c Äiá»n thoáº¡i.';
+    }
+
+    let seconds = 300;
+    const cdEl = document.getElementById('cd');
+    const timer = setInterval(() => {
+      seconds--;
+      const m = Math.floor(seconds / 60);
+      const s = seconds % 60;
+      cdEl.textContent = m + ':' + (s < 10 ? '0' : '') + s;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        cdEl.textContent = 'ngay bÃ¢y giá»...';
+      }
+    }, 1000);
+  </script>
+</body>
+</html>

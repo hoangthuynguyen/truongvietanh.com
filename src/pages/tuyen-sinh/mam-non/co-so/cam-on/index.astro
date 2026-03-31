@@ -1,0 +1,230 @@
+---
+/* Thank You â Campus Selection */
+const pageTitle = 'ÄÄng KÃ½ CÆ¡ Sá» ThÃ nh CÃ´ng â Máº§m Non Viá»t Anh';
+const pageDescription = 'Cáº¡m Æ¡n anh/chá» ÄÃ£ chá»n cÆ¡ sá». TÆ° váº¥n viÃªn cÆ¡ sá» gáº§n nháº¥t sáº½ liÃªn há» trong 5 phÃºt.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/co-so/cam-on';
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <style is:inline>
+    :root {
+      --n: #0C1E38;
+      --b: #1A4D7C;
+      --t: #0D9488;
+      --td: #0F766E;
+      --w: #fff;
+      --g1: #F5F7FA;
+      --g6: #5F6B7A;
+      --g8: #1C2A3A;
+      --f: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      color: var(--g8);
+      background: linear-gradient(165deg, #F0FDFA 0%, #CCFBF1 40%, #B2F5EA 100%);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-bar {
+      text-align: center;
+      padding: 24px 16px 0;
+    }
+    .logo-bar img { height: 56px; opacity: .85; }
+
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .card {
+      background: var(--w);
+      border-radius: 24px;
+      padding: 48px 36px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 16px 60px rgba(0,0,0,.08);
+      text-align: center;
+    }
+
+    .icon { font-size: 56px; margin-bottom: 16px; }
+
+    h1 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--n);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+
+    .msg {
+      font-size: 18px;
+      color: var(--g6);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .msg strong { color: var(--n); }
+
+    .countdown-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(13,148,136,.1);
+      border: 1px solid rgba(13,148,136,.2);
+      color: var(--t);
+      padding: 10px 24px;
+      border-radius: 20px;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 28px;
+    }
+
+    .contact-box {
+      background: var(--g1);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    .contact-box .label {
+      font-size: 14px;
+      color: var(--g6);
+      font-weight: 600;
+    }
+    .contact-box .phones {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .contact-box a {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--n);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .contact-box a:hover { color: var(--t); }
+    .zalo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #0068FF;
+      color: var(--w);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .divider {
+      height: 1px;
+      background: #E8ECF0;
+      margin: 0 0 28px;
+    }
+
+    .cta-label {
+      font-size: 14px;
+      color: var(--g6);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .ctas { display: flex; flex-direction: column; gap: 12px; }
+    .cta {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 800;
+      text-decoration: none;
+      text-align: center;
+      transition: all .2s;
+      font-family: var(--f);
+    }
+    .cta-primary {
+      background: var(--t);
+      color: var(--w);
+      box-shadow: 0 4px 16px rgba(13,148,136,.3);
+    }
+    .cta-primary:hover {
+      background: var(--td);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(13,148,136,.35);
+    }
+    .cta-secondary {
+      background: var(--w);
+      color: var(--t);
+      border: 2px solid var(--t);
+    }
+    .cta-secondary:hover {
+      background: var(--g1);
+      transform: translateY(-1px);
+    }
+
+    .foot-note {
+      font-size: 13px;
+      color: var(--g6);
+      margin-top: 24px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 36px 20px; }
+      h1 { font-size: 24px; }
+      .msg { font-size: 16px; }
+      .contact-box a { font-size: 18px; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');
+  </style>
+
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'generate_lead',
+      'page_title': 'Thank You - Chá»n CÆ¡ Sá» Máº§m Non',
+      'page_url': window.location.href,
+      'school_level': 'mam-non',
+      'funnel_code': 'campus-mn',
+      'conversion_type': 'thank_you_page'
+    });
+  </script>
+</head>
+<body>
+
+  <div class="logo-bar">
+    <img src="/images/logo-viet-anh.png" alt="TrÆ°á»ng Viá»t Anh" />
+  </div>
+
+  <div class="main">
+    <div class="card">
+      <div class="icon">ð</div>
+      <h1>ÄÄng kÃ½ thÃ nh cÃ´ng!</h1>
+      <p class="msg" id="msg">
+        Cáº¡m Æ¡n anh/chá» ÄÃ£ chá»n cÆ¡ sá».<br/>
+        <strong>TÆ° váº¥n viÃªn cÆ¡ sá» gáº§n nháº¥t sáº½ liÃªn há» trong 5 phÃºt</strong> qua Zalo hoæj¹.§«v2I¸vâFþªà¢Â÷à ¢ÆFb6Æ73Ò&6÷VçFF÷vâ×w&#à¢(ûLknªVâf:¦â~¸ÖG&öærÇ7âCÒ&6B#ãS£Â÷7ãà¢ÂöFcà ¢ÆFb6Æ73Ò&6öçF7BÖ&÷#à¢Ç7â6Æ73Ò&Æ&VÂ#äÆ:¦â¸rævî«÷R>ªvâ¹rG.º3Â÷7ãà¢ÆFb6Æ73Ò'öæW2#à¢Æ&VcÒ'FVÃ£ccC#ï	ù9âbcCÂöà¢Æ&VcÒ&GG3¢ò÷¦ÆòæÖRóccC"F&vWCÒ%ö&Ææ²#à¢Ç7â6Æ73Ò'¦ÆòÖ&FvR#å¦ÆóÂ÷7ãâbcC¢Âöà¢ÂöFcà¢ÂöFcà ¢ÆFb6Æ73Ò&FfFW"#ãÂöFcà ¢ÆFb6Æ73Ò&7FÖÆ&VÂ#åG&öær¶6¹ÒLknªVâf:¦â~¸Ö£ÂöFcà¢ÆFb6Æ73Ò&7F2#à¢Æ&VcÒ"÷GWVâ×6æöÖÒÖæöâ÷FÒ×Vâ×G'Vöær"6Æ73Ò&7F7F×&Ö'#à¢I«wBÎ¸¶666ööÂF÷W ¢Âöà¢Æ&VcÒ"÷GWVâ×6æöÖÒÖæöâö6Vöær×G&æ"6Æ73Ò&7F7F×6V6öæF'#à¢VÒ6kjærG,:Ææ¸Ö2bþªBI¹ær>ºv,:¢Âöà¢ÂöFcà ¢Ç6Æ73Ò&fö÷BÖæ÷FR#à¢F;FærFâ>ºvæö6¸²Ikº62.ª6òÞª×BGW¸wBI¹ãÆ'"óà¢6;¦ærVÒ.ªWBÖöærIkº62I;6â6öâ:§RI«öâFH6ÒG,k¹Öærà¢Â÷à¢ÂöFcà¢ÂöFcà ¢Ç67&B3¦æÆæSà¢6öç7B&×2ÒæWrU$Å6V&6&×2væF÷ræÆö6Föâç6V&6°¢6öç7BæÖRÒ&×2ævWBvæÖRr°¢bæÖR°¢Fö7VÖVçBævWDVÆVÖVçD'Bv×6rræææW$DÔÂÐ¢t>ªÒjâæö6¸²Ç7G&öær7GÆSÒ&6öÆ÷#¢3CC#âr²æÖR²sÂ÷7G&öæsâI:26¸Öâ<j>¹òãÆ'"óâr°¢sÇ7G&öæsåLknªVâf:¦â<j>¹ò~ªvâæªWB>«ÒÆ:¦â¸rG&öærR;§CÂ÷7G&öæsâV¦Æòþ«v2I¸vâFþªâs°¢Ð ¢ÆWB6V6öæG2Ò3°¢6öç7B6DVÂÒFö7VÖVçBævWDVÆVÖVçD'Bv6Br°¢6öç7BFÖW"Ò6WDçFW'fÂÓâ°¢6V6öæG2ÒÓ°¢6öç7BÒÒÖFæfÆö÷"6V6öæG2òc°¢6öç7B2Ò6V6öæG2Rc°¢6DVÂçFWD6öçFVçBÒÒ²s¢r²2Âòsr¢rr²3°¢b6V6öæG2ÃÒ°¢6ÆV$çFW'fÂFÖW"°¢6DVÂçFWD6öçFVçBÒvæv,:'v¹Òâââs°¢Ð¢ÒÂ°¢Â÷67&Cà£Âö&öGà£ÂöFÖÃà

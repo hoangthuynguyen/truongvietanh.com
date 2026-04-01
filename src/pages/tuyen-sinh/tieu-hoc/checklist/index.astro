@@ -1,0 +1,109 @@
+---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
+
+const pageTitle = 'Checklist Chọn Trường Tiểu Học – 9 Tiêu Chí Quan Trọng';
+const pageDescription = 'Tải miễn phí Checklist 9 tiêu chí giúp Ba/Mẹ chọn trường Tiểu Học tốt nhất cho con.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc/checklist';
+
+const uspItems = [
+  { icon: '🌍', text: 'Chương trình song ngữ Anh-Việt chuẩn quốc tế' },
+  { icon: '👨‍🏫', text: 'Giáo viên nước ngoài dạy tiếng Anh chuyên sâu' },
+  { icon: '🏆', text: 'Học sinh đạt thành tích xuất sắc các kỳ thi' },
+  { icon: '🎨', text: 'Phương pháp giảng dạy hiện đại, lấy học sinh làm trung tâm' },
+  { icon: '🤝', text: 'Cộng đồng phụ huynh tích cực và gắn kết' },
+  { icon: '⚽', text: 'Hơn 20 CLB ngoại khóa: thể thao, nghệ thuật, STEM' }
+];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục' },
+  { number: '500+', label: 'Học sinh Tiểu Học' },
+  { number: '98%', label: 'Phụ huynh hài lòng' },
+  { number: '3', label: 'Cơ sở tại TPHCM' }
+];
+
+const faqItems = [
+  { question: 'Checklist này có miễn phí không?', answer: 'Hoàn toàn miễn phí. Ba/Mẹ chỉ cần để lại email để nhận tài liệu ngay.' },
+  { question: 'Checklist có áp dụng cho tất cả các trường không?', answer: 'Có, 9 tiêu chí này áp dụng được cho mọi trường tiểu học, giúp Ba/Mẹ đánh giá khách quan.' },
+  { question: 'Ngoài checklist còn nhận được gì?', answer: 'Ba/Mẹ sẽ nhận thêm bảng so sánh trường và lộ trình chuẩn bị vào lớp 1.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="checklist chọn trường, tiêu chí chọn trường tiểu học, trường Việt Anh"
+  schoolLevel="tieu-hoc"
+  funnelCode="checklist-tieu-hoc"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">Checklist 9 Tiêu Chí<br/>Chọn Trường Tiểu Học Tốt Nhất</h1>
+    <p class="hero-subtitle">Tài liệu miễn phí giúp Ba/Mẹ ra quyết định chính xác khi chọn trường cho con</p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section">
+      <h2>Bạn sẽ nhận được gì?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>9 tiêu chí quan trọng</h3>
+          <p>Đánh giá toàn diện: chương trình, giáo viên, cơ sở vật chất, an toàn, dinh dưỡng, ngoại khóa...</p>
+        </div>
+        <div class="content-card">
+          <h3>Bảng so sánh nhanh</h3>
+          <p>Template so sánh các trường tiểu học trong khu vực, giúp Ba/Mẹ nhìn tổng quan nhanh chóng.</p>
+        </div>
+        <div class="content-card">
+          <h3>Lộ trình chuẩn bị</h3>
+          <p>Hướng dẫn từng bước chuẩn bị cho con vào lớp 1, từ 6 tháng trước khi nhập học.</p>
+        </div>
+        <div class="content-card">
+          <h3>Tư vấn miễn phí</h3>
+          <p>Đội ngũ tư vấn Trường Việt Anh sẵn sàng giải đáp mọi thắc mắc của Ba/Mẹ.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Tải Checklist miễn phí</h2>
+    <p class="form-subheading">Nhập email để nhận ngay tài liệu qua hộp thư</p>
+    <LeadFormTwoStepEmailFirst
+      formId="tuyen-sinh-form"
+      funnelCode="checklist-tieu-hoc"
+      schoolLevel="tieu-hoc"
+      submitText="Nhận Checklist"
+      successMessage="Checklist đã được gửi qua email! Vui lòng kiểm tra hộp thư (và thư mục Spam)."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi về Checklist chọn trường" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 1px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #1F4E79; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.6; color: #666666; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #1F4E79; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #666666; margin-bottom: 2rem; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } }
+</style>

@@ -1,0 +1,84 @@
+---
+const pageTitle = 'Cảm Ơn – School Tour Tiểu Học | Trường Việt Anh';
+const pageDescription = 'Cảm ơn Ba/Mẹ đã đăng ký School Tour Tiểu Học tại Trường Việt Anh.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc/tham-quan-truong/cam-on';
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <style is:inline>
+    :root{--b:#1F4E79;--o:#E8792B;--w:#fff;--g6:#666;--f:'Open Sans',system-ui,-apple-system,sans-serif}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--f);-webkit-font-smoothing:antialiased;font-size:16px;color:#1C2A3A;background:linear-gradient(165deg,#F0FDF4 0%,#DCFCE7 40%,#BBF7D0 100%);min-height:100vh;display:flex;flex-direction:column}
+    .logo-bar{text-align:center;padding:24px 16px 0}
+    .logo-bar span{font-family:'Montserrat',sans-serif;font-weight:700;font-size:1.2rem;color:var(--b)}
+    .main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 16px 40px}
+    .card{background:var(--w);border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.08);max-width:480px;width:100%;padding:40px 28px;text-align:center}
+    .icon{width:72px;height:72px;border-radius:50%;background:#16A34A15;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 20px}
+    h1{font-family:'Montserrat',sans-serif;font-size:1.75rem;font-weight:800;color:var(--b);margin-bottom:8px;line-height:1.25}
+    h1 .name{color:var(--o)}
+    .msg{font-size:1.05rem;color:var(--g6);line-height:1.7;margin-bottom:24px}
+    .msg strong{color:#1C2A3A}
+    .countdown-box{display:inline-flex;align-items:center;gap:8px;background:#FFF7ED;color:#B45309;padding:10px 20px;border-radius:16px;font-size:.9rem;font-weight:500;margin-bottom:28px}
+    .countdown-box .time{font-weight:700;font-family:'Montserrat',sans-serif}
+    .cta-stack{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+    .cta-btn{display:block;padding:14px 24px;border-radius:14px;text-decoration:none;font-weight:600;font-size:1rem;text-align:center;transition:all .2s}
+    .cta-primary{background:var(--o);color:var(--w)}
+    .cta-primary:hover{background:#D96A1F;transform:translateY(-2px)}
+    .cta-secondary{background:transparent;color:var(--b);border:2px solid var(--b)}
+    .cta-secondary:hover{background:var(--b);color:var(--w)}
+    .contact-info{display:flex;gap:12px;justify-content:center;margin-bottom:20px}
+    .contact-btn{padding:10px 16px;border-radius:10px;text-decoration:none;font-size:.85rem;font-weight:600}
+    .phone-btn{background:#1F4E79;color:var(--w)}
+    .zalo-btn{background:#0068FF;color:var(--w)}
+    .footer-note{font-size:.75rem;color:#999;margin-top:16px}
+    @media(max-width:480px){.card{padding:28px 20px}h1{font-size:1.5rem}.msg{font-size:.95rem}}
+  </style>
+
+  <script is:inline>
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({event:'generate_lead',page_title:'Cảm Ơn – School Tour Tiểu Học | Trường Việt Anh',school_level:'tieu-hoc',funnel_code:'tham-quan-truong-tieu-hoc'});
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600&display=swap&subset=vietnamese');</style>
+</head>
+<body>
+  <div class="logo-bar"><span>Trường Việt Anh</span></div>
+  <div class="main">
+    <div class="card">
+      <div class="icon">🏫</div>
+      <h1>Cảm ơn Ba/Mẹ <span class="name" id="parentName"></span>!</h1>
+      <p class="msg">Đã nhận yêu cầu đặt lịch tham quan trường!<br><strong>Tư vấn viên sẽ gọi trong 5 phút</strong> để xác nhận ngày giờ tham quan phù hợp cho gia đình anh/chị.</p>
+      <div class="countdown-box">⏰ Tư vấn viên sẽ gọi trong <span class="time" id="countdown">5:00</span></div>
+      <div class="contact-info">
+        <a href="tel:+84916961409" class="contact-btn phone-btn">📞 Gọi ngay</a>
+        <a href="https://zalo.me/0916961409" class="contact-btn zalo-btn" target="_blank">💬 Zalo</a>
+      </div>
+      <div class="cta-stack">
+        <a href="/tuyen-sinh/tieu-hoc/chuong-trinh" class="cta-btn cta-primary">Xem trước chương trình Tiểu Học</a>
+        <a href="/tuyen-sinh/tieu-hoc/checklist" class="cta-btn cta-secondary">Tải Checklist chọn trường</a>
+      </div>
+      <p class="footer-note">Thông tin được bảo mật tuyệt đối theo chính sách của Trường Việt Anh.</p>
+    </div>
+  </div>
+
+  <script is:inline>
+    (function(){
+      var p=new URLSearchParams(window.location.search);
+      var n=p.get('name');
+      if(n)document.getElementById('parentName').textContent=n;
+      var s=300,el=document.getElementById('countdown');
+      var t=setInterval(function(){s--;if(s<=0){clearInterval(t);el.textContent='Đang kết nối...';return}var m=Math.floor(s/60),sc=s%60;el.textContent=m+':'+(sc<10?'0':'')+sc},1e3);
+    })();
+  </script>
+</body>
+</html>

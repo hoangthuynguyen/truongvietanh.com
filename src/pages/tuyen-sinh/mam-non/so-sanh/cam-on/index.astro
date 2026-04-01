@@ -1,0 +1,288 @@
+---
+/* Thank You — Comparison / PDF Delivery */
+const pageTitle = 'Đã Gửi Bảng So Sánh — Mầm Non Việt Anh';
+const pageDescription = 'Bảng so sánh chi tiết đã được gửi qua email.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh/cam-on';
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <style is:inline>
+    :root {
+      --n: #0C1E38;
+      --b: #1A4D7C;
+      --o: #E8792B;
+      --od: #CF6A22;
+      --w: #fff;
+      --g1: #F5F7FA;
+      --g6: #5F6B7A;
+      --g8: #1C2A3A;
+      --gn: #1AAB6E;
+      --f: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --primary: #06B6D4;
+      --primary-dark: #0891B2;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      color: var(--g8);
+      background: linear-gradient(165deg, #F8FAFC 0%, #F1F5F9 40%, #E2E8F0 100%);
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .logo-bar {
+      text-align: center;
+      padding: 24px 16px 0;
+    }
+    .logo-bar img { height: 56px; opacity: .85; }
+
+    .main {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px 40px;
+    }
+
+    .card {
+      background: var(--w);
+      border-radius: 24px;
+      padding: 48px 36px;
+      max-width: 560px;
+      width: 100%;
+      box-shadow: 0 16px 60px rgba(0,0,0,.08);
+      text-align: center;
+    }
+
+    .icon { font-size: 56px; margin-bottom: 16px; }
+
+    h1 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--n);
+      line-height: 1.25;
+      margin-bottom: 12px;
+    }
+    h1 .name { color: var(--primary); }
+
+    .msg {
+      font-size: 18px;
+      color: var(--g6);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .msg strong { color: var(--n); }
+
+    /* Email note / Checklist */
+    .email-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      background: rgba(6,182,212,.08);
+      border: 1px solid rgba(6,182,212,.2);
+      border-radius: 12px;
+      padding: 14px 18px;
+      font-size: 15px;
+      color: var(--g6);
+      margin-bottom: 28px;
+      text-align: left;
+    }
+    .email-note .icon { font-size: 20px; margin: 0; margin-top: 2px; flex-shrink: 0; }
+    .email-note span { flex: 1; }
+
+    /* Contact box */
+    .contact-box {
+      background: var(--g1);
+      border-radius: 16px;
+      padding: 20px 24px;
+      margin-bottom: 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+    }
+    .contact-box .label {
+      font-size: 14px;
+      color: var(--g6);
+      font-weight: 600;
+    }
+    .contact-box .phones {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .contact-box a {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--n);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .contact-box a:hover { color: var(--primary); }
+    .zalo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #0068FF;
+      color: var(--w);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Divider */
+    .divider {
+      height: 1px;
+      background: #E8ECF0;
+      margin: 0 0 28px;
+    }
+
+    /* CTAs */
+    .cta-label {
+      font-size: 14px;
+      color: var(--g6);
+      margin-bottom: 14px;
+      font-weight: 600;
+    }
+    .ctas { display: flex; flex-direction: column; gap: 12px; }
+    .cta {
+      display: block;
+      width: 100%;
+      padding: 16px 20px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 800;
+      text-decoration: none;
+      text-align: center;
+      transition: all .2s;
+      font-family: var(--f);
+    }
+    .cta-primary {
+      background: var(--primary);
+      color: var(--w);
+      box-shadow: 0 4px 16px rgba(6,182,212,.3);
+    }
+    .cta-primary:hover {
+      background: var(--primary-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(6,182,212,.35);
+    }
+    .cta-secondary {
+      background: var(--w);
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .cta-secondary:hover {
+      background: #F8FAFC;
+      transform: translateY(-1px);
+    }
+
+    /* Footer */
+    .foot-note {
+      font-size: 13px;
+      color: var(--g6);
+      margin-top: 24px;
+      line-height: 1.5;
+    }
+
+    @media (max-width: 600px) {
+      .card { padding: 36px 20px; }
+      h1 { font-size: 24px; }
+      .msg { font-size: 16px; }
+      .contact-box a { font-size: 18px; }
+      .email-note { gap: 10px; padding: 12px 16px; font-size: 14px; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');
+  </style>
+
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'generate_lead',
+      'page_title': 'Thank You - So Sánh Mầm Non',
+      'page_url': window.location.href,
+      'school_level': 'mam-non',
+      'funnel_code': 'comparison-mn',
+      'conversion_type': 'thank_you_page'
+    });
+  </script>
+</head>
+<body>
+
+  <div class="logo-bar">
+    <img src="/images/logo-viet-anh.png" alt="Trường Việt Anh" />
+  </div>
+
+  <div class="main">
+    <div class="card">
+      <div class="icon">📊</div>
+      <h1>Đã gửi bảng so sánh qua email!</h1>
+      <p class="msg" id="msg">
+        Bảng so sánh chi tiết đã được gửi. <strong>Kiểm tra hộp thư ngay nhé!</strong>
+      </p>
+
+      <div class="email-note">
+        <span class="icon">📧</span>
+        <span>Kiểm tra cả thư mục <strong>Spam / Promotions</strong></span>
+      </div>
+
+      <div class="contact-box">
+        <span class="label">Liên hệ ngay nếu cần hỗ trợ</span>
+        <div class="phones">
+          <a href="tel:0916961409">📞 0916 961 409</a>
+          <a href="https://zalo.me/0916961409" target="_blank">
+            <span class="zalo-badge">Zalo</span> 0916 961 409
+          </a>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="cta-label">Bước tiếp theo:</div>
+      <div class="ctas">
+        <a href="/tuyen-sinh/mam-non/tham-quan-truong" class="cta cta-primary">
+          Đặt lịch School Tour
+        </a>
+        <a href="/tuyen-sinh/mam-non/dang-ky-som" class="cta cta-secondary">
+          Xem ưu đãi đăng ký sớm
+        </a>
+      </div>
+
+      <p class="foot-note">
+        Thông tin của anh/chị được bảo mật tuyệt đối.<br/>
+        Chúng em luôn sẵn sàng đồng hành cùng con yêu.
+      </p>
+    </div>
+  </div>
+
+  <script is:inline>
+    // Personalize with name from URL
+    const params = new URLSearchParams(window.location.search);
+    const name = params.get('name');
+    if (name) {
+      document.getElementById('msg').innerHTML =
+        'Cảm ơn anh/chị <strong style="color:#06B6D4">' + name + '</strong>!<br/>Bảng so sánh chi tiết đã được gửi. <strong>Kiểm tra hộp thư ngay nhé!</strong>';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,379 @@
+---
+// Version B - School Tour THCS Lớp 6 Squeeze Page
+const pageTitle = "Trải nghiệm lớp 6 thực tế + Tư vấn lộ trình cá nhân hóa – Đăng ký School Tour MIỄN PHÍ";
+const pageDescription = "Đăng ký school tour THCS miễn phí. 75 phút trải nghiệm thực tế tại trường, cha mẹ được tư vấn 1:1 về lộ trình lớp 6–9 và chương trình song ngữ.";
+const canonicalUrl = "https://truongvietanh.com/tuyen-sinh/thcs/lop-6/school-tour-b";
+const pageVariant = "school_tour_lop6_b";
+const funnel = "squeeze_page_lop6";
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content={pageDescription}>
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href={canonicalUrl}>
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content={pageTitle}>
+    <meta property="og:description" content={pageDescription}>
+    <meta property="og:url" content={canonicalUrl}>
+    <meta property="og:site_name" content="Trường Việt Anh">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <title>{pageTitle}</title>
+
+    <!-- Google Tag Manager -->
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+        'event': 'page_view',
+        'page_variant': '{pageVariant}',
+        'funnel': '{funnel}',
+        'school_level': 'thcs',
+        'grade': 'lop-6'
+    });
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Trường Việt Anh",
+        "description": "Trường THCS Việt Anh - Chương trình song ngữ bán công lập",
+        "url": "https://truongvietanh.com",
+        "sameAs": [
+            "https://www.facebook.com/truongvietanh",
+            "https://www.youtube.com/@truongvietanh"
+        ]
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #ffffff;
+            color: #1F4E79;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-top: 20px;
+        }
+
+        .badge {
+            display: inline-block;
+            background-color: #10B981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: #1F4E79;
+            margin-bottom: 15px;
+            line-height: 1.4;
+        }
+
+        .subtitle {
+            font-size: 16px;
+            color: #4B5563;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .info-boxes {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+            gap: 10px;
+        }
+
+        .info-box {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            background-color: #F3F4F6;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F4E79;
+        }
+
+        .form-container {
+            background-color: white;
+        }
+
+        .form-step {
+            margin-bottom: 20px;
+        }
+
+        .form-step.hidden {
+            display: none;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1F4E79;
+            margin-bottom: 8px;
+        }
+
+        input[type="email"],
+        input[type="text"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #E5E7EB;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: 'Open Sans', sans-serif;
+            color: #1F4E79;
+            margin-bottom: 15px;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #10B981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+        }
+
+        input[type="email"]::placeholder,
+        input[type="text"]::placeholder,
+        input[type="tel"]::placeholder {
+            color: #9CA3AF;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #10B981;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Montserrat', sans-serif;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 10px;
+        }
+
+        button:hover {
+            background-color: #059669;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .thank-you {
+            text-align: center;
+            padding: 40px 20px;
+            display: none;
+        }
+
+        .thank-you.visible {
+            display: block;
+        }
+
+        .thank-you-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .thank-you h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #1F4E79;
+            margin-bottom: 10px;
+        }
+
+        .thank-you p {
+            font-size: 16px;
+            color: #4B5563;
+            line-height: 1.6;
+        }
+
+        .error-text {
+            color: #EF4444;
+            font-size: 12px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+            display: none;
+        }
+
+        .error-text.show {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .info-boxes {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .info-box {
+                padding: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="badge">CÒN 22 SLOT TUẦN NÀY • MIỄN PHÍ</div>
+            <h1>Trải nghiệm lớp 6 thực tế + Tư vấn lộ trình cá nhân hóa – Đăng ký School Tour MIỄN PHÍ</h1>
+            <p class="subtitle">75 phút trải nghiệm thực tế tại trường – Cha mẹ được tư vấn 1:1 về lộ trình lớp 6–9 và chương trình song ngữ.</p>
+        </div>
+
+        <div class="info-boxes">
+            <div class="info-box">75 phút</div>
+            <div class="info-box">6 cơ sở</div>
+            <div class="info-box">Miễn phí</div>
+        </div>
+
+        <div id="formContainer" class="form-container">
+            <!-- Step 1: Email -->
+            <div id="step1" class="form-step">
+                <label for="emailInput">Nhập email của bạn *</label>
+                <input
+                    type="email"
+                    id="emailInput"
+                    placeholder="abc@email.com"
+                    autocomplete="email"
+                >
+                <button id="btnStep1" type="button">Tiếp tục</button>
+            </div>
+
+            <!-- Step 2: Details -->
+            <div id="step2" class="form-step hidden">
+                <label for="nameInput">Tên cha/mẹ học sinh *</label>
+                <input
+                    type="text"
+                    id="nameInput"
+                    placeholder="Nguyễn Văn A"
+                    autocomplete="name"
+                >
+
+                <label for="phoneInput">Số điện thoại *</label>
+                <input
+                    type="tel"
+                    id="phoneInput"
+                    placeholder="0938123456"
+                    autocomplete="tel"
+                >
+
+                <label for="extraSelect">Cơ sở quan tâm *</label>
+                <select id="extraSelect">
+                    <option value="">-- Chọn cơ sở --</option>
+                    <option value="co-so-1-quan-3">Cơ sở 1 – Quận 3</option>
+                    <option value="co-so-2-quan-7">Cơ sở 2 – Quận 7</option>
+                    <option value="co-so-3-thu-duc">Cơ sở 3 – Thủ Đức</option>
+                </select>
+
+                <button id="btnStep2" type="button">Đặt lịch School Tour</button>
+            </div>
+        </div>
+
+        <!-- Thank You Message -->
+        <div id="thankYou" class="thank-you">
+            <div class="thank-you-icon">🎉</div>
+            <h2>Đặt lịch thành công!</h2>
+            <p>Tư vấn viên sẽ liên hệ xác nhận lịch tour trong 5 phút.</p>
+        </div>
+    </div>
+
+    <script>
+    (function(){
+      'use strict';
+      var W='https://hook.us2.make.com/yrj1l5kbk79eryk1k9olqfier3a2s2ks';
+      var V='school_tour_lop6_b';
+      var P='squeeze_page_lop6';
+      var ps=new URLSearchParams(window.location.search);
+      var utm={source:ps.get('utm_source')||'',medium:ps.get('utm_medium')||'',campaign:ps.get('utm_campaign')||'',content:ps.get('utm_content')||'',term:ps.get('utm_term')||'',fbclid:ps.get('fbclid')||'',gclid:ps.get('gclid')||'',ttclid:ps.get('ttclid')||''};
+      var emailInput=document.getElementById('emailInput');
+      var step1=document.getElementById('step1');
+      var step2=document.getElementById('step2');
+      var formContainer=document.getElementById('formContainer');
+      var thankYou=document.getElementById('thankYou');
+      var nameInput=document.getElementById('nameInput');
+      var phoneInput=document.getElementById('phoneInput');
+      var extraSelect=document.getElementById('extraSelect');
+      var storedEmail='';
+      var phoneRegex=/^(0|\+84)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])\d{7}$/;
+      function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+      function handleStep1(){
+        var email=emailInput.value.trim();
+        if(!validateEmail(email)){emailInput.style.borderColor='#EF4444';return}
+        storedEmail=email;emailInput.style.borderColor='';
+        step1.style.display='none';step2.style.display='block';
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:'partial_email_capture',page_variant:V,funnel:P,email:email});
+      }
+      function handleStep2Submit(){
+        var name=nameInput.value.trim();
+        var phone=phoneInput.value.trim().replace(/\s/g,'');
+        var extra=extraSelect?extraSelect.value:'';
+        var ok=true;
+        if(!name){nameInput.style.borderColor='#EF4444';ok=false}else{nameInput.style.borderColor=''}
+        if(!phoneRegex.test(phone)){phoneInput.style.borderColor='#EF4444';ok=false}else{phoneInput.style.borderColor=''}
+        if(!ok)return;
+        var data={email:storedEmail,parent_name:name,phone:phone,school_level:'thcs',grade:'lop-6',funnel_code:P,page_variant:V,extra_field:extra,utm_source:utm.source,utm_medium:utm.medium,utm_campaign:utm.campaign,utm_content:utm.content,utm_term:utm.term,fbclid:utm.fbclid,gclid:utm.gclid,ttclid:utm.ttclid,submitted_at:new Date().toISOString(),page_url:window.location.href};
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:'generate_lead',page_variant:V,funnel:P,school_level:'thcs',grade:'lop-6'});
+        fetch(W,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(function(){showThankYou()}).catch(function(){showThankYou()});
+      }
+      function showThankYou(){formContainer.style.display='none';thankYou.style.display='block'}
+      document.getElementById('btnStep1').onclick=handleStep1;
+      document.getElementById('btnStep2').onclick=handleStep2Submit;
+      emailInput.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();handleStep1()}});
+    })();
+    </script>
+</body>
+</html>

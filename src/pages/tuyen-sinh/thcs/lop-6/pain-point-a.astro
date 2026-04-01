@@ -1,0 +1,425 @@
+---
+import { SITE_NAME, SITE_URL } from '@/config';
+
+const pageVariant = 'pain_point_lop6_a';
+const funnel = 'squeeze_page_lop6';
+const schoolLevel = 'thcs';
+const grade = 'lop-6';
+const canonicalUrl = `${SITE_URL}/tuyen-sinh/thcs/lop-6/pain-point-a`;
+const title = "Con sắp vào lớp 6 – Lo lắng về áp lực học tập, môi trường dậy thì và chuyển cấp? Đây là những gì cha mẹ cần biết ngay | Trường Việt Anh";
+const description = "Nhận báo cáo chi tiết '5 thách thức lớn nhất của con khi lên lớp 6' + tư vấn lộ trình miễn phí từ chuyên gia với 15 năm kinh nghiệm.";
+const ogImage = `${SITE_URL}/og/thcs-lop6-pain-point-a.jpg`;
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <link rel="canonical" href={canonicalUrl} />
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:image" content={ogImage} />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta property="og:site_name" content={SITE_NAME} />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content={ogImage} />
+
+  <title>{title}</title>
+
+  <!-- Google Fonts Vietnamese -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Open+Sans:wght@400;500;600;700&subset=vietnamese&display=swap" rel="stylesheet" />
+
+  <!-- GTM -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXX');
+    window.dataLayer.push({
+      event: 'page_view',
+      page_variant: 'pain_point_lop6_a',
+      funnel: 'squeeze_page_lop6',
+      schoolLevel: 'thcs',
+      grade: 'lop-6'
+    });
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      color: #1F4E79;
+      background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .hero-section {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-bottom: 20px;
+      color: #1F4E79;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      color: #64748B;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .offer-items {
+      background: rgba(255, 255, 255, 0.8);
+      border-left: 4px solid #DC2626;
+      padding: 20px;
+      margin: 30px 0;
+      border-radius: 4px;
+    }
+
+    .offer-items ul {
+      list-style: none;
+    }
+
+    .offer-items li {
+      padding: 12px 0;
+      border-bottom: 1px solid #E0E7FF;
+      font-size: 15px;
+    }
+
+    .offer-items li:last-child {
+      border-bottom: none;
+    }
+
+    .offer-items li strong {
+      color: #1F4E79;
+      font-weight: 600;
+    }
+
+    /* Form Styles */
+    .form-section {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(31, 78, 121, 0.08);
+      margin: 30px 0;
+    }
+
+    .form-step {
+      display: none;
+    }
+
+    .form-step.active {
+      display: block;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #1F4E79;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #E0E7FF;
+      border-radius: 4px;
+      font-size: 16px;
+      font-family: 'Open Sans', sans-serif;
+      color: #1F4E79;
+      transition: border-color 0.3s;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #DC2626;
+      box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #DC2626 0%, #991B1B 100%);
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      font-family: 'Montserrat', sans-serif;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(220, 38, 38, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    .step-indicator {
+      font-size: 13px;
+      color: #94A3B8;
+      margin-bottom: 15px;
+      text-align: center;
+    }
+
+    /* Thank You */
+    .thank-you-section {
+      display: none;
+      text-align: center;
+      padding: 40px 20px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 8px;
+      margin: 30px 0;
+    }
+
+    .thank-you-section.active {
+      display: block;
+    }
+
+    .thank-you-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .thank-you-section h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: #1F4E79;
+      margin-bottom: 15px;
+    }
+
+    .thank-you-section p {
+      font-size: 16px;
+      color: #64748B;
+      line-height: 1.6;
+    }
+
+    .urgency-banner {
+      background: rgba(220, 38, 38, 0.1);
+      border: 2px solid #DC2626;
+      color: #991B1B;
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .success-checkmark {
+      display: inline-block;
+      color: #16A34A;
+      margin-right: 5px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+
+      .form-section {
+        padding: 20px;
+      }
+
+      .hero-section {
+        padding: 30px 15px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Hero Section -->
+    <div class="hero-section">
+      <h1>Con sắp vào lớp 6 – Lo lắng về áp lực học tập, môi trường dậy thì và chuyển cấp? Đây là những gì cha mẹ cần biết ngay</h1>
+      <p class="subtitle">Nhận báo cáo chi tiết và tư vấn miễn phí từ chuyên gia giáo dục K-12 với 15 năm kinh nghiệm</p>
+
+      <!-- Offer Items -->
+      <div class="offer-items">
+        <ul>
+          <li><strong>📊 Báo cáo "5 thách thức lớn nhất của con khi lên lớp 6"</strong></li>
+          <li><strong>🧠 Hướng dẫn tâm lý hỗ trợ con giai đoạn dậy thì</strong></li>
+          <li><strong>📞 Tư vấn lộ trình học tập cá nhân hóa miễn phí</strong></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Form Section -->
+    <div id="formContainer" class="form-section">
+      <!-- Step 1: Email -->
+      <div id="step1" class="form-step active">
+        <div class="urgency-banner">⏰ Tư vấn miễn phí - Hạn chế chỗ</div>
+        <div class="step-indicator">Bước 1 / 2</div>
+
+        <div class="form-group">
+          <label for="emailInput">Email của bạn *</label>
+          <input
+            type="email"
+            id="emailInput"
+            placeholder="cha.me@example.com"
+            autocomplete="email"
+          />
+        </div>
+
+        <button id="btnStep1" type="button">Tiếp tục</button>
+      </div>
+
+      <!-- Step 2: Name, Phone, Extra -->
+      <div id="step2" class="form-step">
+        <div class="step-indicator">Bước 2 / 2</div>
+
+        <div class="form-group">
+          <label for="nameInput">Tên của cha/mẹ *</label>
+          <input
+            type="text"
+            id="nameInput"
+            placeholder="Nguyễn Văn A"
+            autocomplete="name"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phoneInput">Số điện thoại *</label>
+          <input
+            type="tel"
+            id="phoneInput"
+            placeholder="0987654321"
+            autocomplete="tel"
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="extraSelect">Mối lo lắng lớn nhất *</label>
+          <select id="extraSelect" required>
+            <option value="">-- Chọn mối lo lắng --</option>
+            <option value="Áp lực học tập">Áp lực học tập</option>
+            <option value="Môi trường dậy thì">Môi trường dậy thì</option>
+            <option value="Chuyển cấp – thích nghi">Chuyển cấp – thích nghi</option>
+            <option value="Lo về bạn bè mới">Lo về bạn bè mới</option>
+            <option value="Khác">Khác</option>
+          </select>
+        </div>
+
+        <button id="btnStep2" type="button">Nhận báo cáo miễn phí</button>
+      </div>
+    </div>
+
+    <!-- Thank You Section -->
+    <div id="thankYou" class="thank-you-section">
+      <div class="thank-you-icon">💪</div>
+      <h2>Đăng ký thành công!</h2>
+      <p><span class="success-checkmark">✓</span> Báo cáo sẽ được gửi qua email. Tư vấn viên sẽ liên hệ trong 5 phút.</p>
+    </div>
+  </div>
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường Việt Anh",
+    "url": "https://truongvietanh.com",
+    "description": "Trường Việt Anh - Giáo dục K-12 chất lượng",
+    "educationalLevel": "Cấp trung học cơ sở",
+    "address": {
+      "@type": "PostalAddress",
+      "addressCountry": "VN"
+    }
+  }
+  </script>
+
+  <!-- Form Handler Script -->
+  <script>
+    (function(){
+      'use strict';
+      var W='https://hook.us2.make.com/yrj1l5kbk79eryk1k9olqfier3a2s2ks';
+      var V='pain_point_lop6_a';
+      var P='squeeze_page_lop6';
+      var ps=new URLSearchParams(window.location.search);
+      var utm={source:ps.get('utm_source')||'',medium:ps.get('utm_medium')||'',campaign:ps.get('utm_campaign')||'',content:ps.get('utm_content')||'',term:ps.get('utm_term')||'',fbclid:ps.get('fbclid')||'',gclid:ps.get('gclid')||'',ttclid:ps.get('ttclid')||''};
+      var emailInput=document.getElementById('emailInput');
+      var step1=document.getElementById('step1');
+      var step2=document.getElementById('step2');
+      var formContainer=document.getElementById('formContainer');
+      var thankYou=document.getElementById('thankYou');
+      var nameInput=document.getElementById('nameInput');
+      var phoneInput=document.getElementById('phoneInput');
+      var extraSelect=document.getElementById('extraSelect');
+      var storedEmail='';
+      var phoneRegex=/^(0|\+84)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])\d{7}$/;
+      function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+      function handleStep1(){
+        var email=emailInput.value.trim();
+        if(!validateEmail(email)){emailInput.style.borderColor='#EF4444';return}
+        storedEmail=email;emailInput.style.borderColor='';
+        step1.style.display='none';step2.style.display='block';
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:'partial_email_capture',page_variant:V,funnel:P,email:email});
+      }
+      function handleStep2Submit(){
+        var name=nameInput.value.trim();
+        var phone=phoneInput.value.trim().replace(/\s/g,'');
+        var extra=extraSelect?extraSelect.value:'';
+        var ok=true;
+        if(!name){nameInput.style.borderColor='#EF4444';ok=false}else{nameInput.style.borderColor=''}
+        if(!phoneRegex.test(phone)){phoneInput.style.borderColor='#EF4444';ok=false}else{phoneInput.style.borderColor=''}
+        if(!ok)return;
+        var data={email:storedEmail,parent_name:name,phone:phone,school_level:'thcs',grade:'lop-6',funnel_code:P,page_variant:V,extra_field:extra,utm_source:utm.source,utm_medium:utm.medium,utm_campaign:utm.campaign,utm_content:utm.content,utm_term:utm.term,fbclid:utm.fbclid,gclid:utm.gclid,ttclid:utm.ttclid,submitted_at:new Date().toISOString(),page_url:window.location.href};
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:'generate_lead',page_variant:V,funnel:P,school_level:'thcs',grade:'lop-6'});
+        fetch(W,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(function(){showThankYou()}).catch(function(){showThankYou()});
+      }
+      function showThankYou(){formContainer.style.display='none';thankYou.style.display='block'}
+      document.getElementById('btnStep1').onclick=handleStep1;
+      document.getElementById('btnStep2').onclick=handleStep2Submit;
+      emailInput.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();handleStep1()}});
+    })();
+  </script>
+</body>
+</html>

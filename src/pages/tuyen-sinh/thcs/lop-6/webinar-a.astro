@@ -1,0 +1,376 @@
+---
+const pageTitle = 'Webinar MIỄN PHÍ: Lộ trình học THCS – THPT thành công năm 2026';
+const pageDescription = 'Webinar miễn phí giúp chuẩn bị cho con lớp 6. Nhận lộ trình học tập từ lớp 6 đến đại học và tư vấn cá nhân 15 phút.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/lop-6/webinar-a';
+const pageVariant = 'webinar_lop6_a';
+const funnel = 'squeeze_page_lop6';
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content={pageDescription}>
+  <meta name="canonical" href={canonicalUrl}>
+  <title>{pageTitle}</title>
+
+  <!-- OG Tags -->
+  <meta property="og:title" content={pageTitle}>
+  <meta property="og:description" content={pageDescription}>
+  <meta property="og:url" content={canonicalUrl}>
+  <meta property="og:type" content="website">
+  <meta name="robots" content="index, follow">
+
+  <!-- Google Fonts Vietnamese -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@400;600;700&subset=vietnamese&display=swap" rel="stylesheet">
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường Việt Anh",
+    "url": "https://truongvietanh.com",
+    "logo": "https://truongvietanh.com/logo.png",
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+84-xxx-xxx-xxx",
+      "contactType": "Customer Support"
+    }
+  }
+  </script>
+
+  <!-- Google Tag Manager -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'page_view',
+      'page_title': {pageTitle},
+      'page_variant': '{pageVariant}',
+      'funnel': '{funnel}',
+      'school_level': 'thcs',
+      'grade': 'lop-6'
+    });
+  </script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: linear-gradient(135deg, #2D1B69 0%, #1F4E79 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      color: #fff;
+    }
+
+    .container {
+      max-width: 700px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.98);
+      border-radius: 16px;
+      padding: 50px 40px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      color: #333;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #D4A574 0%, #F4B860 100%);
+      color: #2D1B69;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 20px;
+      text-align: center;
+      width: 100%;
+      letter-spacing: 0.5px;
+    }
+
+    h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.3;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #2D1B69, #1F4E79);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #666;
+      margin-bottom: 30px;
+      font-weight: 500;
+    }
+
+    .form-section {
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    input[type="email"],
+    input[type="text"],
+    input[type="tel"],
+    select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #E5E7EB;
+      border-radius: 8px;
+      font-size: 15px;
+      font-family: 'Open Sans', sans-serif;
+      transition: border-color 0.3s, box-shadow 0.3s;
+    }
+
+    input[type="email"]:focus,
+    input[type="text"]:focus,
+    input[type="tel"]:focus,
+    select:focus {
+      outline: none;
+      border-color: #D4A574;
+      box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+    }
+
+    button {
+      width: 100%;
+      padding: 16px 20px;
+      background: linear-gradient(135deg, #2D1B69 0%, #1F4E79 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+      font-family: 'Montserrat', sans-serif;
+      letter-spacing: 0.3px;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 25px rgba(45, 27, 105, 0.3);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    #step1,
+    #step2 {
+      display: none;
+    }
+
+    #step1.active,
+    #step2.active {
+      display: block;
+    }
+
+    .offers {
+      background: #F8F4F0;
+      padding: 20px;
+      border-radius: 8px;
+      margin-top: 30px;
+      margin-bottom: 20px;
+    }
+
+    .offer-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+      font-size: 15px;
+      color: #333;
+    }
+
+    .offer-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .offer-item span {
+      margin-left: 12px;
+      line-height: 1.5;
+    }
+
+    #thankYou {
+      text-align: center;
+      padding: 40px 20px;
+      display: none;
+    }
+
+    .thank-you-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+    }
+
+    .thank-you-message {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #2D1B69;
+      margin-bottom: 10px;
+      line-height: 1.4;
+    }
+
+    .thank-you-text {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .form-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 18px;
+      font-weight: 700;
+      color: #2D1B69;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 30px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      .subtitle {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="badge">🎓 WEBINAR MIỄN PHÍ • 19H THỨ 7 HÀNG TUẦN</div>
+
+    <h1>Webinar MIỄN PHÍ: Lộ trình học THCS – THPT thành công năm 2026 – Chuẩn bị cho con từ lớp 6</h1>
+
+    <p class="subtitle">Nhận vé tham dự webinar + Slide lộ trình học tập từ lớp 6 đến đại học + Tư vấn cá nhân 15 phút sau webinar</p>
+
+    <div class="offers">
+      <div class="offer-item">
+        <span>🎟</span>
+        <span>Vé tham dự webinar trực tuyến (hoặc xem replay)</span>
+      </div>
+      <div class="offer-item">
+        <span>📑</span>
+        <span>Slide "Lộ trình học tập từ lớp 6 đến đại học"</span>
+      </div>
+      <div class="offer-item">
+        <span>📞</span>
+        <span>Tư vấn cá nhân 15 phút sau webinar</span>
+      </div>
+    </div>
+
+    <div id="formContainer">
+      <form id="step1" class="active">
+        <div class="form-title">Bước 1: Nhập email của bạn</div>
+        <div class="form-group">
+          <label for="emailInput">Email</label>
+          <input type="email" id="emailInput" placeholder="example@email.com" required>
+        </div>
+        <button type="button" id="btnStep1">Tiếp tục</button>
+      </form>
+
+      <form id="step2">
+        <div class="form-title">Bước 2: Hoàn tất thông tin</div>
+        <div class="form-group">
+          <label for="nameInput">Tên phụ huynh</label>
+          <input type="text" id="nameInput" placeholder="Nhập tên của bạn" required>
+        </div>
+        <div class="form-group">
+          <label for="phoneInput">Số điện thoại</label>
+          <input type="tel" id="phoneInput" placeholder="0xxxxxxxxx" required>
+        </div>
+        <div class="form-group">
+          <label for="extraSelect">Cấp học con đang học</label>
+          <select id="extraSelect" required>
+            <option value="">-- Chọn cấp học --</option>
+            <option value="lop_5">Lớp 5 (sắp lên lớp 6)</option>
+            <option value="lop_6">Lớp 6 (đang học)</option>
+            <option value="khac">Khác</option>
+          </select>
+        </div>
+        <button type="button" id="btnStep2">Đăng ký tham dự webinar</button>
+      </form>
+    </div>
+
+    <div id="thankYou">
+      <div class="thank-you-icon">🎓</div>
+      <div class="thank-you-message">Đăng ký thành công!</div>
+      <div class="thank-you-text">Link webinar sẽ được gửi qua email. Tư vấn viên sẽ liên hệ trong 5 phút.</div>
+    </div>
+  </div>
+
+  <script>
+    (function(){
+      'use strict';
+      var W='https://hook.us2.make.com/yrj1l5kbk79eryk1k9olqfier3a2s2ks';
+      var V='webinar_lop6_a';
+      var P='squeeze_page_lop6';
+      var ps=new URLSearchParams(window.location.search);
+      var utm={source:ps.get('utm_source')||'',medium:ps.get('utm_medium')||'',campaign:ps.get('utm_campaign')||'',content:ps.get('utm_content')||'',term:ps.get('utm_term')||'',fbclid:ps.get('fbclid')||'',gclid:ps.get('gclid')||'',ttclid:ps.get('ttclid')||''};
+      var emailInput=document.getElementById('emailInput');
+      var step1=document.getElementById('step1');
+      var step2=document.getElementById('step2');
+      var formContainer=document.getElementById('formContainer');
+      var thankYou=document.getElementById('thankYou');
+      var nameInput=document.getElementById('nameInput');
+      var phoneInput=document.getElementById('phoneInput');
+      var extraSelect=document.getElementById('extraSelect');
+      var storedEmail='';
+      var phoneRegex=/^(0|\+84)(3[2-9]|5[2689]|7[06-9]|8[1-9]|9[0-9])\d{7}$/;
+      function validateEmail(e){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e)}
+      function handleStep1(){
+        var email=emailInput.value.trim();
+        if(!validateEmail(email)){emailInput.style.borderColor='#EF4444';return}
+        storedEmail=email;emailInput.style.borderColor='';
+        step1.style.display='none';step2.style.display='block';
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:'partial_email_capture',page_variant:V,funnel:P,email:email});
+      }
+      function handleStep2Submit(){
+        var name=nameInput.value.trim();
+        var phone=phoneInput.value.trim().replace(/\s/g,'');
+        var extra=extraSelect?extraSelect.value:'';
+        var ok=true;
+        if(!name){nameInput.style.borderColor='#EF4444';ok=false}else{nameInput.style.borderColor=''}
+        if(!phoneRegex.test(phone)){phoneInput.style.borderColor='#EF4444';ok=false}else{phoneInput.style.borderColor=''}
+        if(!ok)return;
+        var data={email:storedEmail,parent_name:name,phone:phone,school_level:'thcs',grade:'lop-6',funnel_code:P,page_variant:V,extra_field:extra,utm_source:utm.source,utm_medium:utm.medium,utm_campaign:utm.campaign,utm_content:utm.content,utm_term:utm.term,fbclid:utm.fbclid,gclid:utm.gclid,ttclid:utm.ttclid,submitted_at:new Date().toISOString(),page_url:window.location.href};
+        window.dataLayer=window.dataLayer||[];
+        window.dataLayer.push({event:'generate_lead',page_variant:V,funnel:P,school_level:'thcs',grade:'lop-6'});
+        fetch(W,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(function(){showThankYou()}).catch(function(){showThankYou()});
+      }
+      function showThankYou(){formContainer.style.display='none';thankYou.style.display='block'}
+      document.getElementById('btnStep1').onclick=handleStep1;
+      document.getElementById('btnStep2').onclick=handleStep2Submit;
+      emailInput.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();handleStep1()}});
+    })();
+  </script>
+</body>
+</html>

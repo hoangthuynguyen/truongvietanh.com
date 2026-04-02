@@ -5,50 +5,50 @@ import USPGrid from '../../../components/USPGrid.astro';
 import TrustMetrics from '../../../components/TrustMetrics.astro';
 import FAQSection from '../../../components/FAQSection.astro';
 
-const pageTitle = 'Tuyá»n Sinh THPT - TrÆ°á»ng LiÃªn Cáº¥p Viá»t Anh';
-const pageDescription = '90% há»c sinh Viá»t Anh Äá» Äáº¡i há»c nguyá»n vá»ng 1 â 30% du há»c thÃ nh cÃ´ng. IELTS 6.5-7.5, Luyá»n THPTQG, LiÃªn káº¿t ÄH quá»c táº¿, Lab hiá»n Äáº¡i, Ká»¹ nÄng tháº¿ ká»· 21.';
+const pageTitle = 'Tuyển Sinh THPT - Trường Liên Cấp Việt Anh';
+const pageDescription = '90% học sinh Việt Anh đỗ đại học nguyện vọng 1 — 30% du học thành công. IELTS 6.5-7.5, Luyện THPTQG, Liên kết ĐH quốc tế, Lab hiện đại, Kỹ năng thế kỷ 21.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thpt';
 
 const uspItems = [
-  { icon: 'ð', text: '90%+ Äá» ÄH nguyá»n vá»ng 1 â Con báº¡n sáº½ lÃ  1 trong sá» ÄÃ³' },
-  { icon: 'ð', text: '30% du há»c thÃ nh cÃ´ng (Má»¹, Anh, Ãc, Canada) â Con cÃ³ "HÃ nh trang quá»c táº¿"' },
-  { icon: 'ð', text: 'IELTS 6.5-7.5 khi tá»t nghiá»p â KhÃ´ng cáº§n "Ã´n thÃªm" sau THPT' },
-  { icon: 'ð¬', text: 'THPTQG chuyÃªn sÃ¢u: Lá»p 10 ÄÃ£ báº¯t Äáº§u Ã´n táº­p chiáº¿n lÆ°á»£c (khÃ´ng pháº£i "Äáº¯N dá»n cuá»i"' },
-  { icon: 'ð¼', text: 'TÆ° váº¥n Äáº¡i Há»c 1-1: Chá»n ngÃ nh phÃ¹ há»£p, khÃ´ng pháº£i "Ba/Máº¹ ÄoÃ¡n mÃ²"' },
-  { icon: 'ð«', text: 'LiÃªn káº¿t ÄH trong & ngoÃ i: Há»c sinh Viá»t Anh ÄÆ°á»£c Äáº¡i Há»c "nhÃ¬n tháº¥y" & Æ°u tiÃªn' }
+  { icon: '🎓', text: '90%+ đỗ ĐH nguyện vọng 1 — Con bạn sẽ là 1 trong số đó' },
+  { icon: '🌍', text: '30% du học thành công (Mỹ, Anh, Úc, Canada) — Con có "Hành trang quốc tế"' },
+  { icon: '📚', text: 'IELTS 6.5-7.5 khi tốt nghiệp — Không cần "ôn thêm" sau THPT' },
+  { icon: '🔬', text: 'THPTQG chiến lược từ lớp 10 — Không "dồn ép" lớp 12, không "ngủ 4 tiếng"' },
+  { icon: '💼', text: 'Tư vấn Đại Học 1-1: Chọn đúng ngành, không phải "Ba/Mẹ đoán mò"' },
+  { icon: '🏫', text: 'Liên kết 50+ ĐH trong & ngoài: Học sinh Việt Anh được "ưu tiên xét tuyển"' }
 ];
 
 const metrics = [
-  { number: '15+', label: 'NÄm hÃ nh trÃ¬nh tá»« Tiá»u Há»c Äáº¿n THPT' },
-  { number: '90%+', label: 'Äá» ÄH Nguyá»n Vá»ng 1 (2025: 36/40 em)' },
-  { number: '30%', label: 'Du há»c nÆ°á»c ngoÃ i thÃ nh cÃ´ng (Má»¹, Anh, Ãc, Canada)' },
-  { number: '3', label: 'CÆ¡ sá» tiÃªu chuáº©n táº¡i TPHCM' }
+  { number: '15+', label: 'Năm hành trình từ Tiểu Học đến THPT' },
+  { number: '90%+', label: 'Đỗ ĐH Nguyện Vọng 1 (2025: 36/40 em)' },
+  { number: '30%', label: 'Du học nước ngoài thành công (Mỹ, Anh, Úc, Canada)' },
+  { number: '3', label: 'Cơ sở tiêu chuẩn tại TPHCM' }
 ];
 
 const faqItems = [
   {
-    question: 'Táº¡i sao 90%+ vÃ o ÄH NV1 â con tÃ´i cÃ³ vÃ o ÄÆ°á»£c khÃ´ng?',
-    answer: 'Con báº¡n vÃ o ÄÆ°á»£c náº¿u (1) Con hoÃ n thÃ nh 3 nÄm THPT Viá»t Anh vá»i sÃ¡ng suá»t, (2) Äiá»m THPTQG 20+ (khÃ´ng cáº§n 30), (3) IELTS 5.0+ (chÃºng tÃ´i há» trá»£). KhÃ´ng pháº£i "tháº§n Äá»ng" â chá» cáº§n "chÄm chá»". Nhá»¯ng em yáº¿u mÃ´n nÃ o, cÃ´ sáº½ há» trá»£ ngoÃ i giá» (khÃ´ng tÃ­nh phÃ­). Káº¿t quáº£: Em vÃ o ÄÆ°á»£c trÆ°á»ng phÃ¹ há»£p vÃ¬ cÃ´ ÄÃ£ "nhÃ¬n tháº¥y" em, khÃ´ng chá» "cháº¥m Äiá»m".'
+    question: 'Tại sao 90%+ vào ĐH NV1 — con tôi có vào được không?',
+    answer: 'Câu hỏi đúng mà ba/mẹ lo lắng. Thực tế: Con bạn vào được nếu em (1) Hoàn thành 3 năm THPT Việt Anh với sáng suốt và chăm học, (2) Đạt điểm THPTQG 20+ (không cần 30 như trường khác), (3) IELTS 5.0+ (chúng tôi hỗ trợ tích cực). Không phải con phải là “thần đồng” — chỉ cần “chăm chỉ và có hướng dẫn đúng”. Nếu em yếu môn nào, cô sẽ hỗ trợ ngoài giờ học (không tính phí). Điểm khác biệt: Cô giáo tại Việt Anh sẽ “nhìn thấy” con em từ lớp 10 — biết điểm mạnh, điểm yếu, đặc điểm tính cách, mục tiêu học — không chỉ “chấm điểm”. Khi vào ĐH, con em được ưu tiên xét tuyển từ 50+ trường đại học đối tác. Đó là lý do 90%+ vào được nguyện vọng 1.'
   },
   {
-    question: 'IELTS 6.5-7.5 â con tÃ´i khÃ´ng giá»i Tiáº¿ng Anh, sá»£ khÃ´ng Äáº¡t?',
-    answer: 'KhÃ´ng sá»£. Lá»p 10-12, IELTS ÄÆ°á»£c dáº¡y tÃ­ch há»£p trong Tiáº¿ng Anh chÃ­nh khÃ³a (khÃ´ng pháº£i âthÃªm mÃ´nâ). Báº¯t Äáº§u lá»p 10, em lÃ m IELTS Practice Test hÃ ng tuáº§n. Lá»p 11 ThÃ¡ng 5-6, em thi IELTS chÃ­nh thá»©c. Náº¿u chÆ°a Äáº¡t 6.5, em ÄÆ°á»£c Ã´n láº¡i (hÃ¨) vÃ  thi láº¡i. HÃ ng nÄm, >90% em Äáº¡t 5.5-6.5 trÆ°á»c tá»t nghiá»p. Má»t sá» em máº¡nh tá»«ng Äáº¡t 7.0-7.5.'
+    question: 'IELTS 6.5-7.5 — con tôi không giỏi Tiếng Anh, sợ không đạt?',
+    answer: 'Sợ là chuyện bình thường của ba/mẹ. Nhưng thực tế tại Việt Anh: Lớp 10-12, IELTS được dạy “tích hợp” trong bài học Tiếng Anh chính khóa — không phải học thêm hay áp lực. Bắt đầu lớp 10, em làm IELTS Practice Test hàng tuần (1 tiếng), cô sẽ chỉ ra lỗi sai, mẹo trả lời nhanh. Lớp 11 tháng 5-6, em thi IELTS chính thức lần 1. Nếu chưa đạt 6.5, em được ôn lại hè (tuition miễn phí) và thi lại vào lớp 11. Hàng năm, >90% em Việt Anh đạt 5.5-6.5 trước tốt nghiệp. Có em mạnh hơn đạt 7.0-7.5 (điểm này dễ vào ĐH Australia/UK). Không phải vì con em là “thần đồng Tiếng Anh” mà vì em có “thời gian & hướng dẫn đúng”.'
   },
   {
-    question: 'Luyá»n thi THPTQG tá»« lá»p 10 â con lá»p 10 sáº½ má»t khÃ´ng?',
-    answer: 'KhÃ´ng má»t, vÃ¬ chÃºng tÃ´i luyá»n âchiáº¿n lÆ°á»£câ (xem Äá» dá»± èºn, phÃ¢n tÃ­ch xu hÆ°á»ng), khÃ´ng pháº£i ânáº¡p kiáº¿n thá»©câ. VÃ­ dá»¥: Tá»« lá»p 10, má»i tuáº§n em lÃ m 1 Äá» full THPTQG. CÃ´ giÃ¡o sáº½ chá» âNhá»¯ng cÃ¢u nÃ o hay bá» lá»nâ & âCÃ¡ch suy luáº­n nhanhâ. Lá»p 11-12, em sáº½ lÃ m quen vá»i âTinh Tháº§n THPTQGâ, nÃªn lá»p 12 khÃ´ng cáº§n âÃ´n tá»« Äáº§uâ. Káº¿t quáº£: Em sáº½ tá»± tin, khÃ´ng âhoáº£ng sá»£â.'
+    question: 'Luyện thi THPTQG từ lớp 10 — con lớp 10 sẽ mệt mỏi, áp lực không?',
+    answer: 'Lo lắng rất hợp lý. Nhưng Việt Anh khác. Chúng tôi luyện “chiến lược” (học cách làm bài, phân tích xu hướng đề thi), không phải “nạp kiến thức từ đầu” khiến em mệt. Cụ thể: Từ lớp 10, mỗi tuần em làm 1 đề full THPTQG (mất 3 tiếng). Cô giáo sẽ phân tích: “Những câu nào em thường làm sai”, “Cách suy luận nhanh hơn”, “Cách quản lý thời gian”. Lớp 11-12, em không phải “ôn lại từ đầu” vì đã quen với loạt câu hỏi THPTQG. Lớp 12 chỉ là “ôn tập & tăng tốc độ” chứ không phải sợ hãi “ôn chóng vánh cuối”. Kết quả: Em sẽ tự tin, kiểm soát được tâm lý thi, không “hoảng sợ” hay “ngủ 4 tiếng”.'
   },
   {
-    question: 'Muná»n du há»c Má»¹/Anh/Ãc â trÆ°á»ng há» trá»£ khÃ´ng?',
-    answer: 'CÃ³. Bá» pháº­n TÆ° váº¥n Du Há»c sáº½ (1) GiÃºp em chá»n trÆ°á»ng phÃ¹ há»£p, (2) Há» trá»£ viáº¿t Essay & Motivation Letter, (3) TÆ° váº¥n Visa, (4) LiÃªn há» trÆ°á»ng Äá»i tÃ¡c. HÃ ng nÄm, 30% em Viá»t Anh chá»n du há»c thay vÃ¬ ÄH Viá»t Nam. Nhiá»u em vÃ o ÄÆ°á»£c MIT, Harvard, Cambridge, LSE... KhÃ´ng pháº£i vÃ¬ âem giá»i hÆ¡nâ mÃ  vÃ¬ âem ÄÆ°á»£c há» trá»£ tá»tâ.'
+    question: 'Muốn du học Mỹ/Anh/Úc/Canada — trường hỗ trợ không?',
+    answer: 'Hỗ trợ toàn diện, từ A-Z. Bộ phận Tư vấn Du Học sẽ: (1) Giúp em chọn trường phù hợp với điểm & ngành yêu thích (không phải “chọn khó” rồi bị từ chối), (2) Hỗ trợ viết Essay & Motivation Letter (cô Việt viết cùng em bằng Việt, sau đó dịch & chỉnh lại), (3) Tư vấn toàn bộ quá trình Visa (giấy tờ, phỏng vấn, xin visa), (4) Liên hệ với trường đối tác, giới thiệu hồ sơ em. Hàng năm, 30% em Việt Anh THPT chọn du học thay vì ĐH Việt Nam. Nhiều em vào được các trường top (MIT, Harvard, Cambridge, LSE, University of Tokyo...). Không phải vì “em giỏi hơn con em trường khác” mà vì “em được hỗ trợ tốt, Essay hay, hồ sơ hoàn chỉnh”. Nếu con em muốn du học, Việt Anh sẽ biến đó thành hiện thực thay vì mơ mộng.'
   },
   {
-    question: 'THPT Viá»t Anh chuyÃªn gÃ¬? CÃ³ chuyÃªn ToÃ¡n/Khoa Há»c/Ngoáº¡i Ngá»¯ khÃ´ng?',
-    answer: 'KhÃ´ng chuyÃªn (khÃ´ng cÃ³ chuyÃªn ToÃ¡n hay chuyÃªn LÃ½). NhÆ°ng em ÄÆ°á»£c chá»n âKhá»i há»câ (A00/A01/D01) ngay tá»« lá»p 10 Äá» âtinh gá»nâ kiáº¿n thá»©c. VÃ­ dá»¥: Em thÃ­ch ToÃ¡n, chá»n khá»i A01 (ToÃ¡n-LÃ½-HÃ³a) â sáº½ cÃ³ nhiá»u giá» ToÃ¡n, Ã­t giá» Lá»ch Sá»­. Em muá»n du há»c Ngoáº¡i Ngá»¯, chá»n Khá»i D01 (ToÃ¡n-VÄn-Anh) â IELTS sáº½ tÄng nhanh. ChÃºng tÃ´i âcáº¯t xÃ©n khÃ´ng cáº§n thiáº¿tâ cho em, khÃ´ng bá» lá»¡ kiáº¿n thá»©c quan trá»ng.'
+    question: 'THPT Việt Anh chuyên gì? Có chuyên Toán/Khoa Học/Ngoại Ngữ không?',
+    answer: 'Không có “chuyên Toán” hay “chuyên Lý” kiểu trường công. Nhưng Việt Anh linh hoạt hơn: Em được chọn “Khối học” (A00/A01/D01) ngay từ lớp 10 để tập trung vào những môn em yêu thích & cần cho tương lai. Ví dụ: Em thích Toán, chọn khối A01 (Toán-Lý-Hóa) — sẽ có nhiều giờ Toán, ít giờ Lịch Sử, dễ vào ngành Kỹ Sư hay Khoa Học. Em muốn du học Ngoại Ngữ hay chọn ngành tiếng Anh, chọn Khối D01 (Toán-Văn-Anh) — IELTS sẽ tăng nhanh, Văn học em cũng được chữa kỹ. Em muốn học Kiến Trúc hay Thiết Kế, chuyên sâu Mỹ Thuật — Việt Anh cũng linh hoạt điều chỉnh. Chúng tôi “cắt xén không cần thiết” để em tập trung, không bỏ lỡ kiến thức quan trọng, không làm em “quay cuồng với quá nhiều môn”.'
   },
   {
-    question: 'Nháº­n há» sÆ¡ THPT tá»« thÃ¡ng máº¥y? Bao nhiÃªu suáº¥t?',
-    answer: 'Tuyá»n sinh THPT 2026-2027: Nháº­n há» sÆ¡ tá»« thÃ¡ng 3 hÃ ng nÄm, tuyá»n ~60 há»c sinh (lá»p 10 má»i). Náº¿u há»c sinh tá»« THCS Viá»t Anh ÄÆ°á»£c Æ°u tiÃªn (GPA 7.5+ khÃ´ng cáº§n thi Äáº§u vÃ o). Náº¿u tá»« ngoÃ i, pháº£i thi ÄÃ¡nh giÃ¡ nÄng lá»±c. Sá» suáº¥t giá»i háº¡n Äá» giá»¯ cháº¥t lÆ°á»£ng (lá»p 30 em, khÃ´ng pháº£i 40-50). NÃªn ÄÄng kÃ½ tÆ° váº¥n sá»m (thÃ¡ng 3-4/2026).'
+    question: 'Nhận hồ sơ THPT từ tháng mấy? Bao nhiêu suất? Có dễ vào không?',
+    answer: 'Tuyển sinh THPT Việt Anh 2026-2027: Nhận hồ sơ từ tháng 3 hàng năm, tuyển ~60 học sinh lớp 10 mới (3 lớp, ~20 em/lớp). Hàng năm, 300+ phụ huynh quan tâm nhưng chỉ tuyển 60 em vì trường chủ ý giữ lớp nhỏ (max 30 em/lớp, không 40-50) để cô giáo có thể “nhìn thấy” từng em. Về tiêu chí: Nếu em từ THCS Việt Anh có GPA 7.5+, không cần thi đầu vào — tự động lên (ưu tiên liên cấp). Nếu em từ ngoài, phải thi đánh giá năng lực Tiếng Anh & Toán (không khó, để đánh giá trình độ). Điểm THPTQG hiện tại không quan trọng (chúng tôi sẽ giúp em tăng từ lớp 10). Nên đăng ký tư vấn sớm (tháng 3-4/2026) để không bỏ lỡ suất.'
   }
 ];
 ---
@@ -56,17 +56,17 @@ const faqItems = [
 <SqueezePageLayout
   title={pageTitle}
   description={pageDescription}
-  keywords="THPT, tuyá»n sinh THPT, trung há»c phá» thÃ´ng, trÆ°á»ng Viá»t Anh, song ngá»¯, du há»c, IELTS"
+  keywords="THPT, tuyển sinh THPT, trung học phổ thông, trường Việt Anh, song ngữ, du học, IELTS"
   schoolLevel="thpt"
   funnelCode="tuyen-sinh-thpt"
   canonicalUrl={canonicalUrl}
 >
   <div slot="hero">
     <h1 class="hero-h1">
-      90% há»c sinh Viá»t Anh Äá» ÄH nguyá»n vá»ng 1 â 30% du há»c thÃ nh cÃ´ng
+      90% vào ĐH nguyện vọng 1, 30% du học thành công — Con bạn sẽ là 1 trong số đó
     </h1>
     <p class="hero-subtitle">
-      ChÆ°Æ¡ng trÃ¬nh THPT song ngá»¯ â Chuáº©n bá» hÃ nh trang cho Äáº¡i há»c trong nÆ°á»c & quá»c táº¿
+      Lớp 10-12 không phải "ôn lại cũ" — Mà là "Xây hành trang cho đại học trong nước & quốc tế"
     </p>
   </div>
 
@@ -80,49 +80,49 @@ const faqItems = [
 
   <div slot="content">
     <div class="content-section">
-      <h2>Lá»p 10-12 KhÃ´ng Pháº£i "Ãn BÃ i CÅ©" â MÃ  lÃ  "XÃ¢y HÃ nh Trang TÆ°Æ¡ng Lai"</h2>
+      <h2>Tại sao 3 năm THPT Việt Anh thay đổi cả tương lai?</h2>
       <div class="content-grid">
         <div class="content-card">
-          <h3>THPTQG tá»« lá»p 10 â KhÃ´ng "Äáº¯n dá»n" lá»p 12</h3>
-          <p>Trong khi báº¡n khÃ¡c lá»p 12 má»i báº¯t Äáº§u "Ã´n chÃ³ng vÃ¡nh", con báº¡n ÄÃ£ lÃ m 100+ Äá» THPTQG. Em sáº½ tá»± tin, khÃ´ng sá»£ "Láº¡c ÄÆ°á»ng" lÃºc thi. Ká»¹ nÄng "LÃ m bÃ i nhanh & ÄÃºng" ÄÆ°á»£c rÃ¨n tá»« thÃ¡ng 9 lá»p 10.</p>
+          <h3>THPTQG từ lớp 10 — Chiến lược, không "dồn ép" lớp 12</h3>
+          <p>Trong khi trường khác lớp 12 mới bắt đầu "ôn chóng vánh" & dạy thêm khắp nơi, con bạn tại Việt Anh đã làm 100+ đề THPTQG, biết cách làm bài nhanh & đúng từ lớp 10. Lớp 12, con không sợ "lạc đường" hay "hoảng sợ" mà tự tin, có kế hoạch rõ ràng. Ba/Mẹ không cần lo con "ngủ 4 tiếng, ôn 20 tiếng" lớp 12. Đó là lý do 90%+ vào được nguyện vọng 1.</p>
         </div>
         <div class="content-card">
-          <h3>IELTS khÃ´ng pháº£i "CÃ´ng viá»c thÃªm" â MÃ  lÃ  "Pháº§n cá»§a Tiáº¿ng Anh"</h3>
-          <p>HÃ ng tuáº§n, em lÃ m IELTS Practice Test, khÃ´ng pháº£i thi THPTQG. Lá»p 11 ThÃ¡ng 5, em thi IELTS chÃ­nh thá»©c cÃ³ Chá»©ng chá». Khi vÃ o ÄH Viá»t Nam, em ÄÃ£ cÃ³ "Há» chiáº¿u Tiáº¿ng Anh". Muá»n du há»c? CÆ¡m ÄÃ£ Äá» sáºµn, chá» cáº§n "Än".</p>
+          <h3>IELTS 6.5-7.5 khi tốt nghiệp — Không phải "học thêm"</h3>
+          <p>Hàng tuần từ lớp 10, em làm IELTS Practice Test trong giờ Tiếng Anh chính khóa (không phải học thêm hay tốn tiền). Lớp 11 tháng 5, em thi IELTS chính thức có chứng chỉ quốc tế. Khi vào ĐH Việt Nam, con em đã có "Hộ chiếu Tiếng Anh" — vào được lớp chuyên Anh ngay. Muốn du học? Rào cản IELTS đã xóa sạch từ lớp 11.</p>
         </div>
         <div class="content-card">
-          <h3>TÆ° váº¥n Äáº¡i Há»c CÃ¡ NhÃ¢n 1-1 â KhÃ´ng "Xáº¿p Háº¡ng" hay "So SÃ¡nh"</h3>
-          <p>Lá»p 11 ThÃ¡ng 1, má»i em ÄÆ°á»£c 1 cuá»c tÆ° váº¥n riÃªng (CÃ´ + Ba/Máº¹) Äá» chá»n ngÃ nh. KhÃ´ng pháº£i "Máº¹ muá»n con lÃ m BÃ¡c SÄ©" rá»i "Con láº¡i thÃ­ch Kiáº¿n TrÃºc" dáº«n tá»i "Giáº­n Dá»i". ChÃºng tÃ´i sáº½ giÃºp con "KhÃ¡m phÃ¡ MÃ¬nh", chá»n ngÃ nh tháº­t sá»± yÃªu thÃ­ch.</p>
+          <h3>Tư vấn Đại Học 1-1 — Không "mẹ bảo, con theo"</h3>
+          <p>Lớp 11 tháng 1, mỗi em được 1 buổi tư vấn riêng (cô + ba/mẹ) để khám phá ngành & trường phù hợp. Không phải cảnh "mẹ muốn con làm Bác Sĩ, con lại thích Kiến Trúc" dẫn đến giận dỗi. Chúng tôi sẽ giúp con "hiểu bản thân", chọn ngành mà con thật sự yêu thích & phù hợp với năng lực. Lớp 12 con học không áp lực vì đã chọn đúng con đường.</p>
         </div>
         <div class="content-card">
-          <h3>Du Há»c Thá»±c Táº¿ â KhÃ´ng Pháº£i "Hoang TÆ°á»ng"</h3>
-          <p>HÃ ng nÄm, 30% em Viá»t Anh du há»c (Má»¹, Anh, Ãc, Canada). KhÃ´ng pháº£i em "Giá»i kinh khá»§ng", mÃ  vÃ¬ em ÄÆ°á»£c "Há» trá»£ ToÃ n Diá»n" â Essay, Há» sÆ¡, Visa, LiÃªn há» trÆ°á»ng. Náº¿u con báº¡n thÃ­ch du há»c, chÃºng tÃ´i sáº½ biáº¿n nÃ³ thÃ nh "Hiá»n Thá»±c" thay vÃ¬ "MÆ¡ Má»ng".</p>
+          <h3>Du học không phải "mơ mộng" — Mà là "hiện thực"</h3>
+          <p>Hàng năm, 30% em Việt Anh THPT chọn du học (Mỹ, Anh, Úc, Canada, Nhật). Không phải em "giỏi kinh khủng" mà vì em được "hỗ trợ toàn diện" — cô chỉ cách viết Essay, chỉnh hồ sơ, tư vấn visa, liên hệ trường. Nếu con em muốn du học, Việt Anh sẽ biến nó thành hiện thực thay vì mơ mộng vô vàn.</p>
         </div>
       </div>
     </div>
 
     <div class="content-section bonus-section">
-      <h2 style="color: #E8792B;">Bonus: LiÃªn káº¿t Äáº¡i Há»c â Há»c sinh Viá»t Anh ÄÆ°á»£c "NhÃ¬n Tháº¥y"</h2>
-      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
-        <strong>TrÆ°á»ng Viá»t Anh cÃ³ liÃªn káº¿t vá»i 50+ Äáº¡i Há»c</strong> táº¡i Viá»t Nam & quá»c táº¿ (ÄH BÃ¡ch Khoa, ÄH Ngoáº¡i ThÆ°Æ¡ng, Há»c Viá»n Ngoáº¡i Giao, George Mason, RMIT, Macquarie...). Há»c sinh Viá»t Anh sáº½ ÄÆ°á»£c "Æ¯u tiÃªn XÃ©t Tuyá»n" vÃ o nhá»¯ng ngÃ nh tá»t, khÃ´ng lo "Ngá»i Chá» Sá»" THPTQG.
+      <h2 style="color: #E8792B;">Bonus: Lớp nhỏ 30 em & Liên kết 50+ Đại Học</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 2rem;">
+        <strong>Lớp 10-12 tối đa 30 em/lớp</strong> — Cô giáo sẽ biết tên từng em, điểm mạnh, điểm yếu, mục tiêu đại học. Không cảnh "lớp 50 em, cô chỉ nhớ tên cái" ở trường công. <strong>Liên kết 50+ Đại Học</strong> trong nước (ĐH Bách Khoa, Ngoại Thương, Ngoại Giao, Y Hà Nội, HUFLIT...) & quốc tế (George Mason, RMIT, Macquarie, Waseda...). Học sinh Việt Anh được "ưu tiên xét tuyển" vào những ngành tốt, không phải chờ đợi THPTQG hay "ngồi chờ số" lo lắng.
       </p>
     </div>
   </div>
 
   <div slot="form">
-    <h2 class="form-heading">Chá» cÃ²n 20 suáº¥t cho lá»p 10 nÄm há»c 2026-2027 â Äáº·t chá» sá»m</h2>
-    <p class="form-subheading">HÃ ng nÄm, 300+ phá»¥ huynh quan tÃ¢m nhÆ°ng trÆ°á»ng chá» nháº­n 60 em (lá»p 10 má»i). Ba/Máº¹ nÃªn tham quan & tÆ° váº¥n sá»m (thÃ¡ng 3-5 lÃ  thÃ­ch há»£p nháº¥t) Äá» khÃ´ng bá» lá»¡ suáº¥t tuyá»n sinh.</p>
+    <h2 class="form-heading">Chỉ còn ~20 suất cho lớp 10 năm học 2026-2027</h2>
+    <p class="form-subheading">Hàng năm, 300+ phụ huynh quan tâm nhưng Việt Anh chỉ tuyển 60 em lớp 10 mới (để giữ lớp nhỏ 30 em). Ba/Mẹ nên tham quan & tư vấn sớm (tháng 3-5/2026 lý tưởng nhất) để không bỏ lỡ suất.</p>
     <LeadFormTwoStepEmailFirst
       formId="tuyen-sinh-form"
       funnelCode="tuyen-sinh-thpt"
       schoolLevel="thpt"
-      submitText="ÄÄng kÃ½ tÆ° váº¥n ngay"
-      successMessage="Cáº£m Æ¡n Ba/Máº¹! ChÃºng tÃ´i sáº½ liÃªn há» trong 24h Äá» sáº¯p xáº¿p lá»ch tham quan & tÆ° váº¥n chi tiáº¿t."
+      submitText="Đăng ký tư vấn ngay"
+      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để sắp xếp lịch tham quan & tư vấn chi tiết."
     />
   </div>
 
   <div slot="faq">
-    <FAQSection items={faqItems} title="Nhá»¯ng cÃ¢u há»i Ba/Máº¹ hay há»i" />
+    <FAQSection items={faqItems} title="Những câu hỏi Ba/Mẹ hay hỏi" />
   </div>
 </SqueezePageLayout>
 

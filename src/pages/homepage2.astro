@@ -1,16 +1,42 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
-import FooterBase from '../components/FooterBase.astro';const structuredData = [
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const structuredData = [
   {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Trang chủ Tuyển Sinh - Hệ thống giáo dục liên cấp Việt Anh",
-    "description": "Lộ trình giáo dục phát triển toàn diện cho con bạn từ Mầm Non đến THPT tại Trường Việt Anh."
-  }
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Liên Cấp Việt Anh',
+    alternateName: 'Truong Viet Anh',
+    url: 'https://truongvietanh.com',
+    logo: 'https://truongvietanh.com/logo-crest-80.webp',
+    telephone: '+84-916-961-409',
+    description: 'Hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT với chương trình tích hợp 16 kỹ năng thế kỷ 21, cam kết IELTS 6.0+ đầu ra.',
+    foundingDate: '2011',
+    address: [
+      { '@type': 'PostalAddress', streetAddress: '160/72 Phan Huy Ích, Phường 12', addressLocality: 'Quận Gò Vấp', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+      { '@type': 'PostalAddress', streetAddress: '269A Nguyễn Trọng Tuyển, Phường 10', addressLocality: 'Quận Phú Nhuận', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+      { '@type': 'PostalAddress', streetAddress: '951/7 Tỉnh lộ 10, Phường Tân Tạo', addressLocality: 'Quận Bình Tân', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+    ],
+    sameAs: ['https://www.facebook.com/truongvietanh', 'https://www.youtube.com/@truongvietanh'],
+    numberOfEmployees: { '@type': 'QuantitativeValue', value: 200 },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Trường Việt Anh',
+    url: 'https://truongvietanh.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://truongvietanh.com/tin-tuc?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  },
 ];
 
-const logoUrl = "/logo-vietanh.png";
+const logoUrl = "/logo-vietanh.webp";
 
 const stats = [
   { val: '2011', label: 'Năm Thành Lập' },
@@ -72,7 +98,8 @@ const testimonials = [
 <BaseLayout
   title="Nhận Lộ Trình Học Tập Toàn Diện | Trường Việt Anh"
   description="Lộ trình học tập giúp con hạnh phúc & vươn tầm quốc tế. Đảm bảo đầu ra IELTS 6.0+ và 16 Kỹ năng thế kỷ 21."
-  canonical="https://staging.truongvietanh.com/staging-clickfunnels"
+  canonical="https://truongvietanh.com/homepage2"
+  noindex={true}
   structuredData={structuredData}
 >
   <div class="cf-layout">
@@ -121,12 +148,17 @@ const testimonials = [
       </div>
     </section>
 
+    <!-- Content image -->
+    <div class="cf-container" style="margin-top:2rem;margin-bottom:1rem;">
+      <img src="https://media.truongvietanh.com/images/giao-vien-40.webp" alt="Đội ngũ giáo viên Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+    </div>
+
     <!-- PROBLEM & SOLUTION -->
     <section class="cf-problem-solution">
       <div class="cf-container text-center max-w-900">
         <h2 class="section-title">Ba mẹ "Mệt Mỏi" vì đưa đón con quá nhiều nơi?</h2>
         <p class="section-subtitle">Tiếng Anh chỗ này, Khóa lãnh đạo chỗ kia, Thể thao nơi khác...</p>
-        
+
         <div class="solution-box">
           <div class="solution-icon">♥</div>
           <h3 class="solution-title-inline">Trường Việt Anh Tích Hợp TẤT CẢ Trong 1 Lộ Trình Duy Nhất!</h3>
@@ -221,6 +253,17 @@ const testimonials = [
            ))}
         </div>
       </div>
+    </section>
+
+    <section style="max-width: 600px; margin: 0 auto 3rem; padding: 0 1.5rem; text-align: center;">
+      <h2 style="font-size: 1.4rem; font-weight: 700; color: #1a1a5e; margin-bottom: 0.5rem;">Đăng ký nhận tư vấn miễn phí</h2>
+      <p style="color: #64748b; margin-bottom: 1.5rem; font-size: 0.95rem;">Để lại thông tin — phản hồi trong 24 giờ</p>
+      <LeadFormTwoStepEmailFirst
+        formId="homepage2-form"
+        funnelCode="homepage2"
+        schoolLevel="lien-cap"
+        submitText="Nhận tư vấn"
+      />
     </section>
 
     <FooterBase />

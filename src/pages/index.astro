@@ -2,114 +2,80 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
-import { contactLinks, defaultSiteUrl } from '../lib/site-content';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { defaultSiteUrl } from '../lib/site-content';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
-const homepageNav = [
-  { label: 'Giới thiệu', href: '/gioi-thieu' },
-  { label: 'Cấp học', href: '#cap-hoc' },
-  { label: 'Cơ sở', href: '#co-so' },
-  { label: 'Tuyển sinh', href: '/tuyen-sinh' },
-  { label: 'Học phí', href: '/hoc-phi' },
-  { label: 'Cảm nhận', href: '#cam-nhan' },
-  { label: 'Tin tức & Sự kiện', href: '#tin-tuc' },
-  { label: 'Liên hệ', href: '#lien-he' },
-];
-
-const keyReasons = [
+const structuredData = [
   {
-    eyebrow: 'Chuyên Anh',
-    title: 'Lộ trình tiếng Anh hướng tới IELTS 6.0+',
-    body:
-      'Tiếng Anh được đặt trong một lộ trình học tập rõ ràng, gắn với khả năng sử dụng ngôn ngữ, sự tự tin và định hướng dài hạn của học sinh.',
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Liên Cấp Việt Anh',
+    alternateName: 'Truong Viet Anh',
+    url: 'https://truongvietanh.com',
+    logo: 'https://truongvietanh.com/logo-crest-80.webp',
+    telephone: '+84-916-961-409',
+    description: 'Hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT với chương trình tích hợp 16 kỹ năng thế kỷ 21, cam kết IELTS 6.0+ đầu ra.',
+    foundingDate: '2011',
+    address: [
+      { '@type': 'PostalAddress', streetAddress: '160/72 Phan Huy Ích, Phường 12', addressLocality: 'Quận Gò Vấp', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+      { '@type': 'PostalAddress', streetAddress: '269A Nguyễn Trọng Tuyển, Phường 10', addressLocality: 'Quận Phú Nhuận', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+      { '@type': 'PostalAddress', streetAddress: '951/7 Tỉnh lộ 10, Phường Tân Tạo', addressLocality: 'Quận Bình Tân', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+    ],
+    sameAs: ['https://www.facebook.com/truongvietanh', 'https://www.youtube.com/@truongvietanh'],
+    numberOfEmployees: { '@type': 'QuantitativeValue', value: 200 },
   },
   {
-    eyebrow: 'Vui vẻ & thực dụng',
-    title: 'Môi trường học tập hạnh phúc nhưng không “ảo áp lực”',
-    body:
-      'Trường giữ tinh thần học vui, sống chất và tiến bộ đều, để phụ huynh nhìn thấy giá trị thật thay vì những lời hứa quá phô trương.',
-  },
-  {
-    eyebrow: '21st century skills',
-    title: 'Rèn 16 kỹ năng thế kỷ 21 cùng năng lực tự chủ',
-    body:
-      'Kỹ năng, PDR và năng lực lãnh đạo được kết nối thành một hành trình phát triển, không phải những thông điệp rời rạc.',
-  },
-  {
-    eyebrow: 'Minh bạch',
-    title: 'Tư vấn tuyển sinh và học phí theo hướng rõ ràng, dễ hiểu',
-    body:
-      'Từ trang chủ, phụ huynh có thể đi thẳng tới cấp học phù hợp, học phí, tuyển sinh hoặc liên hệ nhanh mà không cần dò tìm quá nhiều lớp menu.',
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Trường Việt Anh',
+    url: 'https://truongvietanh.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://truongvietanh.com/tin-tuc?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
   },
 ];
 
-const levelCards = [
-  {
-    eyebrow: 'Mầm non',
-    title: 'Khởi đầu với sự thích nghi, thói quen và cảm xúc',
-    body:
-      'Ưu tiên môi trường an toàn, giao tiếp song ngữ và nhịp sinh hoạt giúp trẻ đi học tự tin hơn từ những ngày đầu.',
-    href: '/mam-non',
-    cta: 'Xem chương trình mầm non',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg',
-  },
-  {
-    eyebrow: 'Tiểu học',
-    title: 'Xây nền học thuật, tiếng Anh và nề nếp tự học',
-    body:
-      'Giai đoạn cần cân bằng giữa học tốt, giữ hứng thú học tập và hình thành nhịp học rõ ràng cho con.',
-    href: '/tieu-hoc',
-    cta: 'Xem chương trình tiểu học',
-    img: 'https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png',
-  },
-  {
-    eyebrow: 'THCS',
-    title: 'Tăng tốc học thuật, dự án và khả năng tự quản trị',
-    body:
-      'THCS tại Việt Anh nhấn mạnh tư duy chủ động, tiếng Anh và khả năng làm việc với mục tiêu học tập rõ ràng.',
-    href: '/trung-hoc-co-so',
-    cta: 'Xem chương trình THCS',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png',
-  },
-  {
-    eyebrow: 'THPT',
-    title: 'Định hướng IELTS, đại học và sự trưởng thành bền vững',
-    body:
-      'THPT hướng tới đầu ra rõ hơn về ngoại ngữ, học thuật và khả năng tự học để học sinh đi xa hơn sau khi ra trường.',
-    href: '/trung-hoc-pho-thong',
-    cta: 'Xem chương trình THPT',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img2-scaled.jpg',
-  },
+const programCards = [
+  { label: 'Mầm non', href: '/mam-non' },
+  { label: 'Tiểu học', href: '/tieu-hoc' },
+  { label: 'THCS', href: '/trung-hoc-co-so' },
+  { label: 'THPT', href: '/trung-hoc-pho-thong' },
+  { label: 'Trại hè', href: '/tuyen-sinh' },
+  { label: 'Ngoại khoá', href: '/tuyen-sinh' },
+  { label: 'Toán Tư Duy (SAM)', href: '/tuyen-sinh' },
+  { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh' },
+  { label: 'Tiếng Anh Thực Dụng', href: '/tuyen-sinh' },
+  { label: 'Bơi', href: '/tuyen-sinh' },
 ];
 
-const campusCards = [
+const campusGroups = [
   {
-    eyebrow: 'Gò Vấp',
-    title: 'Một trong những khu vực được phụ huynh quan tâm nhiều khi tìm trường cho con',
-    body:
-      'Phù hợp với gia đình muốn bắt đầu từ một cơ sở thuận tiện đưa đón, dễ tham quan và có lộ trình rõ ràng cho từng cấp học.',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/Frame-2144770212.png',
-    href: '/co-so/go-vap-phan-huy-ich',
-    cta: 'Xem cơ sở Gò Vấp',
+    city: 'TP. Hồ Chí Minh',
+    campuses: [
+      { name: 'Trường Việt Anh Phú Nhuận', address: '269A Nguyễn Trọng Tuyển, Phường Phú Nhuận' },
+      { name: 'Trường Việt Anh Bình Tân', address: 'Số 7 đường 38A, Tân Tạo, Bình Tân' },
+      { name: 'Trường Việt Anh Gò Vấp', address: '160/72 Phan Huy Ích, Phường An Hội Đông' },
+      { name: 'Trường Mầm non Việt Anh Gò Vấp', address: '573 Đ. Lê Đức Thọ, Phường An Hội Tây' },
+    ]
   },
   {
-    eyebrow: 'Phú Nhuận',
-    title: 'Điểm chạm gần trung tâm, phù hợp phụ huynh cần vị trí kết nối tốt',
-    body:
-      'Phần giới thiệu cơ sở giúp phụ huynh hiểu khu vực phục vụ và chuyển nhanh sang bước tư vấn hoặc tham quan.',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/Website-Truongvietanh.com_-768x432.png',
-    href: '/co-so/phu-nhuan-nguyen-trong-tuyen',
-    cta: 'Xem cơ sở Phú Nhuận',
+    city: 'Cần Giuộc - Long An',
+    campuses: [
+      { name: 'Trường Mầm non Nhân Lễ', address: '22 Đường D2, Khu Dân cư, Cần Giuộc, Long An' },
+      { name: 'Trường Mầm non Thái Sơn', address: 'Khu Dân Cư Thái Sơn - Long Hậu' },
+      { name: 'Trường Tiểu học Thái Sơn', address: 'Khu Dân Cư Thái Sơn - Long Hậu' },
+    ]
   },
   {
-    eyebrow: 'Mở rộng hệ sinh thái',
-    title: 'Bình Tân cùng các điểm hiện diện khác giúp thương hiệu giữ chiều sâu liên cấp',
-    body:
-      'Khi hệ thống campus được trình bày rõ hơn, phụ huynh có thể chọn theo khu vực, cấp học và nhu cầu để tìm điểm chạm phù hợp nhanh hơn.',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img3-scaled.jpg',
-    href: '/co-so',
-    cta: 'Xem tổng quan cơ sở',
+    city: 'TP Rạch Giá - Kiên Giang',
+    campuses: [
+      { name: 'Trường Mầm non Quốc Tế Mekong Xanh', address: 'Lô E7, khu đô thị Tây Bắc' },
+      { name: 'Trường Tiểu học Quốc Tế Mekong Xanh', address: 'Lô E7, khu đô thị Tây Bắc' },
+    ]
   },
 ];
 
@@ -132,6 +98,18 @@ const testimonials = [
     quote:
       'Niềm tin không đến từ khẩu hiệu mà đến từ cách trường chăm học sinh, cách giao tiếp với phụ huynh và tiến bộ nhìn thấy được qua từng giai đoạn.',
   },
+  {
+    name: 'Phụ huynh Thanh Hà',
+    role: 'Cảm nhận phụ huynh',
+    quote:
+      'Con tôi thay đổi rõ rệt về khả năng giao tiếp tiếng Anh chỉ sau một học kỳ. Điều khiến tôi yên tâm nhất là con thích đi học mỗi ngày.',
+  },
+  {
+    name: 'Phụ huynh Minh Tâm',
+    role: 'Cảm nhận phụ huynh',
+    quote:
+      'Tôi đánh giá cao cách trường rèn kỹ năng lãnh đạo cho con. Con biết tự lập kế hoạch học tập và chủ động hơn trong mọi việc.',
+  },
 ];
 
 const newsCards = [
@@ -142,7 +120,7 @@ const newsCards = [
       'Phụ huynh cần biết quy trình, hồ sơ, lịch tuyển sinh và bước tiếp theo ngay từ trang chủ mà không phải lạc vào các bài nội dung phụ.',
     href: '/tuyen-sinh',
     cta: 'Xem lộ trình tuyển sinh',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg',
+    img: 'https://media.truongvietanh.com/images/trang-chu-3.webp',
   },
   {
     eyebrow: 'Học phí & học bổng',
@@ -151,289 +129,629 @@ const newsCards = [
       'Đây là nhóm nội dung có tác động chuyển đổi cao, nên được đặt đủ sớm để phụ huynh có thể tiếp tục hành trình mà không phải đoán.',
     href: '/hoc-phi',
     cta: 'Xem học phí',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img2-scaled.jpg',
+    img: 'https://media.truongvietanh.com/images/trang-chu-5.webp',
   },
   {
     eyebrow: 'Hoạt động & câu chuyện',
     title: 'Tin tức nên ưu tiên hoạt động học sinh, sự kiện gần và câu chuyện tiến bộ',
     body:
       'Đây là nơi phù hợp để đưa phụ huynh tới những nội dung tạo niềm tin như hoạt động học sinh, ngày hội tuyển sinh và cảm nhận thật từ phụ huynh.',
-    href: 'https://truongvietanh.com/',
+    href: '/tin-tuc',
     cta: 'Xem tin tức mới nhất',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img3-scaled.jpg',
+    img: 'https://media.truongvietanh.com/images/trang-chu-7.webp',
   },
 ];
 ---
 
 <BaseLayout
-  title="Trường Liên cấp Việt Anh | Mầm non, Tiểu học, THCS, THPT tại TP.HCM"
+  title="Trường Việt Anh | Hệ thống trường học liên cấp từ Mầm non đến THPT"
   description="Trường Việt Anh là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, nổi bật với tiếng Anh, môi trường học vui vẻ - thực dụng, kỹ năng thế kỷ 21 và lộ trình tuyển sinh rõ ràng."
-  canonical={siteUrl}
+  canonical="https://truongvietanh.com"
+  ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
+  structuredData={structuredData}
 >
   <div class="site-shell site-shell--home">
-    <SiteHeader currentPath="/" siteUrl="/" navItems={homepageNav} />
+    <SiteHeader currentPath="/" />
 
-    <main class="page-flow">
-      <section class="hero-block hero-block--home">
-        <div class="hero-block__main">
-          <p class="section-eyebrow">Hệ thống giáo dục liên cấp song ngữ tại TP.HCM</p>
-          <h1>Trường Việt Anh: nơi học sinh học tốt, sống hạnh phúc và trưởng thành tự chủ từ Mầm non đến THPT.</h1>
-          <p class="hero-copy">
-            Việt Anh phát triển một hành trình học tập liên cấp với trọng tâm là tiếng Anh, kỹ năng thế kỷ 21, môi trường học vui vẻ
-            và hệ thống PDR giúp học sinh biết lập kế hoạch, thực hiện và nhìn lại tiến bộ của mình.
+    <main>
+      <!-- DARK HERO -->
+      <section class="wp-hero">
+        <div class="wp-hero__overlay"></div>
+        <div class="wp-hero__content">
+          <h1 class="wp-hero__title">Trường Việt Anh</h1>
+          <p class="wp-hero__subtitle">Hệ thống trường học liên cấp từ Mầm non đến THPT</p>
+          <p class="wp-hero__desc">
+            Môi trường học tập vui vẻ và thực dụng
           </p>
+          <div class="wp-hero__actions">
+            <a class="wp-hero__btn wp-hero__btn--primary" href="/tuyen-sinh">Tư vấn</a>
+            <a class="wp-hero__btn wp-hero__btn--outline" href="#danh-gia">Xem đánh giá</a>
+            <a class="wp-hero__btn wp-hero__btn--outline" href="/hoc-phi">Xem học phí</a>
+          </div>
+          <div class="wp-hero__badges">
+            <span class="wp-hero__badge">Đầu ra tiếng Anh IELTS 6.0-8.0</span>
+            <span class="wp-hero__badge">99% vào đại học</span>
+            <span class="wp-hero__badge">Kỹ năng và phẩm chất thế kỷ 21</span>
+          </div>
+        </div>
+      </section>
 
-          <div class="badge-row">
-            <span class="badge">IELTS 6.0+ đầu ra</span>
-            <span class="badge badge--soft">99% học sinh vào đại học</span>
-            <span class="badge badge--soft">16 kỹ năng thế kỷ 21</span>
+      <!-- AIO Quick Answer -->
+      <section class="aio-answer" style="background:#f0f4ff;padding:2rem 0;text-align:center">
+        <div style="max-width:800px;margin:0 auto;padding:0 1.5rem">
+          <p style="font-size:1.05rem;line-height:1.75;color:#334155;margin:0">
+            <strong style="color:#1a193c">Trường Việt Anh</strong> là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT. Thành lập năm 2011, trường có 3 cơ sở tại Gò Vấp, Phú Nhuận và Bình Tân. Học sinh tốt nghiệp đạt IELTS 6.0–8.0, 99% đỗ đại học nguyện vọng 1, và 30% du học thành công. Học phí từ 5–12 triệu/tháng. Hotline tư vấn: <a href="tel:0916961409" style="color:#1a193c;font-weight:700">0916 961 409</a>.
+          </p>
+        </div>
+      </section>
+
+      <!-- REST OF HOMEPAGE CONTENT -->
+      <div class="page-flow">
+
+        <section class="section-block section-block--stats anchor-section">
+          <div class="section-heading">
+            <p class="section-eyebrow">Con số nổi bật</p>
+            <h2>Những chỉ dấu giúp phụ huynh hình dung nhanh quy mô, định hướng và kết quả học tập của Việt Anh.</h2>
           </div>
 
-          <div class="cta-row">
-            <a class="button button--primary" href="/tuyen-sinh">Tư vấn tuyển sinh</a>
-            <a class="button button--ghost" href="/hoc-phi">Xem học phí</a>
-          </div>
-        </div>
-
-        <aside class="hero-block__aside">
-          <p class="aside-eyebrow">Bắt đầu từ nhu cầu của phụ huynh</p>
-          <h2>Chọn đúng cấp học, cơ sở phù hợp và bước tiếp theo rõ ràng.</h2>
-          <div class="quick-stack">
-            <article class="quick-card">
-              <p class="card-eyebrow">Chương trình</p>
-              <h3>4 cấp học với định hướng rõ từ Mầm non đến THPT.</h3>
-              <p>Phụ huynh có thể đi thẳng tới cấp học phù hợp để xem chương trình, triết lý và lộ trình phát triển của con.</p>
+          <div class="stats-grid">
+            <article class="stat-tile">
+              <strong>2011</strong>
+              <span>Năm hình thành và phát triển hệ thống giáo dục Việt Anh</span>
             </article>
-            <article class="quick-card">
-              <p class="card-eyebrow">Cơ sở</p>
-              <h3>Tìm cơ sở thuận tiện cho gia đình tại TP.HCM và hệ sinh thái mở rộng.</h3>
-              <p>Khu vực, cấp học và nhu cầu đưa đón nên là các tiêu chí đầu tiên để phụ huynh bắt đầu hành trình tìm hiểu.</p>
+            <article class="stat-tile">
+              <strong>6.0+</strong>
+              <span>IELTS là chuẩn đầu ra tiếng Anh được nhấn mạnh xuyên suốt trong thông điệp tuyển sinh</span>
             </article>
-            <article class="quick-card">
-              <p class="card-eyebrow">Tuyển sinh</p>
-              <h3>Tư vấn, học phí, tham quan và liên hệ được đặt thành các CTA chính.</h3>
-              <p>Homepage mới ưu tiên những đường đi có ý nghĩa nhất để phụ huynh không bị mất thời gian với nội dung ít liên quan.</p>
+            <article class="stat-tile">
+              <strong>99%</strong>
+              <span>Tỷ lệ học sinh vào đại học là chỉ số tạo niềm tin mạnh với nhiều phụ huynh</span>
+            </article>
+            <article class="stat-tile">
+              <strong>16/16</strong>
+              <span>16 kỹ năng thế kỷ 21 cho thấy định hướng phát triển toàn diện, không chỉ tập trung điểm số</span>
             </article>
           </div>
-        </aside>
-      </section>
 
-      <section class="section-block section-block--stats anchor-section">
-        <div class="section-heading">
-          <p class="section-eyebrow">Con số nổi bật</p>
-          <h2>Những chỉ dấu giúp phụ huynh hình dung nhanh quy mô, định hướng và kết quả học tập của Việt Anh.</h2>
-        </div>
+          <img src="https://media.truongvietanh.com/images/giao-vien-30.webp" alt="Đội ngũ giáo viên Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+        </section>
 
-        <div class="stats-grid">
-          <article class="stat-tile">
-            <strong>2011</strong>
-            <span>Năm hình thành và phát triển hệ thống giáo dục Việt Anh</span>
-          </article>
-          <article class="stat-tile">
-            <strong>6.0+</strong>
-            <span>IELTS là chuẩn đầu ra tiếng Anh được nhấn mạnh xuyên suốt trong thông điệp tuyển sinh</span>
-          </article>
-          <article class="stat-tile">
-            <strong>99%</strong>
-            <span>Tỷ lệ học sinh vào đại học là chỉ số tạo niềm tin mạnh với nhiều phụ huynh</span>
-          </article>
-          <article class="stat-tile">
-            <strong>16/16</strong>
-            <span>16 kỹ năng thế kỷ 21 cho thấy định hướng phát triển toàn diện, không chỉ tập trung điểm số</span>
-          </article>
-        </div>
-      </section>
+        <!-- TAI SAO CHON TRUONG VIET ANH -->
+        <section class="section-block anchor-section">
+          <div class="section-heading">
+            <p class="section-eyebrow">Tại sao chọn Trường Việt Anh</p>
+            <h2>Những lý do cốt lõi khiến Việt Anh khác biệt trong mắt nhiều gia đình đang tìm trường tại TP.HCM.</h2>
+          </div>
 
-      <section class="section-block anchor-section" id="gioi-thieu">
-        <div class="section-heading">
-          <p class="section-eyebrow">Chào mừng đến với Trường Việt Anh</p>
-          <h2>Một môi trường giáo dục liên cấp theo đuổi hạnh phúc, tính thực dụng và sự trưởng thành bền vững.</h2>
-          <p class="section-intro">
-            Từ thông điệp gốc “môi trường học vui vẻ và thực dụng”, Việt Anh đặt mục tiêu giúp học sinh học thật, sống chất,
-            có năng lực tiếng Anh, kỹ năng thực tế và biết làm chủ hành trình của mình.
-          </p>
-        </div>
-
-        <div class="card-grid card-grid--2">
-          <article class="content-card">
-            <p class="card-eyebrow">Thông điệp cốt lõi</p>
-            <h3>Kiến tạo những công dân toàn cầu hạnh phúc.</h3>
-            <p>
-              Đây là lời hứa thương hiệu bao quát cho toàn website: học sinh không chỉ học tốt hơn mà còn trưởng thành tốt hơn
-              trong một môi trường giàu tính người, rõ mục tiêu và gần với thực tế.
-            </p>
-          </article>
-          <article class="content-card">
-            <p class="card-eyebrow">Lời chào thương hiệu</p>
-            <h3>“Một đứa trẻ hạnh phúc sẽ học tốt nhất, và một học sinh tự chủ sẽ đi xa nhất.”</h3>
-            <p>
-              Tinh thần này xuất hiện xuyên suốt từ chương trình đào tạo, PDR, hoạt động học sinh đến cách trường giao tiếp với
-              phụ huynh trên các trang tuyển sinh và học phí.
-            </p>
-          </article>
-        </div>
-      </section>
-
-      <section class="section-block anchor-section">
-        <div class="section-heading">
-          <p class="section-eyebrow">Tại sao chọn Việt Anh</p>
-          <h2>Những lý do cốt lõi khiến Việt Anh khác biệt trong mắt nhiều gia đình đang tìm trường tại TP.HCM.</h2>
-          <p class="section-intro">
-            Mỗi card dưới đây bám sát định vị thương hiệu: liên cấp, chuyên Anh, hạnh phúc, thực dụng và tự chủ.
-          </p>
-        </div>
-
-        <div class="card-grid card-grid--2">
-          {keyReasons.map((reason) => (
-            <article class="content-card">
-              <p class="card-eyebrow">{reason.eyebrow}</p>
-              <h3>{reason.title}</h3>
-              <p>{reason.body}</p>
+          <div class="why-blocks">
+            <!-- Block 1 -->
+            <article class="why-block">
+              <h3 class="why-block__title">Nội dung học thực dụng</h3>
+              <div class="why-block__content">
+                <p>Học sinh được học tập đầy đủ 16 kỹ năng sống còn, là nền tảng cho thành công trong cuộc sống ở thế kỷ 21 (theo công bố của WEF -- diễn đàn kinh tế thế giới 2015), là nội dung các trường K-12 hàng đầu thế giới hiện đang thực hiện</p>
+                <p>Nghiên cứu của WEF chỉ ra, trong khi các nước tiên tiến ở châu Âu hoặc khu vực Bắc Mỹ đã đầu tư đủ 16 kỹ năng của thế kỷ 21 trong giáo dục, mặt bằng chung của Việt Nam còn đang thiếu hụt và tụt hậu xa so với giáo dục thế giới. Trong lúc nhiều trường học tại Việt Nam còn mải mê chạy theo học thuộc lòng, thi cử, thì từ lâu thế giới đã tập trung vào xây dựng năng lực, phẩm chất, vốn là những kỹ năng quan trọng giúp con người trở nên linh hoạt và thành công ở một thế giới tương lai đầy biến động</p>
+                <p>Để thực hiện sứ mệnh của mình, trường Việt Anh dày công xây dựng chương trình học tập giúp học sinh phát triển đầy đủ 16 kỹ năng của thế kỷ 21, vừa thông qua các môn học mới, các hoạt động ngoại khoá và cả văn hoá trường học. Giáo trình giảng dạy của trường Việt Anh hoàn toàn sống động với thời gian, mỗi năm đều có cập nhật mới để đáp ứng sự biến đổi với cấp số nhân của xã hội do cuộc cách mạng AI mang lại</p>
+              </div>
             </article>
-          ))}
-        </div>
-      </section>
 
-      <section class="section-block anchor-section" id="cap-hoc">
-        <div class="section-heading">
-          <p class="section-eyebrow">Chương trình đào tạo</p>
-          <h2>Chọn đúng cấp học để hiểu rõ hơn chương trình, phương pháp và lộ trình phát triển của con.</h2>
-          <p class="section-intro">
-            Từ Mầm non đến THPT, mỗi cấp học tại Việt Anh có vai trò riêng trong hành trình phát triển về học thuật, tiếng Anh,
-            kỹ năng và khả năng tự chủ của học sinh.
-          </p>
-        </div>
-
-        <div class="card-grid card-grid--2">
-          {levelCards.map((card) => (
-            <article class="content-card">
-              {card.img && <img src={card.img} alt={card.title} class="card-img" />}
-              <p class="card-eyebrow">{card.eyebrow}</p>
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
-              <a class="card-link" href={card.href}>{card.cta}</a>
+            <!-- Block 2 -->
+            <article class="why-block">
+              <h3 class="why-block__title">Tiếng Anh đủ du học</h3>
+              <div class="why-block__content">
+                <p>Chương trình tiếng Anh của trường Việt Anh giúp học sinh đạt được trình độ tối thiểu IELTS 6.0 trước khi tốt nghiệp THPT, đây là trình độ tiếng Anh đầu vào của hầu hết các đại học trên toàn thế giới. Thực tế, nhiều học sinh Việt Anh đã ra trường với thành tích tốt hơn nhiều và tìm kiếm được những học bổng quốc tế như ý</p>
+                <p>Để làm được điều này, thì chương trình học của trường được xây dựng có chiều sâu và lộ trình rõ ràng từ rất sớm. Ở Mầm Non, học sinh học hoàn toàn bằng tiếng Anh; Tiểu học, học sinh học một số môn học của giáo trình UK như Toán, Khoa học, Công nghệ, Máy tính; THCS phát triển thêm về giao tiếp và học thuật; THPT bắt đầu luyện thi IELTS và các kỹ năng tiếng Anh cao cấp</p>
+                <p>Tổ Tiếng Anh của trường được xây dựng bởi các giáo viên bản ngữ và chuyên gia giàu kinh nghiệm, bản thân trường Việt Anh cũng là một trong những trung tâm khảo thí IELTS tại TP HCM</p>
+                <p>Chương trình tiếng Anh của trường Việt Anh tốt đến mức được hợp tác triển khai ở hơn 100 trường công tư khác tại TP HCM hàng năm</p>
+              </div>
             </article>
-          ))}
-        </div>
-      </section>
 
-      <section class="section-block anchor-section" id="co-so">
-        <div class="section-heading">
-          <p class="section-eyebrow">Cơ sở & khu vực</p>
-          <h2>Phụ huynh cần biết khu vực trường hiện diện và đâu là điểm bắt đầu phù hợp nhất cho gia đình mình.</h2>
-          <p class="section-intro">
-            Với trang chủ, mục tiêu là tạo cảm giác tin cậy và định hướng đúng bước tiếp theo. Phần chi tiết về cơ sở, hình ảnh
-            và lịch tham quan nên được dẫn sang các trang campus hoặc tuyển sinh chuyên sâu hơn.
-          </p>
-        </div>
-
-        <div class="card-grid card-grid--3">
-          {campusCards.map((campus) => (
-            <article class="content-card">
-              {campus.img && <img src={campus.img} alt={campus.title} class="card-img" />}
-              <p class="card-eyebrow">{campus.eyebrow}</p>
-              <h3>{campus.title}</h3>
-              <p>{campus.body}</p>
-              {campus.href && campus.cta && <a class="card-link" href={campus.href}>{campus.cta}</a>}
+            <!-- Block 3 -->
+            <article class="why-block">
+              <h3 class="why-block__title">Học sinh sớm trưởng thành</h3>
+              <div class="why-block__content">
+                <p>Lãnh đạo là năng lực giúp mỗi học sinh có được sự chủ động lựa chọn con đường cuộc sống và sự thành công của mình. Ban đầu, học sinh Việt Anh được rèn cách lãnh đạo bản thân, dần dần mở rộng phạm vi ảnh hưởng ra đội nhóm, lớp học, trường học, gia đình và xã hội.</p>
+                <p>Chương trình phát triển phẩm chất và năng lực lãnh đạo của học sinh được xây dựng trên nền tảng 5 giá trị cốt lõi và 7 thói quen lãnh đạo. 5 giá trị do trường Việt Anh tự xây dựng với niềm tin sẽ mang lại thành công và hạnh phúc cho mọi người sở hữu nó, còn 7 thói quen là chương trình nhận quyền từ tập đoàn giáo dục toàn cầu Franklin Covey, mang tên "Leader in Me"</p>
+                <p>Tất cả phụ huynh tham quan trường Việt Anh đều ngạc nhiên khi thấy dấu ấn của học sinh ở khắp nơi, từ cơ sở vật chất, đến các ngày lễ, đến văn hoá nhà trường, và cả những chính sách quan trọng chung. Với quá trình phát triển khả năng lãnh đạo sớm và liên tục, học sinh Việt Anh thường được nhìn nhận là đã hình thành tư duy của những người trưởng thành nhỏ tuổi</p>
+              </div>
             </article>
-          ))}
-        </div>
-      </section>
+          </div>
 
-      <section class="section-block">
-        <div class="section-heading">
-          <p class="section-eyebrow">Đội ngũ & phương pháp</p>
-          <h2>Phụ huynh cần nhìn thấy phương pháp giáo dục và con người đứng sau trải nghiệm học tập.</h2>
-          <p class="section-intro">
-            Các trang chiều sâu dưới đây giúp nối thương hiệu với phương pháp giáo dục, hệ thống PDR và cách Việt Anh đồng hành
-            cùng học sinh trong suốt hành trình liên cấp.
-          </p>
-        </div>
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-10.webp" alt="Học sinh phát triển kỹ năng tại Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
 
-        <div class="card-grid card-grid--3">
-          <article class="content-card">
-            <p class="card-eyebrow">Triết lý giáo dục</p>
-            <h3>Hạnh phúc, tính thực dụng và sự trưởng thành đi cùng nhau</h3>
-            <p>Triết lý này giúp website không chỉ kể về thành tích mà còn giải thích vì sao học sinh có thể học tốt trong một môi trường nhiều niềm vui và kỷ luật tích cực.</p>
-            <a class="card-link" href="/triet-ly-giao-duc">Đọc triết lý giáo dục</a>
-          </article>
-          <article class="content-card">
-            <p class="card-eyebrow">PDR</p>
-            <h3>Plan - Do - Review là cách học sinh rèn năng lực tự chủ mỗi ngày</h3>
-            <p>PDR là signature asset của Việt Anh, cho thấy học sinh không chỉ được dạy mà còn học cách lập kế hoạch, thực hiện và tự nhìn lại tiến bộ.</p>
-            <a class="card-link" href="/he-thong-pdr">Khám phá hệ thống PDR</a>
-          </article>
-          <article class="content-card">
-            <p class="card-eyebrow">Giới thiệu thương hiệu</p>
-            <h3>Một hành trình liên cấp cần được kể bằng con người, giá trị và kết quả thật</h3>
-            <p>Phần giới thiệu giúp phụ huynh hiểu Việt Anh là ai, vì sao trường tồn tại và điều gì làm thương hiệu này đáng tin trong một thị trường giáo dục cạnh tranh.</p>
-            <a class="card-link" href="/gioi-thieu">Xem trang giới thiệu</a>
-          </article>
-        </div>
-      </section>
+          <div style="text-align:center;margin:2rem 0 0">
+            <a href="/tuyen-sinh" style="display:inline-block;background:#1a193c;color:#fff;padding:1rem 2.5rem;border-radius:8px;font-weight:700;font-size:1.1rem;text-decoration:none;transition:background 0.2s">Đăng ký tư vấn tuyển sinh ngay</a>
+          </div>
+        </section>
 
-      <section class="section-block anchor-section" id="cam-nhan">
-        <div>
-          <p class="section-eyebrow">Cảm nhận thật</p>
-          <h2>Lời chia sẻ từ học sinh và phụ huynh là một trong những bằng chứng thuyết phục nhất trên trang chủ.</h2>
-          <p>
-            Việt Anh đã có sẵn chất liệu cảm nhận thật trên website hiện tại. Phần này được rút gọn lại để mỗi lời chia sẻ đều
-            cụ thể hơn về trải nghiệm, sự tiến bộ và cảm giác an tâm của gia đình.
-          </p>
-        </div>
+        <!-- CHUONG TRINH DAO TAO -->
+        <section class="section-block anchor-section" id="cap-hoc">
+          <div class="section-heading">
+            <p class="section-eyebrow">Chương trình đào tạo</p>
+            <h2>Chọn đúng chương trình để hiểu rõ hơn lộ trình phát triển của con.</h2>
+          </div>
 
-        <div class="card-grid card-grid--3">
-          {testimonials.map((item) => (
-            <article class="content-card">
-              <p class="card-eyebrow">{item.role}</p>
-              <h3>{item.name}</h3>
-              <p>{item.quote}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section class="section-block anchor-section" id="tin-tuc">
-        <div class="section-heading">
-          <p class="section-eyebrow">Tin tức & sự kiện</p>
-          <h2>Tin tức trên trang chủ nên phục vụ tuyển sinh, thương hiệu và cảm giác trường luôn vận động tích cực.</h2>
-          <p class="section-intro">
-            Trọng tâm nên là thông tin tuyển sinh, hoạt động học sinh, sự kiện sắp tới và các câu chuyện tạo niềm tin cho phụ huynh.
-          </p>
-        </div>
-
-        <div class="card-grid card-grid--3">
-          {newsCards.map((item) => (
-            <article class="content-card">
-              {item.img && <img src={item.img} alt={item.title} class="card-img" />}
-              <p class="card-eyebrow">{item.eyebrow}</p>
-              <h3>{item.title}</h3>
-              <p>{item.body}</p>
-              <a class="card-link" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined}>
-                {item.cta}
+          <div class="program-grid">
+            {programCards.map((card) => (
+              <a class="program-card" href={card.href}>
+                <span class="program-card__label">{card.label}</span>
+                <span class="program-card__arrow">&#8594;</span>
               </a>
-            </article>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
 
-      <section class="cta-banner anchor-section" id="lien-he">
-        <div>
-          <p class="section-eyebrow">Liên hệ nhanh</p>
-          <h2>Bắt đầu từ một cuộc tư vấn ngắn để chọn đúng cấp học, cơ sở và lộ trình phù hợp cho gia đình.</h2>
-          <p>
-            Từ đây, phụ huynh có thể tiếp tục theo 3 hướng rõ nhất: tư vấn tuyển sinh, xem học phí hoặc liên hệ trực tiếp qua điện thoại và Zalo.
+        <!-- CO SO & KHU VUC -->
+        <section class="section-block anchor-section" id="co-so">
+          <div class="section-heading">
+            <p class="section-eyebrow">Cơ sở & khu vực</p>
+            <h2>Hệ thống trường Việt Anh tại nhiều tỉnh thành</h2>
+          </div>
+
+          <p class="campus-intro">Trường Việt Anh hiện vận hành hệ thống giáo dục liên cấp — từ Mầm non đến Lớp 12 — tại nhiều tỉnh thành:</p>
+
+          <div class="campus-groups">
+            {campusGroups.map((group) => (
+              <div class="campus-group">
+                <h3 class="campus-group__city">{group.city}</h3>
+                <div class="campus-group__list">
+                  {group.campuses.map((campus) => (
+                    <div class="campus-item">
+                      <strong class="campus-item__name">{campus.name}</strong>
+                      <span class="campus-item__address">{campus.address}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <p class="campus-outro">Dù mang những tên gọi khác nhau tại từng địa phương, tất cả các cơ sở đều vận hành theo một triết lý, một hệ thống PDR, và một cam kết chất lượng thống nhất.</p>
+        </section>
+
+        <!-- DANH GIA CUA PHU HUYNH -->
+        <section class="section-block anchor-section" id="danh-gia">
+          <div class="section-heading">
+            <p class="section-eyebrow">Đánh giá của phụ huynh</p>
+            <h2>Lời chia sẻ từ học sinh và phụ huynh là một trong những bằng chứng thuyết phục nhất.</h2>
+          </div>
+
+          <img src="https://media.truongvietanh.com/images/phu-huynh-04.webp" alt="Phụ huynh tin tưởng Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <div class="card-grid card-grid--3">
+            {testimonials.map((item) => (
+              <article class="content-card">
+                <p class="card-eyebrow">{item.role}</p>
+                <h3>{item.name}</h3>
+                <p>{item.quote}</p>
+              </article>
+            ))}
+          </div>
+
+          <p style="text-align:center;margin-top:1.5rem">
+            <a href="/tuyen-sinh" style="color:#1a193c;font-weight:700;text-decoration:underline">Tìm hiểu lộ trình tuyển sinh &rarr;</a>
           </p>
-        </div>
+        </section>
 
-        <div class="cta-row">
-          <a class="button button--primary" href="/tuyen-sinh">Đăng ký tư vấn</a>
-          <a class="button button--ghost" href="/hoc-phi">Xem học phí</a>
-          <a class="button button--ghost" href={contactLinks.phoneHref}>Gọi 0916 961 409</a>
-        </div>
-      </section>
+        <!-- BLOG -->
+        <section class="section-block anchor-section" id="tin-tuc">
+          <div class="section-heading">
+            <p class="section-eyebrow">Blog</p>
+            <h2>Tin tức, hoạt động và câu chuyện từ cộng đồng Việt Anh.</h2>
+          </div>
+
+          <div class="card-grid card-grid--3">
+            {newsCards.map((item) => (
+              <article class="content-card">
+                {item.img && <img src={item.img} alt={item.title} class="card-img" width="600" height="400" loading="lazy" decoding="async" />}
+                <p class="card-eyebrow">{item.eyebrow}</p>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                <a class="card-link" href={item.href}>
+                  {item.cta}
+                </a>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <!-- CONTACT FORM -->
+        <section class="section-block section-block--contact anchor-section" id="lien-he">
+          <div class="section-heading">
+            <p class="section-eyebrow">Đăng ký tư vấn</p>
+            <h2>Nhận tư vấn miễn phí cho con</h2>
+            <p style="color: rgba(255,255,255,0.75); max-width: 600px; margin: 0.5rem auto 0;">Để lại email — đội ngũ tuyển sinh sẽ liên hệ trong 24 giờ</p>
+          </div>
+
+          <div style="max-width: 500px; margin: 0 auto;">
+            <LeadFormTwoStepEmailFirst
+              formId="homepage-form"
+              funnelCode="homepage"
+              schoolLevel="lien-cap"
+              submitText="Nhận tư vấn miễn phí"
+            />
+          </div>
+        </section>
+      </div>
     </main>
 
     <SiteFooter />
   </div>
 </BaseLayout>
+
+<style is:global>
+  /* Hero section - dark background */
+  .wp-hero {
+    position: relative;
+    background: linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 40%, #162040 100%);
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 3rem 1.5rem;
+    overflow: hidden;
+  }
+
+  .wp-hero__overlay {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 20%, rgba(212, 168, 67, 0.08), transparent 50%),
+      radial-gradient(circle at 70% 80%, rgba(26, 26, 94, 0.3), transparent 50%);
+    pointer-events: none;
+  }
+
+  .wp-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.25rem;
+  }
+
+  .wp-hero__title {
+    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+    font-size: clamp(2rem, 5vw, 3.4rem);
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1.1;
+    margin: 0;
+    text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .wp-hero__subtitle {
+    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+    font-size: clamp(1.1rem, 2.5vw, 1.6rem);
+    font-weight: 600;
+    color: #D4A843;
+    margin: 0;
+    letter-spacing: 0.02em;
+  }
+
+  .wp-hero__desc {
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.65;
+    max-width: 600px;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .wp-hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .wp-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.6rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+  }
+
+  .wp-hero__btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+  }
+
+  .wp-hero__btn--primary {
+    background: #f5c518;
+    color: #1a1a5e;
+  }
+
+  .wp-hero__btn--primary:hover {
+    background: #fde047;
+  }
+
+  .wp-hero__btn--outline {
+    background: transparent;
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+  }
+
+  .wp-hero__btn--outline:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.55);
+  }
+
+  .wp-hero__badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .wp-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.84rem;
+    font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .wp-hero {
+      min-height: 420px;
+      padding: 2rem 1rem;
+    }
+
+    .wp-hero__actions {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .wp-hero__btn {
+      width: 100%;
+    }
+  }
+
+  /* WHY BLOCKS - detailed content sections */
+  .why-blocks {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .why-block {
+    padding: 2rem;
+    border-radius: 24px;
+    border: 1px solid rgba(18, 57, 103, 0.08);
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(18, 57, 103, 0.04);
+  }
+
+  .why-block__title {
+    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+    font-size: clamp(1.3rem, 2vw, 1.75rem);
+    font-weight: 700;
+    color: #1B2A5B;
+    margin: 0 0 1.25rem 0;
+    padding-bottom: 0.75rem;
+    border-bottom: 3px solid #D4A843;
+    line-height: 1.3;
+  }
+
+  .why-block__content {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .why-block__content p {
+    color: #5c6e80;
+    line-height: 1.75;
+    font-size: 1.02rem;
+    margin: 0;
+  }
+
+  /* PROGRAM GRID - card grid for training programs */
+  .program-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.75rem;
+  }
+
+  .program-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.25rem;
+    border-radius: 16px;
+    border: 1px solid rgba(18, 57, 103, 0.1);
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(18, 57, 103, 0.04);
+    text-decoration: none;
+    color: #1B2A5B;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+
+  .program-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(18, 57, 103, 0.1);
+    border-color: #D4A843;
+  }
+
+  .program-card__label {
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .program-card__arrow {
+    color: #D4A843;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  @media (max-width: 1024px) {
+    .program-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 640px) {
+    .program-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  /* CAMPUS GROUPS */
+  .campus-intro,
+  .campus-outro {
+    color: #5c6e80;
+    line-height: 1.7;
+    font-size: 1.04rem;
+    margin: 0 0 1.5rem 0;
+  }
+
+  .campus-outro {
+    margin: 1.5rem 0 0 0;
+    font-style: italic;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(18, 57, 103, 0.08);
+  }
+
+  .campus-groups {
+    display: grid;
+    gap: 1.5rem;
+  }
+
+  .campus-group {
+    padding: 1.5rem;
+    border-radius: 20px;
+    border: 1px solid rgba(18, 57, 103, 0.08);
+    background: #fafbfd;
+  }
+
+  .campus-group__city {
+    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #1B2A5B;
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #D4A843;
+  }
+
+  .campus-group__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 0.75rem;
+  }
+
+  .campus-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid rgba(18, 57, 103, 0.06);
+  }
+
+  .campus-item__name {
+    color: #1B2A5B;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  .campus-item__address {
+    color: #5c6e80;
+    font-size: 0.88rem;
+    line-height: 1.5;
+  }
+
+  /* CONTACT FORM */
+  .section-block--contact {
+    background:
+      linear-gradient(130deg, rgba(18, 57, 103, 0.96), rgba(13, 47, 85, 0.98));
+    color: #f7f5ef;
+  }
+
+  .section-block--contact .section-eyebrow {
+    color: rgba(240, 193, 90, 0.96);
+  }
+
+  .section-block--contact .section-heading h2 {
+    color: #ffffff;
+  }
+
+  .contact-form {
+    display: grid;
+    gap: 1.25rem;
+    max-width: 640px;
+  }
+
+  .contact-form__field {
+    display: grid;
+    gap: 0.4rem;
+  }
+
+  .contact-form__field label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .contact-form__field select,
+  .contact-form__field textarea {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    font: inherit;
+    font-size: 0.95rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .contact-form__field select option {
+    background: #1B2A5B;
+    color: #ffffff;
+  }
+
+  .contact-form__field textarea::placeholder {
+    color: rgba(255, 255, 255, 0.45);
+  }
+
+  .contact-form__field select:focus,
+  .contact-form__field textarea:focus {
+    outline: none;
+    border-color: #D4A843;
+    background: rgba(255, 255, 255, 0.15);
+  }
+
+  .contact-form__submit {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.9rem 2rem;
+    border-radius: 6px;
+    border: none;
+    background: #f5c518;
+    color: #1a1a5e;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.15s;
+    width: fit-content;
+  }
+
+  .contact-form__submit:hover {
+    background: #fde047;
+    transform: translateY(-1px);
+  }
+</style>

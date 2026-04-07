@@ -12,7 +12,7 @@
     "directus:up": "docker compose -f directus/docker-compose.yml up -d",
     "directus:down": "docker compose -f directus/docker-compose.yml down",
     "directus:setup": "node scripts/setup-directus.mjs",
-    "directus:setup:blocks": "node scripts/setup-directus-blocks.mjs",
+    "directus:setup:blocks": "echo '[DEPRECATED] Use directus:setup:m2a instead' && node scripts/setup-directus-blocks.mjs",
     "directus:setup:m2a": "node scripts/setup-directus-m2a-foundation.mjs",
     "directus:seed:pages:m2a": "node scripts/seed-directus-static-pages-m2a.mjs"
   },
@@ -29,6 +29,7 @@
   },
   "homepage": "https://github.com/hoangthuynguyen/truongvietanh.com#readme",
   "dependencies": {
+    "@astrojs/sitemap": "^3.7.2",
     "@directus/sdk": "^21.2.0",
     "astro": "^6.0.8",
     "axios": "^1.13.6",

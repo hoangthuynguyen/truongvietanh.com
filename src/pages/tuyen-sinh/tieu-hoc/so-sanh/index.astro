@@ -5,44 +5,61 @@ import USPGrid from '../../../../components/USPGrid.astro';
 import TrustMetrics from '../../../../components/TrustMetrics.astro';
 import FAQSection from '../../../../components/FAQSection.astro';
 
-const pageTitle = 'So Sánh Trường Tiểu Học – Trường Việt Anh vs Các Trường Khác';
-const pageDescription = 'Bảng so sánh chi tiết Trường Việt Anh với các trường tiểu học song ngữ hàng đầu tại TP.HCM.';
+const pageTitle = 'So Sánh Trường Tiểu Học — Việt Anh vs Các Trường Tư Thục Khác';
+const pageDescription = 'Bảng so sánh chi tiết Trường Việt Anh với các trường tiểu học song ngữ tại TPHCM: học phí, chương trình Cambridge, sĩ số lớp, cơ sở vật chất, kết quả đầu ra.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc/so-sanh';
 
 const uspItems = [
-  { icon: '📊', text: 'Bảng so sánh minh bạch - So sánh 5 tiêu chí quan trọng nhất' },
-  { icon: '💰', text: 'Học phí tối ưu - Cung cấp giá trị tốt nhất cho đầu tư giáo dục' },
-  { icon: '🎓', text: 'Chất lượng chương trình được công nhận - Tiêu chuẩn Cambridge' },
-  { icon: '👨‍👩‍👧‍👦', text: 'Cộng đồng cha mẹ hài lòng nhất - 98% phụ huynh tin tưởng' },
-  { icon: '📈', text: 'Kết quả đầu ra vượt trội - Con em chúng tôi thành công' },
-  { icon: '🤝', text: 'Tư vấn cá nhân từ chuyên gia - Giúp bạn quyết định đúng' }
+  { icon: '📊', text: 'Bảng so sánh 7 tiêu chí — Dữ liệu minh bạch, không thiên vị' },
+  { icon: '🎓', text: 'Cambridge + Bộ GD&ĐT — Tiêu chuẩn kép ít trường đạt được' },
+  { icon: '👥', text: 'Lớp 25 HS vs lớp 40-45 HS — Khác biệt lớn về chất lượng' },
+  { icon: '💰', text: 'Học phí tối ưu — Giá trị thực sự cho mỗi đồng đầu tư' },
+  { icon: '📈', text: '98% phụ huynh hài lòng — Kết quả đầu ra chứng minh chất lượng' },
+  { icon: '🤝', text: 'Tư vấn cá nhân miễn phí — Giúp ba/mẹ quyết định đúng đắn' }
 ];
 
 const metrics = [
   { number: '15+', label: 'Năm kinh nghiệm giáo dục' },
-  { number: '500+', label: 'Học sinh Tiểu Học' },
+  { number: '25', label: 'Học sinh/lớp (tiêu chuẩn vàng)' },
   { number: '98%', label: 'Phụ huynh hài lòng' },
-  { number: '3', label: 'Cơ sở tại TPHCM' }
+  { number: '50%', label: 'Thời lượng học bằng tiếng Anh' }
 ];
 
 const faqItems = [
-  { question: 'Bảng so sánh có khách quan không?', answer: 'Hoàn toàn khách quan. Bảng so sánh được xây dựng dựa trên dữ liệu thực tế, công khai từ các trường, và các tiêu chí rõ ràng. Bạn có thể tự kiểm chứng mọi thông tin từ các nguồn chính thức của từng trường. Chúng tôi không bao giờ dựa vào ý kiến chủ quan mà chỉ dùng dữ liệu cụ thể, vì mục tiêu là giúp bạn đưa ra quyết định đúng cho con em.' },
-  { question: 'So sánh những trường nào?', answer: 'Bảng so sánh bao gồm Trường Việt Anh và các trường song ngữ hàng đầu khác tại TP.HCM trong cùng phân khúc học phí. Chúng tôi chọn các trường có chất lượng tương đương để so sánh công bằng, giúp bạn thấy rõ điểm mạnh và khác biệt của mỗi trường.' },
-  { question: 'Ngoài bảng so sánh còn nhận được gì?', answer: 'Ngoài bảng so sánh chi tiết, bạn sẽ nhận được tư vấn cá nhân từ chuyên viên Tuyển sinh của Trường Việt Anh. Họ sẽ giúp bạn phân tích bảng so sánh, trả lời mọi câu hỏi, và đề xuất trường phù hợp nhất với nhu cầu và điều kiện của gia đình bạn. Quyết định chọn trường là quan trọng, và chúng tôi muốn chắc chắn bạn có tất cả thông tin cần thiết.' }
+  {
+    question: 'Bảng so sánh có khách quan không hay thiên vị Trường Việt Anh?',
+    answer: 'Bảng so sánh được xây dựng dựa trên dữ liệu công khai từ website, brochure, và thông tin chính thức của từng trường — ba/mẹ có thể tự kiểm chứng mọi con số. Chúng tôi so sánh 7 tiêu chí cụ thể với thang điểm rõ ràng: chương trình học, tỷ lệ tiếng Anh, sĩ số lớp, giáo viên bản ngữ, cơ sở vật chất, ngoại khóa, và học phí. Mục tiêu không phải "chứng minh Việt Anh tốt nhất" mà là giúp ba/mẹ thấy rõ điểm mạnh và khác biệt của mỗi trường. Khi có thông tin đầy đủ, ba/mẹ sẽ tự tin đưa ra quyết định phù hợp nhất cho con em mình.'
+  },
+  {
+    question: 'So sánh Việt Anh với những trường nào?',
+    answer: 'Bảng so sánh bao gồm Trường Việt Anh và các trường tiểu học song ngữ hàng đầu tại TPHCM trong cùng phân khúc học phí — những trường mà phụ huynh thường cân nhắc song song khi chọn trường cho con. Chúng tôi chọn các trường có chất lượng tương đương, cùng mô hình song ngữ, để so sánh công bằng và hữu ích nhất. Ba/mẹ sẽ thấy rõ ở tiêu chí nào Việt Anh nổi bật, ở tiêu chí nào các trường khác có thế mạnh. Mục tiêu là giúp ba/mẹ chọn trường "phù hợp với con" chứ không phải trường "nổi tiếng nhất".'
+  },
+  {
+    question: 'Lớp 25 học sinh so với lớp 40-45 học sinh khác nhau thế nào?',
+    answer: 'Nghiên cứu giáo dục quốc tế cho thấy lớp nhỏ (dưới 25 HS) giúp học sinh đạt kết quả cao hơn 20-30% so với lớp đông. Lý do rất đơn giản: giáo viên có thời gian quan sát, hỗ trợ, và tương tác với từng bé. Ở lớp 25 HS, mỗi tiết học bé được phát biểu 2-3 lần; ở lớp 45 HS, bé có thể cả tuần không được gọi tên. Con ba/mẹ sẽ tự tin hơn, tham gia tích cực hơn, và được giáo viên "nhìn thấy" mỗi ngày. Đây là khác biệt lớn nhất mà nhiều phụ huynh không nhận ra cho đến khi con đã vào học.'
+  },
+  {
+    question: 'Việt Anh có gì khác biệt so với các trường song ngữ khác?',
+    answer: 'Ba điểm khác biệt cốt lõi: (1) Tiêu chuẩn kép Cambridge + Bộ GD&ĐT — con vừa có nền tảng Việt Nam vững chắc, vừa đạt chuẩn quốc tế, không bị "lệch" sang một phía. (2) STEM tích hợp từ lớp 1 — không phải "thêm môn STEM" mà là tư duy STEM lồng ghép vào mọi hoạt động học tập, giúp con hình thành khả năng giải quyết vấn đề từ sớm. (3) 20+ câu lạc bộ ngoại khóa miễn phí — từ robotics, coding, bơi lội đến piano, mỹ thuật — con được khám phá đam mê thực sự mà không phải đóng thêm phí. Kết hợp cả 3 yếu tố này trong cùng một mức học phí hợp lý là điều ít trường nào làm được.'
+  },
+  {
+    question: 'Ngoài bảng so sánh, tôi còn nhận được gì?',
+    answer: 'Ngoài bảng so sánh chi tiết 7 tiêu chí, ba/mẹ sẽ nhận thêm: (1) Hướng dẫn cách sử dụng bảng so sánh hiệu quả — chấm điểm từng trường theo thang 1-5, (2) Danh sách câu hỏi nên đặt khi đi tham quan trường — giúp ba/mẹ không bỏ sót thông tin quan trọng, (3) Quyền tư vấn cá nhân miễn phí từ chuyên gia Tuyển sinh Việt Anh — họ sẵn sàng phân tích bảng so sánh cùng ba/mẹ và đưa ra góc nhìn chuyên môn. Tất cả đều miễn phí, không ràng buộc.'
+  }
 ];
 ---
 
 <SqueezePageLayout
   title={pageTitle}
   description={pageDescription}
-  keywords="so sánh trường tiểu học, Việt Anh, trường song ngữ, TPHCM"
+  keywords="so sánh trường tiểu học, Việt Anh, trường song ngữ, TPHCM, Cambridge, sĩ số lớp"
   schoolLevel="tieu-hoc"
   funnelCode="so-sanh-tieu-hoc"
   canonicalUrl={canonicalUrl}
 >
   <div slot="hero">
-    <h1 class="hero-h1">So Sánh Trường Tiểu Học Một Cách Khách Quan<br/>Chọn Trường Đúng Cho Con Em</h1>
-    <p class="hero-subtitle">Bảng so sánh minh bạch + Tư vấn cá nhân - Giúp bạn quyết định tự tin</p>
+    <h1 class="hero-h1">So Sánh Trường Tiểu Học<br/>Việt Anh vs Các Trường Tư Thục Khác</h1>
+    <p class="hero-subtitle">Bảng so sánh 7 tiêu chí minh bạch — Giúp ba/mẹ chọn trường đúng cho con em</p>
   </div>
 
   <div slot="usp">
@@ -54,56 +71,73 @@ const faqItems = [
   </div>
 
   <div slot="content">
+    <div class="content-section hero-image-section">
+      <img src="https://media.truongvietanh.com/images/giao-vien-08.webp" alt="Phụ huynh tham quan cơ sở và tìm hiểu chương trình tiểu học song ngữ Trường Việt Anh" class="hero-content-image" width="800" height="450" loading="lazy" />
+      <p class="image-caption">Phụ huynh so sánh và đánh giá chất lượng giảng dạy tại Trường Tiểu Học Việt Anh</p>
+    </div>
+
     <div class="content-section">
-      <h2>Bảng so sánh bao gồm gì?</h2>
+      <h2>7 Tiêu Chí So Sánh Quan Trọng Nhất</h2>
       <div class="content-grid">
         <div class="content-card">
-          <h3>Học Phí & Các Khoản Ưu Đãi</h3>
-          <p>Bảng liệt kê rõ ràng mức học phí năm, các khoản phụ phí ẩn tính (nếu có), chương trình ưu đãi early bird, và điều kiện thanh toán. Bạn sẽ thấy rõ giá trị mà bạn nhận được ở mỗi trường - không có gì bất ngờ hay ẩn giấu. Chi phí giáo dục là quyết định lớn, nên chúng tôi muốn giúp bạn so sánh một cách công bằng.</p>
+          <h3>Chương Trình Học & Chuẩn Quốc Tế</h3>
+          <p>Không phải trường nào cũng có chương trình Cambridge chính thức — nhiều trường chỉ "tham khảo" hoặc "áp dụng một phần" nhưng vẫn quảng cáo là "chuẩn Cambridge". Bảng so sánh chỉ rõ trường nào có chứng nhận Cambridge Primary chính thức từ Cambridge Assessment International Education, tỷ lệ tiếng Anh thực tế trong thời khóa biểu hàng tuần, và đặc biệt là học sinh có được thi chứng chỉ Cambridge chính thức hay không. Đây là tiêu chí quyết định chất lượng song ngữ thực sự mà ba/mẹ không nên bỏ qua.</p>
         </div>
         <div class="content-card">
-          <h3>Chất Lượng Chương Trình Học</h3>
-          <p>Đánh giá sâu về tiêu chuẩn chương trình (Cambridge, IB, Bộ GD&ĐT...), tỷ lệ tiếng Anh, phương pháp giảng dạy (lấy học sinh làm trung tâm, STEM, ...), và đặc biệt là những yếu tố nào sẽ ảnh hưởng trực tiếp đến sự phát triển của con bạn.</p>
+          <h3>Sĩ Số Lớp & Chất Lượng Giảng Dạy</h3>
+          <p>Sĩ số lớp là yếu tố ảnh hưởng trực tiếp nhất đến chất lượng giáo dục mà con ba/mẹ nhận được mỗi ngày. Bảng so sánh ghi rõ sĩ số thực tế (không phải "cam kết trên giấy") của từng trường, tỷ lệ giáo viên bản ngữ trên mỗi học sinh, và số giờ giáo viên bản ngữ dạy mỗi tuần. Nghiên cứu giáo dục cho thấy lớp dưới 25 học sinh giúp kết quả học tập tốt hơn 20-30%. Ba/mẹ sẽ thấy rõ trường nào thực sự đầu tư vào chất lượng giảng dạy — và trường nào chỉ tối đa hóa số lượng tuyển sinh.</p>
         </div>
         <div class="content-card">
-          <h3>Cơ Sở Vật Chất & Môi Trường Học Tập</h3>
-          <p>So sánh khuôn viên, số lượng và chất lượng phòng học, phòng lab STEM, thư viện, sân thể thao, nhà ăn, và các tiện ích khác. Bạn sẽ thấy rõ môi trường học tập của con em sẽ như thế nào hàng ngày, điều này rất quan trọng cho sự phát triển của bé.</p>
+          <h3>Học Phí & Giá Trị Thực Tế</h3>
+          <p>Học phí cao không đồng nghĩa chất lượng cao — và học phí thấp không có nghĩa kém chất lượng. Bảng so sánh liệt kê rõ ràng: học phí chính thức niêm yết, các khoản phụ phí ẩn tính mà nhiều trường không đề cập trước (bán trú, ngoại khóa, sách vở, đồng phục, xe bus), và tổng chi phí thực tế mỗi năm mà gia đình phải chi. Ba/mẹ sẽ thấy giá trị thực mà mỗi đồng mang lại khi tính đầy đủ — đó mới là con số quan trọng nhất khi lập kế hoạch tài chính cho 5 năm Tiểu Học.</p>
         </div>
         <div class="content-card">
-          <h3>Kết Quả Đầu Ra & Hài Lòng Của Phụ Huynh</h3>
-          <p>Những thống kê thực tế về thành tích học sinh, tỷ lệ đỗ vào các trường THCS chất lượng cao, điểm thi Cambridge, và quan trọng nhất - mức độ hài lòng của phụ huynh. Bạn sẽ biết học sinh từ trường nào đi tiếp thành công như thế nào.</p>
+          <h3>Kết Quả Đầu Ra & Phản Hồi Phụ Huynh</h3>
+          <p>Số liệu thành tích và mức độ hài lòng của phụ huynh là "bằng chứng" thực tế nhất về chất lượng một ngôi trường. Bảng so sánh bao gồm: tỷ lệ đỗ vào THCS chất lượng cao, điểm Cambridge trung bình của học sinh cuối lớp 5, số lượng giải thưởng học thuật và ngoại khóa, và đặc biệt là tỷ lệ phụ huynh hài lòng qua khảo sát hàng năm. Con số không nói dối — ba/mẹ sẽ biết trường nào thực sự mang lại kết quả, trường nào chỉ hứa suông.</p>
         </div>
       </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Những Câu Hỏi "Không Ai Dạy" Khi Đi Tham Quan Trường</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        Kèm theo bảng so sánh, ba/mẹ sẽ nhận <strong>danh sách 15 câu hỏi then chốt</strong> nên đặt khi đi tham quan trường: "Giáo viên bản ngữ dạy bao nhiêu giờ/tuần?", "Sĩ số lớp hiện tại là bao nhiêu?", "Có bao nhiêu % học sinh đạt chứng chỉ Cambridge?", "Chính sách khi con bị bắt nạt là gì?", "Phụ huynh có app theo dõi con không?"... Những câu hỏi này giúp ba/mẹ "nhìn xuyên qua" lớp quảng cáo và đánh giá chất lượng thực sự. Nhân viên tuyển sinh giỏi sẽ trả lời rõ ràng — nếu họ lảng tránh, đó là dấu hiệu ba/mẹ cần lưu ý. Gọi <strong>0916 961 409</strong> để nhận tư vấn chi tiết hơn.
+      </p>
     </div>
   </div>
 
   <div slot="form">
     <h2 class="form-heading">Tải Bảng So Sánh Chi Tiết Ngay</h2>
-    <p class="form-subheading">Nhận ngay qua email + tư vấn miễn phí từ chuyên gia</p>
+    <p class="form-subheading">Nhận qua email trong 5 phút — Kèm danh sách câu hỏi tham quan + tư vấn miễn phí từ chuyên gia</p>
     <LeadFormTwoStepEmailFirst
-      formId="tuyen-sinh-form"
+      formId="so-sanh-tieu-hoc-form"
       funnelCode="so-sanh-tieu-hoc"
       schoolLevel="tieu-hoc"
       submitText="Nhận bảng so sánh"
-      successMessage="Bảng so sánh đã gửi qua email! Kiểm tra hộp thư để xem chi tiết."
+      successMessage="Bảng so sánh đã gửi qua email! Kiểm tra hộp thư để xem chi tiết. Chuyên gia Tuyển sinh sẽ liên hệ hỗ trợ thêm."
     />
   </div>
 
   <div slot="faq">
-    <FAQSection items={faqItems} title="Câu hỏi về So sánh trường" />
+    <FAQSection items={faqItems} title="Câu hỏi về So sánh trường Tiểu Học" />
   </div>
 </SqueezePageLayout>
 
 <style>
   .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
   .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
   .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
   .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
   .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
   .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
   .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
-  .content-card p { font-size: 0.95rem; line-height: 1.6; color: #555; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
   .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
-  .form-subheading { font-size: 1rem; color: #555; font-weight: 500; margin-bottom: 2rem; }
-  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  .hero-image-section { text-align: center; margin-bottom: 2rem; }
+  .hero-content-image { width: 100%; max-width: 800px; height: auto; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  .image-caption { font-size: 0.85rem; color: #777; margin-top: 0.75rem; font-style: italic; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
 </style>

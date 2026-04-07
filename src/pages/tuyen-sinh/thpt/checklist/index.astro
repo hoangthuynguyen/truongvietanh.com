@@ -1,73 +1,152 @@
 ---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
 
-const pageTitle = 'Checklist 9 Tiêu Chí Chọn Tổ Hợp Môn Lớp 10 Theo GDPT Mới';
-const pageDescription = 'Tải miễn phí checklist giúp chọn tổ hợp môn lớp 10 tối ưu theo chương trình GDPT mới.';
+const pageTitle = 'Checklist Chọn Trường THPT — 10 Tiêu Chí Quan Trọng Nhất Quyết Định Tương Lai Con';
+const pageDescription = 'Checklist 10 tiêu chí chọn trường THPT: tỷ lệ đỗ ĐH (99% tại Việt Anh), IELTS 6.0-8.0, hỗ trợ du học, chất lượng giáo viên, sĩ số lớp, cơ sở vật chất, hướng nghiệp. So sánh khách quan. Hotline: 0916 961 409.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thpt/checklist';
+
+const uspItems = [
+  { icon: '📊', text: 'Tỷ lệ đỗ ĐH NV1: 99% tại Việt Anh — Tiêu chí quan trọng nhất phản ánh chất lượng đào tạo thực sự, không phải quảng cáo hoa mỹ. Hãy hỏi bất kỳ trường nào con số cụ thể này.' },
+  { icon: '🌍', text: 'Hỗ trợ du học toàn diện — 30% học sinh Việt Anh du học thành công mỗi năm. Kiểm tra trường có bộ phận tư vấn du học riêng không, hay chỉ "nói cho vui".' },
+  { icon: '📚', text: 'IELTS tích hợp chính khóa — Con tốt nghiệp với IELTS 6.0-8.0 mà không cần học thêm trung tâm bên ngoài. Hỏi trường: "Điểm IELTS trung bình khi tốt nghiệp là bao nhiêu?"' },
+  { icon: '👩‍🏫', text: 'Giáo viên tận tâm & lớp nhỏ 30 em — Cô biết rõ từng em, phát hiện sớm khi con gặp khó khăn. So sánh với lớp 40-50 em ở trường công để thấy sự khác biệt.' },
+  { icon: '🏫', text: 'Cơ sở vật chất hiện đại — Lab khoa học, thư viện song ngữ, sân thể thao, phòng nhạc/mỹ thuật. Đừng chỉ nghe kể — hãy đến tham quan tận mắt.' },
+  { icon: '💼', text: 'Hướng nghiệp từ lớp 10 — Con được tư vấn chọn ngành, chọn trường ĐH sớm thay vì mất phương hướng đến lớp 12. Kiểm tra trường có chuyên viên hướng nghiệp chuyên trách không.' }
+];
+
+const metrics = [
+  { number: '99%', label: 'Đỗ ĐH tại Việt Anh — thước đo chất lượng thực sự' },
+  { number: '6.0-8.0', label: 'IELTS khi tốt nghiệp — không cần học thêm bên ngoài' },
+  { number: '15+', label: 'Năm kinh nghiệm đào tạo liên cấp Mầm Non đến THPT' },
+  { number: '50+', label: 'Trường ĐH đối tác trong & ngoài nước với ưu tiên xét tuyển' }
+];
+
+const faqItems = [
+  {
+    question: 'Tiêu chí nào quan trọng nhất khi chọn trường THPT cho con?',
+    answer: 'Theo kinh nghiệm tư vấn hàng trăm gia đình mỗi năm, 3 tiêu chí quan trọng nhất là: (1) Tỷ lệ đỗ ĐH nguyện vọng 1 — phản ánh chất lượng đào tạo thực sự, không phải quảng cáo. (2) Hỗ trợ hướng nghiệp — con có được tư vấn chọn ngành chọn trường hay "tự bơi"? (3) Sĩ số lớp — lớp 50 em thì giáo viên không thể quan tâm từng em, lớp 30 em thì hoàn toàn khác. Nhiều phụ huynh hỏi học phí trước, nhưng thực tế "học phí rẻ mà con không đỗ ĐH" đắt hơn nhiều so với "học phí hợp lý mà con vào được trường top".'
+  },
+  {
+    question: 'Làm sao biết trường nào thực sự tốt, không chỉ quảng cáo hay?',
+    answer: 'Cách tốt nhất là kiểm chứng bằng dữ liệu cụ thể: hỏi tỷ lệ đỗ ĐH chính xác của 3 năm gần nhất (trường tốt sẽ công khai con số), gặp phụ huynh cũ hỏi trải nghiệm thực tế, tham quan trường để thấy tận mắt cơ sở vật chất và gặp giáo viên. Đặc biệt, kiểm tra IELTS outcomes — nếu trường nói "dạy song ngữ" thì học sinh tốt nghiệp IELTS trung bình bao nhiêu? Việt Anh sẵn sàng cung cấp tất cả dữ liệu này minh bạch cho bất kỳ phụ huynh nào.'
+  },
+  {
+    question: 'THPT tư thục hay công lập — chọn loại nào tốt hơn cho con?',
+    answer: 'Không có câu trả lời tuyệt đối — tùy thuộc vào mục tiêu của con và khả năng tài chính gia đình. THPT công lập có học phí thấp nhưng sĩ số lớn (40-50 em/lớp), ít hỗ trợ cá nhân hóa, thường không có IELTS/du học tích hợp. THPT tư thục chất lượng (như Việt Anh) có sĩ số nhỏ (20-30 em/lớp), IELTS tích hợp, hỗ trợ du học, giáo viên quan tâm từng em, nhưng học phí cao hơn. Nếu mục tiêu là vào ĐH top hoặc du học, THPT tư thục chất lượng cho kết quả tốt hơn rõ rệt.'
+  },
+  {
+    question: 'Checklist 10 tiêu chí cụ thể gồm những gì?',
+    answer: '10 tiêu chí lần lượt là: (1) Tỷ lệ đỗ ĐH NV1, (2) Tỷ lệ du học thành công, (3) Điểm IELTS trung bình khi tốt nghiệp, (4) Chất lượng và kinh nghiệm giáo viên, (5) Sĩ số lớp và mức độ quan tâm cá nhân, (6) Chương trình hướng nghiệp từ lớp mấy, (7) Cơ sở vật chất (lab, thư viện, sân thể thao), (8) CLB ngoại khóa và hoạt động phát triển toàn diện, (9) Chính sách học phí minh bạch (có phụ phí ẩn không), (10) Chính sách hỗ trợ tài chính, học bổng, hoàn tiền. Ba/mẹ nên dùng checklist này để so sánh ít nhất 3 trường trước khi quyết định.'
+  },
+  {
+    question: 'Việt Anh đạt bao nhiêu trong 10 tiêu chí này?',
+    answer: 'Việt Anh tự tin đạt điểm cao ở tất cả 10 tiêu chí: 99% đỗ ĐH, 30% du học thành công, IELTS 6.0-8.0 khi tốt nghiệp, giáo viên 15+ năm kinh nghiệm, lớp nhỏ 30 em, hướng nghiệp từ lớp 10, 3 cơ sở hiện đại với lab và thư viện đạt chuẩn, 15+ CLB ngoại khóa, học phí minh bạch bao gồm tất cả, và chính sách Early Bird giảm 15%. Nhưng chúng tôi khuyến khích ba/mẹ đừng chỉ tin lời nói — hãy đến tham quan, gặp giáo viên, nói chuyện với phụ huynh cũ, và tự đánh giá.'
+  }
+];
 ---
 
-<!doctype html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription} />
-  <meta name="keywords" content="checklist tổ hợp môn, GDPT mới, lớp 10, trường Việt Anh" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href={canonicalUrl} />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalUrl} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap&subset=vietnamese');</style>
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="checklist chọn trường THPT, tiêu chí chọn trường, trường Việt Anh, THPT tư thục, so sánh trường THPT, tuyển sinh lớp 10"
+  schoolLevel="thpt"
+  funnelCode="checklist-thpt"
+  canonicalUrl={canonicalUrl}
+  ogImage="https://media.truongvietanh.com/images/du-an-05.webp"
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Checklist Chọn Trường THPT — 10 Tiêu Chí Quyết Định Tương Lai Con
+    </h1>
+    <p class="hero-subtitle">
+      Đừng chọn trường theo cảm tính hay quảng cáo — Dùng 10 tiêu chí này để đánh giá khách quan và chính xác
+    </p>
+  </div>
 
-  <style is:inline>
-    :root{--b:#1F4E79;--o:#E8792B;--w:#fff;--f:'Open Sans',system-ui,sans-serif}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:var(--f);-webkit-font-smoothing:antialiased;color:#1C2A3A;min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(135deg,#F8FAFC,#fff);color:#1C2A3A}
-    .wrap{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px 20px;text-align:center}
-    .badge{display:inline-flex;padding:10px 24px;border-radius:24px;font-size:.875rem;font-weight:600;margin-bottom:32px;background:#1F4E79;color:#fff}
-    h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.75rem,5vw,2.25rem);font-weight:800;line-height:1.15;margin-bottom:24px;color:#1F4E79}
-    h1 .accent{color:#E8792B}
-    .subtitle{font-size:1.1rem;line-height:1.6;margin-bottom:40px;max-width:360px;margin-left:auto;margin-right:auto;opacity:.9;color:#E8792B}
-    .form-wrap{width:100%;max-width:380px;margin:0 auto;}
-    .trust-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 24px;margin-top:32px;font-size:.75rem;opacity:.8}
-    .trust-row div::before{content:'✓ ';color:#22C55E}
-    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px;max-width:380px;margin-left:auto;margin-right:auto}
-    .stat-box{background:rgba(0,0,0,.04);border-radius:16px;padding:16px 8px;font-size:.875rem;color:#555}
-    .footer-bar{text-align:center;padding:24px;font-size:.75rem;opacity:.5}
-    @media(max-width:480px){.wrap{padding:32px 16px}h1{font-size:1.5rem}.subtitle{font-size:1rem}.trust-row{font-size:.7rem}}
-  </style>
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
 
-  <script is:inline>
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({event:'page_view',page_title:'Checklist 9 Tiêu Chí Chọn Tổ Hợp Môn Lớp 10 Theo GDPT Mới',school_level:'thpt',funnel_code:'checklist-lop10'});
-  </script>
-</head>
-<body>
-  <div class="wrap">
-    <div class="badge">TÀI LIỆU MIỄN PHÍ DÀNH CHO PHỤ HUYNH LỚP 10</div>
-    <h1>Checklist 9 tiêu chí chọn tổ hợp môn lớp 10<br><span class="accent">theo GDPT mới – Quyết định đúng từ bước đầu</span></h1>
-    <p class="subtitle">Sợ con chọn sai tổ hợp môn từ đầu, ảnh hưởng cả tương lai? Dùng checklist này để giúp con chọn tối ưu dựa trên khả năng thực tế và mơ ước đại học hoặc du học.</p>
-    <div class="form-wrap">
-      <LeadFormTwoStepEmailFirst
-        formId="squeeze-checklist-lop10"
-        funnelCode="checklist-lop10"
-        schoolLevel="thpt"
-        submitText="Đăng ký ngay"
-        successMessage="Cảm ơn! Tư vấn viên sẽ liên hệ trong 5 phút."
-      />
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-image-section">
+      <img src="https://media.truongvietanh.com/images/du-an-05.webp" alt="Học sinh THPT Việt Anh thực hiện dự án nhóm — phát triển kỹ năng tư duy và làm việc nhóm" class="content-hero-image" width="1200" height="675" loading="lazy" />
+      <p class="image-caption">Học sinh THPT Việt Anh thực hiện dự án nhóm — tiêu chí đánh giá toàn diện, không chỉ điểm thi</p>
     </div>
-    <div class="trust-row">
-      <div>Framework chọn tổ hợp không sai</div>
-      <div>Được tư vấn 1-on-1 thêm</div>
-      <div>Hơn 1000 cha mẹ đã sử dụng</div>
+
+    <div class="content-section">
+      <h2>10 tiêu chí Ba/Mẹ nên kiểm tra trước khi chọn trường THPT</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>1-3: Kết quả đầu ra — Thước đo quan trọng nhất</h3>
+          <p>Tỷ lệ đỗ ĐH nguyện vọng 1 là con số không nói dối — hãy hỏi trường cung cấp dữ liệu cụ thể của 3 năm gần nhất. Tiếp theo, kiểm tra tỷ lệ du học thành công: trường có bộ phận tư vấn du học riêng không, hay chỉ giới thiệu qua loa? Cuối cùng, hỏi điểm IELTS trung bình khi tốt nghiệp — nếu trường quảng cáo "song ngữ" mà không công khai con số IELTS thì đáng nghi. Tại Việt Anh: 99% đỗ ĐH, 30% du học, IELTS 6.0-8.0 — tất cả có thể kiểm chứng.</p>
+        </div>
+        <div class="content-card">
+          <h3>4-6: Con người — Giáo viên, sĩ số & hướng nghiệp</h3>
+          <p>Giáo viên giỏi + sĩ số nhỏ = con học hiệu quả gấp nhiều lần. Hãy hỏi: "Mỗi lớp bao nhiêu em? Giáo viên có biết tên và đặc điểm từng em không? Có chuyên viên hướng nghiệp chuyên trách không?" Lớp 40-50 em thì giáo viên không thể quan tâm cá nhân — con yếu môn nào cũng không ai phát hiện kịp thời. Lớp 30 em (như Việt Anh), giáo viên nhận ra ngay khi con có vấn đề và hỗ trợ trước khi quá muộn. Hướng nghiệp từ lớp 10 giúp con chọn đúng ngành, không lãng phí 3 năm rồi bỏ ngang ĐH.</p>
+        </div>
+        <div class="content-card">
+          <h3>7-8: Cơ sở vật chất & hoạt động ngoại khóa</h3>
+          <p>Lab khoa học có đủ thiết bị để con thực hành hàng tuần không? Thư viện có sách song ngữ và tài liệu IELTS không? Sân thể thao có đủ rộng cho con vận động? CLB ngoại khóa có phong phú và thực sự hoạt động không? THPT không chỉ là ngồi trong lớp học — con cần không gian để phát triển toàn diện về thể chất, nghệ thuật và kỹ năng mềm. Hãy đến tham quan trực tiếp để "thấy tận mắt" — đừng chỉ đọc brochure hay xem video quảng cáo.</p>
+        </div>
+        <div class="content-card">
+          <h3>9-10: Tài chính — Học phí minh bạch & chính sách hỗ trợ</h3>
+          <p>Học phí là yếu tố quan trọng nhưng đừng chỉ so sánh con số bề mặt. Hãy hỏi: "Học phí có bao gồm IELTS, sách giáo khoa, ngoại khóa không? Có phụ phí phát sinh ẩn không? Có học bổng và chương trình hỗ trợ tài chính không?" Trường có mức giá thấp nhưng phụ phí nhiều có thể đắt hơn trường có giá rõ ràng "all-inclusive". Ngoài ra, kiểm tra chính sách hoàn tiền, chuyển trường, và khóa học phí nhiều năm — để ba/mẹ yên tâm cho cả lộ trình 3 năm THPT.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Nhận Checklist PDF miễn phí + Tư vấn so sánh trường 1-1</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 1.5rem;">
+        Đăng ký bên dưới để nhận <strong>checklist PDF chi tiết 10 tiêu chí</strong> — có bảng so sánh để ba/mẹ điền và đánh giá từng trường đang cân nhắc. Kèm theo đó là buổi <strong>tư vấn 1-1 miễn phí</strong> với chuyên viên tuyển sinh Việt Anh.
+      </p>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 0;">
+        Chuyên viên sẽ giúp ba/mẹ phân tích nhu cầu cụ thể của gia đình, xếp thứ tự ưu tiên tiêu chí, và <strong>đề xuất trường phù hợp nhất</strong> cho con — kể cả khi đó không phải Việt Anh.
+      </p>
     </div>
   </div>
-  <div class="footer-bar">Bảo mật thông tin &bull; Tư vấn viên sẽ liên hệ trong 5 phút</div>
 
-</body>
-</html>
+  <div slot="form">
+    <h2 class="form-heading">Nhận Checklist PDF + Tư vấn chọn trường THPT miễn phí</h2>
+    <p class="form-subheading">Để lại thông tin để nhận checklist ngay qua email và đặt lịch tư vấn 1-1. Chuyên viên sẽ liên hệ trong 24h.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="checklist-thpt-form"
+      funnelCode="checklist-thpt"
+      schoolLevel="thpt"
+      submitText="Nhận checklist miễn phí"
+      successMessage="Cảm ơn Ba/Mẹ! Checklist sẽ được gửi qua email và chuyên viên sẽ liên hệ trong 24h để tư vấn chọn trường."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi thường gặp về chọn trường THPT" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-image-section { text-align: center; margin-bottom: 3rem; }
+  .content-hero-image { width: 100%; max-width: 900px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  .image-caption { font-size: 0.9rem; color: #777; margin-top: 0.75rem; font-style: italic; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } .content-hero-image { border-radius: 10px; } }
+</style>

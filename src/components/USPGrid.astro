@@ -35,13 +35,97 @@ const { title = 'Tại sao chọn Trường Việt Anh?', items } = Astro.props;
 
 <style is:inline>
   .usp-grid-wrapper { width: 100%; }
-  .usp-grid-title { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; text-align: center; color: #1F4E79; }
-  .usp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .usp-item { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 1.75rem 1.5rem; border-radius: 12px; background-color: white; border: 1px solid #e8e8e8; transition: all 0.3s ease; box-shadow: 0 2px 8px rgba(0,0,0,.04); }
-  .usp-item:hover { border-color: #E8792B; box-shadow: 0 8px 24px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
-  .usp-icon { display: inline-flex; align-items: center; justify-content: center; width: 60px; height: 60px; margin-bottom: 1rem; font-size: 2.5rem; line-height: 1; }
-  .usp-icon svg { width: 48px; height: 48px; color: #E8792B; stroke-width: 1.5; }
-  .usp-text { font-size: 1rem; font-weight: 500; line-height: 1.5; color: #1a1a1a; margin: 0; }
-  @media (max-width: 768px) { .usp-grid-title { margin-bottom: 1.5rem; } .usp-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; } .usp-item { padding: 1.25rem; } .usp-icon { width: 50px; height: 50px; font-size: 2rem; } .usp-text { font-size: 0.9rem; } }
-  @media (max-width: 480px) { .usp-grid { grid-template-columns: 1fr; gap: 1rem; } .usp-item { padding: 1rem; } .usp-icon { width: 45px; height: 45px; font-size: 1.75rem; margin-bottom: 0.75rem; } .usp-text { font-size: 0.85rem; } }
+  .usp-grid-title {
+    font-family: "Montserrat", sans-serif;
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: #1a1a5e;
+  }
+  .usp-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.75rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .usp-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem 1.5rem;
+    border-radius: 14px;
+    background-color: white;
+    border: 1.5px solid #f0f0f0;
+    transition: all 0.35s cubic-bezier(.25,.46,.45,.94);
+    box-shadow: 0 2px 8px rgba(0,0,0,.03);
+    position: relative;
+    overflow: hidden;
+  }
+  .usp-item::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #D4A843, #e8c36a);
+    transform: scaleX(0);
+    transition: transform 0.35s ease;
+  }
+  .usp-item:hover {
+    border-color: rgba(212,168,67,.3);
+    box-shadow: 0 12px 32px rgba(26,26,94,.08);
+    transform: translateY(-6px);
+  }
+  .usp-item:hover::after {
+    transform: scaleX(1);
+  }
+  .usp-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 68px;
+    height: 68px;
+    margin-bottom: 1.25rem;
+    font-size: 2.25rem;
+    line-height: 1;
+    background: linear-gradient(135deg, rgba(26,26,94,.06), rgba(212,168,67,.08));
+    border-radius: 50%;
+    transition: all 0.35s ease;
+  }
+  .usp-item:hover .usp-icon {
+    background: linear-gradient(135deg, rgba(26,26,94,.1), rgba(212,168,67,.15));
+    transform: scale(1.08);
+  }
+  .usp-icon svg {
+    width: 36px;
+    height: 36px;
+    color: #1a1a5e;
+    stroke-width: 1.5;
+  }
+  .usp-text {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #1a1a1a;
+    margin: 0;
+  }
+
+  @media (max-width: 768px) {
+    .usp-grid-title { margin-bottom: 1.5rem; }
+    .usp-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .usp-item { padding: 1.5rem 1rem; }
+    .usp-icon { width: 56px; height: 56px; font-size: 1.85rem; margin-bottom: 1rem; }
+    .usp-text { font-size: 0.9rem; }
+  }
+  @media (max-width: 480px) {
+    .usp-grid { grid-template-columns: 1fr; gap: 1rem; }
+    .usp-item { padding: 1.25rem 1rem; flex-direction: row; gap: 1rem; text-align: left; }
+    .usp-icon { width: 50px; height: 50px; font-size: 1.6rem; margin-bottom: 0; flex-shrink: 0; }
+    .usp-text { font-size: 0.9rem; }
+    .usp-item::after { display: none; }
+  }
 </style>

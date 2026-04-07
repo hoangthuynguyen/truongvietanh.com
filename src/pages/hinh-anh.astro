@@ -1,0 +1,378 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Hình Ảnh Trường Việt Anh',
+    description: 'Thư viện hình ảnh từ Trường Liên Cấp Việt Anh — cơ sở vật chất hiện đại, hoạt động học tập, sự kiện và ngoại khóa.',
+    url: 'https://truongvietanh.com/hinh-anh',
+    mainEntity: {
+      '@type': 'ImageGallery',
+      name: 'Thư viện hình ảnh Trường Việt Anh',
+      numberOfItems: 32,
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang Chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Hình Ảnh', item: 'https://truongvietanh.com/hinh-anh' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Phụ huynh có thể đến tham quan trường Việt Anh trước khi đăng ký không?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Có. Trường Việt Anh mở cửa đón phụ huynh tham quan tại cả 3 cơ sở (Gò Vấp, Phú Nhuận, Bình Tân). Quý phụ huynh đăng ký lịch tham quan qua hotline 0916 961 409 hoặc form trên website để được đội ngũ tuyển sinh hướng dẫn chi tiết.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'Cơ sở vật chất Trường Việt Anh có gì nổi bật?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Trường Việt Anh đầu tư đồng bộ phòng lab STEM, thư viện song ngữ hàng nghìn đầu sách, sân thể thao đa năng, bể bơi, phòng nhạc – mỹ thuật, nhà ăn đạt chuẩn vệ sinh an toàn thực phẩm, và hệ thống camera giám sát 24/7 tại tất cả 3 campus.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'Trường Việt Anh có bao nhiêu cơ sở tại TP.HCM?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Hiện tại Trường Việt Anh có 3 cơ sở: Cơ sở 1 tại Gò Vấp, Cơ sở 2 tại Phú Nhuận (269A Nguyễn Trọng Tuyển) và Cơ sở 3 tại Bình Tân. Mỗi cơ sở phục vụ các cấp học khác nhau từ Mầm Non đến THPT.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'Trường có tổ chức hoạt động ngoại khóa nào cho học sinh?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Trường Việt Anh tổ chức 20+ câu lạc bộ ngoại khóa bao gồm: bóng đá, bóng rổ, bơi lội, cầu lông, dance, nhạc cụ, mỹ thuật, robotics, coding, và nhiều hơn nữa. Mỗi năm học sinh tham gia 4-6 chuyến dã ngoại, tham quan học tập và trải nghiệm thực tế.' },
+      },
+    ],
+  },
+];
+
+const faqItems = [
+  { question: 'Phụ huynh có thể đến tham quan trường Việt Anh trước khi đăng ký không?', answer: 'Có. Trường Việt Anh mở cửa đón phụ huynh tham quan tại cả 3 cơ sở (Gò Vấp, Phú Nhuận, Bình Tân). Quý phụ huynh đăng ký lịch tham quan qua hotline 0916 961 409 hoặc form trên website để được đội ngũ tuyển sinh hướng dẫn chi tiết.' },
+  { question: 'Cơ sở vật chất Trường Việt Anh có gì nổi bật?', answer: 'Trường Việt Anh đầu tư đồng bộ phòng lab STEM, thư viện song ngữ hàng nghìn đầu sách, sân thể thao đa năng, bể bơi, phòng nhạc – mỹ thuật, nhà ăn đạt chuẩn vệ sinh an toàn thực phẩm, và hệ thống camera giám sát 24/7 tại tất cả 3 campus.' },
+  { question: 'Trường Việt Anh có bao nhiêu cơ sở tại TP.HCM?', answer: 'Hiện tại Trường Việt Anh có 3 cơ sở: Cơ sở 1 tại Gò Vấp, Cơ sở 2 tại Phú Nhuận (269A Nguyễn Trọng Tuyển) và Cơ sở 3 tại Bình Tân. Mỗi cơ sở phục vụ các cấp học khác nhau từ Mầm Non đến THPT.' },
+  { question: 'Trường có tổ chức hoạt động ngoại khóa nào cho học sinh?', answer: 'Trường Việt Anh tổ chức 20+ câu lạc bộ ngoại khóa bao gồm: bóng đá, bóng rổ, bơi lội, cầu lông, dance, nhạc cụ, mỹ thuật, robotics, coding, và nhiều hơn nữa. Mỗi năm học sinh tham gia 4-6 chuyến dã ngoại, tham quan học tập và trải nghiệm thực tế.' },
+];
+
+const imgBase = 'https://media.truongvietanh.com/images';
+
+const galleryCategories = [
+  {
+    id: 'the-thao',
+    title: 'Thể Thao',
+    heading: 'Thể Thao & Vận Động',
+    desc: 'Học sinh Trường Việt Anh rèn luyện thể chất qua các môn thể thao đa dạng: bóng đá, bóng rổ, bơi lội, cầu lông và nhiều bộ môn khác. Sân thể thao đạt chuẩn tại cả 3 cơ sở.',
+    slug: 'the-thao',
+    count: 4,
+  },
+  {
+    id: 'da-ngoai',
+    title: 'Dã Ngoại',
+    heading: 'Dã Ngoại & Trải Nghiệm',
+    desc: 'Các chuyến dã ngoại, tham quan học tập giúp học sinh trải nghiệm thực tế, khám phá thiên nhiên và phát triển kỹ năng sống. Mỗi năm 4–6 chuyến trải nghiệm theo cấp học.',
+    slug: 'da-ngoai',
+    count: 4,
+  },
+  {
+    id: 'giao-vien-hoc-sinh',
+    title: 'Giáo Viên & Học Sinh',
+    heading: 'Giáo Viên & Học Sinh',
+    desc: 'Khoảnh khắc ấm áp giữa giáo viên và học sinh — thể hiện mối quan hệ gắn bó và môi trường giáo dục thân thiện tại Trường Việt Anh. Lớp nhỏ 25–30 em, giáo viên biết rõ từng học sinh.',
+    slug: 'giao-vien',
+    count: 4,
+  },
+  {
+    id: 'thuyet-trinh-ky-nang',
+    title: 'Thuyết Trình & Kỹ Năng',
+    heading: 'Thuyết Trình & Kỹ Năng Mềm',
+    desc: 'Học sinh thuyết trình, tranh biện và phát triển kỹ năng mềm — từ giao tiếp, tư duy phản biện đến khả năng lãnh đạo. Chương trình Debate và MUN từ THCS.',
+    slug: 'thuyet-trinh',
+    count: 4,
+  },
+  {
+    id: 'hoat-dong-vui-nhon',
+    title: 'Hoạt Động Vui Nhộn',
+    heading: 'Hoạt Động Vui Nhộn & Sự Kiện',
+    desc: 'Những khoảnh khắc vui nhộn, đầy màu sắc trong các sự kiện văn nghệ, lễ hội và hoạt động ngoại khóa tại Trường Việt Anh. Học mà chơi, chơi mà học.',
+    slug: 'vui-ve',
+    count: 4,
+  },
+  {
+    id: 'phu-huynh-gia-dinh',
+    title: 'Phụ Huynh & Gia Đình',
+    heading: 'Phụ Huynh & Gia Đình',
+    desc: 'Sự kiện dành cho phụ huynh: họp mặt, ngày hội gia đình, tham quan cơ sở và các hoạt động kết nối nhà trường — gia đình. Open Day hàng tháng.',
+    slug: 'phu-huynh',
+    count: 4,
+  },
+  {
+    id: 'thanh-tich-olympic',
+    title: 'Thành Tích & Olympic',
+    heading: 'Thành Tích & Olympic',
+    desc: 'Học sinh Trường Việt Anh đạt thành tích cao trong các kỳ thi Olympic Toán, Khoa học, Tiếng Anh cấp thành phố và quốc gia. 99% đỗ ĐH nguyện vọng 1.',
+    slug: 'olympic',
+    count: 4,
+  },
+  {
+    id: 'du-an-stem',
+    title: 'Dự Án & STEM',
+    heading: 'Dự Án STEM & Sáng Tạo',
+    desc: 'Dự án STEM, Robotics và các cuộc thi sáng tạo khoa học — nơi học sinh ứng dụng kiến thức vào thực tế và giải quyết vấn đề. Lab STEM hiện đại tại mỗi cơ sở.',
+    slug: 'du-an',
+    count: 4,
+  },
+];
+
+// Build image arrays for each category
+const galleryData = galleryCategories.map((cat) => ({
+  ...cat,
+  images: Array.from({ length: cat.count }, (_, i) => ({
+    src: `${imgBase}/${cat.slug}-0${i + 1}.webp`,
+    alt: `${cat.heading} — Trường Việt Anh ${i + 1}`,
+  })),
+}));
+
+---
+
+<BaseLayout
+  title="Hình Ảnh Trường Việt Anh — Cơ Sở Vật Chất, Hoạt Động & Sự Kiện"
+  description="Thư viện hình ảnh từ Trường Liên Cấp Việt Anh — cơ sở vật chất hiện đại, hoạt động học tập STEM, sự kiện trường và các câu lạc bộ ngoại khóa."
+  canonical="https://truongvietanh.com/hinh-anh"
+  ogImage="https://media.truongvietanh.com/images/extra-gal1.webp"
+  structuredData={structuredData}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a> <span>/</span> <span>Hình Ảnh</span>
+        </nav>
+        <h1 class="page-title">Hình Ảnh Trường Việt Anh</h1>
+        <p class="page-desc">Khám phá không gian học tập, hoạt động và sự kiện nổi bật tại Trường Liên Cấp Việt Anh qua thư viện hình ảnh.</p>
+      </div>
+    </section>
+
+    <!-- AIO intro -->
+    <section class="gallery-intro">
+      <div class="cf-container">
+        <p>Trường Việt Anh tự hào sở hữu khuôn viên rộng rãi, trang thiết bị hiện đại và môi trường giáo dục năng động. Dưới đây là hình ảnh tiêu biểu từ cơ sở vật chất, lớp học, sự kiện trường và các hoạt động ngoại khóa — phản ánh cam kết đào tạo toàn diện cho học sinh từ Mầm Non đến THPT.</p>
+        <p style="margin-top:0.75rem;">Hệ thống 3 cơ sở tại TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân) được đầu tư đồng bộ với phòng lab STEM, thư viện song ngữ, sân thể thao, bể bơi và nhà ăn đạt chuẩn vệ sinh an toàn thực phẩm. Phụ huynh có thể <a href="/tuyen-sinh" style="color:#1a1a5e;font-weight:600;">đăng ký tham quan trực tiếp</a> để trải nghiệm không gian học tập thực tế.</p>
+      </div>
+    </section>
+
+    <!-- Quick stats for AIO -->
+    <section class="gallery-stats">
+      <div class="cf-container">
+        <div class="stats-row">
+          <div class="stat-item"><span class="stat-num">3</span><span class="stat-label">Cơ sở tại TPHCM</span></div>
+          <div class="stat-item"><span class="stat-num">20+</span><span class="stat-label">CLB ngoại khóa</span></div>
+          <div class="stat-item"><span class="stat-num">500+</span><span class="stat-label">Giáo viên & nhân viên</span></div>
+          <div class="stat-item"><span class="stat-num">15+</span><span class="stat-label">Năm hoạt động</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Real photo gallery grid -->
+    {galleryData.map((cat) => (
+      <section class="gallery-section" id={cat.id}>
+        <div class="cf-container">
+          <h2 class="section-title">{cat.heading}</h2>
+          <p class="section-desc">{cat.desc}</p>
+          <div class="real-gallery-grid">
+            {cat.images.map((img) => (
+              <img src={img.src} alt={img.alt} loading="lazy" width="400" height="220" style="border-radius:8px;width:100%;height:220px;object-fit:cover" />
+            ))}
+          </div>
+        </div>
+      </section>
+    ))}
+
+    <!-- Internal links -->
+    <section class="internal-links">
+      <div class="cf-container">
+        <h2 class="section-title">Tìm hiểu thêm về Trường Việt Anh</h2>
+        <div class="links-grid">
+          <a href="/gioi-thieu" class="link-card">
+            <strong>Giới thiệu</strong>
+            <span>Sứ mệnh, tầm nhìn và giá trị cốt lõi</span>
+          </a>
+          <a href="/co-so" class="link-card">
+            <strong>Cơ sở</strong>
+            <span>Hệ thống cơ sở và vị trí các campus</span>
+          </a>
+          <a href="/ngoai-khoa" class="link-card">
+            <strong>Ngoại khóa</strong>
+            <span>Câu lạc bộ, thể thao và hoạt động phát triển</span>
+          </a>
+          <a href="/tuyen-sinh" class="link-card">
+            <strong>Tuyển sinh</strong>
+            <span>Thông tin tuyển sinh và đăng ký nhập học</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="cf-container">
+        <h2 class="section-title">Câu Hỏi Thường Gặp</h2>
+        <div class="faq-list">
+          {faqItems.map((faq) => (
+            <details class="faq-item">
+              <summary class="faq-question">{faq.question}</summary>
+              <p class="faq-answer">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="max-width: 600px; margin: 0 auto 3rem; padding: 0 1.5rem; text-align: center;">
+      <h2 style="font-size: 1.4rem; font-weight: 700; color: #1a1a5e; margin-bottom: 0.5rem;">Muốn tham quan trường trực tiếp?</h2>
+      <p style="color: #64748b; margin-bottom: 1.5rem; font-size: 0.95rem;">Đăng ký để đội ngũ tuyển sinh sắp xếp lịch tham quan cơ sở gần nhất</p>
+      <LeadFormTwoStepEmailFirst
+        formId="hinh-anh-form"
+        funnelCode="gallery"
+        schoolLevel="lien-cap"
+        submitText="Đặt lịch tham quan"
+      />
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .text-center { text-align: center; }
+
+  .breadcrumb {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .breadcrumb a { color: rgba(255, 255, 255, 0.75); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { margin: 0 0.35rem; }
+
+  .page-hero {
+    background: linear-gradient(135deg, #0d1b3e, #1a1a5e);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+
+  .page-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+  }
+
+  .page-desc {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
+  .gallery-intro {
+    padding: 2rem 0 0;
+  }
+  .gallery-intro p {
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .gallery-stats { padding: 1.5rem 0 0; }
+  .stats-row { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; }
+  .stat-item { text-align: center; min-width: 100px; }
+  .stat-num { display: block; font-size: 1.8rem; font-weight: 800; color: #1B2A5B; }
+  .stat-label { font-size: 0.85rem; color: #64748b; }
+
+  .gallery-section {
+    padding: 2.5rem 0;
+  }
+  .gallery-section:nth-child(even) {
+    background: #f8fafc;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1B2A5B;
+    margin: 0 0 0.5rem;
+  }
+
+  .section-desc {
+    font-size: 0.95rem;
+    color: #64748b;
+    line-height: 1.65;
+    max-width: 700px;
+    margin: 0 0 1.5rem;
+  }
+
+  .real-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+
+  .internal-links {
+    padding: 2.5rem 0;
+    background: #f0f4ff;
+  }
+  .internal-links .section-title {
+    margin-bottom: 1.25rem;
+  }
+
+  .links-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+
+  .link-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: 1.25rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    text-decoration: none;
+    color: inherit;
+    transition: box-shadow 0.2s;
+  }
+  .link-card:hover { box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); }
+  .link-card strong { font-size: 1rem; color: #1B2A5B; }
+  .link-card span { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+
+  @media (max-width: 900px) {
+    .links-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .links-grid { grid-template-columns: 1fr; }
+  }
+
+  .faq-section { padding: 2.5rem 0; }
+  .faq-list { max-width: 800px; }
+  .faq-item { border-bottom: 1px solid #e2e8f0; padding: 1rem 0; }
+  .faq-question { font-weight: 600; color: #1B2A5B; cursor: pointer; font-size: 1rem; line-height: 1.5; }
+  .faq-question:hover { color: #2563eb; }
+  .faq-answer { color: #475569; line-height: 1.7; margin: 0.75rem 0 0; font-size: 0.95rem; }
+</style>

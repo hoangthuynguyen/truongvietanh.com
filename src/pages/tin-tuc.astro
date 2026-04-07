@@ -1,0 +1,431 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+
+type Post = {
+  id: number | string;
+  title: string;
+  slug: string;
+  excerpt?: string | null;
+  published_at?: string | null;
+};
+
+type DirectusSchema = {
+  posts: Post[];
+};
+
+let posts: Post[] = [];
+let error: string | null = null;
+
+try {
+  const url = import.meta.env.PUBLIC_DIRECTUS_URL?.trim() || 'http://45.88.188.169:8055';
+  const token = import.meta.env.DIRECTUS_TOKEN?.trim() || '';
+
+  const client = token
+    ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
+    : createDirectus<DirectusSchema>(url).with(rest());
+
+  posts = await client.request(
+    readItems('posts', {
+      fields: ['id', 'title', 'slug', 'excerpt', 'published_at'],
+      filter: {
+        status: { _neq: 'archived' },
+      },
+      sort: ['-published_at', '-id'],
+      limit: 100,
+    }),
+  );
+} catch (e) {
+  error = e instanceof Error ? e.message : 'Không thể tải danh sách bài viết.';
+}
+
+function formatDate(dateStr?: string | null): string {
+  if (!dateStr) return '';
+  try {
+    return new Date(dateStr).toLocaleDateString('vi-VN', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    });
+  } catch {
+    return '';
+  }
+}
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Blog Trường Việt Anh — Tin Tức, Sự Kiện & Kiến Thức Giáo Dục',
+    description: 'Cập nhật tin tức, sự kiện và bài viết kiến thức giáo dục từ Trường Việt Anh.',
+    url: 'https://truongvietanh.com/tin-tuc',
+    image: 'https://media.truongvietanh.com/images/giao-vien-35.webp',
+    isPartOf: { '@type': 'WebSite', name: 'Trường Việt Anh', url: 'https://truongvietanh.com' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang Chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Tin Tức & Sự Kiện', item: 'https://truongvietanh.com/tin-tuc' },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Trường Việt Anh có blog hoặc kênh chia sẻ kiến thức giáo dục không?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Có. Trường Việt Anh duy trì blog với hơn 500 bài viết về kiến thức giáo dục, kinh nghiệm nuôi dạy con, thông tin tuyển sinh và các sự kiện trường. Nội dung được cập nhật thường xuyên tại truongvietanh.com/tin-tuc.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'Làm sao để nhận thông tin mới nhất từ Trường Việt Anh?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Phụ huynh có thể theo dõi fanpage Facebook Trường Việt Anh, kênh YouTube, hoặc đăng ký nhận bản tin qua email trên website. Ngoài ra, đội ngũ tuyển sinh sẽ liên hệ trực tiếp khi có sự kiện Open Day, workshop hoặc chương trình ưu đãi.' },
+      },
+      {
+        '@type': 'Question',
+        name: 'Trường Việt Anh tổ chức những sự kiện gì trong năm học?',
+        acceptedAnswer: { '@type': 'Answer', text: 'Trong năm học, trường tổ chức: Open Day cho phụ huynh tham quan, Hội thao liên cấp, English Day, STEM Fair, Music Show, Lễ tri ân thầy cô, Dã ngoại theo cấp học, và các workshop kỹ năng sống dành cho phụ huynh và học sinh.' },
+      },
+    ],
+  },
+];
+
+const faqItems = [
+  { question: 'Trường Việt Anh có blog hoặc kênh chia sẻ kiến thức giáo dục không?', answer: 'Có. Trường Việt Anh duy trì blog với hơn 500 bài viết về kiến thức giáo dục, kinh nghiệm nuôi dạy con, thông tin tuyển sinh và các sự kiện trường. Nội dung được cập nhật thường xuyên tại truongvietanh.com/tin-tuc.' },
+  { question: 'Làm sao để nhận thông tin mới nhất từ Trường Việt Anh?', answer: 'Phụ huynh có thể theo dõi fanpage Facebook Trường Việt Anh, kênh YouTube, hoặc đăng ký nhận bản tin qua email trên website. Ngoài ra, đội ngũ tuyển sinh sẽ liên hệ trực tiếp khi có sự kiện Open Day, workshop hoặc chương trình ưu đãi.' },
+  { question: 'Trường Việt Anh tổ chức những sự kiện gì trong năm học?', answer: 'Trong năm học, trường tổ chức: Open Day cho phụ huynh tham quan, Hội thao liên cấp, English Day, STEM Fair, Music Show, Lễ tri ân thầy cô, Dã ngoại theo cấp học, và các workshop kỹ năng sống dành cho phụ huynh và học sinh.' },
+];
+---
+
+<BaseLayout
+  title="Blog Trường Việt Anh — Tin Tức, Sự Kiện & Kiến Thức Giáo Dục"
+  description="Cập nhật tin tức, sự kiện và bài viết kiến thức giáo dục từ Trường Việt Anh. 552+ bài viết về tuyển sinh, học tập, kỹ năng sống và du học."
+  canonical="https://truongvietanh.com/tin-tuc"
+  ogImage="https://media.truongvietanh.com/images/giao-vien-35.webp"
+  structuredData={structuredData}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a> <span>/</span> <span>Tin Tức</span>
+        </nav>
+        <h1 class="page-title">Tin Tức & Sự Kiện Trường Việt Anh</h1>
+        <p class="page-desc">Cập nhật thông tin mới nhất về tuyển sinh, sự kiện trường, kiến thức giáo dục và kinh nghiệm nuôi dạy con từ Trường Liên Cấp Việt Anh.</p>
+      </div>
+    </section>
+
+    <!-- Featured image -->
+    <section class="featured-image-section">
+      <div class="cf-container">
+        <img
+          src="https://media.truongvietanh.com/images/giao-vien-35.webp"
+          alt="Tin tức và sự kiện Trường Việt Anh — giáo viên và học sinh trong hoạt động giảng dạy"
+          loading="eager"
+          width="1200"
+          height="480"
+          style="width:100%;max-height:480px;object-fit:cover;border-radius:12px;"
+        />
+      </div>
+    </section>
+
+    <!-- AIO-friendly intro -->
+    <section class="blog-intro">
+      <div class="cf-container">
+        <p>Blog Trường Việt Anh chia sẻ bài viết về giáo dục, tuyển sinh, sự kiện trường, kỹ năng sống và định hướng du học. Phụ huynh và học sinh có thể tìm thấy thông tin hữu ích về chương trình đào tạo liên cấp, phương pháp giảng dạy hiện đại, cùng kinh nghiệm thực tế từ giáo viên và cựu học sinh Trường Việt Anh.</p>
+        <p style="margin-top:0.75rem;">Trường Việt Anh là trường liên cấp từ Mầm Non đến THPT tại TP.HCM, áp dụng chương trình song ngữ Việt – Anh, tích hợp STEM và phát triển kỹ năng toàn diện. Xem thêm: <a href="/gioi-thieu">Giới thiệu</a> | <a href="/cap-hoc">Các cấp học</a> | <a href="/tuyen-sinh">Tuyển sinh</a>.</p>
+      </div>
+    </section>
+
+    <!-- AIO content: Chủ đề nổi bật -->
+    <section class="topic-highlights">
+      <div class="cf-container">
+        <h2 class="topic-title">Chủ Đề Nổi Bật</h2>
+        <div class="topic-grid">
+          <a href="/tuyen-sinh" class="topic-card">
+            <span class="topic-icon">🎓</span>
+            <strong>Tuyển Sinh 2026–2027</strong>
+            <span>Thông tin nhập học, lịch thi, ưu đãi Early Bird cho Mầm Non – THPT</span>
+          </a>
+          <a href="/cap-hoc" class="topic-card">
+            <span class="topic-icon">📚</span>
+            <strong>Chương Trình Học</strong>
+            <span>Song ngữ, STEM, Cambridge, IELTS tích hợp từ Tiểu Học đến THPT</span>
+          </a>
+          <a href="/thanh-tich" class="topic-card">
+            <span class="topic-icon">🏆</span>
+            <strong>Thành Tích Học Sinh</strong>
+            <span>Olympic, IELTS 6.0–8.0, 99% đỗ ĐH nguyện vọng 1, du học thành công</span>
+          </a>
+          <a href="/ngoai-khoa" class="topic-card">
+            <span class="topic-icon">⚽</span>
+            <strong>Hoạt Động & Ngoại Khóa</strong>
+            <span>20+ CLB thể thao, nghệ thuật, STEM, kỹ năng lãnh đạo và phát triển bản thân</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="page-content">
+      <div class="cf-container">
+        {error && (
+          <div class="news-error">
+            <p>Không thể tải bài viết: {error}</p>
+          </div>
+        )}
+
+        {posts.length === 0 && !error && (
+          <div class="news-empty">
+            <p>Chưa có bài viết nào. Vui lòng quay lại sau.</p>
+          </div>
+        )}
+
+        {posts.length > 0 && (
+          <div class="news-grid">
+            {posts.map((post) => (
+              <a href={`/blog/${post.slug}`} class="news-card">
+                <div class="news-card__body">
+                  <h2 class="news-card__title">{post.title}</h2>
+                  {post.excerpt && <p class="news-card__excerpt">{post.excerpt}</p>}
+                  {post.published_at && (
+                    <time class="news-card__date" datetime={post.published_at}>
+                      {formatDate(post.published_at)}
+                    </time>
+                  )}
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+
+    <!-- Internal links -->
+    <section class="internal-links">
+      <div class="cf-container">
+        <h2 class="internal-links__title">Xem thêm về Trường Việt Anh</h2>
+        <div class="internal-links__grid">
+          <a href="/gioi-thieu" class="internal-links__item">Giới thiệu Trường Việt Anh</a>
+          <a href="/tuyen-sinh" class="internal-links__item">Thông tin tuyển sinh</a>
+          <a href="/hoc-phi" class="internal-links__item">Học phí các cấp</a>
+          <a href="/cap-hoc" class="internal-links__item">Chương trình các cấp học</a>
+          <a href="/hinh-anh" class="internal-links__item">Thư viện hình ảnh</a>
+          <a href="/thanh-tich" class="internal-links__item">Thành tích học sinh</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq-section">
+      <div class="cf-container">
+        <h2 class="section-title">Câu Hỏi Thường Gặp</h2>
+        <div class="faq-list">
+          {faqItems.map((faq) => (
+            <details class="faq-item">
+              <summary class="faq-question">{faq.question}</summary>
+              <p class="faq-answer">{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section style="max-width: 600px; margin: 0 auto 3rem; padding: 0 1.5rem; text-align: center;">
+      <h2 style="font-size: 1.4rem; font-weight: 700; color: #1a1a5e; margin-bottom: 0.5rem;">Đăng ký nhận tư vấn miễn phí</h2>
+      <p style="color: #64748b; margin-bottom: 1.5rem; font-size: 0.95rem;">Tìm hiểu chương trình phù hợp cho con — phản hồi trong 24 giờ</p>
+      <LeadFormTwoStepEmailFirst
+        formId="tin-tuc-form"
+        funnelCode="blog-listing"
+        schoolLevel="lien-cap"
+        submitText="Nhận tư vấn"
+      />
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .text-center { text-align: center; }
+
+  .breadcrumb {
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .breadcrumb a { color: rgba(255, 255, 255, 0.75); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { margin: 0 0.35rem; }
+
+  .page-hero {
+    background: linear-gradient(135deg, #0d1b3e, #1a1a5e);
+    color: #fff;
+    padding: 3rem 0 2.5rem;
+  }
+
+  .featured-image-section {
+    padding: 2rem 0 0;
+    text-align: center;
+  }
+
+  .page-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+  }
+
+  .page-desc {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin: 0;
+  }
+
+  .blog-intro {
+    padding: 2rem 0 0;
+  }
+  .blog-intro p {
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.7;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .topic-highlights { padding: 2rem 0; }
+  .topic-title { font-size: 1.35rem; font-weight: 700; color: #1B2A5B; margin: 0 0 1.25rem; text-align: center; }
+  .topic-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .topic-card { display: flex; flex-direction: column; gap: 0.4rem; padding: 1.25rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; text-decoration: none; color: inherit; transition: box-shadow 0.2s, transform 0.2s; }
+  .topic-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+  .topic-icon { font-size: 1.6rem; }
+  .topic-card strong { font-size: 1rem; color: #1B2A5B; }
+  .topic-card span:last-child { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+
+  .page-content {
+    padding: 2.5rem 0 3rem;
+  }
+
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .news-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+
+  .news-card:hover {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+  }
+
+  .news-card__body {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .news-card__title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1B2A5B;
+    line-height: 1.35;
+    margin: 0;
+  }
+
+  .news-card__excerpt {
+    font-size: 0.92rem;
+    color: #64748b;
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .news-card__date {
+    font-size: 0.82rem;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+
+  .news-error,
+  .news-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: #64748b;
+  }
+
+  .internal-links {
+    padding: 2rem 0;
+    background: #f0f4ff;
+  }
+
+  .internal-links__title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1B2A5B;
+    margin: 0 0 1rem;
+  }
+
+  .internal-links__grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .internal-links__item {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.25rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #1B2A5B;
+    text-decoration: none;
+    transition: background 0.2s, box-shadow 0.2s;
+  }
+  .internal-links__item:hover {
+    background: #e8edff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  @media (max-width: 900px) {
+    .news-grid { grid-template-columns: repeat(2, 1fr); }
+    .topic-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 600px) {
+    .news-grid { grid-template-columns: 1fr; }
+    .topic-grid { grid-template-columns: 1fr; }
+  }
+
+  .faq-section { padding: 2.5rem 0; }
+  .faq-list { max-width: 800px; }
+  .faq-item { border-bottom: 1px solid #e2e8f0; padding: 1rem 0; }
+  .faq-question { font-weight: 600; color: #1B2A5B; cursor: pointer; font-size: 1rem; line-height: 1.5; }
+  .faq-question:hover { color: #2563eb; }
+  .faq-answer { color: #475569; line-height: 1.7; margin: 0.75rem 0 0; font-size: 0.95rem; }
+</style>

@@ -1,7 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { Image } from 'astro:assets';
+import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 
 // Replicating actual data to match the visual blocks
 const stats = [
@@ -14,17 +16,17 @@ const stats = [
 const programs = [
   {
     title: 'Mầm non',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg',
+    img: 'https://media.truongvietanh.com/images/trang-chu-3.webp',
     desc: 'Ưu tiên môi trường an toàn, vui vẻ và tự lập từ những ngày đầu.'
   },
   {
     title: 'Tiểu học',
-    img: 'https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png',
+    img: 'https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp',
     desc: 'Xây nền học thuật vững chắc và nề nếp kỷ luật tích cực.'
   },
   {
     title: 'Trung học',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png',
+    img: 'https://media.truongvietanh.com/images/trang-chu-30.webp',
     desc: 'Bứt phá học thuật, cam kết IELTS 6.0+ & phát triển dự án thực tế.'
   }
 ];
@@ -34,50 +36,67 @@ const newsList = [
     cat: 'TUYỂN SINH',
     title: 'Công bố lộ trình Tuyển sinh năm học mới 2026 - 2027',
     desc: 'Thông tin chi tiết về chính sách ưu đãi, học phí và lịch phỏng vấn đầu vào các cấp mầm non đến THPT.',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img-scaled.jpg'
+    img: 'https://media.truongvietanh.com/images/trang-chu-3.webp'
   },
   {
     cat: 'SỰ KIỆN',
     title: 'Học sinh Việt Anh tham gia Ngày hội 16 Kỹ Năng',
     desc: 'Toàn bộ học sinh được trải nghiệm và ứng dụng phương pháp PDR (Plan-Do-Review) vào thực tiễn dự án học tập.',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img2-scaled.jpg'
+    img: 'https://media.truongvietanh.com/images/trang-chu-5.webp'
   },
   {
     cat: 'TIN TỨC CHÍNH',
     title: 'Thành tựu đáng tự hào: Học sinh đạt IELTS 8.0 từ lớp 10',
     desc: 'Câu chuyện truyền cảm hứng về thế hệ học sinh chuyên Anh, học tập tự chủ và bản lĩnh vươn mình ra thế giới.',
-    img: 'https://truongvietanh.com/wp-content/uploads/2024/12/big-img3-scaled.jpg'
+    img: 'https://media.truongvietanh.com/images/trang-chu-7.webp'
   }
 ];
 
 const structuredData = [
   {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "Trường Việt Anh (Viet Anh School)",
-    "url": "https://truongvietanh.com",
-    "description": "Trường Liên cấp Song ngữ Việt Anh đào tạo từ Mầm non đến THPT tại TP.HCM. Tối ưu tiếng Anh, tập trung vào hạnh phúc và tự chủ.",
-    "logo": "https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.svg",
-    "foundingDate": "2011"
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Liên Cấp Việt Anh',
+    alternateName: 'Truong Viet Anh',
+    url: 'https://truongvietanh.com',
+    logo: 'https://truongvietanh.com/logo-crest-80.webp',
+    telephone: '+84-916-961-409',
+    description: 'Hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT với chương trình tích hợp 16 kỹ năng thế kỷ 21, cam kết IELTS 6.0+ đầu ra.',
+    foundingDate: '2011',
+    address: [
+      { '@type': 'PostalAddress', streetAddress: '160/72 Phan Huy Ích, Phường 12', addressLocality: 'Quận Gò Vấp', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+      { '@type': 'PostalAddress', streetAddress: '269A Nguyễn Trọng Tuyển, Phường 10', addressLocality: 'Quận Phú Nhuận', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+      { '@type': 'PostalAddress', streetAddress: '951/7 Tỉnh lộ 10, Phường Tân Tạo', addressLocality: 'Quận Bình Tân', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+    ],
+    sameAs: ['https://www.facebook.com/truongvietanh', 'https://www.youtube.com/@truongvietanh'],
+    numberOfEmployees: { '@type': 'QuantitativeValue', value: 200 },
   },
   {
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "name": "Trang chủ - Hệ thống giáo dục liên cấp Việt Anh",
-    "description": "Trường Việt Anh là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, chuyên đào tạo học sinh giỏi Tiếng Anh."
-  }
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Trường Việt Anh',
+    url: 'https://truongvietanh.com',
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: 'https://truongvietanh.com/tin-tuc?q={search_term_string}',
+      'query-input': 'required name=search_term_string',
+    },
+  },
 ];
 
-const logoUrl = "https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.svg";
+const logoUrl = "https://media.truongvietanh.com/images/svg/logo-foot.svg";
 ---
 
 <BaseLayout
   title="Trường Liên cấp Việt Anh | Đào Tạo Học Sinh Giỏi Chuyên Anh"
   description="Trường Việt Anh là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, nổi bật với tiếng Anh chuẩn đầu ra, môi trường học hạnh phúc."
   canonical="https://truongvietanh.com/homepage1"
+  noindex={true}
   structuredData={structuredData}
 >
   <div class="custom-layout">
+    <HeaderBase />
+
     <!-- TOP BAR -->
     <div class="top-bar">
       <div class="top-bar-inner">
@@ -141,7 +160,7 @@ const logoUrl = "https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.
         <!-- Right: Image of Bright Student -->
         <div class="hero-image-right">
            <div class="hero-image-wrapper">
-              <Image src="https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png" alt="Học sinh Việt Anh sáng sủa, tự tin - Full Face" class="hero-student-img portrait-crop" width={600} height={800} fetchpriority="high" />
+              <Image src="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp" alt="Học sinh Việt Anh sáng sủa, tự tin - Full Face" class="hero-student-img portrait-crop" width={600} height={800} fetchpriority="high" />
               <div class="hero-deco-box"></div>
            </div>
         </div>
@@ -193,7 +212,7 @@ const logoUrl = "https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.
     <section class="why-section">
       <div class="container why-grid">
         <div class="why-img">
-          <Image src="https://truongvietanh.com/wp-content/uploads/2021/08/giao-vien-va-hoc-sinh-2.png" alt="Giáo viên học sinh trường Việt Anh" width={800} height={600} loading="lazy" />
+          <Image src="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp" alt="Giáo viên học sinh trường Việt Anh" width={800} height={600} loading="lazy" />
         </div>
         <div class="why-content">
           <div class="section-title">
@@ -227,7 +246,7 @@ const logoUrl = "https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.
     <section class="register-section">
       <div class="container register-grid">
         <div class="register-photo">
-          <Image src="https://truongvietanh.com/wp-content/uploads/2024/11/image-4-edited-2.png" alt="Portrait học sinh nam Việt Anh" width={600} height={800} loading="lazy" />
+          <Image src="https://media.truongvietanh.com/images/trang-chu-30.webp" alt="Portrait học sinh nam Việt Anh" width={600} height={800} loading="lazy" />
         </div>
         <div class="register-form">
           <div class="form-box">
@@ -254,6 +273,17 @@ const logoUrl = "https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.
           </div>
         </div>
       </div>
+    </section>
+
+    <section style="max-width: 600px; margin: 0 auto 3rem; padding: 0 1.5rem; text-align: center;">
+      <h2 style="font-size: 1.4rem; font-weight: 700; color: #1a1a5e; margin-bottom: 0.5rem;">Đăng ký nhận tư vấn miễn phí</h2>
+      <p style="color: #64748b; margin-bottom: 1.5rem; font-size: 0.95rem;">Để lại thông tin — phản hồi trong 24 giờ</p>
+      <LeadFormTwoStepEmailFirst
+        formId="homepage1-form"
+        funnelCode="homepage1"
+        schoolLevel="lien-cap"
+        submitText="Nhận tư vấn"
+      />
     </section>
 
     <!-- TRUONG VIET ANH FOOTER (FROM COMPONENT) -->

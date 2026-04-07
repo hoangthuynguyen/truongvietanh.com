@@ -1,3 +1,8 @@
+/**
+ * @deprecated — This script creates the old blocks_* + page_blocks junction schema.
+ * Use setup-directus-m2a-foundation.mjs instead (npm run directus:setup:m2a).
+ * Kept only for reference. Will be removed in a future cleanup.
+ */
 import { readFile } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 

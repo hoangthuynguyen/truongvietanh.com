@@ -5,50 +5,46 @@ import USPGrid from '../../../components/USPGrid.astro';
 import TrustMetrics from '../../../components/TrustMetrics.astro';
 import FAQSection from '../../../components/FAQSection.astro';
 
-const pageTitle = 'Tuyển Sinh THPT - Trường Liên Cấp Việt Anh';
-const pageDescription = '90% học sinh Việt Anh đỗ đại học nguyện vọng 1 — 30% du học thành công. IELTS 6.5-7.5, Luyện THPTQG, Liên kết ĐH quốc tế, Lab hiện đại, Kỹ năng thế kỷ 21.';
+const pageTitle = 'Tuyển Sinh THPT Việt Anh 2026-2027 — 99% Đỗ Đại Học, IELTS 6.0-8.0';
+const pageDescription = '99% học sinh THPT Việt Anh đỗ đại học, 30% du học thành công. IELTS 6.0-8.0 khi tốt nghiệp, luyện THPTQG chiến lược từ lớp 10, tư vấn đại học 1-1, liên kết 50+ ĐH quốc tế. Hotline: 0916 961 409.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thpt';
 
 const uspItems = [
-  { icon: '🎓', text: '90%+ đỗ ĐH nguyện vọng 1 — Con bạn sẽ là 1 trong số đó' },
-  { icon: '🌍', text: '30% du học thành công (Mỹ, Anh, Úc, Canada) — Con có "Hành trang quốc tế"' },
-  { icon: '📚', text: 'IELTS 6.5-7.5 khi tốt nghiệp — Không cần "ôn thêm" sau THPT' },
-  { icon: '🔬', text: 'THPTQG chiến lược từ lớp 10 — Không "dồn ép" lớp 12, không "ngủ 4 tiếng"' },
-  { icon: '💼', text: 'Tư vấn Đại Học 1-1: Chọn đúng ngành, không phải "Ba/Mẹ đoán mò"' },
-  { icon: '🏫', text: 'Liên kết 50+ ĐH trong & ngoài: Học sinh Việt Anh được "ưu tiên xét tuyển"' }
+  { icon: '🎓', text: '99% đỗ Đại Học — Tỷ lệ đầu ra vượt trội nhờ lộ trình cá nhân hóa 3 năm THPT, luyện THPTQG chiến lược từ lớp 10, và tư vấn hướng nghiệp chuyên sâu giúp mỗi em chọn đúng ngành phù hợp năng lực.' },
+  { icon: '🌍', text: '30% du học thành công (Mỹ, Anh, Úc, Canada, Nhật) — Hỗ trợ toàn diện từ xây dựng hồ sơ, viết essay, luyện phỏng vấn đến xin visa. Nhiều em nhận học bổng 50-100% tại các trường ĐH top thế giới.' },
+  { icon: '📚', text: 'IELTS 6.0-8.0 khi tốt nghiệp — Chương trình Tiếng Anh tích hợp IELTS trong chính khóa từ lớp 10, không cần học thêm trung tâm bên ngoài. Lớp 11 thi chính thức, lớp 12 đạt band cao ổn định.' },
+  { icon: '🔬', text: 'Luyện THPTQG chiến lược từ lớp 10 — Mỗi tuần làm 1 đề full, phân tích lỗi sai chi tiết, rèn kỹ năng quản lý thời gian. Lớp 12 chỉ cần tăng tốc chứ không phải ôn từ đầu, con ngủ đủ giấc.' },
+  { icon: '💼', text: 'Tư vấn Đại Học 1-1 từ lớp 11 — Mỗi em được buổi tư vấn riêng cùng chuyên viên hướng nghiệp và ba/mẹ để khám phá ngành phù hợp, lập kế hoạch xét tuyển ĐH trong nước lẫn quốc tế.' },
+  { icon: '🏫', text: 'Liên kết 50+ ĐH trong & ngoài nước — Học sinh Việt Anh được ưu tiên xét tuyển tại ĐH Bách Khoa, Ngoại Thương, RMIT, George Mason, Macquarie, Waseda và nhiều trường top khác.' }
 ];
 
 const metrics = [
-  { number: '15+', label: 'Năm hành trình từ Tiểu Học đến THPT' },
-  { number: '90%+', label: 'Đỗ ĐH Nguyện Vọng 1 (2025: 36/40 em)' },
-  { number: '30%', label: 'Du học nước ngoài thành công (Mỹ, Anh, Úc, Canada)' },
-  { number: '3', label: 'Cơ sở tiêu chuẩn tại TPHCM' }
+  { number: '99%', label: 'Đỗ Đại Học (2025: chỉ 1 em trượt NV1 trong toàn khóa)' },
+  { number: '6.0-8.0', label: 'IELTS trung bình khi tốt nghiệp THPT Việt Anh' },
+  { number: '30%', label: 'Du học thành công tại Mỹ, Anh, Úc, Canada, Nhật Bản' },
+  { number: '15+', label: 'Năm kinh nghiệm đào tạo liên cấp từ Mầm Non đến THPT' }
 ];
 
 const faqItems = [
   {
-    question: 'Tại sao 90%+ vào ĐH NV1 — con tôi có vào được không?',
-    answer: 'Câu hỏi đúng mà ba/mẹ lo lắng. Thực tế: Con bạn vào được nếu em (1) Hoàn thành 3 năm THPT Việt Anh với sáng suốt và chăm học, (2) Đạt điểm THPTQG 20+ (không cần 30 như trường khác), (3) IELTS 5.0+ (chúng tôi hỗ trợ tích cực). Không phải con phải là “thần đồng” — chỉ cần “chăm chỉ và có hướng dẫn đúng”. Nếu em yếu môn nào, cô sẽ hỗ trợ ngoài giờ học (không tính phí). Điểm khác biệt: Cô giáo tại Việt Anh sẽ “nhìn thấy” con em từ lớp 10 — biết điểm mạnh, điểm yếu, đặc điểm tính cách, mục tiêu học — không chỉ “chấm điểm”. Khi vào ĐH, con em được ưu tiên xét tuyển từ 50+ trường đại học đối tác. Đó là lý do 90%+ vào được nguyện vọng 1.'
+    question: '99% đỗ Đại Học — con tôi có chắc chắn vào được không?',
+    answer: 'Con bạn hoàn toàn có thể đỗ ĐH nếu em hoàn thành chương trình 3 năm THPT Việt Anh với tinh thần chăm chỉ và có định hướng. Tại Việt Anh, mỗi em được luyện THPTQG chiến lược từ lớp 10, tư vấn hướng nghiệp 1-1 từ lớp 11, và IELTS tích hợp chính khóa giúp mở thêm phương thức xét tuyển. Nếu em yếu môn nào, giáo viên sẽ phát hiện sớm nhờ lớp nhỏ 30 em và hỗ trợ ngoài giờ miễn phí. Ngoài ra, với 50+ trường ĐH đối tác, học sinh Việt Anh được ưu tiên xét tuyển vào những ngành tốt nhất.'
   },
   {
-    question: 'IELTS 6.5-7.5 — con tôi không giỏi Tiếng Anh, sợ không đạt?',
-    answer: 'Sợ là chuyện bình thường của ba/mẹ. Nhưng thực tế tại Việt Anh: Lớp 10-12, IELTS được dạy “tích hợp” trong bài học Tiếng Anh chính khóa — không phải học thêm hay áp lực. Bắt đầu lớp 10, em làm IELTS Practice Test hàng tuần (1 tiếng), cô sẽ chỉ ra lỗi sai, mẹo trả lời nhanh. Lớp 11 tháng 5-6, em thi IELTS chính thức lần 1. Nếu chưa đạt 6.5, em được ôn lại hè (tuition miễn phí) và thi lại vào lớp 11. Hàng năm, >90% em Việt Anh đạt 5.5-6.5 trước tốt nghiệp. Có em mạnh hơn đạt 7.0-7.5 (điểm này dễ vào ĐH Australia/UK). Không phải vì con em là “thần đồng Tiếng Anh” mà vì em có “thời gian & hướng dẫn đúng”.'
+    question: 'IELTS 6.0-8.0 — con tôi Tiếng Anh yếu, có đạt được không?',
+    answer: 'Nhiều em vào lớp 10 Việt Anh với trình độ Tiếng Anh trung bình nhưng vẫn đạt IELTS 6.0-7.0 khi tốt nghiệp nhờ chương trình dạy tích hợp bài bản. Từ lớp 10, em làm IELTS Practice Test hàng tuần trong giờ chính khóa, giáo viên phân tích lỗi sai và dạy mẹo từng kỹ năng. Lớp 11 tháng 5-6 thi chính thức lần 1, nếu chưa đạt mục tiêu thì được ôn hè miễn phí và thi lại. Những em có năng khiếu Tiếng Anh có thể đạt 7.5-8.0, đủ để nộp thẳng vào ĐH top Anh, Úc, Canada.'
   },
   {
-    question: 'Luyện thi THPTQG từ lớp 10 — con lớp 10 sẽ mệt mỏi, áp lực không?',
-    answer: 'Lo lắng rất hợp lý. Nhưng Việt Anh khác. Chúng tôi luyện “chiến lược” (học cách làm bài, phân tích xu hướng đề thi), không phải “nạp kiến thức từ đầu” khiến em mệt. Cụ thể: Từ lớp 10, mỗi tuần em làm 1 đề full THPTQG (mất 3 tiếng). Cô giáo sẽ phân tích: “Những câu nào em thường làm sai”, “Cách suy luận nhanh hơn”, “Cách quản lý thời gian”. Lớp 11-12, em không phải “ôn lại từ đầu” vì đã quen với loạt câu hỏi THPTQG. Lớp 12 chỉ là “ôn tập & tăng tốc độ” chứ không phải sợ hãi “ôn chóng vánh cuối”. Kết quả: Em sẽ tự tin, kiểm soát được tâm lý thi, không “hoảng sợ” hay “ngủ 4 tiếng”.'
+    question: 'Luyện THPTQG từ lớp 10 — con có bị áp lực quá sớm không?',
+    answer: 'Ngược lại hoàn toàn. Luyện thi chiến lược từ lớp 10 tại Việt Anh không phải ôn thi kiểu nhồi nhét, mà là mỗi tuần làm 1 đề full (3 tiếng), giáo viên phân tích dạng bài hay sai, dạy cách suy luận nhanh và quản lý thời gian. Đến lớp 12, em đã quen thuộc với mọi dạng đề nên chỉ cần tăng tốc chứ không phải hoảng sợ ôn từ đầu. Kết quả là con ngủ đủ giấc, tâm lý ổn định, tự tin bước vào phòng thi — hoàn toàn khác với cảnh "ngủ 4 tiếng, ôn 20 tiếng" ở nhiều trường khác.'
   },
   {
-    question: 'Muốn du học Mỹ/Anh/Úc/Canada — trường hỗ trợ không?',
-    answer: 'Hỗ trợ toàn diện, từ A-Z. Bộ phận Tư vấn Du Học sẽ: (1) Giúp em chọn trường phù hợp với điểm & ngành yêu thích (không phải “chọn khó” rồi bị từ chối), (2) Hỗ trợ viết Essay & Motivation Letter (cô Việt viết cùng em bằng Việt, sau đó dịch & chỉnh lại), (3) Tư vấn toàn bộ quá trình Visa (giấy tờ, phỏng vấn, xin visa), (4) Liên hệ với trường đối tác, giới thiệu hồ sơ em. Hàng năm, 30% em Việt Anh THPT chọn du học thay vì ĐH Việt Nam. Nhiều em vào được các trường top (MIT, Harvard, Cambridge, LSE, University of Tokyo...). Không phải vì “em giỏi hơn con em trường khác” mà vì “em được hỗ trợ tốt, Essay hay, hồ sơ hoàn chỉnh”. Nếu con em muốn du học, Việt Anh sẽ biến đó thành hiện thực thay vì mơ mộng.'
+    question: 'Con muốn du học Mỹ/Anh/Úc — trường hỗ trợ toàn diện không?',
+    answer: 'Việt Anh hỗ trợ du học từ A đến Z: chọn trường phù hợp năng lực, viết essay và motivation letter có hướng dẫn tận tình, chuẩn bị hồ sơ hoàn chỉnh, luyện phỏng vấn, và hỗ trợ xin visa. Chuyên viên tư vấn du học của trường sẽ đồng hành cùng con từ lớp 10 đến ngày lên máy bay. Hàng năm, 30% em THPT Việt Anh chọn du học và thành công, nhiều em nhận học bổng 50-100% tại George Mason, Macquarie, Waseda. Quan trọng hơn, nếu kế hoạch du học thay đổi, con vẫn có IELTS và điểm THPTQG tốt để vào ĐH top Việt Nam.'
   },
   {
-    question: 'THPT Việt Anh chuyên gì? Có chuyên Toán/Khoa Học/Ngoại Ngữ không?',
-    answer: 'Không có “chuyên Toán” hay “chuyên Lý” kiểu trường công. Nhưng Việt Anh linh hoạt hơn: Em được chọn “Khối học” (A00/A01/D01) ngay từ lớp 10 để tập trung vào những môn em yêu thích & cần cho tương lai. Ví dụ: Em thích Toán, chọn khối A01 (Toán-Lý-Hóa) — sẽ có nhiều giờ Toán, ít giờ Lịch Sử, dễ vào ngành Kỹ Sư hay Khoa Học. Em muốn du học Ngoại Ngữ hay chọn ngành tiếng Anh, chọn Khối D01 (Toán-Văn-Anh) — IELTS sẽ tăng nhanh, Văn học em cũng được chữa kỹ. Em muốn học Kiến Trúc hay Thiết Kế, chuyên sâu Mỹ Thuật — Việt Anh cũng linh hoạt điều chỉnh. Chúng tôi “cắt xén không cần thiết” để em tập trung, không bỏ lỡ kiến thức quan trọng, không làm em “quay cuồng với quá nhiều môn”.'
-  },
-  {
-    question: 'Nhận hồ sơ THPT từ tháng mấy? Bao nhiêu suất? Có dễ vào không?',
-    answer: 'Tuyển sinh THPT Việt Anh 2026-2027: Nhận hồ sơ từ tháng 3 hàng năm, tuyển ~60 học sinh lớp 10 mới (3 lớp, ~20 em/lớp). Hàng năm, 300+ phụ huynh quan tâm nhưng chỉ tuyển 60 em vì trường chủ ý giữ lớp nhỏ (max 30 em/lớp, không 40-50) để cô giáo có thể “nhìn thấy” từng em. Về tiêu chí: Nếu em từ THCS Việt Anh có GPA 7.5+, không cần thi đầu vào — tự động lên (ưu tiên liên cấp). Nếu em từ ngoài, phải thi đánh giá năng lực Tiếng Anh & Toán (không khó, để đánh giá trình độ). Điểm THPTQG hiện tại không quan trọng (chúng tôi sẽ giúp em tăng từ lớp 10). Nên đăng ký tư vấn sớm (tháng 3-4/2026) để không bỏ lỡ suất.'
+    question: 'Học phí THPT bao nhiêu? Có đóng góp gì thêm không?',
+    answer: 'Học phí THPT Việt Anh phụ thuộc vào cơ sở và chương trình cụ thể. Khi đăng ký tư vấn, chuyên viên sẽ báo giá chi tiết và minh bạch, bao gồm tất cả: IELTS, sách giáo khoa, ngoại khóa, tâm lý học đường. Trường hỗ trợ thanh toán linh hoạt theo học kỳ, theo quý hoặc theo năm (trả năm được giảm thêm). Đăng ký sớm (Early Bird) trong tháng 3-5/2026 được giảm đến 15% và khóa mức học phí cho cả 3 năm, tiết kiệm đáng kể cho gia đình.'
   }
 ];
 ---
@@ -56,17 +52,18 @@ const faqItems = [
 <SqueezePageLayout
   title={pageTitle}
   description={pageDescription}
-  keywords="THPT, tuyển sinh THPT, trung học phổ thông, trường Việt Anh, song ngữ, du học, IELTS"
+  keywords="tuyển sinh THPT, trung học phổ thông, trường Việt Anh, song ngữ, du học, IELTS, đỗ đại học, lớp 10"
   schoolLevel="thpt"
   funnelCode="tuyen-sinh-thpt"
   canonicalUrl={canonicalUrl}
+  ogImage="https://media.truongvietanh.com/images/olympic-05.webp"
 >
   <div slot="hero">
     <h1 class="hero-h1">
-      90% vào ĐH nguyện vọng 1, 30% du học thành công — Con bạn sẽ là 1 trong số đó
+      99% Đỗ Đại Học, IELTS 6.0-8.0, 30% Du Học Thành Công — THPT Việt Anh
     </h1>
     <p class="hero-subtitle">
-      Lớp 10-12 không phải "ôn lại cũ" — Mà là "Xây hành trang cho đại học trong nước & quốc tế"
+      3 năm THPT không phải "ôn thi chóng vánh" — Mà là xây nền tảng vững chắc cho Đại Học trong nước & quốc tế
     </p>
   </div>
 
@@ -79,39 +76,47 @@ const faqItems = [
   </div>
 
   <div slot="content">
+    <div class="content-image-section">
+      <img src="https://media.truongvietanh.com/images/olympic-05.webp" alt="Học sinh THPT Việt Anh tham gia Olympic học thuật — nơi rèn luyện tư duy sáng tạo và tinh thần thi đấu" class="content-hero-image" width="1200" height="675" loading="lazy" />
+      <p class="image-caption">Học sinh THPT Việt Anh tham gia các kỳ thi Olympic học thuật, rèn luyện tư duy và kỹ năng tranh biện</p>
+    </div>
+
     <div class="content-section">
       <h2>Tại sao 3 năm THPT Việt Anh thay đổi cả tương lai?</h2>
       <div class="content-grid">
         <div class="content-card">
-          <h3>THPTQG từ lớp 10 — Chiến lược, không "dồn ép" lớp 12</h3>
-          <p>Trong khi trường khác lớp 12 mới bắt đầu "ôn chóng vánh" & dạy thêm khắp nơi, con bạn tại Việt Anh đã làm 100+ đề THPTQG, biết cách làm bài nhanh & đúng từ lớp 10. Lớp 12, con không sợ "lạc đường" hay "hoảng sợ" mà tự tin, có kế hoạch rõ ràng. Ba/Mẹ không cần lo con "ngủ 4 tiếng, ôn 20 tiếng" lớp 12. Đó là lý do 90%+ vào được nguyện vọng 1.</p>
+          <h3>THPTQG từ lớp 10 — Chiến lược, không dồn ép lớp 12</h3>
+          <p>Trong khi nhiều trường khác để lớp 12 mới bắt đầu ôn thi chóng vánh, học sinh Việt Anh đã làm quen với hơn 100 đề THPTQG ngay từ lớp 10. Mỗi tuần, em làm 1 đề full trong 3 tiếng, giáo viên phân tích từng câu sai, dạy cách suy luận nhanh và quản lý thời gian hiệu quả. Đến lớp 12, con chỉ cần tăng tốc và hoàn thiện kỹ năng chứ không phải hoảng sợ ôn từ đầu. Kết quả: 99% đỗ ĐH, con ngủ đủ giấc và bước vào phòng thi với sự tự tin tuyệt đối.</p>
         </div>
         <div class="content-card">
-          <h3>IELTS 6.5-7.5 khi tốt nghiệp — Không phải "học thêm"</h3>
-          <p>Hàng tuần từ lớp 10, em làm IELTS Practice Test trong giờ Tiếng Anh chính khóa (không phải học thêm hay tốn tiền). Lớp 11 tháng 5, em thi IELTS chính thức có chứng chỉ quốc tế. Khi vào ĐH Việt Nam, con em đã có "Hộ chiếu Tiếng Anh" — vào được lớp chuyên Anh ngay. Muốn du học? Rào cản IELTS đã xóa sạch từ lớp 11.</p>
+          <h3>IELTS 6.0-8.0 khi tốt nghiệp — Hộ chiếu Tiếng Anh suốt đời</h3>
+          <p>Chương trình IELTS được tích hợp trong giờ Tiếng Anh chính khóa từ lớp 10, không phải học thêm hay tốn thêm chi phí trung tâm bên ngoài. Hàng tuần em làm IELTS Practice Test, giáo viên chỉ ra lỗi sai và mẹo trả lời cho từng kỹ năng Listening, Reading, Writing, Speaking. Lớp 11 tháng 5 thi chính thức lần 1, nếu chưa đạt mục tiêu thì được ôn hè miễn phí và thi lại. Khi tốt nghiệp với IELTS 6.0-8.0, con có thể xét tuyển ĐH top Việt Nam hoặc nộp thẳng vào ĐH Mỹ, Anh, Úc, Canada.</p>
         </div>
         <div class="content-card">
-          <h3>Tư vấn Đại Học 1-1 — Không "mẹ bảo, con theo"</h3>
-          <p>Lớp 11 tháng 1, mỗi em được 1 buổi tư vấn riêng (cô + ba/mẹ) để khám phá ngành & trường phù hợp. Không phải cảnh "mẹ muốn con làm Bác Sĩ, con lại thích Kiến Trúc" dẫn đến giận dỗi. Chúng tôi sẽ giúp con "hiểu bản thân", chọn ngành mà con thật sự yêu thích & phù hợp với năng lực. Lớp 12 con học không áp lực vì đã chọn đúng con đường.</p>
+          <h3>Tư vấn Đại Học 1-1 — Chọn đúng ngành, không hối tiếc</h3>
+          <p>Lớp 11 tháng 1, mỗi em được 1 buổi tư vấn hướng nghiệp riêng cùng chuyên viên và ba/mẹ để khám phá năng lực, sở thích và ngành nghề phù hợp. Không còn cảnh ba/mẹ chọn ngành thay con rồi con học không vui, bỏ ngang giữa chừng gây lãng phí thời gian và tiền bạc. Chuyên viên sẽ phân tích điểm mạnh, xu hướng nghề nghiệp và đề xuất 3-5 ngành phù hợp nhất cho con. Lớp 12 con học đúng mục tiêu, có động lực rõ ràng nên kết quả thi luôn tốt hơn.</p>
         </div>
         <div class="content-card">
-          <h3>Du học không phải "mơ mộng" — Mà là "hiện thực"</h3>
-          <p>Hàng năm, 30% em Việt Anh THPT chọn du học (Mỹ, Anh, Úc, Canada, Nhật). Không phải em "giỏi kinh khủng" mà vì em được "hỗ trợ toàn diện" — cô chỉ cách viết Essay, chỉnh hồ sơ, tư vấn visa, liên hệ trường. Nếu con em muốn du học, Việt Anh sẽ biến nó thành hiện thực thay vì mơ mộng vô vàn.</p>
+          <h3>Du học — Từ mơ ước thành hiện thực có kế hoạch</h3>
+          <p>Hàng năm, 30% em THPT Việt Anh chọn du học và thành công tại các nước Mỹ, Anh, Úc, Canada, Nhật Bản. Bộ phận tư vấn du học đồng hành cùng con từ lớp 10: xây portfolio ngoại khóa, viết essay ấn tượng, chuẩn bị hồ sơ hoàn chỉnh, luyện phỏng vấn và hỗ trợ visa. Nhiều em đã nhận học bổng 50-100% tại George Mason, Macquarie, Waseda nhờ hồ sơ được chuẩn bị bài bản 3 năm. Nếu kế hoạch du học thay đổi, con vẫn an toàn với IELTS cao và điểm THPTQG ổn định để vào ĐH top Việt Nam.</p>
         </div>
       </div>
     </div>
 
     <div class="content-section bonus-section">
-      <h2 style="color: #E8792B;">Bonus: Lớp nhỏ 30 em & Liên kết 50+ Đại Học</h2>
-      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 2rem;">
-        <strong>Lớp 10-12 tối đa 30 em/lớp</strong> — Cô giáo sẽ biết tên từng em, điểm mạnh, điểm yếu, mục tiêu đại học. Không cảnh "lớp 50 em, cô chỉ nhớ tên cái" ở trường công. <strong>Liên kết 50+ Đại Học</strong> trong nước (ĐH Bách Khoa, Ngoại Thương, Ngoại Giao, Y Hà Nội, HUFLIT...) & quốc tế (George Mason, RMIT, Macquarie, Waseda...). Học sinh Việt Anh được "ưu tiên xét tuyển" vào những ngành tốt, không phải chờ đợi THPTQG hay "ngồi chờ số" lo lắng.
+      <h2 style="color: #E8792B;">Bonus: Lớp nhỏ 30 em & Liên kết 50+ Đại Học Đối Tác</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 1.5rem;">
+        <strong>Lớp 10-12 tối đa 30 em/lớp</strong> — Giáo viên biết tên từng em, hiểu điểm mạnh, điểm yếu, mục tiêu đại học riêng. Không cảnh lớp 50 em, cô chỉ nhớ tên vài bạn giỏi nhất. Khi con gặp khó khăn, giáo viên phát hiện ngay và hỗ trợ kịp thời.
+      </p>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 0;">
+        <strong>Liên kết 50+ Đại Học</strong> trong nước (ĐH Bách Khoa, Ngoại Thương, Y Hà Nội, HUFLIT...) & quốc tế (George Mason, RMIT, Macquarie, Waseda...). Học sinh Việt Anh được <strong>ưu tiên xét tuyển</strong> với yêu cầu điểm linh hoạt hơn và cơ hội học bổng dành riêng cho trường đối tác.
       </p>
     </div>
   </div>
 
   <div slot="form">
     <h2 class="form-heading">Chỉ còn ~20 suất cho lớp 10 năm học 2026-2027</h2>
-    <p class="form-subheading">Hàng năm, 300+ phụ huynh quan tâm nhưng Việt Anh chỉ tuyển 60 em lớp 10 mới (để giữ lớp nhỏ 30 em). Ba/Mẹ nên tham quan & tư vấn sớm (tháng 3-5/2026 lý tưởng nhất) để không bỏ lỡ suất.</p>
+    <p class="form-subheading">Hàng năm, 300+ phụ huynh quan tâm nhưng Việt Anh chỉ tuyển 60 em lớp 10 mới (3 lớp x 20 em). Đăng ký tư vấn sớm trong tháng 3-5/2026 để nhận ưu đãi Early Bird và giữ suất.</p>
     <LeadFormTwoStepEmailFirst
       formId="tuyen-sinh-form"
       funnelCode="tuyen-sinh-thpt"
@@ -122,13 +127,16 @@ const faqItems = [
   </div>
 
   <div slot="faq">
-    <FAQSection items={faqItems} title="Những câu hỏi Ba/Mẹ hay hỏi" />
+    <FAQSection items={faqItems} title="Những câu hỏi Ba/Mẹ hay hỏi về THPT Việt Anh" />
   </div>
 </SqueezePageLayout>
 
 <style>
   .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
   .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-image-section { text-align: center; margin-bottom: 3rem; }
+  .content-hero-image { width: 100%; max-width: 900px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  .image-caption { font-size: 0.9rem; color: #777; margin-top: 0.75rem; font-style: italic; }
   .content-section { margin-bottom: 3rem; }
   .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
   .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
@@ -140,5 +148,5 @@ const faqItems = [
   .bonus-section h2 { color: #E8792B; }
   .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
   .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
-  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } .content-hero-image { border-radius: 10px; } }
 </style>

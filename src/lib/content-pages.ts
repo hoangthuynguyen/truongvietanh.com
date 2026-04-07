@@ -178,46 +178,12 @@ type DirectusPageRecord = {
   content_blocks?: DirectusM2ABlockRecord[] | null;
 };
 
-type DirectusPageBlockRecord = {
-  id: number | string;
-  sort?: number | null;
-  visible?: boolean | null;
-  block_key?: string | null;
-  block_collection?: string | null;
-  block_item_id?: number | string | null;
-  pages_id?: number | string | null;
-};
-
 type DirectusM2ABlockRecord = {
   id?: number | string;
   sort?: number | null;
   collection?: string | null;
   item?: Record<string, unknown> | null;
 };
-
-const supportedBlockCollections = new Set([
-  'block_hero',
-  'block_rich_text',
-  'block_text_with_image',
-  'block_cards',
-  'block_features',
-  'block_stats',
-  'block_faq',
-  'block_quote',
-  'block_links',
-  'block_gallery',
-  'block_pricing_table',
-  'block_form',
-  'block_cta',
-  'blocks_hero',
-  'blocks_rich_text',
-  'blocks_cards',
-  'blocks_stats',
-  'blocks_faq',
-  'blocks_quote',
-  'blocks_links',
-  'blocks_cta',
-]);
 
 function getDirectusUrl() {
   return import.meta.env.PUBLIC_DIRECTUS_URL?.trim() || null;
@@ -631,7 +597,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
 
   switch (collection) {
     case 'block_hero':
-    case 'blocks_hero':
       return {
         id,
         type: 'hero',
@@ -667,7 +632,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
         asideItems: toTextList(raw.aside_items),
       };
     case 'block_rich_text':
-    case 'blocks_rich_text':
       return {
         id,
         type: 'rich_text',
@@ -719,7 +683,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
               : null,
       };
     case 'block_cards':
-    case 'blocks_cards':
       return {
         id,
         type: 'cards',
@@ -739,7 +702,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
         items: parseJsonList(raw.items_json).map(normalizeCardItem).filter(Boolean) as CardItem[],
       };
     case 'block_stats':
-    case 'blocks_stats':
       return {
         id,
         type: 'stats',
@@ -749,7 +711,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
         items: parseJsonList(raw.items_json).map(normalizeStatItem).filter(Boolean) as StatItem[],
       };
     case 'block_faq':
-    case 'blocks_faq':
       return {
         id,
         type: 'faq',
@@ -759,7 +720,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
         items: parseJsonList(raw.items_json).map(normalizeFaqItem).filter(Boolean) as FAQItem[],
       };
     case 'block_quote':
-    case 'blocks_quote':
       return {
         id,
         type: 'quote',
@@ -769,7 +729,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
         attribution: typeof raw.attribution === 'string' ? raw.attribution : '',
       };
     case 'block_links':
-    case 'blocks_links':
       return {
         id,
         type: 'links',
@@ -819,7 +778,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
         fields: parseJsonList(raw.fields_json).map(normalizeFormField).filter(Boolean) as FormField[],
       };
     case 'block_cta':
-    case 'blocks_cta':
       return {
         id,
         type: 'cta',
@@ -834,51 +792,6 @@ function mapDirectusBlock(collection: string, raw: Record<string, unknown>, fall
     default:
       return null;
   }
-}
-
-async function getDirectusPageBlocks(pageId: number | string) {
-  const blocks = await fetchCollectionItems<DirectusPageBlockRecord>('page_blocks', {
-    fields: ['id', 'sort', 'visible', 'block_key', 'block_collection', 'block_item_id', 'pages_id'],
-    filter: {
-      pages_id: { _eq: pageId },
-      visible: { _neq: false },
-    },
-    sort: ['sort', 'id'],
-    limit: -1,
-  });
-
-  return blocks
-    .filter((block) => block.block_collection && block.block_item_id !== null && block.block_item_id !== undefined)
-    .filter((block) => supportedBlockCollections.has(String(block.block_collection)));
-}
-
-async function getDirectusBlocksByCollection(blocks: DirectusPageBlockRecord[]) {
-  const grouped = new Map<string, Array<string | number>>();
-
-  for (const block of blocks) {
-    const collection = String(block.block_collection);
-    const items = grouped.get(collection) || [];
-    items.push(block.block_item_id as string | number);
-    grouped.set(collection, items);
-  }
-
-  const entries = await Promise.all(
-    Array.from(grouped.entries()).map(async ([collection, ids]) => {
-      const records = await fetchCollectionItems<Record<string, unknown>>(collection, {
-        fields: ['*'],
-        filter: {
-          id: {
-            _in: ids,
-          },
-        },
-        limit: -1,
-      });
-
-      return [collection, new Map(records.map((record) => [String(record.id), record]))] as const;
-    }),
-  );
-
-  return new Map(entries);
 }
 
 function getM2AFieldScopes(fieldName: 'blocks' | 'content_blocks') {
@@ -896,14 +809,6 @@ function getM2AFieldScopes(fieldName: 'blocks' | 'content_blocks') {
     'block_pricing_table',
     'block_form',
     'block_cta',
-    'blocks_hero',
-    'blocks_rich_text',
-    'blocks_cards',
-    'blocks_stats',
-    'blocks_faq',
-    'blocks_quote',
-    'blocks_links',
-    'blocks_cta',
   ];
 
   return [
@@ -995,79 +900,7 @@ export async function getCmsPageSlugs() {
 }
 
 export async function getCmsPageBySlug(slug: string) {
-  const m2aPage = await getM2APageBySlug(slug);
-
-  if (m2aPage) {
-    return m2aPage;
-  }
-
-  const items = await fetchCollectionItems<DirectusPageRecord>('pages', {
-    fields: [
-      'id',
-      'slug',
-      'permalink',
-      'title',
-      'description',
-      'seo_title',
-      'seo_description',
-      'og_image',
-      'status',
-      'theme',
-      'template_class',
-      'page_type',
-      'show_cms_link',
-    ],
-    filter: {
-      _and: [
-        { status: { _eq: 'published' } },
-        {
-          _or: [
-            { slug: { _eq: slug } },
-            { permalink: { _eq: slug } },
-          ],
-        },
-      ],
-    },
-    limit: 1,
-  });
-
-  const page = items[0];
-
-  if (!page) {
-    return null;
-  }
-
-  const pageBlocks = await getDirectusPageBlocks(page.id);
-  const blockMaps = await getDirectusBlocksByCollection(pageBlocks);
-  const blocks = pageBlocks
-    .map((entry) => {
-      const collection = String(entry.block_collection);
-      const record = blockMaps.get(collection)?.get(String(entry.block_item_id));
-
-      if (!record) {
-        return null;
-      }
-
-      return mapDirectusBlock(collection, record, `${collection}-${entry.block_item_id}`);
-    })
-    .filter(Boolean) as ContentBlock[];
-
-  return {
-    id: String(page.id),
-    source: 'directus',
-    slug: page.permalink || page.slug,
-    title: page.seo_title || page.title || page.permalink || page.slug,
-    description: page.seo_description || page.description || 'Trang nội dung được đồng bộ từ Directus.',
-    seoTitle: page.seo_title,
-    seoDescription: page.seo_description,
-    ogImage: page.og_image,
-    status: page.status,
-    theme: asTheme(page.theme),
-    templateClass: page.template_class,
-    pageType: page.page_type,
-    showCmsLink: Boolean(page.show_cms_link),
-    blocks,
-  } satisfies ContentPage;
+  return getM2APageBySlug(slug);
 }
 
 export function getStaticPageBySlug(slug: string) {

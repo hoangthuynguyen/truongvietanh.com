@@ -1,0 +1,693 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường THCS Việt Anh",
+    "alternateName": "Trường Trung Học Cơ Sở Song Ngữ Việt Anh",
+    "url": "https://truongvietanh.com/trung-hoc-co-so",
+    "logo": "https://truongvietanh.com/logo-crest-80.webp",
+    "foundingDate": "2011",
+    "description": "Trường THCS Việt Anh tại TP.HCM: chương trình song ngữ, lộ trình IELTS, 16 kỹ năng thế kỷ 21, Leader in Me. Lựa chọn hàng đầu khi chuyển cấp lớp 6.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "ratingCount": "250"
+    },
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": 500 },
+    "areaServed": ["TP. Hồ Chí Minh", "Long An", "Kiên Giang"],
+    "educationalLevel": "Middle School",
+    "teaches": ["Bilingual Education", "IELTS Preparation", "STEM", "Coding", "Leadership", "Debate"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Chương trình chuyển cấp lớp 6 tại Trường Việt Anh như thế nào?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Trường Việt Anh có chương trình chuyển cấp toàn diện cho học sinh vào lớp 6: test đầu vào đánh giá năng lực tiếng Anh và toán, hỗ trợ tâm lý thích nghi môi trường mới, chương trình orientation 2 tuần đầu, và mentor 1-1 giúp học sinh hoà nhập nhanh chóng." }
+      },
+      {
+        "@type": "Question",
+        "name": "Lớp THCS Việt Anh bao nhiêu học sinh?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sĩ số lớp THCS tại Trường Việt Anh từ 25-30 học sinh/lớp. Mỗi lớp có 1 giáo viên chủ nhiệm và các giáo viên bộ môn chuyên trách. Tỷ lệ giáo viên bản ngữ đảm bảo mỗi tuần học sinh có ít nhất 15 tiết học bằng tiếng Anh." }
+      },
+      {
+        "@type": "Question",
+        "name": "Học sinh THCS Việt Anh đạt IELTS mấy điểm?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Mục tiêu IELTS cho học sinh THCS Việt Anh: lớp 6-7 đạt trình độ B1 (tương đương IELTS 4.0-4.5), lớp 8-9 đạt trình độ B2 (tương đương IELTS 5.0-5.5). Nhiều học sinh xuất sắc đạt IELTS 6.0+ cuối lớp 9, sẵn sàng cho chương trình IELTS nâng cao ở THPT." }
+      },
+      {
+        "@type": "Question",
+        "name": "Trường THCS Việt Anh có xe đưa rước không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Có. Hệ thống xe đưa rước phủ khắp Gò Vấp, Phú Nhuận, Bình Thạnh, Tân Bình và nhiều quận khác tại TP.HCM. Xe trang bị camera giám sát, GPS thời gian thực và phụ xe chuyên trách." }
+      },
+      {
+        "@type": "Question",
+        "name": "THCS Việt Anh có những hoạt động ngoại khoá nào?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Hoạt động ngoại khoá THCS bao gồm: CLB tiếng Anh (debate, public speaking, drama), CLB STEM (coding, robotics, science fair), CLB thể thao (bóng rổ, bóng đá, bơi lội, cầu lông), CLB nghệ thuật (âm nhạc, mỹ thuật, nhảy hiện đại), và các dự án cộng đồng hàng quý." }
+      },
+      {
+        "@type": "Question",
+        "name": "Nếu con rớt lớp 10 công lập thì sao?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Học sinh THCS Việt Anh có lợi thế lớn khi thi tuyển sinh lớp 10: nền tảng tiếng Anh vượt trội (IELTS 5.0-6.0), tư duy logic từ chương trình STEM, và kỹ năng làm bài thi bài bản. Ngoài ra, Trường Việt Anh có hệ thống THPT liên cấp — học sinh THCS được ưu tiên xét tuyển thẳng lên THPT Việt Anh mà không cần thi tuyển." }
+      },
+      {
+        "@type": "Question",
+        "name": "Trường THCS Việt Anh có chính sách học bổng không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Có. Trường Việt Anh cấp học bổng cho học sinh THCS dựa trên: kết quả test đầu vào xuất sắc (học bổng lên đến 50% học phí), thành tích học tập nổi bật trong năm (học bổng khuyến khích), và học sinh có hoàn cảnh khó khăn nhưng năng lực tốt (học bổng hỗ trợ). Hồ sơ xét học bổng nộp trước ngày 30/6 hàng năm." }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Chương trình", "item": "https://truongvietanh.com/gioi-thieu" },
+      { "@type": "ListItem", "position": 3, "name": "THCS", "item": "https://truongvietanh.com/trung-hoc-co-so" }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Trường THCS Việt Anh — Chương Trình Song Ngữ, IELTS Và Kỹ Năng Lãnh Đạo"
+  description="Trường THCS Việt Anh tại TP.HCM: chương trình song ngữ, lộ trình IELTS, 16 kỹ năng thế kỷ 21, Leader in Me. Lựa chọn hàng đầu khi chuyển cấp lớp 6. Đăng ký tham quan."
+  canonical="https://truongvietanh.com/trung-hoc-co-so"
+  ogImage="https://media.truongvietanh.com/images/extra-20230311-DSC08612-scaled.webp"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase />
+
+    <!-- ====== LAYER 2: HERO WITH FORM ====== -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">/</span>
+            <a href="/gioi-thieu">Chương trình</a>
+            <span aria-hidden="true">/</span>
+            <span>THCS</span>
+          </nav>
+
+          <h1 class="gi-h1">Trường THCS Việt Anh: Nơi Học Sinh Phát Triển Toàn Diện Và Sẵn Sàng Cho Tương Lai</h1>
+          <p class="gi-subtitle">Chương trình song ngữ — Lộ trình IELTS — Kỹ năng lãnh đạo Franklin Covey</p>
+
+          <div class="gi-hero-rating">
+            <span class="gi-stars" aria-label="4.8 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-rating-text">4.8/5 (250+ đánh giá)</span>
+          </div>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>Song ngữ</strong> Bộ GD + UK</div>
+            <div class="gi-badge"><strong>IELTS</strong> B1-B2</div>
+            <div class="gi-badge"><strong>16</strong> Kỹ năng TK21</div>
+            <div class="gi-badge"><strong>7-10tr</strong> /tháng</div>
+          </div>
+        </div>
+
+        <div class="gi-hero-right">
+          <div class="gi-form-card">
+            <p class="gi-form-heading">Đăng ký tham quan trường THCS miễn phí</p>
+            <LeadFormTwoStepEmailFirst
+              formId="thcs-form"
+              funnelCode="thcs-pillar"
+              schoolLevel="thcs"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img src="https://media.truongvietanh.com/images/giao-vien-16.webp" alt="Học sinh THCS Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+    <!-- ====== LAYER 3 + 4: TOC SIDEBAR + CONTENT ====== -->
+    <div class="gi-container gi-body">
+      <!-- Sticky TOC sidebar -->
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Mục lục</p>
+        <ol class="gi-toc-list">
+          <li><a href="#khac-biet">Chương trình khác biệt</a></li>
+          <li><a href="#tieng-anh-ielts">Lộ trình IELTS</a></li>
+          <li><a href="#chuyen-cap">Chuyển cấp lớp 6</a></li>
+          <li><a href="#lanh-dao">Kỹ năng lãnh đạo</a></li>
+          <li><a href="#hoc-phi">Học phí THCS</a></li>
+          <li><a href="#danh-gia">Đánh giá phụ huynh</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="#thcs-form-thcs-pillar" class="gi-toc-cta">Đăng ký tham quan</a>
+      </nav>
+
+      <!-- Main content -->
+      <article class="gi-main">
+
+        <!-- Section 1: Chương trình THCS khác biệt -->
+        <section id="khac-biet" class="gi-section">
+          <h2>Chương trình THCS tại Trường Việt Anh có gì khác biệt?</h2>
+          <p>Chương trình THCS tại Trường Việt Anh được xây dựng trên nền tảng <strong>song ngữ kết hợp chương trình Bộ Giáo dục Việt Nam và UK Curriculum</strong>. Học sinh không chỉ hoàn thành đầy đủ chương trình chuẩn quốc gia mà còn được tiếp cận phương pháp giảng dạy quốc tế, phát triển tư duy phản biện và kỹ năng giải quyết vấn đề từ giai đoạn trung học cơ sở.</p>
+          <p>Khác với nhiều trường THCS chỉ dạy tiếng Anh như một môn học, tại Việt Anh <strong>tiếng Anh là ngôn ngữ giảng dạy</strong> cho hàng loạt môn học quan trọng: Khoa học, Toán nâng cao, STEM, Coding và các môn kỹ năng. Điều này giúp học sinh không chỉ giỏi tiếng Anh mà còn thành thạo tiếng Anh học thuật — nền tảng thiết yếu cho kỳ thi IELTS và du học tương lai.</p>
+          <p>Chương trình THCS Việt Anh tích hợp 4 trụ cột chính: <strong>Học thuật song ngữ</strong> (chương trình Bộ GD + UK Curriculum), <strong>Tiếng Anh hướng IELTS</strong> (lộ trình rõ ràng từ lớp 6 đến lớp 9), <strong>STEM và Coding</strong> (tư duy logic, lập trình, dự án thực hành), và <strong>Kỹ năng lãnh đạo</strong> (Leader in Me nâng cao, Student Council, dự án cộng đồng). Bốn trụ cột này tạo thành một hệ sinh thái giáo dục hoàn chỉnh, giúp học sinh THCS phát triển toàn diện và sẵn sàng cho bất kỳ lựa chọn nào ở bậc THPT.</p>
+          <p>Đặc biệt, chương trình THCS Việt Anh đưa <strong>Debate (tranh biện)</strong> và <strong>Public Speaking (thuyết trình)</strong> vào chương trình chính khoá. Đây không phải là hoạt động ngoại khoá tuỳ chọn mà là môn học bắt buộc — giúp mọi học sinh đều được rèn kỹ năng lập luận, phản biện và trình bày ý tưởng một cách mạch lạc bằng cả tiếng Anh và tiếng Việt.</p>
+
+          <div class="gi-evidence-bar">
+            <div class="gi-evidence-item">
+              <strong>15+</strong>
+              <span>Tiết tiếng Anh mỗi tuần</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>B1-B2</strong>
+              <span>Trình độ IELTS mục tiêu</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>25-30</strong>
+              <span>Học sinh mỗi lớp</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>16</strong>
+              <span>Kỹ năng thế kỷ 21</span>
+            </div>
+          </div>
+
+          <p>Chương trình STEM tại THCS Việt Anh bao gồm 3 mảng chính: <strong>Coding</strong> (Scratch cho lớp 6, Python cho lớp 7-8, dự án ứng dụng cho lớp 9), <strong>Robotics</strong> (lắp ráp và lập trình robot, tham gia các cuộc thi robotics cấp thành phố), và <strong>Science Fair</strong> (dự án khoa học hàng năm với đề tài do chính học sinh đề xuất và thực hiện). Tất cả các hoạt động STEM đều được giảng dạy bằng tiếng Anh, giúp học sinh vừa phát triển tư duy logic vừa nâng cao vốn tiếng Anh chuyên ngành.</p>
+          <p>Mỗi học kỳ, học sinh THCS tham gia ít nhất 1 dự án liên môn (Project-Based Learning) kéo dài 4-6 tuần. Ví dụ: dự án "Smart City" yêu cầu học sinh kết hợp kiến thức Toán, Khoa học, Coding và tiếng Anh để thiết kế mô hình thành phố thông minh. Kết quả được trình bày trước hội đồng giáo viên và phụ huynh bằng tiếng Anh — rèn kỹ năng thuyết trình, làm việc nhóm và tư duy tổng hợp.</p>
+        </section>
+
+        <!-- Section 2: Lộ trình tiếng Anh IELTS -->
+        <section id="tieng-anh-ielts" class="gi-section">
+          <h2>Lộ trình tiếng Anh THCS hướng tới IELTS như thế nào?</h2>
+          <p>Tại Trường THCS Việt Anh, tiếng Anh không chỉ là một môn học mà là <strong>công cụ học tập và giao tiếp hàng ngày</strong>. Chương trình tiếng Anh THCS được thiết kế với lộ trình rõ ràng từ lớp 6 đến lớp 9, kết hợp phát triển cả 4 kỹ năng: Nghe - Nói - Đọc - Viết, hướng tới mục tiêu B1-B2 theo khung CEFR (tương đương IELTS 4.5-5.5) cuối lớp 9.</p>
+
+          <p>Lộ trình tiếng Anh THCS Việt Anh chia thành 2 giai đoạn chính: <strong>Giai đoạn 1 (lớp 6-7)</strong> tập trung xây dựng nền tảng giao tiếp tự tin và tiếng Anh học thuật cơ bản; <strong>Giai đoạn 2 (lớp 8-9)</strong> nâng cao kỹ năng viết luận, đọc hiểu học thuật và chuẩn bị trực tiếp cho kỳ thi IELTS tại THPT.</p>
+
+          <div class="gi-roadmap">
+            <h3>Lộ trình tiếng Anh 4 năm THCS hướng IELTS</h3>
+            <div class="gi-roadmap-grid">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L6</div>
+                <strong>Lớp 6 — Nền tảng giao tiếp</strong>
+                <p>Củng cố 4 kỹ năng cơ bản, mở rộng vốn từ vựng học thuật. Học sinh làm quen với đọc hiểu văn bản dài và viết đoạn văn 100-150 từ. Mục tiêu: A2+ theo CEFR. Các môn Khoa học và STEM được dạy bằng tiếng Anh, giúp học sinh tiếp xúc tiếng Anh chuyên ngành ngay từ đầu cấp.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L7</div>
+                <strong>Lớp 7 — Giao tiếp và học thuật</strong>
+                <p>Phát triển kỹ năng thuyết trình bằng tiếng Anh, viết bài luận ngắn (200-250 từ), đọc hiểu bài báo và văn bản khoa học. Mục tiêu: B1 theo CEFR (tương đương IELTS 4.0-4.5). Bắt đầu tham gia debate bằng tiếng Anh với chủ đề phù hợp lứa tuổi.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L8</div>
+                <strong>Lớp 8 — Nâng cao và phản biện</strong>
+                <p>Viết luận phân tích 300+ từ, đọc hiểu văn bản học thuật, thảo luận và debate chủ đề phức tạp. Mục tiêu: B1+ theo CEFR (tương đương IELTS 4.5-5.0). Học sinh bắt đầu làm quen với dạng bài IELTS Reading và Listening thông qua các bài kiểm tra mock test hàng tháng.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L9</div>
+                <strong>Lớp 9 — Chuẩn bị IELTS</strong>
+                <p>Hoàn thiện 4 kỹ năng ở trình độ B2, viết luận 400+ từ, đọc hiểu tài liệu học thuật phức tạp. Mục tiêu: B2 theo CEFR (tương đương IELTS 5.0-5.5). Học sinh xuất sắc có thể đạt IELTS 6.0+, sẵn sàng cho chương trình IELTS nâng cao ở THPT hướng tới 6.5-7.5.</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Điểm khác biệt quan trọng trong chương trình tiếng Anh THCS Việt Anh là <strong>học tiếng Anh qua nội dung thực tế</strong> (Content-Based Instruction). Thay vì chỉ học ngữ pháp và từ vựng rời rạc, học sinh sử dụng tiếng Anh để học Khoa học, thảo luận về các vấn đề xã hội, nghiên cứu dự án STEM và trình bày ý tưởng trước lớp. Phương pháp này giúp tiếng Anh trở thành kỹ năng sống thực sự, không chỉ là môn thi trên giấy.</p>
+
+          <div class="gi-comparison-box">
+            <h3>So sánh: Tiếng Anh THCS Việt Anh vs Trường công lập vs Trung tâm IELTS</h3>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Tiêu chí</th>
+                    <th>THCS Việt Anh</th>
+                    <th>Trường công lập</th>
+                    <th>Trung tâm IELTS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Số tiết tiếng Anh/tuần</td>
+                    <td>15+ tiết (bao gồm môn học bằng TA)</td>
+                    <td>3-4 tiết</td>
+                    <td>4-6 tiết (riêng lẻ)</td>
+                  </tr>
+                  <tr>
+                    <td>Giáo viên bản ngữ</td>
+                    <td>Có (full-time, dạy chính)</td>
+                    <td>Hiếm khi</td>
+                    <td>Có (part-time)</td>
+                  </tr>
+                  <tr>
+                    <td>Tiếng Anh học thuật</td>
+                    <td>Có (Khoa học, STEM bằng TA)</td>
+                    <td>Không</td>
+                    <td>Chỉ tập trung IELTS</td>
+                  </tr>
+                  <tr>
+                    <td>Debate & Public Speaking</td>
+                    <td>Chương trình chính khoá</td>
+                    <td>Không</td>
+                    <td>Không</td>
+                  </tr>
+                  <tr>
+                    <td>Mục tiêu cuối lớp 9</td>
+                    <td>B2 / IELTS 5.0-5.5</td>
+                    <td>A2 / IELTS 3.0-3.5</td>
+                    <td>Tuỳ thời gian học</td>
+                  </tr>
+                  <tr>
+                    <td>Chi phí hàng tháng</td>
+                    <td>7-10 triệu (đã bao gồm)</td>
+                    <td>1-2 triệu + phí TA ngoài</td>
+                    <td>3-6 triệu (chỉ TA)</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>Kết quả thực tế tại Trường Việt Anh: <strong>80% học sinh lớp 9 đạt trình độ B2 trở lên</strong>, nhiều học sinh đạt IELTS 5.5-6.0 ngay từ cuối cấp THCS. Đây là nền tảng vững chắc để các em tiếp tục chương trình IELTS nâng cao ở THPT, hướng tới mục tiêu IELTS 6.5-7.5 khi tốt nghiệp — đủ điều kiện vào hầu hết các trường đại học quốc tế không cần học thêm dự bị tiếng Anh.</p>
+          <p>Ngoài tiếng Anh, học sinh THCS Việt Anh còn được học thêm <strong>tiếng Nhật hoặc tiếng Trung</strong> như ngoại ngữ 2 từ lớp 7. Việc thành thạo 2-3 ngôn ngữ giúp học sinh có lợi thế cạnh tranh vượt trội khi xét tuyển đại học và ứng tuyển việc làm trong tương lai.</p>
+        </section>
+
+        <!-- Section 3: Chuyển cấp lớp 6 -->
+        <section id="chuyen-cap" class="gi-section">
+          <h2>Trường Việt Anh chuẩn bị gì cho học sinh chuyển cấp lớp 6?</h2>
+          <p>Chuyển cấp từ tiểu học lên THCS là bước ngoặt quan trọng trong hành trình học tập của trẻ. Nhiều phụ huynh lo lắng: con có thích nghi được với môi trường mới không? Áp lực học tập tăng lên có quá sức không? Trường Việt Anh hiểu rõ những lo lắng này và đã xây dựng <strong>chương trình chuyển cấp toàn diện</strong> giúp học sinh hoà nhập nhanh chóng và tự tin bước vào cấp THCS.</p>
+
+          <div class="gi-roadmap">
+            <h3>4 bước chuyển cấp tại Trường Việt Anh</h3>
+            <div class="gi-roadmap-grid">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">B1</div>
+                <strong>Test đầu vào đánh giá năng lực</strong>
+                <p>Bài kiểm tra đánh giá trình độ tiếng Anh, Toán và kỹ năng tư duy. Không phải là "thi tuyển loại" mà là công cụ để giáo viên hiểu năng lực của từng học sinh, từ đó thiết kế chương trình hỗ trợ phù hợp. Học sinh tiểu học từ Việt Anh được ưu tiên xét tuyển thẳng.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">B2</div>
+                <strong>Hỗ trợ tâm lý thích nghi</strong>
+                <p>Đội ngũ tâm lý học đường tại Việt Anh đồng hành cùng học sinh trong suốt giai đoạn chuyển cấp. Các buổi tư vấn nhóm và cá nhân giúp học sinh hiểu về thay đổi sắp tới, quản lý cảm xúc lo lắng, và xây dựng chiến lược thích nghi hiệu quả. Phụ huynh cũng được hướng dẫn cách hỗ trợ con tại nhà.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">B3</div>
+                <strong>Chương trình Orientation 2 tuần</strong>
+                <p>2 tuần đầu tiên tại THCS Việt Anh là chương trình orientation đặc biệt: làm quen với trường, giáo viên, bạn bè mới; học cách tổ chức thời gian học tập; rèn kỹ năng ghi chép, quản lý bài tập; và trải nghiệm các hoạt động team-building. Mục tiêu: học sinh cảm thấy "đây là ngôi trường của mình" ngay từ tuần đầu tiên.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">B4</div>
+                <strong>Mentor 1-1 và theo dõi liên tục</strong>
+                <p>Mỗi học sinh lớp 6 được phân 1 mentor (anh chị lớp 8-9 hoặc giáo viên) để hỗ trợ trong 3 tháng đầu. Mentor giúp giải đáp thắc mắc, hướng dẫn cách học hiệu quả và chia sẻ kinh nghiệm. Giáo viên chủ nhiệm họp riêng với phụ huynh hàng tháng để cập nhật tình hình thích nghi của con.</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Đối với học sinh từ hệ thống tiểu học Việt Anh chuyển lên, quá trình chuyển cấp diễn ra rất suôn sẻ nhờ <strong>sự liên tục về chương trình và phương pháp</strong>. Các em đã quen với môi trường song ngữ, hệ thống giá trị cốt lõi và phương pháp học tập chủ động — nên bước lên THCS là sự nối tiếp tự nhiên chứ không phải bắt đầu lại từ đầu.</p>
+          <p>Đối với học sinh từ trường khác, Trường Việt Anh có <strong>chương trình Bridge (bắc cầu)</strong> kéo dài 4-8 tuần đầu: bổ sung tiếng Anh cho học sinh chưa đạt trình độ yêu cầu, hướng dẫn phương pháp học tập mới, và hỗ trợ hoà nhập với bạn bè và văn hoá trường. Hơn 90% học sinh chuyển từ trường khác hoà nhập thành công trong 2 tháng đầu tiên.</p>
+
+          <h3>Chính sách học bổng chuyển cấp lớp 6</h3>
+          <p>Trường Việt Anh dành nhiều suất học bổng hấp dẫn cho học sinh vào lớp 6:</p>
+          <ul class="thcs-scholarship-list">
+            <li><strong>Học bổng xuất sắc (lên đến 50% học phí):</strong> Dành cho học sinh đạt kết quả test đầu vào xuất sắc về cả tiếng Anh và Toán.</li>
+            <li><strong>Học bổng tiếng Anh (30% học phí):</strong> Dành cho học sinh có chứng chỉ Cambridge Flyers, KET hoặc tương đương.</li>
+            <li><strong>Học bổng khuyến khích (20% học phí):</strong> Dành cho học sinh có thành tích nổi bật trong học tập hoặc ngoại khoá tại trường cũ.</li>
+            <li><strong>Học bổng hỗ trợ (10-30% học phí):</strong> Dành cho học sinh có hoàn cảnh khó khăn nhưng năng lực học tập tốt.</li>
+            <li><strong>Ưu đãi anh chị em:</strong> Giảm 10% học phí cho con thứ 2 trở lên trong cùng gia đình đang học tại Việt Anh.</li>
+          </ul>
+          <p>Hạn nộp hồ sơ xét học bổng chuyển cấp: <strong>trước ngày 30/6 hàng năm</strong>. Phụ huynh có thể <a href="/tuyen-sinh">xem chi tiết tuyển sinh và nộp hồ sơ tại đây &rarr;</a></p>
+        </section>
+
+        <!-- Section 4: Kỹ năng lãnh đạo -->
+        <section id="lanh-dao" class="gi-section">
+          <h2>Kỹ năng lãnh đạo được rèn luyện như thế nào ở THCS?</h2>
+          <p>Ở bậc THCS, chương trình <strong>Leader in Me</strong> (Franklin Covey) được nâng cấp từ mức cơ bản ở tiểu học lên <strong>mức nâng cao</strong>, phù hợp với sự trưởng thành về tư duy và nhận thức xã hội của học sinh 11-15 tuổi. Thay vì chỉ rèn 7 thói quen cá nhân, học sinh THCS được phát triển thêm <strong>kỹ năng lãnh đạo nhóm, quản lý dự án, và tạo ảnh hưởng tích cực đến cộng đồng</strong>.</p>
+
+          <p>Chương trình lãnh đạo THCS Việt Anh hoạt động qua 3 trụ cột chính: <strong>Leadership Class</strong> (tiết học chính khoá), <strong>Student Council</strong> (Hội đồng học sinh), và <strong>Community Projects</strong> (Dự án cộng đồng). Mỗi trụ cột bổ sung cho nhau, giúp học sinh phát triển kỹ năng lãnh đạo từ lý thuyết đến thực hành.</p>
+
+          <div class="gi-leader-grid">
+            <div class="gi-leader-card">
+              <h4>Leadership Class — Tiết học lãnh đạo hàng tuần</h4>
+              <ul>
+                <li>7 thói quen hiệu quả (Stephen Covey) ở mức nâng cao</li>
+                <li>Kỹ năng giao tiếp và thuyết phục (persuasion)</li>
+                <li>Giải quyết xung đột và đàm phán (conflict resolution)</li>
+                <li>Tư duy chiến lược và lập kế hoạch (strategic thinking)</li>
+                <li>Quản lý thời gian và ưu tiên công việc (prioritization)</li>
+                <li>Trí tuệ cảm xúc và empathy (emotional intelligence)</li>
+              </ul>
+            </div>
+            <div class="gi-leader-card">
+              <h4>Student Council — Hội đồng Học sinh</h4>
+              <ul>
+                <li>Bầu cử dân chủ: ứng cử, vận động, bỏ phiếu kín</li>
+                <li>Quản lý ngân sách hoạt động CLB và sự kiện</li>
+                <li>Tổ chức sự kiện toàn trường (lễ hội, sports day, charity)</li>
+                <li>Đại diện học sinh trong các cuộc họp với Ban giám hiệu</li>
+                <li>Cố vấn cho học sinh lớp dưới (peer mentoring)</li>
+                <li>Đánh giá và đề xuất cải thiện môi trường học tập</li>
+              </ul>
+            </div>
+          </div>
+
+          <h3>Dự án cộng đồng — Leadership in Action</h3>
+          <p>Mỗi học kỳ, học sinh THCS thực hiện ít nhất 1 <strong>dự án cộng đồng</strong> do chính các em khởi xướng và quản lý. Đây không phải là hoạt động tình nguyện đơn lẻ mà là dự án có quy trình bài bản: xác định vấn đề cộng đồng, nghiên cứu giải pháp, lập kế hoạch thực hiện, huy động nguồn lực, triển khai và đánh giá kết quả.</p>
+
+          <p>Ví dụ các dự án cộng đồng đã được học sinh THCS Việt Anh thực hiện:</p>
+          <div class="gi-values-grid">
+            <h3>Dự án cộng đồng tiêu biểu</h3>
+            <div class="gi-values-items">
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9851;</span>
+                <strong>Green Campus</strong>
+                <p>Dự án phân loại rác và tái chế tại trường. Học sinh lớp 8 thiết kế hệ thống phân loại rác, tuyên truyền cho toàn trường, và đo lường lượng rác giảm mỗi tháng.</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9829;</span>
+                <strong>Books for All</strong>
+                <p>Quyên góp và tổ chức thư viện di động cho trẻ em vùng khó khăn. Học sinh lớp 9 quản lý toàn bộ dự án: thu gom sách, phân loại, vận chuyển và tổ chức đọc sách tại điểm trường.</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9733;</span>
+                <strong>English Buddy</strong>
+                <p>Dạy tiếng Anh miễn phí cho học sinh trường công lập lân cận. Học sinh THCS Việt Anh soạn giáo án, thiết kế trò chơi và trực tiếp giảng dạy mỗi cuối tuần.</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9878;</span>
+                <strong>Tech for Good</strong>
+                <p>Sử dụng kỹ năng coding để giải quyết vấn đề thực tế. Học sinh lớp 8-9 phát triển ứng dụng quản lý rác thải, theo dõi chất lượng không khí, hoặc hỗ trợ người khuyết tật.</p>
+              </div>
+            </div>
+          </div>
+
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-08.webp" alt="Học sinh THCS thuyết trình" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <p>Qua chương trình lãnh đạo, học sinh THCS Việt Anh phát triển được <strong>16 kỹ năng thế kỷ 21</strong> mà các nhà tuyển dụng và trường đại học hàng đầu thế giới đánh giá cao: tư duy phản biện, sáng tạo, giao tiếp, hợp tác, kiên trì, tò mò, chủ động, linh hoạt, lãnh đạo, nhận thức xã hội, trách nhiệm cá nhân, quản lý thời gian, giải quyết vấn đề, ra quyết định, trí tuệ cảm xúc và tư duy toàn cầu.</p>
+        </section>
+
+        <!-- Section 5: Học phí -->
+        <section id="hoc-phi" class="gi-section">
+          <h2>Học phí THCS Việt Anh bao nhiêu?</h2>
+          <p>Học phí THCS tại Trường Việt Anh dao động từ <strong>7 đến 10 triệu đồng mỗi tháng</strong> tuỳ theo chương trình và cơ sở. Mức học phí này đã bao gồm toàn bộ chi phí chương trình song ngữ, STEM, coding, Leader in Me, các hoạt động ngoại khoá cơ bản và ăn trưa dinh dưỡng. Phụ huynh không phải lo phát sinh thêm phí "lạ" ngoài dự kiến.</p>
+
+          <p>So với các trường tư thục song ngữ khác (15-25 triệu/tháng) và trường quốc tế (25-50 triệu/tháng), Trường Việt Anh mang đến chất lượng giáo dục tương đương — giáo viên bản ngữ, chương trình song ngữ chuẩn, STEM và kỹ năng lãnh đạo — nhưng với mức học phí phù hợp hơn nhiều cho gia đình Việt Nam.</p>
+
+          <div class="gi-comparison-box">
+            <h3>So sánh học phí THCS: Việt Anh vs Công lập vs Trường Quốc tế</h3>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Tiêu chí</th>
+                    <th>Công lập</th>
+                    <th>Việt Anh</th>
+                    <th>Trường Quốc tế</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Học phí/tháng</td>
+                    <td>1-3 triệu</td>
+                    <td>7-10 triệu</td>
+                    <td>25-50 triệu</td>
+                  </tr>
+                  <tr>
+                    <td>Chương trình song ngữ</td>
+                    <td>Không</td>
+                    <td>Bộ GD + UK Curriculum</td>
+                    <td>100% quốc tế (IB/IGCSE)</td>
+                  </tr>
+                  <tr>
+                    <td>Giáo viên bản ngữ</td>
+                    <td>Không</td>
+                    <td>Có (full-time)</td>
+                    <td>Có (full-time)</td>
+                  </tr>
+                  <tr>
+                    <td>STEM & Coding</td>
+                    <td>Rất hạn chế</td>
+                    <td>Chương trình chính khoá</td>
+                    <td>Chương trình chính khoá</td>
+                  </tr>
+                  <tr>
+                    <td>Leader in Me</td>
+                    <td>Không</td>
+                    <td>Có (Franklin Covey)</td>
+                    <td>Tuỳ trường</td>
+                  </tr>
+                  <tr>
+                    <td>Debate & Public Speaking</td>
+                    <td>Không</td>
+                    <td>Chương trình chính khoá</td>
+                    <td>Tuỳ trường</td>
+                  </tr>
+                  <tr>
+                    <td>Bao gồm ăn trưa</td>
+                    <td>Có (chất lượng hạn chế)</td>
+                    <td>Có (dinh dưỡng cao)</td>
+                    <td>Có</td>
+                  </tr>
+                  <tr>
+                    <td>Xe đưa rước</td>
+                    <td>Không</td>
+                    <td>Có (tuỳ chọn)</td>
+                    <td>Có (phí riêng)</td>
+                  </tr>
+                  <tr>
+                    <td>Sĩ số lớp</td>
+                    <td>40-50 HS</td>
+                    <td>25-30 HS</td>
+                    <td>15-25 HS</td>
+                  </tr>
+                  <tr>
+                    <td>Mục tiêu tiếng Anh cuối lớp 9</td>
+                    <td>A2 / IELTS 3.0-3.5</td>
+                    <td>B2 / IELTS 5.0-5.5</td>
+                    <td>B2-C1 / IELTS 6.0+</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h3>Học phí bao gồm những gì?</h3>
+          <ul class="thcs-fee-includes">
+            <li><strong>Chương trình chính khoá song ngữ:</strong> Toàn bộ môn học theo chương trình Bộ GD và các môn UK Curriculum bằng tiếng Anh</li>
+            <li><strong>STEM & Coding:</strong> Scratch, Python, Robotics, Science Fair — tất cả bằng tiếng Anh</li>
+            <li><strong>Leader in Me nâng cao:</strong> Tiết leadership hàng tuần, Student Council, dự án cộng đồng</li>
+            <li><strong>Debate & Public Speaking:</strong> Chương trình chính khoá phát triển kỹ năng tranh biện và thuyết trình</li>
+            <li><strong>Ăn trưa dinh dưỡng:</strong> Thực đơn do chuyên gia dinh dưỡng thiết kế, phù hợp lứa tuổi THCS</li>
+            <li><strong>Ngoại khoá cơ bản:</strong> CLB thể thao, nghệ thuật, STEM và các hoạt động sau giờ học</li>
+            <li><strong>Tài liệu học tập:</strong> Sách giáo khoa, sách bổ trợ, tài liệu STEM và coding</li>
+            <li><strong>Bảo hiểm:</strong> Bảo hiểm tai nạn cho học sinh trong thời gian tại trường</li>
+          </ul>
+
+          <p>Phụ huynh có thể đăng ký thêm dịch vụ xe đưa rước, chương trình afterschool chuyên sâu (CLB tiếng Anh nâng cao, CLB coding nâng cao, CLB thể thao chuyên nghiệp) với phí bổ sung hợp lý. <a href="/hoc-phi">Xem bảng học phí chi tiết theo từng cơ sở &rarr;</a></p>
+        </section>
+
+        <!-- Section 6: Đánh giá phụ huynh -->
+        <section id="danh-gia" class="gi-section">
+          <h2>Phụ huynh đánh giá THCS Việt Anh thế nào?</h2>
+          <p>Trường THCS Việt Anh tự hào với phản hồi tích cực từ phụ huynh trên Google và các nền tảng đánh giá. Dưới đây là những chia sẻ tiêu biểu từ phụ huynh có con đang theo học bậc THCS.</p>
+
+          <div class="gi-aggregate-rating">
+            <span class="gi-big-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-big-score">4.8/5</span>
+            <span class="gi-review-count">250+ đánh giá trên Google</span>
+          </div>
+
+          <div class="gi-testimonials">
+            <blockquote class="gi-testimonial">
+              <p>"Con trai tôi vào lớp 6 từ trường công lập, ban đầu lo tiếng Anh không theo kịp. Nhưng nhờ chương trình Bridge, chỉ sau 2 tháng con đã tự tin giao tiếp với giáo viên bản ngữ. Cuối lớp 7, con đạt IELTS 4.5 — điều tôi không dám mơ khi con còn ở trường cũ."</p>
+              <cite>— Anh Trần Quốc Bảo, phụ huynh lớp 8, cơ sở Gò Vấp</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Điều tôi ấn tượng nhất là chương trình Leader in Me. Con gái tôi từ một đứa trẻ nhút nhát, hay khóc khi phải nói trước đám đông, giờ đã làm chủ tịch Student Council lớp 9. Cháu tự tin thuyết trình bằng tiếng Anh trước 300 người — sự thay đổi mà tôi không tưởng tượng được."</p>
+              <cite>— Chị Lê Thuỳ Trang, phụ huynh lớp 9, cơ sở Gò Vấp</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Anh trai học trường quốc tế, em gái học Việt Anh. Thành thật mà nói, kết quả tiếng Anh và kỹ năng mềm gần như tương đương, nhưng học phí Việt Anh chỉ bằng 1/3. Giá mà tôi biết Việt Anh sớm hơn để cho cả hai con học ở đây."</p>
+              <cite>— Anh Nguyễn Đức Minh, phụ huynh lớp 7, cơ sở Phú Nhuận</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Con tôi mê coding từ khi học Scratch ở lớp 6. Giờ lớp 8, con đang học Python và đã tự làm được ứng dụng quản lý lịch học cho bạn bè trong lớp. Chương trình STEM ở Việt Anh thực sự truyền cảm hứng sáng tạo cho trẻ."</p>
+              <cite>— Chị Phạm Minh Châu, phụ huynh lớp 8, cơ sở Long An</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Con gái tôi tham gia dự án cộng đồng 'Books for All' ở lớp 9, tự tổ chức quyên góp sách và mang đến điểm trường vùng cao. Về nhà cháu nói: 'Con muốn làm nhiều hơn nữa cho mọi người.' Tôi biết mình đã chọn đúng trường cho con."</p>
+              <cite>— Anh Võ Thanh Sơn, phụ huynh lớp 9, cơ sở Gò Vấp</cite>
+            </blockquote>
+          </div>
+        </section>
+
+        <!-- Section 7: FAQ -->
+        <section id="faq" class="gi-section">
+          <h2>Câu hỏi thường gặp về THCS Việt Anh</h2>
+          <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về chương trình THCS tại Trường Việt Anh.</p>
+
+          <div class="gi-faq-list">
+            <details class="gi-faq-item" open>
+              <summary>Chương trình chuyển cấp lớp 6 tại Trường Việt Anh như thế nào?</summary>
+              <div class="gi-faq-answer">
+                <p>Trường Việt Anh có chương trình chuyển cấp toàn diện gồm 4 bước: <strong>(1) Test đầu vào</strong> đánh giá năng lực tiếng Anh, Toán và tư duy — không phải thi tuyển loại mà là công cụ xếp lớp phù hợp; <strong>(2) Hỗ trợ tâm lý</strong> với đội ngũ tâm lý học đường đồng hành suốt giai đoạn chuyển cấp; <strong>(3) Orientation 2 tuần</strong> làm quen trường, bạn bè, giáo viên và phương pháp học tập mới; <strong>(4) Mentor 1-1</strong> trong 3 tháng đầu giúp học sinh hoà nhập nhanh chóng. Học sinh tiểu học từ Việt Anh được ưu tiên xét tuyển thẳng.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Lớp THCS Việt Anh bao nhiêu học sinh?</summary>
+              <div class="gi-faq-answer">
+                <p>Sĩ số lớp THCS tại Trường Việt Anh từ <strong>25-30 học sinh/lớp</strong>. Mỗi lớp có 1 giáo viên chủ nhiệm theo sát và các giáo viên bộ môn chuyên trách. Với sĩ số này, giáo viên có thể quan tâm đến từng học sinh, phát hiện sớm những khó khăn trong học tập và hỗ trợ kịp thời. So với trường công lập (40-50 HS/lớp), đây là lợi thế lớn giúp mỗi em được "nhìn thấy" và phát triển theo đúng năng lực.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Học sinh THCS Việt Anh đạt IELTS mấy điểm?</summary>
+              <div class="gi-faq-answer">
+                <p>Mục tiêu IELTS theo lộ trình: <strong>Lớp 6-7: B1 (IELTS 4.0-4.5)</strong> — giao tiếp tự tin, đọc hiểu văn bản học thuật cơ bản. <strong>Lớp 8-9: B2 (IELTS 5.0-5.5)</strong> — viết luận phân tích, debate, đọc tài liệu chuyên ngành. Nhiều học sinh xuất sắc đạt <strong>IELTS 6.0+</strong> cuối lớp 9. Kết quả thực tế: 80% học sinh lớp 9 đạt B2 trở lên, tạo nền tảng vững chắc cho chương trình IELTS nâng cao ở THPT hướng tới 6.5-7.5.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường THCS Việt Anh có xe đưa rước không?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>Có.</strong> Hệ thống xe đưa rước phủ khắp Gò Vấp, Phú Nhuận, Bình Thạnh, Tân Bình và nhiều quận khác tại TP.HCM. Xe trang bị camera giám sát, GPS thời gian thực và phụ xe chuyên trách. Phụ huynh nhận thông báo khi xe đến đón và khi con đến trường an toàn. Tại Long An và Kiên Giang, hệ thống xe đưa rước cũng phủ rộng các khu vực dân cư lân cận trường.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>THCS Việt Anh có những hoạt động ngoại khoá nào?</summary>
+              <div class="gi-faq-answer">
+                <p>Hoạt động ngoại khoá THCS phong phú và đa dạng: <strong>CLB tiếng Anh</strong> (Debate Club, Public Speaking, Drama, English Writing); <strong>CLB STEM</strong> (Coding Club, Robotics Team, Science Fair, Math Olympiad); <strong>CLB thể thao</strong> (bóng rổ, bóng đá, bơi lội, cầu lông, võ thuật); <strong>CLB nghệ thuật</strong> (âm nhạc, mỹ thuật, nhảy hiện đại, nhiếp ảnh); và <strong>dự án cộng đồng</strong> hàng quý. Mỗi học sinh tham gia ít nhất 2 CLB mỗi học kỳ để phát triển toàn diện ngoài giờ học.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Nếu con rớt lớp 10 công lập thì sao?</summary>
+              <div class="gi-faq-answer">
+                <p>Học sinh THCS Việt Anh có <strong>lợi thế lớn khi thi tuyển sinh lớp 10</strong>: nền tảng tiếng Anh vượt trội (IELTS 5.0-6.0 so với A2 của trường công), tư duy logic từ chương trình STEM, và kỹ năng làm bài thi bài bản. Tỷ lệ đỗ lớp 10 trường chuyên và trường tốp đầu của học sinh Việt Anh luôn ở mức cao. Ngoài ra, Trường Việt Anh có <strong>hệ thống THPT liên cấp</strong> — học sinh THCS Việt Anh được <strong>ưu tiên xét tuyển thẳng lên THPT Việt Anh</strong> mà không cần thi tuyển, đảm bảo tính liên tục trong chương trình học.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường THCS Việt Anh có chính sách học bổng không?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>Có.</strong> Trường Việt Anh cấp nhiều loại học bổng THCS: <strong>Học bổng xuất sắc</strong> (lên đến 50% học phí cho test đầu vào xuất sắc); <strong>Học bổng tiếng Anh</strong> (30% cho học sinh có chứng chỉ Cambridge hoặc tương đương); <strong>Học bổng khuyến khích</strong> (20% cho thành tích nổi bật); <strong>Học bổng hỗ trợ</strong> (10-30% cho hoàn cảnh khó khăn, năng lực tốt); và <strong>ưu đãi anh chị em</strong> (giảm 10% cho con thứ 2 trở lên). Hạn nộp hồ sơ xét học bổng: trước ngày 30/6 hàng năm.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+        <img src="https://media.truongvietanh.com/images/the-thao-04.webp" alt="Thể thao THCS Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+        <div class="gi-section" style="background:#f8fafc;border-radius:12px;padding:2rem;margin:2rem 0;text-align:center">
+          <h3>Liên hệ tư vấn THCS Trường Việt Anh</h3>
+          <p style="font-size:1.1rem;margin:0.5rem 0">Hotline: <a href="tel:0916961409" style="color:#D4A843;font-weight:700;font-size:1.2rem">0916 961 409</a></p>
+          <p style="font-size:1.1rem;margin:0.5rem 0">Zalo: <a href="https://zalo.me/0916961409" target="_blank" rel="noopener" style="color:#D4A843;font-weight:700">Nhắn tin Zalo ngay</a></p>
+          <p style="margin-top:1rem">Xem thêm: <a href="/cap-hoc">Các cấp học</a> | <a href="/tuyen-sinh">Tuyển sinh</a> | <a href="/thanh-tich">Thành tích học sinh</a></p>
+        </div>
+      </article>
+    </div>
+
+    <!-- ====== LAYER 8: BOTTOM CTA ====== -->
+    <section class="gi-bottom-cta">
+      <div class="gi-container gi-bottom-cta-inner">
+        <div class="gi-bottom-cta-text">
+          <h2>Đăng ký tham quan trường THCS Việt Anh miễn phí</h2>
+          <p>Hãy để con được trải nghiệm môi trường học song ngữ, STEM và lãnh đạo tại Trường THCS Việt Anh. Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ để sắp xếp lịch tham quan phù hợp.</p>
+          <ul class="thcs-cta-benefits">
+            <li>Tham quan cơ sở và gặp giáo viên bản ngữ trực tiếp</li>
+            <li>Cho con trải nghiệm 1 buổi học thử STEM miễn phí</li>
+            <li>Nhận tư vấn lộ trình chuyển cấp lớp 6 phù hợp</li>
+            <li>Tìm hiểu chính sách học bổng và ưu đãi</li>
+            <li>Không ràng buộc, hoàn toàn miễn phí</li>
+          </ul>
+        </div>
+        <div class="gi-bottom-cta-form">
+          <LeadFormTwoStepEmailFirst
+            formId="thcs-bottom-form"
+            funnelCode="thcs-bottom"
+            schoolLevel="thcs"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== LAYER 9: RELATED CONTENT ====== -->
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Bài viết liên quan</h2>
+        <div class="gi-related-grid">
+          <a href="/tieu-hoc" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #D4A843 0%, #b8922e 100%);"></div>
+            <h3>Chương trình Tiểu học song ngữ Trường Việt Anh</h3>
+            <p>Nền tảng vững chắc trước khi bước vào THCS — UK Curriculum, STEAM, Coding và tiếng Anh immersion từ lớp 1.</p>
+          </a>
+          <a href="/trung-hoc-pho-thong" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8a 100%);"></div>
+            <h3>Chương trình THPT Trường Việt Anh — IELTS 6.5+ và Du học</h3>
+            <p>Lộ trình tiếp nối sau THCS: IELTS nâng cao, định hướng du học và nghề nghiệp từ lớp 10.</p>
+          </a>
+          <a href="/hoc-phi" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Bảng học phí chi tiết Trường Việt Anh 2026-2027</h3>
+            <p>Học phí các cấp từ Mầm non đến THPT, chính sách học bổng và phương thức thanh toán.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style is:global>
+/* ===== THCS PILLAR PAGE — Additional styles ===== */
+/* Reuses all gi-* classes from gioi-thieu.astro (is:global) */
+
+/* Scholarship list */
+.thcs-scholarship-list {
+  padding-left: 1.2rem;
+  margin: 1rem 0 1.5rem;
+}
+.thcs-scholarship-list li {
+  font-size: 1rem;
+  color: #334155;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+/* Fee includes list */
+.thcs-fee-includes {
+  padding-left: 1.2rem;
+  margin: 1rem 0 1.5rem;
+}
+.thcs-fee-includes li {
+  font-size: 1rem;
+  color: #334155;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+/* CTA benefits list */
+.thcs-cta-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+.thcs-cta-benefits li {
+  font-size: 1rem;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+.thcs-cta-benefits li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  color: #D4A843;
+  font-weight: 700;
+}
+</style>

@@ -1,73 +1,148 @@
 ---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
 
-const pageTitle = 'Checklist 9 Tiêu Chí Chọn Trường THCS Tốt Nhất Cho Con';
-const pageDescription = 'Tải miễn phí checklist 9 tiêu chí chọn trường THCS tốt nhất cho con lớp 6.';
+const pageTitle = 'Checklist Chọn Trường THCS — 10 Tiêu Chí Ba/Mẹ Cần Xem Xét';
+const pageDescription = 'Hướng dẫn chọn trường THCS đúng cho con: 10 tiêu chí quan trọng nhất, so sánh trường công vs tư thục, và checklist đánh giá chi tiết. Tải PDF miễn phí.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/checklist';
+
+const uspItems = [
+  { icon: '✅', text: '10 tiêu chí đánh giá trường THCS — từ chương trình học đến bếp ăn' },
+  { icon: '📊', text: 'Bảng so sánh trường công vs tư thục — ưu nhược điểm rõ ràng' },
+  { icon: '📥', text: 'Tải PDF checklist miễn phí — in ra mang theo khi tham quan trường' },
+  { icon: '🔍', text: 'Câu hỏi cần hỏi khi tham quan — đừng chỉ "nhìn mà không hỏi"' },
+  { icon: '⚠️', text: '5 dấu hiệu cảnh báo cần tránh khi chọn trường' },
+  { icon: '💡', text: 'Kinh nghiệm từ 500+ phụ huynh đã chọn trường cho con' }
+];
+
+const metrics = [
+  { number: '10', label: 'Tiêu chí đánh giá quan trọng' },
+  { number: '500+', label: 'Phụ huynh đã sử dụng checklist' },
+  { number: '5', label: 'Dấu hiệu cảnh báo cần tránh' },
+  { number: 'PDF', label: 'Tải miễn phí, in ra mang theo' }
+];
+
+const faqItems = [
+  {
+    question: 'Trường công hay trường tư thục — cái nào tốt hơn cho THCS?',
+    answer: 'Không có câu trả lời "đúng cho tất cả" — nhưng có câu trả lời "đúng cho con bạn". Trường công có ưu điểm: học phí thấp, chương trình chuẩn Bộ GD&ĐT, đội ngũ giáo viên có biên chế ổn định. Trường tư thục có ưu điểm: lớp nhỏ (25-30 em thay vì 45-50), chương trình song ngữ/quốc tế, STEM nâng cao, và cơ sở vật chất tốt hơn. Nếu con cần nhiều sự quan tâm cá nhân, muốn học Tiếng Anh chuyên sâu, và gia đình có ngân sách — tư thục thường phù hợp hơn. Checklist của chúng tôi giúp Ba/Mẹ đánh giá khách quan cả hai loại.'
+  },
+  {
+    question: '10 tiêu chí quan trọng nhất khi chọn trường THCS là gì?',
+    answer: 'Đây là 10 tiêu chí chúng tôi đề xuất: (1) Chất lượng giáo viên — trình độ, kinh nghiệm, tỷ lệ giáo viên/học sinh, (2) Chương trình học — chuẩn Bộ GD&ĐT + bổ sung gì?, (3) Tiếng Anh — có giáo viên nước ngoài không, dạy tích hợp hay chỉ dạy ngữ pháp?, (4) STEM/Công nghệ — có phòng Lab không, có thực hành không?, (5) Sĩ số lớp — dưới 30 là lý tưởng, (6) Cơ sở vật chất — phòng học, thư viện, sân chơi, bếp ăn, (7) Hoạt động ngoại khóa — đa dạng hay chỉ có 2-3 CLB?, (8) Kết quả đầu ra — bao nhiêu % vào THPT top?, (9) An toàn và sức khỏe — bếp ăn, y tế, camera, (10) Chi phí tổng — không chỉ học phí mà cả phụ phí, đồng phục, sách...'
+  },
+  {
+    question: 'Làm sao biết trường nào "nói thật" khi quảng cáo?',
+    answer: '5 cách kiểm chứng: (1) Hỏi phụ huynh đang có con học tại trường — không phải "phụ huynh được trường giới thiệu" mà tìm trên group Facebook/Zalo, (2) Yêu cầu xem kết quả cụ thể: bao nhiêu em vào THPT top, điểm IELTS trung bình, giải thưởng STEM — số liệu cụ thể, không phải "nhiều em đạt kết quả tốt", (3) Tham quan bất ngờ (không báo trước) nếu có thể — quan sát không khí thực tế, (4) Hỏi tỷ lệ giáo viên nghỉ việc — nếu giáo viên không ổn định, chất lượng sẽ dao động, (5) Xem review trên Google Maps, Facebook — đọc cả review tiêu cực để thấy cách trường phản hồi.'
+  },
+  {
+    question: 'Khi nào nên bắt đầu tìm trường THCS cho con?',
+    answer: 'Lý tưởng nhất là bắt đầu từ học kỳ 1 lớp 5 (tháng 9-12). Lý do: (1) Ba/Mẹ có đủ thời gian tham quan 3-5 trường, so sánh khách quan, (2) Nhiều trường tư thục có chương trình đăng ký sớm (Early Bird) với ưu đãi học phí, hạn chót thường tháng 3-4, (3) Con có thời gian chuẩn bị tâm lý — biết mình sẽ học trường nào, gặp bạn mới, (4) Tránh tình trạng "chạy đua" vào tháng 5-6 khi các trường đã gần hết suất. Nếu Ba/Mẹ đang đọc bài này vào tháng 1-3, đây chính là thời điểm hoàn hảo để bắt đầu.'
+  },
+  {
+    question: 'Chi phí tổng cho 1 năm THCS tư thục tại TPHCM khoảng bao nhiêu?',
+    answer: 'Chi phí dao động lớn tùy trường: Trường tư thục thông thường (60-100 triệu/năm), Trường song ngữ (100-180 triệu/năm), Trường quốc tế (200-500 triệu/năm). Lưu ý: ngoài học phí, Ba/Mẹ cần tính thêm: đồng phục (2-5 triệu), sách giáo khoa + tài liệu (3-5 triệu), phí ngoại khóa (5-15 triệu), bếp ăn (15-25 triệu/năm nếu ăn tại trường), xe đưa đón (8-15 triệu/năm). Tổng chi phí thực tế thường cao hơn học phí niêm yết 20-30%. Checklist của chúng tôi có bảng tính chi phí tổng để Ba/Mẹ so sánh chính xác giữa các trường.'
+  }
+];
 ---
 
-<!doctype html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription} />
-  <meta name="keywords" content="checklist chọn trường THCS, tiêu chí chọn trường, lớp 6, trường Việt Anh" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href={canonicalUrl} />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalUrl} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap&subset=vietnamese');</style>
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="chọn trường THCS, checklist chọn trường, so sánh trường THCS, trường tư thục TPHCM, tiêu chí chọn trường"
+  schoolLevel="thcs"
+  funnelCode="checklist-thcs"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Checklist Chọn Trường THCS — 10 Tiêu Chí Ba/Mẹ Cần Xem Xét
+    </h1>
+    <p class="hero-subtitle">
+      Đừng chọn trường bằng cảm tính — dùng checklist để đánh giá khách quan
+    </p>
+  </div>
 
-  <style is:inline>
-    :root{--b:#1F4E79;--o:#E8792B;--w:#fff;--f:'Open Sans',system-ui,sans-serif}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:var(--f);-webkit-font-smoothing:antialiased;color:#1C2A3A;min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(135deg,#F8FAFC,#fff);color:#1C2A3A}
-    .wrap{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px 20px;text-align:center}
-    .badge{display:inline-flex;padding:10px 24px;border-radius:24px;font-size:.875rem;font-weight:600;margin-bottom:32px;background:#1F4E79;color:#fff}
-    h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.75rem,5vw,2.25rem);font-weight:800;line-height:1.15;margin-bottom:24px;color:#1F4E79}
-    h1 .accent{color:var(--o)}
-    .subtitle{font-size:1.1rem;line-height:1.6;margin-bottom:40px;max-width:360px;margin-left:auto;margin-right:auto;opacity:.9;color:#E8792B}
-    .form-wrap{width:100%;max-width:380px;margin:0 auto;}
-    .trust-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 24px;margin-top:32px;font-size:.75rem;opacity:.8}
-    .trust-row div::before{content:'✓ ';color:#22C55E}
-    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px;max-width:380px;margin-left:auto;margin-right:auto}
-    .stat-box{background:rgba(0,0,0,.04);border-radius:16px;padding:16px 8px;font-size:.875rem;color:#555}
-    .footer-bar{text-align:center;padding:24px;font-size:.75rem;opacity:.5}
-    @media(max-width:480px){.wrap{padding:32px 16px}h1{font-size:1.5rem}.subtitle{font-size:1rem}.trust-row{font-size:.7rem}}
-  </style>
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
 
-  <script is:inline>
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({event:'page_view',page_title:'Checklist 9 Tiêu Chí Chọn Trường THCS Tốt Nhất Cho Con',school_level:'thcs',funnel_code:'checklist-thcs'});
-  </script>
-</head>
-<body>
-  <div class="wrap">
-    <div class="badge">TÀI LIỆU MIỄN PHÍ DÀNH RIÊNG CHO PHỤ HUYNH LỚP 6</div>
-    <h1>Bố Mẹ Muốn Con Vào Trường THCS Tốt?<br><span class="accent">Đây Là 9 Tiêu Chí Không Thể Bỏ Qua</span></h1>
-    <p class="subtitle">Hàng nghìn phụ huynh đã sử dụng checklist này để tìm được trường phù hợp. Không để con chuyển cấp sai lầm—đọc checklist này trước khi quyết định.</p>
-    <div class="form-wrap">
-      <LeadFormTwoStepEmailFirst
-        formId="squeeze-checklist-thcs"
-        funnelCode="checklist-thcs"
-        schoolLevel="thcs"
-        submitText="Đăng ký ngay"
-        successMessage="Cảm ơn! Tư vấn viên sẽ liên hệ trong 5 phút."
-      />
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section featured-image-section">
+      <img src="https://media.truongvietanh.com/images/du-an-04.webp" alt="Học sinh THCS Việt Anh làm việc nhóm trong dự án STEM thực tế" class="featured-image" width="800" height="450" loading="lazy" />
+      <p class="featured-caption">Môi trường học tập tại THCS Việt Anh -- nơi học sinh phát triển toàn diện qua các dự án thực tế, hoạt động nhóm và chương trình STEM chuyên sâu.</p>
     </div>
-    <div class="trust-row">
-      <div>STEM & song ngữ: Điều kiện tiên quyết</div>
-      <div>95% học sinh Việt Anh vào top trường THPT</div>
-      <div>Lộ trình IELTS, Coding, Leadership từ lớp 6</div>
+
+    <div class="content-section">
+      <h2>10 tiêu chí quan trọng khi chọn trường THCS cho con</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Tiêu chí 1-3: Chất lượng giảng dạy là nền tảng</h3>
+          <p>Ba tiêu chí quan trọng nhất: (1) Chất lượng giáo viên — trình độ chuyên môn, số năm kinh nghiệm, tỷ lệ giáo viên/học sinh (lý tưởng dưới 1:15). Hỏi trường: "Bao nhiêu % giáo viên có trên 5 năm kinh nghiệm?" (2) Chương trình học — ngoài chuẩn Bộ GD&ĐT, trường bổ sung gì? Song ngữ, STEM, kỹ năng mềm? (3) Tiếng Anh — có giáo viên nước ngoài dạy không, dạy tích hợp trong các môn hay chỉ dạy ngữ pháp riêng? Đây là 3 yếu tố quyết định 70% chất lượng giáo dục con nhận được.</p>
+        </div>
+        <div class="content-card">
+          <h3>Tiêu chí 4-6: Môi trường học tập quyết định trải nghiệm</h3>
+          <p>(4) STEM/Công nghệ — trường có phòng Lab thực hành không, hay chỉ "dạy lý thuyết STEM"? Yêu cầu xem phòng Lab khi tham quan. (5) Sĩ số lớp — dưới 30 em là lý tưởng để mỗi em được quan tâm cá nhân. Trên 40 em = giáo viên không thể "nhìn thấy" từng em. (6) Cơ sở vật chất — không chỉ phòng học đẹp mà quan trọng là thư viện có sách không, sân chơi có an toàn không, bếp ăn có đảm bảo vệ sinh không. Hãy "ngửi bếp ăn" khi tham quan — đó là cách kiểm tra thực tế nhất.</p>
+        </div>
+        <div class="content-card">
+          <h3>Tiêu chí 7-8: Phát triển toàn diện ngoài sách vở</h3>
+          <p>(7) Hoạt động ngoại khóa — trường có bao nhiêu CLB? Có đội tuyển thể thao, nhóm Debate, câu lạc bộ STEM không? Em có được tự chọn hay bắt buộc tham gia? Trường tốt nên có ít nhất 10+ CLB ngoại khóa để mỗi em tìm được điều mình thích. (8) Kết quả đầu ra — đây là "bằng chứng" thật nhất: bao nhiêu % em vào THPT top? Điểm IELTS trung bình khi tốt nghiệp là bao nhiêu? Có em nào đạt giải Quốc gia, Quốc tế không? Yêu cầu số liệu cụ thể, không chấp nhận câu trả lời mơ hồ.</p>
+        </div>
+        <div class="content-card">
+          <h3>Tiêu chí 9-10: An toàn và chi phí — hai yếu tố không thể bỏ qua</h3>
+          <p>(9) An toàn và sức khỏe — trường có phòng y tế với nhân viên y tế chuyên trách không? Camera an ninh? Quy trình xử lý khi em bị ốm, tai nạn? Bếp ăn có giấy phép ATTP không? (10) Chi phí tổng — không chỉ học phí mà cả phụ phí, đồng phục, sách, bếp ăn, xe đưa đón, ngoại khóa. Tổng chi phí thực tế thường cao hơn học phí niêm yết 20-30%. Hãy yêu cầu trường liệt kê tất cả chi phí trong 1 năm để so sánh chính xác.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: 5 dấu hiệu cảnh báo cần tránh khi chọn trường</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        Ba/Mẹ cần cảnh giác nếu thấy: <strong>(1) Trường từ chối cho tham quan bất ngờ</strong> — trường tốt sẵn sàng cho phụ huynh đến bất kỳ lúc nào. <strong>(2) Không cung cấp được số liệu đầu ra cụ thể</strong> — chỉ nói "nhiều em đạt kết quả tốt" mà không có con số. <strong>(3) Giáo viên thay đổi liên tục</strong> — hỏi tỷ lệ giáo viên nghỉ việc hàng năm. <strong>(4) Sĩ số lớp trên 40 em</strong> mà quảng cáo "quan tâm cá nhân". <strong>(5) Ép đóng tiền ngay trong buổi tham quan</strong> — trường tốt cho Ba/Mẹ thời gian suy nghĩ.
+      </p>
     </div>
   </div>
-  <div class="footer-bar">Bảo mật thông tin &bull; Tư vấn viên sẽ liên hệ trong 5 phút</div>
 
-</body>
-</html>
+  <div slot="form">
+    <h2 class="form-heading">Tải checklist PDF miễn phí — Mang theo khi tham quan trường</h2>
+    <p class="form-subheading">Nhận bản PDF checklist 10 tiêu chí + bảng so sánh trường + danh sách câu hỏi cần hỏi. In ra mang theo khi đi tham quan — đánh giá khách quan thay vì cảm tính.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="checklist-thcs-form"
+      funnelCode="checklist-thcs"
+      schoolLevel="thcs"
+      submitText="Tải checklist miễn phí"
+      successMessage="Cảm ơn Ba/Mẹ! Checklist PDF đã được gửi vào email. Chúng tôi cũng sẽ liên hệ tư vấn thêm nếu Ba/Mẹ cần."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi phổ biến về chọn trường THCS" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  .featured-image-section { text-align: center; margin-bottom: 3rem; }
+  .featured-image { width: 100%; max-width: 800px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); object-fit: cover; aspect-ratio: 16/9; }
+  .featured-caption { font-size: 0.9rem; color: #777; margin-top: 1rem; font-style: italic; max-width: 700px; margin-left: auto; margin-right: auto; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
+</style>

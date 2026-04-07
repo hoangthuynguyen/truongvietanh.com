@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Khóa Học - Hệ Thống Giáo Dục Trường Việt Anh</title>
+<meta name="description" content="Khám phá các chương trình đào tạo từ Mầm non đến THPT, Trại hè Lion Camp, Tiếng Anh trẻ em và Toán Tư Duy tại Hệ thống Giáo dục Trường Việt Anh.">
+<link rel="icon" href="https://truongvietanh.com/wp-content/uploads/2024/12/cropped-Frame-2144770212-32x32.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#FCDB05;
+  --dark:#1a1a1a;
+  --navy:#0d1b2a;
+  --white:#ffffff;
+  --gray:#f5f5f5;
+  --text:#333333;
+  --light-gold:#fff9d4;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Montserrat',sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
+
+/* HEADER */
+.header{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:var(--navy);
+  padding:10px 0;
+  box-shadow:0 2px 20px rgba(0,0,0,0.15);
+}
+.header-inner{
+  max-width:1200px;margin:0 auto;padding:0 24px;
+  display:flex;align-items:center;justify-content:center;
+}
+.header img{height:38px;}
+
+/* HERO - compact */
+.hero{
+  margin-top:58px;
+  background:linear-gradient(135deg,var(--navy) 0%,#1b365d 50%,#0d1b2a 100%);
+  color:var(--white);
+  text-align:center;
+  padding:32px 24px 24px;
+  position:relative;
+  overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+  background:radial-gradient(circle at 30% 50%,rgba(252,219,5,0.08) 0%,transparent 50%);
+}
+.hero h1{
+  font-size:clamp(22px,3.5vw,38px);font-weight:900;
+  line-height:1.2;margin-bottom:8px;position:relative;
+}
+.hero h1 span{color:var(--gold);}
+.hero p{
+  font-size:clamp(12px,1.5vw,15px);opacity:0.8;
+  max-width:600px;margin:0 auto;position:relative;
+  line-height:1.5;
+}
+
+/* PROGRAMS - compact grid */
+.programs{
+  max-width:1000px;margin:0 auto;
+  padding:24px 24px 16px;
+}
+.programs-title{
+  text-align:center;margin-bottom:20px;
+}
+.programs-title h2{
+  font-size:clamp(18px,2.5vw,26px);font-weight:800;color:var(--navy);
+  margin-bottom:6px;
+}
+.programs-title .line{
+  width:60px;height:3px;background:var(--gold);margin:0 auto;border-radius:2px;
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+
+/* COMPACT CARD - icon + title inline */
+.card{
+  background:var(--white);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 2px 12px rgba(0,0,0,0.06);
+  transition:transform 0.2s ease,box-shadow 0.2s ease;
+  border:1px solid #eee;
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.1);
+}
+.card a{
+  display:flex;align-items:center;gap:12px;
+  padding:14px 16px;
+  text-decoration:none;color:var(--navy);
+  transition:background 0.2s;
+}
+.card a:hover{background:rgba(252,219,5,0.08);}
+.card .icon{
+  width:42px;height:42px;min-width:42px;
+  border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;
+}
+.card .card-title{
+  font-size:14px;font-weight:700;color:var(--navy);
+  line-height:1.3;
+}
+.card .card-sub{
+  font-size:11px;color:#888;font-weight:500;
+  margin-top:2px;
+}
+.card .arrow{
+  margin-left:auto;color:#ccc;font-size:18px;
+  transition:color 0.2s,transform 0.2s;
+}
+.card:hover .arrow{color:var(--gold);transform:translateX(3px);}
+
+/* Last card spans full width if odd */
+.card:last-child:nth-child(odd){
+  grid-column:1 / -1;
+  max-width:50%;
+  justify-self:center;
+}
+
+/* Card icon colors */
+.card-mn .icon{background:linear-gradient(135deg,#fff9e0,#fff3b8);}
+.card-th .icon{background:linear-gradient(135deg,#e0f7fa,#b2ebf2);}
+.card-thcs .icon{background:linear-gradient(135deg,#e8f5e9,#c8e6c9);}
+.card-thpt .icon{background:linear-gradient(135deg,#ede7f6,#d1c4e9);}
+.card-camp .icon{background:linear-gradient(135deg,#fff3e0,#ffe0b2);}
+.card-eng .icon{background:linear-gradient(135deg,#e3f2fd,#bbdefb);}
+.card-math .icon{background:linear-gradient(135deg,#fce4ec,#f8bbd0);}
+
+/* CAMPUSES */
+.campuses{
+  background:var(--gray);
+  padding:40px 24px;
+}
+.campuses-inner{
+  max-width:1200px;margin:0 auto;
+}
+.campuses h2{
+  text-align:center;font-size:clamp(18px,2.5vw,26px);
+  font-weight:800;color:var(--navy);margin-bottom:24px;
+}
+.campus-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.campus-card{
+  background:var(--white);border-radius:10px;padding:14px 16px;
+  display:flex;flex-direction:column;gap:6px;
+  box-shadow:0 2px 10px rgba(0,0,0,0.04);
+  transition:box-shadow 0.3s;
+}
+.campus-card:hover{box-shadow:0 4px 20px rgba(0,0,0,0.08);}
+.campus-icon{
+  width:30px;height:30px;min-width:30px;
+  background:var(--light-gold);border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+}
+.campus-info h4{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.campus-info p{font-size:10px;color:#666;line-height:1.4;margin-bottom:2px;}
+.campus-info a{
+  font-size:11px;font-weight:700;color:var(--navy);
+  text-decoration:none;display:inline-flex;align-items:center;gap:4px;
+}
+.campus-info a:hover{color:var(--gold);}
+.region-label{
+  font-size:15px;font-weight:700;color:var(--navy);
+  margin:24px 0 12px;padding-left:4px;
+}
+.region-label:first-of-type{margin-top:0;}
+
+/* ABOUT */
+.about{
+  max-width:900px;margin:0 auto;
+  padding:40px 24px;text-align:center;
+}
+.about h2{
+  font-size:clamp(18px,2.5vw,26px);font-weight:800;
+  color:var(--navy);margin-bottom:16px;
+}
+.about p{
+  font-size:14px;line-height:1.8;color:#555;
+}
+
+/* FOOTER */
+.footer{
+  background:var(--navy);color:var(--white);
+  padding:32px 24px 20px;text-align:center;
+}
+.footer img{height:36px;margin-bottom:16px;}
+.footer-links{
+  display:flex;flex-wrap:wrap;justify-content:center;gap:6px 20px;
+  margin-bottom:16px;
+}
+.footer-links a{
+  color:rgba(255,255,255,0.7);text-decoration:none;font-size:12px;
+  transition:color 0.3s;
+}
+.footer-links a:hover{color:var(--gold);}
+.footer-copy{
+  font-size:11px;color:rgba(255,255,255,0.4);
+  border-top:1px solid rgba(255,255,255,0.1);
+  padding-top:16px;margin-top:8px;
+}
+
+@media(max-width:900px){
+  .campus-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media(max-width:600px){
+  .grid{grid-template-columns:1fr;}
+  .card:last-child:nth-child(odd){max-width:100%;}
+  .campus-grid{grid-template-columns:1fr;}
+  .hero{padding:24px 16px 20px;}
+  .programs{padding:20px 16px 12px;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-inner">
+    <a href="https://truongvietanh.com" target="_blank">
+      <img src="https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.svg" alt="Trường Việt Anh">
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Hệ Thống Giáo Dục <span>Trường Việt Anh</span></h1>
+  <p>Các chương trình đào tạo từ Mầm non đến THPT, cùng các khóa học kỹ năng giúp con phát triển toàn diện.</p>
+</section>
+
+<!-- PROGRAMS -->
+<section class="programs">
+  <div class="programs-title">
+    <h2>Chương Trình Đào Tạo</h2>
+    <div class="line"></div>
+  </div>
+
+  <div class="grid">
+
+    <div class="card card-mn">
+      <a href="https://mamnon.truongvietanh.com/" target="_blank">
+        <div class="icon">🌱</div>
+        <div>
+          <div class="card-title">Mầm Non</div>
+          <div class="card-sub">Nuôi dưỡng tình yêu học tập tự nhiên</div>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div class="card card-th">
+      <a href="https://tieuhoc.truongvietanh.com/" target="_blank">
+        <div class="icon">🎓</div>
+        <div>
+          <div class="card-title">Tiểu Học</div>
+          <div class="card-sub">Khơi dậy tiềm năng lãnh đạo từ nhỏ</div>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div class="card card-thcs">
+      <a href="https://thcs.truongvietanh.com/" target="_blank">
+        <div class="icon">📈</div>
+        <div>
+          <div class="card-title">Trung Học Cơ Sở</div>
+          <div class="card-sub">95% học sinh tiến bộ mỗi năm</div>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div class="card card-thpt">
+      <a href="https://thpt.truongvietanh.com/" target="_blank">
+        <div class="icon">🚀</div>
+        <div>
+          <div class="card-title">Trung Học Phổ Thông</div>
+          <div class="card-sub">IELTS, định hướng đại học & du học</div>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div class="card card-camp">
+      <a href="https://lioncamps.com/" target="_blank">
+        <div class="icon">🦁</div>
+        <div>
+          <div class="card-title">Trại Hè Lion Camp</div>
+          <div class="card-sub">Rèn luyện kỹ năng lãnh đạo & bản lĩnh</div>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div class="card card-eng">
+      <a href="https://tienganhtreem.com/" target="_blank">
+        <div class="icon">🗣️</div>
+        <div>
+          <div class="card-title">Tiếng Anh Trẻ Em</div>
+          <div class="card-sub">Tự tin giao tiếp như trẻ bản xứ</div>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+    <div class="card card-math">
+      <a href="https://toansam.tubinhthuongtronenphithuong.com/" target="_blank">
+        <div class="icon">🧠</div>
+        <div>
+          <div class="card-title">Toán Tư Duy</div>
+          <div class="card-sub">Rèn logic & đam mê trí tuệ</div>
+        </div>
+        <span class="arrow">›</span>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- CAMPUSES -->
+<section class="campuses">
+  <div class="campuses-inner">
+    <h2>Hệ Thống Cơ Sở</h2>
+    <!-- TP. Hồ Chí Minh -->
+    <h3 class="region-label">TP. Hồ Chí Minh</h3>
+    <div class="campus-grid">
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Việt Anh Phú Nhuận</h4>
+          <p>269A Nguyễn Trọng Tuyển, Phường Phú Nhuận</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Việt Anh Bình Tân</h4>
+          <p>Số 7 đường 38A, Tân Tạo, Bình Tân</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Việt Anh Gò Vấp</h4>
+          <p>160/72 Phan Huy Ích, Phường An Hội Đông</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Mầm Non Việt Anh Gò Vấp</h4>
+          <p>573 Đ. Lê Đức Thọ, Phường An Hội Tây</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cần Giuộc - Long An -->
+    <h3 class="region-label">Cần Giuộc — Long An</h3>
+    <div class="campus-grid">
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Mầm Non Nhân Lễ</h4>
+          <p>22 Đường D2, Khu Dân cư, Cần Giuộc, Long An</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Mầm Non Thái Sơn</h4>
+          <p>Khu Dân Cư Thái Sơn — Long Hậu</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Tiểu Học Thái Sơn</h4>
+          <p>Khu Dân Cư Thái Sơn — Long Hậu</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- TP. Rạch Giá - Kiên Giang -->
+    <h3 class="region-label">TP. Rạch Giá — Kiên Giang</h3>
+    <div class="campus-grid">
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Mầm Non Quốc Tế Mekong Xanh</h4>
+          <p>Lô E7, Khu đô thị Tây Bắc, TP. Rạch Giá</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+      <div class="campus-card">
+        <div class="campus-icon">📍</div>
+        <div class="campus-info">
+          <h4>Trường Tiểu Học Quốc Tế Mekong Xanh</h4>
+          <p>Lô E7, Khu đô thị Tây Bắc, TP. Rạch Giá</p>
+          <a href="tel:0916961409">📞 0916 961 409</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about">
+  <h2>Giới Thiệu</h2>
+  <p>Hầu hết học sinh Việt Nam vừa khao khát vừa sợ hãi cơ hội du học. Vì vậy, trường Việt Anh được thiết kế để chuẩn bị tốt tiếng Anh và các phẩm chất, năng lực cần có. Nhờ đó, học sinh tự tin du học, nhiều em đã nhận được những học bổng giá trị từ nhiều đại học hàng đầu thế giới.</p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <a href="https://truongvietanh.com" target="_blank">
+    <img src="https://truongvietanh.com/wp-content/uploads/2024/12/logo-foot.svg" alt="Trường Việt Anh">
+  </a>
+  <div class="footer-links">
+    <a href="https://truongvietanh.com/thong-tin-danh-cho-phu-huynh/" target="_blank">Phụ huynh</a>
+    <a href="https://truongvietanh.com/thoi-khoa-bieu-mau-cac-khoi-lop/" target="_blank">Thời khóa biểu</a>
+    <a href="https://truongvietanh.com/thuc-don-va-dinh-duong/" target="_blank">Thực đơn</a>
+    <a href="https://truongvietanh.com/cong-khai/" target="_blank">Công Khai</a>
+    <a href="https://truongvietanh.com/trang-tin-tuc/" target="_blank">Blog</a>
+    <a href="https://truongvietanh.com/faqs/" target="_blank">Câu hỏi thường gặp</a>
+    <a href="https://truongvietanh.com/chuong-trinh-dao-tao/" target="_blank">Chương trình đào tạo</a>
+    <a href="https://truongvietanh.com/mam-non-viet-anh/" target="_blank">Chương trình Mầm Non</a>
+    <a href="https://truongvietanh.com/tieu-hoc-viet-anh/" target="_blank">Chương trình Tiểu Học</a>
+    <a href="https://truongvietanh.com/trung-hoc-co-so-viet-anh/" target="_blank">Chương trình THCS</a>
+    <a href="https://truongvietanh.com/trung-hoc-pho-thong/" target="_blank">Chương trình THPT</a>
+  </div>
+  <div class="footer-copy">
+    &copy; 2026 truongvietanh.com — Hệ Thống Giáo Dục Trường Việt Anh
+  </div>
+</footer>
+
+</body>
+</html>

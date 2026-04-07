@@ -1,73 +1,148 @@
 ---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
 
-const pageTitle = 'Webinar Lộ Trình THCS–THPT – Định Hướng Tương Lai Cho Con';
-const pageDescription = 'Đăng ký webinar miễn phí về lộ trình THCS–THPT tại Trường Việt Anh. Tư vấn định hướng tương lai.';
+const pageTitle = 'Webinar Miễn Phí: Lộ Trình THCS–THPT — Định Hướng Tương Lai Cho Con';
+const pageDescription = 'Tham gia webinar miễn phí 90 phút cùng chuyên gia Trường Việt Anh: Lộ trình THCS–THPT, chuẩn bị IELTS từ lớp 6, Coding & AI, và chiến lược vào trường THPT top.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/webinar';
+
+const uspItems = [
+  { icon: '🎓', text: 'Chuyên gia 15+ năm kinh nghiệm giáo dục THCS–THPT chia sẻ trực tiếp' },
+  { icon: '📋', text: 'Lộ trình chi tiết từ lớp 6 đến lớp 12 — từng bước cụ thể' },
+  { icon: '🌐', text: 'Chiến lược IELTS: Khi nào bắt đầu, mục tiêu từng năm, thi lúc nào' },
+  { icon: '💻', text: 'Coding & AI từ lớp 6 — tại sao con cần biết và học như thế nào' },
+  { icon: '❓', text: 'Q&A trực tiếp: Ba/Mẹ hỏi, chuyên gia trả lời ngay trong buổi' },
+  { icon: '📥', text: 'Tài liệu Roadmap THCS–THPT bản đầy đủ — tải miễn phí sau webinar' }
+];
+
+const metrics = [
+  { number: '90', label: 'Phút chia sẻ chuyên sâu' },
+  { number: '500+', label: 'Phụ huynh đã tham gia các kỳ trước' },
+  { number: '95%', label: 'Đánh giá "Rất hữu ích"' },
+  { number: '50', label: 'Slot giới hạn mỗi buổi' }
+];
+
+const faqItems = [
+  {
+    question: 'Webinar có thực sự miễn phí không? Có bán khóa học gì không?',
+    answer: 'Hoàn toàn miễn phí, không bán bất kỳ khóa học nào. Mục đích của webinar là giúp Ba/Mẹ hiểu rõ lộ trình THCS–THPT để đưa ra quyết định đúng cho con. Chúng tôi chia sẻ kinh nghiệm 15+ năm giáo dục, những sai lầm phổ biến phụ huynh hay mắc, và chiến lược cụ thể từng năm. Sau buổi webinar, Ba/Mẹ sẽ nhận tài liệu Roadmap bản đầy đủ hoàn toàn miễn phí.'
+  },
+  {
+    question: 'Con tôi mới lớp 4-5, tham gia webinar này có sớm quá không?',
+    answer: 'Không sớm chút nào — đây chính là thời điểm lý tưởng nhất. Phụ huynh lớp 4-5 cần biết: THCS bắt đầu từ lớp 6, nhưng việc chuẩn bị tốt phải bắt đầu từ 1-2 năm trước. Trong webinar, chúng tôi sẽ giải thích chi tiết Ba/Mẹ cần chuẩn bị gì cho con từ bây giờ: nền tảng Tiếng Anh, tư duy logic, kỹ năng tự học. Nhiều phụ huynh tham gia webinar khi con lớp 5 và nói rằng "giá mà biết sớm hơn 1 năm".'
+  },
+  {
+    question: 'Webinar diễn ra trên nền tảng nào? Tôi cần chuẩn bị gì?',
+    answer: 'Webinar diễn ra trên Zoom — Ba/Mẹ chỉ cần điện thoại hoặc laptop có internet. Sau khi đăng ký, chúng tôi sẽ gửi link Zoom qua email và nhắn nhở qua Zalo trước buổi 1 ngày và 30 phút. Buổi webinar có phần trình chiếu slide chuyên nghiệp, video minh họa thực tế tại trường, và phần Q&A 30 phút cuối. Ba/Mẹ nên chuẩn bị sẵn câu hỏi để tận dụng tối đa thời gian với chuyên gia.'
+  },
+  {
+    question: 'Nếu tôi bận không tham gia được, có bản ghi lại không?',
+    answer: 'Có, chúng tôi sẽ gửi bản ghi (recording) cho tất cả người đã đăng ký trong vòng 24h sau buổi webinar. Tuy nhiên, chúng tôi khuyến khích Ba/Mẹ tham gia trực tiếp để được hỏi đáp với chuyên gia — đây là phần giá trị nhất mà bản ghi không thể thay thế. Phần Q&A trực tiếp thường giải đáp được những thắc mắc rất cụ thể mà Ba/Mẹ không tìm thấy trên internet.'
+  },
+  {
+    question: 'Ai là người chia sẻ trong webinar?',
+    answer: 'Đội ngũ chuyên gia gồm: (1) Hiệu trưởng hoặc Phó Hiệu trưởng THCS Việt Anh — người trực tiếp xây dựng chương trình học, (2) Giáo viên chủ nhiệm có kinh nghiệm 10+ năm hướng dẫn học sinh vào THPT top, (3) Chuyên gia tư vấn hướng nghiệp — người đã giúp hàng trăm em chọn đúng con đường. Mỗi buổi webinar có ít nhất 2 chuyên gia để Ba/Mẹ nhận được góc nhìn đa chiều.'
+  }
+];
 ---
 
-<!doctype html>
-<html lang="vi">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>{pageTitle}</title>
-  <meta name="description" content={pageDescription} />
-  <meta name="keywords" content="webinar THCS, lộ trình THCS THPT, trường Việt Anh, định hướng giáo dục" />
-  <meta name="robots" content="index, follow" />
-  <link rel="canonical" href={canonicalUrl} />
-  <meta property="og:title" content={pageTitle} />
-  <meta property="og:description" content={pageDescription} />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content={canonicalUrl} />
-  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;500;600&display=swap&subset=vietnamese');</style>
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="webinar THCS, lộ trình THCS THPT, trường Việt Anh, định hướng giáo dục, IELTS lớp 6, coding AI"
+  schoolLevel="thcs"
+  funnelCode="webinar-thcs"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Webinar Miễn Phí: Lộ Trình THCS–THPT — Định Hướng Tương Lai Cho Con
+    </h1>
+    <p class="hero-subtitle">
+      90 phút chuyên sâu — Chiến lược IELTS, Coding & AI, vào THPT top từ lớp 6
+    </p>
+  </div>
 
-  <style is:inline>
-    :root{--b:#1F4E79;--o:#E8792B;--w:#fff;--f:'Open Sans',system-ui,sans-serif}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:var(--f);-webkit-font-smoothing:antialiased;color:#1C2A3A;min-height:100vh;display:flex;flex-direction:column;background:linear-gradient(135deg,#1F4E79 0%,#0F2A4A 100%);color:#fff}
-    .wrap{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:48px 20px;text-align:center}
-    .badge{display:inline-flex;padding:10px 24px;border-radius:24px;font-size:.875rem;font-weight:600;margin-bottom:32px;background:#E8792B;color:#fff}
-    h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.75rem,5vw,2.25rem);font-weight:800;line-height:1.15;margin-bottom:24px;color:#fff}
-    h1 .accent{color:var(--o)}
-    .subtitle{font-size:1.1rem;line-height:1.6;margin-bottom:40px;max-width:360px;margin-left:auto;margin-right:auto;opacity:.95;color:#E8D5C4}
-    .form-wrap{width:100%;max-width:380px;margin:0 auto;background:#fff;border-radius:24px;padding:24px;box-shadow:0 12px 40px rgba(0,0,0,.15)}
-    .trust-row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 24px;margin-top:32px;font-size:.75rem;opacity:.9;color:#E8D5C4}
-    .trust-row div::before{content:'✓ ';color:#22C55E}
-    .stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px;max-width:380px;margin-left:auto;margin-right:auto}
-    .stat-box{background:rgba(0,0,0,.04);border-radius:16px;padding:16px 8px;font-size:.875rem;color:#555}
-    .footer-bar{text-align:center;padding:24px;font-size:.75rem;opacity:.5}
-    @media(max-width:480px){.wrap{padding:32px 16px}h1{font-size:1.5rem}.subtitle{font-size:1rem}.trust-row{font-size:.7rem}}
-  </style>
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
 
-  <script is:inline>
-    window.dataLayer=window.dataLayer||[];
-    window.dataLayer.push({event:'page_view',page_title:'Webinar Lộ Trình THCS–THPT – Định Hướng Tương Lai Cho Con',school_level:'thcs',funnel_code:'webinar-thcs'});
-  </script>
-</head>
-<body>
-  <div class="wrap">
-    <div class="badge">WEBINAR MIỄN PHÍ &bull; CHỈ 50 SLOT</div>
-    <h1>Webinar Miễn Phí: Lộ Trình THCS–THPT<br><span class="accent">Quyết Định Hôm Nay, Xác Định Tương Lai Của Con</span></h1>
-    <p class="subtitle">90 phút chuyên sâu từ các chuyên gia giáo dục của Việt Anh: Cách chọn lộ trình lớp 6 sao cho con vào top THPT, chiến lược STEM & song ngữ từ THCS, chuẩn bị du học từ sớm, và cơ hội học bổng. Tải tài liệu lộ trình miễn phí ngay sau webinar.</p>
-    <div class="form-wrap">
-      <LeadFormTwoStepEmailFirst
-        formId="squeeze-webinar-thcs"
-        funnelCode="webinar-thcs"
-        schoolLevel="thcs"
-        submitText="Đăng ký ngay"
-        successMessage="Cảm ơn! Tư vấn viên sẽ liên hệ trong 5 phút."
-      />
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section featured-image-section">
+      <img src="https://media.truongvietanh.com/images/thuyet-trinh-12.webp" alt="Chuyên gia Trường Việt Anh chia sẻ trong buổi webinar về lộ trình THCS-THPT" class="featured-image" width="800" height="450" loading="lazy" />
+      <p class="featured-caption">Chuyên gia giáo dục Trường Việt Anh chia sẻ chiến lược THCS-THPT trong các buổi webinar chuyên sâu dành cho phụ huynh.</p>
     </div>
-    <div class="trust-row">
-      <div>Q&A trực tiếp: Trả lời mọi thắc mắc</div>
-      <div>Chuyên gia 15+ năm kinh nghiệm</div>
-      <div>Tài liệu roadmap THCS–THPT bản đầy đủ</div>
+
+    <div class="content-section">
+      <h2>Ba/Mẹ sẽ học được gì trong 90 phút?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Lộ trình THCS–THPT: Từng bước cụ thể từ lớp 6 đến lớp 12</h3>
+          <p>Ba/Mẹ sẽ nhận được bản đồ chi tiết: Lớp 6-7 cần xây nền tảng gì, lớp 8-9 cần chuẩn bị gì cho tuyển sinh THPT, và lớp 10-12 cần gì để sẵn sàng đại học hoặc du học. Không phải lý thuyết chung chung — mà là kế hoạch cụ thể theo từng học kỳ, với mục tiêu rõ ràng cho mỗi giai đoạn. Chuyên gia sẽ chỉ ra những sai lầm phổ biến mà 80% phụ huynh mắc phải khi không có lộ trình.</p>
+        </div>
+        <div class="content-card">
+          <h3>Chiến lược IELTS từ THCS: Khi nào bắt đầu là đúng?</h3>
+          <p>Nhiều phụ huynh nghĩ IELTS là chuyện của lớp 10-11 — nhưng thực tế, nền tảng IELTS phải được xây từ lớp 6. Trong webinar, chuyên gia sẽ giải thích: Lớp 6-7 tập trung kỹ năng gì (Listening, Speaking tự nhiên), lớp 8-9 chuyển sang luyện thi chính thức ra sao, và mục tiêu IELTS 5.5-6.5 khi hết lớp 9 có thực tế không. Ba/Mẹ sẽ hiểu tại sao em có nền tảng IELTS từ THCS sẽ "đi nhanh hơn" ở THPT.</p>
+        </div>
+        <div class="content-card">
+          <h3>Coding & AI từ lớp 6: Không phải "đào tạo lập trình viên"</h3>
+          <p>Coding & AI không phải để con trở thành "hacker nhí" — mà là để con hiểu công nghệ, biết tư duy logic, và có lợi thế cạnh tranh. Chuyên gia sẽ trình bày: Lớp 6-7 học Robotics vui như thế nào, lớp 8-9 chuyển sang Python và AI Project ra sao, và tại sao các trường THPT top đang ưu tiên tuyển em có nền tảng STEM. Ba/Mẹ sẽ thấy ví dụ thực tế từ học sinh Việt Anh đã làm được.</p>
+        </div>
+        <div class="content-card">
+          <h3>Chiến lược vào THPT top: Không chỉ dựa vào điểm số</h3>
+          <p>THPT top như Trần Đại Nghĩa, RSHQ, Lê Quý Đôn... không chỉ xét điểm — họ xét "con người toàn diện". Chuyên gia sẽ giải thích: Hồ sơ tuyển sinh THPT top cần gì ngoài điểm số, làm sao để con có portfolio ấn tượng (chứng chỉ IELTS, giải thưởng STEM, hoạt động ngoại khóa), và kế hoạch chuẩn bị từ lớp 8 để lớp 9 con tự tin nộp hồ sơ.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Tài liệu Roadmap THCS–THPT bản đầy đủ — Tải miễn phí</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        Sau webinar, tất cả Ba/Mẹ đã đăng ký sẽ nhận bản PDF <strong>"Roadmap THCS–THPT: Kế hoạch 7 năm cho con"</strong> — bao gồm checklist từng học kỳ, mục tiêu IELTS theo năm, danh sách hoạt động ngoại khóa nên tham gia, và timeline chuẩn bị tuyển sinh THPT. Đây là tài liệu được đội ngũ giáo dục Việt Anh biên soạn từ kinh nghiệm 15+ năm, không bán ở đâu — chỉ dành cho phụ huynh tham gia webinar.
+      </p>
     </div>
   </div>
-  <div class="footer-bar">Bảo mật thông tin &bull; Tư vấn viên sẽ liên hệ trong 5 phút</div>
 
-</body>
-</html>
+  <div slot="form">
+    <h2 class="form-heading">Đăng ký webinar miễn phí — Chỉ 50 slot mỗi buổi</h2>
+    <p class="form-subheading">90 phút có thể thay đổi cách Ba/Mẹ nhìn nhận về lộ trình học tập của con. Đăng ký ngay để nhận link Zoom và tài liệu Roadmap miễn phí.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="webinar-thcs-form"
+      funnelCode="webinar-thcs"
+      schoolLevel="thcs"
+      submitText="Đăng ký webinar miễn phí"
+      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ gửi link Zoom qua email và nhắn nhở qua Zalo trước buổi webinar."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi phổ biến về webinar" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  .featured-image-section { text-align: center; margin-bottom: 3rem; }
+  .featured-image { width: 100%; max-width: 800px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); object-fit: cover; aspect-ratio: 16/9; }
+  .featured-caption { font-size: 0.9rem; color: #777; margin-top: 1rem; font-style: italic; max-width: 700px; margin-left: auto; margin-right: auto; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
+</style>

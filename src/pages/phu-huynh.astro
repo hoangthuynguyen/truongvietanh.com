@@ -2,63 +2,573 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
----
-<BaseLayout title="Góc Phụ Huynh | Trường Liên Cấp Việt Anh" description="Cổng thông tin nội bộ và hướng dẫn đồng hành cùng con dành riêng cho Phụ huynh.">
-  <div class="cf-layout page-wrapper">
-    <HeaderBase />
-    
-    <section class="page-hero">
-      <div class="cf-container text-center">
-        <h1 class="page-title">Góc Phụ Huynh</h1>
-        <p class="page-desc">Chuyên trang đồng hành, chia sẻ và kết nối sức mạnh gia đình cùng Nhà trường.</p>
-      </div>
-    </section>
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 
-    <section class="page-content">
-      <div class="cf-container max-w-900 text-center">
-        <h2>Tiện ích Phụ Huynh</h2>
-        
-        <div class="portal-grid">
-           <a href="#" class="portal-card">
-              <h3>Thực Đơn</h3>
-              <p>Chi tiết dinh dưỡng theo tuần.</p>
-           </a>
-           <a href="#" class="portal-card">
-              <h3>Thời Khóa Biểu</h3>
-              <p>Lịch học & hoạt động ngoại khóa.</p>
-           </a>
-           <a href="#" class="portal-card">
-              <h3>Sổ Liên Lạc Điện Tử</h3>
-              <p>Tra cứu kết quả và nhận xét.</p>
-           </a>
-           <a href="#" class="portal-card">
-              <h3>Đưa Rước School Bus</h3>
-              <p>Lộ trình và thông tin tài xế.</p>
-           </a>
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường Việt Anh",
+    "alternateName": "Trường Liên Cấp Việt Anh",
+    "url": "https://truongvietanh.com",
+    "logo": "https://truongvietanh.com/logo-crest-80.webp",
+    "foundingDate": "2011",
+    "description": "Hệ thống giáo dục liên cấp song ngữ từ Mầm non đến THPT tại TP.HCM, Long An, Kiên Giang. Kênh thông tin dành riêng cho phụ huynh.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "ratingCount": "300"
+    },
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": 500 },
+    "areaServed": ["TP. Hồ Chí Minh", "Long An", "Kiên Giang"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Phụ huynh theo dõi kết quả học tập của con bằng cách nào?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Trường Việt Anh cung cấp ứng dụng sổ liên lạc điện tử, cập nhật điểm số, nhận xét giáo viên và hình ảnh hoạt động của con hàng ngày. Phụ huynh nhận thông báo qua app và Zalo." }
+      },
+      {
+        "@type": "Question",
+        "name": "Lịch họp phụ huynh diễn ra bao lâu một lần?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Họp phụ huynh chính thức diễn ra 4 lần/năm (đầu năm, giữa HK1, giữa HK2, cuối năm). Ngoài ra, phụ huynh có thể đặt lịch gặp giáo viên bất kỳ lúc nào qua app." }
+      },
+      {
+        "@type": "Question",
+        "name": "Xe đưa rước hoạt động như thế nào?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Hệ thống xe đưa rước phủ khắp các quận tại TP.HCM, có camera giám sát và GPS thời gian thực. Phụ huynh theo dõi vị trí xe qua ứng dụng." }
+      },
+      {
+        "@type": "Question",
+        "name": "Trường có chương trình bán trú và ăn trưa không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Có. Tất cả cơ sở đều có chương trình bán trú với bữa trưa dinh dưỡng do chuyên gia thiết kế, bữa xế chiều và phòng ngủ trưa riêng cho mỗi cấp học." }
+      },
+      {
+        "@type": "Question",
+        "name": "Phụ huynh có thể tham gia hoạt động nào tại trường?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Phụ huynh được mời tham gia chương trình Phụ huynh Đồng hành, hội thảo nuôi dạy con, ngày hội gia đình, tình nguyện viên sự kiện và các buổi chia sẻ nghề nghiệp với học sinh." }
+      },
+      {
+        "@type": "Question",
+        "name": "Làm sao liên hệ tư vấn viên của trường?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Phụ huynh gọi hotline 0916 961 409 hoặc đăng ký trực tuyến tại trang web. Đội ngũ tư vấn sẽ phản hồi trong vòng 24 giờ." }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Phụ huynh", "item": "https://truongvietanh.com/phu-huynh" }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Góc Phụ Huynh Trường Việt Anh — Đồng Hành Cùng Con Phát Triển"
+  description="Kênh thông tin dành riêng cho phụ huynh Trường Việt Anh: sổ liên lạc điện tử, lịch họp, xe đưa rước, chương trình phụ huynh đồng hành, testimonial. 9 cơ sở tại TP.HCM, Long An, Kiên Giang."
+  canonical="https://truongvietanh.com/phu-huynh"
+  ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase />
+
+    <!-- ====== HERO WITH FORM ====== -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">/</span>
+            <span>Phụ huynh</span>
+          </nav>
+
+          <h1 class="gi-h1">Góc Phụ Huynh Trường Việt Anh</h1>
+          <p class="gi-subtitle">Kênh thông tin dành riêng cho phụ huynh — đồng hành cùng con phát triển toàn diện</p>
+
+          <div class="gi-hero-rating">
+            <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-rating-text">4.9/5 (300+ đánh giá từ phụ huynh)</span>
+          </div>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>15+</strong> năm</div>
+            <div class="gi-badge"><strong>9</strong> cơ sở</div>
+            <div class="gi-badge"><strong>5.000+</strong> gia đình</div>
+            <div class="gi-badge"><strong>24h</strong> phản hồi</div>
+          </div>
+        </div>
+
+        <div class="gi-hero-right">
+          <div class="gi-form-card">
+            <p class="gi-form-heading">Đăng ký nhận tư vấn miễn phí</p>
+            <LeadFormTwoStepEmailFirst
+              formId="phu-huynh-form"
+              funnelCode="phu-huynh-pillar"
+              schoolLevel="lien-cap"
+            />
+          </div>
         </div>
       </div>
     </section>
-    
+
+    <!-- ====== TOC SIDEBAR + CONTENT ====== -->
+    <div class="gi-container gi-body">
+      <!-- Sticky TOC sidebar -->
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Mục lục</p>
+        <ol class="gi-toc-list">
+          <li><a href="#ho-tro">Phụ huynh được hỗ trợ gì?</a></li>
+          <li><a href="#so-lien-lac">Sổ liên lạc điện tử</a></li>
+          <li><a href="#lich-hop">Lịch họp & sự kiện</a></li>
+          <li><a href="#dong-hanh">Phụ huynh đồng hành</a></li>
+          <li><a href="#dich-vu">Xe đưa rước & dịch vụ</a></li>
+          <li><a href="#danh-gia-ph">Phụ huynh nói gì?</a></li>
+          <li><a href="#faq-ph">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="#phu-huynh-form-phu-huynh-pillar" class="gi-toc-cta">Đăng ký tư vấn</a>
+      </nav>
+
+      <!-- Main content -->
+      <article class="gi-main">
+
+        <!-- Section 1: Phụ huynh được hỗ trợ gì -->
+        <section id="ho-tro" class="gi-section">
+          <h2>Phụ huynh được hỗ trợ những gì tại Trường Việt Anh?</h2>
+          <p>Trường Việt Anh tin rằng giáo dục hiệu quả nhất khi nhà trường và gia đình cùng đồng hành. Vì vậy, trường xây dựng hệ sinh thái hỗ trợ phụ huynh toàn diện — từ theo dõi học tập, giao tiếp với giáo viên, đến tham gia trực tiếp vào hoạt động giáo dục của con.</p>
+          <p>Với hơn <strong>15 năm kinh nghiệm</strong> phục vụ hơn 5.000 gia đình mỗi năm tại 9 cơ sở trên 3 tỉnh thành (TP.HCM, Long An, Kiên Giang), Trường Việt Anh hiểu rằng mỗi phụ huynh cần thông tin minh bạch, kênh liên lạc nhanh chóng, và sự an tâm khi gửi con đến trường mỗi ngày.</p>
+
+          <div class="gi-values-grid">
+            <h3>6 dịch vụ hỗ trợ phụ huynh</h3>
+            <div class="gi-values-items">
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#128241;</span>
+                <strong>Sổ liên lạc điện tử</strong>
+                <p>Cập nhật điểm số, nhận xét và hình ảnh hàng ngày qua ứng dụng</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#128197;</span>
+                <strong>Lịch họp phụ huynh</strong>
+                <p>4 buổi họp chính/năm + đặt lịch gặp giáo viên linh hoạt</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#128663;</span>
+                <strong>Xe đưa rước</strong>
+                <p>Phủ khắp TP.HCM, camera giám sát và GPS thời gian thực</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#127860;</span>
+                <strong>Dinh dưỡng học đường</strong>
+                <p>Thực đơn hàng tuần do chuyên gia dinh dưỡng thiết kế</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#129309;</span>
+                <strong>Phụ huynh đồng hành</strong>
+                <p>Hội thảo nuôi dạy con, ngày hội gia đình, chia sẻ nghề nghiệp</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#128222;</span>
+                <strong>Hotline hỗ trợ</strong>
+                <p>Đường dây nóng <a href="tel:0916961409">0916 961 409</a> — phản hồi trong 24 giờ</p>
+              </div>
+            </div>
+          </div>
+
+          <img src="https://media.truongvietanh.com/images/phu-huynh-06.webp" alt="Phụ huynh và học sinh tại Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <p>Tìm hiểu thêm về <a href="/tuyen-sinh">quy trình tuyển sinh</a>, <a href="/hoc-phi">bảng học phí chi tiết</a>, hoặc <a href="/gioi-thieu">triết lý giáo dục của Trường Việt Anh</a> để có cái nhìn toàn diện trước khi đăng ký cho con.</p>
+
+          <div class="gi-evidence-bar">
+            <div class="gi-evidence-item">
+              <strong>5.000+</strong>
+              <span>Gia đình tin tưởng</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>9</strong>
+              <span>Cơ sở</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>4.9/5</strong>
+              <span>Sao Google</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>24h</strong>
+              <span>Phản hồi</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: Sổ liên lạc điện tử -->
+        <section id="so-lien-lac" class="gi-section">
+          <h2>Ứng dụng theo dõi học tập và sổ liên lạc điện tử hoạt động như thế nào?</h2>
+          <p>Trường Việt Anh sử dụng hệ thống sổ liên lạc điện tử hiện đại, giúp phụ huynh nắm bắt tình hình học tập và sinh hoạt của con <strong>mọi lúc, mọi nơi</strong> — ngay trên điện thoại. Không cần chờ đến buổi họp phụ huynh, ba mẹ vẫn biết con hôm nay học gì, ăn gì, và được giáo viên nhận xét ra sao.</p>
+
+          <p>Hệ thống sổ liên lạc điện tử bao gồm các tính năng chính:</p>
+
+          <div class="gi-comparison-box">
+            <h3>Tính năng sổ liên lạc điện tử Trường Việt Anh</h3>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Tính năng</th>
+                    <th>Chi tiết</th>
+                    <th>Tần suất cập nhật</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Điểm số & bảng điểm</td>
+                    <td>Tất cả bài kiểm tra, bài thi, điểm tổng kết theo môn</td>
+                    <td>Sau mỗi bài kiểm tra</td>
+                  </tr>
+                  <tr>
+                    <td>Nhận xét giáo viên</td>
+                    <td>Nhận xét cá nhân từ giáo viên chủ nhiệm và bộ môn</td>
+                    <td>Hàng tuần</td>
+                  </tr>
+                  <tr>
+                    <td>Hình ảnh hoạt động</td>
+                    <td>Ảnh và video con trong lớp, ngoại khoá, sự kiện</td>
+                    <td>Hàng ngày</td>
+                  </tr>
+                  <tr>
+                    <td>Thực đơn dinh dưỡng</td>
+                    <td>Menu bữa trưa, bữa xế, thông tin dinh dưỡng</td>
+                    <td>Hàng tuần</td>
+                  </tr>
+                  <tr>
+                    <td>Thời khoá biểu</td>
+                    <td>Lịch học chính khoá, ngoại khoá, sự kiện đặc biệt</td>
+                    <td>Theo học kỳ</td>
+                  </tr>
+                  <tr>
+                    <td>Tin nhắn hai chiều</td>
+                    <td>Nhắn tin trực tiếp với giáo viên chủ nhiệm qua app</td>
+                    <td>Bất kỳ lúc nào</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>Ngoài ứng dụng chính, Trường Việt Anh còn gửi thông báo qua <strong>Zalo Official Account</strong> — đảm bảo phụ huynh không bỏ lỡ bất kỳ thông tin quan trọng nào dù không cài app. Phụ huynh cũng nhận được <strong>báo cáo tổng hợp cuối tuần</strong> qua email, bao gồm tóm tắt điểm số, nhận xét và lịch tuần tới.</p>
+
+          <p>Hệ thống này giúp phụ huynh chủ động hơn trong việc phối hợp với giáo viên, phát hiện sớm các vấn đề học tập, và ghi nhận sự tiến bộ của con theo thời gian — tất cả chỉ bằng vài thao tác trên điện thoại.</p>
+        </section>
+
+        <!-- Section 3: Lịch họp phụ huynh -->
+        <section id="lich-hop" class="gi-section">
+          <h2>Lịch họp phụ huynh và sự kiện trong năm diễn ra như thế nào?</h2>
+          <p>Trường Việt Anh tổ chức <strong>4 buổi họp phụ huynh chính thức</strong> mỗi năm học, cùng hàng chục sự kiện mở để phụ huynh trực tiếp trải nghiệm môi trường học tập của con. Đây không chỉ là dịp để nghe báo cáo kết quả, mà còn là cơ hội để phụ huynh đóng góp ý kiến, đặt câu hỏi và xây dựng mối quan hệ tin tưởng với đội ngũ giáo viên.</p>
+
+          <div class="gi-roadmap">
+            <h3>Lịch trình sự kiện phụ huynh trong năm học</h3>
+            <div class="gi-roadmap-grid">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">T9</div>
+                <strong>Họp đầu năm học</strong>
+                <p>Giới thiệu giáo viên, chương trình học, mục tiêu năm. Phụ huynh nhận tài liệu và lịch hoạt động cả năm. Gặp gỡ ban giám hiệu.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">T11</div>
+                <strong>Open Day & Ngày hội gia đình</strong>
+                <p>Phụ huynh tham quan lớp, xem con học thực tế. Các hoạt động vui chơi, triển lãm dự án học sinh, biểu diễn văn nghệ.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">T1</div>
+                <strong>Họp giữa học kỳ 1</strong>
+                <p>Đánh giá kết quả nửa năm đầu. Trao đổi 1-1 với giáo viên chủ nhiệm. Tư vấn cá nhân cho từng học sinh.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">T3</div>
+                <strong>Hội thảo nuôi dạy con</strong>
+                <p>Chuyên gia tâm lý và giáo dục chia sẻ kiến thức: kỷ luật tích cực, quản lý thời gian cho con, sức khoẻ tinh thần tuổi teen.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">T4</div>
+                <strong>Họp giữa học kỳ 2</strong>
+                <p>Báo cáo tiến độ, chuẩn bị cuối năm. Trao đổi về kế hoạch hè và định hướng năm học tiếp theo.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">T6</div>
+                <strong>Lễ tổng kết & phát thưởng</strong>
+                <p>Vinh danh học sinh xuất sắc. Trao bằng khen và phần thưởng. Chương trình văn nghệ do học sinh trình diễn.</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Ngoài các sự kiện chính, phụ huynh có thể <strong>đặt lịch gặp giáo viên chủ nhiệm bất kỳ lúc nào</strong> thông qua ứng dụng sổ liên lạc điện tử. Trường cam kết sắp xếp buổi gặp trong vòng 48 giờ kể từ khi nhận yêu cầu.</p>
+
+          <p>Các sự kiện lớn như Trung Thu, Noel, Tết Nguyên Đán, Ngày Nhà Giáo 20/11 cũng là dịp để gia đình cùng con tham gia các hoạt động vui chơi, gắn kết tình cảm tại khuôn viên trường.</p>
+        </section>
+
+        <!-- Section 4: Phụ huynh đồng hành -->
+        <section id="dong-hanh" class="gi-section">
+          <h2>Chương trình "Phụ huynh đồng hành" là gì?</h2>
+          <p>Chương trình <strong>"Phụ huynh Đồng hành"</strong> là sáng kiến độc đáo của Trường Việt Anh nhằm biến phụ huynh từ người quan sát thành người cùng tham gia vào hành trình giáo dục của con. Chương trình được triển khai từ năm 2018 và đã có hơn <strong>1.200 phụ huynh</strong> tham gia tích cực.</p>
+
+          <p>Tại Trường Việt Anh, chúng tôi tin rằng khi phụ huynh hiểu và hỗ trợ đúng cách, con sẽ tiến bộ nhanh hơn gấp nhiều lần. Chương trình bao gồm 4 trụ cột chính:</p>
+
+          <div class="gi-leader-grid">
+            <div class="gi-leader-card">
+              <div class="gi-leader-number">01</div>
+              <strong>Hội thảo chuyên đề nuôi dạy con</strong>
+              <p>Mỗi quý, trường mời chuyên gia tâm lý, giáo dục và sức khoẻ chia sẻ về các chủ đề thiết thực: kỷ luật tích cực, giúp con vượt qua áp lực thi cử, xây dựng thói quen đọc sách, và dinh dưỡng cho trẻ đang tuổi lớn. Mỗi buổi kéo dài 90 phút với phần hỏi đáp trực tiếp.</p>
+            </div>
+            <div class="gi-leader-card">
+              <div class="gi-leader-number">02</div>
+              <strong>Chia sẻ nghề nghiệp với học sinh</strong>
+              <p>Phụ huynh có chuyên môn được mời đến trường chia sẻ về nghề nghiệp của mình — bác sĩ, kỹ sư, nghệ sĩ, doanh nhân. Học sinh được tiếp xúc với thế giới thực và khám phá đam mê sớm hơn. Mỗi năm có hơn 20 buổi chia sẻ như vậy.</p>
+            </div>
+            <div class="gi-leader-card">
+              <div class="gi-leader-number">03</div>
+              <strong>Tình nguyện viên sự kiện</strong>
+              <p>Phụ huynh có thể đăng ký làm tình nguyện viên tại các sự kiện lớn: Open Day, Ngày hội thể thao, Lễ tốt nghiệp, Hội chợ từ thiện. Đây là cơ hội tuyệt vời để ba mẹ hiểu thêm về con trong môi trường học đường và kết nối với các phụ huynh khác.</p>
+            </div>
+            <div class="gi-leader-card">
+              <div class="gi-leader-number">04</div>
+              <strong>Nhóm phụ huynh theo cấp học</strong>
+              <p>Trường tổ chức các nhóm phụ huynh theo cấp học (Mầm non, Tiểu học, THCS, THPT) trên Zalo để phụ huynh chia sẻ kinh nghiệm, hỗ trợ lẫn nhau. Ban đại diện phụ huynh mỗi khối làm cầu nối giữa gia đình và nhà trường.</p>
+            </div>
+          </div>
+
+          <img src="https://media.truongvietanh.com/images/da-ngoai-10.webp" alt="Hoạt động dã ngoại của học sinh Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <p>Kết quả khảo sát nội bộ năm 2025 cho thấy: <strong>94% phụ huynh tham gia chương trình Đồng hành</strong> cho biết mối quan hệ giữa họ và con cải thiện rõ rệt, đặc biệt trong việc giao tiếp về chuyện học hành và định hướng tương lai. Xem thêm <a href="/thanh-tich">thành tích nổi bật của học sinh</a> qua các năm.</p>
+
+          <p>Phụ huynh muốn tham gia chỉ cần đăng ký qua ứng dụng sổ liên lạc hoặc liên hệ giáo viên chủ nhiệm. Chương trình hoàn toàn miễn phí và không giới hạn số lần tham gia.</p>
+        </section>
+
+        <!-- Section 5: Xe đưa rước và dịch vụ hỗ trợ -->
+        <section id="dich-vu" class="gi-section">
+          <h2>Xe đưa rước và các dịch vụ hỗ trợ phụ huynh có gì nổi bật?</h2>
+          <p>Trường Việt Anh cung cấp hệ thống dịch vụ hỗ trợ toàn diện để phụ huynh yên tâm gửi con — từ xe đưa rước an toàn, bữa ăn dinh dưỡng, đến chương trình chăm sóc sau giờ học. Tất cả được thiết kế để giảm áp lực cho gia đình và tối ưu thời gian cho cả ba mẹ lẫn con.</p>
+
+          <div class="gi-comparison-box">
+            <h3>Chi tiết dịch vụ hỗ trợ phụ huynh</h3>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Dịch vụ</th>
+                    <th>Chi tiết</th>
+                    <th>Phạm vi</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Xe đưa rước</td>
+                    <td>Xe 16-29 chỗ, camera giám sát, GPS, có bảo mẫu trên xe (Mầm non + Tiểu học)</td>
+                    <td>Phủ khắp TP.HCM</td>
+                  </tr>
+                  <tr>
+                    <td>Bán trú toàn thời gian</td>
+                    <td>Bữa trưa + bữa xế + phòng ngủ trưa riêng biệt. Thực đơn do chuyên gia dinh dưỡng thiết kế</td>
+                    <td>Tất cả 9 cơ sở</td>
+                  </tr>
+                  <tr>
+                    <td>Chăm sóc sau giờ học</td>
+                    <td>Tự học có giám sát, câu lạc bộ ngoại khoá, trông trẻ đến 17h30</td>
+                    <td>Tất cả 9 cơ sở</td>
+                  </tr>
+                  <tr>
+                    <td>Ngoại khoá tích hợp</td>
+                    <td>Bơi lội, bóng rổ, võ thuật, âm nhạc, robotics, hội hoạ — ngay tại trường</td>
+                    <td>Tuỳ cơ sở</td>
+                  </tr>
+                  <tr>
+                    <td>Y tế học đường</td>
+                    <td>Phòng y tế có nhân viên y tế trực, kiểm tra sức khoẻ định kỳ 2 lần/năm</td>
+                    <td>Tất cả 9 cơ sở</td>
+                  </tr>
+                  <tr>
+                    <td>Tư vấn tâm lý</td>
+                    <td>Chuyên viên tâm lý hỗ trợ học sinh gặp khó khăn về học tập, bạn bè, gia đình</td>
+                    <td>Cơ sở chính</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>Đặc biệt, hệ thống xe đưa rước của Trường Việt Anh được nhiều phụ huynh đánh giá cao vì <strong>tính đúng giờ và an toàn tuyệt đối</strong>. Phụ huynh có thể theo dõi vị trí xe qua ứng dụng, nhận thông báo khi xe sắp đến điểm đón và khi con đã đến trường an toàn.</p>
+
+          <p>Về dinh dưỡng, thực đơn hàng tuần được công bố trên ứng dụng để phụ huynh nắm rõ. Trường lưu ý các trường hợp dị ứng thực phẩm và có phương án thay thế phù hợp. Nhà bếp đạt tiêu chuẩn an toàn vệ sinh thực phẩm và được kiểm tra định kỳ bởi cơ quan chức năng.</p>
+
+          <p>Với các gia đình cần con ở lại trường sau 16h00, chương trình <strong>chăm sóc sau giờ học</strong> (After-school Care) là giải pháp lý tưởng: con vừa được tự học có giám sát, vừa tham gia các hoạt động giải trí lành mạnh cho đến khi ba mẹ tan làm. Tìm hiểu <a href="/co-so">hệ thống 9 cơ sở</a> và <a href="/cap-hoc">chương trình từng cấp học</a> để chọn cơ sở phù hợp nhất.</p>
+        </section>
+
+        <!-- Section 6: Phụ huynh nói gì -->
+        <section id="danh-gia-ph" class="gi-section">
+          <h2>Phụ huynh nói gì về Trường Việt Anh?</h2>
+          <p>Hơn <strong>5.000 gia đình</strong> đang gửi con tại Trường Việt Anh. Dưới đây là những chia sẻ thực tế từ các phụ huynh đã đồng hành cùng trường qua nhiều năm.</p>
+
+          <div class="gi-aggregate-rating">
+            <span class="gi-big-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-big-score">4.9/5</span>
+            <span class="gi-review-count">300+ đánh giá trên Google</span>
+          </div>
+
+          <div class="gi-testimonials">
+            <blockquote class="gi-testimonial">
+              <p>"Tôi rất hài lòng với ứng dụng sổ liên lạc. Hàng ngày tôi đều biết con ăn gì, học gì, và cô giáo nhận xét thế nào. Cảm giác như mình có mặt ở trường cùng con vậy. Đây là điều tôi chưa thấy ở bất kỳ trường nào trước đây."</p>
+              <cite>— Chị Trần Thị Hồng Đào, phụ huynh lớp 2, cơ sở Tân Phú</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Chương trình Phụ huynh Đồng hành thay đổi cách tôi nhìn nhận việc giáo dục con. Sau buổi hội thảo về kỷ luật tích cực, tôi đã ngừng la mắng và học cách lắng nghe con hơn. Cả gia đình đều hạnh phúc hơn."</p>
+              <cite>— Anh Nguyễn Hoàng Minh, phụ huynh lớp 7, cơ sở Bình Tân</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Xe đưa rước rất đúng giờ và an toàn. Tôi theo dõi GPS trên app nên hoàn toàn yên tâm. Con gái tôi thích đi xe bus lắm vì được chơi với bạn bè trên đường đi. Tài xế và bảo mẫu đều rất thân thiện."</p>
+              <cite>— Chị Lê Thị Phương Thảo, phụ huynh mầm non, cơ sở Gò Vấp</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Con trai tôi từ một đứa trẻ nhút nhát, sau 2 năm ở Việt Anh đã tự tin thuyết trình bằng tiếng Anh trước cả lớp. Cô giáo rất tận tâm, luôn nhắn tin cập nhật tình hình con hàng tuần. Tôi cảm thấy mình chọn đúng trường."</p>
+              <cite>— Anh Phạm Quốc Hùng, phụ huynh lớp 5, cơ sở Long An</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Là phụ huynh bận rộn, tôi đánh giá cao dịch vụ bán trú và chăm sóc sau giờ học. Con được ăn uống đầy đủ, ngủ trưa ngay tại trường, chiều tham gia câu lạc bộ bóng rổ. Tôi tan làm lúc 17h30 vẫn kịp đón con — không lo lắng gì cả."</p>
+              <cite>— Chị Võ Ngọc Trâm, phụ huynh lớp 3, cơ sở Bình Chánh</cite>
+            </blockquote>
+          </div>
+        </section>
+
+        <!-- Section 7: FAQ -->
+        <section id="faq-ph" class="gi-section">
+          <h2>Câu hỏi thường gặp từ phụ huynh Trường Việt Anh</h2>
+          <p>Tổng hợp những thắc mắc phổ biến nhất mà phụ huynh thường hỏi khi tìm hiểu hoặc đang gửi con tại Trường Việt Anh.</p>
+
+          <div class="gi-faq-list">
+            <details class="gi-faq-item" open>
+              <summary>Phụ huynh theo dõi kết quả học tập của con bằng cách nào?</summary>
+              <div class="gi-faq-answer">
+                <p>Trường Việt Anh cung cấp ứng dụng sổ liên lạc điện tử, cập nhật điểm số, nhận xét giáo viên và hình ảnh hoạt động của con hàng ngày. Ngoài ra, phụ huynh nhận báo cáo tổng hợp cuối tuần qua email và thông báo qua Zalo Official Account. Phụ huynh cũng có thể nhắn tin trực tiếp với giáo viên chủ nhiệm qua app bất kỳ lúc nào.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Lịch họp phụ huynh diễn ra bao lâu một lần?</summary>
+              <div class="gi-faq-answer">
+                <p>Họp phụ huynh chính thức diễn ra 4 lần mỗi năm học: đầu năm (tháng 9), giữa học kỳ 1 (tháng 1), giữa học kỳ 2 (tháng 4) và tổng kết cuối năm (tháng 6). Ngoài ra, phụ huynh có thể đặt lịch gặp riêng giáo viên chủ nhiệm bất kỳ lúc nào thông qua ứng dụng. Trường cam kết sắp xếp buổi gặp trong 48 giờ.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Xe đưa rước có an toàn không? Phạm vi phục vụ đến đâu?</summary>
+              <div class="gi-faq-answer">
+                <p>Hệ thống xe đưa rước phủ khắp các quận tại TP.HCM, trang bị camera giám sát và GPS thời gian thực. Xe có bảo mẫu đi kèm cho cấp Mầm non và Tiểu học. Phụ huynh theo dõi vị trí xe trên ứng dụng, nhận thông báo khi xe sắp đến điểm đón và khi con đã đến trường an toàn. Tất cả tài xế đều có bằng lái chuyên nghiệp và kinh nghiệm trên 5 năm.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường có chương trình bán trú và bữa ăn trưa không?</summary>
+              <div class="gi-faq-answer">
+                <p>Có. Tất cả 9 cơ sở đều có chương trình bán trú với bữa trưa dinh dưỡng do chuyên gia thiết kế, bữa xế chiều và phòng ngủ trưa riêng cho mỗi cấp học. Thực đơn được công bố hàng tuần trên ứng dụng. Trường lưu ý các trường hợp dị ứng thực phẩm và có phương án thay thế. Nhà bếp đạt tiêu chuẩn an toàn vệ sinh thực phẩm.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Phụ huynh có thể tham gia những hoạt động gì tại trường?</summary>
+              <div class="gi-faq-answer">
+                <p>Phụ huynh được mời tham gia chương trình "Phụ huynh Đồng hành" bao gồm: hội thảo nuôi dạy con (mỗi quý), chia sẻ nghề nghiệp với học sinh (20+ buổi/năm), tình nguyện viên sự kiện (Open Day, hội chợ, lễ tốt nghiệp), và nhóm phụ huynh theo cấp học trên Zalo. Tất cả đều miễn phí và không giới hạn số lần tham gia.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Làm sao liên hệ tư vấn viên hoặc đăng ký tham quan trường?</summary>
+              <div class="gi-faq-answer">
+                <p>Phụ huynh có thể đăng ký trực tuyến ngay tại trang này (form phía trên) hoặc gọi hotline <a href="tel:0916961409"><strong>0916 961 409</strong></a> để được tư vấn và sắp xếp lịch tham quan. Đội ngũ tư vấn sẽ phản hồi trong vòng 24 giờ. Buổi tham quan hoàn toàn miễn phí và không ràng buộc.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <!-- ====== BOTTOM CTA ====== -->
+    <section class="gi-bottom-cta">
+      <div class="gi-container gi-bottom-cta-inner">
+        <div class="gi-bottom-cta-text">
+          <h2>Đăng ký nhận tư vấn từ đội ngũ Trường Việt Anh</h2>
+          <p>Quý phụ huynh muốn tìm hiểu thêm về chương trình học, dịch vụ hỗ trợ hoặc sắp xếp lịch tham quan trường? Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ. Hoặc gọi ngay <a href="tel:0916961409"><strong>0916 961 409</strong></a>.</p>
+        </div>
+        <div class="gi-bottom-cta-form">
+          <LeadFormTwoStepEmailFirst
+            formId="phu-huynh-bottom-form"
+            funnelCode="phu-huynh-bottom"
+            schoolLevel="lien-cap"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== RELATED CONTENT ====== -->
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Khám phá thêm về Trường Việt Anh</h2>
+        <div class="gi-related-grid">
+          <a href="/gioi-thieu" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8a 100%);"></div>
+            <h3>Giới thiệu Trường Việt Anh</h3>
+            <p>Tìm hiểu tầm nhìn, sứ mệnh, chương trình đào tạo và đội ngũ giáo viên của hệ thống giáo dục liên cấp Việt Anh.</p>
+          </a>
+          <a href="/hoc-phi" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #D4A843 0%, #b8922e 100%);"></div>
+            <h3>Bảng học phí chi tiết</h3>
+            <p>Học phí từ 5-8 triệu/tháng tuỳ cấp học. Bao gồm bữa ăn, nước uống và hoạt động ngoại khoá cơ bản.</p>
+          </a>
+          <a href="/co-so" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>9 cơ sở trên 3 tỉnh thành</h3>
+            <p>Bản đồ, địa chỉ và thông tin cấp học tại mỗi cơ sở — TP.HCM, Long An, Kiên Giang.</p>
+          </a>
+          <a href="/tuyen-sinh" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #b71c1c 0%, #e53935 100%);"></div>
+            <h3>Tuyển sinh 2026-2027</h3>
+            <p>Hướng dẫn đăng ký, quy trình xét tuyển, hồ sơ nhập học, học bổng và ưu đãi Early Bird.</p>
+          </a>
+          <a href="/thanh-tich" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #2e7d32 0%, #43a047 100%);"></div>
+            <h3>Thành tích học sinh</h3>
+            <p>Kết quả IELTS, tỷ lệ đậu đại học 99%, giải thưởng quốc gia và quốc tế qua các năm.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <FooterBase />
   </div>
 </BaseLayout>
 
-<style>
-  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
-  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-  .max-w-900 { max-width: 900px; }
-  .text-center { text-align: center; }
-  
-  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/07/Than-Huong-Giang-11A3.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
-  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
-  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+<script>
+  // FAQ accordion — only one open at a time
+  document.querySelectorAll('.gi-faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        document.querySelectorAll('.gi-faq-item').forEach(other => {
+          if (other !== item) other.open = false;
+        });
+      }
+    });
+  });
 
-  .page-content { padding: 5rem 0; min-height: 400px; }
-  .page-content h2 { color: #1a193c; font-size: 2.25rem; font-weight: 800; margin-bottom: 3rem; }
-  
-  .portal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-  .portal-card { background: #ffffff; padding: 2.5rem; border-radius: 12px; border: 1px solid #e2e8f0; text-decoration: none; color: inherit; transition: all 0.2s; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-  .portal-card:hover { transform: translateY(-4px); border-color: #1a193c; box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-  .portal-card h3 { color: #1a193c; font-size: 1.35rem; font-weight: 800; margin-bottom: 0.5rem; }
-  .portal-card p { color: #475569; font-size: 1.05rem; margin: 0; }
-</style>
+  // Smooth scroll for TOC links
+  document.querySelectorAll('.gi-toc a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(link.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        history.replaceState(null, '', link.getAttribute('href'));
+      }
+    });
+  });
+</script>

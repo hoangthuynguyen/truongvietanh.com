@@ -5,44 +5,61 @@ import USPGrid from '../../../../components/USPGrid.astro';
 import TrustMetrics from '../../../../components/TrustMetrics.astro';
 import FAQSection from '../../../../components/FAQSection.astro';
 
-const pageTitle = 'Checklist Chọn Trường Tiểu Học – 9 Tiêu Chí Quan Trọng';
-const pageDescription = 'Tải miễn phí Checklist 9 tiêu chí giúp Ba/Mẹ chọn trường Tiểu Học tốt nhất cho con.';
+const pageTitle = 'Checklist Chọn Trường Tiểu Học — 10 Tiêu Chí Quan Trọng Cho Con';
+const pageDescription = 'Tải miễn phí Checklist 10 tiêu chí chọn trường Tiểu Học: chất lượng giảng dạy, song ngữ, sĩ số lớp, ngoại khóa, cơ sở vật chất, an toàn, chứng chỉ Cambridge.';
 const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc/checklist';
 
 const uspItems = [
-  { icon: '✅', text: '9 tiêu chí đầy đủ - Đánh giá toàn diện mọi khía cạnh' },
-  { icon: '📋', text: 'Bảng so sánh nhanh - So sánh dễ dàng giữa các trường' },
-  { icon: '📅', text: 'Lộ trình chuẩn bị 6 tháng - Hướng dẫn từng bước' },
-  { icon: '🎓', text: 'Tiêu chí được giáo viên chuyên gia xây dựng' },
-  { icon: '💪', text: 'Xây dựng sự tự tin cho ba/mẹ trong quyết định' },
-  { icon: '🤝', text: 'Tư vấn miễn phí sau khi tải - Giải đáp mọi thắc mắc' }
+  { icon: '✅', text: '10 tiêu chí toàn diện - Từ chương trình học đến an toàn trường học' },
+  { icon: '📋', text: 'Bảng chấm điểm so sánh - Đánh giá khách quan từng trường' },
+  { icon: '🗣️', text: 'Tiêu chí song ngữ & Cambridge - Chuẩn quốc tế rõ ràng' },
+  { icon: '👥', text: 'Đánh giá sĩ số lớp - Biết con được chú ý cá nhân hay không' },
+  { icon: '🏫', text: 'Checklist cơ sở vật chất & an toàn - Yên tâm mỗi ngày' },
+  { icon: '🤝', text: 'Tư vấn miễn phí sau khi tải - Chuyên gia giải đáp mọi thắc mắc' }
 ];
 
 const metrics = [
   { number: '15+', label: 'Năm kinh nghiệm giáo dục' },
-  { number: '500+', label: 'Học sinh Tiểu Học' },
+  { number: '500+', label: 'Học sinh Tiểu Học đang theo học' },
   { number: '98%', label: 'Phụ huynh hài lòng' },
   { number: '3', label: 'Cơ sở tại TPHCM' }
 ];
 
 const faqItems = [
-  { question: 'Checklist này có miễn phí không?', answer: 'Hoàn toàn miễn phí! Chúng tôi muốn giúp ba/mẹ có những công cụ tốt nhất để lựa chọn trường cho con. Bạn chỉ cần để lại email để nhận tài liệu ngay trong vài phút. Không có chi phí, không có ràng buộc - chúng tôi tin rằng giáo dục tốt cho con em là lợi ích chung.' },
-  { question: 'Checklist có áp dụng cho tất cả các trường không?', answer: 'Vâng! 9 tiêu chí này được xây dựng bởi các chuyên gia giáo dục và áp dụng được cho mọi trường tiểu học, dù là trường công lập hay tư thục, song ngữ hay một ngôn ngữ. Chúng tôi không thiên vị cho Việt Anh - mục tiêu là giúp bạn đánh giá khách quan và chọn trường thật sự phù hợp với con em bạn.' },
-  { question: 'Ngoài checklist còn nhận được gì?', answer: 'Ngoài checklist 9 tiêu chí, bạn sẽ nhận thêm: (1) Bảng so sánh trường - để so sánh dễ dàng giữa các trường lựa chọn, (2) Lộ trình chuẩn bị vào lớp 1 trong 6 tháng - từng bước cụ thể để chuẩn bị con em phát triển cả về mặt học tập lẫn kỹ năng sống, và (3) Quyền tư vấn miễn phí từ đội ngũ Tuyển sinh Việt Anh - họ sẵn sàng giúp bạn phân tích checklist và trả lời mọi câu hỏi.' }
+  {
+    question: 'Checklist 10 tiêu chí này có miễn phí không?',
+    answer: 'Hoàn toàn miễn phí, không có bất kỳ chi phí hay ràng buộc nào. Chúng tôi xây dựng checklist này vì tin rằng mọi phụ huynh đều xứng đáng có công cụ đánh giá chuyên nghiệp khi chọn trường cho con. Bạn chỉ cần để lại email để nhận tài liệu PDF trong vòng 5 phút. Checklist được thiết kế bởi đội ngũ chuyên gia giáo dục với hơn 15 năm kinh nghiệm, đảm bảo bao quát mọi khía cạnh quan trọng nhất.'
+  },
+  {
+    question: 'Checklist có áp dụng cho tất cả các trường hay chỉ Trường Việt Anh?',
+    answer: 'Checklist áp dụng được cho mọi trường tiểu học — công lập, tư thục, song ngữ hay một ngôn ngữ. 10 tiêu chí được xây dựng dựa trên nghiên cứu giáo dục quốc tế và thực tiễn Việt Nam, hoàn toàn khách quan. Mục tiêu của chúng tôi không phải "bán" Trường Việt Anh mà là giúp ba/mẹ đánh giá đúng, chọn trường thật sự phù hợp với con em. Khi ba/mẹ sử dụng checklist, ba/mẹ sẽ thấy rõ trường nào đạt và không đạt ở từng tiêu chí, từ đó đưa ra quyết định sáng suốt hơn.'
+  },
+  {
+    question: 'Tại sao sĩ số lớp và chứng chỉ Cambridge lại quan trọng?',
+    answer: 'Sĩ số lớp ảnh hưởng trực tiếp đến chất lượng giáo dục: lớp 25 học sinh cho phép giáo viên nhìn thấy và hỗ trợ từng bé, trong khi lớp 40-50 em thì con bạn dễ bị "vô hình". Nghiên cứu giáo dục cho thấy lớp nhỏ giúp học sinh tự tin hơn, tham gia tích cực hơn, và kết quả học tập tốt hơn 20-30%. Còn chứng chỉ Cambridge là "hộ chiếu quốc tế" — con bạn không chỉ giỏi tiếng Anh mà còn có bằng chứng được công nhận toàn cầu. Đây là lợi thế to lớn khi con lên THCS, THPT, và đặc biệt nếu gia đình có kế hoạch du học.'
+  },
+  {
+    question: 'Ngoài checklist, tôi còn nhận được gì?',
+    answer: 'Ngoài checklist 10 tiêu chí, ba/mẹ sẽ nhận thêm: (1) Bảng chấm điểm so sánh trường — điền thông tin từng trường vào bảng để so sánh trực quan, (2) Lộ trình chuẩn bị vào lớp 1 trong 6 tháng — từng bước cụ thể giúp con phát triển kỹ năng xã hội, tập trung, và tự chăm sóc bản thân, (3) Quyền tư vấn miễn phí từ chuyên gia Tuyển sinh Việt Anh — họ sẵn sàng giúp ba/mẹ phân tích kết quả checklist và trả lời mọi câu hỏi chi tiết. Tất cả đều miễn phí, không có ràng buộc gì cả.'
+  },
+  {
+    question: 'Làm thế nào để sử dụng checklist hiệu quả nhất?',
+    answer: 'Cách tốt nhất là in ra và mang theo khi đi tham quan từng trường. Mỗi tiêu chí có thang điểm 1-5, ba/mẹ chấm điểm ngay tại chỗ sau khi quan sát và hỏi đáp. Đừng chỉ nghe nhân viên tuyển sinh giới thiệu — hãy tự mình quan sát lớp học, hỏi giáo viên trực tiếp, và đặc biệt quan sát cách học sinh tương tác với nhau. Sau khi tham quan 3-4 trường, ba/mẹ mở bảng chấm điểm ra so sánh — trường nào đạt điểm cao nhất ở những tiêu chí quan trọng nhất với gia đình mình, đó chính là lựa chọn phù hợp.'
+  }
 ];
 ---
 
 <SqueezePageLayout
   title={pageTitle}
   description={pageDescription}
-  keywords="checklist chọn trường, tiêu chí chọn trường tiểu học, trường Việt Anh"
+  keywords="checklist chọn trường, tiêu chí chọn trường tiểu học, trường Việt Anh, Cambridge, song ngữ, sĩ số lớp"
   schoolLevel="tieu-hoc"
   funnelCode="checklist-tieu-hoc"
   canonicalUrl={canonicalUrl}
 >
   <div slot="hero">
-    <h1 class="hero-h1">Checklist 9 Tiêu Chí Chọn Trường<br/>Lựa Chọn Tự Tin Cho Con Em</h1>
-    <p class="hero-subtitle">Công cụ miễn phí từ giáo viên chuyên gia - Giúp bạn đưa ra quyết định đúng đắn</p>
+    <h1 class="hero-h1">Checklist Chọn Trường Tiểu Học<br/>10 Tiêu Chí Quan Trọng Cho Con</h1>
+    <p class="hero-subtitle">Công cụ miễn phí từ chuyên gia giáo dục — Đánh giá chất lượng giảng dạy, song ngữ, sĩ số, an toàn & hơn thế nữa</p>
   </div>
 
   <div slot="usp">
@@ -54,56 +71,73 @@ const faqItems = [
   </div>
 
   <div slot="content">
+    <div class="content-section hero-image-section">
+      <img src="https://media.truongvietanh.com/images/du-an-03.webp" alt="Học sinh tiểu học Trường Việt Anh làm dự án nhóm trong phòng lab STEM hiện đại" class="hero-content-image" width="800" height="450" loading="lazy" />
+      <p class="image-caption">Học sinh Tiểu Học Trường Việt Anh hào hứng với dự án STEM trong phòng lab hiện đại</p>
+    </div>
+
     <div class="content-section">
-      <h2>Bạn sẽ nhận được gì?</h2>
+      <h2>10 Tiêu Chí Ba/Mẹ Cần Đánh Giá Khi Chọn Trường</h2>
       <div class="content-grid">
         <div class="content-card">
-          <h3>9 Tiêu Chí Toàn Diện - Đánh Giá Mọi Khía Cạnh</h3>
-          <p>Checklist bao gồm 9 tiêu chí quan trọng được giáo viên chuyên gia xây dựng, từ chất lượng chương trình học, trình độ giáo viên, cơ sở vật chất, tiêu chuẩn an toàn, chất lượng dinh dưỡng, ngoại khóa, văn hóa trường học, đến phí tổn và phục vụ khách hàng. Bạn sẽ hiểu rõ tất cả những yếu tố ảnh hưởng đến sự phát triển của con em.</p>
+          <h3>Chất Lượng Giảng Dạy & Đội Ngũ Giáo Viên</h3>
+          <p>Đây là tiêu chí số 1 mà nhiều phụ huynh bỏ qua vì chỉ nhìn vào cơ sở vật chất bề ngoài. Checklist hướng dẫn ba/mẹ cách đánh giá trình độ chuyên môn của giáo viên, tỷ lệ giáo viên trên mỗi học sinh, phương pháp giảng dạy có thực sự lấy học sinh làm trung tâm hay không. Đặc biệt quan trọng: giáo viên bản ngữ có chứng chỉ giảng dạy quốc tế TESOL/CELTA hay chỉ là người nước ngoài biết nói tiếng Anh? Trường tốt phải có giáo viên vừa tâm huyết vừa giỏi chuyên môn sư phạm.</p>
         </div>
         <div class="content-card">
-          <h3>Bảng So Sánh Trường - Nhìn Tổng Quan Dễ Dàng</h3>
-          <p>Kèm theo là một template bảng so sánh các trường tiểu học trong khu vực (hoặc bất kỳ trường nào bạn xem xét). Bạn chỉ cần điền thông tin từng trường vào các tiêu chí, rồi nhìn bảng để so sánh một cách khách quan. Điều này giúp bạn không bỏ sót tiêu chí nào, và quyết định trở nên sáng suốt hơn.</p>
+          <h3>Chương Trình Song Ngữ & Chứng Chỉ Cambridge</h3>
+          <p>Không phải trường nào tự xưng "song ngữ" đều thực sự dạy song ngữ đúng chuẩn. Checklist giúp ba/mẹ phân biệt rõ ràng giữa chương trình song ngữ thật sự (50% thời lượng tiếng Anh, giáo viên bản ngữ dạy chuyên môn, chuẩn Cambridge Primary chính thức) và chương trình chỉ đơn giản "tăng thêm vài tiết tiếng Anh". Con bạn cần một chương trình giúp đạt chuẩn A2-B1 khi kết thúc Tiểu Học và có chứng chỉ Cambridge quốc tế — đó mới là nền tảng song ngữ vững chắc cho THCS, THPT và xa hơn.</p>
         </div>
         <div class="content-card">
-          <h3>Lộ Trình Chuẩn Bị 6 Tháng - Từng Bước Cụ Thể</h3>
-          <p>Ngoài checklist, bạn sẽ nhận lộ trình chuẩn bị cho con vào lớp 1 chi tiết 6 tháng trước nhập học. Bao gồm cách phát triển kỹ năng xã hội, tập trung và kiên nhẫn trong học tập, kỹ năng tự chăm sóc bản thân, và chuẩn bị tinh thần. Lộ trình này giúp con em chuẩn bị tốt nhất cho cuộc chuyển tiếp quan trọng.</p>
+          <h3>Sĩ Số Lớp & Sự Chú Ý Cá Nhân</h3>
+          <p>Lớp 25 học sinh và lớp 45 học sinh là hai thế giới hoàn toàn khác nhau về chất lượng giáo dục con nhận được mỗi ngày. Ở lớp nhỏ, giáo viên biết tên từng bé, hiểu rõ điểm mạnh yếu, và có thời gian hỗ trợ riêng khi bé gặp khó khăn — con được phát biểu 2-3 lần mỗi tiết thay vì cả tuần không được gọi tên. Checklist cung cấp thang đánh giá cụ thể 1-5 điểm để ba/mẹ biết sĩ số bao nhiêu là lý tưởng, kèm danh sách câu hỏi cần đặt cho trường về chính sách kiểm soát sĩ số.</p>
         </div>
         <div class="content-card">
-          <h3>Tư Vấn Miễn Phí Từ Chuyên Gia Giáo Dục</h3>
-          <p>Sau khi tải checklist, bạn có quyền tư vấn miễn phí từ đội ngũ chuyên gia Tuyển sinh của Trường Việt Anh. Họ sẽ giúp bạn hiểu checklist sâu hơn, phân tích thông tin từng trường, trả lời mọi câu hỏi chi tiết, và hỗ trợ bạn ra quyết định tốt nhất cho con em bạn.</p>
+          <h3>Ngoại Khóa, Cơ Sở Vật Chất & An Toàn</h3>
+          <p>Con bạn sẽ dành 8-10 tiếng mỗi ngày ở trường — môi trường phải an toàn, sạch sẽ, và khơi gợi sáng tạo cho bé mỗi ngày. Checklist bao gồm tiêu chí đánh giá chi tiết: phòng lab STEM có thiết bị phù hợp lứa tuổi không, thư viện có sách song ngữ đa dạng không, sân thể thao và bể bơi có đạt chuẩn an toàn không, nhà ăn có chuyên gia dinh dưỡng giám sát không. Đặc biệt: hệ thống camera an ninh, quy trình đón trả nghiêm ngặt, và chính sách chống bắt nạt — những yếu tố nhiều phụ huynh quên hỏi nhưng cực kỳ quan trọng.</p>
         </div>
       </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Lộ Trình Chuẩn Bị Vào Lớp 1 Trong 6 Tháng</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        Ngoài checklist 10 tiêu chí, ba/mẹ sẽ nhận thêm <strong>Lộ trình chuẩn bị 6 tháng</strong> chi tiết giúp con sẵn sàng cho lớp 1: phát triển kỹ năng xã hội (biết chia sẻ, xếp hàng, hợp tác với bạn), rèn khả năng tập trung 30-45 phút liên tục, tập tự chăm sóc bản thân (ăn uống, vệ sinh, mặc đồng phục), và chuẩn bị tinh thần cho cuộc chuyển tiếp lớn nhất trong đời bé. Lộ trình được chia theo từng tháng với hướng dẫn cụ thể cho ba/mẹ — chỉ cần làm theo là con sẽ tự tin bước vào lớp 1. Gọi <strong>0916 961 409</strong> để được tư vấn thêm.
+      </p>
     </div>
   </div>
 
   <div slot="form">
-    <h2 class="form-heading">Tải Checklist 9 Tiêu Chí Ngay Hôm Nay</h2>
-    <p class="form-subheading">Hoàn toàn miễn phí - Nhận qua email trong vòng 5 phút</p>
+    <h2 class="form-heading">Tải Checklist 10 Tiêu Chí Ngay Hôm Nay</h2>
+    <p class="form-subheading">Hoàn toàn miễn phí — Nhận qua email trong vòng 5 phút, kèm bảng chấm điểm và lộ trình chuẩn bị</p>
     <LeadFormTwoStepEmailFirst
-      formId="tuyen-sinh-form"
+      formId="checklist-tieu-hoc-form"
       funnelCode="checklist-tieu-hoc"
       schoolLevel="tieu-hoc"
-      submitText="Nhận Checklist"
-      successMessage="Checklist đã được gửi qua email! Vui lòng kiểm tra hộp thư (và thư mục Spam)."
+      submitText="Nhận Checklist Miễn Phí"
+      successMessage="Checklist đã được gửi qua email! Vui lòng kiểm tra hộp thư (và thư mục Spam). Chuyên gia Tuyển sinh sẽ liên hệ hỗ trợ thêm."
     />
   </div>
 
   <div slot="faq">
-    <FAQSection items={faqItems} title="Câu hỏi về Checklist chọn trường" />
+    <FAQSection items={faqItems} title="Câu hỏi về Checklist chọn trường Tiểu Học" />
   </div>
 </SqueezePageLayout>
 
 <style>
   .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
   .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
   .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
   .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
   .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
   .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
   .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
-  .content-card p { font-size: 0.95rem; line-height: 1.6; color: #555; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
   .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
-  .form-subheading { font-size: 1rem; color: #555; font-weight: 500; margin-bottom: 2rem; }
-  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  .hero-image-section { text-align: center; margin-bottom: 2rem; }
+  .hero-content-image { width: 100%; max-width: 800px; height: auto; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  .image-caption { font-size: 0.85rem; color: #777; margin-top: 0.75rem; font-style: italic; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
 </style>

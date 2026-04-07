@@ -108,15 +108,25 @@ export type PageSpec = {
 };
 
 export const siteName = 'Trường Việt Anh';
-export const defaultSiteUrl = 'https://staging.truongvietanh.com';
+export const defaultSiteUrl = 'https://hoc.truongvietanh.com';
 export const adminUrl = 'https://admin.truongvietanh.com/admin';
 
-export const mainNav = [
-  { label: 'Trang chủ', href: '/' },
-  { label: 'Giới thiệu', href: '/gioi-thieu' },
+export const mainNavLeft = [
+  { label: 'Trang Chủ', href: '/' },
   {
-    label: 'Cấp học',
-    href: '#',
+    label: 'Giới Thiệu',
+    href: '/gioi-thieu',
+    children: [
+      { label: 'Về Trường Việt Anh', href: '/gioi-thieu' },
+      { label: 'Triết lý giáo dục', href: '/triet-ly-giao-duc' },
+      { label: 'Hệ thống PDR', href: '/he-thong-pdr' },
+      { label: 'Thành tích', href: '/thanh-tich' },
+      { label: 'Cơ sở', href: '/co-so' },
+    ]
+  },
+  {
+    label: 'Chương Trình',
+    href: '/cap-hoc',
     children: [
       { label: 'Mầm non', href: '/mam-non' },
       { label: 'Tiểu học', href: '/tieu-hoc' },
@@ -125,47 +135,40 @@ export const mainNav = [
     ]
   },
   {
-    label: 'Cơ sở',
-    href: '/co-so',
-    children: [
-      { label: 'Tổng quan cơ sở', href: '/co-so' },
-      { label: 'Gò Vấp Phan Huy Ích', href: '/co-so/go-vap-phan-huy-ich' },
-      { label: 'Mầm non Gò Vấp Lê Đức Thọ', href: '/co-so/mam-non-go-vap-le-duc-tho' },
-      { label: 'Phú Nhuận Nguyễn Trọng Tuyển', href: '/co-so/phu-nhuan-nguyen-trong-tuyen' },
-      { label: 'Bình Tân Tỉnh Lộ 10', href: '/co-so/binh-tan-tinh-lo-10' },
-    ]
-  },
-  {
-    label: 'Tuyển sinh',
+    label: 'Tuyển Sinh',
     href: '/tuyen-sinh',
     children: [
-      { label: 'Tổng quan tuyển sinh', href: '/tuyen-sinh' },
-      { label: 'Quy trình tuyển sinh', href: '/tuyen-sinh/quy-trinh-tuyen-sinh' },
-      { label: 'Hồ sơ nhập học', href: '/tuyen-sinh/ho-so-nhap-hoc' },
-      { label: 'Lịch tuyển sinh', href: '/tuyen-sinh/lich-tuyen-sinh' },
+      { label: 'Thông tin tuyển sinh', href: '/tuyen-sinh' },
+      { label: 'Học phí', href: '/hoc-phi' },
       { label: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van' },
       { label: 'Tham quan trường', href: '/tuyen-sinh/tham-quan-truong' },
-      { label: 'Học thử', href: '/hoc-thu' },
     ]
   },
+];
+
+export const mainNavRight = [
   {
-    label: 'Học phí',
-    href: '/hoc-phi',
+    label: 'Phụ Huynh',
+    href: '/phu-huynh',
     children: [
-      { label: 'Tổng quan học phí', href: '/hoc-phi' },
-      { label: 'Học bổng & ưu đãi', href: '/hoc-bong' },
+      { label: 'Góc phụ huynh', href: '/phu-huynh' },
+      { label: 'Học phí', href: '/hoc-phi' },
+      { label: 'Cơ sở', href: '/co-so' },
     ]
   },
+  { label: 'Blog', href: '/tin-tuc' },
   { label: 'Liên hệ', href: '/lien-he' },
 ];
+
+export const mainNav = [...mainNavLeft, ...mainNavRight];
 
 export const contactLinks = {
   phoneDisplay: '0916 961 409',
   phoneHref: 'tel:0916961409',
-  zaloHref: 'https://zalo.me/0916961409',
+  zaloHref: 'https://zalo.me/1678310120468101523',
   email: 'info@truongvietanh.com',
   contactHref: '/lien-he',
-  facebookHref: 'https://www.facebook.com/',
+  facebookHref: 'https://www.facebook.com/truongvietanhhcm',
   youtubeHref: 'https://www.youtube.com/',
   instagramHref: 'https://www.instagram.com/',
   admissionsHref: '/tuyen-sinh/dang-ky-tu-van',
@@ -175,111 +178,111 @@ export const contactLinks = {
 export const launchPages: LinkItem[] = [
   {
     eyebrow: 'Class Homepage',
-    title: 'Trang Chu',
+    title: 'Trang Chủ',
     href: '/',
-    body: 'Grand Central Station dieu phoi traffic vao cap hoc, hoc phi va admissions hub.',
+    body: 'Grand Central Station điều phối traffic vào cấp học, học phí và admissions hub.',
   },
   {
     eyebrow: 'Brand Core',
-    title: 'Gioi Thieu',
+    title: 'Giới Thiệu',
     href: '/gioi-thieu',
-    body: 'Trang cot loi de ke cau chuyen thuong hieu, lich su va loi hua gia tri.',
+    body: 'Trang cốt lõi để kể câu chuyện thương hiệu, lịch sử và lời hứa giá trị.',
   },
   {
     eyebrow: 'Brand Depth',
-    title: 'Triet Ly Giao Duc',
+    title: 'Triết Lý Giáo Dục',
     href: '/triet-ly-giao-duc',
-    body: 'Trang thought leadership giai thich tinh than vui ve va thuc dung cua Viet Anh.',
+    body: 'Trang thought leadership giải thích tinh thần vui vẻ và thực dụng của Việt Anh.',
   },
   {
     eyebrow: 'Authority Asset',
-    title: 'He Thong PDR',
+    title: 'Hệ Thống PDR',
     href: '/he-thong-pdr',
-    body: 'Trang signature asset de neo su khac biet ve Plan - Do - Review.',
+    body: 'Trang signature asset để neo sự khác biệt về Plan - Do - Review.',
   },
   {
     eyebrow: 'Class Level Pillar',
-    title: 'Mam Non',
+    title: 'Mầm Non',
     href: '/mam-non',
-    body: 'Pillar page de bat tu khoa cap hoc va route ve hoc phi, tuyen sinh.',
+    body: 'Pillar page để bắt từ khóa cấp học và route về học phí, tuyển sinh.',
   },
   {
     eyebrow: 'Class Level Pillar',
-    title: 'Tieu Hoc',
+    title: 'Tiểu Học',
     href: '/tieu-hoc',
-    body: 'Trang tru cot cho phu huynh dang so sanh chuong trinh, tieng Anh va ne nep.',
+    body: 'Trang trụ cột cho phụ huynh đang so sánh chương trình, tiếng Anh và nề nếp.',
   },
   {
     eyebrow: 'Class Level Pillar',
-    title: 'Trung Hoc Co So',
+    title: 'Trung Học Cơ Sở',
     href: '/trung-hoc-co-so',
-    body: 'Pillar THCS noi bat lo trinh hoc thuat, PDR va tu duy chu dong.',
+    body: 'Pillar THCS nổi bật lộ trình học thuật, PDR và tư duy chủ động.',
   },
   {
     eyebrow: 'Class Level Pillar',
-    title: 'Trung Hoc Pho Thong',
+    title: 'Trung Học Phổ Thông',
     href: '/trung-hoc-pho-thong',
-    body: 'Pillar THPT nhan manh IELTS, dinh huong dai hoc va nang luc tu hoc.',
+    body: 'Pillar THPT nhấn mạnh IELTS, định hướng đại học và năng lực tự học.',
   },
   {
     eyebrow: 'Admissions Hub',
-    title: 'Tuyen Sinh',
+    title: 'Tuyển Sinh',
     href: '/tuyen-sinh',
-    body: 'Trang dieu huong phu huynh vao dung hanh dong: tu van, tham quan, assessment.',
+    body: 'Trang điều hướng phụ huynh vào đúng hành động: tư vấn, tham quan, assessment.',
   },
   {
     eyebrow: 'Money Page',
-    title: 'Hoc Phi',
+    title: 'Học Phí',
     href: '/hoc-phi',
-    body: 'Trang hoc phi minh bach, dung intent thuong mai va chuyen doi sang tu van.',
+    body: 'Trang học phí minh bạch, đúng intent thương mại và chuyển đổi sang tư vấn.',
   },
 ];
 
 export const levelCards: LinkItem[] = [
   {
     eyebrow: 'Level Pillar',
-    title: 'Mam Non',
+    title: 'Mầm Non',
     href: '/mam-non',
-    body: 'Tu 18 thang den 5 tuoi, uu tien thich nghi, an toan va phat trien cam xuc.',
+    body: 'Từ 18 tháng đến 5 tuổi, ưu tiên thích nghi, an toàn và phát triển cảm xúc.',
   },
   {
     eyebrow: 'Level Pillar',
-    title: 'Tieu Hoc',
+    title: 'Tiểu Học',
     href: '/tieu-hoc',
-    body: 'Can bang hoc thuat, tieng Anh, ky luat tu hoc va niem vui moi ngay.',
+    body: 'Cân bằng học thuật, tiếng Anh, kỷ luật tự học và niềm vui mỗi ngày.',
   },
   {
     eyebrow: 'Level Pillar',
-    title: 'Trung Hoc Co So',
+    title: 'Trung Học Cơ Sở',
     href: '/trung-hoc-co-so',
-    body: 'Tang toc tieng Anh, du an, PDR va ky nang the ky 21.',
+    body: 'Tăng tốc tiếng Anh, dự án, PDR và kỹ năng thế kỷ 21.',
   },
   {
     eyebrow: 'Level Pillar',
-    title: 'Trung Hoc Pho Thong',
+    title: 'Trung Học Phổ Thông',
     href: '/trung-hoc-pho-thong',
-    body: 'IELTS, dinh huong dai hoc va mot lo trinh hoc tap co chu dich.',
+    body: 'IELTS, định hướng đại học và một lộ trình học tập có chủ đích.',
   },
 ];
 
 export const admissionsCards: LinkItem[] = [
   {
     eyebrow: 'Admissions Hub',
-    title: 'Bat dau tu Tuyen Sinh',
+    title: 'Bắt đầu từ Tuyển Sinh',
     href: '/tuyen-sinh',
-    body: 'Xem quy trinh, moc thoi gian va cach phoi hop voi doi tuyen sinh cua truong.',
+    body: 'Xem quy trình, mốc thời gian và cách phối hợp với đội tuyển sinh của trường.',
   },
   {
     eyebrow: 'Money Page',
-    title: 'Xem Hoc Phi',
+    title: 'Xem Học Phí',
     href: '/hoc-phi',
-    body: 'Nhin ro cau truc hoc phi, range theo cap hoc va cach nhan bang hoc phi chi tiet.',
+    body: 'Nhìn rõ cấu trúc học phí, range theo cấp học và cách nhận bảng học phí chi tiết.',
   },
   {
     eyebrow: 'Direct Contact',
-    title: 'Goi tu van ngay',
+    title: 'Gọi tư vấn ngay',
     href: contactLinks.phoneHref,
-    body: 'Phu hop voi phu huynh dang o giai doan BOFU va can xac nhan thong tin nhanh.',
+    body: 'Phù hợp với phụ huynh đang ở giai đoạn BOFU và cần xác nhận thông tin nhanh.',
   },
 ];
 
@@ -1361,132 +1364,132 @@ const priorityPages: PageSpec[] = [
 export const pages: PageSpec[] = [
   {
     slug: 'gioi-thieu',
-    title: 'Gioi Thieu Truong Viet Anh',
+    title: 'Giới Thiệu Trường Việt Anh',
     description:
-      'Trang gioi thieu cot loi cua Truong Viet Anh, giai thich su hinh thanh, loi hua thuong hieu va cach truong xay mot hanh trinh hoc tap co tinh nguoi.',
+      'Trang giới thiệu cốt lõi của Trường Việt Anh, giải thích sự hình thành, lời hứa thương hiệu và cách trường xây một hành trình học tập có tính người.',
     templateClass: 'Pure Page / Brand Core',
     pageType: 'Brand trust page',
     theme: 'brand',
     hero: {
       eyebrow: 'Brand Core Page',
-      title: 'Mot he thong truong hoc duoc xay de giup tre vui ve, tu chu va hoc tot that su.',
+      title: 'Một hệ thống trường học được xây để giúp trẻ vui vẻ, tự chủ và học tốt thật sự.',
       body:
-        'Trang nay dong vai tro trang cot loi cua brand: giai thich vi sao Truong Viet Anh ton tai, cach truong ket hop ky luat, tieng Anh va moi truong nhan van de giup phu huynh co them niem tin truoc khi vao giai doan so sanh hoc phi.',
-      primaryCta: { label: 'Xem lo trinh tuyen sinh', href: '/tuyen-sinh' },
-      secondaryCta: { label: 'Tham khao hoc phi', href: '/hoc-phi' },
+        'Trang này đóng vai trò trang cốt lõi của brand: giải thích vì sao Trường Việt Anh tồn tại, cách trường kết hợp kỷ luật, tiếng Anh và môi trường nhân văn để giúp phụ huynh có thêm niềm tin trước khi vào giai đoạn so sánh học phí.',
+      primaryCta: { label: 'Xem lộ trình tuyển sinh', href: '/tuyen-sinh' },
+      secondaryCta: { label: 'Tham khảo học phí', href: '/hoc-phi' },
       badges: ['Brand trust', 'SEO authority', 'Admissions support'],
-      asideTitle: 'Trang nay can tra loi 4 cau hoi',
+      asideTitle: 'Trang này cần trả lời 4 câu hỏi',
       asideItems: [
-        'Truong Viet Anh khac gi so voi mot website giao duc chi noi ve thanh tich?',
-        'Viet Anh tin vao triet ly nao khi giao duc tre?',
-        'Vi sao phu huynh nen xem tiep cac trang cap hoc va admissions?',
-        'CTA chinh la dua phu huynh sang Tuyen Sinh va Hoc Phi, khong ep form qua som.',
+        'Trường Việt Anh khác gì so với một website giáo dục chỉ nói về thành tích?',
+        'Việt Anh tin vào triết lý nào khi giáo dục trẻ?',
+        'Vì sao phụ huynh nên xem tiếp các trang cấp học và admissions?',
+        'CTA chính là đưa phụ huynh sang Tuyển Sinh và Học Phí, không ép form quá sớm.',
       ],
     },
     stats: [
-      { value: '2011', label: 'Nam bat dau hanh trinh giao duc' },
-      { value: 'Lien cap', label: 'He thong tu mam non den THPT' },
-      { value: 'PDR', label: 'Phuong phap Plan - Do - Review xuyen suot' },
-      { value: 'Song ngu', label: 'Tieng Anh duoc day nhu mot nang luc song' },
+      { value: '2011', label: 'Năm bắt đầu hành trình giáo dục' },
+      { value: 'Liên cấp', label: 'Hệ thống từ mầm non đến THPT' },
+      { value: 'PDR', label: 'Phương pháp Plan - Do - Review xuyên suốt' },
+      { value: 'Song ngữ', label: 'Tiếng Anh được dạy như một năng lực sống' },
     ],
     sections: [
       {
         type: 'cards',
-        eyebrow: 'Nen tang thuong hieu',
-        title: 'Ba lop gia tri giup trang gioi thieu nay khong bi “noi cho hay”.',
+        eyebrow: 'Nền tảng thương hiệu',
+        title: 'Ba lớp giá trị giúp trang giới thiệu này không bị “nói cho hay”.',
         intro:
-          'No khong chi ke lai lich su. No can cho thay Viet Anh duoc to chuc de tao ra mot moi truong hoc tap ro muc tieu va de phu huynh hieu buoc tiep theo la gi.',
+          'Nó không chỉ kể lại lịch sử. Nó cần cho thấy Việt Anh được tổ chức để tạo ra một môi trường học tập rõ mục tiêu và để phụ huynh hiểu bước tiếp theo là gì.',
         columns: 3,
         items: [
           {
-            title: 'Nha truong la mot he thong, khong phai mot tap hop phong hoc',
+            title: 'Nhà trường là một hệ thống, không phải một tập hợp phòng học',
             body:
-              'Moi cap hoc, moi trang cap hoc va moi trang tuyen sinh deu duoc noi voi nhau bang mot he thong CTA va noi dung thong nhat.',
+              'Mỗi cấp học, mỗi trang cấp học và mỗi trang tuyển sinh đều được nối với nhau bằng một hệ thống CTA và nội dung thống nhất.',
           },
           {
-            title: 'Tinh nguoi di truoc, hoc thuat di kem',
+            title: 'Tính người đi trước, học thuật đi kèm',
             body:
-              'Thong diep cot loi cua Viet Anh la tre chi co the hoc tot lau dai khi thay an toan, duoc ton trong va duoc huong dan cach tu hoc.',
+              'Thông điệp cốt lõi của Việt Anh là trẻ chỉ có thể học tốt lâu dài khi thấy an toàn, được tôn trọng và được hướng dẫn cách tự học.',
           },
           {
-            title: 'Trang nay dong vai tro neo trust',
+            title: 'Trang này đóng vai trò neo trust',
             body:
-              'Day la page de phu huynh dung lai, doc ky, roi moi chuyen sang pages co intent manh hon nhu hoc phi va admissions.',
+              'Đây là page để phụ huynh dừng lại, đọc kỹ, rồi mới chuyển sang pages có intent mạnh hơn như học phí và admissions.',
           },
         ],
       },
       {
         type: 'steps',
         eyebrow: 'Brand Story',
-        title: 'Lich su duoc ke theo logic ma phu huynh thuc su quan tam.',
+        title: 'Lịch sử được kể theo logic mà phụ huynh thực sự quan tâm.',
         intro:
-          'Khong can qua nhieu timeline vu vo. Can 3 lop thong tin: vi sao mo truong, cach van hanh va dieu gi khien phu huynh yen tam giao con.',
+          'Không cần quá nhiều timeline vụ vơ. Cần 3 lớp thông tin: vì sao mở trường, cách vận hành và điều gì khiến phụ huynh yên tâm giao con.',
         items: [
           {
-            title: 'Bat dau tu nhu cau giao duc that',
+            title: 'Bắt đầu từ nhu cầu giáo dục thật',
             body:
-              'Viet Anh duoc hinh thanh de giai mot bai toan rat doi thuong: phu huynh can mot noi vua co nen nep, vua co tieng Anh, vua khong bien tuoi tho thanh cuoc dua diem so.',
+              'Việt Anh được hình thành để giải một bài toán rất đời thường: phụ huynh cần một nơi vừa có nền nếp, vừa có tiếng Anh, vừa không biến tuổi thơ thành cuộc đua điểm số.',
           },
           {
-            title: 'Mo rong thanh he thong lien cap',
+            title: 'Mở rộng thành hệ thống liên cấp',
             body:
-              'Khi hanh trinh cua tre duoc nhin dai han tu mam non den THPT, nha truong co the xay dung mot lo trinh thong suot thay vi moi cap hoc la mot the gioi tach roi.',
+              'Khi hành trình của trẻ được nhìn dài hạn từ mầm non đến THPT, nhà trường có thể xây dựng một lộ trình thông suốt thay vì mỗi cấp học là một thế giới tách rời.',
           },
           {
-            title: 'Dong bo thuong hieu voi van hanh',
+            title: 'Đồng bộ thương hiệu với vận hành',
             body:
-              'Khong chi la khau hieu. PDR, tieng Anh, danh gia su tien bo va cach giao tiep voi phu huynh deu duoc trien khai nhu mot he thong.',
+              'Không chỉ là khẩu hiệu. PDR, tiếng Anh, đánh giá sự tiến bộ và cách giao tiếp với phụ huynh đều được triển khai như một hệ thống.',
           },
         ],
       },
       {
         type: 'links',
-        eyebrow: 'Route phu huynh',
-        title: 'Sau khi doc trang gioi thieu, phu huynh nen di tiep dau?',
+        eyebrow: 'Route phụ huynh',
+        title: 'Sau khi đọc trang giới thiệu, phụ huynh nên đi tiếp đâu?',
         intro:
-          'Day la phan internal linking bat buoc de trang thuong hieu nay ho tro conversion thay vi dung o giai doan “doc cho biet”.',
+          'Đây là phần internal linking bắt buộc để trang thương hiệu này hỗ trợ conversion thay vì dừng ở giai đoạn “đọc cho biết”.',
         items: [
           {
             eyebrow: 'Authority',
-            title: 'Triet Ly Giao Duc',
+            title: 'Triết Lý Giáo Dục',
             href: '/triet-ly-giao-duc',
-            body: 'Neu phu huynh can hieu sau hon ve cach Viet Anh nhin tre, day la trang tiep theo nen doc.',
+            body: 'Nếu phụ huynh cần hiểu sâu hơn về cách Việt Anh nhìn trẻ, đây là trang tiếp theo nên đọc.',
           },
           {
             eyebrow: 'Signature',
-            title: 'He Thong PDR',
+            title: 'Hệ Thống PDR',
             href: '/he-thong-pdr',
-            body: 'Trang signature asset cho thay cach nha truong bien triet ly thanh thoi quen hoc tap va tu chu.',
+            body: 'Trang signature asset cho thấy cách nhà trường biến triết lý thành thói quen học tập và tự chủ.',
           },
           {
             eyebrow: 'Conversion',
-            title: 'Tuyen Sinh',
+            title: 'Tuyển Sinh',
             href: '/tuyen-sinh',
-            body: 'Khi phu huynh da san sang hanh dong, admissions hub se giai thich quy trinh va cac buoc can thuc hien.',
+            body: 'Khi phụ huynh đã sẵn sàng hành động, admissions hub sẽ giải thích quy trình và các bước cần thực hiện.',
           },
         ],
       },
       {
         type: 'faq',
-        eyebrow: 'FAQ thuong gap',
-        title: 'Nhung cau hoi ma trang gioi thieu can giai toa.',
+        eyebrow: 'FAQ thường gặp',
+        title: 'Những câu hỏi mà trang giới thiệu cần giải toả.',
         intro:
-          'Bo FAQ nay giup trang brand tra loi nhung thac mac dau tien truoc khi user sang trang cap hoc chi tiet.',
+          'Bộ FAQ này giúp trang brand trả lời những thắc mắc đầu tiên trước khi user sang trang cấp học chi tiết.',
         items: [
           {
-            question: 'Trang gioi thieu khac gi so voi homepage?',
+            question: 'Trang giới thiệu khác gì so với homepage?',
             answer:
-              'Homepage dieu phoi traffic. Trang gioi thieu di sau hon vao cau chuyen thuong hieu, cach truong van hanh va su khac biet cot loi.',
+              'Homepage điều phối traffic. Trang giới thiệu đi sâu hơn vào câu chuyện thương hiệu, cách trường vận hành và sự khác biệt cốt lõi.',
           },
           {
-            question: 'Vi sao nen doc tiep he thong PDR?',
+            question: 'Vì sao nên đọc tiếp hệ thống PDR?',
             answer:
-              'Vi PDR la page signature mo ta cach Viet Anh bien “tu hoc va tu chu” thanh mot thoi quen co cau truc, khong chi la thong diep marketing.',
+              'Vì PDR là page signature mô tả cách Việt Anh biến “tự học và tự chủ” thành một thói quen có cấu trúc, không chỉ là thông điệp marketing.',
           },
           {
-            question: 'Neu phu huynh muon biet hoc phi ngay thi sao?',
+            question: 'Nếu phụ huynh muốn biết học phí ngay thì sao?',
             answer:
-              'Trang hoc phi duoc dat san de giam friction. O day chi can dua sang /hoc-phi dung luc, khong can ep user dien form qua som.',
+              'Trang học phí được đặt sẵn để giảm friction. Ở đây chỉ cần đưa sang /hoc-phi đúng lúc, không cần ép user điền form quá sớm.',
           },
         ],
       },
@@ -1494,121 +1497,121 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'triet-ly-giao-duc',
-    title: 'Triet Ly Giao Duc Truong Viet Anh',
+    title: 'Triết Lý Giáo Dục Trường Việt Anh',
     description:
-      'Trang triet ly giao duc giai thich cach Truong Viet Anh ket hop hanh phuc, ky luat va tinh thuc dung de tre hoc tot mot cach ben vung.',
+      'Trang triết lý giáo dục giải th��ch cách Trường Việt Anh kết hợp hạnh phúc, kỷ luật và tính thực dụng để trẻ học tốt một cách bền vững.',
     templateClass: 'Pure Page / Thought Leadership',
     pageType: 'Authority narrative page',
     theme: 'brand',
     hero: {
       eyebrow: 'Thought Leadership Page',
-      title: 'Mot dua tre hanh phuc se hoc tot hon, nhung hanh phuc o day khong phai su de dai.',
+      title: 'Một đứa trẻ hạnh phúc sẽ học tốt hơn, nhưng hạnh phúc ở đây không phải sự dễ dãi.',
       body:
-        'Trang nay duoc viet de lam ro tinh than “vui ve va thuc dung”: tre duoc ton trong, co ky luat, biet lap ke hoach va co mot lo trinh tien bo ro rang. Day la lop noi dung nuoi trust truoc khi phu huynh so sanh hoc phi hay doi chieu voi truong khac.',
-      primaryCta: { label: 'Kham pha he thong PDR', href: '/he-thong-pdr' },
-      secondaryCta: { label: 'Xem cac cap hoc', href: '/mam-non' },
+        'Trang này được viết để làm rõ tinh thần “vui vẻ và thực dụng”: trẻ được tôn trọng, có kỷ luật, biết lập kế hoạch và có một lộ trình tiến b�� rõ ràng. Đây là lớp nội dung nuôi trust trước khi phụ huynh so sánh học phí hay đối chiếu với trường kh��c.',
+      primaryCta: { label: 'Khám phá hệ thống PDR', href: '/he-thong-pdr' },
+      secondaryCta: { label: 'Xem các cấp học', href: '/mam-non' },
       badges: ['Brand depth', 'E-E-A-T support', 'Assisted conversion'],
-      asideTitle: 'Tinh than can giu xuyen suot',
+      asideTitle: 'Tinh thần cần giữ xuyên suốt',
       asideItems: [
-        'Khong ban truc tiep qua manh tren page nay.',
-        'No phai tang trust va chuan bi cho giai doan so sanh.',
-        'No phai link sang pillars va PDR de user di sau hon.',
-        'Giong dieu can am, ro, tu tin va khong khoa truong.',
+        'Không bán trực tiếp quá mạnh trên page này.',
+        'Nó phải tăng trust và chuẩn bị cho giai đoạn so sánh.',
+        'Nó phải link sang pillars và PDR để user đi sâu hơn.',
+        'Giọng điệu cần ấm, rõ, tự tin và không khoa trương.',
       ],
     },
     stats: [
-      { value: 'Vui ve', label: 'Tre can mot moi truong tich cuc de mo long va hoc that' },
-      { value: 'Thuc dung', label: 'Moi hoat dong deu phai huong den nang luc song va hoc tap cu the' },
-      { value: 'Ky luat', label: 'Ky luat duoc day nhu mot ky nang, khong phai su ap dat' },
-      { value: 'Dong hanh', label: 'Gia dinh va nha truong cung nhau tao rhythm tien bo' },
+      { value: 'Vui vẻ', label: 'Trẻ cần một môi trường tích cực để mở lòng và học thật' },
+      { value: 'Th��c dụng', label: 'Mọi hoạt động đều phải hướng đến năng lực sống và học tập cụ thể' },
+      { value: 'Kỷ luật', label: 'Kỷ luật được dạy như một kỹ năng, không phải sự áp đặt' },
+      { value: 'Đồng hành', label: 'Gia đình và nhà trường cùng nhau tạo rhythm tiến bộ' },
     ],
     sections: [
       {
         type: 'cards',
-        eyebrow: 'Cot loi triet ly',
-        title: 'Bon y lon ma trang nay can lam ro.',
+        eyebrow: 'Cốt lõi triết lý',
+        title: 'Bốn ý lớn mà trang này cần l��m rõ.',
         intro:
-          'Neu chi noi “lay hoc sinh lam trung tam” thi qua chung. Viet Anh can dien giai bang logic ma phu huynh co the cam thay trong doi song hoc tap moi ngay.',
+          'Nếu chỉ nói “lấy học sinh làm trung tâm” thì quá chung. Việt Anh cần diễn giải bằng logic mà phụ huynh c�� thể cảm thấy trong đời sống học tập mỗi ngày.',
         columns: 2,
         items: [
           {
-            title: 'Hanh phuc de mo cua hoc tap',
+            title: 'Hạnh phúc để mở cửa học tập',
             body:
-              'Tre hoc tot hon khi duoc ton trong, duoc nghe, duoc sai va duoc huong dan cach sua. Hanh phuc la dieu kien de tre san sang hoc, khong phai phan thuong sau cung.',
+              'Trẻ học tốt hơn khi được tôn trọng, được nghe, được sai và được hướng dẫn cách sửa. Hạnh phúc là điều kiện để trẻ sẵn sàng học, không phải phần thưởng sau cùng.',
           },
           {
-            title: 'Tinh thuc dung trong giao duc',
+            title: 'Tính thực dụng trong giáo dục',
             body:
-              'Kien thuc can duoc bien thanh kha nang lap ke hoach, hop tac, giao tiep, tu danh gia va su dung ngon ngu de giai quyet tinh huong that.',
+              'Kiến thức cần được biến thành khả năng lập kế hoạch, hợp tác, giao tiếp, tự đánh giá và sử dụng ngôn ngữ để giải quyết tình huống thật.',
           },
           {
-            title: 'Ky luat nhan van',
+            title: 'Kỷ luật nhân văn',
             body:
-              'Ky luat khong dong nghia voi ap luc. Tre can duoc huong dan cach xay thoi quen va chiu trach nhiem voi ke hoach cua minh.',
+              'Kỷ luật không đồng nghĩa với áp lực. Trẻ cần được hướng dẫn cách xây thói quen và chịu trách nhiệm với kế hoạch của mình.',
           },
           {
-            title: 'Tieng Anh la nang luc song',
+            title: 'Tiếng Anh là năng lực sống',
             body:
-              'Tieng Anh khong chi la mot mon hoc de thi, ma la mot cong cu de tre tim hieu the gioi va tu tin trong giao tiep.',
+              'Tiếng Anh không chỉ là một môn học để thi, mà là một công cụ để trẻ tìm hiểu thế giới và tự tin trong giao tiếp.',
           },
         ],
       },
       {
         type: 'quote',
-        eyebrow: 'Thuong hieu can mot cau neo',
-        title: 'Trang nay can co mot “brand sentence” de nguoi doc nho.',
+        eyebrow: 'Thương hiệu cần một câu neo',
+        title: 'Trang này cần có một “brand sentence” để người đọc nhớ.',
         quote:
-          'Chung toi khong chon cach day nhanh hon. Chung toi chon cach day sao cho tre biet minh dang hoc vi dieu gi, tien bo the nao va co the dung kien thuc vao cuoc song ra sao.',
-        attribution: 'Editorial note cho voice cua Truong Viet Anh',
+          'Chúng tôi không chọn cách dạy nhanh hơn. Chúng tôi chọn cách dạy sao cho trẻ biết mình đang học vì điều gì, tiến bộ thế nào và có thể dùng kiến thức vào cuộc sống ra sao.',
+        attribution: 'Editorial note cho voice của Trường Việt Anh',
       },
       {
         type: 'links',
-        eyebrow: 'Noi sang noi dung sau hon',
-        title: 'Ba huong di tiep theo tu triet ly giao duc.',
+        eyebrow: 'Nối sang nội dung sâu hơn',
+        title: 'Ba hướng đi tiếp theo từ tri���t lý giáo dục.',
         intro:
-          'Neu triet ly da duoc dong y, user can co duong di sang pages “xac minh” triet ly do bang he thong, cap hoc va hanh dong.',
+          'Nếu triết lý đã được đồng ý, user cần có đường đi sang pages “xác minh” triết lý đó bằng hệ thống, cấp học và hành động.',
         items: [
           {
             eyebrow: 'Signature system',
-            title: 'He Thong PDR',
+            title: 'Hệ Thống PDR',
             href: '/he-thong-pdr',
-            body: 'Trang cho thay triet ly duoc bien thanh quy trinh hoc tap lap di lap lai nhu the nao.',
+            body: 'Trang cho thấy triết lý được biến thành quy trình học tập lặp đi lặp lại như thế nào.',
           },
           {
             eyebrow: 'Pillar',
-            title: 'Mam Non',
+            title: 'Mầm Non',
             href: '/mam-non',
-            body: 'Xem triet ly duoc trien khai ra sao trong giai doan dau doi, noi phu huynh thuong co nhieu lo lang nhat.',
+            body: 'Xem triết lý được triển khai ra sao trong giai đoạn đầu đời, nơi phụ huynh thường có nhiều lo lắng nhất.',
           },
           {
             eyebrow: 'Admissions',
-            title: 'Tuyen Sinh',
+            title: 'Tuyển Sinh',
             href: '/tuyen-sinh',
-            body: 'Khi phu huynh muon tiep tuc di sau vao quy trinh va hanh dong, admissions hub la diem chuyen hop ly nhat.',
+            body: 'Khi phụ huynh muốn tiếp tục đi sâu vào quy trình và hành động, admissions hub là điểm chuyển hợp lý nhất.',
           },
         ],
       },
       {
         type: 'faq',
-        eyebrow: 'FAQ triet ly',
-        title: 'Ba lo lang thuong gap cua phu huynh khi nghe ve “giao duc hanh phuc”.',
+        eyebrow: 'FAQ triết lý',
+        title: 'Ba lo lắng thường gặp của phụ huynh khi nghe về “giáo dục hạnh phúc”.',
         intro:
-          'Muc nay duoc viet de tranh hieu nham rang hanh phuc dong nghia voi de dai hay giam ky luat.',
+          'Mục này được viết để tránh hiểu nhầm rằng hạnh phúc đồng nghĩa với dễ dãi hay giảm kỷ luật.',
         items: [
           {
-            question: 'Giao duc hanh phuc co lam giam ky luat khong?',
+            question: 'Giáo d���c hạnh phúc có làm giảm kỷ luật không?',
             answer:
-              'Khong. Viet Anh xem ky luat la mot phan cua nang luc tu chu. Tre duoc day cach lap ke hoach, hoan thanh va tu danh gia ket qua.',
+              'Không. Việt Anh xem kỷ luật là một phần của năng lực tự chủ. Trẻ được dạy cách lập kế hoạch, hoàn thành và tự đánh giá kết quả.',
           },
           {
-            question: 'Tinh thuc dung co lam mat di chieu sau hoc thuat khong?',
+            question: 'Tính thực dụng có làm mất đi chiều sâu học thuật không?',
             answer:
-              'Nguoc lai, no giup hoc thuat co y nghia hon. Kien thuc duoc noi voi hanh dong, bai tap duoc noi voi ky nang song va tu duy.',
+              'Ngược lại, nó giúp học thuật có ý nghĩa hơn. Kiến thức được nối với hành động, bài tập được nối với kỹ năng sống và tư duy.',
           },
           {
-            question: 'Phu huynh nen doc tiep trang nao neu muon biet cach lam cu the?',
+            question: 'Phụ huynh nên đọc tiếp trang nào nếu muốn biết cách làm cụ thể?',
             answer:
-              'Trang He Thong PDR va cac pillar page se cho thay triet ly do duoc trien khai o tung cap hoc mot cach cu the ra sao.',
+              'Trang Hệ Thống PDR và các pillar page sẽ cho thấy triết lý đó được triển khai ở từng cấp học một cách cụ thể ra sao.',
           },
         ],
       },
@@ -1616,91 +1619,91 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'he-thong-pdr',
-    title: 'He Thong PDR Tai Truong Viet Anh',
+    title: 'Hệ Thống PDR Tại Trường Việt Anh',
     description:
-      'Trang signature asset mo ta cach Truong Viet Anh van hanh Plan - Do - Review de tao nang luc tu hoc, tu chu va kha nang phan tu cho hoc sinh.',
+      'Trang signature asset mô tả cách Trường Việt Anh vận hành Plan - Đó - Review để tạo năng lực tự học, tự chủ và khả năng phản tư cho học sinh.',
     templateClass: 'Authority Page / Signature System',
     pageType: 'Moat page',
     theme: 'brand',
     hero: {
       eyebrow: 'Signature Asset Page',
-      title: 'PDR la cach Viet Anh bien muc tieu hoc tap thanh mot nhiep dieu ro rang moi ngay.',
+      title: 'PDR là cách Việt Anh biến mục tiêu học tập thành một nhịp điệu rõ ràng mỗi ngày.',
       body:
-        'PDR khong phai mot khau hieu dep. Do la mot he thong giup hoc sinh lap ke hoach, thuc hien, roi tu nhin lai va cai tien. Trang nay phai dong vai tro “moat page”: ai doc xong cung hieu vi sao Viet Anh khac biet.',
-      primaryCta: { label: 'Xem cap hoc ap dung PDR', href: '/mam-non' },
-      secondaryCta: { label: 'Trao doi voi tuyen sinh', href: '/tuyen-sinh' },
+        'PDR không phải một khẩu hiệu đẹp. Đó là một hệ thống giúp học sinh lập kế hoạch, thực hiện, rồi tự nhìn lại và cải tiến. Trang này phải đóng vai trò “moat page”: ai đọc xong cũng hiểu vì sao Việt Anh khác biệt.',
+      primaryCta: { label: 'Xem cấp học áp dụng PDR', href: '/mam-non' },
+      secondaryCta: { label: 'Trao đổi với tuyển sinh', href: '/tuyen-sinh' },
       badges: ['Signature asset', 'Trust moat', 'Internal link hub'],
-      asideTitle: '3 dieu page nay phai lam duoc',
+      asideTitle: '3 điều page này phải làm được',
       asideItems: [
-        'Dinh nghia PDR bang ngon ngu de hieu voi phu huynh, khong qua hoc thuat.',
-        'Cho thay PDR duoc ap dung o tung cap hoc, khong chi ton tai tren slide.',
-        'Lien ket PDR voi loi ich cu the: tu chu, phan tu, giao tiep, trach nhiem.',
+        'Định nghĩa PDR bằng ngôn ngữ dễ hiểu với phụ huynh, không quá học thuật.',
+        'Cho thấy PDR được áp dụng ở từng cấp học, không chỉ tồn tại trên slide.',
+        'Liên kết PDR với lợi ích cụ thể: tự chủ, phản tư, giao tiếp, trách nhiệm.',
       ],
     },
     stats: [
-      { value: 'Plan', label: 'Hoc sinh biet minh se lam gi va vi sao' },
-      { value: 'Do', label: 'Hoc sinh tap thuc hien voi muc tieu va timebox ro rang' },
-      { value: 'Review', label: 'Hoc sinh tu nhin lai de rut kinh nghiem va cai tien' },
-      { value: 'Lap lai', label: 'Tien bo den tu nhiep dieu, khong den tu cam hung ngau nhien' },
+      { value: 'Plan', label: 'Học sinh biết mình sẽ làm gì và vì sao' },
+      { value: 'Do', label: 'Học sinh tập thực hiện với mục tiêu và timebox rõ ràng' },
+      { value: 'Review', label: 'Học sinh tự nhìn lại để rút kinh nghiệm và cải tiến' },
+      { value: 'Lặp lại', label: 'Tiến bộ đến từ nhịp điệu, không đến từ cảm hứng ngẫu nhiên' },
     ],
     sections: [
       {
         type: 'steps',
-        eyebrow: 'Plan - Do - Review',
-        title: 'Ba buoc nghe don gian, nhung la cot song cua nang luc tu hoc.',
+        eyebrow: 'Plan - Đó - Review',
+        title: 'Ba bước nghe đơn giản, nhưng là cốt sống của năng lực tự học.',
         intro:
-          'Trang nay nen viet nhu mot trang “giai thich he thong” thay vi mot bai PR. Moi buoc can noi duoc hanh vi cu the ma hoc sinh se lam.',
+          'Trang này nên viết như một trang “giải thích hệ thống” thấy vì một bai PR. Moi bước cần nói được hanh vì cụ thể mà học sinh sẽ làm.',
         items: [
           {
             title: 'Plan',
             body:
-              'Hoc sinh hoc cach dat muc tieu, chia nho cong viec, du kien kho khan va biet minh can ho tro gi. Day la buoc giup tre thoat khoi hoc vo dinh.',
+              'Học sinh học cách đặt mục tiêu, chia nhớ công việc, dự kiến khó khăn và biết mình cần hỗ trợ gì. Đây là bước giúp trẻ thởat khoi học vô định.',
           },
           {
-            title: 'Do',
+            title: 'Đó',
             body:
-              'Tre thuc hien ke hoach trong mot rhythm ro rang: vao viec, hoan thanh, giao tiep voi thay co va hop tac voi ban be.',
+              'Trẻ thực hiện kế hoạch trong một rhythm rõ ràng: vào việc, hoàn thành, giao tiếp với thầy cô và hợp tác với bạn bè.',
           },
           {
             title: 'Review',
             body:
-              'Sau moi chu ky, hoc sinh nhin lai ket qua, nhan biet diem tot, diem can sua va cai gi se thay doi o lan tiep theo.',
+              'Sau moi chu kỳ, học sinh nhìn lại kết quả, nhận biết điểm tốt, điểm cần sửa và cai gì sẽ thấy đổi ở lan tiếp theo.',
           },
         ],
       },
       {
         type: 'cards',
-        eyebrow: 'PDR theo cap hoc',
-        title: 'Cung la PDR, nhung mo hinh the hien se thay doi theo do tuoi.',
+        eyebrow: 'PDR theo cấp học',
+        title: 'Cũng là PDR, nhưng mô hình thể hiện sẽ thấy đổi theo độ tuổi.',
         intro:
-          'Muc nay vua lam ro he thong, vua tao internal links rat tu nhien sang 4 pillar pages.',
+          'Mục này vừa làm rõ hệ thống, vừa tạo internal links rất tự nhien sang 4 pillar pages.',
         columns: 2,
         items: [
           {
-            title: 'Mam Non',
+            title: 'Mầm Non',
             body:
-              'PDR duoc the hien qua nhung viec rat nho: be biet chuan bi, hoan thanh, sap xep va chia se lai nhung gi minh da lam.',
+              'PDR được thể hiện quá nhưng việc rất nhớ: bé biết chuẩn bị, hoàn thành, sắp xếp và chia sẻ lại nhưng gì mình đã làm.',
             href: '/mam-non',
-            cta: 'Xem pillar Mam Non',
+            cta: 'Xem pillar Mầm Non',
           },
           {
-            title: 'Tieu Hoc',
+            title: 'Tiểu Học',
             body:
-              'Hoc sinh tap lap ke hoach hoc tap co huong dan, theo doi tien do va phan hoi voi bai tap, du an, thoi quen hoc.',
+              'Học sinh tập lập kế hoạch học tập có hướng dẫn, theo dõi tiến độ và phản hồi với bài tập, dự án, thói quen học.',
             href: '/tieu-hoc',
-            cta: 'Xem pillar Tieu Hoc',
+            cta: 'Xem pillar Tiểu Học',
           },
           {
-            title: 'Trung Hoc Co So',
+            title: 'Trung Học Cơ Sở',
             body:
-              'THCS la giai doan PDR tang do kho: hoc sinh can tu quan ly bai tap, group work, thuyet trinh va trach nhiem ca nhan.',
+              'THCS là giai đoạn PDR tăng độ khó: học sinh cần tự quản lý bài tập, group work, thuyết trình và trách nhiệm ca nhận.',
             href: '/trung-hoc-co-so',
             cta: 'Xem pillar THCS',
           },
           {
-            title: 'Trung Hoc Pho Thong',
+            title: 'Trung Học Phổ Thông',
             body:
-              'THPT dung PDR de noi muc tieu hoc tap voi IELTS, portfolio, dinh huong dai hoc va kha nang tu hoc ben vung.',
+              'THPT dùng PDR để nói mục tiêu học tập với IELTS, portfolio, định hướng đại học và khả năng tự học bền vững.',
             href: '/trung-hoc-pho-thong',
             cta: 'Xem pillar THPT',
           },
@@ -1709,32 +1712,32 @@ export const pages: PageSpec[] = [
       {
         type: 'quote',
         eyebrow: 'Proof angle',
-        title: 'PDR can duoc doc nhu mot loi giai cho “vi sao con can tu chu”.',
+        title: 'PDR cần được đọc như một loi giai cho “vì sao con cần tự chủ”.',
         quote:
-          'Neu mot hoc sinh chi lam khi co nguoi nhac, em ay dang hoc duoc kien thuc nhung chua xay duoc nang luc. PDR duoc thiet ke de bien viec hoc thanh mot qua trinh co y thuc va co kha nang tu dieu chinh.',
-        attribution: 'Trang signature asset cua Truong Viet Anh',
+          'Nếu một học sinh chỉ làm khi có người nhắc, em ấy đang học được kiến thức nhưng chưa xây được năng lực. PDR được thiết kế để biến việc học thành một quá trình có ý thức và có khả năng tự điều chỉnh.',
+        attribution: 'Trang signature asset của Trường Việt Anh',
       },
       {
         type: 'faq',
         eyebrow: 'FAQ PDR',
-        title: 'FAQ ngan de phu huynh khong bi “nghet” boi thuat ngu.',
+        title: 'FAQ ngắn để phụ huynh không bi “nghet” boi thuật ngữ.',
         intro:
-          'Trang nay can rat de hieu. FAQ duoi day la phan dich PDR sang ngon ngu doi thuong.',
+          'Trang này cần rất dễ hiểu. FAQ dưới đây là phần dịch PDR sang ngôn ngữ đời thường.',
         items: [
           {
-            question: 'PDR co phai mot mon hoc rieng khong?',
+            question: 'PDR có phải một mon học rieng không?',
             answer:
-              'Khong. Day la he thong van hanh cach hoc. No chay xuyen qua bai tap, du an, giao tiep va cach hoc sinh tu danh gia tien bo.',
+              'Không. Đây là hệ thống vận hành cách học. Nó chạy xuyên quá bài tập, dự án, giao tiếp và cách học sinh tự đánh giá tiến bộ.',
           },
           {
-            question: 'PDR co giup tre biet tu hoc that khong?',
+            question: 'PDR có giúp trẻ biết tự học thật không?',
             answer:
-              'Do la muc tieu trung tam. Khi tre biet lap ke hoach, thuc hien va xem lai, tre dan co kha nang tu hoc ben vung hon.',
+              'Đó là mục tiêu trung tâm. Khi trẻ biết lập kế hoạch, thực hiện và xem lại, trẻ dần có khả năng tự học bền vững hơn.',
           },
           {
-            question: 'Sau khi doc page nay, phu huynh nen xem tiep gi?',
+            question: 'Sau khi đọc page này, phụ huynh nên xem tiếp gì?',
             answer:
-              'Tot nhat la sang pillar page cua cap hoc phu hop voi con de thay PDR duoc thiet ke cu the ra sao trong tung giai doan.',
+              'Tốt nhất là sang pillar page của cấp học phù hợp với con để thấy PDR được thiết kế cụ thể ra sao trong từng giai đoạn.',
           },
         ],
       },
@@ -1742,137 +1745,137 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'mam-non',
-    title: 'Mam Non Truong Viet Anh',
+    title: 'Mầm Non Trường Việt Anh',
     description:
-      'Pillar page cap hoc mam non cua Truong Viet Anh, nhan manh moi truong song ngu, thich nghi an toan va phat trien cam xuc cho be.',
+      'Pillar page cấp học mầm non của Trường Việt Anh, nhấn mạnh môi trường song ngữ, thích nghi an toàn và phát triển cảm xúc cho bé.',
     templateClass: 'Class Level Pillar',
     pageType: 'Pillar page',
     theme: 'pillar',
     hero: {
       eyebrow: 'Level Pillar',
-      title: 'Mam non Viet Anh duoc thiet ke de be thay an tam, vui ve va san sang hoc tu ngay dau.',
+      title: 'Mầm non Việt Anh được thiết kế để bé thấy an tâm, vui vẻ và sẵn sàng học từ ngày đầu.',
       body:
-        'Trang pillar nay co vai tro bat keyword cap hoc, giai thich chuong trinh va route phu huynh sang Tuyen Sinh hoac Hoc Phi ma khong can day user vao form qua som. Noi dung uu tien: thich nghi, an toan, song ngu va phat trien cam xuc.',
-      primaryCta: { label: 'Bat dau tu tuyen sinh', href: '/tuyen-sinh' },
-      secondaryCta: { label: 'Xem hoc phi mam non', href: '/hoc-phi' },
+        'Trang pillar này có vai trò bắt keyword cấp học, giải thích chương trình và route phụ huynh sang Tuyển Sinh hoặc Học Phí mà không cần dạy user vào form quá sớm. Nội dung ưu tiên: thích nghi, an toàn, song ngữ và phát triển cảm xúc.',
+      primaryCta: { label: 'Bắt đầu từ tuyển sinh', href: '/tuyen-sinh' },
+      secondaryCta: { label: 'Xem học phí mầm non', href: '/hoc-phi' },
       badges: ['SEO pillar', 'Parent trust', 'Admissions bridge'],
-      asideTitle: 'Intent chinh cua phu huynh mam non',
+      asideTitle: 'Intent chính của phụ huynh mầm non',
       asideItems: [
-        'Con co hoa nhap duoc khong?',
-        'Moi truong co an toan va co nen nep khong?',
-        'Tieng Anh va giao tiep duoc day the nao?',
-        'Hoc phi va quy trinh nhap hoc bat dau tu dau?',
+        'Con có hoà nhập được không?',
+        'Môi trường có an toàn và có nề nếp không?',
+        'Tiếng Anh và giao tiếp được dạy thế nào?',
+        'Học phí và quy trình nhập học bắt đầu từ đầu?',
       ],
     },
     stats: [
-      { value: '18 thang+', label: 'Do tuoi co the bat dau lam quen voi moi truong hoc' },
-      { value: 'Song ngu', label: 'Tieng Anh duoc dua vao nhe nhang, gan voi sinh hoat' },
-      { value: 'Thich nghi', label: 'Chu de lon nhat cua giai doan dau doi duoc dat len dau' },
-      { value: 'PDR nhe', label: 'Be tap nhan biet va hoan thanh viec nho moi ngay' },
+      { value: '18 tháng+', label: 'Độ tuổi có thể bắt đầu làm quen với môi trường học' },
+      { value: 'Song ngữ', label: 'Tiếng Anh được đưa vào nhẹ nhàng, gắn với sinh hoạt' },
+      { value: 'Thích nghi', label: 'Chủ đề lớn nhất của giai đoạn đầu đời được đặt lên đầu' },
+      { value: 'PDR nhẹ', label: 'Bé tập nhận biết và hoàn thành việc nhớ mỗi ngày' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'Curriculum Highlights',
-        title: 'Bon nhom gia tri ma phu huynh mam non thuong tim kiem.',
+        title: 'Bốn nhóm giá trị mà phụ huynh mầm non thường tìm kiếm.',
         intro:
-          'Pillar mam non can noi ro hon ca “chuong trinh hay”. No phai tra loi ve cam xuc, an toan va trai nghiem song ngu hang ngay.',
+          'Pillar mầm non cần nói rõ hơn cả “chương trình hay”. Nó phải trả lời về cảm xúc, an toàn và trải nghiệm song ngữ hàng ngày.',
         columns: 2,
         items: [
           {
-            title: 'Thich nghi nhe nhang',
+            title: 'Thích nghi nhẹ nhàng',
             body:
-              'Lop hoc va giao vien duoc to chuc de be chuyen tu sinh hoat gia dinh sang sinh hoat truong hoc mot cach an toan va co support.',
+              'Lớp học và giáo viên được to chuc để bé chuyen tự sinh hoạt gia đình sang sinh hoạt trường học một cách an toàn và có support.',
           },
           {
-            title: 'Phat trien cam xuc',
+            title: 'Phát triển cảm xúc',
             body:
-              'Tre hoc cach goi ten cam xuc, cho den luot, hop tac va hinh thanh nhung ne nep dau doi song song voi kien thuc nen tang.',
+              'Trẻ học cách gọi tên cảm xúc, cho đến lượt, hợp tác và hình thành nhưng nề nếp dau đời sống sống với kiến thức nền tảng.',
           },
           {
-            title: 'Tieng Anh thong qua trai nghiem',
+            title: 'Tiếng Anh thởng quá trải nghiệm',
             body:
-              'Tieng Anh duoc dua vao bai hat, tro choi, giao tiep va cac chu de gan gui de tre co phan xa tu nhien hon.',
+              'Tiếng Anh được đưa vào bài hát, trò chơi, giao tiếp và các chủ đề gần gũi để trẻ có phản xạ tự nhien hơn.',
           },
           {
-            title: 'Moi truong co nhiep dieu',
+            title: 'Môi trường có nhịp điệu',
             body:
-              'Mot ngay cua be duoc chia rhythm ro rang: don tre, hoc - choi, ngu trua, van dong, review cuoi ngay voi nhieu tin hieu quen thuoc.',
+              'Một ngày của bé được chia rhythm rõ ràng: đón trẻ, học - choi, ngủ trưa, vận động, review cuối ngày với nhiều tín hiệu quen thuộc.',
           },
         ],
       },
       {
         type: 'steps',
-        eyebrow: 'Day in life',
-        title: 'Mot ngay o khoi mam non can duoc hinh dung that ro.',
+        eyebrow: 'Dạy in life',
+        title: 'Một ngày ở khoi mầm non cần được hình dung thật rõ.',
         intro:
-          'Section nay dong vai tro “giam lo au” cho phu huynh. Cang cu the, pillar cang de chuyen doi sang trang tuyen sinh.',
+          'Section này đóng vai trò “giảm lo au” cho phụ huynh. Cang cụ thể, pillar cang để chuyển đổi sang trang tuyển sinh.',
         items: [
           {
-            title: 'Buoi sang binh tinh va co welcome ritual',
+            title: 'Buoi sang bình tĩnh và có welcome ritual',
             body:
-              'Be duoc don trong mot khong khi quen thuoc, co giao tiep tay voi phu huynh va giup be chuyen mood sang moi truong hoc.',
+              'Be được don trong một không khi quen thuộc, có giao tiếp tay với phụ huynh và giúp bé chuyển mood sang môi trường học.',
           },
           {
-            title: 'Cac khoi hoat dong ngan, nhieu chuyen dong',
+            title: 'Các khoi hoạt động ngan, nhiều chuyển động',
             body:
-              'Tre o do tuoi nay can nhieu khoang nho de hoc, choi, nghe, noi va van dong xen ke. Mot rhythm tot quan trong hon viec nhieu kien thuc.',
+              'Trẻ ở độ tuổi này cần nhiều khoang nhớ để học, choi, nghe, nói và vận động xen kẽ. Một rhythm tot quan trọng hơn việc nhiều kiến thức.',
           },
           {
-            title: 'Review nhe de tre biet minh da lam duoc gi',
+            title: 'Review nhe để trẻ biết mình đã làm được gì',
             body:
-              'Ngay tu mam non, tre da duoc tap nhin lai nhung viec nho minh da hoan thanh. Day la phien ban rat som cua PDR.',
+              'Ngày từ mầm non, trẻ đã được tập nhìn lại nhưng việc nhớ mình đã hoàn thành. Đây là phien bản rất sớm của PDR.',
           },
         ],
       },
       {
         type: 'links',
         eyebrow: 'Internal link hub',
-        title: 'Ba diem re nhanh phu hop nhat tu pillar mam non.',
+        title: 'Ba điểm rẽ nhanh phù hợp nhất từ pillar mầm non.',
         intro:
-          'Day la cac link can co de gom phu huynh ve dung hanh dong thay vi de ho luon quan trong.',
+          'Đây là các link cần có để gom phụ huynh về dùng hành động thấy vì để ho luẩn quẩn trọng.',
         items: [
           {
             eyebrow: 'Admissions',
-            title: 'Tuyen Sinh',
+            title: 'Tuyển Sinh',
             href: '/tuyen-sinh',
-            body: 'Diem vao phu hop neu phu huynh muon biet quy trinh dang ky va buoc tiep theo.',
+            body: 'Điểm vào phù hợp nếu phụ huynh muốn biết quy trình đăng ký và bước tiếp theo.',
           },
           {
             eyebrow: 'Money intent',
-            title: 'Hoc Phi',
+            title: 'Học Phí',
             href: '/hoc-phi',
-            body: 'Phu hop voi nhom dang tim gia va muon co muc preview minh bach truoc khi goi.',
+            body: 'Phù hợp với nhóm đang tim gia và muốn có mục preview minh bạch trước khi goi.',
           },
           {
             eyebrow: 'Brand depth',
-            title: 'Triet Ly Giao Duc',
+            title: 'Triết Lý Giáo Dục',
             href: '/triet-ly-giao-duc',
-            body: 'Diem doc tiep cho nhom phu huynh can xac nhan su phu hop ve gia tri va cach day tre.',
+            body: 'Điểm đọc tiếp cho nhóm phụ huynh cần xác nhận sự phù hợp về giá trị và cách dạy trẻ.',
           },
         ],
       },
       {
         type: 'faq',
-        eyebrow: 'FAQ mam non',
-        title: 'Nhung cau hoi co intent chuyen doi cao nhat o khoi mam non.',
+        eyebrow: 'FAQ mầm non',
+        title: 'Nhưng câu hoi có intent chuyển đổi cao nhất ở khoi mầm non.',
         intro:
-          'FAQ duoi pillar page giup bat PAA, giam do day cua sales va ho tro phu huynh ra quyet dinh nhanh hon.',
+          'FAQ dưới pillar page giúp bat PAA, giảm đó dạy của sales và hỗ trợ phụ huynh ra quyết định nhanh hơn.',
         items: [
           {
-            question: 'Be nhut nhat co hoa nhap duoc khong?',
+            question: 'Be nhút nhát có hoà nhập được không?',
             answer:
-              'Day la mot trong nhung noi lo lon nhat, va cung la ly do Viet Anh uu tien rhythm don tre, giao tiep nhe va mot moi truong an toan de be thich nghi tu tu.',
+              'Đây là một trong nhưng nỗi lo lớn nhất, và cũng là ly đó Việt Anh ưu tiên rhythm đón trẻ, giao tiếp nhe và một môi trường an toàn để bé thích nghi tự tự.',
           },
           {
-            question: 'Phu huynh nen bat dau tu trang nao neu muon dang ky?',
+            question: 'Phụ huynh nên bắt đầu từ trang nao nếu muốn đăng ký?',
             answer:
-              'Tuyen Sinh la diem vao tot nhat. Neu phu huynh dang so sanh chi phi, co the di tiep sang Hoc Phi.',
+              'Tuyển Sinh là điểm vào tốt nhất. Nếu phụ huynh đang so sánh chỉ phí, có thể đi tiếp sang Học Phí.',
           },
           {
-            question: 'Tieng Anh o mam non duoc day ra sao?',
+            question: 'Tiếng Anh ở mầm non được dạy ra sao?',
             answer:
-              'Qua bai hat, tro choi, giao tiep va cac chu de gan gui, de be hinh thanh phan xa ngon ngu song song voi trai nghiem vui.',
+              'Quá bài hát, trò chơi, giao tiếp và các chủ đề gần gũi, để bé hình thành phản xạ ngôn ngữ sống sống với trải nghiệm vui.',
           },
         ],
       },
@@ -1880,115 +1883,115 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'tieu-hoc',
-    title: 'Tieu Hoc Truong Viet Anh',
+    title: 'Tiểu Học Trường Việt Anh',
     description:
-      'Pillar page tieu hoc cua Truong Viet Anh, nhan manh can bang hoc thuat, tieng Anh, PDR va ne nep tu hoc cho hoc sinh.',
+      'Pillar page tiểu học của Trường Việt Anh, nhấn mạnh cần bằng học thuật, tiếng Anh, PDR và nề nếp tự học cho học sinh.',
     templateClass: 'Class Level Pillar',
     pageType: 'Pillar page',
     theme: 'pillar',
     hero: {
       eyebrow: 'Level Pillar',
-      title: 'Tieu hoc Viet Anh duoc xay de hoc sinh vua co ne nep hoc tap, vua giu duoc su ham hoc va tinh chu dong.',
+      title: 'Tiểu học Việt Anh được xây để học sinh vừa có nề nếp học tập, vừa gì�� được sự ham học và tính chủ động.',
       body:
-        'Trang pillar nay phuc vu nhom phu huynh dang so sanh rat manh ve chuong trinh, tieng Anh, giao vien va hoc phi. Vi vay no can can bang giua authority, internal link va conversion support.',
+        'Trang pillar này phục vụ nhóm phụ huynh đang so sánh rất mạnh về chương trình, tiếng Anh, giáo viên và học phí. Vì vay nó cần cần bằng giua authority, internal link và conversion support.',
       primaryCta: { label: 'Xem admissions hub', href: '/tuyen-sinh' },
-      secondaryCta: { label: 'Xem hoc phi toan cap', href: '/hoc-phi' },
+      secondaryCta: { label: 'Xem học phí toàn cap', href: '/hoc-phi' },
       badges: ['Seed keyword page', 'Intent match', 'Trust builder'],
-      asideTitle: 'Thong diep chinh cho phu huynh tieu hoc',
+      asideTitle: 'Thông điệp chính cho phụ huynh tiểu học',
       asideItems: [
-        'Hoc sinh duoc day cach hoc, khong chi hoc de hoan thanh bai.',
-        'Tieng Anh va ne nep duoc di cung nhau, khong danh doi.',
-        'PDR la khung giup hoc sinh tu chu hon moi hoc ky.',
-        'CTA mem nhung ro rang: hoc phi, tuyen sinh, trang thuong hieu.',
+        'Học sinh được dạy cách học, không chỉ học để hoàn thành bai.',
+        'Tiếng Anh và nề nếp được di cũng nhau, không danh doi.',
+        'PDR là khung giúp học sinh tự chủ hơn moi học ky.',
+        'CTA mem nhưng rõ ràng: học phí, tuyển sinh, trang thương hiệu.',
       ],
     },
     stats: [
-      { value: 'Can bang', label: 'Hoc thuat, tieng Anh va ne nep di song song' },
-      { value: 'PDR', label: 'Hoc sinh tap lap ke hoach hoc va tu review' },
-      { value: 'Tieng Anh', label: 'Ngon ngu duoc dung trong nhieu hoat dong co chu dich' },
-      { value: 'Tu hoc', label: 'Nang luc tu hoc duoc xem la dau ra lau dai' },
+      { value: 'Cần bằng', label: 'Học thuật, tiếng Anh và nề nếp di sống sống' },
+      { value: 'PDR', label: 'Học sinh tập lập kế hoạch học và tự review' },
+      { value: 'Tiếng Anh', label: 'Ngôn ngữ được dùng trong nhiều hoạt động có chu dich' },
+      { value: 'Tự học', label: 'Năng lực tự học được xem là đầu ra lau dai' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'Curriculum Highlights',
-        title: 'Trang pillar tieu hoc can cho thay “cham vao ket qua” nhu the nao.',
+        title: 'Trang pillar tiểu học cần cho thấy “cham vào kết quả” như thế nào.',
         intro:
-          'Phu huynh cap tieu hoc quan tam ca kien thuc nen tang lan ky nang hoc. Vi vay section nay can rat ro ve structure.',
+          'Phụ huynh cap tiểu học quan tâm ca kiến thức nền tảng lan kỹ năng học. Vì vay section này cần rất rõ về structure.',
         columns: 2,
         items: [
           {
-            title: 'Nen tang hoc thuat chac',
+            title: 'Nền tảng học thuật chac',
             body:
-              'Hoc sinh duoc xay chac cac mon cot loi, dong thoi hoc cach to chuc bai tap, ghi nho va theo doi tien do cua minh.',
+              'Học sinh được xây chac các mon cốt lõi, đồng thởi học cách to chuc bài tập, ghi nhớ và theo dõi tiến độ của minh.',
           },
           {
-            title: 'Tieng Anh co chu dich',
+            title: 'Tiếng Anh có chu dich',
             body:
-              'Tieng Anh khong chi la tiet hoc rieng, ma la mot phan cua moi truong giao tiep va tu duy, de hoc sinh su dung ngon ngu nhu mot cong cu.',
+              'Tiếng Anh không chỉ là tiet học rieng, mà là một phần của môi trường giao tiếp và tư duy, để học sinh sử dụng ngôn ngữ như một công cụ.',
           },
           {
-            title: 'Du an va trinh bay',
+            title: 'Dự án và trình bày',
             body:
-              'Tre duoc tap thuyet trinh, lam viec nhom va trinh bay suy nghi tu som, tu do tu tin hon trong lop hoc va ngoai doi song.',
+              'Trẻ được tập thuyết trình, làm việc nhóm và trình bày suy nghi từ sớm, tự đó tự tin hơn trong lớp học và ngoai đời sống.',
           },
           {
-            title: 'Ne nep hoc tap ben vung',
+            title: 'Nề nếp học tập bền vững',
             body:
-              'Ky luat duoc day qua nhung viec rat cu the: chuan bi, hoan thanh, phan hoi va review lai cach hoc cua minh.',
+              'Kỷ luật được dạy quá nhưng việc rất cụ thể: chuẩn bị, hoàn thành, phản hồi và review lại cách học của minh.',
           },
         ],
       },
       {
         type: 'steps',
         eyebrow: 'Learning rhythm',
-        title: 'Bon lop trai nghiem ma phu huynh can hinh dung ro o cap tieu hoc.',
+        title: 'Bon lớp trải nghiệm mà phụ huynh cần hình dung rõ ở cap tiểu học.',
         intro:
-          'Phu huynh khong chi mua chuong trinh. Ho mua mot nhiep dieu hoc tap ma con co the theo duoc nhieu nam lien.',
+          'Phụ huynh không chỉ mua chương trình. Ho mua một nhịp điệu học tập mà con có thể theo được nhiều nằm lien.',
         items: [
           {
-            title: 'Bat dau bang muc tieu ngay hoc',
+            title: 'Bắt đầu bằng mục tiêu ngày học',
             body:
-              'Hoc sinh biet hom nay minh can dat dieu gi, bai hoc nao can tap trung va se review ra sao vao cuoi ngay.',
+              'Học sinh biết hom này mình cần đặt điều gì, bai học nao cần tập trung và sẽ review ra sao vào cuối ngày.',
           },
           {
-            title: 'Hoc qua hoat dong co dinh huong',
+            title: 'Học quá hoạt động có định hướng',
             body:
-              'Tiet hoc duoc to chuc de hoc sinh tham gia, tra loi, hop tac va ghi nho qua hanh dong, khong chi nghe thu dong.',
+              'Tiet học được to chuc để học sinh tham gia, trả lời, hợp tác và ghi nhớ quá hành động, không chỉ nghe thu đồng.',
           },
           {
-            title: 'Tieng Anh va giao tiep duoc lap lai co chu dich',
+            title: 'Tiếng Anh và giao tiếp được lặp lại có chu dich',
             body:
-              'Tre duoc tiep xuc ngon ngu theo chu de va ngu canh ro rang de co kha nang su dung that, khong chi hoc de tra bai.',
+              'Trẻ được tiếp xuc ngôn ngữ theo chủ đề và ngữ cảnh rõ ràng để có khả năng sử dụng thật, không chỉ học để tra bai.',
           },
           {
-            title: 'Review de xay thoi quen tu hoc',
+            title: 'Review để xây thói quen tự học',
             body:
-              'Hoc sinh duoc huong dan nhin lai cach lam bai, cach dat muc tieu va cach phoi hop voi giao vien, gia dinh.',
+              'Học sinh được hướng dẫn nhìn lại cách làm bai, cách đặt mục tiêu và cách phoi hợp với giáo viên, gia đình.',
           },
         ],
       },
       {
         type: 'faq',
-        eyebrow: 'FAQ tieu hoc',
-        title: 'Cac cau hoi co y nghia lon nhat voi conversion o pillar tieu hoc.',
+        eyebrow: 'FAQ tiểu học',
+        title: 'Các câu hoi có y nghia lớn nhất với conversion ở pillar tiểu học.',
         intro:
-          'Nhung FAQ nay duoc viet de ho tro doi tuyen sinh, dong thoi tao kha nang bat long-tail queries co intent manh.',
+          'Nhưng FAQ này được viết để hỗ trợ đội tuyển sinh, đồng thởi tạo khả năng bat long-tail queries có intent mạnh.',
         items: [
           {
-            question: 'Tieu hoc Viet Anh co qua ap luc khong?',
+            question: 'Tiểu học Việt Anh có quá áp lực không?',
             answer:
-              'Pillar nay can lam ro rang muc tieu khong phai tao ap luc som, ma la xay nen nep hoc tap va kha nang tu hoc co huong dan.',
+              'Pillar này cần làm rõ ràng mục tiêu không phải tạo áp lực sớm, mà là xây nề nếp học tập và khả năng tự học có hướng dẫn.',
           },
           {
-            question: 'Phu huynh nen xem hoc phi truoc hay admissions truoc?',
+            question: 'Phụ huynh nên xem học phí trước hay admissions trước?',
             answer:
-              'Neu dang so sanh chi phi, vao Hoc Phi truoc. Neu muon biet quy trinh, giay to va buoc tiep theo, vao Tuyen Sinh.',
+              'Nếu đang so sánh chỉ phí, vào Học Phí trước. Nếu muốn biết quy trình, giay to và bước tiếp theo, vào Tuyển Sinh.',
           },
           {
-            question: 'PDR giup hoc sinh tieu hoc the nao?',
+            question: 'PDR giúp học sinh tiểu học thế nào?',
             answer:
-              'No giup hoc sinh biet lap ke hoach nho, theo doi bai tap, review lai cach hoc va dan dan hinh thanh tinh tu chu.',
+              'Nó giúp học sinh biết lập kế hoạch nhớ, theo dõi bài tập, review lại cách học và dần dần hình thành tính tự chủ.',
           },
         ],
       },
@@ -1996,113 +1999,113 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'trung-hoc-co-so',
-    title: 'Trung Hoc Co So Truong Viet Anh',
+    title: 'Trung Học Cơ Sở Trường Việt Anh',
     description:
-      'Pillar page THCS cua Truong Viet Anh, tap trung vao lo trinh hoc thuat, tieng Anh, PDR va ky nang tu chu cho hoc sinh.',
+      'Pillar page THCS của Trường Việt Anh, tập trung vào lộ trình học thuật, tiếng Anh, PDR và kỹ năng tự chủ cho học sinh.',
     templateClass: 'Class Level Pillar',
     pageType: 'Pillar page',
     theme: 'pillar',
     hero: {
       eyebrow: 'Level Pillar',
-      title: 'THCS la giai doan hoc sinh can mot lo trinh ro rang de vua lon len, vua khong mat nhiep hoc.',
+      title: 'THCS là giai đoạn học sinh cần một lộ trình rõ ràng để vừa lớn len, vừa không mất nhiep học.',
       body:
-        'Trang pillar THCS phai noi duoc mot dieu rat quan trong: day la giai doan chuyen tiep de hoc sinh tang toc hoc thuat, tieng Anh va ky nang tu hoc ma khong bi qua tai. Noi dung can giup phu huynh thay duoc su ro rang ve he thong.',
-      primaryCta: { label: 'Xem quy trinh tuyen sinh', href: '/tuyen-sinh' },
-      secondaryCta: { label: 'Tham khao hoc phi THCS', href: '/hoc-phi' },
+        'Trang pillar THCS phải nói được một điều rất quan trọng: dạy là giai đoạn chuyển tiếp để học sinh tăng tốc học thuật, tiếng Anh và kỹ năng tự học mà không bi quá tai. Nội dung cần giúp phụ huynh thấy được sự rõ ràng về hệ thống.',
+      primaryCta: { label: 'Xem quy trình tuyển sinh', href: '/tuyen-sinh' },
+      secondaryCta: { label: 'Tham khảo học phí THCS', href: '/hoc-phi' },
       badges: ['THCS authority', 'Mid-funnel support', 'Admissions bridge'],
-      asideTitle: 'Cac objection can duoc xu ly',
+      asideTitle: 'Các objection cần được xu ly',
       asideItems: [
-        'Chu trinh hoc co qua nang khong?',
-        'Tieng Anh duoc day o muc nao?',
-        'Hoc sinh co duoc huong dan cach tu hoc that khong?',
-        'THCS co duong link tu nhien sang THPT va hoc phi hay khong?',
+        'Chu trình học có quá nang không?',
+        'Tiếng Anh được dạy ở mục nao?',
+        'Học sinh có được hướng dẫn cách tự học thật không?',
+        'THCS có đường link tự nhien sang THPT và học phí hay không?',
       ],
     },
     stats: [
-      { value: 'Lo trinh', label: 'THCS duoc nhin nhu giai doan tang toc co huong dan' },
-      { value: 'Tieng Anh', label: 'Gia tang kha nang ngon ngu va su tu tin' },
-      { value: 'PDR', label: 'Hoc sinh tu quan ly bai tap va group work tot hon' },
-      { value: 'Dinh huong', label: 'San sang cho THPT, IELTS va du an lon hon' },
+      { value: 'Lộ trình', label: 'THCS được nhìn như giai đoạn tăng tốc có hướng dẫn' },
+      { value: 'Tiếng Anh', label: 'Gia tăng khả năng ngôn ngữ và sự tự tin' },
+      { value: 'PDR', label: 'Học sinh tự quản lý bài tập và group work tot hơn' },
+      { value: 'Định hướng', label: 'Sẵn sàng cho THPT, IELTS và dự án lớn hơn' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'THCS priorities',
-        title: 'Bon diem can rat ro tren pillar THCS.',
+        title: 'Bon điểm cần rất rõ trên pillar THCS.',
         intro:
-          'Nhieu phu huynh bat dau so sanh rat ky tu THCS. Trang nay vi vay can chat ve logic va co internal links dung luc.',
+          'Nhiều phụ huynh bắt đầu so sánh rất ky tự THCS. Trang này vì vay cần chat về logic và có internal links dùng luc.',
         columns: 2,
         items: [
           {
-            title: 'Hoc thuat co cau truc',
+            title: 'Học thuật có cấu trúc',
             body:
-              'Hoc sinh co mot rhythm hoc tap ro rang hon, biet cach quan ly deadline, project va bai kiem tra theo mot lo trinh co support.',
+              'Học sinh có một rhythm học tập rõ ràng hơn, biết cách quản lý deadline, project và bai kiem tra theo một lộ trình có support.',
           },
           {
-            title: 'Tieng Anh de mo rong tu duy',
+            title: 'Tiếng Anh để mo rong tư duy',
             body:
-              'Tieng Anh duoc day de hoc sinh co the doc, nghe, noi va trinh bay suy nghi tu tin hon trong mon hoc va hoat dong du an.',
+              'Tiếng Anh được dạy để học sinh có thể đọc, nghe, nói và trình bày suy nghi tự tin hơn trong mon học và hoạt động dự án.',
           },
           {
-            title: 'PDR tang cap',
+            title: 'PDR tăng cap',
             body:
-              'THCS la luc PDR khong chi la thoi quen nho nua, ma tro thanh mot he thong giup hoc sinh tu dieu chinh cach hoc.',
+              'THCS là luc PDR không chỉ là thói quen nhớ nua, mà tro thành một hệ thống giúp học sinh tự điều chỉnh cách học.',
           },
           {
-            title: 'Ky nang the ky 21',
+            title: 'Kỹ năng thế kỷ 21',
             body:
-              'Thuyet trinh, hop tac, phan bien va trach nhiem duoc dua vao cach hoc moi ngay de hoc sinh truong thanh hon.',
+              'Thuyết trình, hợp tác, phản biện và trách nhiệm được đưa vào cách học mỗi ngày để học sinh trưởng thành hơn.',
           },
         ],
       },
       {
         type: 'links',
-        eyebrow: 'Internal links can co',
-        title: 'Ba trang ma THCS phai day user toi mot cach co chu dich.',
+        eyebrow: 'Internal links cần có',
+        title: 'Ba trang mà THCS phải dạy user tôi một cách có chu dich.',
         intro:
-          'Page nay phai lam viec nhu hub: vua giu authority, vua don luc chuyen doi ve hoc phi va admissions.',
+          'Page này phải làm việc như hub: vừa gì�� authority, vừa don luc chuyển đổi về học phí và admissions.',
         items: [
           {
             eyebrow: 'Signature system',
-            title: 'He Thong PDR',
+            title: 'Hệ Thống PDR',
             href: '/he-thong-pdr',
-            body: 'Giup phu huynh nhin ro co che van hanh cua kha nang tu hoc va phan tu.',
+            body: 'Giúp phụ huynh nhìn rõ có che vận hành của khả năng tự học và phản tư.',
           },
           {
             eyebrow: 'Next stage',
-            title: 'Trung Hoc Pho Thong',
+            title: 'Trung Học Phổ Thông',
             href: '/trung-hoc-pho-thong',
-            body: 'Cho thay lo trinh THCS khong tach roi ma dan len THPT mot cach logic.',
+            body: 'Cho thấy lộ trình THCS không tach rồi mà dần len THPT một cách logic.',
           },
           {
             eyebrow: 'Commercial support',
-            title: 'Hoc Phi',
+            title: 'Học Phí',
             href: '/hoc-phi',
-            body: 'Noi user co the xem minh bach cac muc hoc phi va huong tu van tiep theo.',
+            body: 'Nói user có thể xem minh bạch các mục học phí và hướng tư vấn tiếp theo.',
           },
         ],
       },
       {
         type: 'faq',
         eyebrow: 'FAQ THCS',
-        title: 'Cau hoi hay gap nhat truoc khi phu huynh chuyen sang giai doan ra quyet dinh.',
+        title: 'Câu hoi hay gặp nhất trước khi phụ huynh chuyen sang giai đoạn ra quyết định.',
         intro:
-          'Nhung cau hoi nay duoc viet de cat giam ma sat o mid-funnel va tao kha nang rank tot hon cho long-tail.',
+          'Nhưng câu hoi này được viết để cat giảm mà sát ở mid-funnel và tạo khả năng rank tot hơn cho long-tail.',
         items: [
           {
-            question: 'THCS Viet Anh co thien ve hoc thuat hay ky nang?',
+            question: 'THCS Việt Anh có thien về học thuật hay kỹ năng?',
             answer:
-              'Trang nay phai truyen tai ro mot thong diep: day la mo hinh can bang, trong do hoc thuat, tieng Anh va nang luc tu hoc duoc xay dong thoi.',
+              'Trang này phải truyền tải rõ một thông điệp: dạy là mô hình cần bằng, trong đó học thuật, tiếng Anh và năng lực tự học được xây đồng thởi.',
           },
           {
-            question: 'PDR co giup hoc sinh THCS giam phu thuoc vao nhac nho khong?',
+            question: 'PDR có giúp học sinh THCS giảm phụ thuộc vào nhắc nhớ không?',
             answer:
-              'Do chinh la muc tieu. THCS la giai doan hoc sinh bat dau can mot he thong de tu quan ly bai tap, thoi gian va cach hoc cua minh.',
+              'Đó chính là mục tiêu. THCS là giai đoạn học sinh bắt đầu cần một hệ thống để tự quản lý bài tập, thởi gian và cách học của minh.',
           },
           {
-            question: 'Neu phu huynh dang can gia hoac quy trinh ngay, nen vao dau?',
+            question: 'Nếu phụ huynh đang cần gia hoặc quy trình ngày, nên vào đầu?',
             answer:
-              'Hoc Phi giai quyet intent thuong mai. Tuyen Sinh giai quyet intent hanh dong. Hai pages nay duoc thiet ke de ho tro trực tiep cho pillar THCS.',
+              'Học Phí giải quyết intent thương mại. Tuyển Sinh giải quyết intent hành động. Hai pages này được thiết kế để hỗ trợ trực tiếp cho pillar THCS.',
           },
         ],
       },
@@ -2110,110 +2113,110 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'trung-hoc-pho-thong',
-    title: 'Trung Hoc Pho Thong Truong Viet Anh',
+    title: 'Trung Học Phổ Thông Trường Việt Anh',
     description:
-      'Pillar page THPT cua Truong Viet Anh, nhan manh lo trinh IELTS, dinh huong dai hoc, PDR va su chu dong cua hoc sinh.',
+      'Pillar page THPT của Trường Việt Anh, nhấn mạnh lộ trình IELTS, định hướng đại học, PDR và sự chủ động của học sinh.',
     templateClass: 'Class Level Pillar',
     pageType: 'Pillar page',
     theme: 'pillar',
     hero: {
       eyebrow: 'Level Pillar',
-      title: 'THPT Viet Anh duoc xay de hoc sinh biet minh hoc vi dieu gi, dang chuan bi cho buoc tiep theo nao.',
+      title: 'THPT Việt Anh được xây để học sinh biết mình học vì điều gì, đang chuẩn bị cho bước tiếp theo nao.',
       body:
-        'THPT la trang pillar co intent rat gan conversion. Phu huynh va hoc sinh thuong so sanh manh ve dau ra, IELTS, dinh huong dai hoc va hoc phi. Vi vay page nay phai vua ro ve authority, vua ro ve next step.',
-      primaryCta: { label: 'Bat dau tu tuyen sinh', href: '/tuyen-sinh' },
-      secondaryCta: { label: 'Xem trang hoc phi', href: '/hoc-phi' },
+        'THPT là trang pillar có intent rất gan conversion. Phụ huynh và học sinh thường so sánh mạnh về đầu ra, IELTS, định hướng đại học và học phí. Vì vay page này phải vừa rõ về authority, vừa rõ về next step.',
+      primaryCta: { label: 'Bắt đầu từ tuyển sinh', href: '/tuyen-sinh' },
+      secondaryCta: { label: 'Xem trang học phí', href: '/hoc-phi' },
       badges: ['THPT pillar', 'Commercial assist', 'Outcome-led'],
-      asideTitle: 'Cac proof point can duoc goi dung',
+      asideTitle: 'Các proof point cần được gọi dùng',
       asideItems: [
-        'Lo trinh hoc va dinh huong sau THPT.',
-        'Tieng Anh / IELTS / kha nang trinh bay.',
-        'PDR nhu mot bo khung giup hoc sinh tu chiu trach nhiem.',
-        'CTA phai dan den hanh dong, khong chi mo ta.',
+        'Lộ trình học và định hướng sau THPT.',
+        'Tiếng Anh / IELTS / khả năng trình bày.',
+        'PDR như một bộ khung giúp học sinh tự chịu trách nhiệm.',
+        'CTA phải dần đến hành động, không chỉ mo ta.',
       ],
     },
     stats: [
-      { value: 'IELTS', label: 'Tieng Anh duoc dat trong boi canh dau ra va dinh huong' },
-      { value: 'PDR', label: 'Hoc sinh tu lap ke hoach va theo doi muc tieu hoc tap' },
-      { value: 'Portfolio', label: 'Trinh bay nang luc va qua trinh tien bo ro rang hon' },
-      { value: 'Dai hoc', label: 'Moi mon hoc duoc noi ve nhung lua chon phia truoc' },
+      { value: 'IELTS', label: 'Tiếng Anh được đặt trong boi canh đầu ra và định hướng' },
+      { value: 'PDR', label: 'Học sinh tự lập kế hoạch và theo dõi mục tiêu học tập' },
+      { value: 'Portfolio', label: 'Trình bày năng lực và quá trình tiến bộ rõ ràng hơn' },
+      { value: 'Đại học', label: 'Moi mon học được nói về những lua chọn phía trước' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'Outcome structure',
-        title: 'Bon lop gia tri can xuat hien ro rang o THPT.',
+        title: 'Bon lớp giá trị cần xuat hien rõ ràng ở THPT.',
         intro:
-          'Day la trang pillar “gan tien” nhat trong 4 cap hoc, nen no can noi rat ro ve dau ra va su san sang cho giai doan sau pho thong.',
+          'Đây là trang pillar “gan tien” nhất trong 4 cấp học, nên nó cần nói rất rõ về đầu ra và sự sẵn sàng cho giai đoạn sau pho thởng.',
         columns: 2,
         items: [
           {
-            title: 'Lo trinh hoc thuat co dinh huong',
+            title: 'Lộ trình học thuật có định hướng',
             body:
-              'Hoc sinh khong chi hoc de xong chuong trinh, ma hoc trong mot khung co muc tieu ro rang hon ve dai hoc, ky nang va profile ca nhan.',
+              'Học sinh không chỉ học để xong chương trình, mà học trong một khung có mục tiêu rõ ràng hơn về đại học, kỹ năng và profile ca nhận.',
           },
           {
-            title: 'Tieng Anh va IELTS',
+            title: 'Tiếng Anh và IELTS',
             body:
-              'Tieng Anh duoc nhin nhu nang luc can de hoc tap va buoc ra the gioi rong hon, khong chi la mot cot diem.',
+              'Tiếng Anh được nhìn như năng lực cần để học tập và bước ra thế giới rong hơn, không chỉ là một cot điểm.',
           },
           {
-            title: 'PDR va su chu dong ca nhan',
+            title: 'PDR và sự chủ động ca nhận',
             body:
-              'THPT la giai doan hoc sinh phai tu lap ke hoach, tu quan ly ap luc va biet review de cai tien cach hoc cua chinh minh.',
+              'THPT là giai đoạn học sinh phải tự lập kế hoạch, tự quản lý áp lực và biết review để cải tiến cách học của chính minh.',
           },
           {
-            title: 'Trinh bay, du an, portfolio',
+            title: 'Trình bày, dự án, portfolio',
             body:
-              'Hoc sinh can kha nang giao tiep, trinh bay va tong hop trai nghiem - day la mot phan cua dau ra, khong phai phan phu.',
+              'Học sinh cần khả năng giao tiếp, trình bày và tong hợp trải nghiệm - dạy là một phần của đầu ra, không phải phần phu.',
           },
         ],
       },
       {
         type: 'steps',
         eyebrow: 'Decision journey',
-        title: 'THPT page can dan user qua ba lop quyet dinh.',
+        title: 'THPT page cần dần user quá ba lớp quyết định.',
         intro:
-          'Neu khong co trinh tu ro rang, trang se de roi vao tinh trang “co ve uy tin nhung kho hanh dong”.',
+          'Nếu không có trình tự rõ ràng, trang sẽ để rồi vào tính trang “có về uy tin nhưng kho hành động”.',
         items: [
           {
-            title: 'Hieu ro outcome',
+            title: 'Hiểu rõ outcome',
             body:
-              'Truoc tien, phu huynh can biet hoc sinh se duoc chuan bi cho gi: hoc thuat, ngon ngu, tu chu va con duong phia sau THPT.',
+              'Trước tien, phụ huynh cần biết học sinh sẽ được chuẩn bị cho gì: học thuật, ngôn ngữ, tự chủ và con đường phía sau THPT.',
           },
           {
-            title: 'Xac minh bang he thong',
+            title: 'Xác mình bằng hệ thống',
             body:
-              'Sau do, ho can thay PDR va cach to chuc hoc tap cua truong du suc de dua hoc sinh den outcome do.',
+              'Sau đó, ho cần thấy PDR và cách to chuc học tập của trường đủ sức để đưa học sinh đến outcome đó.',
           },
           {
-            title: 'Hanh dong qua admissions va hoc phi',
+            title: 'Hành động quá admissions và học phí',
             body:
-              'Cuoi cung, phai co duong ro sang Tuyen Sinh va Hoc Phi de user khong bi dung lai chi vi page qua “authority” ma thieu next step.',
+              'Cuối cũng, phải có đường rõ sang Tuyển Sinh và Học Phí để user không bi dùng lại chỉ vì page quá “authority” mà thieu next step.',
           },
         ],
       },
       {
         type: 'faq',
         eyebrow: 'FAQ THPT',
-        title: 'FAQ duoc viet theo intent BOFU hon ba pillar con lai.',
+        title: 'FAQ được viết theo intent BOFU hơn ba pillar con lại.',
         intro:
-          'No ho tro phu huynh ra quyet dinh nhanh hon va giup doi tuyen sinh xu ly objection co he thong.',
+          'Nó hỗ trợ phụ huynh ra quyết định nhanh hơn và giúp đội tuyển sinh xu ly objection có hệ thống.',
         items: [
           {
-            question: 'THPT Viet Anh co thien ve IELTS va du hoc hay khong?',
+            question: 'THPT Việt Anh có thien về IELTS và du học hay không?',
             answer:
-              'Trang nay can dien giai ro rang: tieng Anh va IELTS la mot phan cua lo trinh nang luc, dong hanh cung hoc thuat, tu chu va dinh huong sau THPT.',
+              'Trang này cần diễn giải rõ ràng: tiếng Anh và IELTS là một phần của lộ trình năng lực, đồng hành cùng học thuật, tự chủ và định hướng sau THPT.',
           },
           {
-            question: 'Hoc sinh THPT co duoc huong dan cach tu hoc that su khong?',
+            question: 'Học sinh THPT có được hướng dẫn cách tự học thật sự không?',
             answer:
-              'Co. PDR la bo khung giup hoc sinh tu lap ke hoach, theo doi muc tieu va review qua trinh hoc cua minh mot cach ro rang hon.',
+              'Có. PDR là bộ khung giúp học sinh tự lập kế hoạch, theo dõi mục tiêu và review quá trình học của mình một cách rõ ràng hơn.',
           },
           {
-            question: 'Phu huynh nen lam gi tiep theo neu thay phu hop?',
+            question: 'Phụ huynh nên làm gì tiếp theo nếu thấy phù hợp?',
             answer:
-              'Trang Tuyen Sinh la diem vao phu hop nhat de bat dau, con Hoc Phi phuc vu nhu cau tham khao chi phi va tu van theo level.',
+              'Trang Tuyển Sinh là điểm vào phù hợp nhất để bắt đầu, con Học Phí phục vụ như cầu tham khảo chỉ phí và tư vấn theo level.',
           },
         ],
       },
@@ -2221,131 +2224,131 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'tuyen-sinh',
-    title: 'Tuyen Sinh Truong Viet Anh',
+    title: 'Tuyển Sinh Trường Việt Anh',
     description:
-      'Admissions hub cua Truong Viet Anh, giai thich quy trinh tuyen sinh, cac moc hanh dong va cach phu huynh bat dau tu van nhanh.',
+      'Admissions hub của Trường Việt Anh, giải thích quy trình tuyển sinh, các mốc hành động và cách phụ huynh bắt đầu tư vấn nhanh.',
     templateClass: 'Admissions Hub',
     pageType: 'Conversion hub',
     theme: 'admissions',
     hero: {
       eyebrow: 'Admissions Hub',
-      title: 'Khi phu huynh da san sang hanh dong, trang tuyen sinh can giai quyet friction that nhanh.',
+      title: 'Khi phụ huynh đã sẵn sàng hành động, trang tuyển sinh cần giải quyết friction thật nhanh.',
       body:
-        'Day la conversion hub cua dot launch dau tien. No khong can qua nhieu van hoa. No can ro quy trinh, ro CTA va ro cach route phu huynh sang level phu hop, hoc phi hoac cuoc goi tu van.',
-      primaryCta: { label: 'Goi ngay cho doi tu van', href: contactLinks.phoneHref },
-      secondaryCta: { label: 'Xem hoc phi', href: '/hoc-phi' },
+        'Đây là conversion hub của đợt launch đầu tiên. Nó không cần quá nhiều văn hóa. Nó cần rõ quy trình, rõ CTA và rõ cách route phụ huynh sang level phù hợp, học phí hoặc cuộc gọi tư vấn.',
+      primaryCta: { label: 'Goi ngay cho doi tư vấn', href: contactLinks.phoneHref },
+      secondaryCta: { label: 'Xem học phí', href: '/hoc-phi' },
       badges: ['Admissions funnel', 'Conversion hub', 'Low-friction routing'],
-      asideTitle: 'Ba viec admissions hub phai lam ngay',
+      asideTitle: 'Ba việc admissions hub phải làm ngay',
       asideItems: [
-        'Giai thich quy trinh mot cach ngan gon, khong hanh chinh hoa.',
-        'Cho phu huynh thay 4 cap hoc deu co duong vao ro rang.',
-        'Tao nhieu next-step don gian: goi, zalo, hoc phi, pillar pages.',
+        'Giải thích quy trình một cách ngắn gọn, không hành chính hóa.',
+        'Cho phụ huynh thấy 4 cấp học đều có đường vào rõ ràng.',
+        'Tạo nhiều next-step đơn giản: gọi, zalo, học phí, pillar pages.',
       ],
     },
     stats: [
-      { value: '4 buoc', label: 'Tu quan tam den xac nhan nhap hoc' },
-      { value: '4 cap hoc', label: 'Mot hub dung cho toan he thong' },
-      { value: 'Call / Zalo', label: 'Hai kenh nhu cau hanh dong nhanh nhat' },
-      { value: 'Pillar-linked', label: 'Moi level page deu day duoc ve day' },
+      { value: '4 bước', label: 'Tự quan tâm đến xác nhận nhập học' },
+      { value: '4 cấp học', label: 'Một hub dùng cho toàn hệ thống' },
+      { value: 'Call / Zalo', label: 'Hai kênh như cầu hành động nhanh nhất' },
+      { value: 'Pillar-linked', label: 'Moi level page đều dạy được về đây' },
     ],
     sections: [
       {
         type: 'steps',
         eyebrow: 'Admissions flow',
-        title: 'Quy trinh tuyen sinh can ro den muc phu huynh chi can doc 1 phut la biet minh dang o dau.',
+        title: 'Quy trình tuyển sinh cần rõ đến mục phụ huynh chỉ cần đọc 1 phút là biết mình đang ở đầu.',
         intro:
-          'Day la core logic cua conversion hub. Khi quy trinh ro, phu huynh it tri hoan hon va sales goi lai cung de chot hon.',
+          'Đây là core logic của conversion hub. Khi quy trình rõ, phụ huynh ít trì hoãn hơn và sales gọi lại cũng để chốt hơn.',
         items: [
           {
-            title: 'Buoc 1: Xac dinh cap hoc phu hop',
+            title: 'Bước 1: Xác đ���nh cấp học phù hợp',
             body:
-              'Neu phu huynh chua ro, hay bat dau tu 4 pillar pages. Moi trang cap hoc se giai thich chuong trinh, triet ly va intent tiep theo.',
+              'Nếu phụ huynh chưa rõ, hay bắt đầu từ 4 pillar pages. Moi trang cấp học sẽ giải thích chương trình, triết lý và intent tiếp theo.',
           },
           {
-            title: 'Buoc 2: Lam ro hoc phi va muc quan tam',
+            title: 'Bước 2: Làm rõ học phí và mục quan tâm',
             body:
-              'Trang Hoc Phi cung cap range va logic chi phi. Muc tieu la giam do ma sat truoc khi vao tu van chi tiet.',
+              'Trang Học Phí cũng cap range và logic chỉ phí. Mục tiêu là giảm đó mà sát trước khi vào tư vấn chi tiết.',
           },
           {
-            title: 'Buoc 3: Goi, chat hoac hen lich',
+            title: 'Bước 3: Goi, chat hoặc hen lich',
             body:
-              'Doi admissions co the tiep nhan thong tin qua cuoc goi hoac Zalo, sau do dieu phoi buoc tiep theo cho dung cap hoc.',
+              'Doi admissions có thể tiếp nhận thởng tin quá cuộc gọi hoặc Zalo, sau đó điều phối bước tiếp theo cho dùng cấp học.',
           },
           {
-            title: 'Buoc 4: Chot hanh dong tiep theo',
+            title: 'Bước 4: Chốt hành động tiếp theo',
             body:
-              'Sau khi du thong tin, phu huynh duoc dinh huong sang assessment, tham quan hoac xu ly ho so nhap hoc o phase tiep theo.',
+              'Sau khi du thởng tin, phụ huynh được định hướng sang assessment, tham quan hoặc xu ly hồ sơ nhập học ở phase tiếp theo.',
           },
         ],
       },
       {
         type: 'links',
         eyebrow: 'Quick routes',
-        title: 'Ba luong hanh dong ma admissions hub can route that nhanh.',
+        title: 'Ba luồng hành động mà admissions hub cần route thật nhanh.',
         intro:
-          'Links duoi day vua la block dieu huong, vua la internal linking support cho 4 pillars va money page.',
+          'Links dưới đây vừa là block điều hướng, vừa là internal linking support cho 4 pillars và money page.',
         items: [
           {
-            eyebrow: 'Cap hoc',
-            title: 'Bat dau tu Mam Non',
+            eyebrow: 'Cấp học',
+            title: 'Bắt đầu từ Mầm Non',
             href: '/mam-non',
-            body: 'Diem vao cho nhom phu huynh can thong tin cap hoc truoc khi quyet dinh tiep.',
+            body: 'Điểm vào cho nhóm phụ huynh cần thởng tin cấp học trước khi quyết định tiếp.',
           },
           {
-            eyebrow: 'Cap hoc',
-            title: 'Bat dau tu Tieu Hoc',
+            eyebrow: 'Cấp học',
+            title: 'Bắt đầu từ Tiểu Học',
             href: '/tieu-hoc',
-            body: 'Phu hop voi nhom dang so sanh chuong trinh va can bang hoc thuat - tieng Anh.',
+            body: 'Phù hợp với nhóm đang so sánh chương trình và cần bằng học thuật - tiếng Anh.',
           },
           {
             eyebrow: 'Commercial',
-            title: 'Vao thang Hoc Phi',
+            title: 'Vào thang Học Phí',
             href: '/hoc-phi',
-            body: 'Diem re nhanh cho user BOFU muon lam ro range chi phi va muc do phu hop.',
+            body: 'Điểm rẽ nhanh cho user BOFU muốn làm rõ rànge chỉ phí và mục đó phù hợp.',
           },
         ],
       },
       {
         type: 'cards',
         eyebrow: 'CTA support',
-        title: 'Hai kieu user admissions hub can phuc vu cung luc.',
+        title: 'Hai kieu user admissions hub cần phục vụ cũng luc.',
         intro:
-          'Neu chỉ co mot CTA, page se mat mot nua nhu cau. Day la ly do block nay can ton tai o gan cuoi trang.',
+          'Nếu chỉ có một CTA, page sẽ mất một nua như cầu. Đây là ly đó block này cần tồn tại ở gan cuối trang.',
         columns: 2,
         items: [
           {
-            title: 'Nhom can thong tin nhanh',
+            title: 'Nhom cần thởng tin nhanh',
             body:
-              'Voi nhom nay, hotline va Zalo la kenh ma sat thap nhat. Ho can co ngay so dien thoai va duoc huong dan tiep theo nhanh.',
+              'Với nhóm này, hotline và Zalo là kênh mà sát thap nhất. Ho cần có ngày số dien thởai và được hướng dẫn tiếp theo nhanh.',
           },
           {
-            title: 'Nhom can do sau truoc khi lien he',
+            title: 'Nhom cần đó sau trước khi lien he',
             body:
-              'Voi nhom nay, pillar pages va Hoc Phi la noi de tiep tuc doc. Admissions hub co nhiem vu route, khong can giam do sau noi dung.',
+              'Với nhóm này, pillar pages và Học Phí là nói để tiếp tục đọc. Admissions hub có nhiem vu route, không cần giảm đó sau nội dung.',
           },
         ],
       },
       {
         type: 'faq',
-        eyebrow: 'FAQ tuyen sinh',
-        title: 'Nhung cau hoi admissions hub phai xu ly rat gon.',
+        eyebrow: 'FAQ tuyển sinh',
+        title: 'Nhưng câu hoi admissions hub phải xu ly rất gon.',
         intro:
-          'Bo FAQ nay giup giam call lap lai va ho tro SEO cho nhung truy van co intent hanh dong.',
+          'Bộ FAQ này giúp giảm call lặp lại và hỗ trợ SEO cho nhưng truy van có intent hành động.',
         items: [
           {
-            question: 'Neu chua chac cap hoc nao phu hop thi bat dau tu dau?',
+            question: 'Nếu chưa chac cấp học nao phù hợp thì bắt đầu từ đầu?',
             answer:
-              'Bat dau tu trang pillar cua cap hoc gan nhat voi do tuoi hien tai cua con, sau do quay lai admissions hub de tiep tuc hanh dong.',
+              'Bắt đầu từ trang pillar của cấp học gan nhất với độ tuổi hien tai của con, sau đó quay lại admissions hub để tiếp tục hành động.',
           },
           {
-            question: 'Neu muon biet chi phi truoc khi goi thi sao?',
+            question: 'Nếu muốn biết chỉ phí trước khi gọi thì sao?',
             answer:
-              'Trang Hoc Phi duoc thiet ke chinh xac cho muc dich do. Sau khi co hinh dung range, phu huynh co the goi admissions de duoc tu van cu the hon.',
+              'Trang Học Phí được thiết kế chính xác cho mục dich đó. Sau khi có hình dung range, phụ huynh có thể gọi admissions để được tư vấn cụ thể hơn.',
           },
           {
-            question: 'Admissions hub co phai trang dang ky form khong?',
+            question: 'Admissions hub có phải trang đăng ký form không?',
             answer:
-              'Trong dot launch dau tien, no la trang dieu huong low-friction: goi, chat Zalo, hoc phi va 4 pillar pages. Form chuyen sau se duoc them o wave tiep theo.',
+              'Trong đợt launch đầu tiên, nó là trang điều hướng low-friction: gọi, chat Zalo, học phí và 4 pillar pages. Form chuyen sau sẽ được thêm ở wave tiếp theo.',
           },
         ],
       },
@@ -2353,67 +2356,67 @@ export const pages: PageSpec[] = [
   },
   {
     slug: 'hoc-phi',
-    title: 'Hoc Phi Truong Viet Anh',
+    title: 'Học Phí Trường Việt Anh',
     description:
-      'Money page cua Truong Viet Anh, trinh bay range hoc phi theo cap hoc, logic gia tri va cach tiep tuc nhan bang hoc phi chi tiet qua doi tuyen sinh.',
+      'Money page của Trường Việt Anh, trình bày range học phí theo cấp học, logic giá trị và cách tiếp tục nhận bằng học phí chi tiết quá đội tuyển sinh.',
     templateClass: 'Money Page / Fee Support',
     pageType: 'Commercial intent page',
     theme: 'tuition',
     hero: {
       eyebrow: 'Money Page',
-      title: 'Trang hoc phi can minh bach du de tao niem tin, nhung van giu duoc duong day tu van chi tiet.',
+      title: 'Trang học phí cần minh bạch đủ để tạo niềm tin, nhưng van gì�� được đường dạy tư vấn chi tiết.',
       body:
-        'Day la money page quan trong nhat cua dot launch dau tien. No khong co muc tieu “an” thong tin. No co muc tieu giup phu huynh hinh dung range hoc phi, hieu cau truc gia tri va di tiep sang hanh dong phu hop.',
-      primaryCta: { label: 'Goi de nhan tu van hoc phi', href: contactLinks.phoneHref },
-      secondaryCta: { label: 'Quay ve tuyen sinh', href: '/tuyen-sinh' },
+        'Đây là money page quan trọng nhất của đợt launch đầu tiên. Nó không có mục tiêu “an” thởng tin. Nó có mục tiêu giúp phụ huynh hình dung range học phí, hiểu cấu trúc giá trị và đi tiếp sang hành động phù hợp.',
+      primaryCta: { label: 'Goi để nhận tư vấn học phí', href: contactLinks.phoneHref },
+      secondaryCta: { label: 'Quay về tuyển sinh', href: '/tuyen-sinh' },
       badges: ['Commercial intent', 'Friction reducer', 'Sales support'],
-      asideTitle: 'Money page nay duoc xay cho 3 intent',
+      asideTitle: 'Money page này được xây cho 3 intent',
       asideItems: [
-        'Nguoi dang so sanh range hoc phi.',
-        'Nguoi can xac nhan co “dang tien” hay khong.',
-        'Nguoi muon biet buoc tiep theo de nhan bang phi chi tiet.',
+        'Người đang so sánh range học phí.',
+        'Người cần xác nhận có “đang tien” hay không.',
+        'Người muốn biết bước tiếp theo để nhận bảng phí chi tiết.',
       ],
     },
     stats: [
-      { value: '4 levels', label: 'Preview hoc phi theo 4 cap hoc chinh' },
-      { value: 'Range preview', label: 'Minh bach du de xoa friction dau funnel' },
-      { value: 'Value-led', label: 'Gia tri duoc giai thich cung hoc phi' },
-      { value: 'Sales assist', label: 'Page duoc viet de doi admissions goi lai de hon' },
+      { value: '4 levels', label: 'Preview học phí theo 4 cấp học chinh' },
+      { value: 'Range preview', label: 'Minh bạch đủ để xóa friction đầu funnel' },
+      { value: 'Value-led', label: 'Giá trị được giải thích cùng học phí' },
+      { value: 'Sales assist', label: 'Page được viết để đội admissions gọi lại để hơn' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'Fee preview',
-        title: 'Preview hoc phi nen du ro de user co moc tham chieu, nhung khong bien page thanh bang gia khung.',
+        title: 'Preview học phí nên du rõ để user có mốc tham chiếu, nhưng không biến page thành bảng giá khung.',
         intro:
-          'Voi dot launch dau tien, cach tot nhat la dua ra range theo cap hoc va giai thich cac lop gia tri di kem.',
+          'Với đợt launch đầu tiên, cách tốt nhất là đưa ra range theo cấp học và giải thích các lớp giá trị đi kèm.',
         columns: 2,
         items: [
           {
-            title: 'Mam Non',
+            title: 'Mầm Non',
             body:
-              'Range hoc phi mam non duoc trinh bay nhu mot moc tham chieu de phu huynh can doi voi chuong trinh song ngu, moi truong va nhiep sinh hoat.',
+              'Range học phí mầm non được trình bày như một mốc tham chiếu để phụ huynh cần doi với chương trình song ngữ, môi trường và nhiep sinh hoạt.',
             href: '/mam-non',
-            cta: 'Xem pillar Mam Non',
+            cta: 'Xem pillar Mầm Non',
           },
           {
-            title: 'Tieu Hoc',
+            title: 'Tiểu Học',
             body:
-              'Tieu hoc can duoc nhin trong boi canh hoc thuat, tieng Anh, PDR va moi truong ky luat nhe nhang de tre tu hoc tot hon.',
+              'Tiểu học cần được nhìn trong boi canh học thuật, tiếng Anh, PDR và môi trường kỷ luật nhẹ nhàng để trẻ tự học tot hơn.',
             href: '/tieu-hoc',
-            cta: 'Xem pillar Tieu Hoc',
+            cta: 'Xem pillar Tiểu Học',
           },
           {
-            title: 'Trung Hoc Co So',
+            title: 'Trung Học Cơ Sở',
             body:
-              'Range THCS can di cung thong diep ve tang toc hoc thuat, tieng Anh, group projects va su chu dong cua hoc sinh.',
+              'Range THCS cần di cũng thông điệp về tăng tốc học thuật, tiếng Anh, group projects và sự chủ động của học sinh.',
             href: '/trung-hoc-co-so',
             cta: 'Xem pillar THCS',
           },
           {
-            title: 'Trung Hoc Pho Thong',
+            title: 'Trung Học Phổ Thông',
             body:
-              'THPT la level co intent thuong mai manh hon, vi vay page can noi ro gia tri dau ra, IELTS va dinh huong dai hoc.',
+              'THPT là level có intent thương mại mạnh hơn, vì vay page cần nói rõ giá trị đầu ra, IELTS và định hướng đại học.',
             href: '/trung-hoc-pho-thong',
             cta: 'Xem pillar THPT',
           },
@@ -2422,75 +2425,75 @@ export const pages: PageSpec[] = [
       {
         type: 'steps',
         eyebrow: 'Fee logic',
-        title: 'Ba lop logic can co tren money page de tranh cam giac “gia cao vi thuong hieu”.',
+        title: 'Ba lớp logic cần có trên money page để tránh cảm giac “gia cao vì thương hiệu”.',
         intro:
-          'Phu huynh khong chi hoi bao nhieu tien. Ho dang hoi minh nhan lai duoc dieu gi va no co xung dang khong.',
+          'Phụ huynh không chỉ hoi bao nhiều tiên. Ho đang hoi mình nhận lại được điều gì và nó có xung đang không.',
         items: [
           {
-            title: 'Hoc phi duoc gan voi trai nghiem hoc tap',
+            title: 'Học phí được gắn với trải nghiệm học tập',
             body:
-              'No phan anh mot he thong giao duc lien cap, su dau tu vao tieng Anh, vao phuong phap va vao nhiep hoc tap co cau truc.',
+              'Nó phần anh một hệ thống giáo dục liên cấp, sự dau tự vào tiếng Anh, vào phương pháp và vào nhiep học tập có cấu trúc.',
           },
           {
-            title: 'Hoc phi can di cung minh bach',
+            title: 'Học phí cần di cũng minh bạch',
             body:
-              'Minh bach khong co nghia la phai dua moi dong phi ra homepage. Minh bach la cho user mot range de dinh hinh va mot duong day ro de nhan thong tin chi tiet.',
+              'Minh bạch không có nghia là phải đưa moi đồng phi ra homepage. Minh bạch là cho user một range để dinh hinh và một đường dạy rõ để nhận thởng tin chi tiết.',
           },
           {
-            title: 'Hoc phi la mot phan cua conversation, khong phai dau cuoi',
+            title: 'Học phí là một phần của conversation, không phải dau cuối',
             body:
-              'Money page co nhiem vu cat giam friction, sau do chuyen tiep sang doi tu van de xac nhan cap hoc, nhu cau va buoc tiep theo.',
+              'Money page có nhiem vu cat giảm friction, sau đó chuyển tiếp sang doi tư vấn để xác nhận cấp học, như cầu và bước tiếp theo.',
           },
         ],
       },
       {
         type: 'links',
         eyebrow: 'Commercial routes',
-        title: 'Neu user chua san sang goi ngay, day la cac duong di tiep theo hop ly nhat.',
+        title: 'Nếu user chưa sẵn sàng gọi ngày, dạy là các đường đi tiếp theo hợp ly nhất.',
         intro:
-          'Money page tot se khong de phu huynh bi dung lai trong mot khong gian chi co bang gia. No phai mo sang triet ly, cap hoc va admissions.',
+          'Money page tot sẽ không để phụ huynh bi dùng lại trong một không gian chỉ có bằng gia. Nó phải mo sang triết lý, cấp học và admissions.',
         items: [
           {
             eyebrow: 'Admissions',
-            title: 'Tuyen Sinh',
+            title: 'Tuyển Sinh',
             href: '/tuyen-sinh',
-            body: 'Khi user muon biet quy trinh va cach bat dau, admissions hub la buoc ke tiep hop ly nhat.',
+            body: 'Khi user muốn biết quy trình và cách bắt đầu, admissions hub là bước ke tiếp hợp ly nhất.',
           },
           {
             eyebrow: 'Brand trust',
             title: 'Gioi Thieu',
             href: '/gioi-thieu',
-            body: 'Danh cho phu huynh dang can “ly do ton tai” va muc do phu hop ve gia tri truoc khi chot duoc quyet dinh.',
+            body: 'Danh cho phụ huynh đang cần “ly đó tồn tại” và mục đó phù hợp về giá trị trước khi chốt được quyết định.',
           },
           {
             eyebrow: 'Signature',
-            title: 'He Thong PDR',
+            title: 'Hệ Thống PDR',
             href: '/he-thong-pdr',
-            body: 'Danh cho nhom muon xac minh rang gia tri hoc phi duoc doi lai bang mot he thong hoc tap ro rang.',
+            body: 'Danh cho nhóm muốn xác mình rằng giá trị học phí được doi lại bằng một hệ thống học tập rõ ràng.',
           },
         ],
       },
       {
         type: 'faq',
-        eyebrow: 'FAQ hoc phi',
-        title: 'Ba cau hoi co the giup money page chuyen doi tot hon.',
+        eyebrow: 'FAQ học phí',
+        title: 'Ba câu hoi có thể giúp money page chuyển đổi tot hơn.',
         intro:
-          'FAQ o day khong can dai, nhung phai danh dung vao friction thuong gap cua phu huynh khi so sanh.',
+          'FAQ ở dạy không cần dai, nhưng phải danh dùng vào friction thường gặp của phụ huynh khi so sánh.',
         items: [
           {
-            question: 'Viet Anh co cong khai hoc phi hoan toan khong?',
+            question: 'Việt Anh có cong khai học phí hoãn toàn không?',
             answer:
-              'Trang nay cong khai range va logic hoc phi de giam friction. Muc phi chi tiet se duoc admissions huong dan theo cap hoc va nhu cau cua gia dinh.',
+              'Trang này cong khai range và logic học phí để giảm friction. Mục phi chi tiết sẽ được admissions hướng dẫn theo cấp học và như cầu của gia đình.',
           },
           {
-            question: 'Nen xem hoc phi truoc hay chuong trinh truoc?',
+            question: 'Nen xem học phí trước hay chương trình trước?',
             answer:
-              'Neu phu huynh dang o BOFU, hoc phi la diem vao hop ly. Neu van dang so sanh gia tri, hay quay lai pillar page cap hoc de doi chieu ky hon.',
+              'Nếu phụ huynh đang ở BOFU, học phí là điểm vào hợp ly. Nếu vẫn đang so sánh giá trị, hay quay lại pillar page cấp học để đối chiếu ky hơn.',
           },
           {
-            question: 'Sau khi xem hoc phi thi buoc tiep theo la gi?',
+            question: 'Sau khi xem học phí thì bước tiếp theo là gì?',
             answer:
-              'Buoc tiep theo co the la goi admissions, nhan tu van qua Zalo hoac vao Tuyen Sinh de xem ro quy trinh va cac moc hanh dong.',
+              'Bước tiếp theo có thể là gọi admissions, nhận tư vấn quá Zalo hoặc vào Tuyển Sinh để xem rõ quy trình và các mốc hành động.',
           },
         ],
       },

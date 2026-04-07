@@ -1,0 +1,649 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường THPT Việt Anh",
+    "alternateName": "Trường Trung Học Phổ Thông Việt Anh",
+    "url": "https://truongvietanh.com/trung-hoc-pho-thong",
+    "logo": "https://truongvietanh.com/logo-crest-80.webp",
+    "foundingDate": "2011",
+    "description": "Trường THPT Việt Anh tại TP.HCM: đầu ra IELTS 6.0-8.0, 99% học sinh vào đại học, chương trình du học profile, kỹ năng lãnh đạo. Giải pháp cho học sinh rớt lớp 10 công lập.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.8",
+      "bestRating": "5",
+      "ratingCount": "250"
+    },
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": 500 },
+    "areaServed": ["TP. Hồ Chí Minh", "Long An", "Kiên Giang"],
+    "educationalLevel": "High School",
+    "teaches": ["IELTS Preparation", "SAT Prep", "Leadership Skills", "University Placement", "Study Abroad Profile"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Học sinh THPT Việt Anh tốt nghiệp đạt IELTS mấy điểm?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Học sinh THPT Việt Anh tốt nghiệp đạt IELTS từ 6.0 đến 8.0. Trung bình đầu ra là IELTS 6.5. Lộ trình luyện thi IELTS chuyên sâu bắt đầu từ lớp 10 với giáo viên bản ngữ và trung tâm khảo thí IELTS tại trường." }
+      },
+      {
+        "@type": "Question",
+        "name": "Trường THPT Việt Anh có thi đầu vào không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Có bài kiểm tra đánh giá năng lực đầu vào nhưng không phải kỳ thi tuyển sinh cạnh tranh khắc nghiệt như trường công lập. Trường đánh giá toàn diện qua phỏng vấn, bài kiểm tra Toán-Anh và hồ sơ học tập. Học sinh rớt lớp 10 công lập vẫn được xét tuyển." }
+      },
+      {
+        "@type": "Question",
+        "name": "Trường THPT Việt Anh hỗ trợ du học nước nào?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Trường hỗ trợ du học tại nhiều quốc gia: Mỹ, Anh, Úc, Canada, Nhật Bản, Hàn Quốc, Singapore. Đội ngũ tư vấn du học riêng hỗ trợ xây dựng profile, viết recommendation letters, chuẩn bị SAT/TOEFL và nộp hồ sơ đại học." }
+      },
+      {
+        "@type": "Question",
+        "name": "Tỷ lệ học sinh THPT Việt Anh đậu đại học là bao nhiêu?",
+        "acceptedAnswer": { "@type": "Answer", "text": "99% học sinh THPT Việt Anh đậu đại học. Trong đó, khoảng 30% du học nước ngoài, 70% vào các trường đại học top trong nước như Bách Khoa, Y Dược, Kinh Tế, RMIT, Fulbright." }
+      },
+      {
+        "@type": "Question",
+        "name": "Trường THPT Việt Anh có học bổng không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Có. Trường có chính sách học bổng dựa trên thành tích học tập, năng khiếu đặc biệt và hoàn cảnh gia đình. Học bổng dao động từ 25% đến 100% học phí tuỳ theo từng trường hợp cụ thể." }
+      },
+      {
+        "@type": "Question",
+        "name": "Trường THPT Việt Anh có hoạt động ngoại khoá gì?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Hơn 20 câu lạc bộ ngoại khoá: Debate Club, MUN, Robotics, STEM, Âm nhạc, Thể thao (bóng đá, bóng rổ, bơi lội), Tình nguyện cộng đồng, Doanh nhân trẻ, Photography, Drama Club. Các CLB giúp xây dựng du học profile phong phú." }
+      },
+      {
+        "@type": "Question",
+        "name": "Học sinh rớt lớp 10 công lập có được nhận vào THPT Việt Anh không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Có. Trường Việt Anh nhận học sinh rớt lớp 10 công lập. Sau bài đánh giá năng lực và phỏng vấn, học sinh được xếp lớp phù hợp và nhận hỗ trợ tâm lý, học thuật để nhanh chóng hoà nhập và phát triển." }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Chương trình", "item": "https://truongvietanh.com/gioi-thieu" },
+      { "@type": "ListItem", "position": 3, "name": "THPT", "item": "https://truongvietanh.com/trung-hoc-pho-thong" }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Trường THPT Việt Anh — Đầu Ra IELTS 6.0-8.0, 99% Vào Đại Học"
+  description="Trường THPT Việt Anh tại TP.HCM: đầu ra IELTS 6.0-8.0, 99% học sinh vào đại học, chương trình du học profile, kỹ năng lãnh đạo. Giải pháp cho học sinh rớt lớp 10 công lập."
+  canonical="https://truongvietanh.com/trung-hoc-pho-thong"
+  ogImage="https://media.truongvietanh.com/images/extra-20230311-DSC08612-scaled.webp"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase />
+
+    <!-- ====== LAYER 2: HERO WITH FORM ====== -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">/</span>
+            <a href="/gioi-thieu">Chương trình</a>
+            <span aria-hidden="true">/</span>
+            <span>THPT</span>
+          </nav>
+
+          <h1 class="gi-h1">Trường THPT Việt Anh: Đầu Ra IELTS 6.0-8.0 Và 99% Vào Đại Học</h1>
+          <p class="gi-subtitle">Luyện thi IELTS chuyên sâu — Du học profile — Kỹ năng lãnh đạo — 99% vào đại học</p>
+
+          <div class="gi-hero-rating">
+            <span class="gi-stars" aria-label="4.8 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-rating-text">4.8/5 (250+ đánh giá)</span>
+          </div>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>IELTS</strong> 6.0-8.0</div>
+            <div class="gi-badge"><strong>99%</strong> Vào ĐH</div>
+            <div class="gi-badge"><strong>Du học</strong> Profile</div>
+            <div class="gi-badge"><strong>8-12tr</strong> /tháng</div>
+          </div>
+        </div>
+
+        <div class="gi-hero-right">
+          <div class="gi-form-card">
+            <p class="gi-form-heading">Đăng ký tư vấn chương trình THPT miễn phí</p>
+            <LeadFormTwoStepEmailFirst
+              formId="thpt-form"
+              funnelCode="thpt-pillar"
+              schoolLevel="thpt"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <img src="https://media.truongvietanh.com/images/olympic-03.webp" alt="Học sinh THPT Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+    <!-- ====== LAYER 3 + 4: TOC SIDEBAR + CONTENT ====== -->
+    <div class="gi-container gi-body">
+      <!-- Sticky TOC sidebar -->
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Mục lục</p>
+        <ol class="gi-toc-list">
+          <li><a href="#khac-biet">Chương trình khác biệt</a></li>
+          <li><a href="#ielts">Đầu ra IELTS</a></li>
+          <li><a href="#rot-lop-10">Rớt lớp 10 công lập</a></li>
+          <li><a href="#du-hoc">Hỗ trợ du học</a></li>
+          <li><a href="#hoc-phi">Học phí THPT</a></li>
+          <li><a href="#danh-gia">Đánh giá & nhận xét</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="#thpt-form-thpt-pillar" class="gi-toc-cta">Đăng ký tư vấn</a>
+      </nav>
+
+      <!-- Main content -->
+      <article class="gi-main">
+
+        <!-- Section 1: Chương trình khác biệt -->
+        <section id="khac-biet" class="gi-section">
+          <h2>Chương trình THPT tại Trường Việt Anh có gì khác biệt?</h2>
+          <p>Chương trình THPT tại Trường Việt Anh không chỉ dừng lại ở chương trình Bộ Giáo dục và Đào tạo. Trường tích hợp thêm <strong>luyện thi IELTS chuyên sâu</strong>, xây dựng du học profile toàn diện, hướng nghiệp và phát triển kỹ năng lãnh đạo — giúp học sinh không chỉ tốt nghiệp THPT mà còn sẵn sàng cho đại học trong nước và du học quốc tế.</p>
+          <p>Khác với nhiều trường THPT tư thục chỉ dạy theo chương trình chuẩn, tại Việt Anh, học sinh được học song song hai hệ: <strong>chương trình Bộ GD&ĐT đảm bảo bằng tốt nghiệp THPT quốc gia</strong> và chương trình IELTS intensive với giáo viên bản ngữ. Kết quả là học sinh vừa có bằng THPT, vừa có chứng chỉ IELTS khi tốt nghiệp — một lợi thế cạnh tranh rất lớn khi xét tuyển đại học.</p>
+          <p>Đặc biệt, chương trình hướng nghiệp tại Trường Việt Anh bắt đầu từ lớp 10. Học sinh được làm bài trắc nghiệm nghề nghiệp chuyên sâu, tham gia các workshop với chuyên gia từ nhiều ngành nghề, thực tập ngắn hạn tại doanh nghiệp đối tác và xây dựng portfolio cá nhân. Đến lớp 12, mỗi học sinh đã có định hướng nghề nghiệp rõ ràng và kế hoạch cụ thể cho con đường sau THPT.</p>
+          <p>Mô hình giáo dục THPT tại Việt Anh dựa trên 4 trụ cột: <strong>Học thuật</strong> (chương trình Bộ GD + IELTS), <strong>Phát triển bản thân</strong> (kỹ năng lãnh đạo, quản lý thời gian, tư duy phản biện), <strong>Hoạt động ngoại khoá</strong> (20+ CLB, dự án cộng đồng, MUN) và <strong>Hướng nghiệp</strong> (du học profile, recommendation letters, SAT prep). Bốn trụ cột này tạo nên lợi thế toàn diện cho học sinh khi bước vào đời.</p>
+
+          <div class="gi-evidence-bar">
+            <div class="gi-evidence-item">
+              <strong>IELTS 6.0-8.0</strong>
+              <span>Đầu ra khi tốt nghiệp</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>99%</strong>
+              <span>Đậu đại học trong & ngoài nước</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>20+</strong>
+              <span>Câu lạc bộ ngoại khoá</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>30%</strong>
+              <span>Du học nước ngoài</span>
+            </div>
+          </div>
+
+          <p>Ngoài kiến thức học thuật, Trường Việt Anh đặc biệt chú trọng phát triển <strong>kỹ năng mềm</strong> cho học sinh THPT. Chương trình Leader in Me (FranklinCovey) được tích hợp vào hoạt động hàng tuần, giúp học sinh rèn luyện 7 thói quen hiệu quả: chủ động, bắt đầu từ mục tiêu, ưu tiên điều quan trọng, tư duy cùng thắng, lắng nghe thấu hiểu, hợp lực sáng tạo và rèn luyện bản thân. Đây chính là nền tảng giúp học sinh Việt Anh tự tin, bản lĩnh và thành công trong bất kỳ môi trường nào.</p>
+          <p>Sĩ số lớp THPT tại Việt Anh chỉ <strong>25-30 học sinh</strong>, đảm bảo giáo viên có thể quan tâm sát sao đến từng em. Mỗi học sinh có một giáo viên chủ nhiệm kiêm mentor, theo dõi sự phát triển toàn diện — từ kết quả học tập, tiến độ IELTS, đến tâm lý và định hướng tương lai. Phụ huynh nhận báo cáo định kỳ hàng tháng về mọi khía cạnh phát triển của con.</p>
+        </section>
+
+        <!-- Section 2: IELTS -->
+        <section id="ielts" class="gi-section">
+          <h2>Học sinh THPT Việt Anh đạt IELTS bao nhiêu khi tốt nghiệp?</h2>
+          <p>Đây là câu hỏi được phụ huynh quan tâm nhất. Câu trả lời: <strong>Học sinh THPT Việt Anh tốt nghiệp đạt IELTS từ 6.0 đến 8.0</strong>, trung bình đầu ra là IELTS 6.5. Kết quả này đến từ lộ trình luyện thi IELTS chuyên sâu 3 năm, với giáo viên bản ngữ có chứng chỉ CELTA/DELTA và kinh nghiệm luyện thi IELTS chuyên nghiệp.</p>
+
+          <p>Trường Việt Anh là một trong số ít trường THPT tại TP.HCM có <strong>trung tâm khảo thí IELTS ngay tại trường</strong>. Học sinh được thi thử IELTS định kỳ trong môi trường thi thực tế, giúp làm quen với áp lực phòng thi và cải thiện điểm số nhanh hơn so với việc chỉ luyện đề ở nhà.</p>
+
+          <div class="gi-roadmap">
+            <h3>Lộ trình IELTS 3 năm THPT tại Việt Anh</h3>
+            <div class="gi-roadmap-grid">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L10</div>
+                <strong>Lớp 10: Xây nền tảng (IELTS 4.0-5.0)</strong>
+                <p>Học kỹ năng tiếng Anh nền tảng với giáo viên bản ngữ. Tập trung vào 4 kỹ năng: Listening, Reading, Writing, Speaking. Bổ trợ ngữ pháp, từ vựng academic. Thi thử IELTS lần đầu cuối học kỳ 2 để đánh giá xuất phát điểm chính xác. Học sinh yếu được bổ trợ thêm ngoài giờ.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L11</div>
+                <strong>Lớp 11: Luyện chuyên sâu (IELTS 5.0-6.5)</strong>
+                <p>Tăng cường luyện đề IELTS thực tế. Luyện Writing Task 1 & Task 2 chuyên sâu với feedback cá nhân hoá. Speaking practice hàng tuần với giáo viên bản ngữ theo format thi thật. Thi IELTS chính thức lần 1 vào cuối lớp 11 — nhiều học sinh đã đạt 6.0-6.5 ở giai đoạn này.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L12</div>
+                <strong>Lớp 12: Đạt target (IELTS 6.0-8.0)</strong>
+                <p>Luyện đề intensive, mock test hàng tuần, coaching 1-1 cho từng kỹ năng yếu. Thi IELTS chính thức lần 2-3 để đạt target cá nhân. Học sinh xuất sắc hướng tới IELTS 7.0-8.0. Kết hợp luyện SAT cho học sinh du học Mỹ. Kết quả IELTS được dùng xét tuyển đại học ngay.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="gi-comparison-box">
+            <h3>Kết quả IELTS đầu ra — Việt Anh so với mặt bằng chung</h3>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Tiêu chí</th>
+                    <th>THPT Việt Anh</th>
+                    <th>THPT công lập (TP.HCM)</th>
+                    <th>Trung tâm IELTS ngoài</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Thời lượng IELTS/tuần</td>
+                    <td>8-10 tiết (tích hợp)</td>
+                    <td>0-2 tiết</td>
+                    <td>4-6 tiết (phải đi thêm)</td>
+                  </tr>
+                  <tr>
+                    <td>Giáo viên</td>
+                    <td>Bản ngữ + CELTA/DELTA</td>
+                    <td>GV Việt Nam</td>
+                    <td>Tuỳ trung tâm</td>
+                  </tr>
+                  <tr>
+                    <td>Thi thử IELTS</td>
+                    <td>Hàng tháng tại trường</td>
+                    <td>Không có</td>
+                    <td>Theo khoá (phí riêng)</td>
+                  </tr>
+                  <tr>
+                    <td>IELTS đầu ra trung bình</td>
+                    <td>6.5</td>
+                    <td>Không có dữ liệu</td>
+                    <td>Tuỳ nỗ lực cá nhân</td>
+                  </tr>
+                  <tr>
+                    <td>Chi phí IELTS riêng</td>
+                    <td>Đã bao gồm trong học phí</td>
+                    <td>30-80 triệu (3 năm)</td>
+                    <td>50-120 triệu (3 năm)</td>
+                  </tr>
+                  <tr>
+                    <td>Kết hợp hướng nghiệp</td>
+                    <td>Có (du học + trong nước)</td>
+                    <td>Hạn chế</td>
+                    <td>Không</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-13.webp" alt="Học sinh THPT chuẩn bị IELTS" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <p>Điểm khác biệt lớn nhất: tại Trường Việt Anh, chi phí luyện thi IELTS đã <strong>nằm trong học phí</strong>. Phụ huynh không cần cho con đi học thêm IELTS ở trung tâm ngoài — tiết kiệm 50-120 triệu đồng trong 3 năm THPT. Đồng thời, việc luyện IELTS được tích hợp vào thời khoá biểu chính khoá, không làm quá tải lịch học của học sinh.</p>
+
+          <p>Kết quả thực tế của khoá tốt nghiệp gần nhất: <strong>85% học sinh đạt IELTS 6.0 trở lên</strong>, trong đó 35% đạt 7.0 trở lên và 10% đạt 7.5-8.0. Nhiều học sinh dùng điểm IELTS để xét tuyển thẳng vào các đại học top như Bách Khoa, Ngoại Thương, RMIT, Fulbright — không cần thi tốt nghiệp môn tiếng Anh.</p>
+        </section>
+
+        <!-- Section 3: Rớt lớp 10 -->
+        <section id="rot-lop-10" class="gi-section">
+          <h2>Rớt lớp 10 công lập thì nên học ở đâu?</h2>
+          <p>Mỗi năm tại TP.HCM, hàng chục ngàn học sinh không đậu lớp 10 công lập. Đây không phải là thất bại — mà là cơ hội để lựa chọn một con đường giáo dục phù hợp hơn. <strong>Trường THPT Việt Anh là lựa chọn hàng đầu cho học sinh rớt lớp 10 công lập</strong>, với môi trường học tập chất lượng, hỗ trợ tâm lý và lộ trình phát triển rõ ràng.</p>
+
+          <p>Tại sao Việt Anh phù hợp? Vì trường không đánh giá học sinh qua một kỳ thi duy nhất. Quá trình xét tuyển tại Việt Anh bao gồm bài đánh giá năng lực (Toán + Anh), phỏng vấn cá nhân và xem xét hồ sơ học tập THCS. Mục đích không phải để "loại" mà để <strong>hiểu rõ năng lực và nhu cầu của từng em</strong>, từ đó xếp lớp và thiết kế lộ trình hỗ trợ phù hợp.</p>
+
+          <div class="gi-leader-grid">
+            <div class="gi-leader-card">
+              <h4>Những gì Việt Anh hỗ trợ học sinh lớp 10 mới</h4>
+              <ul>
+                <li><strong>Hỗ trợ tâm lý:</strong> Phòng tâm lý học đường với chuyên viên tư vấn, giúp học sinh vượt qua áp lực và lấy lại tự tin sau kỳ thi đầu vào không như ý</li>
+                <li><strong>Bổ trợ học thuật:</strong> Lớp phụ đạo Toán, Anh văn cho học sinh cần củng cố nền tảng, lịch linh hoạt ngoài giờ chính khoá</li>
+                <li><strong>Mentor cá nhân:</strong> Mỗi học sinh có giáo viên chủ nhiệm kiêm mentor, theo dõi tiến bộ hàng tuần và phối hợp với phụ huynh</li>
+                <li><strong>Hoà nhập nhanh:</strong> Các hoạt động team-building, CLB, trại hè giúp học sinh kết bạn và gắn kết với môi trường mới</li>
+                <li><strong>Không kỳ thị:</strong> Văn hoá Việt Anh tôn trọng mọi xuất phát điểm — quan trọng là hành trình phát triển, không phải điểm đầu vào</li>
+              </ul>
+            </div>
+            <div class="gi-leader-card">
+              <h4>Thành tích thực tế của HS từng rớt lớp 10</h4>
+              <ul>
+                <li>Nhiều học sinh từng rớt lớp 10 công lập đã đạt IELTS 6.5-7.0 khi tốt nghiệp tại Việt Anh</li>
+                <li>Một số em đậu vào các đại học top: ĐH Bách Khoa, ĐH Kinh Tế, ĐH Ngoại Thương</li>
+                <li>Có học sinh nhận học bổng du học Úc, Singapore sau 3 năm học tại Việt Anh</li>
+                <li>95% học sinh hoà nhập hoàn toàn sau 2-3 tháng đầu</li>
+                <li>Phụ huynh chia sẻ: con thay đổi hoàn toàn về thái độ học tập và sự tự tin</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>Thực tế cho thấy, <strong>rớt lớp 10 công lập không quyết định tương lai của con</strong>. Nhiều học sinh "rớt" đã thành công vượt bậc khi được đặt vào môi trường phù hợp — nơi có sự quan tâm cá nhân hoá, áp lực thi cử vừa phải, và lộ trình phát triển toàn diện. Trường Việt Anh đã chứng minh điều này qua nhiều khoá học sinh.</p>
+
+          <p>Điều quan trọng nhất phụ huynh cần làm lúc này: <strong>đừng để con mất thêm thời gian</strong>. Giai đoạn THPT chỉ 3 năm — nếu chọn đúng trường ngay từ đầu, con sẽ có đủ thời gian để xây dựng nền tảng vững chắc, đạt IELTS mục tiêu và chuẩn bị tốt cho đại học.</p>
+        </section>
+
+        <!-- Section 4: Du học -->
+        <section id="du-hoc" class="gi-section">
+          <h2>Trường THPT Việt Anh hỗ trợ du học như thế nào?</h2>
+          <p>Du học không chỉ là có điểm IELTS cao. Các đại học quốc tế đánh giá ứng viên qua nhiều tiêu chí: điểm GPA, chứng chỉ tiếng Anh, hoạt động ngoại khoá, thư giới thiệu, bài luận cá nhân và phỏng vấn. Trường THPT Việt Anh hỗ trợ học sinh xây dựng <strong>du học profile toàn diện</strong> ngay từ lớp 10, không phải gấp rút chuẩn bị vào lớp 12.</p>
+
+          <div class="gi-roadmap">
+            <h3>Lộ trình xây dựng du học profile 3 năm</h3>
+            <div class="gi-roadmap-grid">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L10</div>
+                <strong>Lớp 10: Khám phá & Định hướng</strong>
+                <p>Trắc nghiệm nghề nghiệp, xác định quốc gia và ngành học mục tiêu. Bắt đầu tham gia CLB ngoại khoá phù hợp (Debate, MUN, STEM, Tình nguyện). Duy trì GPA cao. Bắt đầu lộ trình IELTS. Xây dựng portfolio hoạt động từ năm đầu tiên.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L11</div>
+                <strong>Lớp 11: Tích luỹ & Chuẩn bị</strong>
+                <p>Giữ vai trò lãnh đạo trong CLB. Tham gia dự án cộng đồng có tầm ảnh hưởng. Luyện SAT (nếu du học Mỹ). Đạt IELTS 6.0+ lần thi đầu. Viết bản nháp bài luận cá nhân. Tham gia university fair và workshop với đại diện trường quốc tế tại Việt Anh.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">L12</div>
+                <strong>Lớp 12: Nộp hồ sơ & Kết quả</strong>
+                <p>Hoàn thiện bài luận, recommendation letters từ giáo viên. Nộp hồ sơ đại học (Early Decision / Regular). Phỏng vấn đại học (nếu cần). Nhận offer và chọn trường. Tư vấn visa, chỗ ở, học bổng. Đội ngũ tư vấn du học đồng hành đến khi học sinh lên máy bay.</p>
+              </div>
+            </div>
+          </div>
+
+          <h3>Các dịch vụ hỗ trợ du học tại Việt Anh</h3>
+          <div class="gi-values-grid">
+            <div class="gi-values-items">
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9997;</span>
+                <strong>Recommendation Letters</strong>
+                <p>Giáo viên bản ngữ viết thư giới thiệu bằng tiếng Anh chuẩn quốc tế. Thư được cá nhân hoá theo từng học sinh, nêu bật thế mạnh và đóng góp cụ thể — không phải mẫu chung chung.</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9998;</span>
+                <strong>Essay Coaching</strong>
+                <p>Hướng dẫn viết Common App Essay, supplemental essays cho từng trường đại học. Qua 3-5 vòng chỉnh sửa với mentor, bài luận phản ánh đúng cá tính và câu chuyện riêng của học sinh.</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#127891;</span>
+                <strong>SAT/ACT Prep</strong>
+                <p>Lớp luyện SAT/ACT dành cho học sinh du học Mỹ, tích hợp trong chương trình lớp 11-12. Giáo viên bản ngữ giảng dạy, kết hợp luyện đề và mock test định kỳ. Mục tiêu SAT 1200-1400+.</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#127758;</span>
+                <strong>University Placement</strong>
+                <p>Đội ngũ tư vấn du học riêng tại trường, kết nối trực tiếp với hơn 100 đại học đối tác tại Mỹ, Anh, Úc, Canada, Nhật, Hàn, Singapore. Hỗ trợ nộp hồ sơ, visa, học bổng từ A đến Z.</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#127942;</span>
+                <strong>Extracurricular Portfolio</strong>
+                <p>20+ CLB ngoại khoá: Debate Club, MUN (Model United Nations), Robotics, STEM, Tình nguyện, Doanh nhân trẻ, Photography, Drama. Mỗi hoạt động được ghi nhận vào portfolio chuyên nghiệp.</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Kết quả du học của các khoá gần đây: <strong>30% học sinh THPT Việt Anh du học nước ngoài</strong> sau khi tốt nghiệp. Các điểm đến phổ biến: Mỹ (University of California, Boston University), Anh (University of Manchester, Birmingham), Úc (University of Melbourne, UNSW), Canada (University of Toronto, UBC), Singapore (NUS, NTU), Nhật Bản và Hàn Quốc. Nhiều em nhận được học bổng từ 25% đến 100% từ các đại học quốc tế.</p>
+        </section>
+
+        <!-- Section 5: Học phí -->
+        <section id="hoc-phi" class="gi-section">
+          <h2>Học phí THPT Việt Anh bao nhiêu?</h2>
+          <p>Học phí THPT tại Trường Việt Anh dao động từ <strong>8 đến 12 triệu đồng mỗi tháng</strong> tuỳ theo chương trình và cơ sở. Mức học phí này đã bao gồm: học phí chính khoá (chương trình Bộ GD&ĐT), luyện thi IELTS với giáo viên bản ngữ, hoạt động ngoại khoá cơ bản, tư vấn hướng nghiệp và hỗ trợ du học. Không phát sinh phí ngoài dự kiến.</p>
+
+          <p>Khi so sánh toàn diện, học phí tại Việt Anh là <strong>cực kỳ hợp lý</strong> so với giá trị nhận được. Nếu học sinh học trường công lập và đi học thêm IELTS ở trung tâm ngoài, chi phí 3 năm có thể lên đến 80-150 triệu đồng chỉ riêng tiền IELTS — chưa kể SAT prep, tư vấn du học, essay coaching. Tại Việt Anh, tất cả đã nằm trong một gói học phí duy nhất.</p>
+
+          <div class="gi-comparison-box">
+            <h3>So sánh tổng chi phí 3 năm THPT: Việt Anh vs Các lựa chọn khác</h3>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Hạng mục</th>
+                    <th>THPT Công lập + Học thêm</th>
+                    <th>THPT Việt Anh</th>
+                    <th>Trường Quốc tế</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Học phí 3 năm</td>
+                    <td>15-25 triệu</td>
+                    <td>288-432 triệu</td>
+                    <td>900-1.500 triệu</td>
+                  </tr>
+                  <tr>
+                    <td>Luyện IELTS 3 năm</td>
+                    <td>80-150 triệu (trung tâm ngoài)</td>
+                    <td>Đã bao gồm</td>
+                    <td>Đã bao gồm</td>
+                  </tr>
+                  <tr>
+                    <td>SAT prep</td>
+                    <td>30-60 triệu</td>
+                    <td>Đã bao gồm</td>
+                    <td>Đã bao gồm</td>
+                  </tr>
+                  <tr>
+                    <td>Tư vấn du học</td>
+                    <td>30-80 triệu</td>
+                    <td>Đã bao gồm</td>
+                    <td>Tuỳ trường</td>
+                  </tr>
+                  <tr>
+                    <td>Ngoại khoá/CLB</td>
+                    <td>Hạn chế, tự tìm</td>
+                    <td>20+ CLB, đã bao gồm</td>
+                    <td>Có</td>
+                  </tr>
+                  <tr>
+                    <td>Tổng chi phí ước tính</td>
+                    <td>155-315 triệu</td>
+                    <td>288-432 triệu</td>
+                    <td>900-1.500 triệu</td>
+                  </tr>
+                  <tr>
+                    <td>IELTS đầu ra trung bình</td>
+                    <td>Không đảm bảo</td>
+                    <td>6.0-8.0 (cam kết)</td>
+                    <td>6.5-8.0</td>
+                  </tr>
+                  <tr>
+                    <td>Sĩ số lớp</td>
+                    <td>40-50 học sinh</td>
+                    <td>25-30 học sinh</td>
+                    <td>15-25 học sinh</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <h3>ROI — Phân tích hiệu quả đầu tư giáo dục</h3>
+          <p>Nếu phụ huynh nhìn vào <strong>tổng chi phí toàn phần</strong> (học phí + IELTS + SAT + du học tư vấn + ngoại khoá), THPT Việt Anh chỉ cao hơn khoảng 120-170 triệu so với phương án công lập + học thêm, nhưng mang lại giá trị vượt trội: IELTS đầu ra cam kết, du học profile chuyên nghiệp, sĩ số nhỏ, mentor cá nhân và 99% đậu đại học.</p>
+          <p>So với trường quốc tế (900-1.500 triệu cho 3 năm THPT), Việt Anh tiết kiệm 600-1.000 triệu đồng mà chất lượng đầu ra tương đương — đặc biệt về IELTS, du học profile và tỷ lệ đậu đại học.</p>
+
+          <h3>Học phí bao gồm những gì?</h3>
+          <ul class="thpt-fee-includes">
+            <li><strong>Chương trình chính khoá Bộ GD&ĐT:</strong> Toàn bộ môn học theo quy định, đảm bảo bằng tốt nghiệp THPT quốc gia</li>
+            <li><strong>Luyện thi IELTS chuyên sâu:</strong> 8-10 tiết/tuần với giáo viên bản ngữ CELTA/DELTA, thi thử hàng tháng</li>
+            <li><strong>SAT prep (tuỳ chương trình):</strong> Lớp luyện SAT cho học sinh du học Mỹ</li>
+            <li><strong>Hoạt động ngoại khoá:</strong> 20+ CLB, dự án cộng đồng, university fair</li>
+            <li><strong>Tư vấn hướng nghiệp & du học:</strong> Xây dựng profile, essay coaching, recommendation letters</li>
+            <li><strong>Hệ thống PDR:</strong> Báo cáo phát triển cá nhân hàng tháng</li>
+            <li><strong>Leader in Me:</strong> Chương trình kỹ năng lãnh đạo FranklinCovey</li>
+          </ul>
+
+          <p>Phụ huynh có thể đăng ký thêm dịch vụ xe đưa rước và ăn trưa tại trường với phí bổ sung hợp lý. <a href="/hoc-phi">Xem bảng học phí chi tiết theo từng cơ sở &rarr;</a></p>
+        </section>
+
+        <!-- Section 6: Đánh giá -->
+        <section id="danh-gia" class="gi-section">
+          <h2>Phụ huynh và cựu học sinh nói gì?</h2>
+          <p>Trường THPT Việt Anh tự hào với đánh giá cao từ phụ huynh và cựu học sinh trên Google và các nền tảng khác. Dưới đây là những chia sẻ tiêu biểu từ phụ huynh có con đang học và cựu học sinh đã tốt nghiệp bậc THPT.</p>
+
+          <div class="gi-aggregate-rating">
+            <span class="gi-big-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-big-score">4.8/5</span>
+            <span class="gi-review-count">250+ đánh giá trên Google</span>
+          </div>
+
+          <div class="gi-testimonials">
+            <blockquote class="gi-testimonial">
+              <p>"Con trai tôi rớt lớp 10 công lập, cả nhà rất lo lắng. Sau 3 năm tại Việt Anh, cháu đạt IELTS 7.0 và đậu ĐH Bách Khoa TP.HCM. Giờ cháu tự tin, trưởng thành và biết ơn quãng thời gian tại Việt Anh — nơi đã giúp cháu tìm lại chính mình."</p>
+              <cite>— Anh Trần Văn Hùng, phụ huynh cựu HS khoá 2021-2024, cơ sở Gò Vấp</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Tôi chọn Việt Anh vì chương trình IELTS tích hợp — không phải cho con đi học thêm ở trung tâm ngoài. Kết quả rất ấn tượng: con gái đạt IELTS 7.5 cuối lớp 12 và nhận học bổng 50% tại University of Melbourne, Úc. Cảm ơn thầy cô Việt Anh rất nhiều."</p>
+              <cite>— Chị Nguyễn Thị Minh Nguyệt, phụ huynh cựu HS khoá 2020-2023</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Là cựu học sinh Việt Anh, em muốn chia sẻ: 3 năm THPT ở đây thay đổi cuộc đời em. Em vào trường với IELTS 4.0, ra trường với 6.5. Quan trọng hơn, em học được cách tự học, tư duy phản biện và kỹ năng lãnh đạo — những thứ không trường nào dạy. Giờ em đang năm 2 tại ĐH Ngoại Thương."</p>
+              <cite>— Lê Hoàng Phúc, cựu HS khoá 2020-2023, hiện SV ĐH Ngoại Thương</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Con tôi vốn rất nội tâm, ít nói. Sau khi tham gia Debate Club và MUN tại Việt Anh, cháu thay đổi hoàn toàn — tự tin thuyết trình trước 200 người, dẫn dắt dự án cộng đồng, và viết bài luận du học khiến admission officer ấn tượng. Cháu vừa nhận offer từ University of Toronto."</p>
+              <cite>— Chị Phạm Thuý Hà, phụ huynh HS lớp 12, cơ sở Gò Vấp</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Gia đình tôi ở Long An, ban đầu rất phân vân khi cho con ra TP.HCM học THPT. Nhưng nhìn kết quả sau 2 năm — con đạt IELTS 6.0, tham gia 3 CLB, có định hướng nghề nghiệp rõ ràng — tôi biết đây là quyết định đúng. Thầy cô luôn quan tâm, cập nhật tình hình con cho phụ huynh mỗi tuần."</p>
+              <cite>— Anh Võ Minh Đức, phụ huynh HS lớp 11, cơ sở Long An</cite>
+            </blockquote>
+          </div>
+        </section>
+
+        <!-- Section 7: FAQ -->
+        <section id="faq" class="gi-section">
+          <h2>Câu hỏi thường gặp về THPT Việt Anh</h2>
+          <p>Tổng hợp những câu hỏi phụ huynh và học sinh thường hỏi nhất khi tìm hiểu về chương trình THPT tại Trường Việt Anh.</p>
+
+          <div class="gi-faq-list">
+            <details class="gi-faq-item" open>
+              <summary>Học sinh THPT Việt Anh tốt nghiệp đạt IELTS mấy điểm?</summary>
+              <div class="gi-faq-answer">
+                <p>Học sinh THPT Việt Anh tốt nghiệp đạt <strong>IELTS từ 6.0 đến 8.0</strong>. Trung bình đầu ra là IELTS 6.5. Cụ thể: 85% đạt 6.0 trở lên, 35% đạt 7.0 trở lên, và 10% đạt 7.5-8.0. Lộ trình luyện IELTS kéo dài 3 năm từ lớp 10, với giáo viên bản ngữ có chứng chỉ CELTA/DELTA. Thi thử IELTS hàng tháng tại trung tâm khảo thí ngay tại trường giúp học sinh liên tục cải thiện.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường THPT Việt Anh có thi đầu vào không?</summary>
+              <div class="gi-faq-answer">
+                <p>Có bài <strong>đánh giá năng lực đầu vào</strong>, bao gồm bài kiểm tra Toán và Anh văn cùng phỏng vấn cá nhân. Tuy nhiên, đây không phải kỳ thi tuyển sinh cạnh tranh khắc nghiệt như trường công lập. Mục đích chính là đánh giá năng lực hiện tại của học sinh để xếp lớp phù hợp và thiết kế lộ trình hỗ trợ cá nhân hoá. Học sinh rớt lớp 10 công lập vẫn được xét tuyển bình thường.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường THPT Việt Anh hỗ trợ du học nước nào?</summary>
+              <div class="gi-faq-answer">
+                <p>Trường hỗ trợ du học tại nhiều quốc gia: <strong>Mỹ, Anh, Úc, Canada, Nhật Bản, Hàn Quốc, Singapore</strong> và các nước Châu Âu. Đội ngũ tư vấn du học tại trường kết nối trực tiếp với hơn 100 đại học đối tác quốc tế. Hỗ trợ toàn diện: xây dựng du học profile từ lớp 10, essay coaching, recommendation letters, SAT/TOEFL prep, nộp hồ sơ, visa và học bổng.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Tỷ lệ học sinh THPT Việt Anh đậu đại học là bao nhiêu?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>99% học sinh THPT Việt Anh đậu đại học</strong> (trong nước và quốc tế). Trong đó, khoảng 30% du học nước ngoài, 70% vào các trường đại học top trong nước. Các trường đại học phổ biến: ĐH Bách Khoa, Y Dược, Kinh Tế, Ngoại Thương, Sư Phạm, RMIT, Fulbright. Nhiều em nhận được học bổng từ các đại học quốc tế nhờ profile ngoại khoá phong phú và điểm IELTS/SAT cao.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường THPT Việt Anh có chính sách học bổng không?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>Có.</strong> Trường có nhiều chính sách học bổng: (1) Học bổng thành tích học tập — dành cho học sinh có GPA cao và kết quả IELTS xuất sắc; (2) Học bổng năng khiếu — dành cho học sinh có thành tích đặc biệt về thể thao, nghệ thuật, khoa học; (3) Học bổng hoàn cảnh — hỗ trợ học sinh có hoàn cảnh khó khăn nhưng ý chí vươn lên. Mức học bổng dao động từ 25% đến 100% học phí tuỳ từng trường hợp.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường THPT Việt Anh có những hoạt động ngoại khoá gì?</summary>
+              <div class="gi-faq-answer">
+                <p>Hơn <strong>20 câu lạc bộ ngoại khoá</strong> đa dạng: Debate Club (tranh biện tiếng Anh), MUN (Model United Nations — mô phỏng Liên Hợp Quốc), Robotics & STEM, Coding Club, Câu lạc bộ Doanh nhân trẻ, Photography, Drama Club, Band/Âm nhạc, Bóng đá, Bóng rổ, Bơi lội, Cầu lông, Yoga, Tình nguyện cộng đồng, Môi trường xanh, Đọc sách, và nhiều CLB khác. Mỗi học sinh được khuyến khích tham gia ít nhất 2-3 CLB để xây dựng portfolio ngoại khoá phong phú — đặc biệt quan trọng cho du học profile.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Học sinh rớt lớp 10 công lập có được nhận vào THPT Việt Anh không?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>Có.</strong> Trường Việt Anh nhận học sinh rớt lớp 10 công lập. Quy trình xét tuyển bao gồm: bài đánh giá năng lực Toán và Anh văn, phỏng vấn cá nhân, và xem xét hồ sơ học tập THCS. Mục đích không phải để loại mà để hiểu rõ năng lực hiện tại của em, từ đó xếp lớp và thiết kế lộ trình hỗ trợ phù hợp. Trường có phòng tâm lý học đường hỗ trợ học sinh vượt qua áp lực, lớp phụ đạo bổ trợ kiến thức nền tảng, và hệ thống mentor cá nhân giúp em hoà nhập nhanh chóng. Thực tế, nhiều học sinh từng rớt lớp 10 đã đạt IELTS 6.5-7.0 và đậu đại học top khi tốt nghiệp tại Việt Anh.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+        <img src="https://media.truongvietanh.com/images/olympic-06.webp" alt="Thành tích THPT Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+        <div class="gi-section" style="background:#f8fafc;border-radius:12px;padding:2rem;margin:2rem 0;text-align:center">
+          <h3>Liên hệ tư vấn THPT Trường Việt Anh</h3>
+          <p style="font-size:1.1rem;margin:0.5rem 0">Hotline: <a href="tel:0916961409" style="color:#D4A843;font-weight:700;font-size:1.2rem">0916 961 409</a></p>
+          <p style="font-size:1.1rem;margin:0.5rem 0">Zalo: <a href="https://zalo.me/0916961409" target="_blank" rel="noopener" style="color:#D4A843;font-weight:700">Nhắn tin Zalo ngay</a></p>
+        </div>
+      </article>
+    </div>
+
+    <!-- ====== LAYER 8: BOTTOM CTA ====== -->
+    <section class="gi-bottom-cta">
+      <div class="gi-container gi-bottom-cta-inner">
+        <div class="gi-bottom-cta-text">
+          <h2>Đăng ký tư vấn chương trình THPT miễn phí</h2>
+          <p>Hãy để con được tư vấn lộ trình IELTS, du học và phát triển toàn diện tại Trường THPT Việt Anh. Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ để sắp xếp lịch tham quan và tư vấn phù hợp.</p>
+          <ul class="thpt-cta-benefits">
+            <li>Tham quan cơ sở, gặp giáo viên bản ngữ và đội ngũ tư vấn du học</li>
+            <li>Đánh giá năng lực tiếng Anh miễn phí — biết xuất phát điểm IELTS của con</li>
+            <li>Nhận tư vấn lộ trình IELTS và du học cá nhân hoá cho con</li>
+            <li>Tìm hiểu chính sách học bổng và hỗ trợ tài chính</li>
+            <li>Không ràng buộc, hoàn toàn miễn phí</li>
+          </ul>
+        </div>
+        <div class="gi-bottom-cta-form">
+          <LeadFormTwoStepEmailFirst
+            formId="thpt-bottom-form"
+            funnelCode="thpt-bottom"
+            schoolLevel="thpt"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== LAYER 9: RELATED CONTENT ====== -->
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Bài viết liên quan</h2>
+        <div class="gi-related-grid">
+          <a href="/gioi-thieu" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8a 100%);"></div>
+            <h3>Giới thiệu Trường Việt Anh — Hệ thống giáo dục liên cấp</h3>
+            <p>Tìm hiểu tổng quan về hệ thống trường liên cấp Mầm non — THPT với 9 cơ sở tại TP.HCM, Long An, Kiên Giang.</p>
+          </a>
+          <a href="/trung-hoc-co-so" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f766e 0%, #115e59 100%);"></div>
+            <h3>Chương trình THCS song ngữ Trường Việt Anh</h3>
+            <p>Lộ trình từ THCS lên THPT — nền tảng tiếng Anh, STEM, kỹ năng lãnh đạo chuẩn bị cho bậc học tiếp theo.</p>
+          </a>
+          <a href="/hoc-phi" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Bảng học phí chi tiết Trường Việt Anh 2026-2027</h3>
+            <p>Học phí các cấp từ Mầm non đến THPT, chính sách học bổng và phương thức thanh toán.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style is:global>
+/* ===== THPT PILLAR PAGE — Additional styles ===== */
+/* Reuses all gi-* classes from gioi-thieu.astro (is:global) */
+
+/* Fee includes list */
+.thpt-fee-includes {
+  padding-left: 1.2rem;
+  margin: 1rem 0 1.5rem;
+}
+.thpt-fee-includes li {
+  font-size: 1rem;
+  color: #334155;
+  margin-bottom: 0.6rem;
+  line-height: 1.6;
+}
+
+/* CTA benefits list */
+.thpt-cta-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+.thpt-cta-benefits li {
+  font-size: 1rem;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+.thpt-cta-benefits li::before {
+  content: '\2713';
+  position: absolute;
+  left: 0;
+  color: #D4A843;
+  font-weight: 700;
+}
+</style>

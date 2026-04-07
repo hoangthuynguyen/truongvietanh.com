@@ -2,99 +2,661 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Hệ Thống Trường Liên Cấp Việt Anh",
+    "url": "https://truongvietanh.com/co-so",
+    "logo": "https://truongvietanh.com/logo-crest-80.webp",
+    "description": "Hệ thống 9 cơ sở Trường Việt Anh tại TP.HCM, Long An, Kiên Giang. Từ Mầm non đến THPT — cùng triết lý, cùng chất lượng, cùng hệ thống PDR.",
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": 500 },
+    "areaServed": ["TP. Hồ Chí Minh", "Long An", "Kiên Giang"],
+    "address": [
+      {
+        "@type": "PostalAddress",
+        "name": "Cơ sở Phú Nhuận",
+        "streetAddress": "269A Nguyễn Trọng Tuyển",
+        "addressLocality": "Phú Nhuận, TP. Hồ Chí Minh",
+        "addressCountry": "VN"
+      },
+      {
+        "@type": "PostalAddress",
+        "name": "Cơ sở Gò Vấp",
+        "streetAddress": "160/72 Phan Huy Ích",
+        "addressLocality": "Gò Vấp, TP. Hồ Chí Minh",
+        "addressCountry": "VN"
+      },
+      {
+        "@type": "PostalAddress",
+        "name": "Mầm Non Gò Vấp",
+        "streetAddress": "573 Lê Đức Thọ",
+        "addressLocality": "Gò Vấp, TP. Hồ Chí Minh",
+        "addressCountry": "VN"
+      },
+      {
+        "@type": "PostalAddress",
+        "name": "Cơ sở Bình Tân",
+        "streetAddress": "Số 7, Đường 38A",
+        "addressLocality": "Bình Tân, TP. Hồ Chí Minh",
+        "addressCountry": "VN"
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Trường Việt Anh có bãi đỗ xe cho phụ huynh không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Có. Các cơ sở tại TP.HCM đều có khu vực đậu xe máy và ô tô cho phụ huynh khi đưa đón con. Cơ sở Gò Vấp (160/72 Phan Huy Ích) và Bình Tân có bãi đỗ xe rộng rãi nhất." }
+      },
+      {
+        "@type": "Question",
+        "name": "Sân chơi tại các cơ sở Trường Việt Anh có rộng không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Tất cả cơ sở đều có sân chơi ngoài trời với thiết bị vận động phù hợp từng lứa tuổi. Cơ sở Gò Vấp và Bình Tân có khuôn viên rộng nhất với sân bóng, sân đa năng và khu vui chơi phân theo bậc Mầm non và Tiểu học." }
+      },
+      {
+        "@type": "Question",
+        "name": "An ninh tại Trường Việt Anh được đảm bảo như thế nào?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Mỗi cơ sở đều có hệ thống camera giám sát 24/7, bảo vệ trực cổng, thẻ đón trẻ cho phụ huynh, và quy trình đón-trả nghiêm ngặt. Người lạ không thể vào khuôn viên trường nếu không có giấy phép." }
+      },
+      {
+        "@type": "Question",
+        "name": "Phụ huynh có thể tham quan cơ sở trước khi quyết định không?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Tất nhiên. Trường Việt Anh khuyến khích phụ huynh đến tham quan trực tiếp để cảm nhận môi trường học tập. Đặt lịch qua Hotline 0916 961 409 hoặc Zalo để được sắp xếp buổi tham quan phù hợp — hoàn toàn miễn phí." }
+      },
+      {
+        "@type": "Question",
+        "name": "Mỗi lớp tại Trường Việt Anh có bao nhiêu học sinh?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Sĩ số tối đa: Mầm non 20-25 trẻ/lớp (2 giáo viên + 1 trợ giảng), Tiểu học 25-30 học sinh/lớp, THCS-THPT 30-35 học sinh/lớp. Tỷ lệ giáo viên/học sinh đảm bảo mỗi em được quan tâm đầy đủ." }
+      }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Cơ sở", "item": "https://truongvietanh.com/co-so" }
+    ]
+  }
+];
 ---
-<BaseLayout title="Liên Hệ & Trụ Sở | Trường Liên Cấp Việt Anh" description="Danh sách các cơ sở của Hệ thống giáo dục trường Việt Anh.">
-  <div class="cf-layout page-wrapper">
+
+<BaseLayout
+  title="Hệ Thống Cơ Sở Trường Việt Anh — 9 Cơ Sở Tại TP.HCM, Long An, Kiên Giang"
+  description="Hệ thống 9 cơ sở Trường Việt Anh trên toàn quốc. Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng. Tham quan miễn phí."
+  canonical="https://truongvietanh.com/co-so"
+  ogImage="https://media.truongvietanh.com/images/extra-big-img3-scaled.webp"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
     <HeaderBase />
-    
-    <section class="page-hero">
-      <div class="cf-container text-center">
-        <h1 class="page-title">Hệ Thống Cơ Sở Việt Anh</h1>
-        <p class="page-desc">Các cơ sở đào tạo trải dài tại TP.HCM và các tỉnh lân cận.</p>
-      </div>
-    </section>
 
-    <section class="page-content">
-      <div class="cf-container max-w-900">
-        
-        <div class="campus-list">
-          <!-- Phú Nhuận -->
-           <div class="campus-card">
-             <div class="c-info">
-               <h2>Cơ Sở Phú Nhuận</h2>
-               <p><strong>Địa chỉ:</strong> 269A Nguyễn Trọng Tuyển, P. Phú Nhuận, TP.HCM</p>
-               <p><strong>Hotline:</strong> 0916 961 409</p>
-               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
-             </div>
-           </div>
+    <!-- ====== HERO WITH FORM ====== -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">/</span>
+            <span>Cơ sở</span>
+          </nav>
 
-           <!-- Gò Vấp -->
-           <div class="campus-card">
-             <div class="c-info">
-               <h2>Cơ Sở Gò Vấp</h2>
-               <p><strong>Địa chỉ:</strong> 160/72 Phan Huy Ích, P.12, Q. Gò Vấp, TP.HCM</p>
-               <p><strong>Hotline:</strong> 0916 961 409</p>
-               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
-             </div>
-           </div>
+          <h1 class="gi-h1">Hệ Thống 9 Cơ Sở Trường Việt Anh Trên Toàn Quốc</h1>
+          <p class="gi-subtitle">Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng</p>
 
-           <!-- Bình Tân -->
-           <div class="campus-card">
-             <div class="c-info">
-               <h2>Cơ Sở Bình Tân</h2>
-               <p><strong>Địa chỉ:</strong> 951/7 Tỉnh lộ 10, P. Tân Tạo, Q. Bình Tân, TP.HCM</p>
-               <p><strong>Hotline:</strong> 0916 961 409</p>
-               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
-             </div>
-           </div>
+          <div class="gi-hero-rating">
+            <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-rating-text">4.9/5 (300+ đánh giá)</span>
+          </div>
 
-           <!-- Mầm Non GV -->
-           <div class="campus-card">
-             <div class="c-info">
-               <h2>Mầm Non Việt Anh (Gò Vấp)</h2>
-               <p><strong>Địa chỉ:</strong> 573 Lê Đức Thọ, P.16, Q. Gò Vấp, TP.HCM</p>
-               <p><strong>Hotline:</strong> 0774 588 988</p>
-               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
-             </div>
-           </div>
-
-           <!-- Long Hậu -->
-           <div class="campus-card">
-             <div class="c-info">
-               <h2>Trường Mầm Non Long Hậu</h2>
-               <p><strong>Địa chỉ:</strong> KDC Long Hậu, Xã Cần Giuộc, Tỉnh Long An (Giáp ranh Nhà Bè)</p>
-               <p><strong>Hotline:</strong> 0774 588 988</p>
-               <p><strong>Giờ làm việc:</strong> 8:00 – 17:30 (T2-T6) | 8:00 – 12:00 (T7)</p>
-             </div>
-           </div>
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>9</strong> Cơ sở</div>
+            <div class="gi-badge"><strong>3</strong> Tỉnh thành</div>
+            <div class="gi-badge"><strong>MN-THPT</strong> Liên cấp</div>
+            <div class="gi-badge"><strong>500+</strong> Giáo viên</div>
+          </div>
         </div>
 
+        <div class="gi-hero-right">
+          <div class="gi-form-card">
+            <p class="gi-form-heading">Đặt lịch tham quan cơ sở gần nhất</p>
+            <LeadFormTwoStepEmailFirst
+              formId="co-so-form"
+              funnelCode="co-so-pillar"
+              schoolLevel="tieu-hoc"
+            />
+          </div>
+        </div>
       </div>
     </section>
-    
+
+    <!-- ====== TOC + CONTENT ====== -->
+    <div class="gi-container gi-body">
+      <!-- Sticky TOC sidebar -->
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Mục lục</p>
+        <ol class="gi-toc-list">
+          <li><a href="#tong-quan">Tổng quan hệ thống</a></li>
+          <li><a href="#hcm">Cơ sở TP.HCM</a></li>
+          <li><a href="#long-an">Cơ sở Long An</a></li>
+          <li><a href="#kien-giang">Cơ sở Kiên Giang</a></li>
+          <li><a href="#khac-biet">Khác nhau điều gì?</a></li>
+          <li><a href="#danh-gia">Đánh giá phụ huynh</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="#co-so-form-co-so-pillar" class="gi-toc-cta">Đặt lịch tham quan</a>
+      </nav>
+
+      <!-- Main content -->
+      <article class="gi-main">
+
+        <!-- Section 1: Tổng quan -->
+        <section id="tong-quan" class="gi-section">
+          <h2>Trường Việt Anh có bao nhiêu cơ sở?</h2>
+          <p>Hệ thống Trường Liên Cấp Việt Anh hiện có <strong>9 cơ sở</strong> hoạt động tại <strong>3 tỉnh thành</strong>: TP. Hồ Chí Minh (4 cơ sở), Long An (3 cơ sở) và Kiên Giang (2 cơ sở). Đây là kết quả của hơn 14 năm xây dựng và phát triển kể từ ngày thành lập năm 2011.</p>
+          <p>Mỗi cơ sở trong hệ thống đều vận hành theo cùng một <a href="/gioi-thieu">triết lý giáo dục</a>, cùng hệ thống quản lý chất lượng PDR (Plan-Do-Review), cùng chương trình 100% tiếng Anh với giáo viên bản ngữ. Dù học ở cơ sở nào, con vẫn nhận được chất lượng giáo dục đồng nhất — chỉ khác nhau về vị trí địa lý và quy mô khuôn viên.</p>
+
+          <img src="https://media.truongvietanh.com/images/the-thao-05.webp" alt="Sân thể thao Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <p>Hệ thống liên cấp từ <a href="/cap-hoc">Mầm non đến THPT</a> giúp phụ huynh yên tâm về lộ trình học tập dài hạn. Con có thể bắt đầu từ lớp Mầm (18 tháng tuổi) và tiếp tục học đến lớp 12 trong cùng hệ thống, với chương trình kết nối liền mạch giữa các cấp. Đây là ưu thế lớn so với các trường chỉ có một cấp duy nhất — phụ huynh không phải lo tìm trường mới mỗi khi con chuyển cấp. Phụ huynh có thể tìm hiểu thêm về <a href="/hoc-phi">học phí các cấp học</a> hoặc <a href="/tuyen-sinh">quy trình tuyển sinh</a> tại đây.</p>
+
+          <div class="gi-evidence-bar">
+            <div class="gi-evidence-item">
+              <strong>9</strong>
+              <span>Cơ sở trên toàn quốc</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>3</strong>
+              <span>Tỉnh thành (HCM, LA, KG)</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>14+</strong>
+              <span>Năm hoạt động</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>MN-THPT</strong>
+              <span>Liên cấp đầy đủ</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: TP.HCM -->
+        <section id="hcm" class="gi-section">
+          <h2>Các cơ sở tại TP. Hồ Chí Minh</h2>
+          <p>TP. Hồ Chí Minh là nơi Trường Việt Anh khởi nguồn và phát triển mạnh nhất với <strong>4 cơ sở</strong> phân bố tại các quận Phú Nhuận, Gò Vấp và Bình Tân. Mỗi cơ sở phục vụ khu vực dân cư khác nhau, giúp phụ huynh chọn trường gần nhà nhất.</p>
+
+          <div class="cs-campus-detail-list">
+            <!-- Phú Nhuận -->
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Cơ sở Phú Nhuận</h3>
+                <span class="cs-campus-tag">Liên cấp MN - TH - THCS - THPT</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> <a href="https://maps.google.com/?q=269A+Nguyễn+Trọng+Tuyển,+Phú+Nhuận,+TP.HCM" target="_blank" rel="noopener">269A Nguyễn Trọng Tuyển, P. Phú Nhuận, TP.HCM</a></p>
+                  <p><strong>Hotline:</strong> <a href="tel:0916961409">0916 961 409</a></p>
+                  <p><strong>Cấp học:</strong> Mầm non, Tiểu học, THCS, THPT</p>
+                  <p><strong>Giờ làm việc:</strong> T2-T6: 7:00-17:00 | T7: 7:30-11:30</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở Phú Nhuận là trụ sở chính của hệ thống Trường Việt Anh, toạ lạc tại vị trí trung tâm quận Phú Nhuận — thuận tiện di chuyển cho phụ huynh khu vực nội thành TP.HCM. Đây là cơ sở liên cấp đầy đủ từ Mầm non đến THPT, với khuôn viên được thiết kế tối ưu cho từng cấp học riêng biệt.</p>
+                  <p>Cơ sở vật chất bao gồm: phòng học máy lạnh, phòng thí nghiệm, phòng tin học, thư viện, sân đa năng, khu vực ăn trưa với thực đơn dinh dưỡng. Hệ thống camera giám sát 24/7 và bảo vệ trực cổng đảm bảo an toàn tuyệt đối cho học sinh.</p>
+                  <p><strong>Phù hợp cho:</strong> Gia đình tại Phú Nhuận, Bình Thạnh, Tân Bình, Quận 1, Quận 3 và lân cận.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Gò Vấp -->
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Cơ sở Gò Vấp</h3>
+                <span class="cs-campus-tag">Liên cấp MN - TH - THCS - THPT</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> <a href="https://maps.google.com/?q=160/72+Phan+Huy+Ích,+Gò+Vấp,+TP.HCM" target="_blank" rel="noopener">160/72 Phan Huy Ích, P.12, Q. Gò Vấp, TP.HCM</a></p>
+                  <p><strong>Hotline:</strong> <a href="tel:0916961409">0916 961 409</a></p>
+                  <p><strong>Cấp học:</strong> Mầm non, Tiểu học, THCS, THPT</p>
+                  <p><strong>Giờ làm việc:</strong> T2-T6: 7:00-17:00 | T7: 7:30-11:30</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở Gò Vấp (Phan Huy Ích) là cơ sở liên cấp lớn nhất trong hệ thống, phù hợp cho gia đình có nhiều con ở các cấp học khác nhau. Khuôn viên rộng rãi với sân bóng, sân đa năng, khu vui chơi phân theo lứa tuổi Mầm non và Tiểu học.</p>
+                  <p>Đây là cơ sở có khu vực mầm non riêng biệt, tách biệt hoàn toàn với bậc tiểu học và trung học — đảm bảo không gian an toàn và yên tĩnh cho trẻ nhỏ. Phòng học rộng, thoáng, đầy đủ thiết bị hiện đại, phòng nghệ thuật, phòng âm nhạc và sân chơi ngoài trời.</p>
+                  <p><strong>Phù hợp cho:</strong> Gia đình tại Gò Vấp, Quận 12, Tân Bình, Bình Thạnh và lân cận.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- MN Gò Vấp -->
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Mầm Non Gò Vấp</h3>
+                <span class="cs-campus-tag cs-tag-mn">Chuyên Mầm non</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> <a href="https://maps.google.com/?q=573+Lê+Đức+Thọ,+Gò+Vấp,+TP.HCM" target="_blank" rel="noopener">573 Lê Đức Thọ, P.16, Q. Gò Vấp, TP.HCM</a></p>
+                  <p><strong>Hotline:</strong> <a href="tel:0774588988">0774 588 988</a></p>
+                  <p><strong>Cấp học:</strong> Mầm non (18 tháng - 6 tuổi)</p>
+                  <p><strong>Giờ làm việc:</strong> T2-T6: 7:00-17:00 | T7: 7:30-11:30</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở chuyên mầm non tại đường Lê Đức Thọ được thiết kế riêng cho trẻ 18 tháng đến 6 tuổi. Toàn bộ không gian — từ phòng học, sân chơi đến khu vực ăn uống — đều tối ưu cho trẻ nhỏ: góc tròn an toàn, nội thất vừa tầm với, màu sắc tươi sáng kích thích sáng tạo.</p>
+                  <p>Cơ sở có <strong>bể bơi riêng</strong> cho trẻ mầm non (mực nước nông, có giáo viên bơi chuyên trách), phòng nghệ thuật với đầy đủ dụng cụ vẽ-nặn-cắt dán, và sân chơi ngoài trời rộng rãi với cầu trượt, xích đu, nhà banh. Dinh dưỡng do chuyên gia thiết kế, thực đơn thay đổi hàng ngày.</p>
+                  <p><strong>Phù hợp cho:</strong> Gia đình tại Gò Vấp, Bình Thạnh, Quận 12, Tân Phú muốn cho con học chuyên mầm non.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bình Tân -->
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Cơ sở Bình Tân</h3>
+                <span class="cs-campus-tag">Liên cấp MN - TH - THCS</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> <a href="https://maps.google.com/?q=Số+7+đường+38A,+Bình+Tân,+TP.HCM" target="_blank" rel="noopener">Số 7, Đường 38A, Q. Bình Tân, TP.HCM</a></p>
+                  <p><strong>Hotline:</strong> <a href="tel:0916961409">0916 961 409</a></p>
+                  <p><strong>Cấp học:</strong> Mầm non, Tiểu học, THCS</p>
+                  <p><strong>Giờ làm việc:</strong> T2-T6: 7:00-17:00 | T7: 7:30-11:30</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở Bình Tân phục vụ phụ huynh khu vực phía Tây TP.HCM — Bình Tân, Bình Chánh, Tân Phú. Khuôn viên rộng rãi, nhiều không gian xanh cho trẻ vận động ngoài trời. Đây là cơ sở mới được nâng cấp với trang thiết bị hiện đại, phòng học máy lạnh, sân chơi đa năng.</p>
+                  <p>Bãi đỗ xe tại cơ sở Bình Tân là rộng nhất trong hệ thống, thuận tiện cho phụ huynh đưa đón bằng ô tô. Khu vực mầm non tách biệt hoàn toàn, có lối vào riêng đảm bảo an toàn cho trẻ nhỏ.</p>
+                  <p><strong>Phù hợp cho:</strong> Gia đình tại Bình Tân, Bình Chánh, Tân Phú, Quận 6 và lân cận.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 3: Long An -->
+        <section id="long-an" class="gi-section">
+          <h2>Các cơ sở tại Long An</h2>
+          <p>Trường Việt Anh mở rộng ra tỉnh Long An với <strong>3 cơ sở</strong> phục vụ nhu cầu giáo dục chất lượng cao tại khu vực giáp ranh TP.HCM. Phụ huynh tại Long An không cần đưa con lên TP.HCM mà vẫn được hưởng cùng chương trình 100% tiếng Anh và hệ thống PDR.</p>
+
+          <div class="cs-campus-detail-list">
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Mầm Non Nhân Lễ</h3>
+                <span class="cs-campus-tag cs-tag-mn">Chuyên Mầm non</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> KDC Nhân Lễ, H. Bến Lức, Tỉnh Long An</p>
+                  <p><strong>Hotline:</strong> <a href="tel:0774588988">0774 588 988</a></p>
+                  <p><strong>Cấp học:</strong> Mầm non (18 tháng - 6 tuổi)</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở chuyên mầm non tại KDC Nhân Lễ, huyện Bến Lức — khu vực giáp ranh TP.HCM (gần Nhà Bè). Khuôn viên xanh mát, không gian thoáng đãng, phù hợp cho trẻ phát triển trong môi trường gần gũi thiên nhiên. Cùng chương trình 100% tiếng Anh và giáo viên bản ngữ như các cơ sở tại TP.HCM.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Mầm Non Thái Sơn</h3>
+                <span class="cs-campus-tag cs-tag-mn">Chuyên Mầm non</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> KDC Thái Sơn, H. Đức Hoà, Tỉnh Long An</p>
+                  <p><strong>Hotline:</strong> <a href="tel:0774588988">0774 588 988</a></p>
+                  <p><strong>Cấp học:</strong> Mầm non (18 tháng - 6 tuổi)</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Mầm non tại KDC Thái Sơn, huyện Đức Hoà. Cơ sở được xây dựng theo tiêu chuẩn mới nhất của hệ thống Việt Anh, với phòng học thoáng mát, sân chơi đầy đủ thiết bị vận động, khu vực ăn uống sạch sẽ. Trẻ tại đây học cùng chương trình immersion và được giáo viên bản ngữ dạy trực tiếp.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Tiểu Học Thái Sơn</h3>
+                <span class="cs-campus-tag cs-tag-th">Tiểu học</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> KDC Thái Sơn, H. Đức Hoà, Tỉnh Long An</p>
+                  <p><strong>Hotline:</strong> <a href="tel:0916961409">0916 961 409</a></p>
+                  <p><strong>Cấp học:</strong> Tiểu học (Lớp 1-5)</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở tiểu học song ngữ tại Long An, tiếp nối chương trình mầm non Việt Anh. Học sinh từ Mầm Non Thái Sơn chuyển lên Tiểu Học Thái Sơn liền mạch, không gián đoạn. Chương trình UK Curriculum kết hợp Bộ GD&ĐT, giáo viên bản ngữ full-time, STEAM và Coding từ lớp 1.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 4: Kiên Giang -->
+        <section id="kien-giang" class="gi-section">
+          <h2>Cơ sở tại Kiên Giang</h2>
+          <p>Trường Việt Anh có mặt tại Kiên Giang với <strong>2 cơ sở</strong> mang thương hiệu Mekong Xanh, phục vụ phụ huynh tại TP. Rạch Giá và khu vực lân cận. Đây là các cơ sở mới nhất trong hệ thống, được xây dựng với tiêu chuẩn cao nhất.</p>
+
+          <div class="cs-campus-detail-list">
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Mầm Non Mekong Xanh</h3>
+                <span class="cs-campus-tag cs-tag-mn">Chuyên Mầm non</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> TP. Rạch Giá, Tỉnh Kiên Giang</p>
+                  <p><strong>Hotline:</strong> <a href="tel:0774588988">0774 588 988</a></p>
+                  <p><strong>Cấp học:</strong> Mầm non (18 tháng - 6 tuổi)</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở mầm non đầu tiên của Việt Anh tại miền Tây. Môi trường xanh, thoáng mát, kết hợp các hoạt động ngoài trời đặc thù khu vực sông nước. Cùng chương trình 100% tiếng Anh, giáo viên bản ngữ và hệ thống PDR như tất cả cơ sở trong hệ thống.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="cs-campus-detail">
+              <div class="cs-campus-header">
+                <h3>Tiểu Học Mekong Xanh</h3>
+                <span class="cs-campus-tag cs-tag-th">Tiểu học</span>
+              </div>
+              <div class="cs-campus-body">
+                <div class="cs-campus-info">
+                  <p><strong>Địa chỉ:</strong> TP. Rạch Giá, Tỉnh Kiên Giang</p>
+                  <p><strong>Hotline:</strong> <a href="tel:0916961409">0916 961 409</a></p>
+                  <p><strong>Cấp học:</strong> Tiểu học (Lớp 1-5)</p>
+                </div>
+                <div class="cs-campus-desc">
+                  <p>Cơ sở tiểu học song ngữ tại Kiên Giang, chương trình UK Curriculum kết hợp Bộ GD&ĐT. Phụ huynh tại Rạch Giá và các huyện lân cận không cần gửi con lên TP.HCM mà vẫn được hưởng chương trình giáo dục chất lượng quốc tế — 100% tiếng Anh, giáo viên bản ngữ, STEAM, Coding và hệ thống PDR đầy đủ.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 5: Tất cả cơ sở khác nhau điều gì? -->
+        <section id="khac-biet" class="gi-section">
+          <h2>Tất cả cơ sở khác nhau điều gì?</h2>
+          <p>Câu trả lời ngắn gọn: <strong>khác địa chỉ, cùng chất lượng.</strong> Dù phụ huynh chọn cơ sở Phú Nhuận, Gò Vấp, Bình Tân, Long An hay Kiên Giang, con đều nhận được chương trình giáo dục hoàn toàn giống nhau. Dưới đây là những yếu tố đồng nhất giữa tất cả 9 cơ sở:</p>
+
+          <img src="https://media.truongvietanh.com/images/vui-ve-04.webp" alt="Không gian vui chơi Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <div class="gi-roadmap">
+            <h3>4 yếu tố đồng nhất tại mọi cơ sở</h3>
+            <div class="gi-roadmap-grid cs-uniform-grid">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">TL</div>
+                <strong>Cùng triết lý giáo dục</strong>
+                <p>Tất cả cơ sở đều vận hành theo triết lý giáo dục Việt Anh: phát triển con người toàn diện — trí tuệ, nhân cách, thể chất và kỹ năng sống. 5 giá trị cốt lõi (Chính trực, Tử tế, Kỷ luật, Sáng tạo, Bền bỉ) được rèn luyện hàng ngày ở mọi cơ sở.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">PDR</div>
+                <strong>Cùng hệ thống PDR</strong>
+                <p>Hệ thống Plan-Do-Review (PDR) theo dõi sự phát triển nhân cách của mỗi học sinh được áp dụng đồng nhất tại tất cả cơ sở. Phụ huynh nhận báo cáo hàng tháng theo cùng format, cùng tiêu chí đánh giá, dù con học ở bất kỳ cơ sở nào.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">CL</div>
+                <strong>Cùng chất lượng giáo viên</strong>
+                <p>Giáo viên bản ngữ (Anh, Mỹ, Úc) có bằng TESOL/CELTA được tuyển dụng theo cùng tiêu chuẩn cho tất cả cơ sở. Giáo viên Việt Nam đều có bằng cử nhân sư phạm trở lên và được đào tạo nội bộ theo chương trình Việt Anh trước khi đứng lớp.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">CT</div>
+                <strong>Cùng chương trình học</strong>
+                <p>Chương trình 100% tiếng Anh, UK Curriculum, SAM Math, STEAM, Coding — tất cả đều được triển khai đồng nhất. Sách giáo khoa, tài liệu, kế hoạch giảng dạy do bộ phận chuyên môn trung tâm thiết kế và phân phối đến từng cơ sở.</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Khác biệt giữa các cơ sở chủ yếu nằm ở: <strong>vị trí địa lý</strong> (thuận tiện cho phụ huynh gần nhà), <strong>quy mô khuôn viên</strong> (cơ sở Gò Vấp và Bình Tân rộng hơn Phú Nhuận), <strong>cấp học</strong> (một số cơ sở chuyên mầm non, một số liên cấp đầy đủ) và <strong>tên gọi</strong> (Mekong Xanh tại Kiên Giang, Nhân Lễ/Thái Sơn tại Long An). Tuy nhiên, bản chất giáo dục và chất lượng là hoàn toàn đồng nhất.</p>
+
+          <p>Trường Việt Anh cũng hỗ trợ <strong>chuyển cơ sở</strong> cho phụ huynh thay đổi nơi ở. Nếu gia đình chuyển từ Gò Vấp sang Bình Tân, con có thể chuyển cơ sở mà không cần thi lại hay thích nghi chương trình mới — mọi thứ đều liền mạch.</p>
+        </section>
+
+        <!-- Section 6: Đánh giá phụ huynh -->
+        <section id="danh-gia" class="gi-section">
+          <h2>Đánh giá phụ huynh về cơ sở vật chất Trường Việt Anh</h2>
+          <p>Dưới đây là chia sẻ thực tế từ phụ huynh về trải nghiệm cơ sở vật chất tại các cơ sở Trường Việt Anh. Xem thêm <a href="/phu-huynh">cẩm nang phụ huynh</a> hoặc <a href="/thanh-tich">thành tích học sinh</a> để hiểu rõ hơn giá trị giáo dục tại Trường Việt Anh.</p>
+
+          <img src="https://media.truongvietanh.com/images/giao-vien-15.webp" alt="Lớp học tại cơ sở Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <div class="gi-aggregate-rating">
+            <span class="gi-big-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-big-score">4.9/5</span>
+            <span class="gi-review-count">300+ đánh giá trên Google</span>
+          </div>
+
+          <div class="gi-testimonials">
+            <blockquote class="gi-testimonial">
+              <p>"Lần đầu đến tham quan cơ sở Gò Vấp, tôi ấn tượng với sân chơi rộng và khu vực mầm non tách biệt hoàn toàn. Con gái tôi 3 tuổi, tôi yên tâm vì không gian an toàn, có camera khắp nơi, và bảo vệ kiểm soát cổng rất nghiêm. Sau 1 năm, cháu vẫn rất thích đi học mỗi ngày."</p>
+              <cite>— Chị Lê Thuỳ Trang, phụ huynh lớp Chồi, cơ sở Gò Vấp (Lê Đức Thọ)</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Gia đình tôi chọn cơ sở Phú Nhuận vì gần nhà, đi xe máy chỉ 10 phút. Dù khuôn viên không rộng bằng Gò Vấp, nhưng phòng học rất thoáng, máy lạnh mát, và quan trọng nhất là chương trình học hoàn toàn giống nhau. Con trai tôi học lớp 3, tiếng Anh rất tốt."</p>
+              <cite>— Anh Trần Quốc Bảo, phụ huynh lớp 3, cơ sở Phú Nhuận</cite>
+            </blockquote>
+            <blockquote class="gi-testimonial">
+              <p>"Chúng tôi sống ở Long An, trước đây tính gửi con lên TP.HCM học trường quốc tế. Khi biết Việt Anh có cơ sở Thái Sơn ngay Đức Hoà, gia đình quyết định cho con học tại đây. Cơ sở mới, sạch sẽ, giáo viên bản ngữ dạy rất tận tâm. Con không phải đi xa, học phí hợp lý hơn nhiều."</p>
+              <cite>— Chị Nguyễn Hồng Nhung, phụ huynh MN Thái Sơn, Long An</cite>
+            </blockquote>
+          </div>
+        </section>
+
+        <!-- Section 7: FAQ -->
+        <section id="faq" class="gi-section">
+          <h2>Câu hỏi thường gặp về cơ sở Trường Việt Anh</h2>
+          <p>Những câu hỏi phụ huynh thường đặt ra khi tìm hiểu về cơ sở vật chất và hệ thống trường Việt Anh.</p>
+
+          <div class="gi-faq-list">
+            <details class="gi-faq-item" open>
+              <summary>Các cơ sở Trường Việt Anh có bãi đỗ xe cho phụ huynh không?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>Có.</strong> Tất cả cơ sở tại TP.HCM đều có khu vực đậu xe máy và ô tô cho phụ huynh khi đưa đón con. Cơ sở Gò Vấp (160/72 Phan Huy Ích) và Bình Tân có bãi đỗ xe rộng rãi nhất, thuận tiện cho phụ huynh đi ô tô. Cơ sở Phú Nhuận có bãi xe nhỏ hơn do nằm trong khu vực nội thành, nhưng vẫn đủ phục vụ đưa đón.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Sân chơi tại các cơ sở có rộng không?</summary>
+              <div class="gi-faq-answer">
+                <p>Tất cả cơ sở đều có <strong>sân chơi ngoài trời</strong> với thiết bị vận động phù hợp từng lứa tuổi: cầu trượt, xích đu, nhà banh cho mầm non; sân bóng, sân đa năng cho tiểu học và trung học. Cơ sở Gò Vấp và Bình Tân có khuôn viên rộng nhất. Cơ sở Mầm Non Gò Vấp (573 Lê Đức Thọ) có <strong>bể bơi riêng</strong> cho trẻ nhỏ. Trẻ vận động ngoài trời ít nhất 60 phút mỗi ngày.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>An ninh tại trường được đảm bảo như thế nào?</summary>
+              <div class="gi-faq-answer">
+                <p>An ninh là ưu tiên hàng đầu. Mỗi cơ sở đều có: <strong>camera giám sát 24/7</strong> phủ toàn bộ khuôn viên (hành lang, lớp học, sân chơi, cổng), <strong>bảo vệ trực cổng</strong> trong giờ học, <strong>thẻ đón trẻ</strong> cho phụ huynh (chỉ người có thẻ mới được đón con), và <strong>quy trình đón-trả nghiêm ngặt</strong>. Người lạ không thể vào khuôn viên trường nếu không đăng ký trước và xuất trình giấy tờ.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Phụ huynh có thể tham quan cơ sở trước khi quyết định không?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>Tất nhiên — và chúng tôi khuyến khích điều này.</strong> Phụ huynh nên đến tham quan trực tiếp ít nhất 1 cơ sở để cảm nhận môi trường học tập, gặp giáo viên bản ngữ, và quan sát hoạt động của học sinh. Buổi tham quan kéo dài 45-60 phút, hoàn toàn <strong>miễn phí</strong>. Đặt lịch qua Hotline <a href="tel:0916961409">0916 961 409</a> hoặc <a href="https://zalo.me/0916961409" target="_blank" rel="noopener">Zalo</a>.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Mỗi lớp tại Trường Việt Anh có bao nhiêu học sinh?</summary>
+              <div class="gi-faq-answer">
+                <p>Sĩ số được kiểm soát để đảm bảo chất lượng dạy và học: <strong>Mầm non</strong> 20-25 trẻ/lớp (2 giáo viên + 1 trợ giảng), <strong>Tiểu học</strong> 25-30 học sinh/lớp (1 giáo viên chủ nhiệm + giáo viên bản ngữ), <strong>THCS-THPT</strong> 30-35 học sinh/lớp. Tỷ lệ giáo viên/học sinh này đảm bảo mỗi em được quan tâm đầy đủ, đặc biệt trong các hoạt động nhóm và dự án.</p>
+              </div>
+            </details>
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <!-- ====== BOTTOM CTA ====== -->
+    <section class="gi-bottom-cta">
+      <div class="gi-container gi-bottom-cta-inner">
+        <div class="gi-bottom-cta-text">
+          <h2>Đặt lịch tham quan cơ sở gần nhất</h2>
+          <p>Hãy đến tận nơi để trải nghiệm môi trường học tập tại Trường Việt Anh. Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ để sắp xếp lịch tham quan phù hợp với cơ sở gần nhà phụ huynh nhất.</p>
+          <ul class="cs-cta-benefits">
+            <li>Tham quan cơ sở vật chất và phòng học thực tế</li>
+            <li>Gặp giáo viên bản ngữ và quan sát hoạt động dạy học</li>
+            <li>Nhận tư vấn chương trình phù hợp với độ tuổi con</li>
+            <li>Hoàn toàn miễn phí, không ràng buộc</li>
+          </ul>
+        </div>
+        <div class="gi-bottom-cta-form">
+          <LeadFormTwoStepEmailFirst
+            formId="co-so-bottom-form"
+            funnelCode="co-so-bottom"
+            schoolLevel="tieu-hoc"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== RELATED CONTENT ====== -->
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Tìm hiểu thêm</h2>
+        <div class="gi-related-grid">
+          <a href="/gioi-thieu" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8a 100%);"></div>
+            <h3>Giới thiệu Trường Việt Anh</h3>
+            <p>Tổng quan triết lý, chương trình và hệ thống giáo dục liên cấp Mầm non - THPT.</p>
+          </a>
+          <a href="/hoc-phi" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #D4A843 0%, #b8922e 100%);"></div>
+            <h3>Bảng học phí Trường Việt Anh 2026-2027</h3>
+            <p>Học phí các cấp, chính sách học bổng và ưu đãi khi đăng ký sớm.</p>
+          </a>
+          <a href="/lien-he" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Liên hệ Trường Việt Anh</h3>
+            <p>Hotline, Zalo, Email và giờ làm việc — tư vấn miễn phí.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
     <FooterBase />
   </div>
 </BaseLayout>
 
-<style>
-  .page-wrapper { font-family: 'Inter', sans-serif; color: #0f172a; background: #f8fafc; }
-  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-  .max-w-900 { max-width: 900px; }
-  .text-center { text-align: center; }
-  
-  .page-hero { background: linear-gradient(rgba(26, 25, 60, 0.8), rgba(26, 25, 60, 0.85)), url('https://truongvietanh.com/wp-content/uploads/2023/07/20230311-DSC08612-scaled.jpg') center/cover no-repeat; color: #fff; padding: 8rem 0; border-bottom: 5px solid #fde047; }
-  .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 1rem; }
-  .page-desc { font-size: 1.25rem; font-weight: 500; color: #e2e8f0; }
+<style is:global>
+/* ===== CƠ SỞ PILLAR PAGE — Additional styles ===== */
+/* Reuses all gi-* classes from gioi-thieu.astro (is:global) */
 
-  .page-content { padding: 5rem 0; min-height: 400px; }
-  
-  .campus-list { display: flex; flex-direction: column; gap: 1.5rem; }
-  .campus-card { background: #ffffff; padding: 2rem; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
-  .c-info h2 { color: #1a193c; font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem; }
-  .c-info p { font-size: 1.05rem; color: #475569; margin-bottom: 0.5rem; }
-  .c-info strong { color: #0f172a; }
+/* Campus detail cards */
+.cs-campus-detail-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin: 2rem 0;
+}
+.cs-campus-detail {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+  overflow: hidden;
+}
+.cs-campus-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.75rem;
+  background: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+}
+.cs-campus-header h3 {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #1a193c;
+  margin: 0;
+}
+.cs-campus-tag {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #1a193c;
+  background: #fde047;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.cs-campus-tag.cs-tag-mn {
+  background: #dbeafe;
+  color: #1e40af;
+}
+.cs-campus-tag.cs-tag-th {
+  background: #dcfce7;
+  color: #166534;
+}
+.cs-campus-body {
+  padding: 1.75rem;
+}
+.cs-campus-info {
+  margin-bottom: 1rem;
+}
+.cs-campus-info p {
+  font-size: 0.95rem;
+  color: #475569;
+  margin-bottom: 0.4rem;
+  line-height: 1.5;
+}
+.cs-campus-info a {
+  color: #1a193c;
+  text-decoration: none;
+  border-bottom: 1px solid #fde047;
+  transition: color 0.2s;
+}
+.cs-campus-info a:hover {
+  color: #b8922e;
+}
+.cs-campus-desc p {
+  font-size: 1rem;
+  color: #334155;
+  line-height: 1.7;
+  margin-bottom: 0.75rem;
+}
 
-  @media (max-width: 768px) {
-    .campus-card { flex-direction: column; align-items: flex-start; }
+/* Uniform grid (4 columns) */
+.cs-uniform-grid {
+  grid-template-columns: repeat(4, 1fr) !important;
+}
+
+/* CTA benefits list */
+.cs-cta-benefits {
+  list-style: none;
+  padding: 0;
+  margin: 1.5rem 0 0;
+}
+.cs-cta-benefits li {
+  font-size: 1rem;
+  color: #e2e8f0;
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+.cs-cta-benefits li::before {
+  content: "\2713";
+  position: absolute;
+  left: 0;
+  color: #fde047;
+  font-weight: bold;
+}
+
+@media (max-width: 1024px) {
+  .cs-uniform-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
   }
+}
+@media (max-width: 768px) {
+  .cs-campus-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  .cs-uniform-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
 </style>

@@ -28,9 +28,61 @@ const description =
   page?.seoDescription ||
   page?.description ||
   'Trang bạn đang tìm không tồn tại hoặc chưa được đồng bộ từ Directus.';
+
+// Build structured data: BreadcrumbList + FAQPage if applicable
+const structuredData: Record<string, unknown>[] = [];
+if (page) {
+  // BreadcrumbList
+  const slugParts = page.slug.split('/');
+  const breadcrumbItems = [
+    { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: `${siteUrl.replace(/\/$/, '')}/` },
+  ];
+  if (slugParts.length > 1) {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: slugParts[0] === 'co-so' ? 'Cơ sở' : slugParts[0].charAt(0).toUpperCase() + slugParts[0].slice(1),
+      item: `${siteUrl.replace(/\/$/, '')}/${slugParts[0]}`,
+    });
+  }
+  breadcrumbItems.push({
+    '@type': 'ListItem',
+    position: breadcrumbItems.length + 1,
+    name: page.title,
+    item: canonical!,
+  });
+  structuredData.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumbItems,
+  });
+
+  // FAQPage schema from FAQ blocks
+  const faqBlocks = page.blocks.filter((b) => b.type === 'faq');
+  const faqItems = faqBlocks.flatMap((b) => 'items' in b ? (b as any).items : []);
+  if (faqItems.length > 0) {
+    structuredData.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqItems.map((item: { question: string; answer: string }) => ({
+        '@type': 'Question',
+        name: item.question,
+        acceptedAnswer: { '@type': 'Answer', text: item.answer },
+      })),
+    });
+  }
+}
+
+const defaultOgImage = 'https://media.truongvietanh.com/images/extra-big-img3-scaled.webp';
 ---
 
-<BaseLayout title={title} description={description} canonical={canonical} ogImage={page?.ogImage || undefined}>
+<BaseLayout
+  title={title}
+  description={description}
+  canonical={canonical}
+  ogImage={page?.ogImage || defaultOgImage}
+  structuredData={structuredData.length > 0 ? structuredData : undefined}
+>
   <div class={`site-shell site-shell--${page?.theme || 'brand'}`}>
     <SiteHeader currentPath={`/${slug || ''}`} siteUrl="/" showCmsLink={page?.showCmsLink} />
 
@@ -43,7 +95,7 @@ const description =
             <p class="section-eyebrow">404</p>
             <h1>Trang này chưa có trong Directus hoặc trong bộ dữ liệu fallback.</h1>
             <p class="section-intro">
-              Nếu bạn vừa tạo page trong CMS, hãy kiểm tra lại `slug`, `status=published`, và các bản ghi `page_blocks`.
+              Nếu bạn vừa tạo page trong CMS, hãy kiểm tra lại `slug`, `status=published`, và blocks M2A trong Directus.
             </p>
           </div>
 

@@ -1,0 +1,37 @@
+;; SES DKIM records for reply.truongvietanh.com
+xtsvfg72otdtywdd4web4e522wdd6q1k._domainkey.reply 300 IN CNAME xtsvfg72otdtywdd4web4e522wdd6q1k.dkim.amazonses.com.
+ty4n4hyo7j1jym7pjo4ohse6h3pxfm47._domainkey.reply 300 IN CNAME ty4n4hyo7j1jym7pjo4ohse6h3pxfm47.dkim.amazonses.com.
+d4rk6uzrtitrow3aznbj7r52sa7udofd._domainkey.reply 300 IN CNAME d4rk6uzrtitrow3aznbj7r52sa7udofd.dkim.amazonses.com.
+
+;; SES DKIM records for news.truongvietanh.com
+us3otl1r5duuqqp6r5vb5t3ow3f7wjzw._domainkey.news 300 IN CNAME us3otl1r5duuqqp6r5vb5t3ow3f7wjzw.dkim.amazonses.com.
+m6ctv3bqenkaovofmh5fwxuigfc6xr5d._domainkey.news 300 IN CNAME m6ctv3bqenkaovofmh5fwxuigfc6xr5d.dkim.amazonses.com.
+gnhkeum33wf7mffgwpb3ryf6chgf55vb._domainkey.news 300 IN CNAME gnhkeum33wf7mffgwpb3ryf6chgf55vb.dkim.amazonses.com.
+
+;; SES DKIM records for reach.truongvietanh.com
+c3dfqkb1skttfizitpxfdmydrz4l2cow._domainkey.reach 300 IN CNAME c3dfqkb1skttfizitpxfdmydrz4l2cow.dkim.amazonses.com.
+j3t3yqpyg2e6raqqro7hgoht7s1xvcy._domainkey.reach 300 IN CNAME j3t3yqpyg2e6raqqro7hgoht7s1xvcy.dkim.amazonses.com.
+2e3jpmiszcyfl2dnrj6zfbjoltfvcpd4._domainkey.reach 300 IN CNAME 2e3jpmiszcyfl2dnrj6zfbjoltfvcpd4.dkim.amazonses.com.
+
+;; Custom MAIL FROM - MX records
+mail.reply 300 IN MX 10 feedback-smtp.ap-southeast-1.amazonses.com.
+mail.news 300 IN MX 10 feedback-smtp.ap-southeast-1.amazonses.com.
+mail.reach 300 IN MX 10 feedback-smtp.ap-southeast-1.amazonses.com.
+
+;; Custom MAIL FROM - SPF records
+mail.reply 300 IN TXT "v=spf1 include:amazonses.com ~all"
+mail.news 300 IN TXT "v=spf1 include:amazonses.com ~all"
+mail.reach 300 IN TXT "v=spf1 include:amazonses.com ~all"
+
+;; Subdomain SPF records
+reply 300 IN TXT "v=spf1 include:amazonses.com ~all"
+news 300 IN TXT "v=spf1 include:amazonses.com ~all"
+reach 300 IN TXT "v=spf1 include:amazonses.com ~all"
+
+;; DMARC records
+_dmarc.reply 300 IN TXT "v=DMARC1; p=reject; sp=reject; rua=mailto:dmarc@truongvietanh.com; pct=100; fo=1"
+_dmarc.news 300 IN TXT "v=DMARC1; p=quarantine; rua=mailto:dmarc@truongvietanh.com; pct=100; fo=1"
+_dmarc.reach 300 IN TXT "v=DMARC1; p=none; rua=mailto:dmarc@truongvietanh.com; pct=100"
+
+;; MailChannels auth for lead alerts
+_mailchannels.hoc 300 IN TXT "v=mc1 cfid=truongvietanh-5c361252.workers.dev"

@@ -6,27 +6,31 @@ import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirs
 import FAQSection from '../../components/FAQSection.astro';
 
 const pageTitle = 'Webinar: 3 Sai Lầm Khiến Con Mất Cơ Hội Vào Trường Tốt | Trường Việt Anh';
-const pageDescription = 'Tham gia webinar miễn phí dành cho phụ huynh. Chuyên gia giáo dục với 15+ năm kinh nghiệm chia sẻ cách chọn trường, chuẩn bị hồ sơ, và định hướng tương lai cho con.';
+const pageDescription = 'Tham gia webinar miễn phí dành cho phụ huynh. Chuyên gia giáo dục với 15+ năm kinh nghiệm chia sẻ cách chọn trường, chuẩn bị hồ sơ, và định hướng tương lai cho con. Đã có 1,500+ phụ huynh tham dự.';
 const pageCanonical = 'https://truongvietanh.com/squeeze/webinar-phu-huynh';
 
 const uspItems = [
-  { icon: '🎤', text: 'Chuyên gia 15+ năm kinh nghiệm chia sẻ trực tiếp' },
-  { icon: '⚠️', text: '3 sai lầm phổ biến khiến con mất cơ hội vào trường tốt' },
-  { icon: '📝', text: 'Hỏi đáp trực tiếp — giải đáp mọi thắc mắc của Ba/Mẹ' },
-  { icon: '🎁', text: 'Tặng tài liệu độc quyền cho người tham dự' }
+  { icon: '🎤', text: 'Chuyên gia 15+ năm kinh nghiệm chia sẻ trực tiếp -- từ thực tế giảng dạy và quản lý giáo dục tại TPHCM' },
+  { icon: '⚠️', text: '3 sai lầm phổ biến khiến con mất cơ hội -- 90% phụ huynh mắc phải mà không biết, hậu quả khó khắc phục' },
+  { icon: '📋', text: 'Lộ trình chuẩn bị chi tiết từng bước -- kế hoạch hành động cụ thể Ba/Mẹ có thể áp dụng ngay sau webinar' },
+  { icon: '📝', text: 'Hỏi đáp trực tiếp không giới hạn -- giải đáp mọi thắc mắc cá nhân về chọn trường, học phí, chương trình' },
+  { icon: '🎁', text: 'Tặng bộ tài liệu độc quyền cho người tham dự -- checklist chọn trường, 7 câu hỏi phải hỏi, timeline tuyển sinh' },
+  { icon: '🔄', text: 'Nhận bản ghi lại nếu bận -- không tham dự trực tiếp được vẫn xem đầy đủ nội dung bất cứ lúc nào' }
 ];
 
 const metrics = [
-  { number: '1,500+', label: 'Phụ huynh đã tham dự' },
-  { number: '4.8/5', label: 'Đánh giá trung bình' },
-  { number: '45 phút', label: 'Nội dung súc tích' }
+  { number: '1,500+', label: 'Phụ huynh đã tham dự webinar' },
+  { number: '4.8/5', label: 'Đánh giá trung bình từ phụ huynh' },
+  { number: '45 phút', label: 'Nội dung súc tích, đi vào trọng tâm' },
+  { number: '100%', label: 'Miễn phí, không cam kết' }
 ];
 
 const faqItems = [
-  { question: 'Webinar diễn ra khi nào?', answer: 'Webinar được tổ chức định kỳ. Sau khi đăng ký, bạn sẽ nhận email với lịch cụ thể và link tham dự.' },
-  { question: 'Tôi không tham dự được trực tiếp thì sao?', answer: 'Bạn sẽ nhận được bản ghi lại để xem bất cứ lúc nào thuận tiện.' },
-  { question: 'Có miễn phí không?', answer: 'Hoàn toàn miễn phí, không có bất kỳ chi phí nào.' },
-  { question: 'Webinar phù hợp với phụ huynh có con độ tuổi nào?', answer: 'Phù hợp cho phụ huynh có con từ lớp 3–9, đang cân nhắc chọn trường hoặc định hướng học tập.' }
+  { question: 'Webinar diễn ra khi nào?', answer: 'Webinar được tổ chức định kỳ 2 lần/tháng vào tối thứ 7 (20h-21h) để thuận tiện cho phụ huynh. Sau khi đăng ký, Ba/Mẹ sẽ nhận email xác nhận với lịch cụ thể, link tham dự Zoom, và hướng dẫn chuẩn bị câu hỏi.' },
+  { question: 'Tôi không tham dự được trực tiếp thì sao?', answer: 'Không vấn đề. Ba/Mẹ sẽ nhận được bản ghi lại đầy đủ qua email trong vòng 24 giờ sau buổi webinar. Có thể xem bất cứ lúc nào thuận tiện. Tuy nhiên, tham gia trực tiếp sẽ có lợi thế vì Ba/Mẹ được hỏi đáp riêng với chuyên gia.' },
+  { question: 'Có miễn phí không?', answer: 'Hoàn toàn miễn phí, không có bất kỳ chi phí ẩn nào. Đây là chương trình chia sẻ kiến thức giáo dục của Trường Việt Anh dành cho cộng đồng phụ huynh tại TPHCM. Ba/Mẹ cũng được tặng bộ tài liệu độc quyền khi tham dự.' },
+  { question: 'Webinar phù hợp với phụ huynh có con độ tuổi nào?', answer: 'Phù hợp nhất cho phụ huynh có con từ lớp 3-9, đang cân nhắc chọn trường hoặc cần định hướng học tập. Nội dung bao gồm cả việc chuẩn bị cho kỳ thi đầu vào lớp 6 và lớp 10, nên rất thiết thực cho phụ huynh ở giai đoạn chuyển cấp.' },
+  { question: 'Tôi cần chuẩn bị gì trước khi tham dự?', answer: 'Ba/Mẹ chỉ cần máy tính hoặc điện thoại có kết nối internet. Nên chuẩn bị sẵn 2-3 câu hỏi muốn hỏi chuyên gia trong phần hỏi đáp. Trước buổi webinar, chúng tôi sẽ gửi email nhắc nhở kèm gợi ý câu hỏi hay từ các phụ huynh trước đó.' }
 ];
 ---
 
@@ -39,31 +43,51 @@ const faqItems = [
 >
   <section slot="hero">
     <h1 class="squeeze-hero__heading">3 Sai Lầm Khiến Con Mất Cơ Hội Vào Trường Tốt</h1>
-    <p class="squeeze-hero__subheading">Webinar miễn phí dành cho phụ huynh có con lớp 3–9 — Chuyên gia 15+ năm chia sẻ trực tiếp</p>
+    <p class="squeeze-hero__subheading">Webinar miễn phí dành cho phụ huynh có con lớp 3-9 -- Chuyên gia 15+ năm chia sẻ trực tiếp, hỏi đáp không giới hạn</p>
   </section>
 
   <section slot="usp"><USPGrid title="Bạn sẽ học được gì?" items={uspItems} /></section>
   <section slot="trust"><TrustMetrics title="Được phụ huynh tin tưởng" metrics={metrics} /></section>
 
   <section slot="content">
-    <div style="max-width: 900px; margin: 0 auto;">
-      <h2 style="font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center;">Nội dung webinar</h2>
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0;">
-        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
-          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #E8792B;">Phần 1: 3 sai lầm phổ biến</h3>
-          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Những sai lầm mà 90% phụ huynh mắc phải khi chọn trường và chuẩn bị cho con.</p>
+    <div class="webinar-content">
+      <!-- Hero Image -->
+      <div class="webinar-content__image-wrap">
+        <img src="https://media.truongvietanh.com/images/giao-vien-12.webp" alt="Chuyên gia giáo dục chia sẻ tại webinar dành cho phụ huynh Trường Việt Anh" class="webinar-content__image" width="900" height="500" loading="lazy" />
+      </div>
+
+      <h2 class="webinar-content__title">Nội dung webinar chi tiết</h2>
+
+      <!-- Content Cards -->
+      <div class="webinar-grid">
+        <div class="webinar-card">
+          <h3 class="webinar-card__heading">Phần 1: 3 sai lầm phổ biến nhất</h3>
+          <p>90% phụ huynh mắc phải ít nhất 1 trong 3 sai lầm này khi chọn trường và chuẩn bị cho con. Sai lầm số 1 liên quan đến thời điểm bắt đầu chuẩn bị -- hầu hết phụ huynh bắt đầu muộn hơn thời điểm lý tưởng tới 12-18 tháng. Chuyên gia sẽ phân tích chi tiết từng sai lầm và cách khắc phục.</p>
         </div>
-        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
-          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #E8792B;">Phần 2: Lộ trình chuẩn bị</h3>
-          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Kế hoạch từng bước giúp con sẵn sàng cho kỳ thi đầu vào.</p>
+        <div class="webinar-card">
+          <h3 class="webinar-card__heading">Phần 2: Lộ trình chuẩn bị từng bước</h3>
+          <p>Kế hoạch cụ thể giúp con sẵn sàng cho kỳ thi đầu vào, từ việc xác định trường mục tiêu, lập kế hoạch ôn tập, đến chuẩn bị hồ sơ. Lộ trình được chia theo từng giai đoạn 3 tháng, với mục tiêu rõ ràng và cách đo lường tiến bộ. Ba/Mẹ có thể áp dụng ngay sau webinar.</p>
         </div>
-        <div style="background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem;">
-          <h3 style="font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #E8792B;">Phần 3: Hỏi đáp trực tiếp</h3>
-          <p style="font-size: 0.95rem; line-height: 1.6; color: #666;">Giải đáp mọi thắc mắc của Ba/Mẹ về chọn trường, học phí, chương trình.</p>
+        <div class="webinar-card">
+          <h3 class="webinar-card__heading">Phần 3: Bí quyết chọn trường phù hợp</h3>
+          <p>Không phải trường nổi tiếng nhất là tốt nhất cho con bạn. Chuyên gia chia sẻ 5 tiêu chí then chốt để chọn trường phù hợp với tính cách, năng lực, và mục tiêu phát triển của con. Bao gồm cách đánh giá chương trình, đội ngũ giáo viên, và môi trường học tập thực tế.</p>
+        </div>
+        <div class="webinar-card">
+          <h3 class="webinar-card__heading">Phần 4: Hỏi đáp trực tiếp</h3>
+          <p>15-20 phút dành riêng cho phần hỏi đáp. Ba/Mẹ có thể hỏi bất kỳ câu hỏi nào về chọn trường, học phí, chương trình, chuẩn bị hồ sơ, hay định hướng tương lai cho con. Chuyên gia sẽ trả lời cụ thể cho từng trường hợp, không chung chung. Các buổi trước, phần hỏi đáp luôn là phần được đánh giá cao nhất.</p>
         </div>
       </div>
-      <div style="background-color: #FFF8F0; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem;">
-        <p style="margin: 0; font-size: 0.95rem; line-height: 1.6; color: #1a1a1a;"><strong>🎁 Bonus:</strong> Tất cả người tham dự sẽ nhận tài liệu độc quyền: "Checklist chọn trường 2026" và "7 câu hỏi phải hỏi khi tham quan trường".</p>
+
+      <!-- Bonus Section -->
+      <div class="webinar-bonus">
+        <div class="webinar-bonus__icon">🎁</div>
+        <h3 class="webinar-bonus__title">Bonus: Bộ tài liệu độc quyền cho người tham dự</h3>
+        <p class="webinar-bonus__text">Tất cả người đăng ký sẽ nhận bộ tài liệu trị giá 500,000 VNĐ hoàn toàn miễn phí, bao gồm: "Checklist chọn trường 2026" (15 tiêu chí), "7 câu hỏi phải hỏi khi tham quan trường", "Timeline tuyển sinh TPHCM 2026", và slide trình bày đầy đủ của webinar để xem lại bất cứ lúc nào.</p>
+      </div>
+
+      <!-- Urgency Note -->
+      <div class="webinar-urgency">
+        <p><strong>🔥 Số lượng giới hạn:</strong> Mỗi buổi webinar chỉ nhận tối đa 200 phụ huynh tham dự trực tiếp để đảm bảo chất lượng hỏi đáp. Các buổi gần đây đã kín chỗ trước 3 ngày. Đăng ký ngay để đảm bảo có chỗ trong buổi tiếp theo.</p>
       </div>
     </div>
   </section>
@@ -78,7 +102,23 @@ const faqItems = [
 </SqueezePageLayout>
 
 <style is:inline>
+  .webinar-content { max-width: 900px; margin: 0 auto; }
+  .webinar-content__image-wrap { margin-bottom: 2rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .webinar-content__image { width: 100%; height: auto; display: block; object-fit: cover; max-height: 420px; }
+  .webinar-content__title { font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center; }
+  .webinar-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
+  .webinar-card { background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
+  .webinar-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
+  .webinar-card__heading { font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #E8792B; }
+  .webinar-card p { font-size: 0.95rem; line-height: 1.7; color: #555; margin: 0; }
+  .webinar-bonus { background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%); border: 2px solid #E8792B; border-radius: 12px; padding: 2rem; margin: 2.5rem 0; text-align: center; }
+  .webinar-bonus__icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .webinar-bonus__title { font-family: Montserrat, sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .webinar-bonus__text { font-size: 0.95rem; line-height: 1.7; color: #555; max-width: 700px; margin: 0 auto; }
+  .webinar-urgency { background-color: #FFF8F0; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; }
+  .webinar-urgency p { margin: 0; font-size: 0.95rem; line-height: 1.7; color: #1a1a1a; }
   @media (max-width: 768px) {
-    section[slot='content'] > div > div { grid-template-columns: 1fr !important; }
+    .webinar-grid { grid-template-columns: 1fr; }
+    .webinar-content__image { max-height: 280px; }
   }
 </style>

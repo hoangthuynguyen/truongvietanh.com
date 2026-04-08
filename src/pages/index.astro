@@ -37,6 +37,60 @@ const structuredData = [
       'query-input': 'required name=search_term_string',
     },
   },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Trường Việt Anh dạy từ cấp nào đến cấp nào?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Trường Việt Anh là hệ thống giáo dục liên cấp, đào tạo từ Mầm Non (2 tuổi) đến THPT (lớp 12), với 9 cơ sở tại TP.HCM, Long An và Kiên Giang.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học phí Trường Việt Anh bao nhiêu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học phí Trường Việt Anh dao động từ 5 đến 12 triệu đồng/tháng tuỳ cấp học, bao gồm chương trình song ngữ tích hợp Cambridge, giáo viên bản ngữ và 16 kỹ năng thế kỷ 21.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học sinh tốt nghiệp Trường Việt Anh đạt IELTS bao nhiêu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học sinh THPT Việt Anh tốt nghiệp đạt IELTS từ 6.0 đến 8.0, trung bình đầu ra là IELTS 6.5. Trường cũng là trung tâm khảo thí IELTS tại TP.HCM.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Trường Việt Anh có bao nhiêu cơ sở?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Trường Việt Anh hiện có 9 cơ sở tại 3 tỉnh thành: TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Cần Giuộc - Long An và TP. Rạch Giá - Kiên Giang.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Phương pháp giáo dục PDR của Trường Việt Anh là gì?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'PDR (Play – Discover – Reflect) là phương pháp giáo dục do Trường Việt Anh nghiên cứu và phát triển từ 2011, đặt học sinh làm trung tâm qua 3 giai đoạn: vui chơi có mục đích, khám phá chuyên sâu và phản tư tự đánh giá.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Làm sao để đăng ký tuyển sinh Trường Việt Anh?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Phụ huynh có thể đăng ký tư vấn tuyển sinh trực tiếp trên website truongvietanh.com, gọi hotline 0916 961 409, hoặc đặt lịch tham quan trường để được tư vấn chi tiết.',
+        },
+      },
+    ],
+  },
 ];
 
 const programCards = [
@@ -177,10 +231,10 @@ const newsCards = [
       </section>
 
       <!-- AIO Quick Answer -->
-      <section class="aio-answer" style="background:#f0f4ff;padding:2rem 0;text-align:center">
-        <div style="max-width:800px;margin:0 auto;padding:0 1.5rem">
-          <p style="font-size:1.05rem;line-height:1.75;color:#334155;margin:0">
-            <strong style="color:#1a193c">Trường Việt Anh</strong> là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT. Thành lập năm 2011, trường có 3 cơ sở tại Gò Vấp, Phú Nhuận và Bình Tân. Học sinh tốt nghiệp đạt IELTS 6.0–8.0, 99% đỗ đại học nguyện vọng 1, và 30% du học thành công. Học phí từ 5–12 triệu/tháng. Hotline tư vấn: <a href="tel:0916961409" style="color:#1a193c;font-weight:700">0916 961 409</a>.
+      <section class="aio-answer">
+        <div class="aio-answer__inner">
+          <p class="aio-answer__text">
+            <strong>Trường Việt Anh</strong> là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT. Thành lập năm 2011, trường có 3 cơ sở tại Gò Vấp, Phú Nhuận và Bình Tân. Học sinh tốt nghiệp đạt IELTS 6.0–8.0, 99% đỗ đại học nguyện vọng 1, và 30% du học thành công. Học phí từ 5–12 triệu/tháng. Hotline tư vấn: <a href="tel:0916961409">0916 961 409</a>.
           </p>
         </div>
       </section>
@@ -213,7 +267,7 @@ const newsCards = [
             </article>
           </div>
 
-          <img src="https://media.truongvietanh.com/images/giao-vien-30.webp" alt="Đội ngũ giáo viên Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+          <img src="https://media.truongvietanh.com/images/giao-vien-30.webp" alt="Đội ngũ giáo viên Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
         </section>
 
         <!-- TAI SAO CHON TRUONG VIET ANH -->
@@ -256,10 +310,10 @@ const newsCards = [
             </article>
           </div>
 
-          <img src="https://media.truongvietanh.com/images/thuyet-trinh-10.webp" alt="Học sinh phát triển kỹ năng tại Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-10.webp" alt="Học sinh phát triển kỹ năng tại Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
 
-          <div style="text-align:center;margin:2rem 0 0">
-            <a href="/tuyen-sinh" style="display:inline-block;background:#1a193c;color:#fff;padding:1rem 2.5rem;border-radius:8px;font-weight:700;font-size:1.1rem;text-decoration:none;transition:background 0.2s">Đăng ký tư vấn tuyển sinh ngay</a>
+          <div class="cta-center">
+            <a class="btn-cta" href="/tuyen-sinh">Đăng ký tư vấn tuyển sinh ngay</a>
           </div>
         </section>
 
@@ -315,7 +369,7 @@ const newsCards = [
             <h2>Lời chia sẻ từ học sinh và phụ huynh là một trong những bằng chứng thuyết phục nhất.</h2>
           </div>
 
-          <img src="https://media.truongvietanh.com/images/phu-huynh-04.webp" alt="Phụ huynh tin tưởng Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+          <img src="https://media.truongvietanh.com/images/phu-huynh-04.webp" alt="Phụ huynh tin tưởng Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
 
           <div class="card-grid card-grid--3">
             {testimonials.map((item) => (
@@ -327,8 +381,8 @@ const newsCards = [
             ))}
           </div>
 
-          <p style="text-align:center;margin-top:1.5rem">
-            <a href="/tuyen-sinh" style="color:#1a193c;font-weight:700;text-decoration:underline">Tìm hiểu lộ trình tuyển sinh &rarr;</a>
+          <p class="cta-center">
+            <a class="link-cta" href="/tuyen-sinh">Tìm hiểu lộ trình tuyển sinh &rarr;</a>
           </p>
         </section>
 
@@ -359,10 +413,10 @@ const newsCards = [
           <div class="section-heading">
             <p class="section-eyebrow">Đăng ký tư vấn</p>
             <h2>Nhận tư vấn miễn phí cho con</h2>
-            <p style="color: rgba(255,255,255,0.75); max-width: 600px; margin: 0.5rem auto 0;">Để lại email — đội ngũ tuyển sinh sẽ liên hệ trong 24 giờ</p>
+            <p class="section-block--contact__desc">Để lại email — đội ngũ tuyển sinh sẽ liên hệ trong 24 giờ</p>
           </div>
 
-          <div style="max-width: 500px; margin: 0 auto;">
+          <div class="form-wrapper">
             <LeadFormTwoStepEmailFirst
               formId="homepage-form"
               funnelCode="homepage"

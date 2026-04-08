@@ -226,17 +226,30 @@ async function handleLeadSubmission(request, env) {
 
 // Map funnel codes to GHL workflow IDs
 const WORKFLOW_MAP = {
-  // Squeeze pages → Squeeze Page 2-Step Full Funnel
+  // WF1: Checklist Chọn Trường
   'squeeze-checklist':      'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-ebook-lo-trinh': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-hoc-thu':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-test-nang-luc':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-webinar':        'e8bc47e9-ac16-4a4e-90f9-e542edcc4719', // Webinar Sequence
-  // Tuyen sinh pages → Squeeze Page 2-Step Full Funnel
-  'tuyen-sinh-mam-non':     'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'tuyen-sinh-tieu-hoc':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'tuyen-sinh-thcs':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'tuyen-sinh-thpt':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  // WF2: Ebook Lộ Trình Lớp 10
+  'squeeze-ebook-lo-trinh': '7303fea4-3b2b-4efa-8248-b43c6c3396cd',
+  // WF3: Học Thử Miễn Phí
+  'squeeze-hoc-thu':        '385a3068-41ab-4875-aed2-cb1a2ec6df22',
+  // WF4: Test Năng Lực
+  'squeeze-test-nang-luc':  '2abb3b36-0c08-49dd-96a3-a3506520fcb1',
+  // WF5: Webinar Phụ Huynh
+  'squeeze-webinar':        'e8bc47e9-ac16-4a4e-90f9-e542edcc4719',
+  // WF6: Tuyển Sinh Chung (all tuyen-sinh-* variants)
+  'tuyen-sinh-mam-non':     'e621dee0-eae8-483e-997c-3912704bc9ba',
+  'tuyen-sinh-tieu-hoc':    'e621dee0-eae8-483e-997c-3912704bc9ba',
+  'tuyen-sinh-thcs':        'e621dee0-eae8-483e-997c-3912704bc9ba',
+  'tuyen-sinh-thpt':        'e621dee0-eae8-483e-997c-3912704bc9ba',
+  // WF8: Post-Tour Follow-up
+  'post-tour':              'faf0eeab-253d-4c29-bce3-9152f7f36637',
+  'post-hoc-thu':           'faf0eeab-253d-4c29-bce3-9152f7f36637',
+  // WF7: Re-engagement Inactive
+  'inactive-90days':        '7579d127-d5dd-4405-9cf9-e6741cc0e618',
+  // WF9: Alumni & Referral
+  'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
+  // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
+  'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER', // Replace with GHL workflow ID after creating N1
 };
 
 async function addContactToWorkflow(contactId, source, ghlApiKey) {

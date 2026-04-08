@@ -87,8 +87,43 @@ function formatISO(dateStr?: string | null): string {
   }
 }
 
-const pageTitle = `${post.title} | Blog Trường Việt Anh`;
-const pageDesc = post.excerpt || `Đọc bài viết "${post.title}" trên blog Trường Liên Cấp Việt Anh.`;
+// Clean CMS content: remove duplicate H1, fix placeholder phone/zalo
+function cleanContent(html: string | null | undefined): string {
+  if (!html) return '';
+  let cleaned = html
+    // Remove first H1 (template already has H1)
+    .replace(/<h1[^>]*>[\s\S]*?<\/h1>\s*/i, '')
+    // Remove CMS "Bước Tiếp Theo" section (template already has this)
+    .replace(/<h2[^>]*>\s*Bước Tiếp Theo\s*<\/h2>[\s\S]*?(?=<h2|$)/i, '')
+    // Fix placeholder phone numbers
+    .replace(/0909\.xxx\.xxx/g, '0916 961 409')
+    .replace(/0909\.?xxx\.?xxx/g, '0916 961 409')
+    .replace(/href="tel:0909[^"]*"/g, 'href="tel:0916961409"')
+    // Fix wrong Zalo links
+    .replace(/zalo\.me\/truongvietanh/g, 'zalo.me/0916961409')
+    // Convert markdown-style tables to HTML tables
+    .replace(/(<p>)?\|([^\n]+)\|\s*\n\s*\|[-\s|]+\|\s*\n((?:\s*\|[^\n]+\|\s*\n?)+)(<\/p>)?/g, (_match, _p1, headerRow, bodyRows) => {
+      const headers = headerRow.split('|').map((h: string) => h.trim()).filter(Boolean);
+      const rows = bodyRows.trim().split('\n').map((row: string) =>
+        row.split('|').map((c: string) => c.trim()).filter(Boolean)
+      );
+      let html = '<div class="blog-table-wrap"><table><thead><tr>';
+      headers.forEach((h: string) => { html += `<th>${h}</th>`; });
+      html += '</tr></thead><tbody>';
+      rows.forEach((cols: string[]) => {
+        html += '<tr>';
+        cols.forEach((c: string) => { html += `<td>${c}</td>`; });
+        html += '</tr>';
+      });
+      html += '</tbody></table></div>';
+      return html;
+    });
+  return cleaned;
+}
+
+const cleanedContent = cleanContent(post.content);
+const pageTitle = post.title.length > 55 ? post.title : `${post.title} | Trường Việt Anh`;
+const pageDesc = post.excerpt || `${post.title} — Tìm hiểu chi tiết tại blog Trường Việt Anh.`;
 const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
 
 const structuredData = [
@@ -126,6 +161,52 @@ const structuredData = [
       { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com/' },
       { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://truongvietanh.com/tin-tuc' },
       { '@type': 'ListItem', position: 3, name: post.title, item: canonicalUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Trường Việt Anh dạy chương trình gì?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Trường Việt Anh áp dụng chương trình song ngữ tích hợp: 100% chương trình Bộ GD&ĐT Việt Nam kết hợp chương trình Cambridge International cho các môn Toán, Khoa học, ICT và Computing.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học sinh tốt nghiệp đạt IELTS bao nhiêu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học sinh THPT Việt Anh tốt nghiệp đạt IELTS từ 6.0 đến 8.0, trung bình đầu ra 6.5 — đủ điều kiện xét tuyển vào các trường đại học xếp hạng cao trên thế giới.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học phí Trường Việt Anh bao nhiêu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học phí dao động từ 5 đến 12 triệu đồng/tháng tuỳ cấp học, bao gồm giáo viên bản ngữ, chương trình Cambridge và 16 kỹ năng thế kỷ 21 theo WEF.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Trường có bao nhiêu cơ sở?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Trường Việt Anh hiện có 9 cơ sở tại TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Cần Giuộc - Long An và TP. Rạch Giá - Kiên Giang.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Làm sao để đăng ký tuyển sinh?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Phụ huynh có thể đăng ký tư vấn trên trang tuyển sinh, gọi hotline 0916 961 409, hoặc đặt lịch tham quan trường.',
+        },
+      },
     ],
   },
 ];
@@ -171,12 +252,23 @@ const structuredData = [
           <p class="blog-article__excerpt">{post.excerpt}</p>
         )}
 
-        <div class="blog-article__body" set:html={post.content} />
+        <div class="blog-article__body" set:html={cleanedContent} />
+
+        <!-- Author Bio -->
+        <div class="blog-author-bio">
+          <div class="blog-author-bio__avatar">
+            <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <div class="blog-author-bio__info">
+            <p class="blog-author-bio__name">Ban Truyền Thông Trường Việt Anh</p>
+            <p class="blog-author-bio__desc">Biên soạn bởi đội ngũ truyền thông với hơn 13 năm kinh nghiệm trong giáo dục song ngữ. Kiểm duyệt bởi Ban Giám Hiệu.</p>
+          </div>
+        </div>
 
         <!-- Inline CTA Banner -->
         <div class="blog-cta-inline">
           <div class="blog-cta-inline__inner">
-            <h3 class="blog-cta-inline__title">Tìm hiểu thêm về Trường Việt Anh</h3>
+            <h3 class="blog-cta-inline__title"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>Tìm hiểu thêm về Trường Việt Anh</h3>
             <p class="blog-cta-inline__desc">Khám phá chương trình giáo dục liên cấp chất lượng cao từ Mầm non đến THPT.</p>
             <div class="blog-cta-inline__actions">
               <a href="/tuyen-sinh" class="blog-cta-inline__btn blog-cta-inline__btn--primary">Tư vấn tuyển sinh</a>
@@ -185,9 +277,36 @@ const structuredData = [
           </div>
         </div>
 
+        <!-- FAQ Section -->
+        <section class="blog-faq">
+          <h2 class="blog-faq__title"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Câu hỏi thường gặp về Trường Việt Anh</h2>
+          <div class="blog-faq__list">
+            <details class="blog-faq__item" open>
+              <summary class="blog-faq__question">Trường Việt Anh dạy chương trình gì?</summary>
+              <p class="blog-faq__answer">Trường Việt Anh áp dụng chương trình song ngữ tích hợp: 100% chương trình <a href="https://moet.gov.vn" target="_blank" rel="noopener">Bộ GD&ĐT Việt Nam</a> kết hợp chương trình <a href="https://www.cambridgeinternational.org" target="_blank" rel="noopener">Cambridge International</a> cho các môn Toán, Khoa học, ICT và Computing.</p>
+            </details>
+            <details class="blog-faq__item">
+              <summary class="blog-faq__question">Học sinh tốt nghiệp đạt IELTS bao nhiêu?</summary>
+              <p class="blog-faq__answer">Học sinh THPT Việt Anh tốt nghiệp đạt <a href="https://www.ielts.org" target="_blank" rel="noopener">IELTS</a> từ 6.0 đến 8.0, trung bình đầu ra 6.5 — đủ điều kiện xét tuyển vào các trường đại học xếp hạng cao trên thế giới.</p>
+            </details>
+            <details class="blog-faq__item">
+              <summary class="blog-faq__question">Học phí Trường Việt Anh bao nhiêu?</summary>
+              <p class="blog-faq__answer">Học phí dao động từ 5 đến 12 triệu đồng/tháng tuỳ cấp học, bao gồm giáo viên bản ngữ, chương trình Cambridge và 16 kỹ năng thế kỷ 21 theo <a href="https://www.weforum.org" target="_blank" rel="noopener">WEF</a>.</p>
+            </details>
+            <details class="blog-faq__item">
+              <summary class="blog-faq__question">Trường có bao nhiêu cơ sở?</summary>
+              <p class="blog-faq__answer">Trường Việt Anh hiện có 9 cơ sở tại TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Cần Giuộc - Long An và TP. Rạch Giá - Kiên Giang.</p>
+            </details>
+            <details class="blog-faq__item">
+              <summary class="blog-faq__question">Làm sao để đăng ký tuyển sinh?</summary>
+              <p class="blog-faq__answer">Phụ huynh có thể đăng ký tư vấn trên <a href="/tuyen-sinh">trang tuyển sinh</a>, gọi hotline <a href="tel:0916961409">0916 961 409</a>, hoặc đặt lịch tham quan trường.</p>
+            </details>
+          </div>
+        </section>
+
         <!-- Internal Links to Pillar Pages -->
         <nav class="blog-pillar-links" aria-label="Tìm hiểu thêm">
-          <h3 class="blog-pillar-links__title">Khám phá chương trình các cấp</h3>
+          <h3 class="blog-pillar-links__title"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>Khám phá chương trình các cấp</h3>
           <div class="blog-pillar-links__grid">
             <a href="/mam-non" class="blog-pillar-links__item">Mầm Non</a>
             <a href="/tieu-hoc" class="blog-pillar-links__item">Tiểu Học</a>
@@ -203,7 +322,7 @@ const structuredData = [
         <!-- Related Posts -->
         {relatedPosts.length > 0 && (
           <section class="blog-related">
-            <h2 class="blog-related__title">Bài viết liên quan</h2>
+            <h2 class="blog-related__title"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>Bài viết liên quan</h2>
             <div class="blog-related__grid">
               {relatedPosts.map((rp) => (
                 <a href={`/blog/${rp.slug}`} class="blog-related__card">
@@ -224,7 +343,7 @@ const structuredData = [
 
         <!-- Bottom CTA: Lead Form -->
         <section class="blog-bottom-cta">
-          <h2 class="blog-bottom-cta__title">Đăng ký nhận tư vấn miễn phí</h2>
+          <h2 class="blog-bottom-cta__title"><svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" style="vertical-align:middle;margin-right:6px"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Đăng ký nhận tư vấn miễn phí</h2>
           <p class="blog-bottom-cta__desc">Để lại thông tin để được đội ngũ tuyển sinh tư vấn chi tiết về chương trình phù hợp cho con bạn.</p>
           <div class="blog-bottom-cta__form-wrap">
             <LeadFormTwoStepEmailFirst
@@ -348,7 +467,7 @@ const structuredData = [
 
   .blog-article__excerpt {
     font-size: 1.1rem;
-    color: #475569;
+    color: #1a1a5e;
     line-height: 1.7;
     margin: 0 0 2rem;
     padding: 1rem 1.25rem;
@@ -361,7 +480,7 @@ const structuredData = [
   .blog-article__body {
     font-size: 1.05rem;
     line-height: 1.8;
-    color: #1e293b;
+    color: #1a1a5e;
     word-break: break-word;
   }
 
@@ -384,23 +503,34 @@ const structuredData = [
   .blog-article__body h4 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #334155;
+    color: #1a1a5e;
     margin: 1.5rem 0 0.5rem;
   }
 
   .blog-article__body p {
     margin: 0 0 1.25rem;
+    color: #1a1a5e;
+  }
+
+  .blog-article__body strong,
+  .blog-article__body b {
+    color: #1a1a5e;
+    font-weight: 700;
+  }
+
+  .blog-article__body li {
+    color: #1a1a5e;
   }
 
   .blog-article__body a {
-    color: #1a1a5e;
+    color: #D4A843;
     text-decoration: underline;
     text-decoration-color: #D4A843;
     text-underline-offset: 3px;
   }
 
   .blog-article__body a:hover {
-    color: #D4A843;
+    color: #b8891e;
   }
 
   .blog-article__body img {
@@ -431,24 +561,50 @@ const structuredData = [
     font-style: italic;
   }
 
+  /* Table responsive wrapper — JS adds this automatically */
+  .blog-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+  }
+
   .blog-article__body table {
     width: 100%;
     border-collapse: collapse;
-    margin: 1.5rem 0;
+    margin: 0;
     font-size: 0.95rem;
+    background: #fff;
   }
 
   .blog-article__body th,
   .blog-article__body td {
     border: 1px solid #e2e8f0;
-    padding: 0.6rem 0.8rem;
+    padding: 0.75rem 1rem;
     text-align: left;
+    vertical-align: top;
+    color: #1a1a5e;
   }
 
   .blog-article__body th {
-    background: #f1f5f9;
+    background: #1a1a5e;
     font-weight: 600;
-    color: #1a1a5e;
+    color: #fff;
+    white-space: nowrap;
+  }
+
+  .blog-article__body tbody tr:nth-child(even) {
+    background: #f8fafc;
+  }
+
+  .blog-article__body tbody tr:hover {
+    background: #fef9ef;
+  }
+
+  .blog-article__body td:first-child {
+    font-weight: 600;
+    white-space: nowrap;
   }
 
   .blog-article__body figure {
@@ -466,6 +622,123 @@ const structuredData = [
     max-width: 100%;
     border-radius: 8px;
     margin: 1.5rem 0;
+  }
+
+  /* ===== FAQ SECTION ===== */
+  .blog-faq {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+  }
+
+  .blog-faq__title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1a1a5e;
+    margin: 0 0 1.25rem;
+  }
+
+  .blog-faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .blog-faq__item {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+  }
+
+  .blog-faq__item[open] {
+    border-color: #D4A843;
+  }
+
+  .blog-faq__question {
+    padding: 1rem 1.25rem;
+    font-weight: 700;
+    color: #1a1a5e;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.95rem;
+  }
+
+  .blog-faq__question::-webkit-details-marker {
+    display: none;
+  }
+
+  .blog-faq__question::after {
+    content: '+';
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: #D4A843;
+    flex-shrink: 0;
+    margin-left: 1rem;
+  }
+
+  .blog-faq__item[open] .blog-faq__question::after {
+    content: '−';
+  }
+
+  .blog-faq__answer {
+    padding: 0 1.25rem 1rem;
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.7;
+    color: #475569;
+  }
+
+  .blog-faq__answer a {
+    color: #1a1a5e;
+    text-decoration: underline;
+    text-decoration-color: #D4A843;
+    text-underline-offset: 3px;
+  }
+
+  .blog-faq__answer a:hover {
+    color: #D4A843;
+  }
+
+  /* ===== AUTHOR BIO ===== */
+  .blog-author-bio {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin: 2.5rem 0;
+    padding: 1.25rem 1.5rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+  }
+  .blog-author-bio__avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    background: #1a1a5e;
+    color: #D4A843;
+    border-radius: 50%;
+  }
+  .blog-author-bio__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #1a1a5e;
+    margin: 0 0 0.25rem;
+  }
+  .blog-author-bio__desc {
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin: 0;
   }
 
   /* ===== INLINE CTA ===== */
@@ -765,5 +1038,23 @@ const structuredData = [
     if (!img.hasAttribute('loading')) {
       img.setAttribute('loading', 'lazy');
     }
+  });
+
+  // Wrap tables in responsive container
+  document.querySelectorAll('.blog-article__body table').forEach((table) => {
+    if (!table.parentElement?.classList.contains('blog-table-wrap')) {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'blog-table-wrap';
+      table.parentNode?.insertBefore(wrapper, table);
+      wrapper.appendChild(table);
+    }
+  });
+
+  // Fix placeholder phone numbers in CMS content
+  document.querySelectorAll('.blog-article__body').forEach((body) => {
+    body.innerHTML = body.innerHTML
+      .replace(/0909\.xxx\.xxx/g, '0916 961 409')
+      .replace(/0909\.?xxx\.?xxx/g, '0916 961 409')
+      .replace(/href="tel:0909\d*"/g, 'href="tel:0916961409"');
   });
 </script>

@@ -40,7 +40,6 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       </div>
 
       <h3 class="form-step-title">Nhập email để nhận thông tin</h3>
-      <p class="form-step-description">Để nhận thông tin chi tiết và hỗ trợ miễn phí</p>
 
       <div class="form-group">
         <input
@@ -60,20 +59,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
 
-      <p class="form-consent">
-        <input
-          type="checkbox"
-          id="consent-{formIdWithFunnel}"
-          name="consent"
-          class="form-checkbox"
-          required
-        />
-        <label for="consent-{formIdWithFunnel}">
-          Tôi đồng ý nhận thông tin và tư vấn từ Trường Việt Anh
-        </label>
-      </p>
-
-      <p class="form-social-proof">1,200+ phụ huynh đã đăng ký tuần này</p>
+      <p class="form-social-proof">Hơn 100 phụ huynh đã đăng ký tuần này</p>
     </div>
   </div>
 
@@ -197,7 +183,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
 <style is:inline>
   .lead-form {
     width: 100%;
-    max-width: 500px;
+    max-width: 400px;
   }
 
   .form-step {
@@ -215,7 +201,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   .form-step-content {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 1rem;
   }
 
   /* ===== PROGRESS INDICATOR ===== */
@@ -291,7 +277,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   /* ===== FORM TITLES ===== */
   .form-step-title {
     font-family: "Montserrat", sans-serif;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 700;
     color: #1a1a5e;
     margin: 0;
@@ -611,7 +597,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   // Helper function to get form inputs for current step
   function getStepInputs() {
     if (currentStep === 1) {
-      return form.querySelectorAll('input[name="email"], input[name="consent"]');
+      return form.querySelectorAll('input[name="email"]');
     } else if (currentStep === 2) {
       return form.querySelectorAll('input[name="parent_name"], input[name="phone"], input[name="child_name"], select[name="school_level"]');
     }
@@ -627,12 +613,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       const error = input.parentElement.querySelector('.form-error');
       let errorMsg = '';
 
-      if (input.type === 'checkbox') {
-        if (!input.checked) {
-          errorMsg = 'Vui lòng đồng ý trước khi tiếp tục';
-          isValid = false;
-        }
-      } else if (input.name === 'email') {
+      if (input.name === 'email') {
         if (!input.value.trim()) {
           errorMsg = 'Vui lòng nhập email';
           isValid = false;

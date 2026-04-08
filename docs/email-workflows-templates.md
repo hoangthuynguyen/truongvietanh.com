@@ -3,8 +3,8 @@
 ## GHL SMTP Settings
 - Host: email-smtp.ap-southeast-1.amazonaws.com
 - Port: 587 (TLS)
-- Username: AKIARQZY2FTA3OLZJDBV
-- Password: BOKcoKG/FfnLFTY8cg1FGL2t7OUppoxEgKRvQMRJ2ORD
+- Username: [REDACTED — see AWS SES Console]
+- Password: [REDACTED — see AWS SES Console]
 - From (transactional): tuvan@reply.truongvietanh.com
 - From (marketing): tuyensinh@news.truongvietanh.com
 - Configuration Set: ghl-marketing
@@ -40,6 +40,7 @@
 
 ## WF2: Ebook Lộ Trình Lớp 10 (5 emails, 7 ngày)
 **Trigger tag:** squeeze-ebook-lo-trinh
+**Workflow ID:** 7303fea4-3b2b-4efa-8248-b43c6c3396cd
 
 ### Email 1 (Ngay - từ reply.)
 - Subject: Ebook Lộ trình lớp 10 – Tặng ngay cho {{contact.first_name}}
@@ -68,6 +69,7 @@
 
 ## WF3: Học Thử Miễn Phí (4 emails, 5 ngày)
 **Trigger tag:** squeeze-hoc-thu
+**Workflow ID:** 385a3068-41ab-4875-aed2-cb1a2ec6df22
 
 ### Email 1 (Ngay - từ reply.)
 - Subject: Xác nhận đăng ký học thử thành công
@@ -89,6 +91,7 @@
 
 ## WF4: Test Năng Lực (4 emails, 5 ngày)
 **Trigger tag:** squeeze-test-nang-luc
+**Workflow ID:** 2abb3b36-0c08-49dd-96a3-a3506520fcb1
 
 ### Email 1 (Ngay - từ reply.)
 - Subject: Link làm Test Năng lực miễn phí cho con {{contact.first_name}}
@@ -136,6 +139,7 @@
 
 ## WF6: Tuyển Sinh Chung (3 emails, 4 ngày)
 **Trigger tag:** tuyen-sinh-*
+**Workflow ID:** e621dee0-eae8-483e-997c-3912704bc9ba
 
 ### Email 1 (Ngay - từ reply.)
 - Subject: Cảm ơn {{contact.first_name}} đã quan tâm Trường Việt Anh
@@ -153,6 +157,7 @@
 
 ## WF7: Re-engagement Inactive (4 emails) — MỚI
 **Trigger tag:** inactive-90days
+**Workflow ID:** 7579d127-d5dd-4405-9cf9-e6741cc0e618
 
 ### Email 1 (từ reply.)
 - Subject: {{contact.first_name}} ơi, vẫn giữ chỗ học thử cho con bạn
@@ -200,6 +205,7 @@
 
 ## WF9: Alumni & Referral (4 emails) — MỚI
 **Trigger tag:** alumni-referral
+**Workflow ID:** 5665d8b0-ab23-4238-aa95-4753827a2a76
 
 ### Email 1 (từ reply.)
 - Subject: {{contact.first_name}} ơi, em bạn có muốn học cùng trường?

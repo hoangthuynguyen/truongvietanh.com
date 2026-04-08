@@ -83,12 +83,40 @@ const structuredData = [
       { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
       { "@type": "ListItem", "position": 2, "name": "Cơ sở", "item": "https://truongvietanh.com/co-so" }
     ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Trường Việt Anh",
+    "image": "https://truongvietanh.com/logo-crest-80.webp",
+    "telephone": "+84916961409",
+    "email": "tuyensinh@truongvietanh.com",
+    "url": "https://truongvietanh.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "168/2 Phan Huy Ích",
+      "addressLocality": "Gò Vấp",
+      "addressRegion": "TP. Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 10.8431,
+      "longitude": 106.6422
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "07:30",
+      "closes": "17:00"
+    },
+    "priceRange": "$$"
   }
 ];
 ---
 
 <BaseLayout
-  title="Hệ Thống Cơ Sở Trường Việt Anh — 9 Cơ Sở Tại TP.HCM, Long An, Kiên Giang"
+  title="9 Cơ Sở Trường Việt Anh – TP.HCM, Long An, Kiên Giang"
   description="Hệ thống 9 cơ sở Trường Việt Anh trên toàn quốc. Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng. Tham quan miễn phí."
   canonical="https://truongvietanh.com/co-so"
   ogImage="https://media.truongvietanh.com/images/extra-big-img3-scaled.webp"
@@ -109,6 +137,7 @@ const structuredData = [
 
           <h1 class="gi-h1">Hệ Thống 9 Cơ Sở Trường Việt Anh Trên Toàn Quốc</h1>
           <p class="gi-subtitle">Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng</p>
+          <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
 
           <div class="gi-hero-rating">
             <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
@@ -138,6 +167,7 @@ const structuredData = [
 
     <!-- ====== TOC + CONTENT ====== -->
     <div class="gi-container gi-body">
+      <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4/2026</p>
       <!-- Sticky TOC sidebar -->
       <nav class="gi-toc" aria-label="Mục lục">
         <p class="gi-toc-title">Mục lục</p>
@@ -500,6 +530,19 @@ const structuredData = [
             <li>Hoàn toàn miễn phí, không ràng buộc</li>
           </ul>
         </div>
+          <div class="gi-author-bio">
+            <p class="gi-author-bio__label">Biên soạn bởi</p>
+            <p class="gi-author-bio__name">Ban Truyền Thông Trường Việt Anh</p>
+            <p class="gi-author-bio__desc">Nội dung được biên soạn bởi đội ngũ truyền thông Trường Việt Anh với hơn 13 năm kinh nghiệm trong giáo dục song ngữ. Thông tin được kiểm duyệt bởi Ban Giám Hiệu.</p>
+          </div>
+          <div class="gi-next-step">
+            <p class="gi-next-step-title">Bước Tiếp Theo</p>
+            <div class="gi-next-step-links">
+              <a href="/tuyen-sinh" class="ns-tour">Đặt Lịch Tham Quan</a>
+              <a href="tel:0916961409" class="ns-phone">📞 0916 961 409</a>
+              <a href="https://zalo.me/0916961409" class="ns-zalo">💬 Nhắn Zalo</a>
+            </div>
+          </div>
         <div class="gi-bottom-cta-form">
           <LeadFormTwoStepEmailFirst
             formId="co-so-bottom-form"

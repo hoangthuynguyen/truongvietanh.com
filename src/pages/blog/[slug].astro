@@ -226,12 +226,22 @@ const structuredData = [
         <section class="blog-bottom-cta">
           <h2 class="blog-bottom-cta__title">Đăng ký nhận tư vấn miễn phí</h2>
           <p class="blog-bottom-cta__desc">Để lại thông tin để được đội ngũ tuyển sinh tư vấn chi tiết về chương trình phù hợp cho con bạn.</p>
-          <LeadFormTwoStepEmailFirst
-            formId="blog-lead-form"
-            funnelCode="blog-post"
-            schoolLevel="lien-cap"
-            submitText="Nhận tư vấn miễn phí"
-          />
+          <div class="blog-bottom-cta__form-wrap">
+            <LeadFormTwoStepEmailFirst
+              formId="blog-lead-form"
+              funnelCode="blog-post"
+              schoolLevel="lien-cap"
+              submitText="Nhận tư vấn miễn phí"
+            />
+          </div>
+          <div class="blog-bottom-cta__contact">
+            <p class="blog-bottom-cta__contact-title">Bước Tiếp Theo</p>
+            <div class="blog-bottom-cta__contact-links">
+              <a href="/tuyen-sinh" class="blog-contact-btn blog-contact-btn--tour">Đặt Lịch Tham Quan</a>
+              <a href="tel:0916961409" class="blog-contact-btn blog-contact-btn--phone">📞 0916 961 409</a>
+              <a href="https://zalo.me/0916961409" class="blog-contact-btn blog-contact-btn--zalo">💬 Nhắn Zalo</a>
+            </div>
+          </div>
         </section>
       </div>
     </article>
@@ -243,9 +253,9 @@ const structuredData = [
 <style is:global>
   /* ===== BLOG CONTAINER ===== */
   .blog-container {
-    max-width: 820px;
+    max-width: 960px;
     margin: 0 auto;
-    padding: 0 1.5rem;
+    padding: 0 2rem;
   }
 
   /* ===== BREADCRUMB ===== */
@@ -635,6 +645,9 @@ const structuredData = [
     border-radius: 12px;
     border: 1px solid #e2e8f0;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .blog-bottom-cta__title {
@@ -649,7 +662,58 @@ const structuredData = [
     color: #64748b;
     margin: 0 0 1.5rem;
     line-height: 1.6;
+    max-width: 500px;
   }
+
+  .blog-bottom-cta__form-wrap {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .blog-bottom-cta__contact {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    width: 100%;
+    max-width: 500px;
+  }
+
+  .blog-bottom-cta__contact-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #D4A843;
+    margin: 0 0 0.75rem;
+  }
+
+  .blog-bottom-cta__contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .blog-contact-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: transform 0.15s, background 0.2s;
+  }
+
+  .blog-contact-btn:hover { transform: translateY(-1px); }
+
+  .blog-contact-btn--tour { background: #1a1a5e; color: #fff; }
+  .blog-contact-btn--tour:hover { background: #2d2d8a; color: #fff; }
+  .blog-contact-btn--phone { background: #e2e8f0; color: #1a1a5e; }
+  .blog-contact-btn--phone:hover { background: #cbd5e1; color: #1a1a5e; }
+  .blog-contact-btn--zalo { background: #0068ff; color: #fff; }
+  .blog-contact-btn--zalo:hover { background: #0055d4; color: #fff; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {

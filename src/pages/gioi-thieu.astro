@@ -76,13 +76,41 @@ const structuredData = [
       { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
       { "@type": "ListItem", "position": 2, "name": "Giới thiệu", "item": "https://truongvietanh.com/gioi-thieu" }
     ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": "Trường Việt Anh",
+    "image": "https://truongvietanh.com/logo-crest-80.webp",
+    "telephone": "+84916961409",
+    "email": "tuyensinh@truongvietanh.com",
+    "url": "https://truongvietanh.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "168/2 Phan Huy Ích",
+      "addressLocality": "Gò Vấp",
+      "addressRegion": "TP. Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 10.8431,
+      "longitude": 106.6422
+    },
+    "openingHoursSpecification": {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "opens": "07:30",
+      "closes": "17:00"
+    },
+    "priceRange": "$$"
   }
 ];
 ---
 
 <BaseLayout
-  title="Trường Việt Anh — Hệ Thống Giáo Dục Liên Cấp Song Ngữ Tại TP.HCM"
-  description="Trường Việt Anh thành lập 2011, hệ thống trường liên cấp Mầm non — THPT tại TP.HCM. Chương trình tiếng Anh chuẩn IELTS, 16 kỹ năng thế kỷ 21, 9 cơ sở. Đăng ký tham quan miễn phí."
+  title="Giới Thiệu Trường Việt Anh – Liên Cấp Song Ngữ"
+  description="Trường Việt Anh thành lập 2011: hệ thống liên cấp Mầm non – THPT tại TP.HCM. IELTS, 16 kỹ năng thế kỷ 21, 9 cơ sở. Tham quan miễn phí."
   canonical="https://truongvietanh.com/gioi-thieu"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}
@@ -102,6 +130,7 @@ const structuredData = [
 
           <h1 class="gi-h1">Trường Việt Anh: Hệ Thống Giáo Dục Liên Cấp Song Ngữ Tại TP.HCM</h1>
           <p class="gi-subtitle">Tạo ra môi trường học tập vui vẻ và thực dụng kể từ năm 2011</p>
+          <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
 
           <div class="gi-hero-rating">
             <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
@@ -136,6 +165,7 @@ const structuredData = [
 
     <!-- ====== LAYER 3 + 4: TOC SIDEBAR + CONTENT ====== -->
     <div class="gi-container gi-body">
+      <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4/2026</p>
       <!-- Sticky TOC sidebar -->
       <nav class="gi-toc" aria-label="Mục lục">
         <p class="gi-toc-title">Mục lục</p>
@@ -521,6 +551,19 @@ const structuredData = [
           <p>Hãy để con được trải nghiệm môi trường học tập vui vẻ tại Trường Việt Anh. Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ. Hoặc xem thêm <a href="/tuyen-sinh" style="color:#D4A843">thông tin tuyển sinh</a> và <a href="/hoc-phi" style="color:#D4A843">bảng học phí chi tiết</a>.</p>
           <img src="https://media.truongvietanh.com/images/phu-huynh-01.webp" alt="Phụ huynh và học sinh Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
         </div>
+          <div class="gi-author-bio">
+            <p class="gi-author-bio__label">Biên soạn bởi</p>
+            <p class="gi-author-bio__name">Ban Truyền Thông Trường Việt Anh</p>
+            <p class="gi-author-bio__desc">Nội dung được biên soạn bởi đội ngũ truyền thông Trường Việt Anh với hơn 13 năm kinh nghiệm trong giáo dục song ngữ. Thông tin được kiểm duyệt bởi Ban Giám Hiệu.</p>
+          </div>
+          <div class="gi-next-step">
+            <p class="gi-next-step-title">Bước Tiếp Theo</p>
+            <div class="gi-next-step-links">
+              <a href="/tuyen-sinh" class="ns-tour">Đặt Lịch Tham Quan</a>
+              <a href="tel:0916961409" class="ns-phone">📞 0916 961 409</a>
+              <a href="https://zalo.me/0916961409" class="ns-zalo">💬 Nhắn Zalo</a>
+            </div>
+          </div>
         <div class="gi-bottom-cta-form">
           <LeadFormTwoStepEmailFirst
             formId="gioi-thieu-bottom-form"

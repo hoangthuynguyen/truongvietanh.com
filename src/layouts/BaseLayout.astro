@@ -58,6 +58,9 @@ const schemaPayload = structuredData
     <meta name="description" content={description} />
     <meta name="author" content="Trường Việt Anh" />
     <meta http-equiv="content-language" content="vi" />
+    <meta property="og:locale" content="vi_VN" />
+    {canonical && <link rel="alternate" hreflang="vi" href={canonical} />}
+    {canonical && <link rel="alternate" hreflang="x-default" href={canonical} />}
     {canonical && <link rel="canonical" href={canonical} />}
     <meta name="robots" content={robots} />
     <meta property="og:title" content={title} />
@@ -100,6 +103,21 @@ const schemaPayload = structuredData
     <main>
       <slot />
     </main>
+
+    <!-- Exit Intent Popup -->
+    <div class="exit-popup" id="exitPopup" aria-hidden="true">
+      <div class="exit-popup__overlay"></div>
+      <div class="exit-popup__modal">
+        <button class="exit-popup__close" id="exitPopupClose" aria-label="Đóng">&times;</button>
+        <h3 class="exit-popup__title">Chờ đã! Đừng bỏ lỡ ưu đãi Early Bird</h3>
+        <p class="exit-popup__desc">Đăng ký tư vấn miễn phí ngay hôm nay — giảm đến 15% học phí cho năm học 2026-2027. Chỉ cần để lại số điện thoại.</p>
+        <form class="exit-popup__form" id="exitForm">
+          <input type="tel" class="exit-popup__input" placeholder="Số điện thoại của bạn" pattern="[0-9\+\-\s]+" required />
+          <button type="submit" class="exit-popup__submit">Nhận tư vấn miễn phí</button>
+        </form>
+        <p class="exit-popup__note">Hoặc gọi ngay <a href="tel:0916961409"><strong>0916 961 409</strong></a></p>
+      </div>
+    </div>
 
     <!-- Cookie Consent -->
     <div class="cookie-consent" id="cookieConsent" role="dialog" aria-label="Cookie consent">
@@ -166,6 +184,27 @@ const schemaPayload = structuredData
           }
         });
       });
+
+      /* === Exit intent popup === */
+      var ep = document.getElementById('exitPopup');
+      if(ep && !sessionStorage.getItem('exit_shown')){
+        var shown=false;
+        document.addEventListener('mouseout',function(e){
+          if(!shown && e.clientY < 5 && !e.relatedTarget){
+            shown=true; ep.classList.add('is-open'); ep.setAttribute('aria-hidden','false');
+            sessionStorage.setItem('exit_shown','1');
+          }
+        });
+        document.getElementById('exitPopupClose').addEventListener('click',function(){ ep.classList.remove('is-open'); });
+        ep.querySelector('.exit-popup__overlay').addEventListener('click',function(){ ep.classList.remove('is-open'); });
+        document.getElementById('exitForm').addEventListener('submit',function(e){
+          e.preventDefault();
+          var phone=this.querySelector('input').value;
+          if(phone){ this.innerHTML='<p style="color:#22c55e;font-weight:700;padding:1rem 0">Cảm ơn! Tư vấn viên sẽ gọi bạn sớm.</p>';
+            fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({step:'exit_intent',phone:phone,page:location.href,timestamp:new Date().toISOString()})}).catch(function(){});
+          }
+        });
+      }
 
       /* === Cookie consent === */
       var cc = document.getElementById('cookieConsent');
@@ -279,6 +318,37 @@ const schemaPayload = structuredData
       details[open].faq-item summary {
         color: #2563eb;
       }
+
+      /* === Exit intent popup === */
+      .exit-popup { display:none; position:fixed; inset:0; z-index:99999; align-items:center; justify-content:center; }
+      .exit-popup.is-open { display:flex; }
+      .exit-popup__overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); }
+      .exit-popup__modal {
+        position:relative; background:#fff; border-radius:20px; padding:2.5rem;
+        max-width:420px; width:92%; box-shadow:0 20px 60px rgba(0,0,0,0.25);
+        text-align:center; animation:exitSlide 0.3s ease-out;
+      }
+      @keyframes exitSlide { from{transform:translateY(-30px);opacity:0} to{transform:translateY(0);opacity:1} }
+      .exit-popup__close {
+        position:absolute; top:0.75rem; right:1rem; background:none; border:none;
+        font-size:1.5rem; color:#94a3b8; cursor:pointer;
+      }
+      .exit-popup__title { font-size:1.3rem; font-weight:800; color:#1a1a5e; margin:0 0 0.5rem; line-height:1.3; }
+      .exit-popup__desc { font-size:0.92rem; color:#64748b; line-height:1.6; margin:0 0 1.25rem; }
+      .exit-popup__form { display:flex; gap:0.5rem; }
+      .exit-popup__input {
+        flex:1; padding:0.8rem 1rem; border:1.5px solid #e2e8f0; border-radius:10px;
+        font-size:1rem; font-family:'Inter',sans-serif;
+      }
+      .exit-popup__input:focus { border-color:#D4A843; outline:none; }
+      .exit-popup__submit {
+        padding:0.8rem 1.25rem; background:linear-gradient(135deg,#f5c518,#e8a912);
+        color:#1a1a5e; border:none; border-radius:10px; font-weight:700; font-size:0.9rem;
+        cursor:pointer; white-space:nowrap;
+      }
+      .exit-popup__note { font-size:0.82rem; color:#94a3b8; margin:0.75rem 0 0; }
+      .exit-popup__note a { color:#1a1a5e; }
+      @media(max-width:480px){ .exit-popup__form { flex-direction:column; } }
 
       /* === Cookie consent === */
       .cookie-consent {

@@ -64,6 +64,27 @@ export default {
       return handleLeadSubmission(request, env);
     }
 
+    // Proxy Directus CMS admin via HTTPS
+    const DIRECTUS_ORIGIN = 'http://45.88.188.169:8055';
+    if (url.pathname.startsWith('/cms/') || url.pathname === '/cms') {
+      const directusPath = url.pathname.replace(/^\/cms/, '') || '/';
+      const directusUrl = DIRECTUS_ORIGIN + directusPath + url.search;
+      const proxyReq = new Request(directusUrl, {
+        method: request.method,
+        headers: request.headers,
+        body: request.method !== 'GET' && request.method !== 'HEAD' ? request.body : undefined,
+      });
+      try {
+        const proxyRes = await fetch(proxyReq);
+        const newHeaders = new Headers(proxyRes.headers);
+        newHeaders.delete('content-security-policy');
+        newHeaders.set('X-Proxied-By', 'cloudflare-worker');
+        return new Response(proxyRes.body, { status: proxyRes.status, headers: newHeaders });
+      } catch (e) {
+        return new Response('Directus CMS unavailable', { status: 502 });
+      }
+    }
+
     // Everything else → static assets with cache control
     const response = await env.ASSETS.fetch(request);
     const contentType = response.headers.get('content-type') || '';

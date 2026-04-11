@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('triet-ly-giao-duc');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -84,8 +88,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Triết Lý Giáo Dục Việt Anh – Phát Triển Toàn Diện"
-  description="Triết lý giáo dục Việt Anh: 16 kỹ năng WEF, Leader in Me, song ngữ chuẩn IELTS, hệ thống PDR. Đào tạo công dân toàn cầu từ 2011."
+  title={cmsPage?.title || "Triết Lý Giáo Dục Việt Anh – Phát Triển Toàn Diện"}
+  description={cmsPage?.description || "Triết lý giáo dục Việt Anh: 16 kỹ năng WEF, Leader in Me, song ngữ chuẩn IELTS, hệ thống PDR. Đào tạo công dân toàn cầu từ 2011."}
   canonical="https://truongvietanh.com/triet-ly-giao-duc"
   ogImage="https://media.truongvietanh.com/images/extra-20230311-DSC08552-scaled.webp"
   structuredData={structuredData}

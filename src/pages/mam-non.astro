@@ -3,6 +3,15 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+// Fetch FAQ + meta from Directus CMS (fallback to hardcode if API fails)
+const cmsPage = await getPillarPage('mam-non');
+const cmsFaqs = cmsPage?.faq_items || null;
+const cmsTitle = cmsPage?.title || null;
+const cmsDescription = cmsPage?.description || null;
+const cmsH1 = cmsPage?.h1 || null;
+const cmsSubtitle = cmsPage?.subtitle || null;
 
 const structuredData = [
   {
@@ -99,8 +108,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Mầm Non Việt Anh – 100% Tiếng Anh Tại TP.HCM"
-  description="Mầm Non Việt Anh: 100% tiếng Anh immersion, phát triển tự chủ 2-6 tuổi. 9 cơ sở tại TP.HCM, Long An, Kiên Giang. Đăng ký tham quan miễn phí."
+  title={cmsTitle || "Mầm Non Việt Anh – 100% Tiếng Anh Tại TP.HCM"}
+  description={cmsDescription || "Mầm Non Việt Anh: 100% tiếng Anh immersion, phát triển tự chủ 2-6 tuổi. 9 cơ sở tại TP.HCM, Long An, Kiên Giang. Đăng ký tham quan miễn phí."}
   canonical="https://truongvietanh.com/mam-non"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}
@@ -120,8 +129,8 @@ const structuredData = [
             <span>Mầm non</span>
           </nav>
 
-          <h1 class="gi-h1">Trường Mầm Non Việt Anh: Nơi Con Học Tiếng Anh Như Trẻ Bản Xứ</h1>
-          <p class="gi-subtitle">Chương trình 100% tiếng Anh — Phát triển tự chủ từ 2-6 tuổi</p>
+          <h1 class="gi-h1">{cmsH1 || "Trường Mầm Non Việt Anh: Nơi Con Học Tiếng Anh Như Trẻ Bản Xứ"}</h1>
+          <p class="gi-subtitle">{cmsSubtitle || "Chương trình 100% tiếng Anh — Phát triển tự chủ từ 2-6 tuổi"}</p>
           <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
 
           <div class="gi-hero-rating">
@@ -631,12 +640,25 @@ const structuredData = [
           </div>
         </section>
 
-        <!-- Section 8: FAQ -->
+        <!-- Section 8: FAQ (CMS-powered with hardcode fallback) -->
         <section id="faq" class="gi-section">
           <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>Câu hỏi thường gặp về Trường Mầm Non Việt Anh</h2>
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về chương trình mầm non tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              /* === FAQ từ Directus CMS === */
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              /* === Fallback hardcode nếu CMS không khả dụng === */
+              <>
             <details class="gi-faq-item" open>
               <summary>Trường Mầm Non Việt Anh nhận trẻ từ mấy tuổi?</summary>
               <div class="gi-faq-answer">
@@ -697,6 +719,8 @@ const structuredData = [
                 <p><strong>Có.</strong> Lớp Lá (5-6 tuổi) tại Việt Anh có chương trình "Sẵn sàng vào Lớp 1" với: làm quen chữ cái tiếng Việt và tiếng Anh, số đếm và phép tính cơ bản, kỹ năng viết và cầm bút đúng cách, rèn tập trung 30-45 phút, và kỹ năng xã hội (xếp hàng, giơ tay phát biểu, nghe hướng dẫn). Trẻ tốt nghiệp mầm non Việt Anh tự tin bước vào lớp 1 mà không cần học thêm ở ngoài.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

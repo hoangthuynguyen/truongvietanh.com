@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('tieu-hoc');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -85,8 +89,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Tiểu Học Việt Anh – Song Ngữ UK &amp; Kỹ Năng Thế Kỷ 21"
-  description="Trường Tiểu Học Việt Anh tại TP.HCM: chương trình song ngữ UK Cambridge, tiếng Anh chuyên sâu, 16 kỹ năng thế kỷ 21, hệ thống PDR. Đăng ký tham quan miễn phí."
+  title={cmsPage?.title || "Tiểu Học Việt Anh – Song Ngữ UK &amp; Kỹ Năng Thế Kỷ 21"}
+  description={cmsPage?.description || "Trường Tiểu Học Việt Anh tại TP.HCM: chương trình song ngữ UK Cambridge, tiếng Anh chuyên sâu, 16 kỹ năng thế kỷ 21, hệ thống PDR. Đăng ký tham quan miễn phí."}
   canonical="https://truongvietanh.com/tieu-hoc"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}

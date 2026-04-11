@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('tuyen-sinh');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -104,8 +108,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Tuyển Sinh Việt Anh 2026 – Đăng Ký &amp; Xét Tuyển"
-  description="Tuyển sinh Việt Anh 2026-2027: quy trình xét tuyển, hồ sơ nhập học, học bổng. Mầm non – THPT, 9 cơ sở TP.HCM, Long An, Kiên Giang."
+  title={cmsPage?.title || "Tuyển Sinh Việt Anh 2026 – Đăng Ký &amp; Xét Tuyển"}
+  description={cmsPage?.description || "Tuyển sinh Việt Anh 2026-2027: quy trình xét tuyển, hồ sơ nhập học, học bổng. Mầm non – THPT, 9 cơ sở TP.HCM, Long An, Kiên Giang."}
   canonical="https://truongvietanh.com/tuyen-sinh"
   ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
   structuredData={structuredData}

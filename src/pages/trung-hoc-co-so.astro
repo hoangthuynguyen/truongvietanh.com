@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('trung-hoc-co-so');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -88,8 +92,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Trường THCS Việt Anh – Song Ngữ, IELTS &amp; Lãnh Đạo"
-  description="Trường THCS Việt Anh TP.HCM: song ngữ, IELTS, 16 kỹ năng thế kỷ 21, Leader in Me. Lựa chọn hàng đầu chuyển cấp lớp 6. Đăng ký tham quan."
+  title={cmsPage?.title || "Trường THCS Việt Anh – Song Ngữ, IELTS &amp; Lãnh Đạo"}
+  description={cmsPage?.description || "Trường THCS Việt Anh TP.HCM: song ngữ, IELTS, 16 kỹ năng thế kỷ 21, Leader in Me. Lựa chọn hàng đầu chuyển cấp lớp 6. Đăng ký tham quan."}
   canonical="https://truongvietanh.com/trung-hoc-co-so"
   ogImage="https://media.truongvietanh.com/images/extra-20230311-DSC08612-scaled.webp"
   structuredData={structuredData}

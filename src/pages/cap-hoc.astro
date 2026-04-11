@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('cap-hoc');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -91,8 +95,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Các Cấp Học Tại Trường Việt Anh — Mầm Non Đến THPT"
-  description="4 cấp học Trường Việt Anh: Mầm non, Tiểu học, THCS, THPT. Lộ trình liên cấp song ngữ 2-18 tuổi, IELTS xuyên suốt. Đăng ký tham quan."
+  title={cmsPage?.title || "Các Cấp Học Tại Trường Việt Anh — Mầm Non Đến THPT"}
+  description={cmsPage?.description || "4 cấp học Trường Việt Anh: Mầm non, Tiểu học, THCS, THPT. Lộ trình liên cấp song ngữ 2-18 tuổi, IELTS xuyên suốt. Đăng ký tham quan."}
   canonical="https://truongvietanh.com/cap-hoc"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}

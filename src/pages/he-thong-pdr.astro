@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('he-thong-pdr');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -79,8 +83,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Hệ Thống PDR — Play Discover Reflect Tại Trường Việt Anh"
-  description="Hệ thống PDR (Play – Discover – Reflect): phương pháp giáo dục Trường Việt Anh. Học sinh chơi, khám phá, phản tư từ Mầm non đến THPT."
+  title={cmsPage?.title || "Hệ Thống PDR — Play Discover Reflect Tại Trường Việt Anh"}
+  description={cmsPage?.description || "Hệ thống PDR (Play – Discover – Reflect): phương pháp giáo dục Trường Việt Anh. Học sinh chơi, khám phá, phản tư từ Mầm non đến THPT."}
   canonical="https://truongvietanh.com/he-thong-pdr"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}

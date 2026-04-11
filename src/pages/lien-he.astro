@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('lien-he');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -101,8 +105,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Liên Hệ Trường Việt Anh — Hotline, Zalo, Địa Chỉ Các Cơ Sở"
-  description="Liên hệ Trường Việt Anh qua Hotline 0916 961 409, Zalo OA, Email. Địa chỉ 9 cơ sở tại TP.HCM, Long An, Kiên Giang. Tư vấn miễn phí — Phản hồi trong 24 giờ."
+  title={cmsPage?.title || "Liên Hệ Trường Việt Anh — Hotline, Zalo, Địa Chỉ Các Cơ Sở"}
+  description={cmsPage?.description || "Liên hệ Trường Việt Anh qua Hotline 0916 961 409, Zalo OA, Email. Địa chỉ 9 cơ sở tại TP.HCM, Long An, Kiên Giang. Tư vấn miễn phí — Phản hồi trong 24 giờ."}
   canonical="https://truongvietanh.com/lien-he"
   ogImage="https://media.truongvietanh.com/images/extra-big-img3-scaled.webp"
   structuredData={structuredData}

@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('thanh-tich');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -88,8 +92,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Thành Tích Trường Việt Anh — Kết Quả Nổi Bật Qua Các Năm"
-  description="Thành tích Trường Việt Anh: IELTS trung bình 6.5, 99% đậu đại học, 200+ giải quốc gia & quốc tế, 30% du học. Xem kết quả nổi bật từ 2011 đến nay."
+  title={cmsPage?.title || "Thành Tích Trường Việt Anh — Kết Quả Nổi Bật Qua Các Năm"}
+  description={cmsPage?.description || "Thành tích Trường Việt Anh: IELTS trung bình 6.5, 99% đậu đại học, 200+ giải quốc gia & quốc tế, 30% du học. Xem kết quả nổi bật từ 2011 đến nay."}
   canonical="https://truongvietanh.com/thanh-tich"
   ogImage="https://media.truongvietanh.com/images/extra-Than-Huong-Giang-11A3.webp"
   structuredData={structuredData}

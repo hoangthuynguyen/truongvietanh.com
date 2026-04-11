@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('trung-hoc-pho-thong');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -88,8 +92,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Trường THPT Việt Anh — Đầu Ra IELTS 6.0-8.0, 99% Vào Đại Học"
-  description="Trường THPT Việt Anh TP.HCM: IELTS 6.0-8.0, 99% vào đại học, du học profile, kỹ năng lãnh đạo. Giải pháp cho học sinh lớp 10. Đăng ký ngay."
+  title={cmsPage?.title || "Trường THPT Việt Anh — Đầu Ra IELTS 6.0-8.0, 99% Vào Đại Học"}
+  description={cmsPage?.description || "Trường THPT Việt Anh TP.HCM: IELTS 6.0-8.0, 99% vào đại học, du học profile, kỹ năng lãnh đạo. Giải pháp cho học sinh lớp 10. Đăng ký ngay."}
   canonical="https://truongvietanh.com/trung-hoc-pho-thong"
   ogImage="https://media.truongvietanh.com/images/extra-20230311-DSC08612-scaled.webp"
   structuredData={structuredData}

@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('co-so');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -156,8 +160,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="9 Cơ Sở Trường Việt Anh – TP.HCM, Long An, Kiên Giang"
-  description="Hệ thống 9 cơ sở Trường Việt Anh trên toàn quốc. Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng. Tham quan miễn phí."
+  title={cmsPage?.title || "9 Cơ Sở Trường Việt Anh – TP.HCM, Long An, Kiên Giang"}
+  description={cmsPage?.description || "Hệ thống 9 cơ sở Trường Việt Anh trên toàn quốc. Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng. Tham quan miễn phí."}
   canonical="https://truongvietanh.com/co-so"
   ogImage="https://media.truongvietanh.com/images/extra-big-img3-scaled.webp"
   structuredData={structuredData}

@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('hoc-phi');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -84,8 +88,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Học Phí Trường Việt Anh 2026 – Mầm Non Đến THPT"
-  description="Học phí Trường Việt Anh 2026: bảng phí chi tiết Mầm non đến THPT. Minh bạch, không phí ẩn. Học bổng lên đến 50%. Đăng ký tư vấn miễn phí."
+  title={cmsPage?.title || "Học Phí Trường Việt Anh 2026 – Mầm Non Đến THPT"}
+  description={cmsPage?.description || "Học phí Trường Việt Anh 2026: bảng phí chi tiết Mầm non đến THPT. Minh bạch, không phí ẩn. Học bổng lên đến 50%. Đăng ký tư vấn miễn phí."}
   canonical="https://truongvietanh.com/hoc-phi"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}

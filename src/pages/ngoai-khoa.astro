@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('ngoai-khoa');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -91,8 +95,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Ngoại Khóa Việt Anh – 20+ CLB Thể Thao, STEM, Nghệ Thuật"
-  description="Khám phá 20+ CLB ngoại khóa tại Trường Việt Anh: Thể thao, Nghệ thuật, STEM, Kỹ năng sống. Phát triển toàn diện từ Mầm Non đến THPT."
+  title={cmsPage?.title || "Ngoại Khóa Việt Anh – 20+ CLB Thể Thao, STEM, Nghệ Thuật"}
+  description={cmsPage?.description || "Khám phá 20+ CLB ngoại khóa tại Trường Việt Anh: Thể thao, Nghệ thuật, STEM, Kỹ năng sống. Phát triển toàn diện từ Mầm Non đến THPT."}
   canonical="https://truongvietanh.com/ngoai-khoa"
   ogImage="https://media.truongvietanh.com/images/extra-gal4.webp"
   structuredData={structuredData}

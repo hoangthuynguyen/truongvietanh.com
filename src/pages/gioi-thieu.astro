@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('gioi-thieu');
+const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
@@ -109,8 +113,8 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Giới Thiệu Trường Việt Anh – Liên Cấp Song Ngữ"
-  description="Trường Việt Anh thành lập 2011: hệ thống liên cấp Mầm non – THPT tại TP.HCM. IELTS, 16 kỹ năng thế kỷ 21, 9 cơ sở. Tham quan miễn phí."
+  title={cmsPage?.title || "Giới Thiệu Trường Việt Anh – Liên Cấp Song Ngữ"}
+  description={cmsPage?.description || "Trường Việt Anh thành lập 2011: hệ thống liên cấp Mầm non – THPT tại TP.HCM. IELTS, 16 kỹ năng thế kỷ 21, 9 cơ sở. Tham quan miễn phí."}
   canonical="https://truongvietanh.com/gioi-thieu"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}

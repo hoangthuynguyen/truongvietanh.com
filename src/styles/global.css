@@ -1957,6 +1957,24 @@ h1, h2, h3 {
   color: #18314d;
 }
 
+/* ===================== PEOPLE ALSO ASK ===================== */
+.paa-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem;
+}
+.paa-card {
+  display: flex; flex-direction: column; gap: 0.35rem;
+  padding: 1.25rem; background: #fff; border: 1px solid #e2e8f0;
+  border-radius: 12px; text-decoration: none; color: inherit;
+  transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+}
+.paa-card:hover {
+  box-shadow: 0 6px 24px rgba(18,57,103,0.1);
+  transform: translateY(-2px); border-color: #D4A843;
+}
+.paa-card strong { font-size: 0.95rem; color: #1a1a5e; line-height: 1.4; }
+.paa-card span { font-size: 0.85rem; color: #64748b; line-height: 1.5; }
+@media(max-width:640px){ .paa-grid { grid-template-columns: 1fr; } }
+
 /* ===================== TUITION CALCULATOR ===================== */
 .calc-box {
   background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px;

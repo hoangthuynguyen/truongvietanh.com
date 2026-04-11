@@ -129,15 +129,17 @@ const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
 const structuredData = [
   {
     '@context': 'https://schema.org',
-    '@type': 'Article',
+    '@type': 'BlogPosting',
     headline: post.title,
     description: pageDesc,
     datePublished: formatISO(post.published_at),
     dateModified: formatISO(post.published_at),
     url: canonicalUrl,
+    inLanguage: 'vi',
+    wordCount: cleanedContent ? cleanedContent.replace(/<[^>]*>/g, '').split(/\s+/).length : 0,
     author: {
       '@type': 'Organization',
-      name: 'Trường Việt Anh',
+      name: 'Ban Truyền Thông Trường Việt Anh',
       url: 'https://truongvietanh.com',
     },
     publisher: {
@@ -152,6 +154,10 @@ const structuredData = [
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': canonicalUrl,
+    },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.blog-article h1', '.blog-article > p:first-of-type'],
     },
   },
   {

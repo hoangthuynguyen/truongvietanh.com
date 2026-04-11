@@ -4,8 +4,13 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { defaultSiteUrl } from '../lib/site-content';
+import { getTestimonials, getCampuses } from '../lib/directus';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+
+// Fetch from CMS
+const cmsTestimonials = await getTestimonials('index');
+const cmsCampuses = await getCampuses();
 
 const structuredData = [
   {

@@ -206,6 +206,69 @@ export function buildFaqSchema(faqs: Array<{ question: string; answer: string }>
   };
 }
 
+// ===================== TESTIMONIALS =====================
+
+export type Testimonial = {
+  name: string;
+  role: string;
+  quote: string;
+  initials: string;
+  page_slug: string;
+};
+
+export async function getTestimonials(pageSlug?: string): Promise<Testimonial[]> {
+  try {
+    const client = getPillarClient();
+    const filter: any = { status: { _eq: 'published' } };
+    if (pageSlug) filter.page_slug = { _eq: pageSlug };
+    return await client.request(readItems('testimonials' as any, {
+      filter, sort: ['sort'], limit: 20,
+    })) as Testimonial[];
+  } catch { return []; }
+}
+
+// ===================== CAMPUSES =====================
+
+export type Campus = {
+  name: string;
+  city: string;
+  address: string;
+  phone: string;
+  lat: number;
+  lng: number;
+  levels: string[];
+  opening_hours: string;
+};
+
+export async function getCampuses(): Promise<Campus[]> {
+  try {
+    const client = getPillarClient();
+    return await client.request(readItems('campuses' as any, {
+      filter: { status: { _eq: 'published' } }, sort: ['sort'], limit: 20,
+    })) as Campus[];
+  } catch { return []; }
+}
+
+// ===================== GALLERY CATEGORIES =====================
+
+export type GalleryCategory = {
+  title: string;
+  heading: string;
+  description: string;
+  slug: string;
+  image_count: number;
+  image_base_url: string;
+};
+
+export async function getGalleryCategories(): Promise<GalleryCategory[]> {
+  try {
+    const client = getPillarClient();
+    return await client.request(readItems('gallery_categories' as any, {
+      filter: { status: { _eq: 'published' } }, sort: ['sort'], limit: 20,
+    })) as GalleryCategory[];
+  } catch { return []; }
+}
+
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     const client = getPillarClient();

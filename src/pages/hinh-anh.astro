@@ -3,6 +3,10 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getGalleryCategories } from '../lib/directus';
+
+// Fetch gallery categories from CMS
+const cmsGallery = await getGalleryCategories();
 
 const structuredData = [
   {
@@ -134,11 +138,19 @@ const galleryCategories = [
   },
 ];
 
-// Build image arrays for each category
-const galleryData = galleryCategories.map((cat) => ({
-  ...cat,
-  images: Array.from({ length: cat.count }, (_, i) => ({
-    src: `${imgBase}/${cat.slug}-0${i + 1}.webp`,
+// Build image arrays — CMS data first, fallback to hardcode
+const activeGallery = cmsGallery.length > 0 ? cmsGallery : galleryCategories.map(c => ({
+  ...c, heading: c.heading, image_count: c.count, image_base_url: imgBase,
+}));
+
+const galleryData = activeGallery.map((cat: any) => ({
+  id: cat.slug || cat.id,
+  title: cat.title,
+  heading: cat.heading,
+  desc: cat.description || cat.desc,
+  slug: cat.slug,
+  images: Array.from({ length: cat.image_count || cat.count || 4 }, (_, i) => ({
+    src: `${cat.image_base_url || imgBase}/${cat.slug}-0${i + 1}.webp`,
     alt: `${cat.heading} — Trường Việt Anh ${i + 1}`,
   })),
 }));

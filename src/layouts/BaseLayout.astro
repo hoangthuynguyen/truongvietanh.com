@@ -9,6 +9,9 @@ const announcementLink = siteSettings?.announcement_link || '/tuyen-sinh';
 const announcementActive = siteSettings?.announcement_active ?? true;
 const hotline = siteSettings?.hotline || '0916 961 409';
 const zaloUrl = siteSettings?.zalo_url || 'https://zalo.me/0916961409';
+const popupSeconds = (siteSettings as any)?.popup_seconds ?? 15;
+const zaloOaId = (siteSettings as any)?.zalo_oa_id || '1678310120468101523';
+const zaloOaUrl = `https://zalo.me/${zaloOaId}`;
 
 type Props = {
   title?: string;
@@ -118,7 +121,7 @@ const schemaPayload = structuredData
     </main>
 
     <!-- Exit Intent Popup -->
-    <div class="exit-popup" id="exitPopup" aria-hidden="true">
+    <div class="exit-popup" id="exitPopup" aria-hidden="true" data-auto-close={String(popupSeconds)}>
       <div class="exit-popup__overlay"></div>
       <div class="exit-popup__modal">
         <button class="exit-popup__close" id="exitPopupClose" aria-label="Đóng">&times;</button>
@@ -128,7 +131,11 @@ const schemaPayload = structuredData
           <input type="tel" class="exit-popup__input" placeholder="Số điện thoại của bạn" pattern="[0-9\+\-\s]+" required />
           <button type="submit" class="exit-popup__submit">Nhận tư vấn miễn phí</button>
         </form>
-        <p class="exit-popup__note">Hoặc gọi ngay <a href="tel:0916961409"><strong>0916 961 409</strong></a></p>
+        <p class="exit-popup__note">
+          Hoặc gọi ngay <a href={`tel:${hotline.replace(/\s/g, '')}`}><strong>{hotline}</strong></a>
+          &nbsp;|&nbsp;
+          <a href={zaloOaUrl} target="_blank" rel="noopener" style="color:#0068ff;font-weight:700">Chat Zalo OA</a>
+        </p>
       </div>
     </div>
 
@@ -230,23 +237,42 @@ const schemaPayload = structuredData
         });
       }
 
-      /* === Exit intent popup === */
+      /* === Exit intent popup (timer from CMS) === */
       var ep = document.getElementById('exitPopup');
+      var popupAutoClose = parseInt(ep.getAttribute('data-auto-close')) || 15;
       if(ep && !sessionStorage.getItem('exit_shown')){
         var shown=false;
-        document.addEventListener('mouseout',function(e){
-          if(!shown && e.clientY < 5 && !e.relatedTarget){
-            shown=true; ep.classList.add('is-open'); ep.setAttribute('aria-hidden','false');
-            sessionStorage.setItem('exit_shown','1');
+        var closeTimer=null;
+        function showPopup(){
+          if(shown) return;
+          shown=true; ep.classList.add('is-open'); ep.setAttribute('aria-hidden','false');
+          sessionStorage.setItem('exit_shown','1');
+          if(popupAutoClose > 0){
+            closeTimer = setTimeout(function(){ ep.classList.remove('is-open'); }, popupAutoClose * 1000);
           }
+        }
+        function closePopup(){ ep.classList.remove('is-open'); if(closeTimer) clearTimeout(closeTimer); }
+        // Trigger: mouse leave top of page (desktop)
+        document.addEventListener('mouseout',function(e){
+          if(!shown && e.clientY < 5 && !e.relatedTarget) showPopup();
         });
-        document.getElementById('exitPopupClose').addEventListener('click',function(){ ep.classList.remove('is-open'); });
-        ep.querySelector('.exit-popup__overlay').addEventListener('click',function(){ ep.classList.remove('is-open'); });
+        // Trigger: scroll up fast (mobile fallback)
+        var lastScroll=0;
+        window.addEventListener('scroll',function(){
+          var st=window.scrollY;
+          if(!shown && st < lastScroll - 100 && st > 300) showPopup();
+          lastScroll=st;
+        },{passive:true});
+        document.getElementById('exitPopupClose').addEventListener('click', closePopup);
+        ep.querySelector('.exit-popup__overlay').addEventListener('click', closePopup);
         document.getElementById('exitForm').addEventListener('submit',function(e){
           e.preventDefault();
           var phone=this.querySelector('input').value;
-          if(phone){ this.innerHTML='<p style="color:#22c55e;font-weight:700;padding:1rem 0">Cảm ơn! Tư vấn viên sẽ gọi bạn sớm.</p>';
+          if(phone){
+            if(closeTimer) clearTimeout(closeTimer);
+            this.innerHTML='<p style="color:#22c55e;font-weight:700;padding:1rem 0">Cảm ơn! Tư vấn viên sẽ gọi bạn sớm.</p>';
             fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({step:'exit_intent',phone:phone,page:location.href,timestamp:new Date().toISOString()})}).catch(function(){});
+            setTimeout(closePopup, 3000);
           }
         });
       }

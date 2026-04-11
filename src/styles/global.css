@@ -1258,27 +1258,36 @@ body.menu-open {
 /* tieu-hoc, trung-hoc-co-so, trung-hoc-pho-thong, hoc-phi, lien-he,  */
 /* co-so, phu-huynh, he-thong-pdr, triet-ly-giao-duc, ngoai-khoa       */
 .gi-page { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: #0f172a; background: #f4f6fa; }
-.gi-container { max-width: 1400px; margin: 0 auto; padding: 0 2.5rem; }
+.gi-container { max-width: 1400px; margin: 0 auto; padding: 0 3rem; }
 
 /* --- HERO --- */
 .gi-hero {
   position: relative;
-  background: linear-gradient(160deg, rgba(26,25,60,0.68) 0%, rgba(15,23,42,0.74) 60%, rgba(26,26,94,0.65) 100%),
-    url('https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp') center/cover no-repeat;
+  background: linear-gradient(160deg, rgba(26,25,60,0.82) 0%, rgba(15,23,42,0.85) 50%, rgba(26,26,94,0.78) 100%),
+    url('https://media.truongvietanh.com/images/trang-chu-30.webp') center/cover no-repeat;
   color: #fff; padding: 5rem 0 4rem;
+  overflow: hidden;
+}
+.gi-hero::before {
+  content: '';
+  position: absolute; top: -50%; right: -20%; width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(212,168,67,0.12) 0%, transparent 70%);
+  pointer-events: none; z-index: 0;
 }
 .gi-hero::after {
   content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 80px;
-  background: linear-gradient(to top, #f4f6fa, transparent); pointer-events: none;
+  background: linear-gradient(to top, #f4f6fa, transparent); pointer-events: none; z-index: 0;
 }
 .gi-hero-inner { display: flex; gap: 3.5rem; align-items: center; position: relative; z-index: 1; }
 .gi-hero-left { flex: 1; min-width: 0; }
 .gi-hero-right { width: 340px; flex-shrink: 0; }
 
-.gi-breadcrumb { font-size: 0.85rem; margin-bottom: 1.75rem; color: rgba(255,255,255,0.6); }
+.gi-breadcrumb { font-size: 0.85rem; margin-bottom: 1.75rem; color: rgba(255,255,255,0.6); display: flex; align-items: center; flex-wrap: wrap; gap: 0.15rem; }
 .gi-breadcrumb a { color: #D4A843; text-decoration: none; transition: color 0.15s; }
-.gi-breadcrumb a:hover { color: #fff; }
-.gi-breadcrumb span { margin: 0 0.4rem; }
+.gi-breadcrumb a:hover { color: #fff; text-decoration: underline; }
+.gi-breadcrumb span[aria-hidden="true"] { display: inline-flex; align-items: center; margin: 0 0.25rem; font-size: 0; }
+.gi-breadcrumb span[aria-hidden="true"]::after { content: ''; display: inline-block; width: 6px; height: 6px; border-top: 1.5px solid rgba(255,255,255,0.45); border-right: 1.5px solid rgba(255,255,255,0.45); transform: rotate(45deg); }
+.gi-breadcrumb span:not([aria-hidden]) { color: rgba(255,255,255,0.85); font-weight: 500; }
 
 .gi-h1 {
   font-size: clamp(2rem, 3.5vw, 2.8rem); font-weight: 900; line-height: 1.15;
@@ -1313,9 +1322,9 @@ body.menu-open {
 }
 
 /* --- TOC + CONTENT LAYOUT --- */
-.gi-body { display: flex; gap: 2rem; padding: 3.5rem 0; align-items: flex-start; }
+.gi-body { display: flex; gap: 2.5rem; padding: 3.5rem 0; align-items: flex-start; }
 .gi-toc {
-  width: 220px; flex-shrink: 0; position: sticky; top: 90px;
+  width: 260px; flex-shrink: 0; position: sticky; top: 90px;
   background: #fff; border-radius: 14px; padding: 1.25rem; border: 1px solid #e2e8f0;
   box-shadow: 0 4px 20px rgba(0,0,0,0.04);
 }
@@ -1464,14 +1473,39 @@ body.menu-open {
 .gi-big-score { font-size: 1.4rem; font-weight: 900; color: #1a1a5e; }
 .gi-review-count { font-size: 0.88rem; color: #64748b; }
 
-.gi-testimonials { display: grid; gap: 0.85rem; }
+.gi-testimonials { display: grid; gap: 1rem; }
 .gi-testimonial {
-  background: #f8fafc; border-left: 4px solid #D4A843; border-radius: 10px;
-  padding: 1.25rem 1.5rem; margin: 0; transition: background 0.2s;
+  background: #f8fafc; border-left: 4px solid #D4A843; border-radius: 12px;
+  padding: 1.5rem 1.75rem; margin: 0; transition: background 0.25s, box-shadow 0.25s, transform 0.25s;
+  position: relative;
 }
-.gi-testimonial:hover { background: #fef9ef; }
-.gi-testimonial p { font-size: 0.98rem; color: #3b4963; margin-bottom: 0.5rem; font-style: italic; line-height: 1.65; }
-.gi-testimonial cite { font-size: 0.83rem; color: #64748b; font-style: normal; font-weight: 600; }
+.gi-testimonial:hover { background: #fef9ef; box-shadow: 0 4px 20px rgba(212,168,67,0.12); transform: translateY(-2px); }
+.gi-testimonial::before {
+  content: '\201C';
+  position: absolute; top: 0.75rem; left: 1rem;
+  font-size: 3rem; line-height: 1; color: rgba(212,168,67,0.2);
+  font-family: Georgia, serif; font-weight: 700;
+}
+.gi-testimonial p { font-size: 0.98rem; color: #3b4963; margin-bottom: 0.75rem; font-style: italic; line-height: 1.65; padding-left: 0.25rem; }
+.gi-testimonial cite {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.83rem; color: #64748b; font-style: normal; font-weight: 600;
+}
+.gi-testimonial cite::before {
+  content: '';
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #D4A843, #b57c11);
+  color: #fff; font-size: 0.75rem; font-weight: 700;
+  flex-shrink: 0;
+}
+.gi-testimonial:nth-child(1) cite::before { content: 'NG'; }
+.gi-testimonial:nth-child(2) cite::before { content: 'NT'; }
+.gi-testimonial:nth-child(3) cite::before { content: 'HD'; }
+.gi-testimonial:nth-child(4) cite::before { content: 'TH'; }
+.gi-testimonial:nth-child(5) cite::before { content: 'MT'; }
+.gi-testimonial:nth-child(6) cite::before { content: 'PH'; }
+.gi-testimonial:nth-child(7) cite::before { content: 'VA'; }
 
 /* FAQ */
 .gi-faq-list { display: grid; gap: 0.6rem; }
@@ -1502,13 +1536,13 @@ body.menu-open {
   background: radial-gradient(circle, rgba(212,168,67,0.08), transparent 70%);
   pointer-events: none;
 }
-.gi-bottom-cta-inner { display: flex; gap: 3rem; align-items: center; position: relative; z-index: 1; }
-.gi-bottom-cta-text { flex: 1; text-align: center; }
+.gi-bottom-cta-inner { display: flex; gap: 3rem; align-items: flex-start; position: relative; z-index: 1; }
+.gi-bottom-cta-text { flex: 1; }
 .gi-bottom-cta-text h2 { font-size: 2rem; font-weight: 900; margin-bottom: 1rem; color: #fff; letter-spacing: -0.01em; }
 .gi-bottom-cta-text p { font-size: 1.05rem; color: rgba(255,255,255,0.7); line-height: 1.65; }
 .gi-bottom-cta-form {
-  width: 360px; flex-shrink: 0; background: #fff; border-radius: 16px; padding: 1.5rem;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+  width: 380px; flex-shrink: 0; background: #fff; border-radius: 16px; padding: 1.5rem;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2); position: sticky; top: 100px;
 }
 
 /* Last Updated */
@@ -1854,4 +1888,71 @@ body.menu-open {
   .img-grid-2 {
     grid-template-columns: 1fr;
   }
+}
+
+/* ===================== UI POLISH: BUTTONS & LINKS ===================== */
+
+/* Primary button glow on hover */
+.btn-yellow, .wp-top-bar__cta {
+  transition: background 0.25s, box-shadow 0.25s, transform 0.15s;
+}
+.btn-yellow:hover, .wp-top-bar__cta:hover {
+  box-shadow: 0 4px 16px rgba(245,197,24,0.35);
+  transform: translateY(-1px);
+}
+.btn-yellow:active, .wp-top-bar__cta:active {
+  transform: translateY(0);
+}
+
+/* Card universal hover improvement */
+.content-card,
+.gi-campus-card,
+.gi-faq-item {
+  transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+}
+.content-card:hover,
+.gi-campus-card:hover {
+  box-shadow: 0 8px 30px rgba(18,57,103,0.1);
+  transform: translateY(-3px);
+}
+.gi-faq-item:hover {
+  border-color: #D4A843;
+}
+
+/* Smooth focus outline for accessibility */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Image hover zoom for gallery */
+.real-gallery-grid img,
+.section-img {
+  transition: transform 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+.real-gallery-grid img:hover {
+  transform: scale(1.04);
+}
+
+/* Improved section spacing */
+.gi-section + .gi-section {
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+/* ===================== TYPOGRAPHY POLISH ===================== */
+
+/* Better heading kerning */
+h1, h2, h3 {
+  letter-spacing: -0.015em;
+}
+
+/* Selection color */
+::selection {
+  background: rgba(212,168,67,0.2);
+  color: #18314d;
 }

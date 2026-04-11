@@ -24,7 +24,7 @@ const structuredData = [
       { '@type': 'PostalAddress', streetAddress: '951/7 Tỉnh lộ 10, Phường Tân Tạo', addressLocality: 'Quận Bình Tân', addressRegion: 'TP.HCM', addressCountry: 'VN' },
     ],
     sameAs: ['https://www.facebook.com/truongvietanh', 'https://www.youtube.com/@truongvietanh'],
-    numberOfEmployees: { '@type': 'QuantitativeValue', value: 200 },
+    numberOfEmployees: { '@type': 'QuantitativeValue', value: 500 },
   },
   {
     '@context': 'https://schema.org',
@@ -87,6 +87,22 @@ const structuredData = [
         acceptedAnswer: {
           '@type': 'Answer',
           text: 'Phụ huynh có thể đăng ký tư vấn tuyển sinh trực tiếp trên website truongvietanh.com, gọi hotline 0916 961 409, hoặc đặt lịch tham quan trường để được tư vấn chi tiết.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học phí Trường Việt Anh bao nhiêu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học phí dao động từ 5-12 triệu/tháng tùy cấp học và chương trình. So với trường quốc tế (15-30 triệu), Việt Anh mang đến chất lượng tương đương với mức phí hợp lý hơn nhiều.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Trình độ tiếng Anh đầu ra của học sinh Trường Việt Anh?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học sinh tốt nghiệp THPT đạt tối thiểu IELTS 6.0, nhiều em đạt 7.0-8.0. Đây là mức đủ để xét tuyển vào hầu hết đại học thế giới và nhận học bổng du học.',
         },
       },
     ],
@@ -405,6 +421,36 @@ const newsCards = [
                 </a>
               </article>
             ))}
+          </div>
+        </section>
+
+        <!-- FAQ cho homepage -->
+        <section class="section-block anchor-section" id="faq">
+          <div class="section-heading">
+            <p class="section-eyebrow">Câu hỏi thường gặp</p>
+            <h2>Phụ huynh thường hỏi gì về Trường Việt Anh?</h2>
+          </div>
+          <div class="faq-list" style="max-width:800px">
+            <details class="faq-item">
+              <summary class="faq-question">Trường Việt Anh tuyển sinh những cấp học nào?</summary>
+              <p class="faq-answer">Trường Việt Anh tuyển sinh 4 cấp: Mầm Non (từ 18 tháng), Tiểu Học (lớp 1-5), THCS (lớp 6-9) và THPT (lớp 10-12). Hệ thống liên cấp giúp con được đào tạo xuyên suốt mà không bị gián đoạn chương trình.</p>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">Học phí Trường Việt Anh bao nhiêu?</summary>
+              <p class="faq-answer">Học phí dao động từ 5-12 triệu/tháng tùy cấp học và chương trình. So với trường quốc tế (15-30 triệu), Việt Anh mang đến chất lượng tương đương với mức phí hợp lý hơn nhiều. Xem chi tiết tại trang <a href="/hoc-phi">Học phí</a>.</p>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">Trường Việt Anh có mấy cơ sở?</summary>
+              <p class="faq-answer">Hiện tại Trường Việt Anh có 9 cơ sở tại 3 tỉnh thành: TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Long An (Cần Giuộc) và Kiên Giang (Rạch Giá). Xem chi tiết tại trang <a href="/co-so">Hệ thống cơ sở</a>.</p>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">Làm sao để đăng ký tham quan trường?</summary>
+              <p class="faq-answer">Phụ huynh đăng ký tham quan miễn phí bằng 3 cách: (1) Điền form trên website, (2) Gọi hotline <a href="tel:0916961409">0916 961 409</a>, hoặc (3) Nhắn Zalo. Buổi tham quan kéo dài 60-90 phút, bao gồm thăm cơ sở, gặp giáo viên và dự giờ lớp học.</p>
+            </details>
+            <details class="faq-item">
+              <summary class="faq-question">Trình độ tiếng Anh đầu ra của học sinh Trường Việt Anh?</summary>
+              <p class="faq-answer">Học sinh tốt nghiệp THPT tại Trường Việt Anh đạt tối thiểu IELTS 6.0, nhiều em đạt 7.0-8.0. Đây là mức đủ để xét tuyển vào hầu hết các đại học trên thế giới và nhận học bổng du học.</p>
+            </details>
           </div>
         </section>
 

@@ -1522,7 +1522,7 @@ export const pages: PageSpec[] = [
     stats: [
       { value: 'Vui vẻ', label: 'Trẻ cần một môi trường tích cực để mở lòng và học thật' },
       { value: 'Th��c dụng', label: 'Mọi hoạt động đều phải hướng đến năng lực sống và học tập cụ thể' },
-      { value: 'Kỷ luật', label: 'Kỷ luật được dạy như một kỹ năng, không phải sự áp đặt' },
+      { value: 'Trách nhiệm', label: 'Trách nhiệm được dạy như một kỹ năng, không phải sự áp đặt' },
       { value: 'Đồng hành', label: 'Gia đình và nhà trường cùng nhau tạo rhythm tiến bộ' },
     ],
     sections: [
@@ -1545,9 +1545,9 @@ export const pages: PageSpec[] = [
               'Kiến thức cần được biến thành khả năng lập kế hoạch, hợp tác, giao tiếp, tự đánh giá và sử dụng ngôn ngữ để giải quyết tình huống thật.',
           },
           {
-            title: 'Kỷ luật nhân văn',
+            title: 'Trách nhiệm nhân văn',
             body:
-              'Kỷ luật không đồng nghĩa với áp lực. Trẻ cần được hướng dẫn cách xây thói quen và chịu trách nhiệm với kế hoạch của mình.',
+              'Trách nhiệm không đồng nghĩa với áp lực. Trẻ cần được hướng dẫn cách xây thói quen và chịu trách nhiệm với kế hoạch của mình.',
           },
           {
             title: 'Tiếng Anh là năng lực sống',
@@ -1938,7 +1938,7 @@ export const pages: PageSpec[] = [
           {
             title: 'Nề nếp học tập bền vững',
             body:
-              'Kỷ luật được dạy quá nhưng việc rất cụ thể: chuẩn bị, hoàn thành, phản hồi và review lại cách học của minh.',
+              'Trách nhiệm được dạy qua những việc rất cụ thể: chuẩn bị, hoàn thành, phản hồi và review lại cách học của mình.',
           },
         ],
       },

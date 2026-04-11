@@ -92,6 +92,8 @@ const structuredData = [
         name: 'Trường Việt Anh tổ chức những sự kiện gì trong năm học?',
         acceptedAnswer: { '@type': 'Answer', text: 'Trong năm học, trường tổ chức: Open Day cho phụ huynh tham quan, Hội thao liên cấp, English Day, STEM Fair, Music Show, Lễ tri ân thầy cô, Dã ngoại theo cấp học, và các workshop kỹ năng sống dành cho phụ huynh và học sinh.' },
       },
+      { '@type': 'Question', name: 'Blog Trường Việt Anh có chia sẻ kinh nghiệm luyện thi IELTS không?', acceptedAnswer: { '@type': 'Answer', text: 'Có. Blog thường xuyên đăng bài về lộ trình luyện IELTS từ lớp 6 đến lớp 12, mẹo làm bài thi, chia sẻ từ học sinh đạt IELTS 6.0-8.0, và hướng dẫn chuẩn bị hồ sơ du học.' } },
+      { '@type': 'Question', name: 'Phụ huynh có thể đóng góp bài viết cho blog Trường Việt Anh không?', acceptedAnswer: { '@type': 'Answer', text: 'Trường khuyến khích phụ huynh chia sẻ câu chuyện, kinh nghiệm và cảm nhận. Gửi bài qua email hoặc liên hệ đội ngũ truyền thông để được hỗ trợ đăng bài.' } },
     ],
   },
 ];
@@ -100,6 +102,8 @@ const faqItems = [
   { question: 'Trường Việt Anh có blog hoặc kênh chia sẻ kiến thức giáo dục không?', answer: 'Có. Trường Việt Anh duy trì blog với hơn 500 bài viết về kiến thức giáo dục, kinh nghiệm nuôi dạy con, thông tin tuyển sinh và các sự kiện trường. Nội dung được cập nhật thường xuyên tại truongvietanh.com/tin-tuc.' },
   { question: 'Làm sao để nhận thông tin mới nhất từ Trường Việt Anh?', answer: 'Phụ huynh có thể theo dõi fanpage Facebook Trường Việt Anh, kênh YouTube, hoặc đăng ký nhận bản tin qua email trên website. Ngoài ra, đội ngũ tuyển sinh sẽ liên hệ trực tiếp khi có sự kiện Open Day, workshop hoặc chương trình ưu đãi.' },
   { question: 'Trường Việt Anh tổ chức những sự kiện gì trong năm học?', answer: 'Trong năm học, trường tổ chức: Open Day cho phụ huynh tham quan, Hội thao liên cấp, English Day, STEM Fair, Music Show, Lễ tri ân thầy cô, Dã ngoại theo cấp học, và các workshop kỹ năng sống dành cho phụ huynh và học sinh.' },
+  { question: 'Blog Trường Việt Anh có chia sẻ kinh nghiệm luyện thi IELTS không?', answer: 'Có. Blog thường xuyên đăng bài về lộ trình luyện IELTS từ lớp 6 đến lớp 12, mẹo làm bài thi, chia sẻ từ học sinh đạt IELTS 6.0–8.0, và hướng dẫn chuẩn bị hồ sơ du học cho phụ huynh quan tâm.' },
+  { question: 'Phụ huynh có thể đóng góp bài viết cho blog Trường Việt Anh không?', answer: 'Trường Việt Anh khuyến khích phụ huynh chia sẻ câu chuyện, kinh nghiệm và cảm nhận. Phụ huynh có thể gửi bài viết qua email hoặc liên hệ đội ngũ truyền thông trường để được hỗ trợ đăng bài.' },
 ];
 ---
 
@@ -188,6 +192,51 @@ const faqItems = [
           </div>
         )}
 
+        {/* Fallback nội dung tĩnh khi API không khả dụng */}
+        {(error || posts.length === 0) && (
+          <div class="fallback-content">
+            <h2 class="fallback-title">Bài Viết Nổi Bật</h2>
+            <div class="news-grid">
+              <a href="/tuyen-sinh" class="news-card">
+                <div class="news-card__body">
+                  <h3 class="news-card__title">Tuyển sinh năm học 2026–2027: Lịch trình và ưu đãi Early Bird</h3>
+                  <p class="news-card__excerpt">Trường Việt Anh mở đợt tuyển sinh sớm với ưu đãi giảm 10–15% học phí cho phụ huynh đăng ký trước 31/03/2026. Tìm hiểu quy trình nhập học từ Mầm Non đến THPT.</p>
+                </div>
+              </a>
+              <a href="/triet-ly-giao-duc" class="news-card">
+                <div class="news-card__body">
+                  <h3 class="news-card__title">Phương pháp PDR: Phẩm chất – Đạo đức – Rèn luyện tại Trường Việt Anh</h3>
+                  <p class="news-card__excerpt">Hệ thống giáo dục PDR giúp học sinh phát triển toàn diện cả trí tuệ lẫn nhân cách. Tìm hiểu cách Trường Việt Anh tích hợp 16 kỹ năng thế kỷ 21 vào chương trình học.</p>
+                </div>
+              </a>
+              <a href="/ngoai-khoa" class="news-card">
+                <div class="news-card__body">
+                  <h3 class="news-card__title">20+ câu lạc bộ ngoại khóa: Thể thao, nghệ thuật, STEM và kỹ năng sống</h3>
+                  <p class="news-card__excerpt">Từ bóng đá, bơi lội đến robotics, coding — Trường Việt Anh tổ chức đa dạng hoạt động ngoại khóa giúp học sinh khám phá đam mê và phát triển năng khiếu.</p>
+                </div>
+              </a>
+              <a href="/thanh-tich" class="news-card">
+                <div class="news-card__body">
+                  <h3 class="news-card__title">Thành tích nổi bật: 99% đỗ ĐH nguyện vọng 1, IELTS 6.0–8.0</h3>
+                  <p class="news-card__excerpt">Học sinh Trường Việt Anh liên tục đạt thành tích xuất sắc trong các kỳ thi Olympic, IELTS và kỳ thi tốt nghiệp THPT quốc gia. Nhiều em nhận học bổng du học.</p>
+                </div>
+              </a>
+              <a href="/co-so" class="news-card">
+                <div class="news-card__body">
+                  <h3 class="news-card__title">Hệ thống 9 cơ sở: TP.HCM, Long An, Kiên Giang</h3>
+                  <p class="news-card__excerpt">Trường Việt Anh mở rộng hệ thống trường liên cấp với 9 cơ sở tại 3 tỉnh thành. Mỗi cơ sở đều đạt chuẩn về cơ sở vật chất, phòng lab STEM và sân thể thao.</p>
+                </div>
+              </a>
+              <a href="/mam-non" class="news-card">
+                <div class="news-card__body">
+                  <h3 class="news-card__title">Mầm Non song ngữ: Montessori kết hợp chương trình Việt – Anh</h3>
+                  <p class="news-card__excerpt">Chương trình Mầm Non Việt Anh áp dụng phương pháp Montessori, giúp trẻ từ 18 tháng đến 6 tuổi phát triển ngôn ngữ, tư duy và kỹ năng xã hội trong môi trường an toàn.</p>
+                </div>
+              </a>
+            </div>
+          </div>
+        )}
+
         {posts.length > 0 && (
           <div class="news-grid">
             {posts.map((post) => (
@@ -205,6 +254,31 @@ const faqItems = [
             ))}
           </div>
         )}
+      </div>
+    </section>
+
+    <!-- Nội dung bổ sung: Tại sao theo dõi Trường Việt Anh -->
+    <section class="why-follow">
+      <div class="cf-container">
+        <h2 class="section-title">Tại Sao Phụ Huynh Nên Theo Dõi Blog Trường Việt Anh?</h2>
+        <div class="why-grid">
+          <div class="why-card">
+            <h3>Cập nhật tuyển sinh kịp thời</h3>
+            <p>Nhận thông tin sớm nhất về lịch tuyển sinh, ưu đãi Early Bird, và các chương trình học bổng cho năm học 2026–2027. Phụ huynh đăng ký sớm được ưu tiên chọn lớp và giảm học phí.</p>
+          </div>
+          <div class="why-card">
+            <h3>Kiến thức nuôi dạy con khoa học</h3>
+            <p>Bài viết chuyên sâu về tâm lý trẻ, phương pháp giáo dục tích cực, kỹ năng giao tiếp cha mẹ – con cái, và cách hỗ trợ con học tập hiệu quả tại nhà từ đội ngũ chuyên gia giáo dục.</p>
+          </div>
+          <div class="why-card">
+            <h3>Sự kiện trường phong phú</h3>
+            <p>Lịch các sự kiện Open Day, Hội thao, English Day, STEM Fair, Music Show và workshop kỹ năng sống — để phụ huynh cùng con tham gia trải nghiệm môi trường học tập thực tế.</p>
+          </div>
+          <div class="why-card">
+            <h3>Định hướng học tập & du học</h3>
+            <p>Chia sẻ kinh nghiệm luyện thi IELTS, chuẩn bị hồ sơ du học, chọn trường quốc tế và lộ trình học tập từ lớp 6 đến lớp 12 để con đạt mục tiêu đại học trong và ngoài nước.</p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -420,6 +494,19 @@ const faqItems = [
   @media (max-width: 600px) {
     .news-grid { grid-template-columns: 1fr; }
     .topic-grid { grid-template-columns: 1fr; }
+  }
+
+  .fallback-content { padding: 1rem 0 0; }
+  .fallback-title { font-size: 1.35rem; font-weight: 700; color: #1B2A5B; margin: 0 0 1.25rem; }
+
+  .why-follow { padding: 2.5rem 0; background: #f8fafc; }
+  .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .why-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 1.5rem; }
+  .why-card h3 { font-size: 1.05rem; font-weight: 700; color: #1B2A5B; margin: 0 0 0.5rem; }
+  .why-card p { font-size: 0.92rem; color: #475569; line-height: 1.65; margin: 0; }
+
+  @media (max-width: 600px) {
+    .why-grid { grid-template-columns: 1fr; }
   }
 
   .faq-section { padding: 2.5rem 0; }

@@ -111,57 +111,61 @@ const structuredData = [
 <BaseLayout
   title="Giới Thiệu Trường Việt Anh – Liên Cấp Song Ngữ"
   description="Trường Việt Anh thành lập 2011: hệ thống liên cấp Mầm non – THPT tại TP.HCM. IELTS, 16 kỹ năng thế kỷ 21, 9 cơ sở. Tham quan miễn phí."
-  canonical="https://truongvietanh.com/gioi-thieu"
-  ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
+  canonical="https://truongvietanh.com/gioi-thieu2"
+  noindex={true}
+  ogImage="https://media.truongvietanh.com/images/trang-chu-30.webp"
   structuredData={structuredData}
 >
   <div class="gi-page">
     <HeaderBase />
 
-    <!-- ====== LAYER 2: HERO WITH FORM ====== -->
-    <section class="gi-hero">
-      <div class="gi-container gi-hero-inner">
-        <div class="gi-hero-left">
-          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
-            <a href="/">Trang chủ</a>
-            <span aria-hidden="true">/</span>
-            <span>Giới thiệu</span>
-          </nav>
+    <!-- ====== HERO V2: Full-width cinematic ====== -->
+    <section class="g2-hero">
+      <div class="g2-hero__overlay"></div>
+      <div class="g2-hero__content">
+        <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a>
+          <span aria-hidden="true">/</span>
+          <span>Giới thiệu</span>
+        </nav>
 
-          <h1 class="gi-h1">Trường Việt Anh: Hệ Thống Giáo Dục Liên Cấp Song Ngữ Tại TP.HCM</h1>
-          <p class="gi-subtitle">Tạo ra môi trường học tập vui vẻ và thực dụng kể từ năm 2011</p>
-          <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
+        <h1 class="g2-hero__title">Nơi Con Hạnh Phúc Học Tập<br/>& Phát Triển Toàn Diện</h1>
+        <p class="g2-hero__sub">Liên cấp song ngữ &bull; 9 cơ sở &bull; IELTS 6.0–8.0 &bull; 99% vào đại học</p>
 
-          <div class="gi-hero-rating">
-            <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-            <span class="gi-rating-text">4.9/5 (300+ đánh giá)</span>
-          </div>
-
-          <div class="gi-trust-badges">
-            <div class="gi-badge"><strong>15+</strong> năm</div>
-            <div class="gi-badge"><strong>9</strong> cơ sở</div>
-            <div class="gi-badge"><strong>IELTS</strong> 6-8</div>
-            <div class="gi-badge"><strong>99%</strong> vào đại học</div>
-          </div>
+        <div class="g2-hero__stats">
+          <div class="g2-stat"><strong>15+</strong><span>Năm kinh nghiệm</span></div>
+          <div class="g2-stat"><strong>5,000+</strong><span>Học sinh</span></div>
+          <div class="g2-stat"><strong>9</strong><span>Cơ sở</span></div>
+          <div class="g2-stat"><strong>4.9/5</strong><span>Đánh giá</span></div>
         </div>
 
-        <div class="gi-hero-right">
-          <div class="gi-form-card">
-            <p class="gi-form-heading">Đăng ký tham quan trường miễn phí</p>
-            <LeadFormTwoStepEmailFirst
-              formId="gioi-thieu-form"
-              funnelCode="gioi-thieu-pillar"
-              schoolLevel="tieu-hoc"
-            />
-          </div>
+        <div class="g2-hero__cta">
+          <a href="/tuyen-sinh" class="g2-btn g2-btn--primary">Đăng ký tham quan miễn phí</a>
+          <a href="tel:0916961409" class="g2-btn g2-btn--outline">Gọi ngay: 0916 961 409</a>
         </div>
       </div>
     </section>
 
-    <!-- ====== IMAGE: Giáo viên và học sinh ====== -->
-    <div class="gi-container" style="padding-top:2.5rem">
-      <img src="https://media.truongvietanh.com/images/giao-vien-01.webp" alt="Giáo viên và học sinh Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
-    </div>
+    <!-- ====== FORM STRIP ====== -->
+    <section class="g2-form-strip">
+      <div class="gi-container g2-form-strip__inner">
+        <div class="g2-form-strip__text">
+          <h2>Nhận tư vấn chương trình phù hợp cho con</h2>
+          <p>Đội ngũ tuyển sinh sẽ liên hệ trong 24 giờ</p>
+          <div class="gi-hero-rating" style="justify-content:flex-start">
+            <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-rating-text" style="color:#64748b">4.9/5 (300+ đánh giá)</span>
+          </div>
+        </div>
+        <div class="g2-form-strip__form">
+          <LeadFormTwoStepEmailFirst
+            formId="gioi-thieu2-form"
+            funnelCode="gioi-thieu2-pillar"
+            schoolLevel="tieu-hoc"
+          />
+        </div>
+      </div>
+    </section>
 
     <!-- ====== LAYER 3 + 4: TOC SIDEBAR + CONTENT ====== -->
     <div class="gi-container gi-body">
@@ -210,7 +214,7 @@ const structuredData = [
                 <p>Luôn tìm cách tối ưu năng lực bản thân và cố gắng đến cùng trong mọi việc</p>
               </div>
               <div class="gi-value-card">
-                <span class="gi-value-icon">&#9876;</span>
+                <span class="gi-value-icon">&#9878;</span>
                 <strong>Chính trực</strong>
                 <p>Chỉ làm điều đúng đắn, trở thành tấm gương sáng cho mọi người</p>
               </div>
@@ -548,14 +552,7 @@ const structuredData = [
       <div class="gi-container gi-bottom-cta-inner">
         <div class="gi-bottom-cta-text">
           <h2>Đăng ký tham quan trường miễn phí</h2>
-          <p>Hãy để con được trải nghiệm môi trường học tập vui vẻ tại Trường Việt Anh. Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ. Hoặc xem thêm <a href="/tuyen-sinh" style="color:#D4A843">thông tin tuyển sinh</a> và <a href="/hoc-phi" style="color:#D4A843">bảng học phí chi tiết</a>.</p>
-          <img src="https://media.truongvietanh.com/images/phu-huynh-01.webp" alt="Phụ huynh và học sinh Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
-        </div>
-          <div class="gi-author-bio">
-            <p class="gi-author-bio__label">Biên soạn bởi</p>
-            <p class="gi-author-bio__name">Ban Truyền Thông Trường Việt Anh</p>
-            <p class="gi-author-bio__desc">Nội dung được biên soạn bởi đội ngũ truyền thông Trường Việt Anh với hơn 13 năm kinh nghiệm trong giáo dục song ngữ. Thông tin được kiểm duyệt bởi Ban Giám Hiệu.</p>
-          </div>
+          <p>Hãy để con được trải nghiệm môi trường học tập vui vẻ tại Trường Việt Anh. Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ.</p>
           <div class="gi-next-step">
             <p class="gi-next-step-title">Bước Tiếp Theo</p>
             <div class="gi-next-step-links">
@@ -564,6 +561,12 @@ const structuredData = [
               <a href="https://zalo.me/0916961409" class="ns-zalo">💬 Nhắn Zalo</a>
             </div>
           </div>
+          <div class="gi-author-bio">
+            <p class="gi-author-bio__label">Biên soạn bởi</p>
+            <p class="gi-author-bio__name">Ban Truyền Thông Trường Việt Anh</p>
+            <p class="gi-author-bio__desc">Nội dung được biên soạn bởi đội ngũ truyền thông Trường Việt Anh với hơn 13 năm kinh nghiệm trong giáo dục song ngữ. Thông tin được kiểm duyệt bởi Ban Giám Hiệu.</p>
+          </div>
+        </div>
         <div class="gi-bottom-cta-form">
           <LeadFormTwoStepEmailFirst
             formId="gioi-thieu-bottom-form"
@@ -601,4 +604,420 @@ const structuredData = [
     <FooterBase />
   </div>
 </BaseLayout>
+
+<style is:global>
+  /* ===== HERO V2 — Cinematic Full-Width ===== */
+  .g2-hero {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url('https://media.truongvietanh.com/images/trang-chu-30.webp') center/cover no-repeat;
+    overflow: hidden;
+  }
+  .g2-hero__overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(15,23,42,0.72) 0%,
+      rgba(26,25,60,0.60) 50%,
+      rgba(15,23,42,0.80) 100%
+    );
+    z-index: 1;
+  }
+  .g2-hero__content {
+    position: relative; z-index: 2;
+    max-width: 900px; margin: 0 auto;
+    text-align: center; padding: 4rem 2rem;
+    color: #fff;
+  }
+  .g2-hero__content .gi-breadcrumb {
+    margin-bottom: 2rem;
+  }
+  .g2-hero__title {
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    margin: 0 0 1.25rem;
+    text-shadow: 0 3px 12px rgba(0,0,0,0.5);
+  }
+  .g2-hero__sub {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    margin: 0 0 2.5rem;
+    text-shadow: 0 1px 6px rgba(0,0,0,0.4);
+    letter-spacing: 0.02em;
+  }
+  .g2-hero__stats {
+    display: flex; justify-content: center; gap: 2rem;
+    margin-bottom: 2.5rem; flex-wrap: wrap;
+  }
+  .g2-stat {
+    display: flex; flex-direction: column; align-items: center;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 12px; padding: 1rem 1.5rem; min-width: 110px;
+  }
+  .g2-stat strong {
+    font-size: 1.6rem; font-weight: 900; color: #D4A843;
+    line-height: 1.1;
+  }
+  .g2-stat span {
+    font-size: 0.78rem; color: rgba(255,255,255,0.7);
+    font-weight: 500; margin-top: 0.25rem;
+  }
+  .g2-hero__cta {
+    display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;
+  }
+  .g2-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.9rem 2rem; border-radius: 10px;
+    font-weight: 800; font-size: 1.05rem;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .g2-btn--primary {
+    background: linear-gradient(135deg, #D4A843, #e8c36a);
+    color: #1a1a5e;
+    box-shadow: 0 6px 24px rgba(212,168,67,0.4);
+  }
+  .g2-btn--primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 32px rgba(212,168,67,0.55);
+  }
+  .g2-btn--outline {
+    background: transparent; color: #fff;
+    border: 2px solid rgba(255,255,255,0.4);
+  }
+  .g2-btn--outline:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.6);
+  }
+
+  /* ===== FORM STRIP ===== */
+  .g2-form-strip {
+    background: #fff;
+    padding: 3rem 0;
+    border-bottom: 1px solid #e2e8f0;
+    margin-top: -2rem;
+    position: relative; z-index: 3;
+    border-radius: 20px 20px 0 0;
+  }
+  .g2-form-strip__inner {
+    display: flex; gap: 3rem; align-items: center;
+  }
+  .g2-form-strip__text {
+    flex: 1;
+  }
+  .g2-form-strip__text h2 {
+    font-size: 1.6rem; font-weight: 800; color: #1a1a5e;
+    margin: 0 0 0.5rem;
+  }
+  .g2-form-strip__text p {
+    font-size: 1rem; color: #64748b; margin: 0 0 0.75rem;
+  }
+  .g2-form-strip__form {
+    width: 400px; flex-shrink: 0;
+    background: #f8fafc; border-radius: 16px;
+    padding: 1.25rem; border: 1px solid #e2e8f0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  /* ===== V2 SECTION ENHANCEMENTS ===== */
+
+  /* Animated gold accent line on sections */
+  .gi-page .gi-section {
+    border: none;
+    border-radius: 20px;
+    padding: 2.5rem 2.5rem 2rem;
+    background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+    position: relative;
+    overflow: hidden;
+  }
+  .gi-page .gi-section::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #1a1a5e, #D4A843, #1a1a5e);
+    background-size: 200% 100%;
+    animation: shimmer 4s ease infinite;
+  }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  /* Better section images */
+  .gi-page .section-img {
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease;
+  }
+  .gi-page .section-img:hover {
+    transform: scale(1.01);
+  }
+
+  /* Enhanced values cards */
+  .gi-page .gi-value-card {
+    background: linear-gradient(135deg, #f8fafc 0%, #fff 100%);
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+  }
+  .gi-page .gi-value-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(26,26,94,0.1);
+    border-color: #D4A843;
+  }
+  .gi-page .gi-value-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    filter: grayscale(0);
+  }
+
+  /* Enhanced roadmap items */
+  .gi-page .gi-roadmap-item {
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    background: #fff;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .gi-page .gi-roadmap-item::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, #1a1a5e, #D4A843);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .gi-page .gi-roadmap-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+  }
+  .gi-page .gi-roadmap-item:hover::after {
+    opacity: 1;
+  }
+
+  /* Enhanced testimonials */
+  .gi-page .gi-testimonial {
+    background: linear-gradient(135deg, #fafbfe 0%, #fff 100%);
+    border-left: 4px solid #D4A843;
+    border-radius: 0 14px 14px 0;
+    padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+  .gi-page .gi-testimonial::before {
+    content: '\201C';
+    position: absolute; top: 0.5rem; left: 0.75rem;
+    font-size: 3rem; color: rgba(212,168,67,0.15);
+    font-family: Georgia, serif; line-height: 1;
+  }
+  .gi-page .gi-testimonial:hover {
+    box-shadow: 0 6px 20px rgba(0,0,0,0.06);
+    transform: translateX(4px);
+  }
+  .gi-page .gi-testimonial p {
+    font-style: italic;
+    color: #334155;
+    font-size: 1rem;
+    line-height: 1.7;
+    position: relative; z-index: 1;
+  }
+  .gi-page .gi-testimonial cite {
+    display: block;
+    margin-top: 0.75rem;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #1a1a5e;
+  }
+
+  /* Enhanced FAQ items */
+  .gi-page .gi-faq-item {
+    border-radius: 12px;
+    border: 1px solid #e8ecf1;
+    margin-bottom: 0.75rem;
+    transition: all 0.2s;
+    overflow: hidden;
+  }
+  .gi-page .gi-faq-item[open] {
+    border-color: #D4A843;
+    box-shadow: 0 4px 16px rgba(212,168,67,0.1);
+  }
+  .gi-page .gi-faq-item summary {
+    padding: 1.1rem 1.5rem;
+    font-weight: 700;
+    color: #1a1a5e;
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.2s;
+  }
+  .gi-page .gi-faq-item summary:hover {
+    background: #f8fafc;
+  }
+  .gi-page .gi-faq-item summary::after {
+    content: '+';
+    font-size: 1.4rem;
+    font-weight: 300;
+    color: #D4A843;
+    transition: transform 0.2s;
+  }
+  .gi-page .gi-faq-item[open] summary::after {
+    content: '−';
+  }
+  .gi-page .gi-faq-item summary::-webkit-details-marker { display: none; }
+  .gi-page .gi-faq-answer {
+    padding: 0 1.5rem 1.25rem;
+  }
+  .gi-page .gi-faq-answer p {
+    font-size: 0.98rem;
+    color: #475569;
+    line-height: 1.7;
+  }
+
+  /* Enhanced comparison box */
+  .gi-page .gi-comparison-box {
+    background: #f8fafc;
+    border-radius: 16px;
+    padding: 1.75rem;
+    border: 1px solid #e2e8f0;
+  }
+
+  /* Enhanced table styling */
+  .gi-page .gi-table {
+    border-radius: 12px;
+    overflow: hidden;
+  }
+  .gi-page .gi-table th {
+    background: #1a1a5e;
+    color: #fff;
+    font-weight: 700;
+    padding: 0.9rem 1rem;
+  }
+  .gi-page .gi-table td {
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .gi-page .gi-table tbody tr:hover {
+    background: #fef9ef;
+  }
+
+  /* Level links with arrows */
+  .gi-page .gi-level-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.25rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 10px;
+    color: #1a1a5e;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .gi-page .gi-level-link:hover {
+    background: #1a1a5e;
+    color: #fff;
+    border-color: #1a1a5e;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(26,26,94,0.2);
+  }
+
+  /* Enhanced evidence bar */
+  .gi-page .gi-evidence-bar {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    flex-wrap: wrap;
+  }
+  .gi-page .gi-evidence-item {
+    flex: 1;
+    min-width: 100px;
+    text-align: center;
+    padding: 1.25rem;
+    background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8a 100%);
+    border-radius: 14px;
+    color: #fff;
+    transition: transform 0.3s;
+  }
+  .gi-page .gi-evidence-item:hover {
+    transform: translateY(-3px);
+  }
+  .gi-page .gi-evidence-item strong {
+    display: block;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: #D4A843;
+    line-height: 1.1;
+  }
+  .gi-page .gi-evidence-item span {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.7);
+    font-weight: 500;
+  }
+
+  /* Enhanced aggregate rating */
+  .gi-page .gi-aggregate-rating {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.75rem;
+    background: linear-gradient(135deg, #fefce8 0%, #fff 100%);
+    border: 1px solid #fde68a;
+    border-radius: 14px;
+    margin-bottom: 2rem;
+  }
+  .gi-page .gi-big-stars {
+    font-size: 1.5rem;
+    color: #D4A843;
+    letter-spacing: 2px;
+  }
+  .gi-page .gi-big-score {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #1a1a5e;
+  }
+  .gi-page .gi-review-count {
+    font-size: 0.9rem;
+    color: #64748b;
+  }
+
+  /* Enhanced related cards */
+  .gi-page .gi-related-card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  .gi-page .gi-related-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.12);
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .g2-hero { min-height: 70vh; }
+    .g2-hero__stats { gap: 0.75rem; }
+    .g2-stat { min-width: 80px; padding: 0.75rem 1rem; }
+    .g2-stat strong { font-size: 1.2rem; }
+    .g2-hero__cta { flex-direction: column; align-items: center; }
+    .g2-btn { width: 100%; max-width: 320px; justify-content: center; }
+    .g2-form-strip__inner { flex-direction: column; gap: 1.5rem; }
+    .g2-form-strip__form { width: 100%; }
+    .g2-form-strip { border-radius: 16px 16px 0 0; margin-top: -1rem; }
+    .gi-page .gi-section { padding: 1.5rem; border-radius: 14px; }
+    .gi-page .gi-evidence-item { padding: 1rem; }
+    .gi-page .gi-evidence-item strong { font-size: 1.3rem; }
+  }
+</style>
 

@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import { getPillarPage } from '../lib/directus';
+import { getPillarPage, buildFaqSchema } from '../lib/directus';
 
 // Fetch FAQ + meta from Directus CMS (fallback to hardcode if API fails)
 const cmsPage = await getPillarPage('mam-non');
@@ -51,46 +51,16 @@ const structuredData = [
       "cssSelector": [".gi-h1", ".gi-subtitle", ".aio-answer"]
     }
   },
-  {
+  // FAQ schema — dynamic from CMS or fallback
+  cmsFaqs ? buildFaqSchema(cmsFaqs) : {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Trường Mầm Non Việt Anh nhận trẻ từ mấy tuổi?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Trường Mầm Non Việt Anh nhận trẻ từ 18 tháng tuổi. Các lớp được chia theo độ tuổi: Nhà trẻ (18-24 tháng), Mầm (2-3 tuổi), Chồi (3-4 tuổi), Lá (4-5 tuổi), Lá lớn (5-6 tuổi)." }
-      },
-      {
-        "@type": "Question",
-        "name": "Con chưa biết tiếng Anh có theo kịp không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Phương pháp immersion giúp trẻ tiếp thu tiếng Anh tự nhiên như học tiếng mẹ đẻ. 2-3 tháng đầu là giai đoạn thích nghi — trẻ nghe và quan sát. Sau đó trẻ bắt đầu phản hồi và giao tiếp tự nhiên." }
-      },
-      {
-        "@type": "Question",
-        "name": "Trường Mầm Non Việt Anh có xe đưa rước không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Có. Hệ thống xe đưa rước phủ khắp Gò Vấp, Phú Nhuận, Bình Thạnh, Tân Bình và nhiều quận khác tại TP.HCM." }
-      },
-      {
-        "@type": "Question",
-        "name": "Giáo viên mầm non là người bản ngữ hay Việt Nam?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Cả hai. Giáo viên bản ngữ (Anh, Mỹ, Úc) dạy chính trong lớp. Giáo viên Việt Nam hỗ trợ chăm sóc và giao tiếp với phụ huynh." }
-      },
-      {
-        "@type": "Question",
-        "name": "Thời gian học mầm non từ mấy giờ đến mấy giờ?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Thời gian học từ 7:30 đến 16:30 hàng ngày. Có chương trình afterschool kéo dài đến 17:30 cho phụ huynh đón muộn." }
-      },
-      {
-        "@type": "Question",
-        "name": "Trường Mầm Non Việt Anh có chương trình bán trú không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Có. Chương trình bán trú bao gồm ăn trưa dinh dưỡng, ngủ trưa tại trường và snack chiều. Thực đơn được chuyên gia dinh dưỡng thiết kế." }
-      },
-      {
-        "@type": "Question",
-        "name": "So với trường quốc tế, mầm non Việt Anh khác gì?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Chất lượng giáo dục tương đương trường quốc tế (giáo viên bản ngữ, 100% tiếng Anh, chương trình quốc tế) nhưng học phí phù hợp hơn: 5-8 triệu/tháng so với 15-30 triệu ở trường quốc tế." }
-      },
-      { "@type": "Question", "name": "Trẻ nhút nhát hoặc chưa quen môi trường mới thì sao?", "acceptedAnswer": { "@type": "Answer", "text": "Trường có chương trình Tuần Hội Nhập: giáo viên hỗ trợ 1-1, phụ huynh được ở lại cùng con tuần đầu. Mỗi lớp 15-20 trẻ với 2 giáo viên. Sau 1-2 tuần, 95% trẻ hòa nhập tốt." } },
+      { "@type": "Question", "name": "Trường Mầm Non Việt Anh nhận trẻ từ mấy tuổi?", "acceptedAnswer": { "@type": "Answer", "text": "Trường Mầm Non Việt Anh nhận trẻ từ 18 tháng tuổi." } },
+      { "@type": "Question", "name": "Con chưa biết tiếng Anh có theo kịp không?", "acceptedAnswer": { "@type": "Answer", "text": "Phương pháp immersion giúp trẻ tiếp thu tiếng Anh tự nhiên." } },
+      { "@type": "Question", "name": "Trường có xe đưa rước không?", "acceptedAnswer": { "@type": "Answer", "text": "Có. Xe phủ khắp các quận tại TP.HCM." } },
+      { "@type": "Question", "name": "Giáo viên là người bản ngữ hay Việt Nam?", "acceptedAnswer": { "@type": "Answer", "text": "Cả hai. GV bản ngữ dạy chính, GV Việt hỗ trợ." } },
+      { "@type": "Question", "name": "So với trường quốc tế, mầm non Việt Anh khác gì?", "acceptedAnswer": { "@type": "Answer", "text": "Chất lượng tương đương, học phí 5-8 triệu/tháng." } },
       { "@type": "Question", "name": "Trường có xe đưa đón học sinh không?", "acceptedAnswer": { "@type": "Answer", "text": "Có. Xe đạt chuẩn an toàn, có giáo viên phụ trách, GPS theo dõi và bảo hiểm đầy đủ. Phụ huynh nhận thông báo qua app khi con lên/xuống xe." } },
       { "@type": "Question", "name": "Chương trình học mầm non có giúp con chuẩn bị vào lớp 1 không?", "acceptedAnswer": { "@type": "Answer", "text": "Có. Lớp Lá (5-6 tuổi) có chương trình Sẵn sàng vào Lớp 1: chữ cái Việt-Anh, số đếm, kỹ năng viết, rèn tập trung 30-45 phút, kỹ năng xã hội." } }
     ]

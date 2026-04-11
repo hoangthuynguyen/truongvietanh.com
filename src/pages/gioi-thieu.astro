@@ -500,6 +500,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Trường Việt Anh có bao nhiêu cơ sở?</summary>
               <div class="gi-faq-answer">
@@ -542,6 +554,8 @@ const structuredData = [
                 <p>Quý phụ huynh có thể đăng ký trực tuyến ngay tại trang này (form phía trên) hoặc gọi số <a href="tel:0916961409"><strong>0916 961 409</strong></a> để được sắp xếp lịch tham quan. Buổi tham quan hoàn toàn miễn phí và không ràng buộc.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

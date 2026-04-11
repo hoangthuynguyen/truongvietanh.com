@@ -558,6 +558,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất liên quan đến học phí, phí phát sinh, ưu đãi và chính sách thanh toán tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Học phí Trường Việt Anh có tăng hàng năm không?</summary>
               <div class="gi-faq-answer">
@@ -612,6 +624,8 @@ const structuredData = [
                 <p>Trường Việt Anh là trung tâm khảo thí IELTS, nên học sinh được <strong>hỗ trợ phí thi IELTS ưu đãi</strong>. Lệ phí thi theo quy định của IDP/British Council. Ngoài ra, chi phí luyện IELTS chuyên sâu cho lớp 10-12 đã được <strong>tích hợp trong học phí</strong> — phụ huynh không cần cho con đi học thêm IELTS bên ngoài.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

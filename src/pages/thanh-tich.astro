@@ -528,6 +528,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về kết quả đào tạo và thành tích của Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Điểm IELTS trung bình của học sinh Trường Việt Anh là bao nhiêu?</summary>
               <div class="gi-faq-answer">
@@ -582,6 +594,8 @@ const structuredData = [
                 <p><strong>99% học sinh đỗ đại học nguyện vọng 1</strong> trong các kỳ thi gần đây. Trong đó, khoảng 30% nhận học bổng du học tại Úc, Mỹ, Anh, Canada, Nhật Bản và Singapore. Các đại học trong nước phổ biến: ĐH Bách Khoa, ĐH Kinh Tế, ĐH RMIT, ĐH Y Dược. Kết quả này nhờ lộ trình chuẩn bị hồ sơ và luyện thi từ lớp 10.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

@@ -588,6 +588,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về tuyển sinh Trường Việt Anh năm học 2026-2027.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Trường Việt Anh tuyển sinh những cấp học nào?</summary>
               <div class="gi-faq-answer">
@@ -648,6 +660,8 @@ const structuredData = [
                 <p><strong>Hoàn toàn được.</strong> Trường Việt Anh nhận chuyển trường ở tất cả các cấp học trong suốt năm học. Con sẽ được kiểm tra trình độ để xếp lớp phù hợp. Đối với học sinh chưa có nền tảng tiếng Anh, trường có chương trình bổ trợ đặc biệt 4-8 tuần giúp con hòa nhập nhanh chóng. Phụ huynh liên hệ Phòng Tuyển sinh để được tư vấn cụ thể.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

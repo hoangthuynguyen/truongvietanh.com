@@ -544,6 +544,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về chương trình THCS tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Chương trình chuyển cấp lớp 6 tại Trường Việt Anh như thế nào?</summary>
               <div class="gi-faq-answer">
@@ -598,6 +610,8 @@ const structuredData = [
                 <p>Khoảng <strong>85% học sinh THCS</strong> tiếp tục lên THPT tại Trường Việt Anh — tận dụng lợi thế liên cấp. Số còn lại chuyển sang trường chuyên (Lê Hồng Phong, Trần Đại Nghĩa) hoặc trường quốc tế. Nhờ nền tảng tiếng Anh B1-B2 và kỹ năng toàn diện, học sinh Việt Anh luôn có lợi thế cạnh tranh khi chuyển cấp.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
         <img src="https://media.truongvietanh.com/images/the-thao-04.webp" alt="Thể thao THCS Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />

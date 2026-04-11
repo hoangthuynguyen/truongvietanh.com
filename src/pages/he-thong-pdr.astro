@@ -524,6 +524,18 @@ const structuredData = [
           <p>Tổng hợp những thắc mắc phổ biến nhất từ phụ huynh khi tìm hiểu về phương pháp PDR tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>PDR là viết tắt của gì?</summary>
               <div class="gi-faq-answer">
@@ -578,6 +590,8 @@ const structuredData = [
                 <p><strong>Hoàn toàn có thể.</strong> Trường khuyến khích phụ huynh áp dụng 3 nguyên tắc PDR tại nhà: (1) Cho con thời gian tự do khám phá thay vì kiểm soát mọi hoạt động, (2) Đặt câu hỏi mở thay vì đưa đáp án có sẵn, (3) Cuối ngày hỏi con "Hôm nay con học được gì?" để rèn phản tư. Trường cũng tổ chức workshop PDR cho phụ huynh mỗi quý.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

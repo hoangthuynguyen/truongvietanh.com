@@ -175,3 +175,30 @@ export async function getAllPillarSlugs(): Promise<string[]> {
     return [];
   }
 }
+
+// ===================== SITE SETTINGS =====================
+
+export type SiteSettings = {
+  school_name: string;
+  hotline: string;
+  email: string;
+  zalo_url: string;
+  facebook_url: string;
+  youtube_url: string;
+  instagram_url: string;
+  announcement_text: string;
+  announcement_link: string;
+  announcement_active: boolean;
+};
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  try {
+    const client = getPillarClient();
+    const items = await client.request(
+      readItems('site_settings' as any, { limit: 1 })
+    );
+    return (items as any[])[0] || null;
+  } catch {
+    return null;
+  }
+}

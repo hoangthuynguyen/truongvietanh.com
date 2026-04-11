@@ -515,6 +515,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất về chương trình ngoại khóa tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Trường Việt Anh có bao nhiêu CLB ngoại khóa?</summary>
               <div class="gi-faq-answer">
@@ -569,6 +581,8 @@ const structuredData = [
                 <p>Phần lớn hoạt động ngoại khóa <strong>đã bao gồm trong học phí</strong>: thể thao cơ bản, thư viện, CLB sinh hoạt, dã ngoại. Một số CLB chuyên sâu có giáo viên/huấn luyện viên chuyên nghiệp sẽ có phí bổ sung hợp lý (200-500k/tháng). Phụ huynh sẽ được thông báo rõ trước khi đăng ký.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

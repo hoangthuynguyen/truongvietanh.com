@@ -592,6 +592,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về chương trình tiểu học tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Mỗi lớp tiểu học có bao nhiêu học sinh?</summary>
               <div class="gi-faq-answer">
@@ -652,6 +664,8 @@ const structuredData = [
                 <p><strong>Hoàn toàn được.</strong> Trường Việt Anh nhận chuyển trường ở tất cả các lớp 1-5. Con sẽ được kiểm tra đầu vào Toán và Tiếng Anh để xếp lớp phù hợp. Trường có chương trình hỗ trợ bổ trợ tiếng Anh 4-8 tuần cho học sinh chưa có nền tảng, giúp con hòa nhập nhanh chóng.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

@@ -464,6 +464,18 @@ const structuredData = [
           <p>Tổng hợp những thắc mắc phổ biến nhất mà phụ huynh thường hỏi khi tìm hiểu hoặc đang gửi con tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Phụ huynh theo dõi kết quả học tập của con bằng cách nào?</summary>
               <div class="gi-faq-answer">
@@ -512,6 +524,8 @@ const structuredData = [
                 <p>Trường có đội ngũ tư vấn tâm lý học đường hỗ trợ cá nhân. Khi con gặp khó khăn, giáo viên chủ nhiệm sẽ <strong>họp riêng 1-1 với phụ huynh</strong> để phân tích nguyên nhân và đề xuất phương án: bổ trợ kiến thức (miễn phí), điều chỉnh lịch ngoại khóa, hoặc kết nối chuyên gia tâm lý. 100% trường hợp được phản hồi trong 48 giờ.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

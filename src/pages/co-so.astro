@@ -526,6 +526,18 @@ const structuredData = [
           <p>Những câu hỏi phụ huynh thường đặt ra khi tìm hiểu về cơ sở vật chất và hệ thống trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Các cơ sở Trường Việt Anh có bãi đỗ xe cho phụ huynh không?</summary>
               <div class="gi-faq-answer">
@@ -568,6 +580,8 @@ const structuredData = [
                 <p><strong>An toàn là ưu tiên hàng đầu.</strong> Mọi cơ sở đều có: hệ thống camera giám sát 24/7, bảo vệ chuyên nghiệp, cổng ra vào kiểm soát bằng thẻ, sàn chống trượt, góc bo tròn cho khu mầm non, hệ thống phòng cháy chữa cháy đạt chuẩn, và y tế trường trực full-time. Phụ huynh hoàn toàn yên tâm khi gửi con.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

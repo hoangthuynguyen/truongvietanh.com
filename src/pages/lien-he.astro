@@ -348,6 +348,18 @@ const structuredData = [
           <img src="https://media.truongvietanh.com/images/giao-vien-30.webp" alt="Đội ngũ tư vấn tuyển sinh Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Liên hệ Trường Việt Anh qua kênh nào nhanh nhất?</summary>
               <div class="gi-faq-answer">
@@ -390,6 +402,8 @@ const structuredData = [
                 <p><strong>Có.</strong> Phòng Tuyển sinh hỗ trợ phụ huynh toàn bộ thủ tục chuyển trường: (1) Tư vấn hồ sơ cần chuẩn bị, (2) Kiểm tra đầu vào để xếp lớp phù hợp, (3) Hỗ trợ liên hệ trường cũ để lấy học bạ. Toàn bộ quy trình mất 5-7 ngày làm việc. Phụ huynh gọi <a href="tel:0916961409"><strong>0916 961 409</strong></a> để bắt đầu.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

@@ -513,6 +513,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh và học sinh thường hỏi nhất khi tìm hiểu về chương trình THPT tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Học sinh THPT Việt Anh tốt nghiệp đạt IELTS mấy điểm?</summary>
               <div class="gi-faq-answer">
@@ -567,6 +579,8 @@ const structuredData = [
                 <p><strong>Có.</strong> Học sinh THPT Việt Anh được chuẩn bị kỹ cho cả 2 hướng: (1) <strong>Thi tốt nghiệp THPT quốc gia</strong> — ôn luyện chuyên sâu các môn thi từ lớp 11, mô phỏng đề thi thật. (2) <strong>Xét tuyển đại học</strong> — chuẩn bị hồ sơ SAT/IELTS cho du học hoặc xét tuyển ĐH trong nước. Kết quả: 99% đỗ tốt nghiệp, 99% đỗ ĐH nguyện vọng 1.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
         <img src="https://media.truongvietanh.com/images/olympic-06.webp" alt="Thành tích THPT Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />

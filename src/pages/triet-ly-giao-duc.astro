@@ -514,6 +514,18 @@ const structuredData = [
           <p>Tổng hợp những câu hỏi phụ huynh hay thắc mắc khi tìm hiểu về triết lý và phương pháp giáo dục tại Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Triết lý giáo dục toàn diện cụ thể là gì?</summary>
               <div class="gi-faq-answer">
@@ -568,6 +580,8 @@ const structuredData = [
                 <p>Trường Việt Anh coi phụ huynh là <strong>đối tác giáo dục</strong>. Mỗi học kỳ, phụ huynh tham gia: họp phụ huynh 1-1 với giáo viên chủ nhiệm, workshop nuôi dạy con (Leader in Me cho phụ huynh), Open Day tham quan lớp, và nhận báo cáo học tập chi tiết hàng tháng. Trường cũng có Hội Phụ Huynh hoạt động tích cực, cùng tổ chức sự kiện và đóng góp ý kiến cải tiến.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

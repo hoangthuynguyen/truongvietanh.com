@@ -396,6 +396,18 @@ const structuredData = [
           <p>Tổng hợp những thắc mắc phổ biến nhất khi phụ huynh tìm hiểu về hệ thống cấp học Trường Việt Anh.</p>
 
           <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
             <details class="gi-faq-item" open>
               <summary>Trường Việt Anh có những cấp học nào?</summary>
               <div class="gi-faq-answer">
@@ -450,6 +462,8 @@ const structuredData = [
                 <p><strong>Mầm Non:</strong> 15-20 trẻ/lớp (2 giáo viên + 1 trợ giảng). <strong>Tiểu Học:</strong> 25-30 học sinh/lớp. <strong>THCS:</strong> 30-35 học sinh/lớp. <strong>THPT:</strong> 30-35 học sinh/lớp. Tỷ lệ giáo viên/học sinh thấp đảm bảo mỗi em được quan tâm cá nhân, đặc biệt trong các hoạt động nhóm và dự án.</p>
               </div>
             </details>
+              </>
+            )}
           </div>
         </section>
       </article>

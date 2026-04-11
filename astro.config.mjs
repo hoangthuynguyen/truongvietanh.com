@@ -11,6 +11,7 @@ export default defineConfig({
         !page.includes('/mau/') &&
         !page.includes('/samples/') &&
         !page.includes('/mau-cms-') &&
+        !page.includes('/admin') &&
         !page.includes('/cam-on/'),
     }),
   ],

@@ -5,68 +5,76 @@ import FooterBase from '../components/FooterBase.astro';
 
 const templates = [
   {
-    name: 'Pillar Pages (gi-page)',
-    file: 'src/styles/global.css → class .gi-*',
+    name: '1. Pillar Pages',
+    file: 'src/styles/global.css (.gi-*) + src/layouts/BaseLayout.astro',
     count: 15,
     sample: '/mam-non',
-    description: 'Trang chương trình chính: hero + form, TOC, sections nội dung, FAQ, CTA bottom, author bio. Dùng cho tất cả trang giới thiệu chương trình.',
+    cms: 'pillar_pages (15 records)',
+    description: 'Trang chương trình chính. Blocks: Hero + Form, TOC, Sections (WYSIWYG), FAQ (WYSIWYG), PAA cross-links, Bottom CTA, Author Bio, Next Steps.',
     pages: ['gioi-thieu', 'mam-non', 'tieu-hoc', 'trung-hoc-co-so', 'trung-hoc-pho-thong', 'co-so', 'hoc-phi', 'tuyen-sinh', 'triet-ly-giao-duc', 'he-thong-pdr', 'ngoai-khoa', 'thanh-tich', 'phu-huynh', 'lien-he', 'cap-hoc'],
   },
   {
-    name: 'Squeeze Pages',
+    name: '2. Squeeze Pages',
     file: 'src/layouts/SqueezePageLayout.astro',
     count: 24,
     sample: '/tuyen-sinh/mam-non/gioi-thieu',
-    description: 'Trang lead capture: hero ngắn, USP grid, trust metrics, form nổi bật, FAQ ngắn. Tối ưu cho conversion, mobile-first.',
-    pages: ['tuyen-sinh/mam-non/*', 'tuyen-sinh/tieu-hoc/*', 'tuyen-sinh/thcs/*', 'tuyen-sinh/thpt/*'],
+    cms: 'squeeze_pages (19 records)',
+    description: 'Trang lead capture / funnel tuyển sinh. Blocks: Hero headline, USP Grid, Trust Metrics, 2-Step Lead Form, Content, FAQ, Sticky CTA mobile.',
+    pages: ['tuyen-sinh/mam-non/*', 'tuyen-sinh/tieu-hoc/*', 'tuyen-sinh/thcs/*', 'tuyen-sinh/thpt/*', 'squeeze/*'],
   },
   {
-    name: 'Lop-6 A/B Test',
-    file: 'src/pages/tuyen-sinh/thcs/lop-6/checklist-a.astro',
+    name: '3. Lop-6 A/B Squeeze',
+    file: 'src/pages/tuyen-sinh/thcs/lop-6/checklist-a.astro (inline)',
     count: 10,
     sample: '/tuyen-sinh/thcs/lop-6/checklist-a',
-    description: 'Squeeze pages inline HTML cho A/B testing lớp 6 THCS. 5 loại x 2 variants (A/B): checklist, early-bird, pain-point, school-tour, webinar.',
+    cms: 'squeeze_pages (10 records, tag lop-6)',
+    description: 'Squeeze inline HTML cho A/B testing THCS lớp 6. 5 loại × 2 variants: checklist, early-bird, pain-point, school-tour, webinar.',
     pages: ['checklist-a/b', 'early-bird-a/b', 'pain-point-a/b', 'school-tour-a/b', 'webinar-a/b'],
   },
   {
-    name: 'Thank You (Cam-On)',
-    file: 'src/pages/tuyen-sinh/thcs/checklist/cam-on/index.astro',
+    name: '4. Thank You (Cam-On)',
+    file: 'src/pages/tuyen-sinh/thcs/checklist/cam-on/index.astro (inline)',
     count: 26,
     sample: '/tuyen-sinh/thcs/checklist/cam-on',
-    description: 'Trang cảm ơn sau đăng ký: icon, countdown timer, Zalo/phone CTA, next step links. Compact, conversion-focused.',
-    pages: ['*/cam-on/ across all levels'],
+    cms: '(chưa có — standalone HTML)',
+    description: 'Trang cảm ơn sau đăng ký. Blocks: Logo, Icon, Thank you message, Countdown timer, Zalo/Phone CTA, Next Step links. Compact.',
+    pages: ['*/cam-on/ across mam-non, tieu-hoc, thcs, thpt'],
   },
   {
-    name: 'Blog Post',
-    file: 'src/pages/blog/[slug].astro',
+    name: '5. Blog Post',
+    file: 'src/pages/blog/[slug].astro (inline CSS)',
     count: 1203,
-    sample: '/tin-tuc',
-    description: 'Template blog: breadcrumb, article header, reading progress bar, auto TOC, share buttons, related posts, author bio, CTA form.',
-    pages: ['1203 bài từ Directus CMS'],
+    sample: '/blog/gia-tri-cot-loi',
+    cms: 'posts (1203 records)',
+    description: 'Template blog. Blocks: Reading Progress Bar, Breadcrumb, Header (title + date + read time), Share Buttons, Auto TOC, Content (WYSIWYG), Author Bio, Related Posts, CTA Form.',
+    pages: ['1203 bài từ Directus CMS — content team viết/sửa qua admin'],
   },
   {
-    name: 'Homepage',
-    file: 'src/pages/index.astro',
+    name: '6. Homepage',
+    file: 'src/pages/index.astro + src/styles/global.css (wp-*, section-block)',
     count: 1,
     sample: '/',
-    description: 'Trang chủ: dark hero, AIO answer, stats, "Tại sao chọn VA", chương trình, cơ sở, testimonials, blog, FAQ, form.',
+    cms: 'testimonials + campuses (data blocks)',
+    description: 'Trang chủ. Blocks: Dark Hero, AIO Answer, Stats (animated), "Tại sao chọn VA" (3 blocks), Chương trình (10 cards), Cơ sở (3 cities), Testimonials, Blog, FAQ, PAA, Form.',
     pages: ['/'],
   },
   {
-    name: 'Custom Static',
+    name: '7. Sales Pages',
     file: 'Mỗi trang có <style> riêng',
     count: 5,
     sample: '/so-sanh',
-    description: 'Trang đặc biệt với layout riêng: tin-tuc (blog listing), hinh-anh (gallery), so-sanh (bảng so sánh), su-kien (events), hoc-bong (scholarships).',
-    pages: ['tin-tuc', 'hinh-anh', 'so-sanh', 'su-kien', 'hoc-bong'],
+    cms: 'sales_pages (5 records)',
+    description: 'Trang đặc biệt với layout riêng. Gồm: so-sanh (bảng so sánh), su-kien (events listing), hoc-bong (scholarships cards), hinh-anh (gallery), tin-tuc (blog listing + filter).',
+    pages: ['so-sanh', 'su-kien', 'hoc-bong', 'hinh-anh', 'tin-tuc'],
   },
   {
-    name: 'Public HTML',
-    file: 'public/tuyen-sinh/*/index.html',
+    name: '8. Public HTML',
+    file: 'public/tuyen-sinh/*/index.html (inline CSS)',
     count: 21,
     sample: '/tuyen-sinh/thcs/chuong-trinh-hoc',
-    description: 'Trang HTML tĩnh trong public/ folder — serve trực tiếp, không qua Astro build. Funnel pages cũ.',
-    pages: ['tuyen-sinh/*/chuong-trinh-hoc, hoc-phi, phu-huynh-noi-gi, xac-nhan-tour, cam-on'],
+    cms: '(chưa có — static HTML files)',
+    description: 'Trang HTML tĩnh serve trực tiếp. Funnel pages cũ: chuong-trinh-hoc, hoc-phi, phu-huynh-noi-gi, xac-nhan-tour, cam-on cho mỗi cấp học.',
+    pages: ['tuyen-sinh/*/chuong-trinh-hoc', 'hoc-phi', 'phu-huynh-noi-gi', 'xac-nhan-tour', 'cam-on'],
   },
 ];
 ---
@@ -101,6 +109,9 @@ const templates = [
               <p class="template-desc">{t.description}</p>
               <div class="template-file">
                 <strong>File cần sửa:</strong> <code>{t.file}</code>
+              </div>
+              <div class="template-cms">
+                <strong>CMS collection:</strong> <span>{t.cms}</span>
               </div>
               <div class="template-pages">
                 <strong>Trang áp dụng:</strong>
@@ -137,6 +148,8 @@ const templates = [
   .template-desc { font-size: 0.88rem; color: #475569; line-height: 1.6; margin: 0; }
   .template-file { font-size: 0.82rem; color: #64748b; }
   .template-file code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.78rem; word-break: break-all; }
+  .template-cms { font-size: 0.82rem; color: #2563eb; font-weight: 500; }
+  .template-cms span { background: #eff6ff; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.78rem; }
   .template-pages { font-size: 0.82rem; color: #64748b; }
   .template-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
   .template-tag { padding: 0.15rem 0.5rem; background: #f1f5f9; border-radius: 4px; font-size: 0.75rem; color: #475569; }

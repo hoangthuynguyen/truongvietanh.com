@@ -10,9 +10,6 @@ export default defineConfig({
         !page.includes('/mau-template/') &&
         !page.includes('/mau/') &&
         !page.includes('/samples/') &&
-        !page.includes('/homepage1') &&
-        !page.includes('/homepage2') &&
-        !page.includes('/gioi-thieu2') &&
         !page.includes('/mau-cms-') &&
         !page.includes('/cam-on/'),
     }),

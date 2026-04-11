@@ -56,14 +56,15 @@ export async function getStaticPaths() {
 
 const { post, allPosts } = Astro.props as { post: Post; allPosts: Post[] };
 
-// Pick 3 random related posts (exclude current)
+// Smart related posts — match by title keywords instead of random
 const otherPosts = allPosts.filter((p: Post) => p.slug !== post.slug);
-const relatedPosts: Post[] = [];
-const pool = [...otherPosts];
-for (let i = 0; i < 3 && pool.length > 0; i++) {
-  const idx = Math.floor(Math.random() * pool.length);
-  relatedPosts.push(pool.splice(idx, 1)[0]);
-}
+const titleWords = post.title.toLowerCase().split(/[\s,–—:]+/).filter(w => w.length > 3);
+const scored = otherPosts.map(p => {
+  const pTitle = p.title.toLowerCase();
+  const score = titleWords.reduce((s, w) => s + (pTitle.includes(w) ? 1 : 0), 0);
+  return { post: p, score };
+}).sort((a, b) => b.score - a.score);
+const relatedPosts = scored.slice(0, 3).map(s => s.post);
 
 function formatDate(dateStr?: string | null): string {
   if (!dateStr) return '';

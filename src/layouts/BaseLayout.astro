@@ -83,6 +83,18 @@ const schemaPayload = structuredData
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Announcement Bar -->
+    <div class="announcement-bar" id="announcementBar">
+      <div class="announcement-bar__inner">
+        <span class="announcement-bar__text">
+          Tuyển sinh 2026–2027 đang mở — Ưu đãi Early Bird giảm đến 15% học phí.
+          <a href="/tuyen-sinh" class="announcement-bar__link">Đăng ký ngay</a>
+        </span>
+        <button class="announcement-bar__close" id="closeAnnouncement" aria-label="Đóng thông báo">&times;</button>
+      </div>
+    </div>
+
     <main>
       <slot />
     </main>
@@ -141,6 +153,14 @@ const schemaPayload = structuredData
           }
         });
       });
+
+      /* === Announcement bar dismiss === */
+      var annBar = document.getElementById('announcementBar');
+      var closeAnn = document.getElementById('closeAnnouncement');
+      if(annBar && closeAnn){
+        if(sessionStorage.getItem('ann_closed')){annBar.style.display='none';}
+        closeAnn.addEventListener('click',function(){annBar.style.display='none';sessionStorage.setItem('ann_closed','1');});
+      }
 
       /* === Back to top === */
       var btt = document.querySelector('.back-to-top');
@@ -234,6 +254,30 @@ const schemaPayload = structuredData
       details[open].faq-item summary {
         color: #2563eb;
       }
+
+      /* === Announcement bar === */
+      .announcement-bar {
+        background: linear-gradient(90deg, #1a1a5e, #2563eb);
+        color: #fff; text-align: center;
+        padding: 0.55rem 1rem; font-size: 0.88rem;
+        position: relative; z-index: 101;
+      }
+      .announcement-bar__inner {
+        max-width: 1200px; margin: 0 auto;
+        display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      }
+      .announcement-bar__text { line-height: 1.4; }
+      .announcement-bar__link {
+        color: #fde047; font-weight: 700; text-decoration: underline;
+        text-underline-offset: 2px; white-space: nowrap;
+      }
+      .announcement-bar__close {
+        background: none; border: none; color: rgba(255,255,255,0.6);
+        font-size: 1.3rem; cursor: pointer; padding: 0 0.25rem; line-height: 1;
+        transition: color 0.2s; position: absolute; right: 1rem;
+      }
+      .announcement-bar__close:hover { color: #fff; }
+      @media(max-width:600px){ .announcement-bar { font-size: 0.82rem; padding: 0.5rem 2.5rem 0.5rem 0.75rem; } }
 
       /* === Zalo floating widget === */
       .zalo-float {

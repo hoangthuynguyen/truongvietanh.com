@@ -140,6 +140,7 @@ const structuredData = [
       <nav class="gi-toc" aria-label="Mục lục">
         <p class="gi-toc-title">Mục lục</p>
         <ol class="gi-toc-list">
+          <li><a href="#tinh-hoc-phi">Tính học phí ước lượng</a></li>
           <li><a href="#bang-phi">Bảng học phí theo cấp</a></li>
           <li><a href="#bao-gom">Học phí bao gồm gì</a></li>
           <li><a href="#so-sanh">So sánh với trường khác</a></li>
@@ -153,6 +154,65 @@ const structuredData = [
 
       <!-- Main content -->
       <article class="gi-main">
+
+        <!-- Tuition Calculator -->
+        <section id="tinh-hoc-phi" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg></span>Tính Học Phí Ước Lượng</h2>
+          <p>Chọn cấp học và ưu đãi để xem mức học phí ước tính hàng tháng. Đây là mức tham khảo — liên hệ tư vấn để nhận bảng phí chi tiết theo cơ sở.</p>
+
+          <div class="calc-box" id="calcBox">
+            <div class="calc-row">
+              <label class="calc-label">Cấp học</label>
+              <select id="calcLevel" class="calc-select">
+                <option value="0">— Chọn cấp học —</option>
+                <option value="5000000">Mầm Non (18 tháng – 3 tuổi)</option>
+                <option value="6000000">Mầm Non (3 – 6 tuổi)</option>
+                <option value="7000000">Tiểu Học (Lớp 1-5)</option>
+                <option value="9000000">THCS (Lớp 6-9)</option>
+                <option value="11000000">THPT (Lớp 10-12)</option>
+              </select>
+            </div>
+            <div class="calc-row">
+              <label class="calc-label">Ưu đãi</label>
+              <div class="calc-checks">
+                <label class="calc-check"><input type="checkbox" id="calcEarly" /> Early Bird (giảm 15%)</label>
+                <label class="calc-check"><input type="checkbox" id="calcSibling" /> Anh/chị em (giảm 10%)</label>
+              </div>
+            </div>
+            <div class="calc-result" id="calcResult">
+              <span class="calc-result__label">Học phí ước tính/tháng:</span>
+              <span class="calc-result__value" id="calcValue">—</span>
+              <span class="calc-result__note" id="calcNote"></span>
+            </div>
+          </div>
+          <p style="font-size:0.85rem;color:#94a3b8;margin-top:0.75rem;">* Mức phí ước lượng. Liên hệ <a href="tel:0916961409" style="color:#D4A843">0916 961 409</a> để nhận bảng phí chính xác theo cơ sở.</p>
+        </section>
+
+        <script is:inline>
+        (function(){
+          var level=document.getElementById('calcLevel');
+          var early=document.getElementById('calcEarly');
+          var sibling=document.getElementById('calcSibling');
+          var val=document.getElementById('calcValue');
+          var note=document.getElementById('calcNote');
+          function calc(){
+            var base=parseInt(level.value);
+            if(!base){val.textContent='—';note.textContent='';return;}
+            var disc=0;var labels=[];
+            if(early.checked){disc+=0.15;labels.push('Early Bird -15%');}
+            if(sibling.checked){disc+=0.10;labels.push('Anh/chị em -10%');}
+            var final=Math.round(base*(1-disc));
+            val.textContent=final.toLocaleString('vi-VN')+'đ';
+            if(disc>0){
+              var saved=base-final;
+              note.textContent='Tiết kiệm '+saved.toLocaleString('vi-VN')+'đ/tháng ('+labels.join(' + ')+')';
+            } else {note.textContent='';}
+          }
+          level.addEventListener('change',calc);
+          early.addEventListener('change',calc);
+          sibling.addEventListener('change',calc);
+        })();
+        </script>
 
         <!-- Section 1: Bảng học phí -->
         <section id="bang-phi" class="gi-section">

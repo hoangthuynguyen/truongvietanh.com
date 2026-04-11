@@ -128,6 +128,16 @@ type PillarSchema = {
   pillar_pages: PillarPage[];
 };
 
+// Build-time cache to avoid duplicate API calls
+const _cache = new Map<string, { data: any; ts: number }>();
+const CACHE_TTL = 60_000; // 60s cache during build
+
+function cached<T>(key: string, fn: () => Promise<T>): Promise<T> {
+  const hit = _cache.get(key);
+  if (hit && Date.now() - hit.ts < CACHE_TTL) return Promise.resolve(hit.data as T);
+  return fn().then(data => { _cache.set(key, { data, ts: Date.now() }); return data; });
+}
+
 function getPillarClient() {
   const url = getDirectusUrl() || 'http://45.88.188.169:8055';
   const token = getServerToken();
@@ -140,6 +150,7 @@ function getPillarClient() {
  * Fetch a single pillar page by slug
  */
 export async function getPillarPage(slug: string): Promise<PillarPage | null> {
+  return cached(`pillar:${slug}`, async () => {
   try {
     const client = getPillarClient();
     const items = await client.request(
@@ -153,6 +164,7 @@ export async function getPillarPage(slug: string): Promise<PillarPage | null> {
     console.error(`[Directus] Failed to fetch pillar page "${slug}":`, e instanceof Error ? e.message : e);
     return null;
   }
+  });
 }
 
 /**
@@ -217,14 +229,14 @@ export type Testimonial = {
 };
 
 export async function getTestimonials(pageSlug?: string): Promise<Testimonial[]> {
-  try {
-    const client = getPillarClient();
-    const filter: any = { status: { _eq: 'published' } };
-    if (pageSlug) filter.page_slug = { _eq: pageSlug };
-    return await client.request(readItems('testimonials' as any, {
-      filter, sort: ['sort'], limit: 20,
-    })) as Testimonial[];
-  } catch { return []; }
+  return cached(`testimonials:${pageSlug || 'all'}`, async () => {
+    try {
+      const client = getPillarClient();
+      const filter: any = { status: { _eq: 'published' } };
+      if (pageSlug) filter.page_slug = { _eq: pageSlug };
+      return await client.request(readItems('testimonials' as any, { filter, sort: ['sort'], limit: 20 })) as Testimonial[];
+    } catch { return []; }
+  });
 }
 
 // ===================== CAMPUSES =====================
@@ -241,12 +253,12 @@ export type Campus = {
 };
 
 export async function getCampuses(): Promise<Campus[]> {
-  try {
-    const client = getPillarClient();
-    return await client.request(readItems('campuses' as any, {
-      filter: { status: { _eq: 'published' } }, sort: ['sort'], limit: 20,
-    })) as Campus[];
-  } catch { return []; }
+  return cached('campuses', async () => {
+    try {
+      const client = getPillarClient();
+      return await client.request(readItems('campuses' as any, { filter: { status: { _eq: 'published' } }, sort: ['sort'], limit: 20 })) as Campus[];
+    } catch { return []; }
+  });
 }
 
 // ===================== GALLERY CATEGORIES =====================
@@ -261,12 +273,12 @@ export type GalleryCategory = {
 };
 
 export async function getGalleryCategories(): Promise<GalleryCategory[]> {
-  try {
-    const client = getPillarClient();
-    return await client.request(readItems('gallery_categories' as any, {
-      filter: { status: { _eq: 'published' } }, sort: ['sort'], limit: 20,
-    })) as GalleryCategory[];
-  } catch { return []; }
+  return cached('gallery', async () => {
+    try {
+      const client = getPillarClient();
+      return await client.request(readItems('gallery_categories' as any, { filter: { status: { _eq: 'published' } }, sort: ['sort'], limit: 20 })) as GalleryCategory[];
+    } catch { return []; }
+  });
 }
 
 // ===================== NAV ITEMS =====================
@@ -279,22 +291,20 @@ export type NavItem = {
 };
 
 export async function getNavItems(): Promise<NavItem[]> {
-  try {
-    const client = getPillarClient();
-    return await client.request(readItems('nav_items' as any, {
-      sort: ['sort'], limit: 30,
-    })) as NavItem[];
-  } catch { return []; }
+  return cached('nav', async () => {
+    try {
+      const client = getPillarClient();
+      return await client.request(readItems('nav_items' as any, { sort: ['sort'], limit: 30 })) as NavItem[];
+    } catch { return []; }
+  });
 }
 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
-  try {
-    const client = getPillarClient();
-    const items = await client.request(
-      readItems('site_settings' as any, { limit: 1 })
-    );
-    return (items as any[])[0] || null;
-  } catch {
-    return null;
-  }
+  return cached('settings', async () => {
+    try {
+      const client = getPillarClient();
+      const items = await client.request(readItems('site_settings' as any, { limit: 1 }));
+      return (items as any[])[0] || null;
+    } catch { return null; }
+  });
 }

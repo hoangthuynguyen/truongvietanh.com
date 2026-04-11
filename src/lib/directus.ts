@@ -91,3 +91,87 @@ export async function getHomepageState(): Promise<HomepageState> {
     };
   }
 }
+
+// ===================== PILLAR PAGES (CMS) =====================
+
+export type PillarPage = {
+  id: number;
+  slug: string;
+  status: string;
+  title: string;
+  description: string;
+  canonical_url: string;
+  og_image: string;
+  noindex: boolean;
+  h1: string;
+  subtitle: string;
+  last_updated: string;
+  trust_badges: Array<{ value: string; label: string }>;
+  breadcrumb: Array<{ label: string; href?: string }>;
+  form_heading: string;
+  form_id: string;
+  funnel_code: string;
+  school_level: string;
+  toc_items: Array<{ label: string; href: string }>;
+  sections: Array<{ id: number; title: string; html?: string }>;
+  faq_items: Array<{ question: string; answer: string }>;
+  cta_title: string;
+  cta_text: string;
+  cta_image: string;
+  cta_benefits: string[];
+  related_topics: Array<{ title: string; desc: string; href: string }>;
+  next_steps: Array<{ label: string; href: string; class?: string }>;
+  structured_data: Record<string, unknown>[] | null;
+};
+
+type PillarSchema = {
+  pillar_pages: PillarPage[];
+};
+
+function getPillarClient() {
+  const url = getDirectusUrl() || 'http://45.88.188.169:8055';
+  const token = getServerToken();
+  return token
+    ? createDirectus<PillarSchema>(url).with(staticToken(token)).with(rest())
+    : createDirectus<PillarSchema>(url).with(rest());
+}
+
+/**
+ * Fetch a single pillar page by slug
+ */
+export async function getPillarPage(slug: string): Promise<PillarPage | null> {
+  try {
+    const client = getPillarClient();
+    const items = await client.request(
+      readItems('pillar_pages', {
+        filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
+        limit: 1,
+      })
+    );
+    return (items as PillarPage[])[0] || null;
+  } catch (e) {
+    console.error(`[Directus] Failed to fetch pillar page "${slug}":`, e instanceof Error ? e.message : e);
+    return null;
+  }
+}
+
+/**
+ * Fetch all published pillar page slugs (for getStaticPaths)
+ */
+export async function getAllPillarSlugs(): Promise<string[]> {
+  try {
+    const client = getPillarClient();
+    const items = await client.request(
+      readItems('pillar_pages', {
+        filter: { status: { _eq: 'published' } },
+        fields: ['slug'],
+        sort: ['sort'],
+        limit: 50,
+      })
+    );
+    return (items as PillarPage[]).map(p => p.slug);
+  } catch (e) {
+    console.error('[Directus] Failed to fetch pillar slugs:', e instanceof Error ? e.message : e);
+    return [];
+  }
+}

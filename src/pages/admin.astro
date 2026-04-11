@@ -1,4 +1,5 @@
 ---
-// Redirect to Directus admin via HTTPS proxy
-return Astro.redirect('/cms/admin', 302);
+// Redirect to Directus CMS admin
+// Note: Cần bật Cloudflare Proxy + Origin Rules cho cms.truongvietanh.com để có HTTPS
+return Astro.redirect('http://cms.truongvietanh.com:8055/admin', 302);
 ---

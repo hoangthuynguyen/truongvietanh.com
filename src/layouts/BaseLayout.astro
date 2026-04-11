@@ -203,6 +203,21 @@ const schemaPayload = structuredData
         });
       });
 
+      /* === Web Vitals tracking → GTM === */
+      if('PerformanceObserver' in window){
+        try{
+          new PerformanceObserver(function(l){l.getEntries().forEach(function(e){
+            if(window.dataLayer) window.dataLayer.push({event:'web_vital',metric_name:e.name,metric_value:Math.round(e.name==='CLS'?e.value*1000:e.value),metric_rating:e.rating||'unknown'});
+          })}).observe({type:'largest-contentful-paint',buffered:true});
+          new PerformanceObserver(function(l){l.getEntries().forEach(function(e){
+            if(window.dataLayer) window.dataLayer.push({event:'web_vital',metric_name:'FID',metric_value:Math.round(e.processingStart-e.startTime)});
+          })}).observe({type:'first-input',buffered:true});
+          new PerformanceObserver(function(l){l.getEntries().forEach(function(e){
+            if(!e.hadRecentInput&&window.dataLayer) window.dataLayer.push({event:'web_vital',metric_name:'CLS',metric_value:Math.round(e.value*1000)});
+          })}).observe({type:'layout-shift',buffered:true});
+        }catch(e){}
+      }
+
       /* === Dark mode === */
       var dt = document.getElementById('darkToggle');
       if(dt){

@@ -49,6 +49,9 @@ function isChildActive(item: NavItem, path: string): boolean {
       </a>
     </div>
     <div class="wp-top-bar__right">
+      <button aria-label="Tìm kiếm" class="search-btn" style="background:none;border:none;color:#fff;cursor:pointer;display:flex;align-items:center;padding:0.3rem">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      </button>
       <a href="/tuyen-sinh" class="wp-top-bar__cta">Tư vấn tuyển sinh</a>
     </div>
   </div>
@@ -167,4 +170,93 @@ function isChildActive(item: NavItem, path: string): boolean {
       }
     });
   }
+
+  // Search modal (same as HeaderBase)
+  const searchPages = [
+    { title: 'Trang Chủ', url: '/', desc: 'Hệ thống giáo dục liên cấp song ngữ từ Mầm Non đến THPT' },
+    { title: 'Giới Thiệu', url: '/gioi-thieu', desc: 'Sứ mệnh, tầm nhìn, giá trị cốt lõi' },
+    { title: 'Mầm Non', url: '/mam-non', desc: 'Montessori, 100% tiếng Anh từ 18 tháng' },
+    { title: 'Tiểu Học', url: '/tieu-hoc', desc: 'UK Cambridge, STEM, kỹ năng thế kỷ 21' },
+    { title: 'THCS', url: '/trung-hoc-co-so', desc: 'Song ngữ, IELTS, Debate, Robotics' },
+    { title: 'THPT', url: '/trung-hoc-pho-thong', desc: 'IELTS 6.0-8.0, du học, 99% đỗ ĐH' },
+    { title: 'Tuyển Sinh', url: '/tuyen-sinh', desc: 'Quy trình, ưu đãi Early Bird, học bổng' },
+    { title: 'Học Phí', url: '/hoc-phi', desc: 'Bảng phí Mầm Non đến THPT' },
+    { title: 'Cơ Sở', url: '/co-so', desc: '9 cơ sở TP.HCM, Long An, Kiên Giang' },
+    { title: 'So Sánh', url: '/so-sanh', desc: 'Việt Anh vs Công lập vs Quốc tế' },
+    { title: 'Sự Kiện', url: '/su-kien', desc: 'Open Day, Workshop, Hội thao' },
+    { title: 'Học Bổng', url: '/hoc-bong', desc: 'Giảm đến 50% học phí' },
+    { title: 'Thành Tích', url: '/thanh-tich', desc: 'IELTS, Olympic, du học' },
+    { title: 'Tin Tức', url: '/tin-tuc', desc: 'Blog, sự kiện, kiến thức' },
+    { title: 'Liên Hệ', url: '/lien-he', desc: 'Hotline, Zalo, địa chỉ' },
+  ];
+  const overlay = document.getElementById('searchOverlay');
+  const input = document.getElementById('searchInput');
+  const list = document.getElementById('searchList');
+  const defaultEl = document.querySelector('.search-default');
+  const closeBtn = document.getElementById('searchClose');
+  const openBtns = document.querySelectorAll('.search-btn');
+  function openSearch() { if(!overlay) return; overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; setTimeout(()=>input?.focus(),100); }
+  function closeSearch() { if(!overlay) return; overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden','true'); document.body.style.overflow=''; if(input)input.value=''; if(list)list.innerHTML=''; if(defaultEl)defaultEl.style.display=''; }
+  openBtns.forEach(btn => btn.addEventListener('click', openSearch));
+  if(closeBtn) closeBtn.addEventListener('click', closeSearch);
+  if(overlay) overlay.addEventListener('click', e => { if(e.target===overlay) closeSearch(); });
+  document.addEventListener('keydown', e => { if(e.key==='Escape') closeSearch(); if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();openSearch();} });
+  if(input) input.addEventListener('input', () => {
+    const q=input.value.trim().toLowerCase();
+    if(!q){if(list)list.innerHTML='';if(defaultEl)defaultEl.style.display='';return;}
+    if(defaultEl)defaultEl.style.display='none';
+    const results=searchPages.filter(p=>p.title.toLowerCase().includes(q)||p.desc.toLowerCase().includes(q));
+    if(list) list.innerHTML=results.length===0?'<li class="search-empty">Không tìm thấy.</li>':results.map(r=>`<li><a href="${r.url}" class="search-result"><strong>${r.title}</strong><span>${r.desc}</span></a></li>`).join('');
+  });
 </script>
+
+<!-- Search Modal (shared with HeaderBase) -->
+<div class="search-overlay" id="searchOverlay" aria-hidden="true">
+  <div class="search-modal">
+    <div class="search-modal__header">
+      <div class="search-input-wrap">
+        <svg class="search-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="search" id="searchInput" class="search-modal__input" placeholder="Tìm kiếm trang, chương trình, học phí..." autocomplete="off" />
+        <button class="search-modal__close" id="searchClose" aria-label="Đóng">&times;</button>
+      </div>
+    </div>
+    <div class="search-modal__results" id="searchResults">
+      <div class="search-default">
+        <p class="search-hint">Gợi ý phổ biến</p>
+        <div class="search-tags">
+          <a href="/tuyen-sinh" class="search-tag">Tuyển sinh</a>
+          <a href="/hoc-phi" class="search-tag">Học phí</a>
+          <a href="/mam-non" class="search-tag">Mầm non</a>
+          <a href="/so-sanh" class="search-tag">So sánh</a>
+          <a href="/hoc-bong" class="search-tag">Học bổng</a>
+          <a href="/lien-he" class="search-tag">Liên hệ</a>
+        </div>
+      </div>
+      <ul class="search-list" id="searchList"></ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .search-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);opacity:0;transition:opacity 0.25s}
+  .search-overlay.is-open{display:flex;opacity:1;justify-content:center;padding-top:12vh}
+  .search-modal{background:#fff;border-radius:16px;width:560px;max-width:92vw;max-height:70vh;box-shadow:0 20px 60px rgba(0,0,0,0.2);display:flex;flex-direction:column;overflow:hidden;animation:searchSlideIn 0.25s ease-out}
+  @keyframes searchSlideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
+  .search-modal__header{padding:1rem 1.25rem;border-bottom:1px solid #e2e8f0}
+  .search-input-wrap{display:flex;align-items:center;gap:0.6rem;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:0.6rem 1rem;transition:border-color 0.2s}
+  .search-input-wrap:focus-within{border-color:#D4A843}
+  .search-input-icon{color:#94a3b8;flex-shrink:0}
+  .search-modal__input{flex:1;border:none;outline:none;background:transparent;font-size:1rem;color:#1a1a5e}
+  .search-modal__close{background:none;border:none;font-size:1.5rem;color:#94a3b8;cursor:pointer}
+  .search-modal__results{overflow-y:auto;padding:1rem 1.25rem;flex:1}
+  .search-hint{font-size:0.82rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 0.75rem}
+  .search-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
+  .search-tag{padding:0.4rem 0.9rem;background:#f1f5f9;border-radius:20px;font-size:0.85rem;color:#475569;text-decoration:none;transition:all 0.2s}
+  .search-tag:hover{background:#1a1a5e;color:#fff}
+  .search-list{list-style:none;padding:0;margin:0}
+  .search-result{display:block;padding:0.85rem 0.5rem;text-decoration:none;border-radius:8px;transition:background 0.15s}
+  .search-result:hover{background:#f8fafc}
+  .search-result strong{display:block;color:#1a1a5e;font-size:0.95rem}
+  .search-result span{display:block;color:#64748b;font-size:0.85rem}
+  .search-empty{text-align:center;padding:2rem 0;color:#64748b}
+</style>

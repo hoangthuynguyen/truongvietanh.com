@@ -599,6 +599,18 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   // Lead API endpoint (Cloudflare Worker → GHL + Pancake CRM)
   const LEAD_API_URL = '/api/lead';
 
+  // Capture UTM parameters from URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const utmData = {
+    utm_source: urlParams.get('utm_source') || '',
+    utm_medium: urlParams.get('utm_medium') || '',
+    utm_campaign: urlParams.get('utm_campaign') || '',
+    utm_term: urlParams.get('utm_term') || '',
+    utm_content: urlParams.get('utm_content') || '',
+    referrer: document.referrer || '',
+    landing_page: window.location.pathname,
+  };
+
   // Form state
   let currentStep = 1;
   let formData = {};
@@ -718,7 +730,8 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
               email: formData.email,
               source: funnelCode,
               page: window.location.href,
-              timestamp: new Date().toISOString()
+              timestamp: new Date().toISOString(),
+              ...utmData
             })
           });
         } catch (err) {
@@ -775,7 +788,8 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         schoolLevel: formData.school_level || '',
         source: funnelCode,
         page: window.location.href,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        ...utmData
       };
 
       const response = await fetch(LEAD_API_URL, {

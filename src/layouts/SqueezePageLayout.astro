@@ -6,8 +6,14 @@ const hotline = settings?.hotline || '0916 961 409';
 
 type Props = { title?: string; description?: string; keywords?: string; schoolLevel?: 'mau-non' | 'tieu-hoc' | 'thcs' | 'thpt'; funnelCode?: string; ogImage?: string; canonicalUrl?: string; };
 const { title = 'Trường Việt Anh', description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.', keywords = 'trường, tiếng Anh, song ngữ, Việt Anh', schoolLevel = 'tieu-hoc', funnelCode = 'squeeze-landing', ogImage = 'https://truongvietanh.com/og-image.png', canonicalUrl = 'https://truongvietanh.com', } = Astro.props;
-const schemaData = { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: 'Trường Việt Anh', url: canonicalUrl, image: ogImage, description: description, sameAs: ['https://www.facebook.com/truongvietanhhcm','https://www.youtube.com/@truongvietanh','https://www.instagram.com/truongvietanh'], contactPoint: { '@type': 'ContactPoint', contactType: 'Customer Service', telephone: `+84${hotline.replace(/\s/g,'').replace(/^0/,'')}` } };
-const structuredData = JSON.stringify(schemaData);
+const phoneIntl = `+84${hotline.replace(/\s/g,'').replace(/^0/,'')}`;
+const levelNames: Record<string, string> = { 'mam-non': 'Mầm Non', 'tieu-hoc': 'Tiểu Học', 'thcs': 'THCS', 'thpt': 'THPT' };
+const schemaData = [
+  { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: 'Trường Việt Anh', url: canonicalUrl, image: ogImage, description, sameAs: ['https://www.facebook.com/truongvietanhhcm','https://www.youtube.com/@truongvietanh','https://www.instagram.com/truongvietanh'], contactPoint: { '@type': 'ContactPoint', contactType: 'Customer Service', telephone: phoneIntl } },
+  { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: canonicalUrl, inLanguage: 'vi', speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.squeeze-hero h1', '.squeeze-hero p'] } },
+  { '@context': 'https://schema.org', '@type': 'Offer', itemOffered: { '@type': 'EducationalOccupationalProgram', name: levelNames[schoolLevel] || 'Chương trình giáo dục', provider: { '@type': 'Organization', name: 'Trường Việt Anh' } }, price: '0', priceCurrency: 'VND', description: 'Đăng ký tư vấn miễn phí', availability: 'https://schema.org/InStock' },
+];
+const structuredData = JSON.stringify(Array.isArray(schemaData) ? schemaData : [schemaData]);
 ---
 <!doctype html>
 <html lang="vi">

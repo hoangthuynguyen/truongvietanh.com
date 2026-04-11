@@ -527,6 +527,17 @@ const structuredData = [
   .blog-share__btn--copy:hover { background: #e2e8f0; }
   .blog-share__btn--copied { background: #22c55e !important; color: #fff !important; }
 
+  /* Print styles */
+  @media print {
+    .top-bar, .main-header, .mobile-sticky-cta, .back-to-top, .zalo-float,
+    .reading-progress, .blog-share, .blog-cta, .blog-related, .cookie-consent,
+    .announcement-bar, .site-footer, .mobile-nav-drawer { display: none !important; }
+    .blog-article { max-width: 100%; padding: 0; }
+    .blog-article__body { font-size: 11pt; line-height: 1.6; }
+    .blog-article__body a { color: #000; text-decoration: underline; }
+    .blog-article__body a::after { content: ' (' attr(href) ')'; font-size: 9pt; color: #666; }
+  }
+
   .blog-article__excerpt {
     font-size: 1.1rem;
     color: #1a1a5e;

@@ -71,77 +71,14 @@ const faqItems = [
 
 const imgBase = 'https://media.truongvietanh.com/images';
 
-const galleryCategories = [
-  {
-    id: 'the-thao',
-    title: 'Thể Thao',
-    heading: 'Thể Thao & Vận Động',
-    desc: 'Học sinh Trường Việt Anh rèn luyện thể chất qua các môn thể thao đa dạng: bóng đá, bóng rổ, bơi lội, cầu lông và nhiều bộ môn khác. Sân thể thao đạt chuẩn tại cả 3 cơ sở.',
-    slug: 'the-thao',
-    count: 4,
-  },
-  {
-    id: 'da-ngoai',
-    title: 'Dã Ngoại',
-    heading: 'Dã Ngoại & Trải Nghiệm',
-    desc: 'Các chuyến dã ngoại, tham quan học tập giúp học sinh trải nghiệm thực tế, khám phá thiên nhiên và phát triển kỹ năng sống. Mỗi năm 4–6 chuyến trải nghiệm theo cấp học.',
-    slug: 'da-ngoai',
-    count: 4,
-  },
-  {
-    id: 'giao-vien-hoc-sinh',
-    title: 'Giáo Viên & Học Sinh',
-    heading: 'Giáo Viên & Học Sinh',
-    desc: 'Khoảnh khắc ấm áp giữa giáo viên và học sinh — thể hiện mối quan hệ gắn bó và môi trường giáo dục thân thiện tại Trường Việt Anh. Lớp nhỏ 25–30 em, giáo viên biết rõ từng học sinh.',
-    slug: 'giao-vien',
-    count: 4,
-  },
-  {
-    id: 'thuyet-trinh-ky-nang',
-    title: 'Thuyết Trình & Kỹ Năng',
-    heading: 'Thuyết Trình & Kỹ Năng Mềm',
-    desc: 'Học sinh thuyết trình, tranh biện và phát triển kỹ năng mềm — từ giao tiếp, tư duy phản biện đến khả năng lãnh đạo. Chương trình Debate và MUN từ THCS.',
-    slug: 'thuyet-trinh',
-    count: 4,
-  },
-  {
-    id: 'hoat-dong-vui-nhon',
-    title: 'Hoạt Động Vui Nhộn',
-    heading: 'Hoạt Động Vui Nhộn & Sự Kiện',
-    desc: 'Những khoảnh khắc vui nhộn, đầy màu sắc trong các sự kiện văn nghệ, lễ hội và hoạt động ngoại khóa tại Trường Việt Anh. Học mà chơi, chơi mà học.',
-    slug: 'vui-ve',
-    count: 4,
-  },
-  {
-    id: 'phu-huynh-gia-dinh',
-    title: 'Phụ Huynh & Gia Đình',
-    heading: 'Phụ Huynh & Gia Đình',
-    desc: 'Sự kiện dành cho phụ huynh: họp mặt, ngày hội gia đình, tham quan cơ sở và các hoạt động kết nối nhà trường — gia đình. Open Day hàng tháng.',
-    slug: 'phu-huynh',
-    count: 4,
-  },
-  {
-    id: 'thanh-tich-olympic',
-    title: 'Thành Tích & Olympic',
-    heading: 'Thành Tích & Olympic',
-    desc: 'Học sinh Trường Việt Anh đạt thành tích cao trong các kỳ thi Olympic Toán, Khoa học, Tiếng Anh cấp thành phố và quốc gia. 99% đỗ ĐH nguyện vọng 1.',
-    slug: 'olympic',
-    count: 4,
-  },
-  {
-    id: 'du-an-stem',
-    title: 'Dự Án & STEM',
-    heading: 'Dự Án STEM & Sáng Tạo',
-    desc: 'Dự án STEM, Robotics và các cuộc thi sáng tạo khoa học — nơi học sinh ứng dụng kiến thức vào thực tế và giải quyết vấn đề. Lab STEM hiện đại tại mỗi cơ sở.',
-    slug: 'du-an',
-    count: 4,
-  },
+// Gallery — 100% from CMS, compact fallback if CMS down
+const fallbackGallery = [
+  { title: 'Thể Thao', heading: 'Thể Thao & Vận Động', slug: 'the-thao', description: 'Bóng đá, bóng rổ, bơi lội, cầu lông.', image_count: 4, image_base_url: imgBase },
+  { title: 'Dã Ngoại', heading: 'Dã Ngoại & Trải Nghiệm', slug: 'da-ngoai', description: 'Tham quan học tập và trải nghiệm thực tế.', image_count: 4, image_base_url: imgBase },
+  { title: 'Giáo Viên', heading: 'Giáo Viên & Học Sinh', slug: 'giao-vien', description: 'Khoảnh khắc giữa giáo viên và học sinh.', image_count: 4, image_base_url: imgBase },
+  { title: 'Thuyết Trình', heading: 'Thuyết Trình & Kỹ Năng', slug: 'thuyet-trinh', description: 'Thuyết trình, tranh biện, kỹ năng mềm.', image_count: 4, image_base_url: imgBase },
 ];
-
-// Build image arrays — CMS data first, fallback to hardcode
-const activeGallery = cmsGallery.length > 0 ? cmsGallery : galleryCategories.map(c => ({
-  ...c, heading: c.heading, image_count: c.count, image_base_url: imgBase,
-}));
+const activeGallery = cmsGallery.length > 0 ? cmsGallery : fallbackGallery;
 
 const galleryData = activeGallery.map((cat: any) => ({
   id: cat.slug || cat.id,

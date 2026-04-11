@@ -269,6 +269,24 @@ export async function getGalleryCategories(): Promise<GalleryCategory[]> {
   } catch { return []; }
 }
 
+// ===================== NAV ITEMS =====================
+
+export type NavItem = {
+  label: string;
+  href: string;
+  position: 'left' | 'right';
+  parent_label: string | null;
+};
+
+export async function getNavItems(): Promise<NavItem[]> {
+  try {
+    const client = getPillarClient();
+    return await client.request(readItems('nav_items' as any, {
+      sort: ['sort'], limit: 30,
+    })) as NavItem[];
+  } catch { return []; }
+}
+
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   try {
     const client = getPillarClient();

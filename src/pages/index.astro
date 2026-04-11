@@ -131,65 +131,29 @@ const programCards = [
   { label: 'Bơi', href: '/tuyen-sinh' },
 ];
 
-const campusGroups = [
-  {
-    city: 'TP. Hồ Chí Minh',
-    campuses: [
-      { name: 'Trường Việt Anh Phú Nhuận', address: '269A Nguyễn Trọng Tuyển, Phường Phú Nhuận' },
-      { name: 'Trường Việt Anh Bình Tân', address: 'Số 7 đường 38A, Tân Tạo, Bình Tân' },
-      { name: 'Trường Việt Anh Gò Vấp', address: '160/72 Phan Huy Ích, Phường An Hội Đông' },
-      { name: 'Trường Mầm non Việt Anh Gò Vấp', address: '573 Đ. Lê Đức Thọ, Phường An Hội Tây' },
-    ]
-  },
-  {
-    city: 'Cần Giuộc - Long An',
-    campuses: [
-      { name: 'Trường Mầm non Nhân Lễ', address: '22 Đường D2, Khu Dân cư, Cần Giuộc, Long An' },
-      { name: 'Trường Mầm non Thái Sơn', address: 'Khu Dân Cư Thái Sơn - Long Hậu' },
-      { name: 'Trường Tiểu học Thái Sơn', address: 'Khu Dân Cư Thái Sơn - Long Hậu' },
-    ]
-  },
-  {
-    city: 'TP Rạch Giá - Kiên Giang',
-    campuses: [
-      { name: 'Trường Mầm non Quốc Tế Mekong Xanh', address: 'Lô E7, khu đô thị Tây Bắc' },
-      { name: 'Trường Tiểu học Quốc Tế Mekong Xanh', address: 'Lô E7, khu đô thị Tây Bắc' },
-    ]
-  },
-];
+// Campuses — 100% from CMS, fallback if CMS down
+const campusGroups = (() => {
+  if (cmsCampuses.length > 0) {
+    const cities = [...new Set(cmsCampuses.map((c: any) => c.city))];
+    return cities.map(city => ({
+      city, campuses: cmsCampuses.filter((c: any) => c.city === city).map((c: any) => ({ name: c.name, address: c.address }))
+    }));
+  }
+  return [
+    { city: 'TP. Hồ Chí Minh', campuses: [{ name: 'Trường Việt Anh Phú Nhuận', address: '269A Nguyễn Trọng Tuyển' }, { name: 'Trường Việt Anh Gò Vấp', address: '160/72 Phan Huy Ích' }] },
+    { city: 'Long An', campuses: [{ name: 'Trường Mầm non Thái Sơn', address: 'KDC Thái Sơn' }] },
+    { city: 'Kiên Giang', campuses: [{ name: 'Trường MN QT Mekong Xanh', address: 'Lô E7, Rạch Giá' }] },
+  ];
+})();
 
-const testimonials = [
-  {
-    name: 'Nguyễn Ngọc Thị Giang',
-    role: 'Học sinh lớp 7',
-    quote:
-      'Từ một học sinh còn rụt rè, em dần tự tin hơn khi được khuyến khích nói, trình bày và tìm ra điểm mạnh của mình.',
-  },
-  {
-    name: 'Nguyễn Chí Toàn',
-    role: 'Học sinh lớp 6',
-    quote:
-      'Điều tạo khác biệt là sự gần gũi của thầy cô. Khi gặp khó khăn, em biết mình luôn có người đồng hành để tiến bộ từng bước.',
-  },
-  {
-    name: 'Phụ huynh Hoàng Diễm',
-    role: 'Cảm nhận phụ huynh',
-    quote:
-      'Niềm tin không đến từ khẩu hiệu mà đến từ cách trường chăm học sinh, cách giao tiếp với phụ huynh và tiến bộ nhìn thấy được qua từng giai đoạn.',
-  },
-  {
-    name: 'Phụ huynh Thanh Hà',
-    role: 'Cảm nhận phụ huynh',
-    quote:
-      'Con tôi thay đổi rõ rệt về khả năng giao tiếp tiếng Anh chỉ sau một học kỳ. Điều khiến tôi yên tâm nhất là con thích đi học mỗi ngày.',
-  },
-  {
-    name: 'Phụ huynh Minh Tâm',
-    role: 'Cảm nhận phụ huynh',
-    quote:
-      'Tôi đánh giá cao cách trường rèn kỹ năng lãnh đạo cho con. Con biết tự lập kế hoạch học tập và chủ động hơn trong mọi việc.',
-  },
-];
+// Testimonials — 100% from CMS, fallback if CMS down
+const testimonials = cmsTestimonials.length > 0
+  ? cmsTestimonials.map((t: any) => ({ name: t.name, role: t.role, quote: t.quote }))
+  : [
+    { name: 'Nguyễn Ngọc Thị Giang', role: 'Học sinh lớp 7', quote: 'Từ một học sinh còn rụt rè, em dần tự tin hơn khi được khuyến khích nói và tìm ra điểm mạnh của mình.' },
+    { name: 'Phụ huynh Hoàng Diễm', role: 'Cảm nhận phụ huynh', quote: 'Niềm tin đến từ cách trường chăm học sinh, cách giao tiếp với phụ huynh và tiến bộ nhìn thấy được.' },
+    { name: 'Phụ huynh Thanh Hà', role: 'Cảm nhận phụ huynh', quote: 'Con thay đổi rõ rệt về tiếng Anh chỉ sau một học kỳ. Con thích đi học mỗi ngày.' },
+  ];
 
 const newsCards = [
   {

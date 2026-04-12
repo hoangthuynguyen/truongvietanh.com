@@ -98,6 +98,7 @@ const schemaPayload = structuredData
     <meta name="google-site-verification" content="google-site-verification-placeholder" />
   </head>
   <body>
+    <a href="#main-content" class="skip-to-content">Bỏ qua đến nội dung chính</a>
     <!-- Google Tag Manager (noscript) -->
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9"
     height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -116,7 +117,7 @@ const schemaPayload = structuredData
     </div>
     )}
 
-    <main>
+    <main id="main-content">
       <slot />
     </main>
 
@@ -420,6 +421,15 @@ const schemaPayload = structuredData
       .exit-popup__note { font-size:0.82rem; color:#94a3b8; margin:0.75rem 0 0; }
       .exit-popup__note a { color:#1a1a5e; }
       @media(max-width:480px){ .exit-popup__form { flex-direction:column; } }
+
+      /* === Skip to content === */
+      .skip-to-content {
+        position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+        background: #1a1a5e; color: #fff; padding: 0.75rem 1.5rem; border-radius: 0 0 8px 8px;
+        font-weight: 700; font-size: 0.9rem; z-index: 99999; text-decoration: none;
+        transition: top 0.2s;
+      }
+      .skip-to-content:focus { top: 0; }
 
       /* === Cookie consent === */
       .cookie-consent {

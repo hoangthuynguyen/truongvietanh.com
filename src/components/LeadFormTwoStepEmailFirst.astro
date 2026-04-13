@@ -782,10 +782,10 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       });
     }
 
-    // Show success step
+    // Show success step temporarily while submitting
     showStep('success');
 
-    // Send full_submit to Make.com webhook -> Pancake CRM + GHL
+    // Send full_submit to Worker → GHL + Pancake CRM
     try {
       const webhookPayload = {
         step: 'full_submit',
@@ -800,25 +800,22 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         ...utmData
       };
 
-      const response = await fetch(LEAD_API_URL, {
+      await fetch(LEAD_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(webhookPayload)
       });
-
-      if (!response.ok) {
-        console.error('Failed to submit form:', response.status);
-      }
     } catch (error) {
       console.error('Error submitting form:', error);
     }
 
-    // Reset form after 5 seconds (longer to let user read success info)
-    setTimeout(() => {
-      form.reset();
-      showStep(1);
-      formData = {};
-    }, 5000);
+    // Mark as submitted so popup won't show again
+    localStorage.setItem('lead_submitted', '1');
+
+    // Redirect to thank-you page
+    const thankYouUrl = new URL('/cam-on', window.location.origin);
+    if (formData.parent_name) thankYouUrl.searchParams.set('name', formData.parent_name);
+    window.location.href = thankYouUrl.toString();
   });
 
   // Reset form handler

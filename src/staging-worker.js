@@ -130,9 +130,16 @@ async function handleLeadSubmission(request, env) {
         if (data.grade) tags.push(data.grade);
         if (data.source) tags.push(data.source);
 
+        // Split Vietnamese full name: "Nguyen Van An" → firstName="An", lastName="Nguyen Van"
+        const nameParts = (data.fullName || '').trim().split(/\s+/);
+        const ghlFirstName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0] || '';
+        const ghlLastName = nameParts.length > 1 ? nameParts.slice(0, -1).join(' ') : '';
+
         const ghlBody = {
           locationId: GHL_LOCATION_ID,
-          firstName: data.fullName,
+          firstName: ghlFirstName,
+          lastName: ghlLastName,
+          name: data.fullName, // Keep full name
           email: data.email,
           phone: data.phone,
           source: `Website - ${data.source}`,

@@ -278,7 +278,7 @@ const schemaPayload = structuredData
               if(closeTimer) clearTimeout(closeTimer);
               localStorage.setItem('lead_submitted','1');
               this.innerHTML='<p style="color:#22c55e;font-weight:700;padding:1rem 0">Cảm ơn! Tư vấn viên sẽ gọi bạn sớm.</p>';
-              fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({step:'exit_intent',phone:phone,page:location.href,timestamp:new Date().toISOString()})}).catch(function(){});
+              fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({step:'exit_intent',phone:phone,email:'exit-intent@truongvietanh.com',source:'exit-intent',page:location.href,timestamp:new Date().toISOString()})}).catch(function(){});
               setTimeout(closePopup, 3000);
             }
           });

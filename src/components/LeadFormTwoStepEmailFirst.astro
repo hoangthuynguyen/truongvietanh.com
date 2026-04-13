@@ -800,11 +800,15 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         ...utmData
       };
 
-      await fetch(LEAD_API_URL, {
+      const response = await fetch(LEAD_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(webhookPayload)
       });
+
+      if (!response.ok) {
+        console.error('Failed to submit form:', response.status);
+      }
     } catch (error) {
       console.error('Error submitting form:', error);
     }

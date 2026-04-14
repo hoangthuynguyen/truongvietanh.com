@@ -732,9 +732,28 @@ const structuredData = [
   }
 
   .blog-article__body iframe {
+    width: 100%;
     max-width: 100%;
+    aspect-ratio: 16/9;
+    height: auto;
     border-radius: 8px;
     margin: 1.5rem 0;
+    border: 0;
+  }
+  .blog-article__body audio,
+  .blog-article__body video {
+    width: 100%;
+    max-width: 100%;
+    margin: 1.5rem 0;
+    border-radius: 8px;
+    display: block;
+  }
+  .blog-article__body a[href$=".pdf"]::after {
+    content: ' 📄';
+  }
+  .blog-article__body a[href$=".mp3"]::after,
+  .blog-article__body a[href$=".wav"]::after {
+    content: ' 🔊';
   }
 
   /* ===== FAQ SECTION ===== */

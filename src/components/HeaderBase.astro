@@ -1,52 +1,96 @@
 ---
-// src/components/HeaderBase.astro — CMS-powered navigation
-import { getNavItems, getSiteSettings } from '../lib/directus';
+// src/components/HeaderBase.astro — multi-level navigation
+import { getSiteSettings } from '../lib/directus';
 
-const navItems = await getNavItems();
 const settings = await getSiteSettings();
 const zaloOaId = (settings as any)?.zalo_oa_id || '1678310120468101523';
 const zaloOaUrl = `https://zalo.me/${zaloOaId}`;
 const fbChatUrl = (settings as any)?.facebook_messenger_url || 'https://m.me/truongvietanhhcm';
 const logoUrl = "/logo-vietanh.webp";
 
-// New menu structure (takes precedence over CMS if CMS is empty).
-// Designed per 2026-04-14 redesign spec.
-const fallbackLeft = [
+// Full multi-level menu — 2026-04-14 spec
+interface NavChild { label: string; href: string; }
+interface NavItem { label: string; href: string; children?: NavChild[]; }
+
+const menuLeft: NavItem[] = [
   { label: 'Trang Chủ', href: '/' },
   { label: 'Giới Thiệu', href: '/gioi-thieu' },
-  { label: 'Đánh Giá', href: '/danh-gia' },
-  { label: 'Giáo Viên', href: '/giao-vien' },
-  { label: 'Tuyển Sinh', href: '/tuyen-sinh' },
-];
-const fallbackRight = [
-  { label: 'Chương Trình', href: '/cap-hoc' },
-  { label: 'Thành Tích', href: '/thanh-tich' },
-  { label: 'Blog', href: '/tin-tuc' },
-  { label: 'Tài Nguyên', href: '/tai-nguyen' },
-  { label: 'Hình Ảnh', href: '/hinh-anh' },
+  { label: 'Đánh Giá', href: '/phu-huynh' },
+  {
+    label: 'Giáo Viên', href: '/giao-vien',
+    children: [
+      { label: 'Ban Lãnh Đạo', href: '/giao-vien#ban-lanh-dao' },
+      { label: 'Giáo Viên Chủ Nhiệm', href: '/giao-vien#chu-nhiem' },
+      { label: 'Giáo Viên Bộ Môn', href: '/giao-vien#bo-mon' },
+      { label: 'Quản Nhiệm Nội Trú', href: '/giao-vien#noi-tru' },
+    ],
+  },
+  {
+    label: 'Tuyển Sinh', href: '/tuyen-sinh',
+    children: [
+      { label: 'Trường Mầm Non', href: '/mam-non' },
+      { label: 'Trường Tiểu Học', href: '/tieu-hoc' },
+      { label: 'Trường THCS', href: '/trung-hoc-co-so' },
+      { label: 'Trường THPT', href: '/trung-hoc-pho-thong' },
+      { label: 'Trại Hè', href: '/tuyen-sinh' },
+      { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh' },
+      { label: 'Toán Tư Duy', href: '/tuyen-sinh' },
+    ],
+  },
 ];
 
-// Build nav structure from CMS
-const leftNav = navItems.filter(n => n.position === 'left' && !n.parent_label);
-const rightNav = navItems.filter(n => n.position === 'right' && !n.parent_label);
-const getChildren = (parent: string) => navItems.filter(n => n.parent_label === parent);
+const menuRight: NavItem[] = [
+  {
+    label: 'Chương Trình', href: '/cap-hoc',
+    children: [
+      { label: 'Trường Mầm Non', href: '/mam-non' },
+      { label: 'Trường Tiểu Học', href: '/tieu-hoc' },
+      { label: 'Trường THCS', href: '/trung-hoc-co-so' },
+      { label: 'Trường THPT', href: '/trung-hoc-pho-thong' },
+      { label: 'Trại Hè', href: '/tuyen-sinh' },
+      { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh' },
+      { label: 'Toán Tư Duy', href: '/tuyen-sinh' },
+      { label: 'Du Học', href: '/tuyen-sinh' },
+      { label: 'Kèm Cặp PDR', href: '/he-thong-pdr' },
+    ],
+  },
+  {
+    label: 'Thành Tích', href: '/thanh-tich',
+    children: [
+      { label: 'Học Tập', href: '/thanh-tich#hoc-tap' },
+      { label: 'Thể Thao', href: '/thanh-tich#the-thao' },
+      { label: 'Kỹ Năng', href: '/thanh-tich#ky-nang' },
+      { label: 'Ngoại Khoá', href: '/ngoai-khoa' },
+      { label: 'Giáo Viên', href: '/giao-vien' },
+    ],
+  },
+  {
+    label: 'Blog', href: '/tin-tuc',
+    children: [
+      { label: 'Theo Thời Gian', href: '/tin-tuc' },
+      { label: 'Theo Phổ Biến', href: '/tin-tuc' },
+    ],
+  },
+  { label: 'Tài Nguyên', href: '/hoc-bong' },
+  { label: 'Hình Ảnh', href: '/hinh-anh' },
+];
 ---
 
 <div class="top-bar">
   <div class="cf-container top-bar-inner">
     <div class="top-left">
-      <a href={zaloOaUrl} target="_blank" rel="noopener" class="icon-text text-nowrap" style="text-decoration:none;color:inherit">
-         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-         Chat Zalo OA
+      <a href={zaloOaUrl} target="_blank" rel="noopener" class="icon-text text-nowrap">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+        Chat Zalo OA
       </a>
-      <a href={fbChatUrl} target="_blank" rel="noopener" class="icon-text d-none-mo text-nowrap" style="margin-left:1.5rem;text-decoration:none;color:inherit">
-         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.301 2.246.464 3.443.464 6.627 0 12-4.975 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.733 8.2l3.13 3.26 5.889-3.26-6.561 6.763z"/></svg>
-         Chat Facebook
+      <a href={fbChatUrl} target="_blank" rel="noopener" class="icon-text d-none-mo">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 4.974 0 11.111c0 3.498 1.744 6.614 4.469 8.654V24l4.088-2.242c1.092.301 2.246.464 3.443.464 6.627 0 12-4.975 12-11.111S18.627 0 12 0zm1.191 14.963l-3.055-3.26-5.963 3.26L10.733 8.2l3.13 3.26 5.889-3.26-6.561 6.763z"/></svg>
+        Chat Facebook
       </a>
     </div>
     <div class="top-right d-none-mo">
-      <button aria-label="Tìm kiếm trên website" class="search-btn">
-         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+      <button aria-label="Tìm kiếm" class="search-btn">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       </button>
     </div>
   </div>
@@ -54,38 +98,51 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 
 <header class="main-header">
   <nav class="nav-grid">
-     <ul class="nav-links left-nav">
-       {(leftNav.length > 0 ? leftNav : fallbackLeft).map((item) => {
-         const children = getChildren(item.label);
-         return children.length > 0 ? (
-           <li class="has-dropdown">
-             <a href={item.href}>{item.label} ▾</a>
-             <ul class="dropdown-menu">
-               {children.map(child => <li><a href={child.href}>{child.label}</a></li>)}
-             </ul>
-           </li>
-         ) : (
-           <li><a href={item.href}>{item.label}</a></li>
-         );
-       })}
-     </ul>
+    <!-- Left nav -->
+    <ul class="nav-links left-nav">
+      {menuLeft.map((item) => (
+        item.children ? (
+          <li class="has-dropdown">
+            <a href={item.href}>{item.label} <span class="chevron">▾</span></a>
+            <ul class="dropdown-menu">
+              {item.children.map(child => <li><a href={child.href}>{child.label}</a></li>)}
+            </ul>
+          </li>
+        ) : (
+          <li><a href={item.href}>{item.label}</a></li>
+        )
+      ))}
+    </ul>
 
-     <div class="header-logo text-center">
-       <a href="/">
-          <img src={logoUrl} alt="Trường Liên Cấp Việt Anh" class="official-logo" width="180" height="120" />
-       </a>
-     </div>
+    <!-- Center logo -->
+    <div class="header-logo">
+      <a href="/">
+        <img src={logoUrl} alt="Trường Liên Cấp Việt Anh" class="official-logo" width="180" height="120" />
+      </a>
+    </div>
 
-     <ul class="nav-links right-nav">
-       {(rightNav.length > 0 ? rightNav : fallbackRight).map((item) => <li><a href={item.href}>{item.label}</a></li>)}
-     </ul>
+    <!-- Right nav -->
+    <ul class="nav-links right-nav">
+      {menuRight.map((item) => (
+        item.children ? (
+          <li class="has-dropdown">
+            <a href={item.href}>{item.label} <span class="chevron">▾</span></a>
+            <ul class="dropdown-menu">
+              {item.children.map(child => <li><a href={child.href}>{child.label}</a></li>)}
+            </ul>
+          </li>
+        ) : (
+          <li><a href={item.href}>{item.label}</a></li>
+        )
+      ))}
+    </ul>
 
-     <!-- Mobile hamburger -->
-     <button class="mobile-menu-btn" aria-label="Mở menu" aria-expanded="false">
-       <span class="hamburger-line"></span>
-       <span class="hamburger-line"></span>
-       <span class="hamburger-line"></span>
-     </button>
+    <!-- Mobile hamburger -->
+    <button class="mobile-menu-btn" aria-label="Mở menu" aria-expanded="false">
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
   </nav>
 
   <!-- Mobile nav drawer -->
@@ -93,22 +150,69 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     <div class="mobile-nav-inner">
       <a href="/" class="mobile-nav-link">Trang Chủ</a>
       <a href="/gioi-thieu" class="mobile-nav-link">Giới Thiệu</a>
+      <a href="/phu-huynh" class="mobile-nav-link">Đánh Giá</a>
+
       <div class="mobile-nav-group">
-        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Chương Trình">Chương Trình <span class="toggle-arrow">▾</span></button>
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false">Giáo Viên <span class="toggle-arrow">▾</span></button>
         <div class="mobile-nav-sub">
-          <a href="/mam-non" class="mobile-nav-sublink">Mầm Non</a>
-          <a href="/tieu-hoc" class="mobile-nav-sublink">Tiểu Học</a>
-          <a href="/trung-hoc-co-so" class="mobile-nav-sublink">THCS</a>
-          <a href="/trung-hoc-pho-thong" class="mobile-nav-sublink">THPT</a>
-          <a href="/ngoai-khoa" class="mobile-nav-sublink">Ngoại Khóa</a>
+          <a href="/giao-vien#ban-lanh-dao" class="mobile-nav-sublink">Ban Lãnh Đạo</a>
+          <a href="/giao-vien#chu-nhiem" class="mobile-nav-sublink">Giáo Viên Chủ Nhiệm</a>
+          <a href="/giao-vien#bo-mon" class="mobile-nav-sublink">Giáo Viên Bộ Môn</a>
+          <a href="/giao-vien#noi-tru" class="mobile-nav-sublink">Quản Nhiệm Nội Trú</a>
         </div>
       </div>
-      <a href="/tuyen-sinh" class="mobile-nav-link">Tuyển Sinh</a>
-      <a href="/thanh-tich" class="mobile-nav-link">Thành Tích</a>
-      <a href="/hoc-phi" class="mobile-nav-link">Học Phí</a>
-      <a href="/tin-tuc" class="mobile-nav-link">Tin Tức</a>
-      <a href="/lien-he" class="mobile-nav-link">Liên hệ</a>
-      <a href="/tuyen-sinh" class="mobile-nav-cta">Đăng ký tư vấn</a>
+
+      <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false">Tuyển Sinh <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/mam-non" class="mobile-nav-sublink">Trường Mầm Non</a>
+          <a href="/tieu-hoc" class="mobile-nav-sublink">Trường Tiểu Học</a>
+          <a href="/trung-hoc-co-so" class="mobile-nav-sublink">Trường THCS</a>
+          <a href="/trung-hoc-pho-thong" class="mobile-nav-sublink">Trường THPT</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Trại Hè</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Tiếng Anh Trẻ Em</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Toán Tư Duy</a>
+        </div>
+      </div>
+
+      <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false">Chương Trình <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/mam-non" class="mobile-nav-sublink">Trường Mầm Non</a>
+          <a href="/tieu-hoc" class="mobile-nav-sublink">Trường Tiểu Học</a>
+          <a href="/trung-hoc-co-so" class="mobile-nav-sublink">Trường THCS</a>
+          <a href="/trung-hoc-pho-thong" class="mobile-nav-sublink">Trường THPT</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Trại Hè</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Tiếng Anh Trẻ Em</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Toán Tư Duy</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Du Học</a>
+          <a href="/he-thong-pdr" class="mobile-nav-sublink">Kèm Cặp PDR</a>
+        </div>
+      </div>
+
+      <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false">Thành Tích <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/thanh-tich#hoc-tap" class="mobile-nav-sublink">Học Tập</a>
+          <a href="/thanh-tich#the-thao" class="mobile-nav-sublink">Thể Thao</a>
+          <a href="/thanh-tich#ky-nang" class="mobile-nav-sublink">Kỹ Năng</a>
+          <a href="/ngoai-khoa" class="mobile-nav-sublink">Ngoại Khoá</a>
+          <a href="/giao-vien" class="mobile-nav-sublink">Giáo Viên</a>
+        </div>
+      </div>
+
+      <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false">Blog <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/tin-tuc" class="mobile-nav-sublink">Theo Thời Gian</a>
+          <a href="/tin-tuc" class="mobile-nav-sublink">Theo Phổ Biến</a>
+        </div>
+      </div>
+
+      <a href="/hoc-bong" class="mobile-nav-link">Tài Nguyên</a>
+      <a href="/hinh-anh" class="mobile-nav-link">Hình Ảnh</a>
+
+      <a href="/tuyen-sinh" class="mobile-nav-cta">Đăng Ký Tư Vấn</a>
     </div>
   </div>
 </header>
@@ -120,7 +224,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
       <div class="search-input-wrap">
         <svg class="search-input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input type="search" id="searchInput" class="search-modal__input" placeholder="Tìm kiếm trang, chương trình, học phí..." autocomplete="off" />
-        <button class="search-modal__close" id="searchClose" aria-label="Đóng tìm kiếm">&times;</button>
+        <button class="search-modal__close" id="searchClose" aria-label="Đóng">&times;</button>
       </div>
     </div>
     <div class="search-modal__results" id="searchResults">
@@ -132,7 +236,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
           <a href="/mam-non" class="search-tag">Mầm non</a>
           <a href="/tieu-hoc" class="search-tag">Tiểu học</a>
           <a href="/co-so" class="search-tag">Cơ sở</a>
-          <a href="/triet-ly-giao-duc" class="search-tag">Triết lý giáo dục</a>
           <a href="/thanh-tich" class="search-tag">Thành tích</a>
           <a href="/lien-he" class="search-tag">Liên hệ</a>
         </div>
@@ -143,79 +246,69 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 </div>
 
 <script>
-  // Search data - all main pages
   const searchPages = [
-    { title: 'Trang Chủ — Trường Việt Anh', url: '/', desc: 'Hệ thống giáo dục liên cấp song ngữ từ Mầm Non đến THPT tại TP.HCM' },
+    { title: 'Trang Chủ', url: '/', desc: 'Hệ thống giáo dục liên cấp song ngữ từ Mầm Non đến THPT tại TP.HCM' },
     { title: 'Giới Thiệu Trường Việt Anh', url: '/gioi-thieu', desc: 'Sứ mệnh, tầm nhìn, lịch sử và giá trị cốt lõi' },
-    { title: 'Mầm Non Song Ngữ', url: '/mam-non', desc: 'Chương trình Montessori, 100% tiếng Anh từ 18 tháng đến 6 tuổi' },
+    { title: 'Mầm Non Song Ngữ', url: '/mam-non', desc: 'Chương trình Montessori, 100% tiếng Anh từ 18 tháng' },
     { title: 'Tiểu Học Song Ngữ', url: '/tieu-hoc', desc: 'Chương trình UK Cambridge, STEM, kỹ năng thế kỷ 21' },
-    { title: 'Trung Học Cơ Sở (THCS)', url: '/trung-hoc-co-so', desc: 'Chương trình THCS song ngữ, chuẩn bị IELTS từ lớp 6' },
-    { title: 'Trung Học Phổ Thông (THPT)', url: '/trung-hoc-pho-thong', desc: 'Luyện IELTS chuyên sâu, hỗ trợ du học, 99% đỗ ĐH' },
-    { title: 'Tuyển Sinh 2026-2027', url: '/tuyen-sinh', desc: 'Quy trình đăng ký, lịch trình, ưu đãi Early Bird, học bổng' },
-    { title: 'Học Phí Các Cấp', url: '/hoc-phi', desc: 'Bảng học phí Mầm Non đến THPT, học bổng, ưu đãi' },
+    { title: 'Trung Học Cơ Sở (THCS)', url: '/trung-hoc-co-so', desc: 'Song ngữ, chuẩn bị IELTS từ lớp 6' },
+    { title: 'Trung Học Phổ Thông (THPT)', url: '/trung-hoc-pho-thong', desc: 'IELTS chuyên sâu, hỗ trợ du học, 99% đỗ ĐH' },
+    { title: 'Tuyển Sinh 2026–2027', url: '/tuyen-sinh', desc: 'Quy trình, lịch trình, ưu đãi Early Bird, học bổng' },
+    { title: 'Học Phí Các Cấp', url: '/hoc-phi', desc: 'Bảng học phí, học bổng, ưu đãi' },
     { title: 'Hệ Thống Cơ Sở', url: '/co-so', desc: '9 cơ sở tại TP.HCM, Long An, Kiên Giang' },
     { title: 'Thành Tích Học Sinh', url: '/thanh-tich', desc: 'IELTS 6.0-8.0, 99% đỗ ĐH, 200+ giải thưởng' },
-    { title: 'Triết Lý Giáo Dục', url: '/triet-ly-giao-duc', desc: 'PDR, 16 kỹ năng WEF, Leader in Me, giáo dục toàn diện' },
-    { title: 'Hệ Thống PDR', url: '/he-thong-pdr', desc: 'Play – Discover – Reflect, phương pháp giáo dục riêng' },
-    { title: 'Các Cấp Học', url: '/cap-hoc', desc: 'Tổng quan Mầm Non, Tiểu Học, THCS, THPT liên cấp' },
-    { title: 'Ngoại Khóa', url: '/ngoai-khoa', desc: '20+ CLB: thể thao, nghệ thuật, STEM, kỹ năng sống' },
-    { title: 'Góc Phụ Huynh', url: '/phu-huynh', desc: 'Dịch vụ hỗ trợ phụ huynh, sổ liên lạc, sự kiện' },
-    { title: 'Hình Ảnh', url: '/hinh-anh', desc: 'Thư viện ảnh cơ sở vật chất, hoạt động, sự kiện' },
-    { title: 'Tin Tức & Blog', url: '/tin-tuc', desc: 'Tin tức, sự kiện, kiến thức giáo dục, kinh nghiệm' },
+    { title: 'Tin Tức & Blog', url: '/tin-tuc', desc: 'Tin tức, sự kiện, kiến thức giáo dục' },
     { title: 'Liên Hệ', url: '/lien-he', desc: 'Hotline, Zalo, email, địa chỉ, đặt lịch tham quan' },
-    { title: 'Squeeze: Học Thử Miễn Phí', url: '/squeeze/hoc-thu-mien-phi', desc: 'Đăng ký cho con trải nghiệm 1 buổi học miễn phí' },
-    { title: 'Squeeze: Checklist Chọn Trường', url: '/squeeze/checklist-chon-truong', desc: 'Tải checklist 9 tiêu chí chọn trường phù hợp' },
-    { title: 'Squeeze: Webinar Phụ Huynh', url: '/squeeze/webinar-phu-huynh', desc: 'Đăng ký tham dự webinar miễn phí cho phụ huynh' },
   ];
 
-  // Search functionality
   const overlay = document.getElementById('searchOverlay');
-  const input = document.getElementById('searchInput');
+  const input = document.getElementById('searchInput') as HTMLInputElement;
   const list = document.getElementById('searchList');
-  const defaultEl = document.querySelector('.search-default');
+  const defaultEl = document.querySelector('.search-default') as HTMLElement;
   const closeBtn = document.getElementById('searchClose');
   const openBtns = document.querySelectorAll('.search-btn');
 
   function openSearch() {
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
+    overlay!.classList.add('is-open');
+    overlay!.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => input.focus(), 100);
+    setTimeout(() => input?.focus(), 100);
   }
   function closeSearch() {
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
+    overlay!.classList.remove('is-open');
+    overlay!.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
-    input.value = '';
-    list.innerHTML = '';
-    defaultEl.style.display = '';
+    if (input) input.value = '';
+    if (list) list.innerHTML = '';
+    if (defaultEl) defaultEl.style.display = '';
   }
 
   openBtns.forEach(btn => btn.addEventListener('click', openSearch));
-  closeBtn.addEventListener('click', closeSearch);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
+  closeBtn?.addEventListener('click', closeSearch);
+  overlay?.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') closeSearch();
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
   });
 
-  input.addEventListener('input', () => {
+  input?.addEventListener('input', () => {
     const q = input.value.trim().toLowerCase();
-    if (!q) { list.innerHTML = ''; defaultEl.style.display = ''; return; }
-    defaultEl.style.display = 'none';
+    if (!q) { if (list) list.innerHTML = ''; if (defaultEl) defaultEl.style.display = ''; return; }
+    if (defaultEl) defaultEl.style.display = 'none';
     const results = searchPages.filter(p =>
       p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.url.includes(q)
     );
+    if (!list) return;
     if (results.length === 0) {
-      list.innerHTML = '<li class="search-empty">Không tìm thấy kết quả. Thử từ khóa khác hoặc <a href="/lien-he">liên hệ tư vấn</a>.</li>';
+      list.innerHTML = '<li class="search-empty">Không tìm thấy kết quả.</li>';
     } else {
       list.innerHTML = results.map(r => `<li><a href="${r.url}" class="search-result"><strong>${r.title}</strong><span>${r.desc}</span></a></li>`).join('');
     }
   });
 
   // Mobile menu toggle
-  const menuBtn = document.querySelector('.mobile-menu-btn');
-  const drawer = document.querySelector('.mobile-nav-drawer');
+  const menuBtn = document.querySelector('.mobile-menu-btn') as HTMLButtonElement;
+  const drawer = document.querySelector('.mobile-nav-drawer') as HTMLElement;
   if (menuBtn && drawer) {
     menuBtn.addEventListener('click', () => {
       const open = drawer.classList.toggle('is-open');
@@ -224,7 +317,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
       drawer.setAttribute('aria-hidden', String(!open));
       document.body.style.overflow = open ? 'hidden' : '';
     });
-    // Sub-menu toggle
     drawer.querySelectorAll('.mobile-nav-toggle').forEach(btn => {
       btn.addEventListener('click', () => {
         const expanded = btn.getAttribute('aria-expanded') === 'true';
@@ -232,7 +324,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
         btn.closest('.mobile-nav-group')?.classList.toggle('is-expanded', !expanded);
       });
     });
-    // Close on link click
     drawer.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         drawer.classList.remove('is-open');
@@ -244,40 +335,119 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 </script>
 
 <style>
-  /* UTILS for header */
   .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
-  .text-center { text-align: center; }
   .text-nowrap { white-space: nowrap; }
 
   /* TOP BAR */
-  .top-bar { background: var(--cf-blue, #1a193c); color: #e2e8f0; font-size: 0.85rem; padding: 0.4rem 0; font-weight: 400; font-family: 'Inter', sans-serif;}
+  .top-bar {
+    background: var(--cf-blue, #1a193c);
+    color: #e2e8f0;
+    font-size: 0.82rem;
+    padding: 0.35rem 0;
+    font-family: 'Inter', sans-serif;
+  }
   .top-bar-inner { display: flex; justify-content: space-between; align-items: center; }
-  .top-left .icon-text { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .top-left { display: flex; align-items: center; gap: 1.25rem; }
+  .icon-text {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    text-decoration: none; color: inherit;
+  }
   .top-right { display: flex; align-items: center; gap: 1rem; }
   .search-btn { background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; }
-  .btn-yellow { background: var(--pri-yellow, #fde047); color: #000; font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius:3px; font-size: 0.8rem; border: none; cursor:pointer;}
-  .btn-yellow:hover { background: #fef08a; }
 
-  /* MAIN NAV */
-  .main-header { background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Inter', sans-serif; }
-  .nav-grid { max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 80px; gap: 1rem; }
-  
-  .nav-links { list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; align-items: center; }
-  .right-nav { justify-content: flex-start; }
+  /* MAIN HEADER */
+  .main-header {
+    background: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+    font-family: 'Inter', sans-serif;
+  }
+  .nav-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    min-height: 76px;
+    gap: 0.75rem;
+  }
+
+  /* NAV LINKS */
+  .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 0;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
   .left-nav { justify-content: flex-end; }
+  .right-nav { justify-content: flex-start; }
   .nav-links li { position: relative; }
-  .nav-links a { text-decoration: none; color: var(--pri-blue, #232252); font-weight: 500; font-size: 1rem; white-space: nowrap; transition: color 0.2s; display: flex; align-items: center; padding: 1.5rem 0; }
-  .nav-links a:hover { color: var(--cf-blue, #1a193c); }
+  .nav-links > li > a {
+    text-decoration: none;
+    color: var(--pri-blue, #232252);
+    font-weight: 400;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 1.5rem 0.6rem;
+    transition: color 0.2s;
+  }
+  .nav-links > li > a:hover { color: var(--cf-blue, #1a193c); }
+  .chevron { font-size: 0.65rem; opacity: 0.7; }
 
   /* DROPDOWN */
-  .dropdown-menu { position: absolute; top: 100%; left: 0; background: #ffffff; min-width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; border: 1px solid #f1f5f9; padding: 0.5rem 0; display: flex; flex-direction: column; z-index: 200; }
-  .has-dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
-  .dropdown-menu a { padding: 0.6rem 1.25rem; font-weight: 500; font-size: 0.85rem; color: var(--text-dark, #0f172a); border-left: 3px solid transparent; }
-  .dropdown-menu a:hover { background: var(--bg-gray, #f8fafc); color: var(--cf-blue, #1a193c); border-left-color: var(--cf-blue, #1a193c); }
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(8px);
+    background: #ffffff;
+    min-width: 200px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+    border-radius: 8px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+    border: 1px solid #f1f5f9;
+    padding: 0.4rem 0;
+    display: flex;
+    flex-direction: column;
+    z-index: 200;
+    list-style: none;
+    margin: 0;
+  }
+  .has-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+  }
+  .dropdown-menu a {
+    display: block;
+    padding: 0.55rem 1.15rem;
+    font-weight: 400;
+    font-size: 0.88rem;
+    color: #1e293b;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s;
+  }
+  .dropdown-menu a:hover {
+    background: #f8fafc;
+    color: var(--cf-blue, #1a193c);
+  }
 
-  /* LOGO ENLARGED */
-  .header-logo { display: flex; justify-content: center; width: 100%; }
-  .official-logo { height: 120px; object-fit: contain; }
+  /* LOGO */
+  .header-logo { display: flex; justify-content: center; }
+  .official-logo { height: 110px; object-fit: contain; }
 
   /* SEARCH MODAL */
   .search-overlay {
@@ -290,184 +460,90 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     background: #fff; border-radius: 16px; width: 560px; max-width: 92vw;
     max-height: 70vh; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
     display: flex; flex-direction: column; overflow: hidden;
-    animation: searchSlideIn 0.25s ease-out;
   }
-  @keyframes searchSlideIn { from { transform: translateY(-20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
   .search-modal__header { padding: 1rem 1.25rem; border-bottom: 1px solid #e2e8f0; }
   .search-input-wrap {
     display: flex; align-items: center; gap: 0.6rem;
     background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
-    padding: 0.6rem 1rem; transition: border-color 0.2s;
+    padding: 0.6rem 1rem;
   }
   .search-input-wrap:focus-within { border-color: #D4A843; }
   .search-input-icon { color: #94a3b8; flex-shrink: 0; }
-  .search-modal__input {
-    flex: 1; border: none; outline: none; background: transparent;
-    font-size: 1rem; color: #1a1a5e; font-family: 'Inter', sans-serif;
-  }
+  .search-modal__input { flex: 1; border: none; outline: none; background: transparent; font-size: 1rem; color: #1a1a5e; font-family: 'Inter', sans-serif; }
   .search-modal__input::placeholder { color: #94a3b8; }
-  .search-modal__close {
-    background: none; border: none; font-size: 1.5rem; color: #94a3b8;
-    cursor: pointer; padding: 0; line-height: 1; transition: color 0.2s;
-  }
+  .search-modal__close { background: none; border: none; font-size: 1.5rem; color: #94a3b8; cursor: pointer; padding: 0; line-height: 1; }
   .search-modal__close:hover { color: #1a1a5e; }
   .search-modal__results { overflow-y: auto; padding: 1rem 1.25rem; flex: 1; }
-  .search-hint { font-size: 0.82rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.75rem; }
+  .search-hint { font-size: 0.8rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.75rem; }
   .search-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-  .search-tag {
-    padding: 0.4rem 0.9rem; background: #f1f5f9; border-radius: 20px;
-    font-size: 0.85rem; color: #475569; text-decoration: none;
-    transition: background 0.2s, color 0.2s;
-  }
+  .search-tag { padding: 0.35rem 0.85rem; background: #f1f5f9; border-radius: 20px; font-size: 0.82rem; color: #475569; text-decoration: none; }
   .search-tag:hover { background: #1a1a5e; color: #fff; }
   .search-list { list-style: none; padding: 0; margin: 0; }
   .search-list li { border-bottom: 1px solid #f1f5f9; }
-  .search-list li:last-child { border: none; }
-  .search-result {
-    display: block; padding: 0.85rem 0; text-decoration: none; transition: background 0.15s;
-    border-radius: 8px; padding-left: 0.5rem; padding-right: 0.5rem;
-  }
-  .search-result:hover { background: #f8fafc; }
-  .search-result strong { display: block; color: #1a1a5e; font-size: 0.95rem; margin-bottom: 0.2rem; }
-  .search-result span { display: block; color: #64748b; font-size: 0.85rem; line-height: 1.5; }
-  .search-empty { text-align: center; padding: 2rem 0; color: #64748b; font-size: 0.95rem; }
-  .search-empty a { color: #2563eb; }
+  .search-result { display: block; padding: 0.8rem 0.5rem; text-decoration: none; }
+  .search-result:hover { background: #f8fafc; border-radius: 6px; }
+  .search-result strong { display: block; color: #1a1a5e; font-size: 0.92rem; margin-bottom: 0.15rem; }
+  .search-result span { display: block; color: #64748b; font-size: 0.82rem; }
+  .search-empty { text-align: center; padding: 2rem 0; color: #64748b; font-size: 0.92rem; }
 
-  /* HAMBURGER BUTTON */
+  /* HAMBURGER */
   .mobile-menu-btn {
-    display: none;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 36px;
-    height: 36px;
-    padding: 6px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    z-index: 201;
+    display: none; flex-direction: column; justify-content: center;
+    gap: 5px; width: 36px; height: 36px; padding: 6px;
+    background: none; border: none; cursor: pointer; z-index: 201;
   }
-  .hamburger-line {
-    display: block;
-    width: 100%;
-    height: 2.5px;
-    background: #1a193c;
-    border-radius: 2px;
-    transition: transform 0.3s ease, opacity 0.3s ease;
-  }
-  .mobile-menu-btn.is-open .hamburger-line:nth-child(1) {
-    transform: translateY(7.5px) rotate(45deg);
-  }
-  .mobile-menu-btn.is-open .hamburger-line:nth-child(2) {
-    opacity: 0;
-  }
-  .mobile-menu-btn.is-open .hamburger-line:nth-child(3) {
-    transform: translateY(-7.5px) rotate(-45deg);
-  }
+  .hamburger-line { display: block; width: 100%; height: 2.5px; background: #1a193c; border-radius: 2px; transition: transform 0.3s, opacity 0.3s; }
+  .mobile-menu-btn.is-open .hamburger-line:nth-child(1) { transform: translateY(7.5px) rotate(45deg); }
+  .mobile-menu-btn.is-open .hamburger-line:nth-child(2) { opacity: 0; }
+  .mobile-menu-btn.is-open .hamburger-line:nth-child(3) { transform: translateY(-7.5px) rotate(-45deg); }
 
-  /* MOBILE NAV DRAWER */
+  /* MOBILE DRAWER */
   .mobile-nav-drawer {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 199;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4); z-index: 199; opacity: 0; visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
   }
-  .mobile-nav-drawer.is-open {
-    opacity: 1;
-    visibility: visible;
-  }
+  .mobile-nav-drawer.is-open { opacity: 1; visibility: visible; }
   .mobile-nav-inner {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 300px;
-    max-width: 85vw;
-    height: 100%;
-    background: #fff;
-    box-shadow: -8px 0 30px rgba(0,0,0,0.12);
-    padding: 5rem 1.5rem 2rem;
-    overflow-y: auto;
-    transform: translateX(100%);
-    transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
-    display: flex;
-    flex-direction: column;
-    gap: 0;
+    position: absolute; top: 0; right: 0; width: 300px; max-width: 85vw;
+    height: 100%; background: #fff; box-shadow: -8px 0 30px rgba(0,0,0,0.12);
+    padding: 5rem 1.5rem 2rem; overflow-y: auto;
+    transform: translateX(100%); transition: transform 0.35s cubic-bezier(0.22,1,0.36,1);
+    display: flex; flex-direction: column; gap: 0;
   }
-  .mobile-nav-drawer.is-open .mobile-nav-inner {
-    transform: translateX(0);
-  }
+  .mobile-nav-drawer.is-open .mobile-nav-inner { transform: translateX(0); }
   .mobile-nav-link {
-    display: block;
-    padding: 0.85rem 0;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #1a193c;
-    text-decoration: none;
-    border-bottom: 1px solid #f1f5f9;
-    transition: color 0.2s;
-    font-family: 'Inter', sans-serif;
-    background: none;
-    border-left: none;
-    border-right: none;
-    border-top: none;
-    cursor: pointer;
-    text-align: left;
-    width: 100%;
+    display: block; padding: 0.8rem 0; font-size: 1rem; font-weight: 500;
+    color: #1a193c; text-decoration: none; border-bottom: 1px solid #f1f5f9;
+    font-family: 'Inter', sans-serif; background: none; border-left: none;
+    border-right: none; border-top: none; cursor: pointer; text-align: left; width: 100%;
   }
   .mobile-nav-link:hover { color: #2563eb; }
   .mobile-nav-toggle { display: flex; justify-content: space-between; align-items: center; }
-  .toggle-arrow { transition: transform 0.3s; font-size: 0.8rem; }
+  .toggle-arrow { transition: transform 0.3s; font-size: 0.75rem; }
   .mobile-nav-group.is-expanded .toggle-arrow { transform: rotate(180deg); }
-  .mobile-nav-sub {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 0.35s cubic-bezier(0.22,1,0.36,1);
-    padding-left: 1rem;
-  }
-  .mobile-nav-group.is-expanded .mobile-nav-sub { max-height: 300px; }
+  .mobile-nav-sub { max-height: 0; overflow: hidden; transition: max-height 0.35s; padding-left: 1rem; }
+  .mobile-nav-group.is-expanded .mobile-nav-sub { max-height: 400px; }
   .mobile-nav-sublink {
-    display: block;
-    padding: 0.6rem 0;
-    font-size: 0.92rem;
-    font-weight: 500;
-    color: #475569;
-    text-decoration: none;
-    border-bottom: 1px solid #f8fafc;
-    transition: color 0.2s;
+    display: block; padding: 0.55rem 0; font-size: 0.88rem; font-weight: 400;
+    color: #475569; text-decoration: none; border-bottom: 1px solid #f8fafc;
   }
   .mobile-nav-sublink:hover { color: #1a193c; }
   .mobile-nav-cta {
-    display: block;
-    margin-top: 1.25rem;
-    padding: 0.85rem 1.5rem;
-    background: linear-gradient(135deg, #f5c518, #e8a912);
-    color: #1a1a5e;
-    font-weight: 700;
-    font-size: 1rem;
-    text-align: center;
-    border-radius: 10px;
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(245,197,24,0.3);
+    display: block; margin-top: 1.25rem; padding: 0.85rem 1.5rem;
+    background: linear-gradient(135deg, #f5c518, #e8a912); color: #1a1a5e;
+    font-weight: 700; font-size: 1rem; text-align: center;
+    border-radius: 10px; text-decoration: none;
   }
 
   /* RESPONSIVE */
   @media (max-width: 1024px) {
-    .nav-grid { grid-template-columns: auto 1fr auto; justify-content: space-between; }
+    .nav-grid { grid-template-columns: auto 1fr auto; }
     .left-nav, .right-nav { display: none; }
     .mobile-menu-btn { display: flex; }
     .mobile-nav-drawer { display: block; }
     .header-logo { justify-content: flex-start; }
-    .official-logo { height: 70px; }
+    .official-logo { height: 60px; }
   }
-
-  @media (max-width: 768px) {
-    .d-none-mo { display: none; }
-  }
+  @media (max-width: 768px) { .d-none-mo { display: none !important; } }
 </style>

@@ -51,7 +51,9 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/gioi-thieu';
     }
     .logo-bar img {
       height: 64px;
-      opacity: .9;
+      /* Make logo visible on dark background */
+      filter: brightness(0) invert(1);
+      opacity: .95;
     }
 
     /* Layout */
@@ -73,9 +75,9 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/gioi-thieu';
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      background: rgba(79,70,229,.2);
-      border: 1px solid rgba(79,70,229,.35);
-      color: var(--p);
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff;
       padding: 6px 16px;
       border-radius: 16px;
       font-size: 13px;
@@ -97,10 +99,11 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/gioi-thieu';
     /* Heading */
     h1 {
       font-family: 'Montserrat', var(--f);
-      font-size: clamp(28px, 4.5vw, 38px);
+      font-size: clamp(24px, 4.5vw, 38px);
       font-weight: 800;
       line-height: 1.18;
       margin-bottom: 20px;
+      text-align: center;
     }
     h1 em {
       color: #E8792B;

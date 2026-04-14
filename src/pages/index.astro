@@ -2,7 +2,6 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
-import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { defaultSiteUrl } from '../lib/site-content';
 import { getTestimonials, getCampuses } from '../lib/directus';
 
@@ -461,21 +460,15 @@ const newsCards = [
           </div>
         </section>
 
-        <!-- CONTACT FORM -->
+        <!-- CTA thay form - homepage không có form theo spec -->
         <section class="section-block section-block--contact anchor-section" id="lien-he">
           <div class="section-heading">
-            <p class="section-eyebrow">Đăng ký tư vấn</p>
+            <p class="section-eyebrow">Tư vấn tuyển sinh</p>
             <h2>Nhận tư vấn miễn phí cho con</h2>
-            <p class="section-block--contact__desc">Để lại email — đội ngũ tuyển sinh sẽ liên hệ trong 24 giờ</p>
           </div>
-
-          <div class="form-wrapper">
-            <LeadFormTwoStepEmailFirst
-              formId="homepage-form"
-              funnelCode="homepage"
-              schoolLevel="lien-cap"
-              submitText="Nhận tư vấn miễn phí"
-            />
+          <div style="display:flex;gap:1rem;flex-wrap:wrap;justify-content:center;margin-top:0.5rem">
+            <a href="/tuyen-sinh" class="btn-cta" style="font-size:1.1rem;padding:1rem 2.5rem">Đăng ký tham quan miễn phí</a>
+            <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="btn-cta" style="background:#0068ff;font-size:1.1rem;padding:1rem 2.5rem">Nhắn Zalo OA</a>
           </div>
         </section>
       </div>

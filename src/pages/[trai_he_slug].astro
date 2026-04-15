@@ -1,0 +1,136 @@
+---
+/**
+ * Trại Hè Squeeze Page — CMS-driven template
+ *
+ * One dynamic route backs all 8 summer-camp squeeze landing pages.
+ * Content comes from Directus (`trai_he_squeeze_pages` collection) with a
+ * build-time fallback to directus/seed/trai-he-squeeze-pages.json.
+ *
+ * getStaticPaths() filters to slugs served by this template, so other
+ * top-level pages (/blog, /so-sanh, /tuyen-sinh, …) are not shadowed.
+ */
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+import { getAllTraiHeSlugs, getTraiHePageBySlug } from '../lib/trai-he-pages';
+
+export async function getStaticPaths() {
+  const slugs = await getAllTraiHeSlugs();
+  return slugs
+    .filter((s) => s && s.startsWith('trai-he-'))
+    .map((slug) => ({ params: { trai_he_slug: slug } }));
+}
+
+const { trai_he_slug } = Astro.params;
+const page = await getTraiHePageBySlug(trai_he_slug!);
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const canonicalUrl = `https://truongvietanh.com/${page.slug}`;
+const camOnUrl = `/${page.slug}/cam-on`;
+const formIdWithFunnel = `squeeze-form-${page.funnel_code}`;
+---
+
+<SqueezePageLayout
+  title={page.page_title}
+  description={page.page_description}
+  canonicalUrl={canonicalUrl}
+  schoolLevel={page.school_level}
+  funnelCode={page.funnel_code}
+>
+  <section slot="hero">
+    {page.hero_badge && <span class="squeeze-hero__badge">{page.hero_badge}</span>}
+    <h1 class="squeeze-hero__heading">{page.hero_headline}</h1>
+    <p class="squeeze-hero__subheading">{page.hero_subheading}</p>
+  </section>
+
+  <section slot="usp"><USPGrid title={page.usp_title} items={page.usp_items} /></section>
+  <section slot="trust"><TrustMetrics title={page.metrics_title} metrics={page.metrics} /></section>
+
+  <section slot="content">
+    <div class="camp-content">
+      {page.content_title && <h2 class="camp-content__title">{page.content_title}</h2>}
+
+      <div class="camp-testimonial">
+        <div class="camp-testimonial__quote">"{page.testimonial_text}"</div>
+        <div class="camp-testimonial__author">— {page.testimonial_author}</div>
+      </div>
+
+      <div class="camp-grid">
+        {page.info_cards.map((card) => (
+          <div class="camp-card">
+            <h3>{card.icon} {card.title}</h3>
+            <p>{card.body}</p>
+          </div>
+        ))}
+      </div>
+
+      {page.urgency_text && (
+        <div class="camp-urgency"><p>{page.urgency_text}</p></div>
+      )}
+    </div>
+  </section>
+
+  <section slot="form">
+    <div class="quiz-intro">
+      <h2 class="squeeze-form-section__heading">{page.form_heading}</h2>
+      <p class="squeeze-form-section__description">{page.form_description}</p>
+      <ul class="quiz-checklist">
+        {page.quiz_intro_items.map((item) => (
+          <li>✓ {item}</li>
+        ))}
+      </ul>
+    </div>
+    <LeadFormTwoStepEmailFirst
+      formId="squeeze-form"
+      funnelCode={page.funnel_code}
+      schoolLevel={page.school_level}
+      submitText={page.form_submit_text}
+      successMessage={page.form_success_message}
+    />
+  </section>
+
+  <section slot="faq"><FAQSection title={page.faq_title} items={page.faq_items} /></section>
+</SqueezePageLayout>
+
+<script is:inline define:vars={{ formIdSel: `#${formIdWithFunnel}`, camOnUrl }}>
+  (function () {
+    var formEl = document.querySelector(formIdSel);
+    if (!formEl) return;
+    var obs = new MutationObserver(function () {
+      var success = formEl.querySelector('.form-step[data-step="success"]');
+      if (success && !success.hidden) {
+        var nameInput = formEl.querySelector('input[name="parent_name"]');
+        var n = nameInput ? nameInput.value : '';
+        setTimeout(function () {
+          window.location.href = camOnUrl + '?name=' + encodeURIComponent(n);
+        }, 1800);
+        obs.disconnect();
+      }
+    });
+    obs.observe(formEl, { attributes: true, subtree: true, attributeFilter: ['hidden'] });
+  })();
+</script>
+
+<style is:inline>
+  .camp-content { max-width: 900px; margin: 0 auto; }
+  .camp-content__title { font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center; }
+  .camp-testimonial { background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%); border-left: 4px solid #E8792B; padding: 1.75rem 1.5rem; border-radius: 10px; margin: 2rem 0; }
+  .camp-testimonial__quote { font-size: 1.05rem; line-height: 1.7; color: #1a1a1a; font-style: italic; margin-bottom: .75rem; }
+  .camp-testimonial__author { font-size: .9rem; font-weight: 600; color: #E8792B; }
+  .camp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+  .camp-card { background: #fff; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; transition: all .3s ease; }
+  .camp-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232,121,43,.12); transform: translateY(-3px); }
+  .camp-card h3 { font-family: Montserrat, sans-serif; font-size: 1.08rem; font-weight: 700; margin-bottom: .65rem; color: #1F4E79; }
+  .camp-card p { font-size: .94rem; line-height: 1.65; color: #555; margin: 0; }
+  .camp-urgency { background-color: #fff6ed; border-left: 4px solid #E8792B; padding: 1.25rem 1.5rem; border-radius: 8px; margin-top: 2rem; }
+  .camp-urgency p { margin: 0; font-size: .95rem; line-height: 1.7; color: #1a1a1a; }
+  .quiz-intro { margin-bottom: 1.5rem; }
+  .quiz-checklist { list-style: none; padding: 0; margin: 1.25rem auto 1.5rem; max-width: 420px; text-align: left; display: flex; flex-direction: column; gap: .55rem; }
+  .quiz-checklist li { font-size: .95rem; color: #1F4E79; font-weight: 500; padding: .6rem .85rem; background: rgba(212,168,67,.08); border-radius: 8px; border-left: 3px solid #D4A843; }
+  @media (max-width: 768px) { .camp-grid { grid-template-columns: 1fr; } }
+</style>

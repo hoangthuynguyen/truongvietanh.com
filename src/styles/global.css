@@ -1280,7 +1280,7 @@ body.menu-open {
 
 @media (max-width: 760px) {
   .page-flow {
-    width: min(var(--max-width), calc(100% - 1rem));
+    width: min(var(--max-width), calc(100% - 2rem));
     padding-top: 0.3rem;
   }
 
@@ -1294,7 +1294,7 @@ body.menu-open {
   .hero-block,
   .section-block,
   .cta-banner {
-    padding: 1.1rem;
+    padding: 1.25rem;
   }
 
   .hero-block h1 {
@@ -1388,8 +1388,8 @@ body.menu-open {
 }
 .gi-form-card .lead-form { max-width: 100%; width: 100%; }
 .gi-form-heading {
-  font-size: 0.95rem; font-weight: 800; color: #1a1a5e; margin-bottom: 0.75rem;
-  text-align: center; white-space: normal; word-wrap: break-word;
+  font-size: 1.05rem; font-weight: 800; color: #1a1a5e; margin-bottom: 0.75rem;
+  text-align: left; white-space: normal; word-wrap: break-word;
 }
 
 /* --- TOC + CONTENT LAYOUT --- */
@@ -1725,7 +1725,8 @@ body.menu-open {
   .gi-related-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .gi-container { padding: 0 1.25rem; }
+  .gi-container { padding: 0 1rem; }
+  .gi-body { padding: 2rem 0.5rem; }
   .gi-hero { padding: 3.5rem 0 3rem; }
   .gi-hero::after { height: 50px; }
   .gi-hero-inner { flex-direction: column; gap: 2rem; }
@@ -1750,7 +1751,13 @@ body.menu-open {
   .gi-aggregate-rating { flex-wrap: wrap; }
 }
 @media (max-width: 480px) {
+  .gi-container { padding: 0 1rem; }
+  .gi-section { padding: 1.25rem; border-radius: 10px; }
+  .gi-h1 { font-size: 1.5rem; }
+  .gi-section h2 { font-size: 1.15rem; }
   .gi-related-grid { grid-template-columns: 1fr; }
+  .gi-values-items { grid-template-columns: 1fr; }
+  .gi-evidence-item { flex: 1 1 100%; }
 }
 
 /* ===================== UTILITIES & POLISH (2026-04) ===================== */
@@ -1932,8 +1939,18 @@ body.menu-open {
 }
 
 @media (max-width: 480px) {
+  .page-flow {
+    width: min(var(--max-width), calc(100% - 1.5rem));
+  }
   .section-block {
-    padding: 1.25rem;
+    padding: 1rem;
+  }
+  .hero-block,
+  .cta-banner {
+    padding: 1rem;
+  }
+  .hero-block h1 {
+    font-size: clamp(1.8rem, 9vw, 2.8rem);
   }
 }
 

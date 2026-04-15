@@ -4,7 +4,7 @@ import { getSiteSettings } from '../lib/directus';
 
 // Fetch site settings from Directus CMS (cached at build time)
 const siteSettings = await getSiteSettings();
-const announcementText = siteSettings?.announcement_text || 'Tuyển sinh 2026–2027 đang mở — Ưu đãi Early Bird giảm đến 15% học phí.';
+const announcementText = siteSettings?.announcement_text || 'Tuyển sinh 2026–2027 đang mở — Ưu đãi Early bird giảm đến 46% học phí.';
 const announcementLink = siteSettings?.announcement_link || '/tuyen-sinh';
 const announcementActive = siteSettings?.announcement_active ?? true;
 const hotline = siteSettings?.hotline || '0916 961 409';
@@ -403,9 +403,9 @@ const schemaPayload = structuredData
       .exit-popup.is-open { display:flex; }
       .exit-popup__overlay { position:absolute; inset:0; background:rgba(0,0,0,0.6); backdrop-filter:blur(4px); }
       .exit-popup__modal {
-        position:relative; background:#fff; border-radius:20px; padding:2.5rem;
+        position:relative; background:#fff; border-radius:20px; padding:2rem 1.5rem;
         max-width:420px; width:92%; box-shadow:0 20px 60px rgba(0,0,0,0.25);
-        text-align:center; animation:exitSlide 0.3s ease-out;
+        text-align:center; animation:exitSlide 0.3s ease-out; box-sizing:border-box;
       }
       @keyframes exitSlide { from{transform:translateY(-30px);opacity:0} to{transform:translateY(0);opacity:1} }
       .exit-popup__close {
@@ -427,6 +427,12 @@ const schemaPayload = structuredData
       }
       .exit-popup__note { font-size:0.82rem; color:#94a3b8; margin:0.75rem 0 0; }
       .exit-popup__note a { color:#1a1a5e; }
+      @media(max-width:480px){
+        .exit-popup__modal { padding:1.75rem 1.25rem; }
+        .exit-popup__form { flex-direction:column; }
+        .exit-popup__title { font-size:1.15rem; }
+        .exit-popup__desc { font-size:0.85rem; }
+      }
 
       /* === Skip to content === */
       .skip-to-content {

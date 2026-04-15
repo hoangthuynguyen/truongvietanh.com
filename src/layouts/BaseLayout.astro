@@ -261,6 +261,31 @@ const schemaPayload = structuredData
         img.addEventListener('load', function(){ img.style.background = ''; img.style.animation = ''; }, {once:true});
       });
 
+      /* === gi-section collapsible === */
+      document.querySelectorAll('.gi-section').forEach(function(section){
+        if(section.id === 'faq') return;
+        var h2 = section.querySelector('h2');
+        if(!h2) return;
+        var siblings = [];
+        var node = h2.nextElementSibling;
+        while(node){ siblings.push(node); node = node.nextElementSibling; }
+        if(siblings.length === 0) return;
+        var wrap = document.createElement('div');
+        wrap.className = 'gi-section__collapsible';
+        siblings.forEach(function(s){ wrap.appendChild(s); });
+        var btn = document.createElement('button');
+        btn.className = 'gi-read-more-btn';
+        btn.innerHTML = '… Đọc thêm ▾';
+        btn.setAttribute('aria-expanded','false');
+        btn.addEventListener('click', function(){
+          var open = wrap.classList.toggle('is-open');
+          btn.innerHTML = open ? '▴ Thu gọn' : '… Đọc thêm ▾';
+          btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+        h2.after(wrap);
+        wrap.after(btn);
+      });
+
       /* === Animated counter === */
       document.querySelectorAll('.stat-num, .gi-stat-value, [data-counter]').forEach(function(el){
         var text = el.textContent.trim();

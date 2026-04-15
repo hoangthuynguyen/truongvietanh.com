@@ -11,15 +11,17 @@ type Schema = { articles: any[]; [key: string]: any };
 const client = createDirectus<Schema>(DIRECTUS_URL).with(rest()).with(staticToken(DIRECTUS_TOKEN));
 
 let items: any[] = [];
-try {
-  const filter: any = { status: { _eq: 'published' } };
-  if (data.category) filter.category = { _eq: data.category };
-  if (data.tags?.length) filter.tags = { _contains: data.tags };
-  items = await client.request(readItems('articles' as never, {
-    filter, limit: data.limit || 4, sort: ['-publish_date'] as any,
-    fields: ['id', 'slug', 'title', 'subtitle', 'cover_image', 'publish_date', 'read_time_minutes'] as any,
-  } as any) as any) as any[];
-} catch { items = []; }
+if (DIRECTUS_TOKEN) {
+  try {
+    const filter: any = { status: { _eq: 'published' } };
+    if (data.category) filter.category = { _eq: data.category };
+    if (data.tags?.length) filter.tags = { _contains: data.tags };
+    items = await client.request(readItems('articles' as never, {
+      filter, limit: data.limit || 4, sort: ['-publish_date'] as any,
+      fields: ['id', 'slug', 'title', 'subtitle', 'cover_image', 'publish_date', 'read_time_minutes'] as any,
+    } as any) as any) as any[];
+  } catch { items = []; }
+}
 ---
 {items.length > 0 && (
   <section class="b-related-articles">

@@ -38,26 +38,35 @@ async function cached<T>(key: string, fn: () => Promise<T>): Promise<T> {
 // ============================================================
 
 export async function getAllPageSlugs(opts: { status?: 'published' | 'draft' | 'all' } = {}): Promise<string[]> {
-  const filter = opts.status && opts.status !== 'all' ? { status: { _eq: opts.status } } : {};
-  const items = await client.request(
-    readItems('pages' as never, { fields: ['slug'], filter, limit: -1 }) as any,
-  ) as Array<{ slug: string }>;
-  return items.map((p) => p.slug);
+  try {
+    const filter = opts.status && opts.status !== 'all' ? { status: { _eq: opts.status } } : {};
+    const items = await client.request(
+      readItems('pages' as never, { fields: ['slug'], filter, limit: -1 }) as any,
+    ) as Array<{ slug: string }>;
+    return items.map((p) => p.slug);
+  } catch (err) {
+    console.warn('[cms] getAllPageSlugs failed — CMS unavailable, returning empty list');
+    return [];
+  }
 }
 
 export async function getPageBySlug(slug: string): Promise<Page | null> {
   return cached(`page:${slug}`, async () => {
-    const items = await client.request(
-      readItems('pages' as never, {
-        filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
-        fields: [
-          '*',
-          'blocks.id', 'blocks.collection', 'blocks.sort', 'blocks.item.*',
-        ],
-        limit: 1,
-      }) as any,
-    ) as Page[];
-    return items[0] || null;
+    try {
+      const items = await client.request(
+        readItems('pages' as never, {
+          filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
+          fields: [
+            '*',
+            'blocks.id', 'blocks.collection', 'blocks.sort', 'blocks.item.*',
+          ],
+          limit: 1,
+        }) as any,
+      ) as Page[];
+      return items[0] || null;
+    } catch {
+      return null;
+    }
   });
 }
 
@@ -87,12 +96,14 @@ export async function getFunnelByCode(code: string): Promise<Funnel | null> {
 // ============================================================
 
 export async function getTestimonials(opts: { schoolLevel?: string; campus?: string; limit?: number } = {}): Promise<Testimonial[]> {
-  const filter: any = {};
-  if (opts.schoolLevel) filter.school_level = { _eq: opts.schoolLevel };
-  if (opts.campus) filter.campus_ref = { _eq: opts.campus };
-  return await client.request(
-    readItems('testimonials' as never, { filter, limit: opts.limit || 6, sort: ['-featured', '-id'] as any } as any) as any,
-  ) as Testimonial[];
+  try {
+    const filter: any = {};
+    if (opts.schoolLevel) filter.school_level = { _eq: opts.schoolLevel };
+    if (opts.campus) filter.campus_ref = { _eq: opts.campus };
+    return await client.request(
+      readItems('testimonials' as never, { filter, limit: opts.limit || 6, sort: ['-featured', '-id'] as any } as any) as any,
+    ) as Testimonial[];
+  } catch { return []; }
 }
 
 export async function getCampusBySlug(slug: string): Promise<Campus | null> {
@@ -134,6 +145,7 @@ export async function getSiteSettings(): Promise<SiteSettings> {
 }
 
 export async function getActiveAnnouncement(): Promise<Announcement | null> {
+  try {
   const now = new Date().toISOString();
   const items = await client.request(
     readItems('announcements' as never, {
@@ -149,4 +161,5 @@ export async function getActiveAnnouncement(): Promise<Announcement | null> {
     } as any) as any,
   ) as Announcement[];
   return items[0] || null;
+  } catch { return null; }
 }

@@ -11,6 +11,7 @@
  *  - Returns `{variant, blocks}` where blocks override the base page blocks
  */
 import { createDirectus, rest, readItems, staticToken } from '@directus/sdk';
+import { hashBucket, pickVariant } from './lead-scoring';
 import type { AbTest, AbTestVariant, BlockInstance, Page } from '../types/cms';
 
 type Schema = { ab_tests: AbTest[]; [key: string]: any };
@@ -40,31 +41,9 @@ export async function getAbTest(id: string): Promise<AbTest | null> {
 }
 
 /**
- * Stable hash from user identifier → [0, 1) bucket.
- * Uses the browser's first-touch cookie ID if present, else falls back to
- * page slug + test ID for SSG stability.
+ * hashBucket + pickVariant are re-exported from lead-scoring.ts
+ * (shared so they're unit-testable and used by worker + client alike).
  */
-function hashBucket(seed: string): number {
-  let h = 2166136261;
-  for (let i = 0; i < seed.length; i++) {
-    h ^= seed.charCodeAt(i);
-    h = Math.imul(h, 16777619);
-  }
-  return (h >>> 0) / 0xffffffff;
-}
-
-/**
- * Pick a variant given total weight and user bucket.
- */
-function pickVariant(variants: AbTestVariant[], bucket: number): AbTestVariant {
-  const totalWeight = variants.reduce((s, v) => s + v.weight, 0);
-  let cumulative = 0;
-  for (const v of variants) {
-    cumulative += v.weight / totalWeight;
-    if (bucket <= cumulative) return v;
-  }
-  return variants[variants.length - 1];
-}
 
 /**
  * Resolve which variant a visitor should see.

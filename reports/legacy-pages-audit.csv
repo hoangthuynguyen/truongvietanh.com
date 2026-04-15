@@ -1,0 +1,252 @@
+slug,url,type,layout,title,h1,description,forms,uses_cms,schema_types,file,lines
+blog/[slug],/blog/[slug],article,BaseLayout.astro,,"]*>[\s\S]*?\s*/i, '')
+    // Remove CMS ""Bước Tiếp Theo"" section (template already has this)
+    .replace(/]*>\s*Bước Tiếp Theo\s*[\s\S]*?(?=)?\|([^\n]+)\|\s*\n\s*\|[-\s|]+\|\s*\n((?:\s*\|[^\n]+\|\s*\n?)+)()?/g, (_match, _p1, headerRow, bodyRows) => {
+      const headers = headerRow.split('|').map((h: string) => h.trim()).filter(Boolean);
+      const rows = bodyRows.trim().split('\n').map((row: string) =>
+        row.split('|').map((c: string) => c.trim()).filter(Boolean)
+      );
+      let html = '';
+      headers.forEach((h: string) => { html += `${h}`; });
+      html += '';
+      rows.forEach((cols: string[]) => {
+        html += '';
+        cols.forEach((c: string) => { html += `${c}`; });
+        html += '';
+      });
+      html += '';
+      return html;
+    });
+  return cleaned;
+}
+
+const cleanedContent = cleanContent(post.content);
+const pageTitle = post.title.length > 55 ? post.title : `${post.title} | Trường Việt Anh`;
+const pageDesc = post.excerpt || `${post.title} — Tìm hiểu chi tiết tại blog Trường Việt Anh.`;
+const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: post.title,
+    description: pageDesc,
+    datePublished: formatISO(post.published_at),
+    dateModified: formatISO(post.published_at),
+    url: canonicalUrl,
+    inLanguage: 'vi',
+    wordCount: cleanedContent ? cleanedContent.replace(/]*>/g, '').split(/\s+/).length : 0,
+    author: {
+      '@type': 'Organization',
+      name: 'Ban Truyền Thông Trường Việt Anh',
+      url: 'https://truongvietanh.com',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Trường Việt Anh',
+      url: 'https://truongvietanh.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://truongvietanh.com/logo-crest-80.webp',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': canonicalUrl,
+    },
+    speakable: {
+      '@type': 'SpeakableSpecification',
+      cssSelector: ['.blog-article h1', '.blog-article > p:first-of-type'],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://truongvietanh.com/tin-tuc' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: canonicalUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'Trường Việt Anh dạy chương trình gì?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Trường Việt Anh áp dụng chương trình song ngữ tích hợp: 100% chương trình Bộ GD&ĐT Việt Nam kết hợp chương trình Cambridge International cho các môn Toán, Khoa học, ICT và Computing.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học sinh tốt nghiệp đạt IELTS bao nhiêu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học sinh THPT Việt Anh tốt nghiệp đạt IELTS từ 6.0 đến 8.0, trung bình đầu ra 6.5 — đủ điều kiện xét tuyển vào các trường đại học xếp hạng cao trên thế giới.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học phí Trường Việt Anh bao nhiêu?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Học phí dao động từ 5 đến 12 triệu đồng/tháng tuỳ cấp học, bao gồm giáo viên bản ngữ, chương trình Cambridge và 16 kỹ năng thế kỷ 21 theo WEF.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Trường có bao nhiêu cơ sở?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Trường Việt Anh hiện có 9 cơ sở tại TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Cần Giuộc - Long An và TP. Rạch Giá - Kiên Giang.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Làm sao để đăng ký tuyển sinh?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Phụ huynh có thể đăng ký tư vấn trên trang tuyển sinh, gọi hotline 0916 961 409, hoặc đặt lịch tham quan trường.',
+        },
+      },
+    ],
+  },
+];
+---
+
+
+  
+    
+
+    
+    
+      
+    
+
+    
+    
+      
+        
+          Trang chủ
+          Blog
+          {post.title}
+        
+      
+    
+
+    
+    
+      
+        
+          {post.title}",,blog-lead-form | funnel:blog-post,no,,src/pages/blog/[slug].astro,1255
+,/,homepage,BaseLayout.astro,Trường Việt Anh | Hệ thống trường học liên cấp từ Mầm non đến THPT,Trường Việt Anh,"Trường Việt Anh — hệ thống giáo dục liên cấp song ngữ tại TP.HCM. Tiếng Anh IELTS 6.0-8.0, kỹ năng thế kỷ 21, 99% đỗ ĐH. Học phí từ 5 triệu/tháng.",,no,,src/pages/index.astro,863
+tuyen-sinh/mam-non,/tuyen-sinh/mam-non,landing,SqueezePageLayout.astro,Mầm Non Song Ngữ Việt Anh - Nền Tảng Vàng Cho Tương Lai,85% Phát Triển Não Con Xảy Ra Trước 3 TuổiCon Bạn Sẽ Bỏ Lỡ Những Năm Vàng Này Không?,"Khám phá cách Montessori + STEAM + Song ngữ từ 18 tháng xây dựng nền tảng đúng từ bây giờ. 3 campus, 15+ năm kinh nghiệm, 98% phụ huynh hài lòng.",tuyen-sinh-form | funnel:tuyen-sinh-mam-non,no,,src/pages/tuyen-sinh/mam-non/index.astro,562
+tuyen-sinh/mam-non/cau-chuyen-phu-huynh,/tuyen-sinh/mam-non/cau-chuyen-phu-huynh,landing,,"Sau 8 tháng, con tôi tự tin nói tiếng Anh và yêu trường — Chị Lan, Gò Vấp","Sau 8 tháng, con tôi
+        tự tin nói tiếng Anh
+        và yéu trường","Khám phá 3 câu chuyện cảm động của phụ huynh Mầm Non Việt Anh. Con tôi từ nhút nhát thành tự tin, bé thích đi học mỗi ngày, giáo viên yêu thương như mẹ.",f1 | f2,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/cau-chuyen-phu-huynh/index.astro,544
+tuyen-sinh/mam-non/chuong-trinh,/tuyen-sinh/mam-non/chuong-trinh,landing,,Chương Trình Mầm Non Việt Anh — Nơi Con Yêu Phát Triển Toàn Diện,Chương Trình Mầm Non Việt Anh — Montessori + STEAM Từ 18 Tháng Tuổi,"Khám phá chương trình mầm non song ngữ Cambridge tại Trường Việt Anh. Môi trường an toàn, yêu thương, phát triển toàn diện cho bé từ 18 tháng.",,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/chuong-trinh/index.astro,462
+tuyen-sinh/mam-non/co-so,/tuyen-sinh/mam-non/co-so,landing,,Mầm Non Việt Anh — Chỉ cách nhà anh/chị 7 phút,"Mầm Non Việt Anh
+        — Chỉ 7 phút từ nhà
+        5 cơ sở tiện lợi tại TPHCM","Mầm Non Việt Anh có 5 cơ sở tại TPHCM. Lớp học hiện đại, an toÝv, shuttle bus, bếp ăn chuẩn dinh dưỡng, camera 24/7. Đã có 312 phụ huynh in khu vực tin tưởng.",f1 | f2,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/co-so/index.astro,550
+tuyen-sinh/mam-non/gioi-thieu,/tuyen-sinh/mam-non/gioi-thieu,landing,,Giới Thiệu Bạn Bè — Nhận Ngay Học Bổng 10 Triệu + Quà Tặng,"Giới thiệu bạn bè
+        Nhận học bổng 10 triệu
+        + Quà tặng cho cả hai gia đình",Giới thiệu bạn bè đến Mầm Non Việt Anh: Nhận học bổng 10 triệu + quà tặng cho cả hai gia đình. Không giới hạn số lượt giới thiệu. Áp dụng tất cả cơ sở.,f1 | f2,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/gioi-thieu/index.astro,549
+tuyen-sinh/mam-non/nhap-hoc-2026,/tuyen-sinh/mam-non/nhap-hoc-2026,landing,,Chuẩn Bị Nhập Học Mầm Non Tháng 9/2026 — Ưu Đãi Hè Đặc Biệt,"Chuẩn Bị Con Nhập Học
+        Ưu Đãi Hè Đặc Biệt
+        Tháng 9/2026",Đăng ký nhập học tháng 9/2026: Giảm 20% học phí tháng đầu + Tặng đồng phục 2 triệu. Miễn phí trải nghiệm 1 tuần. Hạn 30/04/2026.,f1 | f2,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/nhap-hoc-2026/index.astro,536
+tuyen-sinh/mam-non/so-sanh,/tuyen-sinh/mam-non/so-sanh,landing,,So Sánh Mầm Non Việt Anh vs Các Trường Khác — Bảng So Sánh Chi Tiết 2026,"Mầm Non Việt Anh
+        vs Các Trường Khác
+        So Sánh Chi Tiết 2026","Bảng so sánh miễn phí: Mầm Non Việt Anh vs các trường khác (học phí, chương trình, cơ sở vật chất, đánh giá phụ huynh). Tải PDF chi tiết ngay.",f1 | f2,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/so-sanh/index.astro,537
+tuyen-sinh/mam-non/tu-van,/tuyen-sinh/mam-non/tu-van,landing,,Con hay khóc khi đi học? 5 sai lầm thường gặp khi chọn trường mầm non,"Con Hay Khóc Khi Đi Học?
+        5 Sai Lầm Thường Gặp
+        Khi Chọn Trường Mầm Non","Tư vấn miễn phí 1-1 từ chuyên gia tâm lý trẻ em. Khám phá 5 sai lầm phổ biến, cách giúp con thích nghi nhanh, và bí quyết chọn trường phù hợp.",f1 | f2,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/tu-van/index.astro,535
+tuyen-sinh/mam-non/webinar,/tuyen-sinh/mam-non/webinar,landing,,Webinar MIỄN PHÍ: Cách chọn trường mầm non giúp con phát triển toàn diện,"Webinar MIỄN PHÍ:
+        Cách Chọn Trường Mầm Non
+        Giúp Con Phát Triển Toàn Diện","Webinar miễn phí 12/04: Cách chọn trường mầm non, 5 sai lầm phổ biến, tiêu chí đánh giá chương trình. Đã có 156 phụ huynh đăng ký.",f1 | f2,no,EducationalOrganization | PostalAddress | EducationalOrganization,src/pages/tuyen-sinh/mam-non/webinar/index.astro,546
+tuyen-sinh/thcs,/tuyen-sinh/thcs,landing,SqueezePageLayout.astro,Tuyển Sinh THCS - Trường Liên Cấp Việt Anh,95% học sinh Việt Anh vào TOP trường THPT — Bí quyết nằm ở 4 năm THCS,"95% học sinh Việt Anh vào TOP trường THPT — Bí quyết nằm ở 4 năm THCS. Chương trình song ngữ chuyên sâu, định hướng THPT, IELTS, Coding & AI từ lớp 6.",tuyen-sinh-form | funnel:tuyen-sinh-thcs,no,,src/pages/tuyen-sinh/thcs/index.astro,153
+tuyen-sinh/thcs/checklist,/tuyen-sinh/thcs/checklist,landing,SqueezePageLayout.astro,Checklist Chọn Trường THCS — 10 Tiêu Chí Ba/Mẹ Cần Xem Xét,Checklist Chọn Trường THCS — 10 Tiêu Chí Ba/Mẹ Cần Xem Xét,"Hướng dẫn chọn trường THCS đúng cho con: 10 tiêu chí quan trọng nhất, so sánh trường công vs tư thục, và checklist đánh giá chi tiết. Tải PDF miễn phí.",checklist-thcs-form | funnel:checklist-thcs,no,,src/pages/tuyen-sinh/thcs/checklist/index.astro,149
+tuyen-sinh/thcs/chuyen-cap,/tuyen-sinh/thcs/chuyen-cap,landing,SqueezePageLayout.astro,Chuyển Cấp Vào THCS Việt Anh — Hướng Dẫn Cho Phụ Huynh Lớp 5,Chuyển Cấp Vào THCS Việt Anh — Hướng Dẫn Cho Phụ Huynh Lớp 5,"Hướng dẫn chuyển cấp từ Tiểu Học vào THCS Việt Anh: Bài kiểm tra xếp lớp, chương trình hội nhập, học bổng, và hỗ trợ chuyển đổi toàn diện cho con lớp 5.",chuyen-cap-thcs-form | funnel:chuyen-cap-thcs,no,,src/pages/tuyen-sinh/thcs/chuyen-cap/index.astro,149
+tuyen-sinh/thcs/dang-ky-som,/tuyen-sinh/thcs/dang-ky-som,landing,SqueezePageLayout.astro,Đăng Ký Sớm THCS 2026-2027 — Ưu Đãi Học Phí & Suất Ưu Tiên,Đăng Ký Sớm THCS 2026-2027 — Ưu Đãi Học Phí & Suất Ưu Tiên,"Đăng ký sớm THCS Việt Anh 2026-2027: Giảm học phí lên đến 15%, suất ưu tiên chọn lớp, và quà tặng khai giảng. Chỉ áp dụng cho 50 gia đình đăng ký trước 30/4.",early-bird-thcs-form | funnel:early-bird-thcs,no,,src/pages/tuyen-sinh/thcs/dang-ky-som/index.astro,149
+tuyen-sinh/thcs/tham-quan-truong,/tuyen-sinh/thcs/tham-quan-truong,landing,SqueezePageLayout.astro,Tham Quan Trường THCS Việt Anh — Trải Nghiệm Thực Tế Trước Khi Quyết Định,Tham Quan Trường THCS Việt Anh — Trải Nghiệm Thực Tế Trước Khi Quyết Định,"Đặt lịch tham quan THCS Việt Anh: Xem phòng STEM Lab, lớp học song ngữ, sân thể thao, gặp giáo viên trực tiếp. Buổi tham quan miễn phí, có tư vấn cá nhân.",tour-thcs-form | funnel:tour-thcs,no,,src/pages/tuyen-sinh/thcs/tham-quan-truong/index.astro,149
+tuyen-sinh/thcs/webinar,/tuyen-sinh/thcs/webinar,landing,SqueezePageLayout.astro,Webinar Miễn Phí: Lộ Trình THCS–THPT — Định Hướng Tương Lai Cho Con,Webinar Miễn Phí: Lộ Trình THCS–THPT — Định Hướng Tương Lai Cho Con,"Tham gia webinar miễn phí 90 phút cùng chuyên gia Trường Việt Anh: Lộ trình THCS–THPT, chuẩn bị IELTS từ lớp 6, Coding & AI, và chiến lược vào trường THPT top.",webinar-thcs-form | funnel:webinar-thcs,no,,src/pages/tuyen-sinh/thcs/webinar/index.astro,149
+tuyen-sinh/thpt,/tuyen-sinh/thpt,landing,SqueezePageLayout.astro,"Tuyển Sinh THPT Việt Anh 2026-2027 — 99% Đỗ Đại Học, IELTS 6.0-8.0","99% Đỗ Đại Học, IELTS 6.0-8.0, 30% Du Học Thành Công — THPT Việt Anh","99% học sinh THPT Việt Anh đỗ đại học, 30% du học thành công. IELTS 6.0-8.0 khi tốt nghiệp, luyện THPTQG chiến lược từ lớp 10, tư vấn đại học 1-1, liên kết 50+ ĐH quốc tế. Hotline: 0916 961 409.",tuyen-sinh-form | funnel:tuyen-sinh-thpt,no,,src/pages/tuyen-sinh/thpt/index.astro,153
+tuyen-sinh/thpt/ap-luc-thi,/tuyen-sinh/thpt/ap-luc-thi,landing,SqueezePageLayout.astro,Giảm Áp Lực Thi Cử THPT — 99% Đỗ ĐH Mà Không Cần Ôn 20 Tiếng/Ngày | Việt Anh,"Giảm Áp Lực Thi Cử THPT — 99% Đỗ ĐH Mà Không Cần ""Ngủ 4 Tiếng, Ôn 20 Tiếng""","Phương pháp học hiệu quả tại THPT Việt Anh giúp con giảm áp lực thi cử: đánh giá toàn diện, IELTS thay thế, luyện THPTQG chiến lược từ lớp 10, tâm lý học đường. 99% đỗ ĐH, IELTS 6.0-8.0. Hotline: 0916 961 409.",ap-luc-thi-form | funnel:ap-luc-thi-thpt,no,,src/pages/tuyen-sinh/thpt/ap-luc-thi/index.astro,153
+tuyen-sinh/thpt/checklist,/tuyen-sinh/thpt/checklist,landing,SqueezePageLayout.astro,Checklist Chọn Trường THPT — 10 Tiêu Chí Quan Trọng Nhất Quyết Định Tương Lai Con,Checklist Chọn Trường THPT — 10 Tiêu Chí Quyết Định Tương Lai Con,"Checklist 10 tiêu chí chọn trường THPT: tỷ lệ đỗ ĐH (99% tại Việt Anh), IELTS 6.0-8.0, hỗ trợ du học, chất lượng giáo viên, sĩ số lớp, cơ sở vật chất, hướng nghiệp. So sánh khách quan. Hotline: 0916 961 409.",checklist-thpt-form | funnel:checklist-thpt,no,,src/pages/tuyen-sinh/thpt/checklist/index.astro,153
+tuyen-sinh/thpt/dang-ky-som,/tuyen-sinh/thpt/dang-ky-som,landing,SqueezePageLayout.astro,Đăng Ký Sớm THPT 2026-2027 — Ưu Đãi Học Phí 15% & Suất Ưu Tiên | Việt Anh,Đăng Ký Sớm THPT 2026-2027 — Giảm 15% Học Phí & Ưu Tiên Chọn Lớp,"Đăng ký sớm THPT Việt Anh 2026-2027: giảm 15% học phí, ưu tiên chọn lớp, khóa mức giá 3 năm, học bổng chuyển tiếp. Chỉ 60 suất lớp 10 — 300+ phụ huynh quan tâm mỗi năm. Hotline: 0916 961 409.",early-bird-thpt-form | funnel:early-bird-thpt,no,,src/pages/tuyen-sinh/thpt/dang-ky-som/index.astro,153
+tuyen-sinh/thpt/du-hoc-profile,/tuyen-sinh/thpt/du-hoc-profile,landing,SqueezePageLayout.astro,"Xây Dựng Hồ Sơ Du Học Từ THPT — Lộ Trình 3 Năm, 30% Thành Công | Việt Anh",Xây Dựng Hồ Sơ Du Học Từ Lớp 10 — Lộ Trình 3 Năm Bài Bản Tại Việt Anh,"Lộ trình 3 năm xây dựng hồ sơ du học từ lớp 10 tại THPT Việt Anh: IELTS 6.0-8.0, SAT/AP, portfolio ngoại khóa ấn tượng, essay cá nhân, tư vấn visa A-Z. 30% học sinh du học thành công mỗi năm. Hotline: 0916 961 409.",du-hoc-profile-form | funnel:du-hoc-thpt,no,,src/pages/tuyen-sinh/thpt/du-hoc-profile/index.astro,153
+tuyen-sinh/thpt/tham-quan-truong,/tuyen-sinh/thpt/tham-quan-truong,landing,SqueezePageLayout.astro,Tham Quan THPT Việt Anh — Xem Cơ Sở Vật Chất & Gặp Giáo Viên Trực Tiếp | Miễn Phí,"Tham Quan THPT Việt Anh — Xem Tận Mắt, Gặp Giáo Viên, Quyết Định Đúng","Đặt lịch tham quan THPT Việt Anh miễn phí. Xem phòng học hiện đại, lab khoa học, trung tâm hướng nghiệp, gặp giáo viên trực tiếp. 90 phút trải nghiệm thực tế + tư vấn lộ trình ĐH/du học 1-1. Hotline: 0916 961 409.",tour-thpt-form | funnel:tour-thpt,no,,src/pages/tuyen-sinh/thpt/tham-quan-truong/index.astro,153
+tuyen-sinh/tieu-hoc,/tuyen-sinh/tieu-hoc,landing,SqueezePageLayout.astro,Tuyển Sinh Tiểu Học - Trường Liên Cấp Việt Anh,Nền tảng 5 năm quyết định cả tương lai — Ba/Mẹ đã chọn đúng trường cho con?,"Nền tảng 5 năm quyết định cả tương lai con em. Chương trình Tiểu Học song ngữ chuẩn quốc tế với giáo viên nước ngoài, Cambridge pathway, 20+ CLB ngoại khóa từ lớp 1.",tuyen-sinh-form | funnel:tuyen-sinh-tieu-hoc,no,,src/pages/tuyen-sinh/tieu-hoc/index.astro,154
+tuyen-sinh/tieu-hoc/checklist,/tuyen-sinh/tieu-hoc/checklist,landing,SqueezePageLayout.astro,Checklist Chọn Trường Tiểu Học — 10 Tiêu Chí Quan Trọng Cho Con,Checklist Chọn Trường Tiểu Học10 Tiêu Chí Quan Trọng Cho Con,"Tải miễn phí Checklist 10 tiêu chí chọn trường Tiểu Học: chất lượng giảng dạy, song ngữ, sĩ số lớp, ngoại khóa, cơ sở vật chất, an toàn, chứng chỉ Cambridge.",checklist-tieu-hoc-form | funnel:checklist-tieu-hoc,no,,src/pages/tuyen-sinh/tieu-hoc/checklist/index.astro,144
+tuyen-sinh/tieu-hoc/chuong-trinh,/tuyen-sinh/tieu-hoc/chuong-trinh,landing,SqueezePageLayout.astro,Chương Trình Tiểu Học Song Ngữ — Xây Dựng Nền Tảng Vững Chắc Cho Tương Lai,Chương Trình Tiểu Học Song NgữXây Dựng Nền Tảng Vững Chắc Cho Tương Lai,"Chương trình Tiểu Học song ngữ Trường Việt Anh: Cambridge + Bộ GD&ĐT, STEM từ lớp 1, giáo viên bản ngữ, 20+ câu lạc bộ ngoại khóa. Nền tảng vững chắc cho tương lai con.",chuong-trinh-tieu-hoc-form | funnel:chuong-trinh-tieu-hoc,no,,src/pages/tuyen-sinh/tieu-hoc/chuong-trinh/index.astro,144
+tuyen-sinh/tieu-hoc/dang-ky-som,/tuyen-sinh/tieu-hoc/dang-ky-som,landing,SqueezePageLayout.astro,Đăng Ký Sớm Tiểu Học 2026 — Ưu Đãi Học Phí & Suất Ưu Tiên,Đăng Ký Sớm Tiểu Học 2026Ưu Đãi Học Phí & Suất Ưu Tiên,"Đăng ký sớm Tiểu Học 2026 tại Trường Việt Anh: giảm 15% học phí, khóa giá 5 năm, ưu tiên lớp song ngữ 25 học sinh. Hạn chót 30/06/2026.",early-bird-tieu-hoc-form | funnel:early-bird-tieu-hoc,no,,src/pages/tuyen-sinh/tieu-hoc/dang-ky-som/index.astro,144
+tuyen-sinh/tieu-hoc/so-sanh,/tuyen-sinh/tieu-hoc/so-sanh,landing,SqueezePageLayout.astro,So Sánh Trường Tiểu Học — Việt Anh vs Các Trường Tư Thục Khác,So Sánh Trường Tiểu HọcViệt Anh vs Các Trường Tư Thục Khác,"Bảng so sánh chi tiết Trường Việt Anh với các trường tiểu học song ngữ tại TPHCM: học phí, chương trình Cambridge, sĩ số lớp, cơ sở vật chất, kết quả đầu ra.",so-sanh-tieu-hoc-form | funnel:so-sanh-tieu-hoc,no,,src/pages/tuyen-sinh/tieu-hoc/so-sanh/index.astro,144
+tuyen-sinh/tieu-hoc/tham-quan-truong,/tuyen-sinh/tieu-hoc/tham-quan-truong,landing,SqueezePageLayout.astro,Tham Quan Tiểu Học Việt Anh — Trải Nghiệm Cơ Sở Trước Khi Quyết Định,Tham Quan Tiểu Học Việt AnhTrải Nghiệm Cơ Sở Trước Khi Quyết Định,"Đặt lịch tham quan miễn phí Trường Tiểu Học Việt Anh: xem phòng học, gặp giáo viên bản ngữ, bé trải nghiệm lớp học thử, tư vấn 1-1 từ chuyên gia.",tour-tieu-hoc-form | funnel:tour-tieu-hoc,no,,src/pages/tuyen-sinh/tieu-hoc/tham-quan-truong/index.astro,144
+[...slug],/[...slug],other,BaseLayout.astro,,Trang này chưa có trong Directus hoặc trong bộ dữ liệu fallback.,,,no,,src/pages/[...slug].astro,117
+admin,/admin,other,,,,,,no,,src/pages/admin.astro,5
+mau-giao-dien,/mau-giao-dien,other,BaseLayout.astro,Mẫu Giao Diện — Templates Trường Việt Anh,Mẫu Giao Diện (Templates),Danh sách 8 templates đang dùng trên website Trường Việt Anh. Hướng dẫn chỉnh sửa giao diện.,,no,,src/pages/mau-giao-dien.astro,158
+cap-hoc,/cap-hoc,pillar,BaseLayout.astro,,Hệ Thống Liên Cấp Trường Việt Anh,,cap-hoc-form | cap-hoc-bottom-form | funnel:cap-hoc-pillar | funnel:cap-hoc-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem,src/pages/cap-hoc.astro,587
+co-so,/co-so,pillar,BaseLayout.astro,,Hệ Thống 9 Cơ Sở Trường Việt Anh Trên Toàn Quốc,,co-so-form | co-so-bottom-form | funnel:co-so-pillar | funnel:co-so-bottom,yes,EducationalOrganization | QuantitativeValue | PostalAddress | PostalAddress | PostalAddress | PostalAddress | SpeakableSpecification | School | PostalAddress | GeoCoordinates | OpeningHoursSpecification | School | PostalAddress | GeoCoordinates | OpeningHoursSpecification | School | PostalAddress | OpeningHoursSpecification | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | LocalBusiness | PostalAddress | GeoCoordinates | OpeningHoursSpecification,src/pages/co-so.astro,776
+gioi-thieu,/gioi-thieu,pillar,BaseLayout.astro,,Trường Việt Anh: Hệ Thống Giáo Dục Liên Cấp Song Ngữ Tại TP.HCM,,gioi-thieu-form | gioi-thieu-bottom-form | funnel:gioi-thieu-pillar | funnel:gioi-thieu-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | LocalBusiness | PostalAddress | GeoCoordinates | OpeningHoursSpecification,src/pages/gioi-thieu.astro,623
+he-thong-pdr,/he-thong-pdr,pillar,BaseLayout.astro,,"Hệ Thống PDR — Chơi, Khám Phá, Phản Tư",,pdr-form | pdr-bottom-form | funnel:pdr-pillar | funnel:pdr-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem,src/pages/he-thong-pdr.astro,723
+hinh-anh,/hinh-anh,pillar,BaseLayout.astro,"Hình Ảnh Trường Việt Anh — Cơ Sở Vật Chất, Hoạt Động & Sự Kiện",Hình Ảnh Trường Việt Anh,"Thư viện hình ảnh từ Trường Liên Cấp Việt Anh — cơ sở vật chất hiện đại, hoạt động học tập STEM, sự kiện trường và các câu lạc bộ ngoại khóa.",hinh-anh-form | funnel:gallery,no,,src/pages/hinh-anh.astro,383
+hoc-bong,/hoc-bong,pillar,BaseLayout.astro,Học Bổng Trường Việt Anh 2026 — Giảm Đến 50% Học Phí,Học Bổng & Ưu Đãi Trường Việt Anh,"Chính sách học bổng Trường Việt Anh: Học bổng Xuất sắc 50%, Tiếng Anh 30%, Early Bird 15%, Anh Chị Em 10%. Điều kiện và hạn nộp.",hoc-bong-form | funnel:scholarship,no,,src/pages/hoc-bong.astro,84
+hoc-phi,/hoc-phi,pillar,BaseLayout.astro,,"Học Phí Trường Việt Anh: Chất Lượng Quốc Tế, Học Phí Phù Hợp",,hoc-phi-form | hoc-phi-bottom-form | funnel:hoc-phi-pillar | funnel:hoc-phi-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem,src/pages/hoc-phi.astro,724
+lien-he,/lien-he,pillar,BaseLayout.astro,,Liên Hệ Trường Việt Anh,,lien-he-form | lien-he-bottom-form | funnel:lien-he-page | funnel:lien-he-bottom,yes,ContactPage | EducationalOrganization | PostalAddress | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | LocalBusiness | PostalAddress | GeoCoordinates | OpeningHoursSpecification,src/pages/lien-he.astro,574
+mam-non,/mam-non,pillar,BaseLayout.astro,,"{cmsH1 || ""Trường Mầm Non Việt Anh: Nơi Con Học Tiếng Anh Như Trẻ Bản Xứ""}",,mam-non-form | mam-non-bottom-form | funnel:mam-non-pillar | funnel:mam-non-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | Offer | SpeakableSpecification | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | ListItem,src/pages/mam-non.astro,900
+ngoai-khoa,/ngoai-khoa,pillar,BaseLayout.astro,,Chương Trình Ngoại Khóa Trường Việt Anh: 20+ CLB Phát Triển Toàn Diện,,ngoai-khoa-form | ngoai-khoa-bottom-form | funnel:ngoai-khoa-pillar | funnel:ngoai-khoa-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem,src/pages/ngoai-khoa.astro,687
+phu-huynh,/phu-huynh,pillar,BaseLayout.astro,,Góc Phụ Huynh Trường Việt Anh,,phu-huynh-form | phu-huynh-bottom-form | funnel:phu-huynh-pillar | funnel:phu-huynh-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem,src/pages/phu-huynh.astro,626
+so-sanh,/so-sanh,pillar,BaseLayout.astro,So Sánh Trường Việt Anh với Trường Công và Quốc Tế — Bảng So Sánh Chi Tiết,So Sánh Trường Việt Anh với Trường Công và Quốc Tế,"Bảng so sánh chi tiết Trường Việt Anh với trường công lập và trường quốc tế: học phí, tiếng Anh, chương trình, cơ sở vật chất, kết quả đầu ra.",so-sanh-form | funnel:comparison,no,WebPage | BreadcrumbList | ListItem | ListItem,src/pages/so-sanh.astro,112
+su-kien,/su-kien,pillar,BaseLayout.astro,"Sự Kiện Trường Việt Anh — Open Day, Workshop, Hội Thao",Sự Kiện Trường Việt Anh,"Lịch sự kiện Trường Việt Anh: Open Day tham quan miễn phí, workshop phụ huynh, hội thao, STEM Fair. Đăng ký tham dự ngay.",,no,,src/pages/su-kien.astro,96
+thanh-tich,/thanh-tich,pillar,BaseLayout.astro,,Thành Tích Trường Việt Anh: Kết Quả Nổi Bật Qua Các Năm Học,,thanh-tich-form | thanh-tich-bottom-form | funnel:thanh-tich-pillar | funnel:thanh-tich-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | EducationalOccupationalCredential | Organization | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem,src/pages/thanh-tich.astro,689
+tieu-hoc,/tieu-hoc,pillar,BaseLayout.astro,,Trường Tiểu Học Song Ngữ Việt Anh: Nền Tảng Vững Chắc Cho Tương Lai,,tieu-hoc-form | tieu-hoc-bottom-form | funnel:tieu-hoc-pillar | funnel:tieu-hoc-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | Offer | SpeakableSpecification | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem,src/pages/tieu-hoc.astro,788
+tin-tuc,/tin-tuc,pillar,BaseLayout.astro,"Blog Trường Việt Anh — Tin Tức, Sự Kiện & Kiến Thức Giáo Dục",Tin Tức & Sự Kiện Trường Việt Anh,"Cập nhật tin tức, sự kiện và bài viết kiến thức giáo dục từ Trường Việt Anh. 552+ bài viết về tuyển sinh, học tập, kỹ năng sống và du học.",tin-tuc-form | funnel:blog-listing,no,,src/pages/tin-tuc.astro,594
+triet-ly-giao-duc,/triet-ly-giao-duc,pillar,BaseLayout.astro,,Triết Lý Giáo Dục Trường Việt Anh: Phát Triển Toàn Diện Con Người,,triet-ly-form | triet-ly-bottom-form | funnel:triet-ly-giao-duc-pillar | funnel:triet-ly-giao-duc-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | ListItem,src/pages/triet-ly-giao-duc.astro,678
+trung-hoc-co-so,/trung-hoc-co-so,pillar,BaseLayout.astro,,"Trường THCS Việt Anh: Phát Triển Toàn Diện, Sẵn Sàng Tương Lai",,thcs-form | thcs-bottom-form | funnel:thcs-pillar | funnel:thcs-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | Offer | SpeakableSpecification | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | ListItem,src/pages/trung-hoc-co-so.astro,754
+trung-hoc-pho-thong,/trung-hoc-pho-thong,pillar,BaseLayout.astro,,Trường THPT Việt Anh: Đầu Ra IELTS 6.0-8.0 Và 99% Vào Đại Học,,thpt-form | thpt-bottom-form | funnel:thpt-pillar | funnel:thpt-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | Offer | SpeakableSpecification | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | ListItem,src/pages/trung-hoc-pho-thong.astro,710
+tuyen-sinh,/tuyen-sinh,pillar,BaseLayout.astro,,Tuyển Sinh Trường Việt Anh — Hướng Dẫn Đăng Ký & Quy Trình Xét Tuyển,,tuyen-sinh-form | tuyen-sinh-bottom-form | funnel:tuyen-sinh-pillar | funnel:tuyen-sinh-bottom,yes,EducationalOrganization | PostalAddress | AggregateRating | QuantitativeValue | FAQPage | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | Question | Answer | BreadcrumbList | ListItem | ListItem | Event | Place | PostalAddress | Organization | Offer,src/pages/tuyen-sinh.astro,779
+squeeze/checklist-chon-truong,/squeeze/checklist-chon-truong,squeeze,SqueezePageLayout.astro,Checklist Chọn Trường 2026: 15 Tiêu Chí Ba/Mẹ Phải Biết | Trường Việt Anh,Chọn Trường Cho Con: 15 Tiêu Chí Ba/Mẹ Không Được Bỏ Qua,"Tải miễn phí checklist 15 tiêu chí chọn trường cho con. Được sử dụng bởi 3,000+ phụ huynh tại TPHCM. Bao gồm bảng so sánh trường, 7 câu hỏi phải hỏi khi tham quan, và timeline tuyển sinh 2026.",squeeze-form | funnel:squeeze-checklist,no,,src/pages/squeeze/checklist-chon-truong.astro,125
+squeeze/ebook-lo-trinh-lop-10,/squeeze/ebook-lo-trinh-lop-10,squeeze,SqueezePageLayout.astro,Lộ trình giúp con vào TOP trường cấp 3 tại TP.HCM (MIỄN PHÍ) | Trường Việt Anh,Lộ trình giúp con vào TOP trường cấp 3 tại TP.HCM,"Dành riêng cho phụ huynh có con từ lớp 5-9 muốn định hướng đúng ngay từ đầu. Nhận ngay lộ trình học chi tiết, checklist chọn trường 2026, 7 sai lầm phụ huynh hay mắc, bộ đề test năng lực. Đã có 5,000+ phụ huynh tải.",squeeze-form | funnel:squeeze-ebook-lo-trinh,no,,src/pages/squeeze/ebook-lo-trinh-lop-10.astro,131
+squeeze/hoc-thu-mien-phi,/squeeze/hoc-thu-mien-phi,squeeze,SqueezePageLayout.astro,Học Thử Miễn Phí 1 Ngày Tại Trường Việt Anh | Đăng Ký Ngay,Cho Con Trải Nghiệm 1 Ngày Học Thực Tế -- Hoàn Toàn Miễn Phí,"Cho con trải nghiệm 1 ngày học thực tế tại Trường Việt Anh. Không cam kết, không phí. Con được học, chơi, kết bạn — Ba/Mẹ được tham quan trường và gặp Ban Giám Hiệu.",squeeze-form | funnel:squeeze-hoc-thu,no,,src/pages/squeeze/hoc-thu-mien-phi.astro,133
+squeeze/test-nang-luc,/squeeze/test-nang-luc,squeeze,SqueezePageLayout.astro,"Test Năng Lực Miễn Phí -- Biết Con Đang Ở Đâu, Để Đưa Con Đi Đúng Hướng | Trường Việt Anh",Con Bạn Đang Ở Đâu? -- Làm Test Năng Lực Miễn Phí Để Biết Chính Xác,"Đánh giá năng lực học tập của con miễn phí. Nhận báo cáo chi tiết về điểm mạnh, điểm yếu, và lộ trình cải thiện phù hợp. Được 2,000+ phụ huynh TPHCM tin dùng.",squeeze-form | funnel:squeeze-test-nang-luc,no,,src/pages/squeeze/test-nang-luc.astro,125
+squeeze/webinar-phu-huynh,/squeeze/webinar-phu-huynh,squeeze,SqueezePageLayout.astro,Webinar: 3 Sai Lầm Khiến Con Mất Cơ Hội Vào Trường Tốt | Trường Việt Anh,3 Sai Lầm Khiến Con Mất Cơ Hội Vào Trường Tốt,"Tham gia webinar miễn phí dành cho phụ huynh. Chuyên gia giáo dục với 15+ năm kinh nghiệm chia sẻ cách chọn trường, chuẩn bị hồ sơ, và định hướng tương lai cho con. Đã có 1,500+ phụ huynh tham dự.",squeeze-form | funnel:squeeze-webinar,no,,src/pages/squeeze/webinar-phu-huynh.astro,125
+tuyen-sinh/thcs/lop-6/checklist-a,/tuyen-sinh/thcs/lop-6/checklist-a,squeeze_ab,,Checklist 9 tiêu chí chọn trường THCS tốt nhất cho con lớp 6 – Tải miễn phí,Checklist 9 tiêu chí chọn trường THCS Tốt Nhất cho con lớp 6– Tải miễn phí trước khi quyết định,Tải miễn phí checklist 9 tiêu chí chọn trường THCS tốt nhất cho con lớp 6. Tài liệu tổng hợp từ kinh nghiệm hàng nghìn phụ huynh thành công.,,no,FAQPage | Question | Answer | Question | Answer,src/pages/tuyen-sinh/thcs/lop-6/checklist-a.astro,407
+tuyen-sinh/thcs/lop-6/checklist-b,/tuyen-sinh/thcs/lop-6/checklist-b,squeeze_ab,,9 tiêu chí vàng chọn trường THCS cho con lớp 6 – Phụ huynh thông thái không thể bỏ qua,9 tiêu chí vàng chọn trường THCS cho con lớp 6 – Phụ huynh thông thái không thể bỏ qua,Phụ huynh thông thái đang dùng 9 tiêu chí vàng này để chọn trường THCS tốt nhất cho con lớp 6. Tải miễn phí checklist so sánh trường.,,no,FAQPage | Question | Answer | Question | Answer,src/pages/tuyen-sinh/thcs/lop-6/checklist-b.astro,403
+tuyen-sinh/thcs/lop-6/early-bird-a,/tuyen-sinh/thcs/lop-6/early-bird-a,squeeze_ab,,Early Bird 2026 – Giảm ngay 15% học phí THCS + Học bổng chuyển tiếp lớp 9,"Early Bird 2026 – Giảm ngay 15% học phí THCS + Học bổng chuyển tiếp lớp 9 lên đến 50 triệu, chỉ còn 72 giờ!",Đăng ký ngay hôm nay để giữ mức học phí thấp nhất và ưu tiên lộ trình lớp 6–9. Giảm 15% học phí THCS và nhận học bổng chuyển tiếp lên đến 50 triệu.,,no,EducationalOrganization | PostalAddress,src/pages/tuyen-sinh/thcs/lop-6/early-bird-a.astro,377
+tuyen-sinh/thcs/lop-6/early-bird-b,/tuyen-sinh/thcs/lop-6/early-bird-b,squeeze_ab,,Khóa học phí THCS thấp nhất 2026 – Tặng thêm học bổng lên lớp 9 trị giá 50 triệu,Khóa học phí THCS thấp nhất 2026 – Tặng thêm học bổng lên lớp 9 trị giá 50 triệu,Chỉ còn 72 giờ – Đăng ký sớm để con được ưu tiên lớp song ngữ và nhận học bổng chuyển tiếp lên lớp 9 trị giá 50 triệu.,,no,EducationalOrganization | PostalAddress,src/pages/tuyen-sinh/thcs/lop-6/early-bird-b.astro,377
+tuyen-sinh/thcs/lop-6/pain-point-a,/tuyen-sinh/thcs/lop-6/pain-point-a,squeeze_ab,,"Con sắp vào lớp 6 – Lo lắng về áp lực học tập, môi trường dậy thì và chuyển cấp? Đây là những gì cha mẹ cần biết ngay | Trường Việt Anh","Con sắp vào lớp 6 – Lo lắng về áp lực học tập, môi trường dậy thì và chuyển cấp? Đây là những gì cha mẹ cần biết ngay",Nhận báo cáo chi tiết,,no,EducationalOrganization | PostalAddress,src/pages/tuyen-sinh/thcs/lop-6/pain-point-a.astro,444
+tuyen-sinh/thcs/lop-6/pain-point-b,/tuyen-sinh/thcs/lop-6/pain-point-b,squeeze_ab,,Nhận ngay báo cáo,"Nhận ngay báo cáo ""5 thách thức lớn nhất khi con lên lớp 6"" + Tư vấn lộ trình miễn phí",Hơn 2.000 phụ huynh đã dùng báo cáo này để chuẩn bị cho con chuyển cấp thành công. Nhận tư vấn miễn phí từ chuyên gia giáo dục.,,no,EducationalOrganization | PostalAddress,src/pages/tuyen-sinh/thcs/lop-6/pain-point-b.astro,483
+tuyen-sinh/thcs/lop-6/school-tour-a,/tuyen-sinh/thcs/lop-6/school-tour-a,squeeze_ab,,Đặt lịch School Tour THCS 2026 – Con bạn sẽ được học 1 buổi thực tế,"Đặt lịch School Tour THCS 2026 – Con bạn sẽ được học 1 buổi thực tế, cha mẹ được tư vấn lộ trình cá nhân hóa từ lớp 6 đến lớp 9","Đặt lịch school tour THCS 2026 miễn phí. Con bạn sẽ tham gia 1 buổi học mẫu, cha mẹ được tư vấn lộ trình cá nhân hóa từ lớp 6 đến lớp 9.",,no,EducationalOrganization,src/pages/tuyen-sinh/thcs/lop-6/school-tour-a.astro,399
+tuyen-sinh/thcs/lop-6/school-tour-b,/tuyen-sinh/thcs/lop-6/school-tour-b,squeeze_ab,,Trải nghiệm lớp 6 thực tế + Tư vấn lộ trình cá nhân hóa – Đăng ký School Tour MIỄN PHÍ,Trải nghiệm lớp 6 thực tế + Tư vấn lộ trình cá nhân hóa – Đăng ký School Tour MIỄN PHÍ,"Đăng ký school tour THCS miễn phí. 75 phút trải nghiệm thực tế tại trường, cha mẹ được tư vấn 1:1 về lộ trình lớp 6–9 và chương trình song ngữ.",,no,EducationalOrganization,src/pages/tuyen-sinh/thcs/lop-6/school-tour-b.astro,399
+tuyen-sinh/thcs/lop-6/webinar-a,/tuyen-sinh/thcs/lop-6/webinar-a,squeeze_ab,,Webinar MIỄN PHÍ: Lộ trình học THCS – THPT thành công năm 2026,Webinar MIỄN PHÍ: Lộ trình học THCS – THPT thành công năm 2026 – Chuẩn bị cho con từ lớp 6,Webinar miễn phí giúp chuẩn bị cho con lớp 6. Nhận lộ trình học tập từ lớp 6 đến đại học và tư vấn cá nhân 15 phút.,step1 | step2,no,EducationalOrganization | ContactPoint,src/pages/tuyen-sinh/thcs/lop-6/webinar-a.astro,396
+tuyen-sinh/thcs/lop-6/webinar-b,/tuyen-sinh/thcs/lop-6/webinar-b,squeeze_ab,,LIVE Webinar: Bí quyết giúp con lớp 6 thành công suốt 4 năm THCS,LIVE Webinar: Bí quyết giúp con lớp 6 thành công suốt 4 năm THCS – Đăng ký miễn phí,Live webinar cùng chuyên gia giáo dục K-12. Lộ trình vàng giúp con lớp 6 tự tin học tập THCS. Đăng ký miễn phí.,step1 | step2,no,EducationalOrganization | ContactPoint,src/pages/tuyen-sinh/thcs/lop-6/webinar-b.astro,406
+cam-on,/cam-on,thankyou,BaseLayout.astro,Cảm ơn bạn đã đăng ký! | Trường Việt Anh,Đăng ký thành công!,Chúng tôi đã nhận được thông tin của bạn. Đội ngũ tư vấn sẽ liên hệ trong 24 giờ.,,no,,src/pages/cam-on.astro,385
+tuyen-sinh/mam-non/cau-chuyen-phu-huynh/cam-on,/tuyen-sinh/mam-non/cau-chuyen-phu-huynh/cam-on,thankyou,,Đã Gửi Câu Chuyện — Mầm Non Việt Anh,Đã gửi câu chuyện qua email!,Cạm ơn anh/chị đã chia sẻ câu chuyện. 3 câu chuyện phụ huynh đã được gửi qua email.,,no,,src/pages/tuyen-sinh/mam-non/cau-chuyen-phu-huynh/cam-on/index.astro,288
+tuyen-sinh/mam-non/checklist/cam-on,/tuyen-sinh/mam-non/checklist/cam-on,thankyou,,Đã Gửi Checklist — Mầm Non Việt Anh,Đã gửi checklist qua email!,Cảm ơn anh/chị! Checklist đã được gửi qua email. Tư vấn viên sẽ liên hệ trong 5 phút.,,no,,src/pages/tuyen-sinh/mam-non/checklist/cam-on/index.astro,287
+tuyen-sinh/mam-non/chuong-trinh/cam-on,/tuyen-sinh/mam-non/chuong-trinh/cam-on,thankyou,,Đăng Ký Thành Công — Chương Trình Mầm Non Việt Anh,Đăng ký thành công!,Cảm ơn anh/chị đã tìm hiểu chương trình. Tư vấn viên sẽ liên hệ sớm nhất.,,no,,src/pages/tuyen-sinh/mam-non/chuong-trinh/cam-on/index.astro,146
+tuyen-sinh/mam-non/co-so/cam-on,/tuyen-sinh/mam-non/co-so/cam-on,thankyou,,Đăng Ký Thành Công — Cơ Sở Mầm Non Việt Anh,Đăng ký thành công!,Cảm ơn anh/chị đã chọn cơ sở. Tư vấn viên sẽ liên hệ sớm nhất.,,no,,src/pages/tuyen-sinh/mam-non/co-so/cam-on/index.astro,146
+tuyen-sinh/mam-non/dang-ky-som/cam-on,/tuyen-sinh/mam-non/dang-ky-som/cam-on,thankyou,,Đăng Ký Thành Công — Mầm Non Việt Anh,Đăng ký thành công!,Cảm ơn anh/chị đã đăng ký sớm. Tư vấn viên sẽ liên hệ trong 5 phút.,,no,,src/pages/tuyen-sinh/mam-non/dang-ky-som/cam-on/index.astro,310
+tuyen-sinh/mam-non/gioi-thieu/cam-on,/tuyen-sinh/mam-non/gioi-thieu/cam-on,thankyou,,Giới Thiệu Thành Công — Mầm Non Việt Anh,Giới thiệu thành công!,Cảm ơn anh/chị đã giới thiệu bạn bè. Tư vấn viên sẽ liên hệ bạn được giới thiệu trong 5 phút.,,no,,src/pages/tuyen-sinh/mam-non/gioi-thieu/cam-on/index.astro,312
+tuyen-sinh/mam-non/nhap-hoc-2026/cam-on,/tuyen-sinh/mam-non/nhap-hoc-2026/cam-on,thankyou,,Đăng Ký Thành Công — Nhập Học Mầm Non 2026 Việt Anh,Đăng ký nhập học 2026 thành công!,Cảm ơn anh/chị đã đăng ký nhập học 2026. Tư vấn viên sẽ liên hệ sớm nhất.,,no,,src/pages/tuyen-sinh/mam-non/nhap-hoc-2026/cam-on/index.astro,232
+tuyen-sinh/mam-non/so-sanh/cam-on,/tuyen-sinh/mam-non/so-sanh/cam-on,thankyou,,Đã Gửi Bảng So Sánh — Mầm Non Việt Anh,Đã gửi bảng so sánh qua email!,Bảng so sánh chi tiết đã được gửi qua email.,,no,,src/pages/tuyen-sinh/mam-non/so-sanh/cam-on/index.astro,300
+tuyen-sinh/mam-non/tham-quan-truong/cam-on,/tuyen-sinh/mam-non/tham-quan-truong/cam-on,thankyou,,Đặt Lịch Thành Công — Mầm Non Việt Anh,Đặt lịch thành công!,Cảm ơn anh/chị đã đặt lịch tham quan. Tư vấn viên sẽ xác nhận trong 5 phút.,,no,,src/pages/tuyen-sinh/mam-non/tham-quan-truong/cam-on/index.astro,301
+tuyen-sinh/mam-non/tu-van/cam-on,/tuyen-sinh/mam-non/tu-van/cam-on,thankyou,,Đăng Ký Tư Vấn Thành Công — Mầm Non Việt Anh,Đăng ký tư vấn thành công!,Cảm ơn anh/chị đã đăng ký tư vấn. Chuyên gia sẽ gọi tư vấn trong 5 phút.,,no,,src/pages/tuyen-sinh/mam-non/tu-van/cam-on/index.astro,301
+tuyen-sinh/mam-non/webinar/cam-on,/tuyen-sinh/mam-non/webinar/cam-on,thankyou,,Đăng Ký Webinar Thành Công — Mầm Non Việt Anh,Đăng ký webinar thành công!,Cảm ơn anh/chị đã đăng ký webinar. Link webinar sẽ được gửi qua email trước buổi học.,,no,,src/pages/tuyen-sinh/mam-non/webinar/cam-on/index.astro,288
+tuyen-sinh/thcs/checklist/cam-on,/tuyen-sinh/thcs/checklist/cam-on,thankyou,,Cảm Ơn – Checklist THCS | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Checklist THCS tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thcs/checklist/cam-on/index.astro,96
+tuyen-sinh/thcs/chuyen-cap/cam-on,/tuyen-sinh/thcs/chuyen-cap/cam-on,thankyou,,Cảm Ơn – Chuyển cấp THCS | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Chuyển cấp THCS tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thcs/chuyen-cap/cam-on/index.astro,96
+tuyen-sinh/thcs/dang-ky-som/cam-on,/tuyen-sinh/thcs/dang-ky-som/cam-on,thankyou,,Cảm Ơn – Early Bird THCS | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Early Bird THCS tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thcs/dang-ky-som/cam-on/index.astro,96
+tuyen-sinh/thcs/tham-quan-truong/cam-on,/tuyen-sinh/thcs/tham-quan-truong/cam-on,thankyou,,Cảm Ơn – School Tour THCS | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký School Tour THCS tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thcs/tham-quan-truong/cam-on/index.astro,96
+tuyen-sinh/thcs/webinar/cam-on,/tuyen-sinh/thcs/webinar/cam-on,thankyou,,Cảm Ơn – Webinar THCS | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Webinar THCS tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thcs/webinar/cam-on/index.astro,96
+tuyen-sinh/thpt/ap-luc-thi/cam-on,/tuyen-sinh/thpt/ap-luc-thi/cam-on,thankyou,,Cảm Ơn – Áp lực thi THPT | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Áp lực thi THPT tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thpt/ap-luc-thi/cam-on/index.astro,96
+tuyen-sinh/thpt/checklist/cam-on,/tuyen-sinh/thpt/checklist/cam-on,thankyou,,Cảm Ơn – Checklist THPT | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Checklist THPT tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thpt/checklist/cam-on/index.astro,96
+tuyen-sinh/thpt/dang-ky-som/cam-on,/tuyen-sinh/thpt/dang-ky-som/cam-on,thankyou,,Cảm Ơn – Early Bird THPT | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Early Bird THPT tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thpt/dang-ky-som/cam-on/index.astro,96
+tuyen-sinh/thpt/du-hoc-profile/cam-on,/tuyen-sinh/thpt/du-hoc-profile/cam-on,thankyou,,Cảm Ơn – Du học Profile THPT | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Du học Profile THPT tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thpt/du-hoc-profile/cam-on/index.astro,96
+tuyen-sinh/thpt/tham-quan-truong/cam-on,/tuyen-sinh/thpt/tham-quan-truong/cam-on,thankyou,,Cảm Ơn – School Tour THPT | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký School Tour THPT tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/thpt/tham-quan-truong/cam-on/index.astro,96
+tuyen-sinh/tieu-hoc/checklist/cam-on,/tuyen-sinh/tieu-hoc/checklist/cam-on,thankyou,,Cảm Ơn – Checklist Tiểu Học | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Checklist Tiểu Học tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/tieu-hoc/checklist/cam-on/index.astro,96
+tuyen-sinh/tieu-hoc/chuong-trinh/cam-on,/tuyen-sinh/tieu-hoc/chuong-trinh/cam-on,thankyou,,Cảm Ơn – Chương trình Tiểu Học | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Chương trình Tiểu Học tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/tieu-hoc/chuong-trinh/cam-on/index.astro,96
+tuyen-sinh/tieu-hoc/dang-ky-som/cam-on,/tuyen-sinh/tieu-hoc/dang-ky-som/cam-on,thankyou,,Cảm Ơn – Early Bird Tiểu Học | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký Early Bird Tiểu Học tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/tieu-hoc/dang-ky-som/cam-on/index.astro,96
+tuyen-sinh/tieu-hoc/so-sanh/cam-on,/tuyen-sinh/tieu-hoc/so-sanh/cam-on,thankyou,,Cảm Ơn – So sánh Tiểu Học | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký So sánh Tiểu Học tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/tieu-hoc/so-sanh/cam-on/index.astro,96
+tuyen-sinh/tieu-hoc/tham-quan-truong/cam-on,/tuyen-sinh/tieu-hoc/tham-quan-truong/cam-on,thankyou,,Cảm Ơn – School Tour Tiểu Học | Trường Việt Anh,Cảm ơn Ba/Mẹ !,Cảm ơn Ba/Mẹ đã đăng ký School Tour Tiểu Học tại Trường Việt Anh.,,no,,src/pages/tuyen-sinh/tieu-hoc/tham-quan-truong/cam-on/index.astro,96
+404,/404,utility,BaseLayout.astro,404 — Không tìm thấy trang | Trường Việt Anh,Trang không tìm thấy,Trang bạn tìm kiếm không tồn tại. Quay lại trang chủ hoặc tìm kiếm nội dung khác tại Trường Việt Anh.,,no,,src/pages/404.astro,157

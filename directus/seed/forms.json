@@ -1,0 +1,139 @@
+[
+  {
+    "id": "form-lead-magnet-download",
+    "name": "Lead Magnet — Download (eBook/checklist/PDF)",
+    "variant": "two_step_email_first",
+    "funnel_code": "{{dynamic}}",
+    "fields": [
+      { "name": "email", "type": "email", "label": "Email", "placeholder": "email@example.com", "required": true, "step": 1, "validate": "email" },
+      { "name": "full_name", "type": "text", "label": "Họ và tên", "placeholder": "Nguyễn Văn A", "required": true, "step": 2 },
+      { "name": "phone", "type": "tel", "label": "Số điện thoại", "placeholder": "0916961409", "required": true, "step": 2, "validate": "vn_phone" },
+      { "name": "school_level", "type": "select", "label": "Con đang học cấp", "required": false, "step": 2, "options_from": "school_levels" }
+    ],
+    "submit_label": "Nhận tài liệu ngay",
+    "success_mode": "redirect",
+    "thank_you_page": "/cam-on/download",
+    "ghl_workflow_id": "wf-nurture-5d",
+    "pancake_pipeline": "warm-lead",
+    "lead_score_weight": 1.0,
+    "notifications": { "email": true, "zalo": false },
+    "gdpr_consent": true,
+    "double_optin": false,
+    "anti_spam": { "honeypot": true, "turnstile": true }
+  },
+  {
+    "id": "form-trial-booking",
+    "name": "Trial — Book học thử / tham quan",
+    "variant": "progressive_3_step",
+    "funnel_code": "{{dynamic}}",
+    "fields": [
+      { "name": "email", "type": "email", "label": "Email", "required": true, "step": 1, "validate": "email" },
+      { "name": "full_name", "type": "text", "label": "Họ tên phụ huynh", "required": true, "step": 2 },
+      { "name": "phone", "type": "tel", "label": "Số điện thoại", "required": true, "step": 2, "validate": "vn_phone" },
+      { "name": "child_name", "type": "text", "label": "Tên bé", "required": true, "step": 2 },
+      { "name": "school_level", "type": "select", "label": "Cấp học", "required": true, "step": 2, "options_from": "school_levels" },
+      { "name": "preferred_campus", "type": "select", "label": "Cơ sở gần nhất", "required": true, "step": 3, "options_from": "campuses" },
+      { "name": "preferred_date", "type": "date", "label": "Ngày mong muốn", "required": false, "step": 3 },
+      { "name": "note", "type": "textarea", "label": "Ghi chú", "required": false, "step": 3 }
+    ],
+    "submit_label": "Đặt lịch ngay",
+    "success_mode": "redirect",
+    "thank_you_page": "/cam-on/trial",
+    "ghl_workflow_id": "wf-trial-hot",
+    "pancake_pipeline": "hot-lead",
+    "lead_score_weight": 2.0,
+    "notifications": { "email": true, "zalo": true, "slack_webhook": "https://hooks.slack.com/..." },
+    "gdpr_consent": true,
+    "double_optin": false,
+    "anti_spam": { "honeypot": true, "turnstile": true }
+  },
+  {
+    "id": "form-webinar-register",
+    "name": "Webinar — Giữ chỗ",
+    "variant": "one_step",
+    "funnel_code": "{{dynamic}}",
+    "fields": [
+      { "name": "full_name", "type": "text", "label": "Họ tên", "required": true, "step": 1 },
+      { "name": "email", "type": "email", "label": "Email", "required": true, "step": 1, "validate": "email" },
+      { "name": "phone", "type": "tel", "label": "SĐT (gửi link Zoom qua Zalo)", "required": true, "step": 1, "validate": "vn_phone" }
+    ],
+    "submit_label": "Giữ chỗ miễn phí",
+    "success_mode": "redirect",
+    "thank_you_page": "/cam-on/webinar",
+    "ghl_workflow_id": "wf-webinar-reminder",
+    "pancake_pipeline": "webinar-attendees",
+    "lead_score_weight": 1.5,
+    "notifications": { "email": true, "zalo": true },
+    "gdpr_consent": true,
+    "double_optin": false,
+    "anti_spam": { "honeypot": true, "turnstile": false }
+  },
+  {
+    "id": "form-direct-enrollment",
+    "name": "Direct enrollment — Sales call ngay",
+    "variant": "one_step",
+    "funnel_code": "{{dynamic}}",
+    "fields": [
+      { "name": "full_name", "type": "text", "label": "Họ tên phụ huynh", "required": true, "step": 1 },
+      { "name": "phone", "type": "tel", "label": "Số điện thoại", "required": true, "step": 1, "validate": "vn_phone" },
+      { "name": "email", "type": "email", "label": "Email (tuỳ chọn)", "required": false, "step": 1 },
+      { "name": "school_level", "type": "select", "label": "Cấp học quan tâm", "required": true, "step": 1, "options_from": "school_levels" }
+    ],
+    "submit_label": "Nhận ưu đãi + gọi lại trong 15 phút",
+    "success_mode": "redirect",
+    "thank_you_page": "/cam-on/sales-call",
+    "ghl_workflow_id": "wf-sales-call-now",
+    "pancake_pipeline": "hot-lead",
+    "lead_score_weight": 3.0,
+    "notifications": { "email": true, "zalo": true, "slack_webhook": "https://hooks.slack.com/..." },
+    "gdpr_consent": true,
+    "double_optin": false,
+    "anti_spam": { "honeypot": true, "turnstile": true }
+  },
+  {
+    "id": "form-assessment-test",
+    "name": "Test trắc nghiệm — Nhận kết quả qua email",
+    "variant": "two_step_email_first",
+    "funnel_code": "{{dynamic}}",
+    "fields": [
+      { "name": "email", "type": "email", "label": "Email nhận kết quả", "required": true, "step": 1, "validate": "email" },
+      { "name": "full_name", "type": "text", "label": "Họ tên phụ huynh", "required": true, "step": 2 },
+      { "name": "phone", "type": "tel", "label": "SĐT", "required": true, "step": 2, "validate": "vn_phone" },
+      { "name": "child_age", "type": "select", "label": "Tuổi bé", "required": true, "step": 2, "options": [
+        { "value": "0-2", "label": "Dưới 2 tuổi" },
+        { "value": "2-5", "label": "2-5 tuổi (mầm non)" },
+        { "value": "6-10", "label": "6-10 tuổi (tiểu học)" },
+        { "value": "11-14", "label": "11-14 tuổi (THCS)" },
+        { "value": "15-18", "label": "15-18 tuổi (THPT)" }
+      ] }
+    ],
+    "submit_label": "Xem kết quả",
+    "success_mode": "redirect",
+    "thank_you_page": "/cam-on/assessment-result",
+    "ghl_workflow_id": "wf-assessment-email",
+    "pancake_pipeline": "warm-lead",
+    "lead_score_weight": 1.2,
+    "notifications": { "email": true, "zalo": false },
+    "gdpr_consent": true,
+    "double_optin": false,
+    "anti_spam": { "honeypot": true, "turnstile": true }
+  },
+  {
+    "id": "form-phone-only-exit",
+    "name": "Exit intent — SĐT only",
+    "variant": "phone_only",
+    "funnel_code": "exit-intent",
+    "fields": [
+      { "name": "phone", "type": "tel", "label": "SĐT", "required": true, "step": 1, "validate": "vn_phone" }
+    ],
+    "submit_label": "Gọi lại cho tôi",
+    "success_mode": "inline_message",
+    "success_message": "Tư vấn viên sẽ gọi bạn trong 15 phút.",
+    "ghl_workflow_id": "wf-exit-intent",
+    "lead_score_weight": 0.8,
+    "notifications": { "email": true, "zalo": true },
+    "gdpr_consent": false,
+    "double_optin": false,
+    "anti_spam": { "honeypot": true, "turnstile": false }
+  }
+]

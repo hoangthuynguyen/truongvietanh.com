@@ -1,0 +1,21 @@
+---
+import type { BlockTimelineRoadmap } from '../../types/cms';
+interface Props { data: BlockTimelineRoadmap; context: string; }
+const { data } = Astro.props;
+---
+<section class="b-timeline-roadmap">
+  <div class="b-container">
+    {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <ol class="b-roadmap">
+      {data.items?.map((item, i) => (
+        <li class="b-roadmap-step" style={`--step-index:${i}`}>
+          <div class="b-roadmap-badge">{item.step}</div>
+          {item.icon && <div class="b-roadmap-icon">{item.icon}</div>}
+          <h3 class="b-roadmap-title">{item.title}</h3>
+          <p class="b-roadmap-desc">{item.description}</p>
+        </li>
+      ))}
+    </ol>
+  </div>
+</section>

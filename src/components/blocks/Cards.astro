@@ -1,0 +1,27 @@
+---
+import type { BlockCards } from '../../types/cms';
+interface Props { data: BlockCards; context: string; }
+const { data } = Astro.props;
+const cols = data.columns || 3;
+---
+<section class="b-cards">
+  <div class="b-container">
+    {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    {data.intro && <p class="b-intro">{data.intro}</p>}
+    <div class={`b-cards-grid b-cols-${cols}`}>
+      {data.items?.map((item) => (
+        <article class="b-card">
+          {item.icon && <div class="b-card-icon">{item.icon}</div>}
+          <h3 class="b-card-title">{item.title}</h3>
+          <p class="b-card-body">{item.body}</p>
+          {item.link && (
+            <a href={item.link.href} class={`b-cta b-cta-${item.link.variant || 'ghost'}`}>
+              {item.link.label} →
+            </a>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

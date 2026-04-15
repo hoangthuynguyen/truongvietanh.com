@@ -1,0 +1,16 @@
+---
+import BlocksRenderer from './BlocksRenderer.astro';
+import type { BlockTwoColumn } from '../../types/cms';
+type Ctx = 'pillar' | 'landing' | 'squeeze' | 'thankyou' | 'article';
+interface Props { data: BlockTwoColumn; context: Ctx; }
+const { data, context } = Astro.props;
+const ratioClass = `b-ratio-${(data.ratio || '50-50').replace('-', '')}`;
+---
+<section class={`b-two-column ${ratioClass} ${data.reverse_on_mobile ? 'b-reverse-mobile' : ''}`}>
+  <div class="b-col b-col-left">
+    <BlocksRenderer blocks={data.left_blocks || []} context={context} />
+  </div>
+  <div class="b-col b-col-right">
+    <BlocksRenderer blocks={data.right_blocks || []} context={context} />
+  </div>
+</section>

@@ -1,0 +1,18 @@
+---
+import DynamicForm from '../DynamicForm.astro';
+import { getFormById } from '../../lib/cms';
+import type { BlockCtaForm } from '../../types/cms';
+
+interface Props { data: BlockCtaForm; context: string; }
+const { data, context } = Astro.props;
+
+const form = await getFormById(data.form_ref);
+if (!form) throw new Error(`[CtaForm] Form "${data.form_ref}" not found`);
+---
+<section class={`cta-form cta-form--${data.variant} cta-form--${data.bg_style || 'light'} cta-form--ctx-${context}`}>
+  <div class="cta-form-inner">
+    {data.heading && <h2 class="cta-form-heading">{data.heading}</h2>}
+    {data.subheading && <p class="cta-form-subheading">{data.subheading}</p>}
+    <DynamicForm form={form} />
+  </div>
+</section>

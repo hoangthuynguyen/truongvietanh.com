@@ -1,0 +1,23 @@
+---
+import type { BlockTextWithImage } from '../../types/cms';
+interface Props { data: BlockTextWithImage; context: string; }
+const { data } = Astro.props;
+const pos = data.image_position || 'right';
+---
+<section class={`b-text-with-image b-image-${pos}`}>
+  <div class="b-container b-twi-inner">
+    <div class="b-twi-text">
+      {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+      <h2 class="b-title">{data.title}</h2>
+      <div class="b-prose" set:html={data.body} />
+      {data.primary_cta && (
+        <a href={data.primary_cta.href} class={`b-cta b-cta-${data.primary_cta.variant || 'primary'}`}>
+          {data.primary_cta.label}
+        </a>
+      )}
+    </div>
+    <div class="b-twi-image">
+      <img src={data.image} alt={data.title} loading="lazy" />
+    </div>
+  </div>
+</section>

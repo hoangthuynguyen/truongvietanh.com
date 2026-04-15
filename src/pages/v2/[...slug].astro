@@ -1,0 +1,50 @@
+---
+/**
+ * CMS dispatcher v2 — resolves slug → Directus page → A/B variant → template.
+ * Single entry point for ALL v2 pages.
+ */
+import { getPageBySlug, getAllPageSlugs } from '../../lib/cms';
+import { resolveVariant } from '../../lib/ab-testing';
+import PillarPageTemplate from '../../templates/PillarPageTemplate.astro';
+import LandingPageTemplate from '../../templates/LandingPageTemplate.astro';
+import SqueezePageTemplate from '../../templates/SqueezePageTemplate.astro';
+import ThankYouTemplate from '../../templates/ThankYouTemplate.astro';
+import ArticleTemplate from '../../templates/ArticleTemplate.astro';
+import type { PageTemplate } from '../../types/cms';
+
+export async function getStaticPaths() {
+  const slugs = await getAllPageSlugs({ status: 'published' });
+  return slugs.map((slug) => ({ params: { slug } }));
+}
+
+const { slug = '' } = Astro.params;
+const page = await getPageBySlug(slug);
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+// A/B variant resolution (no-op if no ab_test_ref)
+const { variant, blocks } = await resolveVariant(page, new URL(Astro.request.url));
+const renderedPage = { ...page, blocks };
+
+const templateMap: Record<PageTemplate, any> = {
+  pillar: PillarPageTemplate,
+  landing: LandingPageTemplate,
+  squeeze: SqueezePageTemplate,
+  thankyou: ThankYouTemplate,
+  article: ArticleTemplate,
+};
+
+const Template = templateMap[page.template];
+if (!Template) {
+  throw new Error(`Unknown template "${page.template}" for page "${slug}"`);
+}
+---
+<Template page={renderedPage} />
+{variant && (
+  <script is:inline define:vars={{ testId: page.ab_test_ref, variantName: variant.name }}>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: 'ab_test_exposure', test_id: testId, variant: variantName });
+  </script>
+)}

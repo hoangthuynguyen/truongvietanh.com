@@ -1,0 +1,29 @@
+---
+import type { BlockPricingTable } from '../../types/cms';
+interface Props { data: BlockPricingTable; context: string; }
+const { data } = Astro.props;
+---
+<section class="b-pricing-table">
+  <div class="b-container">
+    {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <div class="b-pricing-grid">
+      {data.plans?.map((plan) => (
+        <article class={`b-plan ${plan.featured ? 'b-plan-featured' : ''}`}>
+          {plan.featured && <div class="b-plan-ribbon">Khuyến nghị</div>}
+          <h3 class="b-plan-name">{plan.name}</h3>
+          <div class="b-plan-price">
+            <span class="b-plan-amount">{plan.price}</span>
+            {plan.price_note && <span class="b-plan-note">{plan.price_note}</span>}
+          </div>
+          <ul class="b-plan-features">
+            {plan.features.map((f) => <li>✓ {f}</li>)}
+          </ul>
+          <a href={plan.cta.href} class={`b-cta b-cta-${plan.cta.variant || (plan.featured ? 'primary' : 'secondary')}`}>
+            {plan.cta.label}
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

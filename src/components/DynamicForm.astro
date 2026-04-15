@@ -1,0 +1,156 @@
+---
+/**
+ * DynamicForm — CMS-driven form renderer.
+ * Replaces hard-coded LeadFormTwoStepEmailFirst with a config-driven component.
+ *
+ * The `form` prop comes from Directus (forms collection) and controls:
+ *  - variant (two_step_email_first | one_step | progressive_3_step | phone_only)
+ *  - fields (which fields, required, validation, which step they appear in)
+ *  - submit behavior (redirect vs inline message)
+ *  - GHL workflow routing
+ *  - Anti-spam (Turnstile + honeypot)
+ */
+import type { Form } from '../types/cms';
+
+interface Props { form: Form; }
+const { form } = Astro.props;
+
+const step1Fields = form.fields.filter((f) => f.step === 1);
+const step2Fields = form.fields.filter((f) => f.step === 2);
+const step3Fields = form.fields.filter((f) => f.step === 3);
+const hasStep3 = step3Fields.length > 0;
+---
+<div class="df-wrapper" data-form-id={form.id} data-variant={form.variant} data-funnel={form.funnel_code}>
+  <form class="df-form" id={`form-${form.id}`} novalidate>
+    {/* Honeypot (anti-spam) */}
+    {form.anti_spam.honeypot && (
+      <input type="text" name="_hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
+    )}
+
+    {/* STEP 1 */}
+    <div class="df-step" data-step="1">
+      {step1Fields.map((f) => (
+        <div class="df-field">
+          {f.label && <label for={`${form.id}-${f.name}`}>{f.label}{f.required && <span class="df-req">*</span>}</label>}
+          {f.type === 'select' ? (
+            <select id={`${form.id}-${f.name}`} name={f.name} required={f.required}>
+              <option value="">{f.placeholder || '-- Chọn --'}</option>
+              {f.options?.map((o) => <option value={o.value}>{o.label}</option>)}
+            </select>
+          ) : f.type === 'textarea' ? (
+            <textarea id={`${form.id}-${f.name}`} name={f.name} placeholder={f.placeholder} required={f.required} rows="3" />
+          ) : (
+            <input
+              id={`${form.id}-${f.name}`}
+              type={f.type as any}
+              name={f.name}
+              placeholder={f.placeholder}
+              required={f.required}
+              data-validate={f.validate}
+            />
+          )}
+        </div>
+      ))}
+      {form.variant !== 'one_step' && step2Fields.length > 0 ? (
+        <button type="button" class="df-btn-primary" data-action="next-step">
+          Tiếp tục →
+        </button>
+      ) : (
+        <button type="submit" class="df-btn-primary">{form.submit_label}</button>
+      )}
+    </div>
+
+    {/* STEP 2 */}
+    {step2Fields.length > 0 && (
+      <div class="df-step" data-step="2" hidden>
+        {step2Fields.map((f) => (
+          <div class="df-field">
+            {f.label && <label for={`${form.id}-${f.name}`}>{f.label}{f.required && <span class="df-req">*</span>}</label>}
+            {f.type === 'select' ? (
+              <select id={`${form.id}-${f.name}`} name={f.name} required={f.required}>
+                <option value="">{f.placeholder || '-- Chọn --'}</option>
+                {f.options?.map((o) => <option value={o.value} selected={o.value === f.default_value}>{o.label}</option>)}
+              </select>
+            ) : (
+              <input
+                id={`${form.id}-${f.name}`}
+                type={f.type as any}
+                name={f.name}
+                placeholder={f.placeholder}
+                required={f.required}
+                data-validate={f.validate}
+                value={f.default_value}
+              />
+            )}
+          </div>
+        ))}
+        <div class="df-actions">
+          <button type="button" class="df-btn-secondary" data-action="prev-step">← Quay lại</button>
+          {hasStep3 ? (
+            <button type="button" class="df-btn-primary" data-action="next-step">Tiếp tục →</button>
+          ) : (
+            <button type="submit" class="df-btn-primary">{form.submit_label}</button>
+          )}
+        </div>
+      </div>
+    )}
+
+    {/* STEP 3 (optional — progressive profiling) */}
+    {hasStep3 && (
+      <div class="df-step" data-step="3" hidden>
+        {step3Fields.map((f) => (
+          <div class="df-field">
+            {f.label && <label for={`${form.id}-${f.name}`}>{f.label}</label>}
+            <input id={`${form.id}-${f.name}`} type={f.type as any} name={f.name} placeholder={f.placeholder} />
+          </div>
+        ))}
+        <div class="df-actions">
+          <button type="button" class="df-btn-secondary" data-action="prev-step">← Quay lại</button>
+          <button type="submit" class="df-btn-primary">{form.submit_label}</button>
+        </div>
+      </div>
+    )}
+
+    {/* GDPR consent (optional) */}
+    {form.gdpr_consent && (
+      <label class="df-consent">
+        <input type="checkbox" name="gdpr_consent" required />
+        <span>Tôi đồng ý nhận thông tin tư vấn từ Trường Việt Anh.</span>
+      </label>
+    )}
+
+    {/* Turnstile (Cloudflare anti-bot) */}
+    {form.anti_spam.turnstile && (
+      <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITEKEY}></div>
+    )}
+
+    {/* Hidden metadata */}
+    <input type="hidden" name="form_id" value={form.id} />
+    <input type="hidden" name="funnel_code" value={form.funnel_code} />
+    {form.school_level_default && <input type="hidden" name="school_level" value={form.school_level_default} />}
+    {form.campus_default && <input type="hidden" name="campus_ref" value={form.campus_default} />}
+    <input type="hidden" name="ghl_workflow_id" value={form.ghl_workflow_id || ''} />
+    <input type="hidden" name="lead_score_weight" value={form.lead_score_weight.toString()} />
+  </form>
+
+  <div class="df-success" hidden>
+    {form.success_message || 'Cảm ơn! Chúng tôi sẽ liên hệ bạn sớm.'}
+  </div>
+</div>
+
+<script
+  is:inline
+  define:vars={{
+    formId: form.id,
+    variant: form.variant,
+    funnelCode: form.funnel_code,
+    thankYouPage: form.thank_you_page,
+    successMode: form.success_mode,
+    turnstile: form.anti_spam.turnstile,
+  }}
+>
+  // Minimal client logic — full implementation delegated to /scripts/dynamic-form.js
+  // which is loaded once globally and binds to all [data-form-id] wrappers.
+  window.__TVA_FORMS__ = window.__TVA_FORMS__ || [];
+  window.__TVA_FORMS__.push({ formId, variant, funnelCode, thankYouPage, successMode, turnstile });
+</script>

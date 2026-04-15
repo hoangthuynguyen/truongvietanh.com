@@ -1,0 +1,31 @@
+---
+import type { BlockComparisonTable } from '../../types/cms';
+interface Props { data: BlockComparisonTable; context: string; }
+const { data } = Astro.props;
+const hl = data.highlight_column ?? -1;
+---
+<section class="b-comparison-table">
+  <div class="b-container">
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <div class="b-table-scroll">
+      <table class="b-table">
+        <thead>
+          <tr>
+            {data.columns?.map((c, i) => (
+              <th class={i === hl ? 'b-highlight' : ''}>{c}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.rows?.map((row) => (
+            <tr>
+              {row.cells.map((cell, i) => (
+                <td class={i === hl ? 'b-highlight' : ''} set:html={cell} />
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+---
+import { getAuthorById } from '../../lib/cms';
+import type { BlockArticleHeader } from '../../types/cms';
+interface Props { data: BlockArticleHeader; context: string; }
+const { data } = Astro.props;
+const author = data.author_ref ? await getAuthorById(data.author_ref) : null;
+const publishDate = new Date(data.publish_date).toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' });
+---
+<header class="b-article-header">
+  <div class="b-container">
+    {data.category && <p class="b-category">{data.category}</p>}
+    <h1 class="b-h1">{data.title}</h1>
+    {data.subtitle && <p class="b-subtitle">{data.subtitle}</p>}
+    <div class="b-article-meta">
+      {author && (
+        <div class="b-author-chip">
+          {author.avatar && <img src={author.avatar} alt="" width="32" height="32" />}
+          <span>{author.name}</span>
+        </div>
+      )}
+      <span class="b-article-date">📅 {publishDate}</span>
+      {data.read_time_minutes && <span class="b-read-time">⏱ {data.read_time_minutes} phút đọc</span>}
+    </div>
+    {data.cover_image && (
+      <figure class="b-cover">
+        <img src={data.cover_image} alt={data.title} loading="eager" fetchpriority="high" />
+      </figure>
+    )}
+  </div>
+</header>

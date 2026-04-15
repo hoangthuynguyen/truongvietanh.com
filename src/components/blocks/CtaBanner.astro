@@ -1,0 +1,33 @@
+---
+import type { BlockCtaBanner } from '../../types/cms';
+interface Props { data: BlockCtaBanner; context: string; }
+const { data } = Astro.props;
+const bg = data.bg_color ? `background:${data.bg_color}` : '';
+---
+<section class="b-cta-banner" style={bg}>
+  <div class="b-container b-cta-banner-inner">
+    <div class="b-cta-banner-text">
+      {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+      <h2 class="b-title">{data.title}</h2>
+      {data.body && <p class="b-body">{data.body}</p>}
+    </div>
+    <div class="b-cta-banner-actions">
+      <a href={data.primary_cta.href}
+         class={`b-cta b-cta-${data.primary_cta.variant || 'primary'}`}
+         target={data.primary_cta.open_in_new_tab ? '_blank' : undefined}
+         rel={data.primary_cta.open_in_new_tab ? 'noopener' : undefined}>
+        {data.primary_cta.icon && <span>{data.primary_cta.icon}</span>}
+        {data.primary_cta.label}
+      </a>
+      {data.secondary_cta && (
+        <a href={data.secondary_cta.href}
+           class={`b-cta b-cta-${data.secondary_cta.variant || 'secondary'}`}
+           target={data.secondary_cta.open_in_new_tab ? '_blank' : undefined}
+           rel={data.secondary_cta.open_in_new_tab ? 'noopener' : undefined}>
+          {data.secondary_cta.icon && <span>{data.secondary_cta.icon}</span>}
+          {data.secondary_cta.label}
+        </a>
+      )}
+    </div>
+  </div>
+</section>

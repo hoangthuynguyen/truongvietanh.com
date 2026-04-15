@@ -1,0 +1,49 @@
+---
+import CtaForm from './CtaForm.astro';
+import { getFormById } from '../../lib/cms';
+import type { BlockHeroPillar } from '../../types/cms';
+interface Props { data: BlockHeroPillar; context: string; }
+const { data } = Astro.props;
+const form = data.form_ref ? await getFormById(data.form_ref) : null;
+const bgStyle = data.bg_image ? `background-image:linear-gradient(160deg,rgba(26,25,60,0.82) 0%,rgba(15,23,42,0.85) 50%,rgba(26,26,94,0.78) 100%),url('${data.bg_image}')` : '';
+---
+<section class="b-hero-pillar" style={bgStyle}>
+  <div class="b-hero-pillar-inner b-container">
+    <div class="b-hero-pillar-left">
+      {data.breadcrumbs?.length > 0 && (
+        <nav class="b-breadcrumb" aria-label="Breadcrumb">
+          {data.breadcrumbs.map((bc, i) => (
+            <>
+              {i > 0 && <span aria-hidden="true">/</span>}
+              {i < data.breadcrumbs.length - 1
+                ? <a href={bc.href}>{bc.label}</a>
+                : <span>{bc.label}</span>}
+            </>
+          ))}
+        </nav>
+      )}
+      <h1 class="b-h1">{data.title}</h1>
+      {data.subtitle && <p class="b-subtitle">{data.subtitle}</p>}
+      {data.last_updated && <p class="b-last-updated">Cập nhật: {data.last_updated}</p>}
+      {data.rating && (
+        <div class="b-rating">
+          <span class="b-stars" aria-label={`${data.rating.score} trên 5 sao`}>★★★★★</span>
+          <span class="b-rating-text">{data.rating.score}/5 ({data.rating.count}+ đánh giá)</span>
+        </div>
+      )}
+      {data.badges?.length > 0 && (
+        <div class="b-badges">
+          {data.badges.map((b) => (
+            <div class="b-badge">
+              <strong>{b.value}</strong>
+              <span>{b.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+    <div class="b-hero-pillar-right">
+      {form && <CtaForm data={{ id: 'h', form_ref: form.id, variant: 'card', heading: 'Đăng ký tư vấn miễn phí' }} context="pillar" />}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,20 @@
+---
+import type { BlockNextSteps } from '../../types/cms';
+interface Props { data: BlockNextSteps; context: string; }
+const { data } = Astro.props;
+---
+<section class="b-next-steps">
+  <div class="b-container">
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <div class="b-steps-grid">
+      {data.items?.map((item) => (
+        <a href={item.link?.href || '#'} class="b-step-card">
+          {item.icon && <div class="b-step-icon">{item.icon}</div>}
+          <h3 class="b-step-title">{item.title}</h3>
+          {item.description && <p class="b-step-desc">{item.description}</p>}
+          {item.link && <span class="b-step-action">{item.link.label} →</span>}
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,6 @@
+---
+import type { BlockSpacer } from '../../types/cms';
+interface Props { data: BlockSpacer; context: string; }
+const { data } = Astro.props;
+---
+<div class={`b-spacer b-spacer-${data.height || 'md'}`} aria-hidden="true"></div>

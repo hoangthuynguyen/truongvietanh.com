@@ -1,0 +1,45 @@
+---
+import SiteLayout from '../layouts/v2/SiteLayout.astro';
+import BlocksRenderer from '../components/blocks/BlocksRenderer.astro';
+import type { Page } from '../types/cms';
+
+interface Props { page: Page; }
+const { page } = Astro.props;
+
+// Pillar pages auto-generate breadcrumbs + FAQPage + Organization schema
+const autoSchema = buildPillarSchema(page);
+function buildPillarSchema(p: Page) {
+  const faq = p.blocks.find((b) => b.collection === 'block_faq');
+  const schemas: Array<Record<string, unknown>> = [];
+  if (faq && (faq.item as any).emit_schema) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: (faq.item as any).items.map((it: { question: string; answer: string }) => ({
+        '@type': 'Question',
+        name: it.question,
+        acceptedAnswer: { '@type': 'Answer', text: it.answer },
+      })),
+    });
+  }
+  if (p.structured_data) {
+    const extra = Array.isArray(p.structured_data) ? p.structured_data : [p.structured_data];
+    schemas.push(...extra);
+  }
+  return schemas;
+}
+---
+<SiteLayout
+  title={page.title}
+  description={page.meta_description}
+  canonical={page.canonical_url}
+  noindex={page.noindex}
+  ogImage={page.og_image}
+  robots={page.robots}
+  structuredData={autoSchema}
+  funnelCode={page.funnel_ref}
+>
+  <article class="pillar-page" data-slug={page.slug} data-product={page.product_ref} data-campus={page.campus_ref}>
+    <BlocksRenderer blocks={page.blocks} context="pillar" />
+  </article>
+</SiteLayout>

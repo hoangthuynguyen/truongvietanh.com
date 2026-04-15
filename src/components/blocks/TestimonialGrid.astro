@@ -1,0 +1,31 @@
+---
+import { getTestimonials } from '../../lib/cms';
+import type { BlockTestimonialGrid } from '../../types/cms';
+interface Props { data: BlockTestimonialGrid; context: string; }
+const { data } = Astro.props;
+
+const items = data.testimonial_refs && data.testimonial_refs.length > 0
+  ? await getTestimonials({ limit: data.limit || 6 })  // TODO: getTestimonialsByIds
+  : await getTestimonials({ schoolLevel: data.school_level_filter, limit: data.limit || 6 });
+---
+<section class="b-testimonial-grid">
+  <div class="b-container">
+    {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <div class="b-testimonial-items">
+      {items.map((t) => (
+        <blockquote class="b-testimonial">
+          {t.rating && <div class="b-tm-rating" aria-label={`${t.rating} sao`}>{'★'.repeat(t.rating)}</div>}
+          <p class="b-tm-quote">“{t.quote}”</p>
+          <footer class="b-tm-author">
+            {t.avatar && <img src={t.avatar} alt="" width="40" height="40" />}
+            <div>
+              <cite>{t.author_name}</cite>
+              {t.author_role && <span class="b-tm-role">{t.author_role}</span>}
+            </div>
+          </footer>
+        </blockquote>
+      ))}
+    </div>
+  </div>
+</section>

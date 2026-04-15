@@ -1,0 +1,39 @@
+---
+import SiteLayout from '../layouts/v2/SiteLayout.astro';
+import BlocksRenderer from '../components/blocks/BlocksRenderer.astro';
+import type { Page } from '../types/cms';
+
+interface Props { page: Page; }
+const { page } = Astro.props;
+
+// Article schema auto-generated
+const articleHeader = page.blocks.find((b) => b.collection === 'block_article_header');
+const articleSchema = articleHeader ? {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: page.title,
+  description: page.meta_description,
+  image: page.og_image,
+  datePublished: (articleHeader.item as any).publish_date,
+  author: { '@type': 'Person', name: (articleHeader.item as any).author_name || 'Trường Việt Anh' },
+  publisher: {
+    '@type': 'Organization',
+    name: 'Trường Việt Anh',
+    logo: { '@type': 'ImageObject', url: 'https://truongvietanh.com/logo-crest-80.webp' },
+  },
+} : null;
+
+const schemas = [articleSchema, page.structured_data].filter(Boolean).flat() as Array<Record<string, unknown>>;
+---
+<SiteLayout
+  title={page.title}
+  description={page.meta_description}
+  canonical={page.canonical_url}
+  noindex={page.noindex}
+  ogImage={page.og_image}
+  structuredData={schemas}
+>
+  <article class="article-page" data-slug={page.slug}>
+    <BlocksRenderer blocks={page.blocks} context="article" />
+  </article>
+</SiteLayout>

@@ -1,0 +1,10 @@
+---
+import type { BlockSectionHeader } from '../../types/cms';
+interface Props { data: BlockSectionHeader; context: string; }
+const { data } = Astro.props;
+---
+<header class={`b-section-header b-align-${data.alignment || 'left'}`}>
+  {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+  <h2 class="b-title">{data.title}</h2>
+  {data.subtitle && <p class="b-subtitle">{data.subtitle}</p>}
+</header>

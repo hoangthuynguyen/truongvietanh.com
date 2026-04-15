@@ -1,0 +1,96 @@
+---
+/**
+ * FunnelLayout — minimal-chrome conversion-focused layout.
+ * Used by squeeze pages, A/B variants, mid-funnel landing pages.
+ *
+ * Difference from SiteLayout:
+ *  - No main nav (just logo + hotline + zalo)
+ *  - No exit-intent popup (the whole page IS the capture)
+ *  - Minimal footer (3 campus lines only)
+ *  - Trust bar + urgency bar injected by template
+ */
+import '../../styles/global.css';
+import '../../styles/v2.css';
+import { getSiteSettings } from '../../lib/cms';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  canonical?: string;
+  noindex?: boolean;
+  ogImage?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  funnelCode: string;
+  schoolLevel?: string;
+  campusRef?: string;
+}
+
+const {
+  title, description, keywords, canonical, noindex = false,
+  ogImage, structuredData, funnelCode, schoolLevel, campusRef,
+} = Astro.props;
+
+const settings = await getSiteSettings();
+const schemaArray = Array.isArray(structuredData) ? structuredData : structuredData ? [structuredData] : [];
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {keywords && <meta name="keywords" content={keywords} />}
+  {canonical && <link rel="canonical" href={canonical} />}
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+
+  {settings.gtm_id && (
+    <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${settings.gtm_id}');`} />
+  )}
+
+  {schemaArray.map((s) => (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(s)} />
+  ))}
+
+  <meta name="x-funnel-code" content={funnelCode} />
+  {schoolLevel && <meta name="x-school-level" content={schoolLevel} />}
+  {campusRef && <meta name="x-campus-ref" content={campusRef} />}
+</head>
+<body data-layout="funnel">
+  {/* Minimal header */}
+  <header class="funnel-header">
+    <a href="/" class="funnel-logo">
+      <img src="/logo-crest-80.webp" alt="Trường Việt Anh" width="40" height="40" />
+      <span>Trường Việt Anh</span>
+    </a>
+    <div class="funnel-header-cta">
+      <a href={`tel:${settings.hotline}`} class="funnel-hotline">📞 {settings.hotline}</a>
+      {settings.zalo_url && <a href={settings.zalo_url} class="funnel-zalo" target="_blank" rel="noopener">Zalo</a>}
+    </div>
+  </header>
+
+  <main id="funnel-main">
+    <slot />
+  </main>
+
+  {/* Minimal footer — 3 campus lines + legal */}
+  <footer class="funnel-footer">
+    <p><strong>Trường Liên Cấp Việt Anh</strong> — 9 cơ sở tại TP.HCM, Long An, Kiên Giang</p>
+    <p>Hotline: <a href={`tel:${settings.hotline}`}>{settings.hotline}</a> · Zalo OA: {settings.zalo_oa_id}</p>
+    <p class="funnel-footer-legal">© 2026 Trường Việt Anh. Mọi thông tin đăng ký được bảo mật.</p>
+  </footer>
+
+  {/* Zalo float (still useful for funnel) */}
+  {settings.zalo_url && (
+    <a href={settings.zalo_url} class="zalo-float" target="_blank" rel="noopener" aria-label="Chat Zalo">
+      <img src="/zalo-icon.svg" alt="" width="28" height="28" />
+    </a>
+  )}
+
+  <script src="/scripts/funnel-interactions.js" defer></script>
+</body>
+</html>

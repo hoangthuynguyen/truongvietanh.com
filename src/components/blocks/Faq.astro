@@ -3,15 +3,15 @@ import type { BlockFaq } from '../../types/cms';
 interface Props { data: BlockFaq; context: string; }
 const { data } = Astro.props;
 ---
-<section class="block-faq">
-  <div class="block-faq-inner">
-    {data.eyebrow && <p class="block-eyebrow">{data.eyebrow}</p>}
-    {data.title && <h2 class="block-title">{data.title}</h2>}
-    <div class="block-faq-list">
+<section class="b-faq">
+  <div class="b-container b-faq-inner">
+    {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <div class="b-faq-list">
       {data.items.map((item, i) => (
-        <details class="block-faq-item" open={i === 0}>
+        <details class="b-faq-item" open={i === 0}>
           <summary>{item.question}</summary>
-          <div class="block-faq-answer" set:html={item.answer} />
+          <div class="b-faq-answer" set:html={item.answer} />
         </details>
       ))}
     </div>

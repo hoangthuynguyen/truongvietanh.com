@@ -9,6 +9,8 @@
     "check": "ASTRO_TELEMETRY_DISABLED=1 astro check",
     "test": "vitest run",
     "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
     "smoke": "BASE_URL=${BASE_URL:-https://hoc.truongvietanh.com} node scripts/smoke-test.mjs",
     "legacy:audit": "node scripts/legacy-to-v2.mjs",
     "deploy:v2:staging": "ENV=staging node scripts/deploy-v2.mjs",

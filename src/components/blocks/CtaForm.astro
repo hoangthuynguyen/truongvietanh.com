@@ -28,10 +28,10 @@ const FALLBACK_FORM = {
 };
 const renderForm = form || FALLBACK_FORM;
 ---
-<section class={`cta-form cta-form--${data.variant} cta-form--${data.bg_style || 'light'} cta-form--ctx-${context}`}>
-  <div class="cta-form-inner">
-    {data.heading && <h2 class="cta-form-heading">{data.heading}</h2>}
-    {data.subheading && <p class="cta-form-subheading">{data.subheading}</p>}
+<section class={`b-cta-form b-cta-form--${data.variant} b-cta-form--${data.bg_style || 'light'} b-cta-form--ctx-${context}`}>
+  <div class="b-cta-form-inner">
+    {data.heading && <h2 class="b-cta-form-heading">{data.heading}</h2>}
+    {data.subheading && <p class="b-cta-form-subheading">{data.subheading}</p>}
     <DynamicForm form={renderForm} />
   </div>
 </section>

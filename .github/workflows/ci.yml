@@ -38,6 +38,20 @@ jobs:
           grep -q "b-hero-squeeze" dist/v2/demo/index.html || (echo "v2 blocks not rendered" && exit 1)
           echo "✓ /v2/demo rendered with blocks"
 
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright E2E tests
+        run: npm run test:e2e -- --project=chromium
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ github.run_id }}
+          path: playwright-report/
+          retention-days: 7
+
       - name: Upload build artifact
         if: github.event_name == 'pull_request'
         uses: actions/upload-artifact@v4

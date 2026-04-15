@@ -64,8 +64,14 @@ export default {
       return handleLeadSubmission(request, env);
     }
 
+    // hoc.truongvietanh.com root → serve /hoc/index.html (the dedicated landing page)
+    let assetRequest = request;
+    if (url.hostname === 'hoc.truongvietanh.com' && (url.pathname === '/' || url.pathname === '')) {
+      assetRequest = new Request(new URL('/hoc/index.html', request.url).toString(), request);
+    }
+
     // Everything else → static assets with cache control
-    const response = await env.ASSETS.fetch(request);
+    const response = await env.ASSETS.fetch(assetRequest);
     const contentType = response.headers.get('content-type') || '';
     if (contentType.includes('text/html')) {
       const newHeaders = new Headers(response.headers);

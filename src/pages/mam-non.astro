@@ -781,11 +781,6 @@ const structuredData = [
             <li>Không ràng buộc, hoàn toàn miễn phí</li>
           </ul>
         </div>
-          <div class="gi-author-bio">
-            <p class="gi-author-bio__label">Biên soạn bởi</p>
-            <p class="gi-author-bio__name">Ban Truyền Thông Trường Việt Anh</p>
-            <p class="gi-author-bio__desc">Nội dung được biên soạn bởi đội ngũ truyền thông Trường Việt Anh với hơn 13 năm kinh nghiệm trong giáo dục song ngữ. Thông tin được kiểm duyệt bởi Ban Giám Hiệu.</p>
-          </div>
           <div class="gi-next-step">
             <p class="gi-next-step-title">Bước Tiếp Theo</p>
             <div class="gi-next-step-links">
@@ -804,30 +799,54 @@ const structuredData = [
       </div>
     </section>
 
-    <!-- ====== LAYER 9: RELATED CONTENT ====== -->
-    <section class="gi-related">
+    <!-- ====== BLOCK LINKS ====== -->
+    <section class="gi-block-links" aria-label="Cơ sở và chương trình liên quan">
       <div class="gi-container">
-        <h2 class="gi-related-title">Bài viết liên quan</h2>
-        <div class="gi-related-grid">
-          <a href="/gioi-thieu" class="gi-related-card">
-            <div class="gi-related-img" style="background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8a 100%);"></div>
-            <h3>Giới thiệu Trường Việt Anh — Hệ thống giáo dục liên cấp</h3>
-            <p>Tìm hiểu tổng quan về hệ thống trường liên cấp Mầm non — THPT với 9 cơ sở tại TP.HCM, Long An, Kiên Giang.</p>
+        <h2 class="gi-block-links__heading">Cơ sở mầm non Việt Anh</h2>
+        <div class="gi-block-links__grid">
+          <a href="/co-so" class="gi-block-link">
+            <span class="gi-block-link__icon">🏫</span>
+            <strong>Mầm non Gò Vấp</strong>
+            <span>573 Lê Đức Thọ, Q. Gò Vấp</span>
           </a>
-          <a href="/tieu-hoc" class="gi-related-card">
-            <div class="gi-related-img" style="background: linear-gradient(135deg, #D4A843 0%, #b8922e 100%);"></div>
-            <h3>Chương trình Tiểu học song ngữ Trường Việt Anh</h3>
-            <p>Lộ trình tiếp nối sau mầm non — UK Curriculum, STEAM, Coding và nền tảng IELTS từ lớp 1.</p>
+          <a href="/co-so" class="gi-block-link">
+            <span class="gi-block-link__icon">🏫</span>
+            <strong>Mầm non Phú Nhuận</strong>
+            <span>269A Nguyễn Trọng Tuyển, Q. Phú Nhuận</span>
           </a>
-          <a href="/hoc-phi" class="gi-related-card">
-            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
-            <h3>Bảng học phí chi tiết Trường Việt Anh 2026-2027</h3>
-            <p>Học phí các cấp từ Mầm non đến THPT, chính sách học bổng và phương thức thanh toán.</p>
+          <a href="/co-so" class="gi-block-link">
+            <span class="gi-block-link__icon">🏫</span>
+            <strong>Mầm non Bình Chánh</strong>
+            <span>H. Bình Chánh, TP.HCM</span>
           </a>
-          <a href="/tuyen-sinh" class="gi-related-card">
-            <div class="gi-related-img" style="background: linear-gradient(135deg, #2e7d32 0%, #1b5e20 100%);"></div>
-            <h3>Tuyển sinh Trường Việt Anh 2026-2027</h3>
-            <p>Thông tin tuyển sinh, hồ sơ nhập học, lịch thi và chính sách ưu đãi cho năm học mới.</p>
+          <a href="/co-so" class="gi-block-link">
+            <span class="gi-block-link__icon">🏫</span>
+            <strong>Mầm non Long An</strong>
+            <span>TP. Tân An & Đức Hoà, Long An</span>
+          </a>
+        </div>
+
+        <h2 class="gi-block-links__heading" style="margin-top:2.5rem">Tìm hiểu thêm</h2>
+        <div class="gi-block-links__grid">
+          <a href="/tieu-hoc" class="gi-block-link">
+            <span class="gi-block-link__icon">📚</span>
+            <strong>Tiểu học Việt Anh</strong>
+            <span>Chương trình tiếp nối sau mầm non</span>
+          </a>
+          <a href="/hoc-phi" class="gi-block-link">
+            <span class="gi-block-link__icon">💰</span>
+            <strong>Học phí mầm non</strong>
+            <span>5–8 triệu/tháng, bao gồm ăn bán trú</span>
+          </a>
+          <a href="/tuyen-sinh" class="gi-block-link">
+            <span class="gi-block-link__icon">📋</span>
+            <strong>Đăng ký tuyển sinh</strong>
+            <span>Hồ sơ, lịch thi, ưu đãi Early Bird</span>
+          </a>
+          <a href="/co-so" class="gi-block-link">
+            <span class="gi-block-link__icon">📍</span>
+            <strong>Xem tất cả cơ sở</strong>
+            <span>9 cơ sở tại TP.HCM, Long An, Kiên Giang</span>
           </a>
         </div>
       </div>
@@ -840,6 +859,64 @@ const structuredData = [
 <style is:global>
 /* ===== MẦM NON PILLAR PAGE — Additional styles ===== */
 /* Reuses all gi-* classes from gioi-thieu.astro (is:global) */
+
+/* ===== BLOCK LINKS ===== */
+.gi-block-links {
+  background: #f8fafc;
+  padding: 3rem 0;
+}
+.gi-block-links__heading {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #000080;
+  margin: 0 0 1.25rem;
+}
+.gi-block-links__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.gi-block-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  background: #fff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 1.25rem 1rem;
+  text-decoration: none;
+  color: #0f172a;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.gi-block-link:hover {
+  border-color: #000080;
+  box-shadow: 0 4px 12px rgba(0,0,128,0.08);
+}
+.gi-block-link__icon {
+  font-size: 1.4rem;
+  line-height: 1;
+  margin-bottom: 0.2rem;
+}
+.gi-block-link strong {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #000080;
+}
+.gi-block-link span {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.4;
+}
+@media (max-width: 768px) {
+  .gi-block-links__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 480px) {
+  .gi-block-links__grid {
+    grid-template-columns: 1fr;
+  }
+}
 
 /* Program grid: 5 columns for 5 areas instead of 4 */
 .mn-program-grid {

@@ -48,9 +48,13 @@ export async function getStaticPaths() {
     page++;
   }
 
-  return allPosts.map((post) => ({
+  // Filter out posts with slugs that contain characters invalid for file paths
+  // (e.g. a URL accidentally saved as slug: "https:--truongvietanh.com")
+  const validPosts = allPosts.filter((post) => post.slug && !/[:\*\?"<>|]/.test(post.slug));
+
+  return validPosts.map((post) => ({
     params: { slug: post.slug },
-    props: { post, allPosts },
+    props: { post, allPosts: validPosts },
   }));
 }
 

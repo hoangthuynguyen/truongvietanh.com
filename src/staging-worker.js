@@ -203,13 +203,13 @@ async function handleLeadSubmission(request, env) {
           tags,
         };
 
-        // Add quiz custom fields if it's a quiz lead
+        // Add quiz custom fields if it's a quiz lead (use GHL field IDs)
         if (isQuizLead(data)) {
           ghlBody.customFields = [
-            { key: 'quiz_score', field_value: data.quizScore.toString() },
-            { key: 'quiz_level', field_value: data.quizLevel || getQuizResultLabel(data.quizScore) },
-            { key: 'dia_diem', field_value: deriveLocation(data.funnelCode) },
-            { key: 'cap_hoc_trai_he', field_value: deriveCampLevel(data.funnelCode) },
+            { id: 'EoYde4vUysFckhpYeu1V', field_value: data.quizScore.toString() },
+            { id: '4pJj3NJZhiaiCAvI3dhd', field_value: data.quizLevel || getQuizResultLabel(data.quizScore) },
+            { id: 'z1ephcXkEvcNWtyBjiWp', field_value: deriveLocation(data.funnelCode) },
+            { id: 'wDAaUCcIklmwhODgCeC6', field_value: deriveCampLevel(data.funnelCode) },
           ];
         }
 
@@ -283,9 +283,12 @@ async function handleLeadSubmission(request, env) {
         sendEmailNotification(data, env).catch(() => {}),
         sendZaloNotification(data, env).catch(() => {}),
       ];
-      // Quiz leads: send quiz result email to parent + Zalo report
+      // Quiz leads: send quiz result email to parent + create opportunity
       if (isQuizLead(data)) {
         promises.push(sendQuizResultEmail(data, env).catch(() => {}));
+        if (contactId) {
+          promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
+        }
       }
       // Add contact to appropriate GHL workflow
       if (contactId) {
@@ -330,15 +333,16 @@ const WORKFLOW_MAP = {
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
   'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
 
-  // WF10: Trại Hè Quiz Funnel (all trai-he-* variants use same nurture workflow)
-  'trai-he-tieu-hoc-go-vap':    'TRAI_HE_QUIZ_WF_PLACEHOLDER',
-  'trai-he-tieu-hoc-binh-tan':  'TRAI_HE_QUIZ_WF_PLACEHOLDER',
-  'trai-he-tieu-hoc-can-giuoc': 'TRAI_HE_QUIZ_WF_PLACEHOLDER',
-  'trai-he-tieu-hoc-rach-gia':  'TRAI_HE_QUIZ_WF_PLACEHOLDER',
-  'trai-he-thcs-go-vap':        'TRAI_HE_QUIZ_WF_PLACEHOLDER',
-  'trai-he-thcs-binh-tan':      'TRAI_HE_QUIZ_WF_PLACEHOLDER',
-  'trai-he-thpt-go-vap':        'TRAI_HE_QUIZ_WF_PLACEHOLDER',
-  'trai-he-thpt-binh-tan':      'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  // WF10: Trại Hè Quiz Funnel → uses Squeeze Full Funnel workflow
+  // (nurture sequence: quiz result email → follow-up → urgency → consultation invite)
+  'trai-he-tieu-hoc-go-vap':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'trai-he-tieu-hoc-binh-tan':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'trai-he-tieu-hoc-can-giuoc': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'trai-he-tieu-hoc-rach-gia':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'trai-he-thcs-go-vap':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'trai-he-thcs-binh-tan':      'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'trai-he-thpt-go-vap':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'trai-he-thpt-binh-tan':      'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
 };
 
 async function addContactToWorkflow(contactId, source, ghlApiKey) {
@@ -370,6 +374,38 @@ async function addContactToWorkflow(contactId, source, ghlApiKey) {
       body: JSON.stringify({}),
     }
   );
+}
+
+// === OPPORTUNITY (Pipeline) FOR QUIZ LEADS ===
+const TRAI_HE_PIPELINE_ID = 'wBGA6IWGRd14sCXrasTp'; // Tuyển Sinh 2026
+const TRAI_HE_STAGE_ID = '622d8a0e-c396-422b-a62c-f984652cdaa4'; // New Lead
+
+async function createQuizOpportunity(contactId, data, ghlApiKey) {
+  const loc = deriveLocation(data.funnelCode);
+  const campLvl = deriveCampLevel(data.funnelCode);
+  const score = data.quizScore;
+  const level = getQuizResultLabel(score);
+
+  // Monetary value estimate based on quiz score urgency
+  const monetaryValue = score <= 12 ? 15000000 : score <= 17 ? 12000000 : 10000000;
+
+  await fetch('https://services.leadconnectorhq.com/opportunities/', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${ghlApiKey}`,
+      'Version': '2021-07-28',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      pipelineId: TRAI_HE_PIPELINE_ID,
+      locationId: GHL_LOCATION_ID,
+      name: `Trại Hè ${campLvl} ${loc} — ${data.fullName} (${score}đ ${level})`,
+      stageId: TRAI_HE_STAGE_ID,
+      contactId,
+      monetaryValue,
+      source: `Quiz Funnel - ${data.funnelCode}`,
+    }),
+  });
 }
 
 // === NOTIFICATION FUNCTIONS ===

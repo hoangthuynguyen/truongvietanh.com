@@ -60,29 +60,25 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
   schoolLevel={page.school_level}
   funnelCode={page.funnel_code}
 >
-  <!-- ===== HERO with CTA buttons ===== -->
+  <!-- ===== HERO — compact, CTA above fold ===== -->
   <section slot="hero">
     {page.hero_badge && <span class="squeeze-hero__badge">{page.hero_badge}</span>}
     <h1 class="squeeze-hero__heading">{page.hero_headline}</h1>
-    <p class="squeeze-hero__subheading">{page.hero_subheading}</p>
+    <p class="squeeze-hero__sub">{page.hero_subheading}</p>
 
-    <!-- Hero CTA buttons -->
+    <!-- CTA group — must be above fold -->
     <div class="hero-cta-group">
       <a href="#form-section" class="hero-cta hero-cta--primary">
-        <span class="hero-cta__icon">🎯</span>
-        Làm bài đánh giá 3 phút
+        🎯 Đánh giá miễn phí 3 phút
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
       </a>
       <a href={zaloUrl} target="_blank" rel="noopener noreferrer" class="hero-cta hero-cta--zalo">
-        <span class="hero-cta__icon">💬</span>
-        Chat Zalo ngay
+        💬 Chat Zalo
       </a>
     </div>
-
-    <!-- Hero countdown -->
     <div class="hero-countdown" id="heroCountdown">
       <span class="hero-countdown__pulse"></span>
-      <span>Học bổng Early Bird kết thúc trong </span>
+      <span>Học bổng kết thúc trong </span>
       <span class="hero-countdown__time" id="heroTimer">--:--:--</span>
     </div>
   </section>

@@ -30,7 +30,7 @@ if (!page) {
   return Astro.redirect('/404');
 }
 
-const canonicalUrl = `https://truongvietanh.com/${page.slug}/cam-on`;
+const canonicalUrl = `https://hoc.truongvietanh.com/${page.slug}/cam-on`;
 const zaloUrl = 'https://zalo.me/1678310120468101523';
 const zaloDeepLink = `https://zalo.me/1678310120468101523?text=${encodeURIComponent(`Chào thầy/cô, tôi vừa làm bài đánh giá Lion Camp ${page.location} cho con. Tôi muốn nhận báo cáo và giữ chỗ ạ.`)}`;
 
@@ -82,6 +82,13 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
 
     .msg{font-size:.98rem;color:#333;line-height:1.7;margin-bottom:18px;text-align:left}
     .msg strong{color:#1C2A3A}
+
+    /* === Email check (double opt-in) === */
+    .email-check{background:linear-gradient(135deg,#ECFDF5,#D1FAE5);border:2px solid #10B981;border-radius:14px;padding:18px 20px;margin-bottom:16px;text-align:left}
+    .email-check__title{font-weight:800;color:#065F46;margin-bottom:12px;font-size:1rem;font-family:'Montserrat',sans-serif;text-align:center}
+    .email-check__steps{display:flex;flex-direction:column;gap:8px}
+    .email-check__step{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;line-height:1.5;color:#1F2937}
+    .email-check__num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:#10B981;color:var(--w);font-weight:800;font-size:.75rem;display:flex;align-items:center;justify-content:center;margin-top:1px}
 
     /* === Zalo nudge === */
     .zalo-nudge{background:linear-gradient(135deg,#E8F4FD,#DBEAFE);border:2px solid #0068FF;border-radius:14px;padding:16px 18px;margin-bottom:18px;text-align:center}
@@ -139,6 +146,26 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
 
     .footer-note{font-size:.75rem;color:#999;margin-top:10px}
 
+    /* === Score card === */
+    .score-card{background:linear-gradient(135deg,#F0F9FF,#E0F2FE);border:2px solid #7DD3FC;border-radius:16px;padding:18px 20px;margin-bottom:18px;text-align:center}
+    .score-card__header{display:flex;align-items:baseline;justify-content:center;gap:6px;margin-bottom:10px}
+    .score-card__number{font-family:Montserrat,sans-serif;font-size:2.2rem;font-weight:800;color:var(--b)}
+    .score-card__max{font-size:.9rem;color:#666}
+    .score-card__bar{height:10px;background:#E5E7EB;border-radius:5px;overflow:hidden;margin-bottom:8px}
+    .score-card__fill{height:100%;border-radius:5px;transition:width 1.5s ease,background .5s;width:0}
+    .score-card__label{font-family:Montserrat,sans-serif;font-weight:700;font-size:.95rem}
+
+    /* === Next steps timeline === */
+    .next-steps{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:14px;padding:16px 18px;margin-bottom:18px;text-align:left}
+    .next-steps__title{font-weight:700;color:var(--b);margin-bottom:12px;font-size:.92rem}
+    .next-steps__item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:.88rem;color:#555;border-bottom:1px solid #F3F4F6}
+    .next-steps__item:last-child{border-bottom:none}
+    .next-steps__item--done{color:var(--green)}
+    .next-steps__item--done .next-steps__dot{background:var(--green);color:#fff}
+    .next-steps__item--active{color:var(--b);font-weight:600}
+    .next-steps__item--active .next-steps__dot{background:var(--o);color:#fff;animation:stepPulse 2s infinite}
+    .next-steps__dot{width:24px;height:24px;min-width:24px;border-radius:50%;background:#D1D5DB;color:#fff;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;margin-top:1px}
+
     @media(max-width:480px){
       .card{padding:2rem 1.25rem;border-radius:20px}
       h1{font-size:1.15rem}
@@ -164,7 +191,7 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
 <!-- Confetti canvas -->
 <canvas id="confetti"></canvas>
 
-<div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" style="height:50px;width:auto" /></div>
+<div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường TH - THCS - THPT Việt Anh" style="max-width:280px;height:auto;background:#fff;padding:12px 22px;border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,.1)" /></div>
 
 <!-- Progress steps -->
 <div class="progress-steps">
@@ -179,11 +206,66 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
   <div class="card">
     <div class="icon">{page.thank_you_icon}</div>
     <h1>{headlineBefore}<span class="name" id="parentName"></span>{headlineAfter}</h1>
+
+    <!-- Quiz score display (populated from ?score= URL param) -->
+    <div class="score-card" id="scoreCard" hidden>
+      <div class="score-card__header">
+        <div class="score-card__number" id="scoreNumber">--</div>
+        <div class="score-card__max">/ 24 điểm</div>
+      </div>
+      <div class="score-card__bar"><div class="score-card__fill" id="scoreFill"></div></div>
+      <div class="score-card__label" id="scoreLabel"></div>
+    </div>
+
     <p class="msg" set:html={page.thank_you_intro} />
+
+    <!-- Next steps timeline -->
+    <div class="next-steps">
+      <div class="next-steps__title">📋 Các bước tiếp theo:</div>
+      <div class="next-steps__item next-steps__item--done">
+        <span class="next-steps__dot">✓</span>
+        <span>Hoàn thành bài đánh giá</span>
+      </div>
+      <div class="next-steps__item next-steps__item--active">
+        <span class="next-steps__dot">2</span>
+        <span>Mở Zalo nhận <strong>Báo cáo PDF chi tiết</strong> (gửi trong 24h)</span>
+      </div>
+      <div class="next-steps__item">
+        <span class="next-steps__dot">3</span>
+        <span>Tư vấn viên gọi xác nhận + tư vấn lộ trình</span>
+      </div>
+      <div class="next-steps__item">
+        <span class="next-steps__dot">4</span>
+        <span>Nhận <strong>Học bổng Early Bird</strong> + giữ chỗ Lion Camp</span>
+      </div>
+    </div>
+
+    <!-- Email check instructions (double opt-in) -->
+    <div class="email-check">
+      <div class="email-check__title">📧 Kiểm tra Email ngay!</div>
+      <div class="email-check__steps">
+        <div class="email-check__step">
+          <span class="email-check__num">1</span>
+          <span>Mở <strong>Inbox</strong> email — tìm email từ <strong>"Trường Việt Anh"</strong> hoặc <strong>"Lion Camp"</strong></span>
+        </div>
+        <div class="email-check__step">
+          <span class="email-check__num">2</span>
+          <span>Không thấy? Kiểm tra thư mục <strong>Spam</strong>, <strong>Quảng cáo</strong> hoặc <strong>Promotions</strong></span>
+        </div>
+        <div class="email-check__step">
+          <span class="email-check__num">3</span>
+          <span>Vẫn không thấy? <strong>Search</strong> từ khóa <em>"Lion Camp"</em> trong thanh tìm kiếm email</span>
+        </div>
+        <div class="email-check__step">
+          <span class="email-check__num">4</span>
+          <span>Nhấn <strong>"Không phải spam"</strong> để nhận email tiếp theo (nếu email nằm trong Spam)</span>
+        </div>
+      </div>
+    </div>
 
     <!-- Zalo nudge -->
     <div class="zalo-nudge">
-      <div class="zalo-nudge__text">📱 Báo cáo đang chờ Ba/Mẹ trên Zalo!</div>
+      <div class="zalo-nudge__text">📱 Hoặc nhận báo cáo nhanh qua Zalo!</div>
       <a href={zaloDeepLink} target="_blank" rel="noopener" class="zalo-nudge__btn">
         💬 Mở Zalo nhận báo cáo ngay
       </a>
@@ -251,10 +333,31 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
 
 <script is:inline>
   (function () {
-    // === 1. Insert parent name ===
+    // === 1. Insert parent name + quiz score ===
     var p = new URLSearchParams(window.location.search);
     var n = p.get('name');
     if (n) document.getElementById('parentName').textContent = ' ' + n + ' ';
+
+    // Show quiz score if available
+    var score = parseInt(p.get('score'), 10);
+    if (score && score > 0) {
+      var scoreCard = document.getElementById('scoreCard');
+      scoreCard.hidden = false;
+      document.getElementById('scoreNumber').textContent = score;
+      var pct = Math.round((score / 24) * 100);
+      var color, label;
+      if (score >= 18) { color = '#16A34A'; label = '✅ Nền tảng tốt — con sẵn sàng tỏa sáng tại Lion Camp!'; }
+      else if (score >= 12) { color = '#F59E0B'; label = '⚠️ Cần hỗ trợ — Lion Camp sẽ giúp con tiến bộ rõ rệt!'; }
+      else { color = '#EF4444'; label = '🔴 Thời điểm vàng can thiệp — đừng bỏ lỡ mùa hè này!'; }
+      setTimeout(function() {
+        var fill = document.getElementById('scoreFill');
+        fill.style.width = pct + '%';
+        fill.style.background = color;
+      }, 500);
+      var labelEl = document.getElementById('scoreLabel');
+      labelEl.textContent = label;
+      labelEl.style.color = color;
+    }
 
     // === 2. Evergreen 4h countdown (matches squeeze page) ===
     var COUNTDOWN_KEY = 'camp_countdown_end';

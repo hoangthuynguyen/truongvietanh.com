@@ -311,9 +311,36 @@ async function handleLeadSubmission(request, env) {
         const pancakeText = await pancakeRes.text();
         try {
           const pancakeData = JSON.parse(pancakeText);
-          results.pancake = { status: pancakeRes.status, id: pancakeData?.data?.id || null };
+          if (pancakeRes.status >= 200 && pancakeRes.status < 300) {
+            results.pancake = { status: pancakeRes.status, id: pancakeData?.data?.id || null };
+          } else if (pancakeRes.status === 422 && /already exists/i.test(pancakeText) && data.phone) {
+            // Phone/email already exists — idempotent success, lookup existing record
+            try {
+              const lookupRes = await fetch(
+                `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records?api_key=${pancakeApiKey}&phone_number=${encodeURIComponent(data.phone)}`,
+                { headers: { 'Accept': 'application/json', 'User-Agent': 'TruongVietAnh-LeadForm/1.0' } }
+              );
+              const lookupData = await lookupRes.json();
+              const existing = lookupData?.data?.entries?.[0] || null;
+              results.pancake = {
+                status: 200,
+                id: existing?.id || null,
+                duplicate: true,
+                note: 'Phone already in CRM — existing lead found',
+              };
+            } catch {
+              results.pancake = { status: 200, duplicate: true, id: null, note: 'Phone already in CRM (lookup failed)' };
+            }
+          } else {
+            results.pancake = {
+              status: pancakeRes.status,
+              error: pancakeData?.message || pancakeData?.error || pancakeText.substring(0, 400),
+              details: pancakeData?.errors || pancakeData?.data || null,
+              payload: { name: record.name, phone: record.phone_number, email: record.email, khoi: record.khoi_quan_tam || null },
+            };
+          }
         } catch {
-          results.pancake = { status: pancakeRes.status, error: pancakeText.substring(0, 200) };
+          results.pancake = { status: pancakeRes.status, error: pancakeText.substring(0, 400) };
         }
       } catch (err) {
         results.pancake = { error: err.message };

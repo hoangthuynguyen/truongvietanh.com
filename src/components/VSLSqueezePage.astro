@@ -41,7 +41,7 @@ const levelBadge: Record<string, string> = {
 };
 const shortLocation = location.replace(/^(Tiểu học|THCS|THPT)\s*/,'');
 const levelName = levelBadge[schoolLevel] || '';
-const programTitle = `Trại hè Lion Camp 2026 — dành cho học sinh ${levelName} tại ${shortLocation}`;
+const programTitle = `Trại Hè Lion Camp 2026 — dành cho học sinh ${levelName} tại ${shortLocation}`;
 
 // Auto-split headline at natural breakpoints (... or — or :)
 function splitHeadline(text: string): string[] {
@@ -266,7 +266,7 @@ const headlineLines = splitHeadline(headline);
     <div class="vid-wrap">
       <div class="vid">
         {videoEmbedUrl ? (
-          <iframe src={videoEmbedUrl} title="VSL Lion Camp" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+          <iframe src={videoEmbedUrl} title="VSL Trại Hè Lion Camp" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
         ) : (
           <div class="vid-ph">
             <div class="play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
@@ -308,7 +308,7 @@ const headlineLines = splitHeadline(headline);
 
   <!-- Benefits full list (not duplicate of hero pills — full 5+ items) -->
   <div class="bens">
-    <h3>Sau 6 tuần tại Lion Camp {shortLocation}, con sẽ:</h3>
+    <h3>Sau 6 tuần tại Trại Hè Lion Camp {shortLocation}, con sẽ:</h3>
     <ul>{benefits.map(b => <li>{b}</li>)}</ul>
   </div>
 

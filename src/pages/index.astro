@@ -214,6 +214,7 @@ const newsCards = [
   canonical="https://truongvietanh.com"
   ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
   structuredData={structuredData}
+  noPopup={true}
 >
   <div class="site-shell site-shell--home">
     <SiteHeader currentPath="/" />
@@ -526,12 +527,12 @@ const newsCards = [
         </section>
 
         <!-- FAQ cho homepage -->
-        <section class="section-block anchor-section" id="faq">
+        <section class="section-block section-block--faq anchor-section" id="faq">
           <div class="section-heading">
             <p class="section-eyebrow">Câu hỏi thường gặp</p>
             <h2>Phụ huynh thường hỏi gì về Trường Việt Anh?</h2>
           </div>
-          <div class="faq-list" style="max-width:800px">
+          <div class="faq-list">
             <details class="faq-item">
               <summary class="faq-question">Trường Việt Anh tuyển sinh những cấp học nào?</summary>
               <p class="faq-answer">Trường Việt Anh tuyển sinh 4 cấp: Mầm Non (từ 18 tháng), Tiểu Học (lớp 1-5), THCS (lớp 6-9) và THPT (lớp 10-12). Hệ thống liên cấp giúp con được đào tạo xuyên suốt mà không bị gián đoạn chương trình.</p>
@@ -1027,11 +1028,32 @@ const newsCards = [
     }
   }
 
-  /* CONTACT FORM — brochure section */
+  /* CONTACT FORM — brochure section (matches hero blue) */
   .section-block--contact {
     background:
-      linear-gradient(130deg, rgba(18, 57, 103, 0.96), rgba(13, 47, 85, 0.98));
+      linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 40%, #162040 100%);
     color: #f7f5ef;
+  }
+
+  /* FAQ section — full width, tighter padding */
+  .section-block--faq {
+    padding: 1.75rem 1rem;
+  }
+  .section-block--faq .faq-list {
+    max-width: none;
+    width: 100%;
+  }
+  .section-block--faq .section-heading {
+    margin-bottom: 0.75rem;
+  }
+  .section-block--faq .section-heading h2 {
+    max-width: none;
+    white-space: normal;
+  }
+  @media (max-width: 760px) {
+    .section-block--faq {
+      padding: 1.25rem 0.75rem;
+    }
   }
 
   /* Brochure: heading + form side-by-side in 1 row */

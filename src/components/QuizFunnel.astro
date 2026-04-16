@@ -270,16 +270,12 @@ const quizId = `quiz-${funnelCode}`;
     });
   });
 
-  // === Show result ===
+  // === Show result → skip score display, go straight to form ===
   function showResult() {
-    var scoreEl = document.getElementById(quizId + '-result-score');
-    var titleEl = document.getElementById(quizId + '-result-title');
-    var descEl = document.getElementById(quizId + '-result-desc');
     var fillEl = document.getElementById(quizId + '-score-fill');
 
     // Convert raw internal score to /maxScore (100) for display
     var displayScore = Math.round((totalScore / rawMax) * maxScore);
-    scoreEl.textContent = displayScore;
 
     // Determine result (range matching uses raw totalScore vs seed ranges)
     var result = resultsData[resultsData.length - 1]; // default to lowest
@@ -293,9 +289,7 @@ const quizId = `quiz-${funnelCode}`;
       }
     }
 
-    titleEl.textContent = result.title;
-    titleEl.style.color = result.color;
-    descEl.textContent = result.description;
+    // Populate score bar animation (hidden in result step, kept for completeness)
 
     // Score bar animation (% of 100)
     setTimeout(function() {
@@ -303,14 +297,22 @@ const quizId = `quiz-${funnelCode}`;
       fillEl.style.background = result.color;
     }, 300);
 
-    showStep('result');
+    // Skip result screen — go directly to form
+    var recapScore = document.getElementById(quizId + '-recap-score');
+    var recapLevel = document.getElementById(quizId + '-recap-level');
+    var hiddenScore = document.getElementById(quizId + '-hidden-score');
+    var hiddenLevel = document.getElementById(quizId + '-hidden-level');
+    if (recapScore) recapScore.textContent = displayScore;
+    if (recapLevel) { recapLevel.textContent = result.title; recapLevel.style.color = result.color; }
+    if (hiddenScore) hiddenScore.value = displayScore;
+    if (hiddenLevel) hiddenLevel.value = result.title;
+    showStep('form');
   }
 
-  // === Show form from result ===
+  // === Show form button (no longer used — kept for safety) ===
   var showFormBtn = root.querySelector('[data-qf-action="show-form"]');
   if (showFormBtn) {
     showFormBtn.addEventListener('click', function() {
-      // Populate recap
       var recapScore = document.getElementById(quizId + '-recap-score');
       var recapLevel = document.getElementById(quizId + '-recap-level');
       var hiddenScore = document.getElementById(quizId + '-hidden-score');
@@ -324,7 +326,6 @@ const quizId = `quiz-${funnelCode}`;
         }
       }
 
-      // Convert raw internal score to /maxScore (100) for display/transport
       var displayScore = Math.round((totalScore / rawMax) * maxScore);
       recapScore.textContent = displayScore;
       recapLevel.textContent = result.title;
@@ -408,23 +409,19 @@ const quizId = `quiz-${funnelCode}`;
 
         showStep('success');
 
-        // Redirect to cam-on with /100 total + per-question raw scores
+        // Redirect to cam-on WITHOUT score — score sent to email only
         var camOnUrl = root.dataset.camOnUrl;
         var parentName = name.value;
-        var qParams = answers.map(function(a, i) { return 'q' + (i+1) + '=' + a; }).join('&');
         setTimeout(function() {
-          window.location.href = camOnUrl + '?name=' + encodeURIComponent(parentName) + '&score=' + score100 + '&' + qParams;
+          window.location.href = camOnUrl + '?name=' + encodeURIComponent(parentName);
         }, 1500);
       }).catch(function(err) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Thử lại';
         console.error('Quiz form error:', err);
-        // Fallback — still redirect with /maxScore (100) score
-        var score100 = Math.round((totalScore / rawMax) * maxScore);
         showStep('success');
-        var qParams = answers.map(function(a, i) { return 'q' + (i+1) + '=' + a; }).join('&');
         setTimeout(function() {
-          window.location.href = root.dataset.camOnUrl + '?name=' + encodeURIComponent(name.value) + '&score=' + score100 + '&' + qParams;
+          window.location.href = root.dataset.camOnUrl + '?name=' + encodeURIComponent(name.value);
         }, 2000);
       });
     });

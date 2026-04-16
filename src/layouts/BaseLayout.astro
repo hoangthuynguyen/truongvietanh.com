@@ -128,8 +128,8 @@ const schemaPayload = structuredData
       <div class="exit-popup__overlay"></div>
       <div class="exit-popup__modal">
         <button class="exit-popup__close" id="exitPopupClose" aria-label="Đóng">&times;</button>
-        <h3 class="exit-popup__title">Chờ đã! Đừng bỏ lỡ ưu đãi Early Bird</h3>
-        <p class="exit-popup__desc">Đăng ký tư vấn miễn phí ngay hôm nay — giảm đến 15% học phí cho năm học 2026-2027. Chỉ cần để lại số điện thoại.</p>
+        <h3 class="exit-popup__title">⚠️ Chờ Ba/Mẹ! Con có thể đang bị bỏ lỡ mùa hè quan trọng nhất</h3>
+        <p class="exit-popup__desc">Hơn <strong>200 bé đã đăng ký</strong> Trại hè Lion Camp 2026 — chỉ còn <strong>vài chỗ cuối</strong>.<br/>Để lại số điện thoại để tư vấn viên gọi trong <strong>5 phút</strong> + nhận ngay <strong>học bổng 15%</strong>.</p>
         <form class="exit-popup__form" id="exitForm">
           <input type="tel" class="exit-popup__input" placeholder="Số điện thoại của bạn" pattern="[0-9\+\-\s]+" required />
           <button type="submit" class="exit-popup__submit">Nhận tư vấn miễn phí</button>
@@ -240,7 +240,7 @@ const schemaPayload = structuredData
         });
       }
 
-      /* === Exit intent popup (timer from CMS) === */
+      /* === Exit intent popup — chỉ kích hoạt khi khách định rời trang, không ưu tiên hiển thị === */
       var ep = document.getElementById('exitPopup');
       if(ep){
         var popupAutoClose = parseInt(ep.getAttribute('data-auto-close')) || 15;
@@ -249,8 +249,12 @@ const schemaPayload = structuredData
         if(!alreadySubmitted && !sessionStorage.getItem('exit_shown')){
           var shown=false;
           var closeTimer=null;
+          // Yêu cầu khách đã ở trên trang tối thiểu 120s (2 phút) trước khi popup có thể hiện
+          var pageLoadTime = Date.now();
+          var MIN_TIME_ON_PAGE = 120000;
           function showPopup(){
             if(shown) return;
+            if(Date.now() - pageLoadTime < MIN_TIME_ON_PAGE) return;
             shown=true; ep.classList.add('is-open'); ep.setAttribute('aria-hidden','false');
             sessionStorage.setItem('exit_shown','1');
             if(popupAutoClose > 0){
@@ -258,17 +262,14 @@ const schemaPayload = structuredData
             }
           }
           function closePopup(){ ep.classList.remove('is-open'); if(closeTimer) clearTimeout(closeTimer); }
-          // Trigger: mouse leave top of page (desktop)
+          // Desktop exit intent: chuột rời viewport qua cạnh trên
           document.addEventListener('mouseout',function(e){
             if(!shown && e.clientY < 5 && !e.relatedTarget) showPopup();
           });
-          // Trigger: scroll up fast (mobile fallback)
-          var lastScroll=0;
-          window.addEventListener('scroll',function(){
-            var st=window.scrollY;
-            if(!shown && st < lastScroll - 100 && st > 300) showPopup();
-            lastScroll=st;
-          },{passive:true});
+          // Mobile exit intent: khách chuyển tab/ứng dụng khác hoặc bấm nút back
+          document.addEventListener('visibilitychange', function(){
+            if(!shown && document.visibilityState === 'hidden') showPopup();
+          });
           document.getElementById('exitPopupClose').addEventListener('click', closePopup);
           ep.querySelector('.exit-popup__overlay').addEventListener('click', closePopup);
           document.getElementById('exitForm').addEventListener('submit',function(e){

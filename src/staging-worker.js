@@ -382,6 +382,17 @@ const WORKFLOW_MAP = {
   'post-hoc-thu':           'faf0eeab-253d-4c29-bce3-9152f7f36637',
   // WF7: Re-engagement Inactive
   'inactive-90days':        '7579d127-d5dd-4405-9cf9-e6741cc0e618',
+  // WF9: Trại Hè Lion Camp 2026 — routed to "Trại hè - Email Drip 7 ngày"
+  'trai-he-tieu-hoc-go-vap':    '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'trai-he-tieu-hoc-binh-tan':  '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'trai-he-tieu-hoc-can-giuoc': '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'trai-he-tieu-hoc-rach-gia':  '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'trai-he-thcs-go-vap':        '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'trai-he-thcs-binh-tan':      '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'trai-he-thpt-go-vap':        '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'trai-he-thpt-binh-tan':      '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  // Main Trại hè workflow (fallback prefix match)
+  'trai-he':                    '023f00e9-d100-40d8-a8dc-2bd575ecb6c4',
   // WF9: Alumni & Referral
   'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)

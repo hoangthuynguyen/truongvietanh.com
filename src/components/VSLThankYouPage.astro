@@ -1,0 +1,347 @@
+---
+export interface Props {
+  pageTitle: string;
+  pageDescription: string;
+  canonicalUrl: string;
+  schoolLevel: string;
+  funnelCode: string;
+  level: 'tieu-hoc' | 'thcs' | 'thpt';
+  location: string;
+  levelLabel: string;
+  zaloUrl: string;
+  slotsLeft: string;
+  messageHtml: string;
+  bonusIntro: string;
+  bonusItems: string[];
+  ctaPrimary: string;
+  ctaZalo: string;
+  signOff: string;
+}
+
+const {
+  pageTitle, pageDescription, canonicalUrl, funnelCode,
+  level, location, levelLabel, zaloUrl, slotsLeft, messageHtml,
+  bonusIntro, bonusItems, ctaPrimary, ctaZalo, signOff
+} = Astro.props;
+
+const todayCount = 7 + Math.floor(Math.random() * 9); // 7–15
+---
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonicalUrl} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese');</style>
+
+  <style is:inline>
+    :root{--navy:#1F4E79;--orange:#E8792B;--orange-dk:#D06A22;--white:#fff;--cream:#FFF9F3;--text:#1C2A3A;--sub:#5A6577;--muted:#9CA3AF;--zalo:#0068FF;--r:14px}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased;line-height:1.65}
+    h1,h2,h3,h4{font-family:'Montserrat',sans-serif}
+
+    /* === LOGO === */
+    .logo-bar{text-align:center;padding:18px 16px 12px;background:var(--white);border-bottom:1px solid #E2E8F0}
+    .logo-bar img{max-width:300px;width:80%;height:auto}
+
+    /* === WRAP === */
+    .wrap{max-width:820px;margin:0 auto;padding:0 16px 90px}
+
+    /* === MOMENTUM HEADER === */
+    .momentum{background:var(--navy);color:var(--white);border-radius:0 0 var(--r) var(--r);padding:24px 22px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden}
+    .momentum::after{content:'';position:absolute;bottom:0;left:0;right:0;height:4px;background:var(--orange)}
+    .momentum .check{width:52px;height:52px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;animation:pop .5s ease .2s both}
+    @keyframes pop{0%{transform:scale(0)}60%{transform:scale(1.15)}100%{transform:scale(1)}}
+    .momentum .check svg{width:28px;height:28px;fill:var(--white)}
+    .momentum h1{font-size:1.4rem;font-weight:900;line-height:1.3;margin-bottom:6px}
+    .momentum .sub{font-size:.95rem;opacity:.8}
+    .momentum .timer{display:inline-flex;align-items:center;gap:6px;background:rgba(232,121,43,.2);border:1px solid rgba(232,121,43,.4);padding:6px 14px;border-radius:8px;margin-top:10px;font-weight:700;font-size:.88rem}
+    .momentum .timer .cd{font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;color:var(--orange);letter-spacing:.5px}
+
+    /* === NEXT STEPS === */
+    .steps-block{background:var(--white);border-radius:var(--r);padding:22px 24px;margin-bottom:16px;border:2px solid var(--navy)}
+    .steps-block h2{color:var(--navy);font-size:1.15rem;font-weight:800;margin-bottom:14px;text-align:center}
+    .steps-list{display:flex;flex-direction:column;gap:0}
+    .stp{display:flex;align-items:flex-start;gap:14px;padding:12px 0;border-bottom:1px solid #F3F4F6;position:relative}
+    .stp:last-child{border-bottom:0}
+    .stp .num{width:36px;height:36px;border-radius:50%;background:var(--orange);color:var(--white);display:flex;align-items:center;justify-content:center;font-family:'Montserrat',sans-serif;font-weight:900;font-size:1rem;flex-shrink:0}
+    .stp .stxt{flex:1}
+    .stp .stxt strong{color:var(--navy);display:block;font-size:1rem;margin-bottom:2px}
+    .stp .stxt span{color:var(--sub);font-size:.88rem}
+    .stp.active .num{animation:dot-pulse 1.5s infinite}
+    @keyframes dot-pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,121,43,.4)}50%{box-shadow:0 0 0 8px rgba(232,121,43,0)}}
+
+    /* === HOT CTA === */
+    .hot-cta{margin-bottom:16px}
+    .cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:18px 20px;border-radius:var(--r);text-decoration:none;font-weight:800;font-size:1.05rem;font-family:'Montserrat',sans-serif;transition:all .2s;line-height:1.3;text-align:center;width:100%;cursor:pointer;border:0}
+    .cta-hot{background:var(--orange);color:var(--white);box-shadow:0 6px 24px rgba(232,121,43,.4);position:relative;overflow:hidden;font-size:1.1rem}
+    .cta-hot::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);animation:shine 2.5s ease infinite}
+    @keyframes shine{0%{left:-100%}100%{left:150%}}
+    .cta-hot:hover{background:var(--orange-dk);transform:translateY(-2px)}
+    .cta-warm{background:var(--navy);color:var(--white);font-size:.95rem}
+    .cta-warm:hover{opacity:.9;transform:translateY(-1px)}
+    .cta-cold{background:var(--white);color:var(--navy);border:2px solid var(--navy);font-size:.9rem}
+    .cta-cold:hover{background:#F0F4F8}
+    .cta-sub{text-align:center;font-size:.78rem;color:var(--muted);margin-top:6px}
+
+    /* === WHY NOW === */
+    .why-now{background:var(--white);border-radius:var(--r);padding:20px 22px;margin-bottom:16px;border-left:4px solid var(--orange)}
+    .why-now h3{color:var(--navy);font-size:1.05rem;font-weight:800;margin-bottom:12px}
+    .why-now ul{list-style:none;padding:0}
+    .why-now li{padding:8px 0 8px 30px;position:relative;font-size:.95rem;color:var(--text);font-weight:600;border-bottom:1px solid #F3F4F6}
+    .why-now li:last-child{border-bottom:0}
+    .why-now li::before{content:'⚡';position:absolute;left:0;top:8px;font-size:1rem}
+
+    /* === WARNING === */
+    .warning{background:#FEF2F2;border:2px solid #FECACA;border-radius:var(--r);padding:16px 18px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px}
+    .warning .ic{font-size:1.4rem;flex-shrink:0;margin-top:2px}
+    .warning p{font-size:.92rem;color:#991B1B;font-weight:600;line-height:1.55}
+    .warning strong{color:#7F1D1D}
+
+    /* === PROOF === */
+    .proof{background:var(--white);border-radius:var(--r);padding:16px 18px;margin-bottom:16px;display:flex;align-items:center;gap:12px;border:1px solid #E5E7EB}
+    .proof .dot-live{width:10px;height:10px;border-radius:50%;background:#16A34A;animation:blink 1.5s infinite;flex-shrink:0}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+    .proof p{font-size:.92rem;color:var(--text);font-weight:600}
+    .proof strong{color:var(--navy)}
+
+    /* === RISK REVERSAL === */
+    .risk-block{background:var(--white);border:2px solid var(--navy);border-radius:var(--r);padding:22px 22px;margin-bottom:16px;text-align:center}
+    .risk-block h3{color:var(--navy);font-size:1.1rem;font-weight:800;margin-bottom:14px;display:flex;align-items:center;justify-content:center;gap:8px}
+    .risk-items{display:flex;flex-direction:column;gap:8px}
+    .risk-item{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--cream);border-radius:10px;font-size:.95rem;font-weight:600;color:var(--text)}
+    .risk-item .ic{font-size:1.2rem;flex-shrink:0}
+
+    /* === MULTI CTA === */
+    .multi-cta{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+
+    /* === BONUS === */
+    .bonus{background:var(--white);border:2px solid var(--orange);border-radius:var(--r);padding:20px 22px;margin-bottom:16px}
+    .bonus .t{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--orange);margin-bottom:8px;font-size:1.05rem}
+    .bonus .intro{font-size:.92rem;color:var(--sub);margin-bottom:8px}
+    .bonus ul{list-style:none;padding:0}
+    .bonus li{padding:6px 0 6px 28px;position:relative;font-size:.92rem;color:var(--text);font-weight:600}
+    .bonus li::before{content:'✓';position:absolute;left:0;color:var(--orange);font-weight:900}
+
+    /* === SIGNOFF === */
+    .signoff-block{font-size:.9rem;color:var(--sub);line-height:1.65;border-top:1px solid #E5E7EB;padding-top:14px;margin-top:8px}
+    .signoff-block b{color:var(--navy)}
+
+    /* === STICKY BOTTOM === */
+    .sticky-bot{position:fixed;bottom:0;left:0;right:0;z-index:998;background:var(--white);padding:10px 16px;box-shadow:0 -3px 16px rgba(0,0,0,.1);display:none;border-top:3px solid var(--orange)}
+    .sticky-bot .sb{display:block;padding:14px;border-radius:10px;text-decoration:none;font-weight:800;font-size:.95rem;text-align:center;font-family:'Montserrat',sans-serif;color:var(--white);background:var(--orange);width:100%}
+
+    /* === FLOATING ZALO === */
+    .fzalo{position:fixed;bottom:72px;right:14px;z-index:999;background:var(--zalo);color:var(--white);width:50px;height:50px;border-radius:50%;text-decoration:none;font-size:1.3rem;box-shadow:0 4px 16px rgba(0,104,255,.35);display:flex;align-items:center;justify-content:center}
+
+    /* === SOCIAL NOTIF === */
+    .snotif{position:fixed;bottom:130px;left:12px;z-index:997;background:var(--white);border-radius:10px;padding:10px 14px;box-shadow:0 4px 20px rgba(0,0,0,.1);display:flex;align-items:center;gap:8px;max-width:290px;transform:translateX(-110%);transition:transform .35s ease;font-size:.82rem;border:1px solid #F0F0F0}
+    .snotif.show{transform:translateX(0)}
+    .snotif .sa{width:32px;height:32px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:.85rem;flex-shrink:0}
+    .snotif b{color:var(--navy)}
+    .snotif .st{font-size:.7rem;color:var(--muted);display:block;margin-top:1px}
+
+    /* === ZALO POPUP === */
+    .zalo-popup{position:fixed;bottom:130px;right:14px;z-index:998;background:var(--white);border-radius:14px;padding:14px 16px;box-shadow:0 6px 30px rgba(0,0,0,.15);max-width:260px;transform:scale(0);transform-origin:bottom right;transition:transform .3s ease;border:2px solid var(--zalo)}
+    .zalo-popup.show{transform:scale(1)}
+    .zalo-popup p{font-size:.88rem;color:var(--text);margin-bottom:8px;line-height:1.5}
+    .zalo-popup a{display:block;background:var(--zalo);color:var(--white);padding:10px;border-radius:8px;text-align:center;text-decoration:none;font-weight:700;font-size:.88rem}
+    .zalo-popup .close{position:absolute;top:6px;right:10px;background:none;border:0;font-size:1.2rem;color:var(--muted);cursor:pointer}
+
+    /* === RESPONSIVE === */
+    @media(max-width:600px){
+      .logo-bar img{max-width:260px}
+      .momentum h1{font-size:1.2rem}
+      .wrap{padding:0 14px 90px}
+      .sticky-bot{display:block}
+      .fzalo{bottom:72px}
+      .snotif{bottom:130px}
+    }
+    @media(min-width:601px){
+      .logo-bar img{max-width:380px}
+      .momentum h1{font-size:1.55rem}
+      .momentum{padding:30px 28px}
+      .fzalo{bottom:20px;right:20px}
+    }
+  </style>
+
+  <script is:inline define:vars={{ pageTitle, level, funnelCode }}>
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({event:'generate_lead',page_title:pageTitle,school_level:level,funnel_code:funnelCode});
+  </script>
+  <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- Logo -->
+<div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" /></div>
+
+<div class="wrap">
+
+  <!-- 1. MOMENTUM HEADER -->
+  <div class="momentum">
+    <div class="check"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/></svg></div>
+    <h1>Ba/Mẹ vừa hoàn thành bước quan trọng nhất — tư vấn viên sẽ liên hệ trong 30 phút!</h1>
+    <p class="sub">Báo cáo đang gửi vào Zalo & Email. Để được tư vấn nhanh hơn, Ba/Mẹ có thể chat Zalo ngay.</p>
+    <div class="timer">⏳ Hết hạn trong <span class="cd" id="cd">00:59:59</span></div>
+  </div>
+
+  <!-- 2. NEXT STEPS -->
+  <div class="steps-block">
+    <h2>👉 Bước tiếp theo (mất 30 giây):</h2>
+    <div class="steps-list">
+      <div class="stp"><div class="num">1</div><div class="stxt"><strong>Nhấn "Nhận tư vấn 1:1"</strong><span>Chọn nút cam bên dưới để kết nối tư vấn viên</span></div></div>
+      <div class="stp active"><div class="num">2</div><div class="stxt"><strong>Tư vấn viên gọi lại</strong><span>Trong vòng 30 phút qua Zalo hoặc điện thoại</span></div></div>
+      <div class="stp"><div class="num">3</div><div class="stxt"><strong>Nhận lộ trình cá nhân hóa</strong><span>Chương trình + học bổng phù hợp nhất cho bé</span></div></div>
+    </div>
+  </div>
+
+  <!-- 3. HOT CTA -->
+  <div class="hot-cta" id="main-cta">
+    <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-hot">📞 NHẬN TƯ VẤN 1:1 MIỄN PHÍ NGAY</a>
+    <p class="cta-sub">Tư vấn miễn phí · Không cam kết · Phản hồi trong 30 phút</p>
+  </div>
+
+  <!-- 4. WHY NOW -->
+  <div class="why-now">
+    <h3>Vì sao nên tư vấn ngay hôm nay?</h3>
+    <ul>
+      <li>Lớp chỉ 15–18 học sinh — đầy là hết, không mở thêm</li>
+      <li>Hôm nay đã có <strong>{todayCount}</strong> phụ huynh đăng ký tư vấn tại {location}</li>
+      <li>Học bổng Early Bird giảm theo thời gian — tư vấn sớm = nhiều lựa chọn nhất</li>
+      <li>Tư vấn 1:1 giúp Ba/Mẹ hiểu rõ lộ trình phù hợp nhất cho bé</li>
+    </ul>
+  </div>
+
+  <!-- 5. WARNING -->
+  <div class="warning">
+    <div class="ic">⚠️</div>
+    <p><strong>80% phụ huynh không hành động ngay sẽ mất suất trong 24–48h.</strong> Hiện lớp {levelLabel} {location} chỉ còn <strong>{slotsLeft}</strong> chỗ.</p>
+  </div>
+
+  <!-- 6. REAL-TIME PROOF -->
+  <div class="proof">
+    <div class="dot-live"></div>
+    <p>Hôm nay: <strong>{todayCount} phụ huynh</strong> đã đăng ký tư vấn tại {location}. Còn <strong>{slotsLeft} suất</strong>.</p>
+  </div>
+
+  <!-- 7. RISK REVERSAL -->
+  <div class="risk-block">
+    <h3>🛡️ TƯ VẤN MIỄN PHÍ — KHÔNG RỦI RO</h3>
+    <div class="risk-items">
+      <div class="risk-item"><div class="ic">💬</div> Tư vấn 1:1 hoàn toàn miễn phí</div>
+      <div class="risk-item"><div class="ic">🎯</div> Nhận lộ trình cá nhân hóa phù hợp cho bé</div>
+      <div class="risk-item"><div class="ic">🎁</div> Được ưu tiên học bổng Early Bird khi đăng ký sớm</div>
+    </div>
+  </div>
+
+  <!-- 8. MULTI-LAYER CTA -->
+  <div class="multi-cta">
+    <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-hot">📞 {ctaPrimary}</a>
+    <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-warm">💬 {ctaZalo}</a>
+    <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-cold">📋 XEM LỊCH TRẠI HÈ & HỌC PHÍ</a>
+  </div>
+
+  <!-- 9. BONUS -->
+  <div class="bonus">
+    <div class="t">⚡ Fast Action Bonus — Ưu đãi 24 giờ tới</div>
+    <p class="intro">{bonusIntro}</p>
+    <ul>{bonusItems.map(b => <li>{b}</li>)}</ul>
+  </div>
+
+  <!-- SIGNOFF -->
+  <div class="signoff-block" set:html={signOff}></div>
+
+</div>
+
+<!-- Sticky bottom (mobile) -->
+<div class="sticky-bot" id="sBot">
+  <a href={zaloUrl} target="_blank" rel="noopener" class="sb">📞 Nhận tư vấn 1:1 miễn phí</a>
+</div>
+
+<!-- Floating Zalo -->
+<a href={zaloUrl} target="_blank" rel="noopener" class="fzalo" title="Chat Zalo">💬</a>
+
+<!-- Social notif -->
+<div class="snotif" id="sn">
+  <div class="sa" id="snA">👩</div>
+  <div><b id="snN">Chị Nguyễn T.</b> <span id="snAc">vừa đăng ký tư vấn</span><span class="st" id="snT">2p trước</span></div>
+</div>
+
+<!-- Zalo auto popup -->
+<div class="zalo-popup" id="zPopup">
+  <button class="close" id="zClose">&times;</button>
+  <p>Ba/Mẹ vừa đăng ký — cần em tư vấn thêm không ạ? 😊</p>
+  <a href={zaloUrl} target="_blank" rel="noopener">Chat Zalo ngay</a>
+</div>
+
+<script is:inline define:vars={{ location, slotsLeft }}>
+// === COUNTDOWN 60 min ===
+(function(){
+  var k='vsl_close_'+window.location.pathname,d=localStorage.getItem(k);
+  if(!d){d=String(Date.now()+36e5);localStorage.setItem(k,d)} // 60 min
+  function t(){
+    var df=parseInt(d)-Date.now();if(df<0)df=0;
+    var m=String(Math.floor(df/6e4)).padStart(2,'0'),s=String(Math.floor(df/1e3)%60).padStart(2,'0');
+    var el=document.getElementById('cd');
+    if(el)el.textContent='00:'+m+':'+s;
+  }
+  t();setInterval(t,1000);
+})();
+
+// === AUTO SCROLL to CTA after 1.5s ===
+setTimeout(function(){
+  var el=document.getElementById('main-cta');
+  if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+},1500);
+
+// === STICKY BOTTOM on scroll ===
+(function(){
+  var s=document.getElementById('sBot');if(!s)return;
+  window.addEventListener('scroll',function(){s.style.display=window.scrollY>200?'block':'none'},{passive:true});
+})();
+
+// === SOCIAL NOTIF ===
+(function(){
+  var ns=['Chị Nguyễn T.','Anh Trần V.','Chị Lê H.','Anh Phạm D.','Chị Hoàng M.'],
+      ac=[' vừa đăng ký tư vấn',' vừa nhận học bổng',' vừa đăng ký tư vấn tại '+location,' vừa đăng ký tư vấn'],
+      ts=['vừa xong','1p trước','2p trước','4p trước'],
+      av=['👩','👨','👩‍🦰','👨‍🦱','👩‍💼'];
+  var el=document.getElementById('sn');if(!el)return;
+  function r(a){return a[Math.floor(Math.random()*a.length)]}
+  function go(){
+    var n=document.getElementById('snN'),a=document.getElementById('snAc'),t=document.getElementById('snT'),v=document.getElementById('snA');
+    if(n)n.textContent=r(ns);if(a)a.textContent=r(ac);if(t)t.textContent=r(ts);if(v)v.textContent=r(av);
+    el.classList.add('show');setTimeout(function(){el.classList.remove('show')},4500);
+  }
+  setTimeout(go,5000);setInterval(go,18000+Math.random()*8000);
+})();
+
+// === ZALO AUTO POPUP after 25s ===
+(function(){
+  var popup=document.getElementById('zPopup'),close=document.getElementById('zClose');
+  if(!popup||!close)return;
+  setTimeout(function(){popup.classList.add('show')},25000);
+  close.addEventListener('click',function(){popup.classList.remove('show')});
+})();
+
+// === STEP AUTO-ADVANCE ===
+(function(){
+  var steps=document.querySelectorAll('.stp');
+  if(steps.length<3)return;
+  setTimeout(function(){
+    steps[1].classList.remove('active');
+    steps[1].querySelector('.num').style.background='#16A34A';
+    steps[1].querySelector('.num').textContent='✓';
+    steps[2].classList.add('active');
+  },3000);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+---
+import VSLThankYouPage from '../../components/VSLThankYouPage.astro';
+import { getVSLContent, ZALO_URL } from '../../lib/vsl-configs.ts';
+const c = getVSLContent('tieu-hoc', 'Cần Giuộc');
+---
+<VSLThankYouPage
+  pageTitle="Cảm Ơn – Trại Hè Tiểu Học Cần Giuộc VSL | Việt Anh"
+  pageDescription="Báo cáo kỹ năng bé đang được gửi. Giữ suất Lion Camp Tiểu học Cần Giuộc chỉ với 500k."
+  canonicalUrl="https://truongvietanh.com/trai-he-tieu-hoc-can-giuoc-vsl/cam-on"
+  schoolLevel="tieu-hoc"
+  funnelCode="vsl-tieu-hoc-can-giuoc"
+  level="tieu-hoc"
+  location="Cần Giuộc"
+  levelLabel={c.levelLabel}
+  zaloUrl={ZALO_URL}
+  slotsLeft="10"
+  messageHtml={c.tyMessage}
+  bonusIntro={c.bonusIntro}
+  bonusItems={c.bonusItems}
+  ctaPrimary={c.ctaPrimaryTY}
+  ctaZalo={c.ctaZaloTY}
+  signOff={c.signOff}
+/>

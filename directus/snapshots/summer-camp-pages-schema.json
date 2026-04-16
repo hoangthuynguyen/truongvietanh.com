@@ -1,0 +1,103 @@
+{
+  "_note": "Schema patch for summer_camp_pages collection. Apply via Directus snapshot apply (npx directus schema apply) or merge into snapshots/schema.json.",
+  "version": 1,
+  "directus": "11.0.0",
+  "vendor": "postgres",
+  "collections": [
+    {
+      "collection": "summer_camp_pages",
+      "meta": {
+        "icon": "wb_sunny",
+        "note": "Trại Hè Sales Page Template — 1 row = 1 landing page at /<slug>/dang-ky. Fast-loading static build for Google/Meta Ads.",
+        "display_template": "{{class_label}} — {{slug}}",
+        "sort_field": "sort",
+        "accountability": "all",
+        "archive_field": "status",
+        "archive_value": "archived",
+        "unarchive_value": "draft"
+      },
+      "schema": { "name": "summer_camp_pages" }
+    }
+  ],
+  "fields": [
+    { "collection": "summer_camp_pages", "field": "id", "type": "string", "meta": { "interface": "input", "note": "Short unique ID, e.g. sc-th-gv", "required": true, "width": "half" }, "schema": { "is_primary_key": true } },
+    { "collection": "summer_camp_pages", "field": "status", "type": "string", "meta": { "interface": "select-dropdown", "options": { "choices": [{ "text": "Published", "value": "published" }, { "text": "Draft", "value": "draft" }, { "text": "Archived", "value": "archived" }] }, "width": "half", "display": "labels" } },
+    { "collection": "summer_camp_pages", "field": "sort", "type": "integer", "meta": { "interface": "input", "hidden": true } },
+    { "collection": "summer_camp_pages", "field": "slug", "type": "string", "meta": { "interface": "input", "note": "URL segment, e.g. trai-he-tieu-hoc-go-vap. Page renders at /<slug>/dang-ky", "required": true, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "level", "type": "string", "meta": { "interface": "select-dropdown", "options": { "choices": [{ "text": "Tiểu học", "value": "tieu-hoc" }, { "text": "THCS", "value": "thcs" }, { "text": "THPT", "value": "thpt" }] }, "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "location_slug", "type": "string", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "location_name", "type": "string", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "campus_name", "type": "string", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "class_label", "type": "string", "meta": { "interface": "input", "note": "Shown in seats-remaining, e.g. \"Tiểu học Gò Vấp\"", "width": "half" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_seo", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "SEO & Meta" } } },
+    { "collection": "summer_camp_pages", "field": "seo_title", "type": "string", "meta": { "interface": "input", "note": "Max 70 chars", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "seo_description", "type": "text", "meta": { "interface": "input-multiline", "note": "Max 160 chars", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "og_image", "type": "uuid", "meta": { "interface": "file-image", "special": ["file"], "width": "half" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_hero", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Hero Section" } } },
+    { "collection": "summer_camp_pages", "field": "pre_headline", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "hero_badge", "type": "string", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "headline", "type": "text", "meta": { "interface": "input-multiline", "required": true, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "subheadline", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "hero_bullets", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Bullet", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "primary_cta_text", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "secondary_cta_text", "type": "string", "meta": { "interface": "input", "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_problems", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Problems Section" } } },
+    { "collection": "summer_camp_pages", "field": "problems_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "problems_intro", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "problems_list", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Problem", "type": "string", "meta": { "interface": "input-multiline" } }] }, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "problems_conclusion", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_transform", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Transformation — Before/After or Timeline" } } },
+    { "collection": "summer_camp_pages", "field": "transformation_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "timeline_mode", "type": "boolean", "meta": { "interface": "boolean", "note": "ON: use timeline_items (weekly/phase). OFF: use before/after lists (typical for Tiểu học).", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "before_title", "type": "string", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "before_items", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Item", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "after_title", "type": "string", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "after_items", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Item", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "timeline_items", "type": "json", "meta": { "interface": "list", "options": { "template": "{{phase}} — {{body}}", "fields": [{ "field": "phase", "name": "Phase", "type": "string", "meta": { "interface": "input" } }, { "field": "body", "name": "Body", "type": "string", "meta": { "interface": "input-multiline" } }] }, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "results_title", "type": "string", "meta": { "interface": "input", "note": "Optional — for THPT: 'Kết quả điển hình'", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "results_items", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Result", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_offerings", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Offerings" } } },
+    { "collection": "summer_camp_pages", "field": "offerings_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "offerings", "type": "json", "meta": { "interface": "list", "options": { "template": "{{icon}} {{title}}", "fields": [{ "field": "icon", "name": "Icon", "type": "string", "meta": { "interface": "input", "width": "half" } }, { "field": "title", "name": "Title", "type": "string", "meta": { "interface": "input", "width": "half" } }, { "field": "description", "name": "Description", "type": "string", "meta": { "interface": "input-multiline" } }] }, "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_pricing", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Pricing & Offer" } } },
+    { "collection": "summer_camp_pages", "field": "pricing_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "price_original", "type": "integer", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "price_discounted", "type": "integer", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "price_note", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "pricing_breakdown", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Item", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "price_compare_title", "type": "string", "meta": { "interface": "input", "note": "Optional — for THPT comparison block", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "price_compare_items", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Item", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "price_compare_conclusion", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "early_bird_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "early_bird_items", "type": "json", "meta": { "interface": "list", "options": { "template": "{{item}}", "fields": [{ "field": "item", "name": "Item", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_guarantee", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Guarantee" } } },
+    { "collection": "summer_camp_pages", "field": "guarantee_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "guarantee_body", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "guarantee_tagline", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_testimonials", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Testimonials" } } },
+    { "collection": "summer_camp_pages", "field": "testimonials_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "testimonials", "type": "json", "meta": { "interface": "list", "options": { "template": "{{author}}", "fields": [{ "field": "quote", "name": "Quote", "type": "string", "meta": { "interface": "input-multiline" } }, { "field": "author", "name": "Author", "type": "string", "meta": { "interface": "input" } }] }, "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_objections", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Objections (short)" } } },
+    { "collection": "summer_camp_pages", "field": "objections_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "objections", "type": "json", "meta": { "interface": "list", "options": { "template": "{{q}}", "fields": [{ "field": "q", "name": "Question", "type": "string", "meta": { "interface": "input" } }, { "field": "a", "name": "Answer", "type": "string", "meta": { "interface": "input-multiline" } }] }, "width": "full" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_cta", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Final CTA" } } },
+    { "collection": "summer_camp_pages", "field": "final_cta_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "final_cta_body", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "seats_remaining", "type": "integer", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "summer_camp_pages", "field": "hotline", "type": "string", "meta": { "interface": "input", "width": "half" } },
+
+    { "collection": "summer_camp_pages", "field": "divider_faq", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "FAQ" } } },
+    { "collection": "summer_camp_pages", "field": "faq_title", "type": "string", "meta": { "interface": "input", "width": "full" } },
+    { "collection": "summer_camp_pages", "field": "faq_items", "type": "json", "meta": { "interface": "list", "options": { "template": "{{question}}", "fields": [{ "field": "question", "name": "Question", "type": "string", "meta": { "interface": "input" } }, { "field": "answer", "name": "Answer", "type": "string", "meta": { "interface": "input-multiline" } }] }, "width": "full" } }
+  ]
+}

@@ -1,0 +1,29 @@
+---
+import type { BlockAggregateRating } from '../../types/cms';
+interface Props { data: BlockAggregateRating; context: string; }
+const { data } = Astro.props;
+const filled = Math.round(data.score);
+const sourceLabel = { google: 'Google Reviews', facebook: 'Facebook', internal: 'Trường Việt Anh' }[data.source] || data.source;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'AggregateRating',
+  ratingValue: data.score,
+  reviewCount: data.review_count,
+  bestRating: 5,
+};
+---
+<section class="b-aggregate-rating">
+  <div class="b-container b-ar-inner">
+    <div class="b-ar-stars" aria-label={`${data.score} trên 5 sao`}>
+      {Array.from({ length: 5 }).map((_, i) => (
+        <span class={i < filled ? 'b-star filled' : 'b-star'}>★</span>
+      ))}
+    </div>
+    <div class="b-ar-score">{data.score.toFixed(1)}/5</div>
+    <div class="b-ar-count">{data.review_count.toLocaleString('vi-VN')} đánh giá</div>
+    <div class="b-ar-source">trên {sourceLabel}</div>
+    {data.label && <div class="b-ar-label">{data.label}</div>}
+  </div>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+</section>

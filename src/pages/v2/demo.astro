@@ -1,0 +1,34 @@
+---
+/**
+ * v2 demo page — renders a sample squeeze page using the v2 architecture
+ * WITHOUT needing a live Directus instance.
+ *
+ * Loads the first page from directus/seed/pages.json and the matching form
+ * from directus/seed/forms.json. Proves the whole pipeline works:
+ *   seed data → PageTemplate → BlocksRenderer → all 7 block types → DynamicForm
+ *
+ * URL: /v2/demo
+ * Once Directus is live, delete this file and use /v2/[...slug].astro.
+ */
+import SqueezePageTemplate from '../../templates/SqueezePageTemplate.astro';
+import LandingPageTemplate from '../../templates/LandingPageTemplate.astro';
+import type { Page } from '../../types/cms';
+import pagesSeed from '../../../directus/seed/pages.json';
+
+// Pick a specific page to demo (first mam-non squeeze)
+const demoPage = pagesSeed.find((p: any) => p.slug === 'mam-non/cam-nang-chon-mam-non') || pagesSeed[0];
+
+// Map block.item UUIDs to the seed structure expected by BlocksRenderer
+const page: Page = {
+  ...demoPage,
+  blocks: demoPage.blocks.map((b: any) => ({
+    id: b.item.id,
+    collection: b.collection,
+    item: b.item,
+    sort: b.sort,
+  })),
+} as any;
+
+const Template = demoPage.template === 'squeeze' ? SqueezePageTemplate : LandingPageTemplate;
+---
+<Template page={page} />

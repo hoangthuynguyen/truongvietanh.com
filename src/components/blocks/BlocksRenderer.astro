@@ -1,0 +1,88 @@
+---
+/**
+ * BlocksRenderer v2 — dispatches every BlockInstance to its renderer.
+ * Context-aware: same block renders differently in "pillar" vs "squeeze" vs "article".
+ */
+import type { BlockInstance, BlockCollection } from '../../types/cms';
+
+// Structural
+import SectionHeader from './SectionHeader.astro';
+import TwoColumn from './TwoColumn.astro';
+import Spacer from './Spacer.astro';
+// Heroes
+import HeroPillar from './HeroPillar.astro';
+import HeroFunnel from './HeroFunnel.astro';
+import HeroSqueeze from './HeroSqueeze.astro';
+import ArticleHeader from './ArticleHeader.astro';
+// Content
+import RichText from './RichText.astro';
+import TextWithImage from './TextWithImage.astro';
+import Cards from './Cards.astro';
+import Features from './Features.astro';
+import Stats from './Stats.astro';
+import TimelineRoadmap from './TimelineRoadmap.astro';
+import ComparisonTable from './ComparisonTable.astro';
+import Gallery from './Gallery.astro';
+import VideoEmbed from './VideoEmbed.astro';
+// Social proof
+import TestimonialGrid from './TestimonialGrid.astro';
+import TrustBar from './TrustBar.astro';
+import AggregateRating from './AggregateRating.astro';
+// Conversion
+import CtaForm from './CtaForm.astro';
+import CtaBanner from './CtaBanner.astro';
+import UrgencyBar from './UrgencyBar.astro';
+import PricingTable from './PricingTable.astro';
+import NextSteps from './NextSteps.astro';
+// Special
+import Faq from './Faq.astro';
+import AuthorBio from './AuthorBio.astro';
+import RelatedArticles from './RelatedArticles.astro';
+
+interface Props {
+  blocks: BlockInstance[];
+  context: 'pillar' | 'landing' | 'squeeze' | 'thankyou' | 'article';
+}
+
+const { blocks, context } = Astro.props;
+
+const registry: Record<BlockCollection, any> = {
+  block_section_header: SectionHeader,
+  block_two_column: TwoColumn,
+  block_spacer: Spacer,
+  block_hero_pillar: HeroPillar,
+  block_hero_funnel: HeroFunnel,
+  block_hero_squeeze: HeroSqueeze,
+  block_article_header: ArticleHeader,
+  block_rich_text: RichText,
+  block_text_with_image: TextWithImage,
+  block_cards: Cards,
+  block_features: Features,
+  block_stats: Stats,
+  block_timeline_roadmap: TimelineRoadmap,
+  block_comparison_table: ComparisonTable,
+  block_gallery: Gallery,
+  block_video_embed: VideoEmbed,
+  block_testimonial_grid: TestimonialGrid,
+  block_trust_bar: TrustBar,
+  block_aggregate_rating: AggregateRating,
+  block_cta_form: CtaForm,
+  block_cta_banner: CtaBanner,
+  block_urgency_bar: UrgencyBar,
+  block_pricing_table: PricingTable,
+  block_next_steps: NextSteps,
+  block_faq: Faq,
+  block_author_bio: AuthorBio,
+  block_related_articles: RelatedArticles,
+};
+
+const sorted = [...blocks].sort((a, b) => a.sort - b.sort);
+---
+{sorted.map((block) => {
+  const Component = registry[block.collection];
+  if (!Component) {
+    if (import.meta.env.DEV) console.warn(`[BlocksRenderer] Unknown block collection: ${block.collection}`);
+    return null;
+  }
+  return <Component data={block.item} context={context} />;
+})}

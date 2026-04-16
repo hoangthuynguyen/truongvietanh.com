@@ -59,7 +59,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 /* ===== HEADER ===== */
 .squeeze-header{position:sticky;top:0;z-index:1000;background-color:var(--nav-primary);color:#fff;padding:.75rem 1rem;box-shadow:0 2px 12px rgba(26,26,94,.25)}
 .squeeze-header__inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.squeeze-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff;flex:1}.squeeze-brand__img{height:40px;width:auto;object-fit:contain;filter:brightness(0) invert(1)}.squeeze-brand__text{font-size:.875rem;font-weight:600;letter-spacing:.3px;opacity:.95}
+.squeeze-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff;flex:1}.squeeze-brand__img{height:48px;width:auto;object-fit:contain;background:rgba(255,255,255,.08);padding:4px 8px;border-radius:6px}.squeeze-brand__text{font-size:1rem;font-weight:700;letter-spacing:.3px;opacity:1;color:#fff}
 .squeeze-header__actions{display:flex;align-items:center;gap:.5rem}
 .squeeze-header-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.5rem 1rem;border-radius:6px;font-size:.875rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .3s ease}
 .squeeze-header-btn--hotline{background-color:var(--nav-accent);color:#fff}.squeeze-header-btn--hotline:hover{background-color:var(--nav-accent-hover)}
@@ -70,25 +70,25 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .squeeze-trust-bar__inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap}
 .squeeze-trust-bar__item{display:inline-flex;align-items:center;gap:.35rem;white-space:nowrap}
 
-/* ===== HERO ===== */
-.squeeze-hero{background:linear-gradient(135deg,var(--nav-primary) 0%,var(--nav-primary-light) 40%,var(--nav-primary-dark) 100%);color:#fff;padding:4rem 1.5rem 3.5rem;text-align:center;position:relative;overflow:hidden}
-.squeeze-hero::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 1px);background-size:24px 24px;pointer-events:none}
-.squeeze-hero::after{content:'';position:absolute;top:-40%;right:-15%;width:600px;height:600px;background:radial-gradient(circle,rgba(212,168,67,.12) 0%,transparent 65%);border-radius:50%;pointer-events:none;animation:heroGlow 6s ease-in-out infinite alternate}
-@keyframes heroGlow{0%{opacity:.6;transform:scale(1)}100%{opacity:1;transform:scale(1.1)}}
-.squeeze-hero__content{max-width:800px;margin:0 auto;position:relative;z-index:1}
-.squeeze-hero__crest{width:80px;height:80px;margin-bottom:1rem;filter:brightness(0) invert(1);opacity:.9}
-.squeeze-hero__badge{display:inline-block;background:var(--nav-accent-light);border:1px solid rgba(212,168,67,.4);color:var(--nav-accent);font-size:.8rem;font-weight:600;padding:.35rem 1rem;border-radius:50px;margin-bottom:1.25rem;letter-spacing:.5px;text-transform:uppercase}
+/* ===== HERO — WHITE BG, NAVY TEXT ===== */
+.squeeze-hero{background:#fff;color:var(--nav-primary);padding:2rem 1.5rem 2.5rem;text-align:center;position:relative;overflow:hidden;border-bottom:1px solid var(--border-color)}
+.squeeze-hero__content{max-width:860px;margin:0 auto;position:relative;z-index:1}
+.squeeze-hero__crest{width:auto;height:auto;max-width:380px;max-height:130px;margin:0 auto 1.25rem;display:block;object-fit:contain}
+@media(max-width:560px){.squeeze-hero__crest{max-width:280px;max-height:100px}}
+.squeeze-hero h1,.squeeze-hero h2{color:var(--nav-primary) !important;text-align:center;font-weight:800;font-size:1.75rem;line-height:1.3;margin-bottom:.75rem}
+.squeeze-hero p,.squeeze-hero__sub{color:var(--text-dark);text-align:center;font-size:1.05rem;line-height:1.65;max-width:720px;margin:0 auto 1rem;font-weight:500}
+@media(min-width:769px){.squeeze-hero h1,.squeeze-hero h2{font-size:2.15rem}}
+.squeeze-hero__badge{display:inline-block;background:var(--nav-primary);color:#fff;font-size:.82rem;font-weight:700;padding:.45rem 1.25rem;border-radius:50px;margin-bottom:1rem;letter-spacing:.3px}
 
-/* ===== USP SECTION ===== */
-.squeeze-usp{background-color:var(--bg-light);padding:2.5rem 1rem}.squeeze-usp__inner{max-width:1200px;margin:0 auto}
+/* ===== USP SECTION — tighter spacing ===== */
+.squeeze-usp{background-color:#fff;padding:2rem 1rem}.squeeze-usp__inner{max-width:1100px;margin:0 auto}
 
-/* ===== TRUST METRICS SECTION ===== */
-.squeeze-trust{background:linear-gradient(135deg,var(--nav-primary) 0%,var(--nav-primary-dark) 100%);color:#fff;padding:2.5rem 1rem;position:relative;overflow:hidden}
-.squeeze-trust::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background-image:radial-gradient(rgba(255,255,255,.03) 1px,transparent 1px);background-size:20px 20px;pointer-events:none}
-.squeeze-trust__inner{max-width:1200px;margin:0 auto;position:relative;z-index:1}
+/* ===== TRUST METRICS SECTION — navy on white ===== */
+.squeeze-trust{background:var(--nav-primary);color:#fff;padding:2rem 1rem;position:relative;overflow:hidden}
+.squeeze-trust__inner{max-width:1100px;margin:0 auto;position:relative;z-index:1}
 
-/* ===== CONTENT ===== */
-.squeeze-content{padding:3rem 1.5rem;max-width:1200px;margin:0 auto}
+/* ===== CONTENT — tighter spacing ===== */
+.squeeze-content{padding:2rem 1.5rem;max-width:1100px;margin:0 auto}
 
 /* ===== FORM SECTION ===== */
 .squeeze-form-section{background:linear-gradient(180deg,#f0ebe4 0%,#faf7f3 50%,var(--bg-light) 100%);padding:3.5rem 1.5rem;text-align:center;position:relative}
@@ -104,8 +104,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .squeeze-urgency__pulse{display:inline-block;width:10px;height:10px;background:var(--nav-accent);border-radius:50%;animation:urgencyPulse 1.5s ease-in-out infinite}
 @keyframes urgencyPulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.3)}}
 
-/* ===== FAQ ===== */
-.squeeze-faq{padding:3rem 1.5rem;max-width:900px;margin:0 auto}
+/* ===== FAQ — wider ===== */
+.squeeze-faq{padding:2rem 1.5rem;max-width:1100px;margin:0 auto}
 
 /* ===== MOBILE CTA ===== */
 .squeeze-mobile-cta{display:none;position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,var(--nav-primary) 0%,var(--nav-primary-dark) 100%);color:#fff;padding:.85rem 1rem;text-align:center;box-shadow:0 -4px 20px rgba(26,26,94,.3)}
@@ -113,7 +113,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .squeeze-mobile-cta__btn{display:inline-block;padding:.75rem 2rem;background:linear-gradient(135deg,var(--nav-accent),#e8c36a);color:var(--nav-primary-dark);text-decoration:none;border-radius:8px;font-weight:700;border:none;cursor:pointer;transition:all .3s ease;font-size:1rem;animation:ctaPulse 2s ease-in-out infinite;box-shadow:0 4px 15px rgba(212,168,67,.4)}
 @keyframes ctaPulse{0%,100%{box-shadow:0 4px 15px rgba(212,168,67,.4)}50%{box-shadow:0 4px 25px rgba(212,168,67,.7),0 0 40px rgba(212,168,67,.2)}}
 .squeeze-mobile-cta__btn:hover{transform:translateY(-1px)}
-.squeeze-mobile-cta__note{font-size:.7rem;opacity:.8;white-space:nowrap}
+.squeeze-mobile-cta__zalo{display:inline-flex;align-items:center;gap:.3rem;padding:.6rem 1rem;background:#0068FF;color:#fff;text-decoration:none;border-radius:8px;font-weight:700;font-size:.85rem;white-space:nowrap;transition:background .2s}.squeeze-mobile-cta__zalo:hover{background:#0056D6}
 
 /* ===== FOOTER ===== */
 .squeeze-footer{background-color:#111;color:#fff;padding:2.5rem 1.5rem;font-size:.875rem}.squeeze-footer__inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
@@ -145,7 +145,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div></div>
 
 <main>
-<section class="squeeze-hero"><div class="squeeze-hero__content"><img src="/logo-crest-80.webp" alt="Việt Anh" class="squeeze-hero__crest" width="80" height="80" loading="eager" /><slot name="hero" /></div></section>
+<section class="squeeze-hero"><div class="squeeze-hero__content"><img src="/logo-vietanh.webp" alt="Trường TH - THCS - THPT Việt Anh — Đào tạo học sinh giỏi chuyên Anh" class="squeeze-hero__crest" width="320" height="140" loading="eager" /><slot name="hero" /></div></section>
 <section class="squeeze-usp"><div class="squeeze-usp__inner"><slot name="usp" /></div></section>
 <section class="squeeze-trust"><div class="squeeze-trust__inner"><slot name="trust" /></div></section>
 <section class="squeeze-content"><slot name="content" /></section>
@@ -165,13 +165,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div></section>
 <section class="squeeze-faq"><slot name="faq" /></section>
 <div class="squeeze-mobile-cta"><div class="squeeze-mobile-cta__inner">
-<a href="#form-section" class="squeeze-mobile-cta__btn">Đăng ký ngay</a>
-<span class="squeeze-mobile-cta__note">Miễn phí tư vấn</span>
+<a href="#form-section" class="squeeze-mobile-cta__btn">🎯 Đánh giá miễn phí ngay</a>
+<a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener noreferrer" class="squeeze-mobile-cta__zalo">💬 Zalo</a>
 </div></div>
 </main>
 <footer class="squeeze-footer"><div class="squeeze-footer__inner">
-<div class="squeeze-footer__contact"><div class="squeeze-footer__contact-title">Cơ sở Gò Vấp</div><div class="squeeze-footer__contact-item">160/72 Phan Huy Ích, phường An Hội Tây, TP.HCM</div><div class="squeeze-footer__contact-item"><a href="tel:+84916961409">0916 961 409</a></div></div>
-<div class="squeeze-footer__contact"><div class="squeeze-footer__contact-title">Cơ sở Phú Nhuận</div><div class="squeeze-footer__contact-item">269A Nguyễn Trọng Tuyển, Phú Nhuận, TP.HCM</div><div class="squeeze-footer__contact-item"><a href="tel:+84916961409">0916 961 409</a></div></div>
+<div class="squeeze-footer__contact"><div class="squeeze-footer__contact-title">Cơ sở chính</div><div class="squeeze-footer__contact-item">160/72 Phan Huy Ích, phường An Hội Tây, Thành phố Hồ Chí Minh</div><div class="squeeze-footer__contact-item"><a href="tel:+84916961409">0916 961 409</a></div><div class="squeeze-footer__contact-item"><a href="https://zalo.me/1678310120468101523" target="_blank" rel="noreferrer">Chat Zalo OA</a></div></div>
 <div class="squeeze-footer__contact"><div class="squeeze-footer__contact-title">Cơ sở Bình Tân</div><div class="squeeze-footer__contact-item">951/7 Tỉnh lộ 10, Bình Tân, TP.HCM</div><div class="squeeze-footer__contact-item"><a href="tel:+84916961409">0916 961 409</a></div></div>
 <div class="squeeze-footer__copyright"><p>&copy; {new Date().getFullYear()} Trường Việt Anh. All rights reserved.</p></div>
 </div></footer>

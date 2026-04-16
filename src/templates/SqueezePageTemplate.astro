@@ -1,0 +1,30 @@
+---
+import FunnelLayout from '../layouts/v2/FunnelLayout.astro';
+import BlocksRenderer from '../components/blocks/BlocksRenderer.astro';
+import type { Page } from '../types/cms';
+
+interface Props { page: Page; }
+const { page } = Astro.props;
+
+// Enforce squeeze constraints: exactly 1 hero_squeeze, 1 cta_form, ≤3 content blocks
+const heroCount = page.blocks.filter((b) => b.collection === 'block_hero_squeeze').length;
+if (heroCount !== 1 && import.meta.env.DEV) {
+  console.warn(`[SqueezePageTemplate] Page ${page.slug} has ${heroCount} hero blocks (expected 1)`);
+}
+---
+<FunnelLayout
+  title={page.title}
+  description={page.meta_description}
+  keywords={page.meta_keywords}
+  canonical={page.canonical_url}
+  noindex={page.noindex}
+  ogImage={page.og_image}
+  structuredData={page.structured_data}
+  funnelCode={page.funnel_ref || 'squeeze'}
+  schoolLevel={page.product_ref}
+  campusRef={page.campus_ref}
+>
+  <article class="squeeze-page" data-slug={page.slug} data-product={page.product_ref} data-campus={page.campus_ref}>
+    <BlocksRenderer blocks={page.blocks} context="squeeze" />
+  </article>
+</FunnelLayout>

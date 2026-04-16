@@ -1,0 +1,23 @@
+---
+import VSLThankYouPage from '../../components/VSLThankYouPage.astro';
+import { getVSLContent, ZALO_URL } from '../../lib/vsl-configs.ts';
+const c = getVSLContent('thcs', 'Gò Vấp');
+---
+<VSLThankYouPage
+  pageTitle="Cảm Ơn – Trại Hè THCS Gò Vấp VSL | Việt Anh"
+  pageDescription="Giữ suất an toàn Lion Camp THCS Gò Vấp chỉ với 500k — hoàn lại 100% nếu bé không đi."
+  canonicalUrl="https://truongvietanh.com/trai-he-thcs-go-vap-vsl/cam-on"
+  schoolLevel="thcs"
+  funnelCode="vsl-thcs-go-vap"
+  level="thcs"
+  location="Gò Vấp"
+  levelLabel={c.levelLabel}
+  zaloUrl={ZALO_URL}
+  slotsLeft="6"
+  messageHtml={c.tyMessage}
+  bonusIntro={c.bonusIntro}
+  bonusItems={c.bonusItems}
+  ctaPrimary={c.ctaPrimaryTY}
+  ctaZalo={c.ctaZaloTY}
+  signOff={c.signOff}
+/>

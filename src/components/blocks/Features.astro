@@ -1,0 +1,23 @@
+---
+import type { BlockFeatures } from '../../types/cms';
+interface Props { data: BlockFeatures; context: string; }
+const { data } = Astro.props;
+---
+<section class={`b-features b-features-${data.layout || 'grid'}`}>
+  <div class="b-container">
+    {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    {data.intro && <p class="b-intro">{data.intro}</p>}
+    <div class="b-features-list">
+      {data.items?.map((item) => (
+        <div class="b-feature">
+          <div class="b-feature-icon">{item.icon}</div>
+          <div class="b-feature-text">
+            <h3>{item.title}</h3>
+            <p>{item.body}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

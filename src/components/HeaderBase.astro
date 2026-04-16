@@ -21,16 +21,16 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
          Hotline: {hotline}
       </a>
-      <a href={zaloUrl} target="_blank" rel="noopener" class="icon-text d-none-mo text-nowrap" style="margin-left:1.5rem;text-decoration:none;color:inherit">
-         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
-         Zalo: {hotline}
+      <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="icon-text d-none-mo text-nowrap" style="margin-left:1.5rem;text-decoration:none;color:inherit">
+         <img src="https://page.zalo.me/static/img/zalo-logo.svg" alt="Zalo OA" width="16" height="16" style="vertical-align:middle" onerror="this.style.display='none'" />
+         Zalo OA
       </a>
     </div>
     <div class="top-right d-none-mo">
       <button aria-label="Tìm kiếm trên website" class="search-btn">
          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       </button>
-      <a href="/tuyen-sinh" class="btn-yellow">Tư vấn tuyển sinh ↗</a>
+      <a href="https://m.me/truongvietanhhcm" target="_blank" rel="noopener" class="btn-yellow">Facebook Chat ↗</a>
     </div>
   </div>
 </div>
@@ -41,15 +41,30 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
        {(leftNav.length > 0 ? leftNav : [
          { label: 'Trang Chủ', href: '/' },
          { label: 'Giới Thiệu', href: '/gioi-thieu' },
-         { label: 'Chương Trình', href: '/cap-hoc' },
-         { label: 'Tuyển Sinh', href: '/tuyen-sinh' },
+         { label: 'Giáo Viên', href: '/gioi-thieu', children: [
+           { label: 'Đội ngũ giáo viên', href: '/gioi-thieu' },
+           { label: 'Giáo viên bản ngữ', href: '/gioi-thieu' },
+           { label: 'Phương pháp', href: '/triet-ly-giao-duc' },
+           { label: 'Tuyển dụng', href: '/lien-he' },
+         ]},
+         { label: 'Đánh Giá', href: '/phu-huynh' },
+         { label: 'Tuyển Sinh', href: '/tuyen-sinh', children: [
+           { label: 'Tuyển sinh Mầm non', href: '/tuyen-sinh' },
+           { label: 'Tuyển sinh Tiểu học', href: '/tuyen-sinh' },
+           { label: 'Tuyển sinh THCS', href: '/tuyen-sinh' },
+           { label: 'Tuyển sinh THPT', href: '/tuyen-sinh' },
+           { label: 'Học bổng', href: '/hoc-bong' },
+           { label: 'Học phí', href: '/hoc-phi' },
+           { label: 'Quy trình đăng ký', href: '/tuyen-sinh' },
+         ]},
        ]).map((item) => {
-         const children = getChildren(item.label);
-         return children.length > 0 ? (
+         const cmsChildren = getChildren(item.label);
+         const allChildren = cmsChildren.length > 0 ? cmsChildren : (item.children || []);
+         return allChildren.length > 0 ? (
            <li class="has-dropdown">
              <a href={item.href}>{item.label} ▾</a>
              <ul class="dropdown-menu">
-               {children.map(child => <li><a href={child.href}>{child.label}</a></li>)}
+               {allChildren.map(child => <li><a href={child.href}>{child.label}</a></li>)}
              </ul>
            </li>
          ) : (
@@ -66,11 +81,41 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 
      <ul class="nav-links right-nav">
        {(rightNav.length > 0 ? rightNav : [
-         { label: 'Thành Tích', href: '/thanh-tich' },
-         { label: 'Học Phí', href: '/hoc-phi' },
-         { label: 'Tin Tức', href: '/tin-tuc' },
-         { label: 'Liên hệ', href: '/lien-he' },
-       ]).map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+         { label: 'Chương Trình', href: '/cap-hoc', children: [
+           { label: 'Mầm Non', href: '/mam-non' },
+           { label: 'Tiểu Học', href: '/tieu-hoc' },
+           { label: 'THCS', href: '/thcs' },
+           { label: 'THPT', href: '/thpt' },
+           { label: 'Ngoại Khóa', href: '/ngoai-khoa' },
+           { label: 'Hệ thống PDR', href: '/he-thong-pdr' },
+           { label: 'Triết lý GD', href: '/triet-ly-giao-duc' },
+           { label: 'Cơ sở', href: '/co-so' },
+           { label: 'Hình ảnh', href: '/hinh-anh' },
+         ]},
+         { label: 'Thành Tích', href: '/thanh-tich', children: [
+           { label: 'Thành tích học sinh', href: '/thanh-tich' },
+           { label: 'Đánh giá phụ huynh', href: '/phu-huynh' },
+           { label: 'So sánh trường', href: '/so-sanh' },
+           { label: 'Sự kiện', href: '/su-kien' },
+           { label: 'Tin tức', href: '/tin-tuc' },
+         ]},
+         { label: 'Blog', href: '/tin-tuc' },
+         { label: 'Tài Nguyên', href: '/phu-huynh' },
+         { label: 'Hình Ảnh', href: '/hinh-anh' },
+       ]).map((item) => {
+         const cmsChildren = getChildren(item.label);
+         const allChildren = cmsChildren.length > 0 ? cmsChildren : (item.children || []);
+         return allChildren.length > 0 ? (
+           <li class="has-dropdown">
+             <a href={item.href}>{item.label} ▾</a>
+             <ul class="dropdown-menu">
+               {allChildren.map(child => <li><a href={child.href}>{child.label}</a></li>)}
+             </ul>
+           </li>
+         ) : (
+           <li><a href={item.href}>{item.label}</a></li>
+         );
+       })}
      </ul>
 
      <!-- Mobile hamburger -->
@@ -87,21 +132,50 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
       <a href="/" class="mobile-nav-link">Trang Chủ</a>
       <a href="/gioi-thieu" class="mobile-nav-link">Giới Thiệu</a>
       <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Giáo Viên">Giáo Viên <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/gioi-thieu" class="mobile-nav-sublink">Đội ngũ giáo viên</a>
+          <a href="/triet-ly-giao-duc" class="mobile-nav-sublink">Phương pháp</a>
+          <a href="/lien-he" class="mobile-nav-sublink">Tuyển dụng</a>
+        </div>
+      </div>
+      <a href="/phu-huynh" class="mobile-nav-link">Đánh Giá</a>
+      <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Tuyển Sinh">Tuyển Sinh <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Mầm Non</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Tiểu Học</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">THCS</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">THPT</a>
+          <a href="/hoc-bong" class="mobile-nav-sublink">Học bổng</a>
+          <a href="/hoc-phi" class="mobile-nav-sublink">Học phí</a>
+          <a href="/tuyen-sinh" class="mobile-nav-sublink">Quy trình đăng ký</a>
+        </div>
+      </div>
+      <div class="mobile-nav-group">
         <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Chương Trình">Chương Trình <span class="toggle-arrow">▾</span></button>
         <div class="mobile-nav-sub">
           <a href="/mam-non" class="mobile-nav-sublink">Mầm Non</a>
           <a href="/tieu-hoc" class="mobile-nav-sublink">Tiểu Học</a>
-          <a href="/trung-hoc-co-so" class="mobile-nav-sublink">THCS</a>
-          <a href="/trung-hoc-pho-thong" class="mobile-nav-sublink">THPT</a>
+          <a href="/thcs" class="mobile-nav-sublink">THCS</a>
+          <a href="/thpt" class="mobile-nav-sublink">THPT</a>
           <a href="/ngoai-khoa" class="mobile-nav-sublink">Ngoại Khóa</a>
+          <a href="/he-thong-pdr" class="mobile-nav-sublink">Hệ thống PDR</a>
+          <a href="/triet-ly-giao-duc" class="mobile-nav-sublink">Triết lý GD</a>
         </div>
       </div>
-      <a href="/tuyen-sinh" class="mobile-nav-link">Tuyển Sinh</a>
-      <a href="/thanh-tich" class="mobile-nav-link">Thành Tích</a>
-      <a href="/hoc-phi" class="mobile-nav-link">Học Phí</a>
-      <a href="/tin-tuc" class="mobile-nav-link">Tin Tức</a>
-      <a href="/lien-he" class="mobile-nav-link">Liên hệ</a>
-      <a href="/tuyen-sinh" class="mobile-nav-cta">Đăng ký tư vấn</a>
+      <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Thành Tích">Thành Tích <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/thanh-tich" class="mobile-nav-sublink">Thành tích học sinh</a>
+          <a href="/phu-huynh" class="mobile-nav-sublink">Đánh giá phụ huynh</a>
+          <a href="/so-sanh" class="mobile-nav-sublink">So sánh trường</a>
+          <a href="/su-kien" class="mobile-nav-sublink">Sự kiện</a>
+        </div>
+      </div>
+      <a href="/tin-tuc" class="mobile-nav-link">Blog</a>
+      <a href="/hinh-anh" class="mobile-nav-link">Hình Ảnh</a>
+      <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="mobile-nav-cta">Chat Zalo OA</a>
     </div>
   </div>
 </header>

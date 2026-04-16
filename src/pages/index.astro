@@ -4,13 +4,12 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { defaultSiteUrl } from '../lib/site-content';
-import { getTestimonials, getCampuses } from '../lib/directus';
+import { getTestimonials } from '../lib/directus';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
 // Fetch from CMS
 const cmsTestimonials = await getTestimonials('index');
-const cmsCampuses = await getCampuses();
 
 const structuredData = [
   {
@@ -118,69 +117,92 @@ const structuredData = [
   },
 ];
 
-const programCards = [
+const productLinks = [
   { label: 'Mầm non', href: '/mam-non' },
   { label: 'Tiểu học', href: '/tieu-hoc' },
   { label: 'THCS', href: '/trung-hoc-co-so' },
   { label: 'THPT', href: '/trung-hoc-pho-thong' },
   { label: 'Trại hè', href: '/tuyen-sinh' },
-  { label: 'Ngoại khoá', href: '/tuyen-sinh' },
-  { label: 'Toán Tư Duy (SAM)', href: '/tuyen-sinh' },
   { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh' },
-  { label: 'Tiếng Anh Thực Dụng', href: '/tuyen-sinh' },
-  { label: 'Bơi', href: '/tuyen-sinh' },
+  { label: 'Toán Tư Duy', href: '/tuyen-sinh' },
+  { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh' },
 ];
 
-// Campuses — 100% from CMS, fallback if CMS down
-const campusGroups = (() => {
-  if (cmsCampuses.length > 0) {
-    const cities = [...new Set(cmsCampuses.map((c: any) => c.city))];
-    return cities.map(city => ({
-      city, campuses: cmsCampuses.filter((c: any) => c.city === city).map((c: any) => ({ name: c.name, address: c.address }))
-    }));
-  }
-  return [
-    { city: 'TP. Hồ Chí Minh', campuses: [{ name: 'Trường Việt Anh Phú Nhuận', address: '269A Nguyễn Trọng Tuyển' }, { name: 'Trường Việt Anh Gò Vấp', address: '160/72 Phan Huy Ích' }] },
-    { city: 'Long An', campuses: [{ name: 'Trường Mầm non Thái Sơn', address: 'KDC Thái Sơn' }] },
-    { city: 'Kiên Giang', campuses: [{ name: 'Trường MN QT Mekong Xanh', address: 'Lô E7, Rạch Giá' }] },
-  ];
-})();
+const campusLinks = [
+  { label: 'Trường Mầm non Việt Anh Gò Vấp - HCM', href: '/co-so' },
+  { label: 'Trường TiH THCS THPT Việt Anh Gò Vấp - HCM', href: '/co-so' },
+  { label: 'Trường TiH THCS THPT Việt Anh Bình Tân - HCM', href: '/co-so' },
+  { label: 'Trường Mầm non Nhân Lễ - Xã Cần Giuộc - Tây Ninh', href: '/co-so' },
+  { label: 'Trường MN và TiH Thái Sơn - Xã Cần Giuộc - Tây Ninh', href: '/co-so' },
+  { label: 'Trường MN và TiH Mekong Xanh - TP Rạch Giá - An Giang', href: '/co-so' },
+];
 
-// Testimonials — 100% from CMS, fallback if CMS down
+
+// Testimonials — from Google Sheet data, with individual photos
 const testimonials = cmsTestimonials.length > 0
-  ? cmsTestimonials.map((t: any) => ({ name: t.name, role: t.role, quote: t.quote }))
+  ? cmsTestimonials.map((t: any) => ({ name: t.name, role: t.role, quote: t.quote, img: t.image || '' }))
   : [
-    { name: 'Nguyễn Ngọc Thị Giang', role: 'Học sinh lớp 7', quote: 'Từ một học sinh còn rụt rè, em dần tự tin hơn khi được khuyến khích nói và tìm ra điểm mạnh của mình.' },
-    { name: 'Phụ huynh Hoàng Diễm', role: 'Cảm nhận phụ huynh', quote: 'Niềm tin đến từ cách trường chăm học sinh, cách giao tiếp với phụ huynh và tiến bộ nhìn thấy được.' },
-    { name: 'Phụ huynh Thanh Hà', role: 'Cảm nhận phụ huynh', quote: 'Con thay đổi rõ rệt về tiếng Anh chỉ sau một học kỳ. Con thích đi học mỗi ngày.' },
+    {
+      name: 'Chị Mai',
+      role: 'Phụ huynh bé Phúc, Tiểu học lớp 3',
+      quote: 'Những gì mà lúc đầu thầy cô tư vấn cho chị thì sau 2 năm, chị thấy là đều có trong chương trình học của con hết.',
+      img: 'https://media.truongvietanh.com/images/phu-huynh-mai.webp',
+    },
+    {
+      name: 'Phụ huynh Quốc Long',
+      role: 'Phụ huynh có nhiều con theo học',
+      quote: 'Bé có những sở thích như coi điện thoại hay chơi game nhưng bé tự mình điều tiết nó, không có quá sa đà vào nó.',
+      img: 'https://media.truongvietanh.com/images/phu-huynh-quoclong.webp',
+    },
+    {
+      name: 'Chị Kim Trinh',
+      role: 'Phụ huynh Tiểu học',
+      quote: 'Cô giáo cũng đồng cảm, cũng chia sẻ và giúp cho mình làm sao để mình có thể gần con hơn.',
+      img: 'https://media.truongvietanh.com/images/phu-huynh-kimtrinh.webp',
+    },
+    {
+      name: 'Chị Hoàng Diễm',
+      role: 'Phụ huynh có 2 con theo học',
+      quote: 'Trường Việt Anh luôn luôn cải tiến chương trình học và cập nhật kiến thức.',
+      img: 'https://media.truongvietanh.com/images/phu-huynh-hoangdiem.webp',
+    },
+    {
+      name: 'Chị Anh Đào',
+      role: 'Nhà giáo dục & Phụ huynh',
+      quote: 'Phụ huynh phải là người hiểu con mình nhất, hiểu được cái điểm mạnh cũng như điểm yếu của con.',
+      img: 'https://media.truongvietanh.com/images/phu-huynh-anhdao.webp',
+    },
+    {
+      name: 'Chị Nguyễn Tuyết Trinh',
+      role: 'Phụ huynh THPT',
+      quote: 'Rất an tâm, nhiệt huyết và tin tưởng vào sự tận tụy của thầy cô.',
+      img: 'https://media.truongvietanh.com/images/phu-huynh-tuyettrinh.webp',
+    },
   ];
 
 const newsCards = [
   {
-    eyebrow: 'Tuyển sinh 2026 - 2027',
-    title: 'Lộ trình tuyển sinh nên là một trong những đường đi rõ nhất từ trang chủ',
-    body:
-      'Phụ huynh cần biết quy trình, hồ sơ, lịch tuyển sinh và bước tiếp theo ngay từ trang chủ mà không phải lạc vào các bài nội dung phụ.',
+    eyebrow: 'Tuyển sinh 2026–2027',
+    title: 'Quy trình tuyển sinh Trường Việt Anh: Từ đăng ký đến nhập học',
+    body: 'Hướng dẫn đầy đủ các bước đăng ký tuyển sinh, hồ sơ cần chuẩn bị, lịch thi đầu vào và thời hạn nộp hồ sơ năm học 2026–2027.',
     href: '/tuyen-sinh',
-    cta: 'Xem lộ trình tuyển sinh',
+    cta: 'Xem lộ trình tuyển sinh →',
     img: 'https://media.truongvietanh.com/images/trang-chu-3.webp',
   },
   {
     eyebrow: 'Học phí & học bổng',
-    title: 'Học phí minh bạch nên đi cùng tư vấn rõ ràng và định vị giá trị thật',
-    body:
-      'Đây là nhóm nội dung có tác động chuyển đổi cao, nên được đặt đủ sớm để phụ huynh có thể tiếp tục hành trình mà không phải đoán.',
+    title: 'Học phí Trường Việt Anh 2026–2027 và các chính sách học bổng',
+    body: 'Chi tiết học phí theo từng cấp học, chính sách học bổng dành cho học sinh xuất sắc và ưu đãi Early Bird cho phụ huynh đăng ký sớm.',
     href: '/hoc-phi',
-    cta: 'Xem học phí',
+    cta: 'Xem học phí chi tiết →',
     img: 'https://media.truongvietanh.com/images/trang-chu-5.webp',
   },
   {
-    eyebrow: 'Hoạt động & câu chuyện',
-    title: 'Tin tức nên ưu tiên hoạt động học sinh, sự kiện gần và câu chuyện tiến bộ',
-    body:
-      'Đây là nơi phù hợp để đưa phụ huynh tới những nội dung tạo niềm tin như hoạt động học sinh, ngày hội tuyển sinh và cảm nhận thật từ phụ huynh.',
+    eyebrow: 'Đời sống học đường',
+    title: 'Một ngày ở Trường Việt Anh: Học sinh làm gì từ 7 giờ sáng đến 5 giờ chiều?',
+    body: 'Lịch học, giờ nghỉ ngơi, hoạt động ngoại khóa, bữa ăn và không gian tự học — tất cả để phụ huynh hình dung rõ cuộc sống của con tại trường.',
     href: '/tin-tuc',
-    cta: 'Xem tin tức mới nhất',
+    cta: 'Đọc câu chuyện →',
     img: 'https://media.truongvietanh.com/images/trang-chu-7.webp',
   },
 ];
@@ -192,29 +214,63 @@ const newsCards = [
   canonical="https://truongvietanh.com"
   ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
   structuredData={structuredData}
+  noPopup={true}
 >
   <div class="site-shell site-shell--home">
     <SiteHeader currentPath="/" />
 
     <main>
+      <!-- URGENCY STRIP -->
+      <div class="urgency-strip">
+        <span class="urgency-strip__dot"></span>
+        🎓 Tuyển sinh 2026–2027 đang mở · Ưu đãi Early Bird giảm 15% học phí
+        <a href="/tuyen-sinh" class="urgency-strip__link">Xem ưu đãi →</a>
+      </div>
+
       <!-- DARK HERO -->
       <section class="wp-hero">
         <div class="wp-hero__overlay"></div>
         <div class="wp-hero__content">
           <h1 class="wp-hero__title">Trường Việt Anh</h1>
-          <p class="wp-hero__subtitle">Hệ thống trường học liên cấp từ Mầm non đến THPT</p>
+          <p class="wp-hero__subtitle">Hệ thống trường học Mầm non, Tiểu học, THCS và THPT</p>
           <p class="wp-hero__desc">
-            Môi trường học tập vui vẻ và thực dụng
+            Con học vui — ra trường tự tin. IELTS 6–8, 99% vào đại học NV1, 30% du học thành công.
           </p>
           <div class="wp-hero__actions">
-            <a class="wp-hero__btn wp-hero__btn--primary" href="/tuyen-sinh">Tư vấn</a>
-            <a class="wp-hero__btn wp-hero__btn--outline" href="#danh-gia">Xem đánh giá</a>
+            <a class="wp-hero__btn wp-hero__btn--primary" href="/tuyen-sinh/tham-quan-truong">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+              Đặt lịch tham quan miễn phí
+            </a>
             <a class="wp-hero__btn wp-hero__btn--outline" href="/hoc-phi">Xem học phí</a>
+            <a class="wp-hero__btn wp-hero__btn--outline" href="https://zalo.me/1678310120468101523" target="_blank" rel="noreferrer">Chat Zalo</a>
           </div>
           <div class="wp-hero__badges">
-            <span class="wp-hero__badge">Đầu ra tiếng Anh IELTS 6.0-8.0</span>
+            <span class="wp-hero__badge">Song ngữ Cambridge</span>
+            <span class="wp-hero__badge">IELTS 6.0–8.0 đầu ra</span>
             <span class="wp-hero__badge">99% vào đại học</span>
-            <span class="wp-hero__badge">Kỹ năng và phẩm chất thế kỷ 21</span>
+            <span class="wp-hero__badge">Leader in Me</span>
+          </div>
+
+          <!-- INLINE LEAD FORM -->
+          <div class="hero-lead-box">
+            <p class="hero-lead-box__label">Nhận tư vấn — gọi lại trong 30 phút</p>
+            <form class="hero-lead-form" id="hero-lead-form" novalidate>
+              <div class="hero-lead-grades">
+                <button type="button" class="hlf-pill" data-level="mam-non">Mầm non</button>
+                <button type="button" class="hlf-pill" data-level="tieu-hoc">Tiểu học</button>
+                <button type="button" class="hlf-pill" data-level="thcs">THCS</button>
+                <button type="button" class="hlf-pill" data-level="thpt">THPT</button>
+              </div>
+              <div class="hero-lead-inputs">
+                <input type="tel" name="phone" placeholder="Số điện thoại" inputmode="numeric" required class="hlf-input" autocomplete="tel" />
+                <button type="submit" class="hlf-submit">Gọi lại cho tôi</button>
+              </div>
+              <p class="hlf-privacy">🔒 Không spam · Chỉ tư vấn 1 lần</p>
+            </form>
+            <div class="hero-lead-success" hidden>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+              <span>Đã nhận! Tư vấn viên gọi bạn sớm.</span>
+            </div>
           </div>
         </div>
       </section>
@@ -223,7 +279,7 @@ const newsCards = [
       <section class="aio-answer">
         <div class="aio-answer__inner">
           <p class="aio-answer__text">
-            <strong>Trường Việt Anh</strong> là hệ thống giáo dục liên cấp song ngữ tại TP.HCM, đào tạo từ Mầm Non đến THPT. Thành lập năm 2011, trường có 3 cơ sở tại Gò Vấp, Phú Nhuận và Bình Tân. Học sinh tốt nghiệp đạt IELTS 6.0–8.0, 99% đỗ đại học nguyện vọng 1, và 30% du học thành công. Học phí từ 5–12 triệu/tháng. Hotline tư vấn: <a href="tel:0916961409">0916 961 409</a>.
+            <strong>Trường Việt Anh</strong> thành lập năm 2011 tại TP HCM, là lựa chọn yêu thích của các gia đình trí thức trung lưu, khao khát với giáo dục hiện đại, kỳ vọng cao ở kỹ năng và phẩm chất của học sinh. Học sinh Việt Anh trải nghiệm quãng thời gian học tập vui vẻ, hạnh phúc, ra trường với các kỹ năng, phẩm chất lãnh đạo của thế kỷ 21, giành được quyền chọn của riêng mình với các trường đại học danh giá trong và ngoài nước.
           </p>
         </div>
       </section>
@@ -232,123 +288,127 @@ const newsCards = [
       <div class="page-flow">
 
         <section class="section-block section-block--stats anchor-section">
-          <div class="section-heading">
-            <p class="section-eyebrow">Con số nổi bật</p>
-            <h2>Những chỉ dấu giúp phụ huynh hình dung nhanh quy mô, định hướng và kết quả học tập của Việt Anh.</h2>
-          </div>
-
           <div class="stats-grid">
             <article class="stat-tile">
               <strong>2011</strong>
-              <span>Năm hình thành và phát triển hệ thống giáo dục Việt Anh</span>
+              <span>Năm thành lập — 13+ năm kinh nghiệm</span>
             </article>
             <article class="stat-tile">
-              <strong>6.0+</strong>
-              <span>IELTS là chuẩn đầu ra tiếng Anh được nhấn mạnh xuyên suốt trong thông điệp tuyển sinh</span>
+              <strong>IELTS 6–8</strong>
+              <span>Chuẩn đầu ra tiếng Anh tối thiểu trước khi tốt nghiệp THPT</span>
             </article>
             <article class="stat-tile">
               <strong>99%</strong>
-              <span>Tỷ lệ học sinh vào đại học là chỉ số tạo niềm tin mạnh với nhiều phụ huynh</span>
+              <span>Học sinh đỗ đại học nguyện vọng 1</span>
             </article>
             <article class="stat-tile">
-              <strong>16/16</strong>
-              <span>16 kỹ năng thế kỷ 21 cho thấy định hướng phát triển toàn diện, không chỉ tập trung điểm số</span>
+              <strong>9 cơ sở</strong>
+              <span>TP.HCM · Long An · Kiên Giang</span>
             </article>
           </div>
 
-          <img src="https://media.truongvietanh.com/images/giao-vien-30.webp" alt="Đội ngũ giáo viên Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
+          <!-- TRUST LOGOS -->
+          <div class="trust-logos">
+            <span class="trust-logos__label">Được công nhận bởi</span>
+            <div class="trust-logos__row">
+              <div class="trust-logo-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B2A5B" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>Cambridge Assessment</span>
+              </div>
+              <div class="trust-logo-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B2A5B" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                <span>Franklin Covey — Leader in Me</span>
+              </div>
+              <div class="trust-logo-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B2A5B" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                <span>Trung tâm thi IELTS — British Council</span>
+              </div>
+              <div class="trust-logo-item">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#1B2A5B" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span>8.000+ học sinh đang theo học</span>
+              </div>
+            </div>
+          </div>
         </section>
 
-        <!-- TAI SAO CHON TRUONG VIET ANH -->
+        <!-- 3 KHAC BIET CUA HOC SINH VIET ANH -->
         <section class="section-block anchor-section">
           <div class="section-heading">
-            <p class="section-eyebrow">Tại sao chọn Trường Việt Anh</p>
-            <h2>Những lý do cốt lõi khiến Việt Anh khác biệt trong mắt nhiều gia đình đang tìm trường tại TP.HCM.</h2>
+            <p class="section-eyebrow">Điểm khác biệt</p>
+            <h2>3 khác biệt của học sinh Việt Anh</h2>
           </div>
 
           <div class="why-blocks">
             <!-- Block 1 -->
-            <article class="why-block">
-              <h3 class="why-block__title">Nội dung học thực dụng</h3>
-              <div class="why-block__content">
-                <p>Học sinh được học tập đầy đủ 16 kỹ năng sống còn, là nền tảng cho thành công trong cuộc sống ở thế kỷ 21 (theo công bố của WEF -- diễn đàn kinh tế thế giới 2015), là nội dung các trường K-12 hàng đầu thế giới hiện đang thực hiện</p>
-                <p>Nghiên cứu của WEF chỉ ra, trong khi các nước tiên tiến ở châu Âu hoặc khu vực Bắc Mỹ đã đầu tư đủ 16 kỹ năng của thế kỷ 21 trong giáo dục, mặt bằng chung của Việt Nam còn đang thiếu hụt và tụt hậu xa so với giáo dục thế giới. Trong lúc nhiều trường học tại Việt Nam còn mải mê chạy theo học thuộc lòng, thi cử, thì từ lâu thế giới đã tập trung vào xây dựng năng lực, phẩm chất, vốn là những kỹ năng quan trọng giúp con người trở nên linh hoạt và thành công ở một thế giới tương lai đầy biến động</p>
-                <p>Để thực hiện sứ mệnh của mình, trường Việt Anh dày công xây dựng chương trình học tập giúp học sinh phát triển đầy đủ 16 kỹ năng của thế kỷ 21, vừa thông qua các môn học mới, các hoạt động ngoại khoá và cả văn hoá trường học. Giáo trình giảng dạy của trường Việt Anh hoàn toàn sống động với thời gian, mỗi năm đều có cập nhật mới để đáp ứng sự biến đổi với cấp số nhân của xã hội do cuộc cách mạng AI mang lại</p>
+            <article class="why-block why-block--with-img">
+              <div class="why-block__text">
+                <h3 class="why-block__title">1. Nội dung học thực dụng</h3>
+                <div class="why-block__content">
+                  <p>Học sinh được phát triển đầy đủ 16 kỹ năng thế kỷ 21 theo chuẩn WEF, nội dung mà các trường K-12 hàng đầu thế giới đang thực hiện.</p>
+                  <details class="why-block__more">
+                    <summary>Đọc thêm</summary>
+                    <p>Nghiên cứu của WEF chỉ ra, trong khi các nước tiên tiến đã đầu tư đủ 16 kỹ năng trong giáo dục, mặt bằng chung của Việt Nam còn đang thiếu hụt. Trường Việt Anh dày công xây dựng chương trình phát triển đầy đủ 16 kỹ năng qua các môn học, hoạt động ngoại khoá và văn hoá trường học. Giáo trình cập nhật mỗi năm để đáp ứng sự biến đổi của xã hội do cách mạng AI mang lại.</p>
+                  </details>
+                </div>
               </div>
+              <img src="https://media.truongvietanh.com/images/hoc-sinh-stem-01.webp" alt="Học sinh Việt Anh trong giờ STEM" loading="lazy" width="500" height="340" class="why-block__img" />
             </article>
 
             <!-- Block 2 -->
-            <article class="why-block">
-              <h3 class="why-block__title">Tiếng Anh đủ du học</h3>
-              <div class="why-block__content">
-                <p>Chương trình tiếng Anh của trường Việt Anh giúp học sinh đạt được trình độ tối thiểu IELTS 6.0 trước khi tốt nghiệp THPT, đây là trình độ tiếng Anh đầu vào của hầu hết các đại học trên toàn thế giới. Thực tế, nhiều học sinh Việt Anh đã ra trường với thành tích tốt hơn nhiều và tìm kiếm được những học bổng quốc tế như ý</p>
-                <p>Để làm được điều này, thì chương trình học của trường được xây dựng có chiều sâu và lộ trình rõ ràng từ rất sớm. Ở Mầm Non, học sinh học hoàn toàn bằng tiếng Anh; Tiểu học, học sinh học một số môn học của giáo trình UK như Toán, Khoa học, Công nghệ, Máy tính; THCS phát triển thêm về giao tiếp và học thuật; THPT bắt đầu luyện thi IELTS và các kỹ năng tiếng Anh cao cấp</p>
-                <p>Tổ Tiếng Anh của trường được xây dựng bởi các giáo viên bản ngữ và chuyên gia giàu kinh nghiệm, bản thân trường Việt Anh cũng là một trong những trung tâm khảo thí IELTS tại TP HCM</p>
-                <p>Chương trình tiếng Anh của trường Việt Anh tốt đến mức được hợp tác triển khai ở hơn 100 trường công tư khác tại TP HCM hàng năm</p>
+            <article class="why-block why-block--with-img">
+              <div class="why-block__text">
+                <h3 class="why-block__title">2. Tiếng Anh đủ du học</h3>
+                <div class="why-block__content">
+                  <p>Học sinh đạt tối thiểu IELTS 6.0 trước khi tốt nghiệp THPT — đủ điều kiện xét tuyển hầu hết các đại học trên thế giới.</p>
+                  <details class="why-block__more">
+                    <summary>Đọc thêm</summary>
+                    <p>Lộ trình tiếng Anh xuyên suốt từ Mầm Non (100% immersion), Tiểu học (giáo trình UK Cambridge), THCS (giao tiếp + học thuật), đến THPT (luyện IELTS). Tổ Tiếng Anh do giáo viên bản ngữ phụ trách, trường cũng là trung tâm khảo thí IELTS tại TP HCM. Chương trình tiếng Anh được hợp tác triển khai ở hơn 100 trường công tư khác.</p>
+                  </details>
+                </div>
               </div>
+              <img src="https://media.truongvietanh.com/images/tieng-anh-02.webp" alt="Học sinh Việt Anh học tiếng Anh" loading="lazy" width="500" height="340" class="why-block__img" />
             </article>
 
             <!-- Block 3 -->
-            <article class="why-block">
-              <h3 class="why-block__title">Học sinh sớm trưởng thành</h3>
-              <div class="why-block__content">
-                <p>Lãnh đạo là năng lực giúp mỗi học sinh có được sự chủ động lựa chọn con đường cuộc sống và sự thành công của mình. Ban đầu, học sinh Việt Anh được rèn cách lãnh đạo bản thân, dần dần mở rộng phạm vi ảnh hưởng ra đội nhóm, lớp học, trường học, gia đình và xã hội.</p>
-                <p>Chương trình phát triển phẩm chất và năng lực lãnh đạo của học sinh được xây dựng trên nền tảng 5 giá trị cốt lõi và 7 thói quen lãnh đạo. 5 giá trị do trường Việt Anh tự xây dựng với niềm tin sẽ mang lại thành công và hạnh phúc cho mọi người sở hữu nó, còn 7 thói quen là chương trình nhận quyền từ tập đoàn giáo dục toàn cầu Franklin Covey, mang tên "Leader in Me"</p>
-                <p>Tất cả phụ huynh tham quan trường Việt Anh đều ngạc nhiên khi thấy dấu ấn của học sinh ở khắp nơi, từ cơ sở vật chất, đến các ngày lễ, đến văn hoá nhà trường, và cả những chính sách quan trọng chung. Với quá trình phát triển khả năng lãnh đạo sớm và liên tục, học sinh Việt Anh thường được nhìn nhận là đã hình thành tư duy của những người trưởng thành nhỏ tuổi</p>
-              </div>
-            </article>
-          </div>
-
-          <img src="https://media.truongvietanh.com/images/thuyet-trinh-10.webp" alt="Học sinh phát triển kỹ năng tại Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
-
-          <div class="cta-center">
-            <a class="btn-cta" href="/tuyen-sinh">Đăng ký tư vấn tuyển sinh ngay</a>
-          </div>
-        </section>
-
-        <!-- CHUONG TRINH DAO TAO -->
-        <section class="section-block anchor-section" id="cap-hoc">
-          <div class="section-heading">
-            <p class="section-eyebrow">Chương trình đào tạo</p>
-            <h2>Chọn đúng chương trình để hiểu rõ hơn lộ trình phát triển của con.</h2>
-          </div>
-
-          <div class="program-grid">
-            {programCards.map((card) => (
-              <a class="program-card" href={card.href}>
-                <span class="program-card__label">{card.label}</span>
-                <span class="program-card__arrow">&#8594;</span>
-              </a>
-            ))}
-          </div>
-        </section>
-
-        <!-- CO SO & KHU VUC -->
-        <section class="section-block anchor-section" id="co-so">
-          <div class="section-heading">
-            <p class="section-eyebrow">Cơ sở & khu vực</p>
-            <h2>Hệ thống trường Việt Anh tại nhiều tỉnh thành</h2>
-          </div>
-
-          <p class="campus-intro">Trường Việt Anh hiện vận hành hệ thống giáo dục liên cấp — từ Mầm non đến Lớp 12 — tại nhiều tỉnh thành:</p>
-
-          <div class="campus-groups">
-            {campusGroups.map((group) => (
-              <div class="campus-group">
-                <h3 class="campus-group__city">{group.city}</h3>
-                <div class="campus-group__list">
-                  {group.campuses.map((campus) => (
-                    <div class="campus-item">
-                      <strong class="campus-item__name">{campus.name}</strong>
-                      <span class="campus-item__address">{campus.address}</span>
-                    </div>
-                  ))}
+            <article class="why-block why-block--with-img">
+              <div class="why-block__text">
+                <h3 class="why-block__title">3. Học sinh sớm trưởng thành</h3>
+                <div class="why-block__content">
+                  <p>Học sinh được rèn năng lực lãnh đạo bản thân từ sớm, dần mở rộng ảnh hưởng ra đội nhóm, lớp học và xã hội.</p>
+                  <details class="why-block__more">
+                    <summary>Đọc thêm</summary>
+                    <p>Chương trình xây dựng trên 5 giá trị cốt lõi và 7 thói quen lãnh đạo (chương trình "Leader in Me" từ Franklin Covey). Phụ huynh tham quan trường đều ngạc nhiên khi thấy dấu ấn của học sinh ở khắp nơi — từ cơ sở vật chất, ngày lễ đến văn hoá và chính sách nhà trường.</p>
+                  </details>
                 </div>
               </div>
-            ))}
+              <img src="https://media.truongvietanh.com/images/lanh-dao-03.webp" alt="Học sinh Việt Anh phát triển kỹ năng lãnh đạo" loading="lazy" width="500" height="340" class="why-block__img" />
+            </article>
           </div>
+        </section>
 
-          <p class="campus-outro">Dù mang những tên gọi khác nhau tại từng địa phương, tất cả các cơ sở đều vận hành theo một triết lý, một hệ thống PDR, và một cam kết chất lượng thống nhất.</p>
+
+        <!-- MID-PAGE CTA STRIP -->
+        <section class="mid-cta-strip">
+          <div class="mid-cta-strip__inner">
+            <div class="mid-cta-strip__text">
+              <strong>Bạn muốn con học ở Trường Việt Anh?</strong>
+              <span>Đặt lịch tham quan miễn phí — gặp trực tiếp ban lãnh đạo và tham dự thử 1 tiết học.</span>
+            </div>
+            <div class="mid-cta-strip__actions">
+              <a href="/tuyen-sinh/tham-quan-truong" class="mid-cta-btn mid-cta-btn--primary">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                Đặt lịch tham quan
+              </a>
+              <a href="tel:0916961409" class="mid-cta-btn mid-cta-btn--outline">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                0916 961 409
+              </a>
+              <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="mid-cta-btn mid-cta-btn--zalo">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                Chat Zalo OA
+              </a>
+            </div>
+          </div>
         </section>
 
         <!-- DANH GIA CUA PHU HUYNH -->
@@ -358,21 +418,53 @@ const newsCards = [
             <h2>Lời chia sẻ từ học sinh và phụ huynh là một trong những bằng chứng thuyết phục nhất.</h2>
           </div>
 
-          <img src="https://media.truongvietanh.com/images/phu-huynh-04.webp" alt="Phụ huynh tin tưởng Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
-
-          <div class="card-grid card-grid--3">
+          <div class="testimonial-grid">
             {testimonials.map((item) => (
-              <article class="content-card">
-                <p class="card-eyebrow">{item.role}</p>
-                <h3>{item.name}</h3>
-                <p>{item.quote}</p>
+              <article class="testimonial-card">
+                <div class="testimonial-card__avatar">
+                  <img src={item.img || 'https://media.truongvietanh.com/images/phu-huynh-04.webp'} alt={item.name} loading="lazy" width="80" height="80" />
+                </div>
+                <blockquote class="testimonial-card__quote">
+                  <p>&ldquo;{item.quote}&rdquo;</p>
+                </blockquote>
+                <div class="testimonial-card__info">
+                  <strong>{item.name}</strong>
+                  <span>{item.role}</span>
+                </div>
               </article>
             ))}
           </div>
+        </section>
 
-          <p class="cta-center">
-            <a class="link-cta" href="/tuyen-sinh">Tìm hiểu lộ trình tuyển sinh &rarr;</a>
-          </p>
+        <!-- BLOCK LINKS - San pham va co so -->
+        <section class="section-block anchor-section" id="san-pham">
+          <div class="section-heading">
+            <p class="section-eyebrow">Sản phẩm giáo dục</p>
+            <h2>Khám phá các chương trình của Trường Việt Anh</h2>
+          </div>
+
+          <div class="program-grid">
+            {productLinks.map((card) => (
+              <a class="program-card" href={card.href}>
+                <span class="program-card__label">{card.label}</span>
+                <span class="program-card__arrow">&#8594;</span>
+              </a>
+            ))}
+          </div>
+
+          <div class="section-heading" style="margin-top:2.5rem">
+            <p class="section-eyebrow">Hệ thống cơ sở</p>
+            <h2>Các trường trong hệ thống Việt Anh</h2>
+          </div>
+
+          <div class="program-grid program-grid--campuses">
+            {campusLinks.map((card) => (
+              <a class="program-card" href={card.href}>
+                <span class="program-card__label">{card.label}</span>
+                <span class="program-card__arrow">&#8594;</span>
+              </a>
+            ))}
+          </div>
         </section>
 
         <!-- BLOG -->
@@ -397,13 +489,50 @@ const newsCards = [
           </div>
         </section>
 
+        <!-- PRICE COMPARISON -->
+        <section class="section-block anchor-section" id="hoc-phi-so-sanh">
+          <div class="section-heading">
+            <p class="section-eyebrow">So sánh học phí</p>
+            <h2>Chất lượng quốc tế — học phí hợp lý hơn nhiều</h2>
+          </div>
+          <div class="price-compare">
+            <div class="price-compare__col price-compare__col--other">
+              <div class="price-compare__header">Trường quốc tế</div>
+              <div class="price-compare__price">15–30 triệu<span>/tháng</span></div>
+              <ul class="price-compare__list">
+                <li>✓ Chương trình quốc tế</li>
+                <li>✓ Giáo viên bản ngữ</li>
+                <li>✓ Cơ sở vật chất hiện đại</li>
+                <li class="price-compare__miss">✗ Học phí rất cao</li>
+                <li class="price-compare__miss">✗ Xa rời văn hóa Việt</li>
+                <li class="price-compare__miss">✗ Ít cơ sở, khó tiếp cận</li>
+              </ul>
+            </div>
+            <div class="price-compare__vs">VS</div>
+            <div class="price-compare__col price-compare__col--va">
+              <div class="price-compare__badge">Khuyến nghị</div>
+              <div class="price-compare__header">Trường Việt Anh</div>
+              <div class="price-compare__price">5–12 triệu<span>/tháng</span></div>
+              <ul class="price-compare__list">
+                <li>✓ Cambridge song ngữ Anh–Việt</li>
+                <li>✓ Giáo viên bản ngữ + Việt Nam</li>
+                <li>✓ 9 cơ sở tại TP.HCM, Long An, Kiên Giang</li>
+                <li>✓ IELTS 6.0–8.0 đầu ra cam kết</li>
+                <li>✓ 99% đỗ đại học NV1</li>
+                <li>✓ Xe đưa đón GPS, bán trú</li>
+              </ul>
+              <a href="/hoc-phi" class="price-compare__cta">Xem bảng học phí chi tiết →</a>
+            </div>
+          </div>
+        </section>
+
         <!-- FAQ cho homepage -->
-        <section class="section-block anchor-section" id="faq">
+        <section class="section-block section-block--faq anchor-section" id="faq">
           <div class="section-heading">
             <p class="section-eyebrow">Câu hỏi thường gặp</p>
             <h2>Phụ huynh thường hỏi gì về Trường Việt Anh?</h2>
           </div>
-          <div class="faq-list" style="max-width:800px">
+          <div class="faq-list">
             <details class="faq-item">
               <summary class="faq-question">Trường Việt Anh tuyển sinh những cấp học nào?</summary>
               <p class="faq-answer">Trường Việt Anh tuyển sinh 4 cấp: Mầm Non (từ 18 tháng), Tiểu Học (lớp 1-5), THCS (lớp 6-9) và THPT (lớp 10-12). Hệ thống liên cấp giúp con được đào tạo xuyên suốt mà không bị gián đoạn chương trình.</p>
@@ -435,53 +564,83 @@ const newsCards = [
           </div>
           <div class="paa-grid">
             <a href="/mam-non" class="paa-card">
+              <span class="paa-card__icon">🌱</span>
               <strong>Chương trình Mầm Non song ngữ phù hợp cho bé mấy tuổi?</strong>
               <span>Nhận trẻ từ 18 tháng, 100% tiếng Anh immersion, Montessori + STEAM</span>
             </a>
             <a href="/hoc-phi" class="paa-card">
+              <span class="paa-card__icon">💰</span>
               <strong>So sánh học phí Trường Việt Anh với trường quốc tế?</strong>
               <span>Chỉ bằng 1/3 trường quốc tế — 5 đến 15 triệu/tháng tùy cấp học</span>
             </a>
             <a href="/triet-ly-giao-duc" class="paa-card">
+              <span class="paa-card__icon">🧩</span>
               <strong>Phương pháp PDR là gì và khác gì trường truyền thống?</strong>
               <span>Play – Discover – Reflect: học qua trải nghiệm thay vì nhồi nhét</span>
             </a>
             <a href="/thanh-tich" class="paa-card">
+              <span class="paa-card__icon">🏆</span>
               <strong>Học sinh Trường Việt Anh thi đại học và du học thế nào?</strong>
               <span>99% đỗ ĐH nguyện vọng 1, 30% nhận học bổng du học, IELTS 6.0-8.0</span>
             </a>
             <a href="/co-so" class="paa-card">
+              <span class="paa-card__icon">📍</span>
               <strong>Trường Việt Anh có ở gần nhà tôi không?</strong>
               <span>9 cơ sở tại TP.HCM, Long An, Kiên Giang — có xe đưa đón</span>
             </a>
             <a href="/ngoai-khoa" class="paa-card">
+              <span class="paa-card__icon">⚽</span>
               <strong>Con có thể tham gia CLB ngoại khóa nào?</strong>
               <span>20+ CLB: bóng đá, robotics, piano, debate, bơi lội và nhiều hơn</span>
             </a>
           </div>
         </section>
 
-        <!-- CONTACT FORM -->
+        <!-- CTA: NHAN BROCHURE -->
         <section class="section-block section-block--contact anchor-section" id="lien-he">
-          <div class="section-heading">
-            <p class="section-eyebrow">Đăng ký tư vấn</p>
-            <h2>Nhận tư vấn miễn phí cho con</h2>
-            <p class="section-block--contact__desc">Để lại email — đội ngũ tuyển sinh sẽ liên hệ trong 24 giờ</p>
-          </div>
+          <div class="brochure-layout">
+            <div class="section-heading section-heading--left">
+              <p class="section-eyebrow">Tài liệu miễn phí</p>
+              <h2>Tải tài liệu: Chương trình, học phí và lịch tham quan 2026–2027</h2>
+              <p class="section-block--contact__desc">PDF 24 trang — chương trình Cambridge, bảng học phí chi tiết, lịch mở cửa tham quan và form đăng ký ưu tiên. Gửi ngay vào email của bạn.</p>
+              <ul class="brochure-perks">
+                <li>✓ Bảng học phí đầy đủ theo từng cấp học</li>
+                <li>✓ Lịch tuyển sinh & ngày tham quan mở</li>
+                <li>✓ Chương trình Cambridge + Leader in Me</li>
+                <li>✓ Ưu đãi Early Bird chỉ gửi qua email</li>
+              </ul>
+            </div>
 
-          <div class="form-wrapper">
-            <LeadFormTwoStepEmailFirst
-              formId="homepage-form"
-              funnelCode="homepage"
-              schoolLevel="lien-cap"
-              submitText="Nhận tư vấn miễn phí"
-            />
+            <div class="form-wrapper">
+              <LeadFormTwoStepEmailFirst
+                formId="homepage-brochure-form"
+                funnelCode="brochure-homepage"
+                schoolLevel="lien-cap"
+                submitText="Nhận Brochure miễn phí"
+              />
+            </div>
           </div>
         </section>
       </div>
     </main>
 
     <SiteFooter />
+
+    <!-- STICKY MOBILE BAR -->
+    <div class="sticky-mobile-bar" id="sticky-mobile-bar">
+      <a href="tel:0916961409" class="smb-btn smb-btn--call">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Gọi ngay
+      </a>
+      <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="smb-btn smb-btn--zalo">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+        Zalo
+      </a>
+      <a href="/tuyen-sinh/tham-quan-truong" class="smb-btn smb-btn--book">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+        Đặt lịch
+      </a>
+    </div>
   </div>
 </BaseLayout>
 
@@ -489,7 +648,7 @@ const newsCards = [
   /* Hero section - dark background */
   .wp-hero {
     position: relative;
-    background: linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 40%, #162040 100%);
+    background: url('/hero-bg-hoc.jpg') center/cover no-repeat, linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 40%, #162040 100%);
     min-height: 520px;
     display: flex;
     align-items: center;
@@ -502,9 +661,7 @@ const newsCards = [
   .wp-hero__overlay {
     position: absolute;
     inset: 0;
-    background:
-      radial-gradient(circle at 30% 20%, rgba(212, 168, 67, 0.08), transparent 50%),
-      radial-gradient(circle at 70% 80%, rgba(26, 26, 94, 0.3), transparent 50%);
+    background: rgba(13, 27, 62, 0.55);
     pointer-events: none;
   }
 
@@ -627,10 +784,12 @@ const newsCards = [
     }
   }
 
-  /* WHY BLOCKS - detailed content sections */
+  /* WHY BLOCKS - 3 columns in one row, image on top */
   .why-blocks {
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
+    align-items: start;
   }
 
   .why-block {
@@ -639,6 +798,29 @@ const newsCards = [
     border: 1px solid rgba(18, 57, 103, 0.08);
     background: #ffffff;
     box-shadow: 0 8px 24px rgba(18, 57, 103, 0.04);
+  }
+
+  .why-block--with-img {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .why-block__img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 16px;
+    order: -1;
+  }
+
+  @media (max-width: 900px) {
+    .why-blocks {
+      grid-template-columns: 1fr;
+    }
+    .why-block__img {
+      height: 180px;
+    }
   }
 
   .why-block__title {
@@ -662,6 +844,138 @@ const newsCards = [
     line-height: 1.75;
     font-size: 1.02rem;
     margin: 0;
+  }
+
+  /* Read more toggle */
+  .why-block__more {
+    margin-top: 0.25rem;
+  }
+
+  .why-block__more summary {
+    cursor: pointer;
+    color: #D4A843;
+    font-weight: 600;
+    font-size: 0.92rem;
+    list-style: none;
+    user-select: none;
+  }
+
+  .why-block__more summary::-webkit-details-marker { display: none; }
+  .why-block__more summary::marker { display: none; content: ''; }
+
+  .why-block__more summary::after {
+    content: ' \2193';
+  }
+
+  .why-block__more[open] summary::after {
+    content: ' \2191';
+  }
+
+  .why-block__more p {
+    margin-top: 0.75rem;
+    color: #5c6e80;
+    line-height: 1.75;
+    font-size: 0.95rem;
+  }
+
+  /* TESTIMONIALS - individual cards with photos */
+  .testimonial-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 1.75rem;
+    border: 1px solid rgba(18, 57, 103, 0.08);
+    box-shadow: 0 4px 16px rgba(18, 57, 103, 0.04);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .testimonial-card__avatar {
+    display: flex;
+    justify-content: center;
+  }
+
+  .testimonial-card__avatar img {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #D4A843;
+  }
+
+  .testimonial-card__quote {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+
+  .testimonial-card__quote p {
+    color: #5c6e80;
+    font-style: italic;
+    line-height: 1.7;
+    font-size: 0.95rem;
+    text-align: center;
+    margin: 0;
+  }
+
+  .testimonial-card__info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .testimonial-card__info strong {
+    color: #1B2A5B;
+    font-size: 1rem;
+  }
+
+  .testimonial-card__info span {
+    color: #D4A843;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  /* Campus links grid — 1 row, all 6 campuses side by side */
+  .program-grid--campuses {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .program-grid--campuses .program-card__label {
+    font-size: 0.82rem;
+    line-height: 1.3;
+  }
+
+  .program-grid--campuses .program-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+    padding: 1rem;
+  }
+
+  @media (max-width: 1100px) {
+    .program-grid--campuses {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .program-grid--campuses .program-card {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .program-grid--campuses {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .testimonial-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   /* PROGRAM GRID - card grid for training programs */
@@ -714,77 +1028,51 @@ const newsCards = [
     }
   }
 
-  /* CAMPUS GROUPS */
-  .campus-intro,
-  .campus-outro {
-    color: #5c6e80;
-    line-height: 1.7;
-    font-size: 1.04rem;
-    margin: 0 0 1.5rem 0;
-  }
-
-  .campus-outro {
-    margin: 1.5rem 0 0 0;
-    font-style: italic;
-    padding-top: 1rem;
-    border-top: 1px solid rgba(18, 57, 103, 0.08);
-  }
-
-  .campus-groups {
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  .campus-group {
-    padding: 1.5rem;
-    border-radius: 20px;
-    border: 1px solid rgba(18, 57, 103, 0.08);
-    background: #fafbfd;
-  }
-
-  .campus-group__city {
-    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
-    font-size: 1.2rem;
-    font-weight: 700;
-    color: #1B2A5B;
-    margin: 0 0 1rem 0;
-    padding-bottom: 0.5rem;
-    border-bottom: 2px solid #D4A843;
-  }
-
-  .campus-group__list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 0.75rem;
-  }
-
-  .campus-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-    padding: 0.85rem 1rem;
-    border-radius: 12px;
-    background: #ffffff;
-    border: 1px solid rgba(18, 57, 103, 0.06);
-  }
-
-  .campus-item__name {
-    color: #1B2A5B;
-    font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .campus-item__address {
-    color: #5c6e80;
-    font-size: 0.88rem;
-    line-height: 1.5;
-  }
-
-  /* CONTACT FORM */
+  /* CONTACT FORM — brochure section (matches hero blue) */
   .section-block--contact {
     background:
-      linear-gradient(130deg, rgba(18, 57, 103, 0.96), rgba(13, 47, 85, 0.98));
+      linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 40%, #162040 100%);
     color: #f7f5ef;
+  }
+
+  /* FAQ section — full width, tighter padding */
+  .section-block--faq {
+    padding: 1.75rem 1rem;
+  }
+  .section-block--faq .faq-list {
+    max-width: none;
+    width: 100%;
+  }
+  .section-block--faq .section-heading {
+    margin-bottom: 0.75rem;
+  }
+  .section-block--faq .section-heading h2 {
+    max-width: none;
+    white-space: normal;
+  }
+  @media (max-width: 760px) {
+    .section-block--faq {
+      padding: 1.25rem 0.75rem;
+    }
+  }
+
+  /* Brochure: heading + form side-by-side in 1 row */
+  .brochure-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  .section-heading--left {
+    text-align: left;
+  }
+
+  @media (max-width: 768px) {
+    .brochure-layout {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
   }
 
   .section-block--contact .section-eyebrow {
@@ -793,6 +1081,31 @@ const newsCards = [
 
   .section-block--contact .section-heading h2 {
     color: #ffffff;
+  }
+
+  .section-block--contact__desc {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Fix text contrast inside dark brochure section — LeadForm component uses dark colors */
+  .section-block--contact .form-step-title {
+    color: #ffffff !important;
+  }
+
+  .section-block--contact .form-step-description,
+  .section-block--contact .form-social-proof {
+    color: rgba(255, 255, 255, 0.85) !important;
+  }
+
+  .section-block--contact .form-progress__label {
+    color: rgba(255, 255, 255, 0.6) !important;
+  }
+
+  .section-block--contact .form-progress__step--active .form-progress__label,
+  .section-block--contact .form-progress__step--done .form-progress__label {
+    color: rgba(255, 255, 255, 0.9) !important;
   }
 
   .contact-form {
@@ -861,4 +1174,530 @@ const newsCards = [
     background: #fde047;
     transform: translateY(-1px);
   }
+
+  /* =====================================================
+     URGENCY STRIP
+  ===================================================== */
+  .urgency-strip {
+    background: linear-gradient(90deg, #1a1a5e 0%, #0d1b3e 100%);
+    color: #fff;
+    text-align: center;
+    padding: 0.55rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+  }
+
+  .urgency-strip__dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3);
+    animation: pulse-dot 1.8s ease-in-out infinite;
+    flex-shrink: 0;
+  }
+
+  @keyframes pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3); }
+    50%       { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.08); }
+  }
+
+  .urgency-strip__link {
+    color: #f5c518;
+    text-decoration: none;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .urgency-strip__link:hover { text-decoration: underline; }
+
+  /* =====================================================
+     HERO INLINE LEAD FORM
+  ===================================================== */
+  .hero-lead-box {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    width: 100%;
+    max-width: 560px;
+    backdrop-filter: blur(6px);
+    margin-top: 0.25rem;
+  }
+
+  .hero-lead-box__label {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin: 0 0 0.85rem;
+    text-align: center;
+  }
+
+  .hero-lead-grades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 0.85rem;
+  }
+
+  .hlf-pill {
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.85);
+    border-radius: 999px;
+    padding: 0.4rem 1rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+  }
+
+  .hlf-pill:hover,
+  .hlf-pill.is-active {
+    background: #f5c518;
+    border-color: #f5c518;
+    color: #1a1a5e;
+  }
+
+  .hero-lead-inputs {
+    display: flex;
+    gap: 0.6rem;
+  }
+
+  .hlf-input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    font-size: 0.95rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .hlf-input::placeholder { color: rgba(255, 255, 255, 0.5); }
+
+  .hlf-input:focus {
+    border-color: #f5c518;
+    background: rgba(255, 255, 255, 0.18);
+  }
+
+  .hlf-submit {
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    border: none;
+    background: #f5c518;
+    color: #1a1a5e;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, transform 0.1s;
+  }
+
+  .hlf-submit:hover { background: #fde047; transform: translateY(-1px); }
+
+  .hlf-privacy {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.78rem;
+    text-align: center;
+    margin: 0.65rem 0 0;
+  }
+
+  .hero-lead-success {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+
+  @media (max-width: 480px) {
+    .hero-lead-inputs { flex-direction: column; }
+    .hlf-submit { width: 100%; }
+    .hero-lead-box { padding: 1rem; }
+  }
+
+  /* =====================================================
+     TRUST LOGOS
+  ===================================================== */
+  .trust-logos {
+    margin-top: 1.75rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(18, 57, 103, 0.08);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+  }
+
+  .trust-logos__label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #9aabb8;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .trust-logos__row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .trust-logo-item {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    color: #4a6377;
+    font-size: 0.85rem;
+    font-weight: 600;
+    opacity: 0.75;
+    transition: opacity 0.2s;
+  }
+
+  .trust-logo-item:hover { opacity: 1; }
+
+  /* =====================================================
+     MID-PAGE CTA STRIP
+  ===================================================== */
+  .mid-cta-strip {
+    background: linear-gradient(120deg, #1B2A5B 0%, #0d1b3e 100%);
+    padding: 2.25rem 2rem;
+    border-radius: 24px;
+    margin: 0 0 0;
+  }
+
+  .mid-cta-strip__inner {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .mid-cta-strip__text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    color: #fff;
+    max-width: 520px;
+  }
+
+  .mid-cta-strip__text strong {
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+
+  .mid-cta-strip__text span {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+  }
+
+  .mid-cta-strip__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .mid-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.75rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+
+  .mid-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
+
+  .mid-cta-btn--primary {
+    background: #f5c518;
+    color: #1a1a5e;
+  }
+
+  .mid-cta-btn--outline {
+    background: transparent;
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+
+  .mid-cta-btn--outline:hover { border-color: rgba(255, 255, 255, 0.6); }
+
+  .mid-cta-btn--zalo {
+    background: rgba(0, 120, 255, 0.15);
+    color: #7eb8ff;
+    border: 1px solid rgba(0, 120, 255, 0.3);
+  }
+
+  @media (max-width: 640px) {
+    .mid-cta-strip__inner { flex-direction: column; align-items: flex-start; }
+    .mid-cta-strip__actions { flex-direction: column; width: 100%; }
+    .mid-cta-btn { width: 100%; justify-content: center; }
+  }
+
+  /* =====================================================
+     PRICE COMPARISON
+  ===================================================== */
+  .price-compare {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 1rem;
+    align-items: center;
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  .price-compare__col {
+    border-radius: 20px;
+    padding: 2rem 1.75rem;
+    border: 1px solid rgba(18, 57, 103, 0.1);
+    background: #fff;
+  }
+
+  .price-compare__col--va {
+    border: 2px solid #D4A843;
+    box-shadow: 0 8px 28px rgba(212, 168, 67, 0.15);
+    position: relative;
+  }
+
+  .price-compare__badge {
+    position: absolute;
+    top: -13px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #D4A843;
+    color: #1a1a5e;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 0.25rem 0.9rem;
+    border-radius: 999px;
+    white-space: nowrap;
+  }
+
+  .price-compare__header {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1B2A5B;
+    margin-bottom: 0.5rem;
+  }
+
+  .price-compare__col--other .price-compare__header { color: #7a8ca0; }
+
+  .price-compare__price {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #1B2A5B;
+    margin-bottom: 1rem;
+    line-height: 1;
+  }
+
+  .price-compare__col--other .price-compare__price { color: #9aabb8; }
+
+  .price-compare__price span {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: inherit;
+  }
+
+  .price-compare__list {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+
+  .price-compare__list li {
+    font-size: 0.9rem;
+    color: #4a6377;
+  }
+
+  .price-compare__miss { color: #c0c8d0; }
+
+  .price-compare__cta {
+    display: inline-block;
+    margin-top: 0.5rem;
+    color: #D4A843;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .price-compare__cta:hover { text-decoration: underline; }
+
+  .price-compare__vs {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #c0c8d0;
+    text-align: center;
+  }
+
+  @media (max-width: 700px) {
+    .price-compare {
+      grid-template-columns: 1fr;
+    }
+    .price-compare__vs {
+      text-align: center;
+      padding: 0.25rem 0;
+    }
+  }
+
+  /* =====================================================
+     PAA CARDS with icons
+  ===================================================== */
+  .paa-card__icon {
+    display: block;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+    line-height: 1;
+  }
+
+  /* =====================================================
+     BROCHURE PERKS LIST
+  ===================================================== */
+  .brochure-perks {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .brochure-perks li {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 0.9rem;
+  }
+
+  /* =====================================================
+     STICKY MOBILE BAR
+  ===================================================== */
+  .sticky-mobile-bar {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top: 1px solid rgba(18, 57, 103, 0.1);
+    box-shadow: 0 -4px 20px rgba(18, 57, 103, 0.12);
+    z-index: 900;
+    padding: 0.6rem 1rem;
+    gap: 0.5rem;
+  }
+
+  @media (max-width: 767px) {
+    .sticky-mobile-bar {
+      display: flex;
+    }
+  }
+
+  .smb-btn {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.7rem 0.5rem;
+    border-radius: 10px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform 0.1s;
+  }
+
+  .smb-btn:active { transform: scale(0.97); }
+
+  .smb-btn--call {
+    background: #1B2A5B;
+    color: #fff;
+  }
+
+  .smb-btn--zalo {
+    background: #0068FF;
+    color: #fff;
+  }
+
+  .smb-btn--book {
+    background: #f5c518;
+    color: #1a1a5e;
+  }
+
+  /* Add bottom padding on mobile so content isn't hidden by sticky bar */
+  @media (max-width: 767px) {
+    .site-shell--home > main { padding-bottom: 80px; }
+  }
 </style>
+
+<script>
+  // Hero inline lead form — grade pill selection + POST to /api/lead
+  (function () {
+    const form = document.getElementById('hero-lead-form');
+    if (!form) return;
+
+    const successEl = form.parentElement?.querySelector('.hero-lead-success') as HTMLElement | null;
+    let selectedLevel = '';
+
+    // Grade pill toggle
+    form.querySelectorAll<HTMLButtonElement>('.hlf-pill').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        form.querySelectorAll('.hlf-pill').forEach((p) => p.classList.remove('is-active'));
+        btn.classList.add('is-active');
+        selectedLevel = btn.dataset.level || '';
+      });
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const phoneInput = form.querySelector<HTMLInputElement>('[name="phone"]');
+      const phone = phoneInput?.value.trim() || '';
+      if (!phone) { phoneInput?.focus(); return; }
+
+      const submit = form.querySelector<HTMLButtonElement>('.hlf-submit');
+      if (submit) { submit.disabled = true; submit.textContent = 'Đang gửi…'; }
+
+      try {
+        await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            step: 'hero_inline',
+            phone,
+            email: `hero-${Date.now()}@truongvietanh.com`,
+            school_level: selectedLevel || 'unknown',
+            source: 'homepage-hero',
+            page: location.href,
+            timestamp: new Date().toISOString(),
+          }),
+        });
+      } catch (_) { /* silent — best-effort */ }
+
+      // Show success regardless
+      form.style.display = 'none';
+      if (successEl) successEl.hidden = false;
+    });
+  })();
+</script>

@@ -1,0 +1,791 @@
+---
+/**
+ * Trại Hè Squeeze Page — CMS-driven template (Conversion-Optimized v2)
+ *
+ * One dynamic route backs all 8 summer-camp squeeze landing pages.
+ * Content comes from Directus (`trai_he_squeeze_pages` collection) with a
+ * build-time fallback to directus/seed/trai-he-squeeze-pages.json.
+ *
+ * Conversion features:
+ * - Hero CTA button scrolling to form
+ * - Evergreen countdown timer for urgency
+ * - Enhanced testimonial with star rating & avatar
+ * - Highlighted Early Bird card (golden)
+ * - Floating Zalo button
+ * - Exit-intent popup
+ * - Scroll reveal animations
+ * - Mobile-optimized sticky CTA
+ * - Quiz-funnel form UX
+ */
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import QuizFunnel from '../components/QuizFunnel.astro';
+import FAQSection from '../components/FAQSection.astro';
+import { getAllTraiHeSlugs, getTraiHePageBySlug } from '../lib/trai-he-pages';
+
+export async function getStaticPaths() {
+  const slugs = await getAllTraiHeSlugs();
+  return slugs
+    .filter((s) => s && s.startsWith('trai-he-'))
+    .map((slug) => ({ params: { trai_he_slug: slug } }));
+}
+
+const { trai_he_slug } = Astro.params;
+const page = await getTraiHePageBySlug(trai_he_slug!);
+
+if (!page) {
+  return Astro.redirect('/404');
+}
+
+const canonicalUrl = `https://hoc.truongvietanh.com/${page.slug}`;
+const camOnUrl = `/${page.slug}/cam-on`;
+const formIdWithFunnel = `squeeze-form-${page.funnel_code}`;
+const zaloUrl = 'https://zalo.me/1678310120468101523';
+
+// Label mapping for school level
+const levelLabels: Record<string, string> = {
+  'tieu-hoc': 'Tiểu Học',
+  'thcs': 'THCS',
+  'thpt': 'THPT',
+};
+const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
+---
+
+<SqueezePageLayout
+  title={page.page_title}
+  description={page.page_description}
+  canonicalUrl={canonicalUrl}
+  schoolLevel={page.school_level}
+  funnelCode={page.funnel_code}
+>
+  <!-- ===== HERO — compact, CTA above fold ===== -->
+  <section slot="hero">
+    {page.hero_badge && <span class="squeeze-hero__badge">{page.hero_badge}</span>}
+    <!-- Dynamic headline for warm traffic — overridden by JS from UTM -->
+    <h1 class="squeeze-hero__heading" id="heroHeadline">{page.hero_headline}</h1>
+    <p class="squeeze-hero__sub" id="heroSub">{page.hero_subheading}</p>
+
+    <!-- CTA group — must be above fold -->
+    <div class="hero-cta-group">
+      <a href="#form-section" class="hero-cta hero-cta--primary">
+        🎯 Đánh giá miễn phí 3 phút
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
+      <a href={zaloUrl} target="_blank" rel="noopener noreferrer" class="hero-cta hero-cta--zalo">
+        💬 Chat Zalo
+      </a>
+    </div>
+    <div class="hero-countdown" id="heroCountdown">
+      <span class="hero-countdown__pulse"></span>
+      <span>Học bổng kết thúc trong </span>
+      <span class="hero-countdown__time" id="heroTimer">--:--:--</span>
+    </div>
+  </section>
+
+  <!-- ===== USP GRID with scroll animation ===== -->
+  <section slot="usp"><USPGrid title={page.usp_title} items={page.usp_items} /></section>
+
+  <!-- ===== TRUST METRICS ===== -->
+  <section slot="trust"><TrustMetrics title={page.metrics_title} metrics={page.metrics} /></section>
+
+  <!-- ===== CONTENT: Full conversion-optimized sections ===== -->
+  <section slot="content">
+    <div class="camp-content">
+
+      <!-- ① BEFORE/AFTER TRANSFORMATION -->
+      <div class="camp-transform reveal-on-scroll">
+        <h2 class="camp-section-title">Con bạn sẽ thay đổi như thế nào sau 6 tuần?</h2>
+        <div class="camp-transform__grid">
+          <div class="camp-transform__col camp-transform__col--before">
+            <div class="camp-transform__label">❌ Trước Trại Hè Lion Camp</div>
+            <ul>
+              <li>Nghiện điện thoại, lười vận động</li>
+              <li>Ngại giao tiếp, thiếu tự tin</li>
+              <li>Không nói được tiếng Anh</li>
+              <li>Ỷ lại ba mẹ, thiếu kỷ luật</li>
+              <li>Mùa hè lãng phí, không phát triển</li>
+            </ul>
+          </div>
+          <div class="camp-transform__arrow">→</div>
+          <div class="camp-transform__col camp-transform__col--after">
+            <div class="camp-transform__label">✅ Sau 6 tuần Trại Hè Lion Camp</div>
+            <ul>
+              <li>Chủ động tham gia, năng động</li>
+              <li>Tự tin giao tiếp, dạn dĩ trước đám đông</li>
+              <li>Nói tiếng Anh tự nhiên với giáo viên bản ngữ</li>
+              <li>Tự lập, kỷ luật, biết quản lý thời gian</li>
+              <li>Phát triển toàn diện kỹ năng lãnh đạo</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- ② COMPARISON TABLE: Trại Hè Lion Camp vs Ở nhà -->
+      <div class="camp-compare reveal-on-scroll">
+        <h2 class="camp-section-title">Trại Hè Lion Camp vs. Ở nhà mùa hè — Ba/Mẹ chọn gì cho con?</h2>
+        <div class="camp-compare__table">
+          <div class="camp-compare__header">
+            <div class="camp-compare__col-label"></div>
+            <div class="camp-compare__col-label camp-compare__col-label--bad">😔 Ở nhà</div>
+            <div class="camp-compare__col-label camp-compare__col-label--good">🦁 Trại Hè Lion Camp</div>
+          </div>
+          <div class="camp-compare__row">
+            <div class="camp-compare__criteria">Tiếng Anh</div>
+            <div class="camp-compare__cell camp-compare__cell--bad">Quên dần sau 3 tháng nghỉ</div>
+            <div class="camp-compare__cell camp-compare__cell--good">Tiến bộ rõ rệt với giáo viên bản ngữ hàng ngày</div>
+          </div>
+          <div class="camp-compare__row">
+            <div class="camp-compare__criteria">Thời gian màn hình</div>
+            <div class="camp-compare__cell camp-compare__cell--bad">3-5 giờ/ngày điện thoại/game</div>
+            <div class="camp-compare__cell camp-compare__cell--good">Hoạt động thể chất + sáng tạo cả ngày</div>
+          </div>
+          <div class="camp-compare__row">
+            <div class="camp-compare__criteria">Kỹ năng xã hội</div>
+            <div class="camp-compare__cell camp-compare__cell--bad">Ngại giao tiếp, thu mình</div>
+            <div class="camp-compare__cell camp-compare__cell--good">Tự tin, dẫn dắt, làm việc nhóm</div>
+          </div>
+          <div class="camp-compare__row">
+            <div class="camp-compare__criteria">Kỷ luật bản thân</div>
+            <div class="camp-compare__cell camp-compare__cell--bad">Thức khuya, ngủ nướng, lười biếng</div>
+            <div class="camp-compare__cell camp-compare__cell--good">Nề nếp, tự giác, quản lý thời gian</div>
+          </div>
+          <div class="camp-compare__row">
+            <div class="camp-compare__criteria">Trải nghiệm</div>
+            <div class="camp-compare__cell camp-compare__cell--bad">Buồn chán, lặp lại mỗi ngày</div>
+            <div class="camp-compare__cell camp-compare__cell--good">Du lịch trải nghiệm mỗi tuần + dự án thực tế</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ③ MID-PAGE CTA RIBBON -->
+      <div class="camp-mid-cta reveal-on-scroll">
+        <div class="camp-mid-cta__inner">
+          <div class="camp-mid-cta__text">
+            <strong>Ba/Mẹ muốn biết con phù hợp với lộ trình nào?</strong>
+            <span>Chỉ 3 phút đánh giá — nhận báo cáo miễn phí</span>
+          </div>
+          <a href="#form-section" class="camp-mid-cta__btn">🎯 Làm bài đánh giá ngay</a>
+        </div>
+      </div>
+
+      <!-- ④ TESTIMONIAL -->
+      {page.content_title && <h2 class="camp-section-title reveal-on-scroll">{page.content_title}</h2>}
+      <div class="camp-testimonial reveal-on-scroll">
+        <div class="camp-testimonial__header">
+          <div class="camp-testimonial__avatar"><span class="camp-testimonial__avatar-icon">👤</span></div>
+          <div class="camp-testimonial__meta">
+            <div class="camp-testimonial__stars">★★★★★</div>
+            <div class="camp-testimonial__author">{page.testimonial_author}</div>
+          </div>
+        </div>
+        <div class="camp-testimonial__quote">"{page.testimonial_text}"</div>
+        <div class="camp-testimonial__verified">✓ Phụ huynh đã xác minh</div>
+      </div>
+
+      <!-- ⑤ VIDEO PLACEHOLDER -->
+      <div class="camp-video reveal-on-scroll">
+        <h2 class="camp-section-title">Xem hoạt động thực tế tại Trại Hè Lion Camp</h2>
+        <div class="camp-video__wrapper">
+          <div class="camp-video__placeholder">
+            <div class="camp-video__play">▶</div>
+            <div class="camp-video__text">Video trải nghiệm Trại Hè Lion Camp {page.location}</div>
+            <div class="camp-video__subtext">Nhấn để xem 2 phút hoạt động thực tế</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ⑥ INFO CARDS -->
+      <div class="camp-grid">
+        {page.info_cards.map((card) => (
+          <div class={`camp-card reveal-on-scroll ${card.title.includes('Early Bird') || card.title.includes('Ưu đãi') ? 'camp-card--highlight' : ''}`}>
+            <div class="camp-card__icon-wrap"><span class="camp-card__icon">{card.icon}</span></div>
+            {(card.title.includes('Early Bird') || card.title.includes('Ưu đãi')) && <span class="camp-card__badge">HOT</span>}
+            <h3>{card.title}</h3>
+            <p>{card.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- ⑦ LOCATION PERSONALIZATION -->
+      <div class="camp-location reveal-on-scroll">
+        <div class="camp-location__icon">📍</div>
+        <div class="camp-location__content">
+          <h3>Tại sao chọn cơ sở {page.location}?</h3>
+          <ul>
+            <li>Cơ sở vật chất hiện đại, an toàn cho con</li>
+            <li>Đội ngũ giáo viên bản ngữ thường trực</li>
+            <li>Thuận tiện đưa đón cho Ba/Mẹ khu vực {page.location}</li>
+            <li>Lớp nhỏ 15-18 học sinh, giáo viên theo sát từng em</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- ⑧ URGENCY -->
+      {page.urgency_text && (
+        <div class="camp-urgency reveal-on-scroll">
+          <div class="camp-urgency__icon">⚠️</div>
+          <div class="camp-urgency__text">
+            <p>{page.urgency_text}</p>
+            <div class="camp-urgency__countdown">Ưu đãi kết thúc trong: <strong id="urgencyTimer">--:--:--</strong></div>
+          </div>
+        </div>
+      )}
+
+      <!-- ⑨ SOCIAL PROOF -->
+      <div class="camp-social-proof reveal-on-scroll">
+        <div class="camp-social-proof__avatars">
+          <span>👩</span><span>👨</span><span>👩</span><span>👨</span><span>👩</span>
+        </div>
+        <span class="camp-social-proof__text">
+          <strong id="recentSignups">12</strong> phụ huynh đã đăng ký hôm nay tại {page.location}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== INTERACTIVE QUIZ FUNNEL ===== -->
+  <section slot="form">
+    {page.quiz_questions && page.quiz_questions.length > 0 ? (
+      <QuizFunnel
+        quizTitle={page.quiz_title}
+        quizSubtitle={page.quiz_subtitle}
+        questions={page.quiz_questions}
+        results={page.quiz_results}
+        quizIntroItems={page.quiz_intro_items}
+        formHeading={page.form_heading}
+        formDescription={page.form_description}
+        formSubmitText={page.form_submit_text}
+        funnelCode={page.funnel_code}
+        schoolLevel={page.school_level}
+        location={page.location}
+        camOnUrl={camOnUrl}
+      />
+    ) : (
+      <Fragment>
+        <div class="quiz-intro">
+          <h2 class="squeeze-form-section__heading">{page.form_heading}</h2>
+          <p class="squeeze-form-section__description">{page.form_description}</p>
+        </div>
+        <LeadFormTwoStepEmailFirst
+          formId="squeeze-form"
+          funnelCode={page.funnel_code}
+          schoolLevel={page.school_level}
+          submitText={page.form_submit_text}
+          successMessage={page.form_success_message}
+        />
+      </Fragment>
+    )}
+    <!-- Live signup counter -->
+    <div class="form-live-counter">
+      <span class="form-live-counter__dot"></span>
+      <span><strong id="liveCounter">3</strong> phụ huynh đang xem trang này</span>
+    </div>
+  </section>
+
+  <section slot="faq"><FAQSection title={page.faq_title} items={page.faq_items} /></section>
+</SqueezePageLayout>
+
+<!-- ===== FLOATING ZALO BUTTON ===== -->
+<a href={zaloUrl} target="_blank" rel="noopener noreferrer" class="floating-zalo" id="floatingZalo" aria-label="Chat Zalo">
+  <span class="floating-zalo__icon">💬</span>
+  <span class="floating-zalo__label">Zalo</span>
+  <span class="floating-zalo__badge" id="zaloBadge">1</span>
+</a>
+
+<!-- ===== EXIT-INTENT POPUP ===== -->
+<div class="exit-popup" id="exitPopup" hidden>
+  <div class="exit-popup__overlay" id="exitOverlay"></div>
+  <div class="exit-popup__card">
+    <button class="exit-popup__close" id="exitClose" aria-label="Đóng">✕</button>
+    <div class="exit-popup__icon">🎁</div>
+    <h3 class="exit-popup__title">Khoan đã, Ba/Mẹ ơi!</h3>
+    <p class="exit-popup__text">
+      Ba/Mẹ suýt bỏ lỡ <strong>Học bổng Early Bird đến 30%</strong> cho con tại Trại Hè Lion Camp {page.location}. Chỉ cần 3 phút làm bài đánh giá, Ba/Mẹ sẽ nhận ngay báo cáo kỹ năng + lộ trình hè phù hợp.
+    </p>
+    <a href="#form-section" class="exit-popup__cta exit-popup__cta--primary" id="exitCtaPrimary">
+      🎯 Làm bài đánh giá ngay (3 phút)
+    </a>
+    <a href={zaloUrl} target="_blank" rel="noopener noreferrer" class="exit-popup__cta exit-popup__cta--zalo">
+      💬 Tôi muốn hỏi qua Zalo trước
+    </a>
+  </div>
+</div>
+
+<!-- ===== SCRIPTS ===== -->
+<script is:inline define:vars={{ formIdSel: `#${formIdWithFunnel}`, camOnUrl }}>
+  (function () {
+    // === 1. Form → Thank-you redirect ===
+    var formEl = document.querySelector(formIdSel);
+    if (formEl) {
+      var obs = new MutationObserver(function () {
+        var success = formEl.querySelector('.form-step[data-step="success"]');
+        if (success && !success.hidden) {
+          var nameInput = formEl.querySelector('input[name="parent_name"]');
+          var n = nameInput ? nameInput.value : '';
+          setTimeout(function () {
+            window.location.href = camOnUrl + '?name=' + encodeURIComponent(n);
+          }, 1800);
+          obs.disconnect();
+        }
+      });
+      obs.observe(formEl, { attributes: true, subtree: true, attributeFilter: ['hidden'] });
+    }
+
+    // === 2. Evergreen countdown timer (resets per session, 4h window) ===
+    var COUNTDOWN_KEY = 'camp_countdown_end';
+    var stored = sessionStorage.getItem(COUNTDOWN_KEY);
+    var endTime = stored ? parseInt(stored, 10) : 0;
+    if (!endTime || endTime < Date.now()) {
+      endTime = Date.now() + 4 * 3600 * 1000; // 4 hours
+      sessionStorage.setItem(COUNTDOWN_KEY, endTime.toString());
+    }
+    function updateCountdown() {
+      var diff = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+      var h = Math.floor(diff / 3600);
+      var m = Math.floor((diff % 3600) / 60);
+      var s = diff % 60;
+      var str = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+      var els = document.querySelectorAll('#heroTimer, #urgencyTimer');
+      els.forEach(function (el) { el.textContent = str; });
+      if (diff <= 0) {
+        els.forEach(function (el) { el.textContent = 'Đã kết thúc — liên hệ ngay!'; });
+      }
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // === 3. Scroll reveal animations ===
+    var revealEls = document.querySelectorAll('.reveal-on-scroll');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('revealed');
+            io.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.15 });
+      revealEls.forEach(function (el) { io.observe(el); });
+    } else {
+      revealEls.forEach(function (el) { el.classList.add('revealed'); });
+    }
+
+    // === 4. Exit-intent popup ===
+    var popup = document.getElementById('exitPopup');
+    var overlay = document.getElementById('exitOverlay');
+    var closeBtn = document.getElementById('exitClose');
+    var ctaPrimary = document.getElementById('exitCtaPrimary');
+    var exitShown = false;
+    function showExitPopup() {
+      if (exitShown || !popup) return;
+      exitShown = true;
+      popup.hidden = false;
+      sessionStorage.setItem('camp_exit_shown', '1');
+      if (window.dataLayer) window.dataLayer.push({ event: 'exit_intent_shown' });
+    }
+    function hideExitPopup() {
+      if (popup) popup.hidden = true;
+    }
+    if (!sessionStorage.getItem('camp_exit_shown')) {
+      // Desktop: mouse leaves viewport top
+      document.addEventListener('mouseout', function (e) {
+        if (e.clientY < 5 && !exitShown) showExitPopup();
+      });
+      // Mobile: after 45s of engagement
+      setTimeout(function () {
+        if (!exitShown && window.innerWidth < 768) showExitPopup();
+      }, 45000);
+    }
+    if (overlay) overlay.addEventListener('click', hideExitPopup);
+    if (closeBtn) closeBtn.addEventListener('click', hideExitPopup);
+    if (ctaPrimary) ctaPrimary.addEventListener('click', hideExitPopup);
+
+    // === 5. Live counter (simulated social proof) ===
+    function randomBetween(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
+    var liveEl = document.getElementById('liveCounter');
+    var signupEl = document.getElementById('recentSignups');
+    if (liveEl) liveEl.textContent = randomBetween(2, 7).toString();
+    if (signupEl) signupEl.textContent = randomBetween(8, 23).toString();
+    setInterval(function () {
+      if (liveEl) liveEl.textContent = randomBetween(2, 7).toString();
+    }, 15000);
+
+    // === 6. Floating Zalo badge pulse ===
+    var badge = document.getElementById('zaloBadge');
+    setTimeout(function () {
+      if (badge) badge.classList.add('show');
+    }, 3000);
+
+    // === 7. Warm traffic dynamic headline (from UTM) ===
+    var params = new URLSearchParams(window.location.search);
+    var src = params.get('utm_source') || params.get('source') || '';
+    var childName = params.get('ten_be') || params.get('child') || '';
+    var hlEl = document.getElementById('heroHeadline');
+    var subEl = document.getElementById('heroSub');
+    if (hlEl && src) {
+      if (src === 'quiz' && childName) {
+        hlEl.textContent = 'Dựa trên kết quả đánh giá của bé ' + childName + ' — đây là lộ trình Trại Hè Lion Camp phù hợp nhất';
+      } else if (src === 'vsl') {
+        hlEl.textContent = 'Ba/Mẹ đã xem video — đăng ký tư vấn 1:1 miễn phí ngay';
+        if (subEl) subEl.textContent = 'Tư vấn viên sẽ gọi/Zalo trong 24h để trao đổi chi tiết chương trình phù hợp cho con.';
+      } else if (src === 'remarketing' || src === 'google') {
+        if (subEl) subEl.textContent = 'Ba/Mẹ đã quan tâm Trại Hè Lion Camp — đăng ký ngay để nhận học bổng Early Bird trước khi hết suất.';
+      }
+    }
+
+    // === 8. GTM scroll-to-form tracking ===
+    var formSection = document.getElementById('form-section');
+    if (formSection && 'IntersectionObserver' in window) {
+      var fio = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) {
+          if (window.dataLayer) window.dataLayer.push({ event: 'form_section_visible' });
+          fio.disconnect();
+        }
+      }, { threshold: 0.3 });
+      fio.observe(formSection);
+    }
+  })();
+</script>
+
+<style is:inline>
+  /* ===== HERO CTA BUTTONS ===== */
+  .hero-cta-group { display: flex; gap: .75rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+  .hero-cta {
+    display: inline-flex; align-items: center; gap: .5rem;
+    padding: .85rem 1.75rem; border-radius: 12px; font-weight: 700;
+    font-size: 1rem; text-decoration: none; transition: all .3s ease;
+    font-family: Montserrat, sans-serif; border: none; cursor: pointer;
+  }
+  .hero-cta--primary {
+    background: linear-gradient(135deg, #E8792B, #F59E0B); color: #fff;
+    box-shadow: 0 4px 20px rgba(232,121,43,.4);
+    animation: heroPulse 2.5s ease-in-out infinite;
+  }
+  .hero-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 6px 28px rgba(232,121,43,.55); }
+  .hero-cta--zalo {
+    background: rgba(255,255,255,.15); color: #fff;
+    border: 2px solid rgba(255,255,255,.5); backdrop-filter: blur(4px);
+  }
+  .hero-cta--zalo:hover { background: rgba(255,255,255,.25); border-color: #fff; }
+  .hero-cta__icon { font-size: 1.2rem; }
+  @keyframes heroPulse {
+    0%,100% { box-shadow: 0 4px 20px rgba(232,121,43,.4); }
+    50% { box-shadow: 0 4px 32px rgba(232,121,43,.65), 0 0 48px rgba(245,158,11,.2); }
+  }
+
+  /* ===== HERO COUNTDOWN ===== */
+  .hero-countdown {
+    display: inline-flex; align-items: center; gap: .6rem;
+    margin-top: 1.5rem; padding: .6rem 1.25rem;
+    background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    border-radius: 50px; font-size: .85rem; color: rgba(255,255,255,.9);
+    backdrop-filter: blur(4px);
+  }
+  .hero-countdown__pulse {
+    width: 8px; height: 8px; background: #F59E0B; border-radius: 50%;
+    animation: urgencyPulse 1.5s ease-in-out infinite;
+  }
+  .hero-countdown__time { font-weight: 800; font-family: Montserrat, sans-serif; color: #F59E0B; letter-spacing: .5px; }
+
+  /* ===== ENHANCED TESTIMONIAL ===== */
+  .camp-content { max-width: 900px; margin: 0 auto; }
+  .camp-content__title { font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center; }
+  .camp-testimonial {
+    background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%);
+    border: 2px solid #F59E0B; border-radius: 16px;
+    padding: 2rem 1.75rem; margin: 2rem 0;
+    position: relative; overflow: hidden;
+  }
+  .camp-testimonial::before {
+    content: '"'; position: absolute; top: -10px; left: 16px;
+    font-size: 6rem; color: rgba(232,121,43,.1);
+    font-family: Georgia, serif; line-height: 1;
+  }
+  .camp-testimonial__header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; position: relative; z-index: 1; }
+  .camp-testimonial__avatar {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: linear-gradient(135deg, #1a1a5e, #2a2a7e);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .camp-testimonial__avatar-icon { font-size: 1.5rem; filter: brightness(2); }
+  .camp-testimonial__meta { display: flex; flex-direction: column; gap: 2px; }
+  .camp-testimonial__stars { color: #F59E0B; font-size: 1.1rem; letter-spacing: 2px; }
+  .camp-testimonial__author { font-size: .9rem; font-weight: 600; color: #1F4E79; }
+  .camp-testimonial__quote { font-size: 1.05rem; line-height: 1.75; color: #1a1a1a; font-style: italic; position: relative; z-index: 1; }
+  .camp-testimonial__verified {
+    display: inline-flex; align-items: center; gap: .35rem;
+    margin-top: 1rem; font-size: .8rem; color: #16A34A; font-weight: 600;
+    background: rgba(22,163,106,.08); padding: .35rem .75rem; border-radius: 50px;
+  }
+
+  /* ===== INFO CARDS ===== */
+  .camp-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+  .camp-card {
+    background: #fff; border: 1px solid #e0e0e0; border-radius: 16px;
+    padding: 1.75rem 1.5rem; transition: all .3s ease; position: relative; overflow: hidden;
+  }
+  .camp-card:hover { border-color: #E8792B; box-shadow: 0 8px 24px rgba(232,121,43,.12); transform: translateY(-4px); }
+  .camp-card__icon-wrap {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: rgba(26,26,94,.06); display: flex; align-items: center;
+    justify-content: center; margin-bottom: 1rem;
+  }
+  .camp-card__icon { font-size: 1.5rem; }
+  .camp-card h3 { font-family: Montserrat, sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .65rem; color: #1F4E79; }
+  .camp-card p { font-size: .94rem; line-height: 1.65; color: #555; margin: 0; }
+
+  /* === Highlighted Early Bird card === */
+  .camp-card--highlight {
+    border: 2px solid #F59E0B !important;
+    background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
+    box-shadow: 0 4px 16px rgba(245,158,11,.15);
+  }
+  .camp-card--highlight:hover { box-shadow: 0 8px 28px rgba(245,158,11,.25); }
+  .camp-card__badge {
+    position: absolute; top: 12px; right: 12px;
+    background: linear-gradient(135deg, #E8792B, #F59E0B); color: #fff;
+    font-size: .7rem; font-weight: 800; padding: .25rem .65rem;
+    border-radius: 50px; letter-spacing: 1px; font-family: Montserrat, sans-serif;
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+  @keyframes badgePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+
+  /* ===== URGENCY BANNER ===== */
+  .camp-urgency {
+    display: flex; gap: 1rem; align-items: flex-start;
+    background: linear-gradient(135deg, #FFF7ED, #FFEDD5); border: 2px solid #F59E0B;
+    padding: 1.5rem; border-radius: 14px; margin-top: 2rem;
+  }
+  .camp-urgency__icon { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .camp-urgency__text p { margin: 0 0 .5rem; font-size: .95rem; line-height: 1.7; color: #1a1a1a; }
+  .camp-urgency__countdown {
+    font-size: .9rem; color: #B45309;
+    background: rgba(180,83,9,.08); padding: .4rem .85rem;
+    border-radius: 8px; display: inline-block;
+  }
+  .camp-urgency__countdown strong { font-family: Montserrat, sans-serif; letter-spacing: .5px; }
+
+  /* ===== SOCIAL PROOF BAR ===== */
+  .camp-social-proof {
+    display: flex; align-items: center; gap: .75rem; justify-content: center;
+    margin-top: 2rem; padding: .85rem 1.25rem;
+    background: rgba(26,26,94,.04); border-radius: 12px; border: 1px solid rgba(26,26,94,.08);
+  }
+  .camp-social-proof__avatars { display: flex; gap: 0; }
+  .camp-social-proof__avatars span {
+    width: 28px; height: 28px; border-radius: 50%; background: #e8e8f0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; margin-left: -6px; border: 2px solid #fff;
+  }
+  .camp-social-proof__avatars span:first-child { margin-left: 0; }
+  .camp-social-proof__text { font-size: .88rem; color: #555; }
+  .camp-social-proof__text strong { color: #1F4E79; }
+
+  /* ===== QUIZ FORM INTRO ===== */
+  .quiz-intro { margin-bottom: 1.5rem; }
+  .quiz-badge {
+    display: inline-flex; align-items: center; gap: .5rem;
+    background: linear-gradient(135deg, #1a1a5e, #2a2a7e); color: #fff;
+    padding: .5rem 1.25rem; border-radius: 50px; font-size: .85rem; font-weight: 600;
+    margin-bottom: 1rem;
+  }
+  .quiz-badge__icon { font-size: 1.1rem; }
+  .quiz-checklist { list-style: none; padding: 0; margin: 1.25rem auto 1.5rem; max-width: 440px; text-align: left; display: flex; flex-direction: column; gap: .6rem; }
+  .quiz-checklist li {
+    display: flex; align-items: center; gap: .65rem;
+    font-size: .95rem; color: #1F4E79; font-weight: 500;
+    padding: .7rem 1rem; background: rgba(212,168,67,.08);
+    border-radius: 10px; border-left: 3px solid #D4A843;
+    transition: all .2s ease;
+  }
+  .quiz-checklist li:hover { background: rgba(212,168,67,.14); transform: translateX(4px); }
+  .quiz-check { color: #16A34A; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }
+
+  /* ===== FORM LIVE COUNTER ===== */
+  .form-live-counter {
+    display: inline-flex; align-items: center; gap: .5rem;
+    margin-top: 1rem; font-size: .82rem; color: #666; padding: .4rem .85rem;
+    background: rgba(0,0,0,.03); border-radius: 50px;
+  }
+  .form-live-counter__dot {
+    width: 8px; height: 8px; background: #16A34A; border-radius: 50%;
+    animation: livePulse 2s ease-in-out infinite;
+  }
+  @keyframes livePulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+  /* ===== FLOATING ZALO BUTTON ===== */
+  .floating-zalo {
+    position: fixed; bottom: 100px; right: 20px; z-index: 998;
+    display: flex; align-items: center; gap: .5rem;
+    background: #0068FF; color: #fff; padding: .75rem 1.25rem;
+    border-radius: 50px; text-decoration: none; font-weight: 700; font-size: .9rem;
+    box-shadow: 0 4px 20px rgba(0,104,255,.35);
+    transition: all .3s ease; animation: zaloFloat 3s ease-in-out infinite;
+  }
+  .floating-zalo:hover { transform: scale(1.05); box-shadow: 0 6px 28px rgba(0,104,255,.5); }
+  .floating-zalo__icon { font-size: 1.3rem; }
+  .floating-zalo__badge {
+    position: absolute; top: -6px; right: -6px;
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #EF4444; color: #fff; font-size: .7rem; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: scale(0); transition: all .3s ease;
+  }
+  .floating-zalo__badge.show { opacity: 1; transform: scale(1); }
+  @keyframes zaloFloat {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  @media (max-width: 768px) {
+    .floating-zalo { bottom: 85px; right: 14px; padding: .6rem 1rem; font-size: .85rem; }
+  }
+
+  /* ===== EXIT-INTENT POPUP ===== */
+  .exit-popup__overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.6);
+    z-index: 10000; backdrop-filter: blur(4px);
+  }
+  .exit-popup__card {
+    position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    background: #fff; border-radius: 20px; padding: 2.5rem 2rem;
+    max-width: 440px; width: calc(100% - 32px); z-index: 10001;
+    text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,.25);
+    animation: popupSlide .4s ease;
+  }
+  @keyframes popupSlide { from { opacity: 0; transform: translate(-50%, -45%); } to { opacity: 1; transform: translate(-50%, -50%); } }
+  .exit-popup__close {
+    position: absolute; top: 12px; right: 16px;
+    background: none; border: none; font-size: 1.3rem; color: #999;
+    cursor: pointer; padding: 8px; line-height: 1;
+  }
+  .exit-popup__close:hover { color: #333; }
+  .exit-popup__icon { font-size: 3rem; margin-bottom: .75rem; }
+  .exit-popup__title { font-family: Montserrat, sans-serif; font-size: 1.4rem; font-weight: 800; color: #1F4E79; margin-bottom: .75rem; }
+  .exit-popup__text { font-size: .95rem; line-height: 1.65; color: #555; margin-bottom: 1.5rem; }
+  .exit-popup__text strong { color: #E8792B; }
+  .exit-popup__cta {
+    display: block; padding: .85rem 1.5rem; border-radius: 12px;
+    text-decoration: none; font-weight: 700; font-size: .95rem;
+    text-align: center; transition: all .2s; margin-bottom: .65rem;
+  }
+  .exit-popup__cta--primary { background: #E8792B; color: #fff; }
+  .exit-popup__cta--primary:hover { background: #D96A1F; }
+  .exit-popup__cta--zalo { background: #0068FF; color: #fff; }
+  .exit-popup__cta--zalo:hover { background: #0056D6; }
+
+  /* ===== SCROLL REVEAL ===== */
+  .reveal-on-scroll { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal-on-scroll.revealed { opacity: 1; transform: translateY(0); }
+
+  /* ===== RESPONSIVE ===== */
+  /* ===== SECTION TITLE ===== */
+  .camp-section-title { font-family: Montserrat, sans-serif; font-size: 1.6rem; font-weight: 800; color: #1F4E79; text-align: center; margin-bottom: 1.5rem; line-height: 1.35; }
+
+  /* ===== BEFORE/AFTER TRANSFORMATION ===== */
+  .camp-transform { margin-bottom: 2.5rem; }
+  .camp-transform__grid { display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: stretch; }
+  .camp-transform__col { padding: 1.5rem; border-radius: 16px; }
+  .camp-transform__col--before { background: #FEF2F2; border: 2px solid #FECACA; }
+  .camp-transform__col--after { background: #F0FDF4; border: 2px solid #BBF7D0; }
+  .camp-transform__label { font-family: Montserrat, sans-serif; font-weight: 700; font-size: .95rem; margin-bottom: 1rem; }
+  .camp-transform__col--before .camp-transform__label { color: #991B1B; }
+  .camp-transform__col--after .camp-transform__label { color: #166534; }
+  .camp-transform__col ul { list-style: none; padding: 0; margin: 0; }
+  .camp-transform__col li { padding: .45rem 0; font-size: .9rem; line-height: 1.5; color: #374151; border-bottom: 1px solid rgba(0,0,0,.05); }
+  .camp-transform__col li:last-child { border-bottom: none; }
+  .camp-transform__col--before li::before { content: '✗ '; color: #EF4444; font-weight: 700; }
+  .camp-transform__col--after li::before { content: '✓ '; color: #16A34A; font-weight: 700; }
+  .camp-transform__arrow { display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #D4A843; font-weight: 800; }
+
+  /* ===== COMPARISON TABLE ===== */
+  .camp-compare { margin-bottom: 2.5rem; }
+  .camp-compare__table { border-radius: 16px; overflow: hidden; border: 1px solid #E5E7EB; }
+  .camp-compare__header { display: grid; grid-template-columns: 140px 1fr 1fr; background: #F3F4F6; }
+  .camp-compare__col-label { padding: .75rem 1rem; font-family: Montserrat, sans-serif; font-weight: 700; font-size: .85rem; text-align: center; }
+  .camp-compare__col-label--bad { color: #991B1B; background: #FEF2F2; }
+  .camp-compare__col-label--good { color: #166534; background: #F0FDF4; }
+  .camp-compare__row { display: grid; grid-template-columns: 140px 1fr 1fr; border-top: 1px solid #E5E7EB; }
+  .camp-compare__row:hover { background: rgba(212,168,67,.04); }
+  .camp-compare__criteria { padding: .85rem 1rem; font-weight: 600; font-size: .85rem; color: #1F4E79; background: #F9FAFB; display: flex; align-items: center; }
+  .camp-compare__cell { padding: .85rem 1rem; font-size: .85rem; line-height: 1.5; color: #555; display: flex; align-items: center; }
+  .camp-compare__cell--bad { background: #FFFBFB; }
+  .camp-compare__cell--good { background: #F8FFF8; }
+
+  /* ===== MID-PAGE CTA RIBBON ===== */
+  .camp-mid-cta { margin: 2.5rem -1.5rem; padding: 0; }
+  .camp-mid-cta__inner {
+    background: linear-gradient(135deg, #1a1a5e, #2a2a7e); color: #fff;
+    padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    gap: 1.5rem; border-radius: 0;
+  }
+  .camp-mid-cta__text { display: flex; flex-direction: column; gap: .25rem; }
+  .camp-mid-cta__text strong { font-family: Montserrat, sans-serif; font-size: 1.1rem; }
+  .camp-mid-cta__text span { font-size: .9rem; opacity: .85; }
+  .camp-mid-cta__btn {
+    flex-shrink: 0; display: inline-flex; align-items: center; gap: .5rem;
+    background: linear-gradient(135deg, #E8792B, #F59E0B); color: #fff;
+    padding: .85rem 1.75rem; border-radius: 12px; font-weight: 700; font-size: .95rem;
+    text-decoration: none; font-family: Montserrat, sans-serif;
+    box-shadow: 0 4px 14px rgba(232,121,43,.35); transition: all .2s;
+    animation: heroPulse 2.5s ease-in-out infinite;
+  }
+  .camp-mid-cta__btn:hover { transform: translateY(-2px); }
+
+  /* ===== VIDEO PLACEHOLDER ===== */
+  .camp-video { margin: 2.5rem 0; }
+  .camp-video__wrapper { border-radius: 16px; overflow: hidden; }
+  .camp-video__placeholder {
+    background: linear-gradient(135deg, #1a1a5e 0%, #2a2a7e 100%);
+    padding: 3.5rem 2rem; text-align: center; cursor: pointer;
+    transition: all .3s; position: relative;
+  }
+  .camp-video__placeholder:hover { background: linear-gradient(135deg, #12123e 0%, #1a1a5e 100%); }
+  .camp-video__play {
+    width: 72px; height: 72px; border-radius: 50%;
+    background: rgba(255,255,255,.15); border: 3px solid rgba(255,255,255,.4);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem; color: #fff; margin: 0 auto 1rem;
+    transition: all .3s; backdrop-filter: blur(4px);
+  }
+  .camp-video__placeholder:hover .camp-video__play { background: rgba(232,121,43,.8); border-color: #E8792B; transform: scale(1.1); }
+  .camp-video__text { color: #fff; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: .35rem; }
+  .camp-video__subtext { color: rgba(255,255,255,.7); font-size: .85rem; }
+
+  /* ===== LOCATION PERSONALIZATION ===== */
+  .camp-location {
+    display: flex; gap: 1.25rem; align-items: flex-start;
+    background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border: 2px solid #93C5FD;
+    border-radius: 16px; padding: 1.75rem 1.5rem; margin: 2rem 0;
+  }
+  .camp-location__icon { font-size: 2rem; flex-shrink: 0; }
+  .camp-location__content h3 { font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 700; color: #1F4E79; margin-bottom: .75rem; }
+  .camp-location__content ul { list-style: none; padding: 0; margin: 0; }
+  .camp-location__content li { padding: .35rem 0 .35rem 1.5rem; position: relative; font-size: .9rem; color: #374151; line-height: 1.5; }
+  .camp-location__content li::before { content: '✓'; position: absolute; left: 0; color: #2563EB; font-weight: 700; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 768px) {
+    .camp-grid { grid-template-columns: 1fr; }
+    .hero-cta-group { flex-direction: column; align-items: center; }
+    .hero-cta { width: 100%; max-width: 320px; justify-content: center; }
+    .camp-testimonial { padding: 1.5rem 1.25rem; }
+    .camp-urgency { flex-direction: column; gap: .75rem; }
+    .camp-social-proof { flex-direction: column; gap: .5rem; }
+    .camp-transform__grid { grid-template-columns: 1fr; }
+    .camp-transform__arrow { transform: rotate(90deg); padding: .5rem 0; }
+    .camp-compare__header, .camp-compare__row { grid-template-columns: 1fr; }
+    .camp-compare__criteria { border-bottom: none; padding-bottom: .25rem; }
+    .camp-compare__col-label:first-child { display: none; }
+    .camp-compare__cell { padding: .6rem 1rem; }
+    .camp-compare__cell--bad::before { content: '😔 '; }
+    .camp-compare__cell--good::before { content: '🦁 '; }
+    .camp-mid-cta__inner { flex-direction: column; text-align: center; }
+    .camp-mid-cta__btn { width: 100%; justify-content: center; }
+    .camp-location { flex-direction: column; }
+    .camp-section-title { font-size: 1.3rem; }
+    .camp-video__placeholder { padding: 2.5rem 1.5rem; }
+  }
+</style>

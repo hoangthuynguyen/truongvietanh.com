@@ -1,0 +1,30 @@
+---
+import CtaForm from './CtaForm.astro';
+import { getFormById } from '../../lib/cms';
+import type { BlockHeroFunnel } from '../../types/cms';
+interface Props { data: BlockHeroFunnel; context: string; }
+const { data } = Astro.props;
+const form = data.form_ref ? await getFormById(data.form_ref) : null;
+const overlay = Math.max(0, Math.min(1, data.overlay_opacity ?? 0.85));
+const bgStyle = data.bg_image
+  ? `background-image:linear-gradient(160deg,rgba(26,25,60,${overlay}) 0%,rgba(15,23,42,${overlay}) 100%),url('${data.bg_image}');background-size:cover;background-position:center`
+  : '';
+---
+<section class="b-hero-funnel" style={bgStyle}>
+  <div class="b-hero-funnel-inner b-container">
+    <div class="b-hero-funnel-left">
+      {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+      <h1 class="b-h1">{data.title}</h1>
+      {data.subtitle && <p class="b-subtitle">{data.subtitle}</p>}
+      {data.urgency_text && <p class="b-urgency-inline">⚡ {data.urgency_text}</p>}
+      {data.bullets?.length > 0 && (
+        <ul class="b-bullets">
+          {data.bullets.map((b) => <li>{b}</li>)}
+        </ul>
+      )}
+    </div>
+    <div class="b-hero-funnel-right">
+      {data.form_ref && <CtaForm data={{ id: 'h', form_ref: data.form_ref, variant: 'card' }} context="landing" />}
+    </div>
+  </div>
+</section>

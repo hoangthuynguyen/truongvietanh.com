@@ -1,0 +1,18 @@
+---
+import type { BlockTrustBar } from '../../types/cms';
+interface Props { data: BlockTrustBar; context: string; }
+const { data } = Astro.props;
+---
+<section class={`b-trust-bar b-trust-${data.variant || 'gradient'}`}>
+  <div class="b-container b-trust-inner">
+    {data.items?.map((item) => (
+      <div class="b-trust-item">
+        {item.icon && <span class="b-trust-icon">{item.icon}</span>}
+        <div>
+          <strong class="b-trust-value">{item.value}</strong>
+          <span class="b-trust-label">{item.label}</span>
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

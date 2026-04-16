@@ -1,0 +1,32 @@
+---
+import { getAuthorById } from '../../lib/cms';
+import type { BlockAuthorBio } from '../../types/cms';
+interface Props { data: BlockAuthorBio; context: string; }
+const { data } = Astro.props;
+const author = await getAuthorById(data.author_ref);
+---
+{author && (
+  <section class="b-author-bio">
+    <div class="b-container b-author-inner">
+      {author.avatar && <img class="b-author-avatar" src={author.avatar} alt={author.name} width="80" height="80" />}
+      <div class="b-author-meta">
+        <p class="b-author-label">Biên soạn bởi</p>
+        <h3 class="b-author-name">{author.name}</h3>
+        {author.role && <p class="b-author-role">{author.role}</p>}
+        <p class="b-author-desc">{author.bio}</p>
+        {author.credentials && author.credentials.length > 0 && (
+          <ul class="b-author-creds">
+            {author.credentials.map((c) => <li>🎓 {c}</li>)}
+          </ul>
+        )}
+        {author.social_links && author.social_links.length > 0 && (
+          <div class="b-author-social">
+            {author.social_links.map((s) => (
+              <a href={s.url} target="_blank" rel="noopener">{s.platform}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+)}

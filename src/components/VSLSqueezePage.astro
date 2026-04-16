@@ -1,0 +1,400 @@
+---
+import LeadFormTwoStepEmailFirst from './LeadFormTwoStepEmailFirst.astro';
+
+export interface Props {
+  pageTitle: string;
+  pageDescription: string;
+  canonicalUrl: string;
+  schoolLevel: 'tieu-hoc' | 'thcs' | 'thpt';
+  funnelCode: string;
+  location: string;
+  headline: string;
+  microProof: string[];
+  subheadline: string;
+  hookParagraph: string;
+  hookBullets: string;
+  videoEmbedUrl?: string;
+  benefits: string[];
+  finalHookLine: string;
+  ctaPrimary: string;
+  ctaZalo: string;
+  zaloUrl: string;
+  slotsLeft: string;
+  thankYouUrl: string;
+  testimonialQuote?: string;
+  testimonialAuthor?: string;
+}
+
+const {
+  pageTitle, pageDescription, canonicalUrl, schoolLevel, funnelCode,
+  location, headline, microProof, subheadline, hookParagraph, hookBullets,
+  videoEmbedUrl = '', benefits, finalHookLine, ctaPrimary, ctaZalo,
+  zaloUrl, slotsLeft, thankYouUrl,
+  testimonialQuote = '',
+  testimonialAuthor = ''
+} = Astro.props;
+
+const levelBadge: Record<string, string> = {
+  'tieu-hoc': 'Tiểu học',
+  'thcs': 'THCS',
+  'thpt': 'THPT'
+};
+const shortLocation = location.replace(/^(Tiểu học|THCS|THPT)\s*/,'');
+const levelName = levelBadge[schoolLevel] || '';
+const programTitle = `Trại Hè Lion Camp 2026 — dành cho học sinh ${levelName} tại ${shortLocation}`;
+
+// Auto-split headline at natural breakpoints (... or — or :)
+function splitHeadline(text: string): string[] {
+  const parts = text.split(/(\.\.\.|…|—|:)/);
+  const result: string[] = [];
+  let current = '';
+  for (const p of parts) {
+    current += p;
+    if (/(\.\.\.|…|—|:)$/.test(current)) {
+      result.push(current.trim());
+      current = '';
+    }
+  }
+  if (current.trim()) result.push(current.trim());
+  return result.length > 1 ? result : [text];
+}
+const headlineLines = splitHeadline(headline);
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://truongvietanh.com/og-image.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese');</style>
+
+  <style is:inline>
+    /* Unified palette — Việt Anh navy + warm accent */
+    :root{
+      --navy:#1a1a5e;        /* match logo */
+      --navy-dk:#12123e;
+      --navy-light:#2a2a7e;
+      --gold:#D4A843;
+      --orange:#E8792B;
+      --white:#fff;
+      --cream:#FBF9F5;
+      --text:#1a1a2e;
+      --text-body:#2d2d42;
+      --sub:#4a4a5e;
+      --muted:#6b6b80;
+      --border:#E5E7EB;
+      --zalo:#0068FF;
+      --r:12px
+    }
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:var(--white);min-height:100vh;line-height:1.65;-webkit-font-smoothing:antialiased;font-size:16px}
+    h1,h2,h3{font-family:'Montserrat',sans-serif}
+
+    /* === TOP LOGO BAR (thin, top of page) === */
+    .top-bar{display:flex;align-items:center;justify-content:center;padding:10px 16px;background:var(--white);border-bottom:1px solid var(--border)}
+    .top-bar img{display:block;height:42px;width:auto}
+
+    /* === HERO — wider, more generous padding === */
+    .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px 28px;background:var(--white)}
+    .hero-inner{width:100%;max-width:920px;display:flex;flex-direction:column;align-items:center;gap:14px}
+
+    /* Program title — clear, full name */
+    .prog-title{display:inline-block;background:var(--navy);color:var(--white);font-size:.82rem;font-weight:700;padding:8px 18px;border-radius:28px;text-align:center;line-height:1.35;letter-spacing:.2px}
+
+    /* Headline — multi-line natural breaks */
+    .hl{font-size:1.55rem;font-weight:900;color:var(--navy);line-height:1.3;text-align:center;max-width:800px;margin:0}
+    .hl .line{display:block}
+    .hl .line:not(:last-child){margin-bottom:.2em}
+
+    /* Subheadline — larger, darker, higher contrast */
+    .shl{font-size:1.05rem;color:var(--text-body);text-align:center;max-width:760px;line-height:1.6;margin:0;font-weight:500}
+    .shl strong{color:var(--navy);font-weight:700}
+
+    /* Video — centered, prominent */
+    .vid-wrap{width:100%;max-width:720px;margin:8px 0}
+    .vid{border-radius:14px;overflow:hidden;background:#000;box-shadow:0 8px 32px rgba(26,26,94,.15);aspect-ratio:16/9;position:relative}
+    .vid iframe,.vid video{width:100%;height:100%;border:0;display:block}
+    .vid-ph{display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(135deg,var(--navy-dk) 0%,var(--navy) 100%);color:var(--white);flex-direction:column;gap:12px;cursor:pointer}
+    .vid-ph .play{width:68px;height:68px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(212,168,67,.5);animation:pp 2s ease infinite;transition:transform .2s}
+    .vid-ph:hover .play{transform:scale(1.1)}
+    .vid-ph .play svg{width:26px;height:26px;fill:var(--navy);margin-left:3px}
+    @keyframes pp{0%,100%{box-shadow:0 4px 24px rgba(212,168,67,.5)}50%{box-shadow:0 4px 40px rgba(212,168,67,.85)}}
+    .vid-ph span{font-size:.92rem;opacity:.9;font-weight:600}
+
+    /* Benefits pills below video — clearer, bigger */
+    .vid-benefits{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;max-width:760px}
+    .vid-benefit{display:inline-flex;align-items:center;gap:6px;background:rgba(26,26,94,.06);border:1px solid rgba(26,26,94,.15);border-radius:10px;padding:8px 14px;font-size:.88rem;color:var(--navy);font-weight:600}
+    .vid-benefit::before{content:'✓';color:var(--gold);font-weight:900;font-size:.82rem}
+
+    /* CTA group — bigger, clearer */
+    .hero-cta{display:flex;flex-direction:column;gap:10px;width:100%;max-width:520px;margin-top:4px}
+    .cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:18px 22px;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;text-align:center;font-family:'Montserrat',sans-serif;transition:all .2s;cursor:pointer;border:0;width:100%;line-height:1.35}
+    .cta-primary{background:linear-gradient(135deg,var(--gold) 0%,#c09530 100%);color:var(--navy-dk);box-shadow:0 6px 24px rgba(212,168,67,.4);position:relative;overflow:hidden}
+    .cta-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shine 3s ease infinite}
+    @keyframes shine{0%{left:-100%}100%{left:150%}}
+    .cta-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,168,67,.55)}
+    .cta-sub{text-align:center;font-size:.85rem;color:var(--sub);font-weight:500}
+
+    /* Urgency */
+    .urg{display:flex;align-items:center;justify-content:center;gap:8px;font-size:.92rem;font-weight:600;color:var(--sub);margin-top:2px}
+    .urg .cd{background:var(--navy);color:var(--white);padding:3px 10px;border-radius:6px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.88rem;letter-spacing:.3px}
+
+    /* === BELOW FOLD CONTENT === */
+    .content{max-width:920px;margin:0 auto;padding:32px 20px 90px;background:var(--cream)}
+
+    /* Proof pills */
+    .pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 22px}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:22px;padding:8px 14px;font-size:.88rem;color:var(--navy);font-weight:600}
+    .pill::before{content:'✓';color:var(--gold);font-weight:900;font-size:.8rem}
+
+    /* Pain + solution block (merged from hook + final hook) */
+    .pain-block{background:var(--white);border-radius:16px;padding:24px 26px;margin:0 0 22px;border-left:4px solid var(--gold);box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .pain-block .q{font-size:1.05rem;color:var(--navy);font-weight:700;margin-bottom:12px;line-height:1.5}
+    .pain-block .a{font-size:1rem;color:var(--text-body);line-height:1.7;margin:0}
+
+    /* Benefits full list */
+    .bens{background:var(--white);border-radius:16px;padding:24px 26px;margin:0 0 22px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .bens h3{color:var(--navy);font-size:1.1rem;font-weight:800;margin-bottom:14px;text-align:center;line-height:1.4}
+    .bens ul{list-style:none;padding:0}
+    .bens li{padding:10px 0 10px 32px;position:relative;font-size:1rem;font-weight:600;color:var(--text-body);border-bottom:1px solid #F3F4F6;line-height:1.55}
+    .bens li:last-child{border-bottom:0}
+    .bens li::before{content:'✓';position:absolute;left:0;top:10px;color:var(--gold);font-weight:900;font-size:1.05rem;background:rgba(212,168,67,.12);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+
+    /* Testimonial */
+    .testi{background:var(--white);border-radius:16px;padding:22px 26px;margin:0 0 22px;border:1px solid var(--border);position:relative;box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .testi::before{content:'"';position:absolute;top:8px;left:16px;font-size:2.8rem;color:var(--gold);opacity:.2;font-family:Georgia,serif;line-height:1}
+    .testi blockquote{font-size:.98rem;color:var(--text-body);font-style:italic;line-height:1.7;margin:0 0 10px;padding-left:10px;font-weight:500}
+    .testi cite{display:block;font-size:.88rem;font-weight:700;color:var(--navy);font-style:normal;padding-left:10px}
+    .testi .stars{color:var(--gold);font-size:.9rem;padding-left:10px;margin-top:4px;letter-spacing:2px}
+
+    /* Mid CTA — more prominent */
+    .mcta{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);border-radius:16px;overflow:hidden;margin:0 0 22px;color:var(--white);text-align:center;padding:26px 22px;box-shadow:0 6px 24px rgba(26,26,94,.2)}
+    .mcta h3{color:var(--white);font-size:1.15rem;margin-bottom:8px;line-height:1.4}
+    .mcta .urg-line{color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:16px}
+    .mcta .cd2{background:var(--gold);color:var(--navy-dk);padding:3px 10px;border-radius:6px;font-family:'Montserrat',sans-serif;font-weight:800}
+    .mcta .cta{max-width:420px;margin:0 auto}
+
+    /* Guarantee */
+    .guar{display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin:0 0 22px;box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .guar .ic{font-size:1.8rem;flex-shrink:0}
+    .guar p{font-size:.95rem;color:var(--text-body);line-height:1.6;margin:0}
+    .guar b{color:var(--navy)}
+
+    /* Form */
+    .form-sec{background:var(--white);border-radius:16px;padding:28px 24px;border:2px solid var(--navy);position:relative;box-shadow:0 6px 24px rgba(26,26,94,.12)}
+    .form-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold));border-radius:16px 16px 0 0}
+    .form-sec h2{color:var(--navy);text-align:center;font-size:1.25rem;margin-bottom:6px;line-height:1.4}
+    .form-sec .fsub{text-align:center;color:var(--sub);font-size:.95rem;margin-bottom:18px;font-weight:500;line-height:1.55}
+    .form-lock{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;color:var(--muted);margin-top:12px}
+    .form-lock svg{width:14px;height:14px;fill:var(--navy)}
+
+    /* Sticky bottom (mobile) */
+    .sticky-bot{position:fixed;bottom:0;left:0;right:0;z-index:998;background:var(--white);padding:10px 14px;box-shadow:0 -4px 16px rgba(0,0,0,.1);display:none;border-top:2px solid var(--gold)}
+    .sticky-bot .sb{display:block;padding:14px 12px;border-radius:12px;text-decoration:none;font-weight:800;font-size:.92rem;text-align:center;font-family:'Montserrat',sans-serif;color:var(--navy-dk);background:linear-gradient(135deg,var(--gold) 0%,#c09530 100%);width:100%;box-shadow:0 4px 14px rgba(212,168,67,.4)}
+
+    /* Social notif */
+    .snotif{position:fixed;bottom:80px;left:14px;z-index:997;background:var(--white);border-radius:12px;padding:10px 14px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:flex;align-items:center;gap:10px;max-width:290px;transform:translateX(-110%);transition:transform .35s ease;font-size:.82rem;border:1px solid var(--border)}
+    .snotif.show{transform:translateX(0)}
+    .snotif .sa{width:34px;height:34px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
+    .snotif b{color:var(--navy)}
+    .snotif .st{font-size:.72rem;color:var(--muted);display:block;margin-top:1px}
+
+    /* Footer */
+    .foot{text-align:center;font-size:.8rem;color:var(--muted);margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
+
+    /* === RESPONSIVE === */
+    @media(max-width:560px){
+      .top-bar{padding:8px 12px}
+      .top-bar img{height:36px}
+      .hero{padding:16px 14px 20px}
+      .prog-title{font-size:.72rem;padding:7px 14px}
+      .hl{font-size:1.25rem}
+      .shl{font-size:.95rem}
+      .vid-benefit{font-size:.82rem;padding:7px 12px}
+      .cta{font-size:.92rem;padding:16px 18px}
+      .content{padding:24px 14px 90px}
+      .pain-block, .bens, .testi, .mcta, .guar, .form-sec{padding:18px 18px}
+      .bens li, .pain-block .a, .testi blockquote{font-size:.94rem}
+      .sticky-bot{display:block}
+      .snotif{bottom:72px;max-width:260px}
+    }
+    @media(min-width:561px){
+      .hl{font-size:1.7rem}
+      .shl{font-size:1.05rem}
+    }
+    @media(min-width:800px){
+      .hl{font-size:1.95rem}
+      .vid-wrap{max-width:720px}
+    }
+  </style>
+
+  <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- ===== TOP LOGO BAR (compact, top of page) ===== -->
+<div class="top-bar">
+  <img src="/logo-vietanh.webp" alt="Trường TH - THCS - THPT Việt Anh" />
+</div>
+
+<!-- ===== HERO — Program title + Headline + Video + CTA ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <!-- Program title — full clarity -->
+    <span class="prog-title">{programTitle}</span>
+
+    <!-- Headline with natural line breaks -->
+    <h1 class="hl">
+      {headlineLines.map(line => <span class="line">{line}</span>)}
+    </h1>
+
+    <!-- Subheadline — larger, darker -->
+    <p class="shl" set:html={subheadline} />
+
+    <!-- Video — centered -->
+    <div class="vid-wrap">
+      <div class="vid">
+        {videoEmbedUrl ? (
+          <iframe src={videoEmbedUrl} title="VSL Trại Hè Lion Camp" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        ) : (
+          <div class="vid-ph">
+            <div class="play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span>Nhấn để xem Video 60 giây</span>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Benefits pills — 4 max, clear -->
+    <div class="vid-benefits">
+      {benefits.slice(0, 4).map(b => <span class="vid-benefit">{b}</span>)}
+    </div>
+
+    <!-- CTA — Zalo consultation clear -->
+    <div class="hero-cta">
+      <a href="#vsl-form" class="cta cta-primary">📞 Đăng ký tư vấn Zalo miễn phí — 24/7</a>
+    </div>
+    <p class="cta-sub">Tư vấn viên phản hồi trong 24 giờ · Hoàn toàn miễn phí · Không cam kết</p>
+
+    <!-- Urgency -->
+    <div class="urg">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd" id="cd">23:59:59</span></div>
+  </div>
+</section>
+
+<!-- ===== BELOW FOLD — Social proof + benefits + testimonial + form ===== -->
+<div class="content">
+
+  <!-- Proof pills (one-time) -->
+  <div class="pills">
+    {microProof.map(m => <span class="pill">{m}</span>)}
+  </div>
+
+  <!-- Pain + answer block -->
+  <div class="pain-block">
+    <p class="q">{hookParagraph}</p>
+    <p class="a">{hookBullets}</p>
+  </div>
+
+  <!-- Benefits full list (not duplicate of hero pills — full 5+ items) -->
+  <div class="bens">
+    <h3>Sau 6 tuần tại Trại Hè Lion Camp {shortLocation}, con sẽ:</h3>
+    <ul>{benefits.map(b => <li>{b}</li>)}</ul>
+  </div>
+
+  <!-- Testimonial -->
+  <div class="testi">
+    <blockquote>{testimonialQuote || 'Trước khi đi trại hè, bé nhà mình rất rụt rè, cả ngày ôm iPad. Chỉ sau 3 tuần đầu, cô giáo gửi video bé tự tin thuyết trình bằng tiếng Anh. Mình không tin vào mắt mình!'}</blockquote>
+    <cite>{testimonialAuthor || '— Phụ huynh bé tại ' + shortLocation}</cite>
+    <div class="stars">★★★★★</div>
+  </div>
+
+  <!-- Mid CTA — prominent, urgency -->
+  <div class="mcta">
+    <h3>Ba/Mẹ đã sẵn sàng cho con bứt phá mùa hè này?</h3>
+    <div class="urg-line">⏳ Còn {slotsLeft} suất · Hết trong <span class="cd2" id="cd2">23:59:59</span></div>
+    <a href="#vsl-form" class="cta cta-primary">📞 Đăng ký tư vấn Zalo miễn phí ngay</a>
+  </div>
+
+  <!-- Guarantee — short, clear -->
+  <div class="guar">
+    <div class="ic">🛡️</div>
+    <p><b>Tư vấn 1:1 miễn phí, không cam kết.</b> Ba/Mẹ chỉ quyết định sau khi trao đổi trực tiếp.</p>
+  </div>
+
+  <!-- Form — final conversion point -->
+  <div class="form-sec" id="vsl-form">
+    <h2>Đăng ký tư vấn 1:1 qua Zalo miễn phí</h2>
+    <p class="fsub">Tư vấn viên sẽ gọi hoặc nhắn Zalo trong vòng 24 giờ<br/>để trao đổi chi tiết lộ trình phù hợp cho bé.</p>
+    <LeadFormTwoStepEmailFirst formId={`vsl-${funnelCode}`} funnelCode={funnelCode} schoolLevel={schoolLevel} submitText="Đăng ký tư vấn Zalo miễn phí — 24/7" successMessage="Đang chuyển đến trang xác nhận..." />
+    <div class="form-lock">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2V7a5 5 0 00-5-5zm3 7V7a3 3 0 10-6 0v2h6z"/></svg>
+      Thông tin được bảo mật tuyệt đối
+    </div>
+  </div>
+
+  <p class="foot">© 2026 Trường Việt Anh — Hotline 0916 961 409</p>
+</div>
+
+<!-- Sticky bottom (mobile) -->
+<div class="sticky-bot" id="sBot">
+  <a href="#vsl-form" class="sb">📞 Đăng ký tư vấn Zalo miễn phí</a>
+</div>
+
+<!-- Social notif -->
+<div class="snotif" id="sn">
+  <div class="sa" id="snA">👩</div>
+  <div><b id="snN">Chị Nguyễn T.</b> <span id="snAc">vừa đăng ký tư vấn</span><span class="st" id="snT">2p trước</span></div>
+</div>
+
+<script is:inline define:vars={{ thankYouUrl, location: shortLocation }}>
+// Countdown
+(function(){
+  var k='vsl_'+window.location.pathname,d=localStorage.getItem(k);
+  if(!d){d=String(Date.now()+864e5);localStorage.setItem(k,d)}
+  function t(){
+    var df=parseInt(d)-Date.now();if(df<0)df=0;
+    var h=String(Math.floor(df/36e5)).padStart(2,'0'),m=String(Math.floor(df/6e4)%60).padStart(2,'0'),s=String(Math.floor(df/1e3)%60).padStart(2,'0'),v=h+':'+m+':'+s;
+    var a=document.getElementById('cd'),b=document.getElementById('cd2');
+    if(a)a.textContent=v;if(b)b.textContent=v;
+  }
+  t();setInterval(t,1000);
+})();
+
+// Sticky bottom
+(function(){var s=document.getElementById('sBot');if(!s)return;window.addEventListener('scroll',function(){s.style.display=window.scrollY>400?'block':'none'},{passive:true})})();
+
+// Social notif
+(function(){
+  var ns=['Chị Nguyễn T.','Anh Trần V.','Chị Lê H.','Anh Phạm D.','Chị Hoàng M.'],
+      ac=[' vừa đăng ký tư vấn',' vừa nhận báo cáo',' vừa đăng ký tại '+location,' vừa đăng ký'],
+      ts=['1p trước','2p trước','3p trước','5p trước'],
+      av=['👩','👨','👩‍🦰','👨‍🦱','👩‍💼'],
+      el=document.getElementById('sn');if(!el)return;
+  function r(a){return a[Math.floor(Math.random()*a.length)]}
+  function go(){
+    var n=document.getElementById('snN'),a=document.getElementById('snAc'),t=document.getElementById('snT'),v=document.getElementById('snA');
+    if(n)n.textContent=r(ns);if(a)a.textContent=r(ac);if(t)t.textContent=r(ts);if(v)v.textContent=r(av);
+    el.classList.add('show');setTimeout(function(){el.classList.remove('show')},4e3);
+  }
+  setTimeout(go,7e3);setInterval(go,2e4+Math.random()*1e4);
+})();
+
+// Redirect on submit
+document.addEventListener('DOMContentLoaded',function(){
+  var dl=window.dataLayer=window.dataLayer||[],op=dl.push.bind(dl);
+  dl.push=function(e){if(e&&e.event==='form_submit')setTimeout(function(){window.location.href=thankYouUrl},800);return op(e)};
+});
+</script>
+</body>
+</html>

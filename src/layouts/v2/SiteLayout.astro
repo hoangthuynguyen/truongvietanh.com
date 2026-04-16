@@ -1,0 +1,131 @@
+---
+/**
+ * SiteLayout — full-chrome layout for pillar pages, blog, listings, thank-you.
+ * Replaces BaseLayout.
+ *
+ * Built-in blocks injected automatically:
+ *  - Announcement bar (from CMS)
+ *  - Site header (nav + hotline + zalo)
+ *  - Site footer (3 campuses + links)
+ *  - Exit-intent popup
+ *  - Cookie consent
+ *  - Mobile sticky CTA
+ *  - Zalo float widget
+ *  - Dark mode toggle
+ *  - Back-to-top
+ *  - GTM + Web Vitals
+ */
+import '../../styles/global.css';
+import '../../styles/v2.css';
+import SiteHeader from '../../components/SiteHeader.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import { getSiteSettings, getActiveAnnouncement } from '../../lib/cms';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  noindex?: boolean;
+  ogImage?: string;
+  robots?: string;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  funnelCode?: string;
+  blockPopup?: boolean;        // true for /cam-on pages
+}
+
+const {
+  title, description, canonical, noindex = false,
+  ogImage, robots, structuredData, funnelCode, blockPopup = false,
+} = Astro.props;
+
+const settings = await getSiteSettings();
+const announcement = await getActiveAnnouncement();
+const schemaArray = Array.isArray(structuredData) ? structuredData : structuredData ? [structuredData] : [];
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  {canonical && <link rel="canonical" href={canonical} />}
+  {noindex && <meta name="robots" content="noindex, nofollow" />}
+  {!noindex && robots && <meta name="robots" content={robots} />}
+  {ogImage && <meta property="og:image" content={ogImage} />}
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  {/* GTM */}
+  {settings.gtm_id && (
+    <script is:inline set:html={`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${settings.gtm_id}');`} />
+  )}
+
+  {schemaArray.map((s) => (
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(s)} />
+  ))}
+
+  {funnelCode && <meta name="x-funnel-code" content={funnelCode} />}
+</head>
+<body data-layout="site" data-block-popup={blockPopup ? 'true' : 'false'}>
+  {announcement?.active && (
+    <div class="announcement-bar" data-announcement-id={announcement.id}>
+      <span>{announcement.text}</span>
+      {announcement.link && <a href={announcement.link}>Xem →</a>}
+      <button class="announcement-close" aria-label="Đóng">×</button>
+    </div>
+  )}
+
+  <SiteHeader currentPath={Astro.url.pathname} />
+
+  <main id="main-content">
+    <slot />
+  </main>
+
+  <SiteFooter />
+
+  {/* Mobile sticky CTA */}
+  <div class="mobile-sticky-cta">
+    <a href={`tel:${settings.hotline}`} class="msc-call">📞 Gọi ngay</a>
+    <a href="#cta-form" class="msc-form">Tư vấn miễn phí</a>
+  </div>
+
+  {/* Zalo float */}
+  {settings.zalo_url && (
+    <a href={settings.zalo_url} class="zalo-float" target="_blank" rel="noopener" aria-label="Chat Zalo">
+      <img src="/zalo-icon.svg" alt="" width="28" height="28" />
+    </a>
+  )}
+
+  {/* Exit-intent popup — skipped when blockPopup=true */}
+  {!blockPopup && (
+    <div id="exit-popup" class="exit-popup" hidden data-popup-seconds={settings.popup_seconds}>
+      <div class="exit-popup-content">
+        <button class="exit-popup-close" aria-label="Đóng">×</button>
+        <h3>Chờ đã! Đừng bỏ lỡ ưu đãi</h3>
+        <p>Để lại SĐT — tư vấn viên sẽ gọi bạn trong 15 phút.</p>
+        <form id="exit-form">
+          <input type="tel" placeholder="Số điện thoại" required pattern="[0-9]{10,11}" />
+          <button type="submit">Nhận ưu đãi ngay</button>
+        </form>
+      </div>
+    </div>
+  )}
+
+  {/* Cookie consent */}
+  <div id="cookie-consent" class="cookie-consent" hidden>
+    <span>Chúng tôi sử dụng cookie để cải thiện trải nghiệm của bạn.</span>
+    <button id="cookie-accept">Chấp nhận</button>
+    <button id="cookie-decline">Từ chối</button>
+  </div>
+
+  {/* Back-to-top + Dark mode */}
+  <button id="back-to-top" aria-label="Lên đầu trang" hidden>↑</button>
+  <button id="dark-toggle" aria-label="Đổi giao diện">🌙</button>
+
+  <script src="/scripts/dynamic-form.js" defer></script>
+  <script src="/scripts/site-interactions.js" defer></script>
+</body>
+</html>

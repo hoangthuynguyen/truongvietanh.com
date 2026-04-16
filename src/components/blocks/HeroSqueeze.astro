@@ -1,0 +1,25 @@
+---
+import CtaForm from './CtaForm.astro';
+import { getFormById } from '../../lib/cms';
+import type { BlockHeroSqueeze } from '../../types/cms';
+
+interface Props { data: BlockHeroSqueeze; context: string; }
+const { data } = Astro.props;
+
+const form = data.form_ref ? await getFormById(data.form_ref) : null;
+// Always render CtaForm — it has fallback if form not found
+---
+<section class={`b-hero-squeeze b-hero-bg-${data.bg_variant || 'navy'}`}>
+  <div class="b-container b-hero-squeeze-inner">
+    <div class="b-hero-squeeze-left">
+      {data.crest_icon && <img src={data.crest_icon} alt="" width="80" height="80" class="b-hero-crest" />}
+      {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+      <h1 class="b-h1">{data.title}</h1>
+      {data.subtitle && <p class="b-subtitle">{data.subtitle}</p>}
+      {data.urgency_text && <p class="b-urgency-inline">⚡ {data.urgency_text}</p>}
+    </div>
+    <div class="b-hero-squeeze-right">
+      {data.form_ref && <CtaForm data={{ id: 'hsq', form_ref: data.form_ref, variant: 'card' }} context="squeeze" />}
+    </div>
+  </div>
+</section>

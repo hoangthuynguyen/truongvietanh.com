@@ -1,0 +1,23 @@
+---
+import VSLThankYouPage from '../../components/VSLThankYouPage.astro';
+import { getVSLContent, ZALO_URL } from '../../lib/vsl-configs.ts';
+const c = getVSLContent('tieu-hoc', 'Bình Tân');
+---
+<VSLThankYouPage
+  pageTitle="Cảm Ơn – Trại Hè Tiểu Học Bình Tân VSL | Việt Anh"
+  pageDescription="Báo cáo kỹ năng bé đang được gửi. Giữ suất Lion Camp Tiểu học Bình Tân chỉ với 500k."
+  canonicalUrl="https://truongvietanh.com/trai-he-tieu-hoc-binh-tan-vsl/cam-on"
+  schoolLevel="tieu-hoc"
+  funnelCode="vsl-tieu-hoc-binh-tan"
+  level="tieu-hoc"
+  location="Bình Tân"
+  levelLabel={c.levelLabel}
+  zaloUrl={ZALO_URL}
+  slotsLeft="8"
+  messageHtml={c.tyMessage}
+  bonusIntro={c.bonusIntro}
+  bonusItems={c.bonusItems}
+  ctaPrimary={c.ctaPrimaryTY}
+  ctaZalo={c.ctaZaloTY}
+  signOff={c.signOff}
+/>

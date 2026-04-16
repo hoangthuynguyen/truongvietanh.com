@@ -1,0 +1,44 @@
+---
+import type { BlockRelatedArticles } from '../../types/cms';
+import { createDirectus, rest, readItems, staticToken } from '@directus/sdk';
+interface Props { data: BlockRelatedArticles; context: string; }
+const { data } = Astro.props;
+
+// Query related articles directly (not in cms.ts yet — inline for now)
+const DIRECTUS_URL = import.meta.env.DIRECTUS_URL || 'https://cms.truongvietanh.com';
+const DIRECTUS_TOKEN = import.meta.env.DIRECTUS_READ_TOKEN || '';
+type Schema = { articles: any[]; [key: string]: any };
+const client = createDirectus<Schema>(DIRECTUS_URL).with(rest()).with(staticToken(DIRECTUS_TOKEN));
+
+let items: any[] = [];
+if (DIRECTUS_TOKEN) {
+  try {
+    const filter: any = { status: { _eq: 'published' } };
+    if (data.category) filter.category = { _eq: data.category };
+    if (data.tags?.length) filter.tags = { _contains: data.tags };
+    items = await client.request(readItems('articles' as never, {
+      filter, limit: data.limit || 4, sort: ['-publish_date'] as any,
+      fields: ['id', 'slug', 'title', 'subtitle', 'cover_image', 'publish_date', 'read_time_minutes'] as any,
+    } as any) as any) as any[];
+  } catch { items = []; }
+}
+---
+{items.length > 0 && (
+  <section class="b-related-articles">
+    <div class="b-container">
+      <h2 class="b-title">{data.title || 'Bài viết liên quan'}</h2>
+      <div class="b-related-grid">
+        {items.map((a) => (
+          <a href={`/tin-tuc/${a.slug}`} class="b-related-card">
+            {a.cover_image && <img src={a.cover_image} alt={a.title} loading="lazy" />}
+            <div class="b-related-body">
+              <h3>{a.title}</h3>
+              {a.subtitle && <p>{a.subtitle}</p>}
+              {a.read_time_minutes && <span class="b-read-time">⏱ {a.read_time_minutes} phút</span>}
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}

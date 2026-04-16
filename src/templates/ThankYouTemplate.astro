@@ -1,0 +1,45 @@
+---
+import SiteLayout from '../layouts/v2/SiteLayout.astro';
+import BlocksRenderer from '../components/blocks/BlocksRenderer.astro';
+import type { Page } from '../types/cms';
+
+interface Props { page: Page; }
+const { page } = Astro.props;
+
+// Pull name from query string (set by form redirect) for personalization
+const url = new URL(Astro.request.url);
+const name = url.searchParams.get('name') || '';
+const funnelFromQuery = url.searchParams.get('funnel') || page.funnel_ref || '';
+
+// Thank-you pages ALWAYS block the exit popup (user already converted)
+---
+<SiteLayout
+  title={page.title}
+  description={page.meta_description}
+  canonical={page.canonical_url}
+  noindex={true}
+  ogImage={page.og_image}
+  funnelCode={funnelFromQuery}
+  blockPopup={true}
+>
+  <article class="thankyou-page" data-slug={page.slug} data-funnel={funnelFromQuery}>
+    {name && (
+      <div class="thankyou-greeting" data-name={name}>
+        <p>Cảm ơn <strong>{name}</strong>!</p>
+      </div>
+    )}
+    <BlocksRenderer blocks={page.blocks} context="thankyou" />
+  </article>
+
+  {/* Fire dataLayer conversion event on mount */}
+  <script is:inline define:vars={{ funnel: funnelFromQuery, name }}>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      event: 'conversion',
+      funnel_code: funnel,
+      has_name: !!name,
+    });
+    // Block popup reappearing if user goes back
+    localStorage.setItem('lead_submitted', '1');
+  </script>
+</SiteLayout>

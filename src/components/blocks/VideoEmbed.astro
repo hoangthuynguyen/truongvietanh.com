@@ -1,0 +1,35 @@
+---
+import type { BlockVideoEmbed } from '../../types/cms';
+interface Props { data: BlockVideoEmbed; context: string; }
+const { data } = Astro.props;
+const aspect = (data.aspect_ratio || '16-9').replace('-', '/');
+---
+<section class="b-video-embed">
+  <div class="b-container">
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <div class="b-video-wrapper" style={`aspect-ratio:${aspect}`}>
+      {data.provider === 'youtube' && (
+        <iframe
+          src={`https://www.youtube-nocookie.com/embed/${data.video_id}?rel=0`}
+          title={data.title || 'Video'}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      )}
+      {data.provider === 'vimeo' && (
+        <iframe
+          src={`https://player.vimeo.com/video/${data.video_id}`}
+          title={data.title || 'Video'}
+          loading="lazy"
+          allow="autoplay; fullscreen; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      )}
+      {data.provider === 'mp4' && (
+        <video controls preload="metadata" src={data.video_id}></video>
+      )}
+    </div>
+    {data.caption && <p class="b-video-caption">{data.caption}</p>}
+  </div>
+</section>

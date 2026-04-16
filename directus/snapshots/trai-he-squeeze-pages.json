@@ -1,0 +1,82 @@
+{
+  "version": 1,
+  "directus": "11.0.0",
+  "vendor": "postgres",
+  "collections": [
+    {
+      "collection": "trai_he_squeeze_pages",
+      "meta": {
+        "icon": "beach_access",
+        "note": "Summer camp squeeze landing pages (Trại hè). One record per camp+location. Drives the dynamic Astro route /[trai_he_slug] and /[trai_he_slug]/cam-on.",
+        "display_template": "{{page_title}}",
+        "sort_field": "sort",
+        "accountability": "all",
+        "archive_field": "status",
+        "archive_value": "archived",
+        "unarchive_value": "draft",
+        "singleton": false
+      },
+      "schema": { "name": "trai_he_squeeze_pages" }
+    }
+  ],
+  "fields": [
+    { "collection": "trai_he_squeeze_pages", "field": "id", "type": "uuid", "meta": { "hidden": true, "readonly": true, "interface": "input", "special": ["uuid"] }, "schema": { "is_primary_key": true, "has_auto_increment": false } },
+    { "collection": "trai_he_squeeze_pages", "field": "status", "type": "string", "meta": { "width": "half", "interface": "select-dropdown", "options": { "choices": [{ "text": "Published", "value": "published" }, { "text": "Draft", "value": "draft" }, { "text": "Archived", "value": "archived" }] }, "display": "labels" }, "schema": { "default_value": "draft" } },
+    { "collection": "trai_he_squeeze_pages", "field": "sort", "type": "integer", "meta": { "hidden": true, "interface": "input" } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "slug", "type": "string", "meta": { "width": "half", "interface": "input", "note": "URL slug, e.g. trai-he-tieu-hoc-go-vap" }, "schema": { "is_unique": true } },
+    { "collection": "trai_he_squeeze_pages", "field": "school_level", "type": "string", "meta": { "width": "half", "interface": "select-dropdown", "options": { "choices": [{ "text": "Tiểu học", "value": "tieu-hoc" }, { "text": "THCS", "value": "thcs" }, { "text": "THPT", "value": "thpt" }] } } },
+    { "collection": "trai_he_squeeze_pages", "field": "location", "type": "string", "meta": { "width": "half", "interface": "input", "note": "Human name, e.g. Gò Vấp, Bình Tân" } },
+    { "collection": "trai_he_squeeze_pages", "field": "funnel_code", "type": "string", "meta": { "width": "half", "interface": "input", "note": "Tracking code passed to lead form" } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "seo_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "SEO & Meta" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "page_title", "type": "string", "meta": { "interface": "input", "note": "SEO title tag" } },
+    { "collection": "trai_he_squeeze_pages", "field": "page_description", "type": "text", "meta": { "interface": "input-multiline", "note": "SEO meta description" } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "hero_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Hero" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "hero_badge", "type": "string", "meta": { "interface": "input", "note": "Small pill badge above H1 (optional)" } },
+    { "collection": "trai_he_squeeze_pages", "field": "hero_headline", "type": "text", "meta": { "interface": "input-multiline", "note": "H1 headline" } },
+    { "collection": "trai_he_squeeze_pages", "field": "hero_subheading", "type": "text", "meta": { "interface": "input-multiline", "note": "Paragraph under H1" } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "usp_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "USP Grid" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "usp_title", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "usp_items", "type": "json", "meta": { "interface": "list", "options": { "fields": [{ "field": "icon", "name": "Icon", "type": "string", "meta": { "interface": "input", "width": "half" } }, { "field": "text", "name": "Text", "type": "string", "meta": { "interface": "input", "width": "full" } }] }, "special": ["json"] } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "metrics_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Trust Metrics" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "metrics_title", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "metrics", "type": "json", "meta": { "interface": "list", "options": { "fields": [{ "field": "number", "name": "Number", "type": "string", "meta": { "interface": "input", "width": "half" } }, { "field": "label", "name": "Label", "type": "string", "meta": { "interface": "input", "width": "half" } }] }, "special": ["json"] } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "content_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Content / Testimonial / Info Cards" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "content_title", "type": "string", "meta": { "interface": "input", "note": "Section heading above testimonial" } },
+    { "collection": "trai_he_squeeze_pages", "field": "testimonial_text", "type": "text", "meta": { "interface": "input-multiline" } },
+    { "collection": "trai_he_squeeze_pages", "field": "testimonial_author", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "info_cards", "type": "json", "meta": { "interface": "list", "options": { "fields": [{ "field": "icon", "name": "Icon", "type": "string", "meta": { "interface": "input", "width": "half" } }, { "field": "title", "name": "Title", "type": "string", "meta": { "interface": "input", "width": "half" } }, { "field": "body", "name": "Body", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } }] }, "special": ["json"] } },
+    { "collection": "trai_he_squeeze_pages", "field": "urgency_text", "type": "text", "meta": { "interface": "input-multiline", "note": "Urgency callout below info cards" } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "form_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Form" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "form_heading", "type": "string", "meta": { "interface": "input", "note": "H2 above the form" } },
+    { "collection": "trai_he_squeeze_pages", "field": "form_description", "type": "text", "meta": { "interface": "input-multiline" } },
+    { "collection": "trai_he_squeeze_pages", "field": "quiz_intro_items", "type": "json", "meta": { "interface": "tags", "note": "Checklist items shown above the form", "special": ["json"] } },
+    { "collection": "trai_he_squeeze_pages", "field": "form_submit_text", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "form_success_message", "type": "string", "meta": { "interface": "input" } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "faq_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "FAQ" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "faq_title", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "faq_items", "type": "json", "meta": { "interface": "list", "options": { "fields": [{ "field": "question", "name": "Question", "type": "string", "meta": { "interface": "input", "width": "full" } }, { "field": "answer", "name": "Answer", "type": "text", "meta": { "interface": "input-multiline", "width": "full" } }] }, "special": ["json"] } },
+
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_divider", "type": "alias", "meta": { "interface": "presentation-divider", "special": ["alias", "no-data"], "options": { "title": "Thank-You Page (/cam-on)" } } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_title", "type": "string", "meta": { "interface": "input", "note": "Browser tab title for /cam-on" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_description", "type": "text", "meta": { "interface": "input-multiline" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_icon", "type": "string", "meta": { "interface": "input", "note": "Emoji shown in the round icon circle, e.g. 🎉 ⚠️ 🎯" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_headline", "type": "text", "meta": { "interface": "input-multiline", "note": "Big H1 on cam-on. Use {name} as placeholder for parent-submitted name." } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_intro", "type": "text", "meta": { "interface": "input-rich-text-html", "note": "HTML allowed — e.g. <strong>...</strong>" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_report_title", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_report_items", "type": "json", "meta": { "interface": "tags", "special": ["json"] } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_bonus_title", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_bonus_items", "type": "json", "meta": { "interface": "tags", "special": ["json"] } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_show_two_choices", "type": "boolean", "meta": { "interface": "boolean", "note": "Show \"Ba/Mẹ có 2 lựa chọn\" block (recommended for THCS/THPT)" }, "schema": { "default_value": false } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_two_choices_title", "type": "string", "meta": { "interface": "input" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_waiting_text", "type": "text", "meta": { "interface": "input-multiline", "note": "Text inside the ❌ Chờ đợi card" } },
+    { "collection": "trai_he_squeeze_pages", "field": "thank_you_reserve_text", "type": "text", "meta": { "interface": "input-multiline", "note": "Text inside the ✅ Giữ chỗ card" } }
+  ]
+}

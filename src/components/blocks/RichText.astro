@@ -1,0 +1,10 @@
+---
+import type { BlockRichText } from '../../types/cms';
+interface Props { data: BlockRichText; context: string; }
+const { data } = Astro.props;
+---
+<section class="b-rich-text b-container">
+  {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+  {data.title && <h2 class="b-title">{data.title}</h2>}
+  <div class="b-prose" set:html={data.content} />
+</section>

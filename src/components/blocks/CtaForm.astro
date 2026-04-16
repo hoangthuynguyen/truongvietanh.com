@@ -1,0 +1,37 @@
+---
+import DynamicForm from '../DynamicForm.astro';
+import { getFormById } from '../../lib/cms';
+import type { BlockCtaForm } from '../../types/cms';
+
+interface Props { data: BlockCtaForm; context: string; }
+const { data, context } = Astro.props;
+
+const form = await getFormById(data.form_ref);
+// Graceful fallback when CMS not available (e.g., before Directus seed)
+const FALLBACK_FORM = {
+  id: data.form_ref, name: 'Đăng ký tư vấn',
+  variant: 'two_step_email_first' as const,
+  funnel_code: 'fallback',
+  fields: [
+    { name: 'email', type: 'email' as const, label: 'Email', placeholder: 'email@example.com', required: true, step: 1 as const, validate: 'email' as const },
+    { name: 'full_name', type: 'text' as const, label: 'Họ tên', required: true, step: 2 as const },
+    { name: 'phone', type: 'tel' as const, label: 'Số điện thoại', required: true, step: 2 as const, validate: 'vn_phone' as const },
+  ],
+  submit_label: 'Đăng ký ngay',
+  success_mode: 'inline_message' as const,
+  success_message: 'Cảm ơn! Chúng tôi sẽ liên hệ sớm.',
+  lead_score_weight: 1.0,
+  notifications: { email: true, zalo: false },
+  gdpr_consent: false,
+  double_optin: false,
+  anti_spam: { honeypot: true, turnstile: false },
+};
+const renderForm = form || FALLBACK_FORM;
+---
+<section class={`b-cta-form b-cta-form--${data.variant} b-cta-form--${data.bg_style || 'light'} b-cta-form--ctx-${context}`}>
+  <div class="b-cta-form-inner">
+    {data.heading && <h2 class="b-cta-form-heading">{data.heading}</h2>}
+    {data.subheading && <p class="b-cta-form-subheading">{data.subheading}</p>}
+    <DynamicForm form={renderForm} />
+  </div>
+</section>

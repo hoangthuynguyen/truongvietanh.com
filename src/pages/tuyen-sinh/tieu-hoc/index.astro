@@ -1,153 +1,270 @@
 ---
-import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
-import USPGrid from '../../../components/USPGrid.astro';
-import TrustMetrics from '../../../components/TrustMetrics.astro';
-import FAQSection from '../../../components/FAQSection.astro';
-
-const pageTitle = 'Tuyển Sinh Tiểu Học - Trường Liên Cấp Việt Anh';
-const pageDescription = 'Nền tảng 5 năm quyết định cả tương lai con em. Chương trình Tiểu Học song ngữ chuẩn quốc tế với giáo viên nước ngoài, Cambridge pathway, 20+ CLB ngoại khóa từ lớp 1.';
-const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc';
-
-const uspItems = [
-  { icon: '🎯', text: 'Song ngữ Anh-Việt chuẩn Cambridge từ lớp 1 — Không phải dạy lại lúc lớn' },
-  { icon: '👨‍🏫', text: 'Giáo viên nước ngoài bản ngữ dạy Tiếng Anh chuyên sâu từ buổi đầu tiên' },
-  { icon: '🏫', text: 'Lớp nhỏ 25 học sinh — Mỗi con được chú ý cá nhân hóa' },
-  { icon: '🔬', text: 'STEM từ lớp 1: Robotics, Coding, Khoa học thực nghiệm (không chỉ lý thuyết)' },
-  { icon: '🌟', text: '20+ CLB ngoại khóa: Thể thao, Âm nhạc, Robotics, Vẽ, Leadership' },
-  { icon: '✅', text: 'Lộ trình rõ ràng lên THCS + THPT: Không lo "ngỏ ngơ" cơ sở nào' }
-];
-
-const metrics = [
-  { number: '15+', label: 'Năm hành trình giáo dục đã chứng minh' },
-  { number: '500+', label: 'Cáu bé/gái đã vượt qua giai đoạn quan trọng này' },
-  { number: '98%', label: 'Phụ huynh hài lòng & tái nhập học' },
-  { number: '3', label: 'Cơ sở tiêu chuẩn tại TPHCM' }
-];
-
-const faqItems = [
-  {
-    question: 'Tại sao nên chọn song ngữ từ lớp 1 chứ không học Tiếng Anh lúc lớn?',
-    answer: 'Lớp 1-5 là giai đoạn vàng cho ngôn ngữ. Bé học Tiếng Anh như học Tiếng Việt — tự nhiên, không rụt rè. Nếu chờ lớn (THCS/THPT), con sẽ mất mấy năm để "bắt kịp", sợ phát âm, sợ nói. Tại Việt Anh, con chơi với bạn ngoại hàng ngày, nên sợ cái gì?'
-  },
-  {
-    question: 'Con tôi chỉ nói Tiếng Việt ở nhà, có sợ học Tiếng Anh từ lớp 1 không?',
-    answer: 'Không. Giáo viên nước ngoài và cô Việt tại lớp sẽ hướng dẫn từng bước. Tuần đầu, bé chỉ nghe + nhìn hình ảnh. Tuần thứ hai, bé bắt đầu nói một vài từ đơn giản. Trong 1-2 tháng, bé tự tin "lê" câu đơn. Rất tự nhiên, không áp lực. Ba/Mẹ sẽ kinh ngạc với tốc độ học của con.'
-  },
-  {
-    question: 'Học phí Tiểu Học bao nhiêu? Có khó chi trả không?',
-    answer: 'Học phí khác nhau tùy cơ sở, từ 8-12 triệu/tháng. Vâng, cao hơn trường công — nhưng bạn đang đầu tư vào 5 năm vàng. Lớp 1-5 quyết định liệu con có tự tin nói Tiếng Anh, thích học, hay sợ môn ngoại ngữ suốt đời. Nhiều phụ huynh nói: "Nếu biết kết quả, tôi sẵn lòng trả gấp đôi".'
-  },
-  {
-    question: 'Con tôi hay "lười học", có tích cực hóa được không?',
-    answer: 'Thường đó là vì chương trình nhàm chán. Tại Việt Anh, bé học bằng Dự Án (Project), Trò chơi, Khám phá (không ngồi yên dưỡng lông). Tuần này: Bé làm Robot bằng LEGO + giải thích bằng Tiếng Anh. Tuần sau: Bé chỉ đạo một số bạn làm Kịch nước. Khi bé tự khám phá, bé sẽ thích học.'
-  },
-  {
-    question: 'Có bán trú không? An toàn không?',
-    answer: 'Có chế độ bán trú 7h30-17h00. Ăn trưa + bữa phụ chiều dưỡng chất cân bằng. Giám sát mặt 1-1 lúc ăn & cơ bản buổi chiều. Camera giám sát toàn trường, nhân viên bảo vệ 24/24. Phụ huynh có app IMBA để xem ảnh/video con từ nhà.'
-  },
-  {
-    question: 'Tôi muốn con lên THPT Việt Anh ngay từ Tiểu Học — được không?',
-    answer: 'Được! Học sinh Tiểu Học Việt Anh được ưu tiên chuyển cấp. Nếu hoàn thành Tiểu Học với GPA 7.5+, không cần thi đầu vào THCS — tự động lên. Phụ huynh quên đi nỗi lo "vào được trường nào rồi".'
-  }
-];
 ---
 
-<SqueezePageLayout
-  title={pageTitle}
-  description={pageDescription}
-  keywords="tiểu học, tuyển sinh tiểu học, song ngữ, trường Việt Anh, giáo dục quốc tế, Cambridge"
+<SalesPageLayout
+  title="Tiểu Học Song Ngữ Việt Anh — Cambridge · STEM · Lãnh Đạo"
+  description="Tiểu học Việt Anh: Cambridge chính thức, STEM từ lớp 3, GV bản ngữ mỗi ngày. Học phí 7-10 triệu/tháng. Đặt lịch tham quan miễn phí."
+  canonical="https://truongvietanh.com/tuyen-sinh/tieu-hoc"
+  ogImage="https://media.truongvietanh.com/images/thuyet-trinh-04.webp"
+  heroImage="https://media.truongvietanh.com/images/thuyet-trinh-04.webp"
+  programCode="tieu-hoc"
   schoolLevel="tieu-hoc"
-  funnelCode="tuyen-sinh-tieu-hoc"
-  canonicalUrl={canonicalUrl}
 >
-  <div slot="hero">
-    <h1 class="hero-h1">
-      Nền tảng 5 năm quyết định cả tương lai — Ba/Mẹ đã chọn đúng trường cho con?
+
+  <!-- HERO -->
+  <Fragment slot="hero">
+    <div class="sp-hero__badge">TUYỂN SINH TIỂU HỌC 2026–2027</div>
+    <h1 style="font-size:2.5rem;font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3)">
+      Tiểu Học Việt Anh — Nơi Con Học Cambridge, Nói Tiếng Anh Như Bản Xứ, Và Yêu Thích Đến Trường
     </h1>
-    <p class="hero-subtitle">
-      Chương trình Tiểu Học song ngữ Anh-Việt chuẩn quốc tế — Giúp con tự tin từ lớp 1
+    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
+      Chương trình Cambridge chính thức · STEM từ lớp 3 · Giáo viên bản ngữ mỗi ngày · Kỹ năng lãnh đạo
     </p>
-  </div>
+    <p style="font-size:.88rem;color:rgba(255,255,255,.6);margin-top:.5rem">
+      3,000+ học sinh · 15+ năm · 4 cơ sở HCM + tỉnh
+    </p>
+    <a href="#sp-form1" style="display:inline-block;margin-top:1.5rem;background:#D4A843;color:#1a1a5e;font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
+      Đặt lịch tham quan miễn phí →
+    </a>
+  </Fragment>
 
-  <div slot="usp">
-    <USPGrid items={uspItems} />
-  </div>
+  <!-- PAIN -->
+  <Fragment slot="pain">
+    <p class="sp-pain__eyebrow">VẤN ĐỀ THỰC TẾ</p>
+    <h2>Tiểu Học Quyết Định Tương Lai — Con Bạn Đang Học Ở Đâu?</h2>
+    <p>Tiểu học là nền tảng quyết định toàn bộ hành trình học thuật của con. Đây là giai đoạn hình thành thói quen học tập, tư duy phản biện, và sự tự tin — những yếu tố sẽ đi theo con suốt cả cuộc đời. Chọn sai môi trường ở giai đoạn này, chi phí sửa chữa sau này rất lớn.</p>
+    <p>Rất nhiều phụ huynh phát hiện ra quá muộn: con học trường công 5 năm tiểu học, đến THCS mới nhận ra tiếng Anh quá yếu, thiếu tư duy STEM, và không đủ tự tin để cạnh tranh. Lúc đó, phải cho con học thêm khắp nơi — tốn kém và áp lực cho cả gia đình.</p>
+    <ul class="sp-pain__list">
+      <li>Trường công lập: 40–50 HS/lớp, không đủ thời gian cho từng con</li>
+      <li>Tiếng Anh chỉ 3 tiết/tuần — con sẽ không thể thi IELTS lúc THCS</li>
+      <li>Không STEM, không lập trình — thiếu kỹ năng thế kỷ 21 ngay từ đầu</li>
+      <li>Học vẹt, thi cử áp lực — con sợ đến trường thay vì yêu thích</li>
+    </ul>
+  </Fragment>
 
-  <div slot="trust">
-    <TrustMetrics metrics={metrics} />
-  </div>
-
-  <div slot="content">
-    <div class="content-section hero-image-section">
-      <img src="https://media.truongvietanh.com/images/giao-vien-05.webp" alt="Giáo viên Trường Việt Anh hướng dẫn học sinh tiểu học trong lớp học song ngữ" class="hero-content-image" width="800" height="450" loading="lazy" />
-      <p class="image-caption">Giáo viên bản ngữ và học sinh Tiểu Học Trường Việt Anh trong tiết học song ngữ tương tác</p>
+  <!-- FEATURES -->
+  <Fragment slot="features">
+    <p class="sp-features__eyebrow">CHƯƠNG TRÌNH VIỆT ANH</p>
+    <h2>7 Lợi Thế Tạo Nên Học Sinh Tiểu Học Việt Anh</h2>
+    <p class="sp-features__sub">Hệ thống được thiết kế để con vừa giỏi học thuật, vừa tự tin và biết lãnh đạo</p>
+    <div class="sp-features__grid">
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🎓</div>
+        <h3>Cambridge chính thức từ lớp 1</h3>
+        <p>Chứng chỉ quốc tế được công nhận toàn cầu — con có thể học tiếp ở bất kỳ đâu</p>
+        <span class="sp-feat-card__tag">Cambridge</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🌍</div>
+        <h3>GV bản ngữ mỗi ngày</h3>
+        <p>Tiếng Anh tự nhiên, không phải học thuộc lòng — nghe hiểu và nói như trẻ UK</p>
+        <span class="sp-feat-card__tag">Song ngữ</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🔬</div>
+        <h3>STEM từ lớp 3 · Robotics lớp 4–5</h3>
+        <p>Scratch, Robotics, STEM Fair hàng năm — con tư duy như kỹ sư từ nhỏ</p>
+        <span class="sp-feat-card__tag">STEM</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">👑</div>
+        <h3>Leader In Me · Kỹ năng lãnh đạo</h3>
+        <p>7 Thói Quen của Franklin Covey — phát triển tự tin, trách nhiệm, giao tiếp</p>
+        <span class="sp-feat-card__tag">Lãnh đạo</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🏅</div>
+        <h3>Thi Olympic · Toán Quốc tế · Khoa học</h3>
+        <p>Con được tham gia thi đấu quốc tế ngay từ tiểu học — build profile ấn tượng</p>
+        <span class="sp-feat-card__tag">Thành tích</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🍱</div>
+        <h3>Bán trú · Dinh dưỡng · Xe đưa đón</h3>
+        <p>Chăm sóc toàn diện — ba mẹ yên tâm đi làm, con học trong môi trường tốt nhất</p>
+        <span class="sp-feat-card__tag">Tiện ích</span>
+      </div>
     </div>
+  </Fragment>
 
-    <div class="content-section">
-      <h2>Tại sao Lớp 1-5 là giai đoạn "CAM HUNG" không thể bỏ lỡ?</h2>
-      <div class="content-grid">
-        <div class="content-card">
-          <h3>Giai đoạn vàng cho song ngữ</h3>
-          <p>Nghiên cứu ngôn ngữ học cho thấy trẻ 6-11 tuổi hấp thụ ngôn ngữ thứ hai nhanh gấp 3 lần so với thanh thiếu niên. Con tuổi này học ngôn ngữ như hít thở — không cần "dạy" mà chỉ cần "cho tiếp xúc". Giáo viên nước ngoài bản ngữ dạy hàng ngày kết hợp cùng bạn học trong môi trường tiếng Anh giúp con nói tiếng Anh tự nhiên đến lạ. Nếu bỏ lỡ giai đoạn này, lớp 7-12 con sẽ mất gấp 3 lần công sức để "bắt kịp" và thường mang tâm lý sợ nói.</p>
-        </div>
-        <div class="content-card">
-          <h3>Phương pháp học "Làm mà học" — không chỉ làm bài tập</h3>
-          <p>Robot tự chế từ LEGO Education, thí nghiệm Khoa học thực nghiệm trong phòng lab, Dự án Khám phá liên môn — não trẻ được kích thích sáng tạo hàng ngày thay vì ngồi chép bài. Kết quả: con không sợ môn học khó mà muốn khám phá thêm, phát triển tư duy phản biện và khả năng giải quyết vấn đề. Ba/Mẹ sẽ bất ngờ khi con tự nguyện nói: "Con muốn làm dự án!" Phương pháp Project-Based Learning (PBL) này đã được áp dụng thành công tại hơn 40 quốc gia.</p>
-        </div>
-        <div class="content-card">
-          <h3>Lớp nhỏ 25 em = Mỗi em được biết tên</h3>
-          <p>Cô giáo không chỉ dạy, mà cô "nhìn thấy" từng con — biết điểm mạnh, sở thích, và cả những lo lắng nhỏ nhất của bé. Nếu em lúng túng với bài Toán hay rụt rè trong giờ tiếng Anh, cô sẽ hỗ trợ ngay hôm đó — không để con ngồi im cả học kỳ. Mỗi con có lộ trình học riêng, được đánh giá năng lực định kỳ, không bị "xếp hạng" hay so sánh với bạn. Đây là khác biệt lớn nhất so với lớp 40-45 học sinh ở trường công lập.</p>
-        </div>
-        <div class="content-card">
-          <h3>20+ CLB ngoại khóa = Con tìm được "Thứ mình thích"</h3>
-          <p>Có em thích Robotics và Coding? Có em đam mê Piano hay Guitar? Có em muốn thử sức với Debate và Leadership? Tất cả đều có — và hoàn toàn miễn phí. Khi con tìm được "Thứ mình yêu", con sẽ chủ động, sáng tạo, tự tin một cách tự nhiên thay vì bị ép buộc. Mỗi bé tham gia 2-3 CLB mỗi tuần, từ thể thao (bóng đá, bơi lội, cầu lông) đến nghệ thuật (mỹ thuật, nhảy hiện đại) và công nghệ (nhiếp ảnh, coding).</p>
+  <!-- TEXT WITH IMAGE -->
+  <Fragment slot="textimg">
+    <div class="sp-textimg__text">
+      <p class="sp-textimg__eyebrow">LỚP HỌC THỰC TẾ</p>
+      <h2>Con Không Chỉ Học — Con Trải Nghiệm, Sáng Tạo Và Lãnh Đạo</h2>
+      <p>Phòng STEM được trang bị đầy đủ thiết bị robotics, bộ thí nghiệm khoa học và máy tính lập trình. Học sinh không ngồi nghe — các con thực hành, thử nghiệm và học từ thất bại. STEM Fair hàng năm là sân khấu để con trình bày dự án trước phụ huynh và ban giám khảo.</p>
+      <p>Chương trình Leader In Me giúp con học cách đặt mục tiêu, quản lý thời gian, và tự tin phát biểu trước đám đông. Sau tiểu học Việt Anh, con không chỉ có kiến thức — con có bản lĩnh và kỹ năng lãnh đạo để thành công trong bất kỳ môi trường nào.</p>
+    </div>
+    <div class="sp-textimg__img">
+      <img
+        src="https://media.truongvietanh.com/images/thuyet-trinh-04.webp"
+        alt="Học sinh tiểu học thuyết trình"
+        loading="lazy"
+        width="600"
+        height="400"
+      />
+    </div>
+  </Fragment>
+
+  <!-- STATS -->
+  <Fragment slot="stats">
+    <p class="sp-stats__eyebrow">CON SỐ THỰC TẾ</p>
+    <h2>Kết Quả Của 15 Năm Phát Triển Chương Trình</h2>
+    <div class="sp-stats__grid">
+      <div class="sp-stat">
+        <span class="sp-stat__num">15+</span>
+        <span class="sp-stat__label">Năm xây dựng chương trình tiểu học song ngữ</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat__num">1,200+</span>
+        <span class="sp-stat__label">Học sinh tiểu học đang theo học</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat__num">95%</span>
+        <span class="sp-stat__label">Học sinh tiếp tục lên THCS Việt Anh</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat__num">30+</span>
+        <span class="sp-stat__label">Giải thi học sinh giỏi mỗi năm</span>
+      </div>
+    </div>
+  </Fragment>
+
+  <!-- QUOTE -->
+  <Fragment slot="quote">
+    <p class="sp-quote__eyebrow">PHỤ HUYNH NÓI GÌ</p>
+    <div class="sp-quote__card">
+      <div class="sp-quote__stars">★★★★★</div>
+      <p class="sp-quote__text">
+        "Con tôi từ một bé nhút nhát, sợ phát biểu trước lớp — sau 1 năm Tiểu Học Việt Anh bé đã đứng thuyết trình trước 200 người trong STEM Fair! IELTS lớp 5 đạt 4.5 — cô giáo nói con có nền tảng rất tốt để lên THCS."
+      </p>
+      <div class="sp-quote__author">
+        <img
+          src="https://media.truongvietanh.com/images/phu-huynh-02.webp"
+          alt="Anh Minh Tuấn"
+          class="sp-quote__avatar"
+          width="52"
+          height="52"
+          loading="lazy"
+        />
+        <div>
+          <div class="sp-quote__name">Anh Minh Tuấn</div>
+          <div class="sp-quote__meta">Phụ huynh bé Thu Hà — Tiểu Học Việt Anh Gò Vấp</div>
         </div>
       </div>
     </div>
+  </Fragment>
 
-    <div class="content-section bonus-section">
-      <h2 style="color: #E8792B;">Bonus: Lộ trình suôn sẻ lên THPT top</h2>
-      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 2rem;">
-        <strong>Không phải "lo lắng" ở mỗi cấp</strong> — Phụ huynh Việt Anh từ Tiểu Học đến THPT đều ở cùng một trường. Con không mất tập quán, giáo viên đã hiểu con như "bàn tay", và chương trình học liên thông xuyên suốt 12 năm. Học sinh Tiểu Học Việt Anh với GPA 7.5+ được ưu tiên chuyển cấp lên THCS — không cần thi đầu vào. THPT top (90%+ vào ĐH nguyện vọng 1) bắt đầu từ những quyết định đúng ở lớp 1-5. Gọi <strong>0916 961 409</strong> để được tư vấn lộ trình phù hợp cho con.
-      </p>
+  <!-- PRICING -->
+  <Fragment slot="pricing">
+    <p class="sp-pricing__eyebrow">HỌC PHÍ</p>
+    <h2>Đầu Tư Thông Minh — All-In-One, Không Phải Chạy Học Thêm</h2>
+    <p class="sp-pricing__sub">So sánh thực tế để thấy Việt Anh không đắt — mà còn tiết kiệm hơn khi tính đủ chi phí</p>
+    <div class="sp-pricing__table">
+      <div class="sp-pricing-col sp-pricing-col--regular">
+        <div class="sp-pricing-col__label">Trường công lập + Học thêm</div>
+        <div class="sp-pricing-col__price">3–5tr</div>
+        <div class="sp-pricing-col__unit">/tháng (+ học thêm 2–3tr nữa)</div>
+        <ul class="sp-pricing-col__features">
+          <li>Lớp 40–50 HS</li>
+          <li>Tiếng Anh 3 tiết/tuần</li>
+          <li>Không STEM</li>
+          <li>Phải đi học thêm nhiều nơi</li>
+        </ul>
+      </div>
+      <div class="sp-pricing-col sp-pricing-col--promo">
+        <div class="sp-pricing-col__label">Tiểu học Việt Anh</div>
+        <div class="sp-pricing-col__price">7–10tr</div>
+        <div class="sp-pricing-col__unit">/tháng (all-in-one)</div>
+        <ul class="sp-pricing-col__features">
+          <li>Cambridge chính thức</li>
+          <li>GV bản ngữ mỗi ngày</li>
+          <li>STEM + Robotics</li>
+          <li>Leader In Me</li>
+          <li>Bán trú + Xe đưa đón</li>
+          <li>Không cần học thêm</li>
+        </ul>
+      </div>
     </div>
-  </div>
+    <p class="sp-pricing__note">* Bao gồm Cambridge, bán trú, học liệu. Liên hệ để nhận báo giá chi tiết.</p>
+  </Fragment>
 
-  <div slot="form">
-    <h2 class="form-heading">Chỉ còn 30 suất cho năm học 2026-2027 — Đặt chỗ ngay hôm nay</h2>
-    <p class="form-subheading">Hàng năm, gần 100 phụ huynh muốn nhập học nhưng trường chỉ nhận 30 em. Số suất giới hạn để giữ chất lượng và lớp nhỏ. Ba/Mẹ quan tâm nên đăng ký tham quan & tư vấn sớm.</p>
+  <!-- CTA -->
+  <Fragment slot="cta">
+    <h2>Chỉ Còn Ít Suất Lớp 1–5 — Đặt Lịch Ngay</h2>
+    <p>Tham quan miễn phí, không ràng buộc. Đội tư vấn sẽ liên hệ trong 24h để sắp xếp lịch phù hợp.</p>
+    <a href="#sp-form1" class="sp-cta-btn">Đặt lịch tham quan miễn phí →</a>
+    <p class="sp-cta-block__note">Không cần đặt cọc · Có thể hủy bất kỳ lúc nào</p>
+  </Fragment>
+
+  <!-- FORM 1 -->
+  <Fragment slot="form1">
+    <p class="sp-form-block__eyebrow">ĐĂNG KÝ TƯ VẤN</p>
+    <h2>Đặt Lịch Tham Quan — Miễn Phí, Không Ràng Buộc</h2>
+    <p>Điền thông tin bên dưới — tư vấn viên sẽ gọi lại trong vòng 24 giờ để sắp xếp lịch thăm trường phù hợp nhất với gia đình bạn.</p>
     <LeadFormTwoStepEmailFirst
-      formId="tuyen-sinh-form"
-      funnelCode="tuyen-sinh-tieu-hoc"
+      formId="tieu-hoc-sales-form1"
+      funnelCode="sales-tieu-hoc"
+      schoolLevel="tieu-hoc"
+      submitText="Đặt lịch tham quan ngay"
+    />
+  </Fragment>
+
+  <!-- FAQ -->
+  <Fragment slot="faq">
+    <p class="sp-faq__eyebrow">CÂU HỎI THƯỜNG GẶP</p>
+    <h2>Phụ Huynh Hay Hỏi</h2>
+    <p class="sp-faq__sub">Mọi câu hỏi đều được trả lời thẳng thắn</p>
+
+    <details class="sp-faq-item">
+      <summary>Tiểu học Việt Anh có dạy chương trình Bộ GD-ĐT không?</summary>
+      <div class="sp-faq-answer">
+        Có! Việt Anh dạy đầy đủ chương trình chuẩn Bộ GD-ĐT, CỘNG THÊM Cambridge và STEM. Con học Việt Anh vẫn có thể chuyển trường bất cứ lúc nào mà không bị tụt hậu.
+      </div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Con tôi đang học lớp 3 trường khác — có chuyển sang Việt Anh được không?</summary>
+      <div class="sp-faq-answer">
+        Được! Chúng tôi nhận chuyển trường mọi khối. Có bài kiểm tra đầu vào để xếp lớp phù hợp và chương trình bổ trợ cho các con chưa có nền tiếng Anh.
+      </div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Học phí 7–10 triệu có cao không?</summary>
+      <div class="sp-faq-answer">
+        So sánh: trường công + học thêm tiếng Anh + học thêm toán + năng khiếu = dễ 5–7tr/tháng mà không có hệ thống. Việt Anh 7–10tr bao gồm TẤT CẢ, không phải đưa đón nhiều nơi, không lo thiếu kỹ năng.
+      </div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>STEM có phù hợp với bé gái không?</summary>
+      <div class="sp-faq-answer">
+        Hoàn toàn phù hợp! Thực tế, nhiều học sinh nữ Việt Anh đoạt giải Robotics và STEM Fair. Chúng tôi thiết kế STEM để TẤT CẢ học sinh đều tự tin — không phân biệt giới tính.
+      </div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Sau tiểu học, con có được ưu tiên vào THCS Việt Anh không?</summary>
+      <div class="sp-faq-answer">
+        Có. 95% học sinh tiểu học Việt Anh tiếp tục lên THCS Việt Anh. Con có lợi thế về nền tảng tiếng Anh và STEM — không cần thi lại từ đầu.
+      </div>
+    </details>
+  </Fragment>
+
+  <!-- FORM 2 -->
+  <Fragment slot="form2">
+    <p class="sp-form-block__eyebrow">ĐĂNG KÝ NGAY</p>
+    <h2>Còn Phân Vân? Cứ Đăng Ký Tham Quan Trước</h2>
+    <p>Xem tận mắt môi trường — gặp cô giáo — hiểu chương trình. Hoàn toàn miễn phí, không áp lực.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="tieu-hoc-sales-form2"
+      funnelCode="sales-tieu-hoc-2"
       schoolLevel="tieu-hoc"
       submitText="Đăng ký tham quan ngay"
-      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để sắp xếp lịch tham quan phù hợp nhất."
     />
-  </div>
+  </Fragment>
 
-  <div slot="faq">
-    <FAQSection items={faqItems} title="Những câu hỏi Ba/Mẹ hay hỏi" />
-  </div>
-</SqueezePageLayout>
-
-<style>
-  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
-  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
-  .content-section { margin-bottom: 3rem; }
-  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
-  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
-  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
-  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
-  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
-  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
-  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
-  .bonus-section h2 { color: #E8792B; }
-  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
-  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
-  .hero-image-section { text-align: center; margin-bottom: 2rem; }
-  .hero-content-image { width: 100%; max-width: 800px; height: auto; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
-  .image-caption { font-size: 0.85rem; color: #777; margin-top: 0.75rem; font-style: italic; }
-  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
-</style>
-
+</SalesPageLayout>

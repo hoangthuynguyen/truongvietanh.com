@@ -1,0 +1,91 @@
+{
+  "version": 1,
+  "directus": "11.0.0",
+  "vendor": "postgres",
+  "collections": [
+    {
+      "collection": "pages",
+      "meta": {
+        "icon": "article",
+        "note": "Tất cả pages của site. Template quyết định render nào.",
+        "display_template": "{{title}} ({{template}})",
+        "sort_field": "sort",
+        "accountability": "all",
+        "archive_field": "status",
+        "archive_value": "archived",
+        "unarchive_value": "draft"
+      },
+      "schema": { "name": "pages" }
+    },
+    {
+      "collection": "page_blocks",
+      "meta": {
+        "icon": "view_module",
+        "note": "Junction M2A — page chứa nhiều block từ nhiều collection khác nhau",
+        "hidden": true,
+        "sort_field": "sort"
+      },
+      "schema": { "name": "page_blocks" }
+    },
+    { "collection": "block_section_header", "meta": { "icon": "title", "group": "Structural" } },
+    { "collection": "block_two_column",     "meta": { "icon": "view_column", "group": "Structural" } },
+    { "collection": "block_spacer",         "meta": { "icon": "space_bar", "group": "Structural" } },
+    { "collection": "block_hero_pillar",    "meta": { "icon": "landscape", "group": "Hero" } },
+    { "collection": "block_hero_funnel",    "meta": { "icon": "campaign", "group": "Hero" } },
+    { "collection": "block_hero_squeeze",   "meta": { "icon": "ads_click", "group": "Hero" } },
+    { "collection": "block_article_header", "meta": { "icon": "article", "group": "Hero" } },
+    { "collection": "block_rich_text",      "meta": { "icon": "text_snippet", "group": "Content" } },
+    { "collection": "block_text_with_image","meta": { "icon": "image", "group": "Content" } },
+    { "collection": "block_cards",          "meta": { "icon": "grid_view", "group": "Content" } },
+    { "collection": "block_features",       "meta": { "icon": "stars", "group": "Content" } },
+    { "collection": "block_stats",          "meta": { "icon": "insights", "group": "Content" } },
+    { "collection": "block_timeline_roadmap","meta": { "icon": "timeline", "group": "Content" } },
+    { "collection": "block_comparison_table","meta": { "icon": "table_chart", "group": "Content" } },
+    { "collection": "block_gallery",        "meta": { "icon": "collections", "group": "Content" } },
+    { "collection": "block_video_embed",    "meta": { "icon": "play_circle", "group": "Content" } },
+    { "collection": "block_testimonial_grid","meta": { "icon": "reviews", "group": "Social Proof" } },
+    { "collection": "block_trust_bar",      "meta": { "icon": "verified", "group": "Social Proof" } },
+    { "collection": "block_aggregate_rating","meta": { "icon": "star", "group": "Social Proof" } },
+    { "collection": "block_cta_form",       "meta": { "icon": "inbox", "group": "Conversion" } },
+    { "collection": "block_cta_banner",     "meta": { "icon": "campaign", "group": "Conversion" } },
+    { "collection": "block_urgency_bar",    "meta": { "icon": "timer", "group": "Conversion" } },
+    { "collection": "block_pricing_table",  "meta": { "icon": "payments", "group": "Conversion" } },
+    { "collection": "block_next_steps",     "meta": { "icon": "checklist", "group": "Conversion" } },
+    { "collection": "block_faq",            "meta": { "icon": "help", "group": "Special" } },
+    { "collection": "block_author_bio",     "meta": { "icon": "person", "group": "Special" } },
+    { "collection": "block_related_articles","meta": { "icon": "link", "group": "Special" } },
+    { "collection": "forms",                "meta": { "icon": "dynamic_form", "display_template": "{{name}} ({{funnel_code}})" } },
+    { "collection": "funnels",              "meta": { "icon": "account_tree", "display_template": "{{name}} [{{type}}]" } },
+    { "collection": "testimonials",         "meta": { "icon": "format_quote", "display_template": "{{author_name}}: {{quote}}" } },
+    { "collection": "campuses",             "meta": { "icon": "location_on", "display_template": "{{name}}" } },
+    { "collection": "authors",              "meta": { "icon": "person", "display_template": "{{name}}" } },
+    { "collection": "articles",             "meta": { "icon": "newspaper", "display_template": "{{title}}" } },
+    { "collection": "ab_tests",             "meta": { "icon": "science" } },
+    { "collection": "ab_test_variants",     "meta": { "icon": "call_split", "hidden": true } },
+    { "collection": "announcements",        "meta": { "icon": "announcement" } },
+    { "collection": "site_settings",        "meta": { "icon": "settings", "singleton": true } }
+  ],
+  "fields": [
+    { "collection": "pages", "field": "id", "type": "uuid", "meta": { "special": ["uuid"], "readonly": true, "hidden": true, "interface": "input", "width": "half" } },
+    { "collection": "pages", "field": "status", "type": "string", "meta": { "interface": "select-dropdown", "options": { "choices": [{ "text": "Published", "value": "published" }, { "text": "Draft", "value": "draft" }, { "text": "Archived", "value": "archived" }] }, "width": "half", "display": "labels" } },
+    { "collection": "pages", "field": "slug", "type": "string", "meta": { "interface": "input", "note": "URL path, e.g. tuyen-sinh/mam-non/checklist", "required": true, "width": "full" } },
+    { "collection": "pages", "field": "template", "type": "string", "meta": { "interface": "select-dropdown", "options": { "choices": [{ "text": "Pillar (SEO hub)", "value": "pillar" }, { "text": "Landing (mid-funnel)", "value": "landing" }, { "text": "Squeeze (conversion)", "value": "squeeze" }, { "text": "Thank You", "value": "thankyou" }, { "text": "Article (blog)", "value": "article" }] }, "required": true, "width": "half" } },
+    { "collection": "pages", "field": "layout_override", "type": "string", "meta": { "interface": "select-dropdown", "note": "Leave null to use template default", "options": { "choices": [{ "text": "Site", "value": "site" }, { "text": "Funnel", "value": "funnel" }, { "text": "Blank", "value": "blank" }], "allowNone": true }, "width": "half" } },
+    { "collection": "pages", "field": "title", "type": "string", "meta": { "interface": "input", "required": true, "width": "full" } },
+    { "collection": "pages", "field": "meta_description", "type": "string", "meta": { "interface": "input-multiline", "note": "Max 160 chars", "width": "full" } },
+    { "collection": "pages", "field": "meta_keywords", "type": "string", "meta": { "interface": "tags", "width": "full" } },
+    { "collection": "pages", "field": "og_image", "type": "uuid", "meta": { "interface": "file-image", "special": ["file"], "width": "half" } },
+    { "collection": "pages", "field": "canonical_url", "type": "string", "meta": { "interface": "input", "width": "half" } },
+    { "collection": "pages", "field": "noindex", "type": "boolean", "meta": { "interface": "boolean", "width": "half" } },
+    { "collection": "pages", "field": "structured_data", "type": "json", "meta": { "interface": "input-code", "options": { "language": "JSON" }, "width": "full" } },
+    { "collection": "pages", "field": "funnel_ref", "type": "string", "meta": { "interface": "select-dropdown-m2o", "special": ["m2o"], "width": "half" }, "schema": { "foreign_key_table": "funnels", "foreign_key_column": "code" } },
+    { "collection": "pages", "field": "ab_test_ref", "type": "uuid", "meta": { "interface": "select-dropdown-m2o", "special": ["m2o"], "width": "half" }, "schema": { "foreign_key_table": "ab_tests" } },
+    { "collection": "pages", "field": "campus_ref", "type": "string", "meta": { "interface": "select-dropdown-m2o", "special": ["m2o"], "width": "half" }, "schema": { "foreign_key_table": "campuses", "foreign_key_column": "slug" } },
+    { "collection": "pages", "field": "product_ref", "type": "string", "meta": { "interface": "select-dropdown", "options": { "choices": [{ "text": "Mầm non", "value": "mam-non" }, { "text": "Tiểu học", "value": "tieu-hoc" }, { "text": "THCS", "value": "thcs" }, { "text": "THPT", "value": "thpt" }, { "text": "Song ngữ", "value": "song-ngu" }, { "text": "IELTS", "value": "ielts" }, { "text": "PDR", "value": "pdr" }, { "text": "Học bổng", "value": "hoc-bong" }, { "text": "Ngoại khóa", "value": "ngoai-khoa" }, { "text": "Mentoring", "value": "mentoring" }, { "text": "Du học", "value": "du-hoc" }] }, "width": "half" } },
+    { "collection": "pages", "field": "blocks", "type": "alias", "meta": { "interface": "list-m2a", "special": ["m2a"], "note": "Drag to reorder. Add blocks of any type.", "options": { "enableCreate": true, "enableSelect": false } } }
+  ],
+  "relations": [
+    { "collection": "page_blocks", "field": "page_id", "related_collection": "pages", "meta": { "many_collection": "page_blocks", "many_field": "page_id", "one_collection": "pages", "one_field": "blocks", "sort_field": "sort" } },
+    { "collection": "page_blocks", "field": "item", "related_collection": null, "meta": { "one_allowed_collections": ["block_section_header", "block_two_column", "block_spacer", "block_hero_pillar", "block_hero_funnel", "block_hero_squeeze", "block_article_header", "block_rich_text", "block_text_with_image", "block_cards", "block_features", "block_stats", "block_timeline_roadmap", "block_comparison_table", "block_gallery", "block_video_embed", "block_testimonial_grid", "block_trust_bar", "block_aggregate_rating", "block_cta_form", "block_cta_banner", "block_urgency_bar", "block_pricing_table", "block_next_steps", "block_faq", "block_author_bio", "block_related_articles"], "many_collection": "page_blocks", "many_field": "item", "one_collection_field": "collection" } }
+  ]
+}

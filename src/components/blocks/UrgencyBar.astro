@@ -1,0 +1,18 @@
+---
+import type { BlockUrgencyBar } from '../../types/cms';
+interface Props { data: BlockUrgencyBar; context: string; }
+const { data } = Astro.props;
+---
+<section class={`b-urgency-bar b-urgency-${data.style || 'pulsing'}`} data-countdown-to={data.countdown_to || ''}>
+  <div class="b-container b-urgency-inner">
+    <p class="b-urgency-text">{data.text}</p>
+    {data.countdown_to && (
+      <div class="b-countdown" aria-live="polite">
+        <span data-cd-days>--</span>d
+        <span data-cd-hours>--</span>h
+        <span data-cd-minutes>--</span>m
+        <span data-cd-seconds>--</span>s
+      </div>
+    )}
+  </div>
+</section>

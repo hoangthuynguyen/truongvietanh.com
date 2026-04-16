@@ -1,0 +1,24 @@
+---
+import FunnelLayout from '../layouts/v2/FunnelLayout.astro';
+import BlocksRenderer from '../components/blocks/BlocksRenderer.astro';
+import type { Page } from '../types/cms';
+
+interface Props { page: Page; }
+const { page } = Astro.props;
+---
+<FunnelLayout
+  title={page.title}
+  description={page.meta_description}
+  keywords={page.meta_keywords}
+  canonical={page.canonical_url}
+  noindex={page.noindex}
+  ogImage={page.og_image}
+  structuredData={page.structured_data}
+  funnelCode={page.funnel_ref || 'landing'}
+  schoolLevel={page.product_ref}
+  campusRef={page.campus_ref}
+>
+  <article class="landing-page" data-slug={page.slug} data-product={page.product_ref} data-campus={page.campus_ref}>
+    <BlocksRenderer blocks={page.blocks} context="landing" />
+  </article>
+</FunnelLayout>

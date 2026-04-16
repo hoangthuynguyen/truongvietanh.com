@@ -1,0 +1,20 @@
+---
+import type { BlockStats } from '../../types/cms';
+interface Props { data: BlockStats; context: string; }
+const { data } = Astro.props;
+---
+<section class="b-stats">
+  <div class="b-container">
+    {data.eyebrow && <p class="b-eyebrow">{data.eyebrow}</p>}
+    {data.title && <h2 class="b-title">{data.title}</h2>}
+    <div class="b-stats-grid">
+      {data.items?.map((item) => (
+        <div class="b-stat">
+          <div class="b-stat-value" data-animate-counter={item.value.replace(/[^\d.]/g, '')}>{item.value}</div>
+          <div class="b-stat-label">{item.label}</div>
+          {item.note && <div class="b-stat-note">{item.note}</div>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

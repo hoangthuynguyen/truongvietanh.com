@@ -380,6 +380,7 @@ const quizId = `quiz-${funnelCode}`;
       var formData = new FormData(form);
       var payload = {};
       formData.forEach(function(v, k) { payload[k] = v; });
+      payload.quiz_answers = answers;
 
       fetch('/api/lead', {
         method: 'POST',
@@ -401,20 +402,22 @@ const quizId = `quiz-${funnelCode}`;
 
         showStep('success');
 
-        // Redirect to cam-on
+        // Redirect to cam-on with per-question scores
         var camOnUrl = root.dataset.camOnUrl;
         var parentName = name.value;
+        var qParams = answers.map(function(a, i) { return 'q' + (i+1) + '=' + a; }).join('&');
         setTimeout(function() {
-          window.location.href = camOnUrl + '?name=' + encodeURIComponent(parentName) + '&score=' + totalScore;
+          window.location.href = camOnUrl + '?name=' + encodeURIComponent(parentName) + '&score=' + totalScore + '&' + qParams;
         }, 1500);
       }).catch(function(err) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Thử lại';
         console.error('Quiz form error:', err);
-        // Fallback — still redirect
+        // Fallback — still redirect with per-question scores
         showStep('success');
+        var qParams = answers.map(function(a, i) { return 'q' + (i+1) + '=' + a; }).join('&');
         setTimeout(function() {
-          window.location.href = root.dataset.camOnUrl + '?name=' + encodeURIComponent(name.value) + '&score=' + totalScore;
+          window.location.href = root.dataset.camOnUrl + '?name=' + encodeURIComponent(name.value) + '&score=' + totalScore + '&' + qParams;
         }, 2000);
       });
     });

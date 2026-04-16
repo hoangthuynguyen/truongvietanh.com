@@ -1,0 +1,197 @@
+---
+/* Giu cho Lion Camp — standalone deposit/hold-seat page */
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Giu Cho Lion Camp 2026 | Truong Viet Anh</title>
+  <meta name="description" content="Giu cho Lion Camp He 2026 — Chi 500.000d, hoan 100% neu doi y." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');</style>
+
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+<!-- End Google Tag Manager -->
+
+  <style is:inline>
+    :root{--primary:#1F4E79;--accent:#E8792B;--gold:#F59E0B;--w:#fff;--font-h:'Montserrat',sans-serif;--font-b:'Open Sans',sans-serif}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:var(--font-b);-webkit-font-smoothing:antialiased;font-size:16px;color:#1C2A3A;background:linear-gradient(165deg,#EFF6FF 0%,#DBEAFE 40%,#BFDBFE 100%);min-height:100vh;display:flex;flex-direction:column;align-items:center}
+
+    .wrap{max-width:520px;width:100%;padding:24px 16px 40px}
+    .logo-bar{text-align:center;padding:16px 0}
+    .logo-bar img{max-width:180px;height:auto;background:#fff;padding:8px 14px;border-radius:10px}
+
+    .card{background:var(--w);border-radius:20px;box-shadow:0 12px 40px rgba(0,0,0,.08);padding:32px 24px;text-align:center}
+
+    h1{font-family:var(--font-h);font-size:1.45rem;font-weight:800;color:var(--primary);margin-bottom:8px;line-height:1.3}
+    .subtitle{font-size:.95rem;color:#666;margin-bottom:20px;line-height:1.5}
+    .name-highlight{color:var(--accent);font-weight:700}
+
+    /* Trust badges */
+    .badges{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:24px}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;background:#F0F9FF;border:1px solid #BAE6FD;border-radius:50px;font-size:.8rem;font-weight:600;color:var(--primary)}
+
+    /* Transfer info */
+    .transfer-box{background:#F8FAFC;border:2px solid #E2E8F0;border-radius:16px;padding:20px;text-align:left;margin-bottom:24px}
+    .transfer-box h3{font-family:var(--font-h);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:12px;text-align:center}
+    .transfer-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid #F1F5F9;font-size:.9rem}
+    .transfer-row:last-child{border-bottom:none}
+    .transfer-label{color:#64748B;font-weight:500}
+    .transfer-value{font-weight:700;color:#1C2A3A}
+    .transfer-value.highlight{color:var(--accent);font-size:1.05rem}
+    .transfer-note{margin-top:12px;padding:10px 14px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;font-size:.82rem;color:#92400E;line-height:1.5}
+
+    /* Zalo alternative */
+    .or-divider{display:flex;align-items:center;gap:12px;margin:20px 0;color:#999;font-size:.85rem}
+    .or-divider::before,.or-divider::after{content:'';flex:1;height:1px;background:#E5E7EB}
+
+    .cta-btn{display:block;padding:14px 24px;border-radius:14px;text-decoration:none;font-weight:700;font-size:1rem;text-align:center;transition:all .2s;margin-bottom:10px}
+    .cta-zalo{background:#0068FF;color:var(--w);box-shadow:0 4px 14px rgba(0,104,255,.25)}
+    .cta-zalo:hover{background:#0055DD;transform:translateY(-2px)}
+
+    .contact-row{display:flex;gap:12px;justify-content:center;margin:16px 0}
+    .contact-btn{padding:10px 16px;border-radius:10px;text-decoration:none;font-size:.85rem;font-weight:600;color:#fff}
+    .phone-btn{background:var(--primary)}
+
+    /* FAQ */
+    .faq{text-align:left;margin-top:24px}
+    .faq h3{font-family:var(--font-h);font-size:1rem;font-weight:700;color:var(--primary);margin-bottom:12px}
+    .faq-item{margin-bottom:12px;padding:14px;background:#F9FAFB;border-radius:12px;border:1px solid #F3F4F6}
+    .faq-q{font-weight:700;font-size:.9rem;color:#374151;margin-bottom:4px}
+    .faq-a{font-size:.85rem;color:#666;line-height:1.6}
+
+    .footer-note{font-size:.75rem;color:#999;margin-top:20px;text-align:center}
+
+    @media(max-width:480px){.card{padding:24px 18px}h1{font-size:1.25rem}.transfer-row{font-size:.82rem}}
+  </style>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div class="wrap">
+  <div class="logo-bar">
+    <img src="/logo-vietanh.webp" alt="Truong Viet Anh" />
+  </div>
+
+  <div class="card">
+    <h1>Giu Cho Lion Camp 2026</h1>
+    <p class="subtitle">Chi <strong>500.000d</strong> — Hoan 100% neu doi y<br><span class="name-highlight" id="personalize"></span></p>
+
+    <!-- Trust badges -->
+    <div class="badges">
+      <span class="badge">Hoan tien 100%</span>
+      <span class="badge">Bao mat</span>
+      <span class="badge">15+ nam</span>
+    </div>
+
+    <!-- Transfer info -->
+    <div class="transfer-box">
+      <h3>Thong tin chuyen khoan</h3>
+      <div class="transfer-row">
+        <span class="transfer-label">So tien</span>
+        <span class="transfer-value highlight">500.000 VND</span>
+      </div>
+      <div class="transfer-row">
+        <span class="transfer-label">Ngan hang</span>
+        <span class="transfer-value" id="bank-info">Vietcombank — Truong Viet Anh</span>
+      </div>
+      <div class="transfer-row">
+        <span class="transfer-label">So TK</span>
+        <span class="transfer-value" id="bank-account">[Lien he de nhan STK]</span>
+      </div>
+      <div class="transfer-row">
+        <span class="transfer-label">Noi dung CK</span>
+        <span class="transfer-value" id="ck-content">LIONCAMP [Ten be] [Co so]</span>
+      </div>
+      <div class="transfer-note">
+        Sau khi chuyen khoan, vui long chup man hinh va gui qua Zalo de xac nhan. Tu van vien se lien he trong 30 phut.
+      </div>
+    </div>
+
+    <!-- Zalo alternative -->
+    <div class="or-divider">Hoac</div>
+
+    <a href="https://zalo.me/1678310120468101523" class="cta-btn cta-zalo" id="cta-zalo">
+      Giu cho qua Zalo
+    </a>
+
+    <div class="contact-row">
+      <a href="tel:0916961409" class="contact-btn phone-btn">0916 961 409</a>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq">
+      <h3>Cau hoi thuong gap</h3>
+
+      <div class="faq-item">
+        <div class="faq-q">Co hoan tien khong?</div>
+        <div class="faq-a">Co! Ba/Me duoc hoan 100% so tien giu cho neu doi y truoc ngay khai giang. Khong rang buoc, khong dieu kien.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Giu cho bao lau?</div>
+        <div class="faq-a">Cho duoc giu den ngay khai giang trai he. So luong co han, nen giu cho som de dam bao co vi tri cho con.</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">Sau khi chuyen khoan thi sao?</div>
+        <div class="faq-a">Tu van vien se lien he trong 30 phut de xac nhan va gui thong tin chi tiet ve chuong trinh, lich hoc, va cac buoc tiep theo.</div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      Lion Camp 2026 — Truong Viet Anh<br>
+      Hotline/Zalo: 0916 961 409
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('name') || '';
+  var loc = params.get('loc') || '';
+  var level = params.get('level') || '';
+
+  // Personalize
+  var personalize = document.getElementById('personalize');
+  var parts = [];
+  if (name) parts.push(name);
+  if (loc) parts.push('Co so ' + loc);
+  if (level) {
+    var levelLabel = { 'tieu-hoc': 'Tieu hoc', 'thcs': 'THCS', 'thpt': 'THPT' }[level] || level;
+    parts.push(levelLabel);
+  }
+  if (parts.length) personalize.textContent = parts.join(' — ');
+
+  // Update CK content with personalized info
+  var ckEl = document.getElementById('ck-content');
+  var childName = name ? name.split(' ').pop() : '[Ten be]';
+  var locLabel = loc || '[Co so]';
+  ckEl.textContent = 'LIONCAMP ' + childName + ' ' + locLabel;
+
+  // GTM
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      event: 'view_giu_cho',
+      location: loc,
+      school_level: level
+    });
+  }
+})();
+</script>
+</body>
+</html>

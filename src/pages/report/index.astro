@@ -1,0 +1,672 @@
+---
+/* Report page — standalone HTML, all data from URL query params, client-side rendered */
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bao Cao Ky Nang He 2026 | Lion Camp — Truong Viet Anh</title>
+  <meta name="description" content="Bao cao danh gia ky nang ca nhan hoa — Lion Camp He 2026" />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese');</style>
+
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+<!-- End Google Tag Manager -->
+
+  <style is:inline>
+    :root {
+      --primary: #1F4E79;
+      --accent: #E8792B;
+      --gold: #F59E0B;
+      --green: #16A34A;
+      --red: #EF4444;
+      --yellow: #F59E0B;
+      --bg: linear-gradient(165deg, #EFF6FF 0%, #DBEAFE 40%, #BFDBFE 100%);
+      --font-heading: 'Montserrat', sans-serif;
+      --font-body: 'Open Sans', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      color: #1C2A3A;
+      background: var(--bg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .report-wrap {
+      max-width: 600px;
+      width: 100%;
+      padding: 24px 16px 40px;
+    }
+
+    /* Header */
+    .report-header {
+      text-align: center;
+      padding: 32px 20px 24px;
+      background: linear-gradient(135deg, #1a1a5e, #2a2a7e);
+      border-radius: 20px 20px 0 0;
+      color: #fff;
+    }
+    .report-header img {
+      max-width: 200px;
+      height: auto;
+      background: #fff;
+      padding: 8px 16px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+    }
+    .report-header h1 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      margin-bottom: 6px;
+    }
+    .report-header .subtitle {
+      font-size: .85rem;
+      opacity: .85;
+    }
+
+    /* Card body */
+    .report-card {
+      background: #fff;
+      border-radius: 0 0 20px 20px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.08);
+      padding: 28px 24px 32px;
+    }
+
+    /* Section headings */
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: .95rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin: 28px 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #E5E7EB;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .section-title:first-child { margin-top: 0; }
+
+    /* Score overview */
+    .score-overview {
+      text-align: center;
+      padding: 20px 0;
+    }
+    .score-big {
+      font-family: var(--font-heading);
+      font-size: 3.5rem;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+    }
+    .score-big .max {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #999;
+    }
+    .score-bar-wrap {
+      background: #E5E7EB;
+      border-radius: 8px;
+      height: 14px;
+      margin: 16px 0 12px;
+      overflow: hidden;
+    }
+    .score-bar-fill {
+      height: 100%;
+      border-radius: 8px;
+      transition: width 1.2s ease;
+      width: 0;
+    }
+    .level-badge {
+      display: inline-block;
+      padding: 6px 20px;
+      border-radius: 50px;
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: .95rem;
+      color: #fff;
+    }
+
+    /* Per-question breakdown */
+    .q-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .q-table tr {
+      border-bottom: 1px solid #F3F4F6;
+    }
+    .q-table td {
+      padding: 10px 8px;
+      font-size: .88rem;
+      vertical-align: middle;
+    }
+    .q-table .q-name {
+      font-weight: 600;
+      color: #374151;
+      width: 55%;
+    }
+    .q-table .q-score-cell {
+      width: 15%;
+      text-align: center;
+      font-family: var(--font-heading);
+      font-weight: 700;
+    }
+    .q-table .q-bar-cell {
+      width: 30%;
+    }
+    .q-mini-bar {
+      background: #E5E7EB;
+      border-radius: 4px;
+      height: 8px;
+      overflow: hidden;
+      position: relative;
+    }
+    .q-mini-bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      transition: width .8s ease;
+    }
+    .q-mini-bar-benchmark {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 2px;
+      background: #9CA3AF;
+      left: 75%; /* 3/4 = benchmark */
+    }
+
+    /* Radar / comparison chart */
+    .chart-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 8px;
+    }
+    .chart-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .chart-label {
+      width: 110px;
+      font-size: .78rem;
+      font-weight: 600;
+      color: #555;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .chart-bars {
+      flex: 1;
+      position: relative;
+      height: 22px;
+    }
+    .chart-bar-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #F3F4F6;
+      border-radius: 4px;
+    }
+    .chart-bar-benchmark {
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 100%;
+      background: rgba(31,78,121,.12);
+      border-radius: 4px;
+    }
+    .chart-bar-score {
+      position: absolute;
+      top: 2px; bottom: 2px; left: 0;
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+    .chart-legend {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 8px;
+      font-size: .75rem;
+      color: #777;
+    }
+    .chart-legend span::before {
+      content: '';
+      display: inline-block;
+      width: 12px; height: 12px;
+      border-radius: 3px;
+      margin-right: 4px;
+      vertical-align: -2px;
+    }
+    .chart-legend .leg-score::before { background: var(--accent); }
+    .chart-legend .leg-bench::before { background: rgba(31,78,121,.15); }
+
+    /* Recommendations */
+    .reco-box {
+      background: #F0F9FF;
+      border: 2px solid #7DD3FC;
+      border-radius: 14px;
+      padding: 18px;
+      margin: 12px 0;
+      font-size: .9rem;
+      line-height: 1.7;
+      color: #1E3A5F;
+    }
+    .reco-box strong { color: var(--primary); }
+    .weak-areas {
+      margin-top: 12px;
+      padding: 14px;
+      background: #FFF7ED;
+      border: 1px solid #FDE68A;
+      border-radius: 10px;
+    }
+    .weak-areas h4 {
+      font-family: var(--font-heading);
+      font-size: .88rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .weak-areas ul {
+      padding-left: 18px;
+      font-size: .85rem;
+      line-height: 1.8;
+      color: #555;
+    }
+
+    /* CTA section */
+    .cta-section {
+      background: linear-gradient(135deg, #FFFBEB, #FEF3C7);
+      border: 2px solid var(--gold);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      margin-top: 24px;
+    }
+    .cta-section h3 {
+      font-family: var(--font-heading);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--accent);
+      margin-bottom: 12px;
+    }
+    .cta-btn {
+      display: block;
+      padding: 14px 24px;
+      border-radius: 14px;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1rem;
+      text-align: center;
+      transition: all .2s;
+      margin-bottom: 10px;
+    }
+    .cta-primary {
+      background: var(--accent);
+      color: #fff;
+      box-shadow: 0 4px 16px rgba(232,121,43,.3);
+    }
+    .cta-primary:hover { background: #D96A1F; transform: translateY(-2px); }
+    .cta-secondary {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+    .cta-secondary:hover { background: var(--primary); color: #fff; }
+
+    .countdown-box {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #FFF7ED;
+      color: #B45309;
+      padding: 10px 20px;
+      border-radius: 16px;
+      font-size: .88rem;
+      font-weight: 500;
+      margin: 16px 0 8px;
+    }
+    .countdown-box .time {
+      font-weight: 700;
+      font-family: var(--font-heading);
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .contact-btn {
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 600;
+      color: #fff;
+    }
+    .phone-btn { background: var(--primary); }
+    .zalo-btn { background: #0068FF; }
+
+    /* Footer */
+    .report-footer {
+      text-align: center;
+      padding: 20px 16px;
+      font-size: .75rem;
+      color: #999;
+      line-height: 1.6;
+    }
+
+    /* Print styles */
+    @media print {
+      body { background: #fff; }
+      .report-wrap { max-width: 100%; padding: 0; }
+      .report-header { border-radius: 0; }
+      .report-card { border-radius: 0; box-shadow: none; }
+      .cta-section, .countdown-box, .contact-row, .report-footer { display: none !important; }
+      .score-bar-fill, .q-mini-bar-fill, .chart-bar-score { transition: none; }
+    }
+
+    @media (max-width: 480px) {
+      .report-header h1 { font-size: 1rem; }
+      .score-big { font-size: 2.8rem; }
+      .report-card { padding: 20px 16px 28px; }
+      .chart-label { width: 80px; font-size: .72rem; }
+      .q-table td { padding: 8px 4px; font-size: .82rem; }
+    }
+  </style>
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<div class="report-wrap">
+  <!-- Header -->
+  <div class="report-header">
+    <img src="/logo-vietanh.webp" alt="Truong Viet Anh" />
+    <h1>BAO CAO DANH GIA KY NANG HE 2026</h1>
+    <div class="subtitle" id="report-subtitle">Lion Camp</div>
+  </div>
+
+  <!-- Card body -->
+  <div class="report-card">
+
+    <!-- Score overview -->
+    <div class="score-overview">
+      <div class="score-big"><span id="score-num">--</span><span class="max"> / 24</span></div>
+      <div class="score-bar-wrap">
+        <div class="score-bar-fill" id="score-bar"></div>
+      </div>
+      <div><span class="level-badge" id="level-badge">--</span></div>
+    </div>
+
+    <!-- Per-question breakdown -->
+    <div class="section-title">Chi tiet tung ky nang</div>
+    <table class="q-table" id="q-table">
+      <tbody></tbody>
+    </table>
+
+    <!-- Comparison chart -->
+    <div class="section-title">So sanh voi chuan do tuoi</div>
+    <div class="chart-wrap" id="chart-wrap"></div>
+    <div class="chart-legend">
+      <span class="leg-score">Con ban</span>
+      <span class="leg-bench">Chuan do tuoi</span>
+    </div>
+
+    <!-- Recommendations -->
+    <div class="section-title">Nhan xet & Khuyen nghi</div>
+    <div class="reco-box" id="reco-box"></div>
+    <div class="weak-areas" id="weak-areas">
+      <h4>Ky nang can cai thien</h4>
+      <ul id="weak-list"></ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta-section" id="cta-section">
+      <h3>Buoc tiep theo cho gia dinh</h3>
+      <a href="https://zalo.me/1678310120468101523" class="cta-btn cta-primary" id="cta-consult">
+        Dat lich tu van 1:1 mien phi (15 phut)
+      </a>
+      <a href="https://zalo.me/1678310120468101523" class="cta-btn cta-secondary" id="cta-hold">
+        Giu cho Lion Camp — chi 500k (hoan 100%)
+      </a>
+      <div class="countdown-box">
+        Uu dai con: <span class="time" id="countdown">04:00:00</span>
+      </div>
+      <div class="contact-row">
+        <a href="tel:0916961409" class="contact-btn phone-btn">0916 961 409</a>
+        <a href="https://zalo.me/0916961409" class="contact-btn zalo-btn">Zalo tu van</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="report-footer">
+    Bao cao duoc tao tu dong boi he thong Lion Camp — Truong Viet Anh.<br>
+    Thong tin duoc bao mat va chi dung cho muc dich tu van giao duc.
+  </div>
+</div>
+
+<script is:inline>
+(function() {
+  // === Question data by school level ===
+  var QUESTIONS = {
+    'tieu-hoc': [
+      'Tu giac don dep',
+      'Tu tin giao tiep',
+      'Tieng Anh',
+      'Thoi gian man hinh',
+      'Giai quyet van de',
+      'Hoat dong nhom'
+    ],
+    'thcs': [
+      'Kiem soat cam xuc',
+      'Chia se voi ba me',
+      'Tieng Anh giao tiep',
+      'Thoi gian game/MXH',
+      'Lam viec nhom',
+      'Quan ly thoi gian'
+    ],
+    'thpt': [
+      'Thuyet trinh tieng Anh',
+      'Dinh huong nghe nghiep',
+      'Cong nghe & AI',
+      'Quan ly ap luc',
+      'Hoat dong ngoai khoa',
+      'Tu hoc & quan ly TG'
+    ]
+  };
+
+  // Activity recommendations for weak areas by school level
+  var ACTIVITIES = {
+    'tieu-hoc': [
+      'Thach thuc tu lap — Tu sap xep ba lo, tu don phong moi ngay',
+      'Vong tron tu tin — Bai tap noi chuyen truoc nhom ban nho',
+      'English Zone — Hoc tieng Anh qua tro choi va bai hat',
+      'Digital Detox Challenge — Giam man hinh, tang van dong',
+      'Problem Solving Lab — Giai cau do & thuc hanh tu duy',
+      'Team Adventure — Tro choi dong doi ngoai troi'
+    ],
+    'thcs': [
+      'EQ Workshop — Nhan dien & quan ly cam xuc',
+      'Family Connect — Ky nang giao tiep gia dinh',
+      'English Confidence Club — Luyen noi tieng Anh tu nhien',
+      'Digital Balance — Ke hoach can bang MXH & hoc tap',
+      'Leadership Camp — Lam viec nhom va dan dat du an',
+      'Time Master — Lap ke hoach & quan ly thoi gian hieu qua'
+    ],
+    'thpt': [
+      'Public Speaking English — Thuyet trinh & tranh luan bang tieng Anh',
+      'Career Explore — Kham pha nghe nghiep va xay dung portfolio',
+      'AI & Tech Lab — Ung dung cong nghe vao du an thuc te',
+      'Stress Management — Ky nang giam ap luc thi cu & cuoc song',
+      'Project-Based Learning — Du an ngoai khoa tang profile',
+      'Self-Study Mastery — Xay dung he thong tu hoc hieu qua'
+    ]
+  };
+
+  // Parse URL params
+  var params = new URLSearchParams(window.location.search);
+  var name = params.get('name') || '';
+  var score = parseInt(params.get('score'), 10) || 0;
+  var level = params.get('level') || '';
+  var school = params.get('school') || 'tieu-hoc';
+  var loc = params.get('loc') || '';
+  var funnel = params.get('funnel') || '';
+
+  // Per-question scores
+  var qScores = [];
+  for (var i = 1; i <= 6; i++) {
+    var v = parseInt(params.get('q' + i), 10);
+    qScores.push(isNaN(v) ? 0 : v);
+  }
+
+  // Derive level if not provided
+  if (!level) {
+    if (score >= 18) level = 'Tot';
+    else if (score >= 12) level = 'Trung binh';
+    else level = 'Can can thiep';
+  }
+
+  // Derive school level label
+  var campLevel = { 'tieu-hoc': 'Tieu hoc', 'thcs': 'THCS', 'thpt': 'THPT' }[school] || '';
+
+  // Color mapping
+  var color = score >= 18 ? '#16A34A' : score >= 12 ? '#F59E0B' : '#EF4444';
+  var barPct = Math.round((score / 24) * 100);
+
+  // === Render header ===
+  var subtitleEl = document.getElementById('report-subtitle');
+  var parts = [];
+  if (campLevel) parts.push('Lion Camp ' + campLevel);
+  if (loc) parts.push(loc);
+  if (name) parts.push('— ' + name);
+  subtitleEl.textContent = parts.join(' ') || 'Lion Camp';
+
+  // === Render score ===
+  document.getElementById('score-num').textContent = score;
+  var scoreBar = document.getElementById('score-bar');
+  scoreBar.style.background = color;
+  setTimeout(function() { scoreBar.style.width = barPct + '%'; }, 200);
+
+  var badge = document.getElementById('level-badge');
+  badge.textContent = level;
+  badge.style.background = color;
+
+  // === Render per-question table ===
+  var questions = QUESTIONS[school] || QUESTIONS['tieu-hoc'];
+  var tbody = document.querySelector('#q-table tbody');
+  for (var i = 0; i < questions.length; i++) {
+    var qs = qScores[i] || 0;
+    var qColor = qs >= 3 ? '#16A34A' : qs >= 2 ? '#F59E0B' : '#EF4444';
+    var qPct = Math.round((qs / 4) * 100);
+    var tr = document.createElement('tr');
+    tr.innerHTML =
+      '<td class="q-name">' + questions[i] + '</td>' +
+      '<td class="q-score-cell" style="color:' + qColor + '">' + qs + '/4</td>' +
+      '<td class="q-bar-cell"><div class="q-mini-bar"><div class="q-mini-bar-fill" style="width:' + qPct + '%;background:' + qColor + '"></div><div class="q-mini-bar-benchmark"></div></div></td>';
+    tbody.appendChild(tr);
+  }
+
+  // === Render comparison chart ===
+  var chartWrap = document.getElementById('chart-wrap');
+  var benchmark = 3;
+  var benchPct = Math.round((benchmark / 4) * 100);
+  for (var i = 0; i < questions.length; i++) {
+    var qs = qScores[i] || 0;
+    var sPct = Math.round((qs / 4) * 100);
+    var sColor = qs >= 3 ? '#16A34A' : qs >= 2 ? '#F59E0B' : '#EF4444';
+    var row = document.createElement('div');
+    row.className = 'chart-row';
+    row.innerHTML =
+      '<div class="chart-label">' + questions[i] + '</div>' +
+      '<div class="chart-bars">' +
+        '<div class="chart-bar-bg"></div>' +
+        '<div class="chart-bar-benchmark" style="width:' + benchPct + '%"></div>' +
+        '<div class="chart-bar-score" style="width:' + sPct + '%;background:' + sColor + '"></div>' +
+      '</div>';
+    chartWrap.appendChild(row);
+  }
+
+  // === Render recommendations ===
+  var recoBox = document.getElementById('reco-box');
+  var firstName = name ? name.trim().split(/\s+/).pop() : 'con';
+  if (score >= 18) {
+    recoBox.innerHTML = '<strong>Ket qua rat tot!</strong> ' + firstName + ' da co nen tang ky nang vung chac. Lion Camp se giup ' + firstName + ' <strong>toa sang hon nua</strong> — phat trien ky nang lanh dao, tu tin dung truoc dam dong, va xay dung nhom ban quoc te.';
+  } else if (score >= 12) {
+    recoBox.innerHTML = '<strong>' + firstName + ' can duoc ho tro dung luc.</strong> Voi diem so hien tai, chi can 6 tuan tai Lion Camp, ' + firstName + ' se <strong>thay doi ro ret</strong> ve tu tin, ky luat va ky nang giao tiep. Day la thoi diem vang de can thiep tich cuc.';
+  } else {
+    recoBox.innerHTML = '<strong>Thoi diem vang de can thiep!</strong> Dung de mua he lang phi — ' + firstName + ' dang can su ho tro chuyen sau. Lion Camp se giup ' + firstName + ' <strong>thay doi toan dien</strong> chi trong 6 tuan voi chuong trinh duoc thiet ke rieng cho tung nhu cau.';
+  }
+
+  // Find 2 weakest areas
+  var indexed = qScores.map(function(s, i) { return { score: s, index: i }; });
+  indexed.sort(function(a, b) { return a.score - b.score; });
+  var weakList = document.getElementById('weak-list');
+  var activities = ACTIVITIES[school] || ACTIVITIES['tieu-hoc'];
+  var weakCount = Math.min(2, indexed.length);
+  for (var i = 0; i < weakCount; i++) {
+    var idx = indexed[i].index;
+    var li = document.createElement('li');
+    li.innerHTML = '<strong>' + questions[idx] + '</strong> (' + qScores[idx] + '/4) — ' + activities[idx];
+    weakList.appendChild(li);
+  }
+
+  // === Countdown timer (4h evergreen, shared session) ===
+  var COUNTDOWN_KEY = 'lion_camp_countdown_end';
+  var endTime = sessionStorage.getItem(COUNTDOWN_KEY);
+  if (!endTime) {
+    endTime = Date.now() + 4 * 60 * 60 * 1000;
+    sessionStorage.setItem(COUNTDOWN_KEY, endTime.toString());
+  } else {
+    endTime = parseInt(endTime, 10);
+  }
+
+  var cdEl = document.getElementById('countdown');
+  function updateCountdown() {
+    var diff = endTime - Date.now();
+    if (diff <= 0) {
+      cdEl.textContent = '00:00:00';
+      return;
+    }
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    cdEl.textContent =
+      (h < 10 ? '0' + h : h) + ':' +
+      (m < 10 ? '0' + m : m) + ':' +
+      (s < 10 ? '0' + s : s);
+    setTimeout(updateCountdown, 1000);
+  }
+  updateCountdown();
+
+  // GTM event
+  if (window.dataLayer) {
+    window.dataLayer.push({
+      event: 'view_quiz_report',
+      quiz_score: score,
+      quiz_level: level,
+      school_level: school,
+      location: loc
+    });
+  }
+})();
+</script>
+</body>
+</html>

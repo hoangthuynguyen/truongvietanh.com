@@ -172,18 +172,19 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
         camOnUrl={camOnUrl}
       />
     ) : (
-      /* Fallback to simple form if no quiz questions in CMS */
-      <div class="quiz-intro">
-        <h2 class="squeeze-form-section__heading">{page.form_heading}</h2>
-        <p class="squeeze-form-section__description">{page.form_description}</p>
-      </div>
-      <LeadFormTwoStepEmailFirst
-        formId="squeeze-form"
-        funnelCode={page.funnel_code}
-        schoolLevel={page.school_level}
-        submitText={page.form_submit_text}
-        successMessage={page.form_success_message}
-      />
+      <Fragment>
+        <div class="quiz-intro">
+          <h2 class="squeeze-form-section__heading">{page.form_heading}</h2>
+          <p class="squeeze-form-section__description">{page.form_description}</p>
+        </div>
+        <LeadFormTwoStepEmailFirst
+          formId="squeeze-form"
+          funnelCode={page.funnel_code}
+          schoolLevel={page.school_level}
+          submitText={page.form_submit_text}
+          successMessage={page.form_success_message}
+        />
+      </Fragment>
     )}
     <!-- Live signup counter -->
     <div class="form-live-counter">

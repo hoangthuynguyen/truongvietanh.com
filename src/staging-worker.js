@@ -110,16 +110,16 @@ function normalizeFormData(data) {
     childName: data.childName || data.child_name || '',
     schoolLevel: data.schoolLevel || data.school_level || '',
     grade: data.grade || '',
-    source: data.source || data.funnel_code || data.page_variant || 'unknown',
+    source: data.source || data.funnelCode || data.funnel_code || data.page_variant || 'unknown',
     page: data.page || data.page_url || '',
-    utmSource: data.utm_source || '',
-    utmMedium: data.utm_medium || '',
-    utmCampaign: data.utm_campaign || '',
-    // Quiz funnel fields
-    quizScore: parseInt(data.quiz_score, 10) || 0,
-    quizLevel: data.quiz_level || '',
-    funnelCode: data.funnel_code || '',
-    quizAnswers: Array.isArray(data.quiz_answers) ? data.quiz_answers : [],
+    utmSource: data.utm_source || data.utmSource || '',
+    utmMedium: data.utm_medium || data.utmMedium || '',
+    utmCampaign: data.utm_campaign || data.utmCampaign || '',
+    // Quiz funnel fields — support both camelCase and snake_case
+    quizScore: parseInt(data.quizScore ?? data.quiz_score, 10) || 0,
+    quizLevel: data.quizLevel || data.quiz_level || '',
+    funnelCode: data.funnelCode || data.funnel_code || data.source || '',
+    quizAnswers: Array.isArray(data.quizAnswers || data.quiz_answers) ? (data.quizAnswers || data.quiz_answers) : [],
   };
 }
 
@@ -129,14 +129,14 @@ function isQuizLead(data) {
 }
 
 function getQuizResultLabel(score) {
-  if (score >= 18) return 'Tốt';
-  if (score >= 12) return 'Trung bình';
+  if (score >= 75) return 'Tốt';
+  if (score >= 50) return 'Trung bình';
   return 'Cần can thiệp';
 }
 
 function getQuizResultEmoji(score) {
-  if (score >= 18) return '✅';
-  if (score >= 12) return '⚠️';
+  if (score >= 75) return '✅';
+  if (score >= 50) return '⚠️';
   return '🔴';
 }
 
@@ -254,7 +254,8 @@ async function handleLeadSubmission(request, env) {
         if (isQuizLead(data)) {
           ghlBody.customFields.push(
             { id: 'EoYde4vUysFckhpYeu1V', field_value: data.quizScore.toString() },
-            { id: '4pJj3NJZhiaiCAvI3dhd', field_value: data.quizLevel || getQuizResultLabel(data.quizScore) }
+            { id: '4pJj3NJZhiaiCAvI3dhd', field_value: data.quizLevel || getQuizResultLabel(data.quizScore) },
+            { id: 'ufyzDQCInYMAotvxCj12', field_value: getQuizReportUrl(data) }  // Báo cáo URL
           );
         }
 
@@ -271,40 +272,8 @@ async function handleLeadSubmission(request, env) {
         const ghlData = await ghlRes.json();
         const contactId = ghlData?.contact?.id || null;
         results.ghl = { status: ghlRes.status, contactId };
-
-        // === Create Opportunity in Pipeline "Tuyển Sinh 2026" ===
-        if (contactId && (data.source || '').includes('trai-he')) {
-          try {
-            const PIPELINE_ID = 'wBGA6IWGRd14sCXrasTp';
-            const NEW_LEAD_STAGE = '622d8a0e-c396-422b-a62c-f984652cdaa4';
-            const QUIZ_STAGE = 'f9ae4eae-eda0-41cc-beea-93035932651c';
-
-            const stageId = isQuizLead(data) ? QUIZ_STAGE : NEW_LEAD_STAGE;
-            const oppName = `Trại hè ${deriveCampLevel(data.source) || ''} ${deriveLocation(data.source) || ''} — ${data.fullName || data.phone}`.trim();
-
-            const oppRes = await fetch('https://services.leadconnectorhq.com/opportunities/', {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${ghlApiKey}`,
-                'Version': '2021-07-28',
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({
-                locationId: GHL_LOCATION_ID,
-                pipelineId: PIPELINE_ID,
-                pipelineStageId: stageId,
-                contactId,
-                name: oppName,
-                status: 'open',
-                monetaryValue: 19998000,
-              }),
-            });
-            const oppData = await oppRes.json();
-            results.ghl.opportunityId = oppData?.opportunity?.id || null;
-          } catch (oppErr) {
-            results.ghl.opportunityError = oppErr.message;
-          }
-        }
+        // Opportunity creation handled later via createQuizOpportunity()
+        // for both quiz + sales page trai-he leads (isQuizLead=true for all trai-he)
       } catch (err) {
         results.ghl = { error: err.message };
       }
@@ -363,16 +332,17 @@ async function handleLeadSubmission(request, env) {
         sendEmailNotification(data, env).catch(() => {}),
         sendZaloNotification(data, env).catch(() => {}),
       ];
-      // Quiz leads: send quiz result email to parent + create opportunity
-      if (isQuizLead(data)) {
+      // Actual quiz leads (with score > 0): send quiz result email with score
+      if (data.quizScore > 0) {
         promises.push(sendQuizResultEmail(data, env).catch(() => {}));
-        if (contactId) {
-          promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
-        }
       }
-      // Trai-he sales page leads (non-quiz): send consultation confirmation email
+      // Trai-he sales page leads (no quiz score): send consultation confirmation email
       else if ((data.source || '').includes('trai-he') && data.email) {
         promises.push(sendTraiHeConsultEmail(data, env).catch(() => {}));
+      }
+      // Create opportunity for ALL trai-he leads (quiz or sales page)
+      if (isQuizLead(data) && contactId) {
+        promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
       }
       // Add contact to appropriate GHL workflow
       if (contactId) {
@@ -467,11 +437,20 @@ const TRAI_HE_STAGE_ID = '622d8a0e-c396-422b-a62c-f984652cdaa4'; // New Lead
 async function createQuizOpportunity(contactId, data, ghlApiKey) {
   const loc = deriveLocation(data.funnelCode);
   const campLvl = deriveCampLevel(data.funnelCode);
-  const score = data.quizScore;
-  const level = getQuizResultLabel(score);
+  const score = data.quizScore || 0;
+  const level = score > 0 ? getQuizResultLabel(score) : '';
 
-  // Monetary value estimate based on quiz score urgency
-  const monetaryValue = score <= 12 ? 15000000 : score <= 17 ? 12000000 : 10000000;
+  // Monetary value: default 19.998M for sales page leads, or score-based for quiz leads
+  const monetaryValue = score === 0 ? 19998000
+    : score < 50 ? 15000000
+    : score < 75 ? 12000000
+    : 10000000;
+
+  // Name format: sales → "Trại Hè {Level} {Location} — {Name}"
+  //              quiz  → same + " ({score}đ {label})"
+  const oppName = score > 0
+    ? `Trại Hè ${campLvl} ${loc} — ${data.fullName} (${score}đ ${level})`
+    : `Trại Hè ${campLvl} ${loc} — ${data.fullName}`;
 
   await fetch('https://services.leadconnectorhq.com/opportunities/', {
     method: 'POST',
@@ -483,11 +462,12 @@ async function createQuizOpportunity(contactId, data, ghlApiKey) {
     body: JSON.stringify({
       pipelineId: TRAI_HE_PIPELINE_ID,
       locationId: GHL_LOCATION_ID,
-      name: `Trại Hè ${campLvl} ${loc} — ${data.fullName} (${score}đ ${level})`,
-      stageId: TRAI_HE_STAGE_ID,
+      name: oppName,
+      pipelineStageId: TRAI_HE_STAGE_ID,
       contactId,
+      status: 'open',
       monetaryValue,
-      source: `Quiz Funnel - ${data.funnelCode}`,
+      source: `Trai He Funnel - ${data.funnelCode}`,
     }),
   });
 }
@@ -547,10 +527,10 @@ async function sendEmailNotification(data, env) {
       ${isQuizLead(data) ? `<tr style="background:#fff8e1;">
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">📊 Quiz Score</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;">
-          <strong style="font-size:18px;color:${data.quizScore >= 18 ? '#16A34A' : data.quizScore >= 12 ? '#F59E0B' : '#EF4444'};">
-            ${data.quizScore}/24 — ${getQuizResultLabel(data.quizScore)}
+          <strong style="font-size:18px;color:${data.quizScore >= 75 ? '#16A34A' : data.quizScore >= 50 ? '#F59E0B' : '#EF4444'};">
+            ${data.quizScore}/100 — ${getQuizResultLabel(data.quizScore)}
           </strong>
-          ${data.quizScore <= 12 ? '<br><span style="color:#EF4444;font-weight:bold;">⚡ CAN THIEP GAP — Goi ngay!</span>' : ''}
+          ${data.quizScore < 50 ? '<br><span style="color:#EF4444;font-weight:bold;">⚡ CAN THIEP GAP — Goi ngay!</span>' : ''}
         </td>
       </tr>
       <tr>
@@ -623,12 +603,12 @@ async function sendZaloNotification(data, env) {
     const loc = deriveLocation(data.funnelCode);
     const campLvl = deriveCampLevel(data.funnelCode);
     lines.push('');
-    lines.push(`📊 QUIZ TRẠI HÈ: ${data.quizScore}/24 điểm`);
+    lines.push(`📊 QUIZ TRẠI HÈ: ${data.quizScore}/100 điểm`);
     lines.push(`${getQuizResultEmoji(data.quizScore)} Mức: ${getQuizResultLabel(data.quizScore)}`);
     lines.push(`🏫 Cơ sở: ${loc}`);
     lines.push(`📚 Cấp: ${campLvl}`);
     lines.push('');
-    lines.push(`🔥 Gọi NGAY — lead quiz score ${data.quizScore <= 12 ? 'THẤP → CẦN CAN THIỆP GẤP!' : data.quizScore <= 17 ? 'TB → Khả năng chốt cao' : 'TỐT → Upsell gói premium'}`);
+    lines.push(`🔥 Gọi NGAY — lead quiz score ${data.quizScore < 50 ? 'THẤP → CẦN CAN THIỆP GẤP!' : data.quizScore < 75 ? 'TB → Khả năng chốt cao' : 'TỐT → Upsell gói premium'}`);
   }
 
   lines.push('');
@@ -657,11 +637,11 @@ async function sendQuizResultEmail(data, env) {
   const reportUrl = getQuizReportUrl(data);
   const firstName = (data.fullName || '').trim().split(/\s+/).pop() || 'Ba/Mẹ';
 
-  // Color based on score
-  const color = score >= 18 ? '#16A34A' : score >= 12 ? '#F59E0B' : '#EF4444';
-  const barWidth = Math.round((score / 24) * 100);
+  // Color based on score (0-100 scale)
+  const color = score >= 75 ? '#16A34A' : score >= 50 ? '#F59E0B' : '#EF4444';
+  const barWidth = score;
 
-  const subject = `📊 Kết quả đánh giá Lion Camp — ${score}/24 điểm — Báo cáo dành riêng cho gia đình ${firstName}`;
+  const subject = `📊 Kết quả đánh giá Lion Camp — ${score}/100 điểm — Báo cáo dành riêng cho gia đình ${firstName}`;
 
   const body = `
 <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:560px;margin:0 auto;background:#fff;">
@@ -680,7 +660,7 @@ async function sendQuizResultEmail(data, env) {
 
     <!-- Score Card -->
     <div style="background:#F0F9FF;border:2px solid #7DD3FC;border-radius:14px;padding:20px;text-align:center;margin-bottom:20px;">
-      <div style="font-size:42px;font-weight:800;color:#1F4E79;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 24</span></div>
+      <div style="font-size:42px;font-weight:800;color:#1F4E79;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 100</span></div>
       <!-- Score bar -->
       <div style="background:#E5E7EB;border-radius:6px;height:12px;margin:12px 0;overflow:hidden;">
         <div style="background:${color};height:100%;width:${barWidth}%;border-radius:6px;"></div>
@@ -691,7 +671,7 @@ async function sendQuizResultEmail(data, env) {
     <!-- What this means -->
     <div style="background:#F9FAFB;border-radius:10px;padding:16px;margin-bottom:20px;">
       <p style="font-weight:700;color:#1F4E79;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
-      ${score >= 18 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đã có nền tảng tốt! Trại hè sẽ giúp con <strong>tỏa sáng hơn nữa</strong> và phát triển kỹ năng vượt trội so với bạn bè.</p>` : score >= 12 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đang ở giai đoạn <strong>cần hỗ trợ kịp thời</strong>. 6 tuần tại Lion Camp sẽ giúp con tiến bộ rõ rệt về tự tin và kỷ luật.</p>` : `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Đây là <strong>thời điểm vàng để can thiệp</strong>. Mùa hè này là cơ hội quan trọng nhất để giúp con thay đổi toàn diện.</p>`}
+      ${score >= 75 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đã có nền tảng tốt! Trại hè sẽ giúp con <strong>tỏa sáng hơn nữa</strong> và phát triển kỹ năng vượt trội so với bạn bè.</p>` : score >= 50 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đang ở giai đoạn <strong>cần hỗ trợ kịp thời</strong>. 6 tuần tại Lion Camp sẽ giúp con tiến bộ rõ rệt về tự tin và kỷ luật.</p>` : `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Đây là <strong>thời điểm vàng để can thiệp</strong>. Mùa hè này là cơ hội quan trọng nhất để giúp con thay đổi toàn diện.</p>`}
     </div>
 
     <!-- Recommended action -->

@@ -1,10 +1,18 @@
 ---
 /**
- * Trại Hè Thank-You Page — CMS-driven template
+ * Trại Hè Thank-You Page — CMS-driven template (Conversion-Optimized v2)
  *
  * Standalone HTML (no shared layout) for fast, noindex thank-you pages.
- * All text and lists come from the same Directus record as the squeeze page.
- * {name} in thank_you_headline is replaced client-side from ?name= query.
+ * All text comes from the same Directus record as the squeeze page.
+ *
+ * Conversion features:
+ * - Pulsing primary CTA
+ * - Confetti animation on load
+ * - Urgency countdown (4h evergreen)
+ * - Stronger 2-choice comparison for THCS/THPT
+ * - Zalo deep-link with pre-filled message
+ * - Progress steps visualization
+ * - Trust reassurance footer
  */
 import { getAllTraiHeSlugs, getTraiHePageBySlug } from '../../../lib/trai-he-pages';
 
@@ -23,9 +31,9 @@ if (!page) {
 }
 
 const canonicalUrl = `https://truongvietanh.com/${page.slug}/cam-on`;
+const zaloUrl = 'https://zalo.me/1678310120468101523';
+const zaloDeepLink = `https://zalo.me/1678310120468101523?text=${encodeURIComponent(`Chào thầy/cô, tôi vừa làm bài đánh giá Lion Camp ${page.location} cho con. Tôi muốn nhận báo cáo và giữ chỗ ạ.`)}`;
 
-// Split headline around {name} so we can render server HTML statically and
-// let a small inline script insert the submitted name on the client.
 const headlineParts = page.thank_you_headline.split('{name}');
 const headlineBefore = headlineParts[0] ?? page.thank_you_headline;
 const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{name}') : '';
@@ -40,57 +48,110 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
   <meta name="description" content={page.thank_you_description} />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="canonical" href={canonicalUrl} />
+
   <style is:inline>
-    :root{--b:#1F4E79;--o:#E8792B;--w:#fff;--g6:#666;--f:'Open Sans',system-ui,-apple-system,sans-serif}
+    :root{--b:#1F4E79;--o:#E8792B;--gold:#F59E0B;--w:#fff;--g6:#666;--green:#16A34A;--f:'Open Sans',system-ui,-apple-system,sans-serif}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:var(--f);-webkit-font-smoothing:antialiased;font-size:16px;color:#1C2A3A;background:linear-gradient(165deg,#FFF7ED 0%,#FED7AA 40%,#FDBA74 100%);min-height:100vh;display:flex;flex-direction:column}
-    .logo-bar{text-align:center;padding:24px 16px 0}
-    .main{flex:1;display:flex;align-items:center;justify-content:center;padding:24px 16px 40px}
-    .card{background:var(--w);border-radius:24px;box-shadow:0 12px 40px rgba(0,0,0,.1);max-width:580px;width:100%;padding:36px 28px;text-align:center}
-    .icon{width:72px;height:72px;border-radius:50%;background:#FFF7ED;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 18px}
-    h1{font-family:'Montserrat',sans-serif;font-size:1.4rem;font-weight:800;color:var(--o);margin-bottom:10px;line-height:1.35}
+    body{font-family:var(--f);-webkit-font-smoothing:antialiased;font-size:16px;color:#1C2A3A;background:linear-gradient(165deg,#FFF7ED 0%,#FED7AA 40%,#FDBA74 100%);min-height:100vh;display:flex;flex-direction:column;overflow-x:hidden}
+
+    /* === Confetti canvas === */
+    #confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:10001}
+
+    .logo-bar{text-align:center;padding:20px 16px 0}
+
+    /* === Progress steps === */
+    .progress-steps{display:flex;align-items:center;justify-content:center;gap:0;margin:16px auto 0;max-width:360px;padding:0 16px}
+    .step{display:flex;align-items:center;gap:6px;font-size:.78rem;font-weight:600;color:var(--green)}
+    .step--pending{color:#aaa}
+    .step__dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:800;color:var(--w)}
+    .step--done .step__dot{background:var(--green)}
+    .step--active .step__dot{background:var(--o);animation:stepPulse 2s ease-in-out infinite}
+    .step--pending .step__dot{background:#ccc}
+    .step__line{flex:1;height:3px;background:var(--green);min-width:30px;border-radius:2px}
+    .step__line--pending{background:#ddd}
+    @keyframes stepPulse{0%,100%{box-shadow:0 0 0 0 rgba(232,121,43,.4)}50%{box-shadow:0 0 0 8px rgba(232,121,43,0)}}
+
+    .main{flex:1;display:flex;align-items:center;justify-content:center;padding:20px 16px 40px}
+
+    .card{background:var(--w);border-radius:24px;box-shadow:0 16px 48px rgba(0,0,0,.12);max-width:580px;width:100%;padding:2.5rem 2rem;text-align:center;position:relative;overflow:hidden}
+    .card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--o),var(--gold),var(--o))}
+
+    .icon{width:76px;height:76px;border-radius:50%;background:#FFF7ED;display:flex;align-items:center;justify-content:center;font-size:2.5rem;margin:0 auto 16px;box-shadow:0 4px 16px rgba(245,158,11,.2)}
+    h1{font-family:'Montserrat',sans-serif;font-size:1.35rem;font-weight:800;color:var(--o);margin-bottom:10px;line-height:1.35}
     h1 .name{color:var(--b)}
-    .msg{font-size:1rem;color:#333;line-height:1.7;margin-bottom:20px;text-align:left}
+
+    .msg{font-size:.98rem;color:#333;line-height:1.7;margin-bottom:18px;text-align:left}
     .msg strong{color:#1C2A3A}
-    .report-list{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:12px;padding:16px 20px;margin-bottom:20px;text-align:left}
-    .report-list .title{font-weight:700;color:var(--b);margin-bottom:8px;font-size:.95rem}
+
+    /* === Zalo nudge === */
+    .zalo-nudge{background:linear-gradient(135deg,#E8F4FD,#DBEAFE);border:2px solid #0068FF;border-radius:14px;padding:16px 18px;margin-bottom:18px;text-align:center}
+    .zalo-nudge__text{font-size:.92rem;color:#1E40AF;font-weight:600;margin-bottom:8px}
+    .zalo-nudge__btn{display:inline-flex;align-items:center;gap:6px;background:#0068FF;color:var(--w);padding:10px 20px;border-radius:10px;text-decoration:none;font-weight:700;font-size:.9rem;transition:all .2s}
+    .zalo-nudge__btn:hover{background:#0056D6;transform:translateY(-1px)}
+
+    .report-list{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:14px;padding:18px 20px;margin-bottom:18px;text-align:left}
+    .report-list .title{font-weight:700;color:var(--b);margin-bottom:10px;font-size:.95rem;display:flex;align-items:center;gap:8px}
+    .report-list .title::before{content:'📊';font-size:1.1rem}
     .report-list ul{list-style:none;padding:0;margin:0}
-    .report-list li{padding:6px 0 6px 22px;position:relative;font-size:.92rem;color:#374151}
-    .report-list li::before{content:'✓';position:absolute;left:0;color:#16A34A;font-weight:700}
-    .bonus-box{background:#FFF7ED;border:2px solid var(--o);border-radius:14px;padding:18px 20px;margin-bottom:18px;text-align:left}
-    .bonus-box .title{font-weight:800;color:var(--o);margin-bottom:10px;font-size:1rem;font-family:'Montserrat',sans-serif}
+    .report-list li{padding:7px 0 7px 26px;position:relative;font-size:.92rem;color:#374151;line-height:1.5}
+    .report-list li::before{content:'✓';position:absolute;left:0;color:var(--green);font-weight:700;font-size:1rem}
+
+    .bonus-box{background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid var(--gold);border-radius:16px;padding:20px;margin-bottom:18px;text-align:left;position:relative;overflow:hidden}
+    .bonus-box::before{content:'⚡';position:absolute;top:8px;right:12px;font-size:1.5rem;opacity:.3}
+    .bonus-box .title{font-weight:800;color:var(--o);margin-bottom:10px;font-size:1rem;font-family:'Montserrat',sans-serif;display:flex;align-items:center;gap:8px}
     .bonus-box ul{list-style:none;padding:0;margin:0}
-    .bonus-box li{padding:5px 0 5px 22px;position:relative;font-size:.92rem;color:#7C2D12;line-height:1.5}
-    .bonus-box li::before{content:'•';position:absolute;left:6px;color:var(--o);font-weight:700;font-size:1.2rem}
-    .choices-title{font-weight:700;color:var(--b);margin-bottom:10px;font-family:Montserrat,sans-serif}
-    .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px}
-    .choice{padding:14px 12px;border-radius:12px;text-align:left;font-size:.85rem;line-height:1.5}
-    .choice-bad{background:#FEF2F2;border:1.5px solid #FCA5A5}
-    .choice-bad .label{color:#991B1B;font-weight:700;font-size:.9rem;margin-bottom:6px}
-    .choice-good{background:#F0FDF4;border:1.5px solid #86EFAC}
-    .choice-good .label{color:#166534;font-weight:700;font-size:.9rem;margin-bottom:6px}
-    .countdown-box{display:inline-flex;align-items:center;gap:8px;background:#FEE2E2;color:#991B1B;padding:10px 18px;border-radius:14px;font-size:.9rem;font-weight:600;margin-bottom:18px}
-    .countdown-box .time{font-weight:800;font-family:'Montserrat',sans-serif;letter-spacing:.5px}
-    .secondary-countdown{font-size:.82rem;color:#666;margin-bottom:20px}
-    .cta-stack{display:flex;flex-direction:column;gap:10px;margin-bottom:18px}
-    .cta-btn{display:block;padding:15px 20px;border-radius:14px;text-decoration:none;font-weight:700;font-size:1rem;text-align:center;transition:all .2s;font-family:'Montserrat',sans-serif}
-    .cta-primary{background:var(--o);color:var(--w);box-shadow:0 4px 14px rgba(232,121,43,.35)}
-    .cta-primary:hover{background:#D96A1F;transform:translateY(-2px)}
-    .cta-zalo{background:#0068FF;color:var(--w)}
-    .cta-zalo:hover{background:#0056D6}
+    .bonus-box li{padding:6px 0 6px 24px;position:relative;font-size:.92rem;color:#7C2D12;line-height:1.55}
+    .bonus-box li::before{content:'🎁';position:absolute;left:0;font-size:.85rem}
+
+    .choices-title{font-weight:700;color:var(--b);margin-bottom:12px;font-family:Montserrat,sans-serif;font-size:1.05rem}
+    .choices{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+    .choice{padding:16px 14px;border-radius:14px;text-align:left;font-size:.85rem;line-height:1.55;transition:all .2s}
+    .choice-bad{background:#FEF2F2;border:2px solid #FCA5A5}
+    .choice-bad .label{color:#991B1B;font-weight:700;font-size:.92rem;margin-bottom:8px}
+    .choice-good{background:#F0FDF4;border:2px solid #86EFAC;box-shadow:0 4px 12px rgba(22,163,106,.1)}
+    .choice-good .label{color:#166534;font-weight:700;font-size:.92rem;margin-bottom:8px}
+    .choice-good:hover{box-shadow:0 6px 18px rgba(22,163,106,.18);transform:translateY(-2px)}
+
+    /* === Countdown === */
+    .countdown-box{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,#FEE2E2,#FECACA);color:#991B1B;padding:12px 20px;border-radius:14px;font-size:.9rem;font-weight:600;margin-bottom:12px;border:1px solid #FCA5A5}
+    .countdown-box .time{font-weight:800;font-family:'Montserrat',sans-serif;letter-spacing:.5px;font-size:1.05rem}
+    .secondary-countdown{font-size:.82rem;color:#666;margin-bottom:18px;display:flex;align-items:center;justify-content:center;gap:6px}
+    .secondary-countdown__dot{width:8px;height:8px;background:var(--green);border-radius:50%;animation:livePulse 2s infinite}
+    @keyframes livePulse{0%,100%{opacity:1}50%{opacity:.3}}
+
+    /* === CTA buttons === */
+    .cta-stack{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+    .cta-btn{display:block;padding:16px 20px;border-radius:14px;text-decoration:none;font-weight:700;font-size:1rem;text-align:center;transition:all .2s;font-family:'Montserrat',sans-serif}
+    .cta-primary{background:linear-gradient(135deg,var(--o),var(--gold));color:var(--w);box-shadow:0 4px 18px rgba(232,121,43,.35);animation:ctaPulse 2.5s ease-in-out infinite}
+    .cta-primary:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(232,121,43,.5)}
+    @keyframes ctaPulse{0%,100%{box-shadow:0 4px 18px rgba(232,121,43,.35)}50%{box-shadow:0 4px 30px rgba(232,121,43,.6),0 0 48px rgba(245,158,11,.15)}}
+    .cta-zalo{background:#0068FF;color:var(--w);box-shadow:0 4px 14px rgba(0,104,255,.25)}
+    .cta-zalo:hover{background:#0056D6;transform:translateY(-1px)}
+
     .contact-info{display:flex;gap:10px;justify-content:center;margin-bottom:14px}
-    .contact-btn{padding:10px 16px;border-radius:10px;text-decoration:none;font-size:.85rem;font-weight:600;background:#1F4E79;color:var(--w)}
-    .footer-note{font-size:.75rem;color:#999;margin-top:14px}
-    @media(max-width:480px){.card{padding:28px 20px}h1{font-size:1.2rem}.choices{grid-template-columns:1fr}}
+    .contact-btn{padding:10px 18px;border-radius:10px;text-decoration:none;font-size:.85rem;font-weight:600;background:var(--b);color:var(--w);transition:all .2s}
+    .contact-btn:hover{background:#163D61}
+
+    /* === Trust footer === */
+    .trust-footer{display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid #eee}
+    .trust-footer__item{display:flex;align-items:center;gap:4px;font-size:.75rem;color:#999}
+    .trust-footer__item span{font-size:.85rem}
+
+    .footer-note{font-size:.75rem;color:#999;margin-top:10px}
+
+    @media(max-width:480px){
+      .card{padding:2rem 1.25rem;border-radius:20px}
+      h1{font-size:1.15rem}
+      .msg{font-size:.92rem}
+      .choices{grid-template-columns:1fr}
+      .cta-btn{padding:14px 16px;font-size:.92rem}
+      .trust-footer{gap:.75rem}
+    }
   </style>
+
   <script is:inline define:vars={{ pageTitle: page.thank_you_title, schoolLevel: page.school_level, funnelCode: page.funnel_code }}>
     window.dataLayer = window.dataLayer || [];
-    window.dataLayer.push({
-      event: 'generate_lead',
-      page_title: pageTitle,
-      school_level: schoolLevel,
-      funnel_code: funnelCode,
-    });
+    window.dataLayer.push({ event: 'generate_lead', page_title: pageTitle, school_level: schoolLevel, funnel_code: funnelCode });
   </script>
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -99,70 +160,173 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-  <div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" style="height:56px;width:auto" /></div>
-  <div class="main">
-    <div class="card">
-      <div class="icon">{page.thank_you_icon}</div>
-      <h1>{headlineBefore}<span class="name" id="parentName"></span>{headlineAfter}</h1>
-      <p class="msg" set:html={page.thank_you_intro} />
 
-      <div class="report-list">
-        <div class="title">{page.thank_you_report_title}</div>
-        <ul>
-          {page.thank_you_report_items.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
+<!-- Confetti canvas -->
+<canvas id="confetti"></canvas>
 
-      <div class="bonus-box">
-        <div class="title">{page.thank_you_bonus_title}</div>
-        <ul>
-          {page.thank_you_bonus_items.map((item) => <li>{item}</li>)}
-        </ul>
-      </div>
+<div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" style="height:50px;width:auto" /></div>
 
-      {page.thank_you_show_two_choices && (
-        <>
-          {page.thank_you_two_choices_title && (
-            <div class="choices-title">{page.thank_you_two_choices_title}</div>
-          )}
-          <div class="choices">
-            <div class="choice choice-bad">
-              <div class="label">❌ Chờ đợi</div>
-              {page.thank_you_waiting_text}
-            </div>
-            <div class="choice choice-good">
-              <div class="label">✅ Giữ chỗ an toàn</div>
-              {page.thank_you_reserve_text}
-            </div>
-          </div>
-        </>
-      )}
+<!-- Progress steps -->
+<div class="progress-steps">
+  <div class="step step--done"><span class="step__dot">✓</span><span>Đánh giá</span></div>
+  <div class="step__line"></div>
+  <div class="step step--active"><span class="step__dot">2</span><span>Nhận báo cáo</span></div>
+  <div class="step__line step__line--pending"></div>
+  <div class="step step--pending"><span class="step__dot">3</span><span>Giữ chỗ</span></div>
+</div>
 
-      <div class="countdown-box">⏰ Ưu đãi kết thúc trong <span class="time" id="countdown">24:00:00</span></div>
-      <div class="secondary-countdown">📞 Tư vấn viên sẽ gọi trong 5 phút để hỗ trợ giữ chỗ</div>
-      <div class="cta-stack">
-        <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="cta-btn cta-primary">👉 TÔI MUỐN GIỮ SUẤT 500K &amp; NHẬN HỌC BỔNG NGAY!</a>
-        <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="cta-btn cta-zalo">💬 Tôi cần xem báo cáo và tư vấn nhanh qua Zalo</a>
-      </div>
-      <div class="contact-info">
-        <a href="tel:+84916961409" class="contact-btn">📞 Gọi 0916 961 409</a>
-      </div>
-      <p class="footer-note">Thông tin được bảo mật tuyệt đối theo chính sách của Trường Việt Anh.</p>
+<div class="main">
+  <div class="card">
+    <div class="icon">{page.thank_you_icon}</div>
+    <h1>{headlineBefore}<span class="name" id="parentName"></span>{headlineAfter}</h1>
+    <p class="msg" set:html={page.thank_you_intro} />
+
+    <!-- Zalo nudge -->
+    <div class="zalo-nudge">
+      <div class="zalo-nudge__text">📱 Báo cáo đang chờ Ba/Mẹ trên Zalo!</div>
+      <a href={zaloDeepLink} target="_blank" rel="noopener" class="zalo-nudge__btn">
+        💬 Mở Zalo nhận báo cáo ngay
+      </a>
     </div>
+
+    <div class="report-list">
+      <div class="title">{page.thank_you_report_title}</div>
+      <ul>
+        {page.thank_you_report_items.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    <div class="bonus-box">
+      <div class="title">🎁 {page.thank_you_bonus_title}</div>
+      <ul>
+        {page.thank_you_bonus_items.map((item) => <li>{item}</li>)}
+      </ul>
+    </div>
+
+    {page.thank_you_show_two_choices && (
+      <>
+        {page.thank_you_two_choices_title && (
+          <div class="choices-title">{page.thank_you_two_choices_title}</div>
+        )}
+        <div class="choices">
+          <div class="choice choice-bad">
+            <div class="label">❌ Chờ đợi</div>
+            {page.thank_you_waiting_text}
+          </div>
+          <div class="choice choice-good">
+            <div class="label">✅ Giữ chỗ an toàn</div>
+            {page.thank_you_reserve_text}
+          </div>
+        </div>
+      </>
+    )}
+
+    <div class="countdown-box">⏰ Ưu đãi kết thúc trong <span class="time" id="countdown">--:--:--</span></div>
+    <div class="secondary-countdown">
+      <span class="secondary-countdown__dot"></span>
+      Tư vấn viên sẽ gọi trong 5 phút để hỗ trợ giữ chỗ
+    </div>
+
+    <div class="cta-stack">
+      <a href={zaloDeepLink} target="_blank" rel="noopener" class="cta-btn cta-primary">
+        👉 TÔI MUỐN GIỮ SUẤT 500K &amp; NHẬN HỌC BỔNG NGAY!
+      </a>
+      <a href={zaloDeepLink} target="_blank" rel="noopener" class="cta-btn cta-zalo">
+        💬 Tôi cần xem báo cáo và tư vấn nhanh qua Zalo
+      </a>
+    </div>
+
+    <div class="contact-info">
+      <a href="tel:+84916961409" class="contact-btn">📞 Gọi 0916 961 409</a>
+    </div>
+
+    <div class="trust-footer">
+      <div class="trust-footer__item"><span>🔒</span> Bảo mật</div>
+      <div class="trust-footer__item"><span>💯</span> Hoàn tiền 100%</div>
+      <div class="trust-footer__item"><span>🏫</span> 15+ năm</div>
+    </div>
+    <p class="footer-note">Thông tin được bảo mật tuyệt đối theo chính sách của Trường Việt Anh.</p>
   </div>
-  <script is:inline>
-    (function () {
-      var p = new URLSearchParams(window.location.search);
-      var n = p.get('name');
-      if (n) document.getElementById('parentName').textContent = n;
-      var s = 24 * 3600, el = document.getElementById('countdown');
-      var t = setInterval(function () {
-        s--;
-        if (s <= 0) { clearInterval(t); el.textContent = 'Đã kết thúc'; return; }
-        var h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), sc = s % 60;
-        el.textContent = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (sc < 10 ? '0' : '') + sc;
-      }, 1e3);
-    })();
-  </script>
+</div>
+
+<script is:inline>
+  (function () {
+    // === 1. Insert parent name ===
+    var p = new URLSearchParams(window.location.search);
+    var n = p.get('name');
+    if (n) document.getElementById('parentName').textContent = ' ' + n + ' ';
+
+    // === 2. Evergreen 4h countdown (matches squeeze page) ===
+    var COUNTDOWN_KEY = 'camp_countdown_end';
+    var stored = sessionStorage.getItem(COUNTDOWN_KEY);
+    var endTime = stored ? parseInt(stored, 10) : 0;
+    if (!endTime || endTime < Date.now()) {
+      endTime = Date.now() + 4 * 3600 * 1000;
+      sessionStorage.setItem(COUNTDOWN_KEY, endTime.toString());
+    }
+    var el = document.getElementById('countdown');
+    var t = setInterval(function () {
+      var diff = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
+      var h = Math.floor(diff / 3600), m = Math.floor((diff % 3600) / 60), sc = diff % 60;
+      el.textContent = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (sc < 10 ? '0' : '') + sc;
+      if (diff <= 0) { clearInterval(t); el.textContent = 'Đã kết thúc'; }
+    }, 1e3);
+
+    // === 3. Mini confetti animation (lightweight, no library) ===
+    var canvas = document.getElementById('confetti');
+    if (canvas) {
+      var ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      var pieces = [];
+      var colors = ['#E8792B', '#F59E0B', '#1a1a5e', '#16A34A', '#0068FF', '#EF4444'];
+      for (var i = 0; i < 80; i++) {
+        pieces.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * -canvas.height,
+          w: Math.random() * 8 + 4,
+          h: Math.random() * 6 + 2,
+          r: Math.random() * 360,
+          c: colors[Math.floor(Math.random() * colors.length)],
+          vx: (Math.random() - .5) * 3,
+          vy: Math.random() * 3 + 2,
+          vr: (Math.random() - .5) * 8
+        });
+      }
+      var frame = 0;
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        pieces.forEach(function (p) {
+          ctx.save();
+          ctx.translate(p.x, p.y);
+          ctx.rotate(p.r * Math.PI / 180);
+          ctx.fillStyle = p.c;
+          ctx.globalAlpha = Math.max(0, 1 - frame / 120);
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          ctx.restore();
+          p.x += p.vx;
+          p.y += p.vy;
+          p.r += p.vr;
+          p.vy += 0.05;
+        });
+        frame++;
+        if (frame < 150) requestAnimationFrame(draw);
+        else { ctx.clearRect(0, 0, canvas.width, canvas.height); canvas.style.display = 'none'; }
+      }
+      draw();
+    }
+
+    // === 4. CTA click tracking ===
+    document.querySelectorAll('.cta-btn, .zalo-nudge__btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        if (window.dataLayer) window.dataLayer.push({
+          event: 'cta_click',
+          cta_text: btn.textContent.trim().substring(0, 50),
+          page: 'thank_you'
+        });
+      });
+    });
+  })();
+</script>
 </body>
 </html>

@@ -40,7 +40,25 @@ const levelBadge: Record<string, string> = {
   'thpt': 'THPT'
 };
 const shortLocation = location.replace(/^(Tiểu học|THCS|THPT)\s*/,'');
-const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocation}`;
+const levelName = levelBadge[schoolLevel] || '';
+const programTitle = `Trại hè Lion Camp 2026 — dành cho học sinh ${levelName} tại ${shortLocation}`;
+
+// Auto-split headline at natural breakpoints (... or — or :)
+function splitHeadline(text: string): string[] {
+  const parts = text.split(/(\.\.\.|…|—|:)/);
+  const result: string[] = [];
+  let current = '';
+  for (const p of parts) {
+    current += p;
+    if (/(\.\.\.|…|—|:)$/.test(current)) {
+      result.push(current.trim());
+      current = '';
+    }
+  }
+  if (current.trim()) result.push(current.trim());
+  return result.length > 1 ? result : [text];
+}
+const headlineLines = splitHeadline(headline);
 ---
 
 <!doctype html>
@@ -61,139 +79,162 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
   <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese');</style>
 
   <style is:inline>
-    :root{--navy:#1F4E79;--navy-dk:#163A5C;--orange:#E8792B;--orange-dk:#D06A22;--white:#fff;--cream:#FFF9F3;--text:#1C2A3A;--sub:#5A6577;--muted:#9CA3AF;--zalo:#0068FF;--r:12px}
+    /* Unified palette — Việt Anh navy + warm accent */
+    :root{
+      --navy:#1a1a5e;        /* match logo */
+      --navy-dk:#12123e;
+      --navy-light:#2a2a7e;
+      --gold:#D4A843;
+      --orange:#E8792B;
+      --white:#fff;
+      --cream:#FBF9F5;
+      --text:#1a1a2e;
+      --text-body:#2d2d42;
+      --sub:#4a4a5e;
+      --muted:#6b6b80;
+      --border:#E5E7EB;
+      --zalo:#0068FF;
+      --r:12px
+    }
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:var(--white);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+    body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:var(--white);min-height:100vh;line-height:1.65;-webkit-font-smoothing:antialiased;font-size:16px}
     h1,h2,h3{font-family:'Montserrat',sans-serif}
 
-    /* === HERO — white bg, navy text === */
-    .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 16px 24px;background:var(--white)}
-    .hero-inner{width:100%;max-width:820px;display:flex;flex-direction:column;align-items:center;gap:10px}
+    /* === TOP LOGO BAR (thin, top of page) === */
+    .top-bar{display:flex;align-items:center;justify-content:center;padding:10px 16px;background:var(--white);border-bottom:1px solid var(--border)}
+    .top-bar img{display:block;height:42px;width:auto}
 
-    /* Logo — centered, large */
-    .logo{padding:0;margin-bottom:4px}
-    .logo img{display:block;max-width:300px;width:100%;height:auto}
+    /* === HERO — wider, more generous padding === */
+    .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 20px 28px;background:var(--white)}
+    .hero-inner{width:100%;max-width:920px;display:flex;flex-direction:column;align-items:center;gap:14px}
 
-    /* Badge */
-    .badge{display:inline-block;background:var(--navy);color:var(--white);font-size:.72rem;font-weight:700;padding:5px 16px;border-radius:50px;letter-spacing:.4px;text-transform:uppercase}
+    /* Program title — clear, full name */
+    .prog-title{display:inline-block;background:var(--navy);color:var(--white);font-size:.82rem;font-weight:700;padding:8px 18px;border-radius:28px;text-align:center;line-height:1.35;letter-spacing:.2px}
 
-    /* Headline + Subheadline */
-    .hl{font-size:1.45rem;font-weight:900;color:var(--navy);line-height:1.25;text-align:center;max-width:700px;margin:0}
-    .shl{font-size:.92rem;color:var(--sub);text-align:center;max-width:600px;line-height:1.55;margin:0}
-    .shl strong{color:var(--navy)}
+    /* Headline — multi-line natural breaks */
+    .hl{font-size:1.55rem;font-weight:900;color:var(--navy);line-height:1.3;text-align:center;max-width:800px;margin:0}
+    .hl .line{display:block}
+    .hl .line:not(:last-child){margin-bottom:.2em}
+
+    /* Subheadline — larger, darker, higher contrast */
+    .shl{font-size:1.05rem;color:var(--text-body);text-align:center;max-width:760px;line-height:1.6;margin:0;font-weight:500}
+    .shl strong{color:var(--navy);font-weight:700}
 
     /* Video — centered, prominent */
-    .vid-wrap{width:100%;max-width:600px;margin:4px 0}
-    .vid{border-radius:14px;overflow:hidden;background:#000;box-shadow:0 6px 24px rgba(0,0,0,.12);aspect-ratio:16/9;position:relative}
+    .vid-wrap{width:100%;max-width:720px;margin:8px 0}
+    .vid{border-radius:14px;overflow:hidden;background:#000;box-shadow:0 8px 32px rgba(26,26,94,.15);aspect-ratio:16/9;position:relative}
     .vid iframe,.vid video{width:100%;height:100%;border:0;display:block}
-    .vid-ph{display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(135deg,#0F172A 0%,var(--navy-dk) 100%);color:var(--white);flex-direction:column;gap:10px;cursor:pointer}
-    .vid-ph .play{width:64px;height:64px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(232,121,43,.5);animation:pp 2s ease infinite;transition:transform .2s}
+    .vid-ph{display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(135deg,var(--navy-dk) 0%,var(--navy) 100%);color:var(--white);flex-direction:column;gap:12px;cursor:pointer}
+    .vid-ph .play{width:68px;height:68px;background:var(--gold);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(212,168,67,.5);animation:pp 2s ease infinite;transition:transform .2s}
     .vid-ph:hover .play{transform:scale(1.1)}
-    .vid-ph .play svg{width:24px;height:24px;fill:var(--white);margin-left:3px}
-    @keyframes pp{0%,100%{box-shadow:0 4px 24px rgba(232,121,43,.5)}50%{box-shadow:0 4px 36px rgba(232,121,43,.8)}}
-    .vid-ph span{font-size:.82rem;opacity:.7;font-weight:600}
+    .vid-ph .play svg{width:26px;height:26px;fill:var(--navy);margin-left:3px}
+    @keyframes pp{0%,100%{box-shadow:0 4px 24px rgba(212,168,67,.5)}50%{box-shadow:0 4px 40px rgba(212,168,67,.85)}}
+    .vid-ph span{font-size:.92rem;opacity:.9;font-weight:600}
 
-    /* Benefits list below video */
-    .vid-benefits{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;width:100%;max-width:720px}
-    .vid-benefit{display:inline-flex;align-items:center;gap:5px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:8px;padding:6px 12px;font-size:.78rem;color:var(--navy);font-weight:600}
-    .vid-benefit::before{content:'✓';color:var(--orange);font-weight:900;font-size:.72rem}
+    /* Benefits pills below video — clearer, bigger */
+    .vid-benefits{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;max-width:760px}
+    .vid-benefit{display:inline-flex;align-items:center;gap:6px;background:rgba(26,26,94,.06);border:1px solid rgba(26,26,94,.15);border-radius:10px;padding:8px 14px;font-size:.88rem;color:var(--navy);font-weight:600}
+    .vid-benefit::before{content:'✓';color:var(--gold);font-weight:900;font-size:.82rem}
 
-    /* CTA group — below video */
-    .hero-cta{display:flex;flex-direction:column;gap:8px;width:100%;max-width:480px}
-    .cta{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 16px;border-radius:var(--r);text-decoration:none;font-weight:800;font-size:.88rem;text-align:center;font-family:'Montserrat',sans-serif;transition:all .2s;cursor:pointer;border:0;width:100%;line-height:1.3}
-    .cta-o{background:var(--orange);color:var(--white);box-shadow:0 4px 20px rgba(232,121,43,.35);position:relative;overflow:hidden}
-    .cta-o::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);animation:shine 2.5s ease infinite}
+    /* CTA group — bigger, clearer */
+    .hero-cta{display:flex;flex-direction:column;gap:10px;width:100%;max-width:520px;margin-top:4px}
+    .cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:18px 22px;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;text-align:center;font-family:'Montserrat',sans-serif;transition:all .2s;cursor:pointer;border:0;width:100%;line-height:1.35}
+    .cta-primary{background:linear-gradient(135deg,var(--gold) 0%,#c09530 100%);color:var(--navy-dk);box-shadow:0 6px 24px rgba(212,168,67,.4);position:relative;overflow:hidden}
+    .cta-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:shine 3s ease infinite}
     @keyframes shine{0%{left:-100%}100%{left:150%}}
-    .cta-o:hover{background:var(--orange-dk);transform:translateY(-1px)}
-    .cta-sub{text-align:center;font-size:.76rem;color:var(--muted)}
+    .cta-primary:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(212,168,67,.55)}
+    .cta-sub{text-align:center;font-size:.85rem;color:var(--sub);font-weight:500}
 
-    /* Urgency strip */
-    .urg{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.84rem;font-weight:700;color:var(--navy)}
-    .urg .cd{background:var(--orange);color:var(--white);padding:2px 8px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.82rem;letter-spacing:.3px}
+    /* Urgency */
+    .urg{display:flex;align-items:center;justify-content:center;gap:8px;font-size:.92rem;font-weight:600;color:var(--sub);margin-top:2px}
+    .urg .cd{background:var(--navy);color:var(--white);padding:3px 10px;border-radius:6px;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.88rem;letter-spacing:.3px}
 
     /* === BELOW FOLD CONTENT === */
-    .content{max-width:820px;margin:0 auto;padding:24px 16px 80px;background:#F8FAFC;border-top:1px solid #E2E8F0}
+    .content{max-width:920px;margin:0 auto;padding:32px 20px 90px;background:var(--cream)}
 
     /* Proof pills */
-    .pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 16px}
-    .pill{display:inline-flex;align-items:center;gap:4px;background:var(--white);border:1px solid #E5E7EB;border-radius:20px;padding:6px 12px;font-size:.78rem;color:var(--navy);font-weight:600}
-    .pill::before{content:'✓';color:var(--orange);font-weight:900;font-size:.7rem}
+    .pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:0 0 22px}
+    .pill{display:inline-flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--border);border-radius:22px;padding:8px 14px;font-size:.88rem;color:var(--navy);font-weight:600}
+    .pill::before{content:'✓';color:var(--gold);font-weight:900;font-size:.8rem}
 
-    /* Hook */
-    .hook{background:var(--white);border-radius:var(--r);padding:16px 18px;margin:0 0 14px;border-left:3px solid var(--orange)}
-    .hook p{font-size:.92rem;margin-bottom:6px;color:var(--sub)}
-    .hook .lbl{font-weight:700;color:var(--navy);font-size:.92rem}
+    /* Pain + solution block (merged from hook + final hook) */
+    .pain-block{background:var(--white);border-radius:16px;padding:24px 26px;margin:0 0 22px;border-left:4px solid var(--gold);box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .pain-block .q{font-size:1.05rem;color:var(--navy);font-weight:700;margin-bottom:12px;line-height:1.5}
+    .pain-block .a{font-size:1rem;color:var(--text-body);line-height:1.7;margin:0}
 
-    /* Benefits */
-    .bens{background:var(--white);border-radius:var(--r);padding:16px 18px;margin:0 0 14px;border:1px solid #E5E7EB}
-    .bens h3{color:var(--navy);font-size:.95rem;font-weight:800;margin-bottom:10px;text-align:center}
+    /* Benefits full list */
+    .bens{background:var(--white);border-radius:16px;padding:24px 26px;margin:0 0 22px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .bens h3{color:var(--navy);font-size:1.1rem;font-weight:800;margin-bottom:14px;text-align:center;line-height:1.4}
     .bens ul{list-style:none;padding:0}
-    .bens li{padding:8px 0 8px 28px;position:relative;font-size:.9rem;font-weight:600;color:var(--text);border-bottom:1px solid #F3F4F6}
+    .bens li{padding:10px 0 10px 32px;position:relative;font-size:1rem;font-weight:600;color:var(--text-body);border-bottom:1px solid #F3F4F6;line-height:1.55}
     .bens li:last-child{border-bottom:0}
-    .bens li::before{content:'✓';position:absolute;left:0;top:8px;color:var(--orange);font-weight:900;font-size:.9rem}
-
-    /* Final hook */
-    .fhook{text-align:center;font-size:.9rem;color:var(--sub);padding:14px;margin:0 0 14px;background:var(--white);border-radius:var(--r);border:1px dashed var(--orange)}
-    .fhook strong{color:var(--orange);display:block;margin-top:4px}
+    .bens li::before{content:'✓';position:absolute;left:0;top:10px;color:var(--gold);font-weight:900;font-size:1.05rem;background:rgba(212,168,67,.12);width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center}
 
     /* Testimonial */
-    .testi{background:var(--white);border-radius:var(--r);padding:16px 18px;margin:0 0 14px;border:1px solid #E5E7EB;position:relative}
-    .testi::before{content:'"';position:absolute;top:4px;left:12px;font-size:2.2rem;color:var(--orange);opacity:.15;font-family:Georgia,serif;line-height:1}
-    .testi blockquote{font-size:.88rem;color:var(--sub);font-style:italic;line-height:1.65;margin:0 0 6px;padding-left:6px}
-    .testi cite{display:block;font-size:.78rem;font-weight:700;color:var(--navy);font-style:normal;padding-left:6px}
-    .testi .stars{color:var(--orange);font-size:.8rem;padding-left:6px;margin-top:2px}
+    .testi{background:var(--white);border-radius:16px;padding:22px 26px;margin:0 0 22px;border:1px solid var(--border);position:relative;box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .testi::before{content:'"';position:absolute;top:8px;left:16px;font-size:2.8rem;color:var(--gold);opacity:.2;font-family:Georgia,serif;line-height:1}
+    .testi blockquote{font-size:.98rem;color:var(--text-body);font-style:italic;line-height:1.7;margin:0 0 10px;padding-left:10px;font-weight:500}
+    .testi cite{display:block;font-size:.88rem;font-weight:700;color:var(--navy);font-style:normal;padding-left:10px}
+    .testi .stars{color:var(--gold);font-size:.9rem;padding-left:10px;margin-top:4px;letter-spacing:2px}
 
-    /* Mid CTA */
-    .mcta{background:var(--white);border-radius:var(--r);overflow:hidden;margin:0 0 14px;border:2px solid var(--orange)}
-    .mcta-head{background:var(--navy);color:var(--white);padding:10px 14px;text-align:center;font-size:.84rem;font-weight:700}
-    .mcta-head .cd2{background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:900}
-    .mcta-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+    /* Mid CTA — more prominent */
+    .mcta{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);border-radius:16px;overflow:hidden;margin:0 0 22px;color:var(--white);text-align:center;padding:26px 22px;box-shadow:0 6px 24px rgba(26,26,94,.2)}
+    .mcta h3{color:var(--white);font-size:1.15rem;margin-bottom:8px;line-height:1.4}
+    .mcta .urg-line{color:var(--gold);font-weight:700;font-size:.95rem;margin-bottom:16px}
+    .mcta .cd2{background:var(--gold);color:var(--navy-dk);padding:3px 10px;border-radius:6px;font-family:'Montserrat',sans-serif;font-weight:800}
+    .mcta .cta{max-width:420px;margin:0 auto}
 
     /* Guarantee */
-    .guar{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid #E5E7EB;border-radius:var(--r);padding:12px 14px;margin:0 0 14px}
-    .guar .ic{font-size:1.4rem;flex-shrink:0}
-    .guar p{font-size:.82rem;color:var(--sub);line-height:1.5}
+    .guar{display:flex;align-items:center;gap:14px;background:var(--white);border:1px solid var(--border);border-radius:14px;padding:16px 20px;margin:0 0 22px;box-shadow:0 2px 8px rgba(26,26,94,.04)}
+    .guar .ic{font-size:1.8rem;flex-shrink:0}
+    .guar p{font-size:.95rem;color:var(--text-body);line-height:1.6;margin:0}
     .guar b{color:var(--navy)}
 
     /* Form */
-    .form-sec{background:var(--white);border-radius:var(--r);padding:20px 16px;border:2px solid var(--navy);position:relative}
-    .form-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--orange);border-radius:var(--r) var(--r) 0 0}
-    .form-sec h2{color:var(--navy);text-align:center;font-size:1.05rem;margin-bottom:4px}
-    .form-sec .fsub{text-align:center;color:var(--muted);font-size:.82rem;margin-bottom:12px}
-    .form-lock{display:flex;align-items:center;justify-content:center;gap:4px;font-size:.72rem;color:var(--muted);margin-top:8px}
-    .form-lock svg{width:12px;height:12px;fill:var(--navy)}
+    .form-sec{background:var(--white);border-radius:16px;padding:28px 24px;border:2px solid var(--navy);position:relative;box-shadow:0 6px 24px rgba(26,26,94,.12)}
+    .form-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--gold),var(--orange),var(--gold));border-radius:16px 16px 0 0}
+    .form-sec h2{color:var(--navy);text-align:center;font-size:1.25rem;margin-bottom:6px;line-height:1.4}
+    .form-sec .fsub{text-align:center;color:var(--sub);font-size:.95rem;margin-bottom:18px;font-weight:500;line-height:1.55}
+    .form-lock{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;color:var(--muted);margin-top:12px}
+    .form-lock svg{width:14px;height:14px;fill:var(--navy)}
 
-    /* Sticky bottom (mobile) — no Zalo button */
-    .sticky-bot{position:fixed;bottom:0;left:0;right:0;z-index:998;background:var(--white);padding:8px 12px;box-shadow:0 -2px 12px rgba(0,0,0,.08);display:none;border-top:2px solid var(--orange)}
-    .sticky-bot .sb{display:block;padding:12px 10px;border-radius:10px;text-decoration:none;font-weight:800;font-size:.88rem;text-align:center;font-family:'Montserrat',sans-serif;color:var(--white);background:var(--orange);width:100%}
+    /* Sticky bottom (mobile) */
+    .sticky-bot{position:fixed;bottom:0;left:0;right:0;z-index:998;background:var(--white);padding:10px 14px;box-shadow:0 -4px 16px rgba(0,0,0,.1);display:none;border-top:2px solid var(--gold)}
+    .sticky-bot .sb{display:block;padding:14px 12px;border-radius:12px;text-decoration:none;font-weight:800;font-size:.92rem;text-align:center;font-family:'Montserrat',sans-serif;color:var(--navy-dk);background:linear-gradient(135deg,var(--gold) 0%,#c09530 100%);width:100%;box-shadow:0 4px 14px rgba(212,168,67,.4)}
 
     /* Social notif */
-    .snotif{position:fixed;bottom:80px;left:12px;z-index:997;background:var(--white);border-radius:10px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,.1);display:flex;align-items:center;gap:8px;max-width:270px;transform:translateX(-110%);transition:transform .35s ease;font-size:.78rem;border:1px solid #F0F0F0}
+    .snotif{position:fixed;bottom:80px;left:14px;z-index:997;background:var(--white);border-radius:12px;padding:10px 14px;box-shadow:0 4px 20px rgba(0,0,0,.12);display:flex;align-items:center;gap:10px;max-width:290px;transform:translateX(-110%);transition:transform .35s ease;font-size:.82rem;border:1px solid var(--border)}
     .snotif.show{transform:translateX(0)}
-    .snotif .sa{width:30px;height:30px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+    .snotif .sa{width:34px;height:34px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
     .snotif b{color:var(--navy)}
-    .snotif .st{font-size:.68rem;color:var(--muted);display:block;margin-top:1px}
+    .snotif .st{font-size:.72rem;color:var(--muted);display:block;margin-top:1px}
 
     /* Footer */
-    .foot{text-align:center;font-size:.72rem;color:var(--muted);margin-top:16px}
+    .foot{text-align:center;font-size:.8rem;color:var(--muted);margin-top:22px;padding-top:18px;border-top:1px solid var(--border)}
 
     /* === RESPONSIVE === */
     @media(max-width:560px){
-      .hero{padding:14px 12px 18px}
-      .hl{font-size:1.15rem}
-      .shl{font-size:.82rem}
-      .logo img{max-width:260px}
+      .top-bar{padding:8px 12px}
+      .top-bar img{height:36px}
+      .hero{padding:16px 14px 20px}
+      .prog-title{font-size:.72rem;padding:7px 14px}
+      .hl{font-size:1.25rem}
+      .shl{font-size:.95rem}
+      .vid-benefit{font-size:.82rem;padding:7px 12px}
+      .cta{font-size:.92rem;padding:16px 18px}
+      .content{padding:24px 14px 90px}
+      .pain-block, .bens, .testi, .mcta, .guar, .form-sec{padding:18px 18px}
+      .bens li, .pain-block .a, .testi blockquote{font-size:.94rem}
       .sticky-bot{display:block}
-      .snotif{bottom:70px}
+      .snotif{bottom:72px;max-width:260px}
     }
     @media(min-width:561px){
-      .logo img{max-width:340px}
-      .hl{font-size:1.5rem}
-      .shl{font-size:.9rem}
+      .hl{font-size:1.7rem}
+      .shl{font-size:1.05rem}
     }
     @media(min-width:800px){
-      .hl{font-size:1.65rem}
-      .vid-wrap{max-width:600px}
+      .hl{font-size:1.95rem}
+      .vid-wrap{max-width:720px}
     }
   </style>
 
@@ -202,19 +243,23 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- ===== HERO — Full-screen centered video ===== -->
+<!-- ===== TOP LOGO BAR (compact, top of page) ===== -->
+<div class="top-bar">
+  <img src="/logo-vietanh.webp" alt="Trường TH - THCS - THPT Việt Anh" />
+</div>
+
+<!-- ===== HERO — Program title + Headline + Video + CTA ===== -->
 <section class="hero">
   <div class="hero-inner">
-    <!-- Logo — centered, large -->
-    <div class="logo">
-      <img src="/logo-vietanh.webp" alt="Trường TH - THCS - THPT Việt Anh" />
-    </div>
+    <!-- Program title — full clarity -->
+    <span class="prog-title">{programTitle}</span>
 
-    <!-- Badge -->
-    <span class="badge">{badge}</span>
+    <!-- Headline with natural line breaks -->
+    <h1 class="hl">
+      {headlineLines.map(line => <span class="line">{line}</span>)}
+    </h1>
 
-    <!-- Headline + Subheadline -->
-    <h1 class="hl">{headline}</h1>
+    <!-- Subheadline — larger, darker -->
     <p class="shl" set:html={subheadline} />
 
     <!-- Video — centered -->
@@ -231,87 +276,79 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
       </div>
     </div>
 
-    <!-- Benefits below video -->
+    <!-- Benefits pills — 4 max, clear -->
     <div class="vid-benefits">
       {benefits.slice(0, 4).map(b => <span class="vid-benefit">{b}</span>)}
     </div>
 
-    <!-- CTA right after video -->
+    <!-- CTA — Zalo consultation clear -->
     <div class="hero-cta">
-      <a href="#vsl-form" class="cta cta-o">👉 {ctaPrimary}</a>
+      <a href="#vsl-form" class="cta cta-primary">📞 Đăng ký tư vấn Zalo miễn phí — 24/7</a>
     </div>
-    <p class="cta-sub">Tư vấn miễn phí · Không cam kết · Phản hồi trong 24h</p>
+    <p class="cta-sub">Tư vấn viên phản hồi trong 24 giờ · Hoàn toàn miễn phí · Không cam kết</p>
 
     <!-- Urgency -->
     <div class="urg">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd" id="cd">23:59:59</span></div>
   </div>
 </section>
 
-<!-- ===== BELOW FOLD ===== -->
+<!-- ===== BELOW FOLD — Social proof + benefits + testimonial + form ===== -->
 <div class="content">
 
-  <!-- Proof pills -->
+  <!-- Proof pills (one-time) -->
   <div class="pills">
     {microProof.map(m => <span class="pill">{m}</span>)}
   </div>
 
-  <!-- Hook -->
-  <div class="hook">
-    <p>{hookParagraph}</p>
-    <p class="lbl">🎬 Xem video để thấy:</p>
-    <p>{hookBullets}</p>
+  <!-- Pain + answer block -->
+  <div class="pain-block">
+    <p class="q">{hookParagraph}</p>
+    <p class="a">{hookBullets}</p>
   </div>
 
-  <!-- Benefits (full list) -->
+  <!-- Benefits full list (not duplicate of hero pills — full 5+ items) -->
   <div class="bens">
-    <h3>Chỉ sau 6 tuần tại Lion Camp {location}:</h3>
+    <h3>Sau 6 tuần tại Lion Camp {shortLocation}, con sẽ:</h3>
     <ul>{benefits.map(b => <li>{b}</li>)}</ul>
-  </div>
-
-  <!-- Final hook -->
-  <div class="fhook">
-    Nhưng điều quan trọng nhất không nằm ở những kỹ năng này…
-    <strong>→ Mà là sự thay đổi Ba/Mẹ sẽ thấy rõ trong video.</strong>
   </div>
 
   <!-- Testimonial -->
   <div class="testi">
     <blockquote>{testimonialQuote || 'Trước khi đi trại hè, bé nhà mình rất rụt rè, cả ngày ôm iPad. Chỉ sau 3 tuần đầu, cô giáo gửi video bé tự tin thuyết trình bằng tiếng Anh. Mình không tin vào mắt mình!'}</blockquote>
-    <cite>{testimonialAuthor || '— Phụ huynh bé tại ' + location}</cite>
+    <cite>{testimonialAuthor || '— Phụ huynh bé tại ' + shortLocation}</cite>
     <div class="stars">★★★★★</div>
   </div>
 
-  <!-- Mid CTA -->
+  <!-- Mid CTA — prominent, urgency -->
   <div class="mcta">
-    <div class="mcta-head">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd2" id="cd2">23:59:59</span></div>
-    <div class="mcta-body">
-      <a href="#vsl-form" class="cta cta-o">👉 {ctaPrimary}</a>
-    </div>
+    <h3>Ba/Mẹ đã sẵn sàng cho con bứt phá mùa hè này?</h3>
+    <div class="urg-line">⏳ Còn {slotsLeft} suất · Hết trong <span class="cd2" id="cd2">23:59:59</span></div>
+    <a href="#vsl-form" class="cta cta-primary">📞 Đăng ký tư vấn Zalo miễn phí ngay</a>
   </div>
 
-  <!-- Guarantee -->
+  <!-- Guarantee — short, clear -->
   <div class="guar">
     <div class="ic">🛡️</div>
-    <p><b>Tư vấn miễn phí, không cam kết.</b> Ba/Mẹ chỉ quyết định sau khi trao đổi trực tiếp với tư vấn viên.</p>
+    <p><b>Tư vấn 1:1 miễn phí, không cam kết.</b> Ba/Mẹ chỉ quyết định sau khi trao đổi trực tiếp.</p>
   </div>
 
-  <!-- Form -->
+  <!-- Form — final conversion point -->
   <div class="form-sec" id="vsl-form">
-    <h2>Đăng ký tư vấn 1:1 miễn phí</h2>
-    <p class="fsub">Tư vấn viên gọi/Zalo trong 24 giờ để trao đổi chi tiết</p>
-    <LeadFormTwoStepEmailFirst formId={`vsl-${funnelCode}`} funnelCode={funnelCode} schoolLevel={schoolLevel} submitText="Đăng ký tư vấn miễn phí ngay" successMessage="Đang chuyển đến trang xác nhận..." />
+    <h2>Đăng ký tư vấn 1:1 qua Zalo miễn phí</h2>
+    <p class="fsub">Tư vấn viên sẽ gọi hoặc nhắn Zalo trong vòng 24 giờ<br/>để trao đổi chi tiết lộ trình phù hợp cho bé.</p>
+    <LeadFormTwoStepEmailFirst formId={`vsl-${funnelCode}`} funnelCode={funnelCode} schoolLevel={schoolLevel} submitText="Đăng ký tư vấn Zalo miễn phí — 24/7" successMessage="Đang chuyển đến trang xác nhận..." />
     <div class="form-lock">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2V7a5 5 0 00-5-5zm3 7V7a3 3 0 10-6 0v2h6z"/></svg>
-      Bảo mật tuyệt đối
+      Thông tin được bảo mật tuyệt đối
     </div>
   </div>
 
-  <p class="foot">© 2026 Trường Việt Anh — 0916 961 409</p>
+  <p class="foot">© 2026 Trường Việt Anh — Hotline 0916 961 409</p>
 </div>
 
-<!-- Sticky bottom (mobile) — CTA only, no Zalo -->
+<!-- Sticky bottom (mobile) -->
 <div class="sticky-bot" id="sBot">
-  <a href="#vsl-form" class="sb">👉 Đăng ký tư vấn — {slotsLeft} suất còn lại</a>
+  <a href="#vsl-form" class="sb">📞 Đăng ký tư vấn Zalo miễn phí</a>
 </div>
 
 <!-- Social notif -->
@@ -320,7 +357,7 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
   <div><b id="snN">Chị Nguyễn T.</b> <span id="snAc">vừa đăng ký tư vấn</span><span class="st" id="snT">2p trước</span></div>
 </div>
 
-<script is:inline define:vars={{ thankYouUrl, location }}>
+<script is:inline define:vars={{ thankYouUrl, location: shortLocation }}>
 // Countdown
 (function(){
   var k='vsl_'+window.location.pathname,d=localStorage.getItem(k);

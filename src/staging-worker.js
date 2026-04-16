@@ -370,6 +370,10 @@ async function handleLeadSubmission(request, env) {
           promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
         }
       }
+      // Trai-he sales page leads (non-quiz): send consultation confirmation email
+      else if ((data.source || '').includes('trai-he') && data.email) {
+        promises.push(sendTraiHeConsultEmail(data, env).catch(() => {}));
+      }
       // Add contact to appropriate GHL workflow
       if (contactId) {
         const wfSource = data.funnelCode || data.source;
@@ -737,6 +741,89 @@ async function sendQuizResultEmail(data, env) {
         to: [{ email: data.email, name: data.fullName }],
       }],
       from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+      subject,
+      content: [{ type: 'text/html', value: body }],
+    }),
+  });
+}
+
+// === TRAI HE CONSULTATION CONFIRMATION EMAIL (non-quiz sales page leads) ===
+async function sendTraiHeConsultEmail(data, env) {
+  const loc = deriveLocation(data.source) || '';
+  const campLvl = deriveCampLevel(data.source) || '';
+  const firstName = (data.fullName || '').trim().split(/\s+/).pop() || 'Ba/Mẹ';
+  const childName = data.childName || 'bé';
+
+  const subject = `✅ Đã nhận đăng ký tư vấn Trại hè Lion Camp ${loc} — Liên hệ trong 24h`;
+
+  const body = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;margin:0;padding:20px;">
+<div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
+  <!-- Header -->
+  <div style="background:linear-gradient(135deg,#1a1a5e,#12123e);color:#fff;padding:28px 24px;text-align:center;">
+    <img src="https://hoc.truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:10px 20px;border-radius:10px;margin-bottom:16px;"/>
+    <h1 style="color:#fff;font-size:22px;margin:8px 0;line-height:1.3;">✅ Đã nhận đăng ký tư vấn!</h1>
+    <p style="color:#ffd89a;font-size:14px;margin:4px 0 0;">Trại hè Lion Camp 2026 — ${campLvl} ${loc}</p>
+  </div>
+
+  <div style="padding:26px 24px;">
+    <p style="font-size:16px;color:#1a1a2e;line-height:1.7;margin:0 0 16px;">Dạ chào Ba/Mẹ <strong>${firstName}</strong>,</p>
+
+    <p style="font-size:15px;color:#2d2d42;line-height:1.7;margin:0 0 16px;">
+      Cảm ơn Ba/Mẹ đã đăng ký tư vấn 1:1 cho bé <strong>${childName}</strong> tại Trại hè Lion Camp 2026.
+    </p>
+
+    <p style="font-size:15px;color:#2d2d42;line-height:1.7;margin:0 0 20px;">
+      <strong>Tư vấn viên của em sẽ liên hệ Ba/Mẹ qua Zalo hoặc điện thoại trong 24 giờ tới</strong> để trao đổi chi tiết lộ trình phù hợp nhất cho bé.
+    </p>
+
+    <!-- Next steps box -->
+    <div style="background:#f8faff;border-left:4px solid #D4A843;padding:18px 20px;border-radius:10px;margin-bottom:20px;">
+      <p style="font-weight:800;color:#1a1a5e;margin:0 0 12px;font-size:15px;">📋 Các bước tiếp theo:</p>
+      <ol style="margin:0;padding-left:22px;font-size:14px;color:#2d2d42;line-height:1.9;">
+        <li><strong>Tư vấn viên gọi/Zalo</strong> trong 24 giờ</li>
+        <li>Trao đổi nhu cầu của bé và gia đình</li>
+        <li>Nhận <strong>lộ trình Lion Camp 6 tuần</strong> cá nhân hóa</li>
+        <li>Chọn ưu đãi <strong>học bổng Early Bird</strong> phù hợp</li>
+      </ol>
+    </div>
+
+    <!-- CTA Zalo -->
+    <div style="text-align:center;margin:24px 0;">
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:linear-gradient(135deg,#D4A843,#c09530);color:#12123e;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(212,168,67,.4);">
+        📞 Chat Zalo tư vấn nhanh hơn
+      </a>
+    </div>
+
+    <!-- Trust box -->
+    <div style="background:#f0faf4;border:1px solid #c8e9d4;border-radius:10px;padding:14px 18px;margin:16px 0;">
+      <p style="margin:0;font-size:14px;color:#1e8449;line-height:1.6;">
+        🛡️ <strong>Tư vấn miễn phí, không cam kết.</strong> Ba/Mẹ chỉ quyết định sau khi trao đổi trực tiếp với tư vấn viên.
+      </p>
+    </div>
+
+    <!-- Contact info -->
+    <div style="text-align:center;padding-top:16px;border-top:1px solid #eee;margin-top:16px;">
+      <p style="margin:0 0 6px;font-size:13px;color:#999;">Hotline / Zalo:</p>
+      <a href="tel:+84916961409" style="color:#1a1a5e;font-size:15px;font-weight:700;text-decoration:none;">0916 961 409</a>
+    </div>
+  </div>
+
+  <div style="background:#12123e;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
+    Lion Camp 2026 — Trường Việt Anh<br/>
+    <a href="https://hoc.truongvietanh.com" style="color:#ffd89a;">hoc.truongvietanh.com</a>
+  </div>
+</div>
+</body></html>`.trim();
+
+  await fetch('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      personalizations: [{
+        to: [{ email: data.email, name: data.fullName }],
+      }],
+      from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+      reply_to: { email: 'tu@truongvietanh.com', name: 'Ban Tuyển sinh Việt Anh' },
       subject,
       content: [{ type: 'text/html', value: body }],
     }),

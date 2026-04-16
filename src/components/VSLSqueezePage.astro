@@ -63,46 +63,57 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
   <style is:inline>
     :root{--navy:#1F4E79;--navy-dk:#163A5C;--orange:#E8792B;--orange-dk:#D06A22;--white:#fff;--cream:#FFF9F3;--text:#1C2A3A;--sub:#5A6577;--muted:#9CA3AF;--zalo:#0068FF;--r:12px}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:var(--cream);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+    body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:#0F172A;min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
     h1,h2,h3{font-family:'Montserrat',sans-serif}
 
-    /* === ABOVE THE FOLD === */
-    .atf{background:var(--white);padding-bottom:16px}
+    /* === HERO — Full screen centered video === */
+    .hero{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px 32px;position:relative;overflow:hidden}
+    .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 30%,rgba(31,78,121,.3),transparent 60%),radial-gradient(ellipse at 80% 80%,rgba(232,121,43,.08),transparent 50%);pointer-events:none}
+    .hero-inner{position:relative;z-index:1;width:100%;max-width:780px;display:flex;flex-direction:column;align-items:center;gap:8px}
 
-    /* Logo row */
-    .logo-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #F0F0F0}
-    .logo-row img{height:44px;width:auto}
-    .logo-row .tag{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;color:var(--white);background:var(--navy);padding:4px 10px;border-radius:14px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+    /* Logo — centered, large */
+    .logo{background:rgba(255,255,255,.95);padding:10px 24px;border-radius:12px;box-shadow:0 4px 24px rgba(0,0,0,.2);margin-bottom:2px}
+    .logo img{display:block;max-width:240px;width:100%;height:auto}
 
-    /* Headline */
-    .hl{font-size:1.2rem;font-weight:800;color:var(--navy);line-height:1.25;text-align:center;padding:12px 18px 8px;margin:0}
+    /* Badge */
+    .badge{display:inline-block;background:rgba(232,121,43,.15);border:1px solid rgba(232,121,43,.4);color:var(--orange);font-size:.72rem;font-weight:700;padding:4px 14px;border-radius:50px;letter-spacing:.4px;text-transform:uppercase}
 
-    /* Video */
-    .vid{margin:0 12px;border-radius:var(--r);overflow:hidden;background:#0a0a0a;box-shadow:0 4px 20px rgba(0,0,0,.12);aspect-ratio:16/9;position:relative}
+    /* Headline + Subheadline */
+    .hl{font-size:1.35rem;font-weight:900;color:var(--white);line-height:1.25;text-align:center;max-width:640px;margin:0}
+    .shl{font-size:.88rem;color:rgba(255,255,255,.7);text-align:center;max-width:560px;line-height:1.5;margin:0}
+    .shl strong{color:rgba(255,255,255,.95)}
+
+    /* Video — centered, prominent */
+    .vid-wrap{width:100%;max-width:600px;margin:4px 0}
+    .vid{border-radius:14px;overflow:hidden;background:#000;box-shadow:0 8px 40px rgba(0,0,0,.4);aspect-ratio:16/9;position:relative}
     .vid iframe,.vid video{width:100%;height:100%;border:0;display:block}
-    .vid-ph{display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(135deg,#0F172A,var(--navy));color:var(--white);flex-direction:column;gap:8px}
-    .vid-ph .play{width:56px;height:56px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(232,121,43,.5);animation:pp 2s ease infinite}
-    .vid-ph .play svg{width:22px;height:22px;fill:var(--white);margin-left:2px}
-    @keyframes pp{0%,100%{box-shadow:0 4px 20px rgba(232,121,43,.5)}50%{box-shadow:0 4px 28px rgba(232,121,43,.8)}}
-    .vid-ph span{font-size:.8rem;opacity:.8;font-weight:600}
+    .vid-ph{display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(135deg,#0F172A 0%,var(--navy-dk) 100%);color:var(--white);flex-direction:column;gap:10px;cursor:pointer}
+    .vid-ph .play{width:64px;height:64px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(232,121,43,.5);animation:pp 2s ease infinite;transition:transform .2s}
+    .vid-ph:hover .play{transform:scale(1.1)}
+    .vid-ph .play svg{width:24px;height:24px;fill:var(--white);margin-left:3px}
+    @keyframes pp{0%,100%{box-shadow:0 4px 24px rgba(232,121,43,.5)}50%{box-shadow:0 4px 36px rgba(232,121,43,.8)}}
+    .vid-ph span{font-size:.82rem;opacity:.7;font-weight:600}
 
-    /* CTA row right after video */
-    .cta-row{padding:12px 12px 0;display:flex;flex-direction:column;gap:8px}
+    /* Benefits list below video */
+    .vid-benefits{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;width:100%;max-width:720px}
+    .vid-benefit{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:6px 12px;font-size:.78rem;color:rgba(255,255,255,.85);font-weight:600;backdrop-filter:blur(4px)}
+    .vid-benefit::before{content:'✓';color:var(--orange);font-weight:900;font-size:.72rem}
+
+    /* CTA group — below video */
+    .hero-cta{display:flex;flex-direction:column;gap:8px;width:100%;max-width:480px}
     .cta{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 16px;border-radius:var(--r);text-decoration:none;font-weight:800;font-size:.88rem;text-align:center;font-family:'Montserrat',sans-serif;transition:all .2s;cursor:pointer;border:0;width:100%;line-height:1.3}
-    .cta-o{background:var(--orange);color:var(--white);box-shadow:0 4px 16px rgba(232,121,43,.3);position:relative;overflow:hidden}
+    .cta-o{background:var(--orange);color:var(--white);box-shadow:0 4px 20px rgba(232,121,43,.35);position:relative;overflow:hidden}
     .cta-o::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);animation:shine 2.5s ease infinite}
     @keyframes shine{0%{left:-100%}100%{left:150%}}
     .cta-o:hover{background:var(--orange-dk);transform:translateY(-1px)}
-    .cta-z{background:var(--zalo);color:var(--white)}
-    .cta-z:hover{background:#0056D6}
-    .cta-sub{text-align:center;font-size:.72rem;color:var(--muted);padding:4px 0 0}
+    .cta-sub{text-align:center;font-size:.72rem;color:rgba(255,255,255,.5)}
 
     /* Urgency strip */
-    .urg{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;font-size:.8rem;font-weight:700;color:var(--navy)}
-    .urg .cd{background:var(--navy);color:var(--white);padding:2px 7px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.8rem;letter-spacing:.3px}
+    .urg{display:flex;align-items:center;justify-content:center;gap:6px;font-size:.8rem;font-weight:700;color:rgba(255,255,255,.8)}
+    .urg .cd{background:var(--orange);color:var(--white);padding:2px 8px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.82rem;letter-spacing:.3px}
 
     /* === BELOW FOLD CONTENT === */
-    .content{max-width:680px;margin:0 auto;padding:16px 16px 80px}
+    .content{max-width:680px;margin:0 auto;padding:32px 16px 80px;background:var(--cream);border-radius:24px 24px 0 0;margin-top:-12px;position:relative;z-index:2}
 
     /* Proof pills */
     .pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 16px}
@@ -153,17 +164,12 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
     .form-lock{display:flex;align-items:center;justify-content:center;gap:4px;font-size:.72rem;color:var(--muted);margin-top:8px}
     .form-lock svg{width:12px;height:12px;fill:var(--navy)}
 
-    /* Sticky bottom (mobile) */
-    .sticky-bot{position:fixed;bottom:0;left:0;right:0;z-index:998;background:var(--white);padding:8px 12px;box-shadow:0 -2px 12px rgba(0,0,0,.08);display:none;gap:8px;align-items:center;border-top:2px solid var(--orange)}
-    .sticky-bot .sb{flex:1;padding:12px 10px;border-radius:10px;text-decoration:none;font-weight:800;font-size:.82rem;text-align:center;font-family:'Montserrat',sans-serif;color:var(--white)}
-    .sticky-bot .sb-o{background:var(--orange)}
-    .sticky-bot .sb-z{background:var(--zalo);flex:0 0 auto;padding:12px 14px}
-
-    /* Floating Zalo */
-    .fzalo{position:fixed;bottom:64px;right:14px;z-index:999;background:var(--zalo);color:var(--white);width:46px;height:46px;border-radius:50%;text-decoration:none;font-size:1.2rem;box-shadow:0 4px 14px rgba(0,104,255,.3);display:flex;align-items:center;justify-content:center}
+    /* Sticky bottom (mobile) — no Zalo button */
+    .sticky-bot{position:fixed;bottom:0;left:0;right:0;z-index:998;background:var(--white);padding:8px 12px;box-shadow:0 -2px 12px rgba(0,0,0,.08);display:none;border-top:2px solid var(--orange)}
+    .sticky-bot .sb{display:block;padding:12px 10px;border-radius:10px;text-decoration:none;font-weight:800;font-size:.88rem;text-align:center;font-family:'Montserrat',sans-serif;color:var(--white);background:var(--orange);width:100%}
 
     /* Social notif */
-    .snotif{position:fixed;bottom:120px;left:12px;z-index:997;background:var(--white);border-radius:10px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,.1);display:flex;align-items:center;gap:8px;max-width:270px;transform:translateX(-110%);transition:transform .35s ease;font-size:.78rem;border:1px solid #F0F0F0}
+    .snotif{position:fixed;bottom:80px;left:12px;z-index:997;background:var(--white);border-radius:10px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,.1);display:flex;align-items:center;gap:8px;max-width:270px;transform:translateX(-110%);transition:transform .35s ease;font-size:.78rem;border:1px solid #F0F0F0}
     .snotif.show{transform:translateX(0)}
     .snotif .sa{width:30px;height:30px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
     .snotif b{color:var(--navy)}
@@ -174,24 +180,21 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
 
     /* === RESPONSIVE === */
     @media(max-width:560px){
-      .hl{font-size:1.15rem;padding:10px 14px 6px}
-      .sticky-bot{display:flex}
-      .fzalo{bottom:64px}
-      .snotif{bottom:120px}
+      .hero{padding:14px 12px 18px}
+      .hl{font-size:1.15rem}
+      .shl{font-size:.82rem}
+      .logo img{max-width:220px}
+      .sticky-bot{display:block}
+      .snotif{bottom:70px}
     }
     @media(min-width:561px){
-      .logo-row{padding:12px 24px}
-      .logo-row img{height:54px}
-      .hl{font-size:1.5rem;padding:16px 30px 10px}
-      .vid{margin:0 24px;max-height:360px}
-      .cta-row{padding:14px 24px 0;flex-direction:row}
-      .cta-row .cta{flex:1}
-      .urg{padding:10px}
-      .fzalo{bottom:20px;right:20px;width:52px;height:52px}
+      .logo img{max-width:280px}
+      .hl{font-size:1.5rem}
+      .shl{font-size:.9rem}
     }
     @media(min-width:800px){
       .hl{font-size:1.65rem}
-      .vid{margin:0 60px}
+      .vid-wrap{max-width:600px}
     }
   </style>
 
@@ -200,39 +203,50 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- ===== ABOVE THE FOLD ===== -->
-<div class="atf">
-  <!-- Logo + badge -->
-  <div class="logo-row">
-    <img src="/logo-vietanh.webp" alt="Trường Việt Anh" />
-    <span class="tag">{badge}</span>
-  </div>
+<!-- ===== HERO — Full-screen centered video ===== -->
+<section class="hero">
+  <div class="hero-inner">
+    <!-- Logo — centered, large -->
+    <div class="logo">
+      <img src="/logo-vietanh.webp" alt="Trường TH - THCS - THPT Việt Anh" />
+    </div>
 
-  <!-- Headline (compact) -->
-  <h1 class="hl">{headline}</h1>
+    <!-- Badge -->
+    <span class="badge">{badge}</span>
 
-  <!-- Video (immediately) -->
-  <div class="vid">
-    {videoEmbedUrl ? (
-      <iframe src={videoEmbedUrl} title="VSL Lion Camp" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-    ) : (
-      <div class="vid-ph">
-        <div class="play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
-        <span>Nhấn để xem Video 60 giây</span>
+    <!-- Headline + Subheadline -->
+    <h1 class="hl">{headline}</h1>
+    <p class="shl" set:html={subheadline} />
+
+    <!-- Video — centered -->
+    <div class="vid-wrap">
+      <div class="vid">
+        {videoEmbedUrl ? (
+          <iframe src={videoEmbedUrl} title="VSL Lion Camp" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        ) : (
+          <div class="vid-ph">
+            <div class="play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+            <span>Nhấn để xem Video 60 giây</span>
+          </div>
+        )}
       </div>
-    )}
-  </div>
+    </div>
 
-  <!-- CTA right after video -->
-  <div class="cta-row">
-    <a href="#vsl-form" class="cta cta-o">👉 Giữ chỗ & nhận học bổng ngay</a>
-    <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-z">💬 Chat Zalo tư vấn</a>
-  </div>
-  <p class="cta-sub">Hoàn 100% nếu đổi ý · Giữ chỗ chỉ 500k</p>
+    <!-- Benefits below video -->
+    <div class="vid-benefits">
+      {benefits.slice(0, 4).map(b => <span class="vid-benefit">{b}</span>)}
+    </div>
 
-  <!-- Urgency -->
-  <div class="urg">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd" id="cd">23:59:59</span></div>
-</div>
+    <!-- CTA right after video -->
+    <div class="hero-cta">
+      <a href="#vsl-form" class="cta cta-o">👉 {ctaPrimary}</a>
+    </div>
+    <p class="cta-sub">Hoàn 100% nếu đổi ý · Giữ chỗ chỉ 500k</p>
+
+    <!-- Urgency -->
+    <div class="urg">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd" id="cd">23:59:59</span></div>
+  </div>
+</section>
 
 <!-- ===== BELOW FOLD ===== -->
 <div class="content">
@@ -245,11 +259,11 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
   <!-- Hook -->
   <div class="hook">
     <p>{hookParagraph}</p>
-    <p class="lbl">🎬 Video 60 giây cho Ba/Mẹ thấy:</p>
+    <p class="lbl">🎬 Xem video để thấy:</p>
     <p>{hookBullets}</p>
   </div>
 
-  <!-- Benefits -->
+  <!-- Benefits (full list) -->
   <div class="bens">
     <h3>Chỉ sau 6 tuần tại Lion Camp {location}:</h3>
     <ul>{benefits.map(b => <li>{b}</li>)}</ul>
@@ -273,7 +287,6 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
     <div class="mcta-head">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd2" id="cd2">23:59:59</span></div>
     <div class="mcta-body">
       <a href="#vsl-form" class="cta cta-o">👉 {ctaPrimary}</a>
-      <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-z">💬 {ctaZalo}</a>
     </div>
   </div>
 
@@ -297,12 +310,10 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
   <p class="foot">© 2026 Trường Việt Anh — 0916 961 409</p>
 </div>
 
-<!-- Sticky bottom -->
+<!-- Sticky bottom (mobile) — CTA only, no Zalo -->
 <div class="sticky-bot" id="sBot">
-  <a href="#vsl-form" class="sb sb-o">Giữ chỗ ngay</a>
-  <a href={zaloUrl} target="_blank" rel="noopener" class="sb sb-z">Zalo</a>
+  <a href="#vsl-form" class="sb">👉 Giữ chỗ ngay — {slotsLeft} suất còn lại</a>
 </div>
-<a href={zaloUrl} target="_blank" rel="noopener" class="fzalo" title="Chat Zalo">💬</a>
 
 <!-- Social notif -->
 <div class="snotif" id="sn">
@@ -325,12 +336,12 @@ const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocati
 })();
 
 // Sticky bottom
-(function(){var s=document.getElementById('sBot');if(!s)return;window.addEventListener('scroll',function(){s.style.display=window.scrollY>300?'flex':'none'},{passive:true})})();
+(function(){var s=document.getElementById('sBot');if(!s)return;window.addEventListener('scroll',function(){s.style.display=window.scrollY>400?'block':'none'},{passive:true})})();
 
 // Social notif
 (function(){
   var ns=['Chị Nguyễn T.','Anh Trần V.','Chị Lê H.','Anh Phạm D.','Chị Hoàng M.'],
-      ac=[' vừa giữ chỗ',' vừa nhận báo cáo',' vừa giữ suất tại '+location,' vừa chat Zalo'],
+      ac=[' vừa giữ chỗ',' vừa nhận báo cáo',' vừa giữ suất tại '+location,' vừa đăng ký'],
       ts=['1p trước','2p trước','3p trước','5p trước'],
       av=['👩','👨','👩‍🦰','👨‍🦱','👩‍💼'],
       el=document.getElementById('sn');if(!el)return;

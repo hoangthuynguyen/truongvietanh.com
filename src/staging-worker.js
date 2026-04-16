@@ -334,11 +334,11 @@ async function handleLeadSubmission(request, env) {
       ];
       // Actual quiz leads (with score > 0): send quiz result email with score
       if (data.quizScore > 0) {
-        promises.push(sendQuizResultEmail(data, env).catch(() => {}));
+        promises.push(sendQuizResultEmail(data, env, contactId, ghlApiKey).catch(() => {}));
       }
       // Trai-he sales page leads (no quiz score): send consultation confirmation email
       else if ((data.source || '').includes('trai-he') && data.email) {
-        promises.push(sendTraiHeConsultEmail(data, env).catch(() => {}));
+        promises.push(sendTraiHeConsultEmail(data, env, contactId, ghlApiKey).catch(() => {}));
       }
       // Create opportunity for ALL trai-he leads (quiz or sales page)
       if (isQuizLead(data) && contactId) {
@@ -473,6 +473,30 @@ async function createQuizOpportunity(contactId, data, ghlApiKey) {
 }
 
 // === NOTIFICATION FUNCTIONS ===
+
+// === Helper: send email via GHL Conversations API (works reliably with SES backend) ===
+async function sendEmailViaGHL({ contactId, subject, html, ghlApiKey }) {
+  if (!contactId) return { error: 'No contactId' };
+  try {
+    const res = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${ghlApiKey || 'pit-3a3f370c-7e6a-47f0-977f-053d093bc06c'}`,
+        'Version': '2021-07-28',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        type: 'Email',
+        contactId,
+        subject,
+        html,
+      }),
+    });
+    return await res.json();
+  } catch (e) {
+    return { error: e.message };
+  }
+}
 
 async function sendEmailNotification(data, env) {
   const schoolLabel = {
@@ -628,7 +652,7 @@ async function sendZaloNotification(data, env) {
 }
 
 // === QUIZ RESULT EMAIL TO PARENT ===
-async function sendQuizResultEmail(data, env) {
+async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
   const score = data.quizScore;
   const level = getQuizResultLabel(score);
   const emoji = getQuizResultEmoji(score);
@@ -713,22 +737,27 @@ async function sendQuizResultEmail(data, env) {
   </div>
 </div>`.trim();
 
-  await fetch('https://api.mailchannels.net/tx/v1/send', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      personalizations: [{
-        to: [{ email: data.email, name: data.fullName }],
-      }],
-      from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
-      subject,
-      content: [{ type: 'text/html', value: body }],
-    }),
-  });
+  // Primary: send via GHL Conversations API (uses SES backend, reliable)
+  if (contactId) {
+    await sendEmailViaGHL({ contactId, subject, html: body, ghlApiKey });
+  }
+  // Fallback: MailChannels (legacy, may fail with 401)
+  try {
+    await fetch('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: data.email, name: data.fullName }] }],
+        from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+        subject,
+        content: [{ type: 'text/html', value: body }],
+      }),
+    });
+  } catch (_) {}
 }
 
 // === TRAI HE CONSULTATION CONFIRMATION EMAIL (non-quiz sales page leads) ===
-async function sendTraiHeConsultEmail(data, env) {
+async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
   const loc = deriveLocation(data.source) || '';
   const campLvl = deriveCampLevel(data.source) || '';
   const firstName = (data.fullName || '').trim().split(/\s+/).pop() || 'Ba/Mẹ';
@@ -795,19 +824,24 @@ async function sendTraiHeConsultEmail(data, env) {
 </div>
 </body></html>`.trim();
 
-  await fetch('https://api.mailchannels.net/tx/v1/send', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      personalizations: [{
-        to: [{ email: data.email, name: data.fullName }],
-      }],
-      from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
-      reply_to: { email: 'tu@truongvietanh.com', name: 'Ban Tuyển sinh Việt Anh' },
-      subject,
-      content: [{ type: 'text/html', value: body }],
-    }),
-  });
+  // Primary: send via GHL Conversations API (uses SES backend, reliable)
+  if (contactId) {
+    await sendEmailViaGHL({ contactId, subject, html: body, ghlApiKey });
+  }
+  // Fallback: MailChannels (legacy, may fail with 401)
+  try {
+    await fetch('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: data.email, name: data.fullName }] }],
+        from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+        reply_to: { email: 'tu@truongvietanh.com', name: 'Ban Tuyển sinh Việt Anh' },
+        subject,
+        content: [{ type: 'text/html', value: body }],
+      }),
+    });
+  } catch (_) {}
 }
 
 function jsonResponse(data, status = 200) {

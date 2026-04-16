@@ -35,43 +35,113 @@ const {
   <link rel="canonical" href={canonicalUrl} />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');</style>
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese');</style>
+
   <style is:inline>
-    :root{--b:#1F4E79;--o:#E8792B;--w:#fff;--zalo:#0068FF}
+    :root{--b:#1F4E79;--o:#E8792B;--o-d:#D96A1F;--w:#fff;--zalo:#0068FF;--green:#16A34A;--red:#DC2626;--radius:16px}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Open Sans',system-ui,sans-serif;color:#1C2A3A;background:linear-gradient(165deg,#FFF7ED 0%,#FED7AA 40%,#FDBA74 100%);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
-    .logo-bar{text-align:center;padding:22px 16px 0}
-    .logo-bar img{height:54px;width:auto}
-    .main{flex:1;display:flex;align-items:center;justify-content:center;padding:22px 16px 36px}
-    .card{background:var(--w);border-radius:22px;box-shadow:0 14px 44px rgba(0,0,0,.12);max-width:620px;width:100%;padding:30px 26px;text-align:center}
-    .icon{width:68px;height:68px;border-radius:50%;background:#FFF7ED;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px}
-    h1{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;color:var(--o);margin-bottom:14px;line-height:1.3}
-    .msg{font-size:1rem;color:#1C2A3A;line-height:1.7;margin-bottom:16px;text-align:left}
+    body{font-family:'Open Sans',system-ui,sans-serif;color:#1C2A3A;background:linear-gradient(165deg,#FFF7ED 0%,#FED7AA 35%,#FDBA74 70%,#FB923C 100%);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+    h1,h2,h3{font-family:'Montserrat',sans-serif}
+
+    /* Header */
+    .logo-bar{text-align:center;padding:16px 16px 8px}
+    .logo-bar img{height:48px;width:auto}
+
+    /* Main */
+    .main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:12px 16px 36px}
+    .card{background:var(--w);border-radius:20px;box-shadow:0 16px 50px rgba(0,0,0,.14);max-width:640px;width:100%;padding:0;overflow:hidden}
+
+    /* Card Header */
+    .card-header{background:linear-gradient(135deg,var(--b) 0%,#2563EB 100%);color:var(--w);padding:22px 24px;text-align:center;position:relative;overflow:hidden}
+    .card-header::before{content:'';position:absolute;top:-50%;right:-50%;width:100%;height:100%;background:radial-gradient(circle,rgba(255,255,255,.08) 0%,transparent 70%)}
+    .card-header .icon-wrap{width:64px;height:64px;border-radius:50%;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;backdrop-filter:blur(4px)}
+    .card-header .icon-wrap .check-anim{width:36px;height:36px;animation:check-pop .6s ease .3s both}
+    @keyframes check-pop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.2)}100%{transform:scale(1);opacity:1}}
+    .card-header h1{font-size:1.35rem;font-weight:800;line-height:1.3;margin:0}
+    .card-header .sub-h{font-size:.9rem;opacity:.85;margin-top:6px;font-weight:500}
+
+    /* Card Body */
+    .card-body{padding:24px 24px 28px}
+
+    /* Status Steps */
+    .status-steps{display:flex;justify-content:center;gap:0;margin:0 0 20px;position:relative}
+    .status-steps::before{content:'';position:absolute;top:16px;left:20%;right:20%;height:2px;background:#E5E7EB}
+    .step{display:flex;flex-direction:column;align-items:center;gap:6px;position:relative;z-index:1;flex:1;max-width:100px}
+    .step .dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:800;color:var(--w)}
+    .step.done .dot{background:var(--green)}
+    .step.active .dot{background:var(--o);animation:dot-pulse 1.5s infinite}
+    .step.pending .dot{background:#D1D5DB;color:#6B7280}
+    @keyframes dot-pulse{0%,100%{box-shadow:0 0 0 0 rgba(232,121,43,.4)}50%{box-shadow:0 0 0 8px rgba(232,121,43,0)}}
+    .step .label{font-size:.72rem;color:#6B7280;font-weight:600;text-align:center;line-height:1.2}
+    .step.done .label{color:var(--green)}
+    .step.active .label{color:var(--o);font-weight:700}
+
+    /* Message */
+    .msg{font-size:.96rem;color:#1C2A3A;line-height:1.75;margin-bottom:16px}
     .msg p{margin-bottom:10px}
     .msg strong{color:var(--b)}
-    .choices{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:12px;padding:14px 18px;margin:14px 0;text-align:left}
-    .choices .opt{padding:10px 0;border-bottom:1px dashed #E5E7EB;font-size:.95rem;color:#374151}
-    .choices .opt:last-child{border-bottom:0}
-    .choices .opt b{color:var(--b)}
-    .bonus{background:#FFF7ED;border:2px solid var(--o);border-radius:14px;padding:18px 20px;margin:14px 0;text-align:left}
-    .bonus .t{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--o);margin-bottom:10px;font-size:1rem}
+
+    /* Divider */
+    .divider{height:1px;background:linear-gradient(90deg,transparent,#E5E7EB,transparent);margin:16px 0}
+
+    /* Choices */
+    .choices{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+    .choice{border-radius:14px;padding:16px 18px;display:flex;align-items:flex-start;gap:12px;font-size:.94rem;line-height:1.55}
+    .choice-yes{background:#F0FDF4;border:2px solid #86EFAC}
+    .choice-no{background:#FEF2F2;border:1px solid #FECACA}
+    .choice .icon{font-size:1.5rem;flex-shrink:0;margin-top:2px}
+    .choice b{color:var(--b);display:block;margin-bottom:2px;font-size:.95rem}
+    .choice.choice-no b{color:#991B1B}
+
+    /* Bonus */
+    .bonus{background:linear-gradient(135deg,#FFF7ED 0%,#FFEDD5 100%);border:2px solid var(--o);border-radius:var(--radius);padding:20px 22px;margin:16px 0;position:relative;overflow:hidden}
+    .bonus::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--o),#F59E0B,var(--o))}
+    .bonus .t{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--o);margin-bottom:10px;font-size:1rem;display:flex;align-items:center;gap:6px}
+    .bonus .intro{font-size:.92rem;color:#7C2D12;margin-bottom:10px;line-height:1.6}
     .bonus ul{list-style:none;padding:0}
-    .bonus li{padding:6px 0 6px 24px;position:relative;font-size:.94rem;color:#7C2D12;line-height:1.55}
-    .bonus li::before{content:'✓';position:absolute;left:4px;color:#16A34A;font-weight:800}
-    .countdown-box{display:inline-flex;align-items:center;gap:8px;background:#FEE2E2;color:#991B1B;padding:10px 18px;border-radius:12px;font-size:.9rem;font-weight:700;margin:8px 0 14px}
-    .countdown-box .time{font-family:'Montserrat',sans-serif;font-weight:800;letter-spacing:.5px}
-    .cta-stack{display:flex;flex-direction:column;gap:10px;margin:12px 0 10px}
-    .cta{display:block;padding:16px 20px;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;font-family:'Montserrat',sans-serif;transition:all .2s}
-    .cta-primary{background:var(--o);color:var(--w);box-shadow:0 6px 20px rgba(232,121,43,.4);animation:pulse 2s infinite}
-    .cta-primary:hover{background:#D96A1F;transform:translateY(-2px)}
-    @keyframes pulse{0%,100%{box-shadow:0 6px 20px rgba(232,121,43,.4)}50%{box-shadow:0 6px 28px rgba(232,121,43,.7)}}
-    .cta-zalo{background:var(--zalo);color:var(--w)}
-    .cta-zalo:hover{background:#0056D6}
-    .signoff{font-size:.92rem;color:#555;line-height:1.6;margin-top:14px;text-align:left;border-top:1px solid #E5E7EB;padding-top:14px}
+    .bonus li{padding:8px 0 8px 30px;position:relative;font-size:.93rem;color:#7C2D12;line-height:1.55;font-weight:500}
+    .bonus li::before{content:'';position:absolute;left:0;top:10px;width:22px;height:22px;background:var(--green);border-radius:50%;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='white'%3E%3Cpath d='M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");background-size:14px;background-repeat:no-repeat;background-position:center}
+
+    /* Countdown */
+    .countdown-row{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#FEE2E2,#FECACA);color:#7F1D1D;padding:14px 18px;border-radius:14px;font-weight:700;margin:12px 0 6px;font-size:.92rem;position:relative;overflow:hidden}
+    .countdown-row::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);animation:cd-shine 3s infinite}
+    @keyframes cd-shine{0%{left:-100%}100%{left:100%}}
+    .countdown-row .time{font-family:'Montserrat',sans-serif;font-size:1.1rem;font-weight:900;background:#7F1D1D;color:var(--w);padding:4px 10px;border-radius:6px}
+    .slots-text{text-align:center;font-size:.92rem;color:#991B1B;font-weight:700;margin-bottom:12px}
+
+    /* CTA */
+    .cta-stack{display:flex;flex-direction:column;gap:10px;margin:12px 0 14px}
+    .cta{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 20px;border-radius:14px;text-decoration:none;font-weight:800;font-size:.98rem;font-family:'Montserrat',sans-serif;transition:all .25s;line-height:1.3;text-align:center}
+    .cta-primary{background:linear-gradient(135deg,var(--o) 0%,#F97316 100%);color:var(--w);box-shadow:0 8px 24px rgba(232,121,43,.35);position:relative;overflow:hidden}
+    .cta-primary::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);animation:cta-shine 2.5s ease infinite}
+    @keyframes cta-shine{0%{left:-100%}100%{left:150%}}
+    .cta-primary:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(232,121,43,.5)}
+    .cta-zalo{background:var(--zalo);color:var(--w);box-shadow:0 4px 14px rgba(0,104,255,.2)}
+    .cta-zalo:hover{background:#0056D6;transform:translateY(-1px)}
+
+    /* Guarantee */
+    .guarantee{display:flex;align-items:center;gap:12px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:14px 16px;margin:10px 0 14px}
+    .guarantee .shield{font-size:1.8rem;flex-shrink:0}
+    .guarantee p{font-size:.85rem;color:#166534;line-height:1.5;font-weight:500}
+
+    /* Sign off */
+    .signoff{font-size:.9rem;color:#555;line-height:1.65;border-top:1px solid #E5E7EB;padding-top:14px;margin-top:6px}
     .signoff b{color:var(--b)}
-    .sticky-zalo{position:fixed;bottom:18px;right:18px;z-index:999;background:var(--zalo);color:#fff;padding:12px 16px;border-radius:50px;text-decoration:none;font-weight:700;font-size:.9rem;box-shadow:0 6px 20px rgba(0,104,255,.4)}
-    @media(max-width:480px){.card{padding:24px 20px}h1{font-size:1.25rem}.msg{font-size:.94rem}}
+
+    /* Floating Zalo */
+    .sticky-zalo{position:fixed;bottom:18px;right:18px;z-index:999;background:var(--zalo);color:var(--w);width:54px;height:54px;border-radius:50%;text-decoration:none;font-size:1.5rem;box-shadow:0 6px 20px rgba(0,104,255,.4);display:flex;align-items:center;justify-content:center;transition:transform .2s}
+    .sticky-zalo:hover{transform:scale(1.1)}
+
+    /* Responsive */
+    @media(max-width:480px){
+      .card-body{padding:20px 18px 24px}
+      .card-header h1{font-size:1.2rem}
+      .msg{font-size:.92rem}
+      .cta{font-size:.9rem;padding:14px 16px}
+      .status-steps::before{left:15%;right:15%}
+    }
   </style>
+
   <script is:inline define:vars={{ pageTitle, level, funnelCode }}>
     window.dataLayer=window.dataLayer||[];
     window.dataLayer.push({event:'generate_lead',page_title:pageTitle,school_level:level,funnel_code:funnelCode});
@@ -83,49 +153,116 @@ const {
 <div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" /></div>
 <div class="main">
   <div class="card">
-    <div class="icon">🛑</div>
-    <h1>Khoan đã! Ba/Mẹ đừng tắt trang này — Báo cáo đang được gửi...</h1>
-
-    <div class="msg" set:html={messageHtml}></div>
-
-    <div class="choices">
-      <div class="opt"><b>✅ Lựa chọn 1 — Hành động ngay (Khuyên dùng):</b><br/>Cọc 500.000đ để khóa học bổng Early Bird cao nhất + giữ chỗ + nhận quà. Hoàn lại 100% nếu đổi ý.</div>
-      <div class="opt"><b>❌ Lựa chọn 2 — Chờ thêm:</b><br/>Có thể mất suất hoặc mức học bổng khi quay lại.</div>
+    <!-- Card Header with animated check -->
+    <div class="card-header">
+      <div class="icon-wrap">
+        <svg class="check-anim" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="18" cy="18" r="16" fill="rgba(255,255,255,.2)"/>
+          <path d="M12 18l4 4 8-8" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <h1>Khoan đã! Ba/Mẹ đừng tắt trang này</h1>
+      <p class="sub-h">Báo cáo đang được gửi vào Zalo & Email của Ba/Mẹ...</p>
     </div>
 
-    <div class="bonus">
-      <div class="t">⚡ Fast Action Bonus — Ưu đãi 24 giờ tới:</div>
-      <p style="font-size:.94rem;color:#7C2D12;margin-bottom:10px">{bonusIntro}</p>
-      <ul>{bonusItems.map(b => <li>{b}</li>)}</ul>
+    <div class="card-body">
+      <!-- Status Steps -->
+      <div class="status-steps">
+        <div class="step done">
+          <div class="dot">✓</div>
+          <div class="label">Đăng ký</div>
+        </div>
+        <div class="step active">
+          <div class="dot">2</div>
+          <div class="label">Gửi báo cáo</div>
+        </div>
+        <div class="step pending">
+          <div class="dot">3</div>
+          <div class="label">Giữ chỗ</div>
+        </div>
+      </div>
+
+      <!-- Message -->
+      <div class="msg" set:html={messageHtml}></div>
+
+      <div class="divider"></div>
+
+      <!-- Choices -->
+      <div class="choices">
+        <div class="choice choice-yes">
+          <div class="icon">✅</div>
+          <div>
+            <b>Lựa chọn 1 — Hành động ngay (Khuyên dùng)</b>
+            Cọc 500.000đ để khóa học bổng Early Bird cao nhất + giữ chỗ + nhận quà. <strong>Hoàn lại 100% nếu đổi ý.</strong>
+          </div>
+        </div>
+        <div class="choice choice-no">
+          <div class="icon">⚠️</div>
+          <div>
+            <b>Lựa chọn 2 — Chờ thêm</b>
+            Có thể mất suất hoặc mức học bổng khi quay lại.
+          </div>
+        </div>
+      </div>
+
+      <!-- Bonus -->
+      <div class="bonus">
+        <div class="t">⚡ Fast Action Bonus — Ưu đãi 24 giờ tới</div>
+        <p class="intro">{bonusIntro}</p>
+        <ul>{bonusItems.map(b => <li>{b}</li>)}</ul>
+      </div>
+
+      <!-- Countdown -->
+      <div class="countdown-row">⏳ Ưu đãi kết thúc trong <span class="time" id="cd2">23:59:59</span></div>
+      <p class="slots-text">Hiện lớp {levelLabel} {location} chỉ còn <strong>{slotsLeft}</strong> suất.</p>
+
+      <!-- CTA -->
+      <div class="cta-stack">
+        <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-primary">👉 {ctaPrimary}</a>
+        <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-zalo">💬 {ctaZalo}</a>
+      </div>
+
+      <!-- Guarantee -->
+      <div class="guarantee">
+        <div class="shield">🛡️</div>
+        <p><strong>Hoàn 100% tiền cọc</strong> nếu Ba/Mẹ đổi ý trước khi trại hè bắt đầu. Không hỏi lý do.</p>
+      </div>
+
+      <!-- Sign off -->
+      <div class="signoff" set:html={signOff}></div>
     </div>
-
-    <div class="countdown-box">⏳ Ưu đãi kết thúc trong: <span class="time" id="cd2">23:59:59</span></div>
-    <p style="font-size:.95rem;color:#991B1B;font-weight:700;margin-bottom:8px">Hiện lớp {levelLabel} {location} chỉ còn <b>{slotsLeft}</b> suất.</p>
-
-    <div class="cta-stack">
-      <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-primary">👉 {ctaPrimary}</a>
-      <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-zalo">💬 {ctaZalo}</a>
-    </div>
-
-    <div class="signoff" set:html={signOff}></div>
   </div>
 </div>
-<a href={zaloUrl} target="_blank" rel="noopener" class="sticky-zalo">💬 Chat Zalo ngay</a>
+<a href={zaloUrl} target="_blank" rel="noopener" class="sticky-zalo" title="Chat Zalo">💬</a>
 
 <script is:inline>
+// === COUNTDOWN ===
 (function(){
-  const key='vsl_ty_deadline_'+location.pathname;
-  let d=localStorage.getItem(key);
+  var key='vsl_ty_deadline_'+location.pathname;
+  var d=localStorage.getItem(key);
   if(!d){d=String(Date.now()+24*3600*1000);localStorage.setItem(key,d)}
-  const el=document.getElementById('cd2');
+  var el=document.getElementById('cd2');
   function tick(){
-    let diff=parseInt(d)-Date.now();if(diff<0)diff=0;
-    const h=String(Math.floor(diff/3600000)).padStart(2,'0');
-    const m=String(Math.floor(diff/60000)%60).padStart(2,'0');
-    const s=String(Math.floor(diff/1000)%60).padStart(2,'0');
+    var diff=parseInt(d)-Date.now();if(diff<0)diff=0;
+    var h=String(Math.floor(diff/3600000)).padStart(2,'0');
+    var m=String(Math.floor(diff/60000)%60).padStart(2,'0');
+    var s=String(Math.floor(diff/1000)%60).padStart(2,'0');
     if(el)el.textContent=h+':'+m+':'+s;
   }
   tick();setInterval(tick,1000);
+})();
+
+// === Auto-advance step after 3s ===
+(function(){
+  setTimeout(function(){
+    var step2=document.querySelector('.step.active');
+    var step3=document.querySelector('.step.pending');
+    if(step2&&step3){
+      step2.classList.remove('active');step2.classList.add('done');
+      step2.querySelector('.dot').textContent='✓';
+      step3.classList.remove('pending');step3.classList.add('active');
+    }
+  },3000);
 })();
 </script>
 </body>

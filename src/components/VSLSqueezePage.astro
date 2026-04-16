@@ -21,14 +21,26 @@ export interface Props {
   zaloUrl: string;
   slotsLeft: string;
   thankYouUrl: string;
+  testimonialQuote?: string;
+  testimonialAuthor?: string;
 }
 
 const {
   pageTitle, pageDescription, canonicalUrl, schoolLevel, funnelCode,
   location, headline, microProof, subheadline, hookParagraph, hookBullets,
   videoEmbedUrl = '', benefits, finalHookLine, ctaPrimary, ctaZalo,
-  zaloUrl, slotsLeft, thankYouUrl
+  zaloUrl, slotsLeft, thankYouUrl,
+  testimonialQuote = '',
+  testimonialAuthor = ''
 } = Astro.props;
+
+const levelBadge: Record<string, string> = {
+  'tieu-hoc': 'Tiểu học',
+  'thcs': 'THCS',
+  'thpt': 'THPT'
+};
+const shortLocation = location.replace(/^(Tiểu học|THCS|THPT)\s*/,'');
+const badge = `Lion Camp 2026 — ${levelBadge[schoolLevel] || ''} ${shortLocation}`;
 ---
 
 <!doctype html>
@@ -42,130 +54,299 @@ const {
   <link rel="canonical" href={canonicalUrl} />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://truongvietanh.com/og-image.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');</style>
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese');</style>
+
   <style is:inline>
-    :root{--b:#1F4E79;--o:#E8792B;--o-d:#D96A1F;--w:#fff;--zalo:#0068FF;--g6:#666}
+    :root{--navy:#1F4E79;--navy-dk:#163A5C;--orange:#E8792B;--orange-dk:#D06A22;--white:#fff;--cream:#FFF9F3;--text:#1C2A3A;--sub:#5A6577;--muted:#9CA3AF;--zalo:#0068FF;--r:12px}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Open Sans',system-ui,-apple-system,sans-serif;color:#1C2A3A;background:linear-gradient(180deg,#FFF7ED 0%,#fff 320px);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
+    body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:var(--cream);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased}
     h1,h2,h3{font-family:'Montserrat',sans-serif}
-    .logo-bar{text-align:center;padding:18px 16px 0}
-    .logo-bar img{height:52px;width:auto}
-    .wrap{max-width:760px;margin:0 auto;padding:20px 18px 60px}
-    .headline{font-size:1.75rem;font-weight:800;color:var(--o);line-height:1.25;text-align:center;margin:16px 0 14px}
-    .micro{display:flex;flex-direction:column;gap:6px;background:#FFF7ED;border:1px solid #FED7AA;border-radius:12px;padding:14px 18px;margin:0 auto 16px;max-width:620px;font-size:.92rem;color:#7C2D12}
-    .micro div{padding-left:22px;position:relative}
-    .micro div::before{content:'✔';position:absolute;left:0;color:#16A34A;font-weight:800}
-    .sub{text-align:center;font-size:1.05rem;color:#374151;font-weight:600;margin:8px 0 20px;line-height:1.5}
-    .hook{background:#fff;border:1px solid #E5E7EB;border-radius:16px;padding:22px 20px;margin-bottom:22px;box-shadow:0 6px 20px rgba(31,78,121,.06)}
-    .hook p{font-size:1rem;margin-bottom:10px;color:#1C2A3A}
-    .hook .big{font-weight:700;font-size:1.05rem;color:var(--b);margin:14px 0 6px}
-    .video-box{aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#000;margin:18px 0 22px;box-shadow:0 10px 30px rgba(0,0,0,.15);position:relative}
-    .video-box iframe,.video-box video{width:100%;height:100%;border:0;display:block}
-    .video-placeholder{display:flex;align-items:center;justify-content:center;height:100%;color:#fff;font-size:1rem;text-align:center;padding:20px;background:linear-gradient(135deg,#1F4E79 0%,#2a5d8a 100%)}
-    .video-placeholder .play{font-size:3rem;margin-bottom:8px}
-    .benefits{background:linear-gradient(135deg,#FFF7ED 0%,#FFE8D1 100%);border:2px solid var(--o);border-radius:16px;padding:22px 22px;margin-bottom:20px}
-    .benefits h3{color:var(--o);font-size:1.1rem;font-weight:800;margin-bottom:12px;text-align:center}
-    .benefits ul{list-style:none;padding:0}
-    .benefits li{padding:10px 0 10px 34px;position:relative;font-size:1rem;color:#1C2A3A;font-weight:600;border-bottom:1px dashed rgba(232,121,43,.3)}
-    .benefits li:last-child{border-bottom:0}
-    .benefits li::before{content:'⭐';position:absolute;left:4px;top:9px;font-size:1.2rem}
-    .final-hook{text-align:center;font-size:1.02rem;color:#1C2A3A;margin:16px 0 22px;padding:0 10px;font-style:italic}
-    .final-hook strong{color:var(--o);font-weight:800;font-style:normal}
-    .urgency{text-align:center;background:#FEE2E2;color:#991B1B;padding:12px 18px;border-radius:12px;font-weight:700;margin-bottom:14px;font-size:.95rem}
-    .urgency .countdown{font-family:'Montserrat',sans-serif;font-size:1.1rem;letter-spacing:.5px}
-    .cta-stack{display:flex;flex-direction:column;gap:12px;margin:10px 0 20px}
-    .cta{display:block;padding:18px 22px;border-radius:14px;text-decoration:none;font-weight:800;font-size:1.02rem;text-align:center;font-family:'Montserrat',sans-serif;transition:all .2s;cursor:pointer;border:0;width:100%}
-    .cta-primary{background:var(--o);color:var(--w);box-shadow:0 6px 20px rgba(232,121,43,.4);animation:pulse 2s infinite}
-    .cta-primary:hover{background:var(--o-d);transform:translateY(-2px)}
-    @keyframes pulse{0%,100%{box-shadow:0 6px 20px rgba(232,121,43,.4)}50%{box-shadow:0 6px 28px rgba(232,121,43,.7)}}
-    .cta-zalo{background:var(--zalo);color:var(--w)}
-    .cta-zalo:hover{background:#0056D6}
-    .form-wrap{background:#fff;border-radius:16px;padding:22px 20px;box-shadow:0 10px 30px rgba(31,78,121,.1);margin-top:18px}
-    .form-wrap h2{color:var(--b);text-align:center;font-size:1.25rem;margin-bottom:8px}
-    .form-wrap .sub-form{text-align:center;color:var(--g6);font-size:.9rem;margin-bottom:14px}
-    .sticky-zalo{position:fixed;bottom:18px;right:18px;z-index:999;background:var(--zalo);color:#fff;padding:12px 16px;border-radius:50px;text-decoration:none;font-weight:700;font-size:.9rem;box-shadow:0 6px 20px rgba(0,104,255,.4);display:flex;align-items:center;gap:8px}
-    .footer-note{text-align:center;font-size:.78rem;color:#999;margin-top:20px;padding:0 20px}
-    @media(max-width:560px){.headline{font-size:1.4rem}.sub{font-size:.98rem}.benefits li{font-size:.94rem}.cta{font-size:.95rem;padding:16px 18px}}
+
+    /* === ABOVE THE FOLD === */
+    .atf{background:var(--white);padding-bottom:16px}
+
+    /* Logo row */
+    .logo-row{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid #F0F0F0}
+    .logo-row img{height:44px;width:auto}
+    .logo-row .tag{font-family:'Montserrat',sans-serif;font-size:.65rem;font-weight:700;color:var(--white);background:var(--navy);padding:4px 10px;border-radius:14px;text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
+
+    /* Headline */
+    .hl{font-size:1.2rem;font-weight:800;color:var(--navy);line-height:1.25;text-align:center;padding:12px 18px 8px;margin:0}
+
+    /* Video */
+    .vid{margin:0 12px;border-radius:var(--r);overflow:hidden;background:#0a0a0a;box-shadow:0 4px 20px rgba(0,0,0,.12);aspect-ratio:16/9;position:relative}
+    .vid iframe,.vid video{width:100%;height:100%;border:0;display:block}
+    .vid-ph{display:flex;align-items:center;justify-content:center;height:100%;background:linear-gradient(135deg,#0F172A,var(--navy));color:var(--white);flex-direction:column;gap:8px}
+    .vid-ph .play{width:56px;height:56px;background:var(--orange);border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(232,121,43,.5);animation:pp 2s ease infinite}
+    .vid-ph .play svg{width:22px;height:22px;fill:var(--white);margin-left:2px}
+    @keyframes pp{0%,100%{box-shadow:0 4px 20px rgba(232,121,43,.5)}50%{box-shadow:0 4px 28px rgba(232,121,43,.8)}}
+    .vid-ph span{font-size:.8rem;opacity:.8;font-weight:600}
+
+    /* CTA row right after video */
+    .cta-row{padding:12px 12px 0;display:flex;flex-direction:column;gap:8px}
+    .cta{display:flex;align-items:center;justify-content:center;gap:6px;padding:14px 16px;border-radius:var(--r);text-decoration:none;font-weight:800;font-size:.88rem;text-align:center;font-family:'Montserrat',sans-serif;transition:all .2s;cursor:pointer;border:0;width:100%;line-height:1.3}
+    .cta-o{background:var(--orange);color:var(--white);box-shadow:0 4px 16px rgba(232,121,43,.3);position:relative;overflow:hidden}
+    .cta-o::after{content:'';position:absolute;top:0;left:-100%;width:60%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);animation:shine 2.5s ease infinite}
+    @keyframes shine{0%{left:-100%}100%{left:150%}}
+    .cta-o:hover{background:var(--orange-dk);transform:translateY(-1px)}
+    .cta-z{background:var(--zalo);color:var(--white)}
+    .cta-z:hover{background:#0056D6}
+    .cta-sub{text-align:center;font-size:.72rem;color:var(--muted);padding:4px 0 0}
+
+    /* Urgency strip */
+    .urg{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;font-size:.8rem;font-weight:700;color:var(--navy)}
+    .urg .cd{background:var(--navy);color:var(--white);padding:2px 7px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:900;font-size:.8rem;letter-spacing:.3px}
+
+    /* === BELOW FOLD CONTENT === */
+    .content{max-width:680px;margin:0 auto;padding:16px 16px 80px}
+
+    /* Proof pills */
+    .pills{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin:0 0 16px}
+    .pill{display:inline-flex;align-items:center;gap:4px;background:var(--white);border:1px solid #E5E7EB;border-radius:20px;padding:6px 12px;font-size:.78rem;color:var(--navy);font-weight:600}
+    .pill::before{content:'✓';color:var(--orange);font-weight:900;font-size:.7rem}
+
+    /* Hook */
+    .hook{background:var(--white);border-radius:var(--r);padding:16px 18px;margin:0 0 14px;border-left:3px solid var(--orange)}
+    .hook p{font-size:.92rem;margin-bottom:6px;color:var(--sub)}
+    .hook .lbl{font-weight:700;color:var(--navy);font-size:.92rem}
+
+    /* Benefits */
+    .bens{background:var(--white);border-radius:var(--r);padding:16px 18px;margin:0 0 14px;border:1px solid #E5E7EB}
+    .bens h3{color:var(--navy);font-size:.95rem;font-weight:800;margin-bottom:10px;text-align:center}
+    .bens ul{list-style:none;padding:0}
+    .bens li{padding:8px 0 8px 28px;position:relative;font-size:.9rem;font-weight:600;color:var(--text);border-bottom:1px solid #F3F4F6}
+    .bens li:last-child{border-bottom:0}
+    .bens li::before{content:'✓';position:absolute;left:0;top:8px;color:var(--orange);font-weight:900;font-size:.9rem}
+
+    /* Final hook */
+    .fhook{text-align:center;font-size:.9rem;color:var(--sub);padding:14px;margin:0 0 14px;background:var(--white);border-radius:var(--r);border:1px dashed var(--orange)}
+    .fhook strong{color:var(--orange);display:block;margin-top:4px}
+
+    /* Testimonial */
+    .testi{background:var(--white);border-radius:var(--r);padding:16px 18px;margin:0 0 14px;border:1px solid #E5E7EB;position:relative}
+    .testi::before{content:'"';position:absolute;top:4px;left:12px;font-size:2.2rem;color:var(--orange);opacity:.15;font-family:Georgia,serif;line-height:1}
+    .testi blockquote{font-size:.88rem;color:var(--sub);font-style:italic;line-height:1.65;margin:0 0 6px;padding-left:6px}
+    .testi cite{display:block;font-size:.78rem;font-weight:700;color:var(--navy);font-style:normal;padding-left:6px}
+    .testi .stars{color:var(--orange);font-size:.8rem;padding-left:6px;margin-top:2px}
+
+    /* Mid CTA */
+    .mcta{background:var(--white);border-radius:var(--r);overflow:hidden;margin:0 0 14px;border:2px solid var(--orange)}
+    .mcta-head{background:var(--navy);color:var(--white);padding:10px 14px;text-align:center;font-size:.84rem;font-weight:700}
+    .mcta-head .cd2{background:rgba(255,255,255,.2);padding:2px 8px;border-radius:4px;font-family:'Montserrat',sans-serif;font-weight:900}
+    .mcta-body{padding:12px 14px;display:flex;flex-direction:column;gap:8px}
+
+    /* Guarantee */
+    .guar{display:flex;align-items:center;gap:8px;background:var(--white);border:1px solid #E5E7EB;border-radius:var(--r);padding:12px 14px;margin:0 0 14px}
+    .guar .ic{font-size:1.4rem;flex-shrink:0}
+    .guar p{font-size:.82rem;color:var(--sub);line-height:1.5}
+    .guar b{color:var(--navy)}
+
+    /* Form */
+    .form-sec{background:var(--white);border-radius:var(--r);padding:20px 16px;border:2px solid var(--navy);position:relative}
+    .form-sec::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--orange);border-radius:var(--r) var(--r) 0 0}
+    .form-sec h2{color:var(--navy);text-align:center;font-size:1.05rem;margin-bottom:4px}
+    .form-sec .fsub{text-align:center;color:var(--muted);font-size:.82rem;margin-bottom:12px}
+    .form-lock{display:flex;align-items:center;justify-content:center;gap:4px;font-size:.72rem;color:var(--muted);margin-top:8px}
+    .form-lock svg{width:12px;height:12px;fill:var(--navy)}
+
+    /* Sticky bottom (mobile) */
+    .sticky-bot{position:fixed;bottom:0;left:0;right:0;z-index:998;background:var(--white);padding:8px 12px;box-shadow:0 -2px 12px rgba(0,0,0,.08);display:none;gap:8px;align-items:center;border-top:2px solid var(--orange)}
+    .sticky-bot .sb{flex:1;padding:12px 10px;border-radius:10px;text-decoration:none;font-weight:800;font-size:.82rem;text-align:center;font-family:'Montserrat',sans-serif;color:var(--white)}
+    .sticky-bot .sb-o{background:var(--orange)}
+    .sticky-bot .sb-z{background:var(--zalo);flex:0 0 auto;padding:12px 14px}
+
+    /* Floating Zalo */
+    .fzalo{position:fixed;bottom:64px;right:14px;z-index:999;background:var(--zalo);color:var(--white);width:46px;height:46px;border-radius:50%;text-decoration:none;font-size:1.2rem;box-shadow:0 4px 14px rgba(0,104,255,.3);display:flex;align-items:center;justify-content:center}
+
+    /* Social notif */
+    .snotif{position:fixed;bottom:120px;left:12px;z-index:997;background:var(--white);border-radius:10px;padding:8px 12px;box-shadow:0 4px 18px rgba(0,0,0,.1);display:flex;align-items:center;gap:8px;max-width:270px;transform:translateX(-110%);transition:transform .35s ease;font-size:.78rem;border:1px solid #F0F0F0}
+    .snotif.show{transform:translateX(0)}
+    .snotif .sa{width:30px;height:30px;border-radius:50%;background:var(--cream);display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0}
+    .snotif b{color:var(--navy)}
+    .snotif .st{font-size:.68rem;color:var(--muted);display:block;margin-top:1px}
+
+    /* Footer */
+    .foot{text-align:center;font-size:.72rem;color:var(--muted);margin-top:16px}
+
+    /* === RESPONSIVE === */
+    @media(max-width:560px){
+      .hl{font-size:1.15rem;padding:10px 14px 6px}
+      .sticky-bot{display:flex}
+      .fzalo{bottom:64px}
+      .snotif{bottom:120px}
+    }
+    @media(min-width:561px){
+      .logo-row{padding:12px 24px}
+      .logo-row img{height:54px}
+      .hl{font-size:1.5rem;padding:16px 30px 10px}
+      .vid{margin:0 24px;max-height:360px}
+      .cta-row{padding:14px 24px 0;flex-direction:row}
+      .cta-row .cta{flex:1}
+      .urg{padding:10px}
+      .fzalo{bottom:20px;right:20px;width:52px;height:52px}
+    }
+    @media(min-width:800px){
+      .hl{font-size:1.65rem}
+      .vid{margin:0 60px}
+    }
   </style>
+
   <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-<div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" /></div>
-<div class="wrap">
-  <h1 class="headline">{headline}</h1>
-  <div class="micro">{microProof.map(m => <div>{m}</div>)}</div>
-  <p class="sub">{subheadline}</p>
 
-  <div class="hook">
-    <p>{hookParagraph}</p>
-    <p class="big">Video 60 giây này sẽ cho Ba/Mẹ thấy:</p>
-    <p>{hookBullets}</p>
+<!-- ===== ABOVE THE FOLD ===== -->
+<div class="atf">
+  <!-- Logo + badge -->
+  <div class="logo-row">
+    <img src="/logo-vietanh.webp" alt="Trường Việt Anh" />
+    <span class="tag">{badge}</span>
   </div>
 
-  <div class="video-box">
+  <!-- Headline (compact) -->
+  <h1 class="hl">{headline}</h1>
+
+  <!-- Video (immediately) -->
+  <div class="vid">
     {videoEmbedUrl ? (
-      <iframe src={videoEmbedUrl} title="VSL Trại hè Lion Camp" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+      <iframe src={videoEmbedUrl} title="VSL Lion Camp" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
     ) : (
-      <div class="video-placeholder"><div><div class="play">▶</div><div>Video VSL 60 giây<br/><span style="font-size:.85rem;opacity:.8">(Sẽ cập nhật sớm)</span></div></div></div>
+      <div class="vid-ph">
+        <div class="play"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></div>
+        <span>Nhấn để xem Video 60 giây</span>
+      </div>
     )}
   </div>
 
-  <div class="benefits">
+  <!-- CTA right after video -->
+  <div class="cta-row">
+    <a href="#vsl-form" class="cta cta-o">👉 Giữ chỗ & nhận học bổng ngay</a>
+    <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-z">💬 Chat Zalo tư vấn</a>
+  </div>
+  <p class="cta-sub">Hoàn 100% nếu đổi ý · Giữ chỗ chỉ 500k</p>
+
+  <!-- Urgency -->
+  <div class="urg">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd" id="cd">23:59:59</span></div>
+</div>
+
+<!-- ===== BELOW FOLD ===== -->
+<div class="content">
+
+  <!-- Proof pills -->
+  <div class="pills">
+    {microProof.map(m => <span class="pill">{m}</span>)}
+  </div>
+
+  <!-- Hook -->
+  <div class="hook">
+    <p>{hookParagraph}</p>
+    <p class="lbl">🎬 Video 60 giây cho Ba/Mẹ thấy:</p>
+    <p>{hookBullets}</p>
+  </div>
+
+  <!-- Benefits -->
+  <div class="bens">
     <h3>Chỉ sau 6 tuần tại Lion Camp {location}:</h3>
     <ul>{benefits.map(b => <li>{b}</li>)}</ul>
   </div>
 
-  <p class="final-hook">Nhưng điều quan trọng nhất không nằm ở những kỹ năng này…<br/><strong>→ Mà là sự thay đổi mà Ba/Mẹ sẽ thấy rõ trong video.</strong></p>
-
-  <div class="urgency">⏳ Chỉ còn <strong>{slotsLeft}</strong> suất — Ưu đãi kết thúc trong <span class="countdown" id="cd">23:59:59</span></div>
-
-  <div class="cta-stack">
-    <a href="#vsl-form" class="cta cta-primary">👉 {ctaPrimary}</a>
-    <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-zalo">💬 {ctaZalo}</a>
+  <!-- Final hook -->
+  <div class="fhook">
+    Nhưng điều quan trọng nhất không nằm ở những kỹ năng này…
+    <strong>→ Mà là sự thay đổi Ba/Mẹ sẽ thấy rõ trong video.</strong>
   </div>
 
-  <div class="form-wrap" id="vsl-form">
-    <h2>Đăng ký giữ chỗ & nhận báo cáo cá nhân hóa</h2>
-    <p class="sub-form">Điền thông tin — tư vấn viên liên hệ trong 24 giờ qua Zalo</p>
-    <LeadFormTwoStepEmailFirst formId={`vsl-${funnelCode}`} funnelCode={funnelCode} schoolLevel={schoolLevel} submitText="Giữ chỗ ngay — Nhận học bổng Early Bird" successMessage="Đang chuyển đến trang xác nhận..." />
+  <!-- Testimonial -->
+  <div class="testi">
+    <blockquote>{testimonialQuote || 'Trước khi đi trại hè, bé nhà mình rất rụt rè, cả ngày ôm iPad. Chỉ sau 3 tuần đầu, cô giáo gửi video bé tự tin thuyết trình bằng tiếng Anh. Mình không tin vào mắt mình!'}</blockquote>
+    <cite>{testimonialAuthor || '— Phụ huynh bé tại ' + location}</cite>
+    <div class="stars">★★★★★</div>
   </div>
 
-  <p class="footer-note">© Trường Việt Anh {location} — Hotline: 0916 961 409</p>
+  <!-- Mid CTA -->
+  <div class="mcta">
+    <div class="mcta-head">⏳ Còn <strong>{slotsLeft}</strong> suất — hết trong <span class="cd2" id="cd2">23:59:59</span></div>
+    <div class="mcta-body">
+      <a href="#vsl-form" class="cta cta-o">👉 {ctaPrimary}</a>
+      <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-z">💬 {ctaZalo}</a>
+    </div>
+  </div>
+
+  <!-- Guarantee -->
+  <div class="guar">
+    <div class="ic">🛡️</div>
+    <p><b>Cam kết hoàn 100% tiền cọc</b> nếu Ba/Mẹ đổi ý trước khi trại hè bắt đầu.</p>
+  </div>
+
+  <!-- Form -->
+  <div class="form-sec" id="vsl-form">
+    <h2>Đăng ký giữ chỗ</h2>
+    <p class="fsub">Tư vấn viên liên hệ trong 24 giờ qua Zalo</p>
+    <LeadFormTwoStepEmailFirst formId={`vsl-${funnelCode}`} funnelCode={funnelCode} schoolLevel={schoolLevel} submitText="Giữ chỗ ngay — Nhận học bổng" successMessage="Đang chuyển đến trang xác nhận..." />
+    <div class="form-lock">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2V7a5 5 0 00-5-5zm3 7V7a3 3 0 10-6 0v2h6z"/></svg>
+      Bảo mật tuyệt đối
+    </div>
+  </div>
+
+  <p class="foot">© 2026 Trường Việt Anh — 0916 961 409</p>
 </div>
 
-<a href={zaloUrl} target="_blank" rel="noopener" class="sticky-zalo">💬 Chat Zalo</a>
+<!-- Sticky bottom -->
+<div class="sticky-bot" id="sBot">
+  <a href="#vsl-form" class="sb sb-o">Giữ chỗ ngay</a>
+  <a href={zaloUrl} target="_blank" rel="noopener" class="sb sb-z">Zalo</a>
+</div>
+<a href={zaloUrl} target="_blank" rel="noopener" class="fzalo" title="Chat Zalo">💬</a>
 
-<script is:inline define:vars={{ thankYouUrl }}>
-// Countdown 24h evergreen per session
+<!-- Social notif -->
+<div class="snotif" id="sn">
+  <div class="sa" id="snA">👩</div>
+  <div><b id="snN">Chị Nguyễn T.</b> <span id="snAc">vừa giữ chỗ</span><span class="st" id="snT">2p trước</span></div>
+</div>
+
+<script is:inline define:vars={{ thankYouUrl, location }}>
+// Countdown
 (function(){
-  const key='vsl_deadline_'+location.pathname;
-  let d=localStorage.getItem(key);
-  if(!d){d=String(Date.now()+24*3600*1000);localStorage.setItem(key,d)}
-  const el=document.getElementById('cd');
-  function tick(){
-    let diff=parseInt(d)-Date.now();
-    if(diff<0)diff=0;
-    const h=String(Math.floor(diff/3600000)).padStart(2,'0');
-    const m=String(Math.floor(diff/60000)%60).padStart(2,'0');
-    const s=String(Math.floor(diff/1000)%60).padStart(2,'0');
-    if(el)el.textContent=h+':'+m+':'+s;
+  var k='vsl_'+window.location.pathname,d=localStorage.getItem(k);
+  if(!d){d=String(Date.now()+864e5);localStorage.setItem(k,d)}
+  function t(){
+    var df=parseInt(d)-Date.now();if(df<0)df=0;
+    var h=String(Math.floor(df/36e5)).padStart(2,'0'),m=String(Math.floor(df/6e4)%60).padStart(2,'0'),s=String(Math.floor(df/1e3)%60).padStart(2,'0'),v=h+':'+m+':'+s;
+    var a=document.getElementById('cd'),b=document.getElementById('cd2');
+    if(a)a.textContent=v;if(b)b.textContent=v;
   }
-  tick();setInterval(tick,1000);
+  t();setInterval(t,1000);
 })();
-// Redirect to thank-you on form submit success
-window.addEventListener('message',function(){});
+
+// Sticky bottom
+(function(){var s=document.getElementById('sBot');if(!s)return;window.addEventListener('scroll',function(){s.style.display=window.scrollY>300?'flex':'none'},{passive:true})})();
+
+// Social notif
+(function(){
+  var ns=['Chị Nguyễn T.','Anh Trần V.','Chị Lê H.','Anh Phạm D.','Chị Hoàng M.'],
+      ac=[' vừa giữ chỗ',' vừa nhận báo cáo',' vừa giữ suất tại '+location,' vừa chat Zalo'],
+      ts=['1p trước','2p trước','3p trước','5p trước'],
+      av=['👩','👨','👩‍🦰','👨‍🦱','👩‍💼'],
+      el=document.getElementById('sn');if(!el)return;
+  function r(a){return a[Math.floor(Math.random()*a.length)]}
+  function go(){
+    var n=document.getElementById('snN'),a=document.getElementById('snAc'),t=document.getElementById('snT'),v=document.getElementById('snA');
+    if(n)n.textContent=r(ns);if(a)a.textContent=r(ac);if(t)t.textContent=r(ts);if(v)v.textContent=r(av);
+    el.classList.add('show');setTimeout(function(){el.classList.remove('show')},4e3);
+  }
+  setTimeout(go,7e3);setInterval(go,2e4+Math.random()*1e4);
+})();
+
+// Redirect on submit
 document.addEventListener('DOMContentLoaded',function(){
-  const dl=window.dataLayer=window.dataLayer||[];
-  const origPush=dl.push.bind(dl);
-  dl.push=function(evt){
-    if(evt && evt.event==='form_submit'){
-      setTimeout(function(){window.location.href=thankYouUrl},800);
-    }
-    return origPush(evt);
-  };
+  var dl=window.dataLayer=window.dataLayer||[],op=dl.push.bind(dl);
+  dl.push=function(e){if(e&&e.event==='form_submit')setTimeout(function(){window.location.href=thankYouUrl},800);return op(e)};
 });
 </script>
 </body>

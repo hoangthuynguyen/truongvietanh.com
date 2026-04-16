@@ -211,7 +211,7 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
     <div class="score-card" id="scoreCard" hidden>
       <div class="score-card__header">
         <div class="score-card__number" id="scoreNumber">--</div>
-        <div class="score-card__max">/ 24 điểm</div>
+        <div class="score-card__max">/ 100 điểm</div>
       </div>
       <div class="score-card__bar"><div class="score-card__fill" id="scoreFill"></div></div>
       <div class="score-card__label" id="scoreLabel"></div>
@@ -338,20 +338,19 @@ const headlineAfter = headlineParts.length > 1 ? headlineParts.slice(1).join('{n
     var n = p.get('name');
     if (n) document.getElementById('parentName').textContent = ' ' + n + ' ';
 
-    // Show quiz score if available
+    // Show quiz score if available (score param is already /100)
     var score = parseInt(p.get('score'), 10);
     if (score && score > 0) {
       var scoreCard = document.getElementById('scoreCard');
       scoreCard.hidden = false;
       document.getElementById('scoreNumber').textContent = score;
-      var pct = Math.round((score / 24) * 100);
       var color, label;
-      if (score >= 18) { color = '#16A34A'; label = '✅ Nền tảng tốt — con sẵn sàng tỏa sáng tại Lion Camp!'; }
-      else if (score >= 12) { color = '#F59E0B'; label = '⚠️ Cần hỗ trợ — Lion Camp sẽ giúp con tiến bộ rõ rệt!'; }
+      if (score >= 75) { color = '#16A34A'; label = '✅ Nền tảng tốt — con sẵn sàng tỏa sáng tại Lion Camp!'; }
+      else if (score >= 50) { color = '#F59E0B'; label = '⚠️ Cần hỗ trợ — Lion Camp sẽ giúp con tiến bộ rõ rệt!'; }
       else { color = '#EF4444'; label = '🔴 Thời điểm vàng can thiệp — đừng bỏ lỡ mùa hè này!'; }
       setTimeout(function() {
         var fill = document.getElementById('scoreFill');
-        fill.style.width = pct + '%';
+        fill.style.width = score + '%';
         fill.style.background = color;
       }, 500);
       var labelEl = document.getElementById('scoreLabel');

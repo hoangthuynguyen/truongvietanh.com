@@ -1,8 +1,7 @@
 ---
 /**
  * BÁO CÁO ĐÁNH GIÁ KỸ NĂNG HÈ 2026
- * Personalized quiz report — professional format, wider layout
- * All data from URL query params, rendered client-side
+ * Wide layout, CTA above-the-fold, benefits on hero.
  */
 ---
 
@@ -12,7 +11,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Báo Cáo Đánh Giá Kỹ Năng Hè 2026 | Lion Camp — Trường Việt Anh</title>
-  <meta name="description" content="Báo cáo đánh giá kỹ năng cá nhân hóa — Lion Camp Hè 2026" />
   <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,188 +18,167 @@
   <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
 
   <style is:inline>
-    :root { --p:#1a1a5e; --p2:#2a2a7e; --acc:#E8792B; --gold:#F59E0B; --grn:#16A34A; --red:#EF4444; --f:'Open Sans',sans-serif; --fh:'Montserrat',sans-serif; }
+    :root{--p:#1a1a5e;--p2:#2a2a7e;--acc:#E8792B;--gold:#F59E0B;--grn:#16A34A;--red:#EF4444;--f:'Open Sans',sans-serif;--fh:'Montserrat',sans-serif}
     *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:var(--f);-webkit-font-smoothing:antialiased;color:#1C2A3A;background:#F0F4F8;min-height:100vh}
+    body{font-family:var(--f);-webkit-font-smoothing:antialiased;color:#1C2A3A;background:#EAEFF5;min-height:100vh}
+    .wrap{max-width:1120px;margin:0 auto;padding:8px 12px 16px}
 
-    /* === LAYOUT — wider === */
-    .wrap{max-width:820px;margin:0 auto;padding:16px}
+    /* === HEADER: logo sát trên, title to === */
+    .hdr{text-align:center;padding:10px 24px 14px;background:#fff;border-radius:16px 16px 0 0;border-bottom:3px solid var(--p)}
+    .hdr img{max-width:240px;height:auto;margin-bottom:6px;display:block;margin-left:auto;margin-right:auto}
+    .hdr h1{font-family:var(--fh);font-size:2rem;font-weight:900;color:var(--p);letter-spacing:.02em;line-height:1.1}
+    .hdr .sub{font-size:.9rem;color:#555;margin-top:6px;font-weight:500}
 
-    /* === HEADER === */
-    .hdr{background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border-radius:16px 16px 0 0;padding:28px 32px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-    .hdr-logo{height:52px;width:auto;flex-shrink:0}
-    .hdr-text{text-align:right}
-    .hdr h1{font-family:var(--fh);font-size:1.1rem;font-weight:800;letter-spacing:.02em;margin-bottom:2px}
-    .hdr .sub{font-size:.82rem;opacity:.8}
+    /* === CARD === */
+    .card{background:#fff;box-shadow:0 4px 24px rgba(0,0,0,.06);overflow:hidden}
 
-    /* === MAIN CARD === */
-    .card{background:#fff;border-radius:0 0 16px 16px;box-shadow:0 8px 32px rgba(0,0,0,.06);overflow:hidden}
-
-    /* === SCORE HERO === */
-    .score-hero{display:grid;grid-template-columns:1fr 1fr;gap:0}
-    .score-left{padding:32px;text-align:center;border-right:1px solid #F0F0F0}
+    /* === HERO SCORE + CTA — above the fold === */
+    .hero{display:grid;grid-template-columns:300px 1fr;border-bottom:1px solid #F0F0F0}
+    .score-left{padding:28px 28px;text-align:center;background:linear-gradient(180deg,#F8FAFC,#EEF2F7);border-right:1px solid #F0F0F0;display:flex;flex-direction:column;justify-content:center}
     .score-num{font-family:var(--fh);font-size:4rem;font-weight:900;line-height:1}
-    .score-max{font-size:1rem;color:#999;font-weight:500;margin-top:4px}
-    .score-bar{height:10px;background:#E5E7EB;border-radius:5px;margin:16px 0 12px;overflow:hidden}
+    .score-max{font-size:.95rem;color:#777;margin-top:2px;font-weight:600}
+    .score-bar{height:10px;background:#E5E7EB;border-radius:5px;margin:14px 0 10px;overflow:hidden}
     .score-fill{height:100%;border-radius:5px;transition:width 1.5s ease;width:0}
-    .score-badge{display:inline-block;padding:6px 20px;border-radius:50px;font-family:var(--fh);font-weight:700;font-size:.9rem;color:#fff}
-    .score-right{padding:32px;display:flex;flex-direction:column;justify-content:center}
-    .score-right h2{font-family:var(--fh);font-size:1.15rem;font-weight:800;margin-bottom:8px}
-    .score-right p{font-size:.9rem;color:#555;line-height:1.6}
+    .score-badge{display:inline-block;padding:6px 18px;border-radius:50px;font-family:var(--fh);font-weight:700;font-size:.88rem;color:#fff}
 
-    /* === SECTION === */
-    .sec{padding:0 32px}
-    .sec-title{font-family:var(--fh);font-size:.95rem;font-weight:700;color:var(--p);padding:20px 0 10px;border-bottom:2px solid #F0F0F0;margin-bottom:0}
+    .hero-right{padding:22px 28px;display:flex;flex-direction:column;justify-content:center;gap:14px}
+    .hero-right h2{font-family:var(--fh);font-size:1.35rem;font-weight:800;color:var(--p);line-height:1.25}
+    .hero-right .hero-desc{font-size:.98rem;color:#444;line-height:1.55}
 
-    /* === SKILL GRID === */
-    .skills{display:grid;grid-template-columns:1fr 1fr;gap:0}
-    .skill{padding:14px 0;border-bottom:1px solid #F8F8F8;display:flex;align-items:center;gap:12px}
-    .skill:nth-child(odd){padding-right:16px;border-right:1px solid #F0F0F0}
-    .skill:nth-child(even){padding-left:16px}
+    /* Benefits list — rõ ràng, chữ to */
+    .benefits{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;margin:4px 0}
+    .benefit{display:flex;align-items:center;gap:8px;font-size:.92rem;font-weight:600;color:#1C2A3A}
+    .benefit .bi{font-size:1.1rem;flex-shrink:0}
+
+    /* Hero CTA — màu hấp dẫn, above the fold */
+    .hero-cta-wrap{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:4px}
+    .hero-cta{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;font-family:var(--fh);font-weight:800;font-size:1.02rem;text-decoration:none;color:#fff;background:linear-gradient(135deg,#E8792B,#F59E0B);box-shadow:0 4px 18px rgba(232,121,43,.45);transition:all .2s;animation:pulse 2.5s infinite}
+    .hero-cta:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,121,43,.65)}
+    .hero-call{display:inline-flex;align-items:center;gap:6px;padding:13px 22px;border-radius:12px;font-family:var(--fh);font-weight:700;font-size:.98rem;text-decoration:none;color:var(--p);background:#fff;border:2px solid var(--p);transition:all .2s}
+    .hero-call:hover{background:var(--p);color:#fff}
+
+    /* === SKILLS — 3-col grid === */
+    .sec-hdr{padding:16px 28px 10px;font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--p);border-bottom:1px solid #F0F0F0;display:flex;align-items:center;gap:8px}
+    .skills{display:grid;grid-template-columns:1fr 1fr 1fr;border-bottom:1px solid #F0F0F0}
+    .skill{padding:14px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid #F8F8F8;border-right:1px solid #F8F8F8}
+    .skill:nth-child(3n){border-right:none}
     .skill-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
     .skill-info{flex:1;min-width:0}
-    .skill-name{font-size:.82rem;font-weight:600;color:#374151;margin-bottom:4px}
+    .skill-name{font-size:.85rem;font-weight:600;color:#374151;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .skill-bar{height:6px;background:#E5E7EB;border-radius:3px;overflow:hidden}
     .skill-bar-fill{height:100%;border-radius:3px;transition:width 1s ease}
-    .skill-score{font-family:var(--fh);font-weight:800;font-size:.85rem;min-width:32px;text-align:right}
+    .skill-val{font-family:var(--fh);font-weight:800;font-size:.9rem;min-width:32px;text-align:right}
 
-    /* === INSIGHTS — the key conversion section === */
-    .insights{padding:24px 32px;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-top:3px solid var(--gold);margin-top:0}
-    .insights h3{font-family:var(--fh);font-size:1.05rem;font-weight:800;color:var(--acc);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-    .insight-cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
-    .insight-card{background:#fff;border-radius:12px;padding:14px;border-left:4px solid var(--red)}
-    .insight-card h4{font-family:var(--fh);font-size:.82rem;font-weight:700;color:#991B1B;margin-bottom:4px}
-    .insight-card p{font-size:.8rem;color:#555;line-height:1.5}
-    .insight-card--good{border-left-color:var(--grn)}
-    .insight-card--good h4{color:#166534}
+    /* === INSIGHTS === */
+    .insights{padding:18px 28px 22px;background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border-bottom:1px solid #F0F0F0}
+    .insights h3{font-family:var(--fh);font-size:1rem;font-weight:800;color:var(--acc);margin-bottom:12px}
+    .ins-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+    .ins-card{background:#fff;border-radius:10px;padding:14px;border-left:3px solid var(--red)}
+    .ins-card h4{font-family:var(--fh);font-size:.85rem;font-weight:700;color:#991B1B;margin-bottom:4px}
+    .ins-card p{font-size:.8rem;color:#555;line-height:1.5}
+    .ins-card--good{border-left-color:var(--grn)}
+    .ins-card--good h4{color:#166534}
 
-    /* === CTA SECTION — the money section === */
-    .cta-section{padding:28px 32px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;text-align:center}
-    .cta-section h3{font-family:var(--fh);font-size:1.2rem;font-weight:800;margin-bottom:6px}
-    .cta-section .cta-sub{font-size:.88rem;opacity:.85;margin-bottom:20px;max-width:500px;margin-left:auto;margin-right:auto}
-    .cta-benefits{display:flex;gap:16px;justify-content:center;margin-bottom:20px;flex-wrap:wrap}
-    .cta-benefit{display:flex;align-items:center;gap:6px;font-size:.82rem;font-weight:600;background:rgba(255,255,255,.12);padding:8px 14px;border-radius:50px}
-    .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px}
-    .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 28px;border-radius:12px;font-family:var(--fh);font-weight:700;font-size:1rem;text-decoration:none;transition:all .2s;border:none;cursor:pointer}
-    .cta-btn--primary{background:linear-gradient(135deg,var(--acc),var(--gold));color:#fff;box-shadow:0 4px 18px rgba(232,121,43,.4);animation:pulse 2.5s infinite}
-    .cta-btn--primary:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(232,121,43,.55)}
-    .cta-btn--zalo{background:#0068FF;color:#fff;box-shadow:0 4px 14px rgba(0,104,255,.3)}
-    .cta-btn--zalo:hover{background:#0056D6}
-    .cta-btn--outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
-    .cta-btn--outline:hover{background:rgba(255,255,255,.1);border-color:#fff}
-    @keyframes pulse{0%,100%{box-shadow:0 4px 18px rgba(232,121,43,.4)}50%{box-shadow:0 4px 32px rgba(232,121,43,.7),0 0 48px rgba(245,158,11,.2)}}
-    .cta-timer{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);padding:8px 16px;border-radius:50px;font-size:.82rem;margin-bottom:16px}
-    .cta-timer strong{font-family:var(--fh);letter-spacing:.5px}
-    .cta-phone{margin-top:8px;font-size:.85rem;opacity:.7}
-    .cta-phone a{color:#fff;text-decoration:none}
+    /* === FINAL CTA === */
+    .cta{padding:26px 28px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;text-align:center;border-radius:0 0 16px 16px}
+    .cta h3{font-family:var(--fh);font-size:1.3rem;font-weight:800;margin-bottom:6px}
+    .cta .cta-sub{font-size:.92rem;opacity:.9;margin-bottom:18px;max-width:640px;margin-left:auto;margin-right:auto}
+    .cta-main{display:inline-flex;align-items:center;gap:8px;padding:18px 44px;border-radius:14px;font-family:var(--fh);font-weight:800;font-size:1.15rem;text-decoration:none;color:#fff;background:linear-gradient(135deg,var(--acc),var(--gold));box-shadow:0 4px 20px rgba(232,121,43,.4);transition:all .2s;animation:pulse 2.5s infinite}
+    .cta-main:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(232,121,43,.6)}
+    @keyframes pulse{0%,100%{box-shadow:0 4px 20px rgba(232,121,43,.4)}50%{box-shadow:0 4px 32px rgba(232,121,43,.7),0 0 48px rgba(245,158,11,.2)}}
+    .cta-note{margin-top:14px;font-size:.9rem;opacity:.9}
+    .cta-note a{color:#fff;font-weight:700;text-decoration:underline}
 
-    /* === FOOTER === */
-    .report-footer{text-align:center;padding:16px;font-size:.75rem;color:#999}
+    .footer{text-align:center;padding:12px;font-size:.72rem;color:#999}
 
-    /* === RESPONSIVE === */
-    @media(max-width:700px){
-      .wrap{padding:8px}
-      .hdr{flex-direction:column;text-align:center;padding:20px 16px;gap:12px}
-      .hdr-text{text-align:center}
-      .hdr-logo{height:44px}
-      .score-hero{grid-template-columns:1fr}
-      .score-left{border-right:none;border-bottom:1px solid #F0F0F0;padding:24px 20px}
-      .score-right{padding:20px}
-      .sec{padding:0 20px}
-      .skills{grid-template-columns:1fr}
-      .skill:nth-child(odd){border-right:none;padding-right:0}
-      .skill:nth-child(even){padding-left:0}
-      .insights{padding:20px}
-      .insight-cards{grid-template-columns:1fr}
-      .cta-section{padding:24px 20px}
-      .cta-btns{flex-direction:column;align-items:center}
-      .cta-btn{width:100%;max-width:320px;justify-content:center}
+    @media(max-width:760px){
+      .wrap{padding:6px}
+      .hdr{padding:10px 16px 12px}
+      .hdr h1{font-size:1.4rem}
+      .hdr img{max-width:180px}
+      .hero{grid-template-columns:1fr}
+      .score-left{border-right:none;border-bottom:1px solid #F0F0F0;padding:20px}
+      .hero-right{padding:18px 20px}
+      .hero-right h2{font-size:1.15rem}
+      .benefits{grid-template-columns:1fr}
+      .hero-cta-wrap{flex-direction:column;align-items:stretch}
+      .hero-cta,.hero-call{width:100%;justify-content:center}
+      .sec-hdr{padding:12px 16px 8px}
+      .skills{grid-template-columns:1fr 1fr}
+      .skill:nth-child(2n){border-right:none}
+      .skill:nth-child(3n){border-right:1px solid #F8F8F8}
+      .insights{padding:14px 16px}
+      .ins-grid{grid-template-columns:1fr}
+      .cta{padding:22px 16px}
+      .cta-main{width:100%;justify-content:center;padding:16px 24px}
     }
-
-    /* === PRINT === */
-    @media print{
-      body{background:#fff}
-      .cta-section,.cta-timer,.report-footer{display:none}
-      .card{box-shadow:none;border:1px solid #ddd}
-      .wrap{max-width:100%;padding:0}
-    }
+    @media print{.cta,.hero-cta,.hero-call,.footer{display:none}.card{box-shadow:none;border:1px solid #ddd}.wrap{max-width:100%;padding:0}}
   </style>
 </head>
 <body>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="wrap">
-  <!-- HEADER -->
+  <!-- HEADER — logo sát trên, title to -->
   <div class="hdr">
-    <img src="/logo-vietanh-header.webp" alt="Trường Việt Anh" class="hdr-logo" />
-    <div class="hdr-text">
-      <h1>BÁO CÁO ĐÁNH GIÁ KỸ NĂNG HÈ 2026</h1>
-      <div class="sub" id="hdrSub">Lion Camp — Trường Việt Anh</div>
-    </div>
+    <img src="/logo-vietanh.png" alt="Trường TH - THCS - THPT Việt Anh" />
+    <h1>BÁO CÁO ĐÁNH GIÁ KỸ NĂNG HÈ 2026</h1>
+    <div class="sub" id="hdrSub">Lion Camp — Trường Việt Anh</div>
   </div>
 
   <div class="card">
-    <!-- SCORE HERO — 2 columns -->
-    <div class="score-hero">
+    <!-- HERO — SCORE + BENEFITS + CTA (above the fold) -->
+    <div class="hero">
       <div class="score-left">
         <div class="score-num" id="scoreNum">--</div>
-        <div class="score-max">/ 24 điểm</div>
+        <div class="score-max">/ 100 điểm</div>
         <div class="score-bar"><div class="score-fill" id="scoreFill"></div></div>
         <span class="score-badge" id="scoreBadge">--</span>
       </div>
-      <div class="score-right">
+      <div class="hero-right">
         <h2 id="resultTitle">Đang phân tích...</h2>
-        <p id="resultDesc"></p>
+        <p class="hero-desc" id="resultDesc"></p>
+
+        <div class="benefits">
+          <div class="benefit"><span class="bi">🎯</span> Phân tích chuyên sâu 6 kỹ năng</div>
+          <div class="benefit"><span class="bi">🗺️</span> Lộ trình cá nhân hóa cho con</div>
+          <div class="benefit"><span class="bi">🎁</span> Học bổng Early Bird đến 30%</div>
+          <div class="benefit"><span class="bi">⚡</span> Ưu tiên giữ chỗ Lion Camp 2026</div>
+        </div>
+
+        <div class="hero-cta-wrap">
+          <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="hero-cta" id="heroZalo">
+            💬 Nhận tư vấn miễn phí qua Zalo
+          </a>
+          <a href="tel:+84916961409" class="hero-call">
+            📞 Gọi 0916 961 409
+          </a>
+        </div>
       </div>
     </div>
 
-    <!-- SKILL BREAKDOWN — 2-column grid -->
-    <div class="sec">
-      <div class="sec-title">Chi tiết từng kỹ năng</div>
-    </div>
-    <div class="skills" id="skillsGrid">
-      <!-- Populated by JS -->
-    </div>
+    <!-- SKILLS — 3-col -->
+    <div class="sec-hdr">📊 Chi tiết từng kỹ năng</div>
+    <div class="skills" id="skillsGrid"></div>
 
-    <!-- INSIGHTS — weakest areas + recommendations -->
-    <div class="insights" id="insightsSection">
+    <!-- INSIGHTS -->
+    <div class="insights">
       <h3>🔍 Phân tích & Khuyến nghị</h3>
-      <div class="insight-cards" id="insightCards">
-        <!-- Populated by JS -->
-      </div>
-    </div>
-
-    <!-- CTA — the conversion section -->
-    <div class="cta-section">
-      <div class="cta-timer">⏰ Ưu đãi Early Bird còn <strong id="ctaTimer">--:--:--</strong></div>
-      <h3>Đặt lịch tư vấn 1:1 MIỄN PHÍ (15 phút)</h3>
-      <p class="cta-sub">Chuyên gia giáo dục sẽ phân tích chi tiết kết quả của con và tư vấn lộ trình Lion Camp phù hợp nhất</p>
-
-      <div class="cta-benefits">
-        <span class="cta-benefit">✅ Phân tích chi tiết 6 kỹ năng</span>
-        <span class="cta-benefit">🎁 Học bổng đến 30%</span>
-        <span class="cta-benefit">🗺️ Lộ trình cá nhân hóa</span>
-        <span class="cta-benefit">⏱️ Chỉ 15 phút, miễn phí</span>
-      </div>
-
-      <div class="cta-btns">
-        <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="cta-btn cta-btn--primary" id="ctaZalo">
-          💬 Nhắn Zalo để được tư vấn ngay
-        </a>
-        <a href="tel:+84916961409" class="cta-btn cta-btn--outline">
-          📞 Gọi ngay 0916 961 409
-        </a>
-      </div>
-
-      <a href="/giu-cho/" class="cta-btn cta-btn--zalo" id="ctaConsult" style="margin-top:8px">
-        📋 Xem thêm quyền lợi tư vấn 1:1
-      </a>
-
-      <div class="cta-phone">Hotline: <a href="tel:+84916961409">0916 961 409</a></div>
+      <div class="ins-grid" id="insightCards"></div>
     </div>
   </div>
 
-  <div class="report-footer">
+  <!-- FINAL CTA -->
+  <div class="cta">
+    <h3>Sẵn sàng đồng hành cùng con phát triển toàn diện?</h3>
+    <p class="cta-sub">Tư vấn viên Lion Camp sẽ phân tích chi tiết kết quả, đề xuất lộ trình và hỗ trợ đăng ký học bổng Early Bird đến 30% cho con.</p>
+    <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="cta-main" id="ctaZalo">
+      💬 Nhận tư vấn miễn phí qua Zalo
+    </a>
+    <div class="cta-note">Hoặc gọi hotline <a href="tel:+84916961409">0916 961 409</a> — phản hồi trong 5 phút</div>
+  </div>
+
+  <div class="footer">
     Báo cáo được tạo tự động bởi hệ thống Lion Camp — Trường Việt Anh.<br>
     Thông tin được bảo mật và chỉ dùng cho mục đích tư vấn giáo dục.
   </div>
@@ -212,139 +189,86 @@
   var p = new URLSearchParams(window.location.search);
   var name = p.get('name') || '';
   var score = parseInt(p.get('score'),10) || 0;
-  var level = p.get('level') || '';
   var school = p.get('school') || 'tieu-hoc';
   var loc = p.get('loc') || '';
-  var funnel = p.get('funnel') || '';
   var q = [1,2,3,4,5,6].map(function(i){ return parseInt(p.get('q'+i),10) || 0; });
 
-  // School level label
   var levelMap = {'tieu-hoc':'Tiểu học','thcs':'THCS','thpt':'THPT'};
   var schoolLabel = levelMap[school] || 'Tiểu học';
 
-  // Questions per school level
   var QUESTIONS = {
     'tieu-hoc': [
-      {name:'Tự giác & kỷ luật', icon:'🎯', activity:'Chương trình Lãnh đạo Bản thân — rèn nề nếp qua dự án thực tế'},
-      {name:'Tự tin giao tiếp', icon:'💬', activity:'Vòng tròn tự tin — tập nói trước nhóm bạn nhỏ mỗi ngày'},
-      {name:'Tiếng Anh', icon:'🇬🇧', activity:'Lớp Oxford với giáo viên bản ngữ — "tắm" tiếng Anh hàng ngày'},
-      {name:'Quản lý màn hình', icon:'📱', activity:'Hoạt động thể chất + sáng tạo thay thế thời gian điện thoại'},
-      {name:'Giải quyết vấn đề', icon:'🧩', activity:'Problem Solving Lab — giải câu đố & thực hành tư duy'},
-      {name:'Hoạt động nhóm', icon:'🤝', activity:'Team Building + du lịch trải nghiệm mỗi tuần'}
+      {name:'Tự giác & kỷ luật', icon:'🎯', act:'Chương trình Lãnh đạo Bản thân'},
+      {name:'Tự tin giao tiếp', icon:'💬', act:'Vòng tròn tự tin — nói trước nhóm mỗi ngày'},
+      {name:'Tiếng Anh', icon:'🇬🇧', act:'Lớp Oxford với giáo viên bản ngữ'},
+      {name:'Quản lý màn hình', icon:'📱', act:'Hoạt động thể chất thay thế điện thoại'},
+      {name:'Giải quyết vấn đề', icon:'🧩', act:'Problem Solving Lab'},
+      {name:'Hoạt động nhóm', icon:'🤝', act:'Team Building + trải nghiệm mỗi tuần'}
     ],
     'thcs': [
-      {name:'Kiểm soát cảm xúc', icon:'❤️', activity:'Workshop EQ — nhận diện & điều tiết cảm xúc tuổi dậy thì'},
-      {name:'Giao tiếp gia đình', icon:'👨‍👩‍👧', activity:'Dự án Gia đình — con học cách mở lòng và chia sẻ'},
-      {name:'Tiếng Anh thực chiến', icon:'🇬🇧', activity:'English Debate Club + giáo viên bản ngữ hàng ngày'},
-      {name:'Quản lý game/MXH', icon:'🎮', activity:'Digital Detox + dự án AI cơ bản thay thế thói quen game'},
-      {name:'Làm việc nhóm', icon:'🤝', activity:'Dự án nhóm thực tế — rèn kỹ năng dẫn dắt & hợp tác'},
-      {name:'Quản lý thời gian', icon:'⏰', activity:'Hệ thống Planner cá nhân — tự lập kế hoạch mỗi ngày'}
+      {name:'Kiểm soát cảm xúc', icon:'❤️', act:'Workshop EQ tuổi dậy thì'},
+      {name:'Giao tiếp gia đình', icon:'👨‍👩‍👧', act:'Dự án Gia đình — mở lòng chia sẻ'},
+      {name:'Tiếng Anh thực chiến', icon:'🇬🇧', act:'English Debate Club'},
+      {name:'Quản lý game/MXH', icon:'🎮', act:'Digital Detox + dự án AI cơ bản'},
+      {name:'Làm việc nhóm', icon:'🤝', act:'Dự án nhóm — dẫn dắt & hợp tác'},
+      {name:'Quản lý thời gian', icon:'⏰', act:'Planner cá nhân mỗi ngày'}
     ],
     'thpt': [
-      {name:'Thuyết trình tiếng Anh', icon:'🎤', activity:'IELTS Speaking + Public Speaking Club hàng tuần'},
-      {name:'Định hướng nghề nghiệp', icon:'🎯', activity:'Workshop Hướng nghiệp + mentor 1:1 với chuyên gia'},
-      {name:'Công nghệ & AI', icon:'🤖', activity:'Dự án AI nâng cao — ứng dụng ChatGPT, Midjourney vào học tập'},
-      {name:'Quản lý áp lực', icon:'🧠', activity:'Mindfulness + Kỹ năng quản lý stress cho học sinh THPT'},
-      {name:'Hoạt động ngoại khóa', icon:'⚡', activity:'CLB Lãnh đạo Trẻ + trải nghiệm thực tế mỗi tuần'},
-      {name:'Tự học & quản lý TG', icon:'📚', activity:'Hệ thống Study Planner + nhóm học tập hiệu quả'}
+      {name:'Thuyết trình TA', icon:'🎤', act:'IELTS Speaking + Public Speaking'},
+      {name:'Hướng nghiệp', icon:'🎯', act:'Workshop Hướng nghiệp + mentor 1:1'},
+      {name:'Công nghệ & AI', icon:'🤖', act:'Dự án AI nâng cao'},
+      {name:'Quản lý áp lực', icon:'🧠', act:'Mindfulness & quản lý stress'},
+      {name:'Ngoại khóa', icon:'⚡', act:'CLB Lãnh đạo Trẻ'},
+      {name:'Tự học', icon:'📚', act:'Study Planner & nhóm học tập'}
     ]
   };
-
   var questions = QUESTIONS[school] || QUESTIONS['tieu-hoc'];
 
-  // Header
-  document.getElementById('hdrSub').textContent = 'Lion Camp ' + schoolLabel + ' ' + loc + ' — Dành cho ' + (name || 'Ba/Mẹ');
+  document.getElementById('hdrSub').textContent = 'Lion Camp ' + schoolLabel + ' ' + loc + (name ? ' — Dành cho ' + name : '');
 
-  // Score
-  var pct = Math.round((score/24)*100);
-  var color = score >= 18 ? '#16A34A' : score >= 12 ? '#F59E0B' : '#EF4444';
-  var levelText = score >= 18 ? 'Nền tảng tốt' : score >= 12 ? 'Cần hỗ trợ' : 'Cần can thiệp gấp';
-
+  // score param is already on /100 scale
+  var color = score >= 75 ? '#16A34A' : score >= 50 ? '#F59E0B' : '#EF4444';
+  var levelText = score >= 75 ? 'Nền tảng tốt' : score >= 50 ? 'Cần hỗ trợ' : 'Cần can thiệp';
   document.getElementById('scoreNum').textContent = score;
   document.getElementById('scoreNum').style.color = color;
   var badge = document.getElementById('scoreBadge');
-  badge.textContent = levelText;
-  badge.style.background = color;
-  setTimeout(function(){
-    document.getElementById('scoreFill').style.width = pct + '%';
-    document.getElementById('scoreFill').style.background = color;
-  }, 300);
+  badge.textContent = levelText; badge.style.background = color;
+  setTimeout(function(){ var f=document.getElementById('scoreFill'); f.style.width=score+'%'; f.style.background=color; }, 300);
 
-  // Result text
-  var titles = {
-    high: 'Con đã có nền tảng tốt!',
-    mid: 'Con cần được hỗ trợ đúng lúc',
-    low: 'Thời điểm vàng để can thiệp!'
-  };
-  var descs = {
-    high: 'Lion Camp sẽ giúp con tỏa sáng hơn nữa — phát triển kỹ năng lãnh đạo vượt trội và tạo lợi thế so với bạn bè.',
-    mid: 'Chỉ cần 6 tuần đúng phương pháp, con sẽ tiến bộ rõ rệt. Đây là thời điểm lý tưởng để hành động.',
-    low: 'Mùa hè này là cơ hội quan trọng nhất để thay đổi. Nếu không can thiệp ngay, con có thể tụt hậu xa hơn.'
-  };
-  var tier = score >= 18 ? 'high' : score >= 12 ? 'mid' : 'low';
+  var tier = score >= 75 ? 'high' : score >= 50 ? 'mid' : 'low';
+  var titles = {high:'Con đã có nền tảng tốt!', mid:'Con cần được hỗ trợ đúng lúc', low:'Thời điểm vàng để can thiệp!'};
+  var descs = {high:'Lion Camp sẽ giúp con tỏa sáng — phát triển kỹ năng lãnh đạo vượt trội trong 6 tuần hè.', mid:'6 tuần đúng phương pháp, con sẽ tiến bộ rõ rệt. Hành động ngay để không bỏ lỡ cơ hội.', low:'Nếu không can thiệp ngay, con có thể tụt hậu xa hơn bạn bè. Hãy hành động sớm.'};
   document.getElementById('resultTitle').textContent = titles[tier];
+  document.getElementById('resultTitle').style.color = color;
   document.getElementById('resultDesc').textContent = descs[tier];
 
-  // Skills grid
   var grid = document.getElementById('skillsGrid');
-  questions.forEach(function(qn, i){
-    var s = q[i] || 0;
-    var sc = s >= 4 ? '#16A34A' : s >= 3 ? '#F59E0B' : '#EF4444';
+  questions.forEach(function(qn,i){
+    var s = q[i]||0;
+    var sc = s>=4?'#16A34A':s>=3?'#F59E0B':'#EF4444';
     var w = Math.round((s/4)*100);
-    var bgColor = s >= 4 ? 'rgba(22,163,106,.1)' : s >= 3 ? 'rgba(245,158,11,.1)' : 'rgba(239,68,68,.1)';
-    grid.innerHTML += '<div class="skill">' +
-      '<div class="skill-icon" style="background:'+bgColor+'">' + qn.icon + '</div>' +
-      '<div class="skill-info">' +
-        '<div class="skill-name">' + qn.name + '</div>' +
-        '<div class="skill-bar"><div class="skill-bar-fill" style="width:'+w+'%;background:'+sc+'"></div></div>' +
-      '</div>' +
-      '<div class="skill-score" style="color:'+sc+'">' + s + '/4</div>' +
-    '</div>';
+    var bg = s>=4?'rgba(22,163,106,.1)':s>=3?'rgba(245,158,11,.1)':'rgba(239,68,68,.1)';
+    grid.innerHTML += '<div class="skill"><div class="skill-icon" style="background:'+bg+'">'+qn.icon+'</div><div class="skill-info"><div class="skill-name">'+qn.name+'</div><div class="skill-bar"><div class="skill-bar-fill" style="width:'+w+'%;background:'+sc+'"></div></div></div><div class="skill-val" style="color:'+sc+'">'+s+'/4</div></div>';
   });
 
-  // Insights — find weakest + strongest
-  var sorted = q.map(function(s,i){return {score:s,idx:i}}).sort(function(a,b){return a.score-b.score});
-  var weakest = sorted.slice(0,2);
-  var strongest = sorted.slice(-1);
-
+  var sorted = q.map(function(s,i){return{score:s,idx:i}}).sort(function(a,b){return a.score-b.score});
   var cards = document.getElementById('insightCards');
-  weakest.forEach(function(w){
+  sorted.slice(0,2).forEach(function(w){
     var qn = questions[w.idx];
-    cards.innerHTML += '<div class="insight-card">' +
-      '<h4>⚠️ ' + qn.name + ' (' + w.score + '/4)</h4>' +
-      '<p>Khuyến nghị: <strong>' + qn.activity + '</strong></p>' +
-    '</div>';
+    cards.innerHTML += '<div class="ins-card"><h4>⚠️ '+qn.name+' ('+w.score+'/4)</h4><p>'+qn.act+'</p></div>';
   });
-  if (strongest[0]) {
-    var sq = questions[strongest[0].idx];
-    cards.innerHTML += '<div class="insight-card insight-card--good">' +
-      '<h4>💪 Điểm mạnh: ' + sq.name + ' (' + strongest[0].score + '/4)</h4>' +
-      '<p>Con đã làm tốt! Lion Camp sẽ phát huy thêm qua: <strong>' + sq.activity + '</strong></p>' +
-    '</div>';
+  var best = sorted[sorted.length-1];
+  if(best){
+    var bq = questions[best.idx];
+    cards.innerHTML += '<div class="ins-card ins-card--good"><h4>💪 '+bq.name+' ('+best.score+'/4)</h4><p>'+bq.act+'</p></div>';
   }
 
-  // Deposit link personalization
-  var consultLink = '/giu-cho/?loc=' + encodeURIComponent(loc) + '&level=' + school + '&name=' + encodeURIComponent(name);
-  document.getElementById('ctaConsult').href = consultLink;
+  var msg = 'Chào thầy/cô, tôi vừa nhận kết quả đánh giá Lion Camp'+(loc?' '+loc:'')+(name?' cho con ('+name+')':'')+' ('+score+'/100 điểm). Tôi muốn được tư vấn ạ.';
+  var zaloUrl = 'https://zalo.me/1678310120468101523?text='+encodeURIComponent(msg);
+  document.getElementById('heroZalo').href = zaloUrl;
+  document.getElementById('ctaZalo').href = zaloUrl;
 
-  // Zalo deep-link
-  var zaloMsg = 'Chào thầy/cô, tôi vừa nhận kết quả đánh giá Lion Camp ' + loc + ' cho con (' + score + '/24 điểm). Tôi muốn đặt lịch tư vấn 1:1 ạ.';
-  document.getElementById('ctaZalo').href = 'https://zalo.me/1678310120468101523?text=' + encodeURIComponent(zaloMsg);
-
-  // Countdown
-  var CK = 'camp_countdown_end';
-  var stored = sessionStorage.getItem(CK);
-  var endTime = stored ? parseInt(stored,10) : 0;
-  if (!endTime || endTime < Date.now()) { endTime = Date.now() + 4*3600*1000; sessionStorage.setItem(CK, endTime.toString()); }
-  function tick(){
-    var d = Math.max(0, Math.floor((endTime - Date.now())/1000));
-    var h=Math.floor(d/3600), m=Math.floor((d%3600)/60), s=d%60;
-    document.getElementById('ctaTimer').textContent = (h<10?'0':'')+h+':'+(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
-  }
-  tick(); setInterval(tick, 1000);
-
-  // GTM
-  if (window.dataLayer) window.dataLayer.push({event:'report_viewed', quiz_score:score, school_level:school, location:loc});
+  if(window.dataLayer) window.dataLayer.push({event:'report_viewed',quiz_score:score,school_level:school,location:loc});
 })();
 </script>
 </body>

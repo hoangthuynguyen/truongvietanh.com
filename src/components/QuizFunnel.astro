@@ -119,7 +119,7 @@ const quizId = `quiz-${funnelCode}`;
     <h3 class="qf-result-title" id={`${quizId}-result-title`}>Đang tính điểm...</h3>
     <div class="qf-result-score">
       <span class="qf-result-score__number" id={`${quizId}-result-score`}>--</span>
-      <span class="qf-result-score__max">/ {questions.length * 4} điểm</span>
+      <span class="qf-result-score__max">/ 100 điểm</span>
     </div>
     <p class="qf-result-desc" id={`${quizId}-result-desc`}></p>
 
@@ -202,7 +202,7 @@ const quizId = `quiz-${funnelCode}`;
 </div>
 
 <!-- Results data for client-side scoring -->
-<script is:inline define:vars={{ quizId, results: JSON.stringify(results), maxScore: questions.length * 4 }}>
+<script is:inline define:vars={{ quizId, results: JSON.stringify(results), rawMax: questions.length * 4, maxScore: 100 }}>
 (function() {
   var root = document.getElementById(quizId);
   if (!root) return;
@@ -277,9 +277,11 @@ const quizId = `quiz-${funnelCode}`;
     var descEl = document.getElementById(quizId + '-result-desc');
     var fillEl = document.getElementById(quizId + '-score-fill');
 
-    scoreEl.textContent = totalScore;
+    // Convert raw internal score to /maxScore (100) for display
+    var displayScore = Math.round((totalScore / rawMax) * maxScore);
+    scoreEl.textContent = displayScore;
 
-    // Determine result
+    // Determine result (range matching uses raw totalScore vs seed ranges)
     var result = resultsData[resultsData.length - 1]; // default to lowest
     for (var i = 0; i < resultsData.length; i++) {
       var parts = resultsData[i].range.split('-');
@@ -295,10 +297,9 @@ const quizId = `quiz-${funnelCode}`;
     titleEl.style.color = result.color;
     descEl.textContent = result.description;
 
-    // Score bar animation
-    var pct = Math.round((totalScore / maxScore) * 100);
+    // Score bar animation (% of 100)
     setTimeout(function() {
-      fillEl.style.width = pct + '%';
+      fillEl.style.width = displayScore + '%';
       fillEl.style.background = result.color;
     }, 300);
 
@@ -323,10 +324,12 @@ const quizId = `quiz-${funnelCode}`;
         }
       }
 
-      recapScore.textContent = totalScore;
+      // Convert raw internal score to /maxScore (100) for display/transport
+      var displayScore = Math.round((totalScore / rawMax) * maxScore);
+      recapScore.textContent = displayScore;
       recapLevel.textContent = result.title;
       recapLevel.style.color = result.color;
-      hiddenScore.value = totalScore;
+      hiddenScore.value = displayScore;
       hiddenLevel.value = result.title;
 
       showStep('form');
@@ -390,34 +393,38 @@ const quizId = `quiz-${funnelCode}`;
         if (!res.ok) throw new Error('API error');
         return res.json();
       }).then(function() {
+        // Convert raw to /maxScore (100) for display/transport (per-question answers stay raw 0-4)
+        var score100 = Math.round((totalScore / rawMax) * maxScore);
+
         // GTM
         if (window.dataLayer) {
           window.dataLayer.push({
             event: 'form_submit',
             funnel_code: root.dataset.funnelCode,
             school_level: root.dataset.schoolLevel,
-            quiz_score: totalScore
+            quiz_score: score100
           });
         }
 
         showStep('success');
 
-        // Redirect to cam-on with per-question scores
+        // Redirect to cam-on with /100 total + per-question raw scores
         var camOnUrl = root.dataset.camOnUrl;
         var parentName = name.value;
         var qParams = answers.map(function(a, i) { return 'q' + (i+1) + '=' + a; }).join('&');
         setTimeout(function() {
-          window.location.href = camOnUrl + '?name=' + encodeURIComponent(parentName) + '&score=' + totalScore + '&' + qParams;
+          window.location.href = camOnUrl + '?name=' + encodeURIComponent(parentName) + '&score=' + score100 + '&' + qParams;
         }, 1500);
       }).catch(function(err) {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Thử lại';
         console.error('Quiz form error:', err);
-        // Fallback — still redirect with per-question scores
+        // Fallback — still redirect with /maxScore (100) score
+        var score100 = Math.round((totalScore / rawMax) * maxScore);
         showStep('success');
         var qParams = answers.map(function(a, i) { return 'q' + (i+1) + '=' + a; }).join('&');
         setTimeout(function() {
-          window.location.href = root.dataset.camOnUrl + '?name=' + encodeURIComponent(name.value) + '&score=' + totalScore + '&' + qParams;
+          window.location.href = root.dataset.camOnUrl + '?name=' + encodeURIComponent(name.value) + '&score=' + score100 + '&' + qParams;
         }, 2000);
       });
     });

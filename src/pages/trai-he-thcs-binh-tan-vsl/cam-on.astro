@@ -1,0 +1,23 @@
+---
+import VSLThankYouPage from '../../components/VSLThankYouPage.astro';
+import { getVSLContent, ZALO_URL } from '../../lib/vsl-configs.ts';
+const c = getVSLContent('thcs', 'Bình Tân');
+---
+<VSLThankYouPage
+  pageTitle="Cảm Ơn – Trại Hè THCS Bình Tân VSL | Việt Anh"
+  pageDescription="Giữ suất an toàn Lion Camp THCS Bình Tân chỉ với 500k — hoàn lại 100% nếu bé không đi."
+  canonicalUrl="https://truongvietanh.com/trai-he-thcs-binh-tan-vsl/cam-on"
+  schoolLevel="thcs"
+  funnelCode="vsl-thcs-binh-tan"
+  level="thcs"
+  location="Bình Tân"
+  levelLabel={c.levelLabel}
+  zaloUrl={ZALO_URL}
+  slotsLeft="6"
+  messageHtml={c.tyMessage}
+  bonusIntro={c.bonusIntro}
+  bonusItems={c.bonusItems}
+  ctaPrimary={c.ctaPrimaryTY}
+  ctaZalo={c.ctaZaloTY}
+  signOff={c.signOff}
+/>

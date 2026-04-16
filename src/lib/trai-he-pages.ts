@@ -17,6 +17,9 @@ export type UspItem = { icon: string; text: string };
 export type MetricItem = { number: string; label: string };
 export type InfoCard = { icon: string; title: string; body: string };
 export type FaqItem = { question: string; answer: string };
+export type QuizOption = { label: string; score: number };
+export type QuizQuestion = { question: string; options: QuizOption[] };
+export type QuizResult = { range: string; title: string; description: string; color: string };
 
 export type TraiHePage = {
   id: string;
@@ -56,6 +59,12 @@ export type TraiHePage = {
   form_submit_text: string;
   form_success_message: string;
   quiz_intro_items: string[];
+
+  // Quiz
+  quiz_title: string;
+  quiz_subtitle: string;
+  quiz_questions: QuizQuestion[];
+  quiz_results: QuizResult[];
 
   // FAQ
   faq_title: string;

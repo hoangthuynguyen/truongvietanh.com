@@ -1,0 +1,132 @@
+---
+export interface Props {
+  pageTitle: string;
+  pageDescription: string;
+  canonicalUrl: string;
+  schoolLevel: string;
+  funnelCode: string;
+  level: 'tieu-hoc' | 'thcs' | 'thpt';
+  location: string;
+  levelLabel: string;
+  zaloUrl: string;
+  slotsLeft: string;
+  messageHtml: string;
+  bonusIntro: string;
+  bonusItems: string[];
+  ctaPrimary: string;
+  ctaZalo: string;
+  signOff: string;
+}
+
+const {
+  pageTitle, pageDescription, canonicalUrl, funnelCode,
+  level, location, levelLabel, zaloUrl, slotsLeft, messageHtml,
+  bonusIntro, bonusItems, ctaPrimary, ctaZalo, signOff
+} = Astro.props;
+---
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="canonical" href={canonicalUrl} />
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <style is:inline>@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');</style>
+  <style is:inline>
+    :root{--b:#1F4E79;--o:#E8792B;--w:#fff;--zalo:#0068FF}
+    *{margin:0;padding:0;box-sizing:border-box}
+    body{font-family:'Open Sans',system-ui,sans-serif;color:#1C2A3A;background:linear-gradient(165deg,#FFF7ED 0%,#FED7AA 40%,#FDBA74 100%);min-height:100vh;display:flex;flex-direction:column;-webkit-font-smoothing:antialiased}
+    .logo-bar{text-align:center;padding:22px 16px 0}
+    .logo-bar img{height:54px;width:auto}
+    .main{flex:1;display:flex;align-items:center;justify-content:center;padding:22px 16px 36px}
+    .card{background:var(--w);border-radius:22px;box-shadow:0 14px 44px rgba(0,0,0,.12);max-width:620px;width:100%;padding:30px 26px;text-align:center}
+    .icon{width:68px;height:68px;border-radius:50%;background:#FFF7ED;display:flex;align-items:center;justify-content:center;font-size:36px;margin:0 auto 16px}
+    h1{font-family:'Montserrat',sans-serif;font-size:1.5rem;font-weight:800;color:var(--o);margin-bottom:14px;line-height:1.3}
+    .msg{font-size:1rem;color:#1C2A3A;line-height:1.7;margin-bottom:16px;text-align:left}
+    .msg p{margin-bottom:10px}
+    .msg strong{color:var(--b)}
+    .choices{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:12px;padding:14px 18px;margin:14px 0;text-align:left}
+    .choices .opt{padding:10px 0;border-bottom:1px dashed #E5E7EB;font-size:.95rem;color:#374151}
+    .choices .opt:last-child{border-bottom:0}
+    .choices .opt b{color:var(--b)}
+    .bonus{background:#FFF7ED;border:2px solid var(--o);border-radius:14px;padding:18px 20px;margin:14px 0;text-align:left}
+    .bonus .t{font-family:'Montserrat',sans-serif;font-weight:800;color:var(--o);margin-bottom:10px;font-size:1rem}
+    .bonus ul{list-style:none;padding:0}
+    .bonus li{padding:6px 0 6px 24px;position:relative;font-size:.94rem;color:#7C2D12;line-height:1.55}
+    .bonus li::before{content:'✓';position:absolute;left:4px;color:#16A34A;font-weight:800}
+    .countdown-box{display:inline-flex;align-items:center;gap:8px;background:#FEE2E2;color:#991B1B;padding:10px 18px;border-radius:12px;font-size:.9rem;font-weight:700;margin:8px 0 14px}
+    .countdown-box .time{font-family:'Montserrat',sans-serif;font-weight:800;letter-spacing:.5px}
+    .cta-stack{display:flex;flex-direction:column;gap:10px;margin:12px 0 10px}
+    .cta{display:block;padding:16px 20px;border-radius:14px;text-decoration:none;font-weight:800;font-size:1rem;font-family:'Montserrat',sans-serif;transition:all .2s}
+    .cta-primary{background:var(--o);color:var(--w);box-shadow:0 6px 20px rgba(232,121,43,.4);animation:pulse 2s infinite}
+    .cta-primary:hover{background:#D96A1F;transform:translateY(-2px)}
+    @keyframes pulse{0%,100%{box-shadow:0 6px 20px rgba(232,121,43,.4)}50%{box-shadow:0 6px 28px rgba(232,121,43,.7)}}
+    .cta-zalo{background:var(--zalo);color:var(--w)}
+    .cta-zalo:hover{background:#0056D6}
+    .signoff{font-size:.92rem;color:#555;line-height:1.6;margin-top:14px;text-align:left;border-top:1px solid #E5E7EB;padding-top:14px}
+    .signoff b{color:var(--b)}
+    .sticky-zalo{position:fixed;bottom:18px;right:18px;z-index:999;background:var(--zalo);color:#fff;padding:12px 16px;border-radius:50px;text-decoration:none;font-weight:700;font-size:.9rem;box-shadow:0 6px 20px rgba(0,104,255,.4)}
+    @media(max-width:480px){.card{padding:24px 20px}h1{font-size:1.25rem}.msg{font-size:.94rem}}
+  </style>
+  <script is:inline define:vars={{ pageTitle, level, funnelCode }}>
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({event:'generate_lead',page_title:pageTitle,school_level:level,funnel_code:funnelCode});
+  </script>
+  <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="logo-bar"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" /></div>
+<div class="main">
+  <div class="card">
+    <div class="icon">🛑</div>
+    <h1>Khoan đã! Ba/Mẹ đừng tắt trang này — Báo cáo đang được gửi...</h1>
+
+    <div class="msg" set:html={messageHtml}></div>
+
+    <div class="choices">
+      <div class="opt"><b>✅ Lựa chọn 1 — Hành động ngay (Khuyên dùng):</b><br/>Cọc 500.000đ để khóa học bổng Early Bird cao nhất + giữ chỗ + nhận quà. Hoàn lại 100% nếu đổi ý.</div>
+      <div class="opt"><b>❌ Lựa chọn 2 — Chờ thêm:</b><br/>Có thể mất suất hoặc mức học bổng khi quay lại.</div>
+    </div>
+
+    <div class="bonus">
+      <div class="t">⚡ Fast Action Bonus — Ưu đãi 24 giờ tới:</div>
+      <p style="font-size:.94rem;color:#7C2D12;margin-bottom:10px">{bonusIntro}</p>
+      <ul>{bonusItems.map(b => <li>{b}</li>)}</ul>
+    </div>
+
+    <div class="countdown-box">⏳ Ưu đãi kết thúc trong: <span class="time" id="cd2">23:59:59</span></div>
+    <p style="font-size:.95rem;color:#991B1B;font-weight:700;margin-bottom:8px">Hiện lớp {levelLabel} {location} chỉ còn <b>{slotsLeft}</b> suất.</p>
+
+    <div class="cta-stack">
+      <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-primary">👉 {ctaPrimary}</a>
+      <a href={zaloUrl} target="_blank" rel="noopener" class="cta cta-zalo">💬 {ctaZalo}</a>
+    </div>
+
+    <div class="signoff" set:html={signOff}></div>
+  </div>
+</div>
+<a href={zaloUrl} target="_blank" rel="noopener" class="sticky-zalo">💬 Chat Zalo ngay</a>
+
+<script is:inline>
+(function(){
+  const key='vsl_ty_deadline_'+location.pathname;
+  let d=localStorage.getItem(key);
+  if(!d){d=String(Date.now()+24*3600*1000);localStorage.setItem(key,d)}
+  const el=document.getElementById('cd2');
+  function tick(){
+    let diff=parseInt(d)-Date.now();if(diff<0)diff=0;
+    const h=String(Math.floor(diff/3600000)).padStart(2,'0');
+    const m=String(Math.floor(diff/60000)%60).padStart(2,'0');
+    const s=String(Math.floor(diff/1000)%60).padStart(2,'0');
+    if(el)el.textContent=h+':'+m+':'+s;
+  }
+  tick();setInterval(tick,1000);
+})();
+</script>
+</body>
+</html>

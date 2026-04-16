@@ -1,0 +1,23 @@
+---
+import VSLThankYouPage from '../../components/VSLThankYouPage.astro';
+import { getVSLContent, ZALO_URL } from '../../lib/vsl-configs.ts';
+const c = getVSLContent('tieu-hoc', 'Gò Vấp');
+---
+<VSLThankYouPage
+  pageTitle="Cảm Ơn – Trại Hè Tiểu Học Gò Vấp VSL | Việt Anh"
+  pageDescription="Báo cáo kỹ năng bé đang được gửi. Giữ suất Lion Camp Tiểu học Gò Vấp chỉ với 500k."
+  canonicalUrl="https://truongvietanh.com/trai-he-tieu-hoc-go-vap-vsl/cam-on"
+  schoolLevel="tieu-hoc"
+  funnelCode="vsl-tieu-hoc-go-vap"
+  level="tieu-hoc"
+  location="Gò Vấp"
+  levelLabel={c.levelLabel}
+  zaloUrl={ZALO_URL}
+  slotsLeft="7"
+  messageHtml={c.tyMessage}
+  bonusIntro={c.bonusIntro}
+  bonusItems={c.bonusItems}
+  ctaPrimary={c.ctaPrimaryTY}
+  ctaZalo={c.ctaZaloTY}
+  signOff={c.signOff}
+/>

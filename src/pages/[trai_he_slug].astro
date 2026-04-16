@@ -21,6 +21,7 @@ import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
 import USPGrid from '../components/USPGrid.astro';
 import TrustMetrics from '../components/TrustMetrics.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import QuizFunnel from '../components/QuizFunnel.astro';
 import FAQSection from '../components/FAQSection.astro';
 import { getAllTraiHeSlugs, getTraiHePageBySlug } from '../lib/trai-he-pages';
 
@@ -38,7 +39,7 @@ if (!page) {
   return Astro.redirect('/404');
 }
 
-const canonicalUrl = `https://truongvietanh.com/${page.slug}`;
+const canonicalUrl = `https://hoc.truongvietanh.com/${page.slug}`;
 const camOnUrl = `/${page.slug}/cam-on`;
 const formIdWithFunnel = `squeeze-form-${page.funnel_code}`;
 const zaloUrl = 'https://zalo.me/1678310120468101523';
@@ -153,28 +154,37 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
     </div>
   </section>
 
-  <!-- ===== FORM with quiz-funnel UX ===== -->
+  <!-- ===== INTERACTIVE QUIZ FUNNEL ===== -->
   <section slot="form">
-    <div class="quiz-intro">
-      <div class="quiz-badge">
-        <span class="quiz-badge__icon">📋</span>
-        <span>Bài đánh giá kỹ năng {levelLabel}</span>
+    {page.quiz_questions && page.quiz_questions.length > 0 ? (
+      <QuizFunnel
+        quizTitle={page.quiz_title}
+        quizSubtitle={page.quiz_subtitle}
+        questions={page.quiz_questions}
+        results={page.quiz_results}
+        quizIntroItems={page.quiz_intro_items}
+        formHeading={page.form_heading}
+        formDescription={page.form_description}
+        formSubmitText={page.form_submit_text}
+        funnelCode={page.funnel_code}
+        schoolLevel={page.school_level}
+        location={page.location}
+        camOnUrl={camOnUrl}
+      />
+    ) : (
+      /* Fallback to simple form if no quiz questions in CMS */
+      <div class="quiz-intro">
+        <h2 class="squeeze-form-section__heading">{page.form_heading}</h2>
+        <p class="squeeze-form-section__description">{page.form_description}</p>
       </div>
-      <h2 class="squeeze-form-section__heading">{page.form_heading}</h2>
-      <p class="squeeze-form-section__description">{page.form_description}</p>
-      <ul class="quiz-checklist">
-        {page.quiz_intro_items.map((item) => (
-          <li><span class="quiz-check">✓</span> {item}</li>
-        ))}
-      </ul>
-    </div>
-    <LeadFormTwoStepEmailFirst
-      formId="squeeze-form"
-      funnelCode={page.funnel_code}
-      schoolLevel={page.school_level}
-      submitText={page.form_submit_text}
-      successMessage={page.form_success_message}
-    />
+      <LeadFormTwoStepEmailFirst
+        formId="squeeze-form"
+        funnelCode={page.funnel_code}
+        schoolLevel={page.school_level}
+        submitText={page.form_submit_text}
+        successMessage={page.form_success_message}
+      />
+    )}
     <!-- Live signup counter -->
     <div class="form-live-counter">
       <span class="form-live-counter__dot"></span>

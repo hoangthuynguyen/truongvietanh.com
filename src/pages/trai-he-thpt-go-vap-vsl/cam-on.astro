@@ -1,0 +1,23 @@
+---
+import VSLThankYouPage from '../../components/VSLThankYouPage.astro';
+import { getVSLContent, ZALO_URL } from '../../lib/vsl-configs.ts';
+const c = getVSLContent('thpt', 'Gò Vấp');
+---
+<VSLThankYouPage
+  pageTitle="Cảm Ơn – Trại Hè THPT Gò Vấp VSL | Việt Anh"
+  pageDescription="Báo cáo IELTS + định hướng đại học đã gửi. Giữ suất Lion Camp THPT Gò Vấp chỉ với 500k."
+  canonicalUrl="https://truongvietanh.com/trai-he-thpt-go-vap-vsl/cam-on"
+  schoolLevel="thpt"
+  funnelCode="vsl-thpt-go-vap"
+  level="thpt"
+  location="Gò Vấp"
+  levelLabel={c.levelLabel}
+  zaloUrl={ZALO_URL}
+  slotsLeft="5"
+  messageHtml={c.tyMessage}
+  bonusIntro={c.bonusIntro}
+  bonusItems={c.bonusItems}
+  ctaPrimary={c.ctaPrimaryTY}
+  ctaZalo={c.ctaZaloTY}
+  signOff={c.signOff}
+/>

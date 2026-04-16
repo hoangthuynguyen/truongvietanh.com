@@ -3,790 +3,255 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import { getPillarPage } from '../lib/directus';
-
-const cmsPage = await getPillarPage('tieu-hoc');
-const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
   {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
-    "name": "Trường Tiểu Học Việt Anh",
-    "alternateName": "Trường Tiểu Học Song Ngữ Việt Anh",
-    "url": "https://truongvietanh.com/tieu-hoc",
-    "logo": "https://truongvietanh.com/logo-crest-80.webp",
-    "foundingDate": "2011",
-    "description": "Chương trình tiểu học song ngữ UK Cambridge, tiếng Anh chuyên sâu, 16 kỹ năng thế kỷ 21, hệ thống PDR tại TP.HCM.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Hồ Chí Minh",
-      "addressCountry": "VN"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "bestRating": "5",
-      "ratingCount": "300"
-    },
-    "areaServed": ["TP. Hồ Chí Minh", "Long An", "Kiên Giang"],
-    "offers": { "@type": "Offer", "category": "Tiểu Học Song Ngữ", "price": "7000000", "priceCurrency": "VND", "priceValidUntil": "2027-08-31", "description": "Học phí Tiểu Học từ 7-10 triệu VND/tháng" },
-    "speakable": { "@type": "SpeakableSpecification", "cssSelector": [".gi-h1", ".gi-subtitle"] }
+    "name": "Tiểu Học Việt Anh",
+    "url": "https://hoc.truongvietanh.com/tieu-hoc",
+    "description": "Tiểu học Việt Anh – nơi trẻ bắt đầu làm chủ việc học và bản thân.",
+    "address": { "@type": "PostalAddress", "addressLocality": "Hồ Chí Minh", "addressCountry": "VN" }
   },
   {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "Lớp tiểu học Trường Việt Anh có bao nhiêu học sinh?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Mỗi lớp tiểu học tại Trường Việt Anh có tối đa 30-35 học sinh, đảm bảo giáo viên quan tâm từng em." }
-      },
-      {
-        "@type": "Question",
-        "name": "Trường Việt Anh có xe đưa rước cho học sinh tiểu học không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Có, hệ thống xe đưa rước phục vụ tất cả cơ sở tại TP.HCM, phủ khắp các quận huyện với camera giám sát và GPS." }
-      },
-      {
-        "@type": "Question",
-        "name": "Học sinh từ trường khác có thể chuyển sang tiểu học Việt Anh không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Có, Trường Việt Anh nhận chuyển cấp và chuyển trường bất kỳ lúc nào trong năm học nếu còn chỗ. Trường có chương trình hỗ trợ hội nhập cho học sinh mới." }
-      },
-      {
-        "@type": "Question",
-        "name": "Tiểu học Việt Anh có dạy thêm ngoài giờ không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Không cần học thêm. Chương trình bán trú kéo dài đến 16h30, bao gồm tự học có hướng dẫn, ngoại khoá và CLB. Học sinh hoàn thành bài tập tại trường." }
-      },
-      {
-        "@type": "Question",
-        "name": "Chương trình Bộ GD&ĐT ở tiểu học Việt Anh có đầy đủ không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Đầy đủ 100%. Học sinh hoàn thành toàn bộ chương trình Bộ GD&ĐT theo đúng chuẩn, đồng thời học thêm UK Cambridge Primary cho Toán, Khoa học và Công nghệ." }
-      },
-      {
-        "@type": "Question",
-        "name": "Tốt nghiệp tiểu học Việt Anh, học sinh đi đâu?",
-        "acceptedAnswer": { "@type": "Answer", "text": "95% học sinh tiếp tục học THCS tại Trường Việt Anh. Số còn lại chuyển sang các trường quốc tế hoặc trường chuyên với nền tảng tiếng Anh và kỹ năng vượt trội." }
-      },
-      {
-        "@type": "Question",
-        "name": "Tiểu học Việt Anh có chính sách học bổng không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Có, Trường Việt Anh dành học bổng cho học sinh có thành tích xuất sắc, năng khiếu đặc biệt và gia đình có hoàn cảnh. Liên hệ tư vấn để biết chi tiết." }
-      },
-      { "@type": "Question", "name": "Trường có dạy lập trình và STEM cho học sinh tiểu học không?", "acceptedAnswer": { "@type": "Answer", "text": "Có. Từ lớp 3 học Scratch, lớp 4-5 nâng cấp Python và Robotics. Phòng lab STEM với Lego Education, Arduino, 3D Printer. Hàng năm có STEM Fair toàn trường." } },
-      { "@type": "Question", "name": "Chương trình tiểu học có nặng quá cho con không?", "acceptedAnswer": { "@type": "Answer", "text": "Không. Thời khóa biểu cân bằng: sáng học kiến thức, chiều CLB ngoại khóa và thể thao. Mỗi tuần ít nhất 4 tiết thể dục, nghệ thuật và kỹ năng sống." } },
-      { "@type": "Question", "name": "Con có thể chuyển từ trường công sang tiểu học Việt Anh giữa chừng không?", "acceptedAnswer": { "@type": "Answer", "text": "Hoàn toàn được. Nhận chuyển trường tất cả lớp 1-5. Kiểm tra Toán + Tiếng Anh xếp lớp. Có chương trình bổ trợ tiếng Anh 4-8 tuần cho học sinh chưa có nền tảng." } }
+      { "@type": "Question", "name": "Có cần cho con học nhiều ở tiểu học không?", "acceptedAnswer": { "@type": "Answer", "text": "Không. Quan trọng là học đúng cách và hình thành thói quen tự học." } },
+      { "@type": "Question", "name": "Nếu không học thêm nhiều, con có bị tụt lại không?", "acceptedAnswer": { "@type": "Answer", "text": "Không. Trẻ biết cách học sẽ tiến nhanh hơn mà không cần học thêm." } },
+      { "@type": "Question", "name": "Làm sao để con tự giác hơn?", "acceptedAnswer": { "@type": "Answer", "text": "Cần môi trường rèn thói quen liên tục, không chỉ nhắc nhở từng ngày." } },
+      { "@type": "Question", "name": "Trường khác gì so với các trường khác?", "acceptedAnswer": { "@type": "Answer", "text": "Tập trung vào cách học, không chỉ nội dung học — giúp trẻ tự học bền vững." } }
     ]
   },
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
-      { "@type": "ListItem", "position": 2, "name": "Tiểu học", "item": "https://truongvietanh.com/tieu-hoc" }
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://hoc.truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Tiểu học", "item": "https://hoc.truongvietanh.com/tieu-hoc" }
     ]
   }
 ];
 ---
 
 <BaseLayout
-  title={cmsPage?.title || "Tiểu Học Việt Anh – Song Ngữ UK &amp; Kỹ Năng Thế Kỷ 21"}
-  description={cmsPage?.description || "Trường Tiểu Học Việt Anh tại TP.HCM: chương trình song ngữ UK Cambridge, tiếng Anh chuyên sâu, 16 kỹ năng thế kỷ 21, hệ thống PDR. Đăng ký tham quan miễn phí."}
-  canonical="https://truongvietanh.com/tieu-hoc"
-  ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
+  title="Tiểu Học Việt Anh – Làm Chủ Việc Học, Tiếng Anh & Bản Thân"
+  description="Tiểu học Việt Anh: giúp trẻ biết cách học, tự giác và làm chủ bản thân từ lớp 1. Chương trình UK Cambridge, tiếng Anh như ngôn ngữ, Leader in Me."
+  canonical="https://hoc.truongvietanh.com/tieu-hoc"
+  ogImage="https://media.truongvietanh.com/images/thuyet-trinh-09.webp"
   structuredData={structuredData}
 >
-  <div class="gi-page">
+  <div class="pp-page">
     <HeaderBase />
 
-    <!-- ====== HERO WITH FORM ====== -->
-    <section class="gi-hero">
-      <div class="gi-container gi-hero-inner">
-        <div class="gi-hero-left">
-          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
-            <a href="/">Trang chủ</a>
-            <span aria-hidden="true">/</span>
-            <a href="/gioi-thieu">Giới thiệu</a>
-            <span aria-hidden="true">/</span>
-            <span>Tiểu học</span>
-          </nav>
+    <!-- BLOCK 1: HERO -->
+    <section class="pp-hero">
+      <div class="pp-hero-inner">
+        <h1 class="pp-h1">
+          Tiểu học không phải là nơi để học nhiều hơn
+          <span class="pp-h1-accent">mà là nơi trẻ bắt đầu biết cách học và làm chủ bản thân</span>
+        </h1>
+        <p class="pp-subtitle">
+          Điểm số có thể giúp trẻ đi nhanh trong ngắn hạn. Nhưng khả năng tự học, tư duy và kỷ luật bản thân mới là thứ quyết định con đi được bao xa.
+        </p>
+        <div class="pp-cta-row">
+          <a href="/tuyen-sinh/tieu-hoc" class="pp-btn pp-btn-gold">Khám phá chương trình Tiểu học →</a>
+          <a href="#pp-form" class="pp-btn pp-btn-outline">Nhận tư vấn cho con →</a>
+        </div>
+      </div>
+    </section>
 
-          <h1 class="gi-h1">Trường Tiểu Học Song Ngữ Việt Anh: Nền Tảng Vững Chắc Cho Tương Lai</h1>
-          <p class="gi-subtitle">Chương trình UK Cambridge — 16 kỹ năng thế kỷ 21 — Tiếng Anh chuyên sâu</p>
-          <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
+    <!-- BLOCK 2: RICH TEXT -->
+    <section class="pp-richtext">
+      <div class="pp-richtext-inner">
+        <h2>Vấn đề không phải là trẻ học kém<br/>mà là không biết cách học</h2>
+        <p>Rất nhiều học sinh tiểu học: làm bài tốt khi có người kèm, nhưng không thể tự học — học xong nhưng không hiểu sâu.</p>
+        <div class="pp-callout">Điều này không phải do trẻ "kém" — mà do chưa được dạy cách học, chưa hình thành thói quen, chưa có môi trường đúng</div>
+        <p>Trong khi đó, giai đoạn Tiểu học chính là lúc: <strong>hình thành tư duy, xây dựng thói quen, tạo nền tảng học tập</strong>.</p>
+        <div class="pp-callout">Giáo dục tiểu học đúng phải giúp trẻ: biết cách học, biết tự học, và muốn học</div>
+      </div>
+    </section>
 
-          <div class="gi-hero-rating">
-            <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-            <span class="gi-rating-text">4.9/5 (300+ đánh giá từ phụ huynh)</span>
+    <!-- BLOCK 3: STATS -->
+    <section class="pp-stats">
+      <div class="pp-stats-inner">
+        <h2>Những gì trẻ hình thành ở tiểu học sẽ theo suốt cả hành trình</h2>
+        <div class="pp-stats-cols">
+          <div class="pp-stats-col">
+            <h3>Nếu chỉ tập trung vào điểm số…</h3>
+            <ul>
+              <li>Học nhanh nhưng không bền</li>
+              <li>Dễ chán học theo thời gian</li>
+              <li>Càng lớn càng phụ thuộc</li>
+            </ul>
           </div>
-
-          <div class="gi-trust-badges">
-            <div class="gi-badge"><strong>100%</strong> CT Bộ GD</div>
-            <div class="gi-badge"><strong>UK</strong> Cambridge</div>
-            <div class="gi-badge"><strong>A2-B1</strong> Tiếng Anh</div>
-            <div class="gi-badge"><strong>16</strong> kỹ năng WEF</div>
+          <div class="pp-stats-col">
+            <h3>Nếu tập trung đúng vào cách học…</h3>
+            <ul>
+              <li>Tự học tốt hơn</li>
+              <li>Hiểu sâu và nhớ lâu hơn</li>
+              <li>Tiến bộ nhanh hơn theo thời gian</li>
+            </ul>
           </div>
         </div>
+        <p style="text-align:center;margin-top:1.5rem;color:#64748b;font-size:.95rem;">Thói quen học tập hình thành từ tiểu học · Giai đoạn vàng phát triển ngôn ngữ & tư duy logic · Nền tảng theo suốt hành trình học tập</p>
+      </div>
+    </section>
 
-        <div class="gi-hero-right">
-          <div class="gi-form-card">
-            <p class="gi-form-heading">Đăng ký tham quan trường miễn phí</p>
-            <LeadFormTwoStepEmailFirst
-              formId="tieu-hoc-form"
-              funnelCode="tieu-hoc-pillar"
-              schoolLevel="tieu-hoc"
-            />
+    <!-- BLOCK 4: FEATURES -->
+    <section class="pp-features">
+      <div class="pp-features-inner">
+        <h2>Môi trường giúp trẻ biết cách học</h2>
+        <div class="pp-feat-grid">
+          <div class="pp-feat-card">
+            <span class="pp-icon">📘</span>
+            <strong>Học thuật tích hợp chuẩn quốc tế</strong>
+            <p>Giúp trẻ hiểu sâu, không học vẹt</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">🌍</span>
+            <strong>Tiếng Anh như ngôn ngữ</strong>
+            <p>Không học để thi, mà để sử dụng thực tế</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">🧠</span>
+            <strong>Tư duy & giải quyết vấn đề</strong>
+            <p>Phát triển logic, không chỉ làm bài theo mẫu</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">🎯</span>
+            <strong>PDR – tự học & tự quản lý</strong>
+            <p>Trẻ học cách đặt mục tiêu và theo dõi tiến bộ</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">🧭</span>
+            <strong>Lãnh đạo bản thân</strong>
+            <p>Hình thành kỷ luật và trách nhiệm từ sớm</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">🤝</span>
+            <strong>Học qua trải nghiệm</strong>
+            <p>Không chỉ học kiến thức, mà học cách áp dụng</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ====== TOC SIDEBAR + CONTENT ====== -->
-    <div class="gi-container gi-body">
-      <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4/2026</p>
-      <!-- Sticky TOC sidebar -->
-      <nav class="gi-toc" aria-label="Mục lục">
-        <p class="gi-toc-title">Mục lục</p>
-        <ol class="gi-toc-list">
-          <li><a href="#chuong-trinh">Chương trình đặc biệt</a></li>
-          <li><a href="#tieng-anh">Tiếng Anh tiểu học</a></li>
-          <li><a href="#ky-nang">Kỹ năng & lãnh đạo</a></li>
-          <li><a href="#hoc-phi">Học phí tiểu học</a></li>
-          <li><a href="#co-so">Cơ sở tiểu học</a></li>
-          <li><a href="#danh-gia">Đánh giá phụ huynh</a></li>
-          <li><a href="#faq">Câu hỏi thường gặp</a></li>
-        </ol>
-        <a href="#tieu-hoc-form-tieu-hoc-pillar" class="gi-toc-cta">Đăng ký tham quan</a>
-      </nav>
-
-      <!-- Main content -->
-      <article class="gi-main">
-
-        <!-- Section 1: Chương trình -->
-        <section id="chuong-trinh" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></span>Chương trình tiểu học tại Trường Việt Anh có gì đặc biệt?</h2>
-          <p>Chương trình tiểu học tại Trường Việt Anh được thiết kế theo mô hình <strong>song ngữ tích hợp</strong>: học sinh vừa hoàn thành 100% chương trình Bộ Giáo dục & Đào tạo Việt Nam, vừa học song song chương trình <strong>UK <a href="https://www.cambridgeinternational.org" target="_blank" rel="noopener">Cambridge International</a> Primary</strong> cho các môn Toán (Mathematics), Khoa học (Science), Công nghệ thông tin (ICT) và Máy tính (Computing). Chương trình tiếng Anh được xây dựng theo chuẩn quốc tế với sự tham vấn của <a href="https://www.britishcouncil.vn" target="_blank" rel="noopener">British Council Việt Nam</a>.</p>
-          <p>Điều này có nghĩa con bạn không bị thiếu bất kỳ kiến thức nào so với bạn bè ở trường công lập, nhưng đồng thời được bổ sung một nền tảng học thuật quốc tế vững chắc — giúp các em sẵn sàng cho môi trường giáo dục toàn cầu từ sớm.</p>
-
-          <div class="gi-comparison-box">
-            <h3>So sánh: Tiểu học Việt Anh vs Trường công lập vs Trường quốc tế</h3>
-            <div class="gi-table-responsive">
-              <table class="gi-table">
-                <thead>
-                  <tr>
-                    <th>Tiêu chí</th>
-                    <th>Trường công lập</th>
-                    <th>Trường Việt Anh</th>
-                    <th>Trường quốc tế</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Chương trình VN</td>
-                    <td>100% Bộ GD&ĐT</td>
-                    <td>100% Bộ GD&ĐT</td>
-                    <td>Một phần hoặc không có</td>
-                  </tr>
-                  <tr>
-                    <td>Chương trình quốc tế</td>
-                    <td>Không có</td>
-                    <td>UK Cambridge Primary</td>
-                    <td>IB / Cambridge / American</td>
-                  </tr>
-                  <tr>
-                    <td>Tiếng Anh</td>
-                    <td>4-8 tiết/tuần</td>
-                    <td>40-50% thời lượng</td>
-                    <td>70-100% tiếng Anh</td>
-                  </tr>
-                  <tr>
-                    <td>Toán tư duy</td>
-                    <td>Theo SGK</td>
-                    <td>SAM (Singapore Math) + Cambridge</td>
-                    <td>Singapore / IB Math</td>
-                  </tr>
-                  <tr>
-                    <td>STEM / Coding</td>
-                    <td>Cơ bản hoặc không</td>
-                    <td>Hàng tuần, dự án thực tế</td>
-                    <td>Có</td>
-                  </tr>
-                  <tr>
-                    <td>Kỹ năng sống</td>
-                    <td>Lồng ghép ít</td>
-                    <td>16 kỹ năng WEF + Leader in Me</td>
-                    <td>Tuỳ trường</td>
-                  </tr>
-                  <tr>
-                    <td>Học phí/tháng</td>
-                    <td>Miễn phí / phí nhỏ</td>
-                    <td>6-9 triệu</td>
-                    <td>20-50 triệu</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <img src="https://media.truongvietanh.com/images/giao-vien-06.webp" alt="Học sinh tiểu học Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
-
-          <p>Ngoài chương trình học thuật, tiểu học Việt Anh còn tích hợp <strong>Toán tư duy SAM</strong> (Singapore Approach to Mathematics) — giúp học sinh hiểu bản chất toán học thay vì chỉ làm theo công thức. Các môn STEM và Coding được dạy hàng tuần thông qua dự án thực tế, giúp trẻ phát triển tư duy logic và sáng tạo từ lớp 1.</p>
-
-          <div class="gi-evidence-bar">
-            <div class="gi-evidence-item">
-              <strong>100%</strong>
-              <span>Hoàn thành CT Bộ GD&ĐT</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>100%</strong>
-              <span>Hoàn thành Cambridge Primary</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>40-50%</strong>
-              <span>Thời lượng tiếng Anh</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>SAM</strong>
-              <span>Toán tư duy Singapore</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- Section 2: Tiếng Anh -->
-        <section id="tieng-anh" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>Tiếng Anh tiểu học tại Việt Anh đạt trình độ gì?</h2>
-          <p>Chương trình tiếng Anh bậc tiểu học tại Trường Việt Anh là sự tiếp nối tự nhiên từ giai đoạn <strong>Immersion</strong> (đắm chìm ngôn ngữ) ở Mầm non. Khi bước vào lớp 1, trẻ đã có nền tảng nghe-nói cơ bản sau 2-3 năm tiếp xúc 100% tiếng Anh với giáo viên bản ngữ. Giai đoạn tiểu học tập trung phát triển đầy đủ 4 kỹ năng: Nghe — Nói — Đọc — Viết.</p>
-
-          <p>Điểm khác biệt lớn nhất: tại Trường Việt Anh, tiếng Anh không chỉ là một "môn học" mà là <strong>ngôn ngữ giảng dạy</strong> cho các môn UK Cambridge. Học sinh học Toán bằng tiếng Anh, làm thí nghiệm Khoa học bằng tiếng Anh, thuyết trình dự án bằng tiếng Anh — tất cả trong bối cảnh thực tế, không chỉ trên sách giáo khoa.</p>
-
-          <div class="gi-roadmap">
-            <h3>Lộ trình Tiếng Anh tiểu học 5 năm</h3>
-            <div class="gi-roadmap-grid th-roadmap-5col">
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">Lớp 1</div>
-                <strong>Nền tảng Phonics</strong>
-                <p>Củng cố phát âm, bắt đầu đọc-viết. Học Toán và Khoa học đơn giản bằng tiếng Anh. Xây dựng vốn từ 500-800 từ.</p>
-              </div>
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">Lớp 2</div>
-                <strong>Đọc hiểu cơ bản</strong>
-                <p>Đọc truyện ngắn, viết đoạn văn đơn giản. Bắt đầu thuyết trình nhóm bằng tiếng Anh. Vốn từ 1.000-1.500.</p>
-              </div>
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">Lớp 3</div>
-                <strong>Giao tiếp tự tin</strong>
-                <p>Thảo luận, phản biện trong lớp. Viết báo cáo khoa học đơn giản bằng tiếng Anh. Mục tiêu Pre-A1 Starters.</p>
-              </div>
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">Lớp 4</div>
-                <strong>Học thuật Cambridge</strong>
-                <p>Làm chủ đọc hiểu học thuật. Viết bài luận có cấu trúc. Dự án STEM trình bày bằng tiếng Anh. Mục tiêu A1 Movers.</p>
-              </div>
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">Lớp 5</div>
-                <strong>Sẵn sàng Cambridge A2</strong>
-                <p>Tự tin đọc-viết-nghe-nói ở trình độ A2. Chuẩn bị thi Cambridge A2 Key (KET). Sẵn sàng cho THCS Academic English.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="gi-comparison-box">
-            <h3>So sánh trình độ tiếng Anh cuối lớp 5</h3>
-            <div class="gi-table-responsive">
-              <table class="gi-table">
-                <thead>
-                  <tr>
-                    <th>Tiêu chí</th>
-                    <th>Trường công lập</th>
-                    <th>Trường Việt Anh</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Trình độ CEFR</td>
-                    <td>A1 (cơ bản)</td>
-                    <td>A2 — B1 (trung cấp)</td>
-                  </tr>
-                  <tr>
-                    <td>Vốn từ vựng</td>
-                    <td>800-1.200 từ</td>
-                    <td>2.500-4.000 từ</td>
-                  </tr>
-                  <tr>
-                    <td>Kỹ năng nói</td>
-                    <td>Đọc bài trong SGK</td>
-                    <td>Thuyết trình, phản biện, phỏng vấn</td>
-                  </tr>
-                  <tr>
-                    <td>Kỹ năng viết</td>
-                    <td>Chép bài, điền từ</td>
-                    <td>Viết luận, báo cáo, email</td>
-                  </tr>
-                  <tr>
-                    <td>Chứng chỉ</td>
-                    <td>Không</td>
-                    <td>Cambridge A2 Key (KET)</td>
-                  </tr>
-                  <tr>
-                    <td>Thời lượng TA/tuần</td>
-                    <td>4-8 tiết</td>
-                    <td>15-20 tiết (gồm môn UK)</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <p>Với lộ trình này, học sinh tiểu học Trường Việt Anh khi lên THCS đã có đủ nền tảng để học các môn học thuật bằng tiếng Anh, hướng tới mục tiêu IELTS 4.5-5.5 cuối lớp 9 và IELTS 6.0-8.0 khi tốt nghiệp THPT.</p>
-        </section>
-
-        <!-- Section 3: Kỹ năng -->
-        <section id="ky-nang" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></span>Trường Việt Anh rèn luyện kỹ năng gì cho học sinh tiểu học?</h2>
-          <p>Ở bậc tiểu học, ngoài kiến thức học thuật, Trường Việt Anh đặc biệt chú trọng phát triển <strong>phẩm chất và kỹ năng</strong> — những yếu tố quyết định thành công dài hạn của trẻ. Chương trình kỹ năng tại trường dựa trên 3 trụ cột chính.</p>
-
-          <div class="gi-leader-grid">
-            <div class="gi-leader-card">
-              <h4>16 kỹ năng thế kỷ 21 (WEF)</h4>
-              <p style="font-size:0.9rem;color:#5c6e80;margin-bottom:0.75rem;">Theo khung năng lực của Diễn đàn Kinh tế Thế giới, chia thành 3 nhóm:</p>
-              <ul>
-                <li><strong>Nền tảng:</strong> Đọc-viết, Toán học, Khoa học, Công nghệ thông tin, Tài chính, Văn hoá</li>
-                <li><strong>Năng lực:</strong> Tư duy phản biện, Tài giỏi, Giao tiếp, Hợp tác</li>
-                <li><strong>Phẩm chất:</strong> Tò mò, Chủ động, Yêu thương, Thích nghi, Lãnh đạo, Nhận thức xã hội</li>
-              </ul>
-            </div>
-            <div class="gi-leader-card">
-              <h4>Leader in Me (Franklin Covey)</h4>
-              <p style="font-size:0.9rem;color:#5c6e80;margin-bottom:0.75rem;">7 thói quen lãnh đạo được rèn luyện hàng ngày:</p>
-              <ol>
-                <li>Chủ động (Be Proactive)</li>
-                <li>Bắt đầu từ mục tiêu (Begin with the End in Mind)</li>
-                <li>Ưu tiên việc quan trọng (Put First Things First)</li>
-                <li>Tư duy cùng thắng (Think Win-Win)</li>
-                <li>Hiểu người trước (Seek First to Understand)</li>
-                <li>Hợp tác sáng tạo (Synergize)</li>
-                <li>Rèn luyện bản thân (Sharpen the Saw)</li>
-              </ol>
-            </div>
-          </div>
-
-          <div class="gi-comparison-box">
-            <h3>Hệ thống PDR — Theo dõi phát triển cá nhân hàng tuần</h3>
-            <p>PDR (Plan — Do — Review) là hệ thống giáo dục độc quyền của Trường Việt Anh, áp dụng từ Mầm non đến THPT. Ở bậc tiểu học, mỗi tuần học sinh sẽ:</p>
-            <div class="gi-values-items th-pdr-grid">
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#9997;</span>
-                <strong>Plan (Lập kế hoạch)</strong>
-                <p>Đầu tuần: đặt mục tiêu học tập và phát triển cá nhân cùng giáo viên chủ nhiệm</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#9881;</span>
-                <strong>Do (Thực hiện)</strong>
-                <p>Trong tuần: thực hành theo kế hoạch, ghi nhật ký học tập, tham gia hoạt động</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#9733;</span>
-                <strong>Review (Đánh giá)</strong>
-                <p>Cuối tuần: tự đánh giá, nhận phản hồi từ thầy cô, điều chỉnh cho tuần tiếp theo</p>
-              </div>
-            </div>
-          </div>
-
-          <h3>Hoạt động ngoại khoá phong phú</h3>
-          <p>Ngoài giờ học chính khoá, học sinh tiểu học Trường Việt Anh được tham gia đa dạng câu lạc bộ và hoạt động ngoại khoá, giúp phát triển toàn diện cả thể chất lẫn tinh thần.</p>
-          <div class="gi-values-items th-extra-grid">
-            <div class="gi-value-card">
-              <span class="gi-value-icon">&#127946;</span>
-              <strong>Bơi lội</strong>
-              <p>Bắt buộc từ lớp 1, đảm bảo kỹ năng sinh tồn dưới nước</p>
-            </div>
-            <div class="gi-value-card">
-              <span class="gi-value-icon">&#127911;</span>
-              <strong>Âm nhạc</strong>
-              <p>Piano, Guitar, Ukulele, hợp xướng, nhạc cụ dân tộc</p>
-            </div>
-            <div class="gi-value-card">
-              <span class="gi-value-icon">&#129302;</span>
-              <strong>STEM & Coding</strong>
-              <p>Robotics, Scratch, dự án khoa học thực tế hàng tháng</p>
-            </div>
-            <div class="gi-value-card">
-              <span class="gi-value-icon">&#127912;</span>
-              <strong>Mỹ thuật</strong>
-              <p>Vẽ, thủ công, sáng tạo nghệ thuật đa phương tiện</p>
-            </div>
-            <div class="gi-value-card">
-              <span class="gi-value-icon">&#9917;</span>
-              <strong>Thể thao</strong>
-              <p>Bóng đá, cầu lông, võ thuật, điền kinh, cờ vua</p>
-            </div>
-            <div class="gi-value-card">
-              <span class="gi-value-icon">&#127757;</span>
-              <strong>Dã ngoại</strong>
-              <p>Tham quan thực tế, trại hè, chương trình trao đổi văn hoá</p>
-            </div>
-          </div>
-
-          <img src="https://media.truongvietanh.com/images/du-an-03.webp" alt="Học sinh tiểu học làm dự án" loading="lazy" width="1200" height="auto" class="section-img" />
-        </section>
-
-        <!-- Section 4: Học phí -->
-        <section id="hoc-phi" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span>Học phí tiểu học Trường Việt Anh bao nhiêu?</h2>
-          <p>Học phí tiểu học tại Trường Việt Anh dao động từ <strong>6 đến 9 triệu đồng/tháng</strong> tuỳ theo cơ sở và chương trình. Đây là mức chi phí hợp lý khi so sánh với giá trị giáo dục nhận được — bao gồm cả chương trình Bộ GD&ĐT lẫn UK Cambridge, ăn bán trú đầy đủ dinh dưỡng và hệ thống ngoại khoá phong phú.</p>
-
-          <div class="gi-comparison-box">
-            <h3>Chi phí đã bao gồm trong học phí</h3>
-            <div class="gi-values-items th-fee-grid">
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#128218;</span>
-                <strong>Học phí chính khoá</strong>
-                <p>100% chương trình Bộ GD&ĐT + UK Cambridge Primary</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#127860;</span>
-                <strong>Ăn bán trú</strong>
-                <p>Bữa trưa + bữa phụ, thực đơn dinh dưỡng theo tuần</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#127947;</span>
-                <strong>Ngoại khoá cơ bản</strong>
-                <p>Bơi lội, thể dục, CLB nghệ thuật, STEM cơ bản</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#128221;</span>
-                <strong>Tự học có hướng dẫn</strong>
-                <p>Hoàn thành bài tập tại trường, không cần học thêm</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="gi-table-responsive">
-            <table class="gi-table">
-              <thead>
-                <tr>
-                  <th>Hạng mục</th>
-                  <th>Trường Việt Anh</th>
-                  <th>Trường công lập</th>
-                  <th>Trường quốc tế</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Học phí/tháng</td>
-                  <td><strong>6-9 triệu</strong></td>
-                  <td>Miễn phí / 500K</td>
-                  <td>20-50 triệu</td>
-                </tr>
-                <tr>
-                  <td>Ăn bán trú</td>
-                  <td>Bao gồm</td>
-                  <td>Phụ thu 800K-1.5tr</td>
-                  <td>Bao gồm</td>
-                </tr>
-                <tr>
-                  <td>Chương trình quốc tế</td>
-                  <td>UK Cambridge (bao gồm)</td>
-                  <td>Không có</td>
-                  <td>Bao gồm</td>
-                </tr>
-                <tr>
-                  <td>Tiếng Anh chuyên sâu</td>
-                  <td>Bao gồm (40-50%)</td>
-                  <td>Học thêm ngoài: 3-5tr/th</td>
-                  <td>Bao gồm</td>
-                </tr>
-                <tr>
-                  <td>Ngoại khoá cơ bản</td>
-                  <td>Bao gồm</td>
-                  <td>Phụ thu</td>
-                  <td>Bao gồm</td>
-                </tr>
-                <tr>
-                  <td>Tổng chi phí ước tính/tháng</td>
-                  <td><strong>6-9 triệu</strong></td>
-                  <td>4-7 triệu (gồm học thêm)</td>
-                  <td>20-50 triệu</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p>Khi tính tổng chi phí thực tế (bao gồm học thêm tiếng Anh, kỹ năng sống, ngoại khoá bên ngoài), học phí Trường Việt Anh chỉ cao hơn trường công khoảng <strong>2-3 triệu/tháng</strong>, nhưng chất lượng tiếng Anh và kỹ năng vượt trội hơn nhiều — trong khi chỉ bằng <strong>1/3 đến 1/5 trường quốc tế</strong>.</p>
-
-          <p><a href="/hoc-phi">Xem bảng học phí chi tiết cho tất cả các cấp &rarr;</a></p>
-        </section>
-
-        <!-- Section 5: Cơ sở -->
-        <section id="co-so" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></span>Cơ sở tiểu học Việt Anh ở đâu?</h2>
-          <p>Trường Việt Anh có chương trình tiểu học tại nhiều cơ sở, phủ rộng khắp TP.HCM và các tỉnh lân cận. Mỗi cơ sở tiểu học đều được trang bị đầy đủ: phòng học máy lạnh, phòng lab khoa học, phòng tin học, thư viện song ngữ, hồ bơi, sân chơi và khu vực ăn bán trú sạch sẽ.</p>
-
-          <div class="gi-campus-groups">
-            <div class="gi-campus-group">
-              <h3>TP. Hồ Chí Minh</h3>
-              <ul>
-                <li><strong>Cơ sở Gò Vấp:</strong> Mầm non + Tiểu học. Khu vực quận Gò Vấp — thuận tiện cho phụ huynh quận Gò Vấp, Phú Nhuận, Bình Thạnh.</li>
-                <li><strong>Cơ sở Bình Tân:</strong> Mầm non + Tiểu học + THCS. Khu vực quận Bình Tân — phục vụ phụ huynh quận Bình Tân, Tân Phú, Quận 6, Quận 8.</li>
-                <li><strong>Cơ sở Tân Phú:</strong> Mầm non + Tiểu học. Khu vực quận Tân Phú — thuận tiện di chuyển từ Quận 11, Tân Bình.</li>
-                <li><strong>Cơ sở Bình Chánh:</strong> Hệ thống liên cấp MN — THPT. Campus rộng, đầy đủ tiện ích cho mọi cấp học.</li>
-              </ul>
-            </div>
-            <div class="gi-campus-group">
-              <h3>Long An</h3>
-              <ul>
-                <li><strong>Cơ sở TP. Tân An:</strong> Mầm non + Tiểu học + THCS.</li>
-                <li><strong>Cơ sở Đức Hoà:</strong> Mầm non + Tiểu học.</li>
-                <li><strong>Cơ sở Bến Lức:</strong> Mầm non + Tiểu học.</li>
-              </ul>
-            </div>
-            <div class="gi-campus-group">
-              <h3>Kiên Giang</h3>
-              <ul>
-                <li><strong>Cơ sở TP. Rạch Giá:</strong> Mầm non + Tiểu học + THCS.</li>
-                <li><strong>Cơ sở Phú Quốc:</strong> Mầm non + Tiểu học.</li>
-              </ul>
-            </div>
-          </div>
-
-          <p>Hệ thống xe đưa rước phục vụ tất cả cơ sở tại TP.HCM, phủ khắp các quận huyện. Xe có camera giám sát, tài xế có kinh nghiệm và theo dõi GPS thời gian thực. <a href="/co-so">Xem bản đồ và địa chỉ chi tiết &rarr;</a></p>
-        </section>
-
-        <!-- Section 6: Đánh giá -->
-        <section id="danh-gia" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>Phụ huynh đánh giá tiểu học Việt Anh thế nào?</h2>
-          <p>Trường Việt Anh đạt 4.9/5 sao trên Google với hơn 300 đánh giá từ phụ huynh. Dưới đây là những chia sẻ tiêu biểu từ phụ huynh có con đang học bậc tiểu học.</p>
-
-          <div class="gi-aggregate-rating">
-            <span class="gi-big-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-            <span class="gi-big-score">4.9/5</span>
-            <span class="gi-review-count">300+ đánh giá trên Google</span>
-          </div>
-
-          <div class="gi-testimonials">
-            <!-- Row 1: Chị Nga – Sự lột xác rõ rệt -->
-            <blockquote class="gi-testimonial gi-testimonial--video">
-              <a class="gi-testimonial__thumb" href="https://www.youtube.com/watch?v=3jwB87z-Keg" target="_blank" rel="noopener noreferrer" aria-label="Xem video chia sẻ của Chị Nga">
-                <img src="https://img.youtube.com/vi/3jwB87z-Keg/hqdefault.jpg" alt="Thumbnail video – Chị Nga, phụ huynh lớp 3 Gò Vấp" loading="lazy" width="160" height="90" />
-                <span class="gi-testimonial__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
-              </a>
-              <div class="gi-testimonial__content">
-                <p>"Sau 2 năm, con thay đổi rõ rệt cả về học tập và kỹ năng. Con không chỉ tiến bộ trong học tập mà còn tự tin hơn hẳn."</p>
-                <cite><span class="cite-badge">NN</span>— Chị Nga, phụ huynh lớp 3 – cơ sở Gò Vấp</cite>
-              </div>
-            </blockquote>
-            <!-- Row 2: Phụ huynh bé Huỳnh Khánh Ngọc – Tự tin -->
-            <blockquote class="gi-testimonial gi-testimonial--video">
-              <a class="gi-testimonial__thumb" href="https://www.youtube.com/watch?v=uK3LeaodCvU" target="_blank" rel="noopener noreferrer" aria-label="Xem video chia sẻ về bé Huỳnh Khánh Ngọc">
-                <img src="https://img.youtube.com/vi/uK3LeaodCvU/hqdefault.jpg" alt="Thumbnail video – Phụ huynh bé Huỳnh Khánh Ngọc" loading="lazy" width="160" height="90" />
-                <span class="gi-testimonial__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
-              </a>
-              <div class="gi-testimonial__content">
-                <p>"Con tự tin hơn rất nhiều và dám thể hiện bản thân. Trước đây rụt rè, sau khi được khuyến khích tham gia hoạt động, con đã hoàn toàn khác."</p>
-                <cite><span class="cite-badge">KN</span>— Phụ huynh bé Huỳnh Khánh Ngọc, lớp 4 – cơ sở Bình Tân</cite>
-              </div>
-            </blockquote>
-            <!-- Row 6: Anh Lê Thành Nhân – Tiếng Anh / Tự tin -->
-            <blockquote class="gi-testimonial gi-testimonial--video">
-              <a class="gi-testimonial__thumb" href="https://www.youtube.com/watch?v=PRRvvFHp7Ho" target="_blank" rel="noopener noreferrer" aria-label="Xem video chia sẻ của Anh Lê Thành Nhân">
-                <img src="https://img.youtube.com/vi/PRRvvFHp7Ho/hqdefault.jpg" alt="Thumbnail video – Anh Lê Thành Nhân, phụ huynh lớp 3" loading="lazy" width="160" height="90" />
-                <span class="gi-testimonial__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
-              </a>
-              <div class="gi-testimonial__content">
-                <p>"Từ chỗ không dám nói, con đã tự tin giao tiếp tiếng Anh. Nay con phản xạ tự nhiên, thoải mái nói chuyện với thầy cô người nước ngoài."</p>
-                <cite><span class="cite-badge">LN</span>— Anh Lê Thành Nhân, phụ huynh lớp 3 – sau học kỳ đầu tiên</cite>
-              </div>
-            </blockquote>
-            <!-- Row 7: Anh Công – Niềm vui học tập -->
-            <blockquote class="gi-testimonial gi-testimonial--video">
-              <a class="gi-testimonial__thumb" href="https://www.youtube.com/watch?v=b9eNSFUDd98" target="_blank" rel="noopener noreferrer" aria-label="Xem video chia sẻ của Anh Công">
-                <img src="https://img.youtube.com/vi/b9eNSFUDd98/hqdefault.jpg" alt="Thumbnail video – Anh Công, phụ huynh lớp 1" loading="lazy" width="160" height="90" />
-                <span class="gi-testimonial__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
-              </a>
-              <div class="gi-testimonial__content">
-                <p>"Con luôn háo hức và mong chờ được đến trường mỗi ngày. Đi học vui vẻ, không áp lực, ngày càng dạn dĩ và tự lập hơn."</p>
-                <cite><span class="cite-badge">AC</span>— Anh Công, phụ huynh lớp 1 – chuyển từ mầm non</cite>
-              </div>
-            </blockquote>
-            <!-- Row 24: Chị Bùi Thị Kim Trinh – Nền tảng tương lai -->
-            <blockquote class="gi-testimonial gi-testimonial--video">
-              <a class="gi-testimonial__thumb" href="https://www.youtube.com/watch?v=Qcney88rB2c" target="_blank" rel="noopener noreferrer" aria-label="Xem video chia sẻ của Chị Bùi Thị Kim Trinh">
-                <img src="https://img.youtube.com/vi/Qcney88rB2c/hqdefault.jpg" alt="Thumbnail video – Chị Bùi Thị Kim Trinh, phụ huynh lớp 3" loading="lazy" width="160" height="90" />
-                <span class="gi-testimonial__play" aria-hidden="true"><svg viewBox="0 0 24 24" width="28" height="28" fill="white"><path d="M8 5v14l11-7z"/></svg></span>
-              </a>
-              <div class="gi-testimonial__content">
-                <p>"Gia đình chọn trường để tạo nền tảng vững chắc cho tương lai. Con phát triển toàn diện — cả học thuật lẫn kỹ năng sống."</p>
-                <cite><span class="cite-badge">KT</span>— Chị Bùi Thị Kim Trinh, phụ huynh lớp 3 – lựa chọn môi trường</cite>
-              </div>
-            </blockquote>
-          </div>
-        </section>
-
-        <!-- Section 7: FAQ -->
-        <section id="faq" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>Câu hỏi thường gặp về tiểu học Việt Anh</h2>
-          <p>Tổng hợp những câu hỏi phụ huynh thường hỏi nhất khi tìm hiểu về chương trình tiểu học tại Trường Việt Anh.</p>
-
-          <div class="gi-faq-list">
-            {cmsFaqs ? (
-              cmsFaqs.map((faq, i) => (
-                <details class="gi-faq-item" open={i === 0}>
-                  <summary>{faq.question}</summary>
-                  <div class="gi-faq-answer">
-                    <p set:html={faq.answer} />
-                  </div>
-                </details>
-              ))
-            ) : (
-              <>
-            
-            <details class="gi-faq-item" open>
-              <summary>Mỗi lớp tiểu học có bao nhiêu học sinh?</summary>
-              <div class="gi-faq-answer">
-                <p>Mỗi lớp tiểu học tại Trường Việt Anh có tối đa 30-35 học sinh. Sĩ số này đảm bảo giáo viên có thể quan tâm từng em, đặc biệt trong các giờ học tiếng Anh và dự án nhóm. Một số lớp Cambridge có thêm trợ giảng hỗ trợ.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Trường có xe đưa rước cho học sinh tiểu học không?</summary>
-              <div class="gi-faq-answer">
-                <p>Có. Hệ thống xe đưa rước phục vụ tất cả cơ sở tại TP.HCM, phủ khắp các quận huyện. Xe có camera giám sát, tài xế có kinh nghiệm và theo dõi GPS thời gian thực. Phụ huynh nhận thông báo khi xe đón và trả con qua ứng dụng.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Học sinh từ trường khác có thể chuyển sang tiểu học Việt Anh không?</summary>
-              <div class="gi-faq-answer">
-                <p>Hoàn toàn được. Trường Việt Anh nhận chuyển trường bất kỳ lúc nào trong năm học nếu còn chỗ. Trường có chương trình hỗ trợ hội nhập dành riêng cho học sinh mới — bao gồm kiểm tra đầu vào tiếng Anh, lớp bổ trợ (nếu cần), và mentor từ bạn cùng lớp giúp làm quen.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Học sinh tiểu học Việt Anh có cần đi học thêm không?</summary>
-              <div class="gi-faq-answer">
-                <p>Không cần. Chương trình bán trú kéo dài đến 16h30, bao gồm giờ tự học có hướng dẫn — học sinh hoàn thành bài tập ngay tại trường dưới sự hỗ trợ của giáo viên. Buổi tối về nhà, trẻ có thời gian nghỉ ngơi, vui chơi và đọc sách thay vì đi học thêm.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Chương trình Bộ GD&ĐT ở tiểu học Việt Anh có đầy đủ không?</summary>
-              <div class="gi-faq-answer">
-                <p>Đầy đủ 100%. Học sinh Trường Việt Anh hoàn thành toàn bộ chương trình giáo dục phổ thông theo chuẩn của Bộ GD&ĐT, sử dụng sách giáo khoa được phê duyệt. Đồng thời, các em học thêm chương trình UK Cambridge Primary cho Toán, Khoa học và Công nghệ bằng tiếng Anh — giúp mở rộng kiến thức và tư duy quốc tế.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Tốt nghiệp tiểu học Việt Anh, học sinh đi đâu?</summary>
-              <div class="gi-faq-answer">
-                <p>Khoảng 95% học sinh tiểu học Trường Việt Anh tiếp tục lên THCS tại trường — tận dụng lợi thế liên cấp, không bị gián đoạn chương trình tiếng Anh và kỹ năng. Số còn lại chuyển sang các trường quốc tế (như BIS, ISHCMC) hoặc trường chuyên lớp 6 với nền tảng tiếng Anh A2-B1 vượt trội so với bạn bè.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Tiểu học Việt Anh có chính sách học bổng không?</summary>
-              <div class="gi-faq-answer">
-                <p>Có. Trường Việt Anh dành học bổng cho học sinh có thành tích học tập xuất sắc, học sinh có năng khiếu đặc biệt (thể thao, nghệ thuật, học thuật), và gia đình có hoàn cảnh khó khăn. Mức học bổng từ 20% đến 100% học phí. Liên hệ tư vấn viên hoặc gọi <a href="tel:0916961409"><strong>0916 961 409</strong></a> để biết chi tiết điều kiện và hồ sơ.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Trường có dạy lập trình và STEM cho học sinh tiểu học không?</summary>
-              <div class="gi-faq-answer">
-                <p><strong>Có.</strong> Từ lớp 3, học sinh được học lập trình Scratch và tham gia dự án STEM thực tế. Lớp 4-5 nâng cấp lên Python cơ bản và Robotics. Trường có phòng lab STEM hiện đại với bộ kit Lego Education, Arduino và 3D Printer. Mỗi năm, học sinh tham gia STEM Fair toàn trường để trình bày dự án sáng tạo.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Chương trình tiểu học có nặng quá cho con không?</summary>
-              <div class="gi-faq-answer">
-                <p>Không. Trường Việt Anh thiết kế thời khóa biểu <strong>cân bằng giữa học và chơi</strong>: sáng học kiến thức, chiều tham gia CLB ngoại khóa và thể thao. Học sinh không mang bài tập về nhà quá nhiều — mục tiêu là hiểu sâu tại lớp, không phải nhồi nhét. Mỗi tuần có ít nhất 4 tiết thể dục, nghệ thuật và kỹ năng sống.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Con có thể chuyển từ trường công sang tiểu học Việt Anh giữa chừng không?</summary>
-              <div class="gi-faq-answer">
-                <p><strong>Hoàn toàn được.</strong> Trường Việt Anh nhận chuyển trường ở tất cả các lớp 1-5. Con sẽ được kiểm tra đầu vào Toán và Tiếng Anh để xếp lớp phù hợp. Trường có chương trình hỗ trợ bổ trợ tiếng Anh 4-8 tuần cho học sinh chưa có nền tảng, giúp con hòa nhập nhanh chóng.</p>
-              </div>
-            </details>
-              </>
-            )}
-          </div>
-        </section>
-      </article>
-    </div>
-
-    <!-- Related Topics (PAA) -->
-    <section class="gi-section" style="background:#f8fafc;border-radius:12px;padding:2rem;margin:0 auto 2rem;max-width:var(--max-width,1180px)">
-      <h2 style="font-size:1.2rem;font-weight:700;color:#1a1a5e;margin:0 0 1rem">Phụ huynh cũng tìm hiểu</h2>
-      <div class="paa-grid">
-        <a href="/mam-non" class="paa-card"><strong>Con chưa đủ tuổi vào lớp 1 thì học gì?</strong><span>Chương trình Mầm Non Montessori — nhận trẻ từ 18 tháng</span></a>
-        <a href="/trung-hoc-co-so" class="paa-card"><strong>Sau tiểu học, con lên THCS thế nào?</strong><span>Ưu tiên xét thẳng lên THCS Việt Anh — không thi tuyển</span></a>
-        <a href="/hoc-phi" class="paa-card"><strong>Học phí tiểu học song ngữ bao nhiêu?</strong><span>7-10 triệu/tháng — chỉ bằng 1/3 trường quốc tế</span></a>
-        <a href="/ngoai-khoa" class="paa-card"><strong>Tiểu học có STEM và lập trình không?</strong><span>Scratch từ lớp 3, Robotics lớp 4-5, STEM Fair hàng năm</span></a>
-      </div>
-    </section>
-
-    <!-- ====== BOTTOM CTA ====== -->
-    <section class="gi-bottom-cta">
-      <div class="gi-container gi-bottom-cta-inner">
-        <div class="gi-bottom-cta-text">
-          <h2>Đăng ký tham quan tiểu học Việt Anh miễn phí</h2>
-          <img src="https://media.truongvietanh.com/images/thuyet-trinh-04.webp" alt="Học sinh tiểu học thuyết trình" loading="lazy" width="1200" height="auto" class="section-img" />
+    <!-- BLOCK 5: TEXT WITH IMAGE -->
+    <section class="pp-textimg">
+      <div class="pp-textimg-inner">
+        <div class="pp-textimg-text">
+          <h2>Trẻ không cần bị ép học<br/>Trẻ cần biết cách học</h2>
+          <p>Tại Việt Anh: Trẻ không chỉ làm bài, không chỉ nghe giảng.</p>
+          <p>Mà được: <strong>đặt câu hỏi, được thử nghiệm, được sai và sửa</strong>.</p>
+          <div class="pp-callout">Giáo viên không chỉ dạy — mà giúp trẻ hiểu cách học, tự tìm ra câu trả lời và phát triển tư duy</div>
+          <p>Đây là cách trẻ học chủ động, học lâu dài, và không sợ học.</p>
         </div>
-        <div class="gi-bottom-cta-form">
-          <LeadFormTwoStepEmailFirst
-            formId="tieu-hoc-bottom-form"
-            funnelCode="tieu-hoc-bottom"
-            schoolLevel="tieu-hoc"
-          />
+        <div class="pp-textimg-img">
+          <img src="https://media.truongvietanh.com/images/du-an-03.webp" alt="Học sinh tiểu học Việt Anh" loading="lazy" width="600" height="400" />
         </div>
       </div>
     </section>
 
-    <!-- ====== BLOCK LINKS ====== -->
-    <section class="gi-block-links" aria-label="Cơ sở và chương trình liên quan">
-      <div class="gi-container">
-        <h2 class="gi-block-links__heading">Cơ sở tiểu học Việt Anh</h2>
-        <div class="gi-block-links__grid">
-          <a href="/co-so" class="gi-block-link">
-            <span class="gi-block-link__icon">🏫</span>
-            <strong>Việt Anh Gò Vấp HCM</strong>
-            <span>160/72 Phan Huy Ích, Q. Gò Vấp</span>
-          </a>
-          <a href="/co-so" class="gi-block-link">
-            <span class="gi-block-link__icon">🏫</span>
-            <strong>Việt Anh Bình Tân HCM</strong>
-            <span>Q. Bình Tân, TP.HCM</span>
-          </a>
-          <a href="/co-so" class="gi-block-link">
-            <span class="gi-block-link__icon">🏫</span>
-            <strong>Thái Sơn Cần Giuộc TN</strong>
-            <span>H. Cần Giuộc, Long An</span>
-          </a>
-          <a href="/co-so" class="gi-block-link">
-            <span class="gi-block-link__icon">🏫</span>
-            <strong>Mekong Xanh Rạch Giá AG</strong>
-            <span>TP. Rạch Giá, Kiên Giang</span>
-          </a>
+    <!-- BLOCK 6: VALUE CARDS -->
+    <section class="pp-valuecards">
+      <div class="pp-valuecards-inner">
+        <h2>Những giá trị trẻ nhận được</h2>
+        <div class="pp-value-grid">
+          <div class="pp-value-card">
+            <span class="pp-icon">🧠</span>
+            <strong>Biết cách học</strong>
+            <p>Không cần phụ thuộc vào người lớn để hoàn thành bài</p>
+          </div>
+          <div class="pp-value-card">
+            <span class="pp-icon">🎯</span>
+            <strong>Tự giác hơn</strong>
+            <p>Biết làm việc của mình đúng lúc, đúng cách</p>
+          </div>
+          <div class="pp-value-card">
+            <span class="pp-icon">💬</span>
+            <strong>Giao tiếp tốt hơn</strong>
+            <p>Biết trình bày ý kiến và lắng nghe người khác</p>
+          </div>
+          <div class="pp-value-card">
+            <span class="pp-icon">🌍</span>
+            <strong>Dùng được tiếng Anh</strong>
+            <p>Không chỉ học, mà thực sự sử dụng tiếng Anh</p>
+          </div>
+          <div class="pp-value-card">
+            <span class="pp-icon">🚀</span>
+            <strong>Nền tảng lâu dài</strong>
+            <p>Sẵn sàng và tự tin cho các cấp học tiếp theo</p>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <h2 class="gi-block-links__heading" style="margin-top:2.5rem">Chương trình nổi bật</h2>
-        <div class="gi-block-links__grid">
-          <a href="/chuong-trinh" class="gi-block-link">
-            <span class="gi-block-link__icon">📚</span>
-            <strong>Tiền Tiểu học</strong>
-            <span>Lộ trình vào lớp 1 vững vàng từ mầm non</span>
+    <!-- BLOCK 7: FAQ -->
+    <section class="pp-faq">
+      <div class="pp-faq-inner">
+        <h2>Câu hỏi phụ huynh thường gặp</h2>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Có cần cho con học nhiều ở tiểu học không?</p>
+          <p class="pp-faq-a">Không. Học nhiều không bằng học đúng cách. Quan trọng là hình thành thói quen tự học và tư duy — những thứ giúp con tiến bộ bền vững.</p>
+        </div>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Nếu không học thêm nhiều, con có bị tụt lại không?</p>
+          <p class="pp-faq-a">Không. Trẻ biết cách học, biết tự học sẽ tiến nhanh hơn — và không cần học thêm liên tục mới theo kịp.</p>
+        </div>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Làm sao để con tự giác hơn?</p>
+          <p class="pp-faq-a">Cần môi trường rèn thói quen liên tục — hệ thống PDR, kỷ luật bản thân và trách nhiệm cá nhân — không phải chỉ nhắc nhở mỗi ngày.</p>
+        </div>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Trường khác gì so với các trường khác?</p>
+          <p class="pp-faq-a">Chúng tôi tập trung vào cách học, không chỉ nội dung học. Học sinh được rèn tư duy, tự học và lãnh đạo bản thân — để học tốt ở mọi cấp, không chỉ tiểu học.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 8: FORM -->
+    <section class="pp-form-block" id="pp-form">
+      <div class="pp-form-block-inner">
+        <h2>Nhận tư vấn cho con</h2>
+        <p>Để lại thông tin — nhận lộ trình học tập phù hợp, tư vấn cá nhân hoá và Brochure chi tiết.</p>
+        <ul>
+          <li>Lộ trình học tập phù hợp theo lớp của con</li>
+          <li>Tư vấn cá nhân hoá cho từng học sinh</li>
+          <li>Brochure chi tiết chương trình tiểu học</li>
+        </ul>
+        <LeadFormTwoStepEmailFirst
+          formId="tieu-hoc-pillar-form"
+          funnelCode="tieu-hoc-pillar"
+          schoolLevel="tieu-hoc"
+        />
+      </div>
+    </section>
+
+    <!-- BLOCK 9: LINKS -->
+    <section class="pp-links">
+      <div class="pp-links-inner">
+        <h2>Khám phá các chương trình liên quan</h2>
+        <div class="pp-link-grid">
+          <a href="/tuyen-sinh/tieu-hoc" class="pp-link-card">
+            <strong>Chương trình Tiểu học Việt Anh</strong>
+            <span>Nền tảng học tập & tự học</span>
           </a>
-          <a href="/chuong-trinh" class="gi-block-link">
-            <span class="gi-block-link__icon">🥗</span>
-            <strong>Siêu Ăn Giỏi</strong>
-            <span>Dinh dưỡng học đường — bé ăn ngon, học tốt</span>
+          <a href="/tuyen-sinh/trai-he-tieu-hoc-2026" class="pp-link-card">
+            <strong>Lion Camp – Trại hè Tiểu học</strong>
+            <span>Rèn kỹ năng sống & tự lập trong 6 tuần</span>
           </a>
-          <a href="/chuong-trinh" class="gi-block-link">
-            <span class="gi-block-link__icon">🔢</span>
+          <a href="https://truongvietanh.com/toan-tu-duy" class="pp-link-card">
             <strong>Toán Tư Duy</strong>
-            <span>Phát triển tư duy logic, toán học sáng tạo</span>
+            <span>Phát triển tư duy logic & giải quyết vấn đề</span>
           </a>
-          <a href="/chuong-trinh" class="gi-block-link">
-            <span class="gi-block-link__icon">🇬🇧</span>
-            <strong>Tiếng Anh Trẻ Em</strong>
-            <span>Lộ trình Cambridge từ lớp 1 đến lớp 5</span>
+          <a href="https://truongvietanh.com/sieu-an-gioi" class="pp-link-card">
+            <strong>Siêu Ăn Giỏi</strong>
+            <span>Hình thành thói quen sống & tự lập</span>
           </a>
-          <a href="/chuong-trinh" class="gi-block-link">
-            <span class="gi-block-link__icon">🦁</span>
-            <strong>Trại hè Lion Camp</strong>
-            <span>Kỹ năng lãnh đạo và tiếng Anh trong mùa hè</span>
+          <a href="https://truongvietanh.com/thoi-khoa-bieu-mau-cac-khoi-lop/" class="pp-link-card" style="grid-column:1/-1">
+            <strong>Thời khoá biểu mẫu các lớp</strong>
+            <span>truongvietanh.com/thoi-khoa-bieu-mau-cac-khoi-lop/</span>
           </a>
         </div>
       </div>
@@ -794,44 +259,78 @@ const structuredData = [
 
     <FooterBase />
   </div>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    .pp-page { font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a2e; line-height: 1.6; }
+    .pp-hero { background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8e 100%); color: white; padding: 5rem 1.5rem; text-align: center; }
+    .pp-hero-inner { max-width: 820px; margin: 0 auto; }
+    .pp-h1 { font-size: 2.4rem; font-weight: 800; line-height: 1.3; margin-bottom: 1.25rem; }
+    .pp-h1-accent { color: #ff5555; display: block; margin-top: .5rem; font-size: .9em; }
+    .pp-subtitle { font-size: 1.1rem; opacity: .88; margin-bottom: 2.5rem; line-height: 1.75; }
+    .pp-cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .pp-btn { display: inline-block; padding: .9rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: opacity .2s; }
+    .pp-btn:hover { opacity: .88; }
+    .pp-btn-gold { background: #e8b84b; color: #1a1a2e; }
+    .pp-btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,.7); }
+    .pp-richtext { background: #fff; padding: 4.5rem 1.5rem; }
+    .pp-richtext-inner { max-width: 820px; margin: 0 auto; }
+    .pp-richtext h2 { font-size: 1.5rem; font-weight: 800; color: #1a1a5e; text-transform: uppercase; margin-bottom: 1.5rem; line-height: 1.4; }
+    .pp-richtext p { font-size: 1.05rem; color: #334155; line-height: 1.8; margin-bottom: 1rem; }
+    .pp-callout { color: #1a1a5e; font-weight: 700; font-size: 1.05rem; padding: .6rem 1rem; border-left: 3px solid #e8b84b; margin: 1.25rem 0; background: #fffbeb; border-radius: 0 6px 6px 0; }
+    .pp-stats { background: #f8fafc; padding: 4rem 1.5rem; border-top: 3px solid #e2e8f0; }
+    .pp-stats-inner { max-width: 900px; margin: 0 auto; }
+    .pp-stats-inner > h2 { font-size: 1.5rem; font-weight: 800; color: #1a1a5e; text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
+    .pp-stats-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .pp-stats-col { background: white; border-radius: 12px; padding: 1.75rem; box-shadow: 0 2px 10px rgba(0,0,0,.05); }
+    .pp-stats-col h3 { font-size: 1rem; font-weight: 700; color: #1a1a5e; margin-bottom: 1rem; border-bottom: 2px solid #e8b84b; padding-bottom: .5rem; }
+    .pp-stats-col ul { list-style: none; padding: 0; margin: 0; }
+    .pp-stats-col li { padding: .4rem 0 .4rem 1.5rem; position: relative; color: #475569; font-size: .95rem; }
+    .pp-stats-col li::before { content: '✓'; position: absolute; left: 0; color: #22c55e; font-weight: 700; }
+    .pp-features { background: #1a1a5e; color: white; padding: 4.5rem 1.5rem; }
+    .pp-features-inner { max-width: 1050px; margin: 0 auto; }
+    .pp-features h2 { font-size: 1.5rem; font-weight: 800; text-align: center; text-transform: uppercase; margin-bottom: 2.5rem; }
+    .pp-feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .pp-feat-card { background: rgba(255,255,255,.08); border-radius: 12px; padding: 1.5rem; border: 1px solid rgba(255,255,255,.12); }
+    .pp-feat-card .pp-icon { font-size: 2rem; display: block; margin-bottom: .75rem; }
+    .pp-feat-card strong { display: block; font-size: 1rem; margin-bottom: .5rem; }
+    .pp-feat-card p { font-size: .88rem; opacity: .82; line-height: 1.65; margin: 0; }
+    .pp-textimg { background: white; padding: 4.5rem 1.5rem; }
+    .pp-textimg-inner { max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+    .pp-textimg-text h2 { font-size: 1.4rem; font-weight: 800; color: #1a1a5e; text-transform: uppercase; margin-bottom: 1.25rem; line-height: 1.4; }
+    .pp-textimg-text p { color: #334155; line-height: 1.8; margin-bottom: .8rem; }
+    .pp-textimg-img img { width: 100%; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,.12); }
+    .pp-valuecards { background: #f8fafc; padding: 4rem 1.5rem; }
+    .pp-valuecards-inner { max-width: 1050px; margin: 0 auto; }
+    .pp-valuecards h2 { font-size: 1.5rem; font-weight: 800; color: #1a1a5e; text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
+    .pp-value-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .pp-value-card { background: white; border-radius: 12px; padding: 1.5rem; box-shadow: 0 2px 12px rgba(0,0,0,.07); border-top: 3px solid #e8b84b; }
+    .pp-value-card .pp-icon { font-size: 2rem; display: block; margin-bottom: .75rem; }
+    .pp-value-card strong { display: block; color: #1a1a5e; font-size: 1rem; margin-bottom: .4rem; }
+    .pp-value-card p { color: #475569; font-size: .88rem; line-height: 1.6; margin: 0; }
+    .pp-faq { background: white; padding: 4rem 1.5rem; }
+    .pp-faq-inner { max-width: 820px; margin: 0 auto; }
+    .pp-faq h2 { font-size: 1.5rem; font-weight: 800; color: #1a1a5e; text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
+    .pp-faq-item { border-bottom: 1px solid #e2e8f0; padding: 1.25rem 0; }
+    .pp-faq-q { font-size: 1rem; font-weight: 700; color: #1a1a5e; margin-bottom: .6rem; }
+    .pp-faq-a { color: #475569; font-size: .95rem; line-height: 1.75; margin: 0; }
+    .pp-form-block { background: #1a1a5e; padding: 4.5rem 1.5rem; }
+    .pp-form-block-inner { max-width: 580px; margin: 0 auto; text-align: center; }
+    .pp-form-block h2 { color: white; font-size: 1.5rem; font-weight: 800; margin-bottom: .75rem; }
+    .pp-form-block p { color: rgba(255,255,255,.82); margin-bottom: 1.5rem; line-height: 1.7; }
+    .pp-form-block ul { list-style: none; padding: 0; text-align: left; display: inline-block; margin-bottom: 2rem; }
+    .pp-form-block li { color: rgba(255,255,255,.9); padding: .3rem 0 .3rem 1.5rem; position: relative; }
+    .pp-form-block li::before { content: '✓'; position: absolute; left: 0; color: #e8b84b; font-weight: 700; }
+    .pp-links { background: #f8fafc; padding: 4rem 1.5rem; border-top: 3px solid #e2e8f0; }
+    .pp-links-inner { max-width: 900px; margin: 0 auto; }
+    .pp-links h2 { font-size: 1.5rem; font-weight: 800; color: #1a1a5e; text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
+    .pp-link-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .pp-link-card { background: white; border-radius: 10px; padding: 1.25rem 1.5rem; text-decoration: none; border-left: 4px solid #e8b84b; box-shadow: 0 2px 8px rgba(0,0,0,.06); display: block; transition: transform .15s; }
+    .pp-link-card:hover { transform: translateY(-2px); }
+    .pp-link-card strong { display: block; color: #1a1a5e; font-size: 1rem; margin-bottom: .3rem; }
+    .pp-link-card span { color: #64748b; font-size: .85rem; }
+    @media (max-width: 900px) { .pp-feat-grid { grid-template-columns: repeat(2, 1fr); } .pp-value-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 768px) { .pp-h1 { font-size: 1.7rem; } .pp-textimg-inner { grid-template-columns: 1fr; } .pp-stats-cols { grid-template-columns: 1fr; } .pp-link-grid { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .pp-cta-row { flex-direction: column; align-items: center; } .pp-feat-grid { grid-template-columns: 1fr; } .pp-value-grid { grid-template-columns: 1fr; } }
+  </style>
 </BaseLayout>
-
-<style is:global>
-/* Tiểu học page uses gi-* global classes from gioi-thieu.astro */
-/* Only add tiểu-học-specific overrides here */
-
-/* 5-column roadmap for 5 school years */
-.th-roadmap-5col {
-  grid-template-columns: repeat(5, 1fr);
-}
-
-/* PDR 3-column grid */
-.th-pdr-grid {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-/* Extra-curricular 6-column grid */
-.th-extra-grid {
-  grid-template-columns: repeat(3, 1fr);
-}
-
-/* Fee includes 4-column grid */
-.th-fee-grid {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-/* ===== RESPONSIVE for tieu-hoc specific grids ===== */
-@media (max-width: 1024px) {
-  .th-roadmap-5col { grid-template-columns: repeat(3, 1fr); }
-  .th-fee-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 768px) {
-  .th-roadmap-5col { grid-template-columns: 1fr; }
-  .th-pdr-grid { grid-template-columns: 1fr; }
-  .th-extra-grid { grid-template-columns: repeat(2, 1fr); }
-  .th-fee-grid { grid-template-columns: 1fr; }
-}
-@media (max-width: 480px) {
-  .th-extra-grid { grid-template-columns: 1fr; }
-}
-</style>

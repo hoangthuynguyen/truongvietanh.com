@@ -104,7 +104,54 @@ function normalizeFormData(data) {
     utmSource: data.utm_source || '',
     utmMedium: data.utm_medium || '',
     utmCampaign: data.utm_campaign || '',
+    // Quiz funnel fields
+    quizScore: parseInt(data.quiz_score, 10) || 0,
+    quizLevel: data.quiz_level || '',
+    funnelCode: data.funnel_code || '',
   };
+}
+
+// === QUIZ RESULT HELPERS ===
+function isQuizLead(data) {
+  return data.quizScore > 0 || data.funnelCode.startsWith('trai-he-');
+}
+
+function getQuizResultLabel(score) {
+  if (score >= 18) return 'Tốt';
+  if (score >= 12) return 'Trung bình';
+  return 'Cần can thiệp';
+}
+
+function getQuizResultEmoji(score) {
+  if (score >= 18) return '✅';
+  if (score >= 12) return '⚠️';
+  return '🔴';
+}
+
+function deriveLocation(funnelCode) {
+  if (funnelCode.includes('go-vap')) return 'Gò Vấp';
+  if (funnelCode.includes('binh-tan')) return 'Bình Tân';
+  if (funnelCode.includes('can-giuoc')) return 'Cần Giuộc';
+  if (funnelCode.includes('rach-gia')) return 'Rạch Giá';
+  return '';
+}
+
+function deriveCampLevel(funnelCode) {
+  if (funnelCode.includes('tieu-hoc')) return 'Tiểu học';
+  if (funnelCode.includes('thcs')) return 'THCS';
+  if (funnelCode.includes('thpt')) return 'THPT';
+  return '';
+}
+
+// Generate quiz result report URL (personalized link)
+function getQuizReportUrl(data) {
+  const params = new URLSearchParams({
+    name: data.fullName,
+    score: data.quizScore.toString(),
+    level: data.schoolLevel,
+    loc: deriveLocation(data.funnelCode),
+  });
+  return `https://hoc.truongvietanh.com/${data.funnelCode}/cam-on?${params.toString()}`;
 }
 
 async function handleLeadSubmission(request, env) {
@@ -130,6 +177,16 @@ async function handleLeadSubmission(request, env) {
         if (data.grade) tags.push(data.grade);
         if (data.source) tags.push(data.source);
 
+        // Quiz-specific tags
+        if (isQuizLead(data)) {
+          tags.push('quiz-lead');
+          tags.push(`quiz-${getQuizResultLabel(data.quizScore).toLowerCase().replace(/\s+/g, '-')}`);
+          const loc = deriveLocation(data.funnelCode);
+          if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);
+          const campLvl = deriveCampLevel(data.funnelCode);
+          if (campLvl) tags.push(`trai-he-${campLvl.toLowerCase()}`);
+        }
+
         // Split Vietnamese full name: "Nguyen Van An" → firstName="An", lastName="Nguyen Van"
         const nameParts = (data.fullName || '').trim().split(/\s+/);
         const ghlFirstName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0] || '';
@@ -139,12 +196,22 @@ async function handleLeadSubmission(request, env) {
           locationId: GHL_LOCATION_ID,
           firstName: ghlFirstName,
           lastName: ghlLastName,
-          name: data.fullName, // Keep full name
+          name: data.fullName,
           email: data.email,
           phone: data.phone,
           source: `Website - ${data.source}`,
           tags,
         };
+
+        // Add quiz custom fields if it's a quiz lead
+        if (isQuizLead(data)) {
+          ghlBody.customFields = [
+            { key: 'quiz_score', field_value: data.quizScore.toString() },
+            { key: 'quiz_level', field_value: data.quizLevel || getQuizResultLabel(data.quizScore) },
+            { key: 'dia_diem', field_value: deriveLocation(data.funnelCode) },
+            { key: 'cap_hoc_trai_he', field_value: deriveCampLevel(data.funnelCode) },
+          ];
+        }
 
         const ghlRes = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {
           method: 'POST',
@@ -216,9 +283,14 @@ async function handleLeadSubmission(request, env) {
         sendEmailNotification(data, env).catch(() => {}),
         sendZaloNotification(data, env).catch(() => {}),
       ];
+      // Quiz leads: send quiz result email to parent + Zalo report
+      if (isQuizLead(data)) {
+        promises.push(sendQuizResultEmail(data, env).catch(() => {}));
+      }
       // Add contact to appropriate GHL workflow
       if (contactId) {
-        promises.push(addContactToWorkflow(contactId, data.source, ghlApiKey).catch(() => {}));
+        const wfSource = data.funnelCode || data.source;
+        promises.push(addContactToWorkflow(contactId, wfSource, ghlApiKey).catch(() => {}));
       }
       await Promise.allSettled(promises);
     }
@@ -256,7 +328,17 @@ const WORKFLOW_MAP = {
   // WF9: Alumni & Referral
   'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
-  'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER', // Replace with GHL workflow ID after creating N1
+  'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
+
+  // WF10: Trại Hè Quiz Funnel (all trai-he-* variants use same nurture workflow)
+  'trai-he-tieu-hoc-go-vap':    'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  'trai-he-tieu-hoc-binh-tan':  'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  'trai-he-tieu-hoc-can-giuoc': 'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  'trai-he-tieu-hoc-rach-gia':  'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  'trai-he-thcs-go-vap':        'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  'trai-he-thcs-binh-tan':      'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  'trai-he-thpt-go-vap':        'TRAI_HE_QUIZ_WF_PLACEHOLDER',
+  'trai-he-thpt-binh-tan':      'TRAI_HE_QUIZ_WF_PLACEHOLDER',
 };
 
 async function addContactToWorkflow(contactId, source, ghlApiKey) {
@@ -342,6 +424,19 @@ async function sendEmailNotification(data, env) {
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">Ten con em</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;">${data.childName}</td>
       </tr>` : ''}
+      ${isQuizLead(data) ? `<tr style="background:#fff8e1;">
+        <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">📊 Quiz Score</td>
+        <td style="padding:10px 12px;border:1px solid #e0e0e0;">
+          <strong style="font-size:18px;color:${data.quizScore >= 18 ? '#16A34A' : data.quizScore >= 12 ? '#F59E0B' : '#EF4444'};">
+            ${data.quizScore}/24 — ${getQuizResultLabel(data.quizScore)}
+          </strong>
+          ${data.quizScore <= 12 ? '<br><span style="color:#EF4444;font-weight:bold;">⚡ CAN THIEP GAP — Goi ngay!</span>' : ''}
+        </td>
+      </tr>
+      <tr>
+        <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">🏫 Trai he</td>
+        <td style="padding:10px 12px;border:1px solid #e0e0e0;">${deriveCampLevel(data.funnelCode)} — ${deriveLocation(data.funnelCode)}</td>
+      </tr>` : ''}
       <tr style="background:#f8f9fa;">
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">Quan tam toi</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;">${sourceLabel || 'Thong tin chung'}</td>
@@ -394,16 +489,30 @@ async function sendZaloNotification(data, env) {
     'thcs': 'THCS', 'thpt': 'THPT',
   }[data.schoolLevel] || data.schoolLevel || 'Chưa chọn';
 
-  const message = [
+  const lines = [
     `🔔 LEAD MỚI TỪ WEBSITE`,
     `👤 ${data.fullName}`,
     `📧 ${data.email}`,
     `📱 ${data.phone}`,
     `🎓 ${schoolLabel}`,
     `📄 Nguồn: ${data.source}`,
-    ``,
-    `👉 Liên lạc ngay!`,
-  ].join('\n');
+  ];
+
+  // Add quiz info if available
+  if (isQuizLead(data)) {
+    const loc = deriveLocation(data.funnelCode);
+    const campLvl = deriveCampLevel(data.funnelCode);
+    lines.push('');
+    lines.push(`📊 QUIZ TRẠI HÈ: ${data.quizScore}/24 điểm`);
+    lines.push(`${getQuizResultEmoji(data.quizScore)} Mức: ${getQuizResultLabel(data.quizScore)}`);
+    lines.push(`🏫 Cơ sở: ${loc}`);
+    lines.push(`📚 Cấp: ${campLvl}`);
+    lines.push('');
+    lines.push(`🔥 Gọi NGAY — lead quiz score ${data.quizScore <= 12 ? 'THẤP → CẦN CAN THIỆP GẤP!' : data.quizScore <= 17 ? 'TB → Khả năng chốt cao' : 'TỐT → Upsell gói premium'}`);
+  }
+
+  lines.push('');
+  lines.push(`👉 Liên lạc ngay!`);
 
   await fetch('https://openapi.zalo.me/v3.0/oa/message/cs', {
     method: 'POST',
@@ -413,7 +522,107 @@ async function sendZaloNotification(data, env) {
     },
     body: JSON.stringify({
       recipient: { user_id: zaloUserId },
-      message: { text: message },
+      message: { text: lines.join('\n') },
+    }),
+  });
+}
+
+// === QUIZ RESULT EMAIL TO PARENT ===
+async function sendQuizResultEmail(data, env) {
+  const score = data.quizScore;
+  const level = getQuizResultLabel(score);
+  const emoji = getQuizResultEmoji(score);
+  const loc = deriveLocation(data.funnelCode);
+  const campLvl = deriveCampLevel(data.funnelCode);
+  const reportUrl = getQuizReportUrl(data);
+  const firstName = (data.fullName || '').trim().split(/\s+/).pop() || 'Ba/Mẹ';
+
+  // Color based on score
+  const color = score >= 18 ? '#16A34A' : score >= 12 ? '#F59E0B' : '#EF4444';
+  const barWidth = Math.round((score / 24) * 100);
+
+  const subject = `📊 Kết quả đánh giá Lion Camp — ${score}/24 điểm — Báo cáo dành riêng cho gia đình ${firstName}`;
+
+  const body = `
+<div style="font-family:'Segoe UI',Arial,sans-serif;max-width:560px;margin:0 auto;background:#fff;">
+  <!-- Header -->
+  <div style="background:linear-gradient(135deg,#1a1a5e,#2a2a7e);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
+    <img src="https://hoc.truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:12px;background:#fff;padding:8px 16px;border-radius:8px;" />
+    <h1 style="margin:0;font-size:20px;font-weight:800;">KẾT QUẢ ĐÁNH GIÁ KỸ NĂNG HÈ 2026</h1>
+    <p style="margin:6px 0 0;opacity:.85;font-size:14px;">Lion Camp — ${campLvl} ${loc}</p>
+  </div>
+
+  <div style="padding:24px;border:1px solid #e0e0e0;border-top:none;">
+    <p style="font-size:15px;color:#333;margin:0 0 16px;">
+      Kính gửi ${firstName},<br><br>
+      Cảm ơn Ba/Mẹ đã dành thời gian làm bài đánh giá cho con. Dưới đây là kết quả sơ bộ:
+    </p>
+
+    <!-- Score Card -->
+    <div style="background:#F0F9FF;border:2px solid #7DD3FC;border-radius:14px;padding:20px;text-align:center;margin-bottom:20px;">
+      <div style="font-size:42px;font-weight:800;color:#1F4E79;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 24</span></div>
+      <!-- Score bar -->
+      <div style="background:#E5E7EB;border-radius:6px;height:12px;margin:12px 0;overflow:hidden;">
+        <div style="background:${color};height:100%;width:${barWidth}%;border-radius:6px;"></div>
+      </div>
+      <div style="font-size:16px;font-weight:700;color:${color};">${emoji} ${level}</div>
+    </div>
+
+    <!-- What this means -->
+    <div style="background:#F9FAFB;border-radius:10px;padding:16px;margin-bottom:20px;">
+      <p style="font-weight:700;color:#1F4E79;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
+      ${score >= 18 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đã có nền tảng tốt! Trại hè sẽ giúp con <strong>tỏa sáng hơn nữa</strong> và phát triển kỹ năng vượt trội so với bạn bè.</p>` : score >= 12 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đang ở giai đoạn <strong>cần hỗ trợ kịp thời</strong>. 6 tuần tại Lion Camp sẽ giúp con tiến bộ rõ rệt về tự tin và kỷ luật.</p>` : `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Đây là <strong>thời điểm vàng để can thiệp</strong>. Mùa hè này là cơ hội quan trọng nhất để giúp con thay đổi toàn diện.</p>`}
+    </div>
+
+    <!-- Recommended action -->
+    <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #F59E0B;border-radius:12px;padding:18px;margin-bottom:20px;">
+      <p style="font-weight:800;color:#E8792B;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
+      <p style="margin:0 0 12px;font-size:14px;color:#7C2D12;line-height:1.6;">
+        Con rất phù hợp với <strong>Lion Camp ${campLvl} tại cơ sở ${loc}</strong>.
+        Đăng ký giữ chỗ trong 48 giờ tới để nhận <strong>Học bổng Early Bird đến 30%</strong>.
+      </p>
+      <div style="text-align:center;">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#E8792B;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
+          💬 Chat Zalo giữ chỗ ngay
+        </a>
+      </div>
+    </div>
+
+    <!-- Next steps -->
+    <div style="margin-bottom:16px;">
+      <p style="font-weight:700;color:#1F4E79;margin:0 0 8px;">📋 Các bước tiếp theo:</p>
+      <ol style="margin:0;padding-left:20px;font-size:14px;color:#555;line-height:1.8;">
+        <li><strong>Tư vấn viên sẽ gọi</strong> trong vài phút để giải thích chi tiết kết quả</li>
+        <li>Nhận <strong>Báo cáo PDF đầy đủ</strong> qua Zalo trong 24 giờ</li>
+        <li>Đặt lịch <strong>tư vấn 1:1 miễn phí</strong> (15 phút) để chọn lộ trình phù hợp</li>
+        <li>Giữ chỗ Lion Camp + nhận <strong>Học bổng Early Bird</strong></li>
+      </ol>
+    </div>
+
+    <div style="text-align:center;padding-top:16px;border-top:1px solid #eee;">
+      <p style="margin:0 0 8px;font-size:13px;color:#999;">Xem lại kết quả đánh giá:</p>
+      <a href="${reportUrl}" style="color:#1a1a5e;font-size:13px;">${reportUrl}</a>
+    </div>
+
+    <div style="text-align:center;margin-top:16px;">
+      <p style="color:#999;font-size:12px;">
+        Lion Camp 2026 — Trường Việt Anh<br>
+        Hotline/Zalo: 0916 961 409
+      </p>
+    </div>
+  </div>
+</div>`.trim();
+
+  await fetch('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      personalizations: [{
+        to: [{ email: data.email, name: data.fullName }],
+      }],
+      from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+      subject,
+      content: [{ type: 'text/html', value: body }],
     }),
   });
 }

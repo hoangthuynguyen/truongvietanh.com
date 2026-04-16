@@ -336,8 +336,8 @@ async function handleLeadSubmission(request, env) {
       if (data.quizScore > 0) {
         promises.push(sendQuizResultEmail(data, env, contactId, ghlApiKey).catch(() => {}));
       }
-      // Trai-he sales page leads (no quiz score): send consultation confirmation email
-      else if ((data.source || '').includes('trai-he') && data.email) {
+      // Trai-he sales page + VSL leads (no quiz score): send consultation confirmation email
+      else if ((data.source || '').match(/trai-he|vsl-/) && data.email) {
         promises.push(sendTraiHeConsultEmail(data, env, contactId, ghlApiKey).catch(() => {}));
       }
       // Create opportunity for ALL trai-he leads (quiz or sales page)
@@ -393,6 +393,16 @@ const WORKFLOW_MAP = {
   'trai-he-thpt-binh-tan':      '698086d0-d38c-4b45-9a52-81cb3e3962ac',
   // Main Trại hè workflow (fallback prefix match)
   'trai-he':                    '023f00e9-d100-40d8-a8dc-2bd575ecb6c4',
+  // VSL variants — route to same trai-he workflow
+  'vsl-tieu-hoc-go-vap':        '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl-tieu-hoc-binh-tan':      '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl-tieu-hoc-can-giuoc':     '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl-tieu-hoc-rach-gia':      '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl-thcs-go-vap':            '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl-thcs-binh-tan':          '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl-thpt-go-vap':            '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl-thpt-binh-tan':          '698086d0-d38c-4b45-9a52-81cb3e3962ac',
+  'vsl':                        '023f00e9-d100-40d8-a8dc-2bd575ecb6c4',
   // WF9: Alumni & Referral
   'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
@@ -670,7 +680,8 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
   const loc = deriveLocation(data.funnelCode);
   const campLvl = deriveCampLevel(data.funnelCode);
   const reportUrl = getQuizReportUrl(data);
-  const firstName = (data.fullName || '').trim().split(/\s+/).pop() || 'Ba/Mẹ';
+  const nameParts = (data.fullName || '').trim().split(/\s+/).filter(w => !/^\d+$/.test(w));
+  const firstName = nameParts.length ? nameParts[nameParts.length - 1] : 'Ba/Mẹ';
 
   // Color based on score (0-100 scale)
   const color = score >= 75 ? '#16A34A' : score >= 50 ? '#F59E0B' : '#EF4444';
@@ -771,7 +782,8 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
   const loc = deriveLocation(data.source) || '';
   const campLvl = deriveCampLevel(data.source) || '';
-  const firstName = (data.fullName || '').trim().split(/\s+/).pop() || 'Ba/Mẹ';
+  const nameParts = (data.fullName || '').trim().split(/\s+/).filter(w => !/^\d+$/.test(w));
+  const firstName = nameParts.length ? nameParts[nameParts.length - 1] : 'Ba/Mẹ';
   const childName = data.childName || 'bé';
 
   const subject = `✅ Đã nhận đăng ký tư vấn Trại hè Lion Camp ${loc} — Liên hệ trong 24h`;

@@ -269,7 +269,42 @@ async function handleLeadSubmission(request, env) {
         });
 
         const ghlData = await ghlRes.json();
-        results.ghl = { status: ghlRes.status, contactId: ghlData?.contact?.id || null };
+        const contactId = ghlData?.contact?.id || null;
+        results.ghl = { status: ghlRes.status, contactId };
+
+        // === Create Opportunity in Pipeline "Tuyển Sinh 2026" ===
+        if (contactId && (data.source || '').includes('trai-he')) {
+          try {
+            const PIPELINE_ID = 'wBGA6IWGRd14sCXrasTp';
+            const NEW_LEAD_STAGE = '622d8a0e-c396-422b-a62c-f984652cdaa4';
+            const QUIZ_STAGE = 'f9ae4eae-eda0-41cc-beea-93035932651c';
+
+            const stageId = isQuizLead(data) ? QUIZ_STAGE : NEW_LEAD_STAGE;
+            const oppName = `Trại hè ${deriveCampLevel(data.source) || ''} ${deriveLocation(data.source) || ''} — ${data.fullName || data.phone}`.trim();
+
+            const oppRes = await fetch('https://services.leadconnectorhq.com/opportunities/', {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${ghlApiKey}`,
+                'Version': '2021-07-28',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                locationId: GHL_LOCATION_ID,
+                pipelineId: PIPELINE_ID,
+                pipelineStageId: stageId,
+                contactId,
+                name: oppName,
+                status: 'open',
+                monetaryValue: 19998000,
+              }),
+            });
+            const oppData = await oppRes.json();
+            results.ghl.opportunityId = oppData?.opportunity?.id || null;
+          } catch (oppErr) {
+            results.ghl.opportunityError = oppErr.message;
+          }
+        }
       } catch (err) {
         results.ghl = { error: err.message };
       }

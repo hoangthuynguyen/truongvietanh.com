@@ -1630,6 +1630,49 @@ body.menu-open {
 .gi-testimonial:nth-child(6) cite::before { content: 'PH'; }
 .gi-testimonial:nth-child(7) cite::before { content: 'VA'; }
 
+/* Block Quote with video thumbnail */
+.gi-testimonial--video {
+  display: flex; align-items: flex-start; gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+}
+.gi-testimonial--video::before { display: none; }
+.gi-testimonial__thumb {
+  flex-shrink: 0; position: relative; border-radius: 8px;
+  overflow: hidden; display: block; width: 160px; text-decoration: none;
+}
+.gi-testimonial__thumb img {
+  width: 160px; height: 90px; object-fit: cover; display: block;
+  border-radius: 8px; transition: transform 0.3s;
+}
+.gi-testimonial__thumb:hover img { transform: scale(1.04); }
+.gi-testimonial__play {
+  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+  background: rgba(0,0,0,0.32); border-radius: 8px;
+  transition: background 0.2s;
+}
+.gi-testimonial__thumb:hover .gi-testimonial__play { background: rgba(212,168,67,0.55); }
+.gi-testimonial__play svg { filter: drop-shadow(0 1px 4px rgba(0,0,0,0.5)); }
+.gi-testimonial__content { flex: 1; min-width: 0; }
+.gi-testimonial--video .gi-testimonial__content p {
+  font-size: 0.97rem; color: #3b4963; font-style: italic;
+  line-height: 1.65; margin-bottom: 0.7rem; padding-left: 0;
+}
+.gi-testimonial--video cite {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.82rem; color: #64748b; font-style: normal; font-weight: 600;
+}
+.gi-testimonial--video cite::before { display: none; }
+.gi-testimonial--video .cite-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: linear-gradient(135deg, #D4A843, #b57c11);
+  color: #fff; font-size: 0.68rem; font-weight: 700;
+}
+@media (max-width: 500px) {
+  .gi-testimonial--video { flex-direction: column; gap: 0.75rem; }
+  .gi-testimonial__thumb, .gi-testimonial__thumb img { width: 100%; height: 180px; }
+}
+
 /* FAQ */
 .gi-faq-list { display: grid; gap: 0.6rem; max-width: 780px; margin: 0 auto; }
 .gi-faq-item {

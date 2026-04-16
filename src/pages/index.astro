@@ -138,45 +138,51 @@ const campusLinks = [
 ];
 
 
-// Testimonials — from Google Sheet data, with individual photos
+// Testimonials — nội dung từ thư viện testimonial, ảnh từ thumbnail YouTube
 const testimonials = cmsTestimonials.length > 0
-  ? cmsTestimonials.map((t: any) => ({ name: t.name, role: t.role, quote: t.quote, img: t.image || '' }))
+  ? cmsTestimonials.map((t: any) => ({ name: t.name, role: t.role, quote: t.quote, img: t.image || '', videoUrl: t.video_url || '' }))
   : [
     {
-      name: 'Chị Mai',
-      role: 'Phụ huynh bé Phúc, Tiểu học lớp 3',
-      quote: 'Những gì mà lúc đầu thầy cô tư vấn cho chị thì sau 2 năm, chị thấy là đều có trong chương trình học của con hết.',
-      img: 'https://media.truongvietanh.com/images/phu-huynh-mai.webp',
+      name: 'Chị Linh',
+      role: 'Phụ huynh mầm non – bé 2 tuổi',
+      quote: 'Từ em bé bướng bỉnh, con đã biết tự ăn và vào nề nếp. Con thay đổi rõ rệt chỉ sau vài tháng đầu.',
+      img: 'https://img.youtube.com/vi/Bt1yyMil3Tg/hqdefault.jpg',
+      videoUrl: 'https://www.youtube.com/watch?v=Bt1yyMil3Tg',
     },
     {
-      name: 'Phụ huynh Quốc Long',
-      role: 'Phụ huynh có nhiều con theo học',
-      quote: 'Bé có những sở thích như coi điện thoại hay chơi game nhưng bé tự mình điều tiết nó, không có quá sa đà vào nó.',
-      img: 'https://media.truongvietanh.com/images/phu-huynh-quoclong.webp',
+      name: 'Anh Công',
+      role: 'Phụ huynh lớp 1 – chuyển từ mầm non',
+      quote: 'Con luôn háo hức và mong chờ được đến trường mỗi ngày. Đi học vui vẻ, không áp lực.',
+      img: 'https://img.youtube.com/vi/b9eNSFUDd98/hqdefault.jpg',
+      videoUrl: 'https://www.youtube.com/watch?v=b9eNSFUDd98',
     },
     {
-      name: 'Chị Kim Trinh',
-      role: 'Phụ huynh Tiểu học',
-      quote: 'Cô giáo cũng đồng cảm, cũng chia sẻ và giúp cho mình làm sao để mình có thể gần con hơn.',
-      img: 'https://media.truongvietanh.com/images/phu-huynh-kimtrinh.webp',
+      name: 'Chị Nga',
+      role: 'Phụ huynh lớp 3 – cơ sở Gò Vấp',
+      quote: 'Sau 2 năm, con thay đổi rõ rệt cả về học tập và kỹ năng — đúng như thầy cô tư vấn từ đầu.',
+      img: 'https://img.youtube.com/vi/3jwB87z-Keg/hqdefault.jpg',
+      videoUrl: 'https://www.youtube.com/watch?v=3jwB87z-Keg',
     },
     {
-      name: 'Chị Hoàng Diễm',
-      role: 'Phụ huynh có 2 con theo học',
-      quote: 'Trường Việt Anh luôn luôn cải tiến chương trình học và cập nhật kiến thức.',
-      img: 'https://media.truongvietanh.com/images/phu-huynh-hoangdiem.webp',
+      name: 'Chị Quỳnh',
+      role: 'Phụ huynh lớp 7 – chuyển trường mới',
+      quote: 'Chỉ sau hơn 1 tháng, con đã hòa nhập rất tốt với bạn bè và học tập vui vẻ mỗi ngày.',
+      img: 'https://img.youtube.com/vi/cZ6S_3MG1Vo/hqdefault.jpg',
+      videoUrl: 'https://www.youtube.com/watch?v=cZ6S_3MG1Vo',
     },
     {
-      name: 'Chị Anh Đào',
-      role: 'Nhà giáo dục & Phụ huynh',
-      quote: 'Phụ huynh phải là người hiểu con mình nhất, hiểu được cái điểm mạnh cũng như điểm yếu của con.',
-      img: 'https://media.truongvietanh.com/images/phu-huynh-anhdao.webp',
+      name: 'Anh Lê Trung Thành',
+      role: 'Phụ huynh THPT – lựa chọn môi trường',
+      quote: 'Gia đình chọn trường vì môi trường giúp con phát triển toàn diện — từ kiến thức đến thái độ.',
+      img: 'https://img.youtube.com/vi/5T8j_k5VCW4/hqdefault.jpg',
+      videoUrl: 'https://www.youtube.com/watch?v=5T8j_k5VCW4',
     },
     {
-      name: 'Chị Nguyễn Tuyết Trinh',
-      role: 'Phụ huynh THPT',
-      quote: 'Rất an tâm, nhiệt huyết và tin tưởng vào sự tận tụy của thầy cô.',
-      img: 'https://media.truongvietanh.com/images/phu-huynh-tuyettrinh.webp',
+      name: 'Bạn Chu Anh Tài',
+      role: 'Học sinh lớp 12 – Chủ tịch Hội học sinh',
+      quote: 'Từ một người khép kín, em đã khám phá khả năng lãnh đạo và đảm nhận Chủ tịch Hội học sinh.',
+      img: 'https://img.youtube.com/vi/NAYd7sM0d-8/hqdefault.jpg',
+      videoUrl: 'https://www.youtube.com/watch?v=NAYd7sM0d-8',
     },
   ];
 
@@ -351,7 +357,7 @@ const newsCards = [
                   </details>
                 </div>
               </div>
-              <img src="https://media.truongvietanh.com/images/hoc-sinh-stem-01.webp" alt="Học sinh Việt Anh trong giờ STEM" loading="lazy" width="500" height="340" class="why-block__img" />
+              <img src="https://media.truongvietanh.com/images/du-an-03.webp" alt="Học sinh tiểu học Việt Anh làm dự án thực tế" loading="lazy" width="500" height="340" class="why-block__img" />
             </article>
 
             <!-- Block 2 -->
@@ -366,7 +372,7 @@ const newsCards = [
                   </details>
                 </div>
               </div>
-              <img src="https://media.truongvietanh.com/images/tieng-anh-02.webp" alt="Học sinh Việt Anh học tiếng Anh" loading="lazy" width="500" height="340" class="why-block__img" />
+              <img src="https://media.truongvietanh.com/images/thuyet-trinh-09.webp" alt="Học sinh THCS/THPT Việt Anh thuyết trình bằng tiếng Anh" loading="lazy" width="500" height="340" class="why-block__img" />
             </article>
 
             <!-- Block 3 -->
@@ -381,7 +387,7 @@ const newsCards = [
                   </details>
                 </div>
               </div>
-              <img src="https://media.truongvietanh.com/images/lanh-dao-03.webp" alt="Học sinh Việt Anh phát triển kỹ năng lãnh đạo" loading="lazy" width="500" height="340" class="why-block__img" />
+              <img src="https://media.truongvietanh.com/images/vui-ve-06.webp" alt="Học sinh mầm non Việt Anh vui vẻ, tự lập từ sớm" loading="lazy" width="500" height="340" class="why-block__img" />
             </article>
           </div>
         </section>
@@ -414,15 +420,22 @@ const newsCards = [
         <!-- DANH GIA CUA PHU HUYNH -->
         <section class="section-block anchor-section" id="danh-gia">
           <div class="section-heading">
-            <p class="section-eyebrow">Đánh giá của phụ huynh</p>
-            <h2>Lời chia sẻ từ học sinh và phụ huynh là một trong những bằng chứng thuyết phục nhất.</h2>
+            <p class="section-eyebrow">Đánh giá của phụ huynh &amp; học sinh</p>
+            <h2>Phụ huynh và học sinh nói gì về Trường Việt Anh?</h2>
           </div>
 
           <div class="testimonial-grid">
             {testimonials.map((item) => (
               <article class="testimonial-card">
                 <div class="testimonial-card__avatar">
-                  <img src={item.img || 'https://media.truongvietanh.com/images/phu-huynh-04.webp'} alt={item.name} loading="lazy" width="80" height="80" />
+                  {item.videoUrl ? (
+                    <a href={item.videoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Xem video – ${item.name}`} class="testimonial-card__avatar-link">
+                      <img src={item.img || 'https://media.truongvietanh.com/images/phu-huynh-04.webp'} alt={item.name} loading="lazy" width="72" height="72" />
+                      <span class="testimonial-card__play" aria-hidden="true">▶</span>
+                    </a>
+                  ) : (
+                    <img src={item.img || 'https://media.truongvietanh.com/images/phu-huynh-04.webp'} alt={item.name} loading="lazy" width="72" height="72" />
+                  )}
                 </div>
                 <blockquote class="testimonial-card__quote">
                   <p>&ldquo;{item.quote}&rdquo;</p>
@@ -907,6 +920,32 @@ const newsCards = [
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #D4A843;
+  }
+
+  .testimonial-card__avatar-link {
+    position: relative;
+    display: inline-block;
+    border-radius: 50%;
+    text-decoration: none;
+  }
+
+  .testimonial-card__avatar-link img {
+    display: block;
+    transition: opacity 0.2s;
+  }
+
+  .testimonial-card__avatar-link:hover img { opacity: 0.85; }
+
+  .testimonial-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.6);
+    pointer-events: none;
   }
 
   .testimonial-card__quote {

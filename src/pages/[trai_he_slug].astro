@@ -63,8 +63,9 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
   <!-- ===== HERO — compact, CTA above fold ===== -->
   <section slot="hero">
     {page.hero_badge && <span class="squeeze-hero__badge">{page.hero_badge}</span>}
-    <h1 class="squeeze-hero__heading">{page.hero_headline}</h1>
-    <p class="squeeze-hero__sub">{page.hero_subheading}</p>
+    <!-- Dynamic headline for warm traffic — overridden by JS from UTM -->
+    <h1 class="squeeze-hero__heading" id="heroHeadline">{page.hero_headline}</h1>
+    <p class="squeeze-hero__sub" id="heroSub">{page.hero_subheading}</p>
 
     <!-- CTA group — must be above fold -->
     <div class="hero-cta-group">
@@ -417,7 +418,24 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
       if (badge) badge.classList.add('show');
     }, 3000);
 
-    // === 7. GTM scroll-to-form tracking ===
+    // === 7. Warm traffic dynamic headline (from UTM) ===
+    var params = new URLSearchParams(window.location.search);
+    var src = params.get('utm_source') || params.get('source') || '';
+    var childName = params.get('ten_be') || params.get('child') || '';
+    var hlEl = document.getElementById('heroHeadline');
+    var subEl = document.getElementById('heroSub');
+    if (hlEl && src) {
+      if (src === 'quiz' && childName) {
+        hlEl.textContent = 'Dựa trên kết quả đánh giá của bé ' + childName + ' — đây là lộ trình Lion Camp phù hợp nhất';
+      } else if (src === 'vsl') {
+        hlEl.textContent = 'Ba/Mẹ đã xem video — giờ là lúc giữ chỗ cho con trước khi hết suất';
+        if (subEl) subEl.textContent = 'Chỉ cần 500K giữ chỗ, hoàn 100% nếu đổi ý. Tư vấn viên liên hệ trong 24h.';
+      } else if (src === 'remarketing' || src === 'google') {
+        if (subEl) subEl.textContent = 'Ba/Mẹ đã quan tâm Lion Camp — đăng ký ngay để nhận học bổng Early Bird trước khi hết suất.';
+      }
+    }
+
+    // === 8. GTM scroll-to-form tracking ===
     var formSection = document.getElementById('form-section');
     if (formSection && 'IntersectionObserver' in window) {
       var fio = new IntersectionObserver(function (entries) {

@@ -64,6 +64,17 @@ export default {
       return handleLeadSubmission(request, env);
     }
 
+    // Handle report page redirect (short URL for Zalo/Email)
+    if (request.method === 'GET' && url.pathname === '/api/report') {
+      const params = url.searchParams;
+      const reportUrl = new URL('/report/', url.origin);
+      // Pass through all params
+      for (const [k, v] of params) {
+        reportUrl.searchParams.set(k, v);
+      }
+      return Response.redirect(reportUrl.toString(), 302);
+    }
+
     // Everything else → static assets with cache control
     const response = await env.ASSETS.fetch(request);
     const contentType = response.headers.get('content-type') || '';
@@ -108,6 +119,7 @@ function normalizeFormData(data) {
     quizScore: parseInt(data.quiz_score, 10) || 0,
     quizLevel: data.quiz_level || '',
     funnelCode: data.funnel_code || '',
+    quizAnswers: Array.isArray(data.quiz_answers) ? data.quiz_answers : [],
   };
 }
 
@@ -148,10 +160,16 @@ function getQuizReportUrl(data) {
   const params = new URLSearchParams({
     name: data.fullName,
     score: data.quizScore.toString(),
-    level: data.schoolLevel,
+    level: data.quizLevel || getQuizResultLabel(data.quizScore),
+    school: data.schoolLevel,
     loc: deriveLocation(data.funnelCode),
+    funnel: data.funnelCode,
   });
-  return `https://hoc.truongvietanh.com/${data.funnelCode}/cam-on?${params.toString()}`;
+  // Add per-question scores if available
+  if (data.quizAnswers && Array.isArray(data.quizAnswers) && data.quizAnswers.length > 0) {
+    data.quizAnswers.forEach((a, i) => params.set(`q${i+1}`, a.toString()));
+  }
+  return `https://hoc.truongvietanh.com/report/?${params.toString()}`;
 }
 
 async function handleLeadSubmission(request, env) {
@@ -176,6 +194,16 @@ async function handleLeadSubmission(request, env) {
         if (data.schoolLevel) tags.push(data.schoolLevel);
         if (data.grade) tags.push(data.grade);
         if (data.source) tags.push(data.source);
+
+        // Warm sales page tags
+        if (data.source && data.source.includes('trai-he-') && !isQuizLead(data)) {
+          tags.push('warm_sales_page');
+          tags.push('lead_nong');
+          const campLvl = deriveCampLevel(data.source);
+          if (campLvl) tags.push(`trai-he-${campLvl.toLowerCase()}`);
+          const loc = deriveLocation(data.source);
+          if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);
+        }
 
         // Quiz-specific tags
         if (isQuizLead(data)) {
@@ -203,14 +231,31 @@ async function handleLeadSubmission(request, env) {
           tags,
         };
 
-        // Add quiz custom fields if it's a quiz lead (use GHL field IDs)
+        // Custom fields for all trai-he leads
+        ghlBody.customFields = ghlBody.customFields || [];
+
+        // Location + level for all camp leads
+        const loc = deriveLocation(data.funnelCode || data.source);
+        const campLvl = deriveCampLevel(data.funnelCode || data.source);
+        if (loc) ghlBody.customFields.push({ id: 'z1ephcXkEvcNWtyBjiWp', field_value: loc });
+        if (campLvl) ghlBody.customFields.push({ id: 'wDAaUCcIklmwhODgCeC6', field_value: campLvl });
+
+        // Nguon traffic
+        if (data.source) ghlBody.customFields.push({ id: 'vkzg6XE4djR10VyGb2H8', field_value: data.source });
+
+        // Child name / grade
+        if (data.childName) ghlBody.customFields.push({ id: 'OcylouF8wHIZPJkoMpj6', field_value: data.childName });
+        if (data.grade) ghlBody.customFields.push({ id: 'cvoJJ9T82wbLJY6Pr70p', field_value: data.grade });
+
+        // Trang thai
+        ghlBody.customFields.push({ id: '3U5RWUZqGGoZP0PaMzNS', field_value: 'New_Lead' });
+
+        // Quiz-specific fields
         if (isQuizLead(data)) {
-          ghlBody.customFields = [
+          ghlBody.customFields.push(
             { id: 'EoYde4vUysFckhpYeu1V', field_value: data.quizScore.toString() },
-            { id: '4pJj3NJZhiaiCAvI3dhd', field_value: data.quizLevel || getQuizResultLabel(data.quizScore) },
-            { id: 'z1ephcXkEvcNWtyBjiWp', field_value: deriveLocation(data.funnelCode) },
-            { id: 'wDAaUCcIklmwhODgCeC6', field_value: deriveCampLevel(data.funnelCode) },
-          ];
+            { id: '4pJj3NJZhiaiCAvI3dhd', field_value: data.quizLevel || getQuizResultLabel(data.quizScore) }
+          );
         }
 
         const ghlRes = await fetch('https://services.leadconnectorhq.com/contacts/upsert', {

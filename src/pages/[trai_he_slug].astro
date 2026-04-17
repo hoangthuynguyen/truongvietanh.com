@@ -62,7 +62,11 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
 >
   <!-- ===== HERO — compact, CTA above fold ===== -->
   <section slot="hero">
-    {page.hero_badge && <span class="squeeze-hero__badge">{page.hero_badge}</span>}
+    {page.hero_badge && (
+      <span class="squeeze-hero__badge">
+        {/^trại\s*hè/i.test(page.hero_badge) ? page.hero_badge : `Trại hè ${page.hero_badge}`}
+      </span>
+    )}
     <!-- Dynamic headline for warm traffic — overridden by JS from UTM -->
     <h1 class="squeeze-hero__heading" id="heroHeadline">{page.hero_headline}</h1>
     <p class="squeeze-hero__sub" id="heroSub">{page.hero_subheading}</p>
@@ -85,7 +89,12 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
   </section>
 
   <!-- ===== USP GRID with scroll animation ===== -->
-  <section slot="usp"><USPGrid title={page.usp_title} items={page.usp_items} /></section>
+  <section slot="usp"><USPGrid
+    title={/lion\s*camp/i.test(page.usp_title) && !/trại\s*hè/i.test(page.usp_title)
+      ? page.usp_title.replace(/lion\s*camp/i, 'Trại hè Lion Camp')
+      : page.usp_title}
+    items={page.usp_items}
+  /></section>
 
   <!-- ===== TRUST METRICS ===== -->
   <section slot="trust"><TrustMetrics title={page.metrics_title} metrics={page.metrics} /></section>
@@ -294,24 +303,7 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
   <span class="floating-zalo__badge" id="zaloBadge">1</span>
 </a>
 
-<!-- ===== EXIT-INTENT POPUP ===== -->
-<div class="exit-popup" id="exitPopup" hidden>
-  <div class="exit-popup__overlay" id="exitOverlay"></div>
-  <div class="exit-popup__card">
-    <button class="exit-popup__close" id="exitClose" aria-label="Đóng">✕</button>
-    <div class="exit-popup__icon">🎁</div>
-    <h3 class="exit-popup__title">Khoan đã, Ba/Mẹ ơi!</h3>
-    <p class="exit-popup__text">
-      Ba/Mẹ suýt bỏ lỡ <strong>Học bổng Early Bird đến 30%</strong> cho con tại Trại Hè Lion Camp {page.location}. Chỉ cần 3 phút làm bài đánh giá, Ba/Mẹ sẽ nhận ngay báo cáo kỹ năng + lộ trình hè phù hợp.
-    </p>
-    <a href="#form-section" class="exit-popup__cta exit-popup__cta--primary" id="exitCtaPrimary">
-      🎯 Làm bài đánh giá ngay (3 phút)
-    </a>
-    <a href={zaloUrl} target="_blank" rel="noopener noreferrer" class="exit-popup__cta exit-popup__cta--zalo">
-      💬 Tôi muốn hỏi qua Zalo trước
-    </a>
-  </div>
-</div>
+<!-- Exit-intent popup removed per request: trai-he pages do not show popup -->
 
 <!-- ===== SCRIPTS ===== -->
 <script is:inline define:vars={{ formIdSel: `#${formIdWithFunnel}`, camOnUrl }}>
@@ -371,36 +363,6 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
     } else {
       revealEls.forEach(function (el) { el.classList.add('revealed'); });
     }
-
-    // === 4. Exit-intent popup ===
-    var popup = document.getElementById('exitPopup');
-    var overlay = document.getElementById('exitOverlay');
-    var closeBtn = document.getElementById('exitClose');
-    var ctaPrimary = document.getElementById('exitCtaPrimary');
-    var exitShown = false;
-    function showExitPopup() {
-      if (exitShown || !popup) return;
-      exitShown = true;
-      popup.hidden = false;
-      sessionStorage.setItem('camp_exit_shown', '1');
-      if (window.dataLayer) window.dataLayer.push({ event: 'exit_intent_shown' });
-    }
-    function hideExitPopup() {
-      if (popup) popup.hidden = true;
-    }
-    if (!sessionStorage.getItem('camp_exit_shown')) {
-      // Desktop: mouse leaves viewport top
-      document.addEventListener('mouseout', function (e) {
-        if (e.clientY < 5 && !exitShown) showExitPopup();
-      });
-      // Mobile: after 45s of engagement
-      setTimeout(function () {
-        if (!exitShown && window.innerWidth < 768) showExitPopup();
-      }, 45000);
-    }
-    if (overlay) overlay.addEventListener('click', hideExitPopup);
-    if (closeBtn) closeBtn.addEventListener('click', hideExitPopup);
-    if (ctaPrimary) ctaPrimary.addEventListener('click', hideExitPopup);
 
     // === 5. Live counter (simulated social proof) ===
     function randomBetween(a, b) { return Math.floor(Math.random() * (b - a + 1)) + a; }
@@ -534,7 +496,7 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
   }
   .camp-card__icon { font-size: 1.5rem; }
   .camp-card h3 { font-family: Montserrat, sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: .65rem; color: #1a1a5e; }
-  .camp-card p { font-size: .94rem; line-height: 1.65; color: #555; margin: 0; }
+  .camp-card p { font-size: 1rem; line-height: 1.65; color: #555; margin: 0; }
 
   /* === Highlighted Early Bird card === */
   .camp-card--highlight {
@@ -693,7 +655,7 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
   .camp-transform__col--before .camp-transform__label { color: #991B1B; }
   .camp-transform__col--after .camp-transform__label { color: #166534; }
   .camp-transform__col ul { list-style: none; padding: 0; margin: 0; }
-  .camp-transform__col li { padding: .45rem 0; font-size: .9rem; line-height: 1.5; color: #374151; border-bottom: 1px solid rgba(0,0,0,.05); }
+  .camp-transform__col li { padding: .45rem 0; font-size: 1rem; line-height: 1.5; color: #374151; border-bottom: 1px solid rgba(0,0,0,.05); }
   .camp-transform__col li:last-child { border-bottom: none; }
   .camp-transform__col--before li::before { content: '✗ '; color: #EF4444; font-weight: 700; }
   .camp-transform__col--after li::before { content: '✓ '; color: #16A34A; font-weight: 700; }
@@ -709,7 +671,7 @@ const levelLabel = levelLabels[page.school_level] || 'Tiểu Học';
   .camp-compare__row { display: grid; grid-template-columns: 140px 1fr 1fr; border-top: 1px solid #E5E7EB; }
   .camp-compare__row:hover { background: rgba(212,168,67,.04); }
   .camp-compare__criteria { padding: .85rem 1rem; font-weight: 600; font-size: .85rem; color: #1a1a5e; background: #F9FAFB; display: flex; align-items: center; }
-  .camp-compare__cell { padding: .85rem 1rem; font-size: .85rem; line-height: 1.5; color: #555; display: flex; align-items: center; }
+  .camp-compare__cell { padding: .85rem 1rem; font-size: 1rem; line-height: 1.5; color: #555; display: flex; align-items: center; }
   .camp-compare__cell--bad { background: #FFFBFB; }
   .camp-compare__cell--good { background: #F8FFF8; }
 

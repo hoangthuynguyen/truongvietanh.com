@@ -46,7 +46,7 @@ const { title = 'Tại sao chọn Trường Việt Anh?', items } = Astro.props;
   }
   .usp-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(3, 1fr);
     gap: 0.9rem;
     max-width: 1100px;
     margin: 0 auto;
@@ -114,18 +114,21 @@ const { title = 'Tại sao chọn Trường Việt Anh?', items } = Astro.props;
     margin: 0;
   }
 
+  @media (max-width: 900px) {
+    .usp-grid { grid-template-columns: repeat(2, 1fr); }
+  }
   @media (max-width: 768px) {
     .usp-grid-title { margin-bottom: 1.5rem; }
-    .usp-grid { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
-    .usp-item { padding: 1.5rem 1rem; }
+    .usp-grid { gap: 1rem; }
+    .usp-item { padding: 1.25rem 1rem; }
     .usp-icon { width: 56px; height: 56px; font-size: 1.85rem; margin-bottom: 1rem; }
-    .usp-text { font-size: 0.9rem; }
+    .usp-text { font-size: 1rem; }
   }
   @media (max-width: 480px) {
-    .usp-grid { grid-template-columns: 1fr; gap: 1rem; }
-    .usp-item { padding: 1.25rem 1rem; flex-direction: row; gap: 1rem; text-align: left; }
-    .usp-icon { width: 50px; height: 50px; font-size: 1.6rem; margin-bottom: 0; flex-shrink: 0; }
-    .usp-text { font-size: 0.9rem; }
+    .usp-grid { grid-template-columns: 1fr; gap: 0.85rem; }
+    .usp-item { padding: 1.1rem 1rem; flex-direction: row; gap: 1rem; text-align: left; }
+    .usp-icon { width: 48px; height: 48px; font-size: 1.6rem; margin-bottom: 0; flex-shrink: 0; }
+    .usp-text { font-size: 1rem; }
     .usp-item::after { display: none; }
   }
 </style>

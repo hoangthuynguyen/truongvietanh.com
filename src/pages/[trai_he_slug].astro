@@ -299,6 +299,18 @@ function addTraiHe(text: string | undefined | null): string {
         />
       </Fragment>
     )}
+    <!-- Seats remaining progress bar -->
+    <div class="seats-bar" id="seatsBar">
+      <div class="seats-bar__header">
+        <span>🎫 Suất ưu đãi Early Bird còn lại</span>
+        <span><strong id="seatsLeft">8</strong>/15 suất</span>
+      </div>
+      <div class="seats-bar__track" role="progressbar" aria-valuenow="53" aria-valuemin="0" aria-valuemax="100">
+        <div class="seats-bar__fill" id="seatsBarFill"></div>
+      </div>
+      <p class="seats-bar__hint">Lớp chỉ 15 học sinh — giáo viên theo sát từng em · Hết là đóng đăng ký</p>
+    </div>
+
     <!-- Live signup counter -->
     <div class="form-live-counter">
       <span class="form-live-counter__dot"></span>
@@ -317,6 +329,15 @@ function addTraiHe(text: string | undefined | null): string {
 </a>
 
 <!-- Exit-intent popup removed per request: trai-he pages do not show popup -->
+
+<!-- ===== SOCIAL PROOF NOTIFICATION TOAST ===== -->
+<div class="sq-snotif" id="sqSnotif" aria-live="polite" aria-atomic="true">
+  <div class="sq-snotif__avatar" id="sqSnA">👩</div>
+  <div class="sq-snotif__body">
+    <b id="sqSnN">Chị Nguyễn T.</b><span id="sqSnAc"> vừa đăng ký tư vấn</span>
+    <span class="sq-snotif__time" id="sqSnT">2 phút trước</span>
+  </div>
+</div>
 
 <!-- ===== SCRIPTS ===== -->
 <script is:inline define:vars={{ formIdSel: `#${formIdWithFunnel}`, camOnUrl }}>
@@ -352,10 +373,10 @@ function addTraiHe(text: string | undefined | null): string {
       var m = Math.floor((diff % 3600) / 60);
       var s = diff % 60;
       var str = (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
-      var els = document.querySelectorAll('#heroTimer, #urgencyTimer');
+      var els = document.querySelectorAll('#heroTimer, #urgencyTimer, #urgencyLayoutTimer');
       els.forEach(function (el) { el.textContent = str; });
       if (diff <= 0) {
-        els.forEach(function (el) { el.textContent = 'Đã kết thúc — liên hệ ngay!'; });
+        els.forEach(function (el) { el.textContent = 'Đã kết thúc!'; });
       }
     }
     updateCountdown();
@@ -443,6 +464,48 @@ function addTraiHe(text: string | undefined | null): string {
       }, { threshold: 0.3 });
       fio.observe(formSection);
     }
+
+    // === 9. Seats remaining progress bar ===
+    (function () {
+      var SEATS_KEY = 'camp_seats_' + window.location.pathname;
+      var total = 15;
+      // Seats count decreases by 1 every 8 min of real time (simulated scarcity)
+      var baseSeats = parseInt(localStorage.getItem(SEATS_KEY) || '0', 10);
+      if (!baseSeats) {
+        baseSeats = 6 + Math.floor(Math.random() * 4); // 6–9 seats left on first visit
+        localStorage.setItem(SEATS_KEY, baseSeats.toString());
+      }
+      var seatsEl = document.getElementById('seatsLeft');
+      var fillEl = document.getElementById('seatsBarFill');
+      if (seatsEl) seatsEl.textContent = baseSeats.toString();
+      if (fillEl) {
+        var pct = Math.round(((total - baseSeats) / total) * 100);
+        fillEl.style.width = pct + '%';
+      }
+    })();
+
+    // === 10. Sliding social proof notification ===
+    (function () {
+      var names = ['Chị Nguyễn T.', 'Anh Trần V.', 'Chị Lê H.', 'Anh Phạm D.', 'Chị Hoàng M.', 'Anh Vũ Q.', 'Chị Đặng A.'];
+      var actions = [' vừa đăng ký tư vấn', ' vừa nhận học bổng Early Bird', ' vừa đăng ký tư vấn 1:1', ' vừa giữ suất cho bé'];
+      var times = ['vừa xong', '1p trước', '2p trước', '4p trước', '5p trước'];
+      var avatars = ['👩', '👨', '👩‍🦰', '👨‍🦱', '👩‍💼', '👨‍🦳'];
+      var el = document.getElementById('sqSnotif');
+      if (!el) return;
+      function r(a) { return a[Math.floor(Math.random() * a.length)]; }
+      function show() {
+        var n = document.getElementById('sqSnN'), ac = document.getElementById('sqSnAc'),
+            t = document.getElementById('sqSnT'), av = document.getElementById('sqSnA');
+        if (n) n.textContent = r(names);
+        if (ac) ac.textContent = r(actions);
+        if (t) t.textContent = r(times);
+        if (av) av.textContent = r(avatars);
+        el.classList.add('show');
+        setTimeout(function () { el.classList.remove('show'); }, 4500);
+      }
+      setTimeout(show, 8000);
+      setInterval(show, 22000 + Math.random() * 10000);
+    })();
   })();
 </script>
 
@@ -603,7 +666,7 @@ function addTraiHe(text: string | undefined | null): string {
   /* ===== FORM LIVE COUNTER ===== */
   .form-live-counter {
     display: inline-flex; align-items: center; gap: .5rem;
-    margin-top: 1rem; font-size: .82rem; color: #666; padding: .4rem .85rem;
+    margin-top: .75rem; font-size: .82rem; color: #666; padding: .4rem .85rem;
     background: rgba(0,0,0,.03); border-radius: 50px;
   }
   .form-live-counter__dot {
@@ -611,6 +674,56 @@ function addTraiHe(text: string | undefined | null): string {
     animation: livePulse 2s ease-in-out infinite;
   }
   @keyframes livePulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+  /* ===== SEATS REMAINING BAR ===== */
+  .seats-bar {
+    background: #fff; border: 1px solid #E5E7EB; border-radius: 14px;
+    padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
+    box-shadow: 0 2px 8px rgba(26,26,94,.05);
+  }
+  .seats-bar__header {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .9rem; font-weight: 600; color: #1a1a5e; margin-bottom: .65rem;
+  }
+  .seats-bar__header strong { color: #D96A1F; font-size: 1.05rem; }
+  .seats-bar__track {
+    height: 10px; background: #F3F4F6; border-radius: 10px; overflow: hidden;
+  }
+  .seats-bar__fill {
+    height: 100%; border-radius: 10px;
+    background: linear-gradient(90deg, #D4A843, #D96A1F);
+    transition: width 1s ease;
+    animation: fillPulse 3s ease-in-out infinite;
+  }
+  @keyframes fillPulse { 0%,100% { opacity: 1; } 50% { opacity: .85; } }
+  .seats-bar__hint {
+    font-size: .78rem; color: #888; margin-top: .55rem; line-height: 1.5;
+  }
+
+  /* ===== SOCIAL PROOF NOTIFICATION TOAST ===== */
+  .sq-snotif {
+    position: fixed; bottom: 90px; left: 14px; z-index: 997;
+    background: #fff; border-radius: 12px; padding: 10px 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.12);
+    display: flex; align-items: center; gap: 10px;
+    max-width: 295px; min-width: 230px;
+    transform: translateX(-115%); transition: transform .4s cubic-bezier(.34,1.56,.64,1);
+    font-size: .82rem; border: 1px solid #F0F0F0; border-left: 3px solid #D4A843;
+  }
+  .sq-snotif.show { transform: translateX(0); }
+  .sq-snotif__avatar {
+    width: 34px; height: 34px; border-radius: 50%;
+    background: rgba(26,26,94,.06); display: flex; align-items: center;
+    justify-content: center; font-size: .9rem; flex-shrink: 0;
+  }
+  .sq-snotif__body { flex: 1; line-height: 1.45; }
+  .sq-snotif__body b { color: #1a1a5e; }
+  .sq-snotif__time {
+    display: block; font-size: .72rem; color: #999; margin-top: 2px;
+  }
+  @media (max-width: 480px) {
+    .sq-snotif { bottom: 85px; max-width: 260px; }
+  }
 
   /* ===== FLOATING ZALO BUTTON ===== */
   .floating-zalo {

@@ -57,10 +57,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 *{box-sizing:border-box;margin:0;padding:0}html{font-size:16px;scroll-behavior:smooth}body{font-family:"Open Sans",-apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Helvetica","Arial",sans-serif;line-height:1.6;color:var(--text-dark);background-color:var(--bg-white)}main{width:100%}
 
 /* ===== HEADER ===== */
-.squeeze-header{position:sticky;top:0;z-index:1000;background-color:var(--nav-primary);color:#fff;padding:.75rem 1rem;box-shadow:0 2px 12px rgba(26,26,94,.25)}
-.squeeze-header__inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem}
-.squeeze-brand{display:flex;align-items:center;gap:.75rem;text-decoration:none;color:#fff;flex:1}.squeeze-brand__img{height:48px;width:auto;object-fit:contain;background:rgba(255,255,255,.08);padding:4px 8px;border-radius:6px}.squeeze-brand__text{font-size:1rem;font-weight:700;letter-spacing:.3px;opacity:1;color:#fff}
-.squeeze-header__actions{display:flex;align-items:center;gap:.5rem}
+.squeeze-header{position:sticky;top:0;z-index:1000;background-color:var(--nav-primary);color:#fff;padding:.6rem 1rem;box-shadow:0 2px 12px rgba(26,26,94,.25)}
+.squeeze-header__inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:.75rem}
+.squeeze-header__left{display:flex;align-items:center;justify-content:flex-start}
+.squeeze-header__right{display:flex;align-items:center;justify-content:flex-end}
+.squeeze-brand{display:flex;align-items:center;justify-content:center;text-decoration:none;color:#fff}
+.squeeze-brand__img{height:72px;width:auto;object-fit:contain;background:rgba(255,255,255,.97);padding:6px 14px;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,.18);display:block}
+.squeeze-brand__text{display:none}
 .squeeze-header-btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.5rem 1rem;border-radius:6px;font-size:.875rem;font-weight:600;text-decoration:none;border:none;cursor:pointer;transition:all .3s ease}
 .squeeze-header-btn--hotline{background-color:var(--nav-accent);color:#fff}.squeeze-header-btn--hotline:hover{background-color:var(--nav-accent-hover)}
 .squeeze-header-btn--zalo{background-color:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.6)}.squeeze-header-btn--zalo:hover{background-color:rgba(255,255,255,.1);border-color:#fff}
@@ -122,8 +125,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .squeeze-footer__copyright{grid-column:1/-1;border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;text-align:center;opacity:.6;font-size:.8rem}
 
 /* ===== RESPONSIVE ===== */
-@media(max-width:768px){.squeeze-header__inner{flex-wrap:wrap}.squeeze-brand__text{display:none}.squeeze-brand__img{height:34px}.squeeze-hero{padding:2.5rem 1rem 2rem}.squeeze-content{padding:2rem 1rem}.squeeze-form-section{padding:2.5rem 1rem}.squeeze-faq{padding:2rem 1rem}.squeeze-mobile-cta{display:block}main{padding-bottom:80px}.squeeze-footer__inner{grid-template-columns:1fr}.squeeze-trust-bar__inner{gap:.75rem;font-size:.78rem}}
-@media(max-width:480px){.squeeze-header-btn{padding:.5rem .75rem;font-size:.75rem}.squeeze-hero{padding:2rem 1rem 1.5rem}.squeeze-trust-bar__item:nth-child(n+3){display:none}.squeeze-urgency__text{font-size:.85rem}}
+@media(max-width:768px){.squeeze-brand__img{height:56px;padding:4px 10px}.squeeze-hero{padding:2.5rem 1rem 2rem}.squeeze-content{padding:2rem 1rem}.squeeze-form-section{padding:2.5rem 1rem}.squeeze-faq{padding:2rem 1rem}.squeeze-mobile-cta{display:block}main{padding-bottom:80px}.squeeze-footer__inner{grid-template-columns:1fr}.squeeze-trust-bar__inner{gap:.75rem;font-size:.78rem}}
+@media(max-width:480px){.squeeze-header-btn{padding:.45rem .6rem;font-size:.72rem}.squeeze-header-btn--hotline .ph-text{display:none}.squeeze-brand__img{height:48px;padding:3px 8px}.squeeze-hero{padding:2rem 1rem 1.5rem}.squeeze-trust-bar__item:nth-child(n+3){display:none}.squeeze-urgency__text{font-size:.85rem}}
 </style>
 </head>
 <body>
@@ -132,11 +135,14 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
 <header class="squeeze-header"><div class="squeeze-header__inner">
-<a href="/" class="squeeze-brand"><img src="/logo-vietanh-header.webp" alt="Trường Việt Anh" class="squeeze-brand__img" width="81" height="40" loading="eager" /><span class="squeeze-brand__text">Trường Việt Anh</span></a>
-<div class="squeeze-header__actions">
-<a href="tel:+84916961409" class="squeeze-header-btn squeeze-header-btn--hotline">0916 961 409</a>
-<a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener noreferrer" class="squeeze-header-btn squeeze-header-btn--zalo">Zalo</a>
-</div></div></header>
+<div class="squeeze-header__left">
+  <a href="tel:+84916961409" class="squeeze-header-btn squeeze-header-btn--hotline">📞 <span class="ph-text">{hotline}</span></a>
+</div>
+<a href="/" class="squeeze-brand"><img src="/logo-vietanh.webp" alt="Trường Việt Anh" class="squeeze-brand__img" width="220" height="72" loading="eager" /></a>
+<div class="squeeze-header__right">
+  <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener noreferrer" class="squeeze-header-btn squeeze-header-btn--zalo">Zalo</a>
+</div>
+</div></header>
 
 <div class="squeeze-trust-bar"><div class="squeeze-trust-bar__inner">
 <span class="squeeze-trust-bar__item">3,000+ phụ huynh tin tưởng</span>

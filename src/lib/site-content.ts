@@ -112,52 +112,63 @@ export const defaultSiteUrl = 'https://hoc.truongvietanh.com';
 export const adminUrl = 'https://admin.truongvietanh.com/admin';
 
 export const mainNavLeft = [
-  { label: 'Trang Chủ', href: '/' },
+  { label: 'Trang chủ', href: '/' },
+  { label: 'Giới thiệu', href: '/gioi-thieu' },
   {
-    label: 'Giới Thiệu',
-    href: '/gioi-thieu',
+    label: 'Giáo viên',
+    href: '/ban-lanh-dao',
     children: [
-      { label: 'Về Trường Việt Anh', href: '/gioi-thieu' },
-      { label: 'Triết lý giáo dục', href: '/triet-ly-giao-duc' },
-      { label: 'Hệ thống PDR', href: '/he-thong-pdr' },
-      { label: 'Thành tích', href: '/thanh-tich' },
-      { label: 'Cơ sở', href: '/co-so' },
+      { label: 'Ban Lãnh Đạo', href: '/ban-lanh-dao' },
+      { label: 'Giáo viên Chủ Nhiệm', href: '/giao-vien-chu-nhiem' },
+      { label: 'Giáo viên Bộ Môn', href: '/giao-vien-bo-mon' },
+      { label: 'Quản nhiệm nội trú', href: '/quan-nhiem-noi-tru' },
     ]
   },
+  { label: 'Đánh giá', href: '/danh-gia-cua-phu-huynh' },
   {
-    label: 'Chương Trình',
-    href: '/cap-hoc',
-    children: [
-      { label: 'Mầm non', href: '/mam-non' },
-      { label: 'Tiểu học', href: '/tieu-hoc' },
-      { label: 'THCS', href: '/trung-hoc-co-so' },
-      { label: 'THPT', href: '/trung-hoc-pho-thong' },
-    ]
-  },
-  {
-    label: 'Tuyển Sinh',
+    label: 'Tuyển sinh',
     href: '/tuyen-sinh',
     children: [
-      { label: 'Thông tin tuyển sinh', href: '/tuyen-sinh' },
-      { label: 'Học phí', href: '/hoc-phi' },
-      { label: 'Đăng ký tư vấn', href: '/tuyen-sinh/dang-ky-tu-van' },
-      { label: 'Tham quan trường', href: '/tuyen-sinh/tham-quan-truong' },
+      { label: 'Mầm non', href: '/tuyen-sinh/mam-non' },
+      { label: 'Tiểu học', href: '/tuyen-sinh/tieu-hoc' },
+      { label: 'THCS', href: '/tuyen-sinh/thcs' },
+      { label: 'THPT', href: '/tuyen-sinh/thpt' },
+      { label: 'Trại hè', href: '/tuyen-sinh/trai-he' },
+      { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
+      { label: 'Toán Tư Duy', href: '/tuyen-sinh/toan-tu-duy' },
     ]
   },
 ];
 
 export const mainNavRight = [
   {
-    label: 'Phụ Huynh',
-    href: '/phu-huynh',
+    label: 'Chương trình',
+    href: '/cap-hoc',
     children: [
-      { label: 'Góc phụ huynh', href: '/phu-huynh' },
-      { label: 'Học phí', href: '/hoc-phi' },
-      { label: 'Cơ sở', href: '/co-so' },
+      { label: 'Mầm non', href: '/mam-non' },
+      { label: 'Tiểu học', href: '/tieu-hoc' },
+      { label: 'THCS', href: '/thcs' },
+      { label: 'THPT', href: '/thpt' },
+      { label: 'Trại hè', href: '/trai-he' },
+      { label: 'Tiếng Anh Trẻ Em', href: '/tieng-anh-tre-em' },
+      { label: 'Toán Tư Duy', href: '/toan-tu-duy-sam' },
+      { label: 'Du học', href: '/du-hoc' },
     ]
   },
-  { label: 'Blog', href: '/tin-tuc' },
-  { label: 'Liên hệ', href: '/lien-he' },
+  {
+    label: 'Thành tích',
+    href: '/thanh-tich',
+    children: [
+      { label: 'Học tập', href: '/thanh-tich-hoc-tap' },
+      { label: 'Thể thao', href: '/thanh-tich-the-thao' },
+      { label: 'Kỹ năng', href: '/thanh-tich-ky-nang' },
+      { label: 'Ngoại khóa', href: '/thanh-tich-ngoai-khoa' },
+      { label: 'Giáo viên', href: '/thanh-tich-giao-vien' },
+    ]
+  },
+  { label: 'Blog', href: '/blog' },
+  { label: 'Tài nguyên', href: '/tai-nguyen-giao-duc' },
+  { label: 'Hình ảnh', href: '/hinh-anh' },
 ];
 
 export const mainNav = [...mainNavLeft, ...mainNavRight];

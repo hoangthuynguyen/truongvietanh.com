@@ -1,0 +1,338 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Siêu Ăn Giỏi – Giúp Trẻ Tự Ăn Một Cách Tự Nhiên",
+    "url": "https://hoc.truongvietanh.com/sieu-an-gioi",
+    "description": "Siêu Ăn Giỏi – chương trình giúp trẻ xây dựng thói quen ăn uống, kỹ năng tự ăn và tâm lý tích cực với bữa ăn. Không ép, không dỗ, không phân tâm.",
+    "provider": { "@type": "Organization", "name": "Hệ thống Trường Việt Anh", "url": "https://truongvietanh.com" }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      { "@type": "Question", "name": "Con tôi rất biếng ăn, có cải thiện được không?", "acceptedAnswer": { "@type": "Answer", "text": "Có, nếu thay đổi đúng cách. Phần lớn tình trạng biếng ăn cải thiện khi cách tiếp cận bữa ăn thay đổi." } },
+      { "@type": "Question", "name": "Có cần ép con ăn không?", "acceptedAnswer": { "@type": "Answer", "text": "Không. Ép ăn thường phản tác dụng và khiến trẻ sợ ăn hơn." } },
+      { "@type": "Question", "name": "Bao lâu thấy thay đổi?", "acceptedAnswer": { "@type": "Answer", "text": "Hành vi bắt đầu thay đổi trong 2–4 tuần đầu tiên." } },
+      { "@type": "Question", "name": "Chương trình khác gì so với ở nhà?", "acceptedAnswer": { "@type": "Answer", "text": "Có môi trường, phương pháp và sự dẫn dắt đúng — điều khó tạo ra được tại nhà trong bữa ăn hàng ngày." } }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://hoc.truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Siêu Ăn Giỏi", "item": "https://hoc.truongvietanh.com/sieu-an-gioi" }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Siêu Ăn Giỏi – Giúp Trẻ Tự Ăn, Không Ép, Không Dỗ"
+  description="Bữa ăn của con là niềm vui hay cuộc chiến? Siêu Ăn Giỏi giúp trẻ xây dựng thói quen ăn uống, kỹ năng tự ăn và tâm lý tích cực với bữa ăn."
+  canonical="https://hoc.truongvietanh.com/sieu-an-gioi"
+  ogImage="https://media.truongvietanh.com/images/thuyet-trinh-09.webp"
+  structuredData={structuredData}
+>
+  <div class="pp-page">
+    <HeaderBase />
+
+    <!-- BLOCK 1: HERO -->
+    <section class="pp-hero">
+      <div class="pp-hero-inner">
+        <h1 class="pp-h1">
+          Bữa ăn của con là niềm vui
+          <span class="pp-h1-accent">hay một cuộc chiến?</span>
+        </h1>
+        <p class="pp-subtitle">
+          Phải dỗ, ép, chạy theo mới ăn · ngậm, nhè, ăn rất lâu · kén ăn, chỉ ăn vài món quen — Nếu bữa ăn mỗi ngày đang là "cuộc chiến", rất có thể vấn đề không nằm ở thức ăn.
+        </p>
+        <div class="pp-cta-row">
+          <a href="#pp-form" class="pp-btn pp-btn-gold">Tìm hiểu cách giúp con tự ăn →</a>
+          <a href="https://zalo.me/truongvietanh" class="pp-btn pp-btn-outline">Nhận tư vấn cho con →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 2: RICH TEXT -->
+    <section class="pp-richtext">
+      <div class="pp-richtext-inner">
+        <h2>Không phải trẻ không muốn ăn<br/>mà trẻ chưa biết cách ăn</h2>
+        <p>Rất nhiều phụ huynh nghĩ rằng con biếng ăn vì: không hợp khẩu vị, không thích ăn, hoặc "lười ăn".</p>
+        <p>Nhưng thực tế: <strong>ăn cũng là một kỹ năng cần phải học</strong>. Trẻ chưa có kỹ năng ăn, chưa có thói quen ăn, và chưa được dẫn dắt đúng.</p>
+        <div class="pp-callout">Khi bữa ăn trở thành ép buộc · căng thẳng · áp lực — trẻ sẽ sợ ăn, né tránh, và phản kháng</div>
+        <p>Vấn đề không nằm ở món ăn. Mà nằm ở <strong>cách trẻ trải nghiệm việc ăn</strong>.</p>
+      </div>
+    </section>
+
+    <!-- BLOCK 3: FEATURES -->
+    <section class="pp-features">
+      <div class="pp-features-inner">
+        <h2>Siêu Ăn Giỏi – Giúp trẻ tự ăn một cách tự nhiên</h2>
+        <div class="pp-feat-grid">
+          <div class="pp-feat-card">
+            <span class="pp-icon">🍽️</span>
+            <strong>Xây dựng thói quen ăn uống</strong>
+            <p>Ăn đúng giờ – đúng cách – không ép</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">🧠</span>
+            <strong>Thay đổi tâm lý với việc ăn</strong>
+            <p>Biến bữa ăn thành trải nghiệm tích cực</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">✋</span>
+            <strong>Rèn kỹ năng tự lập</strong>
+            <p>Tự xúc – tự ăn – tự hoàn thành bữa ăn</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">👀</span>
+            <strong>Quan sát & dẫn dắt cá nhân</strong>
+            <p>Hiểu từng trẻ để điều chỉnh phù hợp</p>
+          </div>
+          <div class="pp-feat-card">
+            <span class="pp-icon">🤝</span>
+            <strong>Đồng hành cùng phụ huynh</strong>
+            <p>Giúp bố mẹ hiểu và làm đúng tại nhà</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 4: TEXT WITH IMAGE -->
+    <section class="pp-textimg">
+      <div class="pp-textimg-inner">
+        <div class="pp-textimg-text">
+          <h2>Trẻ không sinh ra đã biết ăn<br/>nhưng trẻ có thể học được</h2>
+          <p>Hãy nhìn cách nhiều trẻ đang ăn: <strong>bị ép ăn · bị dọa · bị phân tâm</strong> (tivi, điện thoại).</p>
+          <div class="pp-callout">Điều này khiến trẻ không cảm nhận được việc ăn, không học được kỹ năng ăn, và không hình thành thói quen</div>
+          <p>Tại Siêu Ăn Giỏi, trẻ được <strong>tự trải nghiệm · tự làm · tự hoàn thành</strong>.</p>
+          <p>Đây là cách trẻ không còn phụ thuộc, không còn sợ ăn, và <strong>bắt đầu thích ăn</strong>.</p>
+        </div>
+        <div class="pp-textimg-img">
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-09.webp" alt="Trẻ tự ăn tại Siêu Ăn Giỏi – không ép, không dỗ" loading="lazy" width="600" height="400" />
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 5: STATS -->
+    <section class="pp-stats">
+      <div class="pp-stats-inner">
+        <h2>Biếng ăn không chỉ là vấn đề dinh dưỡng</h2>
+        <div class="pp-stats-cols">
+          <div class="pp-stats-col pp-stats-warn">
+            <h3>Nếu không xử lý đúng…</h3>
+            <ul>
+              <li>Trẻ thiếu dinh dưỡng kéo dài</li>
+              <li>Hình thành thói quen ăn xấu</li>
+              <li>Phụ thuộc lâu dài vào dỗ, ép</li>
+            </ul>
+          </div>
+          <div class="pp-stats-col">
+            <h3>Nếu xử lý đúng…</h3>
+            <ul>
+              <li>Trẻ tự ăn, không cần dỗ</li>
+              <li>Ăn đa dạng hơn</li>
+              <li>Phát triển thể chất & tâm lý tốt hơn</li>
+            </ul>
+          </div>
+        </div>
+        <p class="pp-stats-note">Nhiều gia đình kéo dài tình trạng biếng ăn <strong>nhiều năm</strong> — mất rất nhiều thời gian mỗi bữa ăn, và áp lực ăn uống ảnh hưởng đến tâm lý của cả nhà.</p>
+      </div>
+    </section>
+
+    <!-- BLOCK 6: PRICING -->
+    <section class="pp-pricing">
+      <div class="pp-pricing-inner">
+        <h2>Đây không phải là việc "cho con ăn"</h2>
+        <div class="pp-pricing-cols">
+          <div class="pp-pricing-col pp-pricing-bad">
+            <span class="pp-pricing-tag">Lựa chọn 1</span>
+            <p>Tiếp tục <strong>ép con ăn mỗi ngày</strong> — căng thẳng cho cả bố mẹ lẫn con, và bữa ăn mãi là cuộc chiến.</p>
+          </div>
+          <div class="pp-pricing-col pp-pricing-good">
+            <span class="pp-pricing-tag">Lựa chọn 2</span>
+            <p>Giúp con <strong>biết cách ăn, tự lập, và không phụ thuộc</strong> — thói quen dùng cả đời.</p>
+          </div>
+        </div>
+        <div class="pp-pricing-summary">
+          <p>Giá trị không nằm ở bữa ăn hôm nay. Mà nằm ở: <strong>thói quen ăn uống của con trong nhiều năm tới</strong>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 7: CTA -->
+    <section class="pp-ctablock">
+      <div class="pp-ctablock-inner">
+        <h2>Đừng để mỗi bữa ăn<br/>trở thành áp lực</h2>
+        <p>Bạn không cần thay đổi mọi thứ ngay. Nhưng bạn có thể <strong>bắt đầu bằng cách đúng hơn</strong>.</p>
+        <div class="pp-cta-row">
+          <a href="#pp-form" class="pp-btn pp-btn-gold">Nhận tư vấn cho con →</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- BLOCK 8: FORM -->
+    <section class="pp-form-block" id="pp-form">
+      <div class="pp-form-block-inner">
+        <h2>Nhận tư vấn cho con</h2>
+        <p>Để lại thông tin — chúng tôi sẽ liên hệ lại trong vòng 24 giờ.</p>
+        <ul>
+          <li>Đánh giá tình trạng ăn uống hiện tại</li>
+          <li>Gợi ý hướng cải thiện cụ thể</li>
+          <li>Tư vấn cá nhân hoá 1-1 với chuyên viên</li>
+        </ul>
+        <LeadFormTwoStepEmailFirst
+          formId="sieu-an-gioi-form"
+          funnelCode="sieu-an-gioi"
+          schoolLevel="mam-non"
+        />
+      </div>
+    </section>
+
+    <!-- BLOCK 9: FAQ -->
+    <section class="pp-faq">
+      <div class="pp-faq-inner">
+        <h2>Câu hỏi phụ huynh thường gặp</h2>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Con tôi rất biếng ăn, có cải thiện được không?</p>
+          <p class="pp-faq-a"><strong>Có, nếu thay đổi đúng cách.</strong> Phần lớn tình trạng biếng ăn là kết quả của thói quen và cách tiếp cận — không phải do "con có vấn đề". Khi đổi cách, phần lớn trẻ cải thiện rõ trong vài tuần.</p>
+        </div>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Có cần ép con ăn không?</p>
+          <p class="pp-faq-a"><strong>Không.</strong> Ép ăn thường phản tác dụng — càng ép, trẻ càng sợ ăn. Con cần được học kỹ năng ăn, không phải bị buộc phải ăn.</p>
+        </div>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Bao lâu thấy thay đổi?</p>
+          <p class="pp-faq-a">Hành vi bắt đầu thay đổi trong <strong>2–4 tuần</strong> đầu — khi thói quen và môi trường ăn được điều chỉnh đúng.</p>
+        </div>
+        <div class="pp-faq-item">
+          <p class="pp-faq-q">Chương trình khác gì so với ở nhà?</p>
+          <p class="pp-faq-a">Có <strong>môi trường, phương pháp và sự dẫn dắt</strong> đúng cách — điều khó tạo ra tại nhà khi bữa ăn hàng ngày đã thành áp lực. Sau đó, chúng tôi đồng hành để bố mẹ duy trì tại nhà.</p>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    .pp-page { font-family: 'Be Vietnam Pro', 'Segoe UI', system-ui, -apple-system, sans-serif; color: #1a1a2e; line-height: 1.6; }
+
+    /* HERO */
+    .pp-hero { background: linear-gradient(135deg, #0d2b55 0%, #1a1a5e 100%); color: white; padding: 5rem 1.5rem; text-align: center; }
+    .pp-hero-inner { max-width: 820px; margin: 0 auto; }
+    .pp-h1 { font-size: 2.4rem; font-weight: 800; line-height: 1.3; margin-bottom: 1.25rem; color: #f5a623; }
+    .pp-h1-accent { color: #fff; display: block; margin-top: .75rem; font-size: .72em; font-weight: 600; line-height: 1.5; }
+    .pp-subtitle { font-size: 1.1rem; opacity: .9; margin-bottom: 2.5rem; line-height: 1.75; }
+    .pp-cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .pp-btn { display: inline-block; padding: .9rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: opacity .2s, transform .15s; }
+    .pp-btn:hover { opacity: .9; transform: translateY(-1px); }
+    .pp-btn-gold { background: #f07d00; color: #fff; }
+    .pp-btn-outline { background: transparent; color: white; border: 2px solid rgba(255,255,255,.7); }
+    .pp-btn-outline-dark { background: transparent; color: #0d2b55; border: 2px solid #0d2b55; }
+
+    /* RICH TEXT */
+    .pp-richtext { background: #fff; padding: 4.5rem 1.5rem; }
+    .pp-richtext-inner { max-width: 820px; margin: 0 auto; }
+    .pp-richtext h2 { font-size: 1.5rem; font-weight: 800; color: #dc2626; text-transform: uppercase; margin-bottom: 1.5rem; line-height: 1.4; text-align: center; }
+    .pp-richtext p { font-size: 1.05rem; color: #334155; line-height: 1.8; margin-bottom: 1rem; }
+    .pp-callout { color: #0d2b55; font-weight: 700; font-size: 1.05rem; padding: .75rem 1.1rem; border-left: 4px solid #f07d00; margin: 1.25rem 0; background: #fff7ed; border-radius: 0 6px 6px 0; }
+
+    /* FEATURES */
+    .pp-features { background: #0d2b55; color: white; padding: 4.5rem 1.5rem; }
+    .pp-features-inner { max-width: 1050px; margin: 0 auto; }
+    .pp-features h2 { font-size: 1.5rem; font-weight: 800; text-align: center; text-transform: uppercase; margin-bottom: 2.5rem; line-height: 1.45; color: #f5a623; }
+    .pp-feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .pp-feat-card { background: rgba(255,255,255,.08); border-radius: 12px; padding: 1.75rem 1.5rem; border: 1px solid rgba(255,255,255,.12); }
+    .pp-feat-card .pp-icon { font-size: 2rem; display: block; margin-bottom: .75rem; }
+    .pp-feat-card strong { display: block; font-size: 1.05rem; margin-bottom: .5rem; }
+    .pp-feat-card p { font-size: .92rem; opacity: .85; line-height: 1.65; margin: 0; }
+
+    /* TEXT WITH IMAGE */
+    .pp-textimg { background: white; padding: 4.5rem 1.5rem; }
+    .pp-textimg-inner { max-width: 1050px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3.5rem; align-items: center; }
+    .pp-textimg-text h2 { font-size: 1.5rem; font-weight: 800; color: #dc2626; text-transform: uppercase; margin-bottom: 1.25rem; line-height: 1.4; }
+    .pp-textimg-text p { color: #334155; line-height: 1.8; margin-bottom: .9rem; font-size: 1.02rem; }
+    .pp-textimg-img img { width: 100%; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,.12); display: block; }
+
+    /* STATS */
+    .pp-stats { background: #f0f4f8; padding: 4.5rem 1.5rem; border-top: 3px solid #e2e8f0; }
+    .pp-stats-inner { max-width: 900px; margin: 0 auto; }
+    .pp-stats-inner > h2 { font-size: 1.5rem; font-weight: 800; color: #dc2626; text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
+    .pp-stats-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .pp-stats-col { background: white; border-radius: 12px; padding: 1.75rem; box-shadow: 0 2px 10px rgba(0,0,0,.05); border-top: 4px solid #22c55e; }
+    .pp-stats-col.pp-stats-warn { border-top-color: #ef4444; }
+    .pp-stats-col h3 { font-size: 1.05rem; font-weight: 700; color: #0d2b55; margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 1px solid #e2e8f0; }
+    .pp-stats-col ul { list-style: none; padding: 0; margin: 0; }
+    .pp-stats-col li { padding: .45rem 0 .45rem 1.75rem; position: relative; color: #475569; font-size: .98rem; line-height: 1.55; }
+    .pp-stats-col li::before { content: '✓'; position: absolute; left: 0; color: #22c55e; font-weight: 700; }
+    .pp-stats-col.pp-stats-warn li::before { content: '✕'; color: #ef4444; }
+    .pp-stats-note { text-align: center; margin-top: 1.75rem; color: #475569; font-size: 1rem; line-height: 1.7; }
+    .pp-stats-note strong { color: #0d2b55; }
+
+    /* PRICING */
+    .pp-pricing { background: white; padding: 4.5rem 1.5rem; }
+    .pp-pricing-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .pp-pricing-inner > h2 { font-size: 1.5rem; font-weight: 800; color: #dc2626; text-transform: uppercase; margin-bottom: 2rem; line-height: 1.45; }
+    .pp-pricing-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+    .pp-pricing-col { background: #f8fafc; border-radius: 14px; padding: 2rem 1.75rem; text-align: left; border: 1px solid #e2e8f0; }
+    .pp-pricing-col.pp-pricing-bad { background: #fef2f2; border-color: #fecaca; }
+    .pp-pricing-col.pp-pricing-good { background: #f0fdf4; border-color: #bbf7d0; }
+    .pp-pricing-tag { display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: .3rem .75rem; border-radius: 999px; background: #e2e8f0; color: #475569; margin-bottom: 1rem; }
+    .pp-pricing-col.pp-pricing-bad .pp-pricing-tag { background: #fecaca; color: #991b1b; }
+    .pp-pricing-col.pp-pricing-good .pp-pricing-tag { background: #bbf7d0; color: #14532d; }
+    .pp-pricing-col p { color: #334155; font-size: 1.02rem; line-height: 1.75; margin: 0; }
+    .pp-pricing-summary { background: #fff7ed; border-left: 4px solid #f07d00; border-radius: 0 8px 8px 0; padding: 1.25rem 1.5rem; text-align: left; }
+    .pp-pricing-summary p { color: #0d2b55; font-size: 1.05rem; line-height: 1.7; margin: 0; font-weight: 500; }
+
+    /* CTA BLOCK */
+    .pp-ctablock { background: #f0f4f8; padding: 5rem 1.5rem; text-align: center; border-top: 3px solid #e2e8f0; }
+    .pp-ctablock-inner { max-width: 760px; margin: 0 auto; }
+    .pp-ctablock h2 { font-size: 1.6rem; font-weight: 800; color: #dc2626; text-transform: uppercase; margin-bottom: 1.25rem; line-height: 1.4; }
+    .pp-ctablock p { font-size: 1.1rem; color: #334155; line-height: 1.75; margin-bottom: 2.25rem; }
+
+    /* FORM */
+    .pp-form-block { background: #0d2b55; padding: 4.5rem 1.5rem; }
+    .pp-form-block-inner { max-width: 580px; margin: 0 auto; text-align: center; }
+    .pp-form-block h2 { color: #f5a623; font-size: 1.6rem; font-weight: 800; margin-bottom: .75rem; text-transform: uppercase; }
+    .pp-form-block p { color: rgba(255,255,255,.85); margin-bottom: 1.5rem; line-height: 1.7; font-size: 1.02rem; }
+    .pp-form-block ul { list-style: none; padding: 0; text-align: left; display: inline-block; margin-bottom: 2rem; }
+    .pp-form-block li { color: rgba(255,255,255,.92); padding: .35rem 0 .35rem 1.75rem; position: relative; font-size: 1rem; }
+    .pp-form-block li::before { content: '✓'; position: absolute; left: 0; color: #f07d00; font-weight: 700; }
+
+    /* FAQ */
+    .pp-faq { background: white; padding: 4.5rem 1.5rem; }
+    .pp-faq-inner { max-width: 820px; margin: 0 auto; }
+    .pp-faq h2 { font-size: 1.5rem; font-weight: 800; color: #dc2626; text-transform: uppercase; text-align: center; margin-bottom: 2rem; }
+    .pp-faq-item { border-bottom: 1px solid #e2e8f0; padding: 1.4rem 0; }
+    .pp-faq-q { font-size: 1.05rem; font-weight: 700; color: #0d2b55; margin-bottom: .6rem; }
+    .pp-faq-a { color: #475569; font-size: 1rem; line-height: 1.75; margin: 0; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .pp-feat-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .pp-h1 { font-size: 1.7rem; }
+      .pp-textimg-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .pp-stats-cols { grid-template-columns: 1fr; }
+      .pp-pricing-cols { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 560px) {
+      .pp-cta-row { flex-direction: column; align-items: stretch; }
+      .pp-btn { text-align: center; }
+      .pp-feat-grid { grid-template-columns: 1fr; }
+      .pp-hero { padding: 3.5rem 1.25rem; }
+      .pp-richtext, .pp-features, .pp-textimg, .pp-stats, .pp-pricing, .pp-ctablock, .pp-form-block, .pp-faq { padding: 3.5rem 1.25rem; }
+    }
+  </style>
+</BaseLayout>

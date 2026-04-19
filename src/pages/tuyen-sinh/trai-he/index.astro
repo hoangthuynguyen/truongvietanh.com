@@ -3,6 +3,39 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
 ---
 
+<style>
+  /* ── Section headings: 24px ── */
+  h2 { font-size: 1.5rem !important; line-height: 1.3 !important; }
+
+  /* ── Body / content text: 16px ── */
+  /* Broad p reset — excludes eyebrow classes via more-specific layout rules that we purposely DON'T override */
+  .sp-pain p,
+  .sp-features__sub,
+  .sp-textimg p,
+  .sp-quote__text,
+  .sp-pricing__sub { font-size: 1rem !important; }
+
+  /* Card bodies */
+  .sp-feat-card p { font-size: 1rem !important; }
+
+  /* Stats labels */
+  .sp-stat__label { font-size: 1rem !important; }
+
+  /* FAQ */
+  .sp-faq__sub { font-size: 1rem !important; }
+  .sp-faq-item summary { font-size: 1rem !important; }
+  .sp-faq-answer { font-size: 1rem !important; }
+
+  /* Pricing feature list */
+  .sp-pricing-col__features li { font-size: 1rem !important; }
+
+  /* Form paragraphs */
+  .sp-form-block p { font-size: 1rem !important; }
+
+  /* CTA paragraph */
+  .sp-cta-block p { font-size: 1rem !important; }
+</style>
+
 <SalesPageLayout
   title="Lion Camp 2026 — Làm Chủ AI, Bứt Phá Năng Lực Học Tập"
   description="Lion Camp 2026: chương trình trại hè 6 tuần duy nhất tại Việt Nam dạy con dùng AI đúng cách theo khung UNESCO. Lớp 1–12. 15/6–25/7/2026. Chỉ 100 suất ưu đãi."
@@ -48,7 +81,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     <p>Hãy hình dung: Con nghỉ hè. Tuần đầu còn vui. Tuần thứ hai bắt đầu dán mắt vào điện thoại từ sáng đến tối. Tuần thứ ba, bạn thấy con dùng ChatGPT để viết hộ bài — không phải để học, mà để đối phó.</p>
     <p>Bạn lo lắng. Không phải vì con dùng AI — <strong>mà vì con đang bị AI dùng.</strong> Con không biết đặt câu hỏi đúng, không biết kiểm chứng thông tin, không biết khi nào nên và không nên tin máy.</p>
     <div style="border-left:4px solid #D4A843;background:#fffbf0;padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:1.5rem 0">
-      <p style="margin:0;font-size:1rem;line-height:1.75;color:#1a1a5e;font-weight:600">
+      <p style="margin:0;font-size:1rem !important;line-height:1.75;color:#1a1a5e;font-weight:600">
         AI đã len lỏi vào mọi khía cạnh cuộc sống của con — từ cách làm bài, cách giải trí, đến cách suy nghĩ. Câu hỏi không còn là "Con có nên học AI không?" mà là "Con đang học AI đúng cách ở đâu?"
       </p>
     </div>
@@ -95,36 +128,31 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     </div>
   </div>
 
-  <!-- BLOCK 4: TEXT WITH IMAGE (Before/After) -->
-  <div slot="textimg">
-    <div class="sp-textimg__text">
-      <p class="sp-textimg__eyebrow">TRƯỚC & SAU LION CAMP</p>
-      <h2>6 Tuần — Sự Khác Biệt Bạn Nhìn Thấy Rõ Ràng</h2>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-top:1.5rem">
-        <div style="background:#fff0f0;border-radius:10px;padding:1.25rem;border-top:3px solid #ef4444">
-          <p style="font-weight:700;color:#ef4444;margin:0 0 .75rem;font-size:.9rem;text-transform:uppercase;letter-spacing:.05em">Trước Lion Camp</p>
-          <ul style="list-style:none;padding:0;margin:0">
-            <li style="padding:.35rem 0;color:#64748b;font-size:.9rem">😔 Dùng AI để gian lận bài</li>
-            <li style="padding:.35rem 0;color:#64748b;font-size:.9rem">📱 Cuộn điện thoại cả ngày</li>
-            <li style="padding:.35rem 0;color:#64748b;font-size:.9rem">😶 Ngại nói tiếng Anh</li>
-            <li style="padding:.35rem 0;color:#64748b;font-size:.9rem">😴 Không mục tiêu, không kế hoạch</li>
-            <li style="padding:.35rem 0;color:#64748b;font-size:.9rem">🤷 Tin AI vô điều kiện</li>
-          </ul>
-        </div>
-        <div style="background:#f0fdf4;border-radius:10px;padding:1.25rem;border-top:3px solid #22c55e">
-          <p style="font-weight:700;color:#16a34a;margin:0 0 .75rem;font-size:.9rem;text-transform:uppercase;letter-spacing:.05em">Sau Lion Camp</p>
-          <ul style="list-style:none;padding:0;margin:0">
-            <li style="padding:.35rem 0;color:#334155;font-size:.9rem">🧠 Dùng AI để học nhanh gấp 10 lần</li>
-            <li style="padding:.35rem 0;color:#334155;font-size:.9rem">🎯 Tự quản lý thời gian, mục tiêu</li>
-            <li style="padding:.35rem 0;color:#334155;font-size:.9rem">🗣️ Tự tin nói tiếng Anh tự nhiên</li>
-            <li style="padding:.35rem 0;color:#334155;font-size:.9rem">📋 Có Health Plan & lộ trình cá nhân</li>
-            <li style="padding:.35rem 0;color:#334155;font-size:.9rem">🔍 Biết kiểm chứng và phản biện AI</li>
-          </ul>
-        </div>
+  <!-- BLOCK 4: BEFORE / AFTER — full-width (grid-column:1/-1 overrides the 2-col sp-textimg__inner) -->
+  <div slot="textimg" style="grid-column:1/-1;width:100%">
+    <p class="sp-textimg__eyebrow" style="text-align:center">TRƯỚC &amp; SAU LION CAMP</p>
+    <h2 style="text-align:center;margin-bottom:1.75rem">6 Tuần — Sự Khác Biệt Bạn Nhìn Thấy Rõ Ràng</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:860px;margin:0 auto">
+      <div style="background:#fff0f0;border-radius:12px;padding:1.75rem;border-top:4px solid #ef4444">
+        <p style="font-weight:700;color:#ef4444;margin:0 0 1rem;font-size:1rem;text-transform:uppercase;letter-spacing:.05em">😔 Trước Lion Camp</p>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem">
+          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">Dùng AI để gian lận bài</li>
+          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">📱 Cuộn điện thoại cả ngày</li>
+          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">😶 Ngại nói tiếng Anh</li>
+          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">😴 Không mục tiêu, không kế hoạch</li>
+          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">🤷 Tin AI vô điều kiện</li>
+        </ul>
       </div>
-    </div>
-    <div class="sp-textimg__img">
-      <img src="https://media.truongvietanh.com/images/vui-ve-06.webp" alt="Lion Camp 2026 — Học sinh làm chủ AI" width="600" height="400" loading="lazy" style="border-radius:16px" />
+      <div style="background:#f0fdf4;border-radius:12px;padding:1.75rem;border-top:4px solid #22c55e">
+        <p style="font-weight:700;color:#16a34a;margin:0 0 1rem;font-size:1rem;text-transform:uppercase;letter-spacing:.05em">✅ Sau Lion Camp</p>
+        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem">
+          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🧠 Dùng AI để học nhanh gấp 10 lần</li>
+          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🎯 Tự quản lý thời gian, mục tiêu</li>
+          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🗣️ Tự tin nói tiếng Anh tự nhiên</li>
+          <li style="padding:.3rem 0;color:#334155;font-size:1rem">📋 Có Health Plan &amp; lộ trình cá nhân</li>
+          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🔍 Biết kiểm chứng và phản biện AI</li>
+        </ul>
+      </div>
     </div>
   </div>
 

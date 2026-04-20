@@ -1,0 +1,659 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const tabs = [
+  { id: 'bgh', label: 'Ban Giám Hiệu', icon: '🏛️' },
+  { id: 'gv-go-vap', label: 'GV Gò Vấp', icon: '📍' },
+  { id: 'gv-phu-nhuan', label: 'GV Phú Nhuận', icon: '📍' },
+  { id: 'gv-binh-tan', label: 'GV Bình Tân', icon: '📍' },
+  { id: 'gv-mam-non', label: 'GV Mầm Non', icon: '🌱' },
+  { id: 'gv-tieu-hoc', label: 'GV Tiểu Học', icon: '📚' },
+  { id: 'gv-ban-ngu', label: 'GV Bản Ngữ', icon: '🌍' },
+  { id: 'tu-van', label: 'Đội Ngũ Tư Vấn', icon: '💬' },
+];
+
+const bghMembers = [
+  {
+    name: 'Nguyễn Mạnh Dương',
+    title: 'Chủ Tịch',
+    org: 'Hệ Thống Trường Việt Anh',
+    role: 'chairman',
+    initials: 'NMD',
+  },
+  {
+    name: 'Phạm Thị Cẩm Tú',
+    title: 'Phó Chủ Tịch',
+    org: 'Hệ Thống Trường Việt Anh',
+    role: 'vice-chairman',
+    initials: 'PTCT',
+  },
+  {
+    name: 'Phạm Nguyễn Phương Duy',
+    title: 'Hiệu Trưởng',
+    org: 'Trường Việt Anh',
+    role: 'principal',
+    initials: 'PNPD',
+  },
+  {
+    name: 'Nguyễn Thị Lan',
+    title: 'Phó Hiệu Trưởng',
+    org: 'Phụ trách Tiểu Học – Cơ sở Gò Vấp',
+    role: 'vice-principal',
+    initials: 'NTL',
+  },
+  {
+    name: 'Nguyễn Thu Thảo',
+    title: 'Phó Hiệu Trưởng',
+    org: 'Cơ sở Phú Nhuận',
+    role: 'vice-principal',
+    initials: 'NTT',
+  },
+  {
+    name: 'Trần Thị Ngọc Tuyền',
+    title: 'Trợ Lý Hiệu Trưởng',
+    org: 'Cơ sở Bình Tân',
+    role: 'assistant',
+    initials: 'TTNT',
+  },
+  {
+    name: 'Đậu Thị Hải Yến',
+    title: 'Hiệu Trưởng Mầm Non',
+    org: 'Trường Mầm Non Việt Anh',
+    role: 'mam-non',
+    initials: 'DTHY',
+  },
+  {
+    name: 'Nguyễn Thùy Anh',
+    title: 'Viện Trưởng',
+    org: 'Viện Nghiên cứu & Phát triển Học thuật',
+    role: 'research',
+    initials: 'NTA',
+  },
+];
+
+const goVapTeachers = [
+  'Võ Kim Ngân',
+  'Trần Thiện Kim Phượng',
+  'Trần Thị Khánh Phương',
+  'Trần Thị Hồng Hân',
+  'Phạm Thị Xuân Ngọc',
+  'Nguyễn Thị Thùy Linh',
+  'Nguyễn Thị Như Hảo',
+  'Nguyễn Thị Minh Mai',
+  'Nguyễn Thị Kiều Trang',
+  'Megan Carew',
+  'Lê Văn Chất',
+  'La-Rochelle Amanda Bouwer',
+  'Hoàng Kim Phương Tú',
+  'Đinh Thị Triệu Vy',
+];
+
+const phuNhuanTeachers = [
+  'Võ Trần Quỳnh Như',
+  'Từ Hòa Tài',
+  'Trần Tuấn Cảnh',
+  'Trần Tố Ngọc',
+  'Trần Thi Thơ',
+  'Phan Hiếu Thiện',
+  'Nguyễn Thị Thảo Nguyên',
+  'Nguyễn Thị Mỹ Hạnh',
+  'Nguyễn Thị Kim Tiền',
+  'Nguyễn Thị Hợi',
+  'Nguyễn Thị Diệu',
+  'Nguyễn Thị Ái Hoa',
+  'Nguyễn Tam Thanh',
+  'Lê Thị Hoài My',
+  'Lê Thanh Hoài',
+  'Lê Minh Phương',
+  'Hoàng Ngọc Việt',
+  'Đỗ Cao Đan Thụy',
+];
+
+const binhTanTeachers = [
+  'Hán Văn Duy',
+  'Lê Đại Hải',
+  'Đặng Minh Tấn',
+  'Nguyễn Thị Diệu Chinh',
+  'Nguyễn Thị Hà',
+  'Nguyễn Thị Hồng Ngọc',
+  'Nguyễn Thị Ngọc Tuyên',
+  'Nguyễn Thị Thùy',
+  'Nguyễn Thị Thúy Hải',
+  'Nguyễn Thị Ý',
+  'Nguyễn Văn Thám',
+  'Nguyễn Văn Vui',
+  'Nguyễn Vũ Yên Chi',
+  'Phạm Hữu Hiệu',
+  'Phạm Thị Mỹ Hạnh',
+  'Trần Nguyễn Thiên Phúc',
+  'Trần Thị Lệ Thư',
+  'Trương Anh Tuấn',
+  'Võ Hoàng Lâm',
+  'Võ Quang Tân',
+  'Võ Vân Thi',
+  'Nguyễn Thanh Tòng',
+  'Nguyễn Minh Trân',
+  'Nguyễn Hoàng Vủ',
+  'Ngô Thị Hà',
+  'Lý Uyển Quỳnh',
+  'Lưu Thị Thanh Trúc',
+  'Lê Thị Hằng',
+  'Lê Quang Minh Khánh',
+  'Lâm Thoại Tường',
+  'Huỳnh Thị Thu Loan',
+  'Đỗ Ngọc Hoài Thu',
+  'Đinh Thị Ngọc Châu',
+  'Đặng Thành Phát',
+  'Chí Nhiệt Minh Nhi',
+  'Cao Văn Hiếu',
+];
+
+const banNguTeachers = [
+  'Tegan Turnbull',
+  'Jasmine Jade Scriven',
+  'Megan Carew',
+  'La-Rochelle Amanda Bouwer',
+];
+
+const tuVanTeachers = [
+  'Phan Thùy Linh',
+  'Nguyễn Thị Vân',
+  'Nguyễn Thị Thanh Hiếu',
+  'Nguyễn Minh Nguyệt',
+  'Nguyễn Diệu Hoài Trinh',
+  'Ngô Thị Yến Nhi',
+  'Ngô Thị Thanh Tâm',
+  'Lưu Nguyễn Quỳnh Như',
+  'Lê Văn Tuấn',
+  'Lê Mai Tường Vy',
+  'Jasmine Jade Scriven',
+  'Tegan Turnbull',
+  'Đào Thị Đăng Thao',
+  'Chu Ngọc Thanh Vân',
+];
+
+function getInitials(name: string): string {
+  const parts = name.split(' ');
+  if (parts.length === 1) return name.slice(0, 2).toUpperCase();
+  // For Vietnamese names, take first char of first + last word
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+function getAvatarColor(name: string): string {
+  const colors = ['#1a3c5e','#2563eb','#7c3aed','#059669','#d97706','#dc2626','#0891b2','#be185d'];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  return colors[Math.abs(hash) % colors.length];
+}
+
+const roleColors: Record<string, { bg: string; color: string; label: string }> = {
+  chairman:      { bg: '#fef3c7', color: '#92400e', label: 'Chủ Tịch' },
+  'vice-chairman': { bg: '#fef9c3', color: '#713f12', label: 'Phó Chủ Tịch' },
+  principal:     { bg: '#dbeafe', color: '#1e40af', label: 'Hiệu Trưởng' },
+  'vice-principal': { bg: '#e0f2fe', color: '#0c4a6e', label: 'Phó HT' },
+  assistant:     { bg: '#f3e8ff', color: '#6b21a8', label: 'Trợ Lý' },
+  'mam-non':     { bg: '#dcfce7', color: '#14532d', label: 'HT Mầm Non' },
+  research:      { bg: '#ede9fe', color: '#4c1d95', label: 'Viện Trưởng' },
+};
+---
+
+<BaseLayout
+  title="BGH & Đội Ngũ Giáo Viên – Trường Việt Anh"
+  description="Ban Giám Hiệu & đội ngũ giáo viên chủ nhiệm tại các cơ sở Gò Vấp, Phú Nhuận, Bình Tân của Trường Việt Anh. Bằng cấp chính quy, chuyên môn giỏi, giàu kinh nghiệm."
+  canonical="https://hoc.truongvietanh.com/giao-vien-chu-nhiem"
+  noPopup={true}
+>
+  <HeaderBase slot="header" />
+
+  <!-- HERO -->
+  <section class="gvcn-hero">
+    <div class="gvcn-hero__inner">
+      <nav class="gvcn-breadcrumb" aria-label="Breadcrumb">
+        <a href="/">Trang chủ</a>
+        <span>›</span>
+        <span>Giáo Viên Chủ Nhiệm</span>
+      </nav>
+      <h1 class="gvcn-hero__title">BGH & Đội Ngũ Giáo Viên<br>Của Trường Việt Anh</h1>
+      <p class="gvcn-hero__sub">BGH & đội ngũ giáo viên của trường Việt Anh có bằng cấp chính quy, chuyên môn giỏi và nhiều năm kinh nghiệm trong việc giảng dạy và quản lý học sinh.</p>
+      <div class="gvcn-stats">
+        <div class="gvcn-stat"><span class="gvcn-stat__num">15+</span><span class="gvcn-stat__lbl">Năm kinh nghiệm</span></div>
+        <div class="gvcn-stat"><span class="gvcn-stat__num">500+</span><span class="gvcn-stat__lbl">Giáo viên</span></div>
+        <div class="gvcn-stat"><span class="gvcn-stat__num">9</span><span class="gvcn-stat__lbl">Cơ sở</span></div>
+        <div class="gvcn-stat"><span class="gvcn-stat__num">3,000+</span><span class="gvcn-stat__lbl">Học sinh</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB NAV -->
+  <div class="gvcn-tabs-wrap" id="gvcnTabsWrap">
+    <div class="gvcn-tabs" role="tablist" id="gvcnTabs">
+      {tabs.map((tab, i) => (
+        <button
+          class={`gvcn-tab${i === 0 ? ' gvcn-tab--active' : ''}`}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`panel-${tab.id}`}
+          data-tab={tab.id}
+        >
+          <span class="gvcn-tab__icon">{tab.icon}</span>
+          <span class="gvcn-tab__lbl">{tab.label}</span>
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- PANELS -->
+  <div class="gvcn-panels">
+
+    <!-- BGH PANEL -->
+    <div id="panel-bgh" role="tabpanel" class="gvcn-panel gvcn-panel--active">
+      <div class="gvcn-section-hd">
+        <h2>Ban Giám Hiệu</h2>
+        <p>Đội ngũ lãnh đạo cốt lõi điều hành toàn hệ thống Trường Việt Anh</p>
+      </div>
+      <div class="gvcn-bgh-grid">
+        {bghMembers.map(m => {
+          const rc = roleColors[m.role] ?? roleColors['vice-principal'];
+          return (
+            <div class="gvcn-bgh-card">
+              <div class="gvcn-bgh-card__avatar" style={`background:${getAvatarColor(m.name)}`}>
+                {m.initials}
+              </div>
+              <span class="gvcn-bgh-card__badge" style={`background:${rc.bg};color:${rc.color}`}>{rc.label}</span>
+              <h3 class="gvcn-bgh-card__name">{m.name}</h3>
+              <p class="gvcn-bgh-card__org">{m.org}</p>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+
+    <!-- GÒ VẤP PANEL -->
+    <div id="panel-gv-go-vap" role="tabpanel" class="gvcn-panel" hidden>
+      <div class="gvcn-section-hd">
+        <h2>Giáo Viên Cơ Sở Gò Vấp</h2>
+        <p>Đội ngũ giáo viên chủ nhiệm tại cơ sở Gò Vấp – {goVapTeachers.length} thành viên</p>
+      </div>
+      <div class="gvcn-teacher-grid">
+        {goVapTeachers.map(name => (
+          <div class="gvcn-teacher-card">
+            <div class="gvcn-teacher-card__avatar" style={`background:${getAvatarColor(name)}`}>
+              {getInitials(name)}
+            </div>
+            <span class="gvcn-teacher-card__name">{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- PHÚ NHUẬN PANEL -->
+    <div id="panel-gv-phu-nhuan" role="tabpanel" class="gvcn-panel" hidden>
+      <div class="gvcn-section-hd">
+        <h2>Giáo Viên Cơ Sở Phú Nhuận</h2>
+        <p>Đội ngũ giáo viên chủ nhiệm tại cơ sở Phú Nhuận – {phuNhuanTeachers.length} thành viên</p>
+      </div>
+      <div class="gvcn-teacher-grid">
+        {phuNhuanTeachers.map(name => (
+          <div class="gvcn-teacher-card">
+            <div class="gvcn-teacher-card__avatar" style={`background:${getAvatarColor(name)}`}>
+              {getInitials(name)}
+            </div>
+            <span class="gvcn-teacher-card__name">{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- BÌNH TÂN PANEL -->
+    <div id="panel-gv-binh-tan" role="tabpanel" class="gvcn-panel" hidden>
+      <div class="gvcn-section-hd">
+        <h2>Giáo Viên Cơ Sở Bình Tân</h2>
+        <p>Đội ngũ giáo viên chủ nhiệm tại cơ sở Bình Tân – {binhTanTeachers.length} thành viên</p>
+      </div>
+      <div class="gvcn-teacher-grid">
+        {binhTanTeachers.map(name => (
+          <div class="gvcn-teacher-card">
+            <div class="gvcn-teacher-card__avatar" style={`background:${getAvatarColor(name)}`}>
+              {getInitials(name)}
+            </div>
+            <span class="gvcn-teacher-card__name">{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- MẦM NON PANEL -->
+    <div id="panel-gv-mam-non" role="tabpanel" class="gvcn-panel" hidden>
+      <div class="gvcn-section-hd">
+        <h2>Giáo Viên Mầm Non</h2>
+        <p>Đội ngũ giáo viên mầm non Trường Việt Anh</p>
+      </div>
+      <div class="gvcn-coming-soon">
+        <div class="gvcn-coming-soon__icon">🌱</div>
+        <h3>Đang cập nhật</h3>
+        <p>Nội dung đang được cập nhật. Vui lòng liên hệ hotline để được tư vấn.</p>
+        <a href="tel:+84916961409" class="gvcn-coming-soon__btn">📞 0916 961 409</a>
+      </div>
+    </div>
+
+    <!-- TIỂU HỌC PANEL -->
+    <div id="panel-gv-tieu-hoc" role="tabpanel" class="gvcn-panel" hidden>
+      <div class="gvcn-section-hd">
+        <h2>Giáo Viên Tiểu Học</h2>
+        <p>Đội ngũ giáo viên tiểu học Trường Việt Anh</p>
+      </div>
+      <div class="gvcn-coming-soon">
+        <div class="gvcn-coming-soon__icon">📚</div>
+        <h3>Đang cập nhật</h3>
+        <p>Nội dung đang được cập nhật. Vui lòng liên hệ hotline để được tư vấn.</p>
+        <a href="tel:+84916961409" class="gvcn-coming-soon__btn">📞 0916 961 409</a>
+      </div>
+    </div>
+
+    <!-- BẢN NGỮ PANEL -->
+    <div id="panel-gv-ban-ngu" role="tabpanel" class="gvcn-panel" hidden>
+      <div class="gvcn-section-hd">
+        <h2>Giáo Viên Bản Ngữ</h2>
+        <p>Đội ngũ giáo viên bản ngữ quốc tế – {banNguTeachers.length} thành viên</p>
+      </div>
+      <div class="gvcn-teacher-grid gvcn-teacher-grid--native">
+        {banNguTeachers.map(name => (
+          <div class="gvcn-teacher-card gvcn-teacher-card--native">
+            <div class="gvcn-teacher-card__avatar gvcn-teacher-card__avatar--native" style={`background:${getAvatarColor(name)}`}>
+              {getInitials(name)}
+            </div>
+            <span class="gvcn-teacher-card__name">{name}</span>
+            <span class="gvcn-teacher-card__badge">Native Speaker</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- TƯ VẤN PANEL -->
+    <div id="panel-tu-van" role="tabpanel" class="gvcn-panel" hidden>
+      <div class="gvcn-section-hd">
+        <h2>Đội Ngũ Tư Vấn Tại Các Cơ Sở</h2>
+        <p>Đội ngũ tư vấn tuyển sinh hỗ trợ phụ huynh tại 3 cơ sở – {tuVanTeachers.length} thành viên</p>
+      </div>
+      <div class="gvcn-teacher-grid">
+        {tuVanTeachers.map(name => (
+          <div class="gvcn-teacher-card">
+            <div class="gvcn-teacher-card__avatar" style={`background:${getAvatarColor(name)}`}>
+              {getInitials(name)}
+            </div>
+            <span class="gvcn-teacher-card__name">{name}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+  </div><!-- /panels -->
+
+  <!-- CTA -->
+  <section class="gvcn-cta">
+    <div class="gvcn-cta__inner">
+      <h2>Muốn gặp trực tiếp đội ngũ giáo viên?</h2>
+      <p>Đặt lịch tham quan trường và gặp gỡ giáo viên chủ nhiệm tương lai của con</p>
+      <div class="gvcn-cta__btns">
+        <a href="tel:+84916961409" class="gvcn-cta__btn gvcn-cta__btn--primary">📞 Gọi ngay: 0916 961 409</a>
+        <a href="https://zalo.me/0916961409" target="_blank" rel="noopener" class="gvcn-cta__btn gvcn-cta__btn--zalo">💬 Chat Zalo</a>
+      </div>
+    </div>
+  </section>
+
+  <FooterBase slot="footer" />
+</BaseLayout>
+
+<script>
+  // Tab switching
+  const tabBtns = document.querySelectorAll<HTMLButtonElement>('.gvcn-tab');
+  const panels = document.querySelectorAll<HTMLElement>('.gvcn-panel');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.tab;
+      tabBtns.forEach(b => {
+        b.classList.toggle('gvcn-tab--active', b.dataset.tab === target);
+        b.setAttribute('aria-selected', b.dataset.tab === target ? 'true' : 'false');
+      });
+      panels.forEach(p => {
+        const active = p.id === `panel-${target}`;
+        p.classList.toggle('gvcn-panel--active', active);
+        p.hidden = !active;
+      });
+    });
+  });
+
+  // Sticky tabs
+  const tabsWrap = document.getElementById('gvcnTabsWrap');
+  if (tabsWrap) {
+    const sentinel = document.createElement('div');
+    tabsWrap.parentElement!.insertBefore(sentinel, tabsWrap);
+    new IntersectionObserver(([e]) => {
+      tabsWrap.classList.toggle('gvcn-tabs-wrap--sticky', !e.isIntersecting);
+    }, { rootMargin: '-1px 0px 0px 0px', threshold: [1] }).observe(sentinel);
+  }
+</script>
+
+<style>
+  /* ========== HERO ========== */
+  .gvcn-hero {
+    background: linear-gradient(135deg, #0f2744 0%, #1a3c5e 60%, #1e4976 100%);
+    color: #fff;
+    padding: 3.5rem 1rem 3rem;
+    text-align: center;
+  }
+  .gvcn-hero__inner { max-width: 800px; margin: 0 auto; }
+  .gvcn-breadcrumb {
+    font-size: .85rem;
+    color: rgba(255,255,255,.65);
+    margin-bottom: 1rem;
+    display: flex; gap: .4rem; justify-content: center; align-items: center; flex-wrap: wrap;
+  }
+  .gvcn-breadcrumb a { color: rgba(255,255,255,.75); text-decoration: none; }
+  .gvcn-breadcrumb a:hover { color: #fff; }
+  .gvcn-hero__title {
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0 0 1rem;
+  }
+  .gvcn-hero__sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,.8);
+    max-width: 600px;
+    margin: 0 auto 2rem;
+    line-height: 1.6;
+  }
+  .gvcn-stats {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  }
+  .gvcn-stat {
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: .75rem;
+    padding: .75rem 1.25rem;
+    display: flex; flex-direction: column; align-items: center; gap: .15rem;
+    min-width: 100px;
+  }
+  .gvcn-stat__num { font-size: 1.5rem; font-weight: 800; color: #f6c94e; }
+  .gvcn-stat__lbl { font-size: .75rem; color: rgba(255,255,255,.75); }
+
+  /* ========== TABS ========== */
+  .gvcn-tabs-wrap {
+    background: #fff;
+    border-bottom: 2px solid #e5e7eb;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    transition: box-shadow .2s;
+  }
+  .gvcn-tabs-wrap--sticky { box-shadow: 0 2px 12px rgba(0,0,0,.12); }
+  .gvcn-tabs {
+    display: flex;
+    overflow-x: auto;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 .5rem;
+    scrollbar-width: none;
+  }
+  .gvcn-tabs::-webkit-scrollbar { display: none; }
+  .gvcn-tab {
+    display: flex; align-items: center; gap: .35rem;
+    padding: .85rem 1.1rem;
+    border: none; background: none; cursor: pointer;
+    font-size: .85rem; font-weight: 500; color: #6b7280;
+    border-bottom: 3px solid transparent;
+    white-space: nowrap;
+    transition: color .15s, border-color .15s;
+    flex-shrink: 0;
+  }
+  .gvcn-tab:hover { color: #1a3c5e; }
+  .gvcn-tab--active { color: #1a3c5e; border-bottom-color: #1a3c5e; font-weight: 700; }
+  .gvcn-tab__icon { font-size: 1rem; }
+
+  /* ========== PANELS ========== */
+  .gvcn-panels { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1rem 3rem; }
+  .gvcn-panel { display: none; }
+  .gvcn-panel--active { display: block; }
+
+  .gvcn-section-hd { text-align: center; margin-bottom: 2.5rem; }
+  .gvcn-section-hd h2 {
+    font-size: 1.5rem; font-weight: 800; color: #0f2744; margin: 0 0 .5rem;
+  }
+  .gvcn-section-hd p { color: #6b7280; font-size: .95rem; margin: 0; }
+
+  /* BGH grid */
+  .gvcn-bgh-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+  }
+  .gvcn-bgh-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    padding: 1.75rem 1rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: transform .15s, box-shadow .15s;
+  }
+  .gvcn-bgh-card:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+  .gvcn-bgh-card__avatar {
+    width: 72px; height: 72px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem; font-weight: 700; color: #fff;
+    margin: 0 auto 1rem;
+  }
+  .gvcn-bgh-card__badge {
+    display: inline-block;
+    font-size: .72rem; font-weight: 700; letter-spacing: .04em;
+    padding: .2rem .6rem; border-radius: 999px;
+    margin-bottom: .75rem;
+  }
+  .gvcn-bgh-card__name {
+    font-size: 1rem; font-weight: 700; color: #0f2744; margin: 0 0 .3rem;
+  }
+  .gvcn-bgh-card__org {
+    font-size: .8rem; color: #6b7280; margin: 0;
+  }
+
+  /* Teacher grid */
+  .gvcn-teacher-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
+  }
+  .gvcn-teacher-grid--native {
+    grid-template-columns: repeat(4, 1fr);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+  .gvcn-teacher-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: .75rem;
+    padding: 1.25rem .75rem;
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: .6rem;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .gvcn-teacher-card:hover { transform: translateY(-2px); box-shadow: 0 4px 14px rgba(0,0,0,.09); }
+  .gvcn-teacher-card--native { padding: 1.5rem 1rem; }
+  .gvcn-teacher-card__avatar {
+    width: 56px; height: 56px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .9rem; font-weight: 700; color: #fff;
+    flex-shrink: 0;
+  }
+  .gvcn-teacher-card__avatar--native {
+    width: 72px; height: 72px; font-size: 1.1rem;
+  }
+  .gvcn-teacher-card__name {
+    font-size: .85rem; font-weight: 600; color: #1f2937; line-height: 1.3;
+  }
+  .gvcn-teacher-card__badge {
+    font-size: .72rem; background: #dbeafe; color: #1e40af;
+    padding: .15rem .55rem; border-radius: 999px; font-weight: 600;
+  }
+
+  /* Coming soon */
+  .gvcn-coming-soon {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: #f9fafb;
+    border-radius: 1rem;
+    border: 2px dashed #e5e7eb;
+  }
+  .gvcn-coming-soon__icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+  .gvcn-coming-soon h3 { font-size: 1.25rem; color: #1f2937; margin: 0 0 .5rem; }
+  .gvcn-coming-soon p { color: #6b7280; margin: 0 0 1.5rem; }
+  .gvcn-coming-soon__btn {
+    display: inline-block;
+    background: #1a3c5e; color: #fff;
+    padding: .7rem 1.75rem; border-radius: .5rem;
+    text-decoration: none; font-weight: 600; font-size: .9rem;
+    transition: background .15s;
+  }
+  .gvcn-coming-soon__btn:hover { background: #0f2744; }
+
+  /* ========== CTA ========== */
+  .gvcn-cta {
+    background: #0f2744;
+    color: #fff;
+    padding: 4rem 1rem;
+    text-align: center;
+  }
+  .gvcn-cta__inner { max-width: 600px; margin: 0 auto; }
+  .gvcn-cta h2 { font-size: 1.5rem; font-weight: 800; margin: 0 0 .75rem; }
+  .gvcn-cta p { color: rgba(255,255,255,.8); margin: 0 0 2rem; }
+  .gvcn-cta__btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+  .gvcn-cta__btn {
+    display: inline-flex; align-items: center; gap: .4rem;
+    padding: .85rem 1.75rem; border-radius: .5rem;
+    text-decoration: none; font-weight: 700; font-size: .95rem;
+    transition: transform .15s, box-shadow .15s;
+  }
+  .gvcn-cta__btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+  .gvcn-cta__btn--primary { background: #f6c94e; color: #0f2744; }
+  .gvcn-cta__btn--zalo { background: #0068ff; color: #fff; }
+
+  /* ========== RESPONSIVE ========== */
+  @media (max-width: 900px) {
+    .gvcn-bgh-grid { grid-template-columns: repeat(3, 1fr); }
+    .gvcn-teacher-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .gvcn-bgh-grid { grid-template-columns: repeat(2, 1fr); }
+    .gvcn-teacher-grid { grid-template-columns: repeat(3, 1fr); }
+    .gvcn-teacher-grid--native { grid-template-columns: repeat(2, 1fr); }
+    .gvcn-tab__icon { display: none; }
+  }
+  @media (max-width: 420px) {
+    .gvcn-bgh-grid { grid-template-columns: 1fr 1fr; gap: .75rem; }
+    .gvcn-teacher-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>

@@ -108,7 +108,7 @@ export type PageSpec = {
 };
 
 export const siteName = 'Trường Việt Anh';
-export const defaultSiteUrl = 'https://hoc.truongvietanh.com';
+export const defaultSiteUrl = 'https://truongvietanh.com';
 export const adminUrl = 'https://admin.truongvietanh.com/admin';
 
 export const mainNavLeft = [

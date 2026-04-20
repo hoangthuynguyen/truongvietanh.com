@@ -1,5 +1,5 @@
 /**
- * Worker script cho hoc.truongvietanh.com
+ * Worker script cho truongvietanh.com
  *
  * Handles:
  * 1. POST /api/lead → forward to GoHighLevel CRM + Pancake CRM
@@ -293,7 +293,7 @@ async function sendEmailNotification(data, env) {
 
   // Derive which program they're interested in from the source/page
   const sourceLabel = (data.source || '').replace(/-/g, ' ').replace('squeeze ', '');
-  const pageUrl = data.page || 'https://hoc.truongvietanh.com';
+  const pageUrl = data.page || 'https://truongvietanh.com';
   const now = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
 
   const subject = `[HOC VIEN MOI] ${data.fullName} - ${schoolLabel} - Lien lac ngay ${data.phone}`;
@@ -357,7 +357,7 @@ async function sendEmailNotification(data, env) {
     </div>
 
     <p style="color:#999;font-size:12px;margin:0;text-align:center;">
-      Email tu dong tu he thong tuyen sinh hoc.truongvietanh.com
+      Email tu dong tu he thong tuyen sinh truongvietanh.com
     </p>
   </div>
 </div>`.trim();
@@ -370,7 +370,7 @@ async function sendEmailNotification(data, env) {
         to: [{ email: SALES_EMAIL, name: 'Tu - Sales TVA' }],
         cc: [{ email: CC_EMAIL, name: 'Duong Nguyen' }],
       }],
-      from: { email: 'leads@hoc.truongvietanh.com', name: 'Truong Viet Anh - Lead Alert' },
+      from: { email: 'leads@truongvietanh.com', name: 'Truong Viet Anh - Lead Alert' },
       subject,
       content: [{ type: 'text/html', value: body }],
     }),

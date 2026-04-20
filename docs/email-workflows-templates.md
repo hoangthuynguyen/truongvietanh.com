@@ -231,6 +231,6 @@ Trường Liên cấp Việt Anh
 269A Nguyễn Trọng Tuyển, P. Phú Nhuận, TP.HCM
 SĐT: 0916 961 409 | Email: tuyensinh@truongvietanh.com
 
-Email này được gửi vì bạn đã đăng ký trên website hoc.truongvietanh.com.
+Email này được gửi vì bạn đã đăng ký trên website truongvietanh.com.
 Hủy đăng ký: {{unsubscribe_url}}
 ```

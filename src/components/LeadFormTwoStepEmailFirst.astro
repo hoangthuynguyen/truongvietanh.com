@@ -39,7 +39,8 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         </div>
       </div>
 
-      <h3 class="form-step-title">Tư vấn cá nhân hoá lộ trình học tập</h3>
+      <h3 class="form-step-title">Đăng ký ngay để được tư vấn cá nhân hoá 1:1 lộ trình học tập qua Zalo</h3>
+      <p class="form-step-description">Đảm bảo tối ưu hóa lợi ích và phù hợp nhất cho con.</p>
 
       <div class="form-group">
         <input
@@ -254,9 +255,45 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     margin: 0;
   }
 
-  /* Override for white card context (pillar pages) */
-  .gi-form-card .form-step-title { color: #1a1a5e; }
-  .gi-form-card .form-step-description { color: #666666; }
+  /* Auto-contrast: khi form nằm trong card nền trắng → text dark navy */
+  .gi-form-card .form-step-title,
+  .sp-form-block .form-step-title,
+  .F .form-step-title,
+  .lead-form-card--light .form-step-title,
+  [data-form-bg="light"] .form-step-title {
+    color: #1a1a5e;
+  }
+  .gi-form-card .form-step-description,
+  .sp-form-block .form-step-description,
+  .F .form-step-description,
+  .lead-form-card--light .form-step-description,
+  [data-form-bg="light"] .form-step-description {
+    color: #475569;
+  }
+  /* Social proof trên card trắng */
+  .gi-form-card .form-social-proof,
+  .sp-form-block .form-social-proof,
+  .lead-form-card--light .form-social-proof,
+  [data-form-bg="light"] .form-social-proof {
+    color: #1a1a5e;
+  }
+  /* Progress label trên card trắng */
+  .gi-form-card .form-progress__label,
+  .sp-form-block .form-progress__label,
+  .lead-form-card--light .form-progress__label,
+  [data-form-bg="light"] .form-progress__label {
+    color: rgba(26,26,94,.6);
+  }
+  .gi-form-card .form-progress__step--active .form-progress__label,
+  .gi-form-card .form-progress__step--done .form-progress__label,
+  .sp-form-block .form-progress__step--active .form-progress__label,
+  .sp-form-block .form-progress__step--done .form-progress__label,
+  .lead-form-card--light .form-progress__step--active .form-progress__label,
+  .lead-form-card--light .form-progress__step--done .form-progress__label,
+  [data-form-bg="light"] .form-progress__step--active .form-progress__label,
+  [data-form-bg="light"] .form-progress__step--done .form-progress__label {
+    color: #1a1a5e;
+  }
 
   /* ===== SOCIAL PROOF ===== */
   .form-social-proof {

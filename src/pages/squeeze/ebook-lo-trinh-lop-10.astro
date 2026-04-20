@@ -28,7 +28,7 @@ const metrics = [
 const faqItems = [
   { question: 'Lộ trình này có phù hợp với con tôi không?', answer: 'Lộ trình được thiết kế cho phụ huynh có con từ lớp 5-9, đang muốn định hướng vào trường cấp 3 chất lượng. Nội dung được chia theo từng cấp lớp, nên Ba/Mẹ có thể chọn phần phù hợp nhất. Nếu con đang lớp 5-7, đây là thời điểm vàng. Nếu con đang lớp 8-9, lộ trình có phần tăng tốc riêng.' },
   { question: 'Tài liệu được gửi qua hình thức nào?', answer: 'Sau khi đăng ký, chúng tôi sẽ gửi toàn bộ tài liệu qua email trong vòng 24 giờ, bao gồm: ebook PDF (40+ trang), bộ đề test (file Word), bảng checklist (Google Sheets), và timeline tuyển sinh (PDF). Ba/Mẹ có thể tải về điện thoại, máy tính, hoặc in ra.' },
-  { question: 'Có phải tôi sẽ bị gửi quá nhiều email không?', answer: 'Không. Chúng tôi tôn trọng hộp thư của Ba/Mẹ. Sau email gửi tài liệu, chỉ gửi thêm 2-3 email có giá trị trong tháng đầu (tips học tập, thông báo webinar). Nếu không muốn nhận thêm, Ba/Mẹ có thể hủy đăng ký bằng 1 click trong bất kỳ email nào.' },
+  { question: 'Có phải tôi sẽ bị gửi quá nhiều email không?', answer: 'Không. Chúng tôi tôn trọng hộp thư của Ba/Mẹ. Sau email gửi tài liệu, chỉ gửi thêm 2-3 email có giá trị trong tháng đầu (tips học tập, thông báo livestream). Nếu không muốn nhận thêm, Ba/Mẹ có thể hủy đăng ký bằng 1 click trong bất kỳ email nào.' },
   { question: 'Có chi phí ẩn hay bất kỳ cam kết nào không?', answer: 'Hoàn toàn miễn phí, không có chi phí ẩn, không cần cam kết mua gì. Đây là tài liệu Trường Việt Anh biên soạn để hỗ trợ cộng đồng phụ huynh. Ba/Mẹ tải về, áp dụng cho con, và chia sẻ cho bạn bè nếu thấy hữu ích.' },
   { question: 'Lộ trình này khác gì so với các tài liệu miễn phí khác trên mạng?', answer: 'Lộ trình được biên soạn bởi đội ngũ giáo dục với 15+ năm kinh nghiệm thực tế tại TPHCM, dựa trên dữ liệu từ 5,000+ học sinh đã theo dõi. Nội dung cụ thể cho từng trường top tại TPHCM (công lập, dân lập, quốc tế), không phải lý thuyết chung chung. Kèm theo bộ đề test và công cụ đánh giá thực tế.' }
 ];
@@ -113,14 +113,14 @@ const faqItems = [
   .ebook-content__title { font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center; }
   .ebook-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
   .ebook-card { background-color: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
-  .ebook-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
+  .ebook-card:hover { border-color: #D4A843; box-shadow: 0 8px 20px rgba(212,168,67, 0.12); transform: translateY(-4px); }
   .ebook-card h3 { font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79; }
   .ebook-card p { font-size: 0.95rem; line-height: 1.7; color: #555; margin: 0; }
-  .ebook-bonus { background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%); border: 2px solid #E8792B; border-radius: 12px; padding: 2rem; margin: 2.5rem 0; text-align: center; }
+  .ebook-bonus { background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%); border: 2px solid #D4A843; border-radius: 12px; padding: 2rem; margin: 2.5rem 0; text-align: center; }
   .ebook-bonus__icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-  .ebook-bonus__title { font-family: Montserrat, sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .ebook-bonus__title { font-family: Montserrat, sans-serif; font-size: 1.25rem; font-weight: 700; color: #D4A843; margin-bottom: 1rem; }
   .ebook-bonus__text { font-size: 0.95rem; line-height: 1.7; color: #555; max-width: 700px; margin: 0 auto; }
-  .ebook-urgency { background-color: #f0f8ff; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; }
+  .ebook-urgency { background-color: #f0f8ff; border-left: 4px solid #D4A843; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; }
   .ebook-urgency__title { font-family: Montserrat, sans-serif; color: #1F4E79; margin-bottom: 0.75rem; }
   .ebook-urgency p { margin: 0; font-size: 0.95rem; line-height: 1.7; color: #1a1a1a; }
   @media (max-width: 768px) {

@@ -59,6 +59,11 @@ export default {
       return Response.redirect('https://truongvietanh.com' + url.pathname + url.search, 301);
     }
 
+    // Redirect /tin-tuc → /blog/ (301 permanent — blog is now the canonical URL)
+    if (url.pathname === '/tin-tuc' || url.pathname === '/tin-tuc/') {
+      return Response.redirect('https://truongvietanh.com/blog/', 301);
+    }
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS' && url.pathname === '/api/lead') {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
@@ -402,8 +407,8 @@ const WORKFLOW_MAP = {
   'squeeze-hoc-thu':        '385a3068-41ab-4875-aed2-cb1a2ec6df22',
   // WF4: Test Năng Lực
   'squeeze-test-nang-luc':  '2abb3b36-0c08-49dd-96a3-a3506520fcb1',
-  // WF5: Webinar Phụ Huynh
-  'squeeze-webinar':        'e8bc47e9-ac16-4a4e-90f9-e542edcc4719',
+  // WF5: Livestream Phụ Huynh
+  'squeeze-livestream':        'e8bc47e9-ac16-4a4e-90f9-e542edcc4719',
   // WF6: Tuyển Sinh Chung (all tuyen-sinh-* variants)
   'tuyen-sinh-mam-non':     'e621dee0-eae8-483e-997c-3912704bc9ba',
   'tuyen-sinh-tieu-hoc':    'e621dee0-eae8-483e-997c-3912704bc9ba',
@@ -754,13 +759,13 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- Recommended action -->
     <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #F59E0B;border-radius:12px;padding:18px;margin-bottom:20px;">
-      <p style="font-weight:800;color:#E8792B;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
+      <p style="font-weight:800;color:#D4A843;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
       <p style="margin:0 0 12px;font-size:14px;color:#7C2D12;line-height:1.6;">
         Con rất phù hợp với <strong>Lion Camp ${campLvl} tại cơ sở ${loc}</strong>.
         Đăng ký giữ chỗ trong 48 giờ tới để nhận <strong>Học bổng Early Bird đến 30%</strong>.
       </p>
       <div style="text-align:center;">
-        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#E8792B;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#D4A843;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
           💬 Chat Zalo giữ chỗ ngay
         </a>
       </div>

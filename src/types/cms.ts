@@ -358,7 +358,7 @@ export interface Form {
 // FUNNEL
 // ============================================================
 
-export type FunnelType = 'awareness' | 'lead_magnet' | 'webinar' | 'trial' | 'direct_enrollment';
+export type FunnelType = 'awareness' | 'lead_magnet' | 'livestream' | 'trial' | 'direct_enrollment';
 
 export interface Funnel {
   code: string;                        // unique, used as lead source

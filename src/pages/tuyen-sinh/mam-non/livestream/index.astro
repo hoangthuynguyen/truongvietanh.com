@@ -1,8 +1,8 @@
 ---
-/* Webinar / Live Session Landing Page */
-const pageTitle = 'Webinar MIỄN PHÍ: Cách chọn trường mầm non giúp con phát triển toàn diện';
-const pageDescription = 'Webinar miễn phí 12/04: Cách chọn trường mầm non, 5 sai lầm phổ biến, tiêu chí đánh giá chương trình. Đã có 156 phụ huynh đăng ký.';
-const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/webinar';
+/* Livestream / Live Session Landing Page */
+const pageTitle = 'Livestream MIỄN PHÍ: Cách chọn trường mầm non giúp con phát triển toàn diện';
+const pageDescription = 'Livestream miễn phí 12/04: Cách chọn trường mầm non, 5 sai lầm phổ biến, tiêu chí đánh giá chương trình. Đã có 156 phụ huynh đăng ký.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/livestream';
 ---
 
 <!doctype html>
@@ -351,10 +351,10 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/webinar';
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({
       'event': 'page_view',
-      'page_title': 'Webinar Miễn Phí - Mầm Non',
-      'page_url': 'https://truongvietanh.com/tuyen-sinh/mam-non/webinar',
+      'page_title': 'Livestream Miễn Phí - Mầm Non',
+      'page_url': 'https://truongvietanh.com/tuyen-sinh/mam-non/livestream',
       'school_level': 'mam-non',
-      'funnel_code': 'webinar-mn'
+      'funnel_code': 'livestream-mn'
     });
   </script>
 <!-- Google Tag Manager -->
@@ -369,8 +369,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
     "name": "Trường Mầm Non Việt Anh",
-    "url": "https://truongvietanh.com/tuyen-sinh/mam-non/webinar",
-    "description": "Webinar miễn phí 12/04: Cách chọn trường mầm non, 5 sai lầm phổ biến, tiêu chí đánh giá chương trình. Đã có 156 phụ huynh đăng ký.",
+    "url": "https://truongvietanh.com/tuyen-sinh/mam-non/livestream",
+    "description": "Livestream miễn phí 12/04: Cách chọn trường mầm non, 5 sai lầm phổ biến, tiêu chí đánh giá chương trình. Đã có 156 phụ huynh đăng ký.",
     "telephone": "+84-916-961-409",
     "address": {"@type": "PostalAddress", "addressLocality": "TP. Hồ Chí Minh", "addressCountry": "VN"},
     "parentOrganization": {"@type": "EducationalOrganization", "name": "Trường Liên Cấp Việt Anh", "url": "https://truongvietanh.com"}
@@ -391,10 +391,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <div class="L">
       <div class="badge">
         <span class="dot"></span>
-        🎥 Webinar miễn phí · Ngày 12/04
+        🎥 Livestream miễn phí · Ngày 12/04
       </div>
       <h1>
-        Webinar <em>MIỄN PHÍ</em>:<br/>
+        Livestream <em>MIỄN PHÍ</em>:<br/>
         Cách Chọn Trường Mầm Non<br/>
         Giúp Con Phát Triển Toàn Diện
       </h1>
@@ -420,14 +420,14 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <!-- Step 1: Email -->
         <div class="s1" id="s1">
           <div class="sd"><i class="on"></i><i></i></div>
-          <h2>Đăng Ký Webinar Miễn Phí Ngay</h2>
+          <h2>Đăng Ký Livestream Miễn Phí Ngay</h2>
           <div class="fd">Chỉ còn <b>38 slot</b> — Vội vã, bé bạn sẽ phải chờ lần tới</div>
           <form id="f1">
             <div class="fg">
               <label>Email của ba/mẹ</label>
               <input type="email" id="email" placeholder="email@example.com" autocomplete="email" required />
             </div>
-            <button type="submit" class="btn bo" id="b1">Đăng ký webinar ngay →</button>
+            <button type="submit" class="btn bo" id="b1">Đăng ký livestream ngay →</button>
           </form>
           <div class="fm">🔒 Bảo mật · Đăng ký miễn phí</div>
           <div class="fb">
@@ -492,7 +492,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           body: JSON.stringify({
             step: 'partial_capture',
             email: v,
-            source: 'webinar_mn',
+            source: 'livestream_mn',
             page: window.location.href,
             utm_source: new URLSearchParams(location.search).get('utm_source') || '',
             utm_medium: new URLSearchParams(location.search).get('utm_medium') || '',
@@ -505,7 +505,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       }
       $('s1').style.display = 'none';
       $('s2').style.display = 'block';
-      window.dataLayer?.push({ event: 'lead_s1', variant: 'webinar', email: v });
+      window.dataLayer?.push({ event: 'lead_s1', variant: 'livestream', email: v });
     };
 
     $('f2').onsubmit = async e => {
@@ -521,7 +521,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             fullName: $('nm').value.trim(),
             phone: $('ph').value.trim(),
             campus: $('campus').value.trim(),
-            source: 'webinar_mn',
+            source: 'livestream_mn',
             page: window.location.href,
             timestamp: new Date().toISOString()
           })
@@ -530,7 +530,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         console.error('[LeadForm] Step 2 error:', err);
       }
       ok();
-      window.dataLayer?.push({ event: 'lead_done', variant: 'webinar' });
+      window.dataLayer?.push({ event: 'lead_done', variant: 'livestream' });
     };
 
     $('sk').onclick = e => { e.preventDefault(); ok(); };
@@ -538,7 +538,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     function ok() {
       const name = $('nm')?.value?.trim() || '';
       const email = $('email')?.value?.trim() || '';
-      window.location.href = '/tuyen-sinh/mam-non/webinar/cam-on?name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email);
+      window.location.href = '/tuyen-sinh/mam-non/livestream/cam-on?name=' + encodeURIComponent(name) + '&email=' + encodeURIComponent(email);
     }
   </script>
 </body>

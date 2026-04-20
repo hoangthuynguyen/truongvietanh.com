@@ -1,0 +1,141 @@
+---
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const pageTitle = 'Chọn Trường Mầm Non 2026: Cẩm Nang Toàn Diện Cho Ba/Mẹ | Trường Việt Anh';
+const pageDescription = 'Cẩm nang miễn phí giúp Ba/Mẹ chọn trường mầm non đúng cho con tại TP.HCM: 12 tiêu chí vàng, bảng so sánh 5 trường, 7 câu hỏi phải hỏi khi tham quan, timeline tuyển sinh 2026. 3,000+ phụ huynh đã nhận.';
+const pageCanonical = 'https://truongvietanh.com/chon-truong-mam-non';
+const funnelCode = 'chon-truong-mam-non';
+
+const uspItems = [
+  { icon: '🧒', text: '12 tiêu chí vàng chọn trường mầm non — tỷ lệ giáo viên/trẻ, chất lượng chăm sóc, an toàn, dinh dưỡng, môi trường song ngữ' },
+  { icon: '📊', text: 'Bảng so sánh 5 trường mầm non — chấm điểm khách quan để ra quyết định dựa trên dữ liệu thay vì cảm tính' },
+  { icon: '💡', text: '7 câu hỏi phải hỏi khi tham quan — khai thác thông tin nhà trường thường không chủ động chia sẻ (tỷ lệ giáo viên nghỉ, cách xử lý trẻ ốm, chính sách hoàn phí…)' },
+  { icon: '📅', text: 'Timeline tuyển sinh Mầm non 2026 — tất cả mốc thời gian quan trọng tại TP.HCM, tránh bỏ lỡ deadline' },
+  { icon: '🏫', text: 'Hướng dẫn đánh giá môi trường — cách quan sát lớp học, khu vui chơi, phòng ngủ để biết trường có thực sự tốt cho bé' },
+  { icon: '📝', text: 'Mẫu ghi chép tham quan — in ra mang theo, tích điểm tại chỗ để so sánh chính xác sau khi về' }
+];
+
+const metrics = [
+  { number: '3,000+', label: 'Phụ huynh đã nhận cẩm nang' },
+  { number: '12', label: 'Tiêu chí đánh giá toàn diện' },
+  { number: '4.9/5', label: 'Đánh giá từ phụ huynh' },
+  { number: '15+', label: 'Năm kinh nghiệm biên soạn' }
+];
+
+const faqItems = [
+  { question: 'Cẩm nang này dành cho bé mấy tuổi?', answer: 'Cẩm nang phù hợp cho Ba/Mẹ có con từ 2–5 tuổi, đang tìm trường mầm non hoặc chuẩn bị chuyển trường. Cẩm nang có hướng dẫn riêng cho từng độ tuổi: nhà trẻ (2–3 tuổi), mầm (3–4 tuổi), chồi (4–5 tuổi) và lá (5–6 tuổi, chuẩn bị vào lớp 1).' },
+  { question: 'Tài liệu gồm những gì?', answer: 'Bộ tài liệu có 4 phần: (1) Cẩm nang 12 tiêu chí chọn trường mầm non dạng PDF in được; (2) Bảng so sánh 5 trường dạng Excel/Google Sheets; (3) Danh sách 7 câu hỏi phải hỏi khi tham quan; (4) Timeline tuyển sinh Mầm non 2026 tại TP.HCM với tất cả mốc quan trọng.' },
+  { question: 'Tài liệu có miễn phí không? Có cam kết gì không?', answer: 'Hoàn toàn miễn phí và không có bất kỳ cam kết nào. Đây là tài liệu Trường Việt Anh biên soạn từ 15+ năm kinh nghiệm và phản hồi của 3,000+ phụ huynh, chia sẻ để hỗ trợ cộng đồng Ba/Mẹ trong giai đoạn quan trọng này.' },
+  { question: 'Tôi nhận tài liệu bằng cách nào?', answer: 'Sau khi điền email và thông tin, tài liệu sẽ được gửi qua email trong vòng vài phút dưới dạng PDF + link Google Sheets. Ba/Mẹ vui lòng kiểm tra cả hộp Spam / Quảng cáo. Nếu không nhận được, hãy gọi/Zalo 0916 961 409.' },
+  { question: 'Sau khi nhận cẩm nang, tôi có được tư vấn không?', answer: 'Có. Trong 7 ngày sau, tư vấn viên sẽ gửi thêm các nội dung hữu ích qua email: case study phụ huynh thực tế, video giới thiệu cơ sở Mầm non Việt Anh, và lời mời tham quan miễn phí. Ba/Mẹ có thể hủy nhận email bất cứ lúc nào.' },
+  { question: 'Cẩm nang này khác gì so với bài viết trên Google?', answer: 'Cẩm nang được biên soạn bởi đội ngũ giáo dục mầm non tại Trường Việt Anh với 15+ năm kinh nghiệm tại TP.HCM. Tập trung vào những tiêu chí mà phụ huynh thường bỏ sót, kèm công cụ so sánh thực tế và timeline tuyển sinh 2026 — không phải thông tin chung chung trên mạng.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="mau-non"
+  funnelCode={funnelCode}
+>
+  <section slot="hero">
+    <span class="squeeze-hero__badge">🎁 Miễn phí — 3,000+ Ba/Mẹ đã nhận</span>
+    <h1 class="squeeze-hero__heading">Cẩm Nang Chọn Trường Mầm Non 2026</h1>
+    <p class="squeeze-hero__sub">12 tiêu chí vàng + bảng so sánh 5 trường + 7 câu hỏi phải hỏi khi tham quan + timeline tuyển sinh 2026 tại TP.HCM — dành riêng cho Ba/Mẹ đang tìm trường cho bé 2–5 tuổi.</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Trong cẩm nang có gì?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Được tin tưởng bởi" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="chon-content">
+      <h2 class="chon-title">Tại sao Ba/Mẹ cần cẩm nang này?</h2>
+
+      <div class="chon-grid">
+        <div class="chon-card">
+          <h3>🔍 Không bỏ sót tiêu chí quan trọng</h3>
+          <p>90% phụ huynh chỉ nhìn học phí và cơ sở vật chất, bỏ sót những tiêu chí quyết định chất lượng chăm sóc con: tỷ lệ giáo viên/trẻ, quy trình an toàn, thực đơn dinh dưỡng, cách xử lý khi bé ốm. Cẩm nang giúp đánh giá trường toàn diện, không bị hút mắt bởi quảng cáo.</p>
+        </div>
+        <div class="chon-card">
+          <h3>📊 So sánh khách quan giữa các trường</h3>
+          <p>Tham quan 3–5 trường trong vài tuần rất khó nhớ hết. Bảng so sánh cho phép Ba/Mẹ chấm điểm từng tiêu chí, ra quyết định dựa trên dữ liệu. Nhiều phụ huynh đã thay đổi lựa chọn cuối cùng sau khi điền bảng này.</p>
+        </div>
+        <div class="chon-card">
+          <h3>⏰ Kịp thời gian tuyển sinh 2026</h3>
+          <p>Mùa tuyển sinh mầm non TP.HCM thường bắt đầu từ tháng 3, nhưng nhiều trường tốt đã nhận hồ sơ từ tháng 1–2. Timeline chi tiết giúp Ba/Mẹ nắm đúng mốc mở đơn, hạn nộp, phỏng vấn, kết quả — không bỏ lỡ trường mơ ước.</p>
+        </div>
+        <div class="chon-card">
+          <h3>💬 Biết hỏi đúng câu khi tham quan</h3>
+          <p>7 câu hỏi trong cẩm nang giúp khai thác thông tin mà trường thường không chủ động chia sẻ: tỷ lệ giáo viên nghỉ việc, quy trình xử lý khi bé gặp sự cố, chính sách hoàn học phí. Đây là câu hỏi phụ huynh có kinh nghiệm luôn đặt ra.</p>
+        </div>
+      </div>
+
+      <div class="chon-urgency">
+        <p><strong>⚠️ Lưu ý quan trọng:</strong> Mùa tuyển sinh mầm non 2026 tại TP.HCM đang rất nóng. Nhiều trường tốt đã đóng đơn sớm hơn dự kiến. Ba/Mẹ nhận cẩm nang ngay hôm nay để có thời gian so sánh và quyết định kịp thời cho bé.</p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <div class="chon-form-intro">
+      <h2 class="squeeze-form-section__heading">Nhận cẩm nang MIỄN PHÍ qua email</h2>
+      <p class="squeeze-form-section__description">Điền email để nhận ngay bộ tài liệu 4 phần (PDF + Google Sheets) — Không spam, hủy bất cứ lúc nào.</p>
+      <ul class="chon-checklist">
+        <li>✓ Cẩm nang 12 tiêu chí chọn trường mầm non</li>
+        <li>✓ Bảng so sánh 5 trường (Excel)</li>
+        <li>✓ 7 câu hỏi phải hỏi khi tham quan</li>
+        <li>✓ Timeline tuyển sinh Mầm non 2026 TP.HCM</li>
+      </ul>
+    </div>
+    <LeadFormTwoStepEmailFirst
+      formId="chon-truong-mam-non-form"
+      funnelCode={funnelCode}
+      schoolLevel="mau-non"
+      submitText="Nhận cẩm nang miễn phí ngay"
+      successMessage="Cảm ơn Ba/Mẹ! Cẩm nang đang được gửi vào email của Ba/Mẹ..."
+    />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<script is:inline>
+(function(){
+  var formEl=document.querySelector('#chon-truong-mam-non-form-chon-truong-mam-non');
+  if(!formEl) return;
+  var obs=new MutationObserver(function(){
+    var success=formEl.querySelector('.form-step[data-step="success"]');
+    if(success && !success.hidden){
+      var nameInput=formEl.querySelector('input[name="parent_name"]');
+      var n=nameInput?nameInput.value:'';
+      setTimeout(function(){
+        window.location.href='/chon-truong-mam-non/cam-on?name='+encodeURIComponent(n);
+      },1800);
+      obs.disconnect();
+    }
+  });
+  obs.observe(formEl,{attributes:true,subtree:true,attributeFilter:['hidden']});
+})();
+</script>
+
+<style is:inline>
+  .chon-content{max-width:1000px;margin:0 auto}
+  .chon-title{font-family:Montserrat,sans-serif;font-size:1.75rem;font-weight:800;margin-bottom:1.5rem;color:#1a1a5e;text-align:center}
+  .chon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:2rem 0}
+  .chon-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.5rem 1.4rem;transition:border-color .2s,transform .2s}
+  .chon-card:hover{border-color:#D4A843;transform:translateY(-3px)}
+  .chon-card h3{font-family:Montserrat,sans-serif;font-size:1.08rem;font-weight:700;margin-bottom:.6rem;color:#1a1a5e;line-height:1.4}
+  .chon-card p{font-size:.96rem;line-height:1.7;color:#2d2d42;margin:0}
+  .chon-urgency{background:rgba(212,168,67,.12);border-left:4px solid #D4A843;padding:1.1rem 1.4rem;border-radius:8px;margin-top:1.5rem}
+  .chon-urgency p{margin:0;font-size:.96rem;line-height:1.65;color:#1a1a2e}
+  .chon-urgency strong{color:#1a1a5e}
+  .chon-form-intro{margin-bottom:1.5rem}
+  .chon-checklist{list-style:none;padding:0;margin:1.25rem auto 1.5rem;max-width:460px;text-align:left;display:flex;flex-direction:column;gap:.55rem}
+  .chon-checklist li{font-size:.96rem;color:#1a1a5e;font-weight:600;padding:.65rem .9rem;background:rgba(212,168,67,.1);border-radius:8px;border-left:3px solid #D4A843}
+  @media(max-width:768px){.chon-grid{grid-template-columns:1fr}}
+</style>

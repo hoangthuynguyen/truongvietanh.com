@@ -1,0 +1,152 @@
+---
+import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../components/USPGrid.astro';
+import TrustMetrics from '../../../components/TrustMetrics.astro';
+import FAQSection from '../../../components/FAQSection.astro';
+
+const pageTitle = 'Tuyển Sinh THCS - Trường Liên Cấp Việt Anh';
+const pageDescription = '95% học sinh Việt Anh vào TOP trường THPT — Bí quyết nằm ở 4 năm THCS. Chương trình song ngữ chuyên sâu, định hướng THPT, IELTS, Coding & AI từ lớp 6.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs';
+
+const uspItems = [
+  { icon: '🎯', text: '95% học sinh vào TOP THPT — con bạn sẽ là 1 trong số đó' },
+  { icon: '📚', text: 'Song ngữ chuyên sâu: IELTS 5.5-6.5 + Bộ GD&ĐT mạnh mẽ' },
+  { icon: '🔬', text: 'STEM nâng cao: Robotics, Coding, AI Lab — không phải "xưng tụng", mà thực hành' },
+  { icon: '🌐', text: 'Định hướng THPT ngay từ lớp 6 — Ba/Mẹ không cần "đoán mò" năm lớp 10' },
+  { icon: '✈️', text: 'Trao đổi quốc tế: Học sinh được làm Đại sứ, thăm trường đối tác nước ngoài' },
+  { icon: '🏆', text: 'Kỹ năng lãnh đạo: Debate, Thuyết trình, MUN — chuẩn bị hành trang THPT top' }
+];
+
+const metrics = [
+  { number: '15+', label: 'Năm chứng minh chất lượng' },
+  { number: '400+', label: 'Học sinh đã trải qua THCS' },
+  { number: '95%', label: 'Vào THPT top (Trần Đại Nghĩa, RSHQ...)' },
+  { number: '3', label: 'Cơ sở tiêu chuẩn tại TPHCM' }
+];
+
+const faqItems = [
+  {
+    question: '95% vào THPT top là thật hay chỉ là quảng cáo?',
+    answer: 'Thật 100%. Năm 2025, 38 em Việt Anh vào THPT top: Trần Đại Nghĩa, RSHQ, Lê Quý Đôn, Gia Định... Không phải "khó mà thi tốt" — là chúng tôi giúp mỗi em định hướng chính xác. Lý do kết quả này: (1) Nền tảng Tiếng Anh từ Tiểu Học (không cần "bắt đầu lại" ở THPT), (2) 4 năm rèn tư duy, kỹ năng làm leader, Presentation từ lớp 6, (3) Lớp nhỏ 30 em nên mỗi em được cô giáo "nhìn thấy" & định hướng riêng. Quan trọng nhất: Không phải tất cả em đều "điểm 9-10" — nhưng mỗi em được vào trường "phù hợp với mình", không bị "xếp hạng" hay bắt buộc chọn theo điểm điểm cao nhất.'
+  },
+  {
+    question: 'Con tôi không tài Toán — có vào THPT top được không?',
+    answer: 'Được! Nhìn lại kết quả tuyển sinh: Em yếu Toán nhưng khỏe Tiếng Anh + Kỹ năng Debate thường vào được các chuyên ngành Ngoại Ngữ, Quốc Tế, Tài Chính tại THPT top (và thường là những ngành "sôi động" hơn toán học thuần). THPT top không chỉ cần "điểm Toán cao" mà cần "con người toàn diện": có thể giao tiếp tốt, biết tư duy logic (mà không cần bằng Toán), có ý chí tự học. Tại Việt Anh, chúng tôi không "ép" mỗi em vào một khuôn "điểm cao = tố chất tốt" — mà giúp em hiểu: em yếu Toán nhưng khỏe Tiếng Anh là thế mạnh to lớn, em nên chọn con đường Quốc Tế/Ngoại Ngữ thay vì "cố gắng học Toán". Đó là định hướng thông minh.'
+  },
+  {
+    question: 'IELTS từ lớp 6 — con có học kịp được không?',
+    answer: 'Hoàn toàn không sợ. Tại Việt Anh, Tiếng Anh không phải môn "luyện thi IELTS từ lớp 6" — mà là ngôn ngữ "sống", "sử dụng hàng ngày" từ lớp 6. Cô giáo nước ngoài dạy Tiếng Anh tích hợp trong mỗi môn học (Khoa Học, Lịch Sử, Nghệ Thuật...). Em nói Tiếng Anh tự nhiên, không sợ phát âm. Lớp 8-9 (năm thứ 3-4), chúng tôi bắt đầu "chính thức chuẩn bị IELTS" (1-2 buổi/tuần). Mục tiêu: Lớp 9 tháng 4, em thi IELTS để có chứng chỉ khi vào THPT. Nếu em chưa đạt 5.5, chúng tôi hỗ trợ thêm (không tính thêm phí) để em tự tin khi vào THPT. Nhiều em vào THPT mà chưa có chứng chỉ IELTS, nhưng vì nền tảng tốt từ THCS, em học thêm 3-6 tháng là đạt 6.0 trở lên.'
+  },
+  {
+    question: 'Coding & AI từ THCS — con không phải "lập trình viên" được không?',
+    answer: 'Được hết. Coding & AI tại Việt Anh không phải "đào tạo hacker" từ lớp 6 — mà là giúp em biết "Công nghệ hoạt động như thế nào" & "Tôi có thể tạo gì với Code". Lớp 6-7: Em học Robotics cơ bản (LEGO, Arduino) — vui, sáng tạo, không phức tạp. Em lắp ráp Robot, làm nó chuyển động, giải thích bằng Tiếng Anh = Vừa học Code vừa học Tiếng Anh. Lớp 8-9: Em bắt đầu lập trình Python (ngôn ngữ dễ dàng nhất để bắt đầu), tham gia cuộc thi Coding Quốc gia (em sẽ kinh ngạc thấy mình giải được bài toán cứng), hoàn thành các dự án AI thực tế: Chatbot trả lời câu hỏi, Chương trình nhận diện hình ảnh, Ứng dụng dự báo... Sau THCS, em sẽ tự tin: "Nếu muốn, tôi có thể học Lập trình/AI ở THPT" hoặc "Tôi biết Code nhưng thích ngành khác" — tức là em có tự do chọn, không bị "sợ công nghệ".'
+  },
+  {
+    question: 'Có tư vấn THPT chuyên sâu không? Con tôi sẽ bị "lạc hướng" không?',
+    answer: 'Có & không sợ. Từ lớp 8 (năm thứ 3 THCS), mỗi em được một quy trình tư vấn toàn diện: (1) Bài kiểm tra Aptitude — không phải "trắc nghiệm IQ" mà kiểm tra Tính cách, Kỹ năng, Sở thích thực tế (làm gì khiến em vui? Em dễ tập trung ở cái gì? Em muốn giúp xã hội như thế nào?), (2) Buổi tư vấn 1-1 với cô Hướng dẫn + Ba/Mẹ (không "em + ba/mẹ" mà cô chủ động giúp ba/mẹ hiểu em), (3) Đề xuất danh sách THPT "phù hợp với em" (không chỉ "điểm cao" mà "ngành học + môi trường phù hợp"). Kết quả: Không còn tình trạng em vào trường "ba/mẹ chọn rồi em sợ" hay "em điểm cao vào trường khó rồi bị thụt lùi". Mỗi em được "nhìn thấy", không bị lạc hướng.'
+  },
+  {
+    question: 'Nhận hồ sơ đến tháng mấy? Có bao nhiêu suất?',
+    answer: 'Tuyển sinh THCS 2026-2027: Chúng tôi nhận hồ sơ từ tháng 3-5/2026, tuyển khoảng 100 học sinh (bao gồm Lớp 6 mới + Lớp 7 từ các trường khác). Lớp nhỏ 30 em/lớp, nên không quá nhiều em mới nhập học để đảm bảo chất lượng tư vấn cá nhân. Mỗi năm, 150-200 phụ huynh quan tâm nhưng trường chỉ có khoảng 100 suất — nên số suất rất giới hạn. Ba/Mẹ quan tâm nên đăng ký tham quan & tư vấn sớm (tháng 3-4 là thời điểm thích hợp nhất để em cảm nhận không khí trường, gặp giáo viên).'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="THCS, tuyển sinh THCS, trung học cơ sở, trường Việt Anh, song ngữ, IELTS, THPT"
+  schoolLevel="thcs"
+  funnelCode="tuyen-sinh-thcs"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      95% học sinh Việt Anh vào TOP trường THPT — Bí quyết nằm ở 4 năm THCS
+    </h1>
+    <p class="hero-subtitle">
+      4 năm vàng để con "tìm ra mình" — Song ngữ, STEM, Lãnh đạo, Định hướng THPT
+    </p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section featured-image-section">
+      <img src="https://media.truongvietanh.com/images/giao-vien-18.webp" alt="Giáo viên THCS Việt Anh hướng dẫn học sinh trong lớp học song ngữ" class="featured-image" width="800" height="450" loading="lazy" />
+      <p class="featured-caption">Giáo viên THCS Việt Anh đồng hành cùng học sinh trong từng tiết học song ngữ, giúp các em phát triển tư duy và kỹ năng toàn diện.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Lớp 6-9 là "Thời kỳ tạo hình" con bạn — Ba/Mẹ có biết?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Không phải học "ôn tập" mà học "tìm ra mình"</h3>
+          <p>Không phải ngồi làm đề cương 4 tiếng/ngày hay "nhét kiến thức". THCS Việt Anh là nơi con "tìm ra" mình thích gì, khỏe gì, yếu gì, mơ ước gì. Mỗi em được một "Lộ trình Cá nhân hóa" — nếu em khỏe Tiếng Anh nhưng yếu Toán, chúng tôi không "bắt" em học Toán mà giúp em "hiểu mình rồi chọn con đường phù hợp". Kết quả: Em vào THPT tự tin vì em "biết mình", không bị áp lực "so sánh điểm".</p>
+        </div>
+        <div class="content-card">
+          <h3>Tiếng Anh & IELTS: "Hộ chiếu" vào THPT top</h3>
+          <p>Trường THPT top chọn em vì (1) Tiếng Anh tốt (không cần điểm 10, nhưng phải tự tin nói + viết), (2) Có chứng chỉ IELTS (là "miếng bằng cấp" quốc tế). Tại Việt Anh, Tiếng Anh không phải "môn học" mà là "ngôn ngữ sống" từ Tiểu Học qua THCS. Lớp 8-9, em thi IELTS chính thức — sẽ có "Hộ chiếu Tiếng Anh" khi vào THPT. Đó là lợi thế to lớn mà nhiều em lớp 10 vẫn không có.</p>
+        </div>
+        <div class="content-card">
+          <h3>Kỹ năng "Làm Lãnh đạo" — Con bạn sẽ "không sợ nói"</h3>
+          <p>Debate, MUN (Mô phỏng Liên Hợp Quốc), Thuyết trình, Làm dự án nhóm... Mỗi tuần, em rèn kỹ năng mềm mà trường công không dạy. Trường THPT top chọn em vì em "biết cách nói thuyết phục", "lắng nghe để hiểu", "lãnh đạo cả nhóm hợp lý" — tức là em là "con người toàn diện", không chỉ "chứng chỉ điểm".</p>
+        </div>
+        <div class="content-card">
+          <h3>STEM nâng cao: Từ "chơi" Robot đến "làm" AI Project</h3>
+          <p>Lớp 6: Robotics LEGO (em làm Robot chuyển động). Lớp 7-8: Coding Python (em viết chương trình, tham gia cuộc thi Coding Quốc gia). Lớp 9: AI Project thực tế (em tạo Chatbot, Nhận diện hình ảnh, ứng dụng dự báo...). Em sẽ có "Portfolio công nghệ" khi vào THPT — là tiền tố để em tự tin chọn ngành Kỹ Thuật, CNTT, Khoa Học, hoặc thậm chí "khởi nghiệp công nghệ" lúc còn học THPT.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Trao đổi quốc tế — Trải nghiệm mà con chắc không có ở trường khác</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        <strong>Lớp 8-9</strong>, học sinh được tham gia chương trình trao đổi (2-3 tuần) tại trường đối tác nước ngoài (Mỹ, Anh, Úc, Singapore). Con bạn sẽ sống với "Gia đình chủ nhà", nói Tiếng Anh hàng ngày với bạn nước ngoài, tham dự lớp học quốc tế, hiểu sâu "Nền giáo dục thế giới khác như thế nào". Khi về, em sẽ trở nên "tự tin toàn cầu" — biết em có thể sống & học ở nước ngoài. Nhiều em sau đó tự nguyện chọn con đường du học (hoặc chọn ngành Quốc Tế) thay vì bị "ép buộc" ở nhà không hài lòng.<br/>
+      </p>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Tuyển sinh THCS 2026-2027: Suất hạn chế, tham quan sớm tháng 3-4</h2>
+    <p class="form-subheading">Hàng năm, 150-200 phụ huynh quan tâm nhưng Việt Anh chỉ có khoảng 100 suất (bao gồm Lớp 6 mới + Lớp 7 từ các trường khác). Con bạn nên tham quan & được tư vấn sớm để ba/mẹ & con cảm nhận đúng "môi trường học THCS phù hợp với con".</p>
+    <LeadFormTwoStepEmailFirst
+      formId="tuyen-sinh-form"
+      funnelCode="tuyen-sinh-thcs"
+      schoolLevel="thcs"
+      submitText="Đăng ký tham quan & tư vấn"
+      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để sắp xếp lịch tham quan và tư vấn chi tiết."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi phổ biến từ phụ huynh" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  .featured-image-section { text-align: center; margin-bottom: 3rem; }
+  .featured-image { width: 100%; max-width: 800px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); object-fit: cover; aspect-ratio: 16/9; }
+  .featured-caption { font-size: 0.9rem; color: #777; margin-top: 1rem; font-style: italic; max-width: 700px; margin-left: auto; margin-right: auto; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
+</style>

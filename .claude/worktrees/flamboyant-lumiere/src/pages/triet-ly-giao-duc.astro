@@ -1,0 +1,677 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getPillarPage } from '../lib/directus';
+
+const cmsPage = await getPillarPage('triet-ly-giao-duc');
+const cmsFaqs = cmsPage?.faq_items || null;
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường Việt Anh",
+    "alternateName": "Trường Liên Cấp Việt Anh",
+    "url": "https://truongvietanh.com",
+    "logo": "https://truongvietanh.com/logo-crest-80.webp",
+    "foundingDate": "2011",
+    "description": "Triết lý giáo dục toàn diện — phát triển con người qua 16 kỹ năng thế kỷ 21, chương trình Leader in Me, giáo dục song ngữ Anh-Việt chuẩn IELTS.",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Hồ Chí Minh",
+      "addressCountry": "VN"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "4.9",
+      "bestRating": "5",
+      "ratingCount": "300"
+    },
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": 500 },
+    "areaServed": ["TP. Hồ Chí Minh", "Long An", "Kiên Giang"]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "Triết lý giáo dục của Trường Việt Anh là gì?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Trường Việt Anh theo đuổi triết lý giáo dục toàn diện — phát triển cả tri thức, kỹ năng, phẩm chất và thể chất. Mục tiêu: đào tạo công dân toàn cầu sống hạnh phúc và thành công bền vững." }
+      },
+      {
+        "@type": "Question",
+        "name": "16 kỹ năng thế kỷ 21 theo WEF được dạy như thế nào tại Trường Việt Anh?",
+        "acceptedAnswer": { "@type": "Answer", "text": "16 kỹ năng WEF được tích hợp vào chương trình học hàng ngày qua 4 nhóm: Kiến thức nền tảng (6 kỹ năng), Năng lực cốt lõi (4 kỹ năng), và Phẩm chất con người (6 kỹ năng). Học sinh thực hành qua dự án thực tế, không chỉ học lý thuyết." }
+      },
+      {
+        "@type": "Question",
+        "name": "Chương trình Leader in Me tại Trường Việt Anh khác gì so với các trường khác?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Trường Việt Anh triển khai Leader in Me (bản quyền Franklin Covey) toàn trường — từ Mầm non đến THPT. 7 thói quen lãnh đạo của Stephen Covey được điều chỉnh phù hợp từng lứa tuổi, giúp học sinh tự chủ, có trách nhiệm và biết hợp tác." }
+      },
+      {
+        "@type": "Question",
+        "name": "Giáo dục song ngữ Anh-Việt tại Trường Việt Anh khác gì trường quốc tế?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Trường Việt Anh dùng phương pháp Immersion (đắm chìm) — học sinh học các môn bằng tiếng Anh, không phải dịch thuật. Lộ trình từ Mầm non đến THPT đảm bảo đầu ra IELTS 6.0-8.0 với học phí chỉ bằng 1/3 đến 1/5 trường quốc tế." }
+      },
+      {
+        "@type": "Question",
+        "name": "Hệ thống PDR là gì và áp dụng ra sao?",
+        "acceptedAnswer": { "@type": "Answer", "text": "PDR (Play — Discover — Reflect) là phương pháp giáo dục độc quyền của Trường Việt Anh: học sinh Chơi để khám phá, Khám phá để hiểu, và Phản tư để ghi nhớ. Áp dụng chủ yếu ở Mầm non và Tiểu học." }
+      },
+      {
+        "@type": "Question",
+        "name": "Tầm nhìn 2030 của Trường Việt Anh là gì?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Đến 2030, Trường Việt Anh hướng tới trở thành hệ thống giáo dục liên cấp hàng đầu Việt Nam với 20+ cơ sở, 30.000+ học sinh, và 100% học sinh tốt nghiệp đạt IELTS 6.0+ cùng đầy đủ 16 kỹ năng thế kỷ 21." }
+      },
+      {
+        "@type": "Question",
+        "name": "Làm sao đăng ký tìm hiểu triết lý giáo dục Trường Việt Anh?",
+        "acceptedAnswer": { "@type": "Answer", "text": "Phụ huynh có thể đăng ký tham quan trường miễn phí tại trang web hoặc gọi 0916 961 409 để được tư vấn chi tiết về triết lý giáo dục và chương trình đào tạo." }
+      },
+      { "@type": "Question", "name": "Triết lý giáo dục có áp dụng giống nhau cho mọi cấp học không?", "acceptedAnswer": { "@type": "Answer", "text": "Cùng triết lý, khác phương pháp. PDR và 16 kỹ năng WEF được điều chỉnh theo lứa tuổi: Mầm non học qua chơi, Tiểu học qua dự án, THCS-THPT qua nghiên cứu và tranh biện." } },
+      { "@type": "Question", "name": "Phụ huynh tham gia vào quá trình giáo dục như thế nào?", "acceptedAnswer": { "@type": "Answer", "text": "Phụ huynh là đối tác giáo dục: họp 1-1 với giáo viên, workshop Leader in Me cho phụ huynh, Open Day tham quan lớp, báo cáo học tập hàng tháng, Hội Phụ Huynh hoạt động tích cực." } }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Giới thiệu", "item": "https://truongvietanh.com/gioi-thieu" },
+      { "@type": "ListItem", "position": 3, "name": "Triết lý giáo dục", "item": "https://truongvietanh.com/triet-ly-giao-duc" }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title={cmsPage?.title || "Triết Lý Giáo Dục Việt Anh – Phát Triển Toàn Diện"}
+  description={cmsPage?.description || "Triết lý giáo dục Việt Anh: 16 kỹ năng WEF, Leader in Me, song ngữ chuẩn IELTS, hệ thống PDR. Đào tạo công dân toàn cầu từ 2011."}
+  canonical="https://truongvietanh.com/triet-ly-giao-duc"
+  ogImage="https://media.truongvietanh.com/images/extra-20230311-DSC08552-scaled.webp"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase />
+
+    <!-- ====== HERO WITH FORM ====== -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">/</span>
+            <a href="/gioi-thieu">Giới thiệu</a>
+            <span aria-hidden="true">/</span>
+            <span>Triết lý giáo dục</span>
+          </nav>
+
+          <h1 class="gi-h1">Triết Lý Giáo Dục Trường Việt Anh: Phát Triển Toàn Diện Con Người</h1>
+          <p class="gi-subtitle">Dạy con trở thành công dân toàn cầu — Sống hạnh phúc, thành công bền vững</p>
+          <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
+
+          <div class="gi-hero-rating">
+            <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <span class="gi-rating-text">4.9/5 (300+ đánh giá)</span>
+          </div>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>15+</strong> năm</div>
+            <div class="gi-badge"><strong>500+</strong> giáo viên</div>
+            <div class="gi-badge"><strong>12.000+</strong> học sinh</div>
+            <div class="gi-badge"><strong>16</strong> kỹ năng WEF</div>
+          </div>
+        </div>
+
+        <div class="gi-hero-right">
+          <div class="gi-form-card">
+            <p class="gi-form-heading">Tìm hiểu triết lý giáo dục — Đăng ký tham quan miễn phí</p>
+            <LeadFormTwoStepEmailFirst
+              formId="triet-ly-form"
+              funnelCode="triet-ly-giao-duc-pillar"
+              schoolLevel="lien-cap"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image after hero -->
+    <div class="gi-container" style="margin-top:2rem;margin-bottom:1rem;">
+      <img src="https://media.truongvietanh.com/images/giao-vien-36.webp" alt="Triết lý giáo dục Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
+    </div>
+
+    <!-- ====== TOC SIDEBAR + CONTENT ====== -->
+    <div class="gi-container gi-body">
+      <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4/2026</p>
+      <!-- Sticky TOC sidebar -->
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Mục lục</p>
+        <ol class="gi-toc-list">
+          <li><a href="#triet-ly">Triết lý giáo dục là gì?</a></li>
+          <li><a href="#16-ky-nang">16 kỹ năng thế kỷ 21</a></li>
+          <li><a href="#leader-in-me">Leader in Me</a></li>
+          <li><a href="#he-thong-pdr">Hệ thống PDR</a></li>
+          <li><a href="#song-ngu">Giáo dục song ngữ</a></li>
+          <li><a href="#su-menh-2030">Sứ mệnh & Tầm nhìn 2030</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="#triet-ly-form-triet-ly-giao-duc-pillar" class="gi-toc-cta">Đăng ký tham quan</a>
+      </nav>
+
+      <!-- Main content -->
+      <article class="gi-main">
+
+        <!-- Section 1: Triết lý giáo dục tổng quan -->
+        <section id="triet-ly" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0018 8 6 6 0 006 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 018.91 14"/></svg></span>Triết lý giáo dục của Trường Việt Anh là gì?</h2>
+          <p>Từ ngày thành lập năm 2011, Trường Việt Anh kiên định theo đuổi một triết lý giáo dục rõ ràng: <strong>phát triển toàn diện con người</strong> — không chỉ dạy kiến thức mà còn rèn kỹ năng, bồi đắp phẩm chất và nuôi dưỡng thể chất cho mỗi học sinh.</p>
+          <p>Khác với mô hình giáo dục truyền thống tập trung vào điểm số và thi cử, Trường Việt Anh tin rằng mục đích cuối cùng của giáo dục là giúp học sinh <strong>sống hạnh phúc và thành công bền vững</strong> trong một thế giới không ngừng thay đổi. Điều đó đòi hỏi các em phải được trang bị năng lực thích ứng, tư duy phản biện, khả năng giao tiếp đa ngôn ngữ và phẩm chất lãnh đạo từ sớm.</p>
+          <p>Triết lý này được cụ thể hoá thành 4 trụ cột cốt lõi, xuyên suốt từ Mầm non đến THPT:</p>
+
+          <div class="gi-values-grid">
+            <h3>4 trụ cột giáo dục toàn diện</h3>
+            <div class="gi-values-items" style="grid-template-columns: repeat(4, 1fr);">
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#128218;</span>
+                <strong>Tri thức</strong>
+                <p>Nền tảng học thuật vững chắc theo chuẩn Bộ GD&ĐT kết hợp chương trình quốc tế</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9881;</span>
+                <strong>Kỹ năng</strong>
+                <p>16 kỹ năng thế kỷ 21 theo <a href="https://www.weforum.org/stories/2020/10/top-10-work-skills-of-tomorrow-how-long-it-takes-to-learn-them/" target="_blank" rel="noopener">WEF</a> — từ tư duy phản biện đến sáng tạo</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9829;</span>
+                <strong>Phẩm chất</strong>
+                <p>5 giá trị cốt lõi: Tôn trọng & Tự trọng, Trách nhiệm, Tài giỏi, Chính trực, Yêu thương</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#9889;</span>
+                <strong>Thể chất</strong>
+                <p>Giáo dục thể chất, dinh dưỡng học đường và hoạt động ngoài trời hàng ngày</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Với hơn <strong>500 giáo viên</strong> và đội ngũ quản lý chuyên nghiệp, Trường Việt Anh hiện phục vụ hơn <strong>12.000 học sinh</strong> tại 9 cơ sở trên 3 tỉnh thành. Triết lý giáo dục toàn diện không chỉ là khẩu hiệu — mà là kim chỉ nam cho mọi hoạt động dạy và học hàng ngày.</p>
+
+          <img src="https://media.truongvietanh.com/images/da-ngoai-15.webp" alt="Hoạt động trải nghiệm Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
+
+          <div class="gi-evidence-bar">
+            <div class="gi-evidence-item">
+              <strong>2011</strong>
+              <span>Năm thành lập</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>500+</strong>
+              <span>Giáo viên</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>12.000+</strong>
+              <span>Học sinh</span>
+            </div>
+            <div class="gi-evidence-item">
+              <strong>9</strong>
+              <span>Cơ sở</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section 2: 16 kỹ năng thế kỷ 21 -->
+        <section id="16-ky-nang" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>16 kỹ năng thế kỷ 21 (WEF) được tích hợp thế nào?</h2>
+          <p><a href="https://www.weforum.org/stories/2020/10/top-10-work-skills-of-tomorrow-how-long-it-takes-to-learn-them/" target="_blank" rel="noopener">Diễn đàn Kinh tế Thế giới (WEF)</a> đã xác định <strong>16 kỹ năng thiết yếu</strong> mà mọi học sinh cần có để thành công trong thế kỷ 21. Trường Việt Anh là một trong số ít hệ thống giáo dục tại Việt Nam tích hợp đầy đủ 16 kỹ năng này vào chương trình giảng dạy từ Mầm non đến THPT.</p>
+          <p>16 kỹ năng được chia thành 3 nhóm lớn, mỗi nhóm được thiết kế lồng ghép vào các môn học và hoạt động ngoại khoá hàng ngày — không phải dạy riêng lẻ mà tích hợp tự nhiên vào quá trình học tập.</p>
+
+          <div class="gi-comparison-box">
+            <h3>Nhóm 1: Kiến thức nền tảng (Foundational Literacies)</h3>
+            <p>Nền tảng để học sinh tiếp cận và xử lý thông tin trong cuộc sống hàng ngày.</p>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Kỹ năng</th>
+                    <th>Mô tả</th>
+                    <th>Cách tích hợp tại Trường Việt Anh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>1. Đọc viết</strong></td>
+                    <td>Literacy</td>
+                    <td>Song ngữ Anh-Việt từ Mầm non, Academic Reading & Writing từ Tiểu học</td>
+                  </tr>
+                  <tr>
+                    <td><strong>2. Tính toán</strong></td>
+                    <td>Numeracy</td>
+                    <td>Toán ứng dụng thực tế, Math in English từ lớp 1</td>
+                  </tr>
+                  <tr>
+                    <td><strong>3. Khoa học</strong></td>
+                    <td>Scientific Literacy</td>
+                    <td>STEAM, thí nghiệm thực hành, Science Fair hàng năm</td>
+                  </tr>
+                  <tr>
+                    <td><strong>4. Công nghệ</strong></td>
+                    <td>ICT Literacy</td>
+                    <td>Coding từ lớp 3, AI Literacy, Digital Citizenship</td>
+                  </tr>
+                  <tr>
+                    <td><strong>5. Tài chính</strong></td>
+                    <td>Financial Literacy</td>
+                    <td>Chương trình "Nhà kinh doanh nhí", mô phỏng kinh tế tại THCS-THPT</td>
+                  </tr>
+                  <tr>
+                    <td><strong>6. Văn hoá & Công dân</strong></td>
+                    <td>Cultural & Civic Literacy</td>
+                    <td>Trao đổi văn hoá quốc tế, dự án cộng đồng, giáo dục công dân toàn cầu</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="gi-leader-grid">
+            <div class="gi-leader-card">
+              <h4>Nhóm 2: Năng lực cốt lõi (Competencies)</h4>
+              <p style="font-size: 0.9rem; color: #5c6e80; margin-bottom: 0.75rem;">Cách học sinh tiếp cận và giải quyết các thách thức phức tạp.</p>
+              <ol>
+                <li><strong>7. Tư duy phản biện</strong> (Critical Thinking) — Phân tích, đánh giá thông tin đa chiều qua debate, case study</li>
+                <li><strong>8. Sáng tạo</strong> (Creativity) — Dự án STEAM, Design Thinking, cuộc thi sáng tạo hàng quý</li>
+                <li><strong>9. Giao tiếp</strong> (Communication) — Thuyết trình hàng tuần, viết luận, podcast học sinh</li>
+                <li><strong>10. Hợp tác</strong> (Collaboration) — Học nhóm, dự án liên lớp, hoạt động tình nguyện</li>
+              </ol>
+            </div>
+            <div class="gi-leader-card">
+              <h4>Nhóm 3: Phẩm chất con người (Character Qualities)</h4>
+              <p style="font-size: 0.9rem; color: #5c6e80; margin-bottom: 0.75rem;">Cách học sinh ứng xử với bản thân và thế giới xung quanh.</p>
+              <ol start="11">
+                <li><strong>11. Tò mò</strong> (Curiosity) — Khuyến khích đặt câu hỏi, nghiên cứu độc lập</li>
+                <li><strong>12. Chủ động</strong> (Initiative) — Leader in Me, học sinh tự quản lý dự án</li>
+                <li><strong>13. Kiên trì</strong> (Persistence) — Thử thách cá nhân, rèn ý chí qua thể thao</li>
+                <li><strong>14. Thích ứng</strong> (Adaptability) — Xử lý tình huống, học từ thất bại</li>
+                <li><strong>15. Lãnh đạo</strong> (Leadership) — Hội đồng học sinh, Đại sứ trường học</li>
+                <li><strong>16. Ý thức xã hội</strong> (Social & Cultural Awareness) — Dự án cộng đồng, từ thiện</li>
+              </ol>
+            </div>
+          </div>
+
+          <p>Mỗi học kỳ, giáo viên đánh giá sự tiến bộ của học sinh trên cả 16 kỹ năng thông qua <strong>rubric chuẩn hoá</strong> — không chỉ dựa vào điểm số mà còn qua quan sát hành vi, portfolio dự án và phản hồi từ bạn bè. Phụ huynh nhận báo cáo chi tiết về sự phát triển toàn diện của con mỗi quý.</p>
+        </section>
+
+        <!-- Section 3: Leader in Me -->
+        <section id="leader-in-me" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg></span>Chương trình Leader in Me (Stephen Covey)?</h2>
+          <p>Trường Việt Anh là đối tác chính thức của <strong>Franklin Covey Education</strong> trong việc triển khai chương trình <strong><a href="https://www.leaderinme.org" target="_blank" rel="noopener">Leader in Me</a></strong> — mô hình giáo dục lãnh đạo dựa trên cuốn sách nổi tiếng "7 Thói Quen Của Người Thành Đạt" của Stephen R. Covey. Chương trình được áp dụng tại hơn 5.000 trường trên toàn thế giới và Trường Việt Anh là một trong những đơn vị tiên phong tại Việt Nam.</p>
+          <p>Thay vì chỉ dạy kiến thức, Leader in Me giúp mỗi học sinh nhận ra <strong>"mình là nhà lãnh đạo của chính cuộc đời mình"</strong>. 7 thói quen được điều chỉnh phù hợp với từng lứa tuổi — từ 3 tuổi ở Mầm non đến 18 tuổi ở THPT.</p>
+
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-13.webp" alt="Học sinh phát triển kỹ năng lãnh đạo Leader in Me" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <div class="gi-leader-grid">
+            <div class="gi-leader-card">
+              <h4>7 thói quen lãnh đạo cho học sinh</h4>
+              <ol>
+                <li><strong>Chủ động</strong> (Be Proactive) — Tôi chịu trách nhiệm về hành vi và lựa chọn của mình</li>
+                <li><strong>Bắt đầu từ mục tiêu</strong> (Begin with the End in Mind) — Tôi lập kế hoạch trước khi hành động</li>
+                <li><strong>Ưu tiên việc quan trọng</strong> (Put First Things First) — Tôi làm việc cần làm trước khi chơi</li>
+                <li><strong>Tư duy cùng thắng</strong> (Think Win-Win) — Tôi muốn mình vui và người khác cũng vui</li>
+                <li><strong>Hiểu người trước</strong> (Seek First to Understand) — Tôi lắng nghe trước khi nói</li>
+                <li><strong>Hợp tác sáng tạo</strong> (Synergize) — Cùng nhau chúng tôi làm tốt hơn một mình</li>
+                <li><strong>Rèn luyện bản thân</strong> (Sharpen the Saw) — Tôi chăm sóc cơ thể, trí óc, trái tim và tâm hồn</li>
+              </ol>
+            </div>
+            <div class="gi-leader-card">
+              <h4>Triển khai toàn trường — không chỉ trong lớp học</h4>
+              <ul>
+                <li><strong>Ngôn ngữ lãnh đạo chung:</strong> Giáo viên, nhân viên, phụ huynh đều sử dụng 7 thói quen trong giao tiếp hàng ngày</li>
+                <li><strong>Hội đồng học sinh tự quản:</strong> Học sinh từ lớp 3 trở lên tự tổ chức sự kiện, quản lý trật tự</li>
+                <li><strong>Leadership Notebook:</strong> Mỗi em có sổ mục tiêu cá nhân, tự theo dõi tiến bộ</li>
+                <li><strong>Đại sứ trường học:</strong> Lớp lớn hướng dẫn lớp nhỏ — tạo văn hoá mentoring</li>
+                <li><strong>Ngày Lãnh Đạo (Leadership Day):</strong> Sự kiện hàng năm để học sinh trình bày thành quả trước phụ huynh và khách mời</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>Kết quả sau nhiều năm triển khai: học sinh Trường Việt Anh <strong>tự tin hơn, có trách nhiệm hơn, và biết đặt mục tiêu</strong> rõ ràng cho bản thân. Nhiều cựu học sinh phản hồi rằng 7 thói quen đã giúp các em thành công ở đại học và trong sự nghiệp — không chỉ về điểm số mà cả trong cách sống và làm việc.</p>
+        </section>
+
+        <!-- Section 4: Hệ thống PDR -->
+        <section id="he-thong-pdr" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></span>Hệ thống PDR — Play Discover Reflect?</h2>
+          <p>PDR (Play — Discover — Reflect) là phương pháp giáo dục mang tính đặc trưng của Trường Việt Anh, đặc biệt hiệu quả ở bậc Mầm non và Tiểu học. Thay vì ép trẻ ngồi yên học thuộc lòng, PDR tôn trọng bản năng tự nhiên của trẻ em: <strong>học qua chơi, hiểu qua trải nghiệm, nhớ qua phản tư</strong>.</p>
+
+          <div class="gi-roadmap">
+            <h3>3 giai đoạn của chu trình PDR</h3>
+            <div class="gi-roadmap-grid" style="grid-template-columns: repeat(3, 1fr);">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">P</div>
+                <strong>Play (Chơi)</strong>
+                <p>Trẻ được tự do khám phá thông qua các hoạt động vui chơi có mục đích. Giáo viên thiết kế môi trường học tập kích thích trí tò mò — từ góc xây dựng, góc nghệ thuật đến sân chơi ngoài trời.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">D</div>
+                <strong>Discover (Khám phá)</strong>
+                <p>Trong quá trình chơi, trẻ tự phát hiện các quy luật, giải quyết vấn đề và xây dựng kiến thức. Giáo viên đóng vai trò hướng dẫn viên (facilitator), đặt câu hỏi mở để kích thích tư duy.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">R</div>
+                <strong>Reflect (Phản tư)</strong>
+                <p>Sau mỗi hoạt động, trẻ được hướng dẫn nhìn lại: "Con đã học được gì?", "Lần sau con sẽ làm khác như thế nào?". Bước này giúp trẻ ghi nhớ sâu và phát triển tư duy siêu nhận thức (metacognition).</p>
+              </div>
+            </div>
+          </div>
+
+          <p>PDR không chỉ là phương pháp dạy — mà là cách Trường Việt Anh nhìn nhận trẻ em: <strong>mỗi đứa trẻ là một nhà nghiên cứu nhỏ</strong>, có khả năng tự xây dựng kiến thức khi được đặt trong môi trường phù hợp. Nghiên cứu khoa học thần kinh đã chứng minh rằng trẻ em học hiệu quả nhất khi được trải nghiệm trực tiếp, không phải nghe giảng thụ động.</p>
+          <p>Phụ huynh muốn tìm hiểu chi tiết hơn về hệ thống PDR, vui lòng <a href="/he-thong-pdr">xem trang chuyên đề Hệ thống PDR &rarr;</a></p>
+        </section>
+
+        <!-- Section 5: Giáo dục song ngữ -->
+        <section id="song-ngu" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>Giáo dục song ngữ Anh-Việt khác gì trường quốc tế?</h2>
+          <p>Một trong những câu hỏi phụ huynh đặt ra nhiều nhất: <em>"Trường Việt Anh dạy tiếng Anh giống hay khác trường quốc tế?"</em>. Câu trả lời ngắn gọn: <strong>phương pháp tương đương, nhưng triết lý khác biệt và chi phí thấp hơn đáng kể</strong>.</p>
+
+          <div class="gi-comparison-box">
+            <h3>So sánh: Trường Việt Anh vs Trường Quốc Tế</h3>
+            <div class="gi-table-responsive">
+              <table class="gi-table">
+                <thead>
+                  <tr>
+                    <th>Tiêu chí</th>
+                    <th>Trường Quốc Tế</th>
+                    <th>Trường Việt Anh</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Phương pháp</td>
+                    <td>100% tiếng Anh, giáo trình nước ngoài</td>
+                    <td>Immersion 30-50% TA + chương trình Bộ GD&ĐT</td>
+                  </tr>
+                  <tr>
+                    <td>Bản sắc văn hoá</td>
+                    <td>Có thể xa rời văn hoá Việt</td>
+                    <td>Giữ vững gốc rễ Việt Nam + tầm nhìn quốc tế</td>
+                  </tr>
+                  <tr>
+                    <td>Đầu ra tiếng Anh</td>
+                    <td>IELTS 6.5-8.5</td>
+                    <td>IELTS 6.0-8.0</td>
+                  </tr>
+                  <tr>
+                    <td>Giáo viên bản ngữ</td>
+                    <td>90-100% GV nước ngoài</td>
+                    <td>30-40% GV bản ngữ + GV Việt có chứng chỉ quốc tế</td>
+                  </tr>
+                  <tr>
+                    <td>Học phí/tháng</td>
+                    <td>15-50 triệu</td>
+                    <td>5-8 triệu</td>
+                  </tr>
+                  <tr>
+                    <td>Bằng cấp</td>
+                    <td>Bằng quốc tế (có thể không được công nhận tại VN)</td>
+                    <td>Bằng Bộ GD&ĐT + chứng chỉ IELTS quốc tế</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <p>Điểm khác biệt cốt lõi nằm ở triết lý: Trường Việt Anh không dạy tiếng Anh như một "môn học" riêng biệt mà áp dụng phương pháp <strong>Immersion (đắm chìm)</strong> — học sinh học Toán, Khoa học, Nghệ thuật bằng tiếng Anh một cách tự nhiên, giống như cách trẻ em song ngữ ở các nước phát triển.</p>
+
+          <img src="https://media.truongvietanh.com/images/giao-vien-25.webp" alt="Giáo viên bản ngữ dạy tiếng Anh tại Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <div class="gi-roadmap">
+            <h3>Lộ trình tiếng Anh Immersion 4 giai đoạn</h3>
+            <div class="gi-roadmap-grid">
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">MN</div>
+                <strong>Mầm non (2-5 tuổi)</strong>
+                <p>100% Immersion — Trẻ tiếp xúc tiếng Anh qua vui chơi, hát, kể chuyện với giáo viên bản ngữ. Không dạy ngữ pháp, chỉ "sống" trong tiếng Anh.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">TH</div>
+                <strong>Tiểu học (6-10 tuổi)</strong>
+                <p>UK Curriculum — Toán, Khoa học bằng tiếng Anh. Phát triển Academic Reading & Writing. Mục tiêu: Starters-Flyers.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">THCS</div>
+                <strong>THCS (11-14 tuổi)</strong>
+                <p>Giao tiếp + Học thuật — Thuyết trình, viết luận, phản biện bằng tiếng Anh. Mục tiêu: IELTS 4.5-5.5.</p>
+              </div>
+              <div class="gi-roadmap-item">
+                <div class="gi-roadmap-badge">THPT</div>
+                <strong>THPT (15-18 tuổi)</strong>
+                <p>IELTS chuyên sâu — GV bản ngữ + trung tâm khảo thí. Đầu ra: IELTS 6.0-8.0. Sẵn sàng du học.</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Quan trọng nhất, học sinh Trường Việt Anh vẫn giữ vững <strong>bản sắc văn hoá Việt Nam</strong>: các em học Văn, Sử, Địa theo chương trình Bộ GD&ĐT, tham gia các lễ hội truyền thống, và được khuyến khích tự hào về nguồn gốc dân tộc. Đây là lợi thế mà nhiều trường quốc tế không có.</p>
+          <p>Ngoài ra, Trường Việt Anh còn hợp tác triển khai chương trình tiếng Anh cho hơn <strong>100 trường tại TP.HCM</strong> — chứng minh chất lượng giáo trình đã được kiểm chứng trên quy mô rộng.</p>
+        </section>
+
+        <!-- Section 6: Sứ mệnh và Tầm nhìn 2030 -->
+        <section id="su-menh-2030" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>Sứ mệnh và tầm nhìn 2030?</h2>
+          <p>Sứ mệnh của Trường Việt Anh từ ngày thành lập đến nay không thay đổi: <strong>"Tạo ra môi trường học tập vui vẻ và thực dụng"</strong>. "Vui vẻ" vì trẻ em học tốt nhất khi hạnh phúc. "Thực dụng" vì mọi kiến thức phải gắn liền với cuộc sống thực — không dạy những gì học sinh sẽ không bao giờ dùng đến.</p>
+
+          <div class="gi-leader-grid">
+            <div class="gi-leader-card">
+              <h4>Sứ mệnh hiện tại</h4>
+              <ul>
+                <li>Tạo môi trường học tập <strong>an toàn, vui vẻ và kích thích</strong> cho mọi học sinh</li>
+                <li>Phát triển toàn diện: tri thức, kỹ năng, phẩm chất, thể chất</li>
+                <li>Đào tạo <strong>công dân toàn cầu</strong> giữ vững bản sắc Việt Nam</li>
+                <li>Mang giáo dục chất lượng quốc tế đến <strong>mọi gia đình</strong>, không chỉ giới thượng lưu</li>
+                <li>Xây dựng cộng đồng phụ huynh — nhà trường cùng đồng hành</li>
+              </ul>
+            </div>
+            <div class="gi-leader-card">
+              <h4>Tầm nhìn 2030</h4>
+              <ul>
+                <li><strong>20+ cơ sở</strong> trên toàn quốc — từ TP.HCM mở rộng ra Đà Nẵng, Hà Nội</li>
+                <li><strong>30.000+ học sinh</strong> được thụ hưởng giáo dục toàn diện</li>
+                <li><strong>100% học sinh tốt nghiệp</strong> đạt IELTS 6.0+ và đầy đủ 16 kỹ năng WEF</li>
+                <li>Trở thành <strong>đối tác đào tạo giáo viên</strong> cho các trường trong khu vực</li>
+                <li>Phát triển <strong>nền tảng EdTech</strong> phục vụ học sinh toàn quốc</li>
+              </ul>
+            </div>
+          </div>
+
+          <p>Để hiện thực hoá tầm nhìn 2030, Trường Việt Anh đầu tư mạnh vào 3 lĩnh vực then chốt:</p>
+          <div class="gi-values-grid">
+            <div class="gi-values-items" style="grid-template-columns: repeat(3, 1fr);">
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#128101;</span>
+                <strong>Con người</strong>
+                <p>Tuyển dụng, đào tạo và giữ chân giáo viên giỏi — mức lương cạnh tranh top 10% ngành</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#128187;</span>
+                <strong>Công nghệ</strong>
+                <p>Ứng dụng AI trong cá nhân hoá lộ trình học, quản lý lớp học thông minh, báo cáo real-time cho phụ huynh</p>
+              </div>
+              <div class="gi-value-card">
+                <span class="gi-value-icon">&#127969;</span>
+                <strong>Cơ sở vật chất</strong>
+                <p>Mở rộng hệ thống cơ sở đạt chuẩn quốc tế — phòng lab, thư viện, sân thể thao, không gian sáng tạo</p>
+              </div>
+            </div>
+          </div>
+
+          <p>Trường Việt Anh tin rằng: <strong>mỗi đứa trẻ đều xứng đáng được hưởng nền giáo dục tốt nhất</strong> — không phân biệt hoàn cảnh kinh tế. Đó là lý do học phí Trường Việt Anh luôn duy trì ở mức hợp lý (5-8 triệu/tháng) trong khi chất lượng không thua kém trường quốc tế.</p>
+        </section>
+
+        <!-- Section 7: FAQ -->
+        <section id="faq" class="gi-section">
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>Câu hỏi thường gặp về triết lý giáo dục Trường Việt Anh</h2>
+          <p>Tổng hợp những câu hỏi phụ huynh hay thắc mắc khi tìm hiểu về triết lý và phương pháp giáo dục tại Trường Việt Anh.</p>
+
+          <div class="gi-faq-list">
+            {cmsFaqs ? (
+              cmsFaqs.map((faq, i) => (
+                <details class="gi-faq-item" open={i === 0}>
+                  <summary>{faq.question}</summary>
+                  <div class="gi-faq-answer">
+                    <p set:html={faq.answer} />
+                  </div>
+                </details>
+              ))
+            ) : (
+              <>
+            
+            <details class="gi-faq-item" open>
+              <summary>Triết lý giáo dục toàn diện cụ thể là gì?</summary>
+              <div class="gi-faq-answer">
+                <p>Giáo dục toàn diện tại Trường Việt Anh nghĩa là phát triển đồng đều 4 trụ cột: Tri thức (học thuật), Kỹ năng (16 kỹ năng WEF), Phẩm chất (5 giá trị cốt lõi + Leader in Me) và Thể chất (thể thao, dinh dưỡng). Học sinh không chỉ giỏi về điểm số mà còn tự tin, biết lãnh đạo, giao tiếp tốt và có sức khoẻ.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>16 kỹ năng WEF có được kiểm tra đánh giá không?</summary>
+              <div class="gi-faq-answer">
+                <p>Có. Mỗi học kỳ, giáo viên đánh giá sự tiến bộ của học sinh trên 16 kỹ năng bằng rubric chuẩn hoá. Kết quả được gửi cho phụ huynh qua báo cáo phát triển toàn diện (Holistic Development Report) — khác với chỉ gửi bảng điểm như trường truyền thống.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Con tôi nhút nhát, Leader in Me có phù hợp không?</summary>
+              <div class="gi-faq-answer">
+                <p>Rất phù hợp. Leader in Me không dạy trẻ phải "nổi bật" hay "ngoại giao giỏi" — mà giúp mỗi em nhận ra thế mạnh riêng và tự tin vào chính mình. Nhiều phụ huynh phản hồi rằng con từ rụt rè đã dần dám phát biểu, đặt mục tiêu và chủ động hơn chỉ sau 1-2 học kỳ.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Phương pháp PDR có nghiên cứu khoa học nào chứng minh không?</summary>
+              <div class="gi-faq-answer">
+                <p>Có. PDR dựa trên nền tảng lý thuyết constructivism (kiến tạo) của Jean Piaget và experiential learning (học qua trải nghiệm) của John Dewey. Nghiên cứu thần kinh học hiện đại cũng xác nhận rằng trẻ em dưới 10 tuổi ghi nhớ hiệu quả nhất khi được trải nghiệm trực tiếp và phản tư sau đó — chính xác là quy trình PDR.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Học song ngữ có khiến con bị loãng kiến thức không?</summary>
+              <div class="gi-faq-answer">
+                <p>Không. Nghiên cứu của Đại học Harvard cho thấy trẻ em song ngữ có khả năng tập trung, chuyển đổi nhiệm vụ và giải quyết vấn đề tốt hơn trẻ đơn ngữ. Tại Trường Việt Anh, chương trình tiếng Việt vẫn đảm bảo 100% chuẩn Bộ GD&ĐT — tiếng Anh là phần bổ sung, không thay thế.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Trường Việt Anh có khác gì trường quốc tế?</summary>
+              <div class="gi-faq-answer">
+                <p>Trường Việt Anh giữ vững bản sắc Việt Nam (Văn, Sử, Địa, lễ hội truyền thống) trong khi tích hợp chương trình quốc tế (UK Curriculum, IELTS, Leader in Me). Học sinh tốt nghiệp có bằng Bộ GD&ĐT + IELTS, đủ điều kiện vào đại học trong nước lẫn du học. Học phí chỉ bằng 1/3 đến 1/5 trường quốc tế.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Làm sao đăng ký tìm hiểu thêm về triết lý giáo dục?</summary>
+              <div class="gi-faq-answer">
+                <p>Phụ huynh có thể đăng ký tham quan trường miễn phí ngay tại form trên trang này, hoặc gọi số <a href="tel:0916961409"><strong>0916 961 409</strong></a> để được tư vấn chi tiết. Buổi tham quan sẽ bao gồm gặp gỡ Ban Giám Hiệu, tham quan lớp học thực tế, và trải nghiệm một buổi học mẫu.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Triết lý giáo dục có áp dụng giống nhau cho mọi cấp học không?</summary>
+              <div class="gi-faq-answer">
+                <p><strong>Cùng triết lý, khác phương pháp.</strong> Hệ thống PDR và 16 kỹ năng thế kỷ 21 được áp dụng xuyên suốt từ Mầm Non đến THPT, nhưng được điều chỉnh phù hợp từng lứa tuổi: Mầm non học qua chơi và khám phá, Tiểu học qua dự án thực tế, THCS-THPT qua nghiên cứu, tranh biện và giải quyết vấn đề. Điều này giúp con phát triển liền mạch mà không bị gián đoạn khi chuyển cấp.</p>
+              </div>
+            </details>
+            <details class="gi-faq-item">
+              <summary>Phụ huynh tham gia vào quá trình giáo dục của con như thế nào?</summary>
+              <div class="gi-faq-answer">
+                <p>Trường Việt Anh coi phụ huynh là <strong>đối tác giáo dục</strong>. Mỗi học kỳ, phụ huynh tham gia: họp phụ huynh 1-1 với giáo viên chủ nhiệm, workshop nuôi dạy con (Leader in Me cho phụ huynh), Open Day tham quan lớp, và nhận báo cáo học tập chi tiết hàng tháng. Trường cũng có Hội Phụ Huynh hoạt động tích cực, cùng tổ chức sự kiện và đóng góp ý kiến cải tiến.</p>
+              </div>
+            </details>
+              </>
+            )}
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <!-- ====== BOTTOM CTA ====== -->
+    <section class="gi-bottom-cta">
+      <div class="gi-container gi-bottom-cta-inner">
+        <div class="gi-bottom-cta-text">
+          <h2>Tìm hiểu triết lý giáo dục qua buổi tham quan thực tế</h2>
+          <p>Hãy để con được trải nghiệm môi trường học tập toàn diện tại Trường Việt Anh. Điền form bên cạnh — đội ngũ tư vấn sẽ liên hệ trong 24 giờ để sắp xếp lịch tham quan phù hợp.</p>
+          <p style="margin-top: 1rem; font-size: 0.95rem;">Hoặc gọi ngay: <a href="tel:0916961409" style="color: #D4A843; font-weight: 700;">0916 961 409</a></p>
+        </div>
+          <div class="gi-author-bio">
+            <p class="gi-author-bio__label">Biên soạn bởi</p>
+            <p class="gi-author-bio__name">Ban Truyền Thông Trường Việt Anh</p>
+            <p class="gi-author-bio__desc">Nội dung được biên soạn bởi đội ngũ truyền thông Trường Việt Anh với hơn 13 năm kinh nghiệm trong giáo dục song ngữ. Thông tin được kiểm duyệt bởi Ban Giám Hiệu.</p>
+          </div>
+          <div class="gi-next-step">
+            <p class="gi-next-step-title">Bước Tiếp Theo</p>
+            <div class="gi-next-step-links">
+              <a href="/tuyen-sinh" class="ns-tour">Đặt Lịch Tham Quan</a>
+              <a href="tel:0916961409" class="ns-phone">📞 0916 961 409</a>
+              <a href="https://zalo.me/0916961409" class="ns-zalo">💬 Nhắn Zalo</a>
+            </div>
+          </div>
+        <div class="gi-bottom-cta-form">
+          <LeadFormTwoStepEmailFirst
+            formId="triet-ly-bottom-form"
+            funnelCode="triet-ly-giao-duc-bottom"
+            schoolLevel="lien-cap"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== RELATED CONTENT ====== -->
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Tìm hiểu thêm</h2>
+        <div class="gi-related-grid">
+          <a href="/gioi-thieu" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #1a1a5e 0%, #2d2d8a 100%);"></div>
+            <h3>Giới thiệu Trường Việt Anh</h3>
+            <p>Tổng quan hệ thống giáo dục liên cấp song ngữ — 9 cơ sở, 15+ năm kinh nghiệm, 12.000+ học sinh.</p>
+          </a>
+          <a href="/he-thong-pdr" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #D4A843 0%, #b8922e 100%);"></div>
+            <h3>Hệ thống PDR chi tiết</h3>
+            <p>Play — Discover — Reflect: phương pháp giáo dục đặc trưng giúp trẻ học qua trải nghiệm thực tế.</p>
+          </a>
+          <a href="/tuyen-sinh" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Tuyển sinh năm học mới</h3>
+            <p>Thông tin tuyển sinh, hồ sơ nhập học và chính sách ưu đãi cho phụ huynh đăng ký sớm.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<script>
+  // Smooth scroll for TOC links
+  document.querySelectorAll('.gi-toc-list a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', href);
+        }
+      }
+    });
+  });
+
+  // FAQ accordion — only one open at a time
+  document.querySelectorAll('.gi-faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        document.querySelectorAll('.gi-faq-item').forEach(other => {
+          if (other !== item && other.open) {
+            other.open = false;
+          }
+        });
+      }
+    });
+  });
+</script>

@@ -1,0 +1,434 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeaderBase from '../../components/HeaderBase.astro';
+import FooterBase from '../../components/FooterBase.astro';
+import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { CATEGORIES, detectCategory, getCategoryBySlug } from '../../lib/blog-categories';
+
+type Post = {
+  id: number | string;
+  title: string;
+  slug: string;
+  status?: string;
+  excerpt?: string | null;
+  published_at?: string | null;
+  category?: string | null;
+  featured_image?: string | null;
+};
+
+type DirectusSchema = { posts: Post[] };
+
+// ─── Fetch posts ──────────────────────────────────────────────────────────────
+const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
+const token = (import.meta.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7').trim();
+
+const client = token
+  ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
+  : createDirectus<DirectusSchema>(url).with(rest());
+
+let allPosts: Post[] = [];
+
+try {
+  let page = 1;
+  let hasMore = true;
+  while (hasMore) {
+    const batch = await client.request(
+      readItems('posts', {
+        fields: ['id', 'title', 'slug', 'status', 'excerpt', 'published_at', 'category', 'featured_image'],
+        filter: { status: { _eq: 'published' } },
+        sort: ['-published_at', '-id'],
+        limit: 100,
+        offset: (page - 1) * 100,
+      }),
+    );
+    allPosts = [...allPosts, ...batch];
+    hasMore = batch.length === 100;
+    page++;
+  }
+  allPosts = allPosts.filter(p => p.slug && !/[:\*\?"<>|]/.test(p.slug));
+} catch {
+  allPosts = [];
+}
+
+// ─── Attach category ──────────────────────────────────────────────────────────
+const postsWithCategory = allPosts.map(p => ({
+  ...p,
+  _category: p.category || detectCategory(p.title, p.excerpt),
+}));
+
+const featuredPosts = postsWithCategory.slice(0, 3);
+
+const categoryCounts = CATEGORIES.reduce((acc, cat) => {
+  acc[cat.slug] = cat.slug === 'tat-ca'
+    ? allPosts.length
+    : postsWithCategory.filter(p => p._category === cat.slug).length;
+  return acc;
+}, {} as Record<string, number>);
+
+function formatDate(d?: string | null) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    name: 'Blog Trường Việt Anh',
+    description: 'Kiến thức nuôi dạy con, chuyển cấp, IELTS, kỹ năng sống và tin tức giáo dục từ Trường Việt Anh.',
+    url: 'https://truongvietanh.com/blog',
+    inLanguage: 'vi',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Trường Việt Anh',
+      url: 'https://truongvietanh.com',
+      logo: { '@type': 'ImageObject', url: 'https://truongvietanh.com/logo-crest-80.webp' },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://truongvietanh.com/blog' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Blog Trường Việt Anh — Nuôi Dạy Con, IELTS, Chuyển Cấp & Giáo Dục"
+  description="Hơn 500 bài viết kiến thức: nuôi dạy con, chuẩn bị chuyển cấp, luyện IELTS, kỹ năng sống và tin tức giáo dục từ đội ngũ Trường Việt Anh."
+  canonical="https://truongvietanh.com/blog"
+  ogImage="https://media.truongvietanh.com/images/giao-vien-35.webp"
+  structuredData={structuredData}
+  noPopup={true}
+>
+  <div class="bi-page">
+    <HeaderBase currentPath="/blog" />
+
+    <!-- ===== HERO ===== -->
+    <section class="bi-hero">
+      <div class="bi-container">
+        <nav class="bi-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a>
+          <span>/</span>
+          <span>Blog</span>
+        </nav>
+        <h1 class="bi-hero__title">Blog Trường Việt Anh</h1>
+        <p class="bi-hero__sub">
+          Kiến thức nuôi dạy con, chuẩn bị chuyển cấp, luyện IELTS và kỹ năng sống
+          — từ đội ngũ giáo dục 15 năm kinh nghiệm.
+        </p>
+        <div class="bi-hero__stats">
+          <span><strong>{allPosts.length}+</strong> bài viết</span>
+          <span>·</span>
+          <span><strong>8</strong> chủ đề</span>
+          <span>·</span>
+          <span>Cập nhật hàng tuần</span>
+        </div>
+        <!-- Search -->
+        <div class="bi-search">
+          <input
+            type="search"
+            id="biSearchInput"
+            class="bi-search__input"
+            placeholder="Tìm bài viết... (vd: IELTS, lớp 1, kỹ năng sống)"
+            aria-label="Tìm kiếm bài viết"
+            autocomplete="off"
+          />
+          <svg class="bi-search__icon" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FEATURED POSTS ===== -->
+    {featuredPosts.length > 0 && (
+      <section class="bi-featured">
+        <div class="bi-container">
+          <h2 class="bi-section-title">Bài Viết Nổi Bật</h2>
+          <div class="bi-featured__grid">
+            {featuredPosts.map((p, i) => {
+              const cat = getCategoryBySlug(p._category);
+              return (
+                <a href={`/blog/${p.slug}`} class={`bi-featured__card${i === 0 ? ' bi-featured__card--main' : ''}`}>
+                  <div class="bi-featured__card-body">
+                    <span class="bi-cat-badge">{cat.icon} {cat.label}</span>
+                    <h3 class="bi-featured__card-title">{p.title}</h3>
+                    {p.excerpt && <p class="bi-featured__card-excerpt">{p.excerpt}</p>}
+                    <time class="bi-featured__card-date">{formatDate(p.published_at)}</time>
+                  </div>
+                </a>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+    )}
+
+    <!-- ===== CATEGORY TABS ===== -->
+    <div class="bi-cat-wrap" id="biCatWrap">
+      <div class="bi-container">
+        <div class="bi-cats" role="tablist" aria-label="Danh mục bài viết">
+          {CATEGORIES.map((cat, i) => (
+            <button
+              class={`bi-cat-btn${i === 0 ? ' bi-cat-btn--active' : ''}`}
+              role="tab"
+              aria-selected={i === 0 ? 'true' : 'false'}
+              data-cat={cat.slug}
+            >
+              <span class="bi-cat-btn__icon">{cat.icon}</span>
+              <span class="bi-cat-btn__label">{cat.label}</span>
+              <span class="bi-cat-btn__count">{categoryCounts[cat.slug] ?? 0}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== POST GRID ===== -->
+    <section class="bi-posts">
+      <div class="bi-container">
+        <div id="biNoResults" class="bi-no-results" style="display:none">
+          <div class="bi-no-results__icon">🔍</div>
+          <p>Không tìm thấy bài viết phù hợp. Thử từ khóa khác.</p>
+        </div>
+        <div class="bi-grid" id="biGrid">
+          {postsWithCategory.map(p => {
+            const cat = getCategoryBySlug(p._category);
+            return (
+              <a
+                href={`/blog/${p.slug}`}
+                class="bi-card"
+                data-cat={p._category}
+                data-title={p.title.toLowerCase()}
+                data-excerpt={(p.excerpt ?? '').toLowerCase()}
+              >
+                <div class="bi-card__top">
+                  <span class="bi-cat-badge">{cat.icon} {cat.label}</span>
+                </div>
+                <h3 class="bi-card__title">{p.title}</h3>
+                {p.excerpt && <p class="bi-card__excerpt">{p.excerpt}</p>}
+                <div class="bi-card__footer">
+                  <time class="bi-card__date">{formatDate(p.published_at)}</time>
+                  <span class="bi-card__read">Đọc bài →</span>
+                </div>
+              </a>
+            );
+          })}
+        </div>
+        <div class="bi-loadmore" id="biLoadMore">
+          <button class="bi-loadmore__btn" id="biLoadMoreBtn">Xem thêm bài viết</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CATEGORY OVERVIEW ===== -->
+    <section class="bi-cats-overview">
+      <div class="bi-container">
+        <h2 class="bi-section-title">Khám Phá Theo Chủ Đề</h2>
+        <div class="bi-cats-overview__grid">
+          {CATEGORIES.slice(1).map(cat => (
+            <a href={`/blog/danh-muc/${cat.slug}`} class="bi-cat-card">
+              <span class="bi-cat-card__icon">{cat.icon}</span>
+              <h3 class="bi-cat-card__name">{cat.label}</h3>
+              <p class="bi-cat-card__desc">{cat.description}</p>
+              <span class="bi-cat-card__count">{categoryCounts[cat.slug] ?? 0} bài</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== BOTTOM CTA ===== -->
+    <section class="bi-cta">
+      <div class="bi-container bi-cta__inner">
+        <div class="bi-cta__text">
+          <h2>Bạn muốn tư vấn trực tiếp?</h2>
+          <p>Đội ngũ chuyên gia giáo dục Việt Anh sẵn sàng tư vấn cá nhân hóa lộ trình cho con.</p>
+        </div>
+        <div class="bi-cta__actions">
+          <a href="/tuyen-sinh" class="bi-btn bi-btn--gold">Đặt lịch tư vấn</a>
+          <a href="tel:+84916961409" class="bi-btn bi-btn--outline">📞 0916 961 409</a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+(function () {
+  const BATCH = 24;
+  let visibleCount = BATCH;
+  let activeCat = 'tat-ca';
+  let searchQuery = '';
+
+  const grid = document.getElementById('biGrid');
+  const allCards = Array.from(grid ? grid.querySelectorAll('.bi-card') : []);
+  const catBtns = document.querySelectorAll('.bi-cat-btn');
+  const searchInput = document.getElementById('biSearchInput');
+  const loadMoreBtn = document.getElementById('biLoadMoreBtn');
+  const loadMoreWrap = document.getElementById('biLoadMore');
+  const noResults = document.getElementById('biNoResults');
+
+  function getFiltered() {
+    return allCards.filter(function(card) {
+      var catMatch = activeCat === 'tat-ca' || card.dataset.cat === activeCat;
+      var q = searchQuery.trim();
+      var searchMatch = !q ||
+        (card.dataset.title || '').includes(q) ||
+        (card.dataset.excerpt || '').includes(q);
+      return catMatch && searchMatch;
+    });
+  }
+
+  function render() {
+    var filtered = getFiltered();
+    allCards.forEach(function(c) { c.style.display = 'none'; });
+    filtered.slice(0, visibleCount).forEach(function(c) { c.style.display = ''; });
+    if (noResults) noResults.style.display = filtered.length === 0 ? '' : 'none';
+    if (loadMoreWrap) loadMoreWrap.style.display = filtered.length > visibleCount ? '' : 'none';
+  }
+
+  catBtns.forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      activeCat = btn.dataset.cat || 'tat-ca';
+      visibleCount = BATCH;
+      catBtns.forEach(function(b) {
+        b.classList.toggle('bi-cat-btn--active', b.dataset.cat === activeCat);
+        b.setAttribute('aria-selected', b.dataset.cat === activeCat ? 'true' : 'false');
+      });
+      render();
+      var wrap = document.getElementById('biCatWrap');
+      if (wrap) wrap.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  var debounce;
+  if (searchInput) {
+    searchInput.addEventListener('input', function() {
+      clearTimeout(debounce);
+      debounce = setTimeout(function() {
+        searchQuery = searchInput.value.toLowerCase();
+        visibleCount = BATCH;
+        render();
+      }, 200);
+    });
+  }
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() {
+      visibleCount += BATCH;
+      render();
+    });
+  }
+
+  render();
+
+  var catWrap = document.getElementById('biCatWrap');
+  if (catWrap && 'IntersectionObserver' in window) {
+    var sentinel = document.createElement('div');
+    catWrap.parentElement.insertBefore(sentinel, catWrap);
+    new IntersectionObserver(function(entries) {
+      catWrap.classList.toggle('bi-cat-wrap--sticky', !entries[0].isIntersecting);
+    }, { threshold: 0 }).observe(sentinel);
+  }
+})();
+</script>
+
+<style is:inline>
+  .bi-page { --navy: #1a1a5e; --navy-dk: #12123e; --gold: #D4A843; --gold-lt: rgba(212,168,67,.12); --sub: #5a5a7a; --border: #E5E7EB; --bg: #F8F9FC; --white: #fff; --radius: 12px; }
+  .bi-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  .bi-hero { background: linear-gradient(135deg, var(--navy-dk) 0%, var(--navy) 65%, #222274 100%); color: #fff; padding: 3.5rem 0 4rem; position: relative; overflow: hidden; }
+  .bi-hero::before { content: ''; position: absolute; inset: 0; opacity: .03; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E") repeat; }
+  .bi-breadcrumb { display: flex; gap: .45rem; font-size: .83rem; color: rgba(255,255,255,.6); margin-bottom: 1.25rem; position: relative; }
+  .bi-breadcrumb a { color: var(--gold); text-decoration: none; }
+  .bi-hero__title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: #fff; margin: 0 0 .75rem; position: relative; }
+  .bi-hero__sub { font-size: 1.05rem; color: rgba(255,255,255,.8); max-width: 620px; line-height: 1.7; margin: 0 0 1.25rem; position: relative; }
+  .bi-hero__stats { font-size: .9rem; color: rgba(255,255,255,.65); margin-bottom: 2rem; position: relative; display: flex; align-items: center; gap: .5rem; flex-wrap: wrap; }
+  .bi-hero__stats strong { color: var(--gold); }
+
+  .bi-search { position: relative; max-width: 540px; }
+  .bi-search__input { width: 100%; padding: .85rem 1rem .85rem 3rem; border-radius: 10px; border: none; font-size: 1rem; color: #1a1a2e; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.15); outline: none; transition: box-shadow .2s; }
+  .bi-search__input:focus { box-shadow: 0 4px 24px rgba(212,168,67,.35); }
+  .bi-search__icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
+
+  .bi-section-title { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin: 0 0 1.5rem; }
+
+  .bi-featured { padding: 3rem 0 2rem; background: var(--white); }
+  .bi-featured__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1.25rem; }
+  .bi-featured__card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .2s, box-shadow .2s; }
+  .bi-featured__card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,26,94,.1); }
+  .bi-featured__card--main { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); color: #fff; }
+  .bi-featured__card-body { padding: 1.5rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
+  .bi-featured__card-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .bi-featured__card--main .bi-featured__card-title { font-size: 1.2rem; color: #fff; -webkit-line-clamp: 4; }
+  .bi-featured__card-excerpt { font-size: .88rem; color: var(--sub); line-height: 1.55; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .bi-featured__card--main .bi-featured__card-excerpt { color: rgba(255,255,255,.75); }
+  .bi-featured__card-date { font-size: .78rem; color: #94a3b8; margin-top: auto; }
+  .bi-featured__card--main .bi-featured__card-date { color: rgba(255,255,255,.55); }
+
+  .bi-cat-badge { display: inline-flex; align-items: center; gap: .25rem; font-size: .72rem; font-weight: 700; padding: .25rem .65rem; border-radius: 50px; background: var(--gold-lt); color: var(--navy); border: 1px solid rgba(212,168,67,.25); width: fit-content; }
+  .bi-featured__card--main .bi-cat-badge { background: rgba(255,255,255,.15); color: #fff; border-color: rgba(255,255,255,.25); }
+
+  .bi-cat-wrap { background: var(--white); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; transition: box-shadow .2s; }
+  .bi-cat-wrap--sticky { box-shadow: 0 4px 20px rgba(26,26,94,.1); }
+  .bi-cats { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 .25rem; -webkit-overflow-scrolling: touch; }
+  .bi-cats::-webkit-scrollbar { display: none; }
+  .bi-cat-btn { display: flex; align-items: center; gap: .35rem; padding: .9rem 1.1rem; border: none; background: none; cursor: pointer; white-space: nowrap; font-size: .85rem; font-weight: 600; color: var(--sub); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .15s, border-color .15s; flex-shrink: 0; }
+  .bi-cat-btn:hover { color: var(--navy); }
+  .bi-cat-btn--active { color: var(--navy); border-bottom-color: var(--gold); }
+  .bi-cat-btn__icon { font-size: .95rem; }
+  .bi-cat-btn__count { font-size: .72rem; background: var(--bg); border-radius: 50px; padding: .1rem .45rem; color: #94a3b8; font-weight: 500; }
+  .bi-cat-btn--active .bi-cat-btn__count { background: var(--gold-lt); color: var(--navy); }
+
+  .bi-posts { padding: 2.5rem 0 3rem; background: var(--bg); }
+  .bi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .bi-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-decoration: none; color: inherit; transition: transform .2s, box-shadow .2s; position: relative; }
+  .bi-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), #e8c36a); transform: scaleX(0); transition: transform .25s; border-radius: 0 0 var(--radius) var(--radius); }
+  .bi-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,26,94,.09); }
+  .bi-card:hover::after { transform: scaleX(1); }
+  .bi-card__top { margin-bottom: .65rem; }
+  .bi-card__title { font-size: .95rem; font-weight: 700; color: var(--navy); line-height: 1.4; margin: 0 0 .5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+  .bi-card__excerpt { font-size: .83rem; color: var(--sub); line-height: 1.55; margin: 0 0 .75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .bi-card__footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+  .bi-card__date { font-size: .75rem; color: #94a3b8; }
+  .bi-card__read { font-size: .78rem; color: var(--gold); font-weight: 600; }
+
+  .bi-no-results { text-align: center; padding: 3rem 1rem; background: var(--white); border-radius: var(--radius); border: 2px dashed var(--border); }
+  .bi-no-results__icon { font-size: 2.5rem; margin-bottom: .75rem; }
+  .bi-no-results p { color: var(--sub); margin: 0; }
+
+  .bi-loadmore { text-align: center; margin-top: 2rem; }
+  .bi-loadmore__btn { padding: .75rem 2.5rem; border: 2px solid var(--navy); border-radius: 8px; background: none; color: var(--navy); font-weight: 700; font-size: .95rem; cursor: pointer; transition: background .15s, color .15s; }
+  .bi-loadmore__btn:hover { background: var(--navy); color: #fff; }
+
+  .bi-cats-overview { padding: 3.5rem 0; background: var(--white); }
+  .bi-cats-overview__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .bi-cat-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.25rem; transition: transform .2s, box-shadow .2s; }
+  .bi-cat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,26,94,.09); border-color: var(--gold); }
+  .bi-cat-card__icon { font-size: 2rem; margin-bottom: .75rem; display: block; }
+  .bi-cat-card__name { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin: 0 0 .4rem; }
+  .bi-cat-card__desc { font-size: .83rem; color: var(--sub); line-height: 1.55; margin: 0 0 .75rem; flex: 1; }
+  .bi-cat-card__count { font-size: .78rem; color: var(--gold); font-weight: 700; }
+
+  .bi-cta { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); padding: 3.5rem 0; }
+  .bi-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .bi-cta__text h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
+  .bi-cta__text p { color: rgba(255,255,255,.8); font-size: 1rem; margin: 0; line-height: 1.6; }
+  .bi-cta__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+  .bi-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .75rem 1.75rem; border-radius: 8px; font-weight: 700; font-size: .95rem; text-decoration: none; transition: transform .15s, box-shadow .15s; }
+  .bi-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
+  .bi-btn--gold { background: linear-gradient(135deg, var(--gold), #c09530); color: var(--navy-dk); }
+  .bi-btn--outline { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+
+  @media (max-width: 1100px) { .bi-grid { grid-template-columns: repeat(3, 1fr); } .bi-cats-overview__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 860px) { .bi-featured__grid { grid-template-columns: 1fr 1fr; } .bi-featured__card--main { grid-column: 1 / -1; } .bi-grid { grid-template-columns: repeat(2, 1fr); } .bi-cats-overview__grid { grid-template-columns: repeat(2, 1fr); } .bi-cta__inner { flex-direction: column; text-align: center; } .bi-cta__actions { justify-content: center; } }
+  @media (max-width: 560px) { .bi-grid { grid-template-columns: 1fr; } .bi-featured__grid { grid-template-columns: 1fr; } .bi-cats-overview__grid { grid-template-columns: 1fr 1fr; } .bi-cat-btn__icon { display: none; } .bi-hero { padding: 2.5rem 0 3rem; } }
+  @media (max-width: 380px) { .bi-cats-overview__grid { grid-template-columns: 1fr; } }
+</style>

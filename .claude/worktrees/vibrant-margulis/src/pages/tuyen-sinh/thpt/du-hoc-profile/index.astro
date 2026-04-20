@@ -1,0 +1,152 @@
+---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
+
+const pageTitle = 'Xây Dựng Hồ Sơ Du Học Từ THPT — Lộ Trình 3 Năm, 30% Thành Công | Việt Anh';
+const pageDescription = 'Lộ trình 3 năm xây dựng hồ sơ du học từ lớp 10 tại THPT Việt Anh: IELTS 6.0-8.0, SAT/AP, portfolio ngoại khóa ấn tượng, essay cá nhân, tư vấn visa A-Z. 30% học sinh du học thành công mỗi năm. Hotline: 0916 961 409.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thpt/du-hoc-profile';
+
+const uspItems = [
+  { icon: '🌍', text: '30% học sinh du học thành công mỗi năm tại Mỹ, Anh, Úc, Canada, Nhật — Nhiều em nhận học bổng 50-100% nhờ hồ sơ được xây dựng bài bản 3 năm từ lớp 10.' },
+  { icon: '📝', text: 'IELTS 6.0-8.0 tích hợp chính khóa — Không cần học thêm trung tâm. Nhóm du học thường đạt IELTS 7.0+ nhờ tập trung luyện Academic Writing và Speaking chuyên sâu.' },
+  { icon: '🏆', text: 'Portfolio ngoại khóa ấn tượng — 15+ CLB (Debate, MUN, Robotics, Tình nguyện quốc tế) giúp con có hoạt động phong phú mà ĐH Mỹ/Anh đánh giá cao ngang điểm số.' },
+  { icon: '✍️', text: 'Hướng dẫn viết Essay & Motivation Letter — Giáo viên viết cùng con, chỉnh sửa 3-5 lần, đảm bảo essay thể hiện đúng cá tính và câu chuyện riêng của con.' },
+  { icon: '🤝', text: '50+ trường ĐH đối tác quốc tế — George Mason, Macquarie, Waseda, RMIT... Học sinh Việt Anh được ưu tiên xét tuyển, yêu cầu điểm linh hoạt và cơ hội học bổng riêng.' },
+  { icon: '📋', text: 'Hỗ trợ visa A-Z — Chuẩn bị giấy tờ, chứng minh tài chính, luyện phỏng vấn visa. Chuyên viên đồng hành từ ngày nộp hồ sơ đến ngày con lên máy bay.' }
+];
+
+const metrics = [
+  { number: '30%', label: 'Học sinh du học thành công hàng năm (Mỹ, Anh, Úc, Canada, Nhật)' },
+  { number: '50+', label: 'Trường ĐH đối tác quốc tế với chính sách ưu tiên xét tuyển' },
+  { number: '7.0+', label: 'IELTS trung bình của nhóm học sinh chọn du học' },
+  { number: '3 năm', label: 'Lộ trình xây dựng profile bài bản từ lớp 10 đến lớp 12' }
+];
+
+const faqItems = [
+  {
+    question: 'Con tôi lớp 10 bắt đầu xây profile du học có muộn không?',
+    answer: 'Lớp 10 là thời điểm lý tưởng nhất — không sớm quá, không muộn quá. Các trường ĐH quốc tế đánh giá cao hồ sơ được xây dựng có chiều sâu trong 3 năm THPT: năm 1 xây nền (IELTS, khám phá lĩnh vực, tham gia CLB), năm 2 tăng tốc (SAT/AP, dự án ngoại khóa ấn tượng, thi IELTS chính thức), năm 3 hoàn thiện (viết essay, nộp hồ sơ, phỏng vấn). Nếu chờ đến lớp 12 mới bắt đầu, con sẽ không đủ thời gian xây portfolio ngoại khóa — yếu tố mà ĐH Mỹ/Anh coi trọng ngang điểm số.'
+  },
+  {
+    question: 'Việt Anh hỗ trợ du học những nước nào? Có đảm bảo đỗ không?',
+    answer: 'Việt Anh hỗ trợ du học tất cả các nước phổ biến: Mỹ (Ivy League, UC system), Anh (Russell Group, G5), Úc (Go8), Canada (U15), Nhật (Waseda, Keio), Hàn Quốc, Singapore. Không trường nào có thể "đảm bảo đỗ" — nhưng Việt Anh đảm bảo con được hỗ trợ tối đa: chọn trường phù hợp năng lực (không chọn quá sức rồi bị từ chối), viết essay ấn tượng, chuẩn bị hồ sơ hoàn chỉnh, và luyện phỏng vấn kỹ lưỡng. Kết quả thực tế: 30% em chọn du học và thành công mỗi năm.'
+  },
+  {
+    question: 'Chi phí du học rất cao — Việt Anh có hỗ trợ xin học bổng không?',
+    answer: 'Có. Chuyên viên tư vấn sẽ tìm các chương trình học bổng phù hợp với profile của con: học bổng toàn phần, bán phần, hoặc hỗ trợ tài chính từ các trường ĐH đối tác. Nhiều em Việt Anh đã nhận học bổng 50-100% tại các trường Mỹ, Úc, Canada nhờ hồ sơ ấn tượng và essay xuất sắc. Giáo viên còn hướng dẫn con viết essay xin học bổng riêng — đây là kỹ năng mà không phải trường THPT nào cũng dạy. Ngoài ra, một số trường đối tác có học bổng dành riêng cho học sinh Việt Anh.'
+  },
+  {
+    question: 'Nếu du học không thành công thì sao? Có phương án B không?',
+    answer: 'Luôn có phương án B — đây là điểm mạnh đặc biệt của lộ trình Việt Anh. Con vừa xây profile du học, vừa chuẩn bị THPTQG song song suốt 3 năm. Nếu du học thay đổi kế hoạch vì bất kỳ lý do gì, con vẫn có IELTS 6.0+ để xét tuyển ĐH top Việt Nam, điểm THPTQG ổn định, và kỹ năng mềm vượt trội. Mọi nỗ lực xây profile du học (essay, ngoại khóa, IELTS) đều có giá trị cho cả con đường trong nước — con không bao giờ "trắng tay".'
+  },
+  {
+    question: 'Lộ trình 3 năm cụ thể như thế nào? Con cần làm gì từ lớp 10?',
+    answer: 'Lớp 10: học IELTS chính khóa (mục tiêu 5.5-6.0), tham gia 2-3 CLB ngoại khóa để khám phá lĩnh vực yêu thích, xác định nước và ngành du học mục tiêu cùng chuyên viên tư vấn. Lớp 11: thi IELTS chính thức (mục tiêu 6.5-7.5), luyện SAT/AP nếu du học Mỹ, thực hiện dự án ngoại khóa có chiều sâu, chọn 5-8 trường ĐH phù hợp và phác thảo essay. Lớp 12: hoàn thiện essay 3-5 lần review, nộp hồ sơ theo deadline từng trường, nhận Offer Letter, chuẩn bị visa và bay. Toàn bộ quá trình có chuyên viên đồng hành.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="du học, hồ sơ du học, IELTS, SAT, trường Việt Anh, THPT, profile du học, học bổng, essay, visa"
+  schoolLevel="thpt"
+  funnelCode="du-hoc-thpt"
+  canonicalUrl={canonicalUrl}
+  ogImage="https://media.truongvietanh.com/images/olympic-08.webp"
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Xây Dựng Hồ Sơ Du Học Từ Lớp 10 — Lộ Trình 3 Năm Bài Bản Tại Việt Anh
+    </h1>
+    <p class="hero-subtitle">
+      IELTS, Portfolio, Essay, Visa — Tất cả được hỗ trợ từ A đến Z. 30% học sinh du học thành công mỗi năm.
+    </p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-image-section">
+      <img src="https://media.truongvietanh.com/images/olympic-08.webp" alt="Học sinh THPT Việt Anh tham gia Olympic quốc tế — xây dựng hồ sơ ngoại khóa ấn tượng cho du học" class="content-hero-image" width="1200" height="675" loading="lazy" />
+      <p class="image-caption">Học sinh THPT Việt Anh tham gia các kỳ thi Olympic — xây dựng portfolio ấn tượng cho hồ sơ du học</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Lộ trình 3 năm xây dựng hồ sơ du học tại THPT Việt Anh</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Lớp 10: Xây nền — IELTS & Khám phá lĩnh vực</h3>
+          <p>Ngay từ lớp 10, con bắt đầu học IELTS tích hợp trong chương trình chính khóa với mục tiêu đạt 5.5-6.0 cuối năm. Mỗi tuần có 1 buổi IELTS Practice Test để làm quen dạng đề và rèn kỹ năng từng phần. Song song, con tham gia 2-3 CLB ngoại khóa (Debate, MUN, Robotics, Tình nguyện, Nhiếp ảnh...) để khám phá lĩnh vực yêu thích và bắt đầu xây portfolio. Chuyên viên tư vấn giúp con xác định sớm "mình muốn du học ngành gì, nước nào" để lên kế hoạch 3 năm rõ ràng.</p>
+        </div>
+        <div class="content-card">
+          <h3>Lớp 11: Tăng tốc — SAT/AP & Dự án ngoại khóa chiều sâu</h3>
+          <p>Lớp 11 là năm quyết định profile du học. Con thi IELTS chính thức (mục tiêu 6.5-7.5), bắt đầu luyện SAT/AP nếu du học Mỹ, và thực hiện các dự án ngoại khóa có chiều sâu như nghiên cứu khoa học, khởi nghiệp mini, hoặc tình nguyện quốc tế. Chuyên viên tư vấn giúp con chọn 5-8 trường ĐH phù hợp năng lực và bắt đầu phác thảo essay cá nhân. Đây là giai đoạn "profile" của con bắt đầu nổi bật so với hàng ngàn ứng viên khác cùng nộp hồ sơ.</p>
+        </div>
+        <div class="content-card">
+          <h3>Lớp 12: Hoàn thiện — Essay, Nộp hồ sơ & Visa</h3>
+          <p>Lớp 12, mọi thứ đã sẵn sàng để hoàn thiện và nộp. Con viết essay cá nhân (Personal Statement, Motivation Letter) với sự hướng dẫn tận tình của giáo viên — không phải viết một mình rồi nộp bừa. Hồ sơ được chuyên viên review 3-5 lần trước khi nộp theo deadline từng trường. Sau khi nhận thư mời nhập học (Offer Letter), chuyên viên hỗ trợ toàn bộ visa: chuẩn bị chứng minh tài chính, giấy tờ, luyện phỏng vấn đại sứ quán. Con bước lên máy bay với sự tự tin và chuẩn bị kỹ lưỡng.</p>
+        </div>
+        <div class="content-card">
+          <h3>50+ trường ĐH đối tác — Ưu tiên xét tuyển & học bổng riêng</h3>
+          <p>Việt Anh liên kết với 50+ trường ĐH quốc tế uy tín: George Mason (Mỹ), Macquarie (Úc), Waseda (Nhật), RMIT, University of Nottingham, Monash và nhiều trường khác. Học sinh Việt Anh được ưu tiên xét tuyển — hồ sơ được review trước, yêu cầu điểm linh hoạt hơn, và cơ hội nhận học bổng dành riêng cho trường đối tác. Đây là lợi thế cạnh tranh mà học sinh trường THPT khác không có, giúp con tăng đáng kể cơ hội trúng tuyển vào trường mơ ước.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: "An toàn 2 hướng" — Du học + Đại Học Việt Nam</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 1.5rem;">
+        Điểm đặc biệt của lộ trình Việt Anh: con xây profile du học nhưng <strong>đồng thời vẫn chuẩn bị THPTQG song song</strong> suốt 3 năm. Nếu kế hoạch du học thay đổi vì bất kỳ lý do gì, con vẫn có IELTS 6.0+ để xét tuyển ĐH top Việt Nam, điểm THPTQG ổn định, và kỹ năng mềm vượt trội so với bạn cùng trang lứa.
+      </p>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto 0;">
+        <strong>Không bao giờ "trắng tay"</strong> — mọi nỗ lực xây hồ sơ du học (essay, ngoại khóa, IELTS) đều có giá trị ở cả 2 con đường. Đây là lý do nhiều phụ huynh chọn Việt Anh: "an toàn cho con dù tương lai đi hướng nào".
+      </p>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Bắt đầu xây hồ sơ du học cho con từ hôm nay</h2>
+    <p class="form-subheading">Đăng ký tư vấn miễn phí để nhận lộ trình 3 năm cá nhân hóa cho con. Chuyên viên du học sẽ liên hệ trong 24h.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="du-hoc-profile-form"
+      funnelCode="du-hoc-thpt"
+      schoolLevel="thpt"
+      submitText="Nhận lộ trình du học miễn phí"
+      successMessage="Cảm ơn Ba/Mẹ! Chuyên viên tư vấn du học sẽ liên hệ trong 24h để xây dựng lộ trình cá nhân hóa cho con."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi thường gặp về xây dựng hồ sơ du học THPT" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-image-section { text-align: center; margin-bottom: 3rem; }
+  .content-hero-image { width: 100%; max-width: 900px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }
+  .image-caption { font-size: 0.9rem; color: #777; margin-top: 0.75rem; font-style: italic; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } .content-hero-image { border-radius: 10px; } }
+</style>

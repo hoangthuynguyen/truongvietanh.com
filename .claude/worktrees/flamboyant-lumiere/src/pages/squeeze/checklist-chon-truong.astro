@@ -1,0 +1,124 @@
+---
+import SqueezePageLayout from '../../layouts/SqueezePageLayout.astro';
+import USPGrid from '../../components/USPGrid.astro';
+import TrustMetrics from '../../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../../components/FAQSection.astro';
+
+const pageTitle = 'Checklist Chọn Trường 2026: 15 Tiêu Chí Ba/Mẹ Phải Biết | Trường Việt Anh';
+const pageDescription = 'Tải miễn phí checklist 15 tiêu chí chọn trường cho con. Được sử dụng bởi 3,000+ phụ huynh tại TPHCM. Bao gồm bảng so sánh trường, 7 câu hỏi phải hỏi khi tham quan, và timeline tuyển sinh 2026.';
+const pageCanonical = 'https://truongvietanh.com/squeeze/checklist-chon-truong';
+
+const uspItems = [
+  { icon: '✅', text: '15 tiêu chí đánh giá trường -- bao quát mọi khía cạnh từ chương trình, giáo viên, cơ sở vật chất đến chính sách hỗ trợ học sinh' },
+  { icon: '📊', text: 'Bảng so sánh trường -- đặt 3-5 trường cạnh nhau, chấm điểm từng tiêu chí để ra quyết định khách quan' },
+  { icon: '💡', text: '7 câu hỏi phải hỏi khi tham quan trường -- giúp Ba/Mẹ khai thác thông tin mà nhà trường thường không chủ động chia sẻ' },
+  { icon: '📅', text: 'Timeline tuyển sinh 2026 -- tất cả mốc thời gian quan trọng từ tháng 1 đến tháng 9, không bỏ lỡ deadline nào' },
+  { icon: '🏫', text: 'Hướng dẫn đánh giá môi trường học tập -- cách quan sát lớp học, sân chơi, thư viện để biết trường có thực sự tốt cho con' },
+  { icon: '📝', text: 'Mẫu ghi chép tham quan trường -- in ra mang theo khi đi tham quan, ghi nhận xét tại chỗ để so sánh sau' }
+];
+
+const metrics = [
+  { number: '3,000+', label: 'Phụ huynh đã tải và sử dụng' },
+  { number: '15', label: 'Tiêu chí đánh giá toàn diện' },
+  { number: '4.9/5', label: 'Đánh giá hữu ích từ phụ huynh' },
+  { number: '50+', label: 'Trường đã được so sánh' }
+];
+
+const faqItems = [
+  { question: 'Checklist này phù hợp cho cấp nào?', answer: 'Checklist được thiết kế phù hợp cho phụ huynh chọn trường từ mầm non đến THPT. Mỗi cấp học có những tiêu chí riêng, và checklist đã bao gồm hướng dẫn chi tiết cho từng cấp. Ba/Mẹ chỉ cần đánh dấu những tiêu chí phù hợp với cấp học con đang tìm.' },
+  { question: 'Tài liệu gồm những gì?', answer: 'Bộ tài liệu bao gồm 4 phần: Checklist 15 tiêu chí đánh giá trường (dạng PDF in được), Bảng so sánh trường (dạng Excel/Google Sheets), 7 câu hỏi phải hỏi khi tham quan trường, và Timeline tuyển sinh 2026 với tất cả mốc quan trọng tại TPHCM.' },
+  { question: 'Có phải trả phí không?', answer: 'Hoàn toàn miễn phí và không yêu cầu bất kỳ cam kết nào. Đây là tài liệu Trường Việt Anh biên soạn để hỗ trợ phụ huynh trong quá trình chọn trường cho con. Ba/Mẹ có thể chia sẻ cho bạn bè, người thân cũng đang tìm trường.' },
+  { question: 'Tôi nhận tài liệu bằng cách nào?', answer: 'Sau khi đăng ký, tài liệu sẽ được gửi qua email trong vòng 24 giờ dưới dạng PDF và link Google Sheets. Ba/Mẹ có thể tải về điện thoại hoặc in ra mang theo khi đi tham quan trường. Nếu không nhận được email, vui lòng kiểm tra hộp thư spam hoặc gọi 0916 961 409.' },
+  { question: 'Checklist này có khác gì so với thông tin trên mạng?', answer: 'Checklist được biên soạn bởi đội ngũ giáo dục với 15+ năm kinh nghiệm tại TPHCM, dựa trên phản hồi thực tế từ 3,000+ phụ huynh. Nội dung tập trung vào những tiêu chí mà phụ huynh thường bỏ sót, kèm theo công cụ so sánh thực tế -- không phải thông tin chung chung.' }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="tieu-hoc"
+  funnelCode="squeeze-checklist"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Chọn Trường Cho Con: 15 Tiêu Chí Ba/Mẹ Không Được Bỏ Qua</h1>
+    <p class="squeeze-hero__subheading">Tải ngay checklist miễn phí được 3,000+ phụ huynh TPHCM tin dùng -- Kèm bảng so sánh trường và timeline tuyển sinh 2026</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Trong checklist có gì?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Được tin tưởng bởi" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="checklist-content">
+      <!-- Hero Image -->
+      <div class="checklist-content__image-wrap">
+        <img src="https://media.truongvietanh.com/images/phu-huynh-05.webp" alt="Phụ huynh tham quan và chọn trường cho con tại Trường Việt Anh TPHCM" class="checklist-content__image" width="900" height="500" loading="lazy" />
+      </div>
+
+      <h2 class="checklist-content__title">Tại sao cần checklist khi chọn trường?</h2>
+
+      <!-- Content Cards -->
+      <div class="checklist-grid">
+        <div class="checklist-card">
+          <h3>🔍 Không bỏ sót tiêu chí quan trọng</h3>
+          <p>Nhiều phụ huynh chỉ nhìn học phí và cơ sở vật chất mà bỏ sót 10+ tiêu chí quan trọng khác như tỷ lệ giáo viên/học sinh, chương trình ngoại khóa, chính sách hỗ trợ tâm lý. Checklist giúp Ba/Mẹ đánh giá trường một cách toàn diện, không bị ảnh hưởng bởi cảm xúc nhất thời hay quảng cáo hào nhoáng.</p>
+        </div>
+        <div class="checklist-card">
+          <h3>📊 So sánh khách quan giữa các trường</h3>
+          <p>Khi tham quan 3-5 trường, rất khó nhớ hết thông tin và so sánh chính xác. Bảng so sánh trong checklist cho phép Ba/Mẹ chấm điểm từng tiêu chí cho mỗi trường, từ đó ra quyết định dựa trên dữ liệu thay vì cảm tính. Nhiều phụ huynh đã thay đổi quyết định sau khi sử dụng bảng này.</p>
+        </div>
+        <div class="checklist-card">
+          <h3>⏰ Kịp thời gian tuyển sinh 2026</h3>
+          <p>Timeline tuyển sinh 2026 giúp Ba/Mẹ nắm rõ các mốc quan trọng: thời gian mở đơn, hạn nộp hồ sơ, ngày thi/phỏng vấn, và thông báo kết quả. Mùa tuyển sinh tại TPHCM thường bắt đầu từ tháng 3, nhưng nhiều trường tốt đã nhận hồ sơ từ tháng 1-2. Chuẩn bị sớm là lợi thế lớn.</p>
+        </div>
+        <div class="checklist-card">
+          <h3>💬 Biết hỏi đúng câu khi tham quan</h3>
+          <p>7 câu hỏi trong checklist được thiết kế để giúp Ba/Mẹ khai thác những thông tin mà nhà trường thường không chủ động chia sẻ. Ví dụ: tỷ lệ giáo viên nghỉ việc, cách xử lý khi học sinh gặp khó khăn, hay chính sách hoàn học phí. Đây là những câu hỏi mà phụ huynh có kinh nghiệm luôn đặt ra.</p>
+        </div>
+      </div>
+
+      <!-- Bonus Section -->
+      <div class="checklist-bonus">
+        <div class="checklist-bonus__icon">🎁</div>
+        <h3 class="checklist-bonus__title">Bonus: Tặng kèm "Cẩm nang phụ huynh mùa tuyển sinh 2026"</h3>
+        <p class="checklist-bonus__text">Ngoài checklist, Ba/Mẹ còn nhận thêm cẩm nang với 20 trang nội dung bao gồm: phân tích xu hướng giáo dục 2026, danh sách các trường chất lượng tại TPHCM theo từng quận, và lời khuyên từ chuyên gia giáo dục với 15+ năm kinh nghiệm. Tài liệu được cập nhật mới nhất cho năm học 2026-2027.</p>
+      </div>
+
+      <!-- Urgency Note -->
+      <div class="checklist-urgency">
+        <p><strong>📣 Lưu ý:</strong> Mùa tuyển sinh 2026 sẽ bắt đầu từ tháng 3. Nhiều trường tốt nhận hồ sơ sớm từ tháng 1-2 và số lượng có hạn. Phụ huynh nên chuẩn bị từ bây giờ để có lựa chọn tốt nhất cho con. Tải checklist ngay để bắt đầu quá trình chọn trường một cách có hệ thống.</p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Tải checklist miễn phí</h2>
+    <p class="squeeze-form-section__description">Điền thông tin để nhận checklist và bộ tài liệu chọn trường qua email</p>
+    <LeadFormTwoStepEmailFirst formId="squeeze-form" funnelCode="squeeze-checklist" schoolLevel="tieu-hoc" submitText="Tải ngay miễn phí" successMessage="Cảm ơn! Checklist sẽ được gửi qua email trong vòng 24 giờ." />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  .checklist-content { max-width: 900px; margin: 0 auto; }
+  .checklist-content__image-wrap { margin-bottom: 2rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+  .checklist-content__image { width: 100%; height: auto; display: block; object-fit: cover; max-height: 420px; }
+  .checklist-content__title { font-family: Montserrat, sans-serif; font-size: 1.75rem; font-weight: 700; margin-bottom: 1.5rem; color: #1F4E79; text-align: center; }
+  .checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
+  .checklist-card { background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
+  .checklist-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.12); transform: translateY(-4px); }
+  .checklist-card h3 { font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79; }
+  .checklist-card p { font-size: 0.95rem; line-height: 1.7; color: #555; margin: 0; }
+  .checklist-bonus { background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%); border: 2px solid #E8792B; border-radius: 12px; padding: 2rem; margin: 2.5rem 0; text-align: center; }
+  .checklist-bonus__icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .checklist-bonus__title { font-family: Montserrat, sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .checklist-bonus__text { font-size: 0.95rem; line-height: 1.7; color: #555; max-width: 700px; margin: 0 auto; }
+  .checklist-urgency { background-color: #f0f8ff; border-left: 4px solid #E8792B; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; }
+  .checklist-urgency p { margin: 0; font-size: 0.95rem; line-height: 1.7; color: #1a1a1a; }
+  @media (max-width: 768px) {
+    .checklist-grid { grid-template-columns: 1fr; }
+    .checklist-content__image { max-height: 280px; }
+  }
+</style>

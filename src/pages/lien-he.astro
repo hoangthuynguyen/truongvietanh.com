@@ -244,7 +244,7 @@ const structuredData = [
               <ul>
                 <li>
                   <strong>Cơ sở Phú Nhuận (Liên cấp MN-TH-THCS-THPT):</strong>
-                  <a href="https://maps.google.com/?q=160/72+Phan+Huy+%C3%8Dch,+ph%C6%B0%E1%BB%9Dng+An+H%E1%BB%99i+T%C3%A2y,+TP.HCM" target="_blank" rel="noopener">160/72 Phan Huy Ích, phường An Hội Tây, Thành phố Hồ Chí Minh</a>
+                  <a href="https://maps.google.com/?q=269A+Nguy%E1%BB%85n+Tr%E1%BB%8Dng+Tuy%E1%BB%83n%2C+Ph%C6%B0%E1%BB%9Dng+Ph%C3%BA+Nhu%E1%BA%ADn%2C+TP.HCM" target="_blank" rel="noopener">269A Nguyễn Trọng Tuyển, Phường Phú Nhuận, TP. Hồ Chí Minh</a>
                   — Vị trí trung tâm, thuận tiện di chuyển cho phụ huynh nội thành. Hotline: <a href="tel:0916961409">0916 961 409</a>
                 </li>
                 <li>
@@ -299,6 +299,28 @@ const structuredData = [
           <p>Tất cả cơ sở đều hỗ trợ <strong>xe đưa rước</strong> cho học sinh. Tại TP.HCM, hệ thống xe phủ khắp các quận: Gò Vấp, Phú Nhuận, Bình Thạnh, Tân Bình, Tân Phú, Quận 12, Bình Tân. Phụ huynh có thể liên hệ hotline để hỏi tuyến xe qua khu vực mình sinh sống. <a href="/co-so">Xem chi tiết từng cơ sở &rarr;</a></p>
 
           <img src="https://media.truongvietanh.com/images/phu-huynh-04.webp" alt="Phụ huynh trao đổi với tư vấn viên Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <!-- MAP — Google Maps embed, cơ sở Phú Nhuận -->
+          <div class="lh-map-wrap">
+            <h3 class="lh-map-title">📍 Bản đồ cơ sở Phú Nhuận (trụ sở chính)</h3>
+            <p class="lh-map-desc">269A Nguyễn Trọng Tuyển, Phường Phú Nhuận, TP. Hồ Chí Minh · Hotline <a href="tel:0916961409">0916 961 409</a></p>
+            <div class="lh-map-iframe">
+              <iframe
+                src="https://maps.google.com/maps?q=269A%20Nguy%E1%BB%85n%20Tr%E1%BB%8Dng%20Tuy%E1%BB%83n%2C%20Ph%C3%BA%20Nhu%E1%BA%ADn%2C%20TP.HCM&t=m&z=16&ie=UTF8&iwloc=&output=embed"
+                width="100%"
+                height="420"
+                style="border:0;border-radius:12px;display:block;width:100%;"
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+                allowfullscreen
+                title="Bản đồ Trường Việt Anh — Cơ sở Phú Nhuận"
+              ></iframe>
+            </div>
+            <p class="lh-map-cta">
+              <a href="https://maps.google.com/?q=269A+Nguy%E1%BB%85n+Tr%E1%BB%8Dng+Tuy%E1%BB%83n%2C+Ph%C6%B0%E1%BB%9Dng+Ph%C3%BA+Nhu%E1%BA%ADn%2C+TP.HCM" target="_blank" rel="noopener" class="lh-map-link">🧭 Mở Google Maps &rarr;</a>
+              <a href="/co-so" class="lh-map-link lh-map-link--ghost">Xem bản đồ 9 cơ sở &rarr;</a>
+            </p>
+          </div>
         </section>
 
         <!-- Section 3: Giờ làm việc -->
@@ -565,4 +587,17 @@ const structuredData = [
     grid-template-columns: 1fr;
   }
 }
+
+/* Map block */
+.lh-map-wrap { margin: 1.75rem 0 0.5rem; padding: 1.25rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; }
+.lh-map-title { font-size: 1.1rem; font-weight: 700; color: #1a1a5e; margin: 0 0 0.35rem; font-family: 'Montserrat', sans-serif; }
+.lh-map-desc { font-size: 0.92rem; color: #475569; margin: 0 0 0.85rem; line-height: 1.6; }
+.lh-map-desc a { color: #1a1a5e; font-weight: 700; text-decoration: none; }
+.lh-map-iframe { border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+.lh-map-iframe iframe { display: block; width: 100%; }
+.lh-map-cta { margin: 0.75rem 0 0; display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
+.lh-map-link { color: #D4A843; font-weight: 700; text-decoration: none; font-size: 0.95rem; }
+.lh-map-link:hover { color: #c09530; text-decoration: underline; }
+.lh-map-link--ghost { color: #1a1a5e; }
+.lh-map-link--ghost:hover { color: #0d2f55; }
 </style>

@@ -48,6 +48,17 @@ const quizId = `quiz-${funnelCode}`;
 
   <!-- ===== STEP 0: Start Screen ===== -->
   <div class="qf-step qf-step--start" data-qf-step="start">
+
+    <!-- Benefits banner — above the fold, visible before scrolling -->
+    <div class="qf-benefits-banner">
+      <div class="qf-benefits-banner__title">🎁 Làm bài đánh giá để nhận:</div>
+      <div class="qf-benefits-banner__items">
+        <span>📋 Báo cáo EQ cá nhân hóa PDF</span>
+        <span>💸 Học bổng Early Bird đến 30%</span>
+        <span>📞 Tư vấn lộ trình miễn phí 1:1</span>
+      </div>
+    </div>
+
     <div class="qf-start-badge">
       <span>📋</span> Bài đánh giá — Chỉ 3 phút
     </div>
@@ -218,7 +229,11 @@ const quizId = `quiz-${funnelCode}`;
     var target = root.querySelector('[data-qf-step="' + stepName + '"]');
     if (target) {
       target.hidden = false;
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Scroll so the question is visible but don't jump past it
+      var rect = target.getBoundingClientRect();
+      if (rect.top < 60 || rect.bottom > window.innerHeight) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
     currentStep = stepName;
 
@@ -436,6 +451,24 @@ const quizId = `quiz-${funnelCode}`;
   /* ===== STEP TRANSITIONS ===== */
   .qf-step { animation: qfSlideIn .35s ease; }
   @keyframes qfSlideIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* ===== BENEFITS BANNER (above the fold) ===== */
+  .qf-benefits-banner {
+    background: linear-gradient(135deg, #1a1a5e, #2a2a8e);
+    border-radius: 12px; padding: 1rem 1.25rem; margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .qf-benefits-banner__title {
+    color: #D4A843; font-weight: 800; font-size: .9rem; margin-bottom: .6rem;
+    letter-spacing: .02em;
+  }
+  .qf-benefits-banner__items {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem;
+  }
+  .qf-benefits-banner__items span {
+    background: rgba(255,255,255,.12); color: #fff; font-size: .8rem; font-weight: 600;
+    padding: .35rem .75rem; border-radius: 50px; border: 1px solid rgba(255,255,255,.2);
+  }
 
   /* ===== START SCREEN ===== */
   .qf-start-badge {

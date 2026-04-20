@@ -1,0 +1,148 @@
+---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
+
+const pageTitle = 'Chuyển Cấp Vào THCS Việt Anh — Hướng Dẫn Cho Phụ Huynh Lớp 5';
+const pageDescription = 'Hướng dẫn chuyển cấp từ Tiểu Học vào THCS Việt Anh: Bài kiểm tra xếp lớp, chương trình hội nhập, học bổng, và hỗ trợ chuyển đổi toàn diện cho con lớp 5.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/chuyen-cap';
+
+const uspItems = [
+  { icon: '🎒', text: 'Chương trình hội nhập 2 tuần — con làm quen trước khi nhập học chính thức' },
+  { icon: '📝', text: 'Bài kiểm tra xếp lớp (không phải thi loại) — đánh giá năng lực để hỗ trợ đúng' },
+  { icon: '🏆', text: 'Học bổng lên đến 50% cho học sinh xuất sắc từ trường khác' },
+  { icon: '🤝', text: 'Buddy program: Em mới được ghép cặp với em cũ để hòa nhập nhanh' },
+  { icon: '📚', text: 'Bổ trợ Tiếng Anh miễn phí 1 tháng nếu con chưa quen song ngữ' },
+  { icon: '💬', text: 'Tư vấn tâm lý chuyển trường cho cả Ba/Mẹ và con — miễn phí' }
+];
+
+const metrics = [
+  { number: '95%', label: 'Học sinh hòa nhập trong 4 tuần đầu' },
+  { number: '50%', label: 'Học bổng tối đa cho em xuất sắc' },
+  { number: '30', label: 'Em/lớp — cô giáo nhìn thấy từng em' },
+  { number: '2', label: 'Tuần hội nhập trước khi nhập học' }
+];
+
+const faqItems = [
+  {
+    question: 'Con tôi học trường công lớp 5, Tiếng Anh chưa tốt — có vào được THCS Việt Anh không?',
+    answer: 'Hoàn toàn được. Chúng tôi hiểu không phải em nào cũng có nền tảng Tiếng Anh từ Tiểu Học. Bài kiểm tra đầu vào không phải "thi loại" mà để đánh giá mức hiện tại của con — từ đó xếp lớp phù hợp và lên kế hoạch bổ trợ. Em chưa khỏe Tiếng Anh sẽ được: (1) 1 tháng bổ trợ Tiếng Anh miễn phí trước khi nhập học, (2) Xếp vào nhóm học Tiếng Anh phù hợp với mức độ, (3) Giáo viên nước ngoài + Việt Nam song song hỗ trợ. Sau 1 học kỳ, hầu hết em đã tự tin giao tiếp Tiếng Anh cơ bản.'
+  },
+  {
+    question: 'Bài kiểm tra xếp lớp gồm những gì? Con cần ôn gì?',
+    answer: 'Bài kiểm tra gồm 3 phần: Toán (logic, giải toán — theo chương trình lớp 5), Tiếng Việt (đọc hiểu, viết đoạn văn ngắn), và Tiếng Anh (từ vựng cơ bản, nghe hiểu ngắn). Thời gian khoảng 90 phút. Con không cần ôn luyện đặc biệt — bài kiểm tra đánh giá năng lực tự nhiên, không phải "thi đỗ/rớt". 95% học sinh đều đạt yêu cầu. Nếu con cần bổ sung, chúng tôi sẽ tư vấn kế hoạch ôn tập 2-4 tuần và cho phép kiểm tra lại.'
+  },
+  {
+    question: 'Chương trình hội nhập 2 tuần trước nhập học là gì?',
+    answer: 'Trước khi năm học chính thức bắt đầu, em mới sẽ tham gia 2 tuần "Warm-up Camp" tại trường: (1) Tuần 1 — Làm quen môi trường: tham quan trường, gặp giáo viên, tìm hiểu nội quy, tham gia hoạt động nhóm vui, (2) Tuần 2 — Bổ trợ học thuật: ôn Tiếng Anh, làm quen phương pháp học song ngữ, tập thuyết trình ngắn. Em sẽ được ghép cặp với "Buddy" — một em cũ sẽ đồng hành, giới thiệu bạn bè, và giúp em mới cảm thấy "đây là nhà mình". Kết quả: Ngày nhập học chính thức, em đã quen bạn, quen cô, quen trường.'
+  },
+  {
+    question: 'Học bổng chuyển cấp có những mức nào? Điều kiện là gì?',
+    answer: 'Học bổng THCS Việt Anh có 3 mức: (1) Học bổng Xuất sắc (50% học phí) — dành cho em có thành tích học tập nổi bật (giải thưởng cấp Quận/Thành phố, hoặc kết quả kiểm tra đầu vào xuất sắc), (2) Học bổng Tiềm năng (30% học phí) — dành cho em có năng khiếu đặc biệt (STEM, Thể thao, Nghệ thuật), (3) Học bổng Hỗ trợ (15-20% học phí) — dành cho gia đình có hoàn cảnh cần hỗ trợ. Học bổng được xét dựa trên hồ sơ + kết quả kiểm tra đầu vào. Ba/Mẹ chỉ cần đăng ký tư vấn — chúng tôi sẽ đánh giá và thông báo mức học bổng phù hợp.'
+  },
+  {
+    question: 'Con tôi nhút nhát, sợ môi trường mới — trường hỗ trợ thế nào?',
+    answer: 'Đây là lo lắng rất phổ biến và hoàn toàn hợp lý. Tại Việt Anh, chúng tôi có quy trình hỗ trợ tâm lý chuyển trường bài bản: (1) Trước nhập học: Chuyên gia tâm lý gặp riêng Ba/Mẹ và con để hiểu tính cách, lo lắng, mong muốn, (2) Buddy program: Em được ghép với bạn cùng sở thích để có "người quen" ngay từ ngày đầu, (3) Giáo viên chủ nhiệm theo dõi sát 4 tuần đầu: quan sát em ở lớp, sân chơi, bếp ăn — báo cáo Ba/Mẹ hàng tuần, (4) Nếu em cần, có buổi tư vấn tâm lý 1-1 miễn phí. Kinh nghiệm cho thấy: 95% em hòa nhập hoàn toàn trong 4 tuần đầu.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="chuyển cấp THCS, lớp 5 lên lớp 6, trường Việt Anh, tuyển sinh lớp 6, học bổng THCS"
+  schoolLevel="thcs"
+  funnelCode="chuyen-cap-thcs"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Chuyển Cấp Vào THCS Việt Anh — Hướng Dẫn Cho Phụ Huynh Lớp 5
+    </h1>
+    <p class="hero-subtitle">
+      Hội nhập 2 tuần + Buddy program + Bổ trợ Tiếng Anh miễn phí — Con hòa nhập từ ngày đầu
+    </p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section featured-image-section">
+      <img src="https://media.truongvietanh.com/images/thuyet-trinh-09.webp" alt="Học sinh THCS Việt Anh thuyết trình tự tin trước lớp" class="featured-image" width="800" height="450" loading="lazy" />
+      <p class="featured-caption">Học sinh chuyển cấp vào THCS Việt Anh nhanh chóng hòa nhập và tự tin thể hiện bản thân qua các hoạt động thuyết trình, dự án nhóm.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Từ Tiểu Học lên THCS: Ba/Mẹ cần biết gì?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Chuyển cấp không phải "xin vào" — mà là "tìm nơi phù hợp"</h3>
+          <p>Chuyển cấp từ Tiểu Học lên THCS là bước ngoặt quan trọng — con sẽ thay đổi môi trường, bạn bè, phương pháp học. Tại Việt Anh, chúng tôi không "tuyển chọn" theo kiểu loại trừ mà tìm kiếm em phù hợp với môi trường song ngữ, STEM, và phát triển toàn diện. Bài kiểm tra đầu vào là để hiểu con — không phải để "đánh rớt". 95% em kiểm tra đều được nhận, và em nào cần hỗ trợ thêm sẽ có kế hoạch bổ trợ riêng.</p>
+        </div>
+        <div class="content-card">
+          <h3>Bài kiểm tra xếp lớp: Đánh giá để hỗ trợ, không phải để loại</h3>
+          <p>Bài kiểm tra gồm Toán, Tiếng Việt, Tiếng Anh — khoảng 90 phút. Mục đích: biết con khỏe gì, yếu gì để xếp lớp và lên kế hoạch cá nhân hóa. Em khỏe Toán nhưng yếu Tiếng Anh? Chúng tôi xếp em vào nhóm Tiếng Anh phù hợp + bổ trợ thêm. Em khỏe Tiếng Anh nhưng cần rèn tư duy? Chúng tôi tăng cường STEM. Không có em nào "giỏi toàn diện" từ đầu — quan trọng là con được hỗ trợ đúng chỗ.</p>
+        </div>
+        <div class="content-card">
+          <h3>Học bổng chuyển cấp: Cơ hội giảm đến 50% học phí</h3>
+          <p>Việt Anh dành học bổng cho em có thành tích nổi bật hoặc năng khiếu đặc biệt: Học bổng Xuất sắc (50%), Học bổng Tiềm năng (30%), và Học bổng Hỗ trợ (15-20%). Học bổng được xét dựa trên hồ sơ học tập + kết quả kiểm tra đầu vào — Ba/Mẹ không cần "xin" mà chỉ cần đăng ký, chúng tôi sẽ đánh giá và thông báo mức phù hợp. Nhiều em từ trường công có thành tích tốt đã nhận học bổng 30-50%.</p>
+        </div>
+        <div class="content-card">
+          <h3>Chương trình hội nhập: 2 tuần "Warm-up Camp" trước nhập học</h3>
+          <p>Con không bị "ném" vào môi trường mới ngay ngày đầu tiên. Trước khi năm học bắt đầu, em tham gia 2 tuần Warm-up Camp: làm quen trường, gặp giáo viên, kết bạn, ôn Tiếng Anh, tập thuyết trình ngắn. Em được ghép Buddy — một anh/chị lớp trên sẽ đồng hành 4 tuần đầu. Kết quả: Ngày nhập học, con đã có bạn, biết đường đi lớp, quen cô giáo — thay vì "lạ lẫm, sợ hãi".</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Hỗ trợ tâm lý chuyển trường — Miễn phí cho cả Ba/Mẹ và con</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        Chuyển trường không chỉ là "đổi chỗ học" — mà là thay đổi cả thế giới của con. Chuyên gia tâm lý của Việt Anh sẽ gặp riêng Ba/Mẹ và con <strong>trước khi nhập học</strong> để hiểu tính cách, lo lắng, mong muốn. Sau nhập học, giáo viên chủ nhiệm theo dõi sát 4 tuần đầu và báo cáo Ba/Mẹ hàng tuần. Nếu con cần, có buổi tư vấn tâm lý 1-1 hoàn toàn miễn phí. Mục tiêu: Con cảm thấy "đây là nhà mình" trong 4 tuần đầu.
+      </p>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Đăng ký tư vấn chuyển cấp — Miễn phí, không ràng buộc</h2>
+    <p class="form-subheading">Điền thông tin để nhận tư vấn cá nhân về lộ trình chuyển cấp, học bổng, và chương trình hội nhập phù hợp với con.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="chuyen-cap-thcs-form"
+      funnelCode="chuyen-cap-thcs"
+      schoolLevel="thcs"
+      submitText="Đăng ký tư vấn chuyển cấp"
+      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để tư vấn chi tiết về lộ trình chuyển cấp cho con."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi phổ biến về chuyển cấp THCS" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  .featured-image-section { text-align: center; margin-bottom: 3rem; }
+  .featured-image { width: 100%; max-width: 800px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); object-fit: cover; aspect-ratio: 16/9; }
+  .featured-caption { font-size: 0.9rem; color: #777; margin-top: 1rem; font-style: italic; max-width: 700px; margin-left: auto; margin-right: auto; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
+</style>

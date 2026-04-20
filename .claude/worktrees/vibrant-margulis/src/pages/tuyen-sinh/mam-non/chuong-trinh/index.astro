@@ -1,0 +1,461 @@
+---
+/* Sales Page — Chương Trình Mầm Non Việt Anh */
+const pageTitle = 'Chương Trình Mầm Non Việt Anh — Nơi Con Yêu Phát Triển Toàn Diện';
+const pageDescription = 'Khám phá chương trình mầm non song ngữ Cambridge tại Trường Việt Anh. Môi trường an toàn, yêu thương, phát triển toàn diện cho bé từ 18 tháng.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/chuong-trinh';
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{pageTitle}</title>
+  <meta name="description" content={pageDescription} />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href={canonicalUrl} />
+  <meta property="og:title" content={pageTitle} />
+  <meta property="og:description" content={pageDescription} />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content={canonicalUrl} />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <style is:inline>
+    :root {
+      --n: #0C1E38;
+      --b: #1A4D7C;
+      --o: #E8792B;
+      --od: #CF6A22;
+      --w: #fff;
+      --g1: #F5F7FA;
+      --g2: #DFE3E8;
+      --g6: #5F6B7A;
+      --g8: #1C2A3A;
+      --gn: #1AAB6E;
+      --f: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: var(--f);
+      -webkit-font-smoothing: antialiased;
+      font-size: 16px;
+      color: var(--g8);
+      background: var(--w);
+    }
+
+    /* Nav */
+    .nav {
+      background: var(--w);
+      border-bottom: 1px solid var(--g2);
+      padding: 16px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav img { height: 44px; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(165deg, #0A1628 0%, var(--n) 40%, var(--b) 100%);
+      color: var(--w);
+      text-align: center;
+      padding: 64px 24px 56px;
+    }
+    .hero h1 {
+      font-family: 'Montserrat', var(--f);
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .hero p {
+      font-size: 20px;
+      color: rgba(255,255,255,.75);
+      max-width: 600px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .hero .cta-btn {
+      display: inline-block;
+      background: var(--o);
+      color: var(--w);
+      padding: 16px 40px;
+      border-radius: 14px;
+      font-size: 18px;
+      font-weight: 800;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(232,121,43,.35);
+      transition: all .2s;
+    }
+    .hero .cta-btn:hover {
+      background: var(--od);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 28px rgba(232,121,43,.4);
+    }
+
+    /* Section */
+    .section {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+    .section h2 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 28px;
+      font-weight: 800;
+      color: var(--n);
+      text-align: center;
+      margin-bottom: 40px;
+      line-height: 1.3;
+    }
+
+    /* Feature grid */
+    .features {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .feature-card {
+      background: var(--g1);
+      border-radius: 20px;
+      padding: 32px 24px;
+      transition: transform .2s;
+      border: 2px solid #E8792B;
+    }
+    .feature-card:hover { transform: translateY(-4px); }
+    .feature-card .emoji { font-size: 36px; margin-bottom: 12px; }
+    .feature-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+      color: #E8792B;
+      margin-bottom: 8px;
+    }
+    .feature-card p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    /* Benefits list */
+    .benefits {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .benefits li {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+    }
+    .benefits .emoji { font-size: 32px; flex-shrink: 0; }
+    .benefits h4 {
+      font-size: 17px;
+      font-weight: 800;
+      color: #E8792B;
+      margin-bottom: 4px;
+    }
+    .benefits p {
+      font-size: 16px;
+      color: #555;
+      line-height: 1.5;
+    }
+
+    /* Stats */
+    .stats-row {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 40px;
+    }
+    .stat-item {
+      background: var(--g1);
+      border-radius: 16px;
+      padding: 24px 32px;
+      text-align: center;
+      min-width: 140px;
+    }
+    .stat-item .num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--b);
+      display: block;
+    }
+    .stat-item .label {
+      font-size: 14px;
+      color: var(--g6);
+      margin-top: 4px;
+    }
+
+    /* CTA Banner */
+    .cta-banner {
+      background: linear-gradient(135deg, var(--n) 0%, var(--b) 100%);
+      color: var(--w);
+      border-radius: 24px;
+      padding: 48px 36px;
+      text-align: center;
+      margin: 0 auto;
+      max-width: 900px;
+    }
+    .cta-banner h3 {
+      font-family: 'Montserrat', var(--f);
+      font-size: 26px;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .cta-banner p {
+      font-size: 18px;
+      color: rgba(255,255,255,.8);
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .cta-banner .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cta-banner a {
+      display: inline-block;
+      padding: 16px 32px;
+      border-radius: 14px;
+      font-size: 17px;
+      font-weight: 800;
+      text-decoration: none;
+      transition: all .2s;
+      font-family: var(--f);
+    }
+    .cta-banner .btn-primary {
+      background: var(--o);
+      color: var(--w);
+      box-shadow: 0 4px 16px rgba(232,121,43,.35);
+    }
+    .cta-banner .btn-primary:hover {
+      background: var(--od);
+      transform: translateY(-2px);
+    }
+    .cta-banner .btn-secondary {
+      background: rgba(255,255,255,.15);
+      color: var(--w);
+      border: 2px solid rgba(255,255,255,.3);
+    }
+    .cta-banner .btn-secondary:hover {
+      background: rgba(255,255,255,.25);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 24px;
+      color: var(--g6);
+      font-size: 14px;
+    }
+    .footer a {
+      color: var(--o);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    /* Divider */
+    .section-divider {
+      height: 1px;
+      background: var(--g2);
+      max-width: 200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 700px) {
+      .features { grid-template-columns: 1fr; }
+      .hero { padding: 48px 16px 40px; }
+      .hero p { font-size: 17px; }
+      .section { padding: 40px 16px; }
+      .section h2 { font-size: 24px; }
+      .cta-banner { padding: 36px 20px; margin: 0 16px; }
+      .cta-banner h3 { font-size: 22px; }
+      .cta-banner .btn-group { flex-direction: column; }
+      .cta-banner a { width: 100%; text-align: center; }
+      .stat-item { min-width: 100px; padding: 16px 20px; }
+      .stat-item .num { font-size: 26px; }
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Open+Sans:wght@400;600;700&display=swap&subset=vietnamese');
+  </style>
+
+  <script is:inline>
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({
+      'event': 'page_view',
+      'page_title': 'Chương Trình Mầm Non',
+      'page_url': 'https://truongvietanh.com/tuyen-sinh/mam-non/chuong-trinh',
+      'school_level': 'mam-non',
+      'funnel_code': 'sales-page-mn'
+    });
+  </script>
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+<!-- End Google Tag Manager -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường Mầm Non Việt Anh",
+    "url": "https://truongvietanh.com/tuyen-sinh/mam-non/chuong-trinh",
+    "description": "Khám phá chương trình mầm non song ngữ Cambridge tại Trường Việt Anh. Môi trường an toàn, yêu thương, phát triển toàn diện cho bé từ 18 tháng.",
+    "telephone": "+84-916-961-409",
+    "address": {"@type": "PostalAddress", "addressLocality": "TP. Hồ Chí Minh", "addressCountry": "VN"},
+    "parentOrganization": {"@type": "EducationalOrganization", "name": "Trường Liên Cấp Việt Anh", "url": "https://truongvietanh.com"}
+  }
+  </script>
+</head>
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+  <div class="nav">
+    <img src="/logo-vietanh.webp" alt="Trường Việt Anh" />
+  </div>
+
+  <!-- Hero -->
+  <div class="hero">
+    <h1>Chương Trình Mầm Non Việt Anh — Montessori + STEAM Từ 18 Tháng Tuổi</h1>
+    <p>Con em sẽ được phát triển toàn diện qua phương pháp giáo dục hiện đại, song ngữ thiên nhiên, với những cô giáo yêu trẻ như mẹ.</p>
+    <a href="/tuyen-sinh/mam-non/tham-quan-truong" class="cta-btn">
+      Đặt lịch School Tour cho con ngay
+    </a>
+  </div>
+
+  <img src="https://media.truongvietanh.com/images/giao-vien-07.webp" alt="Chương trình học mầm non Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+  <!-- Stats -->
+  <div class="section">
+    <div class="stats-row">
+      <div class="stat-item">
+        <span class="num">15+</span>
+        <span class="label">Năm kinh nghiệm</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">5</span>
+        <span class="label">Cơ sở tại TPHCM</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">2.000+</span>
+        <span class="label">Phụ huynh tin tưởng</span>
+      </div>
+      <div class="stat-item">
+        <span class="num">100%</span>
+        <span class="label">PH hài lòng</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Why Us -->
+  <div class="section">
+    <h2>Cha mẹ tin tưởng gửi con đến đây vì...</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="emoji">🏡</div>
+        <h3>Môi trường yêu thương như mái nhà thứ hai</h3>
+        <p>Con được chăm sóc bởi đội ngũ cô giáo có 15+ năm kinh nghiệm, tận tâm và luôn đặt tình yêu thương lên hàng đầu. Mỗi ngày con đến trường đều là một ngày vui và an tâm. Tối đa 20-25 trẻ/lớp, giáo viên biết tên, khác biệt của mỗi bé.</p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">📚</div>
+        <h3>Montessori + STEAM Song Ngữ Hàng Ngày</h3>
+        <p>Phát triển toàn diện 5 lĩnh vực: Thể chất, Ngôn ngữ, Nhận thức, Thẩm mỹ và Tình cảm - Xã hội theo phương pháp Cambridge. Tiếng Anh được tiếp xúc tự nhiên từ 18 tháng tuổi qua trò chơi, bài hát, hoạt động sáng tạo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">🛡️</div>
+        <h3>An toàn Tuyệt đối + Dinh Dưỡng Chuyên Gia</h3>
+        <p>Cơ sở vật chất đạt tiêu chuẩn quốc tế, camera 24/7, khu vui chơi ngoài trời được kiểm định an toàn. Thực đơn do chuyên gia dinh dưỡng thiết kế, 3 bữa chính + 2 bữa phụ, thay đổi hàng ngày đảm bảo bé ăn ngon và đủ chất.</p>
+      </div>
+      <div class="feature-card">
+        <div class="emoji">🎨</div>
+        <h3>Phát Triển Toàn Diện Qua Các Môn Học</h3>
+        <p>Âm nhạc, Mỹ thuật, Thể thao, Kỹ năng sống, Trải nghiệm thiên nhiên - được tích hợp vào chương trình hàng ngày. Mỗi hoạt động được thiết kế để phát triển cả trí tuệ, cảm xúc và kỹ năng xã hội cho bé.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-divider"></div>
+
+  <!-- Benefits -->
+  <div class="section">
+    <h2>Con sẽ được gì khi học tại Mầm Non Việt Anh?</h2>
+    <ul class="benefits">
+      <li>
+        <span class="emoji">🌱</span>
+        <div>
+          <h4>Phát triển toàn diện theo tiêu chuẩn quốc tế</h4>
+          <p>Con được phát triển từ thể chất, trí tuệ đến cảm xúc và kỹ năng sống qua phương pháp Montessori + STEAM. Mỗi tuần con đều có những thành quả mới khiến bố mẹ tự hào.</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">🗣️</span>
+        <div>
+          <h4>Tiếng Anh song ngữ tự nhiên từ 18 tháng</h4>
+          <p>Con tiếp xúc tiếng Anh hàng ngày qua trò chơi, bài hát, hoạt động thực tế với giáo viên bản ngữ có kinh nghiệm. Sau 8 tháng, con sẽ tự tin nói tiếng Anh cơ bản.</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">❤️</span>
+        <div>
+          <h4>Tình yêu thương nuôi dưỡng sự tự tin</h4>
+          <p>Con được tôn trọng cá nhân, được lắng nghe ý kiến và được khuyến khích thể hiện bản thân. Tâm lý con sẽ phát triển lành mạnh, tự tin trong mỗi hoạt động.</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">🍎</span>
+        <div>
+          <h4>Dinh dưỡng cân bằng do chuyên gia thiết kế</h4>
+          <p>3 bữa chính + 2 bữa phụ được chuyên gia dinh dưỡng lên kế hoạch, thay đổi hàng ngày để con ăn ngon, khỏe mạnh, nhập nội thành tính nuôi dưỡng tốt.</p>
+        </div>
+      </li>
+      <li>
+        <span class="emoji">👩‍🏫</span>
+        <div>
+          <h4>Đội ngũ cô giáo yêu trẻ & chuyên nghiệp</h4>
+          <p>100% có bằng sư phạm mầm non, 15+ năm kinh nghiệm, được đào tạo liên tục. Họ hiểu tâm lý trẻ em và biết cách nuôi dưỡng tiềm năng của mỗi bé.</p>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- CTA Banner -->
+  <div style="padding: 0 24px 56px;">
+    <div class="cta-banner">
+      <h3>Sẵn sàng đồng hành cùng con yêu trên hành trình đầu đời?</h3>
+      <p>Hãy để Trường Việt Anh trở thành nơi con bắt đầu những bước chân đầu tiên một cách hạnh phúc và an toàn.</p>
+      <div class="btn-group">
+        <a href="/tuyen-sinh/mam-non/tham-quan-truong" class="btn-primary">
+          Đặt lịch School Tour cho con ngay
+        </a>
+        <a href="/tuyen-sinh/mam-non/dang-ky-som" class="btn-secondary">
+          Xem ưu đãi đăng ký sớm — Giảm 15%
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    📞 <a href="tel:0916961409">0916 961 409</a> ·
+    <a href="https://zalo.me/0916961409" target="_blank" rel="noopener">Zalo</a> ·
+    truongvietanh.com
+  </div>
+
+</body>
+</html>

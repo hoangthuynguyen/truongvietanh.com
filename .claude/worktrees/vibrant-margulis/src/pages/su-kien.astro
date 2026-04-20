@@ -1,0 +1,95 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+
+let events: any[] = [];
+try {
+  const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
+  const token = (import.meta.env.DIRECTUS_TOKEN || '').trim();
+  const client = token ? createDirectus(url).with(staticToken(token)).with(rest()) : createDirectus(url).with(rest());
+  events = await client.request(readItems('events', {
+    filter: { status: { _eq: 'published' } }, sort: ['date_start'], limit: 20,
+  }));
+} catch {}
+
+function formatDate(d: string) {
+  try { return new Date(d).toLocaleDateString('vi-VN', { day: 'numeric', month: 'long', year: 'numeric' }); } catch { return d; }
+}
+---
+
+<BaseLayout
+  title="Sự Kiện Trường Việt Anh — Open Day, Workshop, Hội Thao"
+  description="Lịch sự kiện Trường Việt Anh: Open Day tham quan miễn phí, workshop phụ huynh, hội thao, STEM Fair. Đăng ký tham dự ngay."
+  canonical="https://truongvietanh.com/su-kien"
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Sự Kiện Trường Việt Anh</h1>
+        <p class="page-desc">Open Day, Workshop, Hội Thao và các sự kiện sắp tới</p>
+      </div>
+    </section>
+
+    <section class="events-section">
+      <div class="cf-container">
+        {events.length > 0 ? (
+          <div class="events-grid">
+            {events.map((evt) => (
+              <article class="event-card">
+                <div class="event-date-badge">
+                  <span class="event-day">{new Date(evt.date_start).getDate()}</span>
+                  <span class="event-month">{new Date(evt.date_start).toLocaleDateString('vi-VN', { month: 'short' })}</span>
+                </div>
+                <div class="event-body">
+                  <h2 class="event-title">{evt.title}</h2>
+                  <p class="event-meta">
+                    {evt.location && <span>{evt.location}</span>}
+                    {evt.is_free && <span class="event-free">Miễn phí</span>}
+                  </p>
+                  <p class="event-desc">{evt.description}</p>
+                  {evt.registration_url && (
+                    <a href={evt.registration_url} class="event-cta">Đăng ký tham dự</a>
+                  )}
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div class="events-empty">
+            <p>Hiện chưa có sự kiện nào. Đăng ký nhận thông báo khi có sự kiện mới.</p>
+            <a href="/tuyen-sinh" class="event-cta">Đăng ký tư vấn</a>
+          </div>
+        )}
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .text-center { text-align: center; }
+  .page-hero { background: linear-gradient(135deg, #0d1b3e, #1a1a5e); color: #fff; padding: 3rem 0 2.5rem; }
+  .page-title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin: 0 0 0.5rem; }
+  .page-desc { font-size: 1.05rem; color: rgba(255,255,255,0.75); margin: 0; }
+  .events-section { padding: 3rem 0; }
+  .events-grid { display: flex; flex-direction: column; gap: 1.5rem; max-width: 800px; }
+  .event-card { display: flex; gap: 1.25rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; transition: box-shadow 0.2s; }
+  .event-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.08); }
+  .event-date-badge { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 64px; background: #1a1a5e; color: #fff; border-radius: 10px; padding: 0.75rem; }
+  .event-day { font-size: 1.8rem; font-weight: 800; line-height: 1; }
+  .event-month { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+  .event-body { flex: 1; }
+  .event-title { font-size: 1.15rem; font-weight: 700; color: #1a1a5e; margin: 0 0 0.4rem; }
+  .event-meta { font-size: 0.85rem; color: #64748b; margin: 0 0 0.5rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
+  .event-free { background: #dcfce7; color: #166534; padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 600; font-size: 0.8rem; }
+  .event-desc { font-size: 0.92rem; color: #475569; line-height: 1.6; margin: 0 0 0.75rem; }
+  .event-cta { display: inline-block; padding: 0.6rem 1.25rem; background: linear-gradient(135deg, #f5c518, #e8a912); color: #1a1a5e; font-weight: 700; border-radius: 8px; text-decoration: none; font-size: 0.9rem; }
+  .events-empty { text-align: center; padding: 3rem 0; color: #64748b; }
+  @media(max-width:600px) { .event-card { flex-direction: column; } .event-date-badge { flex-direction: row; gap: 0.5rem; } }
+</style>

@@ -1,0 +1,273 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import HeaderBase from '../../../components/HeaderBase.astro';
+import FooterBase from '../../../components/FooterBase.astro';
+import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { CATEGORIES, detectCategory, getCategoryBySlug } from '../../../lib/blog-categories';
+
+type Post = {
+  id: number | string;
+  title: string;
+  slug: string;
+  status?: string;
+  excerpt?: string | null;
+  published_at?: string | null;
+  category?: string | null;
+  featured_image?: string | null;
+};
+
+type DirectusSchema = { posts: Post[] };
+
+export async function getStaticPaths() {
+  const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
+  const token = (import.meta.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7').trim();
+
+  const client = token
+    ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
+    : createDirectus<DirectusSchema>(url).with(rest());
+
+  let allPosts: Post[] = [];
+  try {
+    let page = 1;
+    let hasMore = true;
+    while (hasMore) {
+      const batch = await client.request(
+        readItems('posts', {
+          fields: ['id', 'title', 'slug', 'status', 'excerpt', 'published_at', 'category', 'featured_image'],
+          filter: { status: { _eq: 'published' } },
+          sort: ['-published_at', '-id'],
+          limit: 100,
+          offset: (page - 1) * 100,
+        }),
+      );
+      allPosts = [...allPosts, ...batch];
+      hasMore = batch.length === 100;
+      page++;
+    }
+    allPosts = allPosts.filter(p => p.slug && !/[:\*\?"<>|]/.test(p.slug));
+  } catch {
+    allPosts = [];
+  }
+
+  const postsWithCat = allPosts.map(p => ({
+    ...p,
+    _category: p.category || detectCategory(p.title, p.excerpt),
+  }));
+
+  // One path per category (skip 'tat-ca')
+  return CATEGORIES.slice(1).map(cat => ({
+    params: { category: cat.slug },
+    props: {
+      category: cat,
+      posts: postsWithCat.filter(p => p._category === cat.slug),
+    },
+  }));
+}
+
+const { category, posts } = Astro.props as {
+  category: (typeof CATEGORIES)[number];
+  posts: Array<Post & { _category: string }>;
+};
+
+function formatDate(d?: string | null) {
+  if (!d) return '';
+  return new Date(d).toLocaleDateString('vi-VN', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+const canonicalUrl = `https://truongvietanh.com/blog/danh-muc/${category.slug}`;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${category.label} — Blog Trường Việt Anh`,
+    description: category.description,
+    url: canonicalUrl,
+    isPartOf: { '@type': 'Blog', name: 'Blog Trường Việt Anh', url: 'https://truongvietanh.com/blog' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://truongvietanh.com/blog' },
+      { '@type': 'ListItem', position: 3, name: category.label, item: canonicalUrl },
+    ],
+  },
+];
+
+const relatedCats = CATEGORIES.slice(1).filter(c => c.slug !== category.slug).slice(0, 4);
+---
+
+<BaseLayout
+  title={`${category.label} — Blog Trường Việt Anh`}
+  description={`${category.description} — ${posts.length} bài viết từ đội ngũ giáo dục Trường Việt Anh.`}
+  canonical={canonicalUrl}
+  ogImage="https://media.truongvietanh.com/images/giao-vien-35.webp"
+  structuredData={structuredData}
+  noPopup={true}
+>
+  <div class="ca-page">
+    <HeaderBase currentPath={`/blog/danh-muc/${category.slug}`} />
+
+    <!-- HERO -->
+    <section class="ca-hero">
+      <div class="ca-container">
+        <nav class="ca-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a>
+          <span>/</span>
+          <a href="/blog">Blog</a>
+          <span>/</span>
+          <span>{category.label}</span>
+        </nav>
+        <div class="ca-hero__icon">{category.icon}</div>
+        <h1 class="ca-hero__title">{category.label}</h1>
+        <p class="ca-hero__desc">{category.description}</p>
+        <span class="ca-hero__count">{posts.length} bài viết</span>
+      </div>
+    </section>
+
+    <!-- POSTS GRID -->
+    <section class="ca-posts">
+      <div class="ca-container">
+        {posts.length === 0 ? (
+          <div class="ca-empty">
+            <div class="ca-empty__icon">📭</div>
+            <h2>Chưa có bài viết nào</h2>
+            <p>Nội dung đang được biên tập. Vui lòng quay lại sau.</p>
+            <a href="/blog" class="ca-btn">← Xem tất cả bài viết</a>
+          </div>
+        ) : (
+          <div class="ca-grid" id="caGrid">
+            {posts.map(p => (
+              <a href={`/blog/${p.slug}`} class="ca-card">
+                <h3 class="ca-card__title">{p.title}</h3>
+                {p.excerpt && <p class="ca-card__excerpt">{p.excerpt}</p>}
+                <div class="ca-card__footer">
+                  <time class="ca-card__date">{formatDate(p.published_at)}</time>
+                  <span class="ca-card__read">Đọc →</span>
+                </div>
+              </a>
+            ))}
+          </div>
+        )}
+        <div class="ca-loadmore" id="caLoadMore" style="display:none">
+          <button class="ca-loadmore__btn" id="caLoadMoreBtn">Xem thêm bài viết</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RELATED CATEGORIES -->
+    <section class="ca-related">
+      <div class="ca-container">
+        <h2 class="ca-related__title">Khám Phá Chủ Đề Khác</h2>
+        <div class="ca-related__grid">
+          {relatedCats.map(cat => (
+            <a href={`/blog/danh-muc/${cat.slug}`} class="ca-related__card">
+              <span>{cat.icon}</span>
+              <span>{cat.label}</span>
+            </a>
+          ))}
+          <a href="/blog" class="ca-related__card ca-related__card--all">
+            <span>📰</span>
+            <span>Tất Cả Bài Viết</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="ca-cta">
+      <div class="ca-container ca-cta__inner">
+        <div class="ca-cta__text">
+          <h2>Cần tư vấn trực tiếp?</h2>
+          <p>Đội ngũ chuyên gia giáo dục Việt Anh sẵn sàng tư vấn cá nhân hóa lộ trình cho con.</p>
+        </div>
+        <div class="ca-cta__actions">
+          <a href="/tuyen-sinh" class="ca-btn ca-btn--gold">Đặt lịch tư vấn</a>
+          <a href="tel:+84916961409" class="ca-btn ca-btn--outline">📞 0916 961 409</a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<script is:inline>
+(function () {
+  var BATCH = 24;
+  var shown = BATCH;
+  var cards = Array.from(document.querySelectorAll('.ca-card'));
+  var loadMoreWrap = document.getElementById('caLoadMore');
+  var loadMoreBtn = document.getElementById('caLoadMoreBtn');
+
+  function render() {
+    cards.forEach(function(c, i) { c.style.display = i < shown ? '' : 'none'; });
+    if (loadMoreWrap) loadMoreWrap.style.display = cards.length > shown ? '' : 'none';
+  }
+
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener('click', function() { shown += BATCH; render(); });
+  }
+
+  render();
+})();
+</script>
+
+<style is:inline>
+  .ca-page { --navy: #1a1a5e; --navy-dk: #12123e; --gold: #D4A843; --sub: #5a5a7a; --border: #E5E7EB; --bg: #F8F9FC; --white: #fff; --radius: 12px; }
+  .ca-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  .ca-hero { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); color: #fff; padding: 3.5rem 0 4rem; text-align: center; }
+  .ca-breadcrumb { display: flex; justify-content: center; gap: .4rem; font-size: .83rem; color: rgba(255,255,255,.6); margin-bottom: 1.5rem; flex-wrap: wrap; }
+  .ca-breadcrumb a { color: var(--gold); text-decoration: none; }
+  .ca-hero__icon { font-size: 3rem; margin-bottom: .75rem; display: block; }
+  .ca-hero__title { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; color: #fff; margin: 0 0 .75rem; }
+  .ca-hero__desc { font-size: 1.05rem; color: rgba(255,255,255,.8); max-width: 560px; margin: 0 auto 1.25rem; line-height: 1.7; }
+  .ca-hero__count { font-size: .9rem; background: rgba(255,255,255,.12); padding: .35rem 1rem; border-radius: 50px; color: rgba(255,255,255,.85); display: inline-block; }
+
+  .ca-posts { padding: 3rem 0 4rem; background: var(--bg); }
+  .ca-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .ca-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; transition: transform .2s, box-shadow .2s; position: relative; }
+  .ca-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), #e8c36a); transform: scaleX(0); transition: transform .25s; border-radius: 0 0 var(--radius) var(--radius); }
+  .ca-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,26,94,.09); }
+  .ca-card:hover::after { transform: scaleX(1); }
+  .ca-card__title { font-size: .95rem; font-weight: 700; color: var(--navy); line-height: 1.4; margin: 0 0 .5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
+  .ca-card__excerpt { font-size: .83rem; color: var(--sub); line-height: 1.55; margin: 0 0 .75rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .ca-card__footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
+  .ca-card__date { font-size: .75rem; color: #94a3b8; }
+  .ca-card__read { font-size: .78rem; color: var(--gold); font-weight: 600; }
+
+  .ca-empty { text-align: center; padding: 4rem 1rem; background: var(--white); border-radius: var(--radius); border: 2px dashed var(--border); }
+  .ca-empty__icon { font-size: 3rem; margin-bottom: 1rem; display: block; }
+  .ca-empty h2 { font-size: 1.25rem; color: var(--navy); margin: 0 0 .5rem; }
+  .ca-empty p { color: var(--sub); margin: 0 0 1.5rem; }
+
+  .ca-loadmore { text-align: center; margin-top: 2rem; }
+  .ca-loadmore__btn { padding: .75rem 2.5rem; border: 2px solid var(--navy); border-radius: 8px; background: none; color: var(--navy); font-weight: 700; font-size: .95rem; cursor: pointer; transition: background .15s, color .15s; }
+  .ca-loadmore__btn:hover { background: var(--navy); color: #fff; }
+
+  .ca-related { padding: 3rem 0; background: var(--white); }
+  .ca-related__title { font-size: 1.4rem; font-weight: 800; color: var(--navy); margin: 0 0 1.5rem; }
+  .ca-related__grid { display: flex; flex-wrap: wrap; gap: .75rem; }
+  .ca-related__card { display: flex; align-items: center; gap: .5rem; padding: .65rem 1.25rem; background: var(--bg); border: 1px solid var(--border); border-radius: 50px; text-decoration: none; color: var(--navy); font-weight: 600; font-size: .9rem; transition: background .15s, border-color .15s; }
+  .ca-related__card:hover { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .ca-related__card--all { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .ca-related__card--all:hover { background: #2a2a8e; }
+
+  .ca-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .75rem 1.75rem; border-radius: 8px; font-weight: 700; font-size: .95rem; text-decoration: none; background: var(--navy); color: #fff; transition: transform .15s; }
+  .ca-btn:hover { transform: translateY(-2px); }
+  .ca-btn--gold { background: linear-gradient(135deg, var(--gold), #c09530); color: var(--navy-dk); }
+  .ca-btn--outline { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.3); }
+
+  .ca-cta { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); padding: 3.5rem 0; }
+  .ca-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .ca-cta__text h2 { font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
+  .ca-cta__text p { color: rgba(255,255,255,.8); font-size: 1rem; margin: 0; }
+  .ca-cta__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+  @media (max-width: 1100px) { .ca-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 860px) { .ca-grid { grid-template-columns: repeat(2, 1fr); } .ca-cta__inner { flex-direction: column; text-align: center; } .ca-cta__actions { justify-content: center; } }
+  @media (max-width: 480px) { .ca-grid { grid-template-columns: 1fr; } }
+</style>

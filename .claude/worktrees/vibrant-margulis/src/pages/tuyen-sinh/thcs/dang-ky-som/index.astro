@@ -1,0 +1,148 @@
+---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
+
+const pageTitle = 'Đăng Ký Sớm THCS 2026-2027 — Ưu Đãi Học Phí & Suất Ưu Tiên';
+const pageDescription = 'Đăng ký sớm THCS Việt Anh 2026-2027: Giảm học phí lên đến 15%, suất ưu tiên chọn lớp, và quà tặng khai giảng. Chỉ áp dụng cho 50 gia đình đăng ký trước 30/4.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/dang-ky-som';
+
+const uspItems = [
+  { icon: '💰', text: 'Giảm học phí lên đến 15% cho gia đình đăng ký sớm trước 30/4/2026' },
+  { icon: '🎯', text: 'Suất ưu tiên chọn lớp — con được xếp vào lớp phù hợp nhất' },
+  { icon: '📦', text: 'Quà tặng khai giảng trị giá 3 triệu đồng (đồng phục, sách, dụng cụ học tập)' },
+  { icon: '🔒', text: 'Giữ chỗ đảm bảo — không lo hết suất khi tuyển sinh chính thức' },
+  { icon: '📋', text: 'Ưu tiên kiểm tra đầu vào — lịch thi linh hoạt, kết quả nhanh' },
+  { icon: '🤝', text: 'Hỗ trợ chuyển trường toàn diện — thủ tục, hồ sơ, tâm lý cho con' }
+];
+
+const metrics = [
+  { number: '15%', label: 'Giảm học phí tối đa' },
+  { number: '50', label: 'Suất đăng ký sớm' },
+  { number: '30/4', label: 'Hạn chót ưu đãi' },
+  { number: '3TR', label: 'Quà tặng khai giảng' }
+];
+
+const faqItems = [
+  {
+    question: 'Ưu đãi đăng ký sớm cụ thể là gì? Giảm bao nhiêu?',
+    answer: 'Gia đình đăng ký trước 30/4/2026 được: (1) Giảm 10-15% học phí năm đầu tiên (tùy thời điểm đăng ký — càng sớm càng giảm nhiều), (2) Quà tặng khai giảng trị giá 3 triệu đồng bao gồm 2 bộ đồng phục, bộ sách giáo khoa, và dụng cụ học tập đầy đủ, (3) Ưu tiên chọn lớp — con được xếp vào lớp có giáo viên chủ nhiệm phù hợp với tính cách và năng lực. Ưu đãi này chỉ áp dụng cho 50 gia đình đầu tiên và không gia hạn.'
+  },
+  {
+    question: 'Đăng ký sớm có nghĩa là con đã được nhận chính thức chưa?',
+    answer: 'Đăng ký sớm là giữ chỗ ưu tiên — con vẫn cần hoàn thành bài kiểm tra đầu vào (nhưng được ưu tiên lịch thi linh hoạt và kết quả trong 3 ngày thay vì 7 ngày). Bài kiểm tra không phải "thi loại" mà để đánh giá năng lực hiện tại, giúp trường xếp lớp phù hợp. 95% học sinh kiểm tra đều đạt yêu cầu. Nếu con chưa đạt, chúng tôi sẽ tư vấn Ba/Mẹ cách hỗ trợ con và cho phép thi lại sau 2 tuần.'
+  },
+  {
+    question: 'Nếu đăng ký sớm rồi đổi ý thì sao? Có hoàn tiền không?',
+    answer: 'Có. Chúng tôi áp dụng chính sách hoàn tiền linh hoạt: Nếu Ba/Mẹ quyết định không cho con học trước khi năm học bắt đầu, chúng tôi hoàn 100% phí giữ chỗ (không trừ bất kỳ phí nào). Chúng tôi hiểu việc chọn trường cho con là quyết định lớn — Ba/Mẹ cần thời gian cân nhắc. Chính sách hoàn tiền 100% giúp Ba/Mẹ "giữ chỗ an tâm" mà không áp lực tài chính.'
+  },
+  {
+    question: 'Con tôi đang học trường khác — chuyển vào lớp 7, 8, 9 có được ưu đãi không?',
+    answer: 'Được. Ưu đãi đăng ký sớm áp dụng cho tất cả khối lớp THCS: Lớp 6 mới, và cả Lớp 7, 8, 9 chuyển từ trường khác. Đối với em chuyển trường, chúng tôi còn hỗ trợ thêm: (1) Chương trình bổ trợ Tiếng Anh miễn phí 1 tháng đầu nếu em chưa quen môi trường song ngữ, (2) Buddy program — ghép cặp em mới với em cũ để hỗ trợ hòa nhập, (3) Tư vấn tâm lý chuyển trường cho cả Ba/Mẹ và con. Mục tiêu: Con hòa nhập trong 2-4 tuần đầu, không bị "sốc" môi trường mới.'
+  },
+  {
+    question: 'Thời hạn đăng ký sớm kết thúc khi nào?',
+    answer: 'Hạn chót là 30/4/2026 hoặc khi hết 50 suất (tùy cái nào đến trước). Hiện tại đã có nhiều gia đình đăng ký, số suất còn lại đang giảm nhanh — đặc biệt sau mỗi đợt open day cuối tuần. Ba/Mẹ nên đăng ký sớm để đảm bảo nhận ưu đãi tốt nhất (càng sớm càng giảm nhiều). Sau 30/4, tuyển sinh chính thức vẫn mở nhưng không còn ưu đãi giảm học phí và quà tặng khai giảng.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="đăng ký sớm THCS, tuyển sinh THCS 2026, trường Việt Anh, ưu đãi học phí, suất ưu tiên"
+  schoolLevel="thcs"
+  funnelCode="early-bird-thcs"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">
+      Đăng Ký Sớm THCS 2026-2027 — Ưu Đãi Học Phí & Suất Ưu Tiên
+    </h1>
+    <p class="hero-subtitle">
+      Giảm đến 15% học phí + Quà tặng 3 triệu — Chỉ 50 suất trước 30/4/2026
+    </p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section featured-image-section">
+      <img src="https://media.truongvietanh.com/images/giao-vien-22.webp" alt="Giáo viên THCS Việt Anh tận tâm hướng dẫn học sinh trong lớp nhỏ" class="featured-image" width="800" height="450" loading="lazy" />
+      <p class="featured-caption">Lớp học THCS Việt Anh chỉ 30 em -- mỗi em được giáo viên quan tâm cá nhân, đảm bảo chất lượng giáo dục vượt trội.</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Tại sao đăng ký sớm là quyết định thông minh?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Giảm học phí thực sự — Không phải "giảm giá ảo"</h3>
+          <p>Đăng ký sớm THCS Việt Anh là chương trình ưu đãi thực sự: giảm 10-15% học phí năm đầu tiên, tính trên tổng học phí (bao gồm cả học phí chính khóa và ngoại khóa). Ví dụ: Nếu học phí năm là 80 triệu, Ba/Mẹ tiết kiệm 8-12 triệu đồng — đủ để mua sách, dụng cụ học tập, và đồng phục cho cả năm. Ưu đãi càng sớm càng lớn: đăng ký trong tháng 3 giảm 15%, tháng 4 giảm 10%.</p>
+        </div>
+        <div class="content-card">
+          <h3>Suất ưu tiên chọn lớp — Con được xếp lớp phù hợp nhất</h3>
+          <p>Mỗi lớp tại Việt Anh chỉ có 30 em, và mỗi giáo viên chủ nhiệm có phong cách riêng. Gia đình đăng ký sớm được ưu tiên: chọn giáo viên chủ nhiệm phù hợp với tính cách con, xếp lớp cân bằng giữa học sinh giỏi và học sinh cần hỗ trợ, và đảm bảo con có bạn quen (nếu cùng trường cũ). Đăng ký muộn thì lớp gần đầy — con bị xếp vào chỗ còn trống, không phải chỗ phù hợp nhất.</p>
+        </div>
+        <div class="content-card">
+          <h3>Giữ chỗ đảm bảo — Không lo "hết suất"</h3>
+          <p>Mỗi năm, Việt Anh nhận khoảng 100 học sinh THCS mới nhưng có 150-200 gia đình quan tâm. Đăng ký sớm = giữ chỗ chắc chắn. Ba/Mẹ không cần lo lắng đến tháng 5-6 mới biết con có được nhận không. An tâm giữ chỗ từ sớm, tập trung chuẩn bị tâm lý và học tập cho con thay vì "chạy đua" nộp hồ sơ vào phút cuối khi không còn suất.</p>
+        </div>
+        <div class="content-card">
+          <h3>Ưu tiên kiểm tra đầu vào — Linh hoạt và nhanh kết quả</h3>
+          <p>Gia đình đăng ký sớm được lịch kiểm tra linh hoạt (chọn ngày phù hợp thay vì theo lịch cố định), và nhận kết quả trong 3 ngày (thay vì 7 ngày). Bài kiểm tra đánh giá năng lực Toán, Tiếng Việt, Tiếng Anh — không phải "thi loại" mà để xếp lớp phù hợp. Nếu con cần bổ sung kiến thức, chúng tôi sẽ tư vấn kế hoạch ôn tập cụ thể trước khi nhập học.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #E8792B;">Bonus: Hoàn tiền 100% nếu đổi ý — Không rủi ro cho Ba/Mẹ</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        Chúng tôi hiểu chọn trường là quyết định lớn. Vì vậy, chính sách của Việt Anh rất rõ ràng: <strong>nếu Ba/Mẹ đăng ký sớm rồi đổi ý trước khi năm học bắt đầu, chúng tôi hoàn 100% phí giữ chỗ</strong> — không trừ bất kỳ khoản nào. Ba/Mẹ có thể "giữ chỗ an tâm" trong khi tiếp tục tìm hiểu, so sánh, và đưa ra quyết định cuối cùng. Đăng ký sớm = giữ quyền ưu tiên mà không mất gì.
+      </p>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Đăng ký sớm ngay — Chỉ còn ít suất ưu đãi</h2>
+    <p class="form-subheading">Điền thông tin để nhận ưu đãi giảm học phí và giữ chỗ ưu tiên. Chúng tôi sẽ liên hệ trong 24h để hướng dẫn chi tiết.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="early-bird-thcs-form"
+      funnelCode="early-bird-thcs"
+      schoolLevel="thcs"
+      submitText="Đăng ký sớm & nhận ưu đãi"
+      successMessage="Cảm ơn Ba/Mẹ! Chúng tôi sẽ liên hệ trong 24h để xác nhận suất đăng ký sớm và hướng dẫn bước tiếp theo."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi phổ biến về đăng ký sớm" />
+  </div>
+</SqueezePageLayout>
+
+<style>
+  .hero-h1 { font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #1F4E79; }
+  .hero-subtitle { font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #E8792B; }
+  .content-section { margin-bottom: 3rem; }
+  .content-section h2 { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #1F4E79; text-align: center; }
+  .content-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }
+  .content-card { padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }
+  .content-card:hover { border-color: #E8792B; box-shadow: 0 8px 20px rgba(232, 121, 43, 0.15); transform: translateY(-4px); }
+  .content-card h3 { font-family: "Montserrat", sans-serif; font-size: 1.25rem; font-weight: 700; color: #E8792B; margin-bottom: 1rem; }
+  .content-card p { font-size: 0.95rem; line-height: 1.7; color: #555; }
+  .bonus-section { background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #E8792B; border-radius: 8px; }
+  .bonus-section h2 { color: #E8792B; }
+  .form-heading { font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #E8792B; margin-bottom: 0.5rem; }
+  .form-subheading { font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }
+  .featured-image-section { text-align: center; margin-bottom: 3rem; }
+  .featured-image { width: 100%; max-width: 800px; height: auto; border-radius: 16px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); object-fit: cover; aspect-ratio: 16/9; }
+  .featured-caption { font-size: 0.9rem; color: #777; margin-top: 1rem; font-style: italic; max-width: 700px; margin-left: auto; margin-right: auto; }
+  @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } .content-card { padding: 1.5rem; } .bonus-section { padding: 1.5rem; } }
+</style>

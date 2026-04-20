@@ -1,0 +1,157 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const templates = [
+  {
+    name: '1. Pillar Pages',
+    file: 'src/styles/global.css (.gi-*) + src/layouts/BaseLayout.astro',
+    count: 15,
+    sample: '/mam-non',
+    cms: 'pillar_pages (15 records)',
+    description: 'Trang chương trình chính. Blocks: Hero + Form, TOC, Sections (WYSIWYG), FAQ (WYSIWYG), PAA cross-links, Bottom CTA, Author Bio, Next Steps.',
+    pages: ['gioi-thieu', 'mam-non', 'tieu-hoc', 'trung-hoc-co-so', 'trung-hoc-pho-thong', 'co-so', 'hoc-phi', 'tuyen-sinh', 'triet-ly-giao-duc', 'he-thong-pdr', 'ngoai-khoa', 'thanh-tich', 'phu-huynh', 'lien-he', 'cap-hoc'],
+  },
+  {
+    name: '2. Squeeze Pages',
+    file: 'src/layouts/SqueezePageLayout.astro',
+    count: 24,
+    sample: '/tuyen-sinh/mam-non/gioi-thieu',
+    cms: 'squeeze_pages (19 records)',
+    description: 'Trang lead capture / funnel tuyển sinh. Blocks: Hero headline, USP Grid, Trust Metrics, 2-Step Lead Form, Content, FAQ, Sticky CTA mobile.',
+    pages: ['tuyen-sinh/mam-non/*', 'tuyen-sinh/tieu-hoc/*', 'tuyen-sinh/thcs/*', 'tuyen-sinh/thpt/*', 'squeeze/*'],
+  },
+  {
+    name: '3. Lop-6 A/B Squeeze',
+    file: 'src/pages/tuyen-sinh/thcs/lop-6/checklist-a.astro (inline)',
+    count: 10,
+    sample: '/tuyen-sinh/thcs/lop-6/checklist-a',
+    cms: 'squeeze_pages (10 records, tag lop-6)',
+    description: 'Squeeze inline HTML cho A/B testing THCS lớp 6. 5 loại × 2 variants: checklist, early-bird, pain-point, school-tour, webinar.',
+    pages: ['checklist-a/b', 'early-bird-a/b', 'pain-point-a/b', 'school-tour-a/b', 'webinar-a/b'],
+  },
+  {
+    name: '4. Thank You (Cam-On)',
+    file: 'src/pages/tuyen-sinh/thcs/checklist/cam-on/index.astro (inline)',
+    count: 26,
+    sample: '/tuyen-sinh/thcs/checklist/cam-on',
+    cms: '(chưa có — standalone HTML)',
+    description: 'Trang cảm ơn sau đăng ký. Blocks: Logo, Icon, Thank you message, Countdown timer, Zalo/Phone CTA, Next Step links. Compact.',
+    pages: ['*/cam-on/ across mam-non, tieu-hoc, thcs, thpt'],
+  },
+  {
+    name: '5. Blog Post',
+    file: 'src/pages/blog/[slug].astro (inline CSS)',
+    count: 1203,
+    sample: '/blog/gia-tri-cot-loi',
+    cms: 'posts (1203 records)',
+    description: 'Template blog. Blocks: Reading Progress Bar, Breadcrumb, Header (title + date + read time), Share Buttons, Auto TOC, Content (WYSIWYG), Author Bio, Related Posts, CTA Form.',
+    pages: ['1203 bài từ Directus CMS — content team viết/sửa qua admin'],
+  },
+  {
+    name: '6. Homepage',
+    file: 'src/pages/index.astro + src/styles/global.css (wp-*, section-block)',
+    count: 1,
+    sample: '/',
+    cms: 'testimonials + campuses (data blocks)',
+    description: 'Trang chủ. Blocks: Dark Hero, AIO Answer, Stats (animated), "Tại sao chọn VA" (3 blocks), Chương trình (10 cards), Cơ sở (3 cities), Testimonials, Blog, FAQ, PAA, Form.',
+    pages: ['/'],
+  },
+  {
+    name: '7. Sales Pages',
+    file: 'Mỗi trang có <style> riêng',
+    count: 5,
+    sample: '/so-sanh',
+    cms: 'sales_pages (5 records)',
+    description: 'Trang đặc biệt với layout riêng. Gồm: so-sanh (bảng so sánh), su-kien (events listing), hoc-bong (scholarships cards), hinh-anh (gallery), tin-tuc (blog listing + filter).',
+    pages: ['so-sanh', 'su-kien', 'hoc-bong', 'hinh-anh', 'tin-tuc'],
+  },
+  {
+    name: '8. Public HTML',
+    file: 'public/tuyen-sinh/*/index.html (inline CSS)',
+    count: 21,
+    sample: '/tuyen-sinh/thcs/chuong-trinh-hoc',
+    cms: '(chưa có — static HTML files)',
+    description: 'Trang HTML tĩnh serve trực tiếp. Funnel pages cũ: chuong-trinh-hoc, hoc-phi, phu-huynh-noi-gi, xac-nhan-tour, cam-on cho mỗi cấp học.',
+    pages: ['tuyen-sinh/*/chuong-trinh-hoc', 'hoc-phi', 'phu-huynh-noi-gi', 'xac-nhan-tour', 'cam-on'],
+  },
+];
+---
+
+<BaseLayout
+  title="Mẫu Giao Diện — Templates Trường Việt Anh"
+  description="Danh sách 8 templates đang dùng trên website Trường Việt Anh. Hướng dẫn chỉnh sửa giao diện."
+  noindex={true}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Mẫu Giao Diện (Templates)</h1>
+        <p class="page-desc">8 templates đang dùng — click "Xem mẫu" để xem trang live, "File cần sửa" để biết sửa ở đâu</p>
+      </div>
+    </section>
+
+    <section class="templates-section">
+      <div class="cf-container">
+        <div class="templates-grid">
+          {templates.map((t, i) => (
+            <article class="template-card">
+              <div class="template-header">
+                <span class="template-number">{i + 1}</span>
+                <div>
+                  <h2 class="template-name">{t.name}</h2>
+                  <span class="template-count">{t.count} trang</span>
+                </div>
+              </div>
+              <p class="template-desc">{t.description}</p>
+              <div class="template-file">
+                <strong>File cần sửa:</strong> <code>{t.file}</code>
+              </div>
+              <div class="template-cms">
+                <strong>CMS collection:</strong> <span>{t.cms}</span>
+              </div>
+              <div class="template-pages">
+                <strong>Trang áp dụng:</strong>
+                <div class="template-tags">
+                  {t.pages.slice(0, 6).map(p => <span class="template-tag">{p}</span>)}
+                  {t.pages.length > 6 && <span class="template-tag">+{t.pages.length - 6} khác</span>}
+                </div>
+              </div>
+              <a href={t.sample} class="template-cta" target="_blank">Xem mẫu live</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .text-center { text-align: center; }
+  .page-hero { background: linear-gradient(135deg, #0d1b3e, #1a1a5e); color: #fff; padding: 3rem 0 2.5rem; }
+  .page-title { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 800; margin: 0 0 0.5rem; }
+  .page-desc { font-size: 1rem; color: rgba(255,255,255,0.7); margin: 0; }
+  .templates-section { padding: 3rem 0; }
+  .templates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1.5rem; }
+  .template-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.75rem; transition: box-shadow 0.2s; display: flex; flex-direction: column; gap: 0.75rem; }
+  .template-card:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.08); }
+  .template-header { display: flex; align-items: center; gap: 1rem; }
+  .template-number { display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; background: #1a1a5e; color: #fff; font-weight: 800; border-radius: 10px; font-size: 1.1rem; flex-shrink: 0; }
+  .template-name { font-size: 1.1rem; font-weight: 700; color: #1a1a5e; margin: 0; }
+  .template-count { font-size: 0.82rem; color: #D4A843; font-weight: 700; }
+  .template-desc { font-size: 0.88rem; color: #475569; line-height: 1.6; margin: 0; }
+  .template-file { font-size: 0.82rem; color: #64748b; }
+  .template-file code { background: #f1f5f9; padding: 0.15rem 0.4rem; border-radius: 4px; font-size: 0.78rem; word-break: break-all; }
+  .template-cms { font-size: 0.82rem; color: #2563eb; font-weight: 500; }
+  .template-cms span { background: #eff6ff; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.78rem; }
+  .template-pages { font-size: 0.82rem; color: #64748b; }
+  .template-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin-top: 0.3rem; }
+  .template-tag { padding: 0.15rem 0.5rem; background: #f1f5f9; border-radius: 4px; font-size: 0.75rem; color: #475569; }
+  .template-cta { display: inline-block; margin-top: auto; padding: 0.6rem 1.25rem; background: linear-gradient(135deg, #f5c518, #e8a912); color: #1a1a5e; font-weight: 700; border-radius: 8px; text-decoration: none; text-align: center; font-size: 0.9rem; }
+</style>

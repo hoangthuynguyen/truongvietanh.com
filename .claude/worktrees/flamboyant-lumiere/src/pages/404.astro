@@ -1,0 +1,156 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+---
+
+<BaseLayout
+  title="404 — Không tìm thấy trang | Trường Việt Anh"
+  description="Trang bạn tìm kiếm không tồn tại. Quay lại trang chủ hoặc tìm kiếm nội dung khác tại Trường Việt Anh."
+  noindex={true}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <section class="error-page">
+      <div class="error-container">
+        <div class="error-code">404</div>
+        <h1 class="error-title">Trang không tìm thấy</h1>
+        <p class="error-desc">Trang bạn đang tìm kiếm có thể đã được di chuyển, đổi tên hoặc không tồn tại. Hãy thử các liên kết bên dưới.</p>
+
+        <div class="error-actions">
+          <a href="/" class="error-btn error-btn--primary">Về trang chủ</a>
+          <a href="/tuyen-sinh" class="error-btn error-btn--secondary">Tuyển sinh</a>
+          <a href="/lien-he" class="error-btn error-btn--secondary">Liên hệ</a>
+        </div>
+
+        <div class="error-links">
+          <h2>Bạn có thể quan tâm</h2>
+          <ul>
+            <li><a href="/mam-non">Chương trình Mầm Non</a></li>
+            <li><a href="/tieu-hoc">Chương trình Tiểu Học</a></li>
+            <li><a href="/trung-hoc-co-so">Chương trình THCS</a></li>
+            <li><a href="/trung-hoc-pho-thong">Chương trình THPT</a></li>
+            <li><a href="/hoc-phi">Thông tin học phí</a></li>
+            <li><a href="/co-so">Hệ thống cơ sở</a></li>
+            <li><a href="/tin-tuc">Tin tức & sự kiện</a></li>
+            <li><a href="/gioi-thieu">Giới thiệu Trường Việt Anh</a></li>
+          </ul>
+        </div>
+
+        <p class="error-contact">Cần hỗ trợ? Gọi hotline <a href="tel:0916961409"><strong>0916 961 409</strong></a> hoặc nhắn <a href="https://zalo.me/0916961409" target="_blank" rel="noopener"><strong>Zalo</strong></a></p>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .error-page {
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 1.5rem;
+    text-align: center;
+  }
+  .error-container {
+    max-width: 600px;
+  }
+  .error-code {
+    font-size: clamp(5rem, 15vw, 10rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, #1a1a5e, #D4A843);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+  .error-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #1a1a5e;
+    margin-bottom: 0.75rem;
+  }
+  .error-desc {
+    font-size: 1.05rem;
+    color: #64748b;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .error-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+  }
+  .error-btn {
+    padding: 0.8rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .error-btn:hover {
+    transform: translateY(-2px);
+  }
+  .error-btn--primary {
+    background: linear-gradient(135deg, #f5c518, #e8a912);
+    color: #1a1a5e;
+    box-shadow: 0 4px 12px rgba(245,197,24,0.3);
+  }
+  .error-btn--secondary {
+    background: #f1f5f9;
+    color: #1a1a5e;
+  }
+  .error-btn--secondary:hover {
+    background: #e2e8f0;
+  }
+  .error-links {
+    text-align: left;
+    background: #f8fafc;
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .error-links h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1a1a5e;
+    margin-bottom: 0.75rem;
+  }
+  .error-links ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+  }
+  .error-links a {
+    color: #475569;
+    text-decoration: none;
+    font-size: 0.92rem;
+    padding: 0.4rem 0;
+    display: block;
+    transition: color 0.2s;
+  }
+  .error-links a:hover {
+    color: #2563eb;
+  }
+  .error-contact {
+    font-size: 0.92rem;
+    color: #64748b;
+  }
+  .error-contact a {
+    color: #1a1a5e;
+    text-decoration: none;
+  }
+  @media (max-width: 480px) {
+    .error-links ul { grid-template-columns: 1fr; }
+  }
+</style>

@@ -247,6 +247,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     font-weight: 700;
     color: #ffffff;
     margin: 0;
+    line-height: 1.5;
   }
 
   .form-step-description {
@@ -294,6 +295,18 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   [data-form-bg="light"] .form-progress__step--done .form-progress__label {
     color: #1a1a5e;
   }
+
+  /* Progress dot inactive trên nền trắng */
+  [data-form-bg="light"] .form-progress__dot {
+    background: #e2e8f0;
+    color: #1a1a5e;
+  }
+  [data-form-bg="light"] .form-progress__line {
+    background: #e2e8f0;
+  }
+  /* Form step title + description trên nền trắng (fallback if specificity needed) */
+  [data-form-bg="light"] .form-step-title { color: #1a1a5e; }
+  [data-form-bg="light"] .form-step-description { color: #475569; }
 
   /* ===== SOCIAL PROOF ===== */
   .form-social-proof {
@@ -413,11 +426,11 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
 
   /* ===== BUTTONS ===== */
   .form-btn {
-    padding: 0.7rem 1.2rem;
+    padding: 0.55rem 1rem;
     border: none;
     border-radius: 8px;
     font-family: "Montserrat", sans-serif;
-    font-size: 1.15rem;
+    font-size: 1.35rem;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -428,6 +441,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     gap: .5rem;
     text-align: center;
     white-space: nowrap;
+    line-height: 1.25;
   }
 
   .form-btn--next,

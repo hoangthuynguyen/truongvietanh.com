@@ -1,0 +1,175 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { defaultSiteUrl } from '../../lib/site-content';
+import { getTemplateCheckLinks, templateGroups, templateSamples } from '../../lib/template-library';
+
+const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
+const checkLinks = getTemplateCheckLinks();
+const performanceCount = templateSamples.filter((sample) => sample.group === 'Performance').length;
+const authorityCount = templateSamples.filter((sample) => sample.group === 'SEO / Authority').length;
+const nurtureCount = templateSamples.filter((sample) => sample.group === 'Mid-funnel / Nurturing').length;
+const systemCount = templateSamples.filter((sample) => sample.group === 'System / Utility').length;
+---
+
+<BaseLayout
+  title="Thư viện 28 Template Classes | Trường Việt Anh"
+  description="Thư viện 28 template classes của Trường Việt Anh, tối ưu cho SEO, AI Overviews, tốc độ tải và route production-ready."
+  canonical={`${siteUrl}/mau-template/`}
+  noindex={true}
+>
+  <div class="site-shell site-shell--system">
+    <SiteHeader currentPath="/mau-template" siteUrl="/" />
+
+    <main class="page-flow">
+      <section class="hero-block hero-block--home">
+        <div class="hero-block__main">
+          <p class="section-eyebrow">Template library</p>
+          <h1>28 template classes production-ready cho toàn bộ kiến trúc SEO, AIO và lead generation của Trường Việt Anh.</h1>
+          <p class="hero-copy">
+            Thư viện này dùng để xem nhanh từng template đang phục vụ vai trò gì, route production gần nhất là gì, cấu trúc trang ra sao và các tín hiệu SEO/AIO nào cần có trước khi scale bằng Directus.
+          </p>
+
+          <div class="badge-row">
+            <span class="badge">28 template classes</span>
+            <span class="badge badge--soft">Blue + gold brand system</span>
+            <span class="badge badge--soft">SEO + AI parseable</span>
+          </div>
+
+          <div class="cta-row">
+            <a class="button button--primary" href="#template-groups">Xem danh mục template</a>
+            <a class="button button--ghost" href="/">Quay về homepage</a>
+          </div>
+        </div>
+
+        <aside class="hero-block__aside">
+          <p class="aside-eyebrow">Tổng quan hệ</p>
+          <h2>Thư viện này được chia theo 4 nhóm template lớn.</h2>
+          <ul class="aside-list">
+            <li>Performance templates cho paid traffic và conversion trực tiếp.</li>
+            <li>SEO / authority templates cho pillar, local trust và topical coverage.</li>
+            <li>Mid-funnel templates cho comparison, FAQ, objection và parent hub.</li>
+            <li>System / utility templates cho homepage, contact, thank-you, retention và legal.</li>
+          </ul>
+        </aside>
+      </section>
+
+      <section class="section-block section-block--stats">
+        <div class="section-heading">
+          <p class="section-eyebrow">Coverage</p>
+          <h2>Thư viện hiện bao phủ đầy đủ 28 classes theo kiến trúc mới của Trường Việt Anh.</h2>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-tile">
+            <strong>{performanceCount}</strong>
+            <span>Performance templates</span>
+          </article>
+          <article class="stat-tile">
+            <strong>{authorityCount}</strong>
+            <span>SEO / authority templates</span>
+          </article>
+          <article class="stat-tile">
+            <strong>{nurtureCount}</strong>
+            <span>Mid-funnel / nurturing templates</span>
+          </article>
+          <article class="stat-tile">
+            <strong>{systemCount}</strong>
+            <span>System / utility templates</span>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-block" id="template-groups">
+        <div class="section-heading">
+          <p class="section-eyebrow">Danh sách hiển thị</p>
+          <h2>Mỗi template có một page mẫu riêng để kiểm tra cấu trúc, CTA, route liên quan và logic SEO/AIO.</h2>
+          <p class="section-intro">
+            Đây là nơi để team content, design, SEO, admissions và growth nhìn cùng một hệ quy chiếu trước khi chuyển template thành page thật trong CMS.
+          </p>
+        </div>
+
+        <div class="group-stack">
+          {templateGroups.map((group) => (
+            <section class="group-panel">
+              <div class="group-panel__heading">
+                <p class="section-eyebrow">{group}</p>
+                <h3>{group}</h3>
+              </div>
+
+              <div class="sample-index-grid">
+                {templateSamples
+                  .filter((sample) => sample.group === group)
+                  .map((sample) => (
+                    <a class="sample-card" href={`/mau-template/${sample.slug}/`}>
+                      <div class="sample-card__top">
+                        <span class="badge">{sample.classCode}</span>
+                        <span class="sample-theme">{sample.theme}</span>
+                      </div>
+                      <h3>{sample.templateClass}</h3>
+                      <p>{sample.description}</p>
+                      <div class="sample-card__meta">
+                        <strong>CTA:</strong>
+                        <span>{sample.primaryCta}</span>
+                      </div>
+                      <div class="sample-card__meta">
+                        <strong>Vai trò:</strong>
+                        <span>{sample.pageRole}</span>
+                      </div>
+                      <div class="sample-card__meta">
+                        <strong>Funnel:</strong>
+                        <span>{sample.funnel}</span>
+                      </div>
+                    </a>
+                  ))}
+              </div>
+            </section>
+          ))}
+        </div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <p class="section-eyebrow">Routes để kiểm tra</p>
+          <h2>Mỗi template đều có sample route và route production gần nhất để đối chiếu khi build thật.</h2>
+          <p class="section-intro">
+            Dùng cặp route này để review nhanh: sample route xem cấu trúc chuẩn, production route xem mức độ sẵn sàng của hệ thống thật.
+          </p>
+        </div>
+
+        <div class="link-grid">
+          {checkLinks.map((item) => (
+            <article class="link-card">
+              <p class="card-eyebrow">{item.classCode}</p>
+              <h3>{item.templateClass}</h3>
+              <p>
+                <strong>Sample:</strong> <a href={item.sampleRoute}>{item.sampleRoute}</a>
+              </p>
+              <p>
+                <strong>Production-near:</strong> <a href={item.productionRoute}>{item.productionRoute}</a>
+              </p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="cta-banner">
+        <div>
+          <p class="section-eyebrow">Bước tiếp theo</p>
+          <h2>Sau thư viện template, bước production là map từng class vào Directus collections, blocks và route thật.</h2>
+          <p>
+            Khi một template đã ổn về SEO, AI parseability, tốc độ và brand, đội ngũ có thể dùng nó làm khung cho pages thật với content thật, campus thật và tracking thật.
+          </p>
+        </div>
+
+        <div class="cta-row">
+          <a class="button button--primary" href="/tuyen-sinh">Xem admissions live pages</a>
+          <a class="button button--ghost" href="/hoc-phi">Xem money page live</a>
+        </div>
+      </section>
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>

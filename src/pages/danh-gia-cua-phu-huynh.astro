@@ -1,0 +1,299 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { getTestimonials } from '../lib/directus';
+
+// Fetch testimonials from Directus CMS
+const cmsTestimonials = await getTestimonials();
+
+// Fallback testimonials nếu CMS trống
+const fallbackTestimonials = [
+  {
+    name: 'Chị Phạm Thuỳ Dung',
+    role: 'Phụ huynh bé lớp 3 · Cơ sở Gò Vấp',
+    quote: 'Tôi chọn Trường Việt Anh vì con được học tiếng Anh chuẩn mà học phí chỉ bằng 1/3 trường quốc tế. Sau 2 năm, bé đã tự tin nói chuyện với giáo viên nước ngoài. Gia đình rất hài lòng.',
+    initials: 'PD',
+    stars: 5,
+  },
+  {
+    name: 'Anh Nguyễn Hoàng Minh',
+    role: 'Phụ huynh bé lớp 7 · Cơ sở Bình Tân',
+    quote: 'Điều tôi ấn tượng nhất là chương trình Leader in Me. Con trai tôi từ một đứa nhút nhát, giờ dám đứng lên thuyết trình trước cả trường. Sự thay đổi rõ rệt chỉ sau 1 học kỳ.',
+    initials: 'HM',
+    stars: 5,
+  },
+  {
+    name: 'Chị Trần Thị Bích Ngọc',
+    role: 'Phụ huynh có 2 con · Cơ sở Bình Chánh',
+    quote: 'Nhà tôi có 2 con cùng học Việt Anh. Bé lớn lớp 9 vừa đạt IELTS 5.5, bé nhỏ lớp 4 đã đọc sách tiếng Anh trôi chảy. Được giảm học phí anh em ruột nữa, rất đáng đồng tiền.',
+    initials: 'BN',
+    stars: 5,
+  },
+  {
+    name: 'Anh Lê Văn Thành',
+    role: 'Phụ huynh bé lớp 5 · Cơ sở Tân Phú',
+    quote: 'Con gái tôi vào Việt Anh từ Mầm non, giờ lớp 5. Bé không chỉ giỏi tiếng Anh mà còn tự giác, biết lập kế hoạch và có trách nhiệm. Tôi thấy đó mới là giá trị thực sự.',
+    initials: 'LT',
+    stars: 5,
+  },
+  {
+    name: 'Chị Mai',
+    role: 'Phụ huynh bé Phúc · Tiểu học lớp 3',
+    quote: 'Những gì mà lúc đầu thầy cô tư vấn cho chị thì sau 2 năm, chị thấy là đều có trong chương trình học của con hết. Sự cam kết của trường rất rõ ràng.',
+    initials: 'M',
+    stars: 5,
+  },
+  {
+    name: 'Anh Quốc Long',
+    role: 'Phụ huynh có nhiều con theo học',
+    quote: 'Bé có những sở thích như coi điện thoại hay chơi game nhưng bé tự mình điều tiết nó, không có quá sa đà vào nó. Con đã tự kỷ luật rõ rệt.',
+    initials: 'QL',
+    stars: 5,
+  },
+  {
+    name: 'Chị Kim Trinh',
+    role: 'Phụ huynh Tiểu học',
+    quote: 'Cô giáo cũng đồng cảm, cũng chia sẻ và giúp cho mình làm sao để mình có thể gần con hơn. Tôi cảm nhận được sự quan tâm thật sự.',
+    initials: 'KT',
+    stars: 5,
+  },
+  {
+    name: 'Chị Hoàng Diễm',
+    role: 'Phụ huynh có 2 con theo học',
+    quote: 'Trường Việt Anh luôn luôn cải tiến chương trình học và cập nhật kiến thức. Các con tôi được học những gì mới nhất và phù hợp với thời đại.',
+    initials: 'HD',
+    stars: 5,
+  },
+  {
+    name: 'Em Gia Bảo',
+    role: 'Học sinh lớp 11 · IELTS 7.0',
+    quote: 'Nhờ có chương trình luyện IELTS tại trường, em không cần học thêm ở trung tâm nào mà vẫn đạt 7.0. Thầy cô tận tâm, bạn bè cùng quyết tâm luyện đề mỗi ngày.',
+    initials: 'GB',
+    stars: 5,
+  },
+];
+
+const testimonials = cmsTestimonials.length > 0
+  ? cmsTestimonials.map((t: any) => ({
+      name: t.name,
+      role: t.role,
+      quote: t.quote,
+      initials: t.initials || t.name?.split(' ').slice(-2).map((w: string) => w[0]).join('').toUpperCase() || 'VA',
+      stars: 5,
+    }))
+  : fallbackTestimonials;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Liên Cấp Việt Anh',
+    url: 'https://truongvietanh.com',
+    logo: 'https://truongvietanh.com/logo-crest-80.webp',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: '4.9',
+      bestRating: '5',
+      ratingCount: String(testimonials.length),
+    },
+    review: testimonials.slice(0, 10).map(t => ({
+      '@type': 'Review',
+      author: { '@type': 'Person', name: t.name },
+      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+      reviewBody: t.quote,
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Đánh giá phụ huynh', item: 'https://truongvietanh.com/danh-gia-cua-phu-huynh' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Đánh giá từ phụ huynh & học sinh | Trường Việt Anh"
+  description="Tổng hợp chia sẻ thực tế từ phụ huynh và học sinh Trường Việt Anh — hơn 12.000 gia đình tin tưởng, đánh giá 4.9/5 trên 300+ phản hồi."
+  canonical="https://truongvietanh.com/danh-gia-cua-phu-huynh"
+  ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
+  structuredData={structuredData}
+>
+  <div class="dg-page">
+    <HeaderBase />
+
+    <!-- HERO -->
+    <section class="dg-hero">
+      <div class="dg-container">
+        <nav class="dg-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a>
+          <span aria-hidden="true">/</span>
+          <span>Đánh giá phụ huynh</span>
+        </nav>
+        <h1 class="dg-h1">Phụ huynh & học sinh nói gì về Trường Việt Anh?</h1>
+        <p class="dg-sub">Hơn <strong>12.000 gia đình</strong> đã gửi gắm niềm tin. Dưới đây là những chia sẻ thực tế — không dàn dựng, không chỉnh sửa.</p>
+
+        <div class="dg-rating">
+          <span class="dg-stars" aria-label="4.9 trên 5 sao">★★★★★</span>
+          <span class="dg-rating-score"><strong>4.9</strong>/5</span>
+          <span class="dg-rating-count">·&nbsp;{testimonials.length}+ đánh giá từ phụ huynh</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL CARDS -->
+    <section class="dg-testimonials">
+      <div class="dg-container">
+        <div class="dg-grid">
+          {testimonials.map((t) => (
+            <article class="dg-card">
+              <div class="dg-card__quote-mark" aria-hidden="true">"</div>
+              <div class="dg-card__stars" aria-label={`${t.stars} sao`}>
+                {'★'.repeat(t.stars)}
+              </div>
+              <blockquote class="dg-card__quote">{t.quote}</blockquote>
+              <div class="dg-card__author">
+                <div class="dg-card__avatar" aria-hidden="true">{t.initials}</div>
+                <div class="dg-card__meta">
+                  <div class="dg-card__name">{t.name}</div>
+                  <div class="dg-card__role">{t.role}</div>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="dg-cta">
+      <div class="dg-container dg-cta__inner">
+        <div>
+          <h2 class="dg-cta__h2">Muốn trực tiếp gặp phụ huynh đang gửi con tại Việt Anh?</h2>
+          <p class="dg-cta__desc">Đăng ký tham quan trường — bạn sẽ được gặp ban giám hiệu, trò chuyện với phụ huynh hiện hữu và dự giờ lớp học mẫu.</p>
+          <p class="dg-cta__hotline">Hotline: <a href="tel:0916961409">0916 961 409</a> · <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener">Zalo</a></p>
+        </div>
+        <div class="dg-cta__form lead-form-card--light" data-form-bg="light">
+          <LeadFormTwoStepEmailFirst
+            formId="danh-gia-form"
+            funnelCode="danh-gia-pillar"
+            schoolLevel="lien-cap"
+          />
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style is:global>
+  .dg-page { background: #f7f9fc; }
+  .dg-container { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* HERO */
+  .dg-hero { padding: 2.5rem 0 2rem; background: linear-gradient(180deg, #fff 0%, #f7f9fc 100%); }
+  .dg-breadcrumb { font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem; }
+  .dg-breadcrumb a { color: #1a1a5e; text-decoration: none; }
+  .dg-breadcrumb a:hover { text-decoration: underline; }
+  .dg-h1 { font-size: clamp(1.75rem, 3.5vw, 2.4rem); font-weight: 800; color: #0f172a; margin: 0 0 0.75rem; line-height: 1.2; letter-spacing: -0.01em; }
+  .dg-sub { font-size: 1.05rem; color: #475569; line-height: 1.65; margin: 0 0 1.25rem; max-width: 720px; }
+  .dg-sub strong { color: #1a1a5e; font-weight: 700; }
+  .dg-rating { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; padding: 0.6rem 1rem; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 0.95rem; color: #475569; }
+  .dg-stars { color: #D4A843; letter-spacing: 2px; font-size: 1.05rem; }
+  .dg-rating-score strong { color: #1a1a5e; font-weight: 800; font-size: 1.1rem; }
+  .dg-rating-count { color: #64748b; }
+
+  /* TESTIMONIAL GRID */
+  .dg-testimonials { padding: 2.5rem 0 3rem; }
+  .dg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  @media (max-width: 900px) { .dg-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .dg-grid { grid-template-columns: 1fr; } }
+
+  .dg-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem 1.5rem;
+    position: relative;
+    transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    overflow: hidden;
+  }
+  .dg-card:hover {
+    box-shadow: 0 14px 40px rgba(26, 26, 94, 0.08);
+    transform: translateY(-3px);
+    border-color: #D4A843;
+  }
+  .dg-card__quote-mark {
+    position: absolute;
+    top: -10px;
+    left: 14px;
+    font-size: 5rem;
+    line-height: 1;
+    color: rgba(26, 26, 94, 0.08);
+    font-family: Georgia, serif;
+    font-weight: 700;
+    pointer-events: none;
+  }
+  .dg-card__stars {
+    color: #D4A843;
+    font-size: 1rem;
+    letter-spacing: 2px;
+    position: relative;
+    z-index: 1;
+  }
+  .dg-card__quote {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #1f2937;
+    margin: 0;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+    flex: 1;
+  }
+  .dg-card__author {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .dg-card__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1a1a5e, #0d2f55);
+    color: #fff;
+    font-weight: 800;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    letter-spacing: 0.05em;
+  }
+  .dg-card__meta { min-width: 0; }
+  .dg-card__name { font-weight: 700; color: #1a1a5e; font-size: 0.95rem; line-height: 1.3; }
+  .dg-card__role { font-size: 0.82rem; color: #64748b; line-height: 1.4; margin-top: 0.15rem; }
+
+  /* CTA */
+  .dg-cta { background: linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 100%); color: #fff; padding: 2.5rem 0; }
+  .dg-cta__inner { display: grid; grid-template-columns: 1fr 420px; gap: 2rem; align-items: center; }
+  .dg-cta__h2 { font-size: clamp(1.4rem, 2.3vw, 1.75rem); font-weight: 800; color: #fff; margin: 0 0 0.75rem; line-height: 1.25; letter-spacing: -0.01em; }
+  .dg-cta__desc { color: rgba(255, 255, 255, 0.85); font-size: 1rem; line-height: 1.65; margin: 0 0 0.75rem; }
+  .dg-cta__hotline { margin: 0; font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
+  .dg-cta__hotline a { color: #D4A843; font-weight: 800; text-decoration: none; }
+  @media (max-width: 900px) {
+    .dg-cta__inner { grid-template-columns: 1fr; }
+  }
+</style>

@@ -548,6 +548,7 @@ async function sendEmailViaGHL({ contactId, subject, html, ghlApiKey }) {
         contactId,
         subject,
         html,
+        emailReplyTo: 'tu@truongvietanh.com',
       }),
     });
     return await res.json();
@@ -655,6 +656,7 @@ async function sendEmailNotification(data, env) {
         cc: [{ email: CC_EMAIL, name: 'Duong Nguyen' }],
       }],
       from: { email: 'leads@truongvietanh.com', name: 'Truong Viet Anh - Lead Alert' },
+      reply_to: { email: 'tu@truongvietanh.com', name: 'Tu - Sales TVA' },
       subject,
       content: [{ type: 'text/html', value: body }],
     }),
@@ -808,6 +810,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
       body: JSON.stringify({
         personalizations: [{ to: [{ email: data.email, name: data.fullName }] }],
         from: { email: 'results@truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+        reply_to: { email: 'tu@truongvietanh.com', name: 'Tư vấn Trường Việt Anh' },
         subject,
         content: [{ type: 'text/html', value: body }],
       }),

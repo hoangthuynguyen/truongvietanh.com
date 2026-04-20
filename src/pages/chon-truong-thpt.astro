@@ -1,0 +1,109 @@
+---
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+import { CHON_TRUONG_LEVELS } from '../data/chon-truong-levels';
+
+const data = CHON_TRUONG_LEVELS.find(l => l.slug === 'chon-truong-thpt')!;
+const pageCanonical = `https://truongvietanh.com/${data.slug}`;
+---
+
+<SqueezePageLayout
+  title={data.pageTitle}
+  description={data.pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel={data.levelKey as any}
+  funnelCode={data.slug}
+>
+  <section slot="hero">
+    <span class="squeeze-hero__badge">🎁 Miễn phí — {data.metrics[0].number} Ba/Mẹ đã nhận</span>
+    <h1 class="squeeze-hero__heading">{data.heroHeadline}</h1>
+    <p class="squeeze-hero__sub">{data.heroSub}</p>
+  </section>
+
+  <section slot="usp"><USPGrid title={data.uspTitle} items={data.uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Được tin tưởng bởi" metrics={data.metrics} /></section>
+
+  <section slot="content">
+    <div class="chon-content">
+      <h2 class="chon-title">{data.contentTitle}</h2>
+      <div class="chon-grid">
+        {data.contentCards.map((c) => (
+          <div class="chon-card">
+            <h3>{c.heading}</h3>
+            <p>{c.body}</p>
+          </div>
+        ))}
+      </div>
+      <div class="chon-urgency">
+        <p>{data.urgencyNote}</p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <div class="chon-form-intro">
+      <h2 class="squeeze-form-section__heading">{data.formHeading}</h2>
+      <p class="squeeze-form-section__description">Điền email để nhận ngay bộ tài liệu — Không spam, hủy bất cứ lúc nào.</p>
+      <ul class="chon-checklist">
+        {data.formChecklist.map((c) => <li>✓ {c}</li>)}
+      </ul>
+    </div>
+    <LeadFormTwoStepEmailFirst
+      formId={`${data.slug}-form`}
+      funnelCode={data.slug}
+      schoolLevel={data.levelKey as any}
+      submitText="Nhận cẩm nang miễn phí ngay"
+      successMessage="Cảm ơn Ba/Mẹ! Cẩm nang đang được tải xuống..."
+    />
+    <div class="chon-direct-dl">
+      <p>Hoặc tải trực tiếp không cần đăng ký:</p>
+      <a href={`/downloads/${data.pdfFile}`} class="chon-direct-dl__btn" download={`Checklist-Chon-Truong-${data.levelLabel.replace(/\s/g,'-')}.pdf`}>
+        📥 Tải PDF ngay ({data.pdfSizeKB} KB)
+      </a>
+    </div>
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={data.faqItems} /></section>
+</SqueezePageLayout>
+
+<script is:inline define:vars={{ slug: data.slug }}>
+(function(){
+  var formEl=document.querySelector('#'+slug+'-form-'+slug);
+  if(!formEl) return;
+  var obs=new MutationObserver(function(){
+    var success=formEl.querySelector('.form-step[data-step="success"]');
+    if(success && !success.hidden){
+      var nameInput=formEl.querySelector('input[name="parent_name"]');
+      var n=nameInput?nameInput.value:'';
+      setTimeout(function(){
+        window.location.href='/'+slug+'/cam-on?name='+encodeURIComponent(n);
+      },1800);
+      obs.disconnect();
+    }
+  });
+  obs.observe(formEl,{attributes:true,subtree:true,attributeFilter:['hidden']});
+})();
+</script>
+
+<style is:inline>
+  .chon-content{max-width:1000px;margin:0 auto}
+  .chon-title{font-family:Montserrat,sans-serif;font-size:1.75rem;font-weight:800;margin-bottom:1.5rem;color:#1a1a5e;text-align:center}
+  .chon-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin:2rem 0}
+  .chon-card{background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:1.5rem 1.4rem;transition:border-color .2s,transform .2s}
+  .chon-card:hover{border-color:#D4A843;transform:translateY(-3px)}
+  .chon-card h3{font-family:Montserrat,sans-serif;font-size:1.08rem;font-weight:700;margin-bottom:.6rem;color:#1a1a5e;line-height:1.4}
+  .chon-card p{font-size:.96rem;line-height:1.7;color:#2d2d42;margin:0}
+  .chon-urgency{background:rgba(212,168,67,.12);border-left:4px solid #D4A843;padding:1.1rem 1.4rem;border-radius:8px;margin-top:1.5rem}
+  .chon-urgency p{margin:0;font-size:.96rem;line-height:1.65;color:#1a1a2e}
+  .chon-form-intro{margin-bottom:1.5rem}
+  .chon-checklist{list-style:none;padding:0;margin:1.25rem auto 1.5rem;max-width:460px;text-align:left;display:flex;flex-direction:column;gap:.55rem}
+  .chon-checklist li{font-size:.96rem;color:#1a1a5e;font-weight:600;padding:.65rem .9rem;background:rgba(212,168,67,.1);border-radius:8px;border-left:3px solid #D4A843}
+  .chon-direct-dl{margin-top:1.5rem;padding-top:1.5rem;border-top:1px dashed #d0d0d8;text-align:center}
+  .chon-direct-dl p{font-size:.9rem;color:#5a5a70;margin:0 0 .75rem;font-weight:500}
+  .chon-direct-dl__btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.5rem;background:#fff;color:#1a1a5e;border:2px solid #1a1a5e;border-radius:10px;text-decoration:none;font-weight:700;font-size:.95rem;font-family:Montserrat,sans-serif;transition:all .2s}
+  .chon-direct-dl__btn:hover{background:#1a1a5e;color:#fff}
+  @media(max-width:768px){.chon-grid{grid-template-columns:1fr}}
+</style>

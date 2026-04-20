@@ -1,0 +1,21 @@
+services:
+  directus:
+    image: directus/directus:11
+    restart: unless-stopped
+    ports:
+      - "8055:8055"
+    env_file:
+      - ./.env.prod
+    volumes:
+      - ./database-prod:/directus/database
+      - ./uploads-prod:/directus/uploads
+      - ./extensions:/directus/extensions
+      - ./templates:/directus/templates:ro
+    networks:
+      - default
+      - proxy
+
+networks:
+  proxy:
+    external: true
+    name: n8n-contabo_internal

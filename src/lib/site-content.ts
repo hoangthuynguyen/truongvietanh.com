@@ -113,15 +113,13 @@ export const adminUrl = 'https://admin.truongvietanh.com/admin';
 
 export const mainNavLeft = [
   { label: 'Trang chủ', href: '/' },
-  { label: 'Giới thiệu', href: '/gioi-thieu' },
   {
-    label: 'Giáo viên',
-    href: '/ban-lanh-dao',
+    label: 'Giới thiệu',
+    href: '/gioi-thieu',
     children: [
+      { label: 'Giới thiệu nhà trường', href: '/gioi-thieu' },
       { label: 'Ban Lãnh Đạo', href: '/ban-lanh-dao' },
-      { label: 'Giáo viên Chủ Nhiệm', href: '/giao-vien-chu-nhiem' },
-      { label: 'Giáo viên Bộ Môn', href: '/giao-vien-bo-mon' },
-      { label: 'Quản nhiệm nội trú', href: '/quan-nhiem-noi-tru' },
+      { label: 'Giáo viên', href: '/giao-vien' },
     ]
   },
   { label: 'Đánh giá', href: '/danh-gia-cua-phu-huynh' },
@@ -166,9 +164,9 @@ export const mainNavRight = [
       { label: 'Giáo viên', href: '/thanh-tich-giao-vien' },
     ]
   },
-  // { label: 'Blog', href: '/blog' }, // tạm ẩn khỏi menu — bỏ comment để hiển thị lại
-  { label: 'Tài nguyên', href: '/tai-nguyen-giao-duc' },
+  { label: 'Blog', href: '/blog' },
   { label: 'Hình ảnh', href: '/hinh-anh' },
+  { label: 'Liên hệ', href: '/lien-he' },
 ];
 
 export const mainNav = [...mainNavLeft, ...mainNavRight];

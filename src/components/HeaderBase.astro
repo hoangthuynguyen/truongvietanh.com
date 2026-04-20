@@ -89,15 +89,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
            { label: 'Toán Tư Duy', href: '/toan-tu-duy-sam' },
            { label: 'Du học', href: '/du-hoc' },
          ]},
-         { label: 'Thành tích', href: '/thanh-tich', children: [
-           { label: 'Học tập', href: '/thanh-tich-hoc-tap' },
-           { label: 'Thể thao', href: '/thanh-tich-the-thao' },
-           { label: 'Kỹ năng', href: '/thanh-tich-ky-nang' },
-           { label: 'Ngoại khóa', href: '/thanh-tich-ngoai-khoa' },
-           { label: 'Giáo viên', href: '/thanh-tich-giao-vien' },
-         ]},
          { label: 'Blog', href: '/blog' },
-         { label: 'Tài nguyên', href: '/tai-nguyen-giao-duc' },
          { label: 'Hình ảnh', href: '/hinh-anh' },
        ]).map((item) => {
          const cmsChildren = getChildren(item.label);
@@ -162,17 +154,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
         </div>
       </div>
       <div class="mobile-nav-group">
-        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Thành tích">Thành tích <span class="toggle-arrow">▾</span></button>
-        <div class="mobile-nav-sub">
-          <a href="/thanh-tich-hoc-tap" class="mobile-nav-sublink">Học tập</a>
-          <a href="/thanh-tich-the-thao" class="mobile-nav-sublink">Thể thao</a>
-          <a href="/thanh-tich-ky-nang" class="mobile-nav-sublink">Kỹ năng</a>
-          <a href="/thanh-tich-ngoai-khoa" class="mobile-nav-sublink">Ngoại khóa</a>
-          <a href="/thanh-tich-giao-vien" class="mobile-nav-sublink">Giáo viên</a>
-        </div>
-      </div>
       <a href="/blog" class="mobile-nav-link">Blog</a>
-      <a href="/tai-nguyen-giao-duc" class="mobile-nav-link">Tài nguyên</a>
       <a href="/hinh-anh" class="mobile-nav-link">Hình ảnh</a>
       <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="mobile-nav-cta">Chat Zalo OA</a>
     </div>

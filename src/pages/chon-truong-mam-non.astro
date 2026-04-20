@@ -97,8 +97,16 @@ const faqItems = [
       funnelCode={funnelCode}
       schoolLevel="mau-non"
       submitText="Nhận cẩm nang miễn phí ngay"
-      successMessage="Cảm ơn Ba/Mẹ! Cẩm nang đang được gửi vào email của Ba/Mẹ..."
+      successMessage="Cảm ơn Ba/Mẹ! Cẩm nang đang được tải xuống..."
     />
+
+    <!-- Direct download fallback (for users who prefer skipping form) -->
+    <div class="chon-direct-dl">
+      <p>Hoặc tải trực tiếp không cần đăng ký:</p>
+      <a href="/downloads/checklist-chon-truong-mam-non.pdf" class="chon-direct-dl__btn" download="Checklist-Chon-Truong-Mam-Non.pdf">
+        📥 Tải PDF ngay (321 KB)
+      </a>
+    </div>
   </section>
 
   <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
@@ -137,5 +145,9 @@ const faqItems = [
   .chon-form-intro{margin-bottom:1.5rem}
   .chon-checklist{list-style:none;padding:0;margin:1.25rem auto 1.5rem;max-width:460px;text-align:left;display:flex;flex-direction:column;gap:.55rem}
   .chon-checklist li{font-size:.96rem;color:#1a1a5e;font-weight:600;padding:.65rem .9rem;background:rgba(212,168,67,.1);border-radius:8px;border-left:3px solid #D4A843}
+  .chon-direct-dl{margin-top:1.5rem;padding-top:1.5rem;border-top:1px dashed #d0d0d8;text-align:center}
+  .chon-direct-dl p{font-size:.9rem;color:#5a5a70;margin:0 0 .75rem;font-weight:500}
+  .chon-direct-dl__btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 1.5rem;background:#fff;color:#1a1a5e;border:2px solid #1a1a5e;border-radius:10px;text-decoration:none;font-weight:700;font-size:.95rem;font-family:Montserrat,sans-serif;transition:all .2s}
+  .chon-direct-dl__btn:hover{background:#1a1a5e;color:#fff}
   @media(max-width:768px){.chon-grid{grid-template-columns:1fr}}
 </style>

@@ -3,194 +3,139 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
 ---
 
-<style>
-  /* ── Section headings: 24px ── */
-  h2 { font-size: 1.5rem !important; line-height: 1.3 !important; }
-
-  /* ── Body / content text: 16px ── */
-  /* Broad p reset — excludes eyebrow classes via more-specific layout rules that we purposely DON'T override */
-  .sp-pain p,
-  .sp-features__sub,
-  .sp-textimg p,
-  .sp-quote__text,
-  .sp-pricing__sub { font-size: 1rem !important; }
-
-  /* Card bodies */
-  .sp-feat-card p { font-size: 1rem !important; }
-
-  /* Stats labels */
-  .sp-stat__label { font-size: 1rem !important; }
-
-  /* FAQ */
-  .sp-faq__sub { font-size: 1rem !important; }
-  .sp-faq-item summary { font-size: 1rem !important; }
-  .sp-faq-answer { font-size: 1rem !important; }
-
-  /* Pricing feature list */
-  .sp-pricing-col__features li { font-size: 1rem !important; }
-
-  /* Form paragraphs */
-  .sp-form-block p { font-size: 1rem !important; }
-
-  /* CTA paragraph */
-  .sp-cta-block p { font-size: 1rem !important; }
-</style>
-
 <SalesPageLayout
-  title="Lion Camp 2026 — Làm Chủ AI, Bứt Phá Năng Lực Học Tập"
-  description="Lion Camp 2026: chương trình trại hè 6 tuần duy nhất tại Việt Nam dạy con dùng AI đúng cách theo khung UNESCO. Lớp 1–12. 15/6–25/7/2026. Chỉ 100 suất ưu đãi."
-  canonical="https://hoc.truongvietanh.com/tuyen-sinh/trai-he"
-  ogImage="https://media.truongvietanh.com/images/vui-ve-06.webp"
-  heroImage="https://media.truongvietanh.com/images/vui-ve-06.webp"
+  title="Trại Hè Lion Camp — Kỹ Năng Lãnh Đạo · Tiếng Anh · Phiêu Lưu"
+  description="Trại hè Lion Camp Việt Anh: tiếng Anh immersion, kỹ năng lãnh đạo, team building, phiêu lưu ngoài trời. Dành cho HS 6-16 tuổi. Đăng ký ngay."
+  canonical="https://truongvietanh.com/tuyen-sinh/trai-he"
+  ogImage="https://media.truongvietanh.com/images/vui-ve-07.webp"
+  heroImage="https://media.truongvietanh.com/images/vui-ve-07.webp"
   programCode="trai-he"
   schoolLevel="tieu-hoc"
 >
 
   <!-- BLOCK 1: HERO -->
   <div slot="hero">
-    <span class="sp-hero__badge">🦁 TRẠI HÈ 2026 — CHỈ 100 SUẤT ƯU ĐÃI</span>
-    <h1 style="font-size:2.5rem;font-weight:900;color:#e53e3e;margin:0 0 .5rem;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3)">
-      Con bạn sẽ ra khỏi mùa hè này
+    <span class="sp-hero__badge">TRẠI HÈ LION CAMP 2026 — HÈ THÁNG 6, 7, 8</span>
+    <h1 style="font-size:2.5rem;font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3)">
+      Mùa Hè Này — Con Sẽ Trở Thành Phiên Bản Tốt Nhất Của Chính Mình
     </h1>
-    <p style="font-size:1.5rem;font-weight:800;color:#fff;margin:0 0 1rem;line-height:1.25">
-      với năng lực học tập gấp 10 lần nhờ làm chủ AI
+    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
+      Tiếng Anh immersion · Kỹ năng lãnh đạo · Team building · Phiêu lưu ngoài trời · Cho HS 6-16 tuổi
     </p>
-    <p style="font-size:1.05rem;color:rgba(255,255,255,.88);line-height:1.7;margin:.75rem 0;max-width:640px">
-      Lion Camp 2026 — Chương trình trại hè 6 tuần <strong style="color:#D4A843">duy nhất tại Việt Nam</strong> dạy con dùng AI đúng cách theo khung UNESCO, kết hợp phát triển các kỹ năng thế kỷ 21.
+    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
+      500+ học sinh mỗi mùa hè · 10+ năm tổ chức · Phụ huynh hài lòng 97%
     </p>
-    <p style="font-size:.95rem;color:rgba(255,255,255,.75);margin:.5rem 0 1.5rem">
-      📅 15/6 – 25/7/2026 &nbsp;|&nbsp; 3 cơ sở TP.HCM & Kiên Giang &nbsp;|&nbsp; Lớp 1 – 12
-    </p>
-    <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center">
-      <a href="#sp-form1" style="display:inline-block;background:#D4A843;color:#1a1a5e;font-weight:700;padding:.9rem 2.25rem;border-radius:8px;text-decoration:none;font-size:1.05rem">
-        Đăng ký giữ chỗ cho con ngay →
-      </a>
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.85rem 1.75rem;border-radius:8px;text-decoration:none;font-size:1rem;border:2px solid rgba(255,255,255,.6)">
-        Tư vấn qua Zalo →
-      </a>
-    </div>
-    <p style="margin-top:1rem;font-size:.88rem;color:rgba(255,255,255,.7)">
-      🎁 Ưu đãi tháng 4: giảm 10.000.000 VNĐ · Chỉ 100 suất · Cam kết hoàn 100% sau 4 tuần
-    </p>
+    <a href="#sp-form1" style="display:inline-block;margin-top:1.5rem;background:#D4A843;color:#1a1a5e;font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
+      Đăng ký Lion Camp ngay →
+    </a>
   </div>
 
   <!-- BLOCK 2: PAIN -->
   <div slot="pain">
-    <p class="sp-pain__eyebrow">🚨 NHÌN LẠI MÙA HÈ NĂM NGOÁI</p>
-    <h2>Mùa hè của con bạn sẽ trôi qua như thế nào?</h2>
-    <p>Hãy hình dung: Con nghỉ hè. Tuần đầu còn vui. Tuần thứ hai bắt đầu dán mắt vào điện thoại từ sáng đến tối. Tuần thứ ba, bạn thấy con dùng ChatGPT để viết hộ bài — không phải để học, mà để đối phó.</p>
-    <p>Bạn lo lắng. Không phải vì con dùng AI — <strong>mà vì con đang bị AI dùng.</strong> Con không biết đặt câu hỏi đúng, không biết kiểm chứng thông tin, không biết khi nào nên và không nên tin máy.</p>
-    <div style="border-left:4px solid #D4A843;background:#fffbf0;padding:1rem 1.25rem;border-radius:0 8px 8px 0;margin:1.5rem 0">
-      <p style="margin:0;font-size:1rem !important;line-height:1.75;color:#1a1a5e;font-weight:600">
-        AI đã len lỏi vào mọi khía cạnh cuộc sống của con — từ cách làm bài, cách giải trí, đến cách suy nghĩ. Câu hỏi không còn là "Con có nên học AI không?" mà là "Con đang học AI đúng cách ở đâu?"
-      </p>
-    </div>
-    <p>Phần lớn trại hè hiện nay vẫn dạy con theo kiểu cũ: vui chơi rồi về. Một số trại "công nghệ" thì nhồi lập trình khô khan. <strong>Không có chương trình nào</strong> dạy con làm chủ AI một cách có đạo đức, có cấu trúc, có giám sát — và đồng thời phát triển con toàn diện. Cho đến bây giờ.
-    </p>
+    <p class="sp-pain__eyebrow">MÙA HÈ ĐANG LÃNG PHÍ</p>
+    <h2>Con Đang Làm Gì Trong 3 Tháng Hè Quan Trọng Nhất?</h2>
+    <p>Thực tế phần lớn học sinh tại TP.HCM nghỉ hè chỉ ở nhà xem điện thoại, chơi game và ngủ — không có chương trình phát triển kỹ năng nào có cấu trúc. 3 tháng hè trôi qua mà con không có gì để nhớ, không có gì để tự hào.</p>
+    <ul class="sp-pain__list">
+      <li>3 tháng hè = 90 ngày màn hình — con ít vận động, kỹ năng xã hội thụt lùi</li>
+      <li>Không có môi trường tiếng Anh thực tế — học tiếng Anh vẫn chỉ là ngữ pháp, không dùng được</li>
+      <li>Không có cơ hội thử thách bản thân — con vẫn nhút nhát, chưa biết mình mạnh ở điểm nào</li>
+      <li>Bạn bè cùng trang lứa đang tham gia camp, phát triển kỹ năng — con đang bị bỏ lại</li>
+    </ul>
   </div>
 
   <!-- BLOCK 3: FEATURES -->
   <div slot="features">
-    <p class="sp-features__eyebrow">🚀 LION CAMP 2026 — CHƯƠNG TRÌNH 6 TUẦN</p>
-    <h2>Con bạn sẽ trở thành một học sinh hiệu quả gấp 10 lần</h2>
-    <p class="sp-features__sub">Không phải vì con biết dùng nhiều app — mà vì con biết tư duy, ra quyết định, và sử dụng AI như một công cụ đắc lực.</p>
+    <p class="sp-features__eyebrow">CHƯƠNG TRÌNH LION CAMP</p>
+    <h2>5 Trụ Cột Của Lion Camp — Không Phải Trại Hè Bình Thường</h2>
+    <p class="sp-features__sub">Mỗi ngày là một thách thức mới — con về nhà tự tin, năng động và có kỹ năng thực sự</p>
     <div class="sp-features__grid">
       <div class="sp-feat-card">
-        <div class="sp-feat-card__icon">🧠</div>
-        <h3>Tư duy phản biện + AI</h3>
-        <p>Con biết hoài nghi có cơ sở — không bao giờ bị lừa bởi thông tin sai</p>
-        <span class="sp-feat-card__tag">Kỹ năng số 1 thế kỷ 21</span>
-      </div>
-      <div class="sp-feat-card">
-        <div class="sp-feat-card__icon">🎨</div>
-        <h3>Sáng tạo đồng hành AI</h3>
-        <p>Con tạo sản phẩm thật, năng suất gấp 10 lần người bình thường</p>
-        <span class="sp-feat-card__tag">AI theo khung UNESCO</span>
-      </div>
-      <div class="sp-feat-card">
         <div class="sp-feat-card__icon">🦁</div>
-        <h3>Lãnh đạo bản thân</h3>
-        <p>Con tự đặt mục tiêu, tự theo dõi, tự điều chỉnh — kỹ năng cả đời</p>
-        <span class="sp-feat-card__tag">PDR-Lite · 1:1 kèm cặp</span>
+        <h3>English Immersion toàn thời gian</h3>
+        <p>100% tiếng Anh trong môi trường trại — con buộc phải dùng, không chỉ học</p>
+        <span class="sp-feat-card__tag">Tiếng Anh</span>
       </div>
       <div class="sp-feat-card">
-        <div class="sp-feat-card__icon">🗣️</div>
-        <h3>Tiếng Anh thực chiến</h3>
-        <p>Con quen nói tiếng Anh tự nhiên sau 6 tuần immersion thực tế</p>
-        <span class="sp-feat-card__tag">Không phải ngữ pháp</span>
+        <div class="sp-feat-card__icon">👑</div>
+        <h3>Leadership challenges hàng ngày</h3>
+        <p>Bài tập lãnh đạo nhóm, giải quyết vấn đề, ra quyết định dưới áp lực</p>
+        <span class="sp-feat-card__tag">Lãnh đạo</span>
       </div>
       <div class="sp-feat-card">
-        <div class="sp-feat-card__icon">💪</div>
-        <h3>Thể chất + Sức khoẻ</h3>
-        <p>Con có Health Plan cá nhân — không phải lý thuyết, mà là kế hoạch thực tế</p>
-        <span class="sp-feat-card__tag">Nền tảng cho mọi năng lực</span>
+        <div class="sp-feat-card__icon">🏕️</div>
+        <h3>Outdoor adventure · Team building</h3>
+        <p>Vượt thử thách, cắm trại, hoạt động nhóm — phát triển tinh thần đồng đội</p>
+        <span class="sp-feat-card__tag">Phiêu lưu</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🎭</div>
+        <h3>Biểu diễn · Drama · Public speaking</h3>
+        <p>Mini concert, kịch tiếng Anh, thuyết trình — con tự tin lên sân khấu</p>
+        <span class="sp-feat-card__tag">Tự tin</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🥗</div>
+        <h3>Dinh dưỡng &amp; Lịch sinh hoạt khoa học</h3>
+        <p>Bữa ăn lành mạnh, ngủ đủ giấc, vận động đều — thể chất khỏe mạnh</p>
+        <span class="sp-feat-card__tag">Sức khỏe</span>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🌟</div>
+        <h3>Certificate &amp; Portfolio cho con</h3>
+        <p>Giấy chứng nhận hoàn thành, portfolio kỹ năng — thêm vào hồ sơ học sinh</p>
+        <span class="sp-feat-card__tag">Chứng nhận</span>
       </div>
     </div>
   </div>
 
-  <!-- BLOCK 4: BEFORE / AFTER — full-width (grid-column:1/-1 overrides the 2-col sp-textimg__inner) -->
-  <div slot="textimg" style="grid-column:1/-1;width:100%">
-    <p class="sp-textimg__eyebrow" style="text-align:center">TRƯỚC &amp; SAU LION CAMP</p>
-    <h2 style="text-align:center;margin-bottom:1.75rem">6 Tuần — Sự Khác Biệt Bạn Nhìn Thấy Rõ Ràng</h2>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;max-width:860px;margin:0 auto">
-      <div style="background:#fff0f0;border-radius:12px;padding:1.75rem;border-top:4px solid #ef4444">
-        <p style="font-weight:700;color:#ef4444;margin:0 0 1rem;font-size:1rem;text-transform:uppercase;letter-spacing:.05em">😔 Trước Lion Camp</p>
-        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem">
-          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">Dùng AI để gian lận bài</li>
-          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">📱 Cuộn điện thoại cả ngày</li>
-          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">😶 Ngại nói tiếng Anh</li>
-          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">😴 Không mục tiêu, không kế hoạch</li>
-          <li style="padding:.3rem 0;color:#64748b;font-size:1rem">🤷 Tin AI vô điều kiện</li>
-        </ul>
-      </div>
-      <div style="background:#f0fdf4;border-radius:12px;padding:1.75rem;border-top:4px solid #22c55e">
-        <p style="font-weight:700;color:#16a34a;margin:0 0 1rem;font-size:1rem;text-transform:uppercase;letter-spacing:.05em">✅ Sau Lion Camp</p>
-        <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.6rem">
-          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🧠 Dùng AI để học nhanh gấp 10 lần</li>
-          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🎯 Tự quản lý thời gian, mục tiêu</li>
-          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🗣️ Tự tin nói tiếng Anh tự nhiên</li>
-          <li style="padding:.3rem 0;color:#334155;font-size:1rem">📋 Có Health Plan &amp; lộ trình cá nhân</li>
-          <li style="padding:.3rem 0;color:#334155;font-size:1rem">🔍 Biết kiểm chứng và phản biện AI</li>
-        </ul>
-      </div>
+  <!-- BLOCK 4: TEXT WITH IMAGE -->
+  <div slot="textimg">
+    <div class="sp-textimg__text">
+      <p class="sp-textimg__eyebrow">MỘT NGÀY Ở LION CAMP</p>
+      <h2>Sáng: Phiêu Lưu. Chiều: Tiếng Anh. Tối: Lửa Trại. Mỗi Ngày Đáng Nhớ.</h2>
+      <p>Mỗi ngày tại Lion Camp được thiết kế với lịch trình cân bằng: buổi sáng là các hoạt động adventure và team building ngoài trời, buổi chiều là English immersion qua drama và games, buổi tối là lửa trại, kể chuyện và kết nối bạn bè. Không có phút nào lãng phí.</p>
+      <p>Đội ngũ counselor được tuyển chọn kỹ lưỡng, đào tạo bài bản về kỹ năng làm việc với trẻ em, quản lý nhóm và tạo môi trường học tập tích cực. Mỗi counselor chịu trách nhiệm tối đa 8 học sinh — đủ để biết tên, biết điểm mạnh và hỗ trợ cá nhân hóa từng em.</p>
+    </div>
+    <div class="sp-textimg__img">
+      <img src="https://media.truongvietanh.com/images/vui-ve-07.webp" alt="Học sinh tại Trại Hè Lion Camp" width="600" height="340" loading="lazy" />
     </div>
   </div>
 
   <!-- BLOCK 5: STATS -->
   <div slot="stats">
-    <h2>Lion Camp 2026 — 4 Cam Kết Khác Biệt</h2>
+    <h2>Lion Camp — Số Liệu Thực Tế Qua 10+ Mùa Hè</h2>
     <div class="sp-stats__grid">
       <div class="sp-stat">
-        <span class="sp-stat__num">6</span>
-        <span class="sp-stat__label">Tuần liên tục — thể chất, trí tuệ, cảm xúc, kỹ năng</span>
+        <span class="sp-stat__num">500+</span>
+        <span class="sp-stat__label">Học sinh tham gia mỗi mùa hè</span>
       </div>
       <div class="sp-stat">
-        <span class="sp-stat__num">12</span>
-        <span class="sp-stat__label">Tiêu chí AI theo khung UNESCO — làm chủ công cụ mạnh nhất</span>
-      </div>
-      <div class="sp-stat">
-        <span class="sp-stat__num">3×</span>
-        <span class="sp-stat__label">Kèm cặp 1:1 PDR-Lite trong 6 tuần — theo dõi tiến trình cá nhân</span>
+        <span class="sp-stat__num">97%</span>
+        <span class="sp-stat__label">Phụ huynh muốn cho con tham gia năm sau</span>
       </div>
       <div class="sp-stat">
         <span class="sp-stat__num">100%</span>
-        <span class="sp-stat__label">Hoàn tiền nếu không hài lòng sau 4 tuần — không điều kiện</span>
+        <span class="sp-stat__label">Tiếng Anh trong suốt trại — full immersion</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat__num">10+</span>
+        <span class="sp-stat__label">Năm tổ chức liên tục — kinh nghiệm thực chiến</span>
       </div>
     </div>
   </div>
 
-  <!-- BLOCK 6: QUOTE (Testimonial) -->
+  <!-- BLOCK 6: QUOTE -->
   <div slot="quote">
     <p class="sp-quote__eyebrow">PHỤ HUYNH NÓI GÌ</p>
     <div class="sp-quote__card">
       <p class="sp-quote__text">
-        "Con tôi sau Lion Camp không chỉ tự tin hơn mà còn biết cách dùng AI để nghiên cứu, viết outline, rồi tự hoàn thiện bài — thay vì copy nguyên xi như trước. Cô giáo hỏi con làm sao tiến bộ nhanh vậy, con nói: 'Con biết cách học rồi ạ.'"
+        "Con tôi trước khi đi Lion Camp rất nhút nhát, không dám nói tiếng Anh dù học đã 5 năm. Sau 2 tuần trại về, con bắt chuyện được với người nước ngoài, tự tin phát biểu trước lớp và... đòi đăng ký năm sau ngay khi vừa về nhà!"
       </p>
       <div class="sp-quote__author">
         <div>
           <div class="sp-quote__stars">★★★★★</div>
-          <div class="sp-quote__name">Chị Minh Châu</div>
-          <div class="sp-quote__meta">Phụ huynh bé Gia Hân, lớp 8 — Lion Camp 2025</div>
+          <div class="sp-quote__name">Anh Đức Thắng</div>
+          <div class="sp-quote__meta">Phụ huynh bé Khánh Linh, 12 tuổi — Lion Camp mùa hè 2025</div>
         </div>
       </div>
     </div>
@@ -198,99 +143,99 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
 
   <!-- BLOCK 7: PRICING -->
   <div slot="pricing">
-    <p class="sp-pricing__eyebrow">ƯU ĐÃI THÁNG 4 — CHỈ 100 SUẤT</p>
-    <h2>Đầu Tư Hợp Lý Nhất Cho Năng Lực Học Tập Của Con</h2>
+    <p class="sp-pricing__eyebrow">SO SÁNH GIÁ TRỊ</p>
+    <h2>Lion Camp So Với Trại Hè Thông Thường</h2>
     <div class="sp-pricing__table">
       <div class="sp-pricing-col sp-pricing-col--regular">
-        <p class="sp-pricing-col__label">Giá gốc</p>
-        <div class="sp-pricing-col__price" style="text-decoration:line-through;opacity:.55;font-size:1.8rem">29.998.000</div>
-        <div class="sp-pricing-col__unit">VNĐ / toàn chương trình 6 tuần</div>
+        <p class="sp-pricing-col__label">Trại hè thông thường</p>
+        <div class="sp-pricing-col__price">3–5tr</div>
+        <div class="sp-pricing-col__unit">/tuần (trại thường)</div>
         <ul class="sp-pricing-col__features">
-          <li>Chương trình AI theo khung UNESCO</li>
-          <li>6 tuần full-time (15/6–25/7/2026)</li>
-          <li>3 lần kèm cặp 1:1 PDR-Lite</li>
-          <li>Tiếng Anh immersion</li>
+          <li>Ít hoạt động structured</li>
+          <li>Không English immersion</li>
+          <li>Không có Leadership program</li>
+          <li>Không có certified counselors</li>
         </ul>
       </div>
       <div class="sp-pricing-col sp-pricing-col--promo">
-        <p class="sp-pricing-col__label">🎁 Ưu đãi đặt trước tháng 4</p>
-        <div class="sp-pricing-col__price">19.998.000</div>
-        <div class="sp-pricing-col__unit">VNĐ — tiết kiệm 10.000.000</div>
+        <p class="sp-pricing-col__label">Lion Camp Việt Anh</p>
+        <div class="sp-pricing-col__price">5–8tr</div>
+        <div class="sp-pricing-col__unit">/tuần (trọn gói)</div>
         <ul class="sp-pricing-col__features">
-          <li>✅ Toàn bộ chương trình 6 tuần</li>
-          <li>✅ AI Literacy theo 12 tiêu chí UNESCO</li>
-          <li>✅ 3 buổi kèm cặp 1:1 PDR-Lite</li>
-          <li>✅ Tiếng Anh thực chiến immersion</li>
-          <li>✅ Health Plan cá nhân hoá</li>
-          <li>✅ Hoàn 100% học phí sau 4 tuần nếu không hài lòng</li>
+          <li>English immersion 100%</li>
+          <li>Leadership challenges hàng ngày</li>
+          <li>Outdoor adventure + team building</li>
+          <li>Counselors được đào tạo bài bản</li>
+          <li>Bữa ăn dinh dưỡng 3 bữa</li>
+          <li>Certificate hoàn thành</li>
         </ul>
       </div>
     </div>
-    <p class="sp-pricing__note">⏰ Chỉ còn 100 suất ưu đãi tháng 4 — giá tăng về 29.998.000 VNĐ sau khi hết suất.</p>
+    <p class="sp-pricing__note">* Học phí tùy gói 1 tuần / 2 tuần / toàn hè. Liên hệ nhận lịch trại 2026.</p>
   </div>
 
   <!-- BLOCK 8: CTA -->
   <div slot="cta">
-    <h2>Chỉ 100 Suất Ưu Đãi — Đăng Ký Giữ Chỗ Trước Khi Hết</h2>
-    <p>Đặt cọc ngay hôm nay để khoá giá 19.998.000 VNĐ. Cam kết hoàn 100% sau 4 tuần nếu không hài lòng.</p>
-    <a href="#sp-form1" class="sp-cta-btn">Đăng ký giữ chỗ cho con ngay →</a>
-    <p style="margin-top:1rem;font-size:.9rem;opacity:.75">🛡️ Cam kết hoàn 100% học phí sau 4 tuần nếu không hài lòng — không điều kiện</p>
+    <h2>Chỉ Còn Ít Suất Cho Hè 2026 — Đăng Ký Giữ Chỗ Ngay</h2>
+    <p>Đăng ký sớm giảm 10% và chọn được khung thời gian ưa thích.</p>
+    <a href="#sp-form1" class="sp-cta-btn">Đăng ký giữ suất Lion Camp →</a>
   </div>
 
   <!-- BLOCK 9: FORM 1 -->
   <div slot="form1">
-    <p class="sp-form-block__eyebrow">ĐẶT CHỖ NGAY</p>
-    <h2>Nhận Thông Tin Chi Tiết Lion Camp 2026</h2>
-    <p>Để lại thông tin — nhận Brochure đầy đủ, lịch trại và tư vấn chọn chương trình phù hợp cho con.</p>
+    <p class="sp-form-block__eyebrow">ĐĂNG KÝ NGAY</p>
+    <h2>Đăng Ký Lion Camp Hè 2026</h2>
+    <p>Điền thông tin để nhận tư vấn và lịch trại chi tiết — hoàn toàn miễn phí.</p>
     <LeadFormTwoStepEmailFirst
-      formId="trai-he-2026-sales-form1"
-      funnelCode="sales-trai-he-2026"
+      formId="trai-he-sales-form1"
+      funnelCode="sales-trai-he"
       schoolLevel="tieu-hoc"
-      submitText="Nhận ngay Brochure Lion Camp 2026"
+      submitText="Đăng ký Lion Camp ngay"
     />
   </div>
 
   <!-- BLOCK 10: FAQ -->
   <div slot="faq">
     <p class="sp-faq__eyebrow">CÂU HỎI THƯỜNG GẶP</p>
-    <h2>Giải Đáp Nhanh Để Bạn Quyết Định Ngay</h2>
-    <p class="sp-faq__sub">Những câu hỏi phụ huynh hỏi nhiều nhất về Lion Camp 2026</p>
+    <h2>Câu Hỏi Phụ Huynh Hỏi Nhiều Nhất</h2>
+    <p class="sp-faq__sub">Giải đáp để bạn tự tin quyết định cho con tham gia Lion Camp</p>
 
     <details class="sp-faq-item">
-      <summary>AI Literacy trong Lion Camp là gì? Có phải học lập trình không?</summary>
-      <div class="sp-faq-answer">Không phải lập trình. AI Literacy theo khung UNESCO gồm 12 tiêu chí: từ hiểu AI hoạt động như thế nào, cách đặt câu hỏi hiệu quả (prompt engineering), nhận biết thông tin sai, đến đạo đức AI và quyết định khi nào nên/không nên dùng AI. Con học qua dự án thực tế, không phải lý thuyết khô khan.</div>
+      <summary>Lion Camp phù hợp với độ tuổi nào?</summary>
+      <div class="sp-faq-answer">Từ 6 đến 16 tuổi. Chúng tôi chia nhóm theo độ tuổi (6-9, 10-12, 13-16) để hoạt động phù hợp. Trẻ nhỏ có counselor kèm riêng, trẻ lớn hơn có thử thách leadership phức tạp hơn.</div>
     </details>
 
     <details class="sp-faq-item">
-      <summary>Chương trình phù hợp với tất cả khối lớp từ 1 đến 12 không?</summary>
-      <div class="sp-faq-answer">Có. Lion Camp chia nhóm theo cấp học: Tiểu học (lớp 1–5), THCS (lớp 6–9), THPT (lớp 10–12). Nội dung AI Literacy và kỹ năng thế kỷ 21 được thiết kế riêng phù hợp với từng độ tuổi — từ tư duy cơ bản đến ứng dụng nâng cao.</div>
+      <summary>Nếu con chưa nói được tiếng Anh có tham gia được không?</summary>
+      <div class="sp-faq-answer">Hoàn toàn được! Immersion là phương pháp học hiệu quả nhất ngay cả với người mới bắt đầu. Counselors dùng ngôn ngữ cơ thể, hình ảnh và tiếng Việt khi cần thiết để đảm bảo con không bị lạc lõng.</div>
     </details>
 
     <details class="sp-faq-item">
-      <summary>Cam kết hoàn 100% học phí sau 4 tuần là như thế nào?</summary>
-      <div class="sp-faq-answer">Nếu sau 4 tuần tham gia đầy đủ, phụ huynh nhận thấy con không có sự tiến bộ nào đáng kể, chúng tôi hoàn lại toàn bộ học phí — không điều kiện, không cần giải thích. Đây là cam kết thực sự của chúng tôi về chất lượng chương trình.</div>
+      <summary>Con ngủ ở trại hay về nhà mỗi ngày?</summary>
+      <div class="sp-faq-answer">Có cả 2 lựa chọn: Day Camp (về nhà mỗi tối) và Residential Camp (ngủ tại trại). Residential camp giúp con phát triển tính tự lập và tình bạn mạnh hơn — chúng tôi khuyến khích nếu con chưa từng xa nhà.</div>
     </details>
 
     <details class="sp-faq-item">
-      <summary>PDR-Lite 1:1 là gì? Có quan trọng không?</summary>
-      <div class="sp-faq-answer">PDR (Plan-Do-Review) là hệ thống phát triển cá nhân của Trường Việt Anh. Phiên bản Lite trong Lion Camp bao gồm 3 buổi kèm cặp 1:1 giữa học sinh và mentor — để đặt mục tiêu cá nhân, theo dõi tiến trình và điều chỉnh kế hoạch. Đây là thứ tạo ra sự khác biệt giữa "trại hè thường" và Lion Camp.</div>
+      <summary>An toàn của con được đảm bảo như thế nào?</summary>
+      <div class="sp-faq-answer">Tỷ lệ counselor:học sinh là 1:8. Mọi hoạt động adventure đều có thiết bị an toàn được kiểm tra. Cơ sở y tế sẵn có. Ba mẹ nhận cập nhật ảnh và tình hình mỗi ngày qua app.</div>
     </details>
 
     <details class="sp-faq-item">
-      <summary>Tại sao chỉ 100 suất ưu đãi?</summary>
-      <div class="sp-faq-answer">Vì Lion Camp tập trung vào chất lượng — tỷ lệ mentor:học sinh là 1:8. Chúng tôi giới hạn số lượng để đảm bảo mỗi học sinh được theo dõi và hỗ trợ cá nhân. 100 suất ưu đãi tháng 4 là dành cho phụ huynh đăng ký sớm và cam kết.</div>
+      <summary>Sau Lion Camp, con có thay đổi thực sự không?</summary>
+      <div class="sp-faq-answer">97% phụ huynh nhận thấy con tự tin hơn rõ rệt sau trại. Cụ thể: dám nói tiếng Anh, chủ động trong nhóm, biết quản lý thời gian. Những thay đổi này được ghi nhận trong portfolio và certificate mà con nhận cuối trại.</div>
     </details>
   </div>
 
   <!-- BLOCK 11: FORM 2 -->
   <div slot="form2">
-    <h2>Đừng Để Con Mất Thêm Một Mùa Hè Nữa</h2>
-    <p>100 suất ưu đãi — giá 19.998.000 VNĐ (tiết kiệm 10tr). Cam kết hoàn 100% sau 4 tuần.</p>
+    <p class="sp-form-block__eyebrow">ĐỪNG BỎ LỠ HÈ 2026</p>
+    <h2>Giữ Suất Cho Con Trước Khi Hết Chỗ</h2>
+    <p>Suất trại hè có hạn — đăng ký ngay để chọn được khung thời gian và ưu đãi sớm.</p>
     <LeadFormTwoStepEmailFirst
-      formId="trai-he-2026-sales-form2"
-      funnelCode="sales-trai-he-2026-2"
+      formId="trai-he-sales-form2"
+      funnelCode="sales-trai-he-2"
       schoolLevel="tieu-hoc"
-      submitText="Đăng ký giữ chỗ ngay →"
+      submitText="Giữ suất Lion Camp ngay"
     />
   </div>
 

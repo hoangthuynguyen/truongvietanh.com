@@ -29,7 +29,7 @@ const {
   description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.',
   canonical,
   noindex = canonical?.includes('staging.') || canonical?.includes('workers.dev') || canonical?.includes('hoc.'),
-  noPopup = false,
+  noPopup = true, /* TẠM THỜI tắt toàn bộ popup trên site — bật lại bằng cách đổi về false */
   ogImage,
   robots = noindex ? 'noindex, nofollow' : 'index, follow',
   structuredData,
@@ -132,7 +132,7 @@ const schemaPayload = structuredData
         <p class="exit-popup__desc">Hơn <strong>200 bé đã đăng ký</strong> Trại hè Lion Camp 2026 — chỉ còn <strong>vài chỗ cuối</strong>.<br/>Để lại số điện thoại để tư vấn viên gọi trong <strong>5 phút</strong> + nhận ngay <strong>học bổng 15%</strong>.</p>
         <form class="exit-popup__form" id="exitForm">
           <input type="tel" class="exit-popup__input" placeholder="Số điện thoại của bạn" pattern="[0-9\+\-\s]+" required />
-          <button type="submit" class="exit-popup__submit">Nhận tư vấn miễn phí</button>
+          <button type="submit" class="exit-popup__submit">Nhận tư vấn ngay</button>
         </form>
         <p class="exit-popup__note">
           Hoặc gọi ngay <a href={`tel:${hotline.replace(/\s/g, '')}`}><strong>{hotline}</strong></a>

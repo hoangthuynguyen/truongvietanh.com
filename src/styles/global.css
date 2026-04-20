@@ -213,6 +213,42 @@ p {
   gap: 1rem;
 }
 
+/* Merged announcement inside top-bar (replaces separate .announcement-bar) */
+.wp-top-bar__announcement {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+.wp-top-bar__announce {
+  color: #fff;
+  font-size: 0.86rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline-block;
+  max-width: 100%;
+}
+.wp-top-bar__announce-link {
+  color: #f5c518;
+  font-weight: 700;
+  text-decoration: underline;
+  margin-left: 0.35rem;
+}
+.wp-top-bar__announce-link:hover {
+  color: #fde047;
+}
+
+/* Hide the legacy BaseLayout announcement-bar — merged into wp-top-bar */
+.announcement-bar { display: none !important; }
+
+/* TẠM THỜI: tắt toàn bộ popup trên site */
+.exit-popup,
+.exit-popup__overlay,
+.zalo-popup,
+#exitPopup,
+#zPopup { display: none !important; }
+
 .wp-top-bar__cta {
   display: inline-flex;
   align-items: center;
@@ -244,7 +280,7 @@ p {
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  min-height: 80px;
+  min-height: 115px;
   gap: 0.5rem;
 }
 
@@ -307,9 +343,9 @@ p {
 }
 
 .wp-nav__logo img {
-  height: 60px;
+  height: 100px;
   width: auto;
-  max-width: 200px;
+  max-width: 340px;
   object-fit: contain;
 }
 
@@ -491,7 +527,7 @@ body.menu-open {
 
   .wp-nav {
     grid-template-columns: auto 1fr;
-    min-height: 64px;
+    min-height: 84px;
     position: relative;
   }
 
@@ -500,13 +536,16 @@ body.menu-open {
   }
 
   .wp-nav__logo img {
-    height: 52px;
+    height: 72px;
+    max-width: 240px;
   }
 
   .wp-hamburger {
     display: flex;
   }
 
+  .wp-top-bar__announcement { display: none; }
+  .wp-top-bar__inner { justify-content: center; }
   .wp-top-bar__link--zalo {
     display: none;
   }

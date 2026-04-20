@@ -108,7 +108,7 @@ export type PageSpec = {
 };
 
 export const siteName = 'Trường Việt Anh';
-export const defaultSiteUrl = 'https://hoc.truongvietanh.com';
+export const defaultSiteUrl = 'https://truongvietanh.com';
 export const adminUrl = 'https://admin.truongvietanh.com/admin';
 
 export const mainNavLeft = [
@@ -166,7 +166,7 @@ export const mainNavRight = [
       { label: 'Giáo viên', href: '/thanh-tich-giao-vien' },
     ]
   },
-  { label: 'Blog', href: '/blog' },
+  // { label: 'Blog', href: '/blog' }, // tạm ẩn khỏi menu — bỏ comment để hiển thị lại
   { label: 'Tài nguyên', href: '/tai-nguyen-giao-duc' },
   { label: 'Hình ảnh', href: '/hinh-anh' },
 ];

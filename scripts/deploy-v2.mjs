@@ -31,20 +31,21 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 
-const env = process.env.ENV || 'staging';
+const env = process.env.ENV || 'prod';
 const dryRun = process.env.DRY_RUN === '1';
 
+// Single-environment: all deploys go to truongvietanh.com (hoc.* is auto-redirected by worker)
 const BASE_URLS = {
-  staging: 'https://hoc.truongvietanh.com',
+  staging: 'https://truongvietanh.com',
   prod: 'https://truongvietanh.com',
 };
 const baseUrl = BASE_URLS[env];
 if (!baseUrl) {
-  console.error(`❌ Unknown ENV: ${env}. Use 'staging' or 'prod'.`);
+  console.error(`❌ Unknown ENV: ${env}. Use 'prod' (default).`);
   process.exit(1);
 }
 
-const WRANGLER_CONFIG = env === 'prod' ? 'wrangler.jsonc' : 'wrangler.staging.jsonc';
+const WRANGLER_CONFIG = 'wrangler.jsonc';
 
 // ===== HELPERS =====
 

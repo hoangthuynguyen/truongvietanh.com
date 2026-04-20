@@ -8,7 +8,7 @@
 URL: https://developers.zalo.me/app/4580774058394869551/oa/settings
 
 1. **Official Account Callback URL**: đặt callback endpoint để nhận code OAuth
-   - Tạm thời dùng: `https://hoc.truongvietanh.com/api/zalo-callback`
+   - Tạm thời dùng: `https://truongvietanh.com/api/zalo-callback`
    - Sau khi worker code implement callback endpoint, Zalo sẽ POST code đến URL này
 
 2. **Chọn quyền cần yêu cầu** (tick các checkbox):
@@ -97,7 +97,7 @@ wrangler secret put ZALO_APP_SECRET --config wrangler.staging.jsonc
 
 POST test lead:
 ```bash
-curl -X POST "https://hoc.truongvietanh.com/api/lead" \
+curl -X POST "https://truongvietanh.com/api/lead" \
   -H "Content-Type: application/json" \
   -d '{"fullName":"Test Zalo","email":"test@example.com","phone":"0999888777","schoolLevel":"tieu-hoc","source":"trai-he-tieu-hoc-go-vap-vsl","funnelCode":"trai-he-tieu-hoc-go-vap-vsl","quiz_score":45,"quiz_answers":[1,2,1,2,1,2]}'
 ```

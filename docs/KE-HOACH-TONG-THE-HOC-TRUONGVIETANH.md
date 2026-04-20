@@ -3,7 +3,7 @@
 
 > Ngày tạo: 2026-04-07
 > Mục tiêu: Chuyển đổi toàn bộ website WordPress sang hệ thống Astro + Directus
-> Domain mới: hoc.truongvietanh.com (thay staging.truongvietanh.com)
+> Domain mới: truongvietanh.com (thay staging.truongvietanh.com)
 > Mục tiêu cuối: truongvietanh.com (khi hoàn tất)
 
 ---
@@ -40,7 +40,7 @@ File `wrangler.staging.jsonc`:
   "main": "./src/staging-worker.js",
   "routes": [
     {
-      "pattern": "hoc.truongvietanh.com/*",
+      "pattern": "truongvietanh.com/*",
       "zone_name": "truongvietanh.com"
     }
   ],
@@ -51,7 +51,7 @@ File `wrangler.staging.jsonc`:
 ### Bước 3: Cập nhật .env và astro.config (2 phút)
 
 ```env
-PUBLIC_SITE_URL=https://hoc.truongvietanh.com
+PUBLIC_SITE_URL=https://truongvietanh.com
 ```
 
 ### Bước 4: Deploy
@@ -225,9 +225,9 @@ Không viết lại từng bài, mà tối ưu TEMPLATE + batch update:
 
 ```
 NGÀY 1 (Hôm nay)
-├── ✅ A1-A5: Chuyển domain → hoc.truongvietanh.com (15 phút)
+├── ✅ A1-A5: Chuyển domain → truongvietanh.com (15 phút)
 ├── ✅ B1-B2: Tạo route blog/[slug].astro (2 giờ) → +552 trang
-└── Deploy → hoc.truongvietanh.com có 731 trang
+└── Deploy → truongvietanh.com có 731 trang
 
 NGÀY 2-3
 ├── D-GĐ1: Viết lại 10 trang thiết yếu (mam-non, tieu-hoc, thcs, thpt,
@@ -237,7 +237,7 @@ NGÀY 2-3
 NGÀY 4
 ├── C: Import 400 bài viết còn lại → +400 trang → Tổng ~1,130 trang
 ├── E: Tối ưu template blog + batch update 552 posts
-└── Deploy → hoc.truongvietanh.com có ~1,130 trang
+└── Deploy → truongvietanh.com có ~1,130 trang
 
 NGÀY 5-7
 ├── D-GĐ2: Viết 19 trang bổ sung
@@ -246,7 +246,7 @@ NGÀY 5-7
 └── Test toàn diện
 
 NGÀY 8+
-├── Go live: Chuyển hoc.truongvietanh.com → truongvietanh.com
+├── Go live: Chuyển truongvietanh.com → truongvietanh.com
 ├── Monitor: Theo dõi rankings, traffic, leads
 └── Tắt WordPress hosting cũ
 ```

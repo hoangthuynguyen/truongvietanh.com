@@ -30,16 +30,16 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       <div class="form-progress">
         <div class="form-progress__step form-progress__step--active">
           <span class="form-progress__dot">1</span>
-          <span class="form-progress__label">Email</span>
+          <span class="form-progress__label">Điền email</span>
         </div>
         <div class="form-progress__line"></div>
         <div class="form-progress__step">
           <span class="form-progress__dot">2</span>
-          <span class="form-progress__label">Thông tin</span>
+          <span class="form-progress__label">Nhận thông tin</span>
         </div>
       </div>
 
-      <h3 class="form-step-title">Nhập email để nhận thông tin</h3>
+      <h3 class="form-step-title">Tư vấn cá nhân hoá lộ trình học tập</h3>
 
       <div class="form-group">
         <input
@@ -55,7 +55,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       </div>
 
       <button type="button" class="form-btn form-btn--next" data-action="next-step">
-        Nhận tư vấn miễn phí
+        Nhận tư vấn ngay
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
 
@@ -70,12 +70,12 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       <div class="form-progress">
         <div class="form-progress__step form-progress__step--done">
           <span class="form-progress__dot">&#10003;</span>
-          <span class="form-progress__label">Email</span>
+          <span class="form-progress__label">Điền email</span>
         </div>
         <div class="form-progress__line form-progress__line--active"></div>
         <div class="form-progress__step form-progress__step--active">
           <span class="form-progress__dot">2</span>
-          <span class="form-progress__label">Thông tin</span>
+          <span class="form-progress__label">Nhận thông tin</span>
         </div>
       </div>
 
@@ -110,12 +110,8 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       </div>
 
       <div class="form-actions">
-        <button type="button" class="form-btn form-btn--back" data-action="prev-step">
-          &#8592; Quay lại
-        </button>
-        <button type="submit" class="form-btn form-btn--submit">
-          {submitText}
-        </button>
+        <button type="button" class="form-btn form-btn--back" data-action="prev-step">← Quay lại</button>
+        <button type="submit" class="form-btn form-btn--submit">{submitText}</button>
       </div>
     </div>
   </div>
@@ -219,14 +215,14 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   .form-progress__label {
     font-size: .72rem;
     font-weight: 600;
-    color: #999;
+    color: rgba(255,255,255,0.7);
     text-transform: uppercase;
     letter-spacing: .5px;
   }
 
   .form-progress__step--active .form-progress__label,
   .form-progress__step--done .form-progress__label {
-    color: #1a1a5e;
+    color: #fff;
   }
 
   .form-progress__line {
@@ -248,15 +244,19 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     font-family: "Montserrat", sans-serif;
     font-size: 1.2rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #ffffff;
     margin: 0;
   }
 
   .form-step-description {
     font-size: 0.95rem;
-    color: #666666;
+    color: rgba(255, 255, 255, 0.7);
     margin: 0;
   }
+
+  /* Override for white card context (pillar pages) */
+  .gi-form-card .form-step-title { color: #1a1a5e; }
+  .gi-form-card .form-step-description { color: #666666; }
 
   /* ===== SOCIAL PROOF ===== */
   .form-social-proof {
@@ -376,11 +376,11 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
 
   /* ===== BUTTONS ===== */
   .form-btn {
-    padding: 0.9rem 2rem;
+    padding: 0.7rem 1.2rem;
     border: none;
     border-radius: 8px;
     font-family: "Montserrat", sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -390,6 +390,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     justify-content: center;
     gap: .5rem;
     text-align: center;
+    white-space: nowrap;
   }
 
   .form-btn--next,
@@ -454,6 +455,8 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   .form-btn--back {
     background-color: #f0f0f0;
     color: #1a1a1a;
+    white-space: nowrap;
+    font-size: 1.05rem;
   }
 
   .form-btn--back:hover {

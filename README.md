@@ -7,8 +7,10 @@ Astro frontend cho `truongvietanh.com`, build tinh tu Directus va deploy len Clo
 - Frontend: Astro static build (`output: 'static'`)
 - Backend: Directus chay rieng bang Docker hoac Directus Cloud
 - Deploy frontend: Cloudflare Workers Static Assets
-- Worker production: `truongvietanh-com`
-- Worker staging: `truongvietanh-staging`
+- 1 Worker duy nhat: `truongvietanh-com`, phuc vu 3 domain:
+  - `truongvietanh.com` (canonical)
+  - `www.truongvietanh.com` -> 301 -> `truongvietanh.com`
+  - `hoc.truongvietanh.com` -> 301 -> `truongvietanh.com` (legacy staging)
 
 Frontend fetch du lieu tu Directus trong luc build, sau do xuat ra static assets trong `dist`. Cach nay van la Cloudflare Workers, nhung khong chay SSR runtime tren edge.
 
@@ -61,28 +63,25 @@ Can khai bao trong build environment cua moi Worker:
 
 Gia tri goi y:
 
-- Staging Worker: `PUBLIC_SITE_URL=https://staging.truongvietanh.com`
-- Production Worker: `PUBLIC_SITE_URL=https://truongvietanh.com`
+- `PUBLIC_SITE_URL=https://truongvietanh.com`
 - `PUBLIC_DIRECTUS_URL=https://admin.truongvietanh.com`
 
-## Cau hinh 2 Worker tach biet
+## Cau hinh Worker
 
-- Production dung [wrangler.jsonc](/Users/nguyenhoang/Downloads/truongvietanh.com/wrangler.jsonc)
-- Staging dung [wrangler.staging.jsonc](/Users/nguyenhoang/Downloads/truongvietanh.com/wrangler.staging.jsonc)
+Chi dung [wrangler.jsonc](/Users/nguyenhoang/Downloads/truongvietanh.com/wrangler.jsonc). `wrangler.staging.jsonc` da bi bo (da gop lai voi production va dung redirect o worker cho `hoc.truongvietanh.com`).
 
 Lenh deploy local:
 
 ```bash
-npm run deploy:prod
-npm run deploy:staging
+npm run deploy
+# hoac: npm run deploy:prod
 ```
 
-Neu connect GitHub vao Workers Builds, moi Worker se tro cung repo nhung dung deploy command rieng:
+Neu connect GitHub vao Workers Builds:
 
-- Production: `npx wrangler deploy -c wrangler.jsonc`
-- Staging: `npx wrangler deploy -c wrangler.staging.jsonc`
+- Deploy: `npx wrangler deploy -c wrangler.jsonc`
 
-Build command cho ca hai:
+Build command:
 
 ```bash
 npm run build
@@ -90,9 +89,11 @@ npm run build
 
 ## Gan domain
 
-- Worker `truongvietanh-staging` -> `staging.truongvietanh.com`
-- Worker `truongvietanh-com` -> `truongvietanh.com`
-- Worker `truongvietanh-com` -> `www.truongvietanh.com`
+Worker `truongvietanh-com` tro ca 3 route:
+
+- `truongvietanh.com/*` (canonical)
+- `www.truongvietanh.com/*` -> 301 -> `truongvietanh.com`
+- `hoc.truongvietanh.com/*` -> 301 -> `truongvietanh.com` (legacy staging)
 
 Gan trong Cloudflare dashboard tai `Workers & Pages` > Worker > `Domains & Routes`.
 
@@ -100,8 +101,7 @@ Gan trong Cloudflare dashboard tai `Workers & Pages` > Worker > `Domains & Route
 
 Sau khi Directus publish/sua bai:
 
-- goi deploy hook cua Worker staging de test
-- khi on dinh, goi deploy hook cua Worker production
+- goi deploy hook cua Worker production
 
 Co the dung Directus Flows/Webhook hoac GitHub Actions de trigger lai build/deploy.
 

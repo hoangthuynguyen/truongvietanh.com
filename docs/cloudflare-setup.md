@@ -1,6 +1,6 @@
 # Cloudflare Infrastructure Setup — v2 Worker
 
-> One-time setup for Cloudflare Worker (`hoc.truongvietanh.com`) with lead scoring,
+> One-time setup for Cloudflare Worker (`truongvietanh.com`) with lead scoring,
 > idempotency, Turnstile. Run these **once per environment** (staging + prod).
 
 ---
@@ -42,7 +42,7 @@ Copy both IDs. Update `wrangler.staging.jsonc`:
   "main": "./src/lead-worker-v2.js",
   "compatibility_date": "2026-03-17",
   "routes": [
-    { "pattern": "hoc.truongvietanh.com/*", "zone_name": "truongvietanh.com" }
+    { "pattern": "truongvietanh.com/*", "zone_name": "truongvietanh.com" }
   ],
   "assets": { "directory": "./dist", "binding": "ASSETS" },
   "observability": { "enabled": true },
@@ -192,10 +192,10 @@ The deploy script will:
 
 ```bash
 # Smoke test
-BASE_URL=https://hoc.truongvietanh.com npm run smoke
+BASE_URL=https://truongvietanh.com npm run smoke
 
 # Manually test lead capture with real email
-curl -X POST https://hoc.truongvietanh.com/api/lead \
+curl -X POST https://truongvietanh.com/api/lead \
   -H "Content-Type: application/json" \
   -d '{"step":"full_submit","email":"test@example.com","phone":"0900000000","full_name":"Test","funnel_code":"smoke"}'
 ```

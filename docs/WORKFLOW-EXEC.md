@@ -117,7 +117,7 @@ Trong branch **Lead Nóng** (sau tag `lead-nong`), click **`+`**:
 
 - Action: **"Send Email"**
 - **From Name**: `Tư vấn viên Lion Camp`
-- **From Email**: `leads@hoc.truongvietanh.com` (hoặc domain đã verify trong GHL)
+- **From Email**: `leads@truongvietanh.com` (hoặc domain đã verify trong GHL)
 - **To**: `{{contact.email}}`
 - **Subject**:
   ```
@@ -412,7 +412,7 @@ GHL → **Contacts** → **+ Add Contact**:
 | Tên học sinh | `Bé Test` |
 | Địa điểm Trại hè | `Gò Vấp` |
 | Cấp học Trại hè | `Tiểu học` |
-| Báo cáo URL | `https://hoc.truongvietanh.com/report/?name=Test&score=45&school=tieu-hoc&loc=Gò+Vấp&q1=2&q2=1&q3=2&q4=1&q5=2&q6=1` |
+| Báo cáo URL | `https://truongvietanh.com/report/?name=Test&score=45&school=tieu-hoc&loc=Gò+Vấp&q1=2&q2=1&q3=2&q4=1&q5=2&q6=1` |
 
 ### 2. Trigger workflow
 
@@ -457,7 +457,7 @@ Goals: booked-call / đóng cọc → exit workflow sớm
 ## 📞 Cần gì tiếp theo sau khi publish workflow?
 
 1. **Zalo OA token** — để worker tự send Zalo alert cho sales khi lead mới
-2. **Deploy worker mới** (với `report_url` sync) — đã done, live tại hoc.truongvietanh.com
+2. **Deploy worker mới** (với `report_url` sync) — đã done, live tại truongvietanh.com
 3. **Commit code changes** lên Git branch — chờ user confirm
 
 Báo tôi khi workflow đã publish + test xong để tôi guide các bước tiếp theo.

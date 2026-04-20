@@ -89,7 +89,7 @@ const structuredData = [
 
 <BaseLayout
   title={cmsPage?.title || "Học Phí Trường Việt Anh 2026 – Mầm Non Đến THPT"}
-  description={cmsPage?.description || "Học phí Trường Việt Anh 2026: bảng phí chi tiết Mầm non đến THPT. Minh bạch, không phí ẩn. Học bổng lên đến 50%. Đăng ký tư vấn miễn phí."}
+  description={cmsPage?.description || "Học phí Trường Việt Anh 2026: bảng phí chi tiết Mầm non đến THPT. Minh bạch, không phí ẩn. Học bổng lên đến 50%. Đăng ký tư vấn cá nhân hóa lộ trình học tập."}
   canonical="https://truongvietanh.com/hoc-phi"
   ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
   structuredData={structuredData}
@@ -117,7 +117,7 @@ const structuredData = [
           </div>
 
           <div class="gi-trust-badges">
-            <div class="gi-badge"><strong>5-12tr</strong> /tháng</div>
+            <div class="gi-badge"><strong>110-165tr</strong> /năm</div>
             <div class="gi-badge"><strong>100%</strong> Tiếng Anh</div>
             <div class="gi-badge"><strong>Không</strong> phí ẩn</div>
             <div class="gi-badge"><strong>Học bổng</strong> lên đến 50%</div>
@@ -126,7 +126,7 @@ const structuredData = [
 
         <div class="gi-hero-right">
           <div class="gi-form-card">
-            <p class="gi-form-heading">Nhận bảng học phí chi tiết & tư vấn miễn phí</p>
+            <p class="gi-form-heading">Nhận bảng học phí chi tiết & tư vấn cá nhân hóa lộ trình học tập</p>
             <LeadFormTwoStepEmailFirst
               formId="hoc-phi-form"
               funnelCode="hoc-phi-pillar"
@@ -162,18 +162,31 @@ const structuredData = [
         <!-- Tuition Calculator -->
         <section id="tinh-hoc-phi" class="gi-section">
           <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="10" y2="10"/><line x1="12" y1="10" x2="14" y2="10"/><line x1="8" y1="14" x2="10" y2="14"/><line x1="12" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="16" y2="18"/></svg></span>Tính Học Phí Ước Lượng</h2>
-          <p>Chọn cấp học và ưu đãi để xem mức học phí ước tính hàng tháng. Đây là mức tham khảo — liên hệ tư vấn để nhận bảng phí chi tiết theo cơ sở.</p>
+          <p>Chọn lớp và ưu đãi để xem học phí ước tính cả năm. Đây là mức tham khảo — liên hệ tư vấn để nhận bảng phí chi tiết theo cơ sở và lớp chương trình (Thường / OIC).</p>
 
           <div class="calc-box" id="calcBox">
             <div class="calc-row">
-              <label class="calc-label">Cấp học</label>
+              <label class="calc-label">Lớp</label>
               <select id="calcLevel" class="calc-select">
-                <option value="0">— Chọn cấp học —</option>
-                <option value="5000000">Mầm Non (18 tháng – 3 tuổi)</option>
-                <option value="6000000">Mầm Non (3 – 6 tuổi)</option>
-                <option value="7000000">Tiểu Học (Lớp 1-5)</option>
-                <option value="9000000">THCS (Lớp 6-9)</option>
-                <option value="11000000">THPT (Lớp 10-12)</option>
+                <option value="0">— Chọn lớp —</option>
+                <optgroup label="Tiểu học">
+                  <option value="109857000">Lớp 1</option>
+                  <option value="112957000">Lớp 2</option>
+                  <option value="116457000">Lớp 3</option>
+                  <option value="119757000">Lớp 4</option>
+                  <option value="122557000">Lớp 5</option>
+                </optgroup>
+                <optgroup label="THCS">
+                  <option value="125757000">Lớp 6</option>
+                  <option value="128757000">Lớp 7</option>
+                  <option value="132757000">Lớp 8</option>
+                  <option value="136257000">Lớp 9</option>
+                </optgroup>
+                <optgroup label="THPT">
+                  <option value="137257000">Lớp 10</option>
+                  <option value="142557000">Lớp 11</option>
+                  <option value="164757000">Lớp 12</option>
+                </optgroup>
               </select>
             </div>
             <div class="calc-row">
@@ -184,7 +197,7 @@ const structuredData = [
               </div>
             </div>
             <div class="calc-result" id="calcResult">
-              <span class="calc-result__label">Học phí ước tính/tháng:</span>
+              <span class="calc-result__label">Học phí ước tính/năm:</span>
               <span class="calc-result__value" id="calcValue">—</span>
               <span class="calc-result__note" id="calcNote"></span>
             </div>
@@ -209,7 +222,7 @@ const structuredData = [
             val.textContent=final.toLocaleString('vi-VN')+'đ';
             if(disc>0){
               var saved=base-final;
-              note.textContent='Tiết kiệm '+saved.toLocaleString('vi-VN')+'đ/tháng ('+labels.join(' + ')+')';
+              note.textContent='Tiết kiệm '+saved.toLocaleString('vi-VN')+'đ/năm ('+labels.join(' + ')+')';
             } else {note.textContent='';}
           }
           level.addEventListener('change',calc);
@@ -220,49 +233,38 @@ const structuredData = [
 
         <!-- Section 1: Bảng học phí -->
         <section id="bang-phi" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span>Học phí Trường Việt Anh bao nhiêu 1 tháng?</h2>
-          <p>Học phí Trường Việt Anh dao động từ <strong>5 đến 12 triệu đồng mỗi tháng</strong> tuỳ theo cấp học và cơ sở. Đây là mức học phí phù hợp cho gia đình Việt Nam — chỉ bằng 1/3 so với trường quốc tế — nhưng chất lượng giáo dục tương đương: giáo viên bản ngữ, 100% tiếng Anh, chương trình chuẩn UK Curriculum. Tìm hiểu thêm về <a href="/gioi-thieu">triết lý giáo dục</a> và <a href="/cap-hoc">chương trình các cấp học</a> tại Trường Việt Anh.</p>
+          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 000 7h5a3.5 3.5 0 010 7H6"/></svg></span>Học phí Trường Việt Anh bao nhiêu một năm?</h2>
+          <p>Học phí Trường Việt Anh dao động từ <strong>110 đến 165 triệu đồng/năm học</strong> (tương đương ~11–17 triệu/tháng) tuỳ theo cấp học và lớp chương trình. Đây là mức học phí phù hợp cho gia đình Việt Nam — chỉ bằng 1/3 so với trường quốc tế — nhưng chất lượng giáo dục tương đương: giáo viên bản ngữ, 100% tiếng Anh, chương trình chuẩn UK Curriculum. Tìm hiểu thêm về <a href="/gioi-thieu">triết lý giáo dục</a> và <a href="/cap-hoc">chương trình các cấp học</a> tại Trường Việt Anh.</p>
           <p>Trường Việt Anh cam kết <strong>minh bạch tuyệt đối</strong> về học phí. Tất cả khoản phí được công bố rõ ràng ngay từ đầu — phụ huynh không bao giờ bị bất ngờ bởi phí phát sinh. Mức học phí dưới đây đã bao gồm phần lớn chi phí: học chính khoá, ăn bán trú, ngoại khoá cơ bản và bảo hiểm.</p>
 
           <img src="https://media.truongvietanh.com/images/giao-vien-20.webp" alt="Cơ sở vật chất hiện đại Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
 
           <div class="gi-comparison-box">
-            <h3>Bảng học phí theo cấp học — Năm học 2026-2027</h3>
+            <h3>Bảng học phí theo từng lớp — Năm học 2026–2027</h3>
+            <p style="font-size:0.9rem;color:#64748b;margin-bottom:0.75rem">Đơn vị: VNĐ/năm học. Đã bao gồm học chính khoá, tiếng Anh tích hợp, ngoại khoá cơ bản. Chưa bao gồm đồng phục, xe đưa đón, ăn bán trú.</p>
             <div class="gi-table-responsive">
               <table class="gi-table">
                 <thead>
                   <tr>
                     <th>Cấp học</th>
-                    <th>Độ tuổi</th>
-                    <th>Học phí/tháng</th>
-                    <th>Đặc điểm chương trình</th>
+                    <th>Lớp</th>
+                    <th>Học phí Lớp Thường</th>
+                    <th>Học phí Lớp OIC (nâng cao)</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>Mầm non</td>
-                    <td>2-6 tuổi</td>
-                    <td><strong>5 - 8 triệu</strong></td>
-                    <td>100% tiếng Anh immersion, giáo viên bản ngữ, PDR, SAM Math</td>
-                  </tr>
-                  <tr>
-                    <td>Tiểu học</td>
-                    <td>6-11 tuổi</td>
-                    <td><strong>6 - 9 triệu</strong></td>
-                    <td>UK Curriculum, IELTS foundation, SteamE, Coding từ lớp 3</td>
-                  </tr>
-                  <tr>
-                    <td>THCS</td>
-                    <td>11-15 tuổi</td>
-                    <td><strong>7 - 10 triệu</strong></td>
-                    <td>IELTS chuyên sâu, định hướng nghề nghiệp, CLB ngoại khoá</td>
-                  </tr>
-                  <tr>
-                    <td>THPT</td>
-                    <td>15-18 tuổi</td>
-                    <td><strong>8 - 12 triệu</strong></td>
-                    <td>IELTS 6.5-8.0, SAT/ACT, tư vấn du học, A-Level</td>
-                  </tr>
+                  <tr><td>Tiểu học</td><td>1</td><td>109.857.000 VNĐ</td><td>129.857.000 VNĐ</td></tr>
+                  <tr><td>Tiểu học</td><td>2</td><td>112.957.000 VNĐ</td><td>132.957.000 VNĐ</td></tr>
+                  <tr><td>Tiểu học</td><td>3</td><td>116.457.000 VNĐ</td><td>136.457.000 VNĐ</td></tr>
+                  <tr><td>Tiểu học</td><td>4</td><td>119.757.000 VNĐ</td><td>139.757.000 VNĐ</td></tr>
+                  <tr><td>Tiểu học</td><td>5</td><td>122.557.000 VNĐ</td><td>122.557.000 VNĐ</td></tr>
+                  <tr><td>THCS</td><td>6</td><td>125.757.000 VNĐ</td><td>145.757.000 VNĐ</td></tr>
+                  <tr><td>THCS</td><td>7</td><td>128.757.000 VNĐ</td><td>148.757.000 VNĐ</td></tr>
+                  <tr><td>THCS</td><td>8</td><td>132.757.000 VNĐ</td><td>152.757.000 VNĐ</td></tr>
+                  <tr><td>THCS</td><td>9</td><td>136.257.000 VNĐ</td><td>136.257.000 VNĐ</td></tr>
+                  <tr><td>THPT</td><td>10</td><td>137.257.000 VNĐ</td><td>137.257.000 VNĐ</td></tr>
+                  <tr><td>THPT</td><td>11</td><td>142.557.000 VNĐ</td><td>142.557.000 VNĐ</td></tr>
+                  <tr><td>THPT</td><td>12</td><td>164.757.000 VNĐ</td><td>164.757.000 VNĐ</td></tr>
                 </tbody>
               </table>
             </div>
@@ -270,8 +272,8 @@ const structuredData = [
 
           <div class="gi-evidence-bar">
             <div class="gi-evidence-item">
-              <strong>5-12tr</strong>
-              <span>Học phí/tháng tất cả cấp</span>
+              <strong>110-165tr</strong>
+              <span>Học phí/năm (mọi cấp)</span>
             </div>
             <div class="gi-evidence-item">
               <strong>1/3</strong>
@@ -321,7 +323,7 @@ const structuredData = [
           </div>
 
           <p>Điểm quan trọng: <strong>KHÔNG có phí ẩn</strong>. Phụ huynh sẽ nhận bảng phí chi tiết ngay từ đầu với tất cả khoản phí bắt buộc và tuỳ chọn được liệt kê rõ ràng. Không có tình trạng "đóng phí rồi mới biết còn phải đóng thêm" như một số trường khác. Đây là cam kết minh bạch tài chính mà Trường Việt Anh luôn tuân thủ từ ngày thành lập.</p>
-          <p>So sánh nhanh: Tại nhiều trường tư thục, học phí công bố là 3-5 triệu/tháng nhưng phụ huynh phải đóng thêm: phí tiếng Anh riêng (1-2 triệu), phí ngoại khoá (500.000-1 triệu), phí ăn trưa riêng, phí tài liệu... Tổng thực tế lên đến 7-9 triệu. Tại Việt Anh, mức 5-12 triệu đã là <strong>tổng tất cả</strong> — phụ huynh biết chính xác số tiền cần đóng mỗi tháng.</p>
+          <p>So sánh nhanh: Tại nhiều trường tư thục, học phí công bố là 3–5 triệu/tháng nhưng phụ huynh phải đóng thêm: phí tiếng Anh riêng (1–2 triệu), phí ngoại khoá (500.000–1 triệu), phí ăn trưa riêng, phí tài liệu... Tổng thực tế lên đến 7–9 triệu/tháng. Tại Việt Anh, mức 110–165 triệu/năm (tương đương ~11–17 triệu/tháng) đã là <strong>tổng tất cả</strong> — phụ huynh biết chính xác số tiền cần đóng ngay từ đầu năm học.</p>
         </section>
 
         <!-- Section 3: So sánh với trường khác -->
@@ -344,11 +346,11 @@ const structuredData = [
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Học phí/tháng</td>
-                    <td>1-2 triệu</td>
-                    <td>3-7 triệu</td>
-                    <td><strong>5-12 triệu</strong></td>
-                    <td>15-40 triệu</td>
+                    <td>Học phí/năm</td>
+                    <td>10–20 triệu</td>
+                    <td>30–70 triệu</td>
+                    <td><strong>110–165 triệu</strong></td>
+                    <td>350–600 triệu</td>
                   </tr>
                   <tr>
                     <td>Tiếng Anh trong lớp</td>
@@ -498,7 +500,7 @@ const structuredData = [
         <!-- Section 5: ROI - Đầu tư có xứng đáng -->
         <section id="roi" class="gi-section">
           <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></span>Đầu tư vào Trường Việt Anh có xứng đáng không?</h2>
-          <p>Đây là câu hỏi mà nhiều phụ huynh đặt ra khi cân nhắc giữa mức học phí 5-12 triệu/tháng tại Trường Việt Anh so với các lựa chọn rẻ hơn. Câu trả lời nằm ở <strong>giá trị thực tế</strong> mà con nhận được — không chỉ trong thời gian học mà cho cả tương lai dài hạn.</p>
+          <p>Đây là câu hỏi mà nhiều phụ huynh đặt ra khi cân nhắc giữa mức học phí 110–165 triệu/năm (~11–17 triệu/tháng) tại Trường Việt Anh so với các lựa chọn rẻ hơn. Câu trả lời nằm ở <strong>giá trị thực tế</strong> mà con nhận được — không chỉ trong thời gian học mà cho cả tương lai dài hạn.</p>
 
           <div class="gi-roadmap">
             <h3>3 giá trị đầu tư dài hạn khi học tại Việt Anh</h3>
@@ -521,7 +523,7 @@ const structuredData = [
             </div>
           </div>
 
-          <p>Khi tính tổng, một học sinh học 12 năm tại Trường Việt Anh với mức phí trung bình 8 triệu/tháng sẽ chi khoảng 960 triệu cho toàn bộ quá trình học. Với con số này, con nhận được: trình độ tiếng Anh ngang bản ngữ, kỹ năng sống đo được, nền tảng du học vững chắc, và nhân cách được rèn luyện bài bản. So sánh: một học sinh trường công lập + học thêm tiếng Anh + trung tâm kỹ năng mềm + agency du học có thể chi tổng cộng <strong>700-900 triệu</strong> nhưng kết quả đầu ra thấp hơn đáng kể.</p>
+          <p>Khi tính tổng, một học sinh học 12 năm tại Trường Việt Anh với mức phí trung bình ~130 triệu/năm sẽ chi khoảng <strong>1,5 tỷ</strong> cho toàn bộ quá trình học. Với con số này, con nhận được: trình độ tiếng Anh ngang bản ngữ, kỹ năng sống đo được, nền tảng du học vững chắc, và nhân cách được rèn luyện bài bản. So sánh: một học sinh trường công lập + học thêm tiếng Anh + trung tâm kỹ năng mềm + agency du học có thể chi tổng cộng <strong>900 triệu – 1,2 tỷ</strong> nhưng kết quả đầu ra thấp hơn đáng kể.</p>
           <p>Nói cách khác: Trường Việt Anh không phải là chi phí — mà là <strong>khoản đầu tư có ROI cao nhất</strong> mà phụ huynh có thể dành cho tương lai của con. Xem thêm <a href="/co-so">hệ thống 9 cơ sở</a> và <a href="/thanh-tich">thành tích học sinh</a> để hiểu rõ hơn giá trị đầu tư này.</p>
         </section>
 
@@ -597,7 +599,7 @@ const structuredData = [
             <details class="gi-faq-item">
               <summary>Có chiết khấu khi đóng học phí cả năm không?</summary>
               <div class="gi-faq-answer">
-                <p><strong>Có.</strong> Đóng cả năm (10 tháng) được giảm <strong>5% tổng học phí</strong> — tiết kiệm đáng kể. Ví dụ: Tiểu học 8 triệu/tháng, đóng cả năm tiết kiệm 4 triệu. Ngoài ra: đóng theo quý giảm 2%, theo học kỳ giảm 3%. Chiết khấu thanh toán được <strong>cộng dồn</strong> với ưu đãi đăng ký sớm và ưu đãi anh chị em — giúp phụ huynh tối ưu chi phí.</p>
+                <p><strong>Có.</strong> Đóng cả năm được giảm <strong>5% tổng học phí</strong> — tiết kiệm đáng kể. Ví dụ: Tiểu học lớp 1 học phí ~110 triệu/năm, đóng cả năm tiết kiệm ~5,5 triệu. Ngoài ra: đóng theo quý giảm 2%, theo học kỳ giảm 3%. Chiết khấu thanh toán được <strong>cộng dồn</strong> với ưu đãi đăng ký sớm và ưu đãi anh chị em — giúp phụ huynh tối ưu chi phí.</p>
               </div>
             </details>
             <details class="gi-faq-item">
@@ -635,7 +637,7 @@ const structuredData = [
     <section class="gi-bottom-cta">
       <div class="gi-container gi-bottom-cta-inner">
         <div class="gi-bottom-cta-text">
-          <h2>Nhận bảng học phí chi tiết & tư vấn miễn phí</h2>
+          <h2>Nhận bảng học phí chi tiết & tư vấn cá nhân hóa lộ trình học tập</h2>
           <p>Điền form bên cạnh để nhận bảng học phí chi tiết theo cơ sở và cấp học mà gia đình quan tâm. Chuyên viên tuyển sinh sẽ gọi tư vấn trong 24 giờ — giải đáp mọi thắc mắc về học phí, học bổng và phương thức thanh toán.</p>
           <ul class="hp-cta-benefits">
             <li>Nhận bảng học phí chi tiết theo từng cơ sở</li>

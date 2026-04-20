@@ -39,7 +39,7 @@ if (!page) {
   return Astro.redirect('/404');
 }
 
-const canonicalUrl = `https://hoc.truongvietanh.com/${page.slug}`;
+const canonicalUrl = `https://truongvietanh.com/${page.slug}`;
 const camOnUrl = `/${page.slug}/cam-on`;
 const formIdWithFunnel = `squeeze-form-${page.funnel_code}`;
 const zaloUrl = 'https://zalo.me/1678310120468101523';
@@ -424,7 +424,7 @@ function addTraiHe(text: string | undefined | null): string {
       if (src === 'quiz' && childName) {
         hlEl.textContent = 'Dựa trên kết quả đánh giá của bé ' + childName + ' — đây là lộ trình Trại Hè Lion Camp phù hợp nhất';
       } else if (src === 'vsl') {
-        hlEl.textContent = 'Ba/Mẹ đã xem video — đăng ký tư vấn 1:1 miễn phí ngay';
+        hlEl.textContent = 'Ba/Mẹ đã xem video — đăng ký tư vấn cá nhân hóa 1:1 ngay';
         if (subEl) subEl.textContent = 'Tư vấn viên sẽ gọi/Zalo trong 24h để trao đổi chi tiết chương trình phù hợp cho con.';
       } else if (src === 'remarketing' || src === 'google') {
         if (subEl) subEl.textContent = 'Ba/Mẹ đã quan tâm Trại Hè Lion Camp — đăng ký ngay để nhận học bổng Early Bird trước khi hết suất.';

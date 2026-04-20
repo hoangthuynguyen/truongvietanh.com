@@ -4,7 +4,7 @@
  *
  * Runs against:
  *   - Local build: `npm run build && npx serve dist` → BASE_URL=http://localhost:3000
- *   - Staging: BASE_URL=https://hoc.truongvietanh.com
+ *   - Staging: BASE_URL=https://truongvietanh.com
  *
  * Why this test matters: unit tests verify pure logic (lead-scoring.test.ts),
  * but only a real browser can catch:

@@ -89,7 +89,7 @@ Most blocks are stubs right now (~30 lines each). Fill in visuals:
 
 ### Phase 6 — Cutover
 
-- [ ] Build v2 static site → deploy to `hoc.truongvietanh.com` (staging)
+- [ ] Build v2 static site → deploy to `truongvietanh.com` (staging)
 - [ ] Test 5 sample pages (1 per template)
 - [ ] Run Lighthouse + axe on sample pages — target CLS < 0.05, LCP < 2s
 - [ ] Redirect `src/pages/[...slug].astro` to v2 dispatcher

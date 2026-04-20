@@ -276,7 +276,7 @@ async function sendEmailNotification(data, env) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       personalizations: [{ to: [{ email: env.SALES_EMAIL }], cc: env.CC_EMAIL ? [{ email: env.CC_EMAIL }] : [] }],
-      from: { email: 'leads@hoc.truongvietanh.com', name: 'TVA Lead Alert' },
+      from: { email: 'leads@truongvietanh.com', name: 'TVA Lead Alert' },
       subject,
       content: [{ type: 'text/html', value: body }],
     }),

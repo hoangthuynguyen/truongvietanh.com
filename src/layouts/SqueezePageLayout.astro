@@ -11,7 +11,7 @@ const levelNames: Record<string, string> = { 'mam-non': 'Mầm Non', 'tieu-hoc':
 const schemaData = [
   { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: 'Trường Việt Anh', url: canonicalUrl, image: ogImage, description, sameAs: ['https://www.facebook.com/truongvietanhhcm','https://www.youtube.com/@truongvietanh','https://www.instagram.com/truongvietanh'], contactPoint: { '@type': 'ContactPoint', contactType: 'Customer Service', telephone: phoneIntl } },
   { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: canonicalUrl, inLanguage: 'vi', speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.squeeze-hero h1', '.squeeze-hero p'] } },
-  { '@context': 'https://schema.org', '@type': 'Offer', itemOffered: { '@type': 'EducationalOccupationalProgram', name: levelNames[schoolLevel] || 'Chương trình giáo dục', provider: { '@type': 'Organization', name: 'Trường Việt Anh' } }, price: '0', priceCurrency: 'VND', description: 'Đăng ký tư vấn miễn phí', availability: 'https://schema.org/InStock' },
+  { '@context': 'https://schema.org', '@type': 'Offer', itemOffered: { '@type': 'EducationalOccupationalProgram', name: levelNames[schoolLevel] || 'Chương trình giáo dục', provider: { '@type': 'Organization', name: 'Trường Việt Anh' } }, price: '0', priceCurrency: 'VND', description: 'Đăng ký tư vấn cá nhân hóa lộ trình học tập', availability: 'https://schema.org/InStock' },
 ];
 const structuredData = JSON.stringify(Array.isArray(schemaData) ? schemaData : [schemaData]);
 ---
@@ -169,7 +169,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <slot name="form" />
 <div class="squeeze-form-section__badges">
 <span class="squeeze-form-badge">Bảo mật thông tin</span>
-<span class="squeeze-form-badge">Tư vấn miễn phí</span>
+<span class="squeeze-form-badge">Tư vấn cá nhân hóa Lộ trình học tập</span>
 <span class="squeeze-form-badge">Phản hồi trong 24h</span>
 </div>
 </div></section>

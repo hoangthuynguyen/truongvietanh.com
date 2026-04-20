@@ -1,5 +1,5 @@
 /**
- * Worker script cho hoc.truongvietanh.com
+ * Worker script cho truongvietanh.com
  *
  * Handles:
  * 1. POST /api/lead → forward to GoHighLevel CRM + Pancake CRM
@@ -53,6 +53,11 @@ const CORS_HEADERS = {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+
+    // Redirect hoc.truongvietanh.com và www.truongvietanh.com → truongvietanh.com (301)
+    if (url.hostname === 'hoc.truongvietanh.com' || url.hostname === 'www.truongvietanh.com') {
+      return Response.redirect('https://truongvietanh.com' + url.pathname + url.search, 301);
+    }
 
     // Handle CORS preflight
     if (request.method === 'OPTIONS' && url.pathname === '/api/lead') {
@@ -169,7 +174,7 @@ function getQuizReportUrl(data) {
   if (data.quizAnswers && Array.isArray(data.quizAnswers) && data.quizAnswers.length > 0) {
     data.quizAnswers.forEach((a, i) => params.set(`q${i+1}`, a.toString()));
   }
-  return `https://hoc.truongvietanh.com/report/?${params.toString()}`;
+  return `https://truongvietanh.com/report/?${params.toString()}`;
 }
 
 async function handleLeadSubmission(request, env) {
@@ -554,7 +559,7 @@ async function sendEmailNotification(data, env) {
 
   // Derive which program they're interested in from the source/page
   const sourceLabel = (data.source || '').replace(/-/g, ' ').replace('squeeze ', '');
-  const pageUrl = data.page || 'https://hoc.truongvietanh.com';
+  const pageUrl = data.page || 'https://truongvietanh.com';
   const now = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
 
   const subject = `[HOC VIEN MOI] ${data.fullName} - ${schoolLabel} - Lien lac ngay ${data.phone}`;
@@ -631,7 +636,7 @@ async function sendEmailNotification(data, env) {
     </div>
 
     <p style="color:#999;font-size:12px;margin:0;text-align:center;">
-      Email tu dong tu he thong tuyen sinh hoc.truongvietanh.com
+      Email tu dong tu he thong tuyen sinh truongvietanh.com
     </p>
   </div>
 </div>`.trim();
@@ -644,7 +649,7 @@ async function sendEmailNotification(data, env) {
         to: [{ email: SALES_EMAIL, name: 'Tu - Sales TVA' }],
         cc: [{ email: CC_EMAIL, name: 'Duong Nguyen' }],
       }],
-      from: { email: 'leads@hoc.truongvietanh.com', name: 'Truong Viet Anh - Lead Alert' },
+      from: { email: 'leads@truongvietanh.com', name: 'Truong Viet Anh - Lead Alert' },
       subject,
       content: [{ type: 'text/html', value: body }],
     }),
@@ -720,7 +725,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:560px;margin:0 auto;background:#fff;">
   <!-- Header -->
   <div style="background:linear-gradient(135deg,#1a1a5e,#2a2a7e);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
-    <img src="https://hoc.truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:12px;background:#fff;padding:8px 16px;border-radius:8px;" />
+    <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:12px;background:#fff;padding:8px 16px;border-radius:8px;" />
     <h1 style="margin:0;font-size:20px;font-weight:800;">KẾT QUẢ ĐÁNH GIÁ KỸ NĂNG HÈ 2026</h1>
     <p style="margin:6px 0 0;opacity:.85;font-size:14px;">Lion Camp — ${campLvl} ${loc}</p>
   </div>
@@ -767,7 +772,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
       <ol style="margin:0;padding-left:20px;font-size:14px;color:#555;line-height:1.8;">
         <li><strong>Tư vấn viên sẽ gọi</strong> trong vài phút để giải thích chi tiết kết quả</li>
         <li>Nhận <strong>Báo cáo PDF đầy đủ</strong> qua Zalo trong 24 giờ</li>
-        <li>Đặt lịch <strong>tư vấn 1:1 miễn phí</strong> (15 phút) để chọn lộ trình phù hợp</li>
+        <li>Đặt lịch <strong>tư vấn cá nhân hóa 1:1</strong> (15 phút) để chọn lộ trình phù hợp</li>
         <li>Giữ chỗ Lion Camp + nhận <strong>Học bổng Early Bird</strong></li>
       </ol>
     </div>
@@ -797,7 +802,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         personalizations: [{ to: [{ email: data.email, name: data.fullName }] }],
-        from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+        from: { email: 'results@truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
         subject,
         content: [{ type: 'text/html', value: body }],
       }),
@@ -819,7 +824,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
   <!-- Header -->
   <div style="background:linear-gradient(135deg,#1a1a5e,#12123e);color:#fff;padding:28px 24px;text-align:center;">
-    <img src="https://hoc.truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:10px 20px;border-radius:10px;margin-bottom:16px;"/>
+    <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:10px 20px;border-radius:10px;margin-bottom:16px;"/>
     <h1 style="color:#fff;font-size:22px;margin:8px 0;line-height:1.3;">✅ Đã nhận đăng ký tư vấn!</h1>
     <p style="color:#ffd89a;font-size:14px;margin:4px 0 0;">Trại hè Lion Camp 2026 — ${campLvl} ${loc}</p>
   </div>
@@ -856,7 +861,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
     <!-- Trust box -->
     <div style="background:#f0faf4;border:1px solid #c8e9d4;border-radius:10px;padding:14px 18px;margin:16px 0;">
       <p style="margin:0;font-size:14px;color:#1e8449;line-height:1.6;">
-        🛡️ <strong>Tư vấn miễn phí, không cam kết.</strong> Ba/Mẹ chỉ quyết định sau khi trao đổi trực tiếp với tư vấn viên.
+        🛡️ <strong>Tư vấn cá nhân hóa Lộ trình học tập, không cam kết.</strong> Ba/Mẹ chỉ quyết định sau khi trao đổi trực tiếp với tư vấn viên.
       </p>
     </div>
 
@@ -869,7 +874,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
 
   <div style="background:#12123e;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
     Lion Camp 2026 — Trường Việt Anh<br/>
-    <a href="https://hoc.truongvietanh.com" style="color:#ffd89a;">hoc.truongvietanh.com</a>
+    <a href="https://truongvietanh.com" style="color:#ffd89a;">truongvietanh.com</a>
   </div>
 </div>
 </body></html>`.trim();
@@ -885,7 +890,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         personalizations: [{ to: [{ email: data.email, name: data.fullName }] }],
-        from: { email: 'results@hoc.truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
+        from: { email: 'results@truongvietanh.com', name: 'Lion Camp — Trường Việt Anh' },
         reply_to: { email: 'tu@truongvietanh.com', name: 'Ban Tuyển sinh Việt Anh' },
         subject,
         content: [{ type: 'text/html', value: body }],

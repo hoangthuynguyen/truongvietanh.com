@@ -1,5 +1,5 @@
 # MASTER PLAN: PHÁT TRIỂN TOÀN BỘ SITE TRUONGVIETANH.COM
-## Từ hoc.truongvietanh.com → truongvietanh.com
+## Từ truongvietanh.com → truongvietanh.com
 ### Phiên bản: 2.0 | Ngày: 2026-04-12
 
 ---
@@ -713,7 +713,7 @@ Ngày 7:   QA — kiểm tra links, schema, mobile
 
 | Task | Output |
 |------|--------|
-| Switch domain hoc.truongvietanh.com → truongvietanh.com | Live |
+| Switch domain truongvietanh.com → truongvietanh.com | Live |
 | Submit sitemap GSC | Indexed |
 | Monitor rankings, fix issues | Stable |
 | Tắt WordPress hosting cũ | Cost saving |

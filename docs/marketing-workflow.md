@@ -130,7 +130,7 @@ Mỗi item:
 2. Nếu OK → đổi Status sang **Published**
 3. **Save**
 4. Chờ 1-2 phút để Cloudflare cache invalidate + rebuild static
-5. Truy cập `https://hoc.truongvietanh.com/{slug}` để verify
+5. Truy cập `https://truongvietanh.com/{slug}` để verify
 
 ---
 

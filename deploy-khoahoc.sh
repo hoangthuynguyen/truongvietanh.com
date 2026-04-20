@@ -3,10 +3,10 @@
 # Chạy: bash deploy-khoahoc.sh
 
 SERVER="root@45.88.188.169"
-REMOTE_DIR="/var/www/khoahoc.truongvietanh.com"
+REMOTE_DIR="/var/www/khoatruongvietanh.com"
 LOCAL_FILE="$(dirname "$0")/khoahoc/index.html"
 
-echo "🚀 Deploying khoahoc.truongvietanh.com..."
+echo "🚀 Deploying khoatruongvietanh.com..."
 echo "📁 File: $LOCAL_FILE"
 echo "🖥️  Server: $SERVER"
 echo ""
@@ -25,10 +25,10 @@ if [ $? -eq 0 ]; then
     echo ""
     # Tạo Nginx config nếu chưa có
     echo "⚙️  Kiểm tra & tạo Nginx config..."
-    ssh $SERVER "cat > /etc/nginx/sites-available/khoahoc.truongvietanh.com << 'NGINX'
+    ssh $SERVER "cat > /etc/nginx/sites-available/khoatruongvietanh.com << 'NGINX'
 server {
     listen 80;
-    server_name khoahoc.truongvietanh.com;
+    server_name khoatruongvietanh.com;
     root $REMOTE_DIR;
     index index.html;
 
@@ -37,11 +37,11 @@ server {
     }
 }
 NGINX
-ln -sf /etc/nginx/sites-available/khoahoc.truongvietanh.com /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/khoatruongvietanh.com /etc/nginx/sites-enabled/
 nginx -t && systemctl reload nginx"
 
     echo ""
-    echo "🎉 Deploy hoàn tất! Truy cập: https://khoahoc.truongvietanh.com"
+    echo "🎉 Deploy hoàn tất! Truy cập: https://khoatruongvietanh.com"
 else
     echo ""
     echo "❌ Upload thất bại. Kiểm tra kết nối SSH."

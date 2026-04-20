@@ -198,7 +198,7 @@ reg('class-f-tiktok-ugc', {
   heroTitle: 'Ba mẹ đã thấy Trường Việt Anh qua video — giờ hãy kết nối thật với đội ngũ',
   heroCopy: 'Nhắn Zalo để được tư vấn ngay hoặc gọi hotline. Đội ngũ tuyển sinh sẵn sàng giải đáp mọi thắc mắc về chương trình, học phí và lịch tham quan.',
   asideEyebrow: 'Liên hệ nhanh', asideTitle: 'Chỉ cần một tin nhắn để bắt đầu',
-  asidePoints: ['Zalo tư vấn 24/7', 'Hotline: 028 xxxx xxxx', 'Trường có 3+ cơ sở tại TP.HCM', 'Tư vấn miễn phí'],
+  asidePoints: ['Zalo tư vấn 24/7', 'Hotline: 028 xxxx xxxx', 'Trường có 3+ cơ sở tại TP.HCM', 'Tư vấn cá nhân hóa Lộ trình học tập'],
   ctaPrimaryText: 'Nhắn Zalo ngay', ctaPrimaryHref: 'https://zalo.me/truongvietanh',
   ctaSecondaryText: 'Gọi hotline', ctaSecondaryHref: 'tel:028xxxxxxxx',
   statsEyebrow: 'Trường Việt Anh', statsTitle: 'Được hàng ngàn gia đình tin tưởng',
@@ -207,7 +207,7 @@ reg('class-f-tiktok-ugc', {
   features: [
     { title: 'Tiếng Anh mỗi ngày', body: 'Giáo viên bản ngữ, chương trình IELTS Foundation từ mầm non.' },
     { title: 'Con hạnh phúc đi học', body: 'Triết lý "Hạnh phúc trước, thành tích bền" giúp con yêu trường.' },
-    { title: 'Tư vấn miễn phí', body: 'Nhắn Zalo hoặc gọi bất kỳ lúc nào. Không áp lực, không ràng buộc.' },
+    { title: 'Tư vấn cá nhân hóa Lộ trình học tập', body: 'Nhắn Zalo hoặc gọi bất kỳ lúc nào. Không áp lực, không ràng buộc.' },
   ],
   sections: [], faqTitle: '', faqItems: [],
   relatedLinks: [
@@ -215,7 +215,7 @@ reg('class-f-tiktok-ugc', {
     { title: 'Cơ sở', href: '/co-so', body: 'Tìm cơ sở gần với gia đình bạn.' },
     { title: 'Học phí', href: '/hoc-phi', body: 'Nhận bảng học phí nhanh chóng.' },
   ],
-  ctaBannerEyebrow: 'Bắt đầu ngay', ctaBannerTitle: 'Nhắn Zalo để được tư vấn miễn phí',
+  ctaBannerEyebrow: 'Bắt đầu ngay', ctaBannerTitle: 'Nhắn Zalo để được tư vấn cá nhân hóa lộ trình học tập',
   ctaBannerCopy: 'Đội ngũ Trường Việt Anh luôn sẵn sàng giải đáp cho gia đình bạn.',
 });
 

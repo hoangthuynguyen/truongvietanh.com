@@ -2,11 +2,11 @@
 /**
  * Smoke test — runs after deploy to verify v2 endpoints + lead capture work.
  * Usage:
- *   BASE_URL=https://hoc.truongvietanh.com node scripts/smoke-test.mjs
+ *   BASE_URL=https://truongvietanh.com node scripts/smoke-test.mjs
  *   BASE_URL=http://localhost:4321 node scripts/smoke-test.mjs  (dev)
  */
 
-const BASE = process.env.BASE_URL || 'https://hoc.truongvietanh.com';
+const BASE = process.env.BASE_URL || 'https://truongvietanh.com';
 const TIMEOUT_MS = 15_000;
 
 const results = [];

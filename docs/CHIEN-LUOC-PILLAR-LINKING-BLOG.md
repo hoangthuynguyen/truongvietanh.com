@@ -1,5 +1,5 @@
 # CHIẾN LƯỢC PILLAR PAGE + INTERNAL LINKING + BLOG
-## truongvietanh.com — Kế hoạch mở rộng từ hoc.truongvietanh.com
+## truongvietanh.com — Kế hoạch mở rộng từ truongvietanh.com
 ### Cập nhật: 2026-04-12
 
 ---

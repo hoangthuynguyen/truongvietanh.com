@@ -1,4 +1,4 @@
-name: Deploy to Staging
+name: Deploy to Production (truongvietanh.com)
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    name: Build & Deploy to Cloudflare Workers (Staging)
+    name: Build & Deploy to Cloudflare Workers (truongvietanh.com)
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -35,4 +35,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy -c wrangler.staging.jsonc
+          command: deploy -c wrangler.jsonc

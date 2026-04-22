@@ -116,6 +116,36 @@ const faqItems = [
 </SqueezePageLayout>
 
 <style is:inline>
+  /* ===== HEADER OVERRIDE — logo căn giữa, 200% lớn hơn ===== */
+  .squeeze-header__inner {
+    position: relative;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+  .squeeze-header__left {
+    position: absolute;
+    left: 1rem;
+  }
+  .squeeze-header__right {
+    position: absolute;
+    right: 1rem;
+  }
+  .squeeze-brand__img {
+    height: 144px !important; /* 200% of 72px */
+    max-width: 440px !important;
+    padding: 10px 28px !important;
+  }
+  @media (max-width: 768px) {
+    .squeeze-brand__img { height: 112px !important; padding: 8px 18px !important; }
+  }
+  @media (max-width: 480px) {
+    .squeeze-brand__img { height: 96px !important; padding: 6px 12px !important; max-width: 260px !important; }
+    .squeeze-header__left  { left: .5rem; }
+    .squeeze-header__right { right: .5rem; }
+  }
+
   /* ===== HERO FORM — ABOVE THE FOLD ===== */
   .hero-form-wrap {
     margin: 1.75rem auto 0;

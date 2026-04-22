@@ -56,108 +56,75 @@ const ogImage = `${SITE_URL}/og/thcs-lop6-pain-point-a.jpg`;
     });
   </script>
 
-  <style>
-    * {
+  <style>*{
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-    }
-
-    body {
+    }body{
       font-family: 'Open Sans', sans-serif;
       color: #1F4E79;
       background: linear-gradient(135deg, #FEF2F2 0%, #FFFFFF 100%);
       min-height: 100vh;
       line-height: 1.6;
-    }
-
-    .container {
+    }.container{
       max-width: 600px;
       margin: 0 auto;
       padding: 20px;
-    }
-
-    .hero-section {
+    }.hero-section{
       text-align: center;
       padding: 40px 20px;
-    }
-
-    h1 {
+    }h1{
       font-family: 'Montserrat', sans-serif;
       font-size: 28px;
       font-weight: 700;
       line-height: 1.4;
       margin-bottom: 20px;
       color: #1F4E79;
-    }
-
-    .subtitle {
+    }.subtitle{
       font-size: 16px;
       color: #64748B;
       margin-bottom: 30px;
       font-weight: 500;
-    }
-
-    .offer-items {
+    }.offer-items{
       background: rgba(255, 255, 255, 0.8);
       border-left: 4px solid #c09530;
       padding: 20px;
       margin: 30px 0;
       border-radius: 4px;
-    }
-
-    .offer-items ul {
+    }.offer-items ul{
       list-style: none;
-    }
-
-    .offer-items li {
+    }.offer-items li{
       padding: 12px 0;
       border-bottom: 1px solid #E0E7FF;
-      font-size: 15px;
-    }
-
-    .offer-items li:last-child {
+      font-size: 16px;
+    }.offer-items li:last-child{
       border-bottom: none;
-    }
-
-    .offer-items li strong {
+    }.offer-items li strong{
       color: #1F4E79;
       font-weight: 600;
-    }
-
-    /* Form Styles */
-    .form-section {
+    }/* Form Styles */
+    .form-section{
       background: rgba(255, 255, 255, 0.95);
       padding: 30px;
       border-radius: 8px;
       box-shadow: 0 4px 15px rgba(31, 78, 121, 0.08);
       margin: 30px 0;
-    }
-
-    .form-step {
+    }.form-step{
       display: none;
-    }
-
-    .form-step.active {
+    }.form-step.active{
       display: block;
-    }
-
-    .form-group {
+    }.form-group{
       margin-bottom: 20px;
-    }
-
-    label {
+    }label{
       display: block;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       margin-bottom: 8px;
       color: #1F4E79;
-    }
-
-    input[type="email"],
+    }input[type="email"],
     input[type="text"],
     input[type="tel"],
-    select {
+    select{
       width: 100%;
       padding: 12px;
       border: 2px solid #E0E7FF;
@@ -166,18 +133,14 @@ const ogImage = `${SITE_URL}/og/thcs-lop6-pain-point-a.jpg`;
       font-family: 'Open Sans', sans-serif;
       color: #1F4E79;
       transition: border-color 0.3s;
-    }
-
-    input[type="email"]:focus,
+    }input[type="email"]:focus,
     input[type="text"]:focus,
     input[type="tel"]:focus,
-    select:focus {
+    select:focus{
       outline: none;
       border-color: #c09530;
       box-shadow: 0 0 0 3px rgba(192,149,48, 0.1);
-    }
-
-    button {
+    }button{
       width: 100%;
       padding: 14px;
       background: linear-gradient(135deg, #c09530 0%, #991B1B 100%);
@@ -189,85 +152,60 @@ const ogImage = `${SITE_URL}/og/thcs-lop6-pain-point-a.jpg`;
       font-family: 'Montserrat', sans-serif;
       cursor: pointer;
       transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    button:hover {
+    }button:hover{
       transform: translateY(-2px);
       box-shadow: 0 6px 20px rgba(192,149,48, 0.3);
-    }
-
-    button:active {
+    }button:active{
       transform: translateY(0);
-    }
-
-    .step-indicator {
-      font-size: 13px;
+    }.step-indicator{
+      font-size: 16px;
       color: #94A3B8;
       margin-bottom: 15px;
       text-align: center;
-    }
-
-    /* Thank You */
-    .thank-you-section {
+    }/* Thank You */
+    .thank-you-section{
       display: none;
       text-align: center;
       padding: 40px 20px;
       background: rgba(255, 255, 255, 0.95);
       border-radius: 8px;
       margin: 30px 0;
-    }
-
-    .thank-you-section.active {
+    }.thank-you-section.active{
       display: block;
-    }
-
-    .thank-you-icon {
+    }.thank-you-icon{
       font-size: 48px;
       margin-bottom: 20px;
-    }
-
-    .thank-you-section h2 {
+    }.thank-you-section h2{
       font-family: 'Montserrat', sans-serif;
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 700;
       color: #1F4E79;
       margin-bottom: 15px;
-    }
-
-    .thank-you-section p {
+    }.thank-you-section p{
       font-size: 16px;
       color: #64748B;
       line-height: 1.6;
-    }
-
-    .urgency-banner {
+    }.urgency-banner{
       background: rgba(192,149,48, 0.1);
       border: 2px solid #c09530;
       color: #991B1B;
       padding: 12px;
       border-radius: 4px;
       margin-bottom: 20px;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       text-align: center;
-    }
-
-    .success-checkmark {
+    }.success-checkmark{
       display: inline-block;
       color: #16A34A;
       margin-right: 5px;
     }
 
-    @media (max-width: 600px) {
-      h1 {
+    @media (max-width: 600px) {h1{
         font-size: 24px;
-      }
-
-      .form-section {
+      }.form-section{
         padding: 20px;
-      }
-
-      .hero-section {
+      }.hero-section{
         padding: 30px 15px;
       }
     }
@@ -285,7 +223,7 @@ const ogImage = `${SITE_URL}/og/thcs-lop6-pain-point-a.jpg`;
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
-  <div style="background:#1a193c;color:#e2e8f0;font-size:0.85rem;padding:0.45rem 0;text-align:center;font-family:'Open Sans',sans-serif;">
+  <div style="background:#1a193c;color:#e2e8f0;font-size:1rem;padding:0.45rem 0;text-align:center;font-family:'Open Sans',sans-serif;">
     <a href="tel:0916961409" style="color:#e2e8f0;text-decoration:none;margin-right:1.5rem;">📞 Hotline: 0916 961 409</a>
     <a href="https://zalo.me/1678310120468101523" style="color:#e2e8f0;text-decoration:none;" target="_blank" rel="noopener">💬 Zalo: 0916 961 409</a>
   </div>

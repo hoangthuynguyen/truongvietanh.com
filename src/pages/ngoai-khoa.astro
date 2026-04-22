@@ -641,41 +641,27 @@ const structuredData = [
   </div>
 </BaseLayout>
 
-<style is:global>
-/* ===== NGOẠI KHÓA PILLAR PAGE — extends gi-* from gioi-thieu ===== */
+<style is:global>/* ===== NGOẠI KHÓA PILLAR PAGE — extends gi-* from gioi-thieu ===== */
 
 /* Hero background override for ngoai-khoa */
-.nk-hero-bg {
+.nk-hero-bg{
   background: linear-gradient(135deg, rgba(26,25,60,0.92) 0%, rgba(15,23,42,0.95) 100%),
     url('https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp') center/cover no-repeat;
-}
-
-/* 4-column group grid (for 4 groups instead of 5 values) */
-.nk-group-items {
+}/* 4-column group grid (for 4 groups instead of 5 values) */
+.nk-group-items{
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;
-}
-
-/* Steps grid (same as roadmap but semantically distinct) */
-.nk-steps-grid {
+}/* Steps grid (same as roadmap but semantically distinct) */
+.nk-steps-grid{
   display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;
-}
-
-/* Fee note box */
-.nk-fee-note {
+}/* Fee note box */
+.nk-fee-note{
   margin: 2rem 0 0; padding: 1.5rem; background: #fef9ef; border-radius: 10px;
   border: 1px solid #D4A843;
-}
-.nk-fee-note h3 { margin-top: 0; font-size: 1.15rem; color: #1a1a5e; }
-.nk-fee-note p { font-size: 0.95rem; color: #334155; line-height: 1.7; margin-bottom: 0.5rem; }
-.nk-fee-note p:last-child { margin-bottom: 0; }
+}.nk-fee-note h3{ margin-top: 0; font-size: 1.5rem; color: #1a1a5e; }.nk-fee-note p{ font-size: 1rem; color: #334155; line-height: 1.7; margin-bottom: 0.5rem; }.nk-fee-note p:last-child{ margin-bottom: 0; }
 
 /* ===== RESPONSIVE overrides for nk-* elements ===== */
-@media (max-width: 1024px) {
-  .nk-group-items { grid-template-columns: repeat(2, 1fr); }
-  .nk-steps-grid { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 1024px) {.nk-group-items{ grid-template-columns: repeat(2, 1fr); }.nk-steps-grid{ grid-template-columns: repeat(2, 1fr); }
 }
-@media (max-width: 768px) {
-  .nk-group-items { grid-template-columns: 1fr; }
-  .nk-steps-grid { grid-template-columns: 1fr; }
+@media (max-width: 768px) {.nk-group-items{ grid-template-columns: 1fr; }.nk-steps-grid{ grid-template-columns: 1fr; }
 }
 </style>

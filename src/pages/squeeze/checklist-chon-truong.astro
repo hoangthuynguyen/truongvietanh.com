@@ -44,6 +44,20 @@ const faqItems = [
   <section slot="hero">
     <h1 class="squeeze-hero__heading">Chọn Trường Cho Con: 15 Tiêu Chí Ba/Mẹ Không Được Bỏ Qua</h1>
     <p class="squeeze-hero__subheading">Tải ngay checklist miễn phí được 3,000+ phụ huynh TPHCM tin dùng -- Kèm bảng so sánh trường và timeline tuyển sinh 2026</p>
+
+    <!-- ===== TWO-STEP FORM — ABOVE THE FOLD ===== -->
+    <div class="hero-form-wrap" data-form-bg="light">
+      <div class="hero-form-inner">
+        <p class="hero-form-label">🎁 Nhận ngay — hoàn toàn miễn phí</p>
+        <LeadFormTwoStepEmailFirst
+          formId="hero-checklist"
+          funnelCode="squeeze-checklist"
+          schoolLevel="tieu-hoc"
+          submitText="Tải checklist miễn phí"
+          successMessage="Cảm ơn! Checklist sẽ được gửi qua email trong vòng 24 giờ."
+        />
+      </div>
+    </div>
   </section>
 
   <section slot="usp"><USPGrid title="Trong checklist có gì?" items={uspItems} /></section>
@@ -102,6 +116,70 @@ const faqItems = [
 </SqueezePageLayout>
 
 <style is:inline>
+  /* ===== HEADER OVERRIDE — logo căn giữa, 200% lớn hơn ===== */
+  .squeeze-header__inner {
+    position: relative;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    padding: 0.5rem 1rem;
+  }
+  .squeeze-header__left {
+    position: absolute;
+    left: 1rem;
+  }
+  .squeeze-header__right {
+    position: absolute;
+    right: 1rem;
+  }
+  .squeeze-brand__img {
+    height: 144px !important; /* 200% of 72px */
+    max-width: 440px !important;
+    padding: 10px 28px !important;
+  }
+  @media (max-width: 768px) {
+    .squeeze-brand__img { height: 112px !important; padding: 8px 18px !important; }
+  }
+  @media (max-width: 480px) {
+    .squeeze-brand__img { height: 96px !important; padding: 6px 12px !important; max-width: 260px !important; }
+    .squeeze-header__left  { left: .5rem; }
+    .squeeze-header__right { right: .5rem; }
+  }
+
+  /* ===== HERO FORM — ABOVE THE FOLD ===== */
+  .hero-form-wrap {
+    margin: 1.75rem auto 0;
+    max-width: 480px;
+    background: #fff;
+    border: 2px solid #D4A843;
+    border-radius: 16px;
+    box-shadow: 0 8px 32px rgba(26,26,94,0.13);
+    overflow: hidden;
+  }
+  .hero-form-inner {
+    padding: 1.5rem 1.75rem 1.75rem;
+  }
+  .hero-form-label {
+    text-align: center;
+    font-size: .82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+    color: #D4A843;
+    margin: 0 0 1rem;
+  }
+  /* Overrides để form hiển thị đúng trên nền trắng */
+  .hero-form-wrap .form-step-title  { color: #1a1a5e !important; }
+  .hero-form-wrap .form-step-description { color: #475569 !important; }
+  .hero-form-wrap .form-progress__label { color: rgba(26,26,94,.55) !important; }
+  .hero-form-wrap .form-progress__step--active .form-progress__label,
+  .hero-form-wrap .form-progress__step--done  .form-progress__label { color: #1a1a5e !important; }
+  .hero-form-wrap .form-social-proof { color: #1a1a5e !important; }
+  @media (max-width: 520px) {
+    .hero-form-wrap  { border-radius: 12px; }
+    .hero-form-inner { padding: 1.25rem 1rem 1.5rem; }
+  }
+
   .checklist-content { max-width: 900px; margin: 0 auto; }
   .checklist-content__image-wrap { margin-bottom: 2rem; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
   .checklist-content__image { width: 100%; height: auto; display: block; object-fit: cover; max-height: 420px; }
@@ -109,14 +187,14 @@ const faqItems = [
   .checklist-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin: 2rem 0; }
   .checklist-card { background: white; border: 1px solid #e0e0e0; border-radius: 12px; padding: 1.5rem; transition: all 0.3s ease; }
   .checklist-card:hover { border-color: #D4A843; box-shadow: 0 8px 20px rgba(212,168,67, 0.12); transform: translateY(-4px); }
-  .checklist-card h3 { font-family: Montserrat, sans-serif; font-size: 1.1rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79; }
-  .checklist-card p { font-size: 0.95rem; line-height: 1.7; color: #555; margin: 0; }
+  .checklist-card h3 { font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 600; margin-bottom: 0.75rem; color: #1F4E79; }
+  .checklist-card p { font-size: 1rem; line-height: 1.7; color: #555; margin: 0; }
   .checklist-bonus { background: linear-gradient(135deg, #FFF8F0 0%, #FFF3E0 100%); border: 2px solid #D4A843; border-radius: 12px; padding: 2rem; margin: 2.5rem 0; text-align: center; }
   .checklist-bonus__icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
-  .checklist-bonus__title { font-family: Montserrat, sans-serif; font-size: 1.25rem; font-weight: 700; color: #D4A843; margin-bottom: 1rem; }
-  .checklist-bonus__text { font-size: 0.95rem; line-height: 1.7; color: #555; max-width: 700px; margin: 0 auto; }
+  .checklist-bonus__title { font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; color: #D4A843; margin-bottom: 1rem; }
+  .checklist-bonus__text { font-size: 1rem; line-height: 1.7; color: #555; max-width: 700px; margin: 0 auto; }
   .checklist-urgency { background-color: #f0f8ff; border-left: 4px solid #D4A843; padding: 1.5rem; border-radius: 8px; margin-top: 2rem; }
-  .checklist-urgency p { margin: 0; font-size: 0.95rem; line-height: 1.7; color: #1a1a1a; }
+  .checklist-urgency p { margin: 0; font-size: 1rem; line-height: 1.7; color: #1a1a1a; }
   @media (max-width: 768px) {
     .checklist-grid { grid-template-columns: 1fr; }
     .checklist-content__image { max-height: 280px; }

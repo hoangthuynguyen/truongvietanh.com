@@ -1,0 +1,153 @@
+---
+import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+
+const pageTitle = 'Cảm ơn — Công Viên Giáo Dục | Trường Việt Anh';
+const pageDescription = 'Đăng ký hội viên Công viên Giáo dục đã được ghi nhận. Thẻ hội viên 6 tháng sẽ được gửi qua Zalo / SMS sau khi xác thực.';
+const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc/cam-on';
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="mau-non"
+  funnelCode="cong-vien-giao-duc-thankyou"
+>
+  <section slot="hero">
+    <span class="cvgd-ty-badge">🎉 Đăng ký thành công</span>
+    <h1 class="squeeze-hero__heading" id="cvgd-ty-heading">Cảm ơn bạn đã đăng ký</h1>
+    <p class="squeeze-hero__sub">
+      Thẻ hội viên <strong>Công viên Giáo dục — 6 tháng miễn phí</strong> sẽ được gửi qua Zalo / SMS của bạn sau khi tư vấn viên xác thực thông tin của 2 người bạn được mời.
+    </p>
+  </section>
+
+  <section slot="content">
+    <div class="cvgd-ty-wrap">
+      <div class="cvgd-ty-steps">
+        <h2 class="cvgd-ty-h2">Điều gì xảy ra tiếp theo?</h2>
+        <ol class="cvgd-ty-list">
+          <li>
+            <span class="cvgd-ty-num">1</span>
+            <div>
+              <strong>Trong 24 giờ</strong>
+              <p>Tư vấn viên sẽ gọi cho bạn qua Zalo / SĐT để xác nhận thông tin và lịch đến Công viên Giáo dục.</p>
+            </div>
+          </li>
+          <li>
+            <span class="cvgd-ty-num">2</span>
+            <div>
+              <strong>Sau khi xác thực 2 người bạn được mời</strong>
+              <p>Thẻ hội viên 6 tháng sẽ được kích hoạt — bạn và con có thể tham gia mọi hoạt động cuối tuần tại cơ sở đã chọn.</p>
+            </div>
+          </li>
+          <li>
+            <span class="cvgd-ty-num">3</span>
+            <div>
+              <strong>Nhận lịch hoạt động hàng tuần</strong>
+              <p>Mỗi thứ Năm, bạn sẽ nhận lịch vận động / khám phá / kiểm tra thể chất của cuối tuần kế tiếp.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <div class="cvgd-ty-share">
+        <h2 class="cvgd-ty-h2">Muốn giúp thêm bạn bè?</h2>
+        <p>Công viên Giáo dục không giới hạn mỗi người chỉ mời 2 bạn. Càng nhiều gia đình tham gia, các con càng có thêm bạn cùng chơi, cùng học.</p>
+        <div class="cvgd-ty-share-btns">
+          <a id="cvgd-ty-share-zalo" href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener noreferrer" class="cvgd-ty-share-btn cvgd-ty-share-btn--zalo">💬 Chia sẻ qua Zalo</a>
+          <button type="button" id="cvgd-ty-copy" class="cvgd-ty-share-btn cvgd-ty-share-btn--copy">🔗 Sao chép link</button>
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftruongvietanh.com%2Ftuyen-sinh%2Fcong-vien-giao-duc" target="_blank" rel="noopener noreferrer" class="cvgd-ty-share-btn cvgd-ty-share-btn--fb">📘 Chia sẻ Facebook</a>
+        </div>
+        <p class="cvgd-ty-share-hint" id="cvgd-ty-copy-status" hidden>Đã sao chép link!</p>
+      </div>
+
+      <div class="cvgd-ty-contact">
+        <h2 class="cvgd-ty-h2">Cần hỗ trợ?</h2>
+        <p>
+          Gọi trực tiếp: <a href="tel:+84916961409"><strong>0916 961 409</strong></a><br/>
+          Zalo OA: <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener noreferrer"><strong>Trường Việt Anh</strong></a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <div style="text-align:center;padding:1.5rem 0;">
+      <a href="/" class="cvgd-ty-home">← Về trang chủ Trường Việt Anh</a>
+    </div>
+  </section>
+</SqueezePageLayout>
+
+<script is:inline>
+  (function () {
+    try {
+      const qs = new URLSearchParams(window.location.search);
+      const name = (qs.get('name') || '').trim();
+      if (name) {
+        const el = document.getElementById('cvgd-ty-heading');
+        if (el) el.textContent = 'Cảm ơn ' + name + '!';
+      }
+    } catch (e) {}
+
+    const copyBtn = document.getElementById('cvgd-ty-copy');
+    const copyStatus = document.getElementById('cvgd-ty-copy-status');
+    const shareUrl = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc';
+    if (copyBtn) {
+      copyBtn.addEventListener('click', function () {
+        navigator.clipboard?.writeText(shareUrl).then(function () {
+          if (copyStatus) { copyStatus.hidden = false; setTimeout(function () { copyStatus.hidden = true; }, 2500); }
+        });
+      });
+    }
+
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: 'form_thankyou', funnel: 'cong-vien-giao-duc' });
+    }
+  })();
+</script>
+
+<style is:inline>
+  .cvgd-ty-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #fff; padding: 0.5rem 1.15rem; border-radius: 999px;
+    font-weight: 700; font-size: 1rem; letter-spacing: 0.3px; margin-bottom: 1rem;
+  }
+  .cvgd-ty-wrap { max-width: 820px; margin: 0 auto; display: grid; gap: 1.5rem; }
+  .cvgd-ty-h2 { color: #1a1a5e; margin-bottom: 1rem; line-height: 1.3; }
+  .cvgd-ty-steps, .cvgd-ty-share, .cvgd-ty-contact {
+    background: #fff; border: 1px solid #e5e7eb; border-radius: 14px; padding: 1.75rem 1.5rem;
+  }
+  .cvgd-ty-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+  .cvgd-ty-list li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; }
+  .cvgd-ty-num {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, #D4A843, #b8922e);
+    color: #1a1a2e; font-weight: 800; font-size: 1.25rem;
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .cvgd-ty-list strong { color: #1a1a5e; display: block; margin-bottom: 0.25rem; }
+  .cvgd-ty-list p { color: #475569; line-height: 1.65; margin: 0; }
+  .cvgd-ty-share p { color: #2d2d42; line-height: 1.7; margin-bottom: 1rem; }
+  .cvgd-ty-share-btns { display: flex; flex-wrap: wrap; gap: 0.65rem; }
+  .cvgd-ty-share-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.75rem 1.25rem; border-radius: 10px;
+    font-weight: 700; text-decoration: none; font-size: 1rem;
+    border: none; cursor: pointer; font-family: inherit;
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .cvgd-ty-share-btn--zalo { background: #0068ff; color: #fff; }
+  .cvgd-ty-share-btn--copy { background: #1a1a5e; color: #fff; }
+  .cvgd-ty-share-btn--fb { background: #1877f2; color: #fff; }
+  .cvgd-ty-share-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); }
+  .cvgd-ty-share-hint { color: #16a34a; font-weight: 600; margin: 0.5rem 0 0; }
+  .cvgd-ty-contact p { color: #2d2d42; line-height: 1.8; margin: 0; }
+  .cvgd-ty-contact a { color: #1a1a5e; }
+  .cvgd-ty-home {
+    display: inline-block; padding: 0.85rem 1.5rem;
+    background: #fff; color: #1a1a5e; border: 2px solid #1a1a5e;
+    border-radius: 10px; font-weight: 700; text-decoration: none;
+  }
+  .cvgd-ty-home:hover { background: #1a1a5e; color: #fff; }
+</style>

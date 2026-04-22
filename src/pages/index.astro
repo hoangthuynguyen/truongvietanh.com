@@ -606,9 +606,8 @@ const newsCards = [
   </div>
 </BaseLayout>
 
-<style is:global>
-  /* Hero section - dark background */
-  .wp-hero {
+<style is:global>/* Hero section - dark background */
+  .wp-hero{
     position: relative;
     background: url('/hero-bg-home.jpg') center/cover no-repeat, linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 40%, #162040 100%);
     min-height: 520px;
@@ -618,16 +617,12 @@ const newsCards = [
     text-align: center;
     padding: 3rem 1.5rem;
     overflow: hidden;
-  }
-
-  .wp-hero__overlay {
+  }.wp-hero__overlay{
     position: absolute;
     inset: 0;
     background: rgba(13, 27, 62, 0.55);
     pointer-events: none;
-  }
-
-  .wp-hero__content {
+  }.wp-hero__content{
     position: relative;
     z-index: 1;
     max-width: 800px;
@@ -635,9 +630,7 @@ const newsCards = [
     flex-direction: column;
     align-items: center;
     gap: 1.25rem;
-  }
-
-  .wp-hero__title {
+  }.wp-hero__title{
     font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
     font-size: clamp(2rem, 5vw, 3.4rem);
     font-weight: 800;
@@ -645,80 +638,58 @@ const newsCards = [
     line-height: 1.1;
     margin: 0;
     text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-  }
-
-  .wp-hero__subtitle {
+  }.wp-hero__subtitle{
     font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
     font-size: clamp(1.1rem, 2.5vw, 1.6rem);
     font-weight: 600;
     color: #D4A843;
     margin: 0;
     letter-spacing: 0.02em;
-  }
-
-  .wp-hero__desc {
+  }.wp-hero__desc{
     font-size: 1.15rem;
     color: rgba(255, 255, 255, 0.85);
     line-height: 1.65;
     max-width: 600px;
     margin: 0;
     font-weight: 500;
-  }
-
-  .wp-hero__actions {
+  }.wp-hero__actions{
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
     justify-content: center;
     margin-top: 0.5rem;
-  }
-
-  .wp-hero__btn {
+  }.wp-hero__btn{
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.85rem 1.6rem;
     border-radius: 4px;
     font-weight: 700;
-    font-size: 0.95rem;
+    font-size: 1rem;
     text-decoration: none;
     transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
-  }
-
-  .wp-hero__btn:hover {
+  }.wp-hero__btn:hover{
     transform: translateY(-1px);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
-  }
-
-  .wp-hero__btn--primary {
+  }.wp-hero__btn--primary{
     background: #f5c518;
     color: #1a1a5e;
-  }
-
-  .wp-hero__btn--primary:hover {
+  }.wp-hero__btn--primary:hover{
     background: #fde047;
-  }
-
-  .wp-hero__btn--outline {
+  }.wp-hero__btn--outline{
     background: transparent;
     color: #ffffff;
     border: 1px solid rgba(255, 255, 255, 0.35);
-  }
-
-  .wp-hero__btn--outline:hover {
+  }.wp-hero__btn--outline:hover{
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.55);
-  }
-
-  .wp-hero__badges {
+  }.wp-hero__badges{
     display: flex;
     flex-wrap: wrap;
     gap: 0.6rem;
     justify-content: center;
     margin-top: 0.5rem;
-  }
-
-  .wp-hero__badge {
+  }.wp-hero__badge{
     display: inline-flex;
     align-items: center;
     padding: 0.45rem 0.85rem;
@@ -726,49 +697,36 @@ const newsCards = [
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.15);
     color: rgba(255, 255, 255, 0.85);
-    font-size: 0.84rem;
+    font-size: 1rem;
     font-weight: 600;
   }
 
-  @media (max-width: 640px) {
-    .wp-hero {
+  @media (max-width: 640px) {.wp-hero{
       min-height: 420px;
       padding: 2rem 1rem;
-    }
-
-    .wp-hero__actions {
+    }.wp-hero__actions{
       flex-direction: column;
       width: 100%;
-    }
-
-    .wp-hero__btn {
+    }.wp-hero__btn{
       width: 100%;
     }
-  }
-
-  /* WHY BLOCKS - 3 columns in one row, image on top */
-  .why-blocks {
+  }/* WHY BLOCKS - 3 columns in one row, image on top */
+  .why-blocks{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
     align-items: start;
-  }
-
-  .why-block {
+  }.why-block{
     padding: 2rem;
     border-radius: 24px;
     border: 1px solid rgba(18, 57, 103, 0.08);
     background: #ffffff;
     box-shadow: 0 8px 24px rgba(18, 57, 103, 0.04);
-  }
-
-  .why-block--with-img {
+  }.why-block--with-img{
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-  }
-
-  .why-block__img {
+  }.why-block__img{
     width: 100%;
     height: 200px;
     object-fit: cover;
@@ -776,78 +734,53 @@ const newsCards = [
     order: -1;
   }
 
-  @media (max-width: 900px) {
-    .why-blocks {
+  @media (max-width: 900px) {.why-blocks{
       grid-template-columns: 1fr;
-    }
-    .why-block__img {
+    }.why-block__img{
       height: 180px;
     }
-  }
-
-  .why-block__title {
+  }.why-block__title{
     font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
-    font-size: clamp(1.3rem, 2vw, 1.75rem);
+    font-size: clamp(1.5rem, 2vw, 1.75rem);
     font-weight: 700;
     color: #1B2A5B;
     margin: 0 0 1.25rem 0;
     padding-bottom: 0.75rem;
     border-bottom: 3px solid #D4A843;
     line-height: 1.3;
-  }
-
-  .why-block__content {
+  }.why-block__content{
     display: grid;
     gap: 1rem;
-  }
-
-  .why-block__content p {
+  }.why-block__content p{
     color: #5c6e80;
     line-height: 1.75;
     font-size: 1.02rem;
     margin: 0;
-  }
-
-  /* Read more toggle */
-  .why-block__more {
+  }/* Read more toggle */
+  .why-block__more{
     margin-top: 0.25rem;
-  }
-
-  .why-block__more summary {
+  }.why-block__more summary{
     cursor: pointer;
     color: #D4A843;
     font-weight: 600;
-    font-size: 0.92rem;
+    font-size: 1rem;
     list-style: none;
     user-select: none;
-  }
-
-  .why-block__more summary::-webkit-details-marker { display: none; }
-  .why-block__more summary::marker { display: none; content: ''; }
-
-  .why-block__more summary::after {
+  }.why-block__more summary::-webkit-details-marker{ display: none; }.why-block__more summary::marker{ display: none; content: ''; }.why-block__more summary::after{
     content: ' \2193';
-  }
-
-  .why-block__more[open] summary::after {
+  }.why-block__more[open] summary::after{
     content: ' \2191';
-  }
-
-  .why-block__more p {
+  }.why-block__more p{
     margin-top: 0.75rem;
     color: #5c6e80;
     line-height: 1.75;
-    font-size: 0.95rem;
-  }
-
-  /* TESTIMONIALS - individual cards with photos */
-  .testimonial-grid {
+    font-size: 1rem;
+  }/* TESTIMONIALS - individual cards with photos */
+  .testimonial-grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
     gap: 1.5rem;
-  }
-
-  .testimonial-card {
+  }.testimonial-card{
     background: #ffffff;
     border-radius: 20px;
     padding: 1.75rem;
@@ -856,124 +789,88 @@ const newsCards = [
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-
-  .testimonial-card__avatar {
+  }.testimonial-card__avatar{
     display: flex;
     justify-content: center;
-  }
-
-  .testimonial-card__avatar img {
+  }.testimonial-card__avatar img{
     width: 72px;
     height: 72px;
     border-radius: 50%;
     object-fit: cover;
     border: 3px solid #D4A843;
-  }
-
-  .testimonial-card__avatar-link {
+  }.testimonial-card__avatar-link{
     position: relative;
     display: inline-block;
     border-radius: 50%;
     text-decoration: none;
-  }
-
-  .testimonial-card__avatar-link img {
+  }.testimonial-card__avatar-link img{
     display: block;
     transition: opacity 0.2s;
-  }
-
-  .testimonial-card__avatar-link:hover img { opacity: 0.85; }
-
-  .testimonial-card__play {
+  }.testimonial-card__avatar-link:hover img{ opacity: 0.85; }.testimonial-card__play{
     position: absolute;
     inset: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #fff;
     text-shadow: 0 1px 4px rgba(0,0,0,0.6);
     pointer-events: none;
-  }
-
-  .testimonial-card__quote {
+  }.testimonial-card__quote{
     margin: 0;
     padding: 0;
     border: none;
-  }
-
-  .testimonial-card__quote p {
+  }.testimonial-card__quote p{
     color: #5c6e80;
     font-style: italic;
     line-height: 1.7;
-    font-size: 0.95rem;
+    font-size: 1rem;
     text-align: center;
     margin: 0;
-  }
-
-  .testimonial-card__info {
+  }.testimonial-card__info{
     text-align: center;
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
-  }
-
-  .testimonial-card__info strong {
+  }.testimonial-card__info strong{
     color: #1B2A5B;
     font-size: 1rem;
-  }
-
-  .testimonial-card__info span {
+  }.testimonial-card__info span{
     color: #D4A843;
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 500;
-  }
-
-  /* Campus links grid — 2 rows of 3 */
-  .program-grid.program-grid--campuses {
+  }/* Campus links grid — 2 rows of 3 */
+  .program-grid.program-grid--campuses{
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .program-grid--campuses .program-card__label {
-    font-size: 0.82rem;
+  }.program-grid--campuses .program-card__label{
+    font-size: 1rem;
     line-height: 1.3;
-  }
-
-  .program-grid--campuses .program-card {
+  }.program-grid--campuses .program-card{
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
     padding: 1rem;
   }
 
-  @media (max-width: 1100px) {
-    .program-grid--campuses {
+  @media (max-width: 1100px) {.program-grid--campuses{
       grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-    .program-grid--campuses .program-card {
+    }.program-grid--campuses .program-card{
       flex-direction: row;
       align-items: center;
     }
   }
 
-  @media (max-width: 640px) {
-    .program-grid--campuses {
+  @media (max-width: 640px) {.program-grid--campuses{
       grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .testimonial-grid {
+    }.testimonial-grid{
       grid-template-columns: 1fr;
     }
-  }
-
-  /* PROGRAM GRID - card grid for training programs (2 rows of 4) */
-  .program-grid {
+  }/* PROGRAM GRID - card grid for training programs (2 rows of 4) */
+  .program-grid{
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 0.75rem;
-  }
-
-  .program-card {
+  }.program-card{
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -985,136 +882,93 @@ const newsCards = [
     text-decoration: none;
     color: #1B2A5B;
     transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
-  }
-
-  .program-card:hover {
+  }.program-card:hover{
     transform: translateY(-2px);
     box-shadow: 0 8px 24px rgba(18, 57, 103, 0.1);
     border-color: #D4A843;
-  }
-
-  .program-card__label {
+  }.program-card__label{
     font-weight: 600;
-    font-size: 0.95rem;
-  }
-
-  .program-card__arrow {
+    font-size: 1rem;
+  }.program-card__arrow{
     color: #D4A843;
     font-size: 1.1rem;
     font-weight: 700;
   }
 
-  @media (max-width: 1024px) {
-    .program-grid {
+  @media (max-width: 1024px) {.program-grid{
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 
-  @media (max-width: 640px) {
-    .program-grid {
+  @media (max-width: 640px) {.program-grid{
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
-  }
-
-  /* CONTACT FORM — brochure section (matches hero blue) */
-  .section-block--contact {
+  }/* CONTACT FORM — brochure section (matches hero blue) */
+  .section-block--contact{
     background:
       linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 40%, #162040 100%);
     color: #f7f5ef;
-  }
-
-  /* FAQ section — full width, tighter padding */
-  .section-block--faq {
+  }/* FAQ section — full width, tighter padding */
+  .section-block--faq{
     padding: 1.75rem 1rem;
-  }
-  .section-block--faq .faq-list {
+  }.section-block--faq .faq-list{
     max-width: none;
     width: 100%;
-  }
-  .section-block--faq .section-heading {
+  }.section-block--faq .section-heading{
     margin-bottom: 0.75rem;
-  }
-  .section-block--faq .section-heading h2 {
+  }.section-block--faq .section-heading h2{
     max-width: none;
     white-space: normal;
   }
-  @media (max-width: 760px) {
-    .section-block--faq {
+  @media (max-width: 760px) {.section-block--faq{
       padding: 1.25rem 0.75rem;
     }
-  }
-
-  /* Brochure: heading + form side-by-side in 1 row */
-  .brochure-layout {
+  }/* Brochure: heading + form side-by-side in 1 row */
+  .brochure-layout{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 3rem;
     align-items: center;
-  }
-
-  .section-heading--left {
+  }.section-heading--left{
     text-align: left;
   }
 
-  @media (max-width: 768px) {
-    .brochure-layout {
+  @media (max-width: 768px) {.brochure-layout{
       grid-template-columns: 1fr;
       gap: 1.5rem;
     }
-  }
-
-  .section-block--contact .section-eyebrow {
+  }.section-block--contact .section-eyebrow{
     color: rgba(240, 193, 90, 0.96);
-  }
-
-  .section-block--contact .section-heading h2 {
+  }.section-block--contact .section-heading h2{
     color: #ffffff;
-  }
-
-  .section-block--contact__desc {
+  }.section-block--contact__desc{
     color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
     margin-top: 0.5rem;
-  }
-
-  /* Fix text contrast inside dark brochure section — LeadForm component uses dark colors */
-  .section-block--contact .form-step-title {
+  }/* Fix text contrast inside dark brochure section — LeadForm component uses dark colors */
+  .section-block--contact .form-step-title{
     color: #ffffff !important;
-  }
-
-  .section-block--contact .form-step-description,
-  .section-block--contact .form-social-proof {
+  }.section-block--contact .form-step-description,
+  .section-block--contact .form-social-proof{
     color: rgba(255, 255, 255, 0.85) !important;
-  }
-
-  .section-block--contact .form-progress__label {
+  }.section-block--contact .form-progress__label{
     color: rgba(255, 255, 255, 0.6) !important;
-  }
-
-  .section-block--contact .form-progress__step--active .form-progress__label,
-  .section-block--contact .form-progress__step--done .form-progress__label {
+  }.section-block--contact .form-progress__step--active .form-progress__label,
+  .section-block--contact .form-progress__step--done .form-progress__label{
     color: rgba(255, 255, 255, 0.9) !important;
-  }
-
-  .contact-form {
+  }.contact-form{
     display: grid;
     gap: 1.25rem;
     max-width: 640px;
-  }
-
-  .contact-form__field {
+  }.contact-form__field{
     display: grid;
     gap: 0.4rem;
-  }
-
-  .contact-form__field label {
+  }.contact-form__field label{
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.9);
-  }
-
-  .contact-form__field select,
-  .contact-form__field textarea {
+  }.contact-form__field select,
+  .contact-form__field textarea{
     width: 100%;
     padding: 0.75rem 1rem;
     border-radius: 10px;
@@ -1122,27 +976,19 @@ const newsCards = [
     background: rgba(255, 255, 255, 0.1);
     color: #ffffff;
     font: inherit;
-    font-size: 0.95rem;
+    font-size: 1rem;
     transition: border-color 0.2s, background 0.2s;
-  }
-
-  .contact-form__field select option {
+  }.contact-form__field select option{
     background: #1B2A5B;
     color: #ffffff;
-  }
-
-  .contact-form__field textarea::placeholder {
+  }.contact-form__field textarea::placeholder{
     color: rgba(255, 255, 255, 0.45);
-  }
-
-  .contact-form__field select:focus,
-  .contact-form__field textarea:focus {
+  }.contact-form__field select:focus,
+  .contact-form__field textarea:focus{
     outline: none;
     border-color: #D4A843;
     background: rgba(255, 255, 255, 0.15);
-  }
-
-  .contact-form__submit {
+  }.contact-form__submit{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1156,31 +1002,25 @@ const newsCards = [
     cursor: pointer;
     transition: background 0.2s, transform 0.15s;
     width: fit-content;
-  }
-
-  .contact-form__submit:hover {
+  }.contact-form__submit:hover{
     background: #fde047;
     transform: translateY(-1px);
-  }
-
-  /* =====================================================
+  }/* =====================================================
      URGENCY STRIP
   ===================================================== */
-  .urgency-strip {
+  .urgency-strip{
     background: linear-gradient(90deg, #1a1a5e 0%, #0d1b3e 100%);
     color: #fff;
     text-align: center;
     padding: 0.55rem 1rem;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.6rem;
     flex-wrap: wrap;
-  }
-
-  .urgency-strip__dot {
+  }.urgency-strip__dot{
     display: inline-block;
     width: 8px;
     height: 8px;
@@ -1191,24 +1031,16 @@ const newsCards = [
     flex-shrink: 0;
   }
 
-  @keyframes pulse-dot {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3); }
-    50%       { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.08); }
-  }
-
-  .urgency-strip__link {
+  @keyframes pulse-dot {0%, 100%{ box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.3); }50%{ box-shadow: 0 0 0 7px rgba(34, 197, 94, 0.08); }
+  }.urgency-strip__link{
     color: #f5c518;
     text-decoration: none;
     font-weight: 700;
     white-space: nowrap;
-  }
-
-  .urgency-strip__link:hover { text-decoration: underline; }
-
-  /* =====================================================
+  }.urgency-strip__link:hover{ text-decoration: underline; }/* =====================================================
      HERO INLINE LEAD FORM
   ===================================================== */
-  .hero-lead-box {
+  .hero-lead-box{
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
@@ -1217,91 +1049,67 @@ const newsCards = [
     max-width: 560px;
     backdrop-filter: blur(6px);
     margin-top: 0.25rem;
-  }
-
-  .hero-lead-box__label {
+  }.hero-lead-box__label{
     color: rgba(255, 255, 255, 0.85);
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 600;
     margin: 0 0 0.85rem;
     text-align: center;
-  }
-
-  .hero-lead-grades {
+  }.hero-lead-grades{
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     justify-content: center;
     margin-bottom: 0.85rem;
-  }
-
-  .hlf-pill {
+  }.hlf-pill{
     background: rgba(255, 255, 255, 0.12);
     border: 1px solid rgba(255, 255, 255, 0.25);
     color: rgba(255, 255, 255, 0.85);
     border-radius: 999px;
     padding: 0.4rem 1rem;
-    font-size: 0.84rem;
+    font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
     transition: background 0.15s, border-color 0.15s, color 0.15s;
-  }
-
-  .hlf-pill:hover,
-  .hlf-pill.is-active {
+  }.hlf-pill:hover,
+  .hlf-pill.is-active{
     background: #f5c518;
     border-color: #f5c518;
     color: #1a1a5e;
-  }
-
-  .hero-lead-inputs {
+  }.hero-lead-inputs{
     display: flex;
     gap: 0.6rem;
-  }
-
-  .hlf-input {
+  }.hlf-input{
     flex: 1;
     padding: 0.75rem 1rem;
     border-radius: 8px;
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.12);
     color: #fff;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-family: inherit;
     outline: none;
     transition: border-color 0.2s, background 0.2s;
-  }
-
-  .hlf-input::placeholder { color: rgba(255, 255, 255, 0.5); }
-
-  .hlf-input:focus {
+  }.hlf-input::placeholder{ color: rgba(255, 255, 255, 0.5); }.hlf-input:focus{
     border-color: #f5c518;
     background: rgba(255, 255, 255, 0.18);
-  }
-
-  .hlf-submit {
+  }.hlf-submit{
     padding: 0.75rem 1.25rem;
     border-radius: 8px;
     border: none;
     background: #f5c518;
     color: #1a1a5e;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
     cursor: pointer;
     white-space: nowrap;
     transition: background 0.15s, transform 0.1s;
-  }
-
-  .hlf-submit:hover { background: #fde047; transform: translateY(-1px); }
-
-  .hlf-privacy {
+  }.hlf-submit:hover{ background: #fde047; transform: translateY(-1px); }.hlf-privacy{
     color: rgba(255, 255, 255, 0.5);
-    font-size: 0.78rem;
+    font-size: 1rem;
     text-align: center;
     margin: 0.65rem 0 0;
-  }
-
-  .hero-lead-success {
+  }.hero-lead-success{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -1309,19 +1117,14 @@ const newsCards = [
     padding: 0.75rem;
     color: #fff;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 1rem;
   }
 
-  @media (max-width: 480px) {
-    .hero-lead-inputs { flex-direction: column; }
-    .hlf-submit { width: 100%; }
-    .hero-lead-box { padding: 1rem; }
-  }
-
-  /* =====================================================
+  @media (max-width: 480px) {.hero-lead-inputs{ flex-direction: column; }.hlf-submit{ width: 100%; }.hero-lead-box{ padding: 1rem; }
+  }/* =====================================================
      TRUST LOGOS
   ===================================================== */
-  .trust-logos {
+  .trust-logos{
     margin-top: 1.75rem;
     padding-top: 1.5rem;
     border-top: 1px solid rgba(18, 57, 103, 0.08);
@@ -1329,48 +1132,36 @@ const newsCards = [
     flex-direction: column;
     align-items: center;
     gap: 0.85rem;
-  }
-
-  .trust-logos__label {
-    font-size: 0.8rem;
+  }.trust-logos__label{
+    font-size: 1rem;
     font-weight: 600;
     color: #9aabb8;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-  }
-
-  .trust-logos__row {
+  }.trust-logos__row{
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
     justify-content: center;
     align-items: center;
-  }
-
-  .trust-logo-item {
+  }.trust-logo-item{
     display: flex;
     align-items: center;
     gap: 0.45rem;
     color: #4a6377;
-    font-size: 0.85rem;
+    font-size: 1rem;
     font-weight: 600;
     opacity: 0.75;
     transition: opacity 0.2s;
-  }
-
-  .trust-logo-item:hover { opacity: 1; }
-
-  /* =====================================================
+  }.trust-logo-item:hover{ opacity: 1; }/* =====================================================
      MID-PAGE CTA STRIP
   ===================================================== */
-  .mid-cta-strip {
+  .mid-cta-strip{
     background: linear-gradient(120deg, #1B2A5B 0%, #0d1b3e 100%);
     padding: 2.25rem 2rem;
     border-radius: 24px;
     margin: 0 0 0;
-  }
-
-  .mid-cta-strip__inner {
+  }.mid-cta-strip__inner{
     max-width: 900px;
     margin: 0 auto;
     display: flex;
@@ -1378,211 +1169,148 @@ const newsCards = [
     align-items: center;
     justify-content: space-between;
     gap: 1.5rem;
-  }
-
-  .mid-cta-strip__text {
+  }.mid-cta-strip__text{
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
     color: #fff;
     max-width: 520px;
-  }
-
-  .mid-cta-strip__text strong {
+  }.mid-cta-strip__text strong{
     font-size: 1.2rem;
     font-weight: 700;
-  }
-
-  .mid-cta-strip__text span {
+  }.mid-cta-strip__text span{
     color: rgba(255, 255, 255, 0.75);
-    font-size: 0.95rem;
-  }
-
-  .mid-cta-strip__actions {
+    font-size: 1rem;
+  }.mid-cta-strip__actions{
     display: flex;
     flex-wrap: wrap;
     gap: 0.65rem;
-  }
-
-  .mid-cta-btn {
+  }.mid-cta-btn{
     display: inline-flex;
     align-items: center;
     gap: 0.45rem;
     padding: 0.75rem 1.2rem;
     border-radius: 8px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
     text-decoration: none;
     white-space: nowrap;
     transition: transform 0.15s, box-shadow 0.15s;
-  }
-
-  .mid-cta-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }
-
-  .mid-cta-btn--primary {
+  }.mid-cta-btn:hover{ transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.3); }.mid-cta-btn--primary{
     background: #f5c518;
     color: #1a1a5e;
-  }
-
-  .mid-cta-btn--outline {
+  }.mid-cta-btn--outline{
     background: transparent;
     color: #fff;
     border: 1px solid rgba(255, 255, 255, 0.3);
-  }
-
-  .mid-cta-btn--outline:hover { border-color: rgba(255, 255, 255, 0.6); }
-
-  .mid-cta-btn--zalo {
+  }.mid-cta-btn--outline:hover{ border-color: rgba(255, 255, 255, 0.6); }.mid-cta-btn--zalo{
     background: rgba(0, 120, 255, 0.15);
     color: #7eb8ff;
     border: 1px solid rgba(0, 120, 255, 0.3);
   }
 
-  @media (max-width: 640px) {
-    .mid-cta-strip__inner { flex-direction: column; align-items: flex-start; }
-    .mid-cta-strip__actions { flex-direction: column; width: 100%; }
-    .mid-cta-btn { width: 100%; justify-content: center; }
-  }
-
-  /* =====================================================
+  @media (max-width: 640px) {.mid-cta-strip__inner{ flex-direction: column; align-items: flex-start; }.mid-cta-strip__actions{ flex-direction: column; width: 100%; }.mid-cta-btn{ width: 100%; justify-content: center; }
+  }/* =====================================================
      PRICE COMPARISON
   ===================================================== */
-  .price-compare {
+  .price-compare{
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     gap: 1rem;
     align-items: center;
     max-width: 860px;
     margin: 0 auto;
-  }
-
-  .price-compare__col {
+  }.price-compare__col{
     border-radius: 20px;
     padding: 2rem 1.75rem;
     border: 1px solid rgba(18, 57, 103, 0.1);
     background: #fff;
-  }
-
-  .price-compare__col--va {
+  }.price-compare__col--va{
     border: 2px solid #D4A843;
     box-shadow: 0 8px 28px rgba(212, 168, 67, 0.15);
     position: relative;
-  }
-
-  .price-compare__badge {
+  }.price-compare__badge{
     position: absolute;
     top: -13px;
     left: 50%;
     transform: translateX(-50%);
     background: #D4A843;
     color: #1a1a5e;
-    font-size: 0.75rem;
+    font-size: 1rem;
     font-weight: 700;
     padding: 0.25rem 0.9rem;
     border-radius: 999px;
     white-space: nowrap;
-  }
-
-  .price-compare__header {
+  }.price-compare__header{
     font-weight: 700;
     font-size: 1rem;
     color: #1B2A5B;
     margin-bottom: 0.5rem;
-  }
-
-  .price-compare__col--other .price-compare__header { color: #7a8ca0; }
-
-  .price-compare__price {
+  }.price-compare__col--other .price-compare__header{ color: #7a8ca0; }.price-compare__price{
     font-size: 1.6rem;
     font-weight: 800;
     color: #1B2A5B;
     margin-bottom: 1rem;
     line-height: 1;
-  }
-
-  .price-compare__col--other .price-compare__price { color: #9aabb8; }
-
-  .price-compare__price span {
-    font-size: 0.85rem;
+  }.price-compare__col--other .price-compare__price{ color: #9aabb8; }.price-compare__price span{
+    font-size: 1rem;
     font-weight: 500;
     color: inherit;
-  }
-
-  .price-compare__list {
+  }.price-compare__list{
     list-style: none;
     margin: 0 0 1rem;
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: 0.45rem;
-  }
-
-  .price-compare__list li {
-    font-size: 0.9rem;
+  }.price-compare__list li{
+    font-size: 1rem;
     color: #4a6377;
-  }
-
-  .price-compare__miss { color: #c0c8d0; }
-
-  .price-compare__cta {
+  }.price-compare__miss{ color: #c0c8d0; }.price-compare__cta{
     display: inline-block;
     margin-top: 0.5rem;
     color: #D4A843;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
     text-decoration: none;
-  }
-
-  .price-compare__cta:hover { text-decoration: underline; }
-
-  .price-compare__vs {
+  }.price-compare__cta:hover{ text-decoration: underline; }.price-compare__vs{
     font-size: 1rem;
     font-weight: 800;
     color: #c0c8d0;
     text-align: center;
   }
 
-  @media (max-width: 700px) {
-    .price-compare {
+  @media (max-width: 700px) {.price-compare{
       grid-template-columns: 1fr;
-    }
-    .price-compare__vs {
+    }.price-compare__vs{
       text-align: center;
       padding: 0.25rem 0;
     }
-  }
-
-  /* =====================================================
+  }/* =====================================================
      PAA CARDS with icons
   ===================================================== */
-  .paa-card__icon {
+  .paa-card__icon{
     display: block;
     font-size: 1.5rem;
     margin-bottom: 0.5rem;
     line-height: 1;
-  }
-
-  /* =====================================================
+  }/* =====================================================
      BROCHURE PERKS LIST
   ===================================================== */
-  .brochure-perks {
+  .brochure-perks{
     list-style: none;
     margin: 1rem 0 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-  }
-
-  .brochure-perks li {
+  }.brochure-perks li{
     color: rgba(255, 255, 255, 0.85);
-    font-size: 0.9rem;
-  }
-
-  /* =====================================================
+    font-size: 1rem;
+  }/* =====================================================
      STICKY MOBILE BAR
   ===================================================== */
-  .sticky-mobile-bar {
+  .sticky-mobile-bar{
     display: none;
     position: fixed;
     bottom: 0;
@@ -1596,13 +1324,10 @@ const newsCards = [
     gap: 0.5rem;
   }
 
-  @media (max-width: 767px) {
-    .sticky-mobile-bar {
+  @media (max-width: 767px) {.sticky-mobile-bar{
       display: flex;
     }
-  }
-
-  .smb-btn {
+  }.smb-btn{
     flex: 1;
     display: flex;
     align-items: center;
@@ -1610,52 +1335,34 @@ const newsCards = [
     gap: 0.4rem;
     padding: 0.7rem 0.5rem;
     border-radius: 10px;
-    font-size: 0.82rem;
+    font-size: 1rem;
     font-weight: 700;
     text-decoration: none;
     white-space: nowrap;
     transition: transform 0.1s;
-  }
-
-  .smb-btn:active { transform: scale(0.97); }
-
-  .smb-btn--call {
+  }.smb-btn:active{ transform: scale(0.97); }.smb-btn--call{
     background: #1B2A5B;
     color: #fff;
-  }
-
-  .smb-btn--zalo {
+  }.smb-btn--zalo{
     background: #0068FF;
     color: #fff;
-  }
-
-  .smb-btn--book {
+  }.smb-btn--book{
     background: #f5c518;
     color: #1a1a5e;
   }
 
   /* Add bottom padding on mobile so content isn't hidden by sticky bar */
-  @media (max-width: 767px) {
-    .site-shell--home > main { padding-bottom: 80px; }
-  }
-
-  /* Heading that shouldn't wrap on desktop */
-  .heading-nowrap { white-space: nowrap; }
-  @media (max-width: 720px) { .heading-nowrap { white-space: normal; font-size: 1.35rem; } }
-
-  /* ===== BROCHURE LAYOUT TYPOGRAPHY ===== */
-  .brochure-layout h2.brochure-layout__title { font-size: 24px; line-height: 1.3; font-weight: 800; color: #ffffff; margin: .5rem 0 1rem; }
-  .brochure-layout .brochure-perks { list-style: none; padding: 0; margin: 0; }
-  .brochure-layout .brochure-perks li { font-size: 16px; line-height: 1.6; color: #ffffff; padding: .4rem 0; }
-
-  /* ===== 5 PILLARS ===== */
-  .pillar-grid {
+  @media (max-width: 767px) {.site-shell--home > main{ padding-bottom: 80px; }
+  }/* Heading that shouldn't wrap on desktop */
+  .heading-nowrap{ white-space: nowrap; }
+  @media (max-width: 720px) {.heading-nowrap{ white-space: normal; font-size: 1.5rem; } }/* ===== BROCHURE LAYOUT TYPOGRAPHY ===== */
+  .brochure-layout h2.brochure-layout__title{ font-size: 24px; line-height: 1.3; font-weight: 800; color: #ffffff; margin: .5rem 0 1rem; }.brochure-layout .brochure-perks{ list-style: none; padding: 0; margin: 0; }.brochure-layout .brochure-perks li{ font-size: 16px; line-height: 1.6; color: #ffffff; padding: .4rem 0; }/* ===== 5 PILLARS ===== */
+  .pillar-grid{
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem;
     margin-top: .5rem;
-  }
-  .pillar-card {
+  }.pillar-card{
     background: #fff;
     border: 1px solid #e2e8f0;
     border-left: 4px solid #f5a623;
@@ -1663,9 +1370,7 @@ const newsCards = [
     padding: 1.75rem 1.5rem;
     box-shadow: 0 2px 10px rgba(0,0,0,.04);
     position: relative;
-  }
-  .pillar-card--wide { grid-column: 1 / -1; }
-  .pillar-card__num {
+  }.pillar-card--wide{ grid-column: 1 / -1; }.pillar-card__num{
     position: absolute;
     top: 1rem;
     right: 1.25rem;
@@ -1674,59 +1379,42 @@ const newsCards = [
     color: #f5a623;
     opacity: .5;
     letter-spacing: -.04em;
-  }
-  .pillar-card__title {
-    font-size: 1.1rem;
+  }.pillar-card__title{
+    font-size: 1.5rem;
     font-weight: 800;
     color: #0d2b55;
     margin: 0 0 .75rem;
     padding-right: 3rem;
     line-height: 1.4;
-  }
-  .pillar-card__lead {
+  }.pillar-card__lead{
     color: #0d2b55;
     font-weight: 600;
-    font-size: .98rem;
+    font-size: 1rem;
     line-height: 1.6;
     margin: 0 0 .5rem;
-  }
-  .pillar-card p:not(.pillar-card__lead) {
+  }.pillar-card p:not(.pillar-card__lead){
     color: #475569;
-    font-size: .95rem;
+    font-size: 1rem;
     line-height: 1.7;
     margin: 0;
   }
-  @media (max-width: 768px) {
-    .pillar-grid { grid-template-columns: 1fr; }
-    .pillar-card { padding: 1.5rem 1.25rem; }
-  }
-
-  /* ===== BROCHURE CTA ===== */
-  .brochure-cta {
+  @media (max-width: 768px) {.pillar-grid{ grid-template-columns: 1fr; }.pillar-card{ padding: 1.5rem 1.25rem; }
+  }/* ===== BROCHURE CTA ===== */
+  .brochure-cta{
     background: linear-gradient(135deg, #0d2b55 0%, #1a1a5e 100%);
     border-radius: 18px;
     padding: 3rem 2rem;
     margin-top: 1rem;
-  }
-  .brochure-cta__inner {
+  }.brochure-cta__inner{
     max-width: 1050px;
     margin: 0 auto;
     display: grid;
     grid-template-columns: 1.1fr 1fr;
     gap: 3rem;
     align-items: center;
-  }
-  .brochure-cta__text h2 { font-size: 1.75rem; font-weight: 800; margin: .5rem 0 1rem; line-height: 1.3; }
-  .brochure-cta__desc { color: rgba(255,255,255,.85); line-height: 1.7; margin-bottom: 1.25rem; font-size: 1rem; }
-  .brochure-cta__bullets { list-style: none; padding: 0; margin: 0; }
-  .brochure-cta__bullets li { color: rgba(255,255,255,.9); padding: .35rem 0 .35rem 1.75rem; position: relative; font-size: .95rem; line-height: 1.5; }
-  .brochure-cta__bullets li::before { content: '✓'; position: absolute; left: 0; color: #f5a623; font-weight: 700; }
-  .brochure-cta__form { background: #fff; border-radius: 14px; padding: 1.75rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+  }.brochure-cta__text h2{ font-size: 1.75rem; font-weight: 800; margin: .5rem 0 1rem; line-height: 1.3; }.brochure-cta__desc{ color: rgba(255,255,255,.85); line-height: 1.7; margin-bottom: 1.25rem; font-size: 1rem; }.brochure-cta__bullets{ list-style: none; padding: 0; margin: 0; }.brochure-cta__bullets li{ color: rgba(255,255,255,.9); padding: .35rem 0 .35rem 1.75rem; position: relative; font-size: 1rem; line-height: 1.5; }.brochure-cta__bullets li::before{ content: '✓'; position: absolute; left: 0; color: #f5a623; font-weight: 700; }.brochure-cta__form{ background: #fff; border-radius: 14px; padding: 1.75rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
 
-  @media (max-width: 768px) {
-    .brochure-cta { padding: 2rem 1.25rem; }
-    .brochure-cta__inner { grid-template-columns: 1fr; gap: 1.75rem; }
-    .brochure-cta__text h2 { font-size: 1.4rem; }
+  @media (max-width: 768px) {.brochure-cta{ padding: 2rem 1.25rem; }.brochure-cta__inner{ grid-template-columns: 1fr; gap: 1.75rem; }.brochure-cta__text h2{ font-size: 1.5rem; }
   }
 </style>
 

@@ -240,26 +240,6 @@ function isChildActive(item: NavItem, path: string): boolean {
   </div>
 </div>
 
-<style>
-  .search-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);opacity:0;transition:opacity 0.25s}
-  .search-overlay.is-open{display:flex;opacity:1;justify-content:center;padding-top:12vh}
-  .search-modal{background:#fff;border-radius:16px;width:560px;max-width:92vw;max-height:70vh;box-shadow:0 20px 60px rgba(0,0,0,0.2);display:flex;flex-direction:column;overflow:hidden;animation:searchSlideIn 0.25s ease-out}
-  @keyframes searchSlideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}
-  .search-modal__header{padding:1rem 1.25rem;border-bottom:1px solid #e2e8f0}
-  .search-input-wrap{display:flex;align-items:center;gap:0.6rem;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:0.6rem 1rem;transition:border-color 0.2s}
-  .search-input-wrap:focus-within{border-color:#D4A843}
-  .search-input-icon{color:#94a3b8;flex-shrink:0}
-  .search-modal__input{flex:1;border:none;outline:none;background:transparent;font-size:1rem;color:#1a1a5e}
-  .search-modal__close{background:none;border:none;font-size:1.5rem;color:#94a3b8;cursor:pointer}
-  .search-modal__results{overflow-y:auto;padding:1rem 1.25rem;flex:1}
-  .search-hint{font-size:0.82rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 0.75rem}
-  .search-tags{display:flex;flex-wrap:wrap;gap:0.5rem}
-  .search-tag{padding:0.4rem 0.9rem;background:#f1f5f9;border-radius:20px;font-size:0.85rem;color:#475569;text-decoration:none;transition:all 0.2s}
-  .search-tag:hover{background:#1a1a5e;color:#fff}
-  .search-list{list-style:none;padding:0;margin:0}
-  .search-result{display:block;padding:0.85rem 0.5rem;text-decoration:none;border-radius:8px;transition:background 0.15s}
-  .search-result:hover{background:#f8fafc}
-  .search-result strong{display:block;color:#1a1a5e;font-size:0.95rem}
-  .search-result span{display:block;color:#64748b;font-size:0.85rem}
-  .search-empty{text-align:center;padding:2rem 0;color:#64748b}
+<style>.search-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.5);backdrop-filter:blur(4px);opacity:0;transition:opacity 0.25s}.search-overlay.is-open{display:flex;opacity:1;justify-content:center;padding-top:12vh}.search-modal{background:#fff;border-radius:16px;width:560px;max-width:92vw;max-height:70vh;box-shadow:0 20px 60px rgba(0,0,0,0.2);display:flex;flex-direction:column;overflow:hidden;animation:searchSlideIn 0.25s ease-out}
+  @keyframes searchSlideIn{from{transform:translateY(-20px);opacity:0}to{transform:translateY(0);opacity:1}}.search-modal__header{padding:1rem 1.25rem;border-bottom:1px solid #e2e8f0}.search-input-wrap{display:flex;align-items:center;gap:0.6rem;background:#f8fafc;border:1.5px solid #e2e8f0;border-radius:12px;padding:0.6rem 1rem;transition:border-color 0.2s}.search-input-wrap:focus-within{border-color:#D4A843}.search-input-icon{color:#94a3b8;flex-shrink:0}.search-modal__input{flex:1;border:none;outline:none;background:transparent;font-size:1rem;color:#1a1a5e}.search-modal__close{background:none;border:none;font-size:1.5rem;color:#94a3b8;cursor:pointer}.search-modal__results{overflow-y:auto;padding:1rem 1.25rem;flex:1}.search-hint{font-size:1rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;margin:0 0 0.75rem}.search-tags{display:flex;flex-wrap:wrap;gap:0.5rem}.search-tag{padding:0.4rem 0.9rem;background:#f1f5f9;border-radius:20px;font-size:1rem;color:#475569;text-decoration:none;transition:all 0.2s}.search-tag:hover{background:#1a1a5e;color:#fff}.search-list{list-style:none;padding:0;margin:0}.search-result{display:block;padding:0.85rem 0.5rem;text-decoration:none;border-radius:8px;transition:background 0.15s}.search-result:hover{background:#f8fafc}.search-result strong{display:block;color:#1a1a5e;font-size:1rem}.search-result span{display:block;color:#64748b;font-size:1rem}.search-empty{text-align:center;padding:2rem 0;color:#64748b}
 </style>

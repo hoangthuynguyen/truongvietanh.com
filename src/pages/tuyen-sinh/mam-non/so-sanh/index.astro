@@ -20,8 +20,7 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
   <meta property="og:url" content={canonicalUrl} />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <style is:inline>
-    :root {
+  <style is:inline>:root{
       --n: #0C1E38;
       --p: #475569;
       --pd: #334155;
@@ -33,9 +32,7 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       --g8: #1C2A3A;
       --gn: #1AAB6E;
       --f: 'Open Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    }
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
+    }*{ margin: 0; padding: 0; box-sizing: border-box; }body{
       font-family: var(--f);
       -webkit-font-smoothing: antialiased;
       font-size: 16px;
@@ -43,20 +40,15 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       background: linear-gradient(165deg, #0F1620 0%, #1A2535 40%, var(--n) 100%);
       min-height: 100vh;
       min-height: 100dvh;
-    }
-
-    /* Logo */
-    .logo-bar {
+    }/* Logo */
+    .logo-bar{
       text-align: center;
       padding: 20px 12px 0;
-    }
-    .logo-bar img {
+    }.logo-bar img{
       height: 64px;
       opacity: .9;
-    }
-
-    /* Layout */
-    .wrap {
+    }/* Layout */
+    .wrap{
       display: flex;
       max-width: 1100px;
       margin: 0 auto;
@@ -65,12 +57,8 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       align-items: center;
       min-height: calc(100vh - 84px);
       min-height: calc(100dvh - 84px);
-    }
-    .L { flex: 1; }
-    .R { width: 480px; flex-shrink: 0; }
-
-    /* Badge */
-    .badge {
+    }.L{ flex: 1; }.R{ width: 480px; flex-shrink: 0; }/* Badge */
+    .badge{
       display: inline-flex;
       align-items: center;
       gap: 5px;
@@ -79,51 +67,41 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       color: var(--a);
       padding: 6px 16px;
       border-radius: 16px;
-      font-size: 13px;
+      font-size: 16px;
       font-weight: 700;
       margin-bottom: 16px;
-    }
-    .badge .dot {
+    }.badge .dot{
       width: 6px;
       height: 6px;
       background: var(--a);
       border-radius: 50%;
       animation: p 1.5s infinite;
     }
-    @keyframes p {
-      0%, 100% { opacity: 1; }
-      50% { opacity: .3; }
-    }
-
-    /* Heading */
-    h1 {
+    @keyframes p {0%, 100%{ opacity: 1; }50%{ opacity: .3; }
+    }/* Heading */
+    h1{
       font-family: 'Montserrat', var(--f);
       font-size: clamp(28px, 4.5vw, 38px);
       font-weight: 800;
       line-height: 1.18;
       margin-bottom: 20px;
-    }
-    h1 em {
+    }h1 em{
       color: #D4A843;
       font-style: normal;
-    }
-
-    /* Perks list */
-    .perks {
+    }/* Perks list */
+    .perks{
       list-style: none;
       display: flex;
       flex-direction: column;
       gap: 12px;
       margin-bottom: 24px;
-    }
-    .perks li {
+    }.perks li{
       display: flex;
       align-items: center;
       gap: 10px;
       font-size: 16px;
       color: rgba(255,255,255,.85);
-    }
-    .perks .ic {
+    }.perks .ic{
       width: 32px;
       height: 32px;
       background: rgba(255,255,255,.08);
@@ -133,10 +111,8 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       justify-content: center;
       font-size: 16px;
       flex-shrink: 0;
-    }
-
-    /* Social proof */
-    .proof {
+    }/* Social proof */
+    .proof{
       display: flex;
       align-items: center;
       gap: 12px;
@@ -145,39 +121,31 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       border-radius: 10px;
       border: 1px solid rgba(255,255,255,.08);
       margin-bottom: 16px;
-    }
-    .proof b {
+    }.proof b{
       font-size: 26px;
       color: var(--a);
       line-height: 1;
-    }
-    .proof span {
-      font-size: 14px;
+    }.proof span{
+      font-size: 16px;
       color: rgba(255,255,255,.55);
       line-height: 1.3;
-    }
-
-    /* Footer contact */
-    .foot {
-      font-size: 14px;
+    }/* Footer contact */
+    .foot{
+      font-size: 16px;
       color: rgba(255,255,255,.5);
       text-align: center;
-    }
-    .foot a {
+    }.foot a{
       color: var(--a);
       text-decoration: none;
       font-weight: 600;
-    }
-
-    /* FORM CARD */
-    .F {
+    }/* FORM CARD */
+    .F{
       background: var(--w);
       border-radius: 20px;
       padding: 32px 28px;
       box-shadow: 0 20px 60px rgba(0,0,0,.4);
       color: var(--g8);
-    }
-    .F h2 {
+    }.F h2{
       font-family: 'Montserrat', var(--f);
       font-size: 24px;
       font-weight: 800;
@@ -185,44 +153,33 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       text-align: center;
       line-height: 1.25;
       margin-bottom: 4px;
-    }
-    .F .fd {
+    }.F .fd{
       font-size: 16px;
       color: #555;
       text-align: center;
       margin-bottom: 18px;
       font-weight: 500;
-    }
-    .F .fd b { color: #D4A843; }
-
-    /* Step dots */
-    .sd {
+    }.F .fd b{ color: #D4A843; }/* Step dots */
+    .sd{
       display: flex;
       justify-content: center;
       gap: 5px;
       margin-bottom: 14px;
-    }
-    .sd i {
+    }.sd i{
       display: block;
       height: 4px;
       border-radius: 2px;
       background: var(--g2);
       width: 30px;
       transition: .3s;
-    }
-    .sd i.on { background: var(--a); width: 48px; }
-    .sd i.ok { background: var(--gn); }
-
-    /* Form fields */
-    .fg { margin-bottom: 14px; }
-    .fg label {
+    }.sd i.on{ background: var(--a); width: 48px; }.sd i.ok{ background: var(--gn); }/* Form fields */
+    .fg{ margin-bottom: 14px; }.fg label{
       display: block;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
       color: var(--g8);
       margin-bottom: 4px;
-    }
-    .fg input {
+    }.fg input{
       width: 100%;
       padding: 14px 14px;
       border: 2px solid var(--g2);
@@ -231,16 +188,13 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       font-family: var(--f);
       background: var(--g1);
       transition: .15s;
-    }
-    .fg input:focus {
+    }.fg input:focus{
       outline: 0;
       border-color: var(--a);
       background: var(--w);
       box-shadow: 0 0 0 3px rgba(212,168,67,.12);
-    }
-
-    /* Buttons */
-    .btn {
+    }/* Buttons */
+    .btn{
       width: 100%;
       padding: 18px;
       border: none;
@@ -254,66 +208,52 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
       display: flex;
       align-items: center;
       justify-content: center;
-    }
-    .bc {
+    }.bc{
       background: var(--a);
       color: var(--w);
       box-shadow: 0 4px 16px rgba(212,168,67,.35);
-    }
-    .bc:hover {
+    }.bc:hover{
       background: #0891b2;
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(212,168,67,.4);
-    }
-    .btn:disabled {
+    }.btn:disabled{
       opacity: .5;
       cursor: default;
       transform: none;
       box-shadow: none;
-    }
-
-    /* Form meta */
-    .fm {
+    }/* Form meta */
+    .fm{
       text-align: center;
-      font-size: 12px;
+      font-size: 16px;
       color: var(--g6);
       margin-top: 10px;
-    }
-    .fm a {
+    }.fm a{
       color: var(--a);
       font-weight: 600;
-    }
-    .fb {
+    }.fb{
       display: flex;
       justify-content: center;
       gap: 14px;
       margin-top: 8px;
-      font-size: 12px;
+      font-size: 16px;
       color: var(--g6);
-    }
-
-    /* Steps */
-    .s2, .sok { display: none; }
-    .sok {
+    }/* Steps */
+    .s2, .sok{ display: none; }.sok{
       text-align: center;
       padding: 16px 0;
-    }
-    .sok .ck {
+    }.sok .ck{
       font-size: 40px;
       margin-bottom: 8px;
-    }
-    .sok h3 {
-      font-size: 22px;
+    }.sok h3{
+      font-size: 24px;
       color: var(--n);
       font-weight: 800;
-    }
-    .sok p {
+    }.sok p{
       font-size: 16px;
       color: var(--g6);
       margin-top: 6px;
       line-height: 1.5;
-    }
-    .sok a {
+    }.sok a{
       color: var(--a);
       font-weight: 700;
       text-decoration: none;
@@ -321,27 +261,20 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/so-sanh';
     }
 
     /* Responsive */
-    @media (max-width: 800px) {
-      .wrap {
+    @media (max-width: 800px) {.wrap{
         flex-direction: column;
         padding: 16px 12px 24px;
         gap: 24px;
         min-height: auto;
-      }
-      .L {
+      }.L{
         text-align: center;
         align-items: center;
         display: flex;
         flex-direction: column;
-      }
-      h1 { font-size: 26px; }
-      .perks {
+      }h1{ font-size: 26px; }.perks{
         align-items: flex-start;
         max-width: 340px;
-      }
-      .proof { justify-content: center; }
-      .R { width: 100%; max-width: 380px; }
-      .F { padding: 26px 20px; }
+      }.proof{ justify-content: center; }.R{ width: 100%; max-width: 380px; }.F{ padding: 26px 20px; }
     }
 
     /* Google Fonts */

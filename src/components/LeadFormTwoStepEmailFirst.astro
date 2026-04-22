@@ -143,90 +143,67 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   <input type="hidden" name="source" value="squeeze-landing" />
 </form>
 
-<style is:inline>
-  .lead-form {
+<style is:inline>.lead-form{
     width: 100%;
     max-width: 400px;
     margin: 0 auto;
     overflow: hidden;
     box-sizing: border-box;
-  }
-
-  .form-step {
+  }.form-step{
     transition: opacity 0.3s ease, visibility 0.3s ease;
     opacity: 1;
     visibility: visible;
-  }
-
-  .form-step[hidden] {
+  }.form-step[hidden]{
     display: none;
     opacity: 0;
     visibility: hidden;
-  }
-
-  .form-step-content {
+  }.form-step-content{
     display: flex;
     flex-direction: column;
     gap: 0.65rem;
-  }
-
-  /* ===== PROGRESS INDICATOR ===== */
-  .form-progress {
+  }/* ===== PROGRESS INDICATOR ===== */
+  .form-progress{
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 0;
     margin-bottom: .5rem;
-  }
-
-  .form-progress__step {
+  }.form-progress__step{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: .35rem;
-  }
-
-  .form-progress__dot {
+  }.form-progress__dot{
     display: inline-flex;
     align-items: center;
     justify-content: center;
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    font-size: .85rem;
+    font-size: 1rem;
     font-weight: 700;
     font-family: "Montserrat", sans-serif;
     background: #e8e8e8;
     color: #999;
     transition: all .3s ease;
-  }
-
-  .form-progress__step--active .form-progress__dot {
+  }.form-progress__step--active .form-progress__dot{
     background: #1a1a5e;
     color: #fff;
     box-shadow: 0 2px 8px rgba(26,26,94,.3);
-  }
-
-  .form-progress__step--done .form-progress__dot {
+  }.form-progress__step--done .form-progress__dot{
     background: #27ae60;
     color: #fff;
-    font-size: .75rem;
-  }
-
-  .form-progress__label {
-    font-size: .72rem;
+    font-size: 1rem;
+  }.form-progress__label{
+    font-size: 1rem;
     font-weight: 600;
     color: rgba(255,255,255,0.7);
     text-transform: uppercase;
     letter-spacing: .5px;
-  }
-
-  .form-progress__step--active .form-progress__label,
-  .form-progress__step--done .form-progress__label {
+  }.form-progress__step--active .form-progress__label,
+  .form-progress__step--done .form-progress__label{
     color: #fff;
-  }
-
-  .form-progress__line {
+  }.form-progress__line{
     width: 60px;
     height: 3px;
     background: #e8e8e8;
@@ -234,83 +211,56 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     margin: 0 1rem;
     margin-bottom: 1.2rem;
     transition: background .3s ease;
-  }
-
-  .form-progress__line--active {
+  }.form-progress__line--active{
     background: linear-gradient(90deg, #27ae60, #1a1a5e);
-  }
-
-  /* ===== FORM TITLES ===== */
-  .form-step-title {
+  }/* ===== FORM TITLES ===== */
+  .form-step-title{
     font-family: "Montserrat", sans-serif;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #ffffff;
     margin: 0;
-    line-height: 1.5;
-  }
-
-  .form-step-description {
-    font-size: 0.95rem;
+  }.form-step-description{
+    font-size: 1rem;
     color: rgba(255, 255, 255, 0.7);
     margin: 0;
-  }
-
-  /* Auto-contrast: khi form nằm trong card nền trắng → text dark navy */
+  }/* Auto-contrast: khi form nằm trong card nền trắng → text dark navy */
   .gi-form-card .form-step-title,
   .sp-form-block .form-step-title,
   .F .form-step-title,
   .lead-form-card--light .form-step-title,
-  [data-form-bg="light"] .form-step-title {
+  [data-form-bg="light"] .form-step-title{
     color: #1a1a5e;
-  }
-  .gi-form-card .form-step-description,
+  }.gi-form-card .form-step-description,
   .sp-form-block .form-step-description,
   .F .form-step-description,
   .lead-form-card--light .form-step-description,
-  [data-form-bg="light"] .form-step-description {
+  [data-form-bg="light"] .form-step-description{
     color: #475569;
-  }
-  /* Social proof trên card trắng */
+  }/* Social proof trên card trắng */
   .gi-form-card .form-social-proof,
   .sp-form-block .form-social-proof,
   .lead-form-card--light .form-social-proof,
-  [data-form-bg="light"] .form-social-proof {
+  [data-form-bg="light"] .form-social-proof{
     color: #1a1a5e;
-  }
-  /* Progress label trên card trắng */
+  }/* Progress label trên card trắng */
   .gi-form-card .form-progress__label,
   .sp-form-block .form-progress__label,
   .lead-form-card--light .form-progress__label,
-  [data-form-bg="light"] .form-progress__label {
+  [data-form-bg="light"] .form-progress__label{
     color: rgba(26,26,94,.6);
-  }
-  .gi-form-card .form-progress__step--active .form-progress__label,
+  }.gi-form-card .form-progress__step--active .form-progress__label,
   .gi-form-card .form-progress__step--done .form-progress__label,
   .sp-form-block .form-progress__step--active .form-progress__label,
   .sp-form-block .form-progress__step--done .form-progress__label,
   .lead-form-card--light .form-progress__step--active .form-progress__label,
   .lead-form-card--light .form-progress__step--done .form-progress__label,
   [data-form-bg="light"] .form-progress__step--active .form-progress__label,
-  [data-form-bg="light"] .form-progress__step--done .form-progress__label {
+  [data-form-bg="light"] .form-progress__step--done .form-progress__label{
     color: #1a1a5e;
-  }
-
-  /* Progress dot inactive trên nền trắng */
-  [data-form-bg="light"] .form-progress__dot {
-    background: #e2e8f0;
-    color: #1a1a5e;
-  }
-  [data-form-bg="light"] .form-progress__line {
-    background: #e2e8f0;
-  }
-  /* Form step title + description trên nền trắng (fallback if specificity needed) */
-  [data-form-bg="light"] .form-step-title { color: #1a1a5e; }
-  [data-form-bg="light"] .form-step-description { color: #475569; }
-
-  /* ===== SOCIAL PROOF ===== */
-  .form-social-proof {
-    font-size: .78rem;
+  }/* ===== SOCIAL PROOF ===== */
+  .form-social-proof{
+    font-size: 1rem;
     color: #1a1a5e;
     font-weight: 500;
     text-align: left;
@@ -323,9 +273,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     white-space: normal;
     word-wrap: break-word;
     max-width: 100%;
-  }
-
-  .form-social-proof::before {
+  }.form-social-proof::before{
     content: '';
     display: inline-block;
     width: 8px;
@@ -335,102 +283,71 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     animation: proofPulse 2s ease-in-out infinite;
   }
 
-  @keyframes proofPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: .4; }
-  }
-
-  /* ===== FORM GROUPS ===== */
-  .form-group {
+  @keyframes proofPulse {0%, 100%{ opacity: 1; }50%{ opacity: .4; }
+  }/* ===== FORM GROUPS ===== */
+  .form-group{
     display: flex;
     flex-direction: column;
     gap: 0.4rem;
-  }
-
-  .form-row {
+  }.form-row{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
-  }
-
-  .form-input,
-  .form-checkbox {
+  }.form-input,
+  .form-checkbox{
     font-family: "Open Sans", sans-serif;
     font-size: 1rem;
     line-height: 1.5;
-  }
-
-  .form-input {
+  }.form-input{
     padding: 0.85rem 1rem;
     border: 1.5px solid #e0e0e0;
     border-radius: 10px;
     background-color: #fafbfc;
     color: #1a1a1a;
     transition: all 0.25s ease;
-  }
-
-  .form-input--large {
+  }.form-input--large{
     padding: 1rem 1.15rem;
     font-size: 1.05rem;
-  }
-
-  .form-input:focus {
+  }.form-input:focus{
     outline: none;
     border-color: #D4A843;
     box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15);
     background-color: #fff;
     transform: translateY(-1px);
-  }
-
-  .form-input.error {
+  }.form-input.error{
     border-color: #e74c3c;
     box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.1);
     animation: inputShake 0.4s ease;
   }
 
-  @keyframes inputShake {
-    0%, 100% { transform: translateX(0); }
-    20% { transform: translateX(-4px); }
-    40% { transform: translateX(4px); }
-    60% { transform: translateX(-3px); }
-    80% { transform: translateX(2px); }
-  }
-
-  .form-error {
-    font-size: 0.8rem;
+  @keyframes inputShake {0%, 100%{ transform: translateX(0); }20%{ transform: translateX(-4px); }40%{ transform: translateX(4px); }60%{ transform: translateX(-3px); }80%{ transform: translateX(2px); }
+  }.form-error{
+    font-size: 1rem;
     color: #e74c3c;
     min-height: 1.2em;
     display: block;
-  }
-
-  .form-checkbox {
+  }.form-checkbox{
     width: 18px;
     height: 18px;
     cursor: pointer;
     accent-color: #D4A843;
-  }
-
-  .form-consent {
+  }.form-consent{
     display: flex;
     align-items: flex-start;
     gap: 0.75rem;
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: #666666;
     margin: 0;
-  }
-
-  .form-consent label {
+  }.form-consent label{
     cursor: pointer;
     line-height: 1.4;
-  }
-
-  /* ===== BUTTONS ===== */
-  .form-btn {
-    padding: 0.55rem 1rem;
+  }/* ===== BUTTONS ===== */
+  .form-btn{
+    padding: 0.7rem 1.2rem;
     border: none;
     border-radius: 8px;
     font-family: "Montserrat", sans-serif;
-    font-size: 1.35rem;
+    font-size: 1.15rem;
     font-weight: 800;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -441,11 +358,8 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     gap: .5rem;
     text-align: center;
     white-space: nowrap;
-    line-height: 1.25;
-  }
-
-  .form-btn--next,
-  .form-btn--submit {
+  }.form-btn--next,
+  .form-btn--submit{
     width: 100%;
     max-width: 100%;
     box-sizing: border-box;
@@ -454,26 +368,19 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     box-shadow: 0 4px 15px rgba(212, 168, 67, 0.35);
     white-space: normal;
     word-wrap: break-word;
-  }
-
-  .form-btn--next:hover,
-  .form-btn--submit:hover {
+  }.form-btn--next:hover,
+  .form-btn--submit:hover{
     background: linear-gradient(135deg, #c09530, #D4A843);
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(212, 168, 67, 0.45);
-  }
-
-  .form-btn--next:active,
-  .form-btn--submit:active {
+  }.form-btn--next:active,
+  .form-btn--submit:active{
     transform: translateY(0);
     box-shadow: 0 2px 8px rgba(212, 168, 67, 0.3);
-  }
-
-  .form-btn--loading {
+  }.form-btn--loading{
     pointer-events: none;
     opacity: 0.8;
-  }
-  .form-btn--loading::after {
+  }.form-btn--loading::after{
     content: '';
     display: inline-block;
     width: 16px; height: 16px;
@@ -483,43 +390,29 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     animation: btnSpin 0.6s linear infinite;
     margin-left: 0.5rem;
   }
-  @keyframes btnSpin { to { transform: rotate(360deg); } }
-
-  .form-btn--new {
+  @keyframes btnSpin {to{ transform: rotate(360deg); } }.form-btn--new{
     width: 100%;
     background: transparent;
     color: #1a1a5e;
     border: 1.5px solid #1a1a5e;
-  }
-
-  .form-btn--new:hover {
+  }.form-btn--new:hover{
     background: #1a1a5e;
     color: #fff;
-  }
-
-  .form-actions {
+  }.form-actions{
     display: grid;
     grid-template-columns: 1fr 2fr;
     gap: 1rem;
-  }
-
-  .form-btn--back {
+  }.form-btn--back{
     background-color: #f0f0f0;
     color: #1a1a1a;
     white-space: nowrap;
     font-size: 1.05rem;
-  }
-
-  .form-btn--back:hover {
+  }.form-btn--back:hover{
     background-color: #e0e0e0;
-  }
-
-  /* ===== SUCCESS STATE ===== */
-  .form-success {
+  }/* ===== SUCCESS STATE ===== */
+  .form-success{
     text-align: center;
-  }
-
-  .success-icon-wrapper {
+  }.success-icon-wrapper{
     position: relative;
     display: inline-flex;
     align-items: center;
@@ -527,9 +420,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     width: 90px;
     height: 90px;
     margin: 0 auto 1rem;
-  }
-
-  .success-icon {
+  }.success-icon{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -540,9 +431,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     color: white;
     animation: successPop .5s cubic-bezier(.175,.885,.32,1.275);
     z-index: 1;
-  }
-
-  .success-ring {
+  }.success-ring{
     position: absolute;
     top: 0;
     left: 0;
@@ -553,67 +442,42 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     animation: ringExpand .8s ease-out;
   }
 
-  @keyframes successPop {
-    0% { transform: scale(0); opacity: 0; }
-    60% { transform: scale(1.15); }
-    100% { transform: scale(1); opacity: 1; }
+  @keyframes successPop {0%{ transform: scale(0); opacity: 0; }60%{ transform: scale(1.15); }100%{ transform: scale(1); opacity: 1; }
   }
 
-  @keyframes ringExpand {
-    0% { transform: scale(.5); opacity: 0; }
-    50% { opacity: 1; }
-    100% { transform: scale(1); opacity: .5; }
-  }
-
-  .form-success .form-step-title {
+  @keyframes ringExpand {0%{ transform: scale(.5); opacity: 0; }50%{ opacity: 1; }100%{ transform: scale(1); opacity: .5; }
+  }.form-success .form-step-title{
     color: #27ae60;
-  }
-
-  .success-next-steps {
+  }.success-next-steps{
     background: #f0faf4;
     border: 1px solid #d4edda;
     border-radius: 8px;
     padding: 1rem;
-  }
-
-  .success-next-step {
-    font-size: .9rem;
+  }.success-next-step{
+    font-size: 1rem;
     color: #1a5e3a;
     margin: 0;
     font-weight: 500;
   }
 
   /* ===== RESPONSIVE ===== */
-  @media (max-width: 480px) {
-    .form-row {
+  @media (max-width: 480px) {.form-row{
       grid-template-columns: 1fr;
       gap: 1rem;
-    }
-
-    .form-actions {
+    }.form-actions{
       grid-template-columns: 1fr 1fr;
-    }
-
-    .form-step-title {
-      font-size: 1.25rem;
-    }
-
-    .form-input {
+    }.form-step-title{
+      font-size: 1.5rem;
+    }.form-input{
       padding: 0.85rem 0.9rem;
       font-size: 16px; /* Prevents zoom on iOS */
-    }
-
-    .form-input--large {
+    }.form-input--large{
       padding: 1rem;
       font-size: 16px;
-    }
-
-    .form-btn {
+    }.form-btn{
       padding: 0.85rem 1rem;
-      font-size: 0.95rem;
-    }
-
-    .form-progress__line {
+      font-size: 1rem;
+    }.form-progress__line{
       width: 40px;
       margin: 0 .65rem;
     }
@@ -628,7 +492,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
 
   // Returning user check — hide form if already submitted
   if (form && localStorage.getItem('va_form_submitted')) {
-    form.innerHTML = '<div style="padding:1.5rem;text-align:center;color:#27ae60;font-weight:600;font-family:Inter,sans-serif"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:block;margin:0 auto 0.75rem"><path d="M20 6 9 17l-5-5"/></svg>Bạn đã đăng ký thành công.<br><span style="font-weight:400;font-size:0.9rem;color:#475569">Chúng tôi sẽ liên hệ trong 24 giờ.</span></div>';
+    form.innerHTML = '<div style="padding:1.5rem;text-align:center;color:#27ae60;font-weight:600;font-family:Inter,sans-serif"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:block;margin:0 auto 0.75rem"><path d="M20 6 9 17l-5-5"/></svg>Bạn đã đăng ký thành công.<br><span style="font-weight:400;font-size:1rem;color:#475569">Chúng tôi sẽ liên hệ trong 24 giờ.</span></div>';
   }
 
   // Lead API endpoint (Cloudflare Worker → GHL + Pancake CRM)

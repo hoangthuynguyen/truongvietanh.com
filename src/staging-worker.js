@@ -377,6 +377,10 @@ async function handleLeadSubmission(request, env) {
       else if ((data.source || '').match(/trai-he|vsl-/) && data.email) {
         promises.push(sendTraiHeConsultEmail(data, env, contactId, ghlApiKey).catch(() => {}));
       }
+      // Squeeze page leads: send resource delivery email to the registrant
+      else if ((data.source || '').match(/squeeze-/) && data.email) {
+        promises.push(sendSqueezeResourceEmail(data, env, contactId, ghlApiKey).catch(() => {}));
+      }
       // Create opportunity for ALL trai-he leads (quiz or sales page)
       if (isQuizLead(data) && contactId) {
         promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
@@ -902,6 +906,132 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
         reply_to: { email: 'tu@truongvietanh.com', name: 'Ban Tuyển sinh Việt Anh' },
         subject,
         content: [{ type: 'text/html', value: body }],
+      }),
+    });
+  } catch (_) {}
+}
+
+// === SQUEEZE PAGE RESOURCE DELIVERY EMAIL (gửi tài liệu cho người đăng ký) ===
+const SQUEEZE_RESOURCES = {
+  'squeeze-checklist': {
+    title: 'Checklist Chọn Trường 2026',
+    subject: '📋 Checklist chọn trường của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Checklist Chọn Trường 2026. Dưới đây là bộ tài liệu đầy đủ:',
+    items: [
+      { icon: '✅', label: 'Checklist 15 tiêu chí đánh giá trường (PDF)', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-2026.pdf' },
+      { icon: '📊', label: 'Bảng so sánh trường (Google Sheets)', url: 'https://docs.google.com/spreadsheets/d/1_truongvietanh_checklist' },
+      { icon: '💡', label: '7 câu hỏi phải hỏi khi tham quan trường', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-2026.pdf' },
+      { icon: '📅', label: 'Timeline tuyển sinh 2026', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-2026.pdf' },
+    ],
+    cta: { text: '📥 Tải checklist ngay', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-2026.pdf' },
+  },
+  'squeeze-ebook-lo-trinh': {
+    title: 'Ebook Lộ Trình Lớp 10',
+    subject: '📚 Ebook lộ trình lớp 10 của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Ebook Lộ Trình Lớp 10. Đây là tài liệu:',
+    items: [
+      { icon: '📚', label: 'Ebook Lộ Trình Lớp 10 đầy đủ (PDF)', url: 'https://media.truongvietanh.com/docs/ebook-lo-trinh-lop-10.pdf' },
+    ],
+    cta: { text: '📥 Tải ebook ngay', url: 'https://media.truongvietanh.com/docs/ebook-lo-trinh-lop-10.pdf' },
+  },
+  'squeeze-hoc-thu': {
+    title: 'Đăng Ký Học Thử Miễn Phí',
+    subject: '✅ Đăng ký học thử thành công — Trường Việt Anh sẽ liên hệ trong 24h',
+    intro: 'Cảm ơn Ba/Mẹ đã đăng ký học thử miễn phí. Tư vấn viên sẽ liên hệ trong 24 giờ để xếp lịch.',
+    items: [],
+    cta: { text: '💬 Chat Zalo để xếp lịch nhanh hơn', url: 'https://zalo.me/1678310120468101523' },
+  },
+  'squeeze-test-nang-luc': {
+    title: 'Đăng Ký Test Năng Lực',
+    subject: '✅ Đăng ký test năng lực thành công — Trường Việt Anh sẽ liên hệ trong 24h',
+    intro: 'Cảm ơn Ba/Mẹ đã đăng ký test năng lực. Tư vấn viên sẽ liên hệ để đặt lịch test trong 24 giờ.',
+    items: [],
+    cta: { text: '💬 Chat Zalo để xếp lịch nhanh hơn', url: 'https://zalo.me/1678310120468101523' },
+  },
+  'squeeze-livestream': {
+    title: 'Đăng Ký Livestream Phụ Huynh',
+    subject: '✅ Đã đăng ký livestream — Link tham dự sẽ gửi trước 30 phút',
+    intro: 'Cảm ơn Ba/Mẹ đã đăng ký tham dự Livestream. Link tham dự sẽ được gửi qua email trước buổi 30 phút.',
+    items: [],
+    cta: { text: '💬 Chat Zalo để biết thêm chi tiết', url: 'https://zalo.me/1678310120468101523' },
+  },
+};
+
+async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
+  const source = data.source || data.funnelCode || '';
+  const res = SQUEEZE_RESOURCES[source] || {
+    title: 'Tài liệu từ Trường Việt Anh',
+    subject: '✅ Đăng ký thành công — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã đăng ký. Tư vấn viên sẽ liên hệ trong 24 giờ.',
+    items: [],
+    cta: { text: '💬 Chat Zalo ngay', url: 'https://zalo.me/1678310120468101523' },
+  };
+
+  const nameParts = (data.fullName || '').trim().split(/\s+/);
+  const firstName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0] || 'Ba/Mẹ';
+
+  const itemsHtml = res.items.length > 0 ? `
+    <div style="background:#f8faff;border-radius:10px;padding:18px 20px;margin-bottom:20px;">
+      <p style="font-weight:700;color:#1a1a5e;margin:0 0 12px;">📦 Bộ tài liệu của bạn:</p>
+      ${res.items.map(item => `
+        <div style="margin-bottom:10px;">
+          <a href="${item.url}" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#1a1a5e;background:#fff;border:1.5px solid #e0e0e0;border-radius:8px;padding:10px 14px;">
+            <span style="font-size:20px;">${item.icon}</span>
+            <span style="font-size:14px;font-weight:500;">${item.label}</span>
+            <span style="margin-left:auto;color:#D4A843;font-weight:700;">→ Tải</span>
+          </a>
+        </div>
+      `).join('')}
+    </div>` : '';
+
+  const html = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;margin:0;padding:20px;">
+<div style="max-width:580px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
+  <div style="background:linear-gradient(135deg,#1a1a5e,#12123e);color:#fff;padding:28px 24px;text-align:center;">
+    <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:8px 16px;border-radius:8px;margin-bottom:14px;"/>
+    <h1 style="color:#fff;font-size:20px;margin:6px 0;">✅ ${res.title}</h1>
+  </div>
+
+  <div style="padding:26px 24px;">
+    <p style="font-size:15px;color:#1a1a2e;margin:0 0 16px;">Dạ chào <strong>${firstName}</strong>,</p>
+    <p style="font-size:15px;color:#2d2d42;line-height:1.7;margin:0 0 20px;">${res.intro}</p>
+
+    ${itemsHtml}
+
+    <div style="text-align:center;margin:24px 0;">
+      <a href="${res.cta.url}" style="display:inline-block;background:linear-gradient(135deg,#D4A843,#c09530);color:#12123e;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(212,168,67,.4);">
+        ${res.cta.text}
+      </a>
+    </div>
+
+    <div style="background:#f0faf4;border:1px solid #c8e9d4;border-radius:10px;padding:14px 18px;margin-top:16px;">
+      <p style="margin:0;font-size:14px;color:#1e8449;line-height:1.6;">
+        🛡️ Nếu có câu hỏi, Ba/Mẹ có thể liên hệ trực tiếp qua Zalo <a href="https://zalo.me/1678310120468101523" style="color:#1a1a5e;font-weight:700;">tại đây</a> hoặc gọi <a href="tel:+84916961409" style="color:#1a1a5e;font-weight:700;">0916 961 409</a>.
+      </p>
+    </div>
+  </div>
+
+  <div style="background:#12123e;color:#ffd89a;padding:14px 20px;text-align:center;font-size:12px;">
+    Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#ffd89a;">truongvietanh.com</a>
+  </div>
+</div>
+</body></html>`;
+
+  // Primary: GHL Conversations API (dùng SES backend — ổn định hơn MailChannels)
+  if (contactId) {
+    await sendEmailViaGHL({ contactId, subject: res.subject, html, ghlApiKey });
+  }
+
+  // Fallback: MailChannels trực tiếp tới email người dùng
+  try {
+    await fetch('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: data.email, name: data.fullName || firstName }] }],
+        from: { email: 'tailieu@truongvietanh.com', name: 'Trường Việt Anh — Tài liệu' },
+        reply_to: { email: 'tu@truongvietanh.com', name: 'Ban Tuyển sinh Việt Anh' },
+        subject: res.subject,
+        content: [{ type: 'text/html', value: html }],
       }),
     });
   } catch (_) {}

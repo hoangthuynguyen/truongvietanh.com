@@ -101,32 +101,25 @@ import SiteFooter from '../components/SiteFooter.astro';
   </div>
 </BaseLayout>
 
-<style>
-  .thankyou-page {
+<style>.thankyou-page{
     min-height: calc(100vh - 140px);
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 1.5rem 1.5rem;
-  }
-
-  .thankyou-container {
+  }.thankyou-container{
     max-width: 960px;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
-  }
-
-  /* Top row: icon + title inline */
-  .thankyou-top {
+  }/* Top row: icon + title inline */
+  .thankyou-top{
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
-
-  .thankyou-icon {
+  }.thankyou-icon{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -140,35 +133,24 @@ import SiteFooter from '../components/SiteFooter.astro';
     box-shadow: 0 6px 24px rgba(26, 26, 94, 0.2);
   }
 
-  @keyframes popIn {
-    0% { transform: scale(0); opacity: 0; }
-    60% { transform: scale(1.1); }
-    100% { transform: scale(1); opacity: 1; }
-  }
-
-  h1 {
+  @keyframes popIn {0%{ transform: scale(0); opacity: 0; }60%{ transform: scale(1.1); }100%{ transform: scale(1); opacity: 1; }
+  }h1{
     font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
     font-size: clamp(1.5rem, 3vw, 2rem);
     color: #1a1a5e;
     margin: 0 0 0.2rem;
-  }
-
-  .thankyou-subtitle {
+  }.thankyou-subtitle{
     font-size: 1rem;
     color: #5c6e80;
     margin: 0;
-  }
-
-  /* 2-column grid */
-  .thankyou-grid {
+  }/* 2-column grid */
+  .thankyou-grid{
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 1.25rem;
     align-items: start;
-  }
-
-  /* Left: steps */
-  .thankyou-steps {
+  }/* Left: steps */
+  .thankyou-steps{
     text-align: left;
     background: #f8fafc;
     border-radius: 14px;
@@ -176,29 +158,21 @@ import SiteFooter from '../components/SiteFooter.astro';
     border: 1px solid #e2e8f0;
     height: 100%;
     box-sizing: border-box;
-  }
-
-  .thankyou-steps h2 {
-    font-size: 0.95rem;
+  }.thankyou-steps h2{
+    font-size: 1.5rem;
     color: #1a193c;
     margin: 0 0 1rem;
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.03em;
-  }
-
-  .step-cards {
+  }.step-cards{
     display: grid;
     gap: 0.75rem;
-  }
-
-  .step-card {
+  }.step-card{
     display: flex;
     gap: 0.75rem;
     align-items: flex-start;
-  }
-
-  .step-number {
+  }.step-number{
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -208,100 +182,72 @@ import SiteFooter from '../components/SiteFooter.astro';
     background: linear-gradient(135deg, #1a1a5e, #2d2d8a);
     color: #D4A843;
     font-weight: 800;
-    font-size: 0.8rem;
+    font-size: 1rem;
     flex-shrink: 0;
-  }
-
-  .step-card strong {
+  }.step-card strong{
     display: block;
     color: #1a193c;
-    font-size: 0.88rem;
+    font-size: 1rem;
     margin-bottom: 0.2rem;
-  }
-
-  .step-card p {
+  }.step-card p{
     color: #5c6e80;
-    font-size: 0.82rem;
+    font-size: 1rem;
     line-height: 1.45;
     margin: 0;
-  }
-
-  .step-card--highlight {
+  }.step-card--highlight{
     background: linear-gradient(135deg, #fef9ef, #fdf6e3);
     border-left: 3px solid #D4A843;
     padding: 0.65rem 0.75rem;
     border-radius: 8px;
-  }
-
-  /* Right column */
-  .thankyou-right {
+  }/* Right column */
+  .thankyou-right{
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-
-  .thankyou-spam-notice {
+  }.thankyou-spam-notice{
     text-align: left;
     background: #fff8f0;
     border: 1px solid #fed7aa;
     border-radius: 12px;
     padding: 1.1rem;
-  }
-
-  .thankyou-spam-notice h3 {
-    font-size: 0.9rem;
+  }.thankyou-spam-notice h3{
+    font-size: 1.5rem;
     color: #9a3412;
     margin: 0 0 0.5rem;
     font-weight: 700;
-  }
-
-  .thankyou-spam-notice ul {
+  }.thankyou-spam-notice ul{
     margin: 0;
     padding-left: 1.1rem;
-  }
-
-  .thankyou-spam-notice li {
-    font-size: 0.82rem;
+  }.thankyou-spam-notice li{
+    font-size: 1rem;
     color: #78350f;
     line-height: 1.5;
     margin-bottom: 0.35rem;
-  }
-
-  .spam-tip {
+  }.spam-tip{
     margin: 0.65rem 0 0;
     padding: 0.55rem 0.75rem;
     background: #fefce8;
     border-radius: 6px;
-    font-size: 0.8rem;
+    font-size: 1rem;
     color: #713f12;
-  }
-
-  .thankyou-contact {
+  }.thankyou-contact{
     display: flex;
     align-items: center;
     gap: 0.6rem;
     flex-wrap: wrap;
-  }
-
-  .thankyou-contact p {
+  }.thankyou-contact p{
     color: #5c6e80;
-    font-size: 0.88rem;
+    font-size: 1rem;
     margin: 0;
-  }
-
-  .thankyou-phone {
+  }.thankyou-phone{
     font-weight: 700;
     color: #1a193c;
     font-size: 1rem;
     text-decoration: none;
-  }
-
-  .thankyou-divider {
+  }.thankyou-divider{
     color: #94a3b8;
-    font-size: 0.85rem;
-  }
-
-  .thankyou-zalo {
+    font-size: 1rem;
+  }.thankyou-zalo{
     display: inline-flex;
     align-items: center;
     padding: 0.35rem 0.85rem;
@@ -309,75 +255,56 @@ import SiteFooter from '../components/SiteFooter.astro';
     color: #fff;
     border-radius: 7px;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 1rem;
     text-decoration: none;
-  }
-
-  .thankyou-links {
+  }.thankyou-links{
     display: flex;
     gap: 0.75rem;
     flex-wrap: wrap;
-  }
-
-  .thankyou-links .btn-cta {
+  }.thankyou-links .btn-cta{
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.7rem 1.5rem;
     border-radius: 9px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
     text-decoration: none;
     background: linear-gradient(135deg, #1a193c, #2d2d8a);
     color: #fff;
     transition: transform 0.2s, box-shadow 0.2s;
-  }
-
-  .thankyou-links .btn-cta:hover {
+  }.thankyou-links .btn-cta:hover{
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(26, 25, 60, 0.25);
-  }
-
-  .thankyou-links .btn-cta--outline {
+  }.thankyou-links .btn-cta--outline{
     display: inline-flex;
     align-items: center;
     justify-content: center;
     padding: 0.7rem 1.5rem;
     border-radius: 9px;
     font-weight: 700;
-    font-size: 0.9rem;
+    font-size: 1rem;
     text-decoration: none;
     background: transparent;
     color: #1a193c;
     border: 2px solid rgba(26, 25, 60, 0.2);
     transition: background 0.2s;
-  }
-
-  .thankyou-links .btn-cta--outline:hover {
+  }.thankyou-links .btn-cta--outline:hover{
     background: rgba(26, 25, 60, 0.04);
   }
 
   /* Mobile: back to single column */
-  @media (max-width: 680px) {
-    .thankyou-top {
+  @media (max-width: 680px) {.thankyou-top{
       flex-direction: column;
       text-align: center;
-    }
-
-    .thankyou-grid {
+    }.thankyou-grid{
       grid-template-columns: 1fr;
-    }
-
-    .thankyou-links {
+    }.thankyou-links{
       flex-direction: column;
-    }
-
-    .thankyou-links a {
+    }.thankyou-links a{
       width: 100%;
       text-align: center;
-    }
-
-    .thankyou-contact {
+    }.thankyou-contact{
       justify-content: center;
     }
   }

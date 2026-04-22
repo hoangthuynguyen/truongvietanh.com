@@ -468,47 +468,40 @@ const structuredData = [
   </div>
 </BaseLayout>
 
-<style is:global>
-/* ===== LIÊN HỆ PAGE — Additional styles ===== */
+<style is:global>/* ===== LIÊN HỆ PAGE — Additional styles ===== */
 /* Reuses all gi-* classes from gioi-thieu.astro (is:global) */
 
 /* Contact grid */
-.lh-contact-grid {
+.lh-contact-grid{
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
   margin: 2rem 0;
-}
-.lh-contact-card {
+}.lh-contact-card{
   background: #ffffff;
   padding: 2rem;
   border-radius: 12px;
   border: 1px solid #e2e8f0;
   box-shadow: 0 4px 15px rgba(0,0,0,0.03);
   transition: transform 0.2s, box-shadow 0.2s;
-}
-.lh-contact-card:hover {
+}.lh-contact-card:hover{
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0,0,0,0.06);
-}
-.lh-contact-card.lh-primary {
+}.lh-contact-card.lh-primary{
   border-left: 4px solid #fde047;
   background: #fefce8;
-}
-.lh-icon {
+}.lh-icon{
   font-size: 2rem;
   display: block;
   margin-bottom: 0.75rem;
-}
-.lh-contact-card h3 {
-  font-size: 1rem;
+}.lh-contact-card h3{
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1a193c;
   margin-bottom: 0.5rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-}
-.lh-phone {
+}.lh-phone{
   font-size: 1.25rem;
   font-weight: 800;
   color: #1a193c;
@@ -518,36 +511,29 @@ const structuredData = [
   display: inline-block;
   margin-bottom: 0.75rem;
   transition: color 0.2s;
-}
-.lh-phone:hover {
+}.lh-phone:hover{
   color: #b8922e;
-}
-.lh-email-link, .lh-social-link {
+}.lh-email-link, .lh-social-link{
   font-size: 1.05rem;
   font-weight: 700;
-}
-.lh-contact-card p {
-  font-size: 0.92rem;
+}.lh-contact-card p{
+  font-size: 1rem;
   color: #475569;
   line-height: 1.5;
   margin: 0;
-}
-
-/* CTA benefits list */
-.lh-cta-benefits {
+}/* CTA benefits list */
+.lh-cta-benefits{
   list-style: none;
   padding: 0;
   margin: 1.5rem 0 0;
-}
-.lh-cta-benefits li {
+}.lh-cta-benefits li{
   font-size: 1rem;
   color: #e2e8f0;
   margin-bottom: 0.5rem;
   padding-left: 1.5rem;
   position: relative;
   line-height: 1.5;
-}
-.lh-cta-benefits li::before {
+}.lh-cta-benefits li::before{
   content: "\2713";
   position: absolute;
   left: 0;
@@ -555,13 +541,11 @@ const structuredData = [
   font-weight: bold;
 }
 
-@media (max-width: 1024px) {
-  .lh-contact-grid {
+@media (max-width: 1024px) {.lh-contact-grid{
     grid-template-columns: repeat(2, 1fr);
   }
 }
-@media (max-width: 640px) {
-  .lh-contact-grid {
+@media (max-width: 640px) {.lh-contact-grid{
     grid-template-columns: 1fr;
   }
 }

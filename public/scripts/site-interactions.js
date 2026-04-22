@@ -1,7 +1,7 @@
 /**
  * site-interactions.js — interactions for SiteLayout (v2).
  * Handles: announcement close, exit popup, cookie consent, back-to-top,
- * dark mode, scroll animations, FAQ toggle, stat counters, countdown.
+ * scroll animations, FAQ toggle, stat counters, countdown.
  */
 (function () {
   'use strict';
@@ -92,19 +92,6 @@
       btn.hidden = window.scrollY < 300;
     }, { passive: true });
     btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  }
-
-  // ========= DARK MODE =========
-  function initDarkMode() {
-    const btn = $('#dark-toggle');
-    const saved = localStorage.getItem('dark-mode');
-    if (saved === 'dark' || (saved == null && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    }
-    btn?.addEventListener('click', () => {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('dark-mode', isDark ? 'dark' : 'light');
-    });
   }
 
   // ========= SCROLL REVEAL =========
@@ -211,7 +198,6 @@
     initExitPopup();
     initCookieConsent();
     initBackToTop();
-    initDarkMode();
     initScrollReveal();
     initFaq();
     initCounters();

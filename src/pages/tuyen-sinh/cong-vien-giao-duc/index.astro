@@ -1,0 +1,459 @@
+---
+import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
+
+const pageTitle = 'Công Viên Giáo Dục — Nơi 1.000 Đứa Trẻ Hạnh Phúc Lớn Lên Khác Biệt | Trường Việt Anh';
+const pageDescription = 'KHÔNG BÁN VÉ. KHÔNG MỞ CỬA ĐẠI TRÀ. Chỉ dành cho thành viên nội bộ. Trở thành hội viên miễn phí 6 tháng bằng cách mời 2 người bạn có con 1–8 tuổi cùng tham gia. Dành cho Ba/Mẹ muốn con tránh xa màn hình, vận động ngoài trời, phát triển thể chất và cảm xúc.';
+const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc';
+const funnelCode = 'cong-vien-giao-duc';
+
+const campuses = [
+  { value: 'viet-anh', label: 'Trường Mầm non Việt Anh — 573 Lê Đức Thọ, P16, Gò Vấp, TP.HCM', map: 'https://maps.app.goo.gl/5PXx5P9PAmXM5wWv5' },
+  { value: 'nhan-le', label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Tây Ninh', map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
+  { value: 'mekong-xanh', label: 'Mầm non & Tiểu học Mekong Xanh — Lô E7, KĐT Tây Bắc, Rạch Giá, An Giang', map: 'https://maps.app.goo.gl/VHG5dxeEtan3wGjz6' },
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="mau-non"
+  funnelCode={funnelCode}
+>
+  <section slot="hero">
+    <span class="cvgd-badge">Chỉ dành cho thành viên nội bộ</span>
+    <h1 class="squeeze-hero__heading">CÔNG VIÊN GIÁO DỤC</h1>
+    <p class="squeeze-hero__sub"><strong>Nơi 1.000 đứa trẻ hạnh phúc sẽ bắt đầu hành trình lớn lên khác biệt.</strong></p>
+    <div class="cvgd-rules">
+      <div class="cvgd-rule">KHÔNG BÁN VÉ</div>
+      <div class="cvgd-rule">KHÔNG MỞ CỬA ĐẠI TRÀ</div>
+      <div class="cvgd-rule cvgd-rule--accent">CHỈ DÀNH CHO THÀNH VIÊN NỘI BỘ</div>
+    </div>
+    <p class="cvgd-hero-cta-line">
+      Và để trở thành thành viên, bạn chỉ cần làm một việc duy nhất:<br/>
+      <strong>Mời 2 người bạn có con từ 1–8 tuổi cùng tham gia.</strong>
+    </p>
+  </section>
+
+  <section slot="content">
+    <div class="cvgd-content">
+      <div class="cvgd-panel">
+        <h2 class="cvgd-h2">Nếu bạn là cha mẹ của trẻ 1–8 tuổi, hãy đọc kỹ</h2>
+        <p class="cvgd-lead">
+          <strong>7 năm đầu đời quyết định hơn 70% nền tảng trí tuệ, cảm xúc và nhân cách của trẻ.</strong>
+        </p>
+        <p class="cvgd-para">Nhưng hầu hết trẻ em hiện nay lớn lên trong:</p>
+        <ul class="cvgd-pains">
+          <li>📱 Màn hình điện thoại</li>
+          <li>🏠 Không gian 4 bức tường chật hẹp</li>
+          <li>🧠 Thiếu môi trường kích thích tư duy đúng chuẩn</li>
+        </ul>
+        <p class="cvgd-para">
+          Vì vậy, chúng tôi xây dựng một nơi hoàn toàn khác cho những ngày cuối tuần của trẻ tại:
+        </p>
+
+        <ol class="cvgd-campuses">
+          {campuses.map((c, i) => (
+            <li>
+              <a href={c.map} target="_blank" rel="noopener noreferrer">
+                <span class="cvgd-campus__num">{i + 1}</span>
+                <span class="cvgd-campus__text">{c.label}</span>
+                <span class="cvgd-campus__go">Xem bản đồ →</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+
+      <div class="cvgd-panel cvgd-panel--highlight">
+        <h2 class="cvgd-h2">🎯 Ở Công viên Giáo dục, các con sẽ</h2>
+        <ul class="cvgd-benefits">
+          <li><span>🏃</span><div><strong>Vận động ngoài trời</strong><p>Thoát khỏi bốn bức tường, được chạy nhảy, leo trèo, tiếp xúc với đất – nước – cây xanh.</p></div></li>
+          <li><span>🔍</span><div><strong>Tự khám phá bản thân</strong><p>Không gian an toàn để con thử nghiệm, chọn lựa và phát triển tính độc lập từ sớm.</p></div></li>
+          <li><span>❤️</span><div><strong>Phát triển cảm xúc</strong><p>Các hoạt động nhóm giúp con hiểu cảm xúc của mình và kết nối với bạn bè.</p></div></li>
+          <li><span>🥗</span><div><strong>Làm quen với thức ăn vì sức khỏe</strong><p>Tự trồng, tự chọn, tự nếm — con hiểu đồ ăn tốt không phải là khái niệm trừu tượng.</p></div></li>
+          <li><span>💪</span><div><strong>Kiểm tra thể chất định kỳ</strong><p>Đo chiều cao, cân nặng, sức bền — biết con đang mạnh lên mỗi tuần.</p></div></li>
+        </ul>
+      </div>
+
+      <div class="cvgd-panel">
+        <h2 class="cvgd-h2">Ai nên tham gia?</h2>
+        <ul class="cvgd-who">
+          <li>✅ Cha mẹ muốn con khỏe mạnh và thông minh thật sự</li>
+          <li>✅ Gia đình muốn con tránh xa màn hình</li>
+          <li>✅ Những người sẵn sàng hành động thay vì chỉ lo lắng</li>
+        </ul>
+        <p class="cvgd-para cvgd-para--emphasis">Nếu bạn thấy mình trong đó, đừng chờ đợi.</p>
+      </div>
+
+      <div class="cvgd-panel cvgd-panel--steps">
+        <h2 class="cvgd-h2">Cách trở thành hội viên</h2>
+        <ol class="cvgd-steps">
+          <li><strong>Bước 1:</strong> Điền thông tin đăng ký</li>
+          <li><strong>Bước 2:</strong> Mời 2 người bạn cùng tham gia (ghi tên + SĐT của họ ngay trong form)</li>
+          <li><strong>Bước 3:</strong> Nhận thẻ hội viên <strong>6 tháng miễn phí</strong></li>
+        </ol>
+        <p class="cvgd-para">Vậy là xong.</p>
+        <ul class="cvgd-no">
+          <li>✘ Không phí tham gia</li>
+          <li>✘ Không ràng buộc tài chính</li>
+          <li>✔ Chỉ cần bạn lan tỏa giá trị</li>
+        </ul>
+      </div>
+
+      <div class="cvgd-limit">
+        <p>
+          <strong>⏳ Chúng tôi giới hạn số gia đình tham gia mỗi đợt để đảm bảo chất lượng.</strong><br/>
+          Khi đủ số lượng, hệ thống sẽ đóng đăng ký. Ưu tiên đăng ký sớm.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section slot="form">
+    <div class="cvgd-form-intro">
+      <h2 class="squeeze-form-section__heading">Đăng ký hội viên Công viên Giáo dục</h2>
+      <p class="squeeze-form-section__description">
+        Điền 1 phiếu duy nhất bao gồm thông tin của bạn và 2 người bạn được mời. Hoàn toàn miễn phí — không phí tham gia, không ràng buộc.
+      </p>
+    </div>
+
+    <form id="cvgd-form" class="cvgd-form" novalidate>
+      <fieldset class="cvgd-fieldset">
+        <legend>1. Thông tin của bạn</legend>
+        <label>
+          <span>Họ và tên <em>*</em></span>
+          <input type="text" name="parent_name" required minlength="2" autocomplete="name" placeholder="Nguyễn Văn A" />
+        </label>
+        <label>
+          <span>Số điện thoại <em>*</em></span>
+          <input type="tel" name="parent_phone" required pattern="[0-9\+\-\s]{9,}" autocomplete="tel" placeholder="09xx xxx xxx" />
+        </label>
+        <label>
+          <span>Công viên tham gia <em>*</em></span>
+          <select name="campus" required>
+            <option value="">— Chọn nơi gần nhất —</option>
+            {campuses.map((c) => <option value={c.value}>{c.label}</option>)}
+          </select>
+        </label>
+      </fieldset>
+
+      <fieldset class="cvgd-fieldset">
+        <legend>2. Người bạn được mời (1/2)</legend>
+        <label>
+          <span>Họ và tên <em>*</em></span>
+          <input type="text" name="ref1_name" required minlength="2" placeholder="Trần Thị B" />
+        </label>
+        <label>
+          <span>Số điện thoại <em>*</em></span>
+          <input type="tel" name="ref1_phone" required pattern="[0-9\+\-\s]{9,}" placeholder="09xx xxx xxx" />
+        </label>
+      </fieldset>
+
+      <fieldset class="cvgd-fieldset">
+        <legend>3. Người bạn được mời (2/2)</legend>
+        <label>
+          <span>Họ và tên <em>*</em></span>
+          <input type="text" name="ref2_name" required minlength="2" placeholder="Lê Văn C" />
+        </label>
+        <label>
+          <span>Số điện thoại <em>*</em></span>
+          <input type="tel" name="ref2_phone" required pattern="[0-9\+\-\s]{9,}" placeholder="09xx xxx xxx" />
+        </label>
+      </fieldset>
+
+      <button type="submit" class="cvgd-submit">Gửi đăng ký & nhận thẻ hội viên 6 tháng</button>
+      <p class="cvgd-consent">
+        Bằng cách nhấn gửi, bạn đồng ý cho Trường Việt Anh liên hệ bạn và 2 người bạn được mời qua SĐT / Zalo để xác nhận.
+      </p>
+    </form>
+  </section>
+</SqueezePageLayout>
+
+<script is:inline>
+(function () {
+  const form = document.getElementById('cvgd-form');
+  if (!form) return;
+
+  const LEAD_API_URL = '/api/lead';
+  const FUNNEL_CODE = 'cong-vien-giao-duc';
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const utm = {
+    utm_source: urlParams.get('utm_source') || '',
+    utm_medium: urlParams.get('utm_medium') || '',
+    utm_campaign: urlParams.get('utm_campaign') || '',
+    utm_term: urlParams.get('utm_term') || '',
+    utm_content: urlParams.get('utm_content') || '',
+    referrer: document.referrer || '',
+    landing_page: window.location.pathname,
+  };
+
+  function isValidPhone(p) { return /^[0-9\+\-\s\(\)]{9,}$/.test((p || '').replace(/\s/g, '')); }
+  function showError(msg) {
+    const box = form.querySelector('.cvgd-error') || (function () {
+      const d = document.createElement('div');
+      d.className = 'cvgd-error';
+      form.insertBefore(d, form.querySelector('.cvgd-submit'));
+      return d;
+    })();
+    box.textContent = msg;
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  async function postLead(payload) {
+    const body = Object.assign({}, payload, utm, {
+      funnel_code: FUNNEL_CODE,
+      school_level: 'mau-non',
+      page: window.location.href,
+      form_id: 'cvgd-form',
+      timestamp: new Date().toISOString(),
+    });
+    try {
+      const r = await fetch(LEAD_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      return r.ok;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const parentName = (fd.get('parent_name') || '').toString().trim();
+    const parentPhone = (fd.get('parent_phone') || '').toString().trim();
+    const campus = (fd.get('campus') || '').toString().trim();
+    const ref1Name = (fd.get('ref1_name') || '').toString().trim();
+    const ref1Phone = (fd.get('ref1_phone') || '').toString().trim();
+    const ref2Name = (fd.get('ref2_name') || '').toString().trim();
+    const ref2Phone = (fd.get('ref2_phone') || '').toString().trim();
+
+    if (!parentName || !isValidPhone(parentPhone) || !campus) {
+      showError('Vui lòng điền đầy đủ thông tin của bạn.');
+      return;
+    }
+    if (!ref1Name || !isValidPhone(ref1Phone) || !ref2Name || !isValidPhone(ref2Phone)) {
+      showError('Vui lòng điền đầy đủ thông tin 2 người bạn được mời.');
+      return;
+    }
+    if ([parentPhone, ref1Phone, ref2Phone].map((p) => p.replace(/\s/g, '')).some((p, i, a) => a.indexOf(p) !== i)) {
+      showError('Số điện thoại bị trùng. Vui lòng kiểm tra lại.');
+      return;
+    }
+
+    const submitBtn = form.querySelector('.cvgd-submit');
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Đang gửi...';
+
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: 'form_submit', form_id: 'cvgd-form', funnel: FUNNEL_CODE });
+    }
+
+    const leads = [
+      {
+        full_name: parentName,
+        phone: parentPhone,
+        email: '',
+        campus_ref: campus,
+        role: 'registrant',
+        notes: 'Đăng ký hội viên Công viên Giáo dục',
+      },
+      {
+        full_name: ref1Name,
+        phone: ref1Phone,
+        email: '',
+        campus_ref: campus,
+        role: 'referred',
+        notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',
+      },
+      {
+        full_name: ref2Name,
+        phone: ref2Phone,
+        email: '',
+        campus_ref: campus,
+        role: 'referred',
+        notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',
+      },
+    ];
+
+    const results = await Promise.all(leads.map(postLead));
+    const primaryOk = results[0];
+
+    if (primaryOk) {
+      const qs = new URLSearchParams({ name: parentName, campus: campus });
+      window.location.href = '/tuyen-sinh/cong-vien-giao-duc/cam-on?' + qs.toString();
+    } else {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Gửi đăng ký & nhận thẻ hội viên 6 tháng';
+      showError('Có lỗi khi gửi. Vui lòng gọi 0916 961 409 để được hỗ trợ.');
+    }
+  });
+})();
+</script>
+
+<style is:inline>
+  .cvgd-badge {
+    display: inline-block;
+    background: rgba(212, 168, 67, 0.15);
+    color: #8b6a1e;
+    padding: 0.45rem 1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 1rem;
+    border: 1px solid rgba(212, 168, 67, 0.4);
+  }
+  .cvgd-rules {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin: 1.25rem 0;
+  }
+  .cvgd-rule {
+    background: #1a1a5e;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+  }
+  .cvgd-rule--accent {
+    background: linear-gradient(135deg, #D4A843, #b8922e);
+  }
+  .cvgd-hero-cta-line {
+    max-width: 640px;
+    margin: 0.75rem auto 0;
+    color: #2d2d42;
+    line-height: 1.7;
+  }
+
+  .cvgd-content { max-width: 960px; margin: 0 auto; display: grid; gap: 1.5rem; }
+  .cvgd-panel {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+  }
+  .cvgd-panel--highlight {
+    background: linear-gradient(180deg, #fdf7e6 0%, #ffffff 100%);
+    border-color: rgba(212, 168, 67, 0.4);
+  }
+  .cvgd-panel--steps { border-left: 4px solid #D4A843; }
+  .cvgd-h2 {
+    color: #1a1a5e;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  .cvgd-lead { font-size: 1.15rem; line-height: 1.65; margin-bottom: 1rem; color: #1a1a5e; }
+  .cvgd-para { line-height: 1.7; margin-bottom: 1rem; color: #2d2d42; }
+  .cvgd-para--emphasis { font-weight: 700; color: #1a1a5e; font-size: 1.15rem; }
+  .cvgd-pains {
+    list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.5rem;
+  }
+  .cvgd-pains li {
+    padding: 0.75rem 1rem; background: #fef2f2; border-left: 3px solid #dc2626;
+    border-radius: 8px; font-weight: 600; color: #7f1d1d;
+  }
+  .cvgd-campuses { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
+  .cvgd-campuses a {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center;
+    padding: 1rem 1.25rem; background: #f8f9fb; border: 1px solid #e5e7eb;
+    border-radius: 10px; color: #1a1a5e; text-decoration: none; transition: all 0.2s;
+  }
+  .cvgd-campuses a:hover { background: #fff; border-color: #D4A843; transform: translateY(-2px); }
+  .cvgd-campus__num {
+    width: 36px; height: 36px; border-radius: 50%; background: #1a1a5e; color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800; flex-shrink: 0;
+  }
+  .cvgd-campus__text { font-weight: 600; line-height: 1.5; }
+  .cvgd-campus__go { color: #D4A843; font-weight: 700; white-space: nowrap; }
+  .cvgd-benefits { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
+  .cvgd-benefits li {
+    display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
+    padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid #f1e6c9;
+  }
+  .cvgd-benefits li > span {
+    font-size: 1.75rem; width: 48px; height: 48px;
+    background: #fef8e5; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .cvgd-benefits strong { color: #1a1a5e; display: block; margin-bottom: 0.25rem; }
+  .cvgd-benefits p { color: #475569; line-height: 1.6; margin: 0; }
+  .cvgd-who { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.5rem; }
+  .cvgd-who li {
+    padding: 0.75rem 1rem; background: #f0fdf4; border-left: 3px solid #22c55e;
+    border-radius: 8px; color: #14532d; font-weight: 600;
+  }
+  .cvgd-steps { margin: 0 0 1rem 1.25rem; padding: 0; display: grid; gap: 0.65rem; }
+  .cvgd-steps li { line-height: 1.7; color: #2d2d42; }
+  .cvgd-steps li strong { color: #1a1a5e; }
+  .cvgd-no { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
+  .cvgd-no li { color: #475569; font-weight: 500; }
+  .cvgd-limit {
+    padding: 1.25rem 1.5rem; background: linear-gradient(135deg, #1a1a5e, #2d2d8a);
+    color: #fff; border-radius: 14px;
+  }
+  .cvgd-limit p { margin: 0; line-height: 1.65; color: #fff; }
+  .cvgd-limit strong { color: #D4A843; }
+
+  /* Form */
+  .cvgd-form-intro { margin-bottom: 1.5rem; text-align: center; max-width: 640px; margin-left: auto; margin-right: auto; }
+  .cvgd-form { max-width: 640px; margin: 0 auto; display: grid; gap: 1.25rem; text-align: left; }
+  .cvgd-form-intro { text-align: center; }
+  .cvgd-fieldset {
+    border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.25rem 1.25rem;
+    background: #fff;
+  }
+  .cvgd-fieldset legend {
+    padding: 0 0.65rem; font-weight: 700; color: #1a1a5e;
+    font-size: 1rem;
+  }
+  .cvgd-form label {
+    display: grid; gap: 0.35rem; margin-top: 0.75rem;
+  }
+  .cvgd-form label span {
+    font-weight: 600; color: #1a1a5e;
+  }
+  .cvgd-form label em { color: #dc2626; font-style: normal; }
+  .cvgd-form input, .cvgd-form select {
+    padding: 0.75rem 0.9rem; border: 1.5px solid #d1d5db;
+    border-radius: 8px; font-size: 1rem; font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .cvgd-form input:focus, .cvgd-form select:focus {
+    outline: none; border-color: #D4A843;
+    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15);
+  }
+  .cvgd-submit {
+    padding: 1rem 1.25rem;
+    background: linear-gradient(135deg, #D4A843, #b8922e);
+    color: #1a1a2e; border: none; border-radius: 10px;
+    font-weight: 800; font-size: 1.15rem; cursor: pointer;
+    box-shadow: 0 4px 15px rgba(212, 168, 67, 0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .cvgd-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 168, 67, 0.5); }
+  .cvgd-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .cvgd-consent {
+    font-size: 1rem; color: #64748b; text-align: center; line-height: 1.5; margin: 0;
+  }
+  .cvgd-error {
+    background: #fef2f2; color: #991b1b; padding: 0.85rem 1rem;
+    border-radius: 8px; border-left: 3px solid #dc2626; font-weight: 600;
+  }
+
+  @media (max-width: 640px) {
+    .cvgd-campuses a { grid-template-columns: auto 1fr; }
+    .cvgd-campus__go { grid-column: 2; }
+    .cvgd-rules { flex-direction: column; }
+  }
+</style>

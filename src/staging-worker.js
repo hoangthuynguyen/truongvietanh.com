@@ -446,6 +446,8 @@ const WORKFLOW_MAP = {
   'vsl':                        '023f00e9-d100-40d8-a8dc-2bd575ecb6c4',
   // WF9: Alumni & Referral
   'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
+  // WF: Checklist Chọn Trường Mầm Non — same workflow as squeeze-checklist
+  'squeeze-checklist-mam-non': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
   'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
 
@@ -954,6 +956,18 @@ const SQUEEZE_RESOURCES = {
     intro: 'Cảm ơn Ba/Mẹ đã đăng ký tham dự Livestream. Link tham dự sẽ được gửi qua email trước buổi 30 phút.',
     items: [],
     cta: { text: '💬 Chat Zalo để biết thêm chi tiết', url: 'https://zalo.me/1678310120468101523' },
+  },
+  'squeeze-checklist-mam-non': {
+    title: 'Checklist Chuẩn Bị Vào Mầm Non 2026',
+    subject: '🌱 Checklist mầm non của Ba/Mẹ đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Checklist Chuẩn Bị Vào Mầm Non 2026. Dưới đây là tài liệu đầy đủ:',
+    items: [
+      { icon: '✅', label: 'Checklist 25 tiêu chí chọn trường mầm non (PDF)', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-mam-non-2026.pdf' },
+      { icon: '📋', label: '10 câu hỏi bắt buộc khi tham quan trường mầm non', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-mam-non-2026.pdf' },
+      { icon: '🎒', label: 'Danh sách đồ dùng cần chuẩn bị cho bé vào lớp', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-mam-non-2026.pdf' },
+      { icon: '📅', label: 'Timeline nhập học mầm non 2026–2027', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-mam-non-2026.pdf' },
+    ],
+    cta: { text: '📥 Tải checklist mầm non ngay', url: 'https://media.truongvietanh.com/docs/checklist-chon-truong-mam-non-2026.pdf' },
   },
 };
 

@@ -446,8 +446,8 @@ const WORKFLOW_MAP = {
   'vsl':                        '023f00e9-d100-40d8-a8dc-2bd575ecb6c4',
   // WF9: Alumni & Referral
   'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
-  // WF: Checklist Chọn Trường Mầm Non — same workflow as squeeze-checklist
-  'squeeze-checklist-mam-non': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  // WF: Checklist Chọn Trường Mầm Non — LM01_Checklist_ChonTruong_MN
+  'squeeze-checklist-mam-non': '70107f73-45e5-4f5f-8be6-d8979fa5b805',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
   'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
 

@@ -85,6 +85,11 @@ export default {
       return Response.redirect(reportUrl.toString(), 302);
     }
 
+    // Serve media files from R2 bucket at /media/*
+    if (request.method === 'GET' && url.pathname.startsWith('/media/')) {
+      return handleR2Media(request, env, url);
+    }
+
     // Everything else → static assets with cache control
     const response = await env.ASSETS.fetch(request);
     const contentType = response.headers.get('content-type') || '';
@@ -96,6 +101,39 @@ export default {
     return response;
   },
 };
+
+// === R2 MEDIA HANDLER ===
+async function handleR2Media(request, env, url) {
+  if (!env.MEDIA_BUCKET) {
+    return new Response('Media storage not configured', { status: 503 });
+  }
+
+  // Strip /media/ prefix to get the R2 object key
+  const key = decodeURIComponent(url.pathname.replace(/^\/media\//, ''));
+  if (!key) return new Response('Not Found', { status: 404 });
+
+  try {
+    const object = await env.MEDIA_BUCKET.get(key);
+    if (!object) return new Response('Not Found', { status: 404 });
+
+    const headers = new Headers();
+    object.writeHttpMetadata(headers);
+    headers.set('etag', object.httpEtag);
+    // Cache media files aggressively (1 year for immutable assets)
+    headers.set('Cache-Control', 'public, max-age=31536000, immutable');
+    headers.set('Access-Control-Allow-Origin', '*');
+
+    // Support conditional requests (304 Not Modified)
+    const ifNoneMatch = request.headers.get('If-None-Match');
+    if (ifNoneMatch && ifNoneMatch === object.httpEtag) {
+      return new Response(null, { status: 304, headers });
+    }
+
+    return new Response(object.body, { status: 200, headers });
+  } catch (err) {
+    return new Response('Error fetching media', { status: 500 });
+  }
+}
 
 function normalizePhone(phone) {
   if (!phone) return '';

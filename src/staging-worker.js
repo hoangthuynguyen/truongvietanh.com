@@ -215,6 +215,23 @@ async function handleLeadSubmission(request, env) {
           if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);
         }
 
+        // Squeeze-specific tags (dùng làm GHL workflow trigger)
+        if (data.source === 'squeeze-reading-challenge') {
+          tags.push('reading-challenge-30-ngay');
+          tags.push('squeeze-tieu-hoc');
+        }
+        if (data.source === 'squeeze-checklist-mam-non') {
+          tags.push('checklist-mam-non-2026');
+          tags.push('squeeze-mam-non');
+        }
+        if (data.source === 'squeeze-checklist') {
+          tags.push('checklist-chon-truong-2026');
+        }
+        // Tags from form data (e.g. checklist-mam-non.html passes tags array)
+        if (Array.isArray(data.tags)) {
+          data.tags.forEach(t => { if(t && !tags.includes(t)) tags.push(t); });
+        }
+
         // Quiz-specific tags
         if (isQuizLead(data)) {
           tags.push('quiz-lead');
@@ -448,6 +465,9 @@ const WORKFLOW_MAP = {
   'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
   // WF: Checklist Chọn Trường Mầm Non — LM01_Checklist_ChonTruong_MN
   'squeeze-checklist-mam-non': '70107f73-45e5-4f5f-8be6-d8979fa5b805',
+  // WF: Reading Challenge 30 Ngày Đọc Sách — dành cho tiểu học
+  // GHL trigger tag: reading-challenge-30-ngay
+  'squeeze-reading-challenge': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
   'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
 
@@ -956,6 +976,18 @@ const SQUEEZE_RESOURCES = {
     intro: 'Cảm ơn Ba/Mẹ đã đăng ký tham dự Livestream. Link tham dự sẽ được gửi qua email trước buổi 30 phút.',
     items: [],
     cta: { text: '💬 Chat Zalo để biết thêm chi tiết', url: 'https://zalo.me/1678310120468101523' },
+  },
+  'squeeze-reading-challenge': {
+    title: 'Reading Challenge — 30 Ngày Đọc Sách Cùng Con',
+    subject: '📚 Bộ Kit 30 Ngày Đọc Sách của Ba/Mẹ đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Bộ Kit Reading Challenge 30 Ngày. In ra dùng ngay tối nay!',
+    items: [
+      { icon: '📋', label: 'Poster Thử Thách 30 Ngày Đọc Sách (PDF)', url: 'https://media.truongvietanh.com/docs/reading-challenge-30-ngay.pdf' },
+      { icon: '⭐', label: 'Bảng Dán Sticker 30 Ngôi Sao', url: 'https://media.truongvietanh.com/docs/reading-challenge-30-ngay.pdf' },
+      { icon: '📓', label: 'Nhật Ký Đọc Sách — Tiếng Anh + Tiếng Việt', url: 'https://media.truongvietanh.com/docs/reading-challenge-30-ngay.pdf' },
+      { icon: '🏆', label: 'Hướng dẫn nhận Chứng Nhận sau 30 ngày', url: 'https://media.truongvietanh.com/docs/reading-challenge-30-ngay.pdf' },
+    ],
+    cta: { text: '📥 Tải Bộ Kit Reading Challenge ngay', url: 'https://media.truongvietanh.com/docs/reading-challenge-30-ngay.pdf' },
   },
   'squeeze-checklist-mam-non': {
     title: 'Checklist Chuẩn Bị Vào Mầm Non 2026',

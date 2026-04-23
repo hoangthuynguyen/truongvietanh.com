@@ -232,6 +232,23 @@ async function handleLeadSubmission(request, env) {
           data.tags.forEach(t => { if(t && !tags.includes(t)) tags.push(t); });
         }
 
+        if (data.source === 'squeeze-50-truong-ielts') tags.push('ielts-tuyen-sinh-dh');
+        if (data.source === 'squeeze-cam-nang-thpt') tags.push('cam-nang-chon-thpt');
+        if (data.source === 'squeeze-ky-nang-lop1') tags.push('checklist-ky-nang-lop1');
+        if (data.source === 'squeeze-du-hoc-lop10') tags.push('du-hoc-lop10-chuan-bi');
+        if (data.source === 'squeeze-chuyen-truong-lop6') tags.push('chuyen-truong-lop6-2026');
+        if (data.source === 'squeeze-conversation-cards') tags.push('conversation-cards-song-ngu');
+        if (data.source === 'squeeze-ebook-9-linh-vuc') tags.push('ebook-9-linh-vuc-mam-non');
+        if (data.source === 'squeeze-giai-doan-vang') tags.push('giai-doan-vang-ngon-ngu');
+        if (data.source === 'squeeze-dang-ky-lop1') tags.push('dang-ky-vao-lop1-2026');
+        if (data.source === 'squeeze-lo-trinh-ielts-thcs') tags.push('lo-trinh-ielts-thcs');
+        if (data.source === 'squeeze-lo-trinh-tieng-anh') tags.push('lo-trinh-tieng-anh-tieu-hoc');
+        if (data.source === 'squeeze-oxford-cambridge-ib') tags.push('oxford-cambridge-ib-so-sanh');
+        if (data.source === 'squeeze-phuong-phap-teen') tags.push('phuong-phap-hoc-teen');
+        if (data.source === 'squeeze-quiz-phuong-phap') tags.push('quiz-phuong-phap-giao-duc');
+        if (data.source === 'squeeze-so-sanh-chi-phi') tags.push('so-sanh-chi-phi-truong');
+        if (data.source === 'squeeze-so-sanh-thcs') tags.push('so-sanh-truong-thcs');
+
         // Quiz-specific tags
         if (isQuizLead(data)) {
           tags.push('quiz-lead');
@@ -468,6 +485,23 @@ const WORKFLOW_MAP = {
   // WF: Reading Challenge 30 Ngày Đọc Sách — dành cho tiểu học
   // GHL trigger tag: reading-challenge-30-ngay
   'squeeze-reading-challenge': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  // WF: Lead Magnet squeeze pages — all routed to Squeeze Full Funnel
+  'squeeze-50-truong-ielts':     'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-cam-nang-thpt':       'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-ky-nang-lop1':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-du-hoc-lop10':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-chuyen-truong-lop6':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-conversation-cards':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-ebook-9-linh-vuc':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-giai-doan-vang':      'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-dang-ky-lop1':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-lo-trinh-ielts-thcs': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-lo-trinh-tieng-anh':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-oxford-cambridge-ib': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-phuong-phap-teen':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-quiz-phuong-phap':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-so-sanh-chi-phi':     'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  'squeeze-so-sanh-thcs':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
   'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
 
@@ -976,6 +1010,118 @@ const SQUEEZE_RESOURCES = {
     intro: 'Cảm ơn Ba/Mẹ đã đăng ký tham dự Livestream. Link tham dự sẽ được gửi qua email trước buổi 30 phút.',
     items: [],
     cta: { text: '💬 Chat Zalo để biết thêm chi tiết', url: 'https://zalo.me/1678310120468101523' },
+  },
+  'squeeze-50-truong-ielts': {
+    title: '50 Trường ĐH Xét IELTS',
+    subject: '🎓 Danh sách 50 trường ĐH xét IELTS của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải danh sách 50 trường ĐH xét IELTS. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'🎓',label:'Danh sách 50 trường ĐH xét IELTS (PDF)',url:'https://drive.google.com/uc?export=download&id=1-YhgMCFXcm60agDkRFMzuRBKtJx8sfA8'}],
+    cta: {text:'📥 Tải danh sách 50 trường ngay',url:'https://drive.google.com/uc?export=download&id=1-YhgMCFXcm60agDkRFMzuRBKtJx8sfA8'},
+  },
+  'squeeze-cam-nang-thpt': {
+    title: 'Cẩm Nang Chọn Trường THPT',
+    subject: '📚 Cẩm nang chọn trường THPT của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Cẩm Nang Chọn Trường THPT. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'📚',label:'Cẩm nang chọn trường THPT đầy đủ (PDF)',url:'https://drive.google.com/uc?export=download&id=1Fkd7mgPLLctihoVF3_3m77UnMi0edLV9'}],
+    cta: {text:'📥 Tải cẩm nang ngay',url:'https://drive.google.com/uc?export=download&id=1Fkd7mgPLLctihoVF3_3m77UnMi0edLV9'},
+  },
+  'squeeze-ky-nang-lop1': {
+    title: 'Checklist 10 Kỹ Năng Lớp 1',
+    subject: '✅ Checklist kỹ năng lớp 1 của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Checklist 10 Kỹ Năng Lớp 1. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'✅',label:'Checklist 10 kỹ năng lớp 1 (PDF)',url:'https://drive.google.com/uc?export=download&id=1jUbiPr8VAiq5xtcmYuBICjFROo-H91KF'}],
+    cta: {text:'📥 Tải checklist kỹ năng lớp 1 ngay',url:'https://drive.google.com/uc?export=download&id=1jUbiPr8VAiq5xtcmYuBICjFROo-H91KF'},
+  },
+  'squeeze-du-hoc-lop10': {
+    title: 'Chuẩn Bị Du Học Từ Lớp 10',
+    subject: '✈️ Tài liệu chuẩn bị du học từ lớp 10 của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải tài liệu Chuẩn Bị Du Học Từ Lớp 10. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'✈️',label:'Hướng dẫn chuẩn bị du học từ lớp 10 (PDF)',url:'https://drive.google.com/uc?export=download&id=1hhArZ88rxxF0cEAg1rB0n9zM_vEe19RV'}],
+    cta: {text:'📥 Tải tài liệu du học lớp 10 ngay',url:'https://drive.google.com/uc?export=download&id=1hhArZ88rxxF0cEAg1rB0n9zM_vEe19RV'},
+  },
+  'squeeze-chuyen-truong-lop6': {
+    title: 'Hướng Dẫn Chuyển Trường Lớp 6 2026',
+    subject: '🏫 Hướng dẫn chuyển trường lớp 6 của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải hướng dẫn Chuyển Trường Lớp 6 2026. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'🏫',label:'Hướng dẫn chuyển trường lớp 6 2026 (PDF)',url:'https://drive.google.com/uc?export=download&id=1W-8Uy2GYtYNPiZ1J1E319xaCAJwba5Ne'}],
+    cta: {text:'📥 Tải hướng dẫn chuyển trường lớp 6 ngay',url:'https://drive.google.com/uc?export=download&id=1W-8Uy2GYtYNPiZ1J1E319xaCAJwba5Ne'},
+  },
+  'squeeze-conversation-cards': {
+    title: 'Conversation Cards Song Ngữ',
+    subject: '🗣️ Bộ Conversation Cards song ngữ của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Bộ Conversation Cards Song Ngữ. In ra và thực hành cùng con ngay hôm nay!',
+    items: [{icon:'🗣️',label:'Bộ Conversation Cards song ngữ (PDF)',url:'https://drive.google.com/uc?export=download&id=1l_E939CXaEbjKAclGANogitwHa5KTs48'}],
+    cta: {text:'📥 Tải Conversation Cards ngay',url:'https://drive.google.com/uc?export=download&id=1l_E939CXaEbjKAclGANogitwHa5KTs48'},
+  },
+  'squeeze-ebook-9-linh-vuc': {
+    title: 'Ebook 9 Lĩnh Vực Phát Triển Mầm Non',
+    subject: '🌱 Ebook 9 lĩnh vực phát triển mầm non của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Ebook 9 Lĩnh Vực Phát Triển Mầm Non. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'🌱',label:'Ebook 9 lĩnh vực phát triển mầm non (PDF)',url:'https://drive.google.com/uc?export=download&id=1VNdgkDGd4wcKm4LRsAtK0auuVf2zUNH4'}],
+    cta: {text:'📥 Tải ebook mầm non ngay',url:'https://drive.google.com/uc?export=download&id=1VNdgkDGd4wcKm4LRsAtK0auuVf2zUNH4'},
+  },
+  'squeeze-giai-doan-vang': {
+    title: 'Giai Đoạn Vàng Ngôn Ngữ',
+    subject: '✨ Tài liệu giai đoạn vàng ngôn ngữ của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải tài liệu Giai Đoạn Vàng Ngôn Ngữ. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'✨',label:'Tài liệu giai đoạn vàng ngôn ngữ (PDF)',url:'https://drive.google.com/uc?export=download&id=1t3NyOXes_NwUgP5VS_Pwx-BtMJJh53s3'}],
+    cta: {text:'📥 Tải tài liệu giai đoạn vàng ngay',url:'https://drive.google.com/uc?export=download&id=1t3NyOXes_NwUgP5VS_Pwx-BtMJJh53s3'},
+  },
+  'squeeze-dang-ky-lop1': {
+    title: 'Hướng Dẫn Đăng Ký Vào Lớp 1 2026',
+    subject: '📝 Hướng dẫn đăng ký vào lớp 1 của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Hướng Dẫn Đăng Ký Vào Lớp 1 2026. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'📝',label:'Hướng dẫn đăng ký vào lớp 1 2026 (PDF)',url:'https://drive.google.com/uc?export=download&id=1NpfVN4CGXwwV-gDRtJWdcitENEXtg3yE'}],
+    cta: {text:'📥 Tải hướng dẫn đăng ký lớp 1 ngay',url:'https://drive.google.com/uc?export=download&id=1NpfVN4CGXwwV-gDRtJWdcitENEXtg3yE'},
+  },
+  'squeeze-lo-trinh-ielts-thcs': {
+    title: 'Lộ Trình IELTS Dành Cho THCS',
+    subject: '🎯 Lộ trình IELTS THCS của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Lộ Trình IELTS Dành Cho THCS. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'🎯',label:'Lộ trình IELTS dành cho học sinh THCS (PDF)',url:'https://drive.google.com/uc?export=download&id=1Kk7jw0Syt3fp-K2b9HlcsxFkq7HK03xA'}],
+    cta: {text:'📥 Tải lộ trình IELTS THCS ngay',url:'https://drive.google.com/uc?export=download&id=1Kk7jw0Syt3fp-K2b9HlcsxFkq7HK03xA'},
+  },
+  'squeeze-lo-trinh-tieng-anh': {
+    title: 'Lộ Trình Tiếng Anh Tiểu Học',
+    subject: '📖 Lộ trình tiếng Anh tiểu học của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Lộ Trình Tiếng Anh Tiểu Học. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'📖',label:'Lộ trình tiếng Anh dành cho học sinh tiểu học (PDF)',url:'https://drive.google.com/uc?export=download&id=1cl2-XHgMp0jwRYOMRy3502XoE1fHkitE'}],
+    cta: {text:'📥 Tải lộ trình tiếng Anh tiểu học ngay',url:'https://drive.google.com/uc?export=download&id=1cl2-XHgMp0jwRYOMRy3502XoE1fHkitE'},
+  },
+  'squeeze-oxford-cambridge-ib': {
+    title: 'So Sánh Oxford vs Cambridge vs IB',
+    subject: '🌍 Bảng so sánh Oxford/Cambridge/IB của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải tài liệu So Sánh Oxford vs Cambridge vs IB. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'🌍',label:'Bảng so sánh chi tiết Oxford/Cambridge/IB (PDF)',url:'https://drive.google.com/uc?export=download&id=1d-DPkYeuZ62_zmC_Dzj74YpPhbt9GyB-'}],
+    cta: {text:'📥 Tải so sánh Oxford/Cambridge/IB ngay',url:'https://drive.google.com/uc?export=download&id=1d-DPkYeuZ62_zmC_Dzj74YpPhbt9GyB-'},
+  },
+  'squeeze-phuong-phap-teen': {
+    title: 'Phương Pháp Học Dành Cho Teen',
+    subject: '🧠 Tài liệu phương pháp học teen của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải tài liệu Phương Pháp Học Dành Cho Teen. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'🧠',label:'Phương pháp học hiệu quả dành cho teen (PDF)',url:'https://drive.google.com/uc?export=download&id=1o8YozQmcSy6XbkauiQ595njr302eQzIp'}],
+    cta: {text:'📥 Tải tài liệu phương pháp học teen ngay',url:'https://drive.google.com/uc?export=download&id=1o8YozQmcSy6XbkauiQ595njr302eQzIp'},
+  },
+  'squeeze-quiz-phuong-phap': {
+    title: 'Quiz Phong Cách Giáo Dục',
+    subject: '📝 Kết quả Quiz phong cách giáo dục của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã làm Quiz Phong Cách Giáo Dục. Dưới đây là tài liệu phân tích đầy đủ:',
+    items: [{icon:'📝',label:'Quiz và phân tích 4 phong cách giáo dục (PDF)',url:'https://drive.google.com/uc?export=download&id=1i85ltMDeivjoTZ_xYsq2gFX2QuzCp3_F'}],
+    cta: {text:'📥 Nhận kết quả quiz ngay',url:'https://drive.google.com/uc?export=download&id=1i85ltMDeivjoTZ_xYsq2gFX2QuzCp3_F'},
+  },
+  'squeeze-so-sanh-chi-phi': {
+    title: 'Bảng So Sánh Chi Phí Học 2026',
+    subject: '💰 Bảng so sánh chi phí học 2026 của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải Bảng So Sánh Chi Phí Học 2026. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'💰',label:'Bảng so sánh chi phí học 2026 — Công lập/Tư thục/Quốc tế (PDF)',url:'https://drive.google.com/uc?export=download&id=1czcDpVi3pth3WUwLAPg3scHAqpKHUW5f'}],
+    cta: {text:'📥 Tải bảng so sánh chi phí ngay',url:'https://drive.google.com/uc?export=download&id=1czcDpVi3pth3WUwLAPg3scHAqpKHUW5f'},
+  },
+  'squeeze-so-sanh-thcs': {
+    title: 'So Sánh 4 Loại Trường THCS 2026',
+    subject: '🏫 Bảng so sánh trường THCS 2026 của bạn đã sẵn sàng — Trường Việt Anh',
+    intro: 'Cảm ơn Ba/Mẹ đã tải tài liệu So Sánh 4 Loại Trường THCS 2026. Dưới đây là tài liệu đầy đủ:',
+    items: [{icon:'🏫',label:'So sánh 4 loại trường THCS theo 10 tiêu chí (PDF)',url:'https://drive.google.com/uc?export=download&id=1akQeb__XnQ70SPogfSzEuA7ySYnkKI8M'}],
+    cta: {text:'📥 Tải so sánh trường THCS ngay',url:'https://drive.google.com/uc?export=download&id=1akQeb__XnQ70SPogfSzEuA7ySYnkKI8M'},
   },
   'squeeze-reading-challenge': {
     title: 'Reading Challenge — 30 Ngày Đọc Sách Cùng Con',

@@ -480,28 +480,43 @@ const WORKFLOW_MAP = {
   'vsl':                        '023f00e9-d100-40d8-a8dc-2bd575ecb6c4',
   // WF9: Alumni & Referral
   'alumni-referral':        '5665d8b0-ab23-4238-aa95-4753827a2a76',
-  // WF: Checklist Chọn Trường Mầm Non — LM01_Checklist_ChonTruong_MN
-  'squeeze-checklist-mam-non': '70107f73-45e5-4f5f-8be6-d8979fa5b805',
-  // WF: Reading Challenge 30 Ngày Đọc Sách — dành cho tiểu học
-  // GHL trigger tag: reading-challenge-30-ngay
-  'squeeze-reading-challenge': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  // WF: Lead Magnet squeeze pages — all routed to Squeeze Full Funnel
-  'squeeze-50-truong-ielts':     'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-cam-nang-thpt':       'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-ky-nang-lop1':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-du-hoc-lop10':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-chuyen-truong-lop6':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-conversation-cards':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-ebook-9-linh-vuc':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-giai-doan-vang':      'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-dang-ky-lop1':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-lo-trinh-ielts-thcs': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-lo-trinh-tieng-anh':  'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-oxford-cambridge-ib': 'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-phuong-phap-teen':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-quiz-phuong-phap':    'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-so-sanh-chi-phi':     'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
-  'squeeze-so-sanh-thcs':        'c5f1ccf1-5a1f-4cce-ad55-fcbcfc647aa2',
+  // ── 18 SQUEEZE PAGE LEAD MAGNET WORKFLOWS ──────────────────────────────────
+  // LM01 · Checklist Chọn Trường Mầm Non
+  'squeeze-checklist-mam-non':   '70107f73-45e5-4f5f-8be6-d8979fa5b805',
+  // LM02 · Giai Đoạn Vàng Ngôn Ngữ
+  'squeeze-giai-doan-vang':      'c522afe2-d236-4c0f-b9ad-3639a9a5ecbe',
+  // LM03 · Ebook 9 Lĩnh Vực Mầm Non
+  'squeeze-ebook-9-linh-vuc':    '963b0420-e26d-47d4-8bfe-13a4dab08650',
+  // LM07 · Quiz Phương Pháp Giáo Dục
+  'squeeze-quiz-phuong-phap':    '9dccb699-d511-490c-b3c7-1d93771b97df',
+  // LM11 · Lộ Trình Tiếng Anh Lớp 1–5
+  'squeeze-lo-trinh-tieng-anh':  '607f1636-fd30-4ea6-ba43-5791eb10c4b9',
+  // LM12 · So Sánh Chi Phí Học
+  'squeeze-so-sanh-chi-phi':     '7d83c3bb-f647-45dc-a95b-d31d78ef291d',
+  // LM13 · Hướng Dẫn Đăng Ký Vào Lớp 1
+  'squeeze-dang-ky-lop1':        'fe089ade-dfda-4fbb-bb68-c0abb56ee1bb',
+  // LM15 · Reading Challenge 30 Ngày
+  'squeeze-reading-challenge':   'f6f128cc-9b78-4e9a-8c4f-db8ef6aa9c08',
+  // LM17 · Checklist 10 Kỹ Năng Vào Lớp 1
+  'squeeze-ky-nang-lop1':        'ea62b9c5-411b-4ee4-a21f-b0265851ec10',
+  // LM19 · Chuyển Trường Lên Lớp 6
+  'squeeze-chuyen-truong-lop6':  'acd5fd89-e4a4-47b4-acff-56c95484ebe9',
+  // LM20 · Lộ Trình IELTS THCS
+  'squeeze-lo-trinh-ielts-thcs': '5d55727b-b0db-4e65-8214-3fa76110c65c',
+  // LM21 · Phương Pháp Học Teen
+  'squeeze-phuong-phap-teen':    'd02082cb-57b4-409e-a6d4-8a0c8aabb172',
+  // LM24 · So Sánh Trường THCS
+  'squeeze-so-sanh-thcs':        '479222b7-f49c-419b-bbf3-ccfa933cace5',
+  // LM26 · Cẩm Nang Chọn THPT
+  'squeeze-cam-nang-thpt':       '8c5c1f53-efd1-4b8e-883e-eca9c9a339ff',
+  // LM27 · Chuẩn Bị Du Học Từ Lớp 10
+  'squeeze-du-hoc-lop10':        'de732eb3-361b-4c48-9788-15b1f439d4ba',
+  // LM29 · 50 Trường ĐH Xét IELTS
+  'squeeze-50-truong-ielts':     'a69846d6-bed8-451c-99a1-cbafa5863750',
+  // LM33 · Oxford vs Cambridge vs IB
+  'squeeze-oxford-cambridge-ib': '3f9c5202-9e8e-49b0-a532-049b84e80197',
+  // LM47 · Conversation Cards Song Ngữ
+  'squeeze-conversation-cards':  '9ba3a5a1-f36f-49c3-a575-bff07cc1bff4',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
   'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
 

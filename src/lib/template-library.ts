@@ -1235,7 +1235,7 @@ const seeds: TemplateSeed[] = [
   {
     classNumber: 22,
     slug: 'class-corporate-brand-leadership',
-    templateClass: 'Class Corporate Brand & Leadership (Câu chuyện Thương hiệu & BGH)',
+    templateClass: 'Class Corporate Brand & Leadership (Câu chuyện Thương hiệu & Ban LÃ£nh Äáº¡o)',
     group: 'System / Utility',
     theme: 'system',
     pageRole: 'Trang kể câu chuyện thương hiệu, tầm nhìn, ban giám hiệu và nền tảng E-E-A-T.',
@@ -1260,7 +1260,7 @@ const seeds: TemplateSeed[] = [
       'Hero thương hiệu và answer-first brand statement.',
       'Câu chuyện hình thành / milestones.',
       'Tầm nhìn, sứ mệnh, giá trị, định vị.',
-      'Ban giám hiệu / leadership highlights.',
+      'Ban Lãnh Đạo / leadership highlights.',
       'Links sang chương trình, đội ngũ, campus.',
       'CTA mềm về tìm hiểu hệ thống hoặc liên hệ.',
     ],

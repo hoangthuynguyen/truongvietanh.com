@@ -6,6 +6,20 @@ const pageDescription = 'KHÔNG BÁN VÉ. KHÔNG MỞ CỬA ĐẠI TRÀ. Chỉ d
 const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc';
 const funnelCode = 'cong-vien-giao-duc';
 
+const MEDIA = 'https://media.truongvietanh.com/images';
+const heroImage = '/images/cong-vien-giao-duc/hero-toan-canh.jpg';
+const galleryImages = [
+  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-chay-bo-1.webp`, alt: 'Bé vận động ngoài trời, chạy nhảy tự do' },
+  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-vui-ve-1.webp`, alt: 'Bé vui chơi cùng bạn ngoài sân' },
+  { src: `${MEDIA}/da-ngoai/hoc-sinh-di-da-ngoai-1.webp`, alt: 'Bé khám phá thiên nhiên trong hoạt động dã ngoại' },
+  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-choi-the-thao-1.webp`, alt: 'Bé chơi thể thao ngoài trời' },
+  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-1.webp`, alt: 'Bé chơi nhóm, phát triển kỹ năng kết bạn' },
+  { src: `${MEDIA}/da-ngoai/20250821-22-hon-bo-dap-07727.webp`, alt: 'Bé hòa mình với thiên nhiên trong dã ngoại' },
+  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-boi.webp`, alt: 'Bé vận động trong hồ bơi an toàn' },
+  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-tro-choi-45.webp`, alt: 'Bé chơi trò chơi vận động phát triển kỹ năng' },
+  { src: `${MEDIA}/da-ngoai/20250821-22-hon-bo-dap2-06104.webp`, alt: 'Bé khám phá môi trường xung quanh' },
+];
+
 const campuses = [
   { value: 'viet-anh', label: 'Trường Mầm non Việt Anh — 573 Lê Đức Thọ, P16, Gò Vấp, TP.HCM', map: 'https://maps.app.goo.gl/5PXx5P9PAmXM5wWv5' },
   { value: 'nhan-le', label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Tây Ninh', map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
@@ -37,6 +51,10 @@ const campuses = [
 
   <section slot="content">
     <div class="cvgd-content">
+      <figure class="cvgd-hero-img">
+        <img src={heroImage} alt="Phối cảnh tổng thể Công viên Giáo dục Việt Anh — không gian học tập, vận động, vui chơi" loading="eager" width="1200" height="600" />
+      </figure>
+
       <div class="cvgd-panel">
         <h2 class="cvgd-h2">Nếu bạn là cha mẹ của trẻ 1–8 tuổi, hãy đọc kỹ</h2>
         <p class="cvgd-lead">
@@ -63,6 +81,19 @@ const campuses = [
             </li>
           ))}
         </ol>
+      </div>
+
+      <div class="cvgd-gallery-intro">
+        <h2 class="cvgd-h2">Một ngày tại Công viên Giáo dục</h2>
+        <p class="cvgd-para">Mỗi cuối tuần, các bé được vận động – khám phá – vui chơi cùng bạn trong một không gian rộng rãi, an toàn và đầy ánh nắng.</p>
+      </div>
+
+      <div class="cvgd-gallery">
+        {galleryImages.map((img) => (
+          <figure>
+            <img src={img.src} alt={img.alt} loading="lazy" width="1200" height="800" />
+          </figure>
+        ))}
       </div>
 
       <div class="cvgd-panel cvgd-panel--highlight">
@@ -162,7 +193,7 @@ const campuses = [
         </label>
       </fieldset>
 
-      <button type="submit" class="cvgd-submit">Gửi đăng ký & nhận thẻ hội viên 6 tháng</button>
+      <button type="submit" class="cvgd-submit">Đăng ký nhận thẻ hội viên 6 tháng</button>
       <p class="cvgd-consent">
         Bằng cách nhấn gửi, bạn đồng ý cho Trường Việt Anh liên hệ bạn và 2 người bạn được mời qua SĐT / Zalo để xác nhận.
       </p>
@@ -288,7 +319,7 @@ const campuses = [
       window.location.href = '/tuyen-sinh/cong-vien-giao-duc/cam-on?' + qs.toString();
     } else {
       submitBtn.disabled = false;
-      submitBtn.textContent = 'Gửi đăng ký & nhận thẻ hội viên 6 tháng';
+      submitBtn.textContent = 'Đăng ký nhận thẻ hội viên 6 tháng';
       showError('Có lỗi khi gửi. Vui lòng gọi 0916 961 409 để được hỗ trợ.');
     }
   });
@@ -298,7 +329,7 @@ const campuses = [
 <style is:inline>
   .cvgd-badge {
     display: inline-block;
-    background: rgba(212, 168, 67, 0.15);
+    background: rgba(240, 208, 72, 0.15);
     color: #8b6a1e;
     padding: 0.45rem 1rem;
     border-radius: 999px;
@@ -306,7 +337,7 @@ const campuses = [
     font-size: 1rem;
     letter-spacing: 0.5px;
     margin-bottom: 1rem;
-    border: 1px solid rgba(212, 168, 67, 0.4);
+    border: 1px solid rgba(240, 208, 72, 0.4);
   }
   .cvgd-rules {
     display: flex;
@@ -325,7 +356,7 @@ const campuses = [
     letter-spacing: 0.3px;
   }
   .cvgd-rule--accent {
-    background: linear-gradient(135deg, #D4A843, #b8922e);
+    background: linear-gradient(135deg, #F0D048, #b8922e);
   }
   .cvgd-hero-cta-line {
     max-width: 640px;
@@ -335,6 +366,41 @@ const campuses = [
   }
 
   .cvgd-content { max-width: 960px; margin: 0 auto; display: grid; gap: 1.5rem; }
+
+  .cvgd-hero-img {
+    margin: 0;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 8px 24px rgba(26, 26, 94, 0.12);
+  }
+  .cvgd-hero-img img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 1;
+    object-fit: cover;
+  }
+
+  .cvgd-gallery-intro { text-align: center; padding: 0.5rem 0 0; }
+  .cvgd-gallery-intro .cvgd-h2 { margin-bottom: 0.5rem; }
+  .cvgd-gallery-intro .cvgd-para { max-width: 640px; margin: 0 auto; color: #475569; }
+
+  .cvgd-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  .cvgd-gallery figure { margin: 0; border-radius: 12px; overflow: hidden; }
+  .cvgd-gallery img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .cvgd-gallery figure:hover img { transform: scale(1.05); }
+
   .cvgd-panel {
     background: #fff;
     border: 1px solid #e5e7eb;
@@ -343,9 +409,9 @@ const campuses = [
   }
   .cvgd-panel--highlight {
     background: linear-gradient(180deg, #fdf7e6 0%, #ffffff 100%);
-    border-color: rgba(212, 168, 67, 0.4);
+    border-color: rgba(240, 208, 72, 0.4);
   }
-  .cvgd-panel--steps { border-left: 4px solid #D4A843; }
+  .cvgd-panel--steps { border-left: 4px solid #F0D048; }
   .cvgd-h2 {
     color: #1a1a5e;
     margin-bottom: 1rem;
@@ -367,14 +433,14 @@ const campuses = [
     padding: 1rem 1.25rem; background: #f8f9fb; border: 1px solid #e5e7eb;
     border-radius: 10px; color: #1a1a5e; text-decoration: none; transition: all 0.2s;
   }
-  .cvgd-campuses a:hover { background: #fff; border-color: #D4A843; transform: translateY(-2px); }
+  .cvgd-campuses a:hover { background: #fff; border-color: #F0D048; transform: translateY(-2px); }
   .cvgd-campus__num {
     width: 36px; height: 36px; border-radius: 50%; background: #1a1a5e; color: #fff;
     display: inline-flex; align-items: center; justify-content: center;
     font-weight: 800; flex-shrink: 0;
   }
   .cvgd-campus__text { font-weight: 600; line-height: 1.5; }
-  .cvgd-campus__go { color: #D4A843; font-weight: 700; white-space: nowrap; }
+  .cvgd-campus__go { color: #F0D048; font-weight: 700; white-space: nowrap; }
   .cvgd-benefits { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
   .cvgd-benefits li {
     display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
@@ -403,11 +469,13 @@ const campuses = [
     color: #fff; border-radius: 14px;
   }
   .cvgd-limit p { margin: 0; line-height: 1.65; color: #fff; }
-  .cvgd-limit strong { color: #D4A843; }
+  .cvgd-limit strong { color: #F0D048; }
 
   /* Form */
   .cvgd-form-intro { margin-bottom: 1.5rem; text-align: center; max-width: 640px; margin-left: auto; margin-right: auto; }
   .cvgd-form { max-width: 640px; margin: 0 auto; display: grid; gap: 1.25rem; text-align: left; }
+  .cvgd-form > * { min-width: 0; }
+  .cvgd-form input, .cvgd-form select { width: 100%; }
   .cvgd-form-intro { text-align: center; }
   .cvgd-fieldset {
     border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.25rem 1.25rem;
@@ -430,18 +498,25 @@ const campuses = [
     transition: border-color 0.2s;
   }
   .cvgd-form input:focus, .cvgd-form select:focus {
-    outline: none; border-color: #D4A843;
-    box-shadow: 0 0 0 3px rgba(212, 168, 67, 0.15);
+    outline: none; border-color: #F0D048;
+    box-shadow: 0 0 0 3px rgba(240, 208, 72, 0.15);
   }
   .cvgd-submit {
-    padding: 1rem 1.25rem;
-    background: linear-gradient(135deg, #D4A843, #b8922e);
+    justify-self: center;
+    width: auto;
+    max-width: 100%;
+    padding: 0.85rem 1.5rem;
+    background: linear-gradient(135deg, #F0D048, #b8922e);
     color: #1a1a2e; border: none; border-radius: 10px;
-    font-weight: 800; font-size: 1.15rem; cursor: pointer;
-    box-shadow: 0 4px 15px rgba(212, 168, 67, 0.4);
+    font-weight: 800; font-size: 1rem; line-height: 1.25;
+    cursor: pointer; white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(240, 208, 72, 0.4);
     transition: transform 0.15s, box-shadow 0.15s;
   }
-  .cvgd-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212, 168, 67, 0.5); }
+  @media (max-width: 480px) {
+    .cvgd-submit { white-space: normal; padding: 0.85rem 1.1rem; font-size: 0.95rem; }
+  }
+  .cvgd-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(240, 208, 72, 0.5); }
   .cvgd-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
   .cvgd-consent {
     font-size: 1rem; color: #64748b; text-align: center; line-height: 1.5; margin: 0;
@@ -455,5 +530,6 @@ const campuses = [
     .cvgd-campuses a { grid-template-columns: auto 1fr; }
     .cvgd-campus__go { grid-column: 2; }
     .cvgd-rules { flex-direction: column; }
+    .cvgd-gallery { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
   }
 </style>

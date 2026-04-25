@@ -1,0 +1,152 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import audit from '../data/sitemap-audit.json';
+
+const pageTitle = 'Sitemap nội bộ — Cấu trúc trang, Templates, Forms | Trường Việt Anh';
+const pageDescription = 'Bản đồ toàn bộ pages, templates và forms của truongvietanh.com — tự cập nhật mỗi lần build.';
+const canonicalUrl = 'https://truongvietanh.com/sitemap';
+
+const { pages, templates, forms, totals, generatedAt } = audit as any;
+const fmtDate = new Date(generatedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+---
+
+<BaseLayout title={pageTitle} description={pageDescription} canonicalUrl={canonicalUrl} noindex={true}>
+  <main class="sitemap">
+    <header class="sitemap__hero">
+      <h1>🗺️ Sitemap nội bộ Trường Việt Anh</h1>
+      <p>Tổng <strong>{totals.pages}</strong> pages · <strong>{totals.templates}</strong> templates · <strong>{totals.forms}</strong> forms.<br/>
+      Tự cập nhật mỗi lần build. Lần build gần nhất: <code>{fmtDate}</code></p>
+      <nav class="sitemap__tabs">
+        <a href="#pages">📄 Pages ({totals.pages})</a>
+        <a href="#templates">🎨 Templates ({totals.templates})</a>
+        <a href="#forms">📝 Forms ({totals.forms})</a>
+        <a href="/sitemap-audit.csv" download>⬇️ CSV pages</a>
+        <a href="/sitemap-templates.csv" download>⬇️ CSV templates</a>
+        <a href="/sitemap-forms.csv" download>⬇️ CSV forms</a>
+      </nav>
+    </header>
+
+    <section id="pages">
+      <h2>📄 Pages — toàn bộ {totals.pages} trang</h2>
+      <div class="sitemap__filter">
+        <input type="text" id="page-filter" placeholder="🔍 Lọc URL/title/template/form…" />
+        <span id="page-count">{pages.length} / {pages.length}</span>
+      </div>
+      <div class="sitemap__table-wrap">
+        <table id="pages-table">
+          <thead><tr>
+            <th>URL</th><th>Title</th><th>Template</th><th>Form(s)</th><th>Words</th><th>Updated</th><th>Notes</th>
+          </tr></thead>
+          <tbody>
+            {pages.map((p: any) => (
+              <tr>
+                <td><a href={p.url} target="_blank" rel="noopener">{p.url.replace('https://truongvietanh.com', '')}</a></td>
+                <td title={p.title}>{p.title.slice(0, 60)}</td>
+                <td><span class={`tpl tpl--${p.template}`}>{p.template}</span></td>
+                <td class="forms">{p.forms}</td>
+                <td>{p.words}</td>
+                <td>{p.updated}</td>
+                <td>{p.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="templates">
+      <h2>🎨 Templates — {totals.templates} loại</h2>
+      <div class="sitemap__cards">
+        {templates.map((t: any) => (
+          <article class="sitemap__card">
+            <h3>{t.name} <small>({t.pagesUsing} pages)</small></h3>
+            <p class="muted">{t.file}</p>
+            <p>{t.description}</p>
+            <p><strong>Slots/Blocks:</strong> {t.slots.length ? t.slots.map((s: string) => <code>{s}</code>) : <em>(no slots — props-only)</em>}</p>
+            <p class="note">💡 {t.pagesNote}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section id="forms">
+      <h2>📝 Forms — {totals.forms} unique IDs/funnels</h2>
+      <div class="sitemap__filter">
+        <input type="text" id="form-filter" placeholder="🔍 Lọc form ID/funnelCode…" />
+        <span id="form-count">{forms.length} / {forms.length}</span>
+      </div>
+      <div class="sitemap__table-wrap">
+        <table id="forms-table">
+          <thead><tr><th>Form</th><th># Pages</th><th>URLs</th></tr></thead>
+          <tbody>
+            {forms.map((f: any) => (
+              <tr>
+                <td><code>{f.form}</code></td>
+                <td>{f.count}</td>
+                <td class="urls">{f.pages.map((u: string) => <a href={u} target="_blank">{u.replace('https://truongvietanh.com', '')}</a>).reduce((acc: any, x: any, i: number) => i ? [...acc, ' · ', x] : [x], [])}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <style is:inline>
+    .sitemap{max-width:1400px;margin:0 auto;padding:2rem 1.5rem}
+    .sitemap__hero{margin-bottom:2rem;padding:2rem;background:linear-gradient(135deg,#f0f4ff,#fff);border-radius:12px;border:1px solid #e5e7eb}
+    .sitemap__hero h1{font-size:1.75rem;margin-bottom:.5rem;color:#1a1a5e}
+    .sitemap__tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
+    .sitemap__tabs a{padding:.4rem .9rem;background:#1a1a5e;color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600}
+    .sitemap__tabs a:hover{background:#2a2a7e}
+    .sitemap section{margin:2.5rem 0}
+    .sitemap h2{font-size:1.4rem;margin-bottom:1rem;color:#1a1a5e;padding-bottom:.5rem;border-bottom:2px solid #D4A843}
+    .sitemap__filter{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
+    .sitemap__filter input{flex:1;padding:.5rem .9rem;border:1px solid #d1d5db;border-radius:6px;font-size:.9rem}
+    .sitemap__filter span{font-size:.85rem;color:#6b7280;font-weight:600}
+    .sitemap__table-wrap{overflow-x:auto;border:1px solid #e5e7eb;border-radius:8px}
+    .sitemap table{width:100%;border-collapse:collapse;font-size:.82rem}
+    .sitemap th{background:#1a1a5e;color:#fff;padding:.6rem .8rem;text-align:left;position:sticky;top:0;font-weight:600}
+    .sitemap td{padding:.5rem .8rem;border-top:1px solid #f3f4f6;vertical-align:top}
+    .sitemap tr:hover{background:#fafbfc}
+    .sitemap td a{color:#1a1a5e;text-decoration:none}
+    .sitemap td a:hover{text-decoration:underline}
+    .tpl{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72rem;font-weight:700;white-space:nowrap}
+    .tpl--BaseLayout{background:#dbeafe;color:#1e3a8a}
+    .tpl--SqueezePageLayout{background:#fef3c7;color:#92400e}
+    .tpl--SalesPageLayout{background:#dcfce7;color:#166534}
+    .tpl--VSLSqueezePage,.tpl--VSLThankYouPage{background:#fce7f3;color:#9f1239}
+    .tpl--inline{background:#f3f4f6;color:#374151}
+    .tpl--SummerCampSalesPage{background:#e0e7ff;color:#3730a3}
+    .forms{font-family:ui-monospace,monospace;font-size:.75rem;color:#475569;max-width:280px}
+    .urls{max-width:600px;font-size:.75rem}
+    .urls a{display:inline-block;margin-right:.3rem}
+    .sitemap__cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem}
+    .sitemap__card{padding:1.25rem;border:1px solid #e5e7eb;border-radius:8px;background:#fff}
+    .sitemap__card h3{font-size:1.05rem;color:#1a1a5e;margin-bottom:.25rem}
+    .sitemap__card h3 small{color:#6b7280;font-weight:400;font-size:.8rem}
+    .sitemap__card p{font-size:.85rem;line-height:1.55;margin:.5rem 0;color:#374151}
+    .sitemap__card .muted{font-family:monospace;font-size:.75rem;color:#9ca3af}
+    .sitemap__card code{background:#f3f4f6;padding:1px 6px;border-radius:3px;font-size:.75rem;margin-right:.25rem;display:inline-block}
+    .sitemap__card .note{background:#fffbeb;border-left:3px solid #D4A843;padding:.5rem .75rem;margin-top:.75rem;font-size:.8rem;color:#78350f}
+  </style>
+
+  <script is:inline>
+    function setupFilter(inputId, tableId, countId){
+      var inp=document.getElementById(inputId), tbl=document.getElementById(tableId), cnt=document.getElementById(countId);
+      if(!inp||!tbl) return;
+      var rows=tbl.querySelectorAll('tbody tr'), total=rows.length;
+      inp.addEventListener('input',function(){
+        var q=inp.value.toLowerCase().trim(), shown=0;
+        rows.forEach(function(r){
+          var match=q===''||r.textContent.toLowerCase().indexOf(q)>=0;
+          r.style.display=match?'':'none';
+          if(match)shown++;
+        });
+        cnt.textContent=shown+' / '+total;
+      });
+    }
+    setupFilter('page-filter','pages-table','page-count');
+    setupFilter('form-filter','forms-table','form-count');
+  </script>
+</BaseLayout>

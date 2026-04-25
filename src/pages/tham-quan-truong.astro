@@ -1,0 +1,115 @@
+---
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const pageTitle = "Đặt Lịch Tham Quan Trường Việt Anh | Trường Việt Anh";
+const pageDescription = "Tour cá nhân theo lịch của Ba/Mẹ — không gò bó vào ngày Open Day chung. Trải nghiệm trực tiếp phòng học, gặp giáo viên, xem con học thử.";
+const pageCanonical = "https://truongvietanh.com/tham-quan-truong";
+
+const uspItems = [
+    {
+      "icon": "🗓️",
+      "text": "Lịch linh hoạt — chọn ngày giờ phù hợp với Ba/Mẹ"
+    },
+    {
+      "icon": "🎯",
+      "text": "Tour cá nhân — chuyên viên tuyển sinh đi cùng suốt buổi"
+    },
+    {
+      "icon": "👨‍🏫",
+      "text": "Gặp giáo viên cấp học quan tâm — hỏi đáp 1:1"
+    },
+    {
+      "icon": "👶",
+      "text": "Con được trải nghiệm 30–60 phút trong lớp thật"
+    },
+    {
+      "icon": "📋",
+      "text": "Đánh giá sơ bộ năng lực con + tư vấn lộ trình"
+    },
+    {
+      "icon": "🆓",
+      "text": "Hoàn toàn miễn phí — không áp lực đăng ký"
+    }
+  ];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
+  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
+  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
+  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
+];
+
+const faqItems = [
+    {
+      "question": "Tham quan trường mất bao lâu?",
+      "answer": "Tour cá nhân kéo dài 90–120 phút, gồm: tham quan cơ sở vật chất (45 phút) + gặp giáo viên & Ban Giám Hiệu (30 phút) + con trải nghiệm trong lớp (30 phút)."
+    },
+    {
+      "question": "Tôi đến cùng con được không?",
+      "answer": "Khuyến khích. Con đi cùng để cảm nhận trực tiếp môi trường — quyết định cuối cùng nên có sự đồng thuận của con."
+    },
+    {
+      "question": "Khác gì so với Open Day?",
+      "answer": "Tham quan riêng có chuyên viên đi cùng 1:1 cả buổi, có thể đi sâu vào những điểm Ba/Mẹ quan tâm. Open Day chung là sự kiện nhóm 30 gia đình, ít cá nhân hóa hơn."
+    },
+    {
+      "question": "Có cần đặt lịch trước bao lâu?",
+      "answer": "Trước tối thiểu 3 ngày làm việc để trường sắp xếp giáo viên, lớp học và bữa ăn. Lý tưởng nhất là 7 ngày."
+    },
+    {
+      "question": "Có thể tham quan vào cuối tuần không?",
+      "answer": "Cuối tuần trường không có giờ học, nên chỉ tham quan được cơ sở vật chất, không thấy lớp học thật. Khuyến khích thứ 2 — thứ 6 trong giờ học để có trải nghiệm đầy đủ."
+    }
+  ];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="tieu-hoc"
+  funnelCode="tham-quan-truong"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Đặt Lịch Tham Quan Trường Việt Anh</h1>
+    <p class="squeeze-hero__subheading">Tour cá nhân theo lịch của Ba/Mẹ — không gò bó vào ngày Open Day chung. Trải nghiệm trực tiếp phòng học, gặp giáo viên, xem con học thử.</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="page-content">
+      <h2>Một buổi tham quan đáng giá — Quyết định đúng cho con</h2>
+      <p>Mỗi gia đình có những băn khoăn riêng. <strong>Tour tham quan cá nhân</strong> tại Trường Việt Anh được thiết kế để Ba/Mẹ có không gian hỏi sâu, nhìn kỹ và quyết định không vội vã.</p>
+        <p>Trong 90–120 phút, Ba/Mẹ sẽ thấy được trường vào ngày học bình thường — không phải buổi "trình diễn" — đó là trải nghiệm gần nhất với cuộc sống của con khi nhập học.</p>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Đặt lịch tham quan riêng</h2>
+    <p class="squeeze-form-section__description">Đội tuyển sinh sẽ liên hệ trong 24h để chốt lịch và sắp xếp tour cá nhân.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="tham-quan-truong-form"
+      funnelCode="tham-quan-truong"
+      schoolLevel="tieu-hoc"
+      submitText="Đặt lịch tham quan"
+      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h."
+    />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  .page-content { max-width: 800px; margin: 0 auto; padding: 1rem 0; }
+  .page-content h2 { color: #1a1a5e; font-size: 1.6rem; margin-bottom: 1rem; text-align: center; }
+  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
+  .page-content ul { margin: 1rem 0 1rem 1.5rem; }
+  .page-content li { margin-bottom: .5rem; line-height: 1.7; }
+  .page-content strong { color: #1a1a5e; font-weight: 700; }
+</style>

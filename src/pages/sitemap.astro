@@ -35,16 +35,20 @@ const fmtDate = new Date(generatedAt).toLocaleString('vi-VN', { timeZone: 'Asia/
       <div class="sitemap__table-wrap">
         <table id="pages-table">
           <thead><tr>
-            <th>URL</th><th>Title</th><th>Template</th><th>Form(s)</th><th>Words</th><th>Updated</th><th>Notes</th>
+            <th>Category</th><th>URL</th><th>Title</th><th>Template</th><th>Form(s)</th><th>Words</th><th>Status</th><th>Schema</th><th>OG</th><th>Updated</th><th>Notes</th>
           </tr></thead>
           <tbody>
             {pages.map((p: any) => (
               <tr>
+                <td><code class="cat">{p.category}</code></td>
                 <td><a href={p.url} target="_blank" rel="noopener">{p.url.replace('https://truongvietanh.com', '')}</a></td>
                 <td title={p.title}>{p.title.slice(0, 60)}</td>
                 <td><span class={`tpl tpl--${p.template}`}>{p.template}</span></td>
                 <td class="forms">{p.forms}</td>
                 <td>{p.words}</td>
+                <td>{p.status}</td>
+                <td style="text-align:center">{p.schema}</td>
+                <td style="text-align:center">{p.og}</td>
                 <td>{p.updated}</td>
                 <td>{p.note}</td>
               </tr>
@@ -118,6 +122,7 @@ const fmtDate = new Date(generatedAt).toLocaleString('vi-VN', { timeZone: 'Asia/
     .tpl--VSLSqueezePage,.tpl--VSLThankYouPage{background:#fce7f3;color:#9f1239}
     .tpl--inline{background:#f3f4f6;color:#374151}
     .tpl--SummerCampSalesPage{background:#e0e7ff;color:#3730a3}
+    .cat{background:#eef2ff;color:#3730a3;padding:1px 6px;border-radius:3px;font-size:.7rem;white-space:nowrap}
     .forms{font-family:ui-monospace,monospace;font-size:.75rem;color:#475569;max-width:280px}
     .urls{max-width:600px;font-size:.75rem}
     .urls a{display:inline-block;margin-right:.3rem}

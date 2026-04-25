@@ -111,6 +111,41 @@ function extractTitle(c) {
   return m ? m[1].trim() : '';
 }
 
+function extractDescription(c) {
+  const m = c.match(/(?:page)?[Dd]escription\s*[:=]\s*['"`]([^'"`]+)['"`]/);
+  return m ? m[1] : '';
+}
+
+function categorize(url) {
+  const p = url.replace('https://truongvietanh.com', '') || '/';
+  if (p === '/') return '00-Home';
+  if (p.startsWith('/blog')) return '13-Blog';
+  if (p.includes('cam-on')) return '12-Thank-You';
+  if (p.startsWith('/squeeze/') || p.startsWith('/chon-truong')) return '04-Squeeze';
+  if (p.startsWith('/tuyen-sinh/mam-non')) return '08-TS-Mam-Non';
+  if (p.startsWith('/tuyen-sinh/tieu-hoc')) return '07-TS-Tieu-Hoc';
+  if (p.startsWith('/tuyen-sinh/thcs') || p.includes('/lop-6/')) return '05-TS-THCS';
+  if (p.startsWith('/tuyen-sinh/thpt')) return '06-TS-THPT';
+  if (p.startsWith('/tuyen-sinh/trai-he') || p.startsWith('/trai-he')) return '10-Trai-He';
+  if (p.startsWith('/tuyen-sinh/cong-vien')) return '09-Cong-Vien';
+  if (p.startsWith('/tuyen-sinh')) return '03-Tuyen-Sinh';
+  if (p.startsWith('/tai-nguyen')) return '11-Resources';
+  if (/^\/(mam-non|tieu-hoc|thcs|thpt|trung-hoc-co-so|trung-hoc-pho-thong|cap-hoc)$/.test(p)) return '02-Pillar-Cap-Hoc';
+  if (p === '/sitemap' || p === '/404') return '99-Meta';
+  return '01-Pillar-Info';
+}
+
+function statusLabel(wc, isDev) {
+  if (isDev) return 'dev';
+  if (wc < 100) return '🔴 stub';
+  if (wc < 500) return '🟡 light';
+  if (wc < 1500) return '🟢 ok';
+  return '🔵 rich';
+}
+
+const hasSchema = c => /schema\.org|structuredData|application\/ld\+json/.test(c);
+const hasOg = c => /ogImage|og:image|<meta property="og:image"/.test(c);
+
 // === Walk pages ===
 function* walk(dir) {
   for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -146,17 +181,32 @@ for (const fp of [...walk(ROOT)].sort()) {
     allForms.get(f).pages.push(url);
   }
 
-  rows.push({ url, title, template: layout, forms: forms.join('; ') || '—', words: wc, updated, note });
+  rows.push({
+    category: categorize(url),
+    url, title,
+    description: extractDescription(c).slice(0, 160),
+    template: layout,
+    forms: forms.join('; ') || '—',
+    words: wc,
+    status: statusLabel(wc, isDev),
+    schema: hasSchema(c) ? '✓' : '',
+    og: hasOg(c) ? '✓' : '',
+    updated,
+    note,
+  });
 }
+
+// Sort by category → url for nice grouping in sheet
+rows.sort((a, b) => (a.category + a.url).localeCompare(b.category + b.url));
 
 // === CSV ===
 function csvEscape(v) {
   const s = String(v ?? '');
   return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
 }
-const header = ['URL', 'Title', 'Template', 'Form(s)', 'Words', 'Last Updated', 'Notes'];
+const header = ['Category', 'URL', 'Title', 'Description', 'Template', 'Form(s)', 'Words', 'Status', 'Schema', 'OG', 'Last Updated', 'Notes'];
 const csv = [header.join(',')]
-  .concat(rows.map(r => [r.url, r.title, r.template, r.forms, r.words, r.updated, r.note].map(csvEscape).join(',')))
+  .concat(rows.map(r => [r.category, r.url, r.title, r.description, r.template, r.forms, r.words, r.status, r.schema, r.og, r.updated, r.note].map(csvEscape).join(',')))
   .join('\n');
 
 fs.mkdirSync(path.dirname(OUT_CSV), { recursive: true });

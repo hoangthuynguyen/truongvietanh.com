@@ -162,7 +162,7 @@ const structuredData = [
     wordCount: cleanedContent ? cleanedContent.replace(/<[^>]*>/g, '').split(/\s+/).length : 0,
     author: {
       '@type': 'Organization',
-      name: 'Ban Truyền Thông Trường Việt Anh',
+      name: 'Trường Việt Anh',
       url: 'https://truongvietanh.com',
     },
     publisher: {
@@ -226,7 +226,7 @@ const structuredData = [
         name: 'Trường có bao nhiêu cơ sở?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Trường Việt Anh hiện có 9 cơ sở tại TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Cần Giuộc - Tây Ninh và TP. Rạch Giá - Kiên Giang.',
+          text: 'Năm học 2026–2027, Trường Việt Anh có 8 cơ sở đang hoạt động tại 3 tỉnh thành. Tại TP.HCM (3 cơ sở): Cơ sở Gò Vấp, Mầm Non Gò Vấp, Cơ sở Bình Tân. Tại Tây Ninh (3 cơ sở): Mầm Non Nhân Lễ, Mầm Non Thái Sơn, Tiểu Học Thái Sơn. Tại Kiên Giang (2 cơ sở): Mầm Non Mekong Xanh, Tiểu Học Mekong Xanh.',
         },
       },
       {
@@ -298,14 +298,6 @@ const structuredData = [
                 <span class="blog-article__updated">🔄 Cập nhật: {formatDate(post.published_at)}</span>
                 <a href={`/blog/danh-muc/${categorySlug}`} class="blog-article__badge">{categoryInfo.icon} {categoryInfo.label}</a>
                 <span class="blog-article__readtime" id="readTime"></span>
-              </div>
-              <!-- Author micro-bio -->
-              <div class="blog-author">
-                <img src="https://truongvietanh.com/logo-crest-80.webp" alt="Trường Việt Anh" class="blog-author__avatar" width="40" height="40" loading="lazy" />
-                <div class="blog-author__meta">
-                  <p class="blog-author__name">Ban Truyền Thông Trường Việt Anh</p>
-                  <p class="blog-author__role">Đội ngũ giáo dục với 15+ năm kinh nghiệm</p>
-                </div>
               </div>
               <!-- Share buttons -->
               <div class="blog-share">
@@ -390,7 +382,12 @@ const structuredData = [
             </details>
             <details class="blog-faq__item">
               <summary class="blog-faq__question">Trường có bao nhiêu cơ sở?</summary>
-              <p class="blog-faq__answer">Trường Việt Anh hiện có 9 cơ sở tại TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Cần Giuộc - Tây Ninh và TP. Rạch Giá - Kiên Giang.</p>
+              <p class="blog-faq__answer">Năm học 2026–2027, Trường Việt Anh có <strong>8 cơ sở</strong> đang hoạt động tại 3 tỉnh thành:</p>
+              <ul class="blog-faq__campus-list">
+                <li><strong>TP.HCM (3 cơ sở):</strong> Cơ sở Gò Vấp, Mầm Non Gò Vấp, Cơ sở Bình Tân</li>
+                <li><strong>Tây Ninh (3 cơ sở):</strong> Mầm Non Nhân Lễ, Mầm Non Thái Sơn, Tiểu Học Thái Sơn</li>
+                <li><strong>Kiên Giang (2 cơ sở):</strong> Mầm Non Mekong Xanh, Tiểu Học Mekong Xanh</li>
+              </ul>
             </details>
             <details class="blog-faq__item">
               <summary class="blog-faq__question">Làm sao để đăng ký tuyển sinh?</summary>
@@ -610,7 +607,7 @@ const structuredData = [
 
   /* Print styles */
   @media print {.top-bar, .main-header, .mobile-sticky-cta, .back-to-top, .zalo-float,
-    .reading-progress, .blog-share, .blog-cta, .blog-related, .cookie-consent,
+    .reading-progress, .blog-share, .blog-cta, .blog-related,
     .announcement-bar, .site-footer, .mobile-nav-drawer{ display: none !important; }.blog-article{ max-width: 100%; padding: 0; }.blog-article__body{ font-size: 11pt; line-height: 1.6; }.blog-article__body a{ color: #000; text-decoration: underline; }.blog-article__body a::after{ content: ' (' attr(href) ')'; font-size: 9pt; color: #666; }
   }.blog-article__excerpt{
     font-size: 1.1rem;

@@ -1,6 +1,6 @@
 /**
  * site-interactions.js — interactions for SiteLayout (v2).
- * Handles: announcement close, exit popup, cookie consent, back-to-top,
+ * Handles: announcement close, exit popup, back-to-top,
  * scroll animations, FAQ toggle, stat counters, countdown.
  */
 (function () {
@@ -67,20 +67,6 @@
         });
       } catch {}
       setTimeout(() => { popup.hidden = true; }, 3000);
-    });
-  }
-
-  // ========= COOKIE CONSENT =========
-  function initCookieConsent() {
-    const banner = $('#cookie-consent');
-    if (!banner) return;
-    if (localStorage.getItem('cookie-consent')) return;
-    banner.hidden = false;
-    $('#cookie-accept')?.addEventListener('click', () => {
-      localStorage.setItem('cookie-consent', 'accepted'); banner.hidden = true;
-    });
-    $('#cookie-decline')?.addEventListener('click', () => {
-      localStorage.setItem('cookie-consent', 'declined'); banner.hidden = true;
     });
   }
 
@@ -196,7 +182,6 @@
   function init() {
     initAnnouncement();
     initExitPopup();
-    initCookieConsent();
     initBackToTop();
     initScrollReveal();
     initFaq();

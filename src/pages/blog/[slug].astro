@@ -269,46 +269,95 @@ const structuredData = [
       </div>
     </nav>
 
-    <!-- Article -->
-    <article class="blog-article">
-      <div class="blog-container">
-        <header class="blog-article__header">
-          <h1 class="blog-article__title">{post.title}</h1>
-          <div class="blog-article__meta">
-            {post.published_at && (
-              <time class="blog-article__date" datetime={post.published_at}>
-                {formatDate(post.published_at)}
-              </time>
+    <!-- Featured Image Hero (HubSpot-style) -->
+    {post.featured_image && (
+      <div class="blog-hero-img">
+        <img
+          src={`${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85`}
+          alt={post.title}
+          width="1600" height="720" fetchpriority="high" decoding="async"
+          srcset={`${DIRECTUS_URL}/assets/${post.featured_image}?width=800&height=360&fit=cover&format=webp&quality=80 800w, ${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85 1600w`}
+          sizes="(max-width: 960px) 100vw, 1600px"
+        />
+      </div>
+    )}
+
+    <!-- Article in 2-column layout: main + sticky sidebar -->
+    <article class="blog-article blog-article--hubspot">
+      <div class="blog-container blog-container--wide">
+        <div class="blog-grid">
+          <div class="blog-main">
+            <header class="blog-article__header">
+              <h1 class="blog-article__title">{post.title}</h1>
+              <div class="blog-article__meta">
+                {post.published_at && (
+                  <time class="blog-article__date" datetime={post.published_at}>
+                    📅 Đăng: {formatDate(post.published_at)}
+                  </time>
+                )}
+                <span class="blog-article__updated">🔄 Cập nhật: {formatDate(post.published_at)}</span>
+                <a href={`/blog/danh-muc/${categorySlug}`} class="blog-article__badge">{categoryInfo.icon} {categoryInfo.label}</a>
+                <span class="blog-article__readtime" id="readTime"></span>
+              </div>
+              <!-- Author micro-bio -->
+              <div class="blog-author">
+                <img src="https://truongvietanh.com/logo-crest-80.webp" alt="Trường Việt Anh" class="blog-author__avatar" width="40" height="40" loading="lazy" />
+                <div class="blog-author__meta">
+                  <p class="blog-author__name">Ban Truyền Thông Trường Việt Anh</p>
+                  <p class="blog-author__role">Đội ngũ giáo dục với 15+ năm kinh nghiệm</p>
+                </div>
+              </div>
+              <!-- Share buttons -->
+              <div class="blog-share">
+                <span class="blog-share__label">Chia sẻ:</span>
+                <a class="blog-share__btn blog-share__btn--fb" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonicalUrl)}`} target="_blank" rel="noopener" aria-label="Chia sẻ lên Facebook">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </a>
+                <a class="blog-share__btn blog-share__btn--zalo" href={`https://zalo.me/share?url=${encodeURIComponent(canonicalUrl)}`} target="_blank" rel="noopener" aria-label="Chia sẻ qua Zalo">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </a>
+                <button class="blog-share__btn blog-share__btn--copy" id="copyLink" aria-label="Sao chép link">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </header>
+
+            {post.excerpt && (
+              <p class="blog-article__excerpt">{post.excerpt}</p>
             )}
-            <a href={`/blog/danh-muc/${categorySlug}`} class="blog-article__badge">{categoryInfo.icon} {categoryInfo.label}</a>
-            <span class="blog-article__readtime" id="readTime"></span>
-          </div>
-          <!-- Share buttons -->
-          <div class="blog-share">
-            <span class="blog-share__label">Chia sẻ:</span>
-            <a class="blog-share__btn blog-share__btn--fb" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonicalUrl)}`} target="_blank" rel="noopener" aria-label="Chia sẻ lên Facebook">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-            </a>
-            <a class="blog-share__btn blog-share__btn--zalo" href={`https://zalo.me/share?url=${encodeURIComponent(canonicalUrl)}`} target="_blank" rel="noopener" aria-label="Chia sẻ qua Zalo">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-            </a>
-            <button class="blog-share__btn blog-share__btn--copy" id="copyLink" aria-label="Sao chép link">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-            </button>
-          </div>
-        </header>
 
-        {post.excerpt && (
-          <p class="blog-article__excerpt">{post.excerpt}</p>
-        )}
+            <!-- Auto TOC (mobile inline; desktop sticky in sidebar) -->
+            <nav class="blog-toc blog-toc--inline" id="blogToc" aria-label="Mục lục bài viết" style="display:none">
+              <p class="blog-toc__title">📑 Mục lục</p>
+              <ol class="blog-toc__list" id="blogTocList"></ol>
+            </nav>
 
-        <!-- Auto TOC (generated by JS from H2/H3 in content) -->
-        <nav class="blog-toc" id="blogToc" aria-label="Mục lục bài viết" style="display:none">
-          <p class="blog-toc__title">Mục lục</p>
-          <ol class="blog-toc__list" id="blogTocList"></ol>
-        </nav>
+            <div class="blog-article__body" id="blogArticleBody" set:html={cleanedContent} />
 
-        <div class="blog-article__body" set:html={cleanedContent} />
+            <!-- Inline lead magnet (auto-injected mid-article via JS at #midCta) -->
+            <template id="midCtaTpl">
+              <aside class="blog-lead-magnet">
+                <div class="blog-lead-magnet__icon">📥</div>
+                <div class="blog-lead-magnet__body">
+                  <h3>Tải miễn phí: Checklist Chọn Trường Phù Hợp Cho Con</h3>
+                  <p>15 tiêu chí + framework 5C giúp Ba/Mẹ ra quyết định không hối hận. PDF gửi qua email trong 1 phút.</p>
+                  <a href="/squeeze/checklist-chon-truong" class="blog-lead-magnet__btn">Tải checklist miễn phí →</a>
+                </div>
+              </aside>
+            </template>
+
+            <!-- Inline email-only quick subscribe (auto-injected via JS at #subCta) -->
+            <template id="subCtaTpl">
+              <aside class="blog-inline-subscribe" data-form-bg="light">
+                <h3>💌 Nhận bài viết mới qua email</h3>
+                <p>Mỗi tuần 1 bài viết chuyên sâu về giáo dục con — không spam, hủy bất kỳ lúc nào.</p>
+                <form class="blog-inline-subscribe__form" data-form-id="blog-inline-subscribe">
+                  <input type="email" name="email" required placeholder="email@cua-ban.com" autocomplete="email" />
+                  <button type="submit">Đăng ký</button>
+                </form>
+                <p class="blog-inline-subscribe__hint">Nhận miễn phí ebook "Lộ trình giáo dục con 0–18 tuổi"</p>
+              </aside>
+            </template>
 
         <!-- Author Bio -->
 <!-- Inline CTA Banner -->
@@ -408,6 +457,39 @@ const structuredData = [
             </div>
           </div>
         </section>
+          </div><!-- /.blog-main -->
+
+          <!-- HubSpot-style sticky sidebar -->
+          <aside class="blog-sidebar" aria-label="Sidebar">
+            <!-- Sticky TOC desktop -->
+            <nav class="blog-toc-sticky" id="blogTocSticky" style="display:none">
+              <p class="blog-toc__title">📑 Mục lục</p>
+              <ol class="blog-toc__list" id="blogTocStickyList"></ol>
+            </nav>
+
+            <!-- Sticky lead form -->
+            <div class="blog-side-cta" data-form-bg="light">
+              <div class="blog-side-cta__badge">🎯 Tư vấn miễn phí</div>
+              <h3 class="blog-side-cta__title">Tìm trường phù hợp cho con</h3>
+              <p class="blog-side-cta__desc">Đội tuyển sinh phản hồi trong 24h. Cá nhân hóa theo cấp học và ngân sách.</p>
+              <LeadFormTwoStepEmailFirst
+                formId="blog-side-form"
+                funnelCode="blog-sidebar"
+                schoolLevel="lien-cap"
+                submitText="Đăng ký tư vấn"
+                successMessage="Cảm ơn! Sẽ liên hệ trong 24h."
+              />
+            </div>
+
+            <!-- Sidebar contact card -->
+            <div class="blog-side-contact">
+              <p class="blog-side-contact__title">Liên hệ ngay</p>
+              <a href="tel:0916961409" class="blog-side-contact__btn">📞 0916 961 409</a>
+              <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="blog-side-contact__btn blog-side-contact__btn--zalo">💬 Chat Zalo OA</a>
+              <a href="/squeeze/checklist-chon-truong" class="blog-side-contact__btn blog-side-contact__btn--magnet">📥 Tải checklist miễn phí</a>
+            </div>
+          </aside>
+        </div><!-- /.blog-grid -->
       </div>
     </article>
 
@@ -926,6 +1008,123 @@ const structuredData = [
       width: 100%;
     }
   }
+
+  /* ===== HUBSPOT-STYLE: HERO IMAGE ===== */
+  .blog-hero-img{
+    width:100%;max-width:1200px;margin:1.5rem auto 0;padding:0 1rem;
+  }
+  .blog-hero-img img{
+    width:100%;height:auto;max-height:480px;object-fit:cover;
+    border-radius:12px;box-shadow:0 8px 30px rgba(26,26,94,.12);
+    aspect-ratio:16/9;background:#f0f4ff;
+  }
+
+  /* ===== HUBSPOT-STYLE: 2-COLUMN GRID ===== */
+  .blog-container--wide{max-width:1240px;padding:0 1.25rem}
+  .blog-grid{
+    display:grid;grid-template-columns:minmax(0, 1fr) 320px;gap:3rem;
+    align-items:start;margin-top:2rem;
+  }
+  .blog-main{min-width:0}
+  .blog-sidebar{position:sticky;top:90px;display:flex;flex-direction:column;gap:1.25rem}
+  @media (max-width:960px){
+    .blog-grid{grid-template-columns:1fr;gap:1.5rem}
+    .blog-sidebar{position:static;order:99}
+    .blog-toc-sticky{display:none !important}
+  }
+
+  /* ===== AUTHOR MICRO-BIO ===== */
+  .blog-author{
+    display:flex;align-items:center;gap:.75rem;margin:1rem 0;padding:.75rem 0;
+    border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;
+  }
+  .blog-author__avatar{width:40px;height:40px;border-radius:50%;background:#fff;object-fit:contain;border:1px solid #e5e7eb}
+  .blog-author__name{margin:0;font-weight:700;color:#1a1a5e;font-size:.95rem}
+  .blog-author__role{margin:0;font-size:.82rem;color:#64748b}
+
+  .blog-article__updated{color:#6b7280;font-size:.85rem}
+
+  /* ===== STICKY SIDEBAR ===== */
+  .blog-toc-sticky{
+    background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem;
+    max-height:60vh;overflow-y:auto;font-size:.85rem;
+  }
+  .blog-toc-sticky .blog-toc__title{font-size:.85rem;font-weight:700;color:#1a1a5e;margin:0 0 .5rem}
+  .blog-toc-sticky .blog-toc__list{list-style:none;padding:0;margin:0}
+  .blog-toc-sticky .blog-toc__list li{margin:.3rem 0;line-height:1.4}
+  .blog-toc-sticky .blog-toc__list a{color:#374151;text-decoration:none;display:block;padding:.2rem .35rem;border-radius:4px;border-left:2px solid transparent}
+  .blog-toc-sticky .blog-toc__list a:hover{background:#f3f4f6;color:#1a1a5e}
+  .blog-toc-sticky .blog-toc__sub{padding-left:1rem}
+  .blog-toc-sticky .blog-toc__sub a{font-size:.78rem;color:#6b7280}
+
+  .blog-side-cta{
+    background:linear-gradient(135deg,#1a1a5e 0%,#2a2a7e 100%);color:#fff;
+    border-radius:12px;padding:1.5rem;box-shadow:0 8px 24px rgba(26,26,94,.2);
+  }
+  .blog-side-cta__badge{
+    display:inline-block;background:#D4A843;color:#1a1a5e;font-weight:700;font-size:.72rem;
+    padding:3px 10px;border-radius:50px;margin-bottom:.75rem;
+  }
+  .blog-side-cta__title{font-size:1.15rem;font-weight:800;margin:0 0 .5rem;color:#fff;line-height:1.3}
+  .blog-side-cta__desc{font-size:.85rem;line-height:1.55;margin:0 0 1rem;color:#e0e7ff}
+  .blog-side-cta .lead-form input,.blog-side-cta .lead-form button{font-size:.85rem !important}
+  .blog-side-cta[data-form-bg="light"]{background:linear-gradient(135deg,#1a1a5e 0%,#2a2a7e 100%)}
+
+  .blog-side-contact{
+    background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem;
+  }
+  .blog-side-contact__title{font-weight:700;color:#1a1a5e;font-size:.9rem;margin:0 0 .65rem}
+  .blog-side-contact__btn{
+    display:block;padding:.55rem .85rem;margin-bottom:.4rem;
+    background:#1a1a5e;color:#fff;border-radius:6px;text-decoration:none;
+    font-size:.85rem;font-weight:600;text-align:center;transition:background .2s;
+  }
+  .blog-side-contact__btn:hover{background:#2a2a7e}
+  .blog-side-contact__btn--zalo{background:#0068FF}
+  .blog-side-contact__btn--zalo:hover{background:#0055d4}
+  .blog-side-contact__btn--magnet{background:#D4A843;color:#1a1a5e}
+  .blog-side-contact__btn--magnet:hover{background:#c09530}
+
+  /* ===== INLINE LEAD MAGNET (mid-article) ===== */
+  .blog-lead-magnet{
+    display:flex;align-items:flex-start;gap:1rem;
+    background:linear-gradient(135deg,#fff8f0 0%,#fff3e0 100%);
+    border:2px solid #D4A843;border-radius:12px;padding:1.25rem;margin:2rem 0;
+  }
+  .blog-lead-magnet__icon{font-size:2rem;line-height:1;flex-shrink:0}
+  .blog-lead-magnet__body h3{margin:0 0 .35rem;color:#1a1a5e;font-size:1.05rem;font-weight:800}
+  .blog-lead-magnet__body p{margin:0 0 .65rem;font-size:.9rem;line-height:1.55;color:#374151}
+  .blog-lead-magnet__btn{
+    display:inline-block;background:#1a1a5e;color:#fff;padding:.55rem 1.1rem;
+    border-radius:6px;text-decoration:none;font-weight:700;font-size:.9rem;transition:background .2s;
+  }
+  .blog-lead-magnet__btn:hover{background:#D4A843;color:#1a1a5e}
+
+  /* ===== INLINE EMAIL SUBSCRIBE ===== */
+  .blog-inline-subscribe{
+    background:#f0f4ff;border-left:4px solid #1a1a5e;border-radius:8px;padding:1.25rem;margin:2rem 0;
+  }
+  .blog-inline-subscribe h3{margin:0 0 .35rem;color:#1a1a5e;font-size:1.05rem;font-weight:800}
+  .blog-inline-subscribe > p{margin:0 0 .85rem;font-size:.9rem;color:#374151}
+  .blog-inline-subscribe__form{display:flex;gap:.5rem;flex-wrap:wrap}
+  .blog-inline-subscribe__form input{
+    flex:1;min-width:200px;padding:.6rem .85rem;border:1px solid #cbd5e1;border-radius:6px;
+    font-size:.95rem;background:#fff;
+  }
+  .blog-inline-subscribe__form button{
+    padding:.6rem 1.25rem;background:#D4A843;color:#1a1a5e;border:none;border-radius:6px;
+    font-weight:700;cursor:pointer;transition:background .2s;
+  }
+  .blog-inline-subscribe__form button:hover{background:#c09530}
+  .blog-inline-subscribe__form button:disabled{opacity:.6;cursor:not-allowed}
+  .blog-inline-subscribe__hint{margin:.5rem 0 0;font-size:.78rem;color:#6b7280;font-style:italic}
+
+  /* Mobile: smaller hero, full-width */
+  @media (max-width:768px){
+    .blog-hero-img{padding:0;border-radius:0;margin-top:0}
+    .blog-hero-img img{border-radius:0;max-height:240px}
+    .blog-lead-magnet{flex-direction:column;gap:.5rem}
+  }
 </style>
 
 <script>
@@ -961,27 +1160,74 @@ const structuredData = [
     });
   }
 
-  // Auto-generate TOC from H2/H3 headings
+  // Auto-generate TOC (mobile inline + desktop sticky)
   const tocNav = document.getElementById('blogToc');
   const tocList = document.getElementById('blogTocList');
+  const tocSticky = document.getElementById('blogTocSticky');
+  const tocStickyList = document.getElementById('blogTocStickyList');
   const articleBody = document.querySelector('.blog-article__body');
-  if (tocNav && tocList && articleBody) {
+  if (articleBody) {
     const headings = articleBody.querySelectorAll('h2, h3');
     if (headings.length >= 3) {
       headings.forEach((h, i) => {
         const id = 'section-' + i;
         h.id = id;
-        const li = document.createElement('li');
-        li.className = h.tagName === 'H3' ? 'blog-toc__sub' : '';
-        const a = document.createElement('a');
-        a.href = '#' + id;
-        a.textContent = h.textContent;
-        li.appendChild(a);
-        tocList.appendChild(li);
+        [tocList, tocStickyList].forEach(list => {
+          if (!list) return;
+          const li = document.createElement('li');
+          li.className = h.tagName === 'H3' ? 'blog-toc__sub' : '';
+          const a = document.createElement('a');
+          a.href = '#' + id;
+          a.textContent = h.textContent;
+          li.appendChild(a);
+          list.appendChild(li);
+        });
       });
-      tocNav.style.display = '';
+      if (tocNav) tocNav.style.display = '';
+      if (tocSticky) tocSticky.style.display = '';
     }
   }
+
+  // Inject inline CTAs at strategic positions (HubSpot-style mid-article)
+  if (articleBody) {
+    const paragraphs = Array.from(articleBody.querySelectorAll(':scope > p, :scope > h2'));
+    const midCtaTpl = document.getElementById('midCtaTpl');
+    const subCtaTpl = document.getElementById('subCtaTpl');
+    // Insert lead-magnet at ~33%, email subscribe at ~66%
+    const midIdx = Math.floor(paragraphs.length * 0.33);
+    const subIdx = Math.floor(paragraphs.length * 0.66);
+    if (midCtaTpl && paragraphs[midIdx]) {
+      const node = midCtaTpl.content.cloneNode(true);
+      paragraphs[midIdx].parentNode.insertBefore(node, paragraphs[midIdx]);
+    }
+    if (subCtaTpl && paragraphs[subIdx]) {
+      const node = subCtaTpl.content.cloneNode(true);
+      paragraphs[subIdx].parentNode.insertBefore(node, paragraphs[subIdx]);
+    }
+  }
+
+  // Inline subscribe form handler
+  document.querySelectorAll('form[data-form-id="blog-inline-subscribe"]').forEach(form => {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const email = form.querySelector('input[name="email"]').value;
+      const btn = form.querySelector('button');
+      btn.disabled = true; btn.textContent = 'Đang gửi...';
+      try {
+        await fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, funnel_code: 'blog-inline-subscribe', school_level: 'lien-cap', source: 'blog-inline' }),
+        });
+        btn.textContent = '✓ Đã đăng ký!';
+        form.querySelector('input').value = '';
+        if (window.dataLayer) window.dataLayer.push({ event: 'lead_submit', funnel: 'blog-inline-subscribe' });
+      } catch {
+        btn.textContent = 'Lỗi — thử lại';
+        btn.disabled = false;
+      }
+    });
+  });
 
   // Add lazy loading to all images within blog content
   document.querySelectorAll('.blog-article__body img').forEach((img) => {

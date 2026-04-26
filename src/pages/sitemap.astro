@@ -8,150 +8,349 @@ const canonicalUrl = 'https://truongvietanh.com/sitemap';
 
 const { pages, templates, forms, totals, generatedAt } = audit as any;
 const fmtDate = new Date(generatedAt).toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+// Friendly labels for each category code
+const CAT_LABELS: Record<string, { icon: string; name: string; desc: string }> = {
+  '00-Home':            { icon: '🏠', name: 'Trang Chủ',                desc: 'Homepage của site' },
+  '01-Pillar-Info':     { icon: '📚', name: 'Pillar Info',              desc: 'Học phí, học bổng, thành tích, ngoại khóa, giới thiệu, …' },
+  '02-Pillar-Cap-Hoc':  { icon: '🎓', name: 'Pillar Cấp Học',           desc: 'Mầm non · Tiểu học · THCS · THPT · Trại Hè 2026' },
+  '03-Tuyen-Sinh':      { icon: '🎯', name: 'Tuyển Sinh chung',         desc: 'Hub /tuyen-sinh · các trang squeeze /tuyen-sinh-* mới' },
+  '04-Squeeze':         { icon: '🎁', name: 'Squeeze Pages',            desc: 'Lead capture: chọn trường, học thử, ebook, livestream, test' },
+  '05-TS-THCS':         { icon: '🏫', name: 'Tuyển Sinh THCS',          desc: 'Funnel /tuyen-sinh/thcs/* + landing lớp 6 A/B' },
+  '06-TS-THPT':         { icon: '🏫', name: 'Tuyển Sinh THPT',          desc: 'Funnel /tuyen-sinh/thpt/*' },
+  '07-TS-Tieu-Hoc':     { icon: '🏫', name: 'Tuyển Sinh Tiểu Học',     desc: 'Funnel /tuyen-sinh/tieu-hoc/*' },
+  '08-TS-Mam-Non':      { icon: '🏫', name: 'Tuyển Sinh Mầm Non',      desc: 'Funnel /tuyen-sinh/mam-non/*' },
+  '09-Cong-Vien':       { icon: '🌳', name: 'Công Viên Giáo Dục',       desc: 'Concept page mới' },
+  '10-Trai-He':         { icon: '🏕️', name: 'Trại Hè',                  desc: 'Lion Camp 2026 + VSL pages' },
+  '11-Resources':       { icon: '📥', name: 'Tài Nguyên',               desc: 'Lead magnets có thể tải về' },
+  '12-Thank-You':       { icon: '✅', name: 'Thank-You',                desc: 'Cảm ơn sau khi điền form' },
+  '13-Blog':            { icon: '📝', name: 'Blog',                      desc: 'Listing + Category + Post (1,189 bài)' },
+  '14-Other':           { icon: '📄', name: 'Khác',                     desc: '' },
+  '99-Meta':            { icon: '⚙️', name: 'Meta / System',            desc: 'sitemap, 404 …' },
+};
+
+// Group pages by category
+const grouped: Record<string, any[]> = {};
+for (const p of pages) {
+  (grouped[p.category] = grouped[p.category] || []).push(p);
+}
+const sortedCats = Object.keys(grouped).sort();
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} canonicalUrl={canonicalUrl} noindex={true}>
+<BaseLayout title={pageTitle} description={pageDescription} canonical={canonicalUrl} noindex={true}>
   <main class="sitemap">
-    <header class="sitemap__hero">
+
+    <!-- Hero -->
+    <header class="sm-hero">
       <h1>🗺️ Sitemap nội bộ Trường Việt Anh</h1>
-      <p>Tổng <strong>{totals.pages}</strong> pages · <strong>{totals.templates}</strong> templates · <strong>{totals.forms}</strong> forms.<br/>
-      Tự cập nhật mỗi lần build. Lần build gần nhất: <code>{fmtDate}</code></p>
-      <nav class="sitemap__tabs">
-        <a href="#pages">📄 Pages ({totals.pages})</a>
-        <a href="#templates">🎨 Templates ({totals.templates})</a>
-        <a href="#forms">📝 Forms ({totals.forms})</a>
-        <a href="/sitemap-audit.csv" download>⬇️ CSV pages</a>
-        <a href="/sitemap-templates.csv" download>⬇️ CSV templates</a>
-        <a href="/sitemap-forms.csv" download>⬇️ CSV forms</a>
+      <p class="sm-hero__sub">Bản đồ toàn bộ <strong>{totals.pages} pages</strong> · <strong>{totals.templates} templates</strong> · <strong>{totals.forms} forms</strong>. Tự cập nhật mỗi lần build.</p>
+      <p class="sm-hero__meta">⏱️ Build: <code>{fmtDate}</code></p>
+      <nav class="sm-tabs" id="smTabs">
+        <button class="sm-tab is-active" data-tab="pages">📄 Pages <span class="sm-pill">{totals.pages}</span></button>
+        <button class="sm-tab" data-tab="templates">🎨 Templates <span class="sm-pill">{totals.templates}</span></button>
+        <button class="sm-tab" data-tab="forms">📝 Forms <span class="sm-pill">{totals.forms}</span></button>
+        <span class="sm-tabs__spacer"></span>
+        <a href="/sitemap-audit.csv" download class="sm-link">⬇️ CSV pages</a>
+        <a href="/sitemap-templates.csv" download class="sm-link">⬇️ CSV templates</a>
+        <a href="/sitemap-forms.csv" download class="sm-link">⬇️ CSV forms</a>
       </nav>
     </header>
 
-    <section id="pages">
-      <h2>📄 Pages — toàn bộ {totals.pages} trang</h2>
-      <div class="sitemap__filter">
-        <input type="text" id="page-filter" placeholder="🔍 Lọc URL/title/template/form…" />
-        <span id="page-count">{pages.length} / {pages.length}</span>
+    <!-- ========== PANE: PAGES (cards grouped by category) ========== -->
+    <section class="sm-pane is-active" id="pane-pages" data-pane="pages">
+      <div class="sm-toolbar">
+        <input type="text" id="filter-pages" class="sm-search" placeholder="🔍 Lọc URL, title, template, form, category…" />
+        <span class="sm-count" id="count-pages">{pages.length} / {pages.length}</span>
+        <span class="sm-toolbar__legend">
+          <span class="sm-status sm-status--stub">🔴 stub</span>
+          <span class="sm-status sm-status--light">🟡 light</span>
+          <span class="sm-status sm-status--ok">🟢 ok</span>
+          <span class="sm-status sm-status--rich">🔵 rich</span>
+        </span>
       </div>
-      <div class="sitemap__table-wrap">
-        <table id="pages-table">
-          <thead><tr>
-            <th>Category</th><th>URL</th><th>Title</th><th>Template</th><th>Form(s)</th><th>Words</th><th>Status</th><th>Schema</th><th>OG</th><th>Updated</th><th>Notes</th>
-          </tr></thead>
-          <tbody>
-            {pages.map((p: any) => (
-              <tr>
-                <td><code class="cat">{p.category}</code></td>
-                <td><a href={p.url} target="_blank" rel="noopener">{p.url.replace('https://truongvietanh.com', '')}</a></td>
-                <td title={p.title}>{p.title.slice(0, 60)}</td>
-                <td><span class={`tpl tpl--${p.template}`}>{p.template}</span></td>
-                <td class="forms">{p.forms}</td>
-                <td>{p.words}</td>
-                <td>{p.status}</td>
-                <td style="text-align:center">{p.schema}</td>
-                <td style="text-align:center">{p.og}</td>
-                <td>{p.updated}</td>
-                <td>{p.note}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+
+      <div id="pages-groups">
+        {sortedCats.map((cat) => {
+          const meta = CAT_LABELS[cat] || { icon: '📄', name: cat, desc: '' };
+          return (
+            <details class="sm-group" data-cat={cat} open>
+              <summary class="sm-group__head">
+                <span class="sm-group__icon">{meta.icon}</span>
+                <span class="sm-group__name">{meta.name}</span>
+                <span class="sm-group__count">{grouped[cat].length}</span>
+                {meta.desc && <span class="sm-group__desc">{meta.desc}</span>}
+                <span class="sm-group__chev">▾</span>
+              </summary>
+              <div class="sm-group__list">
+                {grouped[cat].map((p: any) => (
+                  <article class="sm-card" data-search={`${p.url} ${p.title} ${p.template} ${p.forms} ${cat}`.toLowerCase()}>
+                    <div class="sm-card__head">
+                      <a href={p.url} target="_blank" rel="noopener" class="sm-card__url">
+                        {p.url.replace('https://truongvietanh.com', '') || '/'}
+                      </a>
+                      <span class={`sm-tpl sm-tpl--${p.template}`}>{p.template}</span>
+                    </div>
+                    <h3 class="sm-card__title" title={p.title}>{p.title || '(untitled)'}</h3>
+                    {p.description && <p class="sm-card__desc">{p.description}</p>}
+                    <div class="sm-card__chips">
+                      <span class={`sm-chip sm-chip--${p.status?.includes('stub') ? 'stub' : p.status?.includes('light') ? 'light' : p.status?.includes('rich') ? 'rich' : p.status?.includes('dev') ? 'dev' : 'ok'}`}>{p.status || '—'}</span>
+                      <span class="sm-chip">📝 {p.words}w</span>
+                      {p.schema && <span class="sm-chip sm-chip--good">Schema ✓</span>}
+                      {p.og && <span class="sm-chip sm-chip--good">OG ✓</span>}
+                      <span class="sm-chip sm-chip--muted">📅 {p.updated || '—'}</span>
+                    </div>
+                    {p.forms && p.forms !== '—' && (
+                      <div class="sm-card__forms" title="Forms in this page">
+                        <span class="sm-card__forms-label">Forms:</span>
+                        <code>{p.forms}</code>
+                      </div>
+                    )}
+                    {p.note && <div class="sm-card__note">💡 {p.note}</div>}
+                  </article>
+                ))}
+              </div>
+            </details>
+          );
+        })}
       </div>
     </section>
 
-    <section id="templates">
-      <h2>🎨 Templates — {totals.templates} loại</h2>
-      <div class="sitemap__cards">
+    <!-- ========== PANE: TEMPLATES ========== -->
+    <section class="sm-pane" id="pane-templates" data-pane="templates">
+      <div class="sm-templates-grid">
         {templates.map((t: any) => (
-          <article class="sitemap__card">
-            <h3>{t.name} <small>({t.pagesUsing} pages)</small></h3>
-            <p class="muted">{t.file}</p>
-            <p>{t.description}</p>
-            <p><strong>Slots/Blocks:</strong> {t.slots.length ? t.slots.map((s: string) => <code>{s}</code>) : <em>(no slots — props-only)</em>}</p>
-            <p class="note">💡 {t.pagesNote}</p>
+          <article class={`sm-tpl-card sm-tpl-card--${t.name}`}>
+            <header class="sm-tpl-card__head">
+              <span class={`sm-tpl sm-tpl--${t.name}`}>{t.name}</span>
+              <span class="sm-tpl-card__count">{t.pagesUsing} pages</span>
+            </header>
+            <p class="sm-tpl-card__file">{t.file}</p>
+            <p class="sm-tpl-card__desc">{t.description}</p>
+            <div class="sm-tpl-card__slots">
+              <strong>Slots / Blocks:</strong>
+              {t.slots.length ? (
+                <ul>{t.slots.map((s: string) => <li><code>{s}</code></li>)}</ul>
+              ) : (
+                <em>(no slots — props-only)</em>
+              )}
+            </div>
+            <div class="sm-tpl-card__hint">💡 {t.pagesNote}</div>
           </article>
         ))}
       </div>
     </section>
 
-    <section id="forms">
-      <h2>📝 Forms — {totals.forms} unique IDs/funnels</h2>
-      <div class="sitemap__filter">
-        <input type="text" id="form-filter" placeholder="🔍 Lọc form ID/funnelCode…" />
-        <span id="form-count">{forms.length} / {forms.length}</span>
+    <!-- ========== PANE: FORMS ========== -->
+    <section class="sm-pane" id="pane-forms" data-pane="forms">
+      <div class="sm-toolbar">
+        <input type="text" id="filter-forms" class="sm-search" placeholder="🔍 Lọc form ID hoặc funnelCode…" />
+        <span class="sm-count" id="count-forms">{forms.length} / {forms.length}</span>
       </div>
-      <div class="sitemap__table-wrap">
-        <table id="forms-table">
-          <thead><tr><th>Form</th><th># Pages</th><th>URLs</th></tr></thead>
-          <tbody>
-            {forms.map((f: any) => (
-              <tr>
-                <td><code>{f.form}</code></td>
-                <td>{f.count}</td>
-                <td class="urls">{f.pages.map((u: string) => <a href={u} target="_blank">{u.replace('https://truongvietanh.com', '')}</a>).reduce((acc: any, x: any, i: number) => i ? [...acc, ' · ', x] : [x], [])}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div class="sm-forms-list" id="forms-list">
+        {forms.map((f: any) => (
+          <article class="sm-form-card" data-search={f.form.toLowerCase()}>
+            <header class="sm-form-card__head">
+              <code class="sm-form-card__id">{f.form}</code>
+              <span class="sm-form-card__count">{f.count} {f.count === 1 ? 'page' : 'pages'}</span>
+            </header>
+            <div class="sm-form-card__urls">
+              {f.pages.slice(0, 8).map((u: string) => (
+                <a href={u} target="_blank" rel="noopener">{u.replace('https://truongvietanh.com', '') || '/'}</a>
+              ))}
+              {f.pages.length > 8 && <span class="sm-form-card__more">+{f.pages.length - 8} more</span>}
+            </div>
+          </article>
+        ))}
       </div>
     </section>
+
   </main>
 
   <style is:inline>
-    .sitemap{max-width:1400px;margin:0 auto;padding:2rem 1.5rem}
-    .sitemap__hero{margin-bottom:2rem;padding:2rem;background:linear-gradient(135deg,#f0f4ff,#fff);border-radius:12px;border:1px solid #e5e7eb}
-    .sitemap__hero h1{font-size:1.75rem;margin-bottom:.5rem;color:#1a1a5e}
-    .sitemap__tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
-    .sitemap__tabs a{padding:.4rem .9rem;background:#1a1a5e;color:#fff;text-decoration:none;border-radius:6px;font-size:.85rem;font-weight:600}
-    .sitemap__tabs a:hover{background:#2a2a7e}
-    .sitemap section{margin:2.5rem 0}
-    .sitemap h2{font-size:1.4rem;margin-bottom:1rem;color:#1a1a5e;padding-bottom:.5rem;border-bottom:2px solid #F0D048}
-    .sitemap__filter{display:flex;align-items:center;gap:1rem;margin-bottom:1rem}
-    .sitemap__filter input{flex:1;padding:.5rem .9rem;border:1px solid #d1d5db;border-radius:6px;font-size:.9rem}
-    .sitemap__filter span{font-size:.85rem;color:#6b7280;font-weight:600}
-    .sitemap__table-wrap{overflow-x:auto;border:1px solid #e5e7eb;border-radius:8px}
-    .sitemap table{width:100%;border-collapse:collapse;font-size:.82rem}
-    .sitemap th{background:#1a1a5e;color:#fff;padding:.6rem .8rem;text-align:left;position:sticky;top:0;font-weight:600}
-    .sitemap td{padding:.5rem .8rem;border-top:1px solid #f3f4f6;vertical-align:top}
-    .sitemap tr:hover{background:#fafbfc}
-    .sitemap td a{color:#1a1a5e;text-decoration:none}
-    .sitemap td a:hover{text-decoration:underline}
-    .tpl{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.72rem;font-weight:700;white-space:nowrap}
-    .tpl--BaseLayout{background:#dbeafe;color:#1e3a8a}
-    .tpl--SqueezePageLayout{background:#fef3c7;color:#92400e}
-    .tpl--SalesPageLayout{background:#dcfce7;color:#166534}
-    .tpl--VSLSqueezePage,.tpl--VSLThankYouPage{background:#fce7f3;color:#9f1239}
-    .tpl--inline{background:#f3f4f6;color:#374151}
-    .tpl--SummerCampSalesPage{background:#e0e7ff;color:#3730a3}
-    .cat{background:#eef2ff;color:#3730a3;padding:1px 6px;border-radius:3px;font-size:.7rem;white-space:nowrap}
-    .forms{font-family:ui-monospace,monospace;font-size:.75rem;color:#475569;max-width:280px}
-    .urls{max-width:600px;font-size:.75rem}
-    .urls a{display:inline-block;margin-right:.3rem}
-    .sitemap__cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1rem}
-    .sitemap__card{padding:1.25rem;border:1px solid #e5e7eb;border-radius:8px;background:#fff}
-    .sitemap__card h3{font-size:1.05rem;color:#1a1a5e;margin-bottom:.25rem}
-    .sitemap__card h3 small{color:#6b7280;font-weight:400;font-size:.8rem}
-    .sitemap__card p{font-size:.85rem;line-height:1.55;margin:.5rem 0;color:#374151}
-    .sitemap__card .muted{font-family:monospace;font-size:.75rem;color:#9ca3af}
-    .sitemap__card code{background:#f3f4f6;padding:1px 6px;border-radius:3px;font-size:.75rem;margin-right:.25rem;display:inline-block}
-    .sitemap__card .note{background:#fffbeb;border-left:3px solid #F0D048;padding:.5rem .75rem;margin-top:.75rem;font-size:.8rem;color:#78350f}
+    /* ========== BASE ========== */
+    .sitemap{max-width:1280px;margin:0 auto;padding:1.5rem 1rem 4rem;color:#1f2937}
+    .sitemap *{box-sizing:border-box}
+
+    /* ========== HERO ========== */
+    .sm-hero{background:linear-gradient(135deg,#1a1a5e 0%,#2a2a7e 50%,#1a1a5e 100%);color:#fff;padding:2rem 1.5rem;border-radius:14px;margin-bottom:1.5rem}
+    .sm-hero h1{font-size:1.6rem;margin:0 0 .5rem;color:#fff}
+    .sm-hero__sub{margin:0 0 .25rem;font-size:.95rem;color:#e0e7ff}
+    .sm-hero__sub strong{color:#F0D048}
+    .sm-hero__meta{margin:0 0 1rem;font-size:.8rem;color:#a5b4fc}
+    .sm-hero__meta code{background:rgba(255,255,255,.1);padding:2px 8px;border-radius:4px;color:#fff}
+
+    /* ========== TABS ========== */
+    .sm-tabs{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin-top:1rem}
+    .sm-tabs__spacer{flex:1;min-width:1rem}
+    .sm-tab{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.2);padding:.5rem 1rem;border-radius:8px;cursor:pointer;font-size:.88rem;font-weight:600;transition:all .15s;font-family:inherit}
+    .sm-tab:hover{background:rgba(255,255,255,.18)}
+    .sm-tab.is-active{background:#F0D048;color:#1a1a5e;border-color:#F0D048}
+    .sm-pill{background:rgba(0,0,0,.15);color:inherit;padding:1px 8px;border-radius:50px;font-size:.72rem;font-weight:700}
+    .sm-tab.is-active .sm-pill{background:rgba(26,26,94,.2);color:#1a1a5e}
+    .sm-link{padding:.45rem .85rem;background:rgba(255,255,255,.08);color:#fff;text-decoration:none;border-radius:6px;font-size:.78rem;font-weight:500;border:1px solid rgba(255,255,255,.15)}
+    .sm-link:hover{background:rgba(255,255,255,.15)}
+
+    /* ========== PANES ========== */
+    .sm-pane{display:none}
+    .sm-pane.is-active{display:block}
+
+    /* ========== TOOLBAR ========== */
+    .sm-toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:.85rem;margin-bottom:1.25rem;padding:.85rem 1rem;background:#fff;border:1px solid #e5e7eb;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);position:sticky;top:0;z-index:10}
+    .sm-search{flex:1;min-width:240px;padding:.6rem .9rem;border:1px solid #d1d5db;border-radius:8px;font-size:.92rem;outline:none;transition:border .15s}
+    .sm-search:focus{border-color:#1a1a5e;box-shadow:0 0 0 3px rgba(26,26,94,.1)}
+    .sm-count{font-size:.85rem;color:#6b7280;font-weight:600;white-space:nowrap}
+    .sm-toolbar__legend{display:flex;gap:.4rem;flex-wrap:wrap}
+    .sm-status{font-size:.7rem;padding:2px 8px;border-radius:50px;font-weight:600;white-space:nowrap}
+    .sm-status--stub{background:#fee2e2;color:#991b1b}
+    .sm-status--light{background:#fef3c7;color:#92400e}
+    .sm-status--ok{background:#dcfce7;color:#166534}
+    .sm-status--rich{background:#dbeafe;color:#1e3a8a}
+
+    /* ========== GROUP (collapsible by category) ========== */
+    .sm-group{background:#fff;border:1px solid #e5e7eb;border-radius:10px;margin-bottom:.85rem;overflow:hidden}
+    .sm-group[open]{border-color:#c7d2fe}
+    .sm-group__head{display:flex;align-items:center;gap:.7rem;padding:.85rem 1rem;cursor:pointer;list-style:none;user-select:none;background:linear-gradient(90deg,#f8fafc,#fff);border-bottom:1px solid transparent;transition:background .15s}
+    .sm-group__head::-webkit-details-marker{display:none}
+    .sm-group[open] .sm-group__head{border-bottom-color:#e5e7eb;background:linear-gradient(90deg,#eef2ff,#fff)}
+    .sm-group__head:hover{background:linear-gradient(90deg,#e0e7ff,#f5f7ff)}
+    .sm-group__icon{font-size:1.4rem;line-height:1}
+    .sm-group__name{font-weight:700;color:#1a1a5e;font-size:1rem}
+    .sm-group__count{background:#1a1a5e;color:#fff;padding:2px 10px;border-radius:50px;font-size:.78rem;font-weight:700;min-width:32px;text-align:center}
+    .sm-group__desc{flex:1;color:#6b7280;font-size:.83rem;font-weight:400}
+    .sm-group__chev{color:#9ca3af;font-size:.9rem;transition:transform .2s;margin-left:auto}
+    .sm-group[open] .sm-group__chev{transform:rotate(180deg)}
+
+    /* ========== CARD GRID ========== */
+    .sm-group__list{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:.85rem;padding:1rem}
+    .sm-card{background:#fafbfc;border:1px solid #e5e7eb;border-radius:8px;padding:.85rem 1rem;transition:all .15s;display:flex;flex-direction:column;gap:.4rem}
+    .sm-card:hover{border-color:#c7d2fe;background:#fff;box-shadow:0 4px 12px rgba(26,26,94,.08);transform:translateY(-1px)}
+    .sm-card__head{display:flex;align-items:center;justify-content:space-between;gap:.5rem}
+    .sm-card__url{font-family:ui-monospace,SFMono-Regular,monospace;font-size:.82rem;font-weight:700;color:#1a1a5e;text-decoration:none;word-break:break-all;flex:1;min-width:0}
+    .sm-card__url:hover{color:#F0D048;text-decoration:underline}
+    .sm-card__title{font-size:.92rem;font-weight:600;color:#111827;margin:0;line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .sm-card__desc{margin:0;font-size:.78rem;color:#6b7280;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+    .sm-card__chips{display:flex;flex-wrap:wrap;gap:.3rem;margin-top:.15rem}
+    .sm-chip{display:inline-flex;align-items:center;font-size:.7rem;padding:2px 8px;border-radius:50px;background:#f3f4f6;color:#374151;font-weight:600;white-space:nowrap}
+    .sm-chip--good{background:#dcfce7;color:#166534}
+    .sm-chip--muted{background:transparent;color:#9ca3af;font-weight:400;padding-left:0}
+    .sm-chip--stub{background:#fee2e2;color:#991b1b}
+    .sm-chip--light{background:#fef3c7;color:#92400e}
+    .sm-chip--ok{background:#dcfce7;color:#166534}
+    .sm-chip--rich{background:#dbeafe;color:#1e3a8a}
+    .sm-chip--dev{background:#e5e7eb;color:#374151}
+    .sm-card__forms{font-size:.7rem;color:#475569;font-family:ui-monospace,monospace;background:#f8fafc;padding:4px 8px;border-radius:4px;border-left:2px solid #c7d2fe;line-height:1.5;word-break:break-all}
+    .sm-card__forms-label{color:#6b7280;font-family:inherit;font-weight:600;margin-right:.3rem}
+    .sm-card__note{font-size:.72rem;color:#78350f;background:#fffbeb;border-left:2px solid #F0D048;padding:4px 8px;border-radius:4px}
+
+    /* ========== TEMPLATE BADGES ========== */
+    .sm-tpl{display:inline-block;padding:3px 9px;border-radius:5px;font-size:.7rem;font-weight:700;white-space:nowrap}
+    .sm-tpl--BaseLayout{background:#dbeafe;color:#1e3a8a}
+    .sm-tpl--SqueezePageLayout{background:#fef3c7;color:#92400e}
+    .sm-tpl--SalesPageLayout{background:#dcfce7;color:#166534}
+    .sm-tpl--VSLSqueezePage,.sm-tpl--VSLThankYouPage{background:#fce7f3;color:#9f1239}
+    .sm-tpl--inline{background:#f3f4f6;color:#374151}
+    .sm-tpl--SummerCampSalesPage{background:#e0e7ff;color:#3730a3}
+
+    /* ========== TEMPLATES PANE ========== */
+    .sm-templates-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1rem}
+    .sm-tpl-card{background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1.25rem}
+    .sm-tpl-card__head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.5rem}
+    .sm-tpl-card__count{background:#1a1a5e;color:#fff;font-size:.72rem;font-weight:700;padding:2px 10px;border-radius:50px}
+    .sm-tpl-card__file{font-family:ui-monospace,monospace;font-size:.72rem;color:#9ca3af;margin:0 0 .75rem}
+    .sm-tpl-card__desc{font-size:.85rem;line-height:1.55;color:#374151;margin:0 0 .85rem}
+    .sm-tpl-card__slots{font-size:.85rem;margin-bottom:.85rem}
+    .sm-tpl-card__slots strong{display:block;color:#1a1a5e;margin-bottom:.35rem;font-size:.78rem}
+    .sm-tpl-card__slots ul{list-style:none;padding:0;margin:0;display:flex;flex-wrap:wrap;gap:.3rem}
+    .sm-tpl-card__slots ul li code{background:#eef2ff;color:#3730a3;padding:2px 8px;border-radius:4px;font-size:.72rem}
+    .sm-tpl-card__hint{background:#fffbeb;border-left:3px solid #F0D048;padding:.6rem .85rem;font-size:.78rem;color:#78350f;border-radius:4px}
+
+    /* ========== FORMS PANE ========== */
+    .sm-forms-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(380px,1fr));gap:.75rem}
+    .sm-form-card{background:#fff;border:1px solid #e5e7eb;border-radius:8px;padding:.85rem 1rem}
+    .sm-form-card__head{display:flex;align-items:center;justify-content:space-between;gap:.5rem;margin-bottom:.5rem;padding-bottom:.5rem;border-bottom:1px dashed #e5e7eb}
+    .sm-form-card__id{font-family:ui-monospace,monospace;font-size:.85rem;font-weight:700;color:#1a1a5e;background:#eef2ff;padding:3px 8px;border-radius:4px;word-break:break-all}
+    .sm-form-card__count{background:#1a1a5e;color:#fff;font-size:.7rem;font-weight:700;padding:2px 9px;border-radius:50px;white-space:nowrap}
+    .sm-form-card__urls{display:flex;flex-wrap:wrap;gap:.3rem}
+    .sm-form-card__urls a{font-family:ui-monospace,monospace;font-size:.72rem;color:#475569;background:#f8fafc;padding:2px 7px;border-radius:3px;text-decoration:none;border:1px solid #e5e7eb;word-break:break-all}
+    .sm-form-card__urls a:hover{background:#eef2ff;color:#1a1a5e;border-color:#c7d2fe}
+    .sm-form-card__more{font-size:.72rem;color:#9ca3af;font-style:italic;padding:2px 7px}
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 768px){
+      .sm-hero{padding:1.25rem 1rem}
+      .sm-hero h1{font-size:1.25rem}
+      .sm-group__list{grid-template-columns:1fr;padding:.75rem;gap:.6rem}
+      .sm-templates-grid,.sm-forms-list{grid-template-columns:1fr}
+      .sm-toolbar{position:relative}
+      .sm-group__desc{display:none}
+      .sm-toolbar__legend{display:none}
+    }
+
+    /* ========== HIDDEN STATES (filter) ========== */
+    .sm-card.is-hidden,.sm-form-card.is-hidden{display:none}
+    .sm-group.is-empty{display:none}
   </style>
 
   <script is:inline>
-    function setupFilter(inputId, tableId, countId){
-      var inp=document.getElementById(inputId), tbl=document.getElementById(tableId), cnt=document.getElementById(countId);
-      if(!inp||!tbl) return;
-      var rows=tbl.querySelectorAll('tbody tr'), total=rows.length;
-      inp.addEventListener('input',function(){
-        var q=inp.value.toLowerCase().trim(), shown=0;
-        rows.forEach(function(r){
-          var match=q===''||r.textContent.toLowerCase().indexOf(q)>=0;
-          r.style.display=match?'':'none';
-          if(match)shown++;
+    // ===== Tab switching =====
+    const tabs = document.querySelectorAll('.sm-tab');
+    const panes = document.querySelectorAll('.sm-pane');
+    tabs.forEach(t => t.addEventListener('click', () => {
+      const target = t.getAttribute('data-tab');
+      tabs.forEach(x => x.classList.toggle('is-active', x === t));
+      panes.forEach(p => p.classList.toggle('is-active', p.getAttribute('data-pane') === target));
+      // Reflect in URL hash without scroll jump
+      history.replaceState(null, '', '#' + target);
+    }));
+    // Initial: read hash to switch tab
+    const hash = (location.hash || '#pages').replace('#', '');
+    if (['pages', 'templates', 'forms'].includes(hash)) {
+      const tab = document.querySelector('.sm-tab[data-tab="' + hash + '"]');
+      if (tab) tab.click();
+    }
+
+    // ===== Pages filter (cards inside groups) =====
+    const filterPages = document.getElementById('filter-pages');
+    const countPages = document.getElementById('count-pages');
+    const allCards = document.querySelectorAll('#pages-groups .sm-card');
+    const allGroups = document.querySelectorAll('#pages-groups .sm-group');
+    if (filterPages) {
+      filterPages.addEventListener('input', () => {
+        const q = filterPages.value.toLowerCase().trim();
+        let shown = 0;
+        allCards.forEach(c => {
+          const text = c.getAttribute('data-search') + ' ' + c.textContent.toLowerCase();
+          const match = !q || text.indexOf(q) >= 0;
+          c.classList.toggle('is-hidden', !match);
+          if (match) shown++;
         });
-        cnt.textContent=shown+' / '+total;
+        // Hide empty groups
+        allGroups.forEach(g => {
+          const visible = g.querySelectorAll('.sm-card:not(.is-hidden)').length;
+          g.classList.toggle('is-empty', visible === 0);
+          // Auto-expand if filtering and has matches
+          if (q && visible > 0) g.setAttribute('open', '');
+        });
+        countPages.textContent = shown + ' / ' + allCards.length;
       });
     }
-    setupFilter('page-filter','pages-table','page-count');
-    setupFilter('form-filter','forms-table','form-count');
+
+    // ===== Forms filter =====
+    const filterForms = document.getElementById('filter-forms');
+    const countForms = document.getElementById('count-forms');
+    const allForms = document.querySelectorAll('#forms-list .sm-form-card');
+    if (filterForms) {
+      filterForms.addEventListener('input', () => {
+        const q = filterForms.value.toLowerCase().trim();
+        let shown = 0;
+        allForms.forEach(f => {
+          const text = f.getAttribute('data-search') + ' ' + f.textContent.toLowerCase();
+          const match = !q || text.indexOf(q) >= 0;
+          f.classList.toggle('is-hidden', !match);
+          if (match) shown++;
+        });
+        countForms.textContent = shown + ' / ' + allForms.length;
+      });
+    }
   </script>
 </BaseLayout>

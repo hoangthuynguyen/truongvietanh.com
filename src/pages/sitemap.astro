@@ -57,7 +57,7 @@ const sortedCats = Object.keys(grouped).sort();
     </header>
 
     <!-- ========== PANE: PAGES (cards grouped by category) ========== -->
-    <section class="sm-pane is-active" id="pane-pages" data-pane="pages">
+    <section class="sm-pane" id="pane-pages" data-pane="pages" style="display:block">
       <div class="sm-toolbar">
         <input type="text" id="filter-pages" class="sm-search" placeholder="🔍 Lọc URL, title, template, form, category…" />
         <span class="sm-count" id="count-pages">{pages.length} / {pages.length}</span>
@@ -116,7 +116,7 @@ const sortedCats = Object.keys(grouped).sort();
     </section>
 
     <!-- ========== PANE: TEMPLATES ========== -->
-    <section class="sm-pane" id="pane-templates" data-pane="templates">
+    <section class="sm-pane" id="pane-templates" data-pane="templates" style="display:none">
       <div class="sm-templates-grid">
         {templates.map((t: any) => (
           <article class={`sm-tpl-card sm-tpl-card--${t.name}`}>
@@ -141,7 +141,7 @@ const sortedCats = Object.keys(grouped).sort();
     </section>
 
     <!-- ========== PANE: FORMS ========== -->
-    <section class="sm-pane" id="pane-forms" data-pane="forms">
+    <section class="sm-pane" id="pane-forms" data-pane="forms" style="display:none">
       <div class="sm-toolbar">
         <input type="text" id="filter-forms" class="sm-search" placeholder="🔍 Lọc form ID hoặc funnelCode…" />
         <span class="sm-count" id="count-forms">{forms.length} / {forms.length}</span>
@@ -295,19 +295,15 @@ const sortedCats = Object.keys(grouped).sort();
     // ===== Tab switching =====
     const tabs = document.querySelectorAll('.sm-tab');
     const panes = document.querySelectorAll('.sm-pane');
-    tabs.forEach(t => t.addEventListener('click', () => {
-      const target = t.getAttribute('data-tab');
-      tabs.forEach(x => x.classList.toggle('is-active', x === t));
-      panes.forEach(p => p.classList.toggle('is-active', p.getAttribute('data-pane') === target));
-      // Reflect in URL hash without scroll jump
+    function showTab(target) {
+      tabs.forEach(x => x.classList.toggle('is-active', x.getAttribute('data-tab') === target));
+      panes.forEach(p => { p.style.display = p.getAttribute('data-pane') === target ? 'block' : 'none'; });
       history.replaceState(null, '', '#' + target);
-    }));
+    }
+    tabs.forEach(t => t.addEventListener('click', () => showTab(t.getAttribute('data-tab'))));
     // Initial: read hash to switch tab
     const hash = (location.hash || '#pages').replace('#', '');
-    if (['pages', 'templates', 'forms'].includes(hash)) {
-      const tab = document.querySelector('.sm-tab[data-tab="' + hash + '"]');
-      if (tab) tab.click();
-    }
+    if (['pages', 'templates', 'forms'].includes(hash)) showTab(hash);
 
     // ===== Pages filter (cards inside groups) =====
     const filterPages = document.getElementById('filter-pages');

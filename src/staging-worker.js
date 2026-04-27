@@ -1215,50 +1215,45 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
   const nameParts = (data.fullName || '').trim().split(/\s+/);
   const firstName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0] || 'Ba/Mẹ';
 
-  const itemsHtml = res.items.length > 0 ? `
-    <div style="background:#f8faff;border-radius:10px;padding:18px 20px;margin-bottom:20px;">
-      <p style="font-weight:700;color:#1a1a5e;margin:0 0 12px;">📦 Bộ tài liệu của bạn:</p>
-      ${res.items.map(item => `
-        <div style="margin-bottom:10px;">
-          <a href="${item.url}" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#1a1a5e;background:#fff;border:1.5px solid #e0e0e0;border-radius:8px;padding:10px 14px;">
-            <span style="font-size:20px;">${item.icon}</span>
-            <span style="font-size:14px;font-weight:500;">${item.label}</span>
-            <span style="margin-left:auto;color:#D4A843;font-weight:700;">→ Tải</span>
-          </a>
-        </div>
-      `).join('')}
-    </div>` : '';
-
-  const html = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;margin:0;padding:20px;">
-<div style="max-width:580px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
-  <div style="background:linear-gradient(135deg,#1a1a5e,#12123e);color:#fff;padding:28px 24px;text-align:center;">
-    <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:8px 16px;border-radius:8px;margin-bottom:14px;"/>
-    <h1 style="color:#fff;font-size:20px;margin:6px 0;">✅ ${res.title}</h1>
-  </div>
-
-  <div style="padding:26px 24px;">
-    <p style="font-size:15px;color:#1a1a2e;margin:0 0 16px;">Dạ chào <strong>${firstName}</strong>,</p>
-    <p style="font-size:15px;color:#2d2d42;line-height:1.7;margin:0 0 20px;">${res.intro}</p>
-
-    ${itemsHtml}
-
-    <div style="text-align:center;margin:24px 0;">
-      <a href="${res.cta.url}" style="display:inline-block;background:linear-gradient(135deg,#D4A843,#c09530);color:#12123e;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(212,168,67,.4);">
-        ${res.cta.text}
-      </a>
-    </div>
-
-    <div style="background:#f0faf4;border:1px solid #c8e9d4;border-radius:10px;padding:14px 18px;margin-top:16px;">
-      <p style="margin:0;font-size:14px;color:#1e8449;line-height:1.6;">
-        🛡️ Nếu có câu hỏi, Ba/Mẹ có thể liên hệ trực tiếp qua Zalo <a href="https://zalo.me/1678310120468101523" style="color:#1a1a5e;font-weight:700;">tại đây</a> hoặc gọi <a href="tel:+84916961409" style="color:#1a1a5e;font-weight:700;">0916 961 409</a>.
+  const html = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
+<table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
+<table width="520" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
+  <tr>
+    <td style="background:#0d1b3e;padding:24px;text-align:center;border-bottom:3px solid #d4a843;">
+      <img src="https://truongvietanh.com/logo-th-thcs-thpt.png" alt="Trường Việt Anh" height="60" style="background:#fff;padding:6px 16px;border-radius:8px;display:block;margin:0 auto 12px;"/>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:36px 36px 28px;text-align:center;">
+      <p style="font-size:36px;margin:0 0 12px;">🎉</p>
+      <h2 style="color:#0d1b3e;font-size:20px;font-family:Arial,sans-serif;margin:0 0 16px;">Cảm ơn bạn đã đăng ký!</h2>
+      <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 12px;">
+        Chúng tôi đã nhận được thông tin của bạn.
       </p>
-    </div>
-  </div>
-
-  <div style="background:#12123e;color:#ffd89a;padding:14px 20px;text-align:center;font-size:12px;">
-    Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#ffd89a;">truongvietanh.com</a>
-  </div>
-</div>
+      <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 20px;">
+        Vui lòng <strong style="color:#0d1b3e;">đợi vài phút</strong>, tài liệu sẽ được gửi đến email của bạn ngay sau đây.
+      </p>
+      <p style="color:#999;font-size:13px;margin:0;">
+        Nếu không thấy email, hãy kiểm tra thư mục <strong>Spam</strong> hoặc <strong>Promotions</strong>.
+      </p>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0 36px 28px;text-align:center;">
+      <a href="https://zalo.me/0916961409" style="display:inline-block;background:#0068FF;color:#fff;padding:13px 28px;border-radius:10px;font-family:Arial,sans-serif;font-weight:700;font-size:14px;text-decoration:none;">
+        💬 Chat Zalo để được hỗ trợ nhanh hơn
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td style="background:#0d1b3e;padding:16px;text-align:center;">
+      <p style="color:rgba(255,255,255,.6);font-size:12px;font-family:Arial,sans-serif;margin:0;">
+        Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#d4a843;text-decoration:none;">truongvietanh.com</a> — Hotline: 0916 961 409
+      </p>
+    </td>
+  </tr>
+</table>
+</td></tr></table>
 </body></html>`;
 
   // Primary: GHL Conversations API (dùng SES backend — ổn định hơn MailChannels)

@@ -20,15 +20,17 @@
 ═══════════════════════════════════════════════════ */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:   #06101f;
-  --navy2:  #0c1b34;
+  /* ── Trường Việt Anh brand palette ── */
+  --navy:   #08082a;         /* deep brand navy  (base: #1a1a5e)  */
+  --navy2:  #10104a;         /* mid  brand navy                   */
   --border: rgba(255,255,255,.08);
   --text:   #eef2ff;
   --muted:  rgba(238,242,255,.58);
-  --red:    #dc2626;
-  --orange: #f97316;
-  --amber:  #fbbf24;
+  --red:    #dc2626;          /* urgency – unchanged               */
+  --orange: #F0D048;          /* → brand gold  #F0D048             */
+  --amber:  #F0D048;          /* → brand gold                      */
   --green:  #22c55e;
+  --blue:   #2563eb;          /* brand blue accent                 */
   --r:      10px;
 }
 html{height:100%}
@@ -37,8 +39,8 @@ body{
   font-family:'Inter',sans-serif;
   background:var(--navy);
   background-image:
-    radial-gradient(ellipse 90% 60% at 72% 105%,rgba(25,75,155,.35) 0%,transparent 55%),
-    radial-gradient(ellipse 55% 40% at  4%  -4%,rgba(12,40,90,.5)  0%,transparent 50%);
+    radial-gradient(ellipse 90% 60% at 72% 105%,rgba(26,26,94,.55) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 40% at  4%  -4%,rgba(16,16,74,.6)  0%,transparent 50%);
   color:var(--text);
   overflow:hidden;
   display:flex;
@@ -155,29 +157,29 @@ body{
   border-radius:20px;padding:1px 9px;font-variant-numeric:tabular-nums;
 }
 
-/* Main CTA button */
+/* Main CTA button — brand gold on dark navy */
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:10px;
   background:var(--orange);
-  background-image:linear-gradient(135deg,#fb923c 0%,var(--orange) 45%,#ea580c 100%);
-  color:#fff;
+  background-image:linear-gradient(135deg,#F8E050 0%,#F0D048 45%,#D4A800 100%);
+  color:#1a1a5e;              /* dark navy text on gold = max contrast */
   font-family:'Montserrat',sans-serif;
   font-size:clamp(.88rem,1.05vw,1rem);
   font-weight:900;letter-spacing:.8px;text-transform:uppercase;
   border:none;border-radius:var(--r);
   padding:17px 30px;cursor:pointer;max-width:440px;
   position:relative;overflow:hidden;
-  box-shadow:0 6px 32px rgba(249,115,22,.58),0 2px 8px rgba(0,0,0,.4);
+  box-shadow:0 6px 32px rgba(240,208,72,.6),0 2px 8px rgba(0,0,0,.45);
   transition:transform .18s ease,box-shadow .18s ease;
   animation:btnPulse 2.8s ease-in-out infinite;
 }
 .btn::after{
   content:'';position:absolute;top:0;left:-90%;
   width:55%;height:100%;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);
   transition:left .5s ease;
 }
-.btn:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 12px 40px rgba(249,115,22,.72),0 2px 8px rgba(0,0,0,.4);animation:none}
+.btn:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 12px 40px rgba(240,208,72,.75),0 2px 8px rgba(0,0,0,.4);animation:none}
 .btn:hover::after{left:145%}
 .btn:active{transform:scale(.98)}
 .btn.shake{animation:shake .55s ease}
@@ -196,12 +198,12 @@ body{
   max-width:290px;
 }
 
-/* Layer 1 – ambient glow (radial orange/amber behind card) */
+/* Layer 1 – ambient glow (brand gold behind card) */
 .m-glow-bg{
   position:absolute;
   inset:-10%;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 65%,rgba(249,115,22,.28) 0%,rgba(251,191,36,.12) 40%,transparent 70%);
+    radial-gradient(ellipse 80% 60% at 50% 65%,rgba(240,208,72,.3) 0%,rgba(240,208,72,.12) 40%,transparent 70%);
   z-index:0;pointer-events:none;
   animation:glowPulse 3.5s ease-in-out infinite;
 }
@@ -355,7 +357,7 @@ body{
 .pprog-track{height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden}
 .pprog-fill{
   height:100%;border-radius:99px;
-  background:linear-gradient(90deg,var(--orange),#fb923c);
+  background:linear-gradient(90deg,#D4A800,#F0D048,#F8E050);
   transition:width .45s ease;
 }
 
@@ -425,19 +427,20 @@ body{
 }
 .s2-urg-dot{width:7px;height:7px;border-radius:50%;background:#dc2626;animation:blink 1s ease infinite;flex-shrink:0}
 
-/* Popup CTA */
+/* Popup CTA — brand gold */
 .pbtn{
   width:100%;
-  background:linear-gradient(135deg,#fb923c,var(--orange),#ea580c);
-  color:#fff;font-family:'Montserrat',sans-serif;
+  background:linear-gradient(135deg,#F8E050,#F0D048,#D4A800);
+  color:#1a1a5e;              /* dark navy on gold */
+  font-family:'Montserrat',sans-serif;
   font-size:.93rem;font-weight:900;letter-spacing:.7px;text-transform:uppercase;
   border:none;border-radius:9px;padding:14px;cursor:pointer;
-  box-shadow:0 4px 20px rgba(249,115,22,.5);
+  box-shadow:0 4px 20px rgba(240,208,72,.5);
   transition:transform .18s,box-shadow .18s;
   margin-top:7px;min-height:50px;
   display:flex;align-items:center;justify-content:center;
 }
-.pbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(249,115,22,.6)}
+.pbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(240,208,72,.65)}
 .pbtn:disabled{opacity:.7;cursor:wait}
 .pbtn .t{display:block}
 .pbtn .s{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .55s linear infinite}
@@ -463,8 +466,8 @@ body{
 @keyframes fadeIn   {from{opacity:0}to{opacity:1}}
 @keyframes springUp {from{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
 @keyframes btnPulse {
-  0%,100%{box-shadow:0 6px 32px rgba(249,115,22,.58),0 2px 8px rgba(0,0,0,.4)}
-  50%    {box-shadow:0 8px 42px rgba(249,115,22,.8), 0 2px 8px rgba(0,0,0,.4)}
+  0%,100%{box-shadow:0 6px 32px rgba(240,208,72,.6), 0 2px 8px rgba(0,0,0,.45)}
+  50%    {box-shadow:0 8px 42px rgba(240,208,72,.85),0 2px 8px rgba(0,0,0,.4)}
 }
 @keyframes shake{
   0%,100%{transform:translateX(0)}
@@ -637,7 +640,7 @@ body{
       <!-- Arrow hint → CTA -->
       <div class="m-arrow">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5" stroke="#f97316" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5" stroke="#F0D048" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         Nhấn nút cam để tải ngay miễn phí
       </div>

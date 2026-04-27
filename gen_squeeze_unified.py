@@ -669,7 +669,7 @@ body{{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:f
       mode: 'cors'
     }}).catch(function(){{}});
 
-    setTimeout(function(){{ window.location.href = '/squeeze/cam-on'; }}, 2000);
+    setTimeout(function(){{ window.location.href = '/cam-on/'; }}, 2000);
   }};
 
   document.getElementById('sq-email').addEventListener('keydown', function(e){{

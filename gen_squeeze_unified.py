@@ -426,37 +426,37 @@ body{{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:f
 }}
 .card-top{{
   background:linear-gradient(135deg,#0d1b3e 0%,#1a2d6e 100%);
-  padding:12px 20px;text-align:center;border-bottom:2.5px solid #d4a843;
+  padding:9px 18px;text-align:center;border-bottom:2.5px solid #d4a843;
 }}
-.card-pretitle{{color:#f0c040;font-size:10px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:2px}}
-.card-title{{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.88rem;line-height:1.35}}
+.card-pretitle{{color:#f0c040;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1px}}
+.card-title{{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.83rem;line-height:1.3}}
 
-.card-body{{padding:12px 16px 10px}}
-.form-label{{display:block;font-size:10.5px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}}
+.card-body{{padding:9px 14px 8px}}
+.form-label{{display:block;font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}}
 .form-input{{
-  width:100%;padding:11px 13px;
-  border:2px solid #e5e7eb;border-radius:10px;
-  font-size:14.5px;outline:none;transition:.2s;
-  font-family:inherit;color:#1a1a1a;margin-bottom:10px;
+  width:100%;padding:9px 12px;
+  border:2px solid #e5e7eb;border-radius:9px;
+  font-size:14px;outline:none;transition:.2s;
+  font-family:inherit;color:#1a1a1a;margin-bottom:7px;
 }}
-.form-input.s2{{padding:10px 13px;font-size:14px;margin-bottom:8px}}
+.form-input.s2{{padding:8px 12px;font-size:13.5px;margin-bottom:6px}}
 .form-input:focus{{border-color:#0d1b3e;box-shadow:0 0 0 3px rgba(13,27,62,.08)}}
 .form-input.error{{border-color:#ef4444}}
 
 .btn-cta{{
-  width:100%;padding:14px;
+  width:100%;padding:12px;
   background:linear-gradient(135deg,#d4a843 0%,#f5cc42 100%);
   color:#0d1b3e;font-family:'Montserrat',sans-serif;
-  font-weight:900;font-size:15px;border:none;border-radius:11px;
+  font-weight:900;font-size:14.5px;border:none;border-radius:10px;
   cursor:pointer;transition:.2s;text-transform:uppercase;letter-spacing:.3px;
   box-shadow:0 6px 22px rgba(212,168,67,.55);
 }}
 .btn-cta:hover{{transform:translateY(-2px);box-shadow:0 12px 30px rgba(212,168,67,.65)}}
 .btn-cta:active{{transform:none}}
-.guarantee{{text-align:center;font-size:10.5px;color:#aaa;margin-top:7px}}
+.guarantee{{text-align:center;font-size:10px;color:#aaa;margin-top:5px}}
 
 /* ── STEP BAR ── */
-.step-bar{{display:flex;align-items:center;gap:8px;padding:10px 16px 0}}
+.step-bar{{display:flex;align-items:center;gap:8px;padding:8px 14px 0}}
 .step-item{{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#bbb}}
 .step-item.active{{color:#0d1b3e}}
 .step-item.done{{color:#22c55e}}

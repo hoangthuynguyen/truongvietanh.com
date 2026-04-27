@@ -12,144 +12,135 @@
 html,body{height:100%;overflow:hidden}
 body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:flex;flex-direction:column}
 
+
 /* ── HEADER ── */
 .hdr{
-  background:#fff;border-bottom:1px solid rgba(0,0,0,.08);
-  padding:0 32px;height:72px;flex-shrink:0;
+  background:#fff;border-bottom:1px solid rgba(0,0,0,.09);
+  padding:0 28px;height:64px;flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
   position:relative;
 }
-.hdr-logo{height:64px;display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
-.hdr-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.hdr-logo{height:54px;display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.hdr-right{display:flex;align-items:center;gap:8px}
 .btn-ph{display:flex;align-items:center;gap:5px;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.12);color:#0d1b3e;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none}
 .btn-zl{background:#0068FF;color:#fff;padding:5px 13px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none}
 
-/* ── HERO ── */
+/* ── HERO: 2-COL GRID ── */
 .hero{
   flex:1;min-height:0;
   display:grid;grid-template-columns:1.15fr 0.85fr;
   max-width:1280px;width:100%;margin:0 auto;
-  padding:18px 36px 14px;gap:36px;align-items:center;
+  padding:20px 44px 16px;gap:44px;
 }
 
-/* ══ LEFT COPY ══ */
-.copy{display:flex;flex-direction:column;gap:13px}
+/* ── LEFT COLUMN ── */
+.col-left{display:flex;flex-direction:column;justify-content:space-between;gap:12px}
 
+/* ── RIGHT COLUMN ── */
+.col-right{display:flex;flex-direction:column;gap:10px}
+
+/* ── HEADLINE BLOCK ── */
 .fomo{
-  display:inline-flex;align-items:center;gap:7px;width:fit-content;
-  background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);
-  color:#ff8080;padding:5px 13px;border-radius:20px;
-  font-size:11.5px;font-weight:700;letter-spacing:.4px;
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(239,68,68,.13);border:1px solid rgba(239,68,68,.38);
+  color:#ff8080;padding:4px 12px;border-radius:20px;
+  font-size:11px;font-weight:700;letter-spacing:.4px;margin-bottom:10px;
 }
-
 .h1{
   font-family:'Montserrat',sans-serif;
-  font-size:clamp(2rem,3.3vw,3.1rem);
-  font-weight:900;line-height:1.1;color:#fff;
+  font-size:clamp(1.9rem,3vw,2.95rem);
+  font-weight:900;line-height:1.1;color:#fff;margin-bottom:11px;
 }
 .h1 em{color:#f0c040;font-style:normal;display:block}
-
 .sub{
-  font-size:15px;color:rgba(255,255,255,.8);line-height:1.5;font-weight:500;
-  border-left:3px solid #d4a843;padding-left:13px;
+  font-size:15px;color:rgba(255,255,255,.82);line-height:1.5;font-weight:500;
+  border-left:3px solid #d4a843;padding-left:12px;
 }
 
+/* ── BULLETS ── */
 .bullets{list-style:none;display:flex;flex-direction:column;gap:9px}
-.bullets li{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:rgba(255,255,255,.88);line-height:1.4}
-.bico{
-  width:20px;height:20px;min-width:20px;border-radius:50%;
-  background:rgba(240,192,64,.15);border:1.5px solid rgba(240,192,64,.5);
-  display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0;
-}
+.bullets li{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;color:rgba(255,255,255,.86);line-height:1.4}
+.bico{width:20px;height:20px;min-width:20px;border-radius:50%;background:rgba(240,192,64,.15);border:1.5px solid rgba(240,192,64,.5);display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0}
 .bico svg{width:10px;height:10px;stroke:#f0c040;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 
-.testimonial{
-  background:rgba(255,255,255,.05);border-left:3px solid #f0c040;
-  border-radius:0 8px 8px 0;padding:9px 13px;
-  font-size:13px;color:rgba(255,255,255,.72);line-height:1.5;font-style:italic;
-}
-.testimonial strong{color:#f0c040;font-style:normal;font-size:11.5px;display:block;margin-top:4px}
+/* ── TESTIMONIAL ── */
+.testimonial{background:rgba(255,255,255,.05);border-left:3px solid #f0c040;border-radius:0 8px 8px 0;padding:8px 12px;font-size:12.5px;color:rgba(255,255,255,.7);line-height:1.5;font-style:italic}
+.testimonial strong{color:#f0c040;font-style:normal;font-size:11px;display:block;margin-top:3px}
 
-/* ══ RIGHT ══ */
-.right{display:flex;flex-direction:column;gap:10px;height:100%;justify-content:flex-start}
-
-.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);flex-shrink:0}
-
-.card-top{
-  background:linear-gradient(135deg,#0d1b3e,#162550);
-  padding:10px 18px;text-align:center;border-bottom:2.5px solid #d4a843;
-}
+/* ── FORM CARD ── */
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.55);flex-shrink:0}
+.card-top{background:linear-gradient(135deg,#0d1b3e,#162550);padding:10px 16px;text-align:center;border-bottom:2.5px solid #d4a843}
 .card-urgency{color:#f0c040;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
-.card-title{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.85rem;line-height:1.3}
-
-.card-body{padding:12px 14px 10px}
+.card-title{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.83rem;line-height:1.3}
+.card-body{padding:14px 16px 12px}
 .form-label{display:block;font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
 .form-input{
-  width:100%;padding:11px 13px;
+  width:100%;padding:13px 14px;
   border:2.5px solid #e5e7eb;border-radius:10px;
-  font-size:14px;outline:none;transition:.2s;
-  font-family:inherit;color:#111;margin-bottom:7px;
+  font-size:15px;outline:none;transition:.2s;
+  font-family:inherit;color:#111;margin-bottom:10px;
 }
 .form-input:focus{border-color:#d4a843;box-shadow:0 0 0 3px rgba(212,168,67,.15)}
 .form-input.error{border-color:#ef4444;animation:shake .3s ease}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
+/* ★ MEGA CTA ★ */
 .btn-cta{
-  width:100%;padding:15px 12px;
+  width:100%;padding:16px 12px;
   background:linear-gradient(135deg,#d4a843 0%,#f5cc42 60%,#f0c040 100%);
   color:#0d1b3e;font-family:'Montserrat',sans-serif;
-  font-weight:900;font-size:14px;border:none;border-radius:11px;
-  cursor:pointer;text-transform:uppercase;letter-spacing:.4px;
-  box-shadow:0 6px 24px rgba(212,168,67,.6);
+  font-weight:900;font-size:15px;border:none;border-radius:11px;
+  cursor:pointer;text-transform:uppercase;letter-spacing:.3px;
+  box-shadow:0 6px 26px rgba(212,168,67,.65);
   transition:transform .15s,box-shadow .15s;
-  position:relative;overflow:hidden;
+  position:relative;overflow:hidden;line-height:1.25;
 }
-.btn-cta::after{
-  content:'';position:absolute;inset:0;
-  background:linear-gradient(rgba(255,255,255,.15),transparent);
-  border-radius:11px;
-}
-.btn-cta:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(212,168,67,.7)}
+.btn-cta::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.18),transparent);border-radius:11px}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(212,168,67,.75)}
 .btn-cta:active{transform:translateY(0)}
-
-.micro{text-align:center;font-size:10px;color:#bbb;margin-top:5px}
+.urgency-row{display:flex;align-items:center;justify-content:space-between;margin-top:7px;gap:4px}
+.micro{font-size:10px;color:#aaa}
+.micro-hot{font-size:10px;color:#e09a30;font-weight:700}
 
 /* STEP BAR */
-.step-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px;justify-content:center}
+.step-bar{display:flex;align-items:center;gap:8px;margin-bottom:10px;justify-content:center}
 .step-dot{width:22px;height:22px;border-radius:50%;background:#e5e7eb;color:#999;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:.3s;flex-shrink:0}
 .step-dot.active{background:#d4a843;color:#0d1b3e}
 .step-dot.done{background:#22c55e;color:#fff}
 .step-line{flex:1;height:2px;background:#e5e7eb;max-width:50px}
 .step-label{font-size:10px;color:#aaa;font-weight:600}
 
-.success-box{display:none;padding:18px;text-align:center}
+/* SUCCESS */
+.success-box{display:none;padding:20px;text-align:center}
 .success-box .s-ico{font-size:2rem;margin-bottom:6px}
 .success-box h3{font-family:'Montserrat',sans-serif;color:#0d1b3e;font-size:.9rem;margin-bottom:4px}
 .success-box p{font-size:12px;color:#666;line-height:1.5}
 
-.mockup-wrap{
-  flex:1;min-height:0;
-  display:flex;align-items:center;justify-content:center;overflow:hidden;
-}
-.mockup-wrap img{
-  max-height:100%;max-width:100%;object-fit:contain;
-  filter:drop-shadow(0 12px 40px rgba(0,0,0,.6));display:block;
-}
+/* ── MOCKUP fills remaining height ── */
+.mockup-wrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.mockup-wrap img{max-height:100%;max-width:100%;object-fit:contain;filter:drop-shadow(0 10px 32px rgba(0,0,0,.55));display:block}
 
 /* ── MOBILE ── */
 @media(max-width:900px){
   html,body{overflow-x:hidden;overflow-y:auto;height:auto}
-  .hero{grid-template-columns:1fr;padding:16px 16px 24px;gap:18px;flex:unset}
-  .h1{font-size:1.65rem}
-  .sub{font-size:13px}
-  .mockup-wrap{max-height:180px}
-  .hdr{padding:0 16px;height:64px}
-  .hdr-logo{height:48px}
+  .hero{display:flex;flex-direction:column;padding:14px 16px 28px;gap:14px;flex:unset}
+  .col-left,.col-right{display:contents}
+  .item-headline{order:1}
+  .item-form    {order:2}
+  .mockup-wrap  {order:3;flex:unset;min-height:0}
+  .mockup-wrap img{max-height:180px}
+  .item-bullets {order:4}
+  .item-social  {order:5}
+  .h1{font-size:1.55rem}
+  .sub{font-size:13.5px}
+  .hdr{height:54px;padding:0 16px}
+  .hdr-logo{height:44px}
+  .btn-cta{font-size:14.5px;padding:15px 10px}
 }
 @media(max-width:480px){
+  .h1{font-size:1.35rem}
   .btn-ph span{display:none}
-  .h1{font-size:1.4rem}
-  .btn-cta{font-size:12.5px;padding:14px 10px}
+  .btn-cta{font-size:13.5px}
 }
 </style>
 </head>
@@ -170,65 +161,86 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
 
 <section class="hero">
 
-  <div class="copy">
-    <div class="fomo">🔥 1,987 phụ huynh đã nhận — Tặng miễn phí có giới hạn</div>
-    <h1 class="h1">Chọn trường THPT theo cảm tính —<em>3 năm con học không phát huy được tiềm năng</em></h1>
-    <p class="sub">15 tiêu chí quan trọng nhất — <strong>chọn đúng trường trong 1 buổi, không phải mất tháng trời đắn đo</strong></p>
-    <ul class="bullets">
+  <!-- LEFT COLUMN -->
+  <div class="col-left">
+
+    <div class="item-headline">
+      <div class="fomo">🔥 1,987 phụ huynh đã nhận — Tặng miễn phí có giới hạn</div>
+      <h1 class="h1">Chọn trường THPT theo cảm tính —<em>3 năm con học không phát huy được tiềm năng</em></h1>
+      <p class="sub">15 tiêu chí quan trọng nhất — <strong>chọn đúng trường trong 1 buổi, không phải mất tháng trời đắn đo</strong></p>
+    </div>
+
+    <div class="item-bullets">
+      <ul class="bullets">
       <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Tỉ lệ đậu ĐH thực tế — <strong>không bị báo cáo đẹp che mắt, biết số liệu thật</strong></span></li>
       <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Checklist 15 tiêu chí khi tham quan — <strong>hỏi đúng câu, không bị ấn tượng vì cơ sở vật chất đẹp</strong></span></li>
       <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Phù hợp định hướng con — <strong>không chọn trường giỏi chung mà chọn đúng trường cho con mình</strong></span></li>
-    </ul>
-    <div class="testimonial">
-      "Cẩm nang này giúp tôi đặt đúng câu hỏi khi đi tham quan. Chọn được trường ưng ý trong 2 tuần!"
-      <strong>— Chị Kim Loan, Q.Bình Tân · Đã tải 1 tuần trước</strong>
+      </ul>
     </div>
+
+    <div class="item-social">
+      <div class="testimonial">
+        "Cẩm nang này giúp tôi đặt đúng câu hỏi khi đi tham quan. Chọn được trường ưng ý trong 2 tuần!"
+        <strong>— Chị Kim Loan, Q.Bình Tân · Đã tải 1 tuần trước</strong>
+      </div>
+    </div>
+
   </div>
 
-  <div class="right">
-    <div class="card" id="mainCard">
-      <div class="card-top">
-        <div class="card-urgency">⏰ Nhận ngay · Miễn phí 100%</div>
-        <div class="card-title">Cẩm Nang Chọn Trường THPT 2026 — 15 Tiêu Chí</div>
-      </div>
-      <div class="card-body" id="formArea">
-        <!-- STEP BAR -->
-        <div class="step-bar">
-          <div class="step-dot active" id="dot1">1</div>
-          <div class="step-line"></div>
-          <div class="step-dot" id="dot2">2</div>
-          <span class="step-label" id="stepLabel">Email</span>
+  <!-- RIGHT COLUMN -->
+  <div class="col-right">
+
+    <div class="item-form">
+      <div class="card" id="mainCard">
+        <div class="card-top">
+          <div class="card-urgency">⏰ Miễn phí 100% · Nhận ngay hôm nay</div>
+          <div class="card-title">Cẩm Nang Chọn Trường THPT 2026 — 15 Tiêu Chí</div>
         </div>
-        <!-- STEP 1: EMAIL -->
-        <div id="step1">
-          <label class="form-label" for="sq-email">Email của bạn</label>
-          <input class="form-input" type="email" id="sq-email"
-                 placeholder="ten@gmail.com" autocomplete="email" />
-          <button class="btn-cta" onclick="sqNext()">TIẾP THEO →</button>
-          <p class="micro">🔒 Không spam · Miễn phí hoàn toàn</p>
+        <div class="card-body" id="formArea">
+          <!-- STEP BAR -->
+          <div class="step-bar">
+            <div class="step-dot active" id="dot1">1</div>
+            <div class="step-line"></div>
+            <div class="step-dot" id="dot2">2</div>
+            <span class="step-label" id="stepLabel">Email</span>
+          </div>
+          <!-- STEP 1: EMAIL -->
+          <div id="step1">
+            <label class="form-label" for="sq-email">Email của bạn</label>
+            <input class="form-input" type="email" id="sq-email"
+                   placeholder="ten@gmail.com" autocomplete="email" />
+            <button class="btn-cta" onclick="sqNext()">TIẾP THEO →</button>
+            <div class="urgency-row">
+              <span class="micro">🔒 Không spam · Miễn phí hoàn toàn</span>
+            </div>
+          </div>
+          <!-- STEP 2: HỌ TÊN + SĐT -->
+          <div id="step2" style="display:none">
+            <label class="form-label" for="sq-name">Họ và tên</label>
+            <input class="form-input" type="text" id="sq-name"
+                   placeholder="Nguyễn Văn A" autocomplete="name" />
+            <label class="form-label" for="sq-phone">Số điện thoại</label>
+            <input class="form-input" type="tel" id="sq-phone"
+                   placeholder="0916 961 409" autocomplete="tel" />
+            <button class="btn-cta" onclick="sqSubmit()">📥 GỬI CẨM NANG VÀO EMAIL CỦA TÔI →</button>
+            <div class="urgency-row">
+              <span class="micro"><span onclick="sqBack()" style="cursor:pointer;color:#bbb">← Quay lại</span> · 🔒 Miễn phí</span>
+            </div>
+          </div>
         </div>
-        <!-- STEP 2: HỌ TÊN + SĐT -->
-        <div id="step2" style="display:none">
-          <label class="form-label" for="sq-name">Họ và tên</label>
-          <input class="form-input" type="text" id="sq-name"
-                 placeholder="Nguyễn Văn A" autocomplete="name" />
-          <label class="form-label" for="sq-phone">Số điện thoại</label>
-          <input class="form-input" type="tel" id="sq-phone"
-                 placeholder="0916 961 409" autocomplete="tel" />
-          <button class="btn-cta" onclick="sqSubmit()">📥 GỬI CẨM NANG VÀO EMAIL CỦA TÔI →</button>
-          <p class="micro"><span onclick="sqBack()" style="cursor:pointer;color:#aaa">← Quay lại</span> · 🔒 Miễn phí</p>
+        <div class="success-box" id="sqSuccess">
+          <div class="s-ico">🎉</div>
+          <h3>Đã gửi thành công!</h3>
+          <p>Kiểm tra email ngay — tài liệu gửi trong vài phút.<br><strong>Nhớ kiểm tra Spam / Promotions</strong></p>
         </div>
-      </div>
-      <div class="success-box" id="sqSuccess">
-        <div class="s-ico">🎉</div>
-        <h3>Đã gửi thành công!</h3>
-        <p>Kiểm tra email ngay — tài liệu gửi trong vài phút.<br><strong>Nhớ kiểm tra Spam / Promotions</strong></p>
       </div>
     </div>
+
     <div class="mockup-wrap">
       <img src="/mockup-cam-nang-chon-thpt.png" alt="Cẩm Nang Chọn Trường THPT 2026 — 15 Tiêu Chí"
            onerror="this.parentElement.style.display='none'" />
     </div>
+
   </div>
 
 </section>
@@ -280,7 +292,6 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
       phoneEl.classList.add('error'); phoneEl.focus(); return;
     }
     phoneEl.classList.remove('error');
-
     var email = document.getElementById('sq-email').value.trim();
     localStorage.setItem('sq_' + SRC, '1');
     document.getElementById('formArea').style.display = 'none';
@@ -303,9 +314,6 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
 
   document.getElementById('sq-email').addEventListener('keydown', function(e){
     if (e.key === 'Enter') sqNext();
-  });
-  document.addEventListener('keydown', function(e){
-    if (e.key === 'Enter' && document.getElementById('step2').style.display !== 'none') sqSubmit();
   });
 })();
 </script>

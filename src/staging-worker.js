@@ -287,6 +287,20 @@ async function handleLeadSubmission(request, env) {
         if (data.source === 'squeeze-so-sanh-chi-phi') tags.push('so-sanh-chi-phi-truong');
         if (data.source === 'squeeze-so-sanh-thcs') tags.push('so-sanh-truong-thcs');
 
+        // Chuỗi nuôi dưỡng chung 435 ngày — kết nối TẤT CẢ squeeze page vào 1 workflow
+        const SQUEEZE_SOURCES = [
+          'squeeze-checklist-mam-non', 'squeeze-giai-doan-vang', 'squeeze-ebook-9-linh-vuc',
+          'squeeze-quiz-phuong-phap', 'squeeze-lo-trinh-tieng-anh', 'squeeze-so-sanh-chi-phi',
+          'squeeze-dang-ky-lop1', 'squeeze-reading-challenge', 'squeeze-ky-nang-lop1',
+          'squeeze-chuyen-truong-lop6', 'squeeze-lo-trinh-ielts-thcs', 'squeeze-phuong-phap-teen',
+          'squeeze-so-sanh-thcs', 'squeeze-cam-nang-thpt', 'squeeze-du-hoc-lop10',
+          'squeeze-50-truong-ielts', 'squeeze-oxford-cambridge-ib', 'squeeze-conversation-cards',
+          'squeeze-checklist',
+        ];
+        if (data.source && SQUEEZE_SOURCES.includes(data.source)) {
+          tags.push('nurture-435-ngay');
+        }
+
         // Quiz-specific tags
         if (isQuizLead(data)) {
           tags.push('quiz-lead');
@@ -555,8 +569,10 @@ const WORKFLOW_MAP = {
   'squeeze-oxford-cambridge-ib': '3f9c5202-9e8e-49b0-a532-049b84e80197',
   // LM47 · Conversation Cards Song Ngữ
   'squeeze-conversation-cards':  '9ba3a5a1-f36f-49c3-a575-bff07cc1bff4',
+  // NURTURE: Chuỗi Email Nuôi Dưỡng 435 Ngày — trigger bằng tag "nurture-435-ngay"
+  'nurture-435-ngay':       '9eae9375-8c2b-4890-9a08-3d2e1896c546',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)
-  'squeeze-30-tinh-huong':  'NURTURE_N1_PLACEHOLDER',
+  'squeeze-30-tinh-huong':  '9eae9375-8c2b-4890-9a08-3d2e1896c546',
 
   // WF10: Trại Hè Quiz Funnel → uses Squeeze Full Funnel workflow
   // (nurture sequence: quiz result email → follow-up → urgency → consultation invite)

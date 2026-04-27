@@ -6,371 +6,430 @@ import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirs
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Checklist Chọn Trường Mầm Non 2026 – Tải Miễn Phí | Trường Việt Anh</title>
-<meta name="description" content="Tải miễn phí Checklist 15 Tiêu Chí Chọn Trường Mầm Non 2026. Giúp Ba/Mẹ tránh sai lầm, chọn đúng ngay lần đầu." />
+<title>15 Tiêu Chí Chọn Trường Mầm Non Song Ngữ 2026 – Miễn Phí | Trường Việt Anh</title>
+<meta name="description" content="Tải miễn phí Checklist 15 Tiêu Chí + Framework 5C + 5 Red Flags. Dành cho ba mẹ có con 2-5 tuổi. Chỉ 30 suất đầu tiên." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
 /* ── RESET ── */
-*{box-sizing:border-box;margin:0;padding:0}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* ── ROOT ── */
-html,body{
-  height:100%;
-  font-family:'Open Sans',sans-serif;
-  /* Dark charcoal with subtle vertical stripe — mirrors GetResponse style */
-  background-color:#161218;
-  background-image:
-    repeating-linear-gradient(
-      90deg,
-      transparent 0px, transparent 38px,
-      rgba(255,255,255,.035) 38px, rgba(255,255,255,.035) 40px
-    );
-  color:#fff;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
+/* ── ROOT — no scroll ── */
+html, body {
+  height: 100%; overflow: hidden;
+  font-family: 'Open Sans', sans-serif;
+  background: #f0f4f8;
+  color: #0d1b3e;
 }
+body { display: flex; flex-direction: column; }
 
-/* ── HEADER ── */
-.hdr{
-  flex-shrink:0;
-  padding:16px 40px;
-  display:flex;
-  align-items:center;
+/* ═══════════════════════════════
+   URGENCY BAR
+═══════════════════════════════ */
+.urgency-bar {
+  flex-shrink: 0;
+  background: #c0392b;
+  color: #fff;
+  text-align: center;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .4px;
+  padding: 5px 16px;
+  line-height: 1.3;
 }
-.hdr-logo{height:36px;display:block}
+.urgency-bar span { opacity: .85; font-weight: 400; }
 
-/* ── MAIN STAGE ── */
-.stage{
-  flex:1;min-height:0;
-  display:flex;
-  align-items:stretch;
-  max-width:1100px;
-  width:100%;
-  margin:0 auto;
-  padding:0 40px 20px;
-  gap:0;
-  position:relative;
+/* ═══════════════════════════════
+   LOGO BAR
+═══════════════════════════════ */
+.logo-bar {
+  flex-shrink: 0;
+  background: #fff;
+  border-bottom: 2px solid #e8ecf0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 20px;
 }
+.logo-bar img { height: 52px; display: block; }
 
-/* ── LEFT PANEL ── */
-.panel-left{
-  flex:0 0 54%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:18px;
-  padding-right:32px;
-  z-index:2;
+/* ═══════════════════════════════
+   MAIN GRID
+═══════════════════════════════ */
+.main {
+  flex: 1; min-height: 0;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 0;
 }
 
-/* Decorative icons row */
-.deco-row{
-  display:flex;align-items:center;gap:14px;
-  font-size:18px;opacity:.75;
-  margin-bottom:-4px;
+/* ═══════════════════════════════
+   LEFT PANEL — dark navy
+═══════════════════════════════ */
+.left {
+  background: linear-gradient(160deg, #0d1b3e 0%, #162550 100%);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px 32px 20px 40px;
+  gap: 14px;
+  overflow: hidden;
+  position: relative;
+}
+/* subtle bg pattern */
+.left::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 80% 20%, rgba(212,168,67,.08) 0%, transparent 60%);
+  pointer-events: none;
 }
 
-/* Headline */
-.h1{
-  font-family:'Montserrat',sans-serif;
-  font-size:clamp(1.75rem,2.8vw,2.6rem);
-  font-weight:900;
-  line-height:1.15;
-  color:#fff;
-}
-.h1 .accent{color:#e84e3c}
-
-/* Sub */
-.sub{
-  font-size:14px;
-  color:rgba(255,255,255,.65);
-  line-height:1.6;
-  max-width:380px;
+/* badge */
+.badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(212,168,67,.15);
+  border: 1px solid rgba(212,168,67,.4);
+  color: #f0c040;
+  font-size: 10.5px; font-weight: 700;
+  letter-spacing: .5px; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px;
+  width: fit-content;
 }
 
-/* ── FORM BLOCK ── */
-.form-block{
-  background:transparent;
-  max-width:400px;
+/* headline */
+.h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 2.1rem);
+  font-weight: 900;
+  line-height: 1.15;
+  color: #fff;
+}
+.h1 em { color: #f0c040; font-style: normal; }
+
+/* tagline */
+.tagline {
+  font-size: 13px;
+  color: rgba(255,255,255,.7);
+  line-height: 1.5;
+  border-left: 3px solid #d4a843;
+  padding-left: 11px;
 }
 
-/* Override component styles for dark bg context */
-.form-block .form-step-title{
-  display:none; /* title already in headline */
-}
-.form-block .form-step-description{
-  display:none;
-}
-.form-block .form-progress{
-  margin-bottom:10px;
-}
-.form-block .form-progress__label{
-  color:rgba(255,255,255,.6) !important;
-  font-size:.72rem !important;
-  text-transform:uppercase;
-  letter-spacing:.5px;
-}
-.form-block .form-progress__step--active .form-progress__label,
-.form-block .form-progress__step--done  .form-progress__label{
-  color:#fff !important;
-}
-.form-block .form-progress__dot{
-  background:rgba(255,255,255,.12);
-  color:rgba(255,255,255,.5);
-  font-size:.8rem;
-  width:26px;height:26px;
-}
-.form-block .form-progress__step--active .form-progress__dot{
-  background:#e84e3c;
-  color:#fff;
-  box-shadow:0 2px 10px rgba(232,78,60,.5);
-}
-.form-block .form-progress__step--done .form-progress__dot{
-  background:#22c55e;color:#fff;
-}
-.form-block .form-progress__line{
-  background:rgba(255,255,255,.15);
-  height:2px;width:44px;margin:0 8px 18px;
-}
-.form-block .form-progress__line--active{
-  background:linear-gradient(90deg,#22c55e,#e84e3c);
-}
-/* Inputs */
-.form-block .form-input{
-  background:#fff;
-  border:2px solid transparent;
-  border-radius:6px;
-  font-size:14.5px;
-  padding:.75rem 1rem;
-  color:#111;
-}
-.form-block .form-input:focus{
-  border-color:#e84e3c;
-  box-shadow:0 0 0 3px rgba(232,78,60,.18);
-}
-/* CTA button */
-.form-block .form-btn--next,
-.form-block .form-btn--submit{
-  background:#e84e3c;
-  color:#fff;
-  font-size:1rem;
-  font-weight:900;
-  letter-spacing:.8px;
-  text-transform:uppercase;
-  border-radius:6px;
-  padding:.9rem 1rem;
-  box-shadow:0 4px 18px rgba(232,78,60,.45);
-  transition:transform .15s,box-shadow .15s;
-}
-.form-block .form-btn--next:hover,
-.form-block .form-btn--submit:hover{
-  background:#d43b2a;
-  transform:translateY(-2px);
-  box-shadow:0 8px 24px rgba(232,78,60,.55);
-}
-/* Social proof pulse */
-.form-block .form-social-proof{
-  color:rgba(255,255,255,.55) !important;
-  font-size:.78rem !important;
-}
-.form-block .form-social-proof::before{
-  background:#22c55e;
-}
-/* Back button */
-.form-block .form-btn--back{
-  background:rgba(255,255,255,.1);
-  color:#fff;
-  border:1px solid rgba(255,255,255,.2);
-  font-size:.85rem;
-}
-.form-block .form-btn--back:hover{background:rgba(255,255,255,.18)}
-/* Success */
-.form-block .form-success .form-step-title{
-  display:block !important;
-  color:#22c55e;
-}
-.form-block .form-success .form-step-description{
-  display:block !important;
-  color:rgba(255,255,255,.7);
-}
-.form-block .success-next-steps{
-  background:rgba(39,174,96,.1);
-  border-color:rgba(39,174,96,.3);
-}
-.form-block .success-next-step{color:rgba(255,255,255,.8)}
-/* Error */
-.form-block .form-error{color:#f87171}
-/* Reset max-width of lead-form */
-.form-block .lead-form{max-width:100%}
-
-/* Privacy note */
-.privacy{
-  font-size:11px;
-  color:rgba(255,255,255,.35);
-  line-height:1.5;
-  max-width:380px;
-}
-.privacy a{color:rgba(255,255,255,.45);text-decoration:underline}
-
-/* ── RIGHT PANEL — floating mockup ── */
-.panel-right{
-  flex:1;
-  position:relative;
-  display:flex;
-  align-items:center;
-  justify-content:flex-start;
-  padding-left:16px;
-  overflow:visible;
-}
-.mockup-img{
-  /* Tilted stack effect like GetResponse */
-  width:clamp(240px,26vw,360px);
-  filter:drop-shadow(-8px 16px 40px rgba(0,0,0,.7));
-  transform:rotate(4deg) translateX(16px);
-  transform-origin:bottom left;
-  display:block;
-  position:relative;
-  z-index:1;
-}
-/* Second "shadow" copy for depth */
-.mockup-stack{
-  position:absolute;
-  left:36px;
-  width:clamp(240px,26vw,360px);
-  opacity:.35;
-  filter:drop-shadow(0 10px 20px rgba(0,0,0,.6));
-  transform:rotate(9deg) translateX(22px);
-  transform-origin:bottom left;
+/* divider */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,.1);
+  margin: 2px 0;
 }
 
-/* ── MOBILE ── */
-@media(max-width:820px){
-  html,body{overflow-y:auto;overflow-x:hidden;height:auto}
-  .stage{
-    flex-direction:column;
-    padding:0 20px 32px;
-    gap:0;
-  }
-  .panel-left{
-    padding-right:0;
-    order:1;
-    gap:14px;
-  }
-  /* Mockup between headline and form */
-  .panel-right{
-    order:2;
-    justify-content:center;
-    padding:12px 0;
-    min-height:160px;
-    overflow:hidden;
-  }
-  .mockup-img{
-    width:clamp(170px,55vw,240px);
-    transform:rotate(4deg);
-  }
-  .mockup-stack{
-    width:clamp(170px,55vw,240px);
-    left:24px;
-  }
-  .panel-left .form-block-wrap{order:3}
-  .hdr{padding:12px 20px}
-  .hdr-logo{height:30px}
-  .h1{font-size:1.5rem}
+/* what's inside */
+.inside-title {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .8px; color: rgba(255,255,255,.45);
+  margin-bottom: -6px;
 }
-@media(max-width:480px){
-  .h1{font-size:1.3rem}
-  .mockup-img{width:clamp(150px,50vw,210px)}
+.items {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 7px;
+}
+.items li {
+  display: flex; align-items: flex-start; gap: 9px;
+  font-size: 13px; color: rgba(255,255,255,.88); line-height: 1.4;
+}
+.ck {
+  width: 18px; height: 18px; min-width: 18px;
+  border-radius: 50%;
+  background: rgba(212,168,67,.18);
+  border: 1.5px solid rgba(212,168,67,.5);
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; flex-shrink: 0;
+}
+.ck svg { width: 9px; height: 9px; stroke: #f0c040; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
+
+/* testimonial */
+.testi {
+  background: rgba(255,255,255,.06);
+  border: 1px solid rgba(240,192,64,.2);
+  border-radius: 10px;
+  padding: 10px 13px;
+}
+.testi-stars { color: #f0c040; font-size: 12px; letter-spacing: 1px; margin-bottom: 4px; }
+.testi-q { font-size: 12px; color: rgba(255,255,255,.78); font-style: italic; line-height: 1.5; margin-bottom: 6px; }
+.testi-who { display: flex; align-items: center; gap: 8px; }
+.testi-av {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg,#d4a843,#f0c040);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Montserrat',sans-serif; font-weight: 900;
+  font-size: 10px; color: #0d1b3e; flex-shrink: 0;
+}
+.testi-name { font-size: 11px; font-weight: 700; color: #f0c040; line-height: 1.2; }
+.testi-sub  { font-size: 10px; color: rgba(255,255,255,.45); margin-top: 1px; }
+
+/* ═══════════════════════════════
+   RIGHT PANEL — white
+═══════════════════════════════ */
+.right {
+  background: #fff;
+  border-left: 1px solid #e0e6ed;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* ── FORM SECTION (top) ── */
+.form-section {
+  flex-shrink: 0;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #edf0f4;
+}
+.form-header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+.form-header .fh-tag {
+  display: inline-block;
+  background: #fff3e0;
+  color: #c0392b;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .5px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+  margin-bottom: 5px;
+}
+.form-header .fh-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: .88rem; font-weight: 800;
+  color: #0d1b3e; line-height: 1.3;
+}
+
+/* ── Component overrides ── */
+.form-section .lead-form { max-width: 100%; }
+.form-section .form-step-title,
+.form-section .form-step-description { display: none; }
+.form-section .form-progress { margin-bottom: 8px; }
+.form-section .form-progress__dot {
+  width: 24px; height: 24px;
+  background: #f0f4f8; color: #94a3b8; font-size: .75rem;
+}
+.form-section .form-progress__step--active .form-progress__dot {
+  background: #0d1b3e; color: #fff;
+  box-shadow: 0 2px 8px rgba(13,27,62,.3);
+}
+.form-section .form-progress__step--done .form-progress__dot {
+  background: #22c55e; color: #fff;
+}
+.form-section .form-progress__label {
+  font-size: .68rem !important; color: #94a3b8 !important; text-transform: uppercase; letter-spacing: .4px;
+}
+.form-section .form-progress__step--active .form-progress__label,
+.form-section .form-progress__step--done .form-progress__label { color: #0d1b3e !important; }
+.form-section .form-progress__line { background: #e0e6ed; height: 2px; width: 40px; margin: 0 6px 16px; }
+.form-section .form-progress__line--active { background: linear-gradient(90deg,#22c55e,#0d1b3e); }
+.form-section .form-input {
+  padding: .65rem .9rem;
+  font-size: 14px;
+  border: 1.5px solid #e0e6ed;
+  border-radius: 8px;
+  background: #f8fafc;
+}
+.form-section .form-input:focus {
+  border-color: #d4a843;
+  box-shadow: 0 0 0 3px rgba(212,168,67,.15);
+  background: #fff;
+}
+.form-section .form-btn--next,
+.form-section .form-btn--submit {
+  background: linear-gradient(135deg, #d4a843, #f5cc42, #f0c040);
+  color: #0d1b3e;
+  font-size: .95rem; font-weight: 900;
+  letter-spacing: .6px; text-transform: uppercase;
+  border-radius: 9px;
+  padding: .85rem 1rem;
+  box-shadow: 0 4px 18px rgba(212,168,67,.5);
+}
+.form-section .form-btn--next:hover,
+.form-section .form-btn--submit:hover {
+  background: linear-gradient(135deg, #c89a35, #e8bb30);
+  transform: translateY(-2px);
+  box-shadow: 0 7px 24px rgba(212,168,67,.6);
+}
+.form-section .form-social-proof {
+  font-size: .72rem !important; color: #64748b !important;
+}
+.form-section .form-btn--back {
+  background: #f1f5f9; color: #475569;
+  border: 1px solid #e0e6ed; font-size: .82rem;
+}
+.form-section .form-error { color: #ef4444; }
+/* Success on white */
+.form-section .form-success .form-step-title {
+  display: block !important; color: #22c55e;
+  font-size: 1rem !important;
+}
+.form-section .form-success .form-step-description {
+  display: block !important; color: #475569;
+}
+.form-section .success-next-steps { background: #f0fdf4; border-color: #bbf7d0; }
+.form-section .success-next-step { color: #166534; }
+
+/* ── MOCKUP SECTION (bottom) ── */
+.mockup-section {
+  flex: 1; min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px 16px;
+  background: #f8fafc;
+  position: relative;
+  overflow: hidden;
+}
+.mockup-section img {
+  max-height: 100%; max-width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,.2));
+  display: block;
+}
+.free-badge {
+  position: absolute; top: 10px; left: 50%;
+  transform: translateX(-50%);
+  background: #22c55e; color: #fff;
+  font-family: 'Montserrat',sans-serif; font-weight: 900;
+  font-size: 10px; letter-spacing: .5px; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 20px;
+  box-shadow: 0 3px 10px rgba(34,197,94,.4);
+  white-space: nowrap;
+}
+
+/* ═══════════════════════════════
+   MOBILE
+═══════════════════════════════ */
+@media(max-width: 820px) {
+  html, body { overflow-y: auto; height: auto; }
+  .main { grid-template-columns: 1fr; }
+  .left { padding: 20px; gap: 12px; }
+  .right { border-left: none; border-top: 2px solid #e0e6ed; }
+  .mockup-section img { max-height: 200px; }
+  .logo-bar img { height: 42px; }
+  .h1 { font-size: 1.4rem; }
+}
+@media(max-width: 480px) {
+  .left { padding: 16px; }
+  .h1 { font-size: 1.25rem; }
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
-<header class="hdr">
+<!-- URGENCY BAR -->
+<div class="urgency-bar">
+  ⏰ Chỉ áp dụng cho <strong>30 ba mẹ đăng ký sớm nhất</strong> trong tháng. <span>Số lượng có hạn!</span>
+</div>
+
+<!-- LOGO BAR -->
+<div class="logo-bar">
   <a href="https://truongvietanh.com">
-    <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="hdr-logo"
-         onerror="this.outerHTML='<span style=\'font-family:Montserrat,sans-serif;font-weight:900;font-size:15px;color:#fff\'>Trường Việt Anh</span>'" />
+    <img src="/logo-th-thcs-thpt.png" alt="Trường TH-THCS-THPT Việt Anh"
+         onerror="this.style.display='none'" />
   </a>
-</header>
+</div>
 
-<!-- STAGE -->
-<section class="stage">
+<!-- MAIN -->
+<div class="main">
 
-  <!-- LEFT PANEL -->
-  <div class="panel-left">
+  <!-- ═══ LEFT — copy & social proof ═══ -->
+  <div class="left">
 
-    <!-- Decorative icons -->
-    <div class="deco-row" aria-hidden="true">
-      <span>🏫</span>
-      <span>📋</span>
-      <span>✅</span>
-      <span>🎁</span>
-    </div>
+    <div class="badge">🎁 Tài liệu miễn phí 2026 · Dành cho ba mẹ có con 2–5 tuổi</div>
 
-    <!-- Headline -->
     <h1 class="h1">
-      Sẵn sàng chọn trường mầm non
-      <span class="accent">đúng ngay lần đầu</span>
-      cho con bạn!
+      15 Tiêu Chí Chọn Trường<br>
+      <em>Mầm Non Song Ngữ 2026</em>
     </h1>
 
-    <!-- Sub -->
-    <p class="sub">
-      Đăng ký nhận checklist miễn phí và nhận ngay bộ 15 tiêu chí
-      giúp bạn lên kế hoạch, so sánh và chọn đúng trường
-      trong mùa tuyển sinh này.
+    <p class="tagline">
+      Framework 5C · 5 Red Flags cần tránh · Bảng so sánh 3 trường<br>
+      <strong style="color:#fff">Mang đi tham quan — tick trực tiếp trên điện thoại</strong>
     </p>
 
-    <!-- Form -->
-    <div class="form-block">
+    <div class="divider"></div>
+
+    <p class="inside-title">Bộ tài liệu gồm</p>
+    <ul class="items">
+      <li>
+        <span class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <span><strong>Framework 5C</strong> — 15 câu hỏi phải hỏi: Curriculum · Competency · Culture · Care · Cost</span>
+      </li>
+      <li>
+        <span class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <span><strong>5 Red Flags</strong> dấu hiệu trường KHÔNG chất lượng — tránh mắc bẫy quảng cáo "song ngữ"</span>
+      </li>
+      <li>
+        <span class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <span><strong>Bảng so sánh 3 trường</strong> — chấm điểm 15 tiêu chí, quyết định bằng dữ liệu không cảm tính</span>
+      </li>
+      <li>
+        <span class="ck"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span>
+        <span><strong>Mẹo tham quan</strong> — đi không báo trước, nhìn mặt trẻ, hỏi giấy phép lao động GV bản ngữ</span>
+      </li>
+    </ul>
+
+    <div class="divider"></div>
+
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-q">"Nhờ checklist này tôi phát hiện trường con đang học có GV bản ngữ không giấy phép. Chuyển trường kịp thời!"</div>
+      <div class="testi-who">
+        <div class="testi-av">HT</div>
+        <div>
+          <div class="testi-name">Chị Hồng Tuyết</div>
+          <div class="testi-sub">Phụ huynh Q.Gò Vấp · Đã tải tháng trước</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ═══ RIGHT — form trên + mockup dưới ═══ -->
+  <div class="right">
+
+    <!-- FORM -->
+    <div class="form-section">
+      <div class="form-header">
+        <div class="fh-tag">⏰ Miễn phí · Chỉ 30 suất</div>
+        <div class="fh-title">Nhận checklist qua email ngay hôm nay</div>
+      </div>
       <LeadFormTwoStepEmailFirst
         formId="sq-mn"
         funnelCode="squeeze-checklist-mam-non"
         schoolLevel="mam-non"
-        submitText="NHẬN CHECKLIST NGAY"
+        submitText="TẢI CHECKLIST MIỄN PHÍ"
         successMessage="Kiểm tra email ngay — tài liệu gửi trong vài phút. Nhớ kiểm tra Spam / Promotions."
       />
     </div>
 
-    <!-- Privacy -->
-    <p class="privacy">
-      Trường Việt Anh cần thông tin bạn cung cấp để gửi tài liệu và hỗ trợ tư vấn.
-      Xem thêm <a href="/chinh-sach-bao-mat/">Chính sách bảo mật</a>.
-    </p>
+    <!-- MOCKUP -->
+    <div class="mockup-section">
+      <span class="free-badge">🎁 FREE DOWNLOAD</span>
+      <img
+        src="/mockup-checklist-mam-non.png"
+        alt="15 Tiêu Chí Chọn Trường Mầm Non Song Ngữ 2026 — Trường Việt Anh"
+        onerror="this.parentElement.style.background='linear-gradient(135deg,#0d1b3e,#162550)'"
+      />
+    </div>
 
   </div>
 
-  <!-- RIGHT PANEL — floating mockup stack -->
-  <div class="panel-right" aria-hidden="true">
-    <img
-      src="/mockup-checklist-mam-non.png"
-      alt=""
-      class="mockup-stack"
-      onerror="this.style.display='none'"
-    />
-    <img
-      src="/mockup-checklist-mam-non.png"
-      alt="Checklist Chọn Trường Mầm Non 2026"
-      class="mockup-img"
-      onerror="this.style.display='none'"
-    />
-  </div>
+</div>
 
-</section>
-
-<!-- Redirect to /cam-on/ after successful form submission -->
+<!-- Redirect after submit -->
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const successStep = document.querySelector('[data-step="success"]');
-    if (!successStep) return;
-    const obs = new MutationObserver(function () {
-      if (!successStep.hidden) {
-        setTimeout(function () { window.location.href = '/cam-on/'; }, 2000);
-      }
-    });
-    obs.observe(successStep, { attributes: true, attributeFilter: ['hidden'] });
+    const s = document.querySelector('[data-step="success"]');
+    if (!s) return;
+    new MutationObserver(function () {
+      if (!s.hidden) setTimeout(function () { location.href = '/cam-on/'; }, 2000);
+    }).observe(s, { attributes: true, attributeFilter: ['hidden'] });
   });
 </script>
 

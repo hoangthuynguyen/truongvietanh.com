@@ -1,229 +1,284 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>50 Conversation Cards Song Ngữ — Luyện Tiếng Anh Cùng Con | Trường Việt Anh</title>
-<meta name="description" content="50 thẻ hội thoại Việt–Anh song ngữ miễn phí. In ra, cắt ra, luyện tiếng Anh cùng con tại nhà mỗi tối!">
+<meta name="description" content="50 thẻ hội thoại Việt–Anh song ngữ miễn phí. In ra, cắt ra, luyện tiếng Anh cùng con tại nhà mỗi tối!" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Segoe UI',Arial,sans-serif;color:#222;background:#f5f6fa}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;min-height:100vh}
 a{color:inherit;text-decoration:none}
-.nb{background:#10103a;color:#fff;text-align:center;padding:8px;font-size:13px;letter-spacing:.5px}
-.nb a{color:#D4A843;font-weight:600}
-.hd{background:#1a1a5e;position:sticky;top:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.3)}
-.hd-in{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 20px}
-.logo img{height:44px}
-.hd-links{display:flex;gap:12px;align-items:center}
-.hd-links a{color:#fff;font-size:14px;font-weight:600;display:flex;align-items:center;gap:5px;padding:6px 12px;border-radius:20px;transition:.2s}
-.hd-links .tel{background:#D4A843;color:#1a1a5e}
-.hd-links .zl{background:#0068ff;color:#fff}
-.hero{background:linear-gradient(135deg,#1a1a5e 0%,#2a2a8e 100%);padding:48px 20px}
-.hero-in{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 420px;gap:40px;align-items:start}
-.badge{display:inline-block;background:#D4A843;color:#1a1a5e;font-size:11px;font-weight:800;letter-spacing:1.5px;padding:4px 14px;border-radius:20px;margin-bottom:8px}
-.pre{color:#D4A843;font-size:13px;margin-bottom:8px;font-weight:600}
-.hero h1{color:#fff;font-size:2rem;line-height:1.3;margin-bottom:12px}
-.hero h1 .gld{color:#D4A843}
-.sub{color:#c8d0e8;font-size:15px;margin-bottom:24px;line-height:1.6}
-.kit{background:rgba(255,255,255,.08);border-radius:12px;padding:16px 20px;margin-bottom:20px}
-.kit h3{color:#D4A843;font-size:13px;font-weight:700;letter-spacing:1px;margin-bottom:12px}
-.kit li{color:#e8ecf8;font-size:14px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.08);list-style:none}
-.kit li:last-child{border:0}
-.sp{color:#a0b0d0;font-size:13px;margin-top:4px}
-.sp span{color:#D4A843;font-weight:700}
-.fc{background:#fff;border:2px solid #D4A843;border-radius:16px;padding:28px 24px;box-shadow:0 8px 32px rgba(0,0,0,.18)}
-.fc h2{color:#1a1a5e;font-size:1.15rem;font-weight:800;margin-bottom:4px;text-align:center}
-.fc .sub2{color:#666;font-size:13px;text-align:center;margin-bottom:20px}
-.step{display:none}.step.act{display:block}
-.lbl{font-size:13px;font-weight:600;color:#333;display:block;margin-bottom:5px}
-.inp{width:100%;padding:11px 14px;border:1.5px solid #ddd;border-radius:8px;font-size:15px;transition:.2s;outline:none}
-.inp:focus{border-color:#D4A843;box-shadow:0 0 0 3px rgba(212,168,67,.15)}
-.inp.err{border-color:#e53e3e}
-.btn{width:100%;padding:14px;background:#D4A843;color:#1a1a5e;font-size:16px;font-weight:800;border:none;border-radius:10px;cursor:pointer;margin-top:12px;transition:.15s;letter-spacing:.3px}
-.btn:hover{background:#c49a30;transform:translateY(-1px)}
-.btn:active{transform:translateY(0)}
-.bk{background:none;border:none;color:#888;font-size:13px;cursor:pointer;margin-top:8px;display:block;width:100%;text-align:center}
-.bk:hover{color:#1a1a5e}
-.pg{display:flex;gap:6px;margin-bottom:18px}
-.pg-d{flex:1;height:4px;border-radius:2px;background:#eee;transition:.3s}
-.pg-d.act{background:#D4A843}
-.err-msg{color:#e53e3e;font-size:12px;margin-top:3px;display:none}
-.err-msg.show{display:block}
-.succ{display:none;text-align:center;padding:8px 0}
-.succ.act{display:block}
-.succ .ic{font-size:48px;margin-bottom:12px}
-.succ h3{color:#1a1a5e;font-size:1.1rem;font-weight:800;margin-bottom:6px}
-.succ p{color:#555;font-size:13px;margin-bottom:16px;line-height:1.5}
-.dl-btn{display:block;width:100%;padding:13px;background:#1a1a5e;color:#fff;font-weight:700;border-radius:8px;text-align:center;margin-bottom:10px;font-size:15px;transition:.15s}
-.dl-btn:hover{background:#2a2a8e}
-.zl-btn{display:block;width:100%;padding:12px;background:#0068ff;color:#fff;font-weight:700;border-radius:8px;text-align:center;font-size:15px;transition:.15s}
-.zl-btn:hover{background:#0055cc}
-.cd{font-size:13px;color:#888;margin-top:10px}
-.cd span{color:#e53e3e;font-weight:700}
-.docs{max-width:1100px;margin:48px auto;padding:0 20px}
-.docs h2{color:#1a1a5e;font-size:1.4rem;font-weight:800;margin-bottom:24px;text-align:center}
-.docs-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.doc-c{background:#fff;border-radius:12px;padding:24px;box-shadow:0 2px 12px rgba(0,0,0,.07);text-align:center;border-top:3px solid #D4A843}
-.doc-c .ic2{font-size:36px;margin-bottom:12px}
-.doc-c h3{color:#1a1a5e;font-size:.95rem;font-weight:700;margin-bottom:6px}
-.doc-c p{color:#666;font-size:13px;line-height:1.5}
-.testi{background:#1a1a5e;padding:48px 20px}
-.testi h2{color:#fff;font-size:1.4rem;font-weight:800;text-align:center;margin-bottom:32px}
-.testi-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.tc{background:rgba(255,255,255,.08);border-radius:12px;padding:20px;border:1px solid rgba(212,168,67,.2)}
-.stars{color:#D4A843;font-size:16px;margin-bottom:10px}
-.tc p{color:#c8d0e8;font-size:13px;line-height:1.6;margin-bottom:12px}
-.tc-auth{color:#fff;font-size:13px;font-weight:600}
-.tc-auth span{color:#a0b0d0;font-weight:400;font-size:12px}
-footer{background:#10103a;color:#a0b0d0;text-align:center;padding:24px 20px;font-size:13px}
-footer strong{color:#D4A843}
-.mb-bar{display:none;position:fixed;bottom:0;left:0;right:0;background:#1a1a5e;z-index:200;padding:10px 16px;gap:8px}
-@media(max-width:768px){
-.hero-in{grid-template-columns:1fr}
-.fc{margin-top:0}
-.docs-grid{grid-template-columns:1fr}
-.testi-grid{grid-template-columns:1fr}
-.hd-links .tel span,.hd-links .zl span{display:none}
-.hero h1{font-size:1.45rem}
-.mb-bar{display:flex}
-body{padding-bottom:64px}
+
+/* ── TOP BAR ── */
+.topbar{background:#060e24;padding:8px 20px;text-align:center;font-size:12.5px;color:rgba(255,255,255,.75)}
+.topbar a{color:#f0c040;font-weight:700}
+
+/* ── HEADER ── */
+.header{background:#0d1b3e;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:block;max-width:260px;width:auto}
+.header-right{display:flex;align-items:center;gap:12px}
+.btn-phone{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:.2s}
+.btn-phone:hover{background:rgba(255,255,255,.18)}
+.btn-zalo{display:flex;align-items:center;gap:6px;background:#0068FF;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;transition:.2s}
+.btn-zalo:hover{background:#0055d4}
+
+/* ── HERO ── */
+.hero{max-width:1160px;margin:0 auto;padding:40px 24px 48px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start}
+
+/* ── LEFT COPY ── */
+.copy{padding-top:8px}
+.target{font-size:12px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(240,192,64,.12);border:1px solid rgba(240,192,64,.3);color:#f0c040;padding:6px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.3px;margin-bottom:14px}
+.h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.55rem,2.8vw,2.3rem);font-weight:900;line-height:1.22;margin-bottom:14px}
+.h1 em{color:#f0c040;font-style:normal}
+.subtitle{color:rgba(255,255,255,.75);font-size:15px;line-height:1.65;margin-bottom:22px}
+.bullets{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px}
+.bullets li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(255,255,255,.88);line-height:1.45}
+.bullet-icon{width:20px;height:20px;background:rgba(240,192,64,.15);border:1.5px solid rgba(240,192,64,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.bullet-icon svg{width:10px;height:10px;stroke:#f0c040;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.proof{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;font-size:13px;color:rgba(255,255,255,.75)}
+.proof-stars{color:#f0c040;font-size:14px;letter-spacing:1px}
+
+/* ── CARD ── */
+.card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.55)}
+.card-head{background:linear-gradient(135deg,#0d1b3e 0%,#1a2d6e 100%);padding:18px 24px;text-align:center;border-bottom:2px solid #d4a843}
+.card-pretitle{color:#f0c040;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px}
+.card-title{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;line-height:1.3}
+
+/* ── FORM ── */
+.card-body{padding:22px 24px 0}
+.step-bar{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.step-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#aaa}
+.step-item.active{color:#0d1b3e}
+.step-num{width:22px;height:22px;border-radius:50%;background:#e5e7eb;color:#888;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.step-item.active .step-num{background:#0d1b3e;color:#fff}
+.step-item.done .step-num{background:#22c55e;color:#fff}
+.step-line{flex:1;height:2px;background:#e5e7eb;border-radius:2px}
+.step-line.done{background:#22c55e}
+
+.form-label{display:block;font-size:11.5px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
+.form-input{width:100%;padding:13px 14px;border:2px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none;transition:.2s;font-family:inherit;color:#1a1a1a}
+.form-input:focus{border-color:#0d1b3e;box-shadow:0 0 0 3px rgba(13,27,62,.08)}
+.form-input.error{border-color:#ef4444}
+.form-group{margin-bottom:12px}
+.btn-gold{width:100%;padding:15px;background:linear-gradient(135deg,#d4a843,#f0c040);color:#0d1b3e;font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;border:none;border-radius:10px;cursor:pointer;transition:.2s;margin-top:4px;letter-spacing:.2px}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(212,168,67,.45)}
+.btn-back{background:none;border:none;color:#999;font-size:12px;cursor:pointer;padding:8px 0 0;display:flex;align-items:center;gap:4px;font-family:inherit}
+.btn-back:hover{color:#555}
+.guarantee{text-align:center;font-size:11px;color:#bbb;padding:10px 0 16px}
+
+/* ── MOCKUP below form ── */
+.card-mockup{padding:0 20px 20px}
+.mockup-divider{border:none;border-top:1px solid #f0f0f0;margin-bottom:16px}
+.mockup-label{text-align:center;font-size:10.5px;color:#bbb;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.mockup-img{width:100%;border-radius:10px;display:block;box-shadow:0 6px 24px rgba(16,40,72,.15)}
+
+/* ── SUCCESS ── */
+.success-box{display:none;padding:24px;text-align:center}
+.success-box h3{font-family:'Montserrat',sans-serif;color:#0d1b3e;font-size:1.2rem;margin-bottom:8px}
+.success-box p{font-size:14px;color:#555;line-height:1.6}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:28px 16px 40px;gap:32px}
+  .header{padding:10px 16px}
+  .logo{height:44px;max-width:200px}
+  .copy{order:2}
+  .card-wrap{order:1}
+  .h1{font-size:1.5rem}
+}
+@media(max-width:500px){
+  .topbar{font-size:11px;padding:6px 12px}
+  .btn-phone span{display:none}
 }
 </style>
 </head>
 <body>
 
-<div class="nb">Tư vấn miễn phí: <a href="tel:0916961409">0916 961 409</a> | <a href="https://zalo.me/1678310120468101523" target="_blank">Chat Zalo ngay</a></div>
-
-<nav class="hd">
-<div class="hd-in">
-<a class="logo" href="/"><img src="https://media.truongvietanh.com/images/logo-viet-anh.webp" alt="Trường Việt Anh"></a>
-<div class="hd-links">
-<a class="tel" href="tel:0916961409">📞 <span>0916 961 409</span></a>
-<a class="zl" href="https://zalo.me/1678310120468101523" target="_blank">💬 <span>Zalo</span></a>
+<!-- TOP BAR -->
+<div class="topbar">
+  Tư vấn miễn phí: <a href="tel:0916961409">0916 961 409</a> &nbsp;|&nbsp; <a href="https://zalo.me/0916961409">Chat Zalo ngay →</a>
 </div>
-</div>
-</nav>
 
+<!-- HEADER -->
+<header class="header">
+  <a href="https://truongvietanh.com">
+    <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="logo" style="height:52px;border-radius:8px;background:#fff;padding:5px 12px;box-shadow:0 2px 10px rgba(0,0,0,.2)" />
+  </a>
+  <div class="header-right">
+    <a href="tel:0916961409" class="btn-phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.69 3.41 2 2 0 0 1 3.65 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+      <span>0916 961 409</span>
+    </a>
+    <a href="https://zalo.me/0916961409" class="btn-zalo">💬 Zalo</a>
+  </div>
+</header>
+
+<!-- HERO -->
 <section class="hero">
-<div class="hero-in">
-<div>
-<div class="pre">Dành cho: Phụ huynh muốn luyện tiếng Anh cho con</div>
-<div class="badge">🗣️ LUYỆN TIẾNG ANH TẠI NHÀ</div>
-<h1><span class="gld">50 Conversation Cards</span> Song Ngữ — Luyện Tiếng Anh Cùng Con Tại Nhà</h1>
-<p class="sub">In ra, cắt ra, chơi cùng con mỗi tối. Tiếng Anh tự nhiên — không cần gia sư!</p>
-<div class="kit">
-<h3>BỘ CARDS MIỄN PHÍ GỒM:</h3>
-<ul>
-<li>🃏 50 thẻ hội thoại Việt–Anh song ngữ</li>
-<li>🎯 10 chủ đề: gia đình, trường học, thức ăn...</li>
-<li>📖 Từ vựng + cấu trúc câu kèm theo</li>
-<li>🎮 5 trò chơi ngôn ngữ dùng thẻ này</li>
-</ul>
-</div>
-<p class="sp">⭐ <span>4,102 phụ huynh</span> đã tải bộ cards này</p>
-</div>
-<div class="fc">
-<h2>Tải 50 Cards Miễn Phí</h2>
-<p class="sub2">Nhận ngay — in ra dùng liền</p>
-<div class="pg"><div class="pg-d act" id="p1"></div><div class="pg-d" id="p2"></div></div>
 
-<div class="step act" id="s1">
-<label class="lbl">Email của bạn *</label>
-<input class="inp" id="email" type="email" placeholder="vidu@gmail.com" autocomplete="email">
-<div class="err-msg" id="em-err">Vui lòng nhập email hợp lệ</div>
-<button class="btn" onclick="goS2()">Tiếp Theo →</button>
-</div>
+  <!-- LEFT: COPY -->
+  <div class="copy">
+    <p class="target">Phụ huynh muốn luyện tiếng Anh cho con</p>
+    <div class="badge">🗣️ LUYỆN TIẾNG ANH TẠI NHÀ</div>
+    <h1 class="h1"><em>50 Conversation Cards Song Ngữ</em> — Luyện Tiếng Anh Cùng Con Tại Nhà</h1>
+    <p class="subtitle">In ra, cắt ra, chơi cùng con mỗi tối. Tiếng Anh tự nhiên — không cần gia sư!</p>
+    <ul class="bullets">
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>50 thẻ hội thoại Việt–Anh song ngữ</span></li>
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>10 chủ đề: gia đình, trường học, thức ăn...</span></li>
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Từ vựng + cấu trúc câu kèm theo</span></li>
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>5 trò chơi ngôn ngữ dùng thẻ này</span></li>
+    </ul>
+    <div class="proof">
+      <span class="proof-stars">★★★★★</span>
+      <span>4,102 phụ huynh đã tải</span>
+    </div>
+  </div>
 
-<div class="step" id="s2">
-<label class="lbl">Họ và tên *</label>
-<input class="inp" id="fname" type="text" placeholder="Nguyễn Văn A" autocomplete="name" style="margin-bottom:10px">
-<div class="err-msg" id="fn-err">Vui lòng nhập họ tên</div>
-<label class="lbl">Số điện thoại *</label>
-<input class="inp" id="phone" type="tel" placeholder="0912 345 678" autocomplete="tel">
-<div class="err-msg" id="ph-err">Vui lòng nhập số điện thoại hợp lệ</div>
-<button class="btn" onclick="submit()">🃏 Tải 50 Cards Ngay</button>
-<button class="bk" onclick="goS1()">← Quay lại</button>
-</div>
+  <!-- RIGHT: CARD -->
+  <div class="card-wrap">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-pretitle">✨ NHẬN NGAY — MIỄN PHÍ 100%</div>
+        <div class="card-title">50 Conversation Cards Song Ngữ</div>
+      </div>
 
-<div class="succ" id="succ">
-<div class="ic">🎉</div>
-<h3>Cards đã sẵn sàng!</h3>
-<p>Tuyệt vời! Bộ 50 Conversation Cards đã được gửi về email. Tải ngay, in ra và chơi cùng con tối nay!</p>
-<a class="dl-btn" href="https://drive.google.com/uc?export=download&id=1l_E939CXaEbjKAclGANogitwHa5KTs48" target="_blank">🃏 Tải 50 Cards Ngay</a>
-<a class="zl-btn" href="https://zalo.me/1678310120468101523" target="_blank">💬 Hỏi thêm về lớp tiếng Anh</a>
-<p class="cd">Link tải hết hạn sau: <span id="ctd">09:59</span></p>
-</div>
-</div>
-</div>
-</div>
+      <div class="card-body">
+        <!-- Step bar -->
+        <div class="step-bar" id="stepBar">
+          <div class="step-item active" id="stepItem1">
+            <div class="step-num">1</div>
+            <span>Email</span>
+          </div>
+          <div class="step-line" id="stepLine"></div>
+          <div class="step-item" id="stepItem2">
+            <div class="step-num">2</div>
+            <span>Thông tin</span>
+          </div>
+        </div>
+
+        <!-- STEP 1: Email -->
+        <div id="step1">
+          <div class="form-group">
+            <label class="form-label" for="sq-email">Email của bạn</label>
+            <input class="form-input" type="email" id="sq-email" placeholder="ten@gmail.com" autocomplete="email" />
+          </div>
+          <button class="btn-gold" onclick="sqNext()">Tiếp Theo →</button>
+        </div>
+
+        <!-- STEP 2: Name + Phone -->
+        <div id="step2" style="display:none">
+          <div class="form-group">
+            <label class="form-label" for="sq-name">Họ và tên</label>
+            <input class="form-input" type="text" id="sq-name" placeholder="Nguyễn Thị An" autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sq-phone">Số điện thoại</label>
+            <input class="form-input" type="tel" id="sq-phone" placeholder="0912 345 678" autocomplete="tel" />
+          </div>
+          <button class="btn-gold" onclick="sqSubmit()">Tải 50 Cards Miễn Phí →</button>
+          <button class="btn-back" onclick="sqBack()">← Quay lại</button>
+        </div>
+
+        <!-- Success -->
+        <div class="success-box" id="sqSuccess">
+          <div style="font-size:2.5rem;margin-bottom:12px">🎉</div>
+          <h3>Đăng ký thành công!</h3>
+          <p>Vui lòng kiểm tra email — tài liệu sẽ được gửi trong vài phút.<br>Nhớ kiểm tra mục <strong>Spam / Promotions</strong> nếu không thấy.</p>
+        </div>
+
+        <p class="guarantee">🔒 Bảo mật thông tin · Không spam · Huỷ bất cứ lúc nào</p>
+      </div>
+
+      <!-- MOCKUP below form -->
+      <div class="card-mockup" id="cardMockup">
+        <hr class="mockup-divider" />
+        <p class="mockup-label">👁 Xem trước tài liệu</p>
+        <img src="/mockup-conversation-cards.png" alt="50 Conversation Cards Song Ngữ" class="mockup-img"
+             onerror="this.closest('.card-mockup').style.display='none'" />
+      </div>
+    </div>
+  </div>
+
 </section>
-
-<section class="docs">
-<h2>🃏 Bộ Cards Gồm Những Gì?</h2>
-<div class="docs-grid">
-<div class="doc-c"><div class="ic2">🌏</div><h3>Song Ngữ Việt–Anh</h3><p>Mỗi thẻ có cả tiếng Việt và tiếng Anh, giúp con học ngôn ngữ tự nhiên qua ngữ cảnh thực tế</p></div>
-<div class="doc-c"><div class="ic2">🎯</div><h3>10 Chủ Đề Thực Tế</h3><p>Gia đình, trường học, thức ăn, cơ thể, màu sắc... — những chủ đề gần gũi với cuộc sống hằng ngày của con</p></div>
-<div class="doc-c"><div class="ic2">🎮</div><h3>5 Trò Chơi Kèm Theo</h3><p>Hướng dẫn 5 cách chơi vui nhộn giúp con học mà không biết mình đang học, hiệu quả gấp 3 lần học thuộc</p></div>
-</div>
-</section>
-
-<section class="testi">
-<h2>💬 Phụ Huynh Nói Gì?</h2>
-<div class="testi-grid">
-<div class="tc"><div class="stars">★★★★★</div><p>"Ban đầu mình nghi ngờ vì chỉ là cards, nhưng sau 2 tuần chơi cùng con mỗi tối, bé nhà mình đã tự nói được cả câu tiếng Anh! Quá bất ngờ!"</p><div class="tc-auth">Chị Phương Thảo <span>— Mẹ bé 7 tuổi, Q.Tân Bình</span></div></div>
-<div class="tc"><div class="stars">★★★★★</div><p>"Mình không biết tiếng Anh nhiều nhưng nhờ có phần tiếng Việt kèm theo, hai mẹ con vẫn chơi được vui vẻ. Con mình thích lắm, đòi chơi mỗi ngày!"</p><div class="tc-auth">Chị Mai Linh <span>— Mẹ bé 6 tuổi, Q.Gò Vấp</span></div></div>
-<div class="tc"><div class="stars">★★★★★</div><p>"Tiết kiệm chi phí gia sư mà con vẫn học được tiếng Anh. Điểm tiếng Anh ở trường của con tăng rõ rệt sau 1 tháng dùng bộ cards này!"</p><div class="tc-auth">Anh Đức Huy <span>— Bố bé 8 tuổi, Bình Dương</span></div></div>
-</div>
-</section>
-
-<footer>
-<strong>Trường Việt Anh</strong> | ĐT: <a href="tel:0916961409" style="color:#D4A843">0916 961 409</a> | <a href="https://zalo.me/1678310120468101523" style="color:#D4A843" target="_blank">Zalo</a><br>
-<span style="font-size:12px;opacity:.7">© 2026 Trường Việt Anh. Tài liệu miễn phí, không ràng buộc.</span>
-</footer>
-
-<div class="mb-bar">
-<a href="tel:0916961409" style="flex:1;background:#D4A843;color:#1a1a5e;text-align:center;padding:10px;border-radius:8px;font-weight:700;font-size:14px">📞 Gọi Ngay</a>
-<a href="https://zalo.me/1678310120468101523" target="_blank" style="flex:1;background:#0068ff;color:#fff;text-align:center;padding:10px;border-radius:8px;font-weight:700;font-size:14px">💬 Zalo</a>
-</div>
 
 <script>
-const FC='squeeze-conversation-cards',API='https://truongvietanh.com/api/lead';
-let em='',cd;
-function goS2(){
-  em=document.getElementById('email').value.trim();
-  const re=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const errEl=document.getElementById('em-err');
-  if(!re.test(em)){errEl.classList.add('show');document.getElementById('email').classList.add('err');return;}
-  errEl.classList.remove('show');
-  document.getElementById('s1').classList.remove('act');
-  document.getElementById('s2').classList.add('act');
-  document.getElementById('p2').classList.add('act');
-}
-function goS1(){
-  document.getElementById('s2').classList.remove('act');
-  document.getElementById('s1').classList.add('act');
-  document.getElementById('p2').classList.remove('act');
-}
-function submit(){
-  const fn=document.getElementById('fname').value.trim();
-  const ph=document.getElementById('phone').value.trim();
-  let ok=true;
-  if(!fn){document.getElementById('fn-err').classList.add('show');ok=false;}else document.getElementById('fn-err').classList.remove('show');
-  if(!/^0\d{8,9}$/.test(ph.replace(/\s/g,''))){document.getElementById('ph-err').classList.add('show');ok=false;}else document.getElementById('ph-err').classList.remove('show');
-  if(!ok)return;
-  document.getElementById('s2').classList.remove('act');
-  document.getElementById('succ').classList.add('act');
-  startCd();
-  fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({fullName:fn,phone:ph.replace(/\s/g,''),email:em,source:FC,funnel_code:FC,school_level:'tieu-hoc',tags:['conversation-cards-song-ngu'],page_url:location.href,submitted_at:new Date().toISOString()})}).catch(()=>{});
-}
-function startCd(){
-  let t=599;
-  cd=setInterval(()=>{
-    if(t<=0){clearInterval(cd);return;}
-    t--;const m=String(Math.floor(t/60)).padStart(2,'0'),s=String(t%60).padStart(2,'0');
-    document.getElementById('ctd').textContent=m+':'+s;
-  },1000);
-}
-document.getElementById('email').addEventListener('keydown',e=>{if(e.key==='Enter')goS2();});
+(function(){
+  var SRC = 'squeeze-conversation-cards';
+  var FC  = 'squeeze-conversation-cards';
+  var SL  = 'tieu-hoc';
+
+  // Already submitted?
+  if (localStorage.getItem('sq_' + SRC)) {
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('sqSuccess').style.display = 'block';
+    document.getElementById('cardMockup').style.display = 'none';
+  }
+
+  window.sqNext = function() {
+    var el = document.getElementById('sq-email');
+    var v = el.value.trim();
+    if (!v || v.indexOf('@') < 1) { el.classList.add('error'); el.focus(); return; }
+    el.classList.remove('error');
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    // update step bar
+    document.getElementById('stepItem1').classList.remove('active');
+    document.getElementById('stepItem1').classList.add('done');
+    document.getElementById('stepItem1').querySelector('.step-num').textContent = '✓';
+    document.getElementById('stepLine').classList.add('done');
+    document.getElementById('stepItem2').classList.add('active');
+    document.getElementById('sq-name').focus();
+  };
+
+  window.sqBack = function() {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step1').style.display = 'block';
+    document.getElementById('stepItem1').classList.add('active');
+    document.getElementById('stepItem1').classList.remove('done');
+    document.getElementById('stepItem1').querySelector('.step-num').textContent = '1';
+    document.getElementById('stepLine').classList.remove('done');
+    document.getElementById('stepItem2').classList.remove('active');
+  };
+
+  window.sqSubmit = function() {
+    var email = document.getElementById('sq-email').value.trim();
+    var name  = document.getElementById('sq-name').value.trim();
+    var phone = document.getElementById('sq-phone').value.trim();
+    var ne = document.getElementById('sq-name');
+    var pe = document.getElementById('sq-phone');
+    var ok = true;
+    if (!name)  { ne.classList.add('error'); ok = false; } else ne.classList.remove('error');
+    if (!phone) { pe.classList.add('error'); ok = false; } else pe.classList.remove('error');
+    if (!ok) return;
+
+    localStorage.setItem('sq_' + SRC, '1');
+
+    // Show success immediately
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('sqSuccess').style.display = 'block';
+    document.getElementById('cardMockup').style.display = 'none';
+
+    // Fire API in background
+    fetch('https://truongvietanh.com/api/lead', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({
+        fullName: name, phone: phone, email: email,
+        source: SRC, funnel_code: FC, school_level: SL,
+        page_url: location.href,
+        submitted_at: new Date().toISOString()
+      }),
+      mode: 'cors'
+    }).catch(function(){});
+
+    // Redirect after 2s
+    setTimeout(function(){ window.location.href = '/squeeze/cam-on'; }, 2000);
+  };
+})();
 </script>
 </body>
 </html>

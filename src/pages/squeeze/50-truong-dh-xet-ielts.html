@@ -1,438 +1,285 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Danh Sách 50 Trường ĐH Xét IELTS 2026 — Tải Miễn Phí | Trường Việt Anh</title>
-<meta name="description" content="Khám phá ngay điểm chuẩn, cách quy đổi điểm IELTS và bí quyết vào 80% các trường Đại học top đầu Việt Nam. Tải miễn phí!">
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: { brand: '#facc15' },
-        fontFamily: { sans: ['-apple-system','BlinkMacSystemFont','Segoe UI','sans-serif'] }
-      }
-    }
-  }
-</script>
+<meta name="description" content="Danh sách 50 trường Đại học Việt Nam xét tuyển bằng IELTS 2026. Điểm chuẩn, cách quy đổi và bí quyết đậu trường top." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
-  @keyframes fadeInUp { from { opacity:0; transform:translateY(16px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes fadeInRight { from { opacity:0; transform:translateX(20px); } to { opacity:1; transform:translateX(0); } }
-  @keyframes zoomIn { from { opacity:0; transform:scale(.85); } to { opacity:1; transform:scale(1); } }
-  @keyframes spin { to { transform:rotate(360deg); } }
-  @keyframes bounce { 0%,100%{transform:rotate(12deg) translateY(0)} 50%{transform:rotate(12deg) translateY(-6px)} }
-  .anim-up   { animation: fadeInUp .5s ease both; }
-  .anim-right{ animation: fadeInRight .5s ease both; }
-  .anim-zoom { animation: zoomIn .45s ease both; }
-  .spinner   { animation: spin 1s linear infinite; }
-  .bounce-badge { animation: bounce 2s infinite; }
-  [x-cloak]  { display:none !important; }
-  /* Custom scrollbar */
-  ::-webkit-scrollbar{width:6px} ::-webkit-scrollbar-track{background:#f1f5f9} ::-webkit-scrollbar-thumb{background:#94a3b8;border-radius:3px}
-  /* Book perspective */
-  .book-wrap { perspective: 800px; }
-  .book-card { transform: rotateY(-15deg) rotateX(5deg); transition: transform .5s; }
-  .book-wrap:hover .book-card { transform: rotateY(-5deg) rotateX(2deg); }
-  /* Glow effect on form */
-  .form-glow::before {
-    content:''; position:absolute; inset:-4px; border-radius:1.25rem;
-    background: linear-gradient(135deg,#facc15,#3b82f6);
-    filter: blur(12px); opacity:.2; z-index:-1;
-  }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;min-height:100vh}
+a{color:inherit;text-decoration:none}
+
+/* ── TOP BAR ── */
+.topbar{background:#060e24;padding:8px 20px;text-align:center;font-size:12.5px;color:rgba(255,255,255,.75)}
+.topbar a{color:#f0c040;font-weight:700}
+
+/* ── HEADER ── */
+.header{background:#0d1b3e;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 32px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:block;max-width:260px;width:auto}
+.header-right{display:flex;align-items:center;gap:12px}
+.btn-phone{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:.2s}
+.btn-phone:hover{background:rgba(255,255,255,.18)}
+.btn-zalo{display:flex;align-items:center;gap:6px;background:#0068FF;color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:700;transition:.2s}
+.btn-zalo:hover{background:#0055d4}
+
+/* ── HERO ── */
+.hero{max-width:1160px;margin:0 auto;padding:40px 24px 48px;display:grid;grid-template-columns:1.1fr 0.9fr;gap:48px;align-items:start}
+
+/* ── LEFT COPY ── */
+.copy{padding-top:8px}
+.target{font-size:12px;color:rgba(255,255,255,.55);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px}
+.badge{display:inline-flex;align-items:center;gap:6px;background:rgba(240,192,64,.12);border:1px solid rgba(240,192,64,.3);color:#f0c040;padding:6px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.3px;margin-bottom:14px}
+.h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.55rem,2.8vw,2.3rem);font-weight:900;line-height:1.22;margin-bottom:14px}
+.h1 em{color:#f0c040;font-style:normal}
+.subtitle{color:rgba(255,255,255,.75);font-size:15px;line-height:1.65;margin-bottom:22px}
+.bullets{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:24px}
+.bullets li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:rgba(255,255,255,.88);line-height:1.45}
+.bullet-icon{width:20px;height:20px;background:rgba(240,192,64,.15);border:1.5px solid rgba(240,192,64,.4);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.bullet-icon svg{width:10px;height:10px;stroke:#f0c040;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+.proof{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:12px 16px;font-size:13px;color:rgba(255,255,255,.75)}
+.proof-stars{color:#f0c040;font-size:14px;letter-spacing:1px}
+
+/* ── CARD ── */
+.card{background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 32px 80px rgba(0,0,0,.55)}
+.card-head{background:linear-gradient(135deg,#0d1b3e 0%,#1a2d6e 100%);padding:18px 24px;text-align:center;border-bottom:2px solid #d4a843}
+.card-pretitle{color:#f0c040;font-size:10.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:4px}
+.card-title{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:1.05rem;line-height:1.3}
+
+/* ── FORM ── */
+.card-body{padding:22px 24px 0}
+.step-bar{display:flex;align-items:center;gap:8px;margin-bottom:18px}
+.step-item{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:#aaa}
+.step-item.active{color:#0d1b3e}
+.step-num{width:22px;height:22px;border-radius:50%;background:#e5e7eb;color:#888;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center}
+.step-item.active .step-num{background:#0d1b3e;color:#fff}
+.step-item.done .step-num{background:#22c55e;color:#fff}
+.step-line{flex:1;height:2px;background:#e5e7eb;border-radius:2px}
+.step-line.done{background:#22c55e}
+
+.form-label{display:block;font-size:11.5px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
+.form-input{width:100%;padding:13px 14px;border:2px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none;transition:.2s;font-family:inherit;color:#1a1a1a}
+.form-input:focus{border-color:#0d1b3e;box-shadow:0 0 0 3px rgba(13,27,62,.08)}
+.form-input.error{border-color:#ef4444}
+.form-group{margin-bottom:12px}
+.btn-gold{width:100%;padding:15px;background:linear-gradient(135deg,#d4a843,#f0c040);color:#0d1b3e;font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;border:none;border-radius:10px;cursor:pointer;transition:.2s;margin-top:4px;letter-spacing:.2px}
+.btn-gold:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(212,168,67,.45)}
+.btn-back{background:none;border:none;color:#999;font-size:12px;cursor:pointer;padding:8px 0 0;display:flex;align-items:center;gap:4px;font-family:inherit}
+.btn-back:hover{color:#555}
+.guarantee{text-align:center;font-size:11px;color:#bbb;padding:10px 0 16px}
+
+/* ── MOCKUP below form ── */
+.card-mockup{padding:0 20px 20px}
+.mockup-divider{border:none;border-top:1px solid #f0f0f0;margin-bottom:16px}
+.mockup-label{text-align:center;font-size:10.5px;color:#bbb;font-weight:600;letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px}
+.mockup-img{width:100%;border-radius:10px;display:block;box-shadow:0 6px 24px rgba(16,40,72,.15)}
+
+/* ── SUCCESS ── */
+.success-box{display:none;padding:24px;text-align:center}
+.success-box h3{font-family:'Montserrat',sans-serif;color:#0d1b3e;font-size:1.2rem;margin-bottom:8px}
+.success-box p{font-size:14px;color:#555;line-height:1.6}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero{grid-template-columns:1fr;padding:28px 16px 40px;gap:32px}
+  .header{padding:10px 16px}
+  .logo{height:44px;max-width:200px}
+  .copy{order:2}
+  .card-wrap{order:1}
+  .h1{font-size:1.5rem}
+}
+@media(max-width:500px){
+  .topbar{font-size:11px;padding:6px 12px}
+  .btn-phone span{display:none}
+}
 </style>
 </head>
-<body class="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-yellow-200">
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  Tư vấn miễn phí: <a href="tel:0916961409">0916 961 409</a> &nbsp;|&nbsp; <a href="https://zalo.me/0916961409">Chat Zalo ngay →</a>
+</div>
 
 <!-- HEADER -->
-<header class="bg-white shadow-sm sticky top-0 z-50">
-  <div class="container mx-auto px-4 py-3 sm:py-4 max-w-6xl flex items-center">
-    <!-- Left: hotline -->
-    <div class="flex-1 flex justify-start">
-      <a href="tel:0916961409" class="hidden sm:flex items-center gap-2 text-slate-600 hover:text-slate-900 font-medium text-sm transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.08a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg>
-        Hotline: 0916 961 409
-      </a>
-    </div>
-    <!-- Center: logo -->
-    <a href="https://truongvietanh.com" class="flex-shrink-0">
-      <img src="/logo-vietanh.png" alt="Trường TH-THCS-THPT Việt Anh" class="h-16 sm:h-20 w-auto">
+<header class="header">
+  <a href="https://truongvietanh.com">
+    <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="logo" style="height:52px;border-radius:8px;background:#fff;padding:5px 12px;box-shadow:0 2px 10px rgba(0,0,0,.2)" />
+  </a>
+  <div class="header-right">
+    <a href="tel:0916961409" class="btn-phone">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.69 3.41 2 2 0 0 1 3.65 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+      <span>0916 961 409</span>
     </a>
-    <!-- Right: zalo -->
-    <div class="flex-1 flex justify-end">
-    <div class="flex items-center gap-3 sm:gap-4">
-      <a href="tel:0916961409" class="hidden sm:flex items-center gap-2 text-slate-600 hover:text-slate-900 font-medium text-sm transition-colors">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.08a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg>
-        Hotline: 0916 961 409
-      </a>
-      <a href="https://zalo.me/truongvietanh" target="_blank"
-         class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-semibold py-2 px-4 rounded-md text-sm transition-colors duration-200 flex items-center gap-2 shadow-sm">
-        <span>Zalo OA</span>
-        <svg class="w-4 h-4 hidden sm:block" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-    </div>
-    </div>
+    <a href="https://zalo.me/0916961409" class="btn-zalo">💬 Zalo</a>
   </div>
 </header>
 
 <!-- HERO -->
-<section class="bg-gradient-to-b from-white to-slate-100 pt-8 pb-16 lg:pt-12 lg:pb-24 overflow-hidden relative">
-  <div class="container mx-auto px-4 max-w-6xl">
+<section class="hero">
 
-    <!-- Headline -->
-    <div class="text-center max-w-4xl mx-auto mb-10 lg:mb-12">
-      <div class="inline-block bg-yellow-100 text-yellow-800 font-semibold px-4 py-1.5 rounded-full text-sm border border-yellow-200 mb-4 shadow-sm">
-        🎁 TÀI LIỆU MIỄN PHÍ CẬP NHẬT 2026
-      </div>
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-tight mb-4">
-        Danh Sách 50 Trường Đại Học Việt Nam<br class="hidden sm:block"> Xét Tuyển <span class="text-blue-600">Bằng IELTS</span>
-      </h1>
-      <p class="text-lg text-slate-600 leading-relaxed">
-        Khám phá ngay điểm chuẩn, cách quy đổi điểm và bí quyết giúp con bạn nắm chắc tấm vé vào
-        <strong class="text-slate-800">80% các trường Đại học top đầu</strong>
-        (Bách Khoa, Ngoại Thương, UEH...) chỉ với chứng chỉ IELTS.
-      </p>
+  <!-- LEFT: COPY -->
+  <div class="copy">
+    <p class="target">Học sinh THPT và phụ huynh</p>
+    <div class="badge">🎓 TUYỂN SINH ĐẠI HỌC 2026</div>
+    <h1 class="h1">Danh Sách <em>50 Trường ĐH Xét IELTS 2026</em> — Tải Miễn Phí</h1>
+    <p class="subtitle">Khám phá điểm chuẩn, cách quy đổi điểm và bí quyết giúp con nắm chắc tấm vé vào 80% trường Đại học top đầu chỉ với chứng chỉ IELTS.</p>
+    <ul class="bullets">
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>50 trường ĐH xét tuyển bằng IELTS</span></li>
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Điểm IELTS yêu cầu từng trường, từng ngành</span></li>
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Cách quy đổi điểm IELTS sang thang 10</span></li>
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Bí quyết tối ưu hồ sơ xét tuyển IELTS</span></li>
+      <li><span class="bullet-icon"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Lộ trình đạt IELTS mục tiêu theo thời gian</span></li>
+    </ul>
+    <div class="proof">
+      <span class="proof-stars">★★★★★</span>
+      <span>3,150 học sinh đã tải</span>
     </div>
-
-    <!-- Two-col -->
-    <div class="flex flex-col lg:flex-row gap-12 items-center justify-center">
-
-      <!-- FORM -->
-      <div class="lg:w-1/2 w-full max-w-md relative z-10 form-glow">
-        <div class="bg-[#0f172a] rounded-2xl shadow-2xl overflow-hidden border border-slate-700 relative">
-
-          <!-- Progress bar -->
-          <div id="progressBar" class="w-full bg-slate-800 h-1.5 flex">
-            <div id="progressFill" class="h-full bg-yellow-400 transition-all duration-500 w-1/2"></div>
-          </div>
-
-          <div class="p-6 sm:p-8">
-
-            <!-- STEP 1 -->
-            <div id="step1" class="anim-up">
-              <div class="text-center mb-6">
-                <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">Tải Tài Liệu Miễn Phí</h2>
-                <p class="text-slate-400 text-sm">Vui lòng nhập email để nhận Danh sách 50 trường Đại học.</p>
-              </div>
-              <div class="mb-6">
-                <input id="emailInput" type="email" placeholder="Địa chỉ Email của bạn *"
-                  class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-4 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition text-lg placeholder-slate-500">
-              </div>
-              <p id="err1" class="text-red-400 text-sm text-center mb-4 hidden"></p>
-              <button onclick="goStep2()"
-                class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold text-lg py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 group shadow-lg shadow-yellow-500/20">
-                Tiếp tục để tải file PDF
-                <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-              </button>
-              <p class="text-center text-slate-500 text-xs mt-4 flex items-center justify-center gap-1">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-                Thông tin của bạn được bảo mật
-              </p>
-            </div>
-
-            <!-- STEP 2 -->
-            <div id="step2" class="hidden">
-              <button onclick="goStep1()" class="text-slate-400 hover:text-white text-sm mb-4 flex items-center transition gap-1">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-                Quay lại
-              </button>
-              <div class="text-center mb-6">
-                <h2 class="text-xl sm:text-2xl font-bold text-white mb-2">Sắp xong rồi!</h2>
-                <p class="text-slate-400 text-sm">Vui lòng để lại thông tin để Trường Việt Anh tư vấn chi tiết hơn cho ba mẹ.</p>
-              </div>
-              <div class="space-y-4 mb-6">
-                <input id="nameInput" type="text" placeholder="Họ và tên phụ huynh *"
-                  class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition placeholder-slate-500">
-                <input id="phoneInput" type="tel" placeholder="Số điện thoại Zalo *"
-                  class="w-full bg-slate-800 border border-slate-700 text-white rounded-xl px-4 py-3 focus:outline-none focus:border-yellow-400 focus:ring-1 focus:ring-yellow-400 transition placeholder-slate-500">
-                <label class="flex items-start cursor-pointer group mt-4">
-                  <input id="wantTest" type="checkbox"
-                    class="mt-1 mr-3 w-5 h-5 rounded border-slate-600 bg-slate-800 accent-yellow-400 flex-shrink-0">
-                  <span class="text-sm text-slate-300 leading-snug group-hover:text-white transition">
-                    Đăng ký test trình độ IELTS <strong>MIỄN PHÍ</strong> cho con – biết con cần bao lâu để đạt mục tiêu!
-                  </span>
-                </label>
-              </div>
-              <p id="err2" class="text-red-400 text-sm text-center mb-3 hidden"></p>
-              <button id="submitBtn" onclick="handleSubmit()"
-                class="w-full bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold text-lg py-4 rounded-xl transition-all duration-300 flex items-center justify-center gap-2 shadow-lg shadow-yellow-500/20 disabled:opacity-70">
-                Gửi &amp; Nhận File Qua Zalo
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-              </button>
-            </div>
-
-            <!-- SUCCESS -->
-            <div id="stepSuccess" class="hidden py-8 text-center anim-zoom">
-              <div class="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-              </div>
-              <h3 class="text-2xl font-bold text-white mb-2">Đăng ký thành công!</h3>
-              <p class="text-slate-300">Cảm ơn bạn đã đăng ký. Hãy check mail của mình ngay để nhận file nhé.</p>
-              <p id="testMsg" class="hidden text-yellow-400 text-sm mt-4 p-3 bg-yellow-400/10 rounded-lg border border-yellow-400/20">
-                Bộ phận tuyển sinh sẽ liên hệ trong 24h để sắp xếp lịch test IELTS miễn phí cho bé.
-              </p>
-              <button onclick="location.reload()" class="mt-6 text-slate-400 hover:text-white underline text-sm transition">Tải lại trang</button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <!-- POSTER MOCKUP -->
-      <div class="lg:w-1/2 hidden sm:flex justify-center order-2">
-        <div class="relative group">
-          <!-- Glow behind poster -->
-          <div class="absolute -inset-3 bg-gradient-to-br from-yellow-400/30 to-blue-500/20 rounded-2xl blur-xl opacity-70 group-hover:opacity-100 transition duration-500"></div>
-          <!-- Poster image -->
-          <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-slate-200/50"
-               style="max-width:340px; transform: perspective(900px) rotateY(-4deg) rotateX(2deg); transition: transform .4s;"
-               onmouseover="this.style.transform='perspective(900px) rotateY(0deg) rotateX(0deg)'"
-               onmouseout="this.style.transform='perspective(900px) rotateY(-4deg) rotateX(2deg)'">
-            <img src="/media/50-truong-dh-xet-ielts-poster.jpg"
-                 alt="Danh sách 50 trường ĐH xét tuyển IELTS 2026"
-                 class="w-full h-auto block">
-          </div>
-          <!-- Badge -->
-          <div class="bounce-badge absolute -bottom-3 -right-3 bg-yellow-400 text-slate-900 font-bold py-2 px-4 rounded-xl shadow-lg flex items-center gap-1.5 z-10 text-sm">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
-            Tải Miễn Phí
-          </div>
-        </div>
-      </div>
-
-    </div><!-- end two-col -->
-
-    <!-- TRUST BADGES -->
-    <div class="mt-16 pt-8 border-t border-slate-200">
-      <div class="flex flex-wrap justify-center gap-4 sm:gap-6">
-        <div class="bg-white px-5 py-3 rounded-full shadow-sm border border-slate-100 flex items-center gap-2">
-          <svg class="w-5 h-5 text-yellow-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-          <span class="text-sm font-semibold text-slate-700">15+ năm kinh nghiệm</span>
-        </div>
-        <div class="bg-white px-5 py-3 rounded-full shadow-sm border border-slate-100 flex items-center gap-2">
-          <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-          <span class="text-sm font-semibold text-slate-700"><strong class="text-slate-900">12.000+</strong> học sinh</span>
-        </div>
-        <div class="bg-white px-5 py-3 rounded-full shadow-sm border border-slate-100 flex items-center gap-2">
-          <svg class="w-5 h-5 text-yellow-400 fill-yellow-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          <span class="text-sm font-semibold text-slate-700"><strong class="text-slate-900">4.9/5</strong> từ 300+ đánh giá</span>
-        </div>
-        <div class="bg-white px-5 py-3 rounded-full shadow-sm border border-slate-100 flex items-center gap-2">
-          <svg class="w-5 h-5 text-green-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span class="text-sm font-semibold text-slate-700">IELTS <strong class="text-slate-900">6.0–8.0</strong> đầu ra</span>
-        </div>
-      </div>
-    </div>
-
   </div>
+
+  <!-- RIGHT: CARD -->
+  <div class="card-wrap">
+    <div class="card">
+      <div class="card-head">
+        <div class="card-pretitle">✨ NHẬN NGAY — MIỄN PHÍ 100%</div>
+        <div class="card-title">Danh Sách 50 Trường ĐH Xét IELTS 2026</div>
+      </div>
+
+      <div class="card-body">
+        <!-- Step bar -->
+        <div class="step-bar" id="stepBar">
+          <div class="step-item active" id="stepItem1">
+            <div class="step-num">1</div>
+            <span>Email</span>
+          </div>
+          <div class="step-line" id="stepLine"></div>
+          <div class="step-item" id="stepItem2">
+            <div class="step-num">2</div>
+            <span>Thông tin</span>
+          </div>
+        </div>
+
+        <!-- STEP 1: Email -->
+        <div id="step1">
+          <div class="form-group">
+            <label class="form-label" for="sq-email">Email của bạn</label>
+            <input class="form-input" type="email" id="sq-email" placeholder="ten@gmail.com" autocomplete="email" />
+          </div>
+          <button class="btn-gold" onclick="sqNext()">Tiếp Theo →</button>
+        </div>
+
+        <!-- STEP 2: Name + Phone -->
+        <div id="step2" style="display:none">
+          <div class="form-group">
+            <label class="form-label" for="sq-name">Họ và tên</label>
+            <input class="form-input" type="text" id="sq-name" placeholder="Nguyễn Thị An" autocomplete="name" />
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="sq-phone">Số điện thoại</label>
+            <input class="form-input" type="tel" id="sq-phone" placeholder="0912 345 678" autocomplete="tel" />
+          </div>
+          <button class="btn-gold" onclick="sqSubmit()">Tải Danh Sách Miễn Phí →</button>
+          <button class="btn-back" onclick="sqBack()">← Quay lại</button>
+        </div>
+
+        <!-- Success -->
+        <div class="success-box" id="sqSuccess">
+          <div style="font-size:2.5rem;margin-bottom:12px">🎉</div>
+          <h3>Đăng ký thành công!</h3>
+          <p>Vui lòng kiểm tra email — tài liệu sẽ được gửi trong vài phút.<br>Nhớ kiểm tra mục <strong>Spam / Promotions</strong> nếu không thấy.</p>
+        </div>
+
+        <p class="guarantee">🔒 Bảo mật thông tin · Không spam · Huỷ bất cứ lúc nào</p>
+      </div>
+
+      <!-- MOCKUP below form -->
+      <div class="card-mockup" id="cardMockup">
+        <hr class="mockup-divider" />
+        <p class="mockup-label">👁 Xem trước tài liệu</p>
+        <img src="/mockup-50-truong-dh-xet-ielts.png" alt="Danh Sách 50 Trường ĐH Xét IELTS 2026" class="mockup-img"
+             onerror="this.closest('.card-mockup').style.display='none'" />
+      </div>
+    </div>
+  </div>
+
 </section>
-
-<!-- CONTENT: What's inside -->
-<section class="py-16 bg-white">
-  <div class="container mx-auto px-4 max-w-5xl">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold text-slate-900 mb-4">Tài liệu này sẽ giúp Ba mẹ &amp; Học sinh nắm rõ</h2>
-      <div class="w-24 h-1 bg-yellow-400 mx-auto rounded-full"></div>
-    </div>
-    <div class="grid md:grid-cols-3 gap-8">
-      <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition duration-300">
-        <div class="w-14 h-14 bg-blue-100 rounded-xl flex items-center justify-center text-blue-600 mb-6">
-          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-        </div>
-        <h3 class="text-xl font-bold text-slate-900 mb-3">Bảng quy đổi chi tiết</h3>
-        <p class="text-slate-600">Cập nhật cách các trường quy đổi chứng chỉ IELTS thành điểm cộng (từ 1–2.5 điểm) hoặc ưu tiên xét tuyển thẳng.</p>
-      </div>
-      <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition duration-300">
-        <div class="w-14 h-14 bg-yellow-100 rounded-xl flex items-center justify-center text-yellow-600 mb-6">
-          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </div>
-        <h3 class="text-xl font-bold text-slate-900 mb-3">Danh sách theo khu vực</h3>
-        <p class="text-slate-600">Bao gồm đầy đủ 17 trường ĐH lớn tại TP.HCM (Bách Khoa, KHTN, UEH...), 16 trường Hà Nội và 17 trường ở các tỉnh thành khác.</p>
-      </div>
-      <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 hover:shadow-lg transition duration-300">
-        <div class="w-14 h-14 bg-green-100 rounded-xl flex items-center justify-center text-green-600 mb-6">
-          <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-        </div>
-        <h3 class="text-xl font-bold text-slate-900 mb-3">Mức điểm an toàn</h3>
-        <p class="text-slate-600">Phân loại rõ ràng các trường chấp nhận mức IELTS từ 4.5–5.0, 5.5, 6.0 và danh sách 45+ trường với mức điểm 6.5+.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SELLING POINT -->
-<section class="py-16 bg-[#0f172a] text-white">
-  <div class="container mx-auto px-4 max-w-4xl text-center">
-    <h2 class="text-3xl sm:text-4xl font-bold mb-6 text-yellow-400">Tại sao IELTS 6.5 là "Tấm vé vàng"?</h2>
-    <p class="text-lg text-slate-300 mb-8 max-w-2xl mx-auto">
-      Đạt IELTS 6.5 đồng nghĩa với việc mở ra <strong class="text-white">80% cánh cửa</strong> vào các trường Đại học hàng đầu Việt Nam (Bao gồm cả RMIT, Ngoại Thương, Bách Khoa).
-    </p>
-    <div class="bg-slate-800/50 border border-slate-700 p-8 rounded-2xl text-left max-w-3xl mx-auto mb-10">
-      <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-        <svg class="w-6 h-6 text-yellow-400 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
-        Lộ trình tại Trường Việt Anh
-      </h3>
-      <ul class="space-y-4 text-slate-300">
-        <li class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span>Học sinh Trường Việt Anh đạt mức điểm <strong>IELTS trung bình lớp 12 là 6.5</strong>.</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span>Xây dựng lộ trình học tiếng Anh bài bản liên tục từ lớp 6 đến lớp 12.</span>
-        </li>
-        <li class="flex items-start gap-3">
-          <svg class="w-5 h-5 text-green-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-          <span>Giúp con có vô vàn lựa chọn khi đứng trước ngưỡng cửa Đại học.</span>
-        </li>
-      </ul>
-    </div>
-    <button onclick="window.scrollTo({top:0,behavior:'smooth'})"
-      class="bg-yellow-400 hover:bg-yellow-500 text-slate-900 font-bold text-lg py-4 px-8 rounded-full transition duration-300 inline-flex items-center gap-2 shadow-lg">
-      Đăng ký nhận Danh sách &amp; Test IELTS
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </button>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800">
-  <div class="container mx-auto px-4 max-w-6xl grid md:grid-cols-2 gap-8">
-    <div>
-      <div class="mb-4">
-        <img src="/logo-vietanh.png" alt="Trường Việt Anh" class="h-16 w-auto brightness-0 invert opacity-90">
-      </div>
-      <p class="mb-4 text-sm max-w-sm">Hệ thống trường đào tạo học sinh giỏi chuyên Anh với lộ trình chuẩn quốc tế, giúp học sinh tự tin bước vào Đại học.</p>
-      <div class="space-y-2 text-sm">
-        <p class="flex items-center gap-2">
-          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 11a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 8.08a16 16 0 006.29 6.29l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 15.42z"/></svg>
-          Hotline &amp; Zalo: <strong class="text-white">0916 961 409</strong>
-        </p>
-        <p class="flex items-center gap-2">
-          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
-          Website: <a href="https://truongvietanh.com" class="text-yellow-400 hover:underline">truongvietanh.com</a>
-        </p>
-      </div>
-    </div>
-    <div>
-      <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Hệ thống cơ sở (9 Cơ sở)</h4>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-        <div>
-          <strong class="text-slate-300 block mb-1">TP. Hồ Chí Minh</strong>
-          <ul class="space-y-1">
-            <li>• Gò Vấp: 160/72 Phan Huy Ích</li>
-            <li>• Bình Tân: 951/7 Tỉnh lộ 10</li>
-            <li>• MN Lê Đức Thọ, Gò Vấp</li>
-          </ul>
-        </div>
-        <div>
-          <strong class="text-slate-300 block mb-1">Các Tỉnh Thành</strong>
-          <ul class="space-y-1">
-            <li>• Long An (Cần Giuộc)</li>
-            <li>• Tây Ninh (KDC Long Hậu)</li>
-            <li>• Kiên Giang (Rạch Giá)</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="container mx-auto px-4 max-w-6xl mt-8 pt-8 border-t border-slate-800 text-center text-xs">
-    <p>© 2026 Hệ thống Trường Việt Anh. Mọi quyền được bảo lưu.</p>
-  </div>
-</footer>
 
 <script>
-  const API_URL = 'https://truongvietanh.com/api/lead';
+(function(){
+  var SRC = 'squeeze-50-truong-ielts';
+  var FC  = 'squeeze-50-truong-ielts';
+  var SL  = 'thpt';
 
-  /* ── helpers ── */
-  const $ = id => document.getElementById(id);
-  function showErr(id, msg) {
-    const el = $(id); el.textContent = msg; el.classList.remove('hidden');
+  // Already submitted?
+  if (localStorage.getItem('sq_' + SRC)) {
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('sqSuccess').style.display = 'block';
+    document.getElementById('cardMockup').style.display = 'none';
   }
-  function hideErr(id) { $(id).classList.add('hidden'); }
-  function showEl(id)  { $(id).classList.remove('hidden'); }
-  function hideEl(id)  { $(id).classList.add('hidden'); }
 
-  /* ── step 1 → 2 ── */
-  function goStep2() {
-    hideErr('err1');
-    const email = $('emailInput').value.trim();
-    if (!email || !/^\S+@\S+\.\S+$/.test(email)) {
-      showErr('err1', 'Vui lòng nhập địa chỉ email hợp lệ'); return;
-    }
-    // Partial capture (email only)
-    fetch(API_URL, {
-      method:'POST', headers:{'Content-Type':'application/json'},
+  window.sqNext = function() {
+    var el = document.getElementById('sq-email');
+    var v = el.value.trim();
+    if (!v || v.indexOf('@') < 1) { el.classList.add('error'); el.focus(); return; }
+    el.classList.remove('error');
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    // update step bar
+    document.getElementById('stepItem1').classList.remove('active');
+    document.getElementById('stepItem1').classList.add('done');
+    document.getElementById('stepItem1').querySelector('.step-num').textContent = '✓';
+    document.getElementById('stepLine').classList.add('done');
+    document.getElementById('stepItem2').classList.add('active');
+    document.getElementById('sq-name').focus();
+  };
+
+  window.sqBack = function() {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step1').style.display = 'block';
+    document.getElementById('stepItem1').classList.add('active');
+    document.getElementById('stepItem1').classList.remove('done');
+    document.getElementById('stepItem1').querySelector('.step-num').textContent = '1';
+    document.getElementById('stepLine').classList.remove('done');
+    document.getElementById('stepItem2').classList.remove('active');
+  };
+
+  window.sqSubmit = function() {
+    var email = document.getElementById('sq-email').value.trim();
+    var name  = document.getElementById('sq-name').value.trim();
+    var phone = document.getElementById('sq-phone').value.trim();
+    var ne = document.getElementById('sq-name');
+    var pe = document.getElementById('sq-phone');
+    var ok = true;
+    if (!name)  { ne.classList.add('error'); ok = false; } else ne.classList.remove('error');
+    if (!phone) { pe.classList.add('error'); ok = false; } else pe.classList.remove('error');
+    if (!ok) return;
+
+    localStorage.setItem('sq_' + SRC, '1');
+
+    // Show success immediately
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('sqSuccess').style.display = 'block';
+    document.getElementById('cardMockup').style.display = 'none';
+
+    // Fire API in background
+    fetch('https://truongvietanh.com/api/lead', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        step: 'partial_capture',
-        email,
-        source: 'squeeze-50-truong-ielts',
-        funnel_code: 'squeeze-50-truong-ielts',
-        school_level: 'thpt',
+        fullName: name, phone: phone, email: email,
+        source: SRC, funnel_code: FC, school_level: SL,
         page_url: location.href,
         submitted_at: new Date().toISOString()
-      })
-    }).catch(()=>{});
+      }),
+      mode: 'cors'
+    }).catch(function(){});
 
-    hideEl('step1'); showEl('step2');
-    $('step2').classList.add('anim-right');
-    $('progressFill').style.width = '100%';
-  }
-
-  /* ── step 2 → 1 ── */
-  function goStep1() {
-    hideEl('step2'); showEl('step1');
-    $('progressFill').style.width = '50%';
-  }
-
-  /* ── final submit ── */
-  async function handleSubmit() {
-    hideErr('err2');
-    const name  = $('nameInput').value.trim();
-    const phone = $('phoneInput').value.trim();
-    const email = $('emailInput').value.trim();
-    const wantTest = $('wantTest').checked;
-
-    if (!name || !phone) {
-      showErr('err2', 'Vui lòng điền đầy đủ Họ tên và Số điện thoại'); return;
-    }
-    if (phone.replace(/\D/g,'').length < 9) {
-      showErr('err2', 'Số điện thoại không hợp lệ'); return;
-    }
-
-    const btn = $('submitBtn');
-    btn.disabled = true;
-    btn.innerHTML = `<svg class="spinner w-5 h-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>Đang gửi...`;
-
-    try {
-      await fetch(API_URL, {
-        method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({
-          fullName: name,
-          phone,
-          email,
-          source: 'squeeze-50-truong-ielts',
-          funnel_code: 'squeeze-50-truong-ielts',
-          school_level: 'thpt',
-          tags: ['50-truong-dh-xet-ielts', wantTest ? 'want-ielts-test' : null].filter(Boolean),
-          page_url: location.href,
-          submitted_at: new Date().toISOString()
-        })
-      });
-    } catch(_) {}
-
-    // Show success
-    $('progressBar').classList.add('hidden');
-    hideEl('step2');
-    showEl('stepSuccess');
-    $('stepSuccess').classList.remove('hidden');
-    if (wantTest) showEl('testMsg');
-  }
-
-  /* ── enter key on email ── */
-  document.addEventListener('DOMContentLoaded', () => {
-    $('emailInput').addEventListener('keydown', e => { if(e.key==='Enter') goStep2(); });
-  });
+    // Redirect after 2s
+    setTimeout(function(){ window.location.href = '/squeeze/cam-on'; }, 2000);
+  };
+})();
 </script>
 </body>
 </html>

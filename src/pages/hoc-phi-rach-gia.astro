@@ -1,0 +1,115 @@
+---
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const pageTitle = "Học Phí Trường Việt Anh tại Rạch Giá 2026 — Bảng Giá Chi Tiết | Trường Việt Anh";
+const pageDescription = "Học phí minh bạch — Không phụ phí ẩn. Trả góp 0% lãi suất qua thẻ. Học bổng đến 50% cho học sinh xuất sắc.";
+const pageCanonical = "https://truongvietanh.com/hoc-phi-rach-gia";
+
+const uspItems = [
+    {
+      "icon": "📊",
+      "text": "Học phí công khai — không phụ phí ẩn, có hợp đồng rõ ràng"
+    },
+    {
+      "icon": "💳",
+      "text": "Trả góp 0% lãi suất qua thẻ tín dụng — chia 6/12 kỳ"
+    },
+    {
+      "icon": "🎓",
+      "text": "Học bổng đầu vào 10–50% theo học lực và hoàn cảnh"
+    },
+    {
+      "icon": "👨‍👩‍👧‍👦",
+      "text": "Ưu đãi anh chị em ruột — giảm 10–15% học phí học sinh thứ 2"
+    },
+    {
+      "icon": "🔒",
+      "text": "Cam kết không tăng học phí giữa năm — đã ký hợp đồng"
+    },
+    {
+      "icon": "↩️",
+      "text": "Chính sách hoàn học phí rõ ràng nếu rút giữa kỳ"
+    }
+  ];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
+  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
+  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
+  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
+];
+
+const faqItems = [
+    {
+      "question": "Học phí đã bao gồm những gì?",
+      "answer": "Học phí cơ bản đã gồm chương trình chính khóa, sách giáo khoa, ngoại khóa cơ bản. Phí ăn uống, xe đưa đón, ngoại khóa nâng cao tính riêng và minh bạch trong hợp đồng."
+    },
+    {
+      "question": "Có chính sách học bổng không?",
+      "answer": "Có 4 loại: học bổng đầu vào (10–50%), học bổng học sinh xuất sắc cuối năm, học bổng anh chị em (10–15%), học bổng hoàn cảnh khó khăn xét theo từng trường hợp."
+    },
+    {
+      "question": "Trả góp được không?",
+      "answer": "Có. Trường liên kết các ngân hàng (TPBank, MB, VPBank) cho trả góp 0% lãi suất 6/9/12 kỳ qua thẻ tín dụng. Phụ huynh không cần chứng minh thu nhập."
+    },
+    {
+      "question": "Học phí có tăng giữa năm không?",
+      "answer": "Không. Hợp đồng nhập học ghi rõ học phí cố định cho cả năm học, kể cả lạm phát. Chỉ điều chỉnh khi sang năm học mới và thông báo trước 3 tháng."
+    },
+    {
+      "question": "Nếu con nghỉ giữa năm có hoàn lại không?",
+      "answer": "Có. Hoàn lại theo công thức: học phí còn lại - phí xử lý 5%. Phí đã đóng cho ngày đã học không hoàn. Chi tiết trong hợp đồng nhập học."
+    }
+  ];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="tieu-hoc"
+  funnelCode="hoc-phi-rach-gia"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Học Phí Trường Việt Anh tại Rạch Giá 2026 — Bảng Giá Chi Tiết</h1>
+    <p class="squeeze-hero__subheading">Học phí minh bạch — Không phụ phí ẩn. Trả góp 0% lãi suất qua thẻ. Học bổng đến 50% cho học sinh xuất sắc.</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="page-content">
+      <h2>Học phí minh bạch — Đầu tư xứng đáng cho tương lai con</h2>
+      <p>Học phí Trường Việt Anh tại Rạch Giá được thiết kế <strong>cạnh tranh trong phân khúc song ngữ chất lượng cao</strong>, thấp hơn 30–40% so với trường quốc tế nhưng giữ đầu ra IELTS 6.0+ và 99% vào đại học top.</p>
+        <p>Để nhận bảng học phí chi tiết theo cấp học (Mầm Non / Tiểu Học / THCS / THPT) và các chính sách ưu đãi đang áp dụng cho năm học 2026–2027, vui lòng để lại thông tin. Đội tuyển sinh gửi qua email trong 1 giờ.</p>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Nhận bảng học phí chi tiết qua email</h2>
+    <p class="squeeze-form-section__description">Bao gồm: học phí cơ bản, ăn uống, xe đưa đón, đồng phục, ngoại khóa và các chính sách ưu đãi 2026.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="hoc-phi-rach-gia-form"
+      funnelCode="hoc-phi-rach-gia"
+      schoolLevel="tieu-hoc"
+      submitText="Nhận bảng học phí"
+      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h."
+    />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  .page-content { max-width: 800px; margin: 0 auto; padding: 1rem 0; }
+  .page-content h2 { color: #1a1a5e; font-size: 1.6rem; margin-bottom: 1rem; text-align: center; }
+  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
+  .page-content ul { margin: 1rem 0 1rem 1.5rem; }
+  .page-content li { margin-bottom: .5rem; line-height: 1.7; }
+  .page-content strong { color: #1a1a5e; font-weight: 700; }
+</style>

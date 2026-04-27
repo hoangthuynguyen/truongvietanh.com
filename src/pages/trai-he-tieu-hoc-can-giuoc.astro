@@ -1,0 +1,116 @@
+---
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const pageTitle = "Trại Hè Lion Camp 2026 — Tiểu Học tại Cần Giuộc | Trường Việt Anh";
+const pageDescription = "Phát triển toàn diện qua 6 tuần: Tiếng Anh giao tiếp · STEM · Lãnh đạo · Phiêu lưu. Đăng ký sớm để nhận ưu đãi Early Bird đến 30% học phí.";
+const pageCanonical = "https://truongvietanh.com/trai-he-tieu-hoc-can-giuoc";
+
+const uspItems = [
+    {
+      "icon": "🦁",
+      "text": "6 tuần học hè bao trọn — không phải gửi con đi đâu khác"
+    },
+    {
+      "icon": "🇬🇧",
+      "text": "Giáo viên bản ngữ + giáo viên Việt cùng dạy theo CEFR"
+    },
+    {
+      "icon": "🧪",
+      "text": "STEM — Robotics — Mỹ thuật — Thể thao đa dạng mỗi ngày"
+    },
+    {
+      "icon": "🏕️",
+      "text": "1–2 chuyến field trip / overnight camp tăng tự lập"
+    },
+    {
+      "icon": "🍱",
+      "text": "Bữa ăn 4 bữa do bếp trường nấu — chuyên gia dinh dưỡng giám sát"
+    },
+    {
+      "icon": "💸",
+      "text": "Early Bird giảm 30% học phí · Brother & Sister giảm thêm 10%"
+    }
+  ];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
+  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
+  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
+  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
+];
+
+const faqItems = [
+    {
+      "question": "Trại hè diễn ra trong bao lâu?",
+      "answer": "Lion Camp 2026 kéo dài 6 tuần, từ tuần đầu tháng 6 đến giữa tháng 7, học từ thứ 2 đến thứ 6, 7h30 — 16h30. Có thể đăng ký theo tuần hoặc trọn khóa."
+    },
+    {
+      "question": "Con tôi chưa học tại Việt Anh có tham gia được không?",
+      "answer": "Có. Lion Camp mở cho cả học sinh ngoài hệ thống. Đây là cơ hội tốt để con và phụ huynh trải nghiệm thực tế trước khi quyết định nhập học chính khóa."
+    },
+    {
+      "question": "Học phí trại hè là bao nhiêu?",
+      "answer": "Học phí phụ thuộc cấp học và cơ sở. Đăng ký Early Bird trước 30/4 giảm 30%. Vui lòng để lại thông tin để được gửi bảng giá chi tiết và chính sách ưu đãi."
+    },
+    {
+      "question": "Có cần đồng phục/dụng cụ riêng không?",
+      "answer": "Trường cung cấp đồng phục Lion Camp + balo + bình nước miễn phí khi đăng ký trọn khóa. Phụ huynh chỉ cần chuẩn bị giày thể thao và đồ dùng cá nhân."
+    },
+    {
+      "question": "Có dịch vụ đưa đón không?",
+      "answer": "Có. Cơ sở Gò Vấp có xe đưa đón bán kính 10km. Vui lòng cung cấp địa chỉ nhà để được báo phí xe theo tuyến."
+    }
+  ];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="tieu-hoc"
+  funnelCode="trai-he-tieu-hoc-can-giuoc"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Trại Hè Lion Camp 2026 — Tiểu Học tại Cần Giuộc</h1>
+    <p class="squeeze-hero__subheading">Phát triển toàn diện qua 6 tuần: Tiếng Anh giao tiếp · STEM · Lãnh đạo · Phiêu lưu. Đăng ký sớm để nhận ưu đãi Early Bird đến 30% học phí.</p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="page-content">
+      <h2>Lion Camp 2026 — Phát triển toàn diện trong 6 tuần</h2>
+      <p>Lion Camp THCS là chương trình trại hè bán trú phát triển toàn diện cho con em Việt Nam, kết hợp <strong>Tiếng Anh giao tiếp với giáo viên bản ngữ</strong>, <strong>STEM/Robotics</strong>, <strong>Kỹ năng lãnh đạo</strong> và <strong>Phiêu lưu — Khám phá ngoài trời</strong>.</p>
+        <p>Mỗi tuần có chủ đề riêng (Tự lập, Sáng tạo, Đồng đội, Trí tuệ cảm xúc…), kết thúc 6 tuần con sẽ có <strong>portfolio học tập + báo cáo phát triển cá nhân</strong> để phụ huynh hiểu rõ điểm mạnh, điểm cần cải thiện của con.</p>
+        <p>Chương trình áp dụng tại cơ sở <strong>160/72 Phan Huy Ích, P. An Hội Tây, Gò Vấp, TP.HCM</strong>. Sĩ số lớp tối đa 18 em / nhóm tuổi để giáo viên quan sát và cá nhân hóa từng con.</p>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Đăng ký Lion Camp 2026 — Nhận tư vấn miễn phí</h2>
+    <p class="squeeze-form-section__description">Để lại thông tin để nhận lịch khai giảng, học phí, ưu đãi sớm và tài liệu chi tiết.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="trai-he-tieu-hoc-can-giuoc-form"
+      funnelCode="trai-he-tieu-hoc-can-giuoc"
+      schoolLevel="tieu-hoc"
+      submitText="Đăng ký ngay"
+      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h."
+    />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  .page-content { max-width: 800px; margin: 0 auto; padding: 1rem 0; }
+  .page-content h2 { color: #1a1a5e; font-size: 1.6rem; margin-bottom: 1rem; text-align: center; }
+  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
+  .page-content ul { margin: 1rem 0 1rem 1.5rem; }
+  .page-content li { margin-bottom: .5rem; line-height: 1.7; }
+  .page-content strong { color: #1a1a5e; font-weight: 700; }
+</style>

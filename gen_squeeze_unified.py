@@ -403,13 +403,15 @@ body{{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:f
 /* ── RIGHT ── */
 .right{{
   display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
+  align-items:stretch;justify-content:flex-start;
   gap:10px;height:100%;
 }}
 
+.card{{flex-shrink:0}}
+
 .mockup-wrap{{
-  max-height:26%;
-  display:flex;align-items:flex-end;justify-content:center;width:100%;overflow:hidden;
+  flex:1;min-height:0;
+  display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden;
 }}
 .mockup-wrap img{{
   max-height:100%;max-width:100%;object-fit:contain;

@@ -381,7 +381,7 @@ body{{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:f
   display:flex;align-items:center;justify-content:space-between;
   position:relative;
 }}
-.hdr-logo{{height:58px;border-radius:8px;background:#fff;padding:6px 16px;display:block;position:absolute;left:50%;transform:translateX(-50%)}}
+.hdr-logo{{height:58px;border-radius:8px;background:#fff;padding:6px 16px;display:block;position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}}
 .hdr-right{{display:flex;align-items:center;gap:8px;margin-left:auto}}
 .btn-ph{{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none}}
 .btn-zl{{background:#0068FF;color:#fff;padding:5px 13px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none}}

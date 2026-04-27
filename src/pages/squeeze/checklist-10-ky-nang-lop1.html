@@ -131,6 +131,19 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
 .btn-cta:active{transform:none}
 .guarantee{text-align:center;font-size:10.5px;color:#aaa;margin-top:8px}
 
+/* ── STEP BAR ── */
+.step-bar{display:flex;align-items:center;gap:8px;padding:12px 18px 0}
+.step-item{display:flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#bbb}
+.step-item.active{color:#0d1b3e}
+.step-item.done{color:#22c55e}
+.step-num{width:21px;height:21px;border-radius:50%;background:#e5e7eb;color:#888;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.step-item.active .step-num{background:#0d1b3e;color:#fff}
+.step-item.done .step-num{background:#22c55e;color:#fff}
+.step-line{flex:1;height:2px;background:#e5e7eb;border-radius:2px}
+.step-line.done{background:#22c55e}
+.btn-back{background:none;border:none;color:#999;font-size:12px;cursor:pointer;padding:6px 0 0;display:flex;align-items:center;gap:4px;font-family:inherit}
+.btn-back:hover{color:#555}
+
 .success-box{display:none;padding:20px;text-align:center}
 .success-box .ico{font-size:2.4rem;margin-bottom:8px}
 .success-box h3{font-family:'Montserrat',sans-serif;color:#0d1b3e;font-size:1rem;margin-bottom:5px}
@@ -202,13 +215,35 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
         <div class="card-pretitle">✨ Nhận ngay · Miễn phí 100%</div>
         <div class="card-title">Checklist 10 Kỹ Năng Vào Lớp 1 + Timeline 3 Tháng</div>
       </div>
-      <div class="card-body" id="formArea">
-        <label class="form-label" for="sq-email">Nhập email để nhận tài liệu</label>
+      <!-- Step indicator -->
+      <div class="step-bar" id="stepBar">
+        <div class="step-item active" id="si1"><div class="step-num" id="sn1">1</div><span>Email</span></div>
+        <div class="step-line" id="sl1"></div>
+        <div class="step-item" id="si2"><div class="step-num">2</div><span>Thông tin</span></div>
+      </div>
+
+      <!-- STEP 1: Email -->
+      <div class="card-body" id="step1">
+        <label class="form-label" for="sq-email">Email của bạn</label>
         <input class="form-input" type="email" id="sq-email"
                placeholder="ten@gmail.com" autocomplete="email" />
-        <button class="btn-cta" onclick="sqSubmit()">🎁 NHẬN CHECKLIST MIỄN PHÍ</button>
+        <button class="btn-cta" onclick="sqNext()">Tiếp theo →</button>
         <p class="guarantee">🔒 Bảo mật · Không spam · Huỷ bất cứ lúc nào</p>
       </div>
+
+      <!-- STEP 2: Họ tên + SĐT -->
+      <div class="card-body" id="step2" style="display:none">
+        <label class="form-label" for="sq-name">Họ và tên</label>
+        <input class="form-input" type="text" id="sq-name"
+               placeholder="Nguyễn Thị An" autocomplete="name" style="margin-bottom:10px"/>
+        <label class="form-label" for="sq-phone">Số điện thoại</label>
+        <input class="form-input" type="tel" id="sq-phone"
+               placeholder="0912 345 678" autocomplete="tel" />
+        <button class="btn-cta" onclick="sqSubmit()">🎁 NHẬN CHECKLIST MIỄN PHÍ</button>
+        <button class="btn-back" onclick="sqBack()">← Quay lại</button>
+        <p class="guarantee">🔒 Bảo mật · Không spam · Huỷ bất cứ lúc nào</p>
+      </div>
+
       <div class="success-box" id="sqSuccess">
         <div class="ico">🎉</div>
         <h3>Đăng ký thành công!</h3>
@@ -226,26 +261,57 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
   var SL  = 'tieu-hoc';
 
   if (localStorage.getItem('sq_' + SRC)) {
-    document.getElementById('formArea').style.display = 'none';
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('stepBar').style.display = 'none';
     document.getElementById('sqSuccess').style.display = 'block';
   }
 
-  window.sqSubmit = function() {
+  window.sqNext = function() {
     var el = document.getElementById('sq-email');
     var email = el.value.trim();
-    if (!email || email.indexOf('@') < 1) {
-      el.classList.add('error'); el.focus(); return;
-    }
+    if (!email || email.indexOf('@') < 1) { el.classList.add('error'); el.focus(); return; }
     el.classList.remove('error');
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    document.getElementById('si1').classList.remove('active');
+    document.getElementById('si1').classList.add('done');
+    document.getElementById('sn1').textContent = '✓';
+    document.getElementById('sl1').classList.add('done');
+    document.getElementById('si2').classList.add('active');
+    document.getElementById('sq-name').focus();
+  };
+
+  window.sqBack = function() {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step1').style.display = 'block';
+    document.getElementById('si1').classList.add('active');
+    document.getElementById('si1').classList.remove('done');
+    document.getElementById('sn1').textContent = '1';
+    document.getElementById('sl1').classList.remove('done');
+    document.getElementById('si2').classList.remove('active');
+  };
+
+  window.sqSubmit = function() {
+    var email = document.getElementById('sq-email').value.trim();
+    var ne = document.getElementById('sq-name');
+    var pe = document.getElementById('sq-phone');
+    var name = ne.value.trim();
+    var phone = pe.value.trim();
+    var ok = true;
+    if (!name)  { ne.classList.add('error'); ok = false; } else ne.classList.remove('error');
+    if (!phone) { pe.classList.add('error'); ok = false; } else pe.classList.remove('error');
+    if (!ok) return;
     localStorage.setItem('sq_' + SRC, '1');
-    document.getElementById('formArea').style.display = 'none';
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('stepBar').style.display = 'none';
     document.getElementById('sqSuccess').style.display = 'block';
 
     fetch('https://truongvietanh.com/api/lead', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        fullName: '', phone: '', email: email,
+        fullName: name, phone: phone, email: email,
         source: SRC, funnel_code: FC, school_level: SL,
         page_url: location.href,
         submitted_at: new Date().toISOString()
@@ -257,7 +323,7 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
   };
 
   document.getElementById('sq-email').addEventListener('keydown', function(e){
-    if (e.key === 'Enter') sqSubmit();
+    if (e.key === 'Enter') sqNext();
   });
 })();
 </script>

@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>So Sánh 4 Loại Trường THCS 2026 — Công Lập, Tư Thục, Song Ngữ, Quốc Tế | Trường Việt Anh</title>
-<meta name="description" content="Bảng so sánh 4 loại trường THCS theo 10 tiêu chí thực tế. Chọn đúng trường cho con lên lớp 6." />
+<meta name="description" content="Bảng so sánh 4 loại trường THCS theo 10 tiêu chí thực tế." />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
 <style>
@@ -14,241 +14,215 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
 
 /* ── HEADER ── */
 .hdr{
-  background:#0d1b3e;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  padding:0 32px;height:56px;
+  background:#0d1b3e;border-bottom:1px solid rgba(255,255,255,.08);
+  padding:0 32px;height:72px;flex-shrink:0;
   display:flex;align-items:center;justify-content:space-between;
-  flex-shrink:0;
+  position:relative;
 }
-.hdr-logo{height:40px;border-radius:7px;background:#fff;padding:4px 10px;display:block}
-.hdr-right{display:flex;align-items:center;gap:8px}
-.btn-ph{
-  display:flex;align-items:center;gap:6px;
-  background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);
-  color:#fff;padding:6px 13px;border-radius:7px;font-size:12.5px;font-weight:600;text-decoration:none;
-}
-.btn-zl{background:#0068FF;color:#fff;padding:6px 14px;border-radius:7px;font-size:12.5px;font-weight:700;text-decoration:none}
+.hdr-logo{height:58px;border-radius:8px;background:#fff;padding:6px 16px;display:block;position:absolute;left:50%;transform:translateX(-50%)}
+.hdr-right{display:flex;align-items:center;gap:8px;margin-left:auto}
+.btn-ph{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.15);color:#fff;padding:5px 12px;border-radius:7px;font-size:12px;font-weight:600;text-decoration:none}
+.btn-zl{background:#0068FF;color:#fff;padding:5px 13px;border-radius:7px;font-size:12px;font-weight:700;text-decoration:none}
 
-/* ── HERO — fills 100% remaining height ── */
+/* ── HERO ── */
 .hero{
   flex:1;min-height:0;
-  display:grid;grid-template-columns:1.1fr 0.9fr;
-  max-width:1300px;width:100%;margin:0 auto;
-  padding:20px 36px 16px;
-  gap:32px;align-items:center;
+  display:grid;grid-template-columns:1.15fr 0.85fr;
+  max-width:1280px;width:100%;margin:0 auto;
+  padding:18px 36px 14px;gap:36px;align-items:center;
 }
 
-/* ── LEFT COPY ── */
-.copy{display:flex;flex-direction:column;justify-content:center;gap:14px}
+/* ══ LEFT COPY ══ */
+.copy{display:flex;flex-direction:column;gap:13px}
 
-.badge{
+.fomo{
   display:inline-flex;align-items:center;gap:7px;width:fit-content;
-  background:rgba(240,192,64,.12);border:1px solid rgba(240,192,64,.32);
-  color:#f0c040;padding:5px 14px;border-radius:20px;
-  font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;
+  background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.35);
+  color:#ff8080;padding:5px 13px;border-radius:20px;
+  font-size:11.5px;font-weight:700;letter-spacing:.4px;
 }
 
 .h1{
   font-family:'Montserrat',sans-serif;
-  font-size:clamp(2rem,3.2vw,3rem);
-  font-weight:900;line-height:1.13;color:#fff;
+  font-size:clamp(2rem,3.3vw,3.1rem);
+  font-weight:900;line-height:1.1;color:#fff;
 }
-.h1 em{color:#f0c040;font-style:normal}
+.h1 em{color:#f0c040;font-style:normal;display:block}
 
 .sub{
-  font-size:15px;color:rgba(255,255,255,.78);line-height:1.5;font-weight:500;
+  font-size:15px;color:rgba(255,255,255,.8);line-height:1.5;font-weight:500;
   border-left:3px solid #d4a843;padding-left:13px;
 }
 
-.bullets{list-style:none;display:flex;flex-direction:column;gap:10px}
-.bullets li{
-  display:flex;align-items:flex-start;gap:10px;
-  font-size:14px;color:rgba(255,255,255,.85);line-height:1.45;
-}
+.bullets{list-style:none;display:flex;flex-direction:column;gap:9px}
+.bullets li{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:rgba(255,255,255,.88);line-height:1.4}
 .bico{
   width:20px;height:20px;min-width:20px;border-radius:50%;
-  background:rgba(240,192,64,.15);border:1.5px solid rgba(240,192,64,.45);
-  display:flex;align-items:center;justify-content:center;margin-top:1px;
+  background:rgba(240,192,64,.15);border:1.5px solid rgba(240,192,64,.5);
+  display:flex;align-items:center;justify-content:center;margin-top:1px;flex-shrink:0;
 }
 .bico svg{width:10px;height:10px;stroke:#f0c040;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 
-.trust{
-  display:flex;align-items:center;gap:10px;width:fit-content;
-  background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);
-  border-radius:10px;padding:9px 14px;font-size:12px;color:rgba(255,255,255,.58);
+.testimonial{
+  background:rgba(255,255,255,.05);border-left:3px solid #f0c040;
+  border-radius:0 8px 8px 0;padding:9px 13px;
+  font-size:13px;color:rgba(255,255,255,.72);line-height:1.5;font-style:italic;
 }
-.trust-stars{color:#f0c040;letter-spacing:1.5px;font-size:13px}
+.testimonial strong{color:#f0c040;font-style:normal;font-size:11.5px;display:block;margin-top:4px}
 
-/* ── RIGHT ── */
-.right{
-  display:flex;flex-direction:column;
-  align-items:stretch;justify-content:flex-start;
-  gap:10px;height:100%;
+/* ══ RIGHT ══ */
+.right{display:flex;flex-direction:column;gap:10px;height:100%;justify-content:flex-start}
+
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.6);flex-shrink:0}
+
+.card-top{
+  background:linear-gradient(135deg,#0d1b3e,#162550);
+  padding:10px 18px;text-align:center;border-bottom:2.5px solid #d4a843;
 }
+.card-urgency{color:#f0c040;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:2px}
+.card-title{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.85rem;line-height:1.3}
 
-.card{flex-shrink:0}
+.card-body{padding:12px 14px 10px}
+.form-label{display:block;font-size:10px;font-weight:700;color:#888;text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px}
+.form-input{
+  width:100%;padding:11px 13px;
+  border:2.5px solid #e5e7eb;border-radius:10px;
+  font-size:14px;outline:none;transition:.2s;
+  font-family:inherit;color:#111;margin-bottom:7px;
+}
+.form-input:focus{border-color:#d4a843;box-shadow:0 0 0 3px rgba(212,168,67,.15)}
+.form-input.error{border-color:#ef4444;animation:shake .3s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+.btn-cta{
+  width:100%;padding:15px 12px;
+  background:linear-gradient(135deg,#d4a843 0%,#f5cc42 60%,#f0c040 100%);
+  color:#0d1b3e;font-family:'Montserrat',sans-serif;
+  font-weight:900;font-size:14px;border:none;border-radius:11px;
+  cursor:pointer;text-transform:uppercase;letter-spacing:.4px;
+  box-shadow:0 6px 24px rgba(212,168,67,.6);
+  transition:transform .15s,box-shadow .15s;
+  position:relative;overflow:hidden;
+}
+.btn-cta::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(rgba(255,255,255,.15),transparent);
+  border-radius:11px;
+}
+.btn-cta:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(212,168,67,.7)}
+.btn-cta:active{transform:translateY(0)}
+
+.micro{text-align:center;font-size:10px;color:#bbb;margin-top:5px}
+
+/* STEP BAR */
+.step-bar{display:flex;align-items:center;gap:8px;margin-bottom:8px;justify-content:center}
+.step-dot{width:22px;height:22px;border-radius:50%;background:#e5e7eb;color:#999;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:.3s;flex-shrink:0}
+.step-dot.active{background:#d4a843;color:#0d1b3e}
+.step-dot.done{background:#22c55e;color:#fff}
+.step-line{flex:1;height:2px;background:#e5e7eb;max-width:50px}
+.step-label{font-size:10px;color:#aaa;font-weight:600}
+
+.success-box{display:none;padding:18px;text-align:center}
+.success-box .s-ico{font-size:2rem;margin-bottom:6px}
+.success-box h3{font-family:'Montserrat',sans-serif;color:#0d1b3e;font-size:.9rem;margin-bottom:4px}
+.success-box p{font-size:12px;color:#666;line-height:1.5}
 
 .mockup-wrap{
   flex:1;min-height:0;
-  display:flex;align-items:center;justify-content:center;width:100%;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
 }
 .mockup-wrap img{
   max-height:100%;max-width:100%;object-fit:contain;
-  filter:drop-shadow(0 12px 36px rgba(0,0,0,.55));display:block;
+  filter:drop-shadow(0 12px 40px rgba(0,0,0,.6));display:block;
 }
-
-/* ── FORM CARD ── */
-.card{
-  background:#fff;border-radius:16px;
-  box-shadow:0 20px 64px rgba(0,0,0,.55);
-  width:100%;overflow:hidden;
-}
-.card-top{
-  background:linear-gradient(135deg,#0d1b3e 0%,#1a2d6e 100%);
-  padding:9px 18px;text-align:center;border-bottom:2.5px solid #d4a843;
-}
-.card-pretitle{color:#f0c040;font-size:9.5px;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;margin-bottom:1px}
-.card-title{color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:.83rem;line-height:1.3}
-
-.card-body{padding:9px 14px 8px}
-.form-label{display:block;font-size:10px;font-weight:700;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.form-input{
-  width:100%;padding:9px 12px;
-  border:2px solid #e5e7eb;border-radius:9px;
-  font-size:14px;outline:none;transition:.2s;
-  font-family:inherit;color:#1a1a1a;margin-bottom:7px;
-}
-.form-input.s2{padding:8px 12px;font-size:13.5px;margin-bottom:6px}
-.form-input:focus{border-color:#0d1b3e;box-shadow:0 0 0 3px rgba(13,27,62,.08)}
-.form-input.error{border-color:#ef4444}
-
-.btn-cta{
-  width:100%;padding:12px;
-  background:linear-gradient(135deg,#d4a843 0%,#f5cc42 100%);
-  color:#0d1b3e;font-family:'Montserrat',sans-serif;
-  font-weight:900;font-size:14.5px;border:none;border-radius:10px;
-  cursor:pointer;transition:.2s;text-transform:uppercase;letter-spacing:.3px;
-  box-shadow:0 6px 22px rgba(212,168,67,.55);
-}
-.btn-cta:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(212,168,67,.65)}
-.btn-cta:active{transform:none}
-.guarantee{text-align:center;font-size:10px;color:#aaa;margin-top:5px}
-
-/* ── STEP BAR ── */
-.step-bar{display:flex;align-items:center;gap:8px;padding:8px 14px 0}
-.step-item{display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:#bbb}
-.step-item.active{color:#0d1b3e}
-.step-item.done{color:#22c55e}
-.step-num{width:20px;height:20px;border-radius:50%;background:#e5e7eb;color:#888;font-size:10px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.step-item.active .step-num{background:#0d1b3e;color:#fff}
-.step-item.done .step-num{background:#22c55e;color:#fff}
-.step-line{flex:1;height:2px;background:#e5e7eb;border-radius:2px}
-.step-line.done{background:#22c55e}
-.btn-back{background:none;border:none;color:#999;font-size:11.5px;cursor:pointer;padding:4px 0 0;display:inline-flex;align-items:center;gap:4px;font-family:inherit}
-.btn-back:hover{color:#555}
-
-.success-box{display:none;padding:16px;text-align:center}
-.success-box .ico{font-size:2.4rem;margin-bottom:8px}
-.success-box h3{font-family:'Montserrat',sans-serif;color:#0d1b3e;font-size:1rem;margin-bottom:5px}
-.success-box p{font-size:13px;color:#666;line-height:1.6}
 
 /* ── MOBILE ── */
 @media(max-width:900px){
   html,body{overflow-x:hidden;overflow-y:auto;height:auto}
-  .hero{grid-template-columns:1fr;padding:20px 18px 28px;gap:20px;flex:unset}
-  .copy{gap:12px}
-  .h1{font-size:1.7rem}
-  .sub{font-size:13.5px}
-  .mockup-wrap{max-height:200px}
-  .right{gap:12px}
-  .hdr{padding:0 18px;height:52px}
-  .hdr-logo{height:36px}
-  .btn-cta{font-size:15px;padding:15px}
+  .hero{grid-template-columns:1fr;padding:16px 16px 24px;gap:18px;flex:unset}
+  .h1{font-size:1.65rem}
+  .sub{font-size:13px}
+  .mockup-wrap{max-height:180px}
+  .hdr{padding:0 16px;height:64px}
+  .hdr-logo{height:48px}
 }
 @media(max-width:480px){
   .btn-ph span{display:none}
-  .h1{font-size:1.5rem}
-  .sub{font-size:13px}
+  .h1{font-size:1.4rem}
+  .btn-cta{font-size:12.5px;padding:14px 10px}
 }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="hdr">
   <a href="https://truongvietanh.com">
     <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="hdr-logo" />
   </a>
   <div class="hdr-right">
     <a href="tel:0916961409" class="btn-ph">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.69 3.41 2 2 0 0 1 3.65 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.69 3.41 2 2 0 0 1 3.65 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
       <span>0916 961 409</span>
     </a>
     <a href="https://zalo.me/0916961409" class="btn-zl">💬 Zalo</a>
   </div>
 </header>
 
-<!-- HERO -->
 <section class="hero">
 
-  <!-- LEFT: COPY -->
   <div class="copy">
-    <div class="badge">🏫 SO SÁNH TRƯỜNG THCS 2026</div>
-    <h1 class="h1">Chọn sai loại trường THCS —<em>4 năm con không phát triển được</em></h1>
-    <p class="sub">4 loại trường, 10 tiêu chí thực tế — chọn đúng từ đầu, không hối hận sau 4 năm</p>
+    <div class="fomo">🔥 2,445 phụ huynh đã nhận — Tặng miễn phí có giới hạn</div>
+    <h1 class="h1">Chọn sai loại trường THCS —<em>4 năm con học không phát triển được</em></h1>
+    <p class="sub">4 loại trường, 10 tiêu chí thực tế — <strong>chọn đúng từ đầu, không hối hận sau 4 năm tốn tiền</strong></p>
     <ul class="bullets">
-      <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>So sánh chất lượng giảng dạy, môi trường và ngoại ngữ từng loại trường</span></li>
-      <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Chi phí thực tế 2026 — không bị bất ngờ với các khoản phát sinh</span></li>
-      <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Phù hợp con nào? Định hướng nghề nghiệp nào? Rõ ràng từng loại</span></li>
+      <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>So sánh chất lượng, môi trường, chi phí — <strong>không bị choáng ngợp, ra quyết định tự tin</strong></span></li>
+      <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Phù hợp tính cách con nào — <strong>không chọn theo đám đông, chọn đúng cho con mình</strong></span></li>
+      <li><span class="bico"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Tránh sai lầm chi phí — <strong>không chọn xong mới phát hiện không đủ tài chính theo</strong></span></li>
     </ul>
-    <div class="trust">
-      <span class="trust-stars">★★★★★</span>
-      <span>2,445 phụ huynh đã tải · Miễn phí 100%</span>
+    <div class="testimonial">
+      "Bảng so sánh giúp tôi nhìn rõ được điểm mạnh yếu từng loại trường. Quyết định tự tin hơn hẳn!"
+      <strong>— Chị Hồng Nhung, Bình Dương · Đã tải 4 ngày trước</strong>
     </div>
   </div>
 
-  <!-- RIGHT: MOCKUP + FORM -->
   <div class="right">
     <div class="card" id="mainCard">
       <div class="card-top">
-        <div class="card-pretitle">✨ Nhận ngay · Miễn phí 100%</div>
+        <div class="card-urgency">⏰ Nhận ngay · Miễn phí 100%</div>
         <div class="card-title">Bảng So Sánh 4 Loại Trường THCS 2026</div>
       </div>
-      <!-- Step indicator -->
-      <div class="step-bar" id="stepBar">
-        <div class="step-item active" id="si1"><div class="step-num" id="sn1">1</div><span>Email</span></div>
-        <div class="step-line" id="sl1"></div>
-        <div class="step-item" id="si2"><div class="step-num">2</div><span>Thông tin</span></div>
-      </div>
-
-      <!-- STEP 1: Email -->
-      <div class="card-body" id="step1">
-        <label class="form-label" for="sq-email">Email của bạn</label>
-        <input class="form-input" type="email" id="sq-email"
-               placeholder="ten@gmail.com" autocomplete="email" />
-        <button class="btn-cta" onclick="sqNext()">Tiếp theo →</button>
-        <p class="guarantee">🔒 Bảo mật · Không spam</p>
-      </div>
-
-      <!-- STEP 2: Họ tên + SĐT -->
-      <div class="card-body" id="step2" style="display:none">
-        <label class="form-label" for="sq-name">Họ và tên</label>
-        <input class="form-input s2" type="text" id="sq-name"
-               placeholder="Nguyễn Thị An" autocomplete="name" />
-        <label class="form-label" for="sq-phone">Số điện thoại</label>
-        <input class="form-input s2" type="tel" id="sq-phone"
-               placeholder="0912 345 678" autocomplete="tel" />
-        <button class="btn-cta" onclick="sqSubmit()">🎁 NHẬN BẢNG SO SÁNH MIỄN PHÍ</button>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:5px">
-          <button class="btn-back" onclick="sqBack()">← Quay lại</button>
-          <span style="font-size:10px;color:#bbb">🔒 Bảo mật · Không spam</span>
+      <div class="card-body" id="formArea">
+        <!-- STEP BAR -->
+        <div class="step-bar">
+          <div class="step-dot active" id="dot1">1</div>
+          <div class="step-line"></div>
+          <div class="step-dot" id="dot2">2</div>
+          <span class="step-label" id="stepLabel">Email</span>
+        </div>
+        <!-- STEP 1: EMAIL -->
+        <div id="step1">
+          <label class="form-label" for="sq-email">Email của bạn</label>
+          <input class="form-input" type="email" id="sq-email"
+                 placeholder="ten@gmail.com" autocomplete="email" />
+          <button class="btn-cta" onclick="sqNext()">TIẾP THEO →</button>
+          <p class="micro">🔒 Không spam · Miễn phí hoàn toàn</p>
+        </div>
+        <!-- STEP 2: HỌ TÊN + SĐT -->
+        <div id="step2" style="display:none">
+          <label class="form-label" for="sq-name">Họ và tên</label>
+          <input class="form-input" type="text" id="sq-name"
+                 placeholder="Nguyễn Văn A" autocomplete="name" />
+          <label class="form-label" for="sq-phone">Số điện thoại</label>
+          <input class="form-input" type="tel" id="sq-phone"
+                 placeholder="0916 961 409" autocomplete="tel" />
+          <button class="btn-cta" onclick="sqSubmit()">📥 GỬI BẢNG SO SÁNH VÀO EMAIL CỦA TÔI →</button>
+          <p class="micro"><span onclick="sqBack()" style="cursor:pointer;color:#aaa">← Quay lại</span> · 🔒 Miễn phí</p>
         </div>
       </div>
-
       <div class="success-box" id="sqSuccess">
-        <div style="font-size:1.8rem;margin-bottom:6px">🎉</div>
-        <h3 style="font-family:Montserrat,sans-serif;color:#0d1b3e;font-size:.9rem;margin-bottom:4px">Đăng ký thành công!</h3>
-        <p style="font-size:12px;color:#666;line-height:1.5">Kiểm tra email — tài liệu gửi trong vài phút.<br><strong>Nhớ kiểm tra Spam / Promotions</strong></p>
+        <div class="s-ico">🎉</div>
+        <h3>Đã gửi thành công!</h3>
+        <p>Kiểm tra email ngay — tài liệu gửi trong vài phút.<br><strong>Nhớ kiểm tra Spam / Promotions</strong></p>
       </div>
     </div>
     <div class="mockup-wrap">
@@ -266,50 +240,50 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
   var SL  = 'thcs';
 
   if (localStorage.getItem('sq_' + SRC)) {
-    document.getElementById('step1').style.display = 'none';
-    document.getElementById('step2').style.display = 'none';
-    document.getElementById('stepBar').style.display = 'none';
+    document.getElementById('formArea').style.display = 'none';
     document.getElementById('sqSuccess').style.display = 'block';
   }
 
   window.sqNext = function() {
     var el = document.getElementById('sq-email');
     var email = el.value.trim();
-    if (!email || email.indexOf('@') < 1) { el.classList.add('error'); el.focus(); return; }
+    if (!email || email.indexOf('@') < 1) {
+      el.classList.add('error'); el.focus(); return;
+    }
     el.classList.remove('error');
     document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'block';
-    document.getElementById('si1').classList.remove('active');
-    document.getElementById('si1').classList.add('done');
-    document.getElementById('sn1').textContent = '✓';
-    document.getElementById('sl1').classList.add('done');
-    document.getElementById('si2').classList.add('active');
+    document.getElementById('dot1').classList.remove('active');
+    document.getElementById('dot1').classList.add('done');
+    document.getElementById('dot2').classList.add('active');
+    document.getElementById('stepLabel').textContent = 'Họ tên & SĐT';
     document.getElementById('sq-name').focus();
   };
 
   window.sqBack = function() {
     document.getElementById('step2').style.display = 'none';
     document.getElementById('step1').style.display = 'block';
-    document.getElementById('si1').classList.add('active');
-    document.getElementById('si1').classList.remove('done');
-    document.getElementById('sn1').textContent = '1';
-    document.getElementById('sl1').classList.remove('done');
-    document.getElementById('si2').classList.remove('active');
+    document.getElementById('dot2').classList.remove('active');
+    document.getElementById('dot1').classList.remove('done');
+    document.getElementById('dot1').classList.add('active');
+    document.getElementById('stepLabel').textContent = 'Email';
   };
 
   window.sqSubmit = function() {
+    var nameEl  = document.getElementById('sq-name');
+    var phoneEl = document.getElementById('sq-phone');
+    var name  = nameEl.value.trim();
+    var phone = phoneEl.value.trim();
+    if (!name) { nameEl.classList.add('error'); nameEl.focus(); return; }
+    nameEl.classList.remove('error');
+    if (!phone || phone.replace(/[^0-9]/g,'').length < 9) {
+      phoneEl.classList.add('error'); phoneEl.focus(); return;
+    }
+    phoneEl.classList.remove('error');
+
     var email = document.getElementById('sq-email').value.trim();
-    var ne = document.getElementById('sq-name');
-    var pe = document.getElementById('sq-phone');
-    var name = ne.value.trim();
-    var phone = pe.value.trim();
-    var ok = true;
-    if (!name)  { ne.classList.add('error'); ok = false; } else ne.classList.remove('error');
-    if (!phone) { pe.classList.add('error'); ok = false; } else pe.classList.remove('error');
-    if (!ok) return;
     localStorage.setItem('sq_' + SRC, '1');
-    document.getElementById('step2').style.display = 'none';
-    document.getElementById('stepBar').style.display = 'none';
+    document.getElementById('formArea').style.display = 'none';
     document.getElementById('sqSuccess').style.display = 'block';
 
     fetch('https://truongvietanh.com/api/lead', {
@@ -329,6 +303,9 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
 
   document.getElementById('sq-email').addEventListener('keydown', function(e){
     if (e.key === 'Enter') sqNext();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Enter' && document.getElementById('step2').style.display !== 'none') sqSubmit();
   });
 })();
 </script>

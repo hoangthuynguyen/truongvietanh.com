@@ -1,116 +1,26 @@
 ---
-import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
-import USPGrid from '../components/USPGrid.astro';
-import TrustMetrics from '../components/TrustMetrics.astro';
-import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import FAQSection from '../components/FAQSection.astro';
-
-const pageTitle = "Tuyển Sinh Mầm Non tại Rạch Giá 2026–2027 | Trường Việt Anh";
-const pageDescription = "Đăng ký sớm nhận học bổng Early Bird đến 30% học phí. Hỗ trợ trọn gói thủ tục và test đầu vào miễn phí.";
-const pageCanonical = "https://truongvietanh.com/tuyen-sinh-mam-non-rach-gia";
-
-const uspItems = [
-    {
-      "icon": "🎓",
-      "text": "Chương trình Mầm Non song ngữ — chuẩn quốc tế, sĩ số 22 em/lớp"
-    },
-    {
-      "icon": "🇬🇧",
-      "text": "Giáo viên bản ngữ + Việt cùng dạy — Tiếng Anh từ 8–12 tiết/tuần"
-    },
-    {
-      "icon": "📋",
-      "text": "Test đầu vào miễn phí — đánh giá toàn diện học lực"
-    },
-    {
-      "icon": "💸",
-      "text": "Early Bird trước 30/4 — giảm 30% học phí + tặng đồng phục"
-    },
-    {
-      "icon": "🚌",
-      "text": "Xe đưa đón bán kính 10km từ Rạch Giá"
-    },
-    {
-      "icon": "📞",
-      "text": "Hỗ trợ 24/7 qua Zalo OA — Hiệu trưởng phản hồi trong 12h"
-    }
-  ];
-
-const metrics = [
-  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
-  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
-  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
-  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
-];
-
-const faqItems = [
-    {
-      "question": "Hồ sơ nhập học cần gì?",
-      "answer": "Học bạ 2 năm gần nhất, giấy khai sinh, sổ tiêm chủng (Mầm Non/Tiểu Học), 4 ảnh 3x4, đơn nhập học. Trường hướng dẫn từng bước."
-    },
-    {
-      "question": "Có test đầu vào không?",
-      "answer": "Mầm Non chỉ có buổi gặp gỡ làm quen 30 phút, không test áp lực. Kết quả dùng để xếp lớp và xét học bổng."
-    },
-    {
-      "question": "Lớp sĩ số bao nhiêu?",
-      "answer": "Mầm Non sĩ số tối đa 22 em/lớp, có 1 giáo viên chính + 1 trợ giảng + 1 giáo viên bản ngữ. Đảm bảo từng con được quan tâm."
-    },
-    {
-      "question": "Có học phí trả góp không?",
-      "answer": "Có. Trả góp 0% lãi suất qua thẻ TPBank, MB, VPBank, chia 6/9/12 kỳ. Không cần chứng minh thu nhập."
-    },
-    {
-      "question": "Khi nào bắt đầu nhập học?",
-      "answer": "Năm học 2026–2027 khai giảng 5/9/2026. Có lớp tiền nhập học (orientation) tháng 7 cho HS mới làm quen môi trường, miễn phí cho HS đăng ký Early Bird."
-    }
-  ];
+import DarkLPLayout from '../layouts/DarkLPLayout.astro';
 ---
-
-<SqueezePageLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonicalUrl={pageCanonical}
-  schoolLevel="mam-non"
+<DarkLPLayout
+  title="Tuyển Sinh Mầm Non tại Rạch Giá 2026–2027 | Trường Việt Anh"
+  description="Đăng ký sớm nhận học bổng Early Bird đến 30% học phí. Hỗ trợ trọn gói thủ tục và test đầu vào miễn phí."
+  canonicalUrl="https://truongvietanh.com/tuyen-sinh-mam-non-rach-gia"
+  fomoText="🔥 3,000+ học sinh đang theo học — Đăng ký nhận ưu đãi Early Bird"
+  headline="Tuyển Sinh Mầm Non tại Rạch Giá 2026–2027"
+  headlineEm="Học bổng Early Bird đến 30% — Đăng ký trước 30/4"
+  subheadline="Đăng ký sớm nhận học bổng Early Bird đến 30% học phí. Hỗ trợ trọn gói thủ tục và test đầu vào miễn phí."
+  bullets={[
+    "🎓 Chương trình Mầm Non song ngữ — <strong>chuẩn quốc tế, sĩ số 22 em/lớp</strong>",
+    "🇬🇧 Giáo viên bản ngữ + Việt cùng dạy — <strong>Tiếng Anh từ 8–12 tiết/tuần</strong>",
+    "📋 Test đầu vào miễn phí — <strong>đánh giá toàn diện học lực</strong>",
+    "💸 Early Bird trước 30/4 — <strong>giảm 30% học phí + tặng đồng phục</strong>",
+  ]}
+  testimonial="Quy trình tuyển sinh rõ ràng, đội tuyển sinh hỗ trợ từng bước. Con vào học 2 tuần là quen ngay môi trường!"
+  testimonialAuthor="— Chị Thanh Hà, Q.Gò Vấp · Phụ huynh học sinh Tiểu Học"
+  cardUrgency="⏰ Học bổng Early Bird · Đăng ký trước 30/4/2026"
+  cardTitle="Đăng ký tuyển sinh Mầm Non tại Rạch Giá"
+  ctaStep2="📋 GỬI ĐĂNG KÝ TUYỂN SINH →"
+  source="tuyen-sinh-mam-non-rach-gia"
   funnelCode="tuyen-sinh-mam-non-rach-gia"
->
-  <section slot="hero">
-    <h1 class="squeeze-hero__heading">Tuyển Sinh Mầm Non tại Rạch Giá 2026–2027</h1>
-    <p class="squeeze-hero__subheading">Đăng ký sớm nhận học bổng Early Bird đến 30% học phí. Hỗ trợ trọn gói thủ tục và test đầu vào miễn phí.</p>
-  </section>
-
-  <section slot="usp"><USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} /></section>
-  <section slot="trust"><TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} /></section>
-
-  <section slot="content">
-    <div class="page-content">
-      <h2>Tuyển sinh Mầm Non tại Rạch Giá — Lộ trình rõ ràng cho con</h2>
-      <p>Trường Việt Anh tại Rạch Giá tuyển sinh năm học 2026–2027 với <strong>chương trình Mầm Non song ngữ chuẩn quốc tế</strong>, đầu ra đảm bảo và lộ trình rõ ràng.</p>
-        <p>Cơ sở: <strong>Cơ sở Rạch Giá, Kiên Giang</strong>. Sĩ số mỗi lớp tối đa 22 em với 3 giáo viên/lớp (1 chính + 1 trợ giảng + 1 bản ngữ). Đăng ký sớm trước 30/4/2026 để nhận học bổng Early Bird 30% học phí.</p>
-        <p>Để nhận thông tin chi tiết về học phí, lộ trình học và lịch tham quan trường, vui lòng để lại thông tin. Đội tuyển sinh sẽ liên hệ trong 24h.</p>
-    </div>
-  </section>
-
-  <section slot="form">
-    <h2 class="squeeze-form-section__heading">Đăng ký tuyển sinh Mầm Non tại Rạch Giá</h2>
-    <p class="squeeze-form-section__description">Đội tuyển sinh phản hồi trong 24h, hướng dẫn hồ sơ và lịch tham quan.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="tuyen-sinh-mam-non-rach-gia-form"
-      funnelCode="tuyen-sinh-mam-non-rach-gia"
-      schoolLevel="mam-non"
-      submitText="Đăng ký tuyển sinh"
-      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h."
-    />
-  </section>
-
-  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
-</SqueezePageLayout>
-
-<style is:inline>
-  .page-content { max-width: 800px; margin: 0 auto; padding: 1rem 0; }
-  .page-content h2 { color: #1a1a5e; font-size: 1.6rem; margin-bottom: 1rem; text-align: center; }
-  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
-  .page-content ul { margin: 1rem 0 1rem 1.5rem; }
-  .page-content li { margin-bottom: .5rem; line-height: 1.7; }
-  .page-content strong { color: #1a1a5e; font-weight: 700; }
-</style>
+  schoolLevel="mam-non"
+/>

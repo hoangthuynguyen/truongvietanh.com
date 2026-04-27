@@ -1,116 +1,26 @@
 ---
-import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
-import USPGrid from '../components/USPGrid.astro';
-import TrustMetrics from '../components/TrustMetrics.astro';
-import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import FAQSection from '../components/FAQSection.astro';
-
-const pageTitle = "Tư Vấn Chuyên Gia Giáo Dục Miễn Phí — Định Hướng Trường Phù Hợp | Trường Việt Anh";
-const pageDescription = "Gặp chuyên gia giáo dục 1-1, phân tích học lực và tính cách con, tư vấn lộ trình học tập phù hợp nhất. Hoàn toàn miễn phí, không áp lực.";
-const pageCanonical = "https://truongvietanh.com/tu-van-chuyen-gia";
-
-const uspItems = [
-    {
-      "icon": "👨‍🎓",
-      "text": "Chuyên gia giáo dục 15+ năm kinh nghiệm — tư vấn cá nhân hóa cho từng bé"
-    },
-    {
-      "icon": "🎯",
-      "text": "Phân tích học lực + tính cách + định hướng nghề nghiệp từ sớm"
-    },
-    {
-      "icon": "🆓",
-      "text": "Hoàn toàn miễn phí — không phí tư vấn, không áp lực nhập học"
-    },
-    {
-      "icon": "📊",
-      "text": "Đánh giá năng lực tiếng Anh + Toán tư duy miễn phí kèm theo"
-    },
-    {
-      "icon": "🏠",
-      "text": "Tư vấn tại trường hoặc online qua Zoom/Zalo Video — linh hoạt giờ giấc"
-    },
-    {
-      "icon": "📋",
-      "text": "Nhận báo cáo đánh giá chi tiết và lộ trình học tập gửi qua email"
-    }
-  ];
-
-const metrics = [
-  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
-  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
-  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
-  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
-];
-
-const faqItems = [
-    {
-      "question": "Buổi tư vấn chuyên gia diễn ra như thế nào?",
-      "answer": "Buổi tư vấn kéo dài 45–60 phút: 15 phút đánh giá năng lực (bài test ngắn), 30 phút thảo luận với chuyên gia về mục tiêu, học lực, tính cách của bé, 10 phút Q&A và nhận tài liệu. Phụ huynh không cần chuẩn bị gì trước."
-    },
-    {
-      "question": "Con tôi bao nhiêu tuổi thì phù hợp?",
-      "answer": "Dịch vụ tư vấn phù hợp cho trẻ từ 3 tuổi (Mầm Non) đến lớp 12. Nội dung tư vấn được điều chỉnh theo độ tuổi và cấp học: Mầm Non tập trung phát triển toàn diện, Tiểu Học định hướng học tập, THCS-THPT định hướng đại học và nghề nghiệp."
-    },
-    {
-      "question": "Tư vấn online có hiệu quả như tại trường không?",
-      "answer": "Hiệu quả tương đương. Qua Zoom/Zalo Video, chuyên gia có thể quan sát bé, làm bài test online và thảo luận trực tiếp. Phụ huynh tiết kiệm thời gian đi lại, đặc biệt tiện cho gia đình ở xa cơ sở trường."
-    },
-    {
-      "question": "Sau tư vấn có nhất thiết phải đăng ký không?",
-      "answer": "Không. Tư vấn hoàn toàn độc lập với quyết định nhập học. Chuyên gia sẽ tư vấn trung thực về lựa chọn tốt nhất cho bé, kể cả khi đó không phải Trường Việt Anh. Mục tiêu là hỗ trợ phụ huynh đưa ra quyết định đúng đắn."
-    },
-    {
-      "question": "Đặt lịch tư vấn như thế nào?",
-      "answer": "Để lại thông tin trong form bên dưới. Đội tư vấn sẽ liên hệ trong vòng 2 tiếng để xác nhận lịch. Thông thường có lịch trống trong vòng 1–2 ngày làm việc."
-    }
-  ];
+import DarkLPLayout from '../layouts/DarkLPLayout.astro';
 ---
-
-<SqueezePageLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonicalUrl={pageCanonical}
-  schoolLevel="tieu-hoc"
+<DarkLPLayout
+  title="Tư Vấn Chuyên Gia Giáo Dục Miễn Phí — Định Hướng Trường Phù Hợp | Trường Việt Anh"
+  description="Gặp chuyên gia giáo dục 1-1, phân tích học lực và tính cách con, tư vấn lộ trình học tập phù hợp nhất. Hoàn toàn miễn phí, không áp lực."
+  canonicalUrl="https://truongvietanh.com/tu-van-chuyen-gia"
+  fomoText="🔥 Tư vấn miễn phí · Phản hồi trong 24h · Không áp lực"
+  headline="Tư Vấn Chuyên Gia Giáo Dục — Miễn Phí 100%"
+  headlineEm="Miễn phí 100% — Không áp lực — Phản hồi trong 24h"
+  subheadline="Gặp chuyên gia 1-1: phân tích học lực, tính cách và định hướng lộ trình học tập phù hợp nhất cho con. Không áp lực, không phí ẩn."
+  bullets={[
+    "👨‍🎓 Chuyên gia giáo dục 15+ năm kinh nghiệm — <strong>tư vấn cá nhân hóa cho từng bé</strong>",
+    "🎯 Phân tích học lực + tính cách — <strong>định hướng nghề nghiệp từ sớm</strong>",
+    "📊 Đánh giá năng lực tiếng Anh + Toán tư duy — <strong>miễn phí kèm theo</strong>",
+    "🆓 Hoàn toàn miễn phí — <strong>không phí tư vấn, không áp lực nhập học</strong>",
+  ]}
+  testimonial="Tư vấn viên giải thích rất tận tình, không hề gây áp lực. Rất hài lòng với chất lượng tư vấn!"
+  testimonialAuthor="— Chị Ngọc Bích, Q.Gò Vấp · Phụ huynh tìm hiểu chương trình"
+  cardUrgency="⏰ Tư vấn miễn phí · Phản hồi trong 24h"
+  cardTitle="Đặt lịch tư vấn chuyên gia miễn phí"
+  ctaStep2="👨‍🎓 ĐẶT LỊCH TƯ VẤN CHUYÊN GIA →"
+  source="tu-van-chuyen-gia"
   funnelCode="tu-van-chuyen-gia"
->
-  <section slot="hero">
-    <h1 class="squeeze-hero__heading">Tư Vấn Chuyên Gia Giáo Dục — Miễn Phí 100%</h1>
-    <p class="squeeze-hero__subheading">Gặp chuyên gia 1-1: phân tích học lực, tính cách và định hướng lộ trình học tập phù hợp nhất cho con. Không áp lực, không phí ẩn.</p>
-  </section>
-
-  <section slot="usp"><USPGrid title="Buổi tư vấn chuyên gia mang lại gì?" items={uspItems} /></section>
-  <section slot="trust"><TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} /></section>
-
-  <section slot="content">
-    <div class="page-content">
-      <h2>Tư vấn chuyên gia — Đầu tư 60 phút để đưa ra quyết định đúng</h2>
-      <p>Chọn trường là một trong những quyết định quan trọng nhất của phụ huynh. Trường Việt Anh cung cấp dịch vụ <strong>tư vấn chuyên gia giáo dục 1-1 hoàn toàn miễn phí</strong> để giúp phụ huynh hiểu rõ nhu cầu của con và đưa ra lựa chọn phù hợp nhất.</p>
-      <p>Chuyên gia của chúng tôi có <strong>15+ năm kinh nghiệm giáo dục song ngữ</strong>, đã tư vấn cho hơn 500 gia đình. Buổi tư vấn bao gồm đánh giá năng lực miễn phí, phân tích điểm mạnh điểm yếu và xây dựng lộ trình học tập cá nhân hóa.</p>
-      <p>Đặt lịch ngay hôm nay — lịch có sẵn trong vòng 1-2 ngày làm việc, tư vấn tại trường hoặc qua Zoom/Zalo.</p>
-    </div>
-  </section>
-
-  <section slot="form">
-    <h2 class="squeeze-form-section__heading">Đặt lịch tư vấn chuyên gia miễn phí</h2>
-    <p class="squeeze-form-section__description">Đội tư vấn liên hệ xác nhận lịch trong 2 tiếng. Tư vấn tại trường hoặc online — linh hoạt theo lịch phụ huynh.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="tu-van-chuyen-gia-form"
-      funnelCode="tu-van-chuyen-gia"
-      schoolLevel="tieu-hoc"
-      submitText="Đặt lịch tư vấn miễn phí"
-      successMessage="Cảm ơn! Chuyên gia sẽ liên hệ xác nhận lịch trong 2 tiếng."
-    />
-  </section>
-
-  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
-</SqueezePageLayout>
-
-<style is:inline>
-  .page-content { max-width: 800px; margin: 0 auto; padding: 1rem 0; }
-  .page-content h2 { color: #1a1a5e; font-size: 1.6rem; margin-bottom: 1rem; text-align: center; }
-  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
-  .page-content ul { margin: 1rem 0 1rem 1.5rem; }
-  .page-content li { margin-bottom: .5rem; line-height: 1.7; }
-  .page-content strong { color: #1a1a5e; font-weight: 700; }
-</style>
+  schoolLevel="tieu-hoc"
+/>

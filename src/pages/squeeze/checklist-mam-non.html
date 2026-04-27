@@ -110,6 +110,14 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
 .micro{font-size:10px;color:#aaa}
 .micro-hot{font-size:10px;color:#e09a30;font-weight:700}
 
+/* STEP BAR */
+.step-bar{display:flex;align-items:center;gap:8px;margin-bottom:10px;justify-content:center}
+.step-dot{width:22px;height:22px;border-radius:50%;background:#e5e7eb;color:#999;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:.3s;flex-shrink:0}
+.step-dot.active{background:#d4a843;color:#0d1b3e}
+.step-dot.done{background:#22c55e;color:#fff}
+.step-line{flex:1;height:2px;background:#e5e7eb;max-width:50px}
+.step-label{font-size:10px;color:#aaa;font-weight:600}
+
 /* SUCCESS */
 .success-box{display:none;padding:20px;text-align:center}
 .success-box .s-ico{font-size:2rem;margin-bottom:6px}
@@ -226,15 +234,35 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
           <div class="card-title">Checklist 15 Tiêu Chí Chọn Trường Mầm Non 2026</div>
         </div>
         <div class="card-body" id="formArea">
-          <label class="form-label" for="sq-email">Gửi checklist vào email của bạn</label>
-          <input class="form-input" type="email" id="sq-email"
-                 placeholder="ten@gmail.com" autocomplete="email" />
-          <button class="btn-cta" onclick="sqSubmit()">
-            🎁 NHẬN CHECKLIST MIỄN PHÍ NGAY
-          </button>
-          <div class="urgency-row">
-            <span class="micro">🔒 Không spam – hủy bất kỳ lúc nào</span>
-            <span class="micro-hot">3,247+ đã nhận</span>
+          <!-- STEP BAR -->
+          <div class="step-bar">
+            <div class="step-dot active" id="dot1">1</div>
+            <div class="step-line"></div>
+            <div class="step-dot" id="dot2">2</div>
+            <span class="step-label" id="stepLabel">Email</span>
+          </div>
+          <!-- STEP 1: EMAIL -->
+          <div id="step1">
+            <label class="form-label" for="sq-email">Email của bạn</label>
+            <input class="form-input" type="email" id="sq-email"
+                   placeholder="ten@gmail.com" autocomplete="email" />
+            <button class="btn-cta" onclick="sqNext()">TIẾP THEO →</button>
+            <div class="urgency-row">
+              <span class="micro">🔒 Không spam · Miễn phí hoàn toàn</span>
+            </div>
+          </div>
+          <!-- STEP 2: HỌ TÊN + SĐT -->
+          <div id="step2" style="display:none">
+            <label class="form-label" for="sq-name">Họ và tên</label>
+            <input class="form-input" type="text" id="sq-name"
+                   placeholder="Nguyễn Văn A" autocomplete="name" />
+            <label class="form-label" for="sq-phone">Số điện thoại</label>
+            <input class="form-input" type="tel" id="sq-phone"
+                   placeholder="0916 961 409" autocomplete="tel" />
+            <button class="btn-cta" onclick="sqSubmit()">🎁 NHẬN CHECKLIST MIỄN PHÍ NGAY</button>
+            <div class="urgency-row">
+              <span class="micro"><span onclick="sqBack()" style="cursor:pointer;color:#bbb">← Quay lại</span> · 🔒 Miễn phí</span>
+            </div>
           </div>
         </div>
         <div class="success-box" id="sqSuccess">
@@ -266,13 +294,43 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
     document.getElementById('sqSuccess').style.display = 'block';
   }
 
-  window.sqSubmit = function() {
+  window.sqNext = function() {
     var el = document.getElementById('sq-email');
     var email = el.value.trim();
     if (!email || email.indexOf('@') < 1) {
       el.classList.add('error'); el.focus(); return;
     }
     el.classList.remove('error');
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    document.getElementById('dot1').classList.remove('active');
+    document.getElementById('dot1').classList.add('done');
+    document.getElementById('dot2').classList.add('active');
+    document.getElementById('stepLabel').textContent = 'Họ tên & SĐT';
+    document.getElementById('sq-name').focus();
+  };
+
+  window.sqBack = function() {
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step1').style.display = 'block';
+    document.getElementById('dot2').classList.remove('active');
+    document.getElementById('dot1').classList.remove('done');
+    document.getElementById('dot1').classList.add('active');
+    document.getElementById('stepLabel').textContent = 'Email';
+  };
+
+  window.sqSubmit = function() {
+    var nameEl  = document.getElementById('sq-name');
+    var phoneEl = document.getElementById('sq-phone');
+    var name  = nameEl.value.trim();
+    var phone = phoneEl.value.trim();
+    if (!name) { nameEl.classList.add('error'); nameEl.focus(); return; }
+    nameEl.classList.remove('error');
+    if (!phone || phone.replace(/[^0-9]/g,'').length < 9) {
+      phoneEl.classList.add('error'); phoneEl.focus(); return;
+    }
+    phoneEl.classList.remove('error');
+    var email = document.getElementById('sq-email').value.trim();
     localStorage.setItem('sq_' + SRC, '1');
     document.getElementById('formArea').style.display = 'none';
     document.getElementById('sqSuccess').style.display = 'block';
@@ -281,7 +339,7 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
       method: 'POST',
       headers: {'Content-Type':'application/json'},
       body: JSON.stringify({
-        fullName: '', phone: '', email: email,
+        fullName: name, phone: phone, email: email,
         source: SRC, funnel_code: FC, school_level: SL,
         page_url: location.href,
         submitted_at: new Date().toISOString()
@@ -293,7 +351,7 @@ body{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:fl
   };
 
   document.getElementById('sq-email').addEventListener('keydown', function(e){
-    if (e.key === 'Enter') sqSubmit();
+    if (e.key === 'Enter') sqNext();
   });
 })();
 </script>

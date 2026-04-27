@@ -58,7 +58,7 @@ const TEMPLATES = {
 
 // === Helpers ===
 function fileToUrl(p) {
-  let rel = path.relative(ROOT, p).replaceAll(path.sep, '/').replace(/\.astro$/, '');
+  let rel = path.relative(ROOT, p).replaceAll(path.sep, '/').replace(/\.(astro|html)$/, '');
   if (rel.endsWith('/index')) rel = rel.slice(0, -6);
   if (rel === 'index') return BASE + '/';
   return BASE + '/' + rel;
@@ -85,6 +85,8 @@ function detectForms(c) {
   for (const m of c.matchAll(/formId\s*=\s*["']([^"']+)["']/g)) forms.add('#' + m[1]);
   for (const m of c.matchAll(/funnelCode\s*=\s*["']([^"']+)["']/g)) forms.add('fc:' + m[1]);
   for (const m of c.matchAll(/<(LeadForm\w*|QuizFunnel)\b/g)) forms.add(m[1]);
+  // HTML pages: var FC = 'squeeze-xxx' pattern
+  for (const m of c.matchAll(/var\s+FC\s*=\s*['"]([^'"]+)['"]/g)) forms.add('fc:' + m[1]);
   return [...forms].sort();
 }
 
@@ -151,7 +153,7 @@ function* walk(dir) {
   for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
     const fp = path.join(dir, ent.name);
     if (ent.isDirectory()) yield* walk(fp);
-    else if (ent.name.endsWith('.astro')) yield fp;
+    else if (ent.name.endsWith('.astro') || ent.name.endsWith('.html')) yield fp;
   }
 }
 

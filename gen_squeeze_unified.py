@@ -526,10 +526,6 @@ body{{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:f
 
   <!-- RIGHT: MOCKUP + FORM -->
   <div class="right">
-    <div class="mockup-wrap">
-      <img src="/{mockup}" alt="{doc}"
-           onerror="this.parentElement.style.display=\'none\'" />
-    </div>
     <div class="card" id="mainCard">
       <div class="card-top">
         <div class="card-pretitle">✨ Nhận ngay · Miễn phí 100%</div>
@@ -571,6 +567,10 @@ body{{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:f
         <h3 style="font-family:Montserrat,sans-serif;color:#0d1b3e;font-size:.9rem;margin-bottom:4px">Đăng ký thành công!</h3>
         <p style="font-size:12px;color:#666;line-height:1.5">Kiểm tra email — tài liệu gửi trong vài phút.<br><strong>Nhớ kiểm tra Spam / Promotions</strong></p>
       </div>
+    </div>
+    <div class="mockup-wrap">
+      <img src="/{mockup}" alt="{doc}"
+           onerror="this.parentElement.style.display=\'none\'" />
     </div>
   </div>
 

@@ -408,7 +408,7 @@ body{{font-family:'Open Sans',sans-serif;background:#0b1735;color:#fff;display:f
 }}
 
 .mockup-wrap{{
-  flex:1;min-height:0;
+  max-height:38%;
   display:flex;align-items:flex-end;justify-content:center;width:100%;overflow:hidden;
 }}
 .mockup-wrap img{{

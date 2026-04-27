@@ -18,7 +18,7 @@ a{color:inherit;text-decoration:none}
 
 /* ── HEADER ── */
 .header{background:#0d1b3e;border-bottom:1px solid rgba(255,255,255,.08);padding:12px 32px;display:flex;align-items:center;justify-content:space-between}
-.logo{display:block;max-width:260px;width:auto}
+.logo{display:block;width:auto}
 .header-right{display:flex;align-items:center;gap:12px}
 .btn-phone{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600;transition:.2s}
 .btn-phone:hover{background:rgba(255,255,255,.18)}
@@ -58,7 +58,6 @@ a{color:inherit;text-decoration:none}
 .step-item.done .step-num{background:#22c55e;color:#fff}
 .step-line{flex:1;height:2px;background:#e5e7eb;border-radius:2px}
 .step-line.done{background:#22c55e}
-
 .form-label{display:block;font-size:11.5px;font-weight:700;color:#555;text-transform:uppercase;letter-spacing:.4px;margin-bottom:7px}
 .form-input{width:100%;padding:13px 14px;border:2px solid #e5e7eb;border-radius:10px;font-size:15px;outline:none;transition:.2s;font-family:inherit;color:#1a1a1a}
 .form-input:focus{border-color:#0d1b3e;box-shadow:0 0 0 3px rgba(13,27,62,.08)}
@@ -81,14 +80,38 @@ a{color:inherit;text-decoration:none}
 .success-box h3{font-family:'Montserrat',sans-serif;color:#0d1b3e;font-size:1.2rem;margin-bottom:8px}
 .success-box p{font-size:14px;color:#555;line-height:1.6}
 
+/* ── FOOTER ── */
+.footer{background:#0d1b3e;border-top:1px solid rgba(255,255,255,.08);margin-top:48px}
+.footer-inner{max-width:1160px;margin:0 auto;padding:40px 24px 32px;display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.footer-logo{height:48px;border-radius:7px;background:#fff;padding:5px 12px;display:block;margin-bottom:14px}
+.footer-brand-name{font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;color:#f0c040;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.footer-desc{font-size:13px;color:rgba(255,255,255,.65);line-height:1.65;margin-bottom:16px}
+.social-links{display:flex;gap:10px}
+.social-link{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;transition:.2s}
+.social-link:hover{background:rgba(255,255,255,.2)}
+.social-link svg{width:16px;height:16px;fill:#fff}
+.footer-contact h4{font-family:'Montserrat',sans-serif;font-weight:800;font-size:16px;color:#fff;margin-bottom:18px}
+.contact-list{list-style:none;display:flex;flex-direction:column;gap:12px}
+.contact-list li{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:rgba(255,255,255,.75);line-height:1.5}
+.contact-list .ci{width:18px;height:18px;color:#f0c040;flex-shrink:0;margin-top:1px}
+.footer-bottom{background:#060e24;padding:14px 24px;text-align:center;font-size:12px;color:rgba(255,255,255,.45)}
+
+/* ── STICKY CTA ── */
+.sticky-cta{position:fixed;bottom:0;left:0;right:0;z-index:999;background:linear-gradient(135deg,#d4a843,#f0c040);padding:14px 24px;display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 -4px 24px rgba(0,0,0,.4);transform:translateY(100%);transition:transform .4s cubic-bezier(.34,1.56,.64,1)}
+.sticky-cta.visible{transform:translateY(0)}
+.sticky-cta-text{font-family:'Montserrat',sans-serif;font-weight:800;font-size:15px;color:#0d1b3e}
+.sticky-cta-btn{background:#0d1b3e;color:#f0c040;font-family:'Montserrat',sans-serif;font-weight:800;font-size:13px;border:none;border-radius:8px;padding:10px 20px;cursor:pointer;white-space:nowrap}
+.sticky-cta-close{position:absolute;right:16px;top:50%;transform:translateY(-50%);background:none;border:none;color:#0d1b3e;font-size:20px;cursor:pointer;opacity:.6;line-height:1}
+
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;padding:28px 16px 40px;gap:32px}
   .header{padding:10px 16px}
-  .logo{height:44px;max-width:200px}
   .copy{order:2}
   .card-wrap{order:1}
   .h1{font-size:1.5rem}
+  .footer-inner{grid-template-columns:1fr;gap:32px;padding:32px 16px 24px}
+  .sticky-cta-text{font-size:13px}
 }
 @media(max-width:500px){
   .topbar{font-size:11px;padding:6px 12px}
@@ -106,7 +129,7 @@ a{color:inherit;text-decoration:none}
 <!-- HEADER -->
 <header class="header">
   <a href="https://truongvietanh.com">
-    <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="logo" style="height:52px;border-radius:8px;background:#fff;padding:5px 12px;box-shadow:0 2px 10px rgba(0,0,0,.2)" />
+    <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="logo" style="height:50px;border-radius:8px;background:#fff;padding:5px 12px;box-shadow:0 2px 10px rgba(0,0,0,.2)" />
   </a>
   <div class="header-right">
     <a href="tel:0916961409" class="btn-phone">
@@ -141,7 +164,7 @@ a{color:inherit;text-decoration:none}
 
   <!-- RIGHT: CARD -->
   <div class="card-wrap">
-    <div class="card">
+    <div class="card" id="mainCard">
       <div class="card-head">
         <div class="card-pretitle">✨ NHẬN NGAY — MIỄN PHÍ 100%</div>
         <div class="card-title">So Sánh Oxford / Cambridge / IB</div>
@@ -206,6 +229,60 @@ a{color:inherit;text-decoration:none}
 
 </section>
 
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <!-- Brand -->
+    <div class="footer-brand">
+      <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="footer-logo" />
+      <p class="footer-brand-name">Hệ Thống Giáo Dục Liên Cấp</p>
+      <p class="footer-desc">Song ngữ từ Mầm non đến THPT. Nổi bật với tiếng Anh, kỹ năng thế kỷ 21 và môi trường học tập vui vẻ, thực dụng.</p>
+      <div class="social-links">
+        <a href="https://facebook.com/truongvietanh" target="_blank" rel="noopener" class="social-link" aria-label="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        </a>
+        <a href="https://youtube.com/@truongvietanh" target="_blank" rel="noopener" class="social-link" aria-label="YouTube">
+          <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.96-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" style="fill:#0d1b3e"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-contact">
+      <h4>Liên hệ</h4>
+      <ul class="contact-list">
+        <li>
+          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>160/72 Phan Huy Ích, Phường An Hội Tây, TP HCM</span>
+        </li>
+        <li>
+          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <span>tu@truongvietanh.com</span>
+        </li>
+        <li>
+          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>Thứ 2 – Chủ Nhật: 07:00 – 17:00</span>
+        </li>
+        <li>
+          <svg class="ci" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.69 3.41 2 2 0 0 1 3.65 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.95-.95a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16z"/></svg>
+          <span><a href="tel:0916961409" style="color:#f0c040;font-weight:700">0916 961 409</a></span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    © 2026 Hệ Thống Trường Liên Cấp Việt Anh — 160/72 Phan Huy Ích, phường An Hội Tây, Thành phố Hồ Chí Minh — Hotline: <a href="tel:0916961409" style="color:#f0c040">0916 961 409</a>
+  </div>
+</footer>
+
+<!-- STICKY CTA (hiện sau 4 giây hoặc khi scroll qua form) -->
+<div class="sticky-cta" id="stickyCta">
+  <span class="sticky-cta-text">📥 Nhận tài liệu miễn phí ngay!</span>
+  <button class="sticky-cta-btn" onclick="sqScrollToForm()">Đăng ký ngay →</button>
+  <button class="sticky-cta-close" onclick="sqHideCta()" aria-label="Đóng">×</button>
+</div>
+
 <script>
 (function(){
   var SRC = 'squeeze-oxford-cambridge-ib';
@@ -217,6 +294,7 @@ a{color:inherit;text-decoration:none}
     document.getElementById('step1').style.display = 'none';
     document.getElementById('sqSuccess').style.display = 'block';
     document.getElementById('cardMockup').style.display = 'none';
+    document.getElementById('stepBar').style.display = 'none';
   }
 
   window.sqNext = function() {
@@ -226,7 +304,6 @@ a{color:inherit;text-decoration:none}
     el.classList.remove('error');
     document.getElementById('step1').style.display = 'none';
     document.getElementById('step2').style.display = 'block';
-    // update step bar
     document.getElementById('stepItem1').classList.remove('active');
     document.getElementById('stepItem1').classList.add('done');
     document.getElementById('stepItem1').querySelector('.step-num').textContent = '✓';
@@ -255,15 +332,12 @@ a{color:inherit;text-decoration:none}
     if (!name)  { ne.classList.add('error'); ok = false; } else ne.classList.remove('error');
     if (!phone) { pe.classList.add('error'); ok = false; } else pe.classList.remove('error');
     if (!ok) return;
-
     localStorage.setItem('sq_' + SRC, '1');
-
-    // Show success immediately
     document.getElementById('step2').style.display = 'none';
     document.getElementById('sqSuccess').style.display = 'block';
     document.getElementById('cardMockup').style.display = 'none';
-
-    // Fire API in background
+    document.getElementById('stepBar').style.display = 'none';
+    sqHideCta();
     fetch('https://truongvietanh.com/api/lead', {
       method: 'POST',
       headers: {'Content-Type':'application/json'},
@@ -275,10 +349,47 @@ a{color:inherit;text-decoration:none}
       }),
       mode: 'cors'
     }).catch(function(){});
-
-    // Redirect after 2s
     setTimeout(function(){ window.location.href = '/squeeze/cam-on'; }, 2000);
   };
+
+  // Sticky CTA logic
+  var ctaEl = document.getElementById('stickyCta');
+  var ctaDismissed = false;
+  var ctaShown = false;
+
+  function sqShowCta() {
+    if (!ctaDismissed && !ctaShown && !localStorage.getItem('sq_' + SRC)) {
+      ctaEl.classList.add('visible');
+      ctaShown = true;
+    }
+  }
+
+  window.sqHideCta = function() {
+    ctaEl.classList.remove('visible');
+    ctaDismissed = true;
+  };
+
+  window.sqScrollToForm = function() {
+    var card = document.getElementById('mainCard');
+    if (card) card.scrollIntoView({behavior:'smooth', block:'center'});
+    setTimeout(function() {
+      var emailEl = document.getElementById('sq-email');
+      if (emailEl && document.getElementById('step1').style.display !== 'none') emailEl.focus();
+    }, 600);
+  };
+
+  // Show sticky CTA after 5s or when user scrolls past the card
+  setTimeout(sqShowCta, 5000);
+
+  var observer = typeof IntersectionObserver !== 'undefined' && new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (!e.isIntersecting) sqShowCta();
+    });
+  }, {threshold: 0.1});
+  if (observer) {
+    var card = document.getElementById('mainCard');
+    if (card) observer.observe(card);
+  }
 })();
 </script>
 </body>

@@ -291,11 +291,14 @@ const bghMembers = [
   .bl-card__avatar-wrap{
     position: relative; padding: 0; display: block;
     background: linear-gradient(180deg, var(--bg) 0%, var(--white) 100%);
-  }.bl-card__photo, .bl-card__avatar{
-    width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 0;
-    object-fit: cover; display: flex; align-items: center; justify-content: center;
-    border: 0;
-    box-shadow: none;
+  }.bl-card__photo{
+    width: 100%; height: auto; aspect-ratio: 3 / 4; border-radius: 0;
+    object-fit: cover; object-position: top center;
+    display: block; border: 0; box-shadow: none;
+  }.bl-card__avatar{
+    width: 100%; aspect-ratio: 3 / 4; border-radius: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 0; box-shadow: none;
   }.bl-card__avatar{ font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: #fff; letter-spacing: .5px; }/* Avatar colors by role */
   .bl-avatar--chairman{ background: linear-gradient(135deg, #C9A329, var(--gold)); }.bl-avatar--vice-chairman{ background: linear-gradient(135deg, #D4B637, #F5DC85); }.bl-avatar--principal{ background: linear-gradient(135deg, var(--navy-dk), var(--navy-lt)); }.bl-avatar--vice-principal{ background: linear-gradient(135deg, #1e5fa8, #2a7abf); }.bl-avatar--mam-non{ background: linear-gradient(135deg, #1a8a4a, #27ae60); }.bl-avatar--research{ background: linear-gradient(135deg, #6b21a8, #9333ea); }.bl-card__role-dot{
     position: absolute; bottom: 12px; right: 12px;

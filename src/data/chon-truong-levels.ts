@@ -96,7 +96,7 @@ export const CHON_TRUONG_LEVELS: ChonTruongLevel[] = [
       { icon: '🌐', text: 'Phân tích chương trình song ngữ — Cambridge, Oxford, IB, AP: trường nào phù hợp mục tiêu của bé?' },
       { icon: '📅', text: 'Timeline tuyển sinh Lớp 1 2026 — khảo sát đầu vào, phỏng vấn, hồ sơ, thông báo kết quả tại TP.HCM' },
       { icon: '💬', text: '8 câu hỏi quan trọng khi phỏng vấn trường — cách hỏi để đánh giá chất lượng thật sự' },
-      { icon: '📝', text: 'Danh mục kiểm tra (checklist) chuẩn bị cho bé vào lớp 1 — tâm lý, kỹ năng, tài liệu cần có' },
+      { icon: '📝', text: 'Checklist chuẩn bị cho bé vào lớp 1 — tâm lý, kỹ năng, tài liệu cần có' },
     ],
     metrics: [
       { number: '3,500+', label: 'Phụ huynh đã nhận cẩm nang' },
@@ -149,7 +149,7 @@ export const CHON_TRUONG_LEVELS: ChonTruongLevel[] = [
       { icon: '🗣️', text: 'Phân tích chương trình IELTS lớp 6-9 — trường nào có lộ trình IELTS 6.5+ đến lớp 9 để lên THPT top?' },
       { icon: '💭', text: 'Hỗ trợ tâm lý tuổi dậy thì — tiêu chí đánh giá môi trường an toàn, tư vấn tâm lý học đường, chống bạo lực' },
       { icon: '📅', text: 'Timeline tuyển sinh Lớp 6 2026 — khảo sát đầu vào, hồ sơ, phỏng vấn, thông báo kết quả' },
-      { icon: '📝', text: 'Danh mục kiểm tra (checklist) chuẩn bị con vào THCS — tâm lý, kỹ năng tự học, kỹ năng xã hội cần có' },
+      { icon: '📝', text: 'Checklist chuẩn bị con vào THCS — tâm lý, kỹ năng tự học, kỹ năng xã hội cần có' },
     ],
     metrics: [
       { number: '2,800+', label: 'Phụ huynh đã nhận cẩm nang' },
@@ -202,7 +202,7 @@ export const CHON_TRUONG_LEVELS: ChonTruongLevel[] = [
       { icon: '🗣️', text: 'Lộ trình IELTS 6.5–8.0 — trường nào có đội ngũ dạy IELTS chuẩn, mục tiêu điểm theo lớp 10-12, ai đạt 8.0+' },
       { icon: '🎯', text: 'Định hướng đại học trong/ngoài nước — SAT, ACT, IB, AP, trường nào hỗ trợ hồ sơ du học Mỹ/Úc/Anh tốt nhất' },
       { icon: '📅', text: 'Timeline thi lớp 10 2026 — thi khảo sát, xét tuyển riêng, tuyển thẳng, thông báo kết quả — tránh bỏ lỡ' },
-      { icon: '📝', text: 'Danh mục kiểm tra (checklist) 6 tháng chuẩn bị thi lớp 10 — ôn thi, tâm lý, hồ sơ đăng ký dự thi, phương án dự phòng' },
+      { icon: '📝', text: 'Checklist 6 tháng chuẩn bị thi lớp 10 — ôn thi, tâm lý, hồ sơ đăng ký dự thi, phương án dự phòng' },
     ],
     metrics: [
       { number: '2,400+', label: 'Phụ huynh đã nhận cẩm nang' },

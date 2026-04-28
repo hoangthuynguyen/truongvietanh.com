@@ -1,26 +1,68 @@
 ---
-import DarkLPLayout from '../layouts/DarkLPLayout.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+
+let scholarships: any[] = [];
+try {
+  const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
+  const token = (import.meta.env.DIRECTUS_TOKEN || '').trim();
+  const client = token ? createDirectus(url).with(staticToken(token)).with(rest()) : createDirectus(url).with(rest());
+  scholarships = await client.request(readItems('scholarships', {
+    filter: { status: { _eq: 'published' } }, sort: ['sort'], limit: 20,
+  }));
+} catch {}
+
+const levelNames: Record<string, string> = { 'mam-non': 'Mầm Non', 'tieu-hoc': 'Tiểu Học', 'thcs': 'THCS', 'thpt': 'THPT' };
 ---
-<DarkLPLayout
-  title="Học Bổng Trường Việt Anh 2026 — Đến 50% Học Phí | Trường Việt Anh"
-  description="Học bổng đầu vào · Học bổng học sinh xuất sắc · Học bổng tài năng · Học bổng anh chị em — 4 loại học bổng tổng giá trị 5 tỷ/năm."
-  canonicalUrl="https://truongvietanh.com/hoc-bong"
-  fomoText="🔥 Học bổng 10–50% theo học lực · 3,000+ học sinh đang theo học"
-  headline="Học Bổng Trường Việt Anh 2026"
-  headlineEm="Học bổng đến 50% — Xét theo học lực & hoàn cảnh"
-  subheadline="Đăng ký test đầu vào miễn phí để xét học bổng Early Bird. Có 4 loại học bổng cho mọi đối tượng."
-  bullets={[
-    "🥇 Học bổng đầu vào 10–50% — <strong>xét test + học bạ</strong>",
-    "👫 Học bổng anh chị em ruột — <strong>giảm thêm 10–15% cho bé thứ 2</strong>",
-    "🎓 Học bổng học sinh xuất sắc — <strong>xét lại mỗi học kỳ</strong>",
-    "💝 Học bổng hoàn cảnh — <strong>xét theo từng trường hợp, không phân biệt</strong>",
-  ]}
-  testimonial="Con đạt học bổng 30% ngay từ đầu vào. Thủ tục nhanh, không phải chờ đợi lâu."
-  testimonialAuthor="— Chị Lan Anh, Q.Tân Bình · Phụ huynh THCS"
-  cardUrgency="⏰ Xét học bổng miễn phí · Kết quả trong 24h"
-  cardTitle="Đăng ký xét học bổng miễn phí"
-  ctaStep2="🎓 ĐĂNG KÝ XÉT HỌC BỔNG →"
-  source="hoc-bong"
-  funnelCode="hoc-bong"
-  schoolLevel="tieu-hoc"
-/>
+
+<BaseLayout
+  title="Học Bổng Trường Việt Anh 2026 — Giảm Đến 50% Học Phí"
+  description="Chính sách học bổng Trường Việt Anh: Học bổng Xuất sắc 50%, Tiếng Anh 30%, Early Bird 15%, Anh Chị Em 10%. Điều kiện và hạn nộp."
+  canonical="https://truongvietanh.com/hoc-bong"
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <section class="page-hero">
+      <div class="cf-container text-center">
+        <h1 class="page-title">Học Bổng & Ưu Đãi Trường Việt Anh</h1>
+        <p class="page-desc">Giảm đến 50% học phí — Cơ hội cho mọi gia đình</p>
+      </div>
+    </section>
+
+    <section class="scholarships-section">
+      <div class="cf-container">
+        <div class="scholarships-grid">
+          {(scholarships.length > 0 ? scholarships : [
+            { name: 'Học bổng Xuất sắc', discount_percent: 50, school_levels: ['thcs','thpt'], requirements: 'Test đầu vào top 10%', deadline: '2026-06-30' },
+            { name: 'Early Bird', discount_percent: 15, school_levels: ['mam-non','tieu-hoc','thcs','thpt'], requirements: 'Đăng ký trước 31/03', deadline: '2026-03-31' },
+          ]).map((s: any) => (
+            <article class="scholarship-card">
+              <div class="scholarship-discount">-{s.discount_percent}%</div>
+              <h2 class="scholarship-name">{s.name}</h2>
+              <div class="scholarship-levels">
+                {(s.school_levels || []).map((l: string) => <span class="level-tag">{levelNames[l] || l}</span>)}
+              </div>
+              <p class="scholarship-req">{s.requirements}</p>
+              {s.deadline && <p class="scholarship-deadline">Hạn nộp: {new Date(s.deadline).toLocaleDateString('vi-VN')}</p>}
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section style="max-width:600px;margin:0 auto 3rem;padding:0 1.5rem;text-align:center">
+      <h2 style="font-size:1.4rem;font-weight:700;color:#1a1a5e;margin-bottom:0.5rem">Đăng ký xét học bổng</h2>
+      <p style="color:#64748b;margin-bottom:1.5rem;font-size:0.95rem">Tư vấn viên sẽ hướng dẫn hồ sơ và điều kiện chi tiết</p>
+      <LeadFormTwoStepEmailFirst formId="hoc-bong-form" funnelCode="scholarship" schoolLevel="lien-cap" submitText="Đăng ký xét học bổng" />
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>.cf-container{ max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }.text-center{ text-align: center; }.page-hero{ background: linear-gradient(135deg, #0d1b3e, #1a1a5e); color: #fff; padding: 3rem 0 2.5rem; }.page-title{ font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; margin: 0 0 0.5rem; }.page-desc{ font-size: 1.05rem; color: rgba(255,255,255,0.75); margin: 0; }.scholarships-section{ padding: 3rem 0; }.scholarships-grid{ display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }.scholarship-card{ background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 1.75rem; position: relative; overflow: hidden; transition: box-shadow 0.2s, transform 0.2s; }.scholarship-card:hover{ box-shadow: 0 8px 30px rgba(0,0,0,0.1); transform: translateY(-3px); }.scholarship-discount{ position: absolute; top: 1rem; right: 1rem; background: linear-gradient(135deg, #F8D800, #e8a912); color: #1a1a5e; font-size: 1.5rem; font-weight: 900; padding: 0.5rem 0.75rem; border-radius: 10px; line-height: 1; }.scholarship-name{ font-size: 1.2rem; font-weight: 700; color: #1a1a5e; margin: 0 0 0.75rem; padding-right: 4rem; }.scholarship-levels{ display: flex; gap: 0.4rem; flex-wrap: wrap; margin-bottom: 0.75rem; }.level-tag{ padding: 0.2rem 0.6rem; background: #f1f5f9; border-radius: 4px; font-size: 1rem; font-weight: 600; color: #475569; }.scholarship-req{ font-size: 1rem; color: #475569; line-height: 1.6; margin: 0 0 0.5rem; }.scholarship-deadline{ font-size: 1rem; color: #D4B637; font-weight: 600; margin: 0; }
+</style>

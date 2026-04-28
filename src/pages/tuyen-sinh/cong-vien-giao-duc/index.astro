@@ -51,10 +51,6 @@ const campuses = [
 
   <section slot="content">
     <div class="cvgd-content">
-      <figure class="cvgd-hero-img">
-        <img src={heroImage} alt="Phối cảnh tổng thể Công viên Giáo dục Việt Anh — không gian học tập, vận động, vui chơi" loading="eager" width="1200" height="600" />
-      </figure>
-
       <div class="cvgd-panel">
         <h2 class="cvgd-h2">Nếu bạn là cha mẹ của trẻ 1–8 tuổi, hãy đọc kỹ</h2>
         <p class="cvgd-lead">
@@ -332,17 +328,32 @@ const campuses = [
   section.squeeze-trust,
   section.squeeze-faq { display: none !important; }
 
+  /* Hero: phối cảnh campus với overlay tối navy */
+  section.squeeze-hero {
+    background:
+      linear-gradient(160deg, rgba(0,0,80,0.72) 0%, rgba(0,0,100,0.68) 50%, rgba(0,0,60,0.72) 100%),
+      url('/cong-vien-giao-duc-phoi-canh.png') center / cover no-repeat !important;
+    color: #fff !important;
+    min-height: 420px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  section.squeeze-hero .squeeze-hero__heading,
+  section.squeeze-hero .squeeze-hero__sub,
+  section.squeeze-hero .cvgd-hero-cta-line { color: #fff !important; }
+
   .cvgd-badge {
     display: inline-block;
-    background: rgba(240, 208, 72, 0.15);
-    color: #8b6a1e;
+    background: rgba(255, 255, 0, 0.18);
+    color: #ffff00;
     padding: 0.45rem 1rem;
     border-radius: 999px;
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: 0.5px;
     margin-bottom: 1rem;
-    border: 1px solid rgba(240, 208, 72, 0.4);
+    border: 1px solid rgba(255, 255, 0, 0.5);
   }
   .cvgd-rules {
     display: flex;

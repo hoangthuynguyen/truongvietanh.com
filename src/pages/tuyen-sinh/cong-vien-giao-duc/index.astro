@@ -147,46 +147,52 @@ const campuses = [
 
     <form id="cvgd-form" class="cvgd-form" novalidate>
       <fieldset class="cvgd-fieldset">
-        <legend>1. Thông tin của bạn</legend>
-        <label>
-          <span>Họ và tên <em>*</em></span>
-          <input type="text" name="parent_name" required minlength="2" autocomplete="name" placeholder="Nguyễn Văn A" />
-        </label>
-        <label>
-          <span>Số điện thoại <em>*</em></span>
-          <input type="tel" name="parent_phone" required pattern="[0-9\+\-\s]{9,}" autocomplete="tel" placeholder="09xx xxx xxx" />
-        </label>
-        <label>
-          <span>Công viên tham gia <em>*</em></span>
-          <select name="campus" required>
-            <option value="">— Chọn nơi gần nhất —</option>
-            {campuses.map((c) => <option value={c.value}>{c.label}</option>)}
-          </select>
-        </label>
+        <legend>① Thông tin của bạn</legend>
+        <div class="cvgd-fieldset-body">
+          <label>
+            <span>Họ và tên <em>*</em></span>
+            <input type="text" name="parent_name" required minlength="2" autocomplete="name" placeholder="Nguyễn Văn A" />
+          </label>
+          <label>
+            <span>Số điện thoại <em>*</em></span>
+            <input type="tel" name="parent_phone" required pattern="[0-9\+\-\s]{9,}" autocomplete="tel" placeholder="09xx xxx xxx" />
+          </label>
+          <label>
+            <span>Công viên tham gia <em>*</em></span>
+            <select name="campus" required>
+              <option value="">— Chọn nơi gần nhất —</option>
+              {campuses.map((c) => <option value={c.value}>{c.label}</option>)}
+            </select>
+          </label>
+        </div>
       </fieldset>
 
       <fieldset class="cvgd-fieldset">
-        <legend>2. Người bạn được mời (1/2)</legend>
-        <label>
-          <span>Họ và tên <em>*</em></span>
-          <input type="text" name="ref1_name" required minlength="2" placeholder="Trần Thị B" />
-        </label>
-        <label>
-          <span>Số điện thoại <em>*</em></span>
-          <input type="tel" name="ref1_phone" required pattern="[0-9\+\-\s]{9,}" placeholder="09xx xxx xxx" />
-        </label>
+        <legend>② Người bạn mời — thứ nhất</legend>
+        <div class="cvgd-fieldset-body">
+          <label>
+            <span>Họ và tên <em>*</em></span>
+            <input type="text" name="ref1_name" required minlength="2" placeholder="Trần Thị B" />
+          </label>
+          <label>
+            <span>Số điện thoại <em>*</em></span>
+            <input type="tel" name="ref1_phone" required pattern="[0-9\+\-\s]{9,}" placeholder="09xx xxx xxx" />
+          </label>
+        </div>
       </fieldset>
 
       <fieldset class="cvgd-fieldset">
-        <legend>3. Người bạn được mời (2/2)</legend>
-        <label>
-          <span>Họ và tên <em>*</em></span>
-          <input type="text" name="ref2_name" required minlength="2" placeholder="Lê Văn C" />
-        </label>
-        <label>
-          <span>Số điện thoại <em>*</em></span>
-          <input type="tel" name="ref2_phone" required pattern="[0-9\+\-\s]{9,}" placeholder="09xx xxx xxx" />
-        </label>
+        <legend>③ Người bạn mời — thứ hai</legend>
+        <div class="cvgd-fieldset-body">
+          <label>
+            <span>Họ và tên <em>*</em></span>
+            <input type="text" name="ref2_name" required minlength="2" placeholder="Lê Văn C" />
+          </label>
+          <label>
+            <span>Số điện thoại <em>*</em></span>
+            <input type="tel" name="ref2_phone" required pattern="[0-9\+\-\s]{9,}" placeholder="09xx xxx xxx" />
+          </label>
+        </div>
       </fieldset>
 
       <button type="submit" class="cvgd-submit">Đăng ký nhận thẻ hội viên 6 tháng</button>
@@ -558,59 +564,93 @@ const campuses = [
   .cvgd-limit p { margin: 0 auto; max-width: 700px; line-height: 1.7; color: #fff; font-size: 1.05rem; }
   .cvgd-limit strong { color: #ffff00; }
 
-  /* Form */
-  .cvgd-form-intro { margin-bottom: 1.5rem; text-align: center; max-width: 640px; margin-left: auto; margin-right: auto; }
-  .cvgd-form { max-width: 640px; margin: 0 auto; display: grid; gap: 1.25rem; text-align: left; }
+  /* ===== Form ===== */
+  .cvgd-form-intro {
+    margin-bottom: 2rem; text-align: center;
+    max-width: 640px; margin-left: auto; margin-right: auto;
+  }
+  .cvgd-form {
+    max-width: 620px; margin: 0 auto; display: grid; gap: 1.5rem; text-align: left;
+  }
   .cvgd-form > * { min-width: 0; }
-  .cvgd-form input, .cvgd-form select { width: 100%; }
-  .cvgd-form-intro { text-align: center; }
+
+  /* Fieldset card */
   .cvgd-fieldset {
-    border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.25rem 1.25rem;
+    border: none;
+    border-radius: 16px;
+    padding: 0;
     background: #fff;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    overflow: hidden;
   }
   .cvgd-fieldset legend {
-    padding: 0 0.65rem; font-weight: 700; color: #000080;
-    font-size: 1rem;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.75rem 1.25rem;
+    background: #000080;
+    color: #ffff00;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    float: left; /* keeps legend full-width */
   }
+  /* Fake clearfix after legend */
+  .cvgd-fieldset > * { clear: both; }
+  .cvgd-fieldset-body {
+    padding: 0.5rem 1.25rem 1.25rem;
+  }
+
   .cvgd-form label {
-    display: grid; gap: 0.35rem; margin-top: 0.75rem;
+    display: grid; gap: 0.35rem; margin-top: 0.85rem;
   }
   .cvgd-form label span {
-    font-weight: 600; color: #000080;
+    font-size: 0.9rem; font-weight: 600; color: #374151;
   }
-  .cvgd-form label em { color: #dc2626; font-style: normal; }
+  .cvgd-form label em { color: #dc2626; font-style: normal; margin-left: 2px; }
   .cvgd-form input, .cvgd-form select {
-    padding: 0.75rem 0.9rem; border: 1.5px solid #d1d5db;
-    border-radius: 8px; font-size: 1rem; font-family: inherit;
-    transition: border-color 0.2s;
+    width: 100%; padding: 0.75rem 0.9rem;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 9px; font-size: 1rem; font-family: inherit;
+    background: #f9fafb;
+    color: #111827;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
   }
   .cvgd-form input:focus, .cvgd-form select:focus {
-    outline: none; border-color: #000080;
-    box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.12);
+    outline: none;
+    border-color: #000080;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0,0,128,0.10);
   }
+  .cvgd-form input::placeholder { color: #9ca3af; }
+
+  /* Submit button */
   .cvgd-submit {
-    justify-self: center;
-    width: auto;
-    max-width: 100%;
-    padding: 0.85rem 1.5rem;
+    display: block;
+    width: 100%;
+    padding: 1rem 1.5rem;
     background: #ffff00;
-    color: #000080; border: none; border-radius: 10px;
-    font-weight: 800; font-size: 1rem; line-height: 1.25;
-    cursor: pointer; white-space: nowrap;
-    box-shadow: 0 4px 15px rgba(255, 255, 0, 0.5);
-    transition: transform 0.15s, box-shadow 0.15s;
+    color: #000080;
+    border: none; border-radius: 12px;
+    font-weight: 800; font-size: 1.1rem; line-height: 1.25;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(255,255,0,0.45);
+    transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
+    letter-spacing: 0.2px;
   }
-  @media (max-width: 480px) {
-    .cvgd-submit { white-space: normal; padding: 0.85rem 1.1rem; font-size: 0.95rem; }
-  }
-  .cvgd-submit:hover { transform: translateY(-2px); background: #ffff44; box-shadow: 0 6px 20px rgba(255, 255, 0, 0.6); }
-  .cvgd-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .cvgd-submit:hover { transform: translateY(-2px); background: #ffff33; box-shadow: 0 6px 24px rgba(255,255,0,0.6); }
+  .cvgd-submit:active { transform: translateY(0); }
+  .cvgd-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
+
   .cvgd-consent {
-    font-size: 0.9rem; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.5; margin: 0;
+    font-size: 0.85rem; color: rgba(255,255,255,0.65);
+    text-align: center; line-height: 1.6; margin: 0;
   }
   .cvgd-error {
     background: #fef2f2; color: #991b1b; padding: 0.85rem 1rem;
-    border-radius: 8px; border-left: 3px solid #dc2626; font-weight: 600;
+    border-radius: 10px; border-left: 4px solid #dc2626; font-weight: 600;
+    font-size: 0.95rem;
   }
 
   @media (max-width: 640px) {

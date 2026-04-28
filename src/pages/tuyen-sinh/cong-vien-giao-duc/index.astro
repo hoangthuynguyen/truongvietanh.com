@@ -198,6 +198,25 @@ const campuses = [
         Bằng cách nhấn gửi, bạn đồng ý cho Trường Việt Anh liên hệ bạn và 2 người bạn được mời qua SĐT / Zalo để xác nhận.
       </p>
     </form>
+
+    <!-- Trust badges on dark bg -->
+    <div class="cvgd-trust-badges">
+      <span>🔒 Bảo mật thông tin</span>
+      <span>✅ Hoàn toàn miễn phí</span>
+      <span>⚡ Phản hồi trong 24h</span>
+    </div>
+  </section>
+
+  <!-- Logo + closing section in faq slot -->
+  <section slot="faq">
+    <div class="cvgd-closing">
+      <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="cvgd-closing__logo" />
+      <p class="cvgd-closing__tagline">Trường Việt Anh — Đào tạo học sinh giỏi chuyên Anh</p>
+      <div class="cvgd-closing__contacts">
+        <a href="tel:0916961409">📞 0916 961 409</a>
+        <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener">💬 Chat Zalo OA</a>
+      </div>
+    </div>
   </section>
 </SqueezePageLayout>
 
@@ -349,6 +368,81 @@ const campuses = [
   section.squeeze-form-section .squeeze-form-section__heading,
   section.squeeze-form-section .squeeze-form-section__description { color: #fff !important; }
   section.squeeze-form-section::before { background: linear-gradient(90deg,#ffff00,#cccc00) !important; }
+
+  /* Fix form badges invisible on dark bg */
+  .squeeze-form-section__badges { display: none !important; }
+
+  /* Hide urgency bar (irrelevant for this page) */
+  .squeeze-urgency { display: none !important; }
+
+  /* Un-hide faq slot for logo closing section */
+  section.squeeze-faq {
+    display: block !important;
+    background: #000080;
+    padding: 0 !important;
+    max-width: 100%;
+  }
+
+  /* Trust badges on dark form bg */
+  .cvgd-trust-badges {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.25rem;
+  }
+  .cvgd-trust-badges span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 0.4rem 0.9rem;
+    border-radius: 50px;
+  }
+
+  /* Logo closing section */
+  .cvgd-closing {
+    background: #000080;
+    text-align: center;
+    padding: 3rem 1.5rem 2rem;
+    border-top: 3px solid #ffff00;
+  }
+  .cvgd-closing__logo {
+    height: 80px;
+    width: auto;
+    display: block;
+    margin: 0 auto 1rem;
+    background: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 10px;
+  }
+  .cvgd-closing__tagline {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  .cvgd-closing__contacts {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cvgd-closing__contacts a {
+    display: inline-block;
+    padding: 0.6rem 1.25rem;
+    background: #ffff00;
+    color: #000080;
+    font-weight: 700;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: background 0.2s;
+  }
+  .cvgd-closing__contacts a:hover { background: #ffff44; }
 
   /* ===== Brand colors: navy #000080, yellow #ffff00 ===== */
 

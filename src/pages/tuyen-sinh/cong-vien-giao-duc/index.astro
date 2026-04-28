@@ -51,10 +51,6 @@ const campuses = [
 
   <section slot="content">
     <div class="cvgd-content">
-      <figure class="cvgd-hero-img">
-        <img src={heroImage} alt="Phối cảnh tổng thể Công viên Giáo dục Việt Anh — không gian học tập, vận động, vui chơi" loading="eager" width="1200" height="600" />
-      </figure>
-
       <div class="cvgd-panel">
         <h2 class="cvgd-h2">Nếu bạn là cha mẹ của trẻ 1–8 tuổi, hãy đọc kỹ</h2>
         <p class="cvgd-lead">
@@ -340,9 +336,11 @@ const campuses = [
   section.squeeze-trust,
   section.squeeze-faq { display: none !important; }
 
-  /* Make hero dark navy */
+  /* Hero: architectural render image + dark navy overlay */
   section.squeeze-hero {
-    background: linear-gradient(160deg, #000060 0%, #000080 60%, #00006e 100%) !important;
+    background:
+      linear-gradient(160deg, rgba(0,0,80,0.72) 0%, rgba(0,0,128,0.68) 50%, rgba(0,0,80,0.72) 100%),
+      url('https://media.truongvietanh.com/images/da-ngoai/hoc-sinh-di-da-ngoai-1.webp') center/cover no-repeat !important;
     color: #fff !important;
   }
   section.squeeze-hero h1,

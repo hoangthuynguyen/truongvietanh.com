@@ -1272,12 +1272,9 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
 </td></tr></table>
 </body></html>`;
 
-  // Primary: GHL Conversations API (dùng SES backend — ổn định hơn MailChannels)
-  if (contactId) {
-    await sendEmailViaGHL({ contactId, subject: res.subject, html, ghlApiKey });
-  }
-
-  // Fallback: MailChannels trực tiếp tới email người dùng
+  // NOTE: GHL workflow (addContactToWorkflow) đã tự gửi email welcome/resource ở bước 1.
+  // Không gọi sendEmailViaGHL ở đây để tránh user nhận 2 email trùng từ cùng sender (duong@reply.truongvietanh.com).
+  // MailChannels bên dưới gửi email xác nhận tức thì từ sender khác (tailieu@truongvietanh.com).
   try {
     await fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',

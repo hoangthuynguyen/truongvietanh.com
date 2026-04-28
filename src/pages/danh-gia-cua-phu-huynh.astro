@@ -119,7 +119,6 @@ const structuredData = [
 <BaseLayout
   title="Đánh giá từ phụ huynh & học sinh | Trường Việt Anh"
   description="Tổng hợp chia sẻ thực tế từ phụ huynh và học sinh Trường Việt Anh — hơn 12.000 gia đình tin tưởng, đánh giá 4.9/5 trên 300+ phản hồi."
-  keywords="đánh giá phụ huynh trường việt anh, review trường vsc, testimonial phụ huynh học sinh, 4.9 sao google"
   canonical="https://truongvietanh.com/danh-gia-cua-phu-huynh"
   ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
   structuredData={structuredData}
@@ -173,12 +172,18 @@ const structuredData = [
     <!-- CTA -->
     <section class="dg-cta">
       <div class="dg-container dg-cta__inner">
-        <div>
-          <h2 class="dg-cta__h2">Muốn trực tiếp gặp phụ huynh đang gửi con tại Việt Anh?</h2>
-          <p class="dg-cta__desc">Đăng ký tham quan trường — bạn sẽ được gặp ban giám hiệu, trò chuyện với phụ huynh hiện hữu và dự giờ lớp học mẫu.</p>
-          <p class="dg-cta__hotline">Hotline: <a href="tel:0916961409">0916 961 409</a> · <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener">Zalo</a></p>
+        <div class="dg-cta__text">
+          <div class="dg-cta__badge">📋 Tư vấn miễn phí</div>
+          <h2 class="dg-cta__h2">Để lại số điện thoại —<br/>chúng tôi gọi lại trong 30 phút</h2>
+          <p class="dg-cta__desc">Chuyên viên tư vấn sẽ lắng nghe mục tiêu của con, giới thiệu chương trình phù hợp và giải đáp mọi thắc mắc của phụ huynh.</p>
+          <ul class="dg-cta__perks">
+            <li>✅ Tư vấn 1-1, không đại trà</li>
+            <li>✅ Xem thực tế lớp học & gặp giáo viên</li>
+            <li>✅ Nhận bảng học phí và ưu đãi hiện hành</li>
+          </ul>
+          <p class="dg-cta__hotline">Hotline: <a href="tel:0916961409">0916 961 409</a> · <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener">Zalo OA</a></p>
         </div>
-        <div class="dg-cta__form lead-form-card--light" data-form-bg="light">
+        <div class="dg-cta__form-wrap" data-form-bg="light">
           <LeadFormTwoStepEmailFirst
             formId="danh-gia-form"
             funnelCode="danh-gia-pillar"
@@ -296,5 +301,40 @@ const structuredData = [
   .dg-cta__hotline a { color: #F0D048; font-weight: 800; text-decoration: none; }
   @media (max-width: 900px) {
     .dg-cta__inner { grid-template-columns: 1fr; }
+  }
+
+  /* CTA – new subclasses */
+  .dg-cta__badge {
+    display: inline-block;
+    background: rgba(240, 208, 72, 0.15);
+    border: 1px solid rgba(240, 208, 72, 0.45);
+    color: #F0D048;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    margin-bottom: 0.75rem;
+  }
+  .dg-cta__text { display: flex; flex-direction: column; }
+  .dg-cta__perks {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .dg-cta__perks li {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.9);
+    line-height: 1.55;
+  }
+  /* Form wrapper – white card so form is visible on dark background */
+  .dg-cta__form-wrap {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.75rem 1.5rem;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
   }
 </style>

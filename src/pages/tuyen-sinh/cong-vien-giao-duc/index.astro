@@ -327,17 +327,35 @@ const campuses = [
 </script>
 
 <style is:inline>
-  /* Hide empty layout sections not used by this page */
+  /* ===== Override layout: dark navy hero, hide empty sections ===== */
   section.squeeze-usp,
   section.squeeze-trust,
   section.squeeze-faq { display: none !important; }
+
+  /* Make hero dark navy */
+  section.squeeze-hero {
+    background: linear-gradient(160deg, #000060 0%, #000080 60%, #00006e 100%) !important;
+    color: #fff !important;
+  }
+  section.squeeze-hero h1,
+  section.squeeze-hero h2 { color: #ffff00 !important; }
+  section.squeeze-hero p, section.squeeze-hero .squeeze-hero__sub { color: rgba(255,255,255,0.9) !important; }
+
+  /* Dark content background alternating */
+  section.squeeze-content { background: #f4f4ff; padding: 0 !important; }
+  section.squeeze-form-section {
+    background: linear-gradient(180deg, #000080 0%, #000060 100%) !important;
+  }
+  section.squeeze-form-section .squeeze-form-section__heading,
+  section.squeeze-form-section .squeeze-form-section__description { color: #fff !important; }
+  section.squeeze-form-section::before { background: linear-gradient(90deg,#ffff00,#cccc00) !important; }
 
   /* ===== Brand colors: navy #000080, yellow #ffff00 ===== */
 
   .cvgd-badge {
     display: inline-block;
-    background: rgba(255, 255, 0, 0.18);
-    color: #000080;
+    background: rgba(255, 255, 0, 0.2);
+    color: #ffff00;
     padding: 0.45rem 1rem;
     border-radius: 999px;
     font-weight: 700;
@@ -369,36 +387,45 @@ const campuses = [
   .cvgd-hero-cta-line {
     max-width: 640px;
     margin: 0.75rem auto 0;
-    color: #000060;
+    color: rgba(255,255,255,0.92);
     line-height: 1.7;
   }
+  .cvgd-hero-cta-line strong { color: #ffff00; }
 
-  .cvgd-content { max-width: 960px; margin: 0 auto; display: grid; gap: 1.5rem; }
+  .cvgd-content { max-width: 960px; margin: 0 auto; display: grid; gap: 0; }
 
+  /* Hero image full-width */
   .cvgd-hero-img {
     margin: 0;
-    border-radius: 14px;
+    border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 128, 0.15);
+    box-shadow: none;
   }
   .cvgd-hero-img img {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 2 / 1;
+    aspect-ratio: 21 / 9;
     object-fit: cover;
   }
 
-  .cvgd-gallery-intro { text-align: center; padding: 0.5rem 0 0; }
-  .cvgd-gallery-intro .cvgd-h2 { margin-bottom: 0.5rem; }
-  .cvgd-gallery-intro .cvgd-para { max-width: 640px; margin: 0 auto; color: #475569; }
+  /* Gallery section — dark navy bg */
+  .cvgd-gallery-intro {
+    text-align: center;
+    padding: 2.5rem 1.5rem 1.25rem;
+    background: #000080;
+  }
+  .cvgd-gallery-intro .cvgd-h2 { margin-bottom: 0.5rem; color: #ffff00 !important; }
+  .cvgd-gallery-intro .cvgd-para { max-width: 640px; margin: 0 auto; color: rgba(255,255,255,0.85); }
 
   .cvgd-gallery {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 0.75rem;
+    gap: 3px;
+    background: #000080;
+    padding: 0 0 2rem;
   }
-  .cvgd-gallery figure { margin: 0; border-radius: 12px; overflow: hidden; }
+  .cvgd-gallery figure { margin: 0; border-radius: 0; overflow: hidden; }
   .cvgd-gallery img {
     display: block;
     width: 100%;
@@ -409,17 +436,32 @@ const campuses = [
   }
   .cvgd-gallery figure:hover img { transform: scale(1.05); }
 
+  /* Content panels — alternating white / light navy */
   .cvgd-panel {
     background: #fff;
-    border: 1px solid #e5e7eb;
-    border-radius: 14px;
-    padding: 1.75rem 1.5rem;
+    border: none;
+    border-radius: 0;
+    padding: 2.5rem 1.5rem;
+    max-width: 100%;
   }
+  .cvgd-panel > * { max-width: 860px; margin-left: auto; margin-right: auto; }
   .cvgd-panel--highlight {
-    background: linear-gradient(180deg, rgba(255,255,0,0.06) 0%, #ffffff 100%);
-    border-color: rgba(255, 255, 0, 0.5);
+    background: #000080;
+    border: none;
   }
-  .cvgd-panel--steps { border-left: 4px solid #ffff00; }
+  .cvgd-panel--highlight .cvgd-h2 { color: #ffff00 !important; }
+  .cvgd-panel--highlight .cvgd-benefits strong { color: #ffff00 !important; }
+  .cvgd-panel--highlight .cvgd-benefits p { color: rgba(255,255,255,0.85) !important; }
+  .cvgd-panel--highlight .cvgd-benefits li {
+    background: rgba(255,255,255,0.08) !important;
+    border-color: rgba(255,255,0,0.2) !important;
+  }
+  .cvgd-panel--highlight .cvgd-benefits li > span { background: rgba(255,255,0,0.15) !important; }
+  .cvgd-panel--steps {
+    background: #f4f4ff;
+    border-left: none;
+    border-top: 4px solid #ffff00;
+  }
   .cvgd-h2 {
     color: #000080;
     margin-bottom: 1rem;
@@ -473,10 +515,14 @@ const campuses = [
   .cvgd-no { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
   .cvgd-no li { color: #475569; font-weight: 500; }
   .cvgd-limit {
-    padding: 1.25rem 1.5rem; background: linear-gradient(135deg, #000080, #0000a8);
-    color: #fff; border-radius: 14px;
+    padding: 2rem 1.5rem;
+    background: linear-gradient(135deg, #000060, #000080);
+    color: #fff;
+    border-radius: 0;
+    text-align: center;
+    max-width: 100%;
   }
-  .cvgd-limit p { margin: 0; line-height: 1.65; color: #fff; }
+  .cvgd-limit p { margin: 0 auto; max-width: 700px; line-height: 1.7; color: #fff; font-size: 1.05rem; }
   .cvgd-limit strong { color: #ffff00; }
 
   /* Form */

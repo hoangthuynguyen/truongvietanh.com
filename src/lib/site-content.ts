@@ -148,8 +148,8 @@ export const mainNavRight = [
       { label: 'THCS', href: '/thcs' },
       { label: 'THPT', href: '/thpt' },
       { label: 'Trại hè', href: '/trai-he' },
-      { label: 'Tiếng Anh Trẻ Em', href: '/tieng-anh-tre-em' },
-      { label: 'Toán Tư Duy', href: '/toan-tu-duy-sam' },
+      { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
+      { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
       { label: 'Du học', href: '/du-hoc' },
     ]
   },

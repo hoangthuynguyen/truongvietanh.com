@@ -1,0 +1,417 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "EducationalOrganization",
+  "name": "Chương Trình Du Học – Trường Việt Anh",
+  "description": "Lộ trình 3 năm xây dựng hồ sơ du học từ lớp 10 tại Việt Anh: IELTS 6.0-8.0, SAT/AP, portfolio, essay, visa A-Z. 30% học sinh du học thành công mỗi năm.",
+  "url": "https://truongvietanh.com/du-hoc"
+};
+
+const destinations = [
+  { flag: '🇺🇸', country: 'Mỹ', schools: 'Ivy League, UC System, George Mason' },
+  { flag: '🇬🇧', country: 'Anh', schools: 'Russell Group, G5 Universities' },
+  { flag: '🇦🇺', country: 'Úc', schools: 'Go8, Macquarie, RMIT, Monash' },
+  { flag: '🇨🇦', country: 'Canada', schools: 'U15, UBC, McGill, Toronto' },
+  { flag: '🇯🇵', country: 'Nhật', schools: 'Waseda, Keio, Tokyo Daigaku' },
+  { flag: '🇸🇬', country: 'Singapore', schools: 'NUS, NTU, SMU' },
+];
+
+const roadmap = [
+  {
+    grade: 'Lớp 10',
+    color: '#000080',
+    icon: '🌱',
+    title: 'Xây nền tảng',
+    items: [
+      'Luyện IELTS chính khóa → mục tiêu 5.5–6.0',
+      'Tham gia 2–3 CLB: Debate, MUN, Tình nguyện…',
+      'Xác định nước & ngành du học mục tiêu',
+      'Cùng chuyên viên lập kế hoạch 3 năm',
+    ],
+  },
+  {
+    grade: 'Lớp 11',
+    color: '#000066',
+    icon: '📈',
+    title: 'Tăng tốc',
+    items: [
+      'Thi IELTS chính thức → mục tiêu 6.5–7.5',
+      'Luyện SAT / AP nếu du học Mỹ',
+      'Thực hiện dự án ngoại khóa có chiều sâu',
+      'Chọn 5–8 trường ĐH & phác thảo essay',
+    ],
+  },
+  {
+    grade: 'Lớp 12',
+    color: '#0000a0',
+    icon: '🎯',
+    title: 'Chốt hồ sơ',
+    items: [
+      'Hoàn thiện essay — review 3–5 lần với giáo viên',
+      'Nộp hồ sơ theo deadline từng trường',
+      'Chuẩn bị visa, chứng minh tài chính',
+      'Nhận Offer Letter & lên đường!',
+    ],
+  },
+];
+
+const services = [
+  { icon: '📝', title: 'IELTS Tích Hợp Chính Khóa', desc: 'Không cần học thêm trung tâm. Luyện Academic Writing & Speaking chuyên sâu ngay trong giờ học chính — mục tiêu IELTS 7.0+ cho nhóm du học.' },
+  { icon: '🏆', title: 'Portfolio Ngoại Khóa', desc: '15+ CLB: Debate, MUN, Robotics, Tình nguyện quốc tế. Hoạt động phong phú giúp con nổi bật trong mắt các ĐH Mỹ, Anh — được đánh giá ngang điểm số.' },
+  { icon: '✍️', title: 'Essay & Motivation Letter', desc: 'Giáo viên viết cùng con, chỉnh sửa 3–5 lần, đảm bảo essay thể hiện đúng cá tính và câu chuyện riêng của con. Không copy template, không viết hộ.' },
+  { icon: '🎓', title: 'Học Bổng 50–100%', desc: 'Chuyên viên tìm học bổng phù hợp với profile của con. Nhiều em Việt Anh nhận học bổng toàn phần tại Mỹ, Úc, Canada — hướng dẫn essay học bổng riêng.' },
+  { icon: '🤝', title: '50+ Trường ĐH Đối Tác', desc: 'George Mason, Macquarie, Waseda, RMIT… Học sinh Việt Anh được ưu tiên xét tuyển, yêu cầu điểm linh hoạt và cơ hội học bổng dành riêng.' },
+  { icon: '📋', title: 'Visa A–Z', desc: 'Chuẩn bị giấy tờ, chứng minh tài chính, luyện phỏng vấn visa. Chuyên viên đồng hành từ ngày nộp hồ sơ đến ngày con lên máy bay.' },
+];
+
+const faqs = [
+  { q: 'Con tôi lớp 10 bắt đầu xây profile có muộn không?', a: 'Lớp 10 là thời điểm lý tưởng nhất. Nếu chờ đến lớp 12 mới bắt đầu, con sẽ không đủ thời gian xây portfolio ngoại khóa — yếu tố ĐH Mỹ/Anh coi trọng ngang điểm số. 3 năm THPT là khoảng thời gian vừa đủ để xây profile bài bản, có chiều sâu.' },
+  { q: 'Việt Anh hỗ trợ du học những nước nào?', a: 'Mỹ, Anh, Úc, Canada, Nhật, Hàn Quốc, Singapore. Chuyên viên sẽ giúp con chọn quốc gia và trường phù hợp với năng lực, ngân sách và định hướng ngành nghề — không chọn quá sức để bị từ chối.' },
+  { q: 'Chi phí rất cao — Việt Anh có hỗ trợ học bổng không?', a: 'Có. Nhiều em Việt Anh đã nhận học bổng 50–100% tại Mỹ, Úc, Canada nhờ hồ sơ ấn tượng và essay xuất sắc. Ngoài ra, các trường đối tác có học bổng dành riêng cho học sinh Việt Anh với yêu cầu linh hoạt hơn.' },
+  { q: 'Nếu du học không thành công thì sao?', a: 'Luôn có phương án B. Con vừa xây profile du học, vừa chuẩn bị THPTQG song song. Nếu kế hoạch thay đổi, con vẫn có IELTS 6.0+, điểm THPTQG ổn định, và kỹ năng mềm vượt trội — không bao giờ trắng tay.' },
+  { q: 'Năm lớp 12 bắt đầu có kịp không?', a: 'Khó tối ưu hồ sơ trong 1 năm, nhưng vẫn có thể nộp được. Chúng tôi sẽ tập trung vào IELTS, essay và chọn trường phù hợp với profile hiện tại của con. Tốt nhất vẫn là bắt đầu từ lớp 10 hoặc 11.' },
+];
+---
+
+<BaseLayout
+  title="Du Học – Lộ Trình 3 Năm Xây Hồ Sơ Bài Bản | Trường Việt Anh"
+  description="30% học sinh Việt Anh du học thành công mỗi năm tại Mỹ, Anh, Úc, Canada, Nhật. IELTS 6.0-8.0, portfolio, essay, học bổng, visa A-Z — lộ trình 3 năm từ lớp 10."
+  canonical="https://truongvietanh.com/du-hoc"
+  ogImage="https://media.truongvietanh.com/images/olympic-08.webp"
+  structuredData={structuredData}
+  noPopup={true}
+>
+  <div class="dh-page">
+    <HeaderBase />
+
+    <!-- ===== HERO ===== -->
+    <section class="dh-hero">
+      <div class="dh-container">
+        <nav class="dh-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a>
+          <span>/</span>
+          <span>Du Học</span>
+        </nav>
+        <div class="dh-hero__inner">
+          <div class="dh-hero__text">
+            <h1 class="dh-hero__title">
+              Du Học Quốc Tế<br/>
+              <span class="dh-hero__accent">Cùng Trường Việt Anh</span>
+            </h1>
+            <p class="dh-hero__subtitle">
+              Lộ trình 3 năm xây hồ sơ bài bản từ lớp 10 — IELTS, Portfolio, Essay, Visa A–Z.
+              <strong>30% học sinh du học thành công</strong> mỗi năm tại Mỹ, Anh, Úc, Canada, Nhật.
+            </p>
+            <div class="dh-hero__badges">
+              <span class="dh-badge">🎯 IELTS 7.0+</span>
+              <span class="dh-badge">🌍 30% Du học/năm</span>
+              <span class="dh-badge">🏛️ 50+ ĐH đối tác</span>
+              <span class="dh-badge">🎓 Học bổng 50–100%</span>
+            </div>
+            <div class="dh-hero__ctas">
+              <a href="tel:+84916961409" class="dh-btn dh-btn--primary">📞 Tư vấn ngay</a>
+              <a href="#lo-trinh" class="dh-btn dh-btn--outline">Xem lộ trình ↓</a>
+            </div>
+          </div>
+          <div class="dh-hero__stats">
+            <div class="dh-stat">
+              <strong>30%</strong>
+              <span>Học sinh du học thành công mỗi năm</span>
+            </div>
+            <div class="dh-stat">
+              <strong>50+</strong>
+              <span>Trường ĐH đối tác quốc tế</span>
+            </div>
+            <div class="dh-stat">
+              <strong>7.0+</strong>
+              <span>IELTS trung bình nhóm du học</span>
+            </div>
+            <div class="dh-stat">
+              <strong>6 nước</strong>
+              <span>Mỹ · Anh · Úc · Canada · Nhật · Singapore</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ĐIỂM ĐẾN ===== -->
+    <section class="dh-section dh-section--light">
+      <div class="dh-container">
+        <h2 class="dh-section__title">Điểm Đến Du Học</h2>
+        <p class="dh-section__desc">Hỗ trợ toàn diện tại 6 quốc gia với 50+ trường đại học đối tác</p>
+        <div class="dh-dest-grid">
+          {destinations.map(d => (
+            <div class="dh-dest-card">
+              <span class="dh-dest__flag">{d.flag}</span>
+              <strong class="dh-dest__country">{d.country}</strong>
+              <p class="dh-dest__schools">{d.schools}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== DỊCH VỤ ===== -->
+    <section class="dh-section">
+      <div class="dh-container">
+        <h2 class="dh-section__title">Việt Anh Hỗ Trợ Gì?</h2>
+        <p class="dh-section__desc">Từ A đến Z — tất cả được đồng hành bởi đội ngũ chuyên viên giàu kinh nghiệm</p>
+        <div class="dh-service-grid">
+          {services.map(s => (
+            <div class="dh-service-card">
+              <div class="dh-service__icon">{s.icon}</div>
+              <h3 class="dh-service__title">{s.title}</h3>
+              <p class="dh-service__desc">{s.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== LỘ TRÌNH 3 NĂM ===== -->
+    <section class="dh-section dh-section--light" id="lo-trinh">
+      <div class="dh-container">
+        <h2 class="dh-section__title">Lộ Trình 3 Năm Xây Hồ Sơ</h2>
+        <p class="dh-section__desc">Mỗi năm một mục tiêu rõ ràng — con không bao giờ không biết mình cần làm gì tiếp theo</p>
+        <div class="dh-roadmap">
+          {roadmap.map((step, i) => (
+            <div class="dh-roadmap__step" style={`--step-color: ${step.color}`}>
+              <div class="dh-roadmap__header">
+                <span class="dh-roadmap__icon">{step.icon}</span>
+                <div>
+                  <div class="dh-roadmap__grade">{step.grade}</div>
+                  <div class="dh-roadmap__label">{step.title}</div>
+                </div>
+              </div>
+              <ul class="dh-roadmap__list">
+                {step.items.map(item => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+              {i < roadmap.length - 1 && <div class="dh-roadmap__arrow">→</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== IMAGE PROOF ===== -->
+    <section class="dh-section">
+      <div class="dh-container dh-proof">
+        <div class="dh-proof__text">
+          <h2>Học Sinh Việt Anh<br/>Đã Du Học Thành Công</h2>
+          <p>Mỗi năm 30% học sinh khối THPT Việt Anh chọn con đường du học và đạt được học bổng tại các trường đại học uy tín ở Mỹ, Anh, Úc, Canada và Nhật Bản.</p>
+          <ul class="dh-proof__list">
+            <li>✅ IELTS 7.0–8.0 tốt nghiệp</li>
+            <li>✅ Học bổng 50–100% học phí</li>
+            <li>✅ Nhận offer từ các ĐH top 100 thế giới</li>
+            <li>✅ Phương án B luôn sẵn sàng nếu thay đổi kế hoạch</li>
+          </ul>
+          <a href="tel:+84916961409" class="dh-btn dh-btn--primary" style="display:inline-flex;margin-top:1.5rem">📞 Đăng ký tư vấn miễn phí</a>
+        </div>
+        <div class="dh-proof__img">
+          <div class="dh-proof__img-frame">
+            <img
+              src="/bang-cap-sau-tot-nghiep.jpg"
+              alt="Học sinh Trường Việt Anh tốt nghiệp và nhận học bổng du học"
+              width="600" height="400" loading="lazy"
+              class="dh-proof__photo"
+            />
+            <div class="dh-proof__badge">
+              <img src="/logo-crest-80.webp" alt="Trường Việt Anh" width="40" height="40" />
+              <div>
+                <div class="dh-proof__badge-name">Trường Việt Anh</div>
+                <div class="dh-proof__badge-sub">30% THPT chọn du học</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="dh-section dh-section--light">
+      <div class="dh-container dh-faq-wrap">
+        <h2 class="dh-section__title">Câu Hỏi Thường Gặp</h2>
+        <div class="dh-faq">
+          {faqs.map((f, i) => (
+            <details class="dh-faq__item" open={i === 0}>
+              <summary class="dh-faq__q">{f.q}</summary>
+              <p class="dh-faq__a">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="dh-cta">
+      <div class="dh-container dh-cta__inner">
+        <div class="dh-cta__text">
+          <h2>Bắt đầu hành trình du học ngay hôm nay</h2>
+          <p>Đặt lịch tư vấn miễn phí — chuyên viên sẽ phân tích profile hiện tại và đề xuất lộ trình phù hợp nhất cho con.</p>
+        </div>
+        <div class="dh-cta__actions">
+          <a href="tel:+84916961409" class="dh-btn dh-btn--gold">📞 0916 961 409</a>
+          <a href="https://zalo.me/0916961409" class="dh-btn dh-btn--zalo" target="_blank" rel="noopener">💬 Zalo OA</a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  :root {
+    --navy: #000080;
+    --navy-dk: #000060;
+    --navy-lt: #0000a8;
+    --gold: #ffff00;
+    --gold-dk: #cccc00;
+    --gold-lt: #ffffcc;
+    --bg: #f8f9fc;
+    --white: #ffffff;
+    --sub: #6b7280;
+    --border: #e5e7eb;
+    --radius: 16px;
+  }
+
+  .dh-page { font-family: 'Inter', sans-serif; color: #000060; }
+  .dh-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* ===== BREADCRUMB ===== */
+  .dh-breadcrumb { display: flex; gap: .5rem; align-items: center; font-size: .875rem; color: rgba(255,255,255,.7); margin-bottom: 1.5rem; }
+  .dh-breadcrumb a { color: rgba(255,255,255,.85); text-decoration: none; }
+  .dh-breadcrumb a:hover { color: var(--gold); }
+
+  /* ===== HERO ===== */
+  .dh-hero {
+    background: linear-gradient(135deg, var(--navy-dk) 0%, #000090 50%, var(--navy) 100%);
+    padding: 4rem 0 5rem;
+    position: relative; overflow: hidden;
+  }
+  .dh-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://media.truongvietanh.com/images/olympic-08.webp') center/cover no-repeat;
+    opacity: .08;
+  }
+  .dh-hero__inner { position: relative; display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: center; }
+  .dh-hero__title { font-family: 'Montserrat', sans-serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 900; color: #fff; line-height: 1.15; margin: 0 0 1rem; }
+  .dh-hero__accent { color: var(--gold); }
+  .dh-hero__subtitle { font-size: 1.1rem; color: rgba(255,255,255,.85); line-height: 1.7; margin: 0 0 1.5rem; }
+  .dh-hero__badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.75rem; }
+  .dh-badge { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: .35rem .85rem; border-radius: 50px; font-size: .875rem; font-weight: 600; }
+  .dh-hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+  /* Stats box */
+  .dh-hero__stats { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.15); border-radius: var(--radius); padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; backdrop-filter: blur(8px); }
+  .dh-stat { text-align: center; }
+  .dh-stat strong { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .dh-stat span { font-size: .78rem; color: rgba(255,255,255,.75); line-height: 1.4; margin-top: .25rem; display: block; }
+
+  /* ===== BUTTONS ===== */
+  .dh-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.75rem; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all .2s; }
+  .dh-btn--primary { background: var(--gold); color: var(--navy-dk); }
+  .dh-btn--primary:hover { background: #ffff44; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,0,.45); }
+  .dh-btn--outline { background: transparent; border: 2px solid rgba(255,255,255,.4); color: #fff; }
+  .dh-btn--outline:hover { border-color: var(--gold); color: var(--gold); }
+  .dh-btn--gold { background: linear-gradient(135deg, var(--gold), var(--gold-dk)); color: var(--navy-dk); }
+  .dh-btn--gold:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,255,0,.45); }
+  .dh-btn--zalo { background: #0068FF; color: #fff; }
+  .dh-btn--zalo:hover { background: #0056D6; transform: translateY(-2px); }
+
+  /* ===== SECTIONS ===== */
+  .dh-section { padding: 4rem 0; }
+  .dh-section--light { background: var(--bg); }
+  .dh-section__title { font-family: 'Montserrat', sans-serif; font-size: 1.875rem; font-weight: 800; color: var(--navy); text-align: center; margin: 0 0 .75rem; }
+  .dh-section__desc { font-size: 1rem; color: var(--sub); text-align: center; max-width: 640px; margin: 0 auto 2.5rem; line-height: 1.7; }
+
+  /* ===== DESTINATIONS ===== */
+  .dh-dest-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 1rem; }
+  .dh-dest-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem 1rem; text-align: center; transition: all .25s; }
+  .dh-dest-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,128,.12); border-color: var(--gold); }
+  .dh-dest__flag { font-size: 2rem; display: block; margin-bottom: .5rem; }
+  .dh-dest__country { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; color: var(--navy); display: block; margin-bottom: .35rem; }
+  .dh-dest__schools { font-size: .75rem; color: var(--sub); line-height: 1.4; margin: 0; }
+
+  /* ===== SERVICES ===== */
+  .dh-service-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .dh-service-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem 1.5rem; transition: all .25s; }
+  .dh-service-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,128,.12); border-color: var(--gold); }
+  .dh-service__icon { font-size: 2rem; margin-bottom: .75rem; }
+  .dh-service__title { font-family: 'Montserrat', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--navy); margin: 0 0 .65rem; }
+  .dh-service__desc { font-size: .9rem; color: #555; line-height: 1.65; margin: 0; }
+
+  /* ===== ROADMAP ===== */
+  .dh-roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; position: relative; }
+  .dh-roadmap__step { background: var(--white); border: 2px solid var(--border); border-top: 4px solid var(--step-color, var(--navy)); border-radius: var(--radius); padding: 1.75rem 1.5rem; position: relative; }
+  .dh-roadmap__header { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem; }
+  .dh-roadmap__icon { font-size: 2rem; }
+  .dh-roadmap__grade { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 900; color: var(--step-color, var(--navy)); }
+  .dh-roadmap__label { font-size: .9rem; font-weight: 600; color: var(--sub); }
+  .dh-roadmap__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+  .dh-roadmap__list li { font-size: .9rem; color: #444; line-height: 1.5; padding-left: 1.25rem; position: relative; }
+  .dh-roadmap__list li::before { content: '✓'; position: absolute; left: 0; color: var(--step-color, var(--navy)); font-weight: 700; }
+  .dh-roadmap__arrow { display: none; }
+
+  /* ===== PROOF ===== */
+  .dh-proof { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .dh-proof__text h2 { font-family: 'Montserrat', sans-serif; font-size: 1.75rem; font-weight: 800; color: var(--navy); margin: 0 0 1rem; }
+  .dh-proof__text p { font-size: 1rem; color: var(--sub); line-height: 1.7; margin: 0 0 1.25rem; }
+  .dh-proof__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .6rem; }
+  .dh-proof__list li { font-size: 1rem; color: #333; line-height: 1.5; }
+  .dh-proof__img-frame { position: relative; border-radius: var(--radius); overflow: hidden; box-shadow: 0 16px 50px rgba(0,0,128,.2); }
+  .dh-proof__photo { width: 100%; height: 340px; object-fit: cover; object-position: center 70%; display: block; border-radius: var(--radius); }
+  /* Gradient overlay: darken bottom for badge readability */
+  .dh-proof__img-frame::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(0,0,100,.5) 100%); border-radius: var(--radius); pointer-events: none; }
+  /* Badge overlaid on image bottom-left */
+  .dh-proof__badge { position: absolute; bottom: 1rem; left: 1rem; display: flex; align-items: center; gap: .65rem; background: rgba(255,255,255,.95); backdrop-filter: blur(6px); border-radius: 10px; padding: .55rem .85rem; box-shadow: 0 4px 16px rgba(0,0,0,.15); z-index: 2; }
+  .dh-proof__badge img { width: 38px; height: 38px; object-fit: contain; flex-shrink: 0; }
+  .dh-proof__badge-name { font-weight: 800; color: #000080; font-size: .85rem; line-height: 1.2; }
+  .dh-proof__badge-sub { font-size: .75rem; color: #64748b; margin-top: .1rem; }
+
+  /* ===== FAQ ===== */
+  .dh-faq-wrap { max-width: 800px; }
+  .dh-faq { display: flex; flex-direction: column; gap: .75rem; }
+  .dh-faq__item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .dh-faq__item[open] { border-color: var(--gold); }
+  .dh-faq__q { padding: 1.1rem 1.5rem; font-size: 1rem; font-weight: 700; color: var(--navy); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .dh-faq__q::after { content: '+'; font-size: 1.25rem; font-weight: 400; color: var(--navy); flex-shrink: 0; margin-left: 1rem; }
+  .dh-faq__item[open] .dh-faq__q::after { content: '−'; }
+  .dh-faq__a { padding: 0 1.5rem 1.25rem; font-size: .95rem; color: #555; line-height: 1.7; margin: 0; }
+
+  /* ===== CTA ===== */
+  .dh-cta { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); padding: 3.5rem 0; }
+  .dh-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .dh-cta__text h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
+  .dh-cta__text p { font-size: 1rem; color: rgba(255,255,255,.8); line-height: 1.65; margin: 0; }
+  .dh-cta__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 1024px) {
+    .dh-dest-grid { grid-template-columns: repeat(3, 1fr); }
+    .dh-hero__inner { grid-template-columns: 1fr; }
+    .dh-hero__stats { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .dh-service-grid { grid-template-columns: 1fr 1fr; }
+    .dh-roadmap { grid-template-columns: 1fr; }
+    .dh-proof { grid-template-columns: 1fr; }
+    .dh-proof__img { order: -1; }
+    .dh-cta__inner { flex-direction: column; text-align: center; }
+    .dh-cta__actions { justify-content: center; }
+    .dh-hero__stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .dh-dest-grid { grid-template-columns: repeat(2, 1fr); }
+    .dh-service-grid { grid-template-columns: 1fr; }
+    .dh-hero { padding: 2.5rem 0 3rem; }
+    .dh-section { padding: 2.5rem 0; }
+  }
+</style>

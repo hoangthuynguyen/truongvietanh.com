@@ -16,6 +16,7 @@ const zaloOaUrl = `https://zalo.me/${zaloOaId}`;
 type Props = {
   title?: string;
   description?: string;
+  keywords?: string;
   canonical?: string;
   noindex?: boolean;
   noPopup?: boolean;
@@ -27,6 +28,7 @@ type Props = {
 const {
   title = 'Trường Việt Anh',
   description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.',
+  keywords,
   canonical,
   noindex = canonical?.includes('staging.') || canonical?.includes('workers.dev') || canonical?.includes('hoc.'),
   noPopup = true, /* TẠM THỜI tắt toàn bộ popup trên site — bật lại bằng cách đổi về false */
@@ -70,6 +72,7 @@ const schemaPayload = structuredData
     </noscript>
     <title>{title}</title>
     <meta name="description" content={description} />
+    {keywords && <meta name="keywords" content={keywords} />}
     <meta name="author" content="Trường Việt Anh" />
     <meta http-equiv="content-language" content="vi" />
     <meta property="og:locale" content="vi_VN" />

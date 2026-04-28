@@ -41,11 +41,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
        {(leftNav.length > 0 ? leftNav : [
          { label: 'Trang chủ', href: '/' },
          { label: 'Giới thiệu', href: '/gioi-thieu' },
-         { label: 'Giáo viên', href: '/ban-lanh-dao', children: [
-           { label: 'Ban Lãnh Đạo', href: '/ban-lanh-dao' },
-           { label: 'Giáo viên Chủ Nhiệm', href: '/giao-vien-chu-nhiem' },
-           { label: 'Giáo viên Bộ Môn', href: '/giao-vien-bo-mon' },
-         ]},
          { label: 'Tuyển sinh', href: '/tuyen-sinh', children: [
            { label: 'Mầm non', href: '/tuyen-sinh/mam-non' },
            { label: 'Tiểu học', href: '/tuyen-sinh/tieu-hoc' },
@@ -86,7 +81,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
            { label: 'THPT', href: '/thpt' },
            { label: 'Trại hè', href: '/trai-he' },
            { label: 'Tiếng Anh Trẻ Em', href: '/tieng-anh-tre-em' },
-           { label: 'Toán Tư Duy', href: '/toan-tu-duy-sam' },
+           { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
            { label: 'Du học', href: '/du-hoc' },
          ]},
          { label: 'Blog', href: '/blog' },
@@ -121,14 +116,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
       <a href="/" class="mobile-nav-link">Trang chủ</a>
       <a href="/gioi-thieu" class="mobile-nav-link">Giới thiệu</a>
       <div class="mobile-nav-group">
-        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Giáo viên">Giáo viên <span class="toggle-arrow">▾</span></button>
-        <div class="mobile-nav-sub">
-          <a href="/ban-lanh-dao" class="mobile-nav-sublink">Ban Lãnh Đạo</a>
-          <a href="/giao-vien-chu-nhiem" class="mobile-nav-sublink">Giáo viên Chủ Nhiệm</a>
-          <a href="/giao-vien-bo-mon" class="mobile-nav-sublink">Giáo viên Bộ Môn</a>
-        </div>
-      </div>
-      <div class="mobile-nav-group">
         <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Tuyển sinh">Tuyển sinh <span class="toggle-arrow">▾</span></button>
         <div class="mobile-nav-sub">
           <a href="/tuyen-sinh/mam-non" class="mobile-nav-sublink">Mầm non</a>
@@ -149,7 +136,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
           <a href="/thpt" class="mobile-nav-sublink">THPT</a>
           <a href="/trai-he" class="mobile-nav-sublink">Trại hè</a>
           <a href="/tieng-anh-tre-em" class="mobile-nav-sublink">Tiếng Anh Trẻ Em</a>
-          <a href="/toan-tu-duy-sam" class="mobile-nav-sublink">Toán Tư Duy</a>
+          <a href="/toan-tu-duy" class="mobile-nav-sublink">Toán Tư Duy</a>
           <a href="/du-hoc" class="mobile-nav-sublink">Du học</a>
         </div>
       </div>
@@ -294,9 +281,9 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 <style>/* UTILS for header */
   .cf-container{ max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }.text-center{ text-align: center; }.text-nowrap{ white-space: nowrap; }/* TOP BAR */
   .top-bar{ background: var(--cf-blue, #1a193c); color: #e2e8f0; font-size: 1rem; padding: 0.4rem 0; font-weight: 400; font-family: 'Inter', sans-serif;}.top-bar-inner{ display: flex; justify-content: space-between; align-items: center; }.top-left{ display: flex; align-items: center; gap: 1.25rem; }.top-left .icon-text{ display: inline-flex; align-items: center; gap: 0.4rem; }.top-right{ display: flex; align-items: center; gap: 1rem; }.search-btn{ background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; }.btn-yellow{ background: var(--pri-yellow, #fde047); color: #000; font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius:3px; font-size: 1rem; border: none; cursor:pointer;}.btn-yellow:hover{ background: #fef08a; }/* MAIN NAV */
-  .main-header{ background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Inter', sans-serif; }.nav-grid{ max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 60px; gap: 1rem; }.nav-links{ list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; align-items: center; }.right-nav{ justify-content: flex-start; }.left-nav{ justify-content: flex-end; }.nav-links li{ position: relative; }.nav-links a{ text-decoration: none; color: var(--pri-blue, #232252); font-weight: 600; font-size: 1rem; white-space: nowrap; transition: color 0.2s; display: flex; align-items: center; padding: 0.85rem 0; }.nav-links a:hover{ color: var(--cf-blue, #1a193c); }/* DROPDOWN */
+  .main-header{ background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Inter', sans-serif; padding-top: 6px !important; padding-bottom: 6px !important; height: auto !important; overflow: visible; }.nav-grid{ max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 50px; gap: 1rem; overflow: visible; }.nav-links{ list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; align-items: center; }.right-nav{ justify-content: flex-start; }.left-nav{ justify-content: flex-end; }.nav-links li{ position: relative; }.nav-links a{ text-decoration: none; color: var(--pri-blue, #232252); font-weight: 600; font-size: 1rem; white-space: nowrap; transition: color 0.2s; display: flex; align-items: center; padding: 0.5rem 0; }.nav-links a:hover{ color: var(--cf-blue, #1a193c); }/* DROPDOWN */
   .dropdown-menu{ position: absolute; top: 100%; left: 0; background: #ffffff; min-width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; border: 1px solid #f1f5f9; padding: 0.5rem 0; display: flex; flex-direction: column; z-index: 200; }.has-dropdown:hover .dropdown-menu{ opacity: 1; visibility: visible; transform: translateY(0); }.dropdown-menu a{ padding: 0.6rem 1.25rem; font-weight: 500; font-size: 1rem; color: var(--text-dark, #0f172a); border-left: 3px solid transparent; }.dropdown-menu a:hover{ background: var(--bg-gray, #f8fafc); color: var(--cf-blue, #1a193c); border-left-color: var(--cf-blue, #1a193c); }/* LOGO ENLARGED */
-  .header-logo{ display: flex; justify-content: center; width: 100%; }.official-logo{ height: 120px; object-fit: contain; }/* SEARCH MODAL */
+  .header-logo{ display: flex; justify-content: center; align-items: center; width: 100%; height: 50px; min-width: 200px; overflow: visible; position: relative; }.official-logo{ height: 80px; width: auto; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5; }/* SEARCH MODAL */
   .search-overlay{
     display: none; position: fixed; inset: 0; z-index: 9999;
     background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
@@ -430,7 +417,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
   }
 
   /* RESPONSIVE */
-  @media (max-width: 1024px) {.nav-grid{ grid-template-columns: auto 1fr auto; justify-content: space-between; }.left-nav, .right-nav{ display: none; }.mobile-menu-btn{ display: flex; }.mobile-nav-drawer{ display: block; }.header-logo{ justify-content: flex-start; }.official-logo{ height: 70px; }
+  @media (max-width: 1024px) {.nav-grid{ grid-template-columns: auto 1fr auto; justify-content: space-between; }.left-nav, .right-nav{ display: none; }.mobile-menu-btn{ display: flex; }.mobile-nav-drawer{ display: block; }.header-logo{ justify-content: flex-start; height: 44px; min-width: 120px; }.official-logo{ height: 64px; left: 0; transform: translate(0, -50%); }
   }
 
   @media (max-width: 768px) {.d-none-mo{ display: none; }

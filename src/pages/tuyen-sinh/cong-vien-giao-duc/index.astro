@@ -7,7 +7,7 @@ const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc';
 const funnelCode = 'cong-vien-giao-duc';
 
 const MEDIA = 'https://media.truongvietanh.com/images';
-const heroImage = '/images/cong-vien-giao-duc/hero-toan-canh.jpg';
+const heroImage = `${MEDIA}/da-ngoai/hoc-sinh-di-da-ngoai-1.webp`;
 const galleryImages = [
   { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-chay-bo-1.webp`, alt: 'Bé vận động ngoài trời, chạy nhảy tự do' },
   { src: `${MEDIA}/vui-ve/hoc-sinh-choi-vui-ve-1.webp`, alt: 'Bé vui chơi cùng bạn ngoài sân' },
@@ -22,7 +22,7 @@ const galleryImages = [
 
 const campuses = [
   { value: 'viet-anh', label: 'Trường Mầm non Việt Anh — 573 Lê Đức Thọ, P16, Gò Vấp, TP.HCM', map: 'https://maps.app.goo.gl/5PXx5P9PAmXM5wWv5' },
-  { value: 'nhan-le', label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Tây Ninh', map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
+  { value: 'nhan-le', label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Long An', map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
   { value: 'mekong-xanh', label: 'Mầm non & Tiểu học Mekong Xanh — Lô E7, KĐT Tây Bắc, Rạch Giá, An Giang', map: 'https://maps.app.goo.gl/VHG5dxeEtan3wGjz6' },
 ];
 ---
@@ -327,6 +327,11 @@ const campuses = [
 </script>
 
 <style is:inline>
+  /* Hide empty layout sections not used by this page */
+  section.squeeze-usp,
+  section.squeeze-trust,
+  section.squeeze-faq { display: none !important; }
+
   .cvgd-badge {
     display: inline-block;
     background: rgba(240, 208, 72, 0.15);

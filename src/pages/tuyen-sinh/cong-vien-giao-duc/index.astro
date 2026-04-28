@@ -280,11 +280,15 @@ const campuses = [
       window.dataLayer.push({ event: 'form_submit', form_id: 'cvgd-form', funnel: FUNNEL_CODE });
     }
 
+    // Form không thu email -> tạo placeholder dạng <phone>@no-email.truongvietanh.com
+    // để pass validate API mà vẫn nhận diện được lead không có email thật.
+    const phEmail = (p) => p.replace(/[^0-9]/g, '') + '@no-email.truongvietanh.com';
+
     const leads = [
       {
         full_name: parentName,
         phone: parentPhone,
-        email: '',
+        email: phEmail(parentPhone),
         campus_ref: campus,
         role: 'registrant',
         notes: 'Đăng ký hội viên Công viên Giáo dục',
@@ -292,7 +296,7 @@ const campuses = [
       {
         full_name: ref1Name,
         phone: ref1Phone,
-        email: '',
+        email: phEmail(ref1Phone),
         campus_ref: campus,
         role: 'referred',
         notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',
@@ -300,7 +304,7 @@ const campuses = [
       {
         full_name: ref2Name,
         phone: ref2Phone,
-        email: '',
+        email: phEmail(ref2Phone),
         campus_ref: campus,
         role: 'referred',
         notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',

@@ -2,28 +2,28 @@
 import SqueezePageLayout from '../../../layouts/SqueezePageLayout.astro';
 
 const pageTitle = 'Công Viên Giáo Dục — Nơi 1.000 Đứa Trẻ Hạnh Phúc Lớn Lên Khác Biệt | Trường Việt Anh';
-const pageDescription = 'KHÔNG BÁN VÉ. KHÔNG MỞ CỬA ĐẠI TRÀ. Chỉ dành cho thành viên nội bộ. Trở thành hội viên miễn phí 6 tháng bằng cách mời 2 người bạn có con 1–8 tuổi cùng tham gia. Dành cho Ba/Mẹ muốn con tránh xa màn hình, vận động ngoài trời, phát triển thể chất và cảm xúc.';
+const pageDescription = 'KHÔNG BÁN VÉ. KHÔNG MỞ CỬA ĐẠI TRÀ. Chỉ dành cho thành viên nội bộ. Trở thành hội viên miễn phí 6 tháng bằng cách mời 2 người bạn có con 1–8 tuổi cùng tham gia.';
 const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc';
 const funnelCode = 'cong-vien-giao-duc';
 
 const MEDIA = 'https://media.truongvietanh.com/images';
-const heroImage = `${MEDIA}/da-ngoai/hoc-sinh-di-da-ngoai-1.webp`;
+
 const galleryImages = [
-  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-chay-bo-1.webp`, alt: 'Bé vận động ngoài trời, chạy nhảy tự do' },
-  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-vui-ve-1.webp`, alt: 'Bé vui chơi cùng bạn ngoài sân' },
-  { src: `${MEDIA}/da-ngoai/hoc-sinh-di-da-ngoai-1.webp`, alt: 'Bé khám phá thiên nhiên trong hoạt động dã ngoại' },
-  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-choi-the-thao-1.webp`, alt: 'Bé chơi thể thao ngoài trời' },
-  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-1.webp`, alt: 'Bé chơi nhóm, phát triển kỹ năng kết bạn' },
-  { src: `${MEDIA}/da-ngoai/20250821-22-hon-bo-dap-07727.webp`, alt: 'Bé hòa mình với thiên nhiên trong dã ngoại' },
-  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-boi.webp`, alt: 'Bé vận động trong hồ bơi an toàn' },
-  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-tro-choi-45.webp`, alt: 'Bé chơi trò chơi vận động phát triển kỹ năng' },
-  { src: `${MEDIA}/da-ngoai/20250821-22-hon-bo-dap2-06104.webp`, alt: 'Bé khám phá môi trường xung quanh' },
+  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-chay-bo-1.webp`,        alt: 'Bé vận động ngoài trời, chạy nhảy tự do' },
+  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-vui-ve-1.webp`,                  alt: 'Bé vui chơi cùng bạn ngoài sân' },
+  { src: `${MEDIA}/da-ngoai/hoc-sinh-di-da-ngoai-1.webp`,               alt: 'Bé khám phá thiên nhiên trong hoạt động dã ngoại' },
+  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-choi-the-thao-1.webp`,  alt: 'Bé chơi thể thao ngoài trời' },
+  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-1.webp`,                         alt: 'Bé chơi nhóm, phát triển kỹ năng kết bạn' },
+  { src: `${MEDIA}/da-ngoai/20250821-22-hon-bo-dap-07727.webp`,          alt: 'Bé hòa mình với thiên nhiên trong dã ngoại' },
+  { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-boi.webp`,               alt: 'Bé vận động trong hồ bơi an toàn' },
+  { src: `${MEDIA}/vui-ve/hoc-sinh-choi-tro-choi-45.webp`,              alt: 'Bé chơi trò chơi vận động phát triển kỹ năng' },
+  { src: `${MEDIA}/da-ngoai/20250821-22-hon-bo-dap2-06104.webp`,         alt: 'Bé khám phá môi trường xung quanh' },
 ];
 
 const campuses = [
-  { value: 'viet-anh', label: 'Trường Mầm non Việt Anh — 573 Lê Đức Thọ, P16, Gò Vấp, TP.HCM', map: 'https://maps.app.goo.gl/5PXx5P9PAmXM5wWv5' },
-  { value: 'nhan-le', label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Long An', map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
-  { value: 'mekong-xanh', label: 'Mầm non & Tiểu học Mekong Xanh — Lô E7, KĐT Tây Bắc, Rạch Giá, An Giang', map: 'https://maps.app.goo.gl/VHG5dxeEtan3wGjz6' },
+  { value: 'viet-anh',    label: 'Trường Mầm non Việt Anh — 573 Lê Đức Thọ, P16, Gò Vấp, TP.HCM',                   map: 'https://maps.app.goo.gl/5PXx5P9PAmXM5wWv5' },
+  { value: 'nhan-le',     label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Long An',          map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
+  { value: 'mekong-xanh', label: 'Mầm non & Tiểu học Mekong Xanh — Lô E7, KĐT Tây Bắc, Rạch Giá, An Giang',        map: 'https://maps.app.goo.gl/VHG5dxeEtan3wGjz6' },
 ];
 ---
 
@@ -34,10 +34,14 @@ const campuses = [
   schoolLevel="mau-non"
   funnelCode={funnelCode}
 >
+
+  <!-- ===== HERO ===== -->
   <section slot="hero">
     <span class="cvgd-badge">Chỉ dành cho thành viên nội bộ</span>
     <h1 class="squeeze-hero__heading">CÔNG VIÊN GIÁO DỤC</h1>
-    <p class="squeeze-hero__sub"><strong>Nơi 1.000 đứa trẻ hạnh phúc sẽ bắt đầu hành trình lớn lên khác biệt.</strong></p>
+    <p class="squeeze-hero__sub">
+      <strong>Nơi 1.000 đứa trẻ hạnh phúc sẽ bắt đầu hành trình lớn lên khác biệt.</strong>
+    </p>
     <div class="cvgd-rules">
       <div class="cvgd-rule">KHÔNG BÁN VÉ</div>
       <div class="cvgd-rule">KHÔNG MỞ CỬA ĐẠI TRÀ</div>
@@ -49,8 +53,10 @@ const campuses = [
     </p>
   </section>
 
+  <!-- ===== NỘI DUNG ===== -->
   <section slot="content">
     <div class="cvgd-content">
+
       <div class="cvgd-panel">
         <h2 class="cvgd-h2">Nếu bạn là cha mẹ của trẻ 1–8 tuổi, hãy đọc kỹ</h2>
         <p class="cvgd-lead">
@@ -65,7 +71,6 @@ const campuses = [
         <p class="cvgd-para">
           Vì vậy, chúng tôi xây dựng một nơi hoàn toàn khác cho những ngày cuối tuần của trẻ tại:
         </p>
-
         <ol class="cvgd-campuses">
           {campuses.map((c, i) => (
             <li>
@@ -81,7 +86,10 @@ const campuses = [
 
       <div class="cvgd-gallery-intro">
         <h2 class="cvgd-h2">Một ngày tại Công viên Giáo dục</h2>
-        <p class="cvgd-para">Mỗi cuối tuần, các bé được vận động – khám phá – vui chơi cùng bạn trong một không gian rộng rãi, an toàn và đầy ánh nắng.</p>
+        <p class="cvgd-para">
+          Mỗi cuối tuần, các bé được vận động – khám phá – vui chơi cùng bạn
+          trong một không gian rộng rãi, an toàn và đầy ánh nắng.
+        </p>
       </div>
 
       <div class="cvgd-gallery">
@@ -134,18 +142,22 @@ const campuses = [
           Khi đủ số lượng, hệ thống sẽ đóng đăng ký. Ưu tiên đăng ký sớm.
         </p>
       </div>
+
     </div>
   </section>
 
+  <!-- ===== FORM ĐĂNG KÝ ===== -->
   <section slot="form">
     <div class="cvgd-form-intro">
       <h2 class="squeeze-form-section__heading">Đăng ký hội viên Công viên Giáo dục</h2>
       <p class="squeeze-form-section__description">
-        Điền 1 phiếu duy nhất bao gồm thông tin của bạn và 2 người bạn được mời. Hoàn toàn miễn phí — không phí tham gia, không ràng buộc.
+        Điền 1 phiếu duy nhất bao gồm thông tin của bạn và 2 người bạn được mời.
+        Hoàn toàn miễn phí — không phí tham gia, không ràng buộc.
       </p>
     </div>
 
     <form id="cvgd-form" class="cvgd-form" novalidate>
+
       <fieldset class="cvgd-fieldset">
         <legend>① Thông tin của bạn</legend>
         <div class="cvgd-fieldset-body">
@@ -201,7 +213,6 @@ const campuses = [
       </p>
     </form>
 
-    <!-- Trust badges on dark bg -->
     <div class="cvgd-trust-badges">
       <span>🔒 Bảo mật thông tin</span>
       <span>✅ Hoàn toàn miễn phí</span>
@@ -211,6 +222,7 @@ const campuses = [
 
 </SqueezePageLayout>
 
+<!-- ===== FORM LOGIC ===== -->
 <script is:inline>
 (function () {
   const form = document.getElementById('cvgd-form');
@@ -221,40 +233,43 @@ const campuses = [
 
   const urlParams = new URLSearchParams(window.location.search);
   const utm = {
-    utm_source: urlParams.get('utm_source') || '',
-    utm_medium: urlParams.get('utm_medium') || '',
-    utm_campaign: urlParams.get('utm_campaign') || '',
-    utm_term: urlParams.get('utm_term') || '',
-    utm_content: urlParams.get('utm_content') || '',
-    referrer: document.referrer || '',
-    landing_page: window.location.pathname,
+    utm_source:    urlParams.get('utm_source')   || '',
+    utm_medium:    urlParams.get('utm_medium')   || '',
+    utm_campaign:  urlParams.get('utm_campaign') || '',
+    utm_term:      urlParams.get('utm_term')     || '',
+    utm_content:   urlParams.get('utm_content')  || '',
+    referrer:      document.referrer             || '',
+    landing_page:  window.location.pathname,
   };
 
-  function isValidPhone(p) { return /^[0-9\+\-\s\(\)]{9,}$/.test((p || '').replace(/\s/g, '')); }
+  function isValidPhone(p) {
+    return /^[0-9\+\-\s\(\)]{9,}$/.test((p || '').replace(/\s/g, ''));
+  }
+
   function showError(msg) {
-    const box = form.querySelector('.cvgd-error') || (function () {
-      const d = document.createElement('div');
-      d.className = 'cvgd-error';
-      form.insertBefore(d, form.querySelector('.cvgd-submit'));
-      return d;
-    })();
+    let box = form.querySelector('.cvgd-error');
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'cvgd-error';
+      form.insertBefore(box, form.querySelector('.cvgd-submit'));
+    }
     box.textContent = msg;
     box.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
 
   async function postLead(payload) {
     const body = Object.assign({}, payload, utm, {
-      funnel_code: FUNNEL_CODE,
+      funnel_code:  FUNNEL_CODE,
       school_level: 'mau-non',
-      page: window.location.href,
-      form_id: 'cvgd-form',
-      timestamp: new Date().toISOString(),
+      page:         window.location.href,
+      form_id:      'cvgd-form',
+      timestamp:    new Date().toISOString(),
     });
     try {
       const r = await fetch(LEAD_API_URL, {
-        method: 'POST',
+        method:  'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body),
+        body:    JSON.stringify(body),
       });
       return r.ok;
     } catch (e) {
@@ -264,14 +279,14 @@ const campuses = [
 
   form.addEventListener('submit', async function (e) {
     e.preventDefault();
-    const fd = new FormData(form);
-    const parentName = (fd.get('parent_name') || '').toString().trim();
+    const fd         = new FormData(form);
+    const parentName  = (fd.get('parent_name')  || '').toString().trim();
     const parentPhone = (fd.get('parent_phone') || '').toString().trim();
-    const campus = (fd.get('campus') || '').toString().trim();
-    const ref1Name = (fd.get('ref1_name') || '').toString().trim();
-    const ref1Phone = (fd.get('ref1_phone') || '').toString().trim();
-    const ref2Name = (fd.get('ref2_name') || '').toString().trim();
-    const ref2Phone = (fd.get('ref2_phone') || '').toString().trim();
+    const campus      = (fd.get('campus')       || '').toString().trim();
+    const ref1Name    = (fd.get('ref1_name')    || '').toString().trim();
+    const ref1Phone   = (fd.get('ref1_phone')   || '').toString().trim();
+    const ref2Name    = (fd.get('ref2_name')    || '').toString().trim();
+    const ref2Phone   = (fd.get('ref2_phone')   || '').toString().trim();
 
     if (!parentName || !isValidPhone(parentPhone) || !campus) {
       showError('Vui lòng điền đầy đủ thông tin của bạn.');
@@ -281,7 +296,8 @@ const campuses = [
       showError('Vui lòng điền đầy đủ thông tin 2 người bạn được mời.');
       return;
     }
-    if ([parentPhone, ref1Phone, ref2Phone].map((p) => p.replace(/\s/g, '')).some((p, i, a) => a.indexOf(p) !== i)) {
+    const phones = [parentPhone, ref1Phone, ref2Phone].map(p => p.replace(/\s/g, ''));
+    if (phones.some((p, i, a) => a.indexOf(p) !== i)) {
       showError('Số điện thoại bị trùng. Vui lòng kiểm tra lại.');
       return;
     }
@@ -295,37 +311,16 @@ const campuses = [
     }
 
     const leads = [
-      {
-        full_name: parentName,
-        phone: parentPhone,
-        email: '',
-        campus_ref: campus,
-        role: 'registrant',
-        notes: 'Đăng ký hội viên Công viên Giáo dục',
-      },
-      {
-        full_name: ref1Name,
-        phone: ref1Phone,
-        email: '',
-        campus_ref: campus,
-        role: 'referred',
-        notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',
-      },
-      {
-        full_name: ref2Name,
-        phone: ref2Phone,
-        email: '',
-        campus_ref: campus,
-        role: 'referred',
-        notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',
-      },
+      { full_name: parentName,  phone: parentPhone, email: '', campus_ref: campus, role: 'registrant', notes: 'Đăng ký hội viên Công viên Giáo dục' },
+      { full_name: ref1Name,    phone: ref1Phone,   email: '', campus_ref: campus, role: 'referred',   notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')' },
+      { full_name: ref2Name,    phone: ref2Phone,   email: '', campus_ref: campus, role: 'referred',   notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')' },
     ];
 
-    const results = await Promise.all(leads.map(postLead));
-    const primaryOk = results[0];
+    const results    = await Promise.all(leads.map(postLead));
+    const primaryOk  = results[0];
 
     if (primaryOk) {
-      const qs = new URLSearchParams({ name: parentName, campus: campus });
+      const qs = new URLSearchParams({ name: parentName, campus });
       window.location.href = '/tuyen-sinh/cong-vien-giao-duc/cam-on?' + qs.toString();
     } else {
       submitBtn.disabled = false;
@@ -336,72 +331,61 @@ const campuses = [
 })();
 </script>
 
+<!-- ===== STYLES ===== -->
 <style is:inline>
-  /* ===== Override layout: dark navy hero, hide empty sections ===== */
+  /* --------------------------------------------------
+     1. ẨN CÁC SECTION TRỐNG CỦA LAYOUT
+     -------------------------------------------------- */
   section.squeeze-usp,
   section.squeeze-trust,
-  section.squeeze-faq { display: none !important; }
+  section.squeeze-faq,
+  .squeeze-urgency,
+  .squeeze-form-section__badges { display: none !important; }
 
-  /* Hero: architectural render image + dark navy overlay */
+  /* --------------------------------------------------
+     2. HERO — nền navy đậm, chữ vàng
+     -------------------------------------------------- */
   section.squeeze-hero {
-    background:
-      linear-gradient(160deg, rgba(0,0,80,0.72) 0%, rgba(0,0,128,0.68) 50%, rgba(0,0,80,0.72) 100%),
-      url('https://media.truongvietanh.com/images/da-ngoai/hoc-sinh-di-da-ngoai-1.webp') center/cover no-repeat !important;
+    background: linear-gradient(160deg, #000060 0%, #000080 55%, #000070 100%) !important;
     color: #fff !important;
   }
   section.squeeze-hero h1,
   section.squeeze-hero h2 { color: #ffff00 !important; }
-  section.squeeze-hero p, section.squeeze-hero .squeeze-hero__sub { color: rgba(255,255,255,0.9) !important; }
+  section.squeeze-hero p  { color: rgba(255,255,255,0.9) !important; }
 
-  /* Content section: white background */
+  /* --------------------------------------------------
+     3. PHẦN NỘI DUNG — nền trắng
+     -------------------------------------------------- */
   section.squeeze-content { background: #fff; padding: 0 !important; }
+
+  /* --------------------------------------------------
+     4. PHẦN FORM — nền navy đậm
+     -------------------------------------------------- */
   section.squeeze-form-section {
     background: linear-gradient(180deg, #000080 0%, #000060 100%) !important;
   }
+  section.squeeze-form-section::before {
+    background: linear-gradient(90deg, #ffff00, #cccc00) !important;
+  }
   section.squeeze-form-section .squeeze-form-section__heading,
-  section.squeeze-form-section .squeeze-form-section__description { color: #fff !important; }
-  section.squeeze-form-section::before { background: linear-gradient(90deg,#ffff00,#cccc00) !important; }
-
-  /* Fix form badges invisible on dark bg */
-  .squeeze-form-section__badges { display: none !important; }
-
-  /* Hide urgency bar (irrelevant for this page) */
-  .squeeze-urgency { display: none !important; }
-
-  /* Trust badges on dark form bg */
-  .cvgd-trust-badges {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 1.25rem;
-  }
-  .cvgd-trust-badges span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.3rem;
-    background: rgba(255,255,255,0.12);
-    border: 1px solid rgba(255,255,255,0.3);
-    color: #fff;
-    font-size: 0.85rem;
-    font-weight: 600;
-    padding: 0.4rem 0.9rem;
-    border-radius: 50px;
+  section.squeeze-form-section .squeeze-form-section__description {
+    color: #fff !important;
   }
 
-  /* ===== Brand colors: navy #000080, yellow #ffff00 ===== */
-
+  /* --------------------------------------------------
+     5. HERO: BADGE + RULES
+     -------------------------------------------------- */
   .cvgd-badge {
     display: inline-block;
-    background: rgba(255, 255, 0, 0.2);
+    background: rgba(255,255,0,0.18);
     color: #ffff00;
-    padding: 0.45rem 1rem;
+    padding: 0.4rem 1rem;
     border-radius: 999px;
     font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
+    font-size: 0.95rem;
+    letter-spacing: 0.4px;
     margin-bottom: 1rem;
-    border: 1.5px solid rgba(255, 255, 0, 0.7);
+    border: 1.5px solid rgba(255,255,0,0.6);
   }
   .cvgd-rules {
     display: flex;
@@ -411,50 +395,41 @@ const campuses = [
     margin: 1.25rem 0;
   }
   .cvgd-rule {
-    background: #000080;
+    background: rgba(0,0,128,0.6);
     color: #fff;
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 1.1rem;
     border-radius: 6px;
     font-weight: 700;
-    font-size: 1rem;
-    letter-spacing: 0.3px;
+    font-size: 0.95rem;
+    border: 1px solid rgba(255,255,255,0.2);
   }
   .cvgd-rule--accent {
     background: #ffff00;
     color: #000080;
+    border-color: #ffff00;
   }
   .cvgd-hero-cta-line {
     max-width: 640px;
     margin: 0.75rem auto 0;
-    color: rgba(255,255,255,0.92);
+    color: rgba(255,255,255,0.9);
     line-height: 1.7;
   }
   .cvgd-hero-cta-line strong { color: #ffff00; }
 
+  /* --------------------------------------------------
+     6. CONTENT: LAYOUT
+     -------------------------------------------------- */
   .cvgd-content { max-width: 960px; margin: 0 auto; display: grid; gap: 0; }
 
-  /* Hero image full-width */
-  .cvgd-hero-img {
-    margin: 0;
-    border-radius: 0;
-    overflow: hidden;
-    box-shadow: none;
-  }
-  .cvgd-hero-img img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 21 / 9;
-    object-fit: cover;
-  }
-
-  /* Gallery section — dark navy bg */
+  /* --------------------------------------------------
+     7. GALLERY
+     -------------------------------------------------- */
   .cvgd-gallery-intro {
     text-align: center;
     padding: 2.5rem 1.5rem 1.25rem;
     background: #000080;
   }
-  .cvgd-gallery-intro .cvgd-h2 { margin-bottom: 0.5rem; color: #ffff00 !important; }
+  .cvgd-gallery-intro .cvgd-h2  { margin-bottom: 0.5rem; color: #ffff00 !important; }
   .cvgd-gallery-intro .cvgd-para { max-width: 640px; margin: 0 auto; color: rgba(255,255,255,0.85); }
 
   .cvgd-gallery {
@@ -464,58 +439,45 @@ const campuses = [
     background: #000080;
     padding: 0 0 2rem;
   }
-  .cvgd-gallery figure { margin: 0; border-radius: 0; overflow: hidden; }
+  .cvgd-gallery figure { margin: 0; overflow: hidden; }
   .cvgd-gallery img {
     display: block;
     width: 100%;
-    height: 100%;
     aspect-ratio: 4 / 3;
     object-fit: cover;
     transition: transform 0.4s ease;
   }
   .cvgd-gallery figure:hover img { transform: scale(1.05); }
 
-  /* Content panels — alternating white / light navy */
+  /* --------------------------------------------------
+     8. PANELS
+     -------------------------------------------------- */
   .cvgd-panel {
     background: #fff;
-    border: none;
-    border-radius: 0;
     padding: 2.5rem 1.5rem;
     max-width: 100%;
   }
   .cvgd-panel > * { max-width: 860px; margin-left: auto; margin-right: auto; }
-  .cvgd-panel--highlight {
-    background: #000080;
-    border: none;
-  }
-  .cvgd-panel--highlight .cvgd-h2 { color: #ffff00 !important; }
+
+  .cvgd-panel--highlight { background: #000080; }
+  .cvgd-panel--highlight .cvgd-h2            { color: #ffff00 !important; }
   .cvgd-panel--highlight .cvgd-benefits strong { color: #ffff00 !important; }
-  .cvgd-panel--highlight .cvgd-benefits p { color: rgba(255,255,255,0.85) !important; }
-  .cvgd-panel--highlight .cvgd-benefits li {
-    background: rgba(255,255,255,0.08) !important;
-    border-color: rgba(255,255,0,0.2) !important;
-  }
+  .cvgd-panel--highlight .cvgd-benefits p    { color: rgba(255,255,255,0.85) !important; }
+  .cvgd-panel--highlight .cvgd-benefits li   { background: rgba(255,255,255,0.08) !important; border-color: rgba(255,255,0,0.2) !important; }
   .cvgd-panel--highlight .cvgd-benefits li > span { background: rgba(255,255,0,0.15) !important; }
-  .cvgd-panel--steps {
-    background: #fff;
-    border-left: none;
-    border-top: 4px solid #ffff00;
-  }
-  .cvgd-h2 {
-    color: #000080;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-  }
-  .cvgd-lead { font-size: 1.15rem; line-height: 1.65; margin-bottom: 1rem; color: #000080; }
-  .cvgd-para { line-height: 1.7; margin-bottom: 1rem; color: #1a1a2e; }
-  .cvgd-para--emphasis { font-weight: 700; color: #000080; font-size: 1.15rem; }
-  .cvgd-pains {
-    list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.5rem;
-  }
-  .cvgd-pains li {
-    padding: 0.75rem 1rem; background: #fef2f2; border-left: 3px solid #dc2626;
-    border-radius: 8px; font-weight: 600; color: #7f1d1d;
-  }
+
+  .cvgd-panel--steps { border-top: 4px solid #ffff00; }
+
+  .cvgd-h2    { color: #000080; margin-bottom: 1rem; line-height: 1.3; }
+  .cvgd-lead  { font-size: 1.15rem; line-height: 1.65; margin-bottom: 1rem; color: #000080; }
+  .cvgd-para  { line-height: 1.7; margin-bottom: 1rem; color: #1a1a2e; }
+  .cvgd-para--emphasis { font-weight: 700; color: #000080; font-size: 1.1rem; }
+
+  /* Danh sách vấn đề */
+  .cvgd-pains { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.5rem; }
+  .cvgd-pains li { padding: 0.75rem 1rem; background: #fef2f2; border-left: 3px solid #dc2626; border-radius: 8px; font-weight: 600; color: #7f1d1d; }
+
+  /* Danh sách cơ sở */
   .cvgd-campuses { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.75rem; }
   .cvgd-campuses a {
     display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center;
@@ -523,101 +485,93 @@ const campuses = [
     border-radius: 10px; color: #000080; text-decoration: none; transition: all 0.2s;
   }
   .cvgd-campuses a:hover { background: #fff; border-color: #ffff00; box-shadow: 0 2px 12px rgba(0,0,128,0.1); transform: translateY(-2px); }
-  .cvgd-campus__num {
-    width: 36px; height: 36px; border-radius: 50%; background: #000080; color: #ffff00;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-weight: 800; flex-shrink: 0;
-  }
+  .cvgd-campus__num  { width: 36px; height: 36px; border-radius: 50%; background: #000080; color: #ffff00; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; flex-shrink: 0; }
   .cvgd-campus__text { font-weight: 600; line-height: 1.5; }
-  .cvgd-campus__go { color: #000080; font-weight: 700; white-space: nowrap; background: #ffff00; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; }
+  .cvgd-campus__go   { color: #000080; font-weight: 700; white-space: nowrap; background: #ffff00; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; }
+
+  /* Lợi ích */
   .cvgd-benefits { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
-  .cvgd-benefits li {
-    display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
-    padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid rgba(0,0,128,0.12);
-  }
-  .cvgd-benefits li > span {
-    font-size: 1.75rem; width: 48px; height: 48px;
-    background: rgba(255,255,0,0.15); border-radius: 50%;
-    display: inline-flex; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
+  .cvgd-benefits li { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid rgba(0,0,128,0.12); }
+  .cvgd-benefits li > span { font-size: 1.75rem; width: 48px; height: 48px; background: rgba(255,255,0,0.15); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; }
   .cvgd-benefits strong { color: #000080; display: block; margin-bottom: 0.25rem; }
   .cvgd-benefits p { color: #475569; line-height: 1.6; margin: 0; }
+
+  /* Ai nên tham gia */
   .cvgd-who { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.5rem; }
-  .cvgd-who li {
-    padding: 0.75rem 1rem; background: #f0fdf4; border-left: 3px solid #22c55e;
-    border-radius: 8px; color: #14532d; font-weight: 600;
-  }
+  .cvgd-who li { padding: 0.75rem 1rem; background: #f0fdf4; border-left: 3px solid #22c55e; border-radius: 8px; color: #14532d; font-weight: 600; }
+
+  /* Bước hướng dẫn */
   .cvgd-steps { margin: 0 0 1rem 1.25rem; padding: 0; display: grid; gap: 0.65rem; }
   .cvgd-steps li { line-height: 1.7; color: #1a1a2e; }
   .cvgd-steps li strong { color: #000080; }
   .cvgd-no { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
   .cvgd-no li { color: #475569; font-weight: 500; }
-  .cvgd-limit {
-    padding: 2rem 1.5rem;
-    background: linear-gradient(135deg, #000060, #000080);
-    color: #fff;
-    border-radius: 0;
-    text-align: center;
-    max-width: 100%;
-  }
+
+  /* Giới hạn */
+  .cvgd-limit { padding: 2rem 1.5rem; background: linear-gradient(135deg, #000060, #000080); text-align: center; }
   .cvgd-limit p { margin: 0 auto; max-width: 700px; line-height: 1.7; color: #fff; font-size: 1.05rem; }
   .cvgd-limit strong { color: #ffff00; }
 
-  /* ===== Form ===== */
+  /* --------------------------------------------------
+     9. FORM
+     -------------------------------------------------- */
   .cvgd-form-intro {
-    margin-bottom: 2rem; text-align: center;
-    max-width: 640px; margin-left: auto; margin-right: auto;
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 2rem;
   }
   .cvgd-form {
-    max-width: 620px; margin: 0 auto; display: grid; gap: 1.5rem; text-align: left;
+    max-width: 620px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.5rem;
+    text-align: left;
   }
   .cvgd-form > * { min-width: 0; }
 
-  /* Fieldset card */
+  /* Fieldset card — header navy, body trắng */
   .cvgd-fieldset {
     border: none;
-    border-radius: 16px;
+    border-radius: 14px;
     padding: 0;
     background: #fff;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.16);
     overflow: hidden;
   }
   .cvgd-fieldset legend {
     display: block;
     width: 100%;
     box-sizing: border-box;
-    padding: 0.75rem 1.25rem;
+    padding: 0.8rem 1.25rem;
     background: #000080;
     color: #ffff00;
     font-size: 0.95rem;
     font-weight: 700;
     letter-spacing: 0.3px;
-    float: left; /* keeps legend full-width */
+    float: left;
   }
-  /* Fake clearfix after legend */
   .cvgd-fieldset > * { clear: both; }
-  .cvgd-fieldset-body {
-    padding: 0.5rem 1.25rem 1.25rem;
-  }
+  .cvgd-fieldset-body { padding: 0.5rem 1.25rem 1.25rem; }
 
-  .cvgd-form label {
-    display: grid; gap: 0.35rem; margin-top: 0.85rem;
-  }
-  .cvgd-form label span {
-    font-size: 0.9rem; font-weight: 600; color: #374151;
-  }
-  .cvgd-form label em { color: #dc2626; font-style: normal; margin-left: 2px; }
-  .cvgd-form input, .cvgd-form select {
-    width: 100%; padding: 0.75rem 0.9rem;
+  .cvgd-form label { display: grid; gap: 0.35rem; margin-top: 0.85rem; }
+  .cvgd-form label span { font-size: 0.9rem; font-weight: 600; color: #374151; }
+  .cvgd-form label em  { color: #dc2626; font-style: normal; margin-left: 2px; }
+
+  .cvgd-form input,
+  .cvgd-form select {
+    width: 100%;
+    padding: 0.75rem 0.9rem;
     border: 1.5px solid #e5e7eb;
-    border-radius: 9px; font-size: 1rem; font-family: inherit;
+    border-radius: 9px;
+    font-size: 1rem;
+    font-family: inherit;
     background: #f9fafb;
     color: #111827;
-    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
     box-sizing: border-box;
+    transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
   }
-  .cvgd-form input:focus, .cvgd-form select:focus {
+  .cvgd-form input:focus,
+  .cvgd-form select:focus {
     outline: none;
     border-color: #000080;
     background: #fff;
@@ -625,38 +579,70 @@ const campuses = [
   }
   .cvgd-form input::placeholder { color: #9ca3af; }
 
-  /* Submit button */
+  /* Nút gửi */
   .cvgd-submit {
     display: block;
     width: 100%;
     padding: 1rem 1.5rem;
     background: #ffff00;
     color: #000080;
-    border: none; border-radius: 12px;
-    font-weight: 800; font-size: 1.1rem; line-height: 1.25;
+    border: none;
+    border-radius: 12px;
+    font-weight: 800;
+    font-size: 1.1rem;
     cursor: pointer;
-    box-shadow: 0 4px 18px rgba(255,255,0,0.45);
+    box-shadow: 0 4px 18px rgba(255,255,0,0.4);
     transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
-    letter-spacing: 0.2px;
   }
-  .cvgd-submit:hover { transform: translateY(-2px); background: #ffff33; box-shadow: 0 6px 24px rgba(255,255,0,0.6); }
-  .cvgd-submit:active { transform: translateY(0); }
+  .cvgd-submit:hover   { transform: translateY(-2px); background: #ffff33; box-shadow: 0 6px 24px rgba(255,255,0,0.55); }
+  .cvgd-submit:active  { transform: translateY(0); }
   .cvgd-submit:disabled { opacity: 0.55; cursor: not-allowed; transform: none; box-shadow: none; }
 
   .cvgd-consent {
-    font-size: 0.85rem; color: rgba(255,255,255,0.65);
-    text-align: center; line-height: 1.6; margin: 0;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    line-height: 1.6;
+    margin: 0;
   }
   .cvgd-error {
-    background: #fef2f2; color: #991b1b; padding: 0.85rem 1rem;
-    border-radius: 10px; border-left: 4px solid #dc2626; font-weight: 600;
+    background: #fef2f2;
+    color: #991b1b;
+    padding: 0.85rem 1rem;
+    border-radius: 10px;
+    border-left: 4px solid #dc2626;
+    font-weight: 600;
     font-size: 0.95rem;
   }
 
+  /* Trust badges */
+  .cvgd-trust-badges {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1.5rem;
+  }
+  .cvgd-trust-badges span {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.28);
+    color: #fff;
+    font-size: 0.82rem;
+    font-weight: 600;
+    padding: 0.4rem 0.85rem;
+    border-radius: 50px;
+  }
+
+  /* --------------------------------------------------
+     10. RESPONSIVE
+     -------------------------------------------------- */
   @media (max-width: 640px) {
-    .cvgd-campuses a { grid-template-columns: auto 1fr; }
-    .cvgd-campus__go { grid-column: 2; }
-    .cvgd-rules { flex-direction: column; }
-    .cvgd-gallery { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+    .cvgd-campuses a         { grid-template-columns: auto 1fr; }
+    .cvgd-campus__go         { grid-column: 2; }
+    .cvgd-rules              { flex-direction: column; align-items: center; }
+    .cvgd-gallery            { grid-template-columns: 1fr 1fr; gap: 3px; }
   }
 </style>

@@ -332,17 +332,19 @@ const campuses = [
   section.squeeze-trust,
   section.squeeze-faq { display: none !important; }
 
+  /* ===== Brand colors: navy #000080, yellow #ffff00 ===== */
+
   .cvgd-badge {
     display: inline-block;
-    background: rgba(240, 208, 72, 0.15);
-    color: #8b6a1e;
+    background: rgba(255, 255, 0, 0.18);
+    color: #000080;
     padding: 0.45rem 1rem;
     border-radius: 999px;
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: 0.5px;
     margin-bottom: 1rem;
-    border: 1px solid rgba(240, 208, 72, 0.4);
+    border: 1.5px solid rgba(255, 255, 0, 0.7);
   }
   .cvgd-rules {
     display: flex;
@@ -352,7 +354,7 @@ const campuses = [
     margin: 1.25rem 0;
   }
   .cvgd-rule {
-    background: #1a1a5e;
+    background: #000080;
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -361,12 +363,13 @@ const campuses = [
     letter-spacing: 0.3px;
   }
   .cvgd-rule--accent {
-    background: linear-gradient(135deg, #F0D048, #b8922e);
+    background: #ffff00;
+    color: #000080;
   }
   .cvgd-hero-cta-line {
     max-width: 640px;
     margin: 0.75rem auto 0;
-    color: #2d2d42;
+    color: #000060;
     line-height: 1.7;
   }
 
@@ -376,7 +379,7 @@ const campuses = [
     margin: 0;
     border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(26, 26, 94, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 128, 0.15);
   }
   .cvgd-hero-img img {
     display: block;
@@ -413,18 +416,18 @@ const campuses = [
     padding: 1.75rem 1.5rem;
   }
   .cvgd-panel--highlight {
-    background: linear-gradient(180deg, #fdf7e6 0%, #ffffff 100%);
-    border-color: rgba(240, 208, 72, 0.4);
+    background: linear-gradient(180deg, rgba(255,255,0,0.06) 0%, #ffffff 100%);
+    border-color: rgba(255, 255, 0, 0.5);
   }
-  .cvgd-panel--steps { border-left: 4px solid #F0D048; }
+  .cvgd-panel--steps { border-left: 4px solid #ffff00; }
   .cvgd-h2 {
-    color: #1a1a5e;
+    color: #000080;
     margin-bottom: 1rem;
     line-height: 1.3;
   }
-  .cvgd-lead { font-size: 1.15rem; line-height: 1.65; margin-bottom: 1rem; color: #1a1a5e; }
-  .cvgd-para { line-height: 1.7; margin-bottom: 1rem; color: #2d2d42; }
-  .cvgd-para--emphasis { font-weight: 700; color: #1a1a5e; font-size: 1.15rem; }
+  .cvgd-lead { font-size: 1.15rem; line-height: 1.65; margin-bottom: 1rem; color: #000080; }
+  .cvgd-para { line-height: 1.7; margin-bottom: 1rem; color: #1a1a2e; }
+  .cvgd-para--emphasis { font-weight: 700; color: #000080; font-size: 1.15rem; }
   .cvgd-pains {
     list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.5rem;
   }
@@ -436,28 +439,28 @@ const campuses = [
   .cvgd-campuses a {
     display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center;
     padding: 1rem 1.25rem; background: #f8f9fb; border: 1px solid #e5e7eb;
-    border-radius: 10px; color: #1a1a5e; text-decoration: none; transition: all 0.2s;
+    border-radius: 10px; color: #000080; text-decoration: none; transition: all 0.2s;
   }
-  .cvgd-campuses a:hover { background: #fff; border-color: #F0D048; transform: translateY(-2px); }
+  .cvgd-campuses a:hover { background: #fff; border-color: #ffff00; box-shadow: 0 2px 12px rgba(0,0,128,0.1); transform: translateY(-2px); }
   .cvgd-campus__num {
-    width: 36px; height: 36px; border-radius: 50%; background: #1a1a5e; color: #fff;
+    width: 36px; height: 36px; border-radius: 50%; background: #000080; color: #ffff00;
     display: inline-flex; align-items: center; justify-content: center;
     font-weight: 800; flex-shrink: 0;
   }
   .cvgd-campus__text { font-weight: 600; line-height: 1.5; }
-  .cvgd-campus__go { color: #F0D048; font-weight: 700; white-space: nowrap; }
+  .cvgd-campus__go { color: #000080; font-weight: 700; white-space: nowrap; background: #ffff00; padding: 0.2rem 0.6rem; border-radius: 4px; font-size: 0.85rem; }
   .cvgd-benefits { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
   .cvgd-benefits li {
     display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
-    padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid #f1e6c9;
+    padding: 1rem; background: #fff; border-radius: 10px; border: 1px solid rgba(0,0,128,0.12);
   }
   .cvgd-benefits li > span {
     font-size: 1.75rem; width: 48px; height: 48px;
-    background: #fef8e5; border-radius: 50%;
+    background: rgba(255,255,0,0.15); border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .cvgd-benefits strong { color: #1a1a5e; display: block; margin-bottom: 0.25rem; }
+  .cvgd-benefits strong { color: #000080; display: block; margin-bottom: 0.25rem; }
   .cvgd-benefits p { color: #475569; line-height: 1.6; margin: 0; }
   .cvgd-who { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.5rem; }
   .cvgd-who li {
@@ -465,16 +468,16 @@ const campuses = [
     border-radius: 8px; color: #14532d; font-weight: 600;
   }
   .cvgd-steps { margin: 0 0 1rem 1.25rem; padding: 0; display: grid; gap: 0.65rem; }
-  .cvgd-steps li { line-height: 1.7; color: #2d2d42; }
-  .cvgd-steps li strong { color: #1a1a5e; }
+  .cvgd-steps li { line-height: 1.7; color: #1a1a2e; }
+  .cvgd-steps li strong { color: #000080; }
   .cvgd-no { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
   .cvgd-no li { color: #475569; font-weight: 500; }
   .cvgd-limit {
-    padding: 1.25rem 1.5rem; background: linear-gradient(135deg, #1a1a5e, #2d2d8a);
+    padding: 1.25rem 1.5rem; background: linear-gradient(135deg, #000080, #0000a8);
     color: #fff; border-radius: 14px;
   }
   .cvgd-limit p { margin: 0; line-height: 1.65; color: #fff; }
-  .cvgd-limit strong { color: #F0D048; }
+  .cvgd-limit strong { color: #ffff00; }
 
   /* Form */
   .cvgd-form-intro { margin-bottom: 1.5rem; text-align: center; max-width: 640px; margin-left: auto; margin-right: auto; }
@@ -487,14 +490,14 @@ const campuses = [
     background: #fff;
   }
   .cvgd-fieldset legend {
-    padding: 0 0.65rem; font-weight: 700; color: #1a1a5e;
+    padding: 0 0.65rem; font-weight: 700; color: #000080;
     font-size: 1rem;
   }
   .cvgd-form label {
     display: grid; gap: 0.35rem; margin-top: 0.75rem;
   }
   .cvgd-form label span {
-    font-weight: 600; color: #1a1a5e;
+    font-weight: 600; color: #000080;
   }
   .cvgd-form label em { color: #dc2626; font-style: normal; }
   .cvgd-form input, .cvgd-form select {
@@ -503,25 +506,25 @@ const campuses = [
     transition: border-color 0.2s;
   }
   .cvgd-form input:focus, .cvgd-form select:focus {
-    outline: none; border-color: #F0D048;
-    box-shadow: 0 0 0 3px rgba(240, 208, 72, 0.15);
+    outline: none; border-color: #000080;
+    box-shadow: 0 0 0 3px rgba(0, 0, 128, 0.12);
   }
   .cvgd-submit {
     justify-self: center;
     width: auto;
     max-width: 100%;
     padding: 0.85rem 1.5rem;
-    background: linear-gradient(135deg, #F0D048, #b8922e);
-    color: #1a1a2e; border: none; border-radius: 10px;
+    background: #ffff00;
+    color: #000080; border: none; border-radius: 10px;
     font-weight: 800; font-size: 1rem; line-height: 1.25;
     cursor: pointer; white-space: nowrap;
-    box-shadow: 0 4px 15px rgba(240, 208, 72, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 255, 0, 0.5);
     transition: transform 0.15s, box-shadow 0.15s;
   }
   @media (max-width: 480px) {
     .cvgd-submit { white-space: normal; padding: 0.85rem 1.1rem; font-size: 0.95rem; }
   }
-  .cvgd-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(240, 208, 72, 0.5); }
+  .cvgd-submit:hover { transform: translateY(-2px); background: #ffff44; box-shadow: 0 6px 20px rgba(255, 255, 0, 0.6); }
   .cvgd-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
   .cvgd-consent {
     font-size: 1rem; color: #64748b; text-align: center; line-height: 1.5; margin: 0;

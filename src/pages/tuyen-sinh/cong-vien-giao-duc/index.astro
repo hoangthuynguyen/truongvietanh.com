@@ -207,17 +207,6 @@ const campuses = [
     </div>
   </section>
 
-  <!-- Logo + closing section in faq slot -->
-  <section slot="faq">
-    <div class="cvgd-closing">
-      <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" class="cvgd-closing__logo" />
-      <p class="cvgd-closing__tagline">Trường Việt Anh — Đào tạo học sinh giỏi chuyên Anh</p>
-      <div class="cvgd-closing__contacts">
-        <a href="tel:0916961409">📞 0916 961 409</a>
-        <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener">💬 Chat Zalo OA</a>
-      </div>
-    </div>
-  </section>
 </SqueezePageLayout>
 
 <script is:inline>
@@ -360,8 +349,8 @@ const campuses = [
   section.squeeze-hero h2 { color: #ffff00 !important; }
   section.squeeze-hero p, section.squeeze-hero .squeeze-hero__sub { color: rgba(255,255,255,0.9) !important; }
 
-  /* Dark content background alternating */
-  section.squeeze-content { background: #f4f4ff; padding: 0 !important; }
+  /* Content section: white background */
+  section.squeeze-content { background: #fff; padding: 0 !important; }
   section.squeeze-form-section {
     background: linear-gradient(180deg, #000080 0%, #000060 100%) !important;
   }
@@ -374,14 +363,6 @@ const campuses = [
 
   /* Hide urgency bar (irrelevant for this page) */
   .squeeze-urgency { display: none !important; }
-
-  /* Un-hide faq slot for logo closing section */
-  section.squeeze-faq {
-    display: block !important;
-    background: #000080;
-    padding: 0 !important;
-    max-width: 100%;
-  }
 
   /* Trust badges on dark form bg */
   .cvgd-trust-badges {
@@ -403,46 +384,6 @@ const campuses = [
     padding: 0.4rem 0.9rem;
     border-radius: 50px;
   }
-
-  /* Logo closing section */
-  .cvgd-closing {
-    background: #000080;
-    text-align: center;
-    padding: 3rem 1.5rem 2rem;
-    border-top: 3px solid #ffff00;
-  }
-  .cvgd-closing__logo {
-    height: 80px;
-    width: auto;
-    display: block;
-    margin: 0 auto 1rem;
-    background: #fff;
-    padding: 0.5rem 1rem;
-    border-radius: 10px;
-  }
-  .cvgd-closing__tagline {
-    color: rgba(255,255,255,0.8);
-    font-size: 1rem;
-    margin-bottom: 1.25rem;
-  }
-  .cvgd-closing__contacts {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .cvgd-closing__contacts a {
-    display: inline-block;
-    padding: 0.6rem 1.25rem;
-    background: #ffff00;
-    color: #000080;
-    font-weight: 700;
-    border-radius: 8px;
-    text-decoration: none;
-    font-size: 0.95rem;
-    transition: background 0.2s;
-  }
-  .cvgd-closing__contacts a:hover { background: #ffff44; }
 
   /* ===== Brand colors: navy #000080, yellow #ffff00 ===== */
 
@@ -552,7 +493,7 @@ const campuses = [
   }
   .cvgd-panel--highlight .cvgd-benefits li > span { background: rgba(255,255,0,0.15) !important; }
   .cvgd-panel--steps {
-    background: #f4f4ff;
+    background: #fff;
     border-left: none;
     border-top: 4px solid #ffff00;
   }
@@ -667,7 +608,7 @@ const campuses = [
   .cvgd-submit:hover { transform: translateY(-2px); background: #ffff44; box-shadow: 0 6px 20px rgba(255, 255, 0, 0.6); }
   .cvgd-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
   .cvgd-consent {
-    font-size: 1rem; color: #64748b; text-align: center; line-height: 1.5; margin: 0;
+    font-size: 0.9rem; color: rgba(255,255,255,0.7); text-align: center; line-height: 1.5; margin: 0;
   }
   .cvgd-error {
     background: #fef2f2; color: #991b1b; padding: 0.85rem 1rem;

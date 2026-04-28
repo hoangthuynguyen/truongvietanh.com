@@ -495,16 +495,20 @@ const campuses = [
   .cvgd-form input, .cvgd-form select { width: 100%; }
   .cvgd-form-intro { text-align: center; }
   .cvgd-fieldset {
-    border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.25rem 1.25rem;
-    background: #fff;
+    border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 0;
+    background: #fff; overflow: hidden; margin: 0;
   }
   .cvgd-fieldset legend {
-    padding: 0 0.65rem; font-weight: 700; color: #1a1a5e;
-    font-size: 1rem;
+    float: left; display: block; width: 100%; box-sizing: border-box;
+    margin: 0; padding: 0.85rem 1.25rem;
+    background: #000080; color: #ffff00;
+    font-weight: 800; font-size: 1.05rem; letter-spacing: 0.2px;
   }
+  .cvgd-fieldset > *:not(legend) { clear: both; }
   .cvgd-form label {
-    display: grid; gap: 0.35rem; margin-top: 0.75rem;
+    display: grid; gap: 0.35rem; margin: 0.85rem 1.25rem 0;
   }
+  .cvgd-fieldset > label:last-of-type { margin-bottom: 1.25rem; }
   .cvgd-form label span {
     font-weight: 600; color: #1a1a5e;
   }

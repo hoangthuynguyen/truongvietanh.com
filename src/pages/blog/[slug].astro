@@ -331,9 +331,9 @@ const structuredData = [
               <aside class="blog-lead-magnet">
                 <div class="blog-lead-magnet__icon">📥</div>
                 <div class="blog-lead-magnet__body">
-                  <h3>Tải miễn phí: Checklist Chọn Trường Phù Hợp Cho Con</h3>
+                  <h3>Tải miễn phí: Danh mục kiểm tra (checklist) Chọn Trường Phù Hợp Cho Con</h3>
                   <p>15 tiêu chí + framework 5C giúp Ba/Mẹ ra quyết định không hối hận. PDF gửi qua email trong 1 phút.</p>
-                  <a href="/squeeze/checklist-chon-truong" class="blog-lead-magnet__btn">Tải checklist miễn phí →</a>
+                  <a href="/squeeze/checklist-chon-truong" class="blog-lead-magnet__btn">Tải danh mục kiểm tra (checklist) miễn phí →</a>
                 </div>
               </aside>
             </template>
@@ -483,7 +483,7 @@ const structuredData = [
               <p class="blog-side-contact__title">Liên hệ ngay</p>
               <a href="tel:0916961409" class="blog-side-contact__btn">📞 0916 961 409</a>
               <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="blog-side-contact__btn blog-side-contact__btn--zalo">💬 Chat Zalo OA</a>
-              <a href="/squeeze/checklist-chon-truong" class="blog-side-contact__btn blog-side-contact__btn--magnet">📥 Tải checklist miễn phí</a>
+              <a href="/squeeze/checklist-chon-truong" class="blog-side-contact__btn blog-side-contact__btn--magnet">📥 Tải danh mục kiểm tra (checklist) miễn phí</a>
             </div>
           </aside>
         </div><!-- /.blog-grid -->
@@ -806,6 +806,7 @@ const structuredData = [
   }.blog-cta-inline__title{
     font-size: 1.5rem;
     font-weight: 700;
+    color: #fff !important;
     margin: 0 0 0.5rem;
   }.blog-cta-inline__desc{
     font-size: 1rem;
@@ -1242,6 +1243,31 @@ const structuredData = [
       wrapper.appendChild(table);
     }
   });
+
+  // Auto-contrast: fix dark-background CMS blocks where text would be invisible
+  (function() {
+    const body = document.querySelector('.blog-article__body');
+    if (!body) return;
+    // Check every element that might have an inline background-color
+    body.querySelectorAll('*').forEach(function(el) {
+      const style = el.getAttribute('style') || '';
+      if (!style.includes('background')) return;
+      const cs = window.getComputedStyle(el);
+      const bg = cs.backgroundColor;
+      if (!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') return;
+      const m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (!m) return;
+      const lum = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
+      if (lum < 0.45) { // dark background → force white text
+        el.style.color = '#ffffff';
+        el.querySelectorAll('p, span, li, h1, h2, h3, h4, strong, em, a').forEach(function(child) {
+          if (!child.getAttribute('style') || !child.getAttribute('style').includes('color')) {
+            child.style.color = '#ffffff';
+          }
+        });
+      }
+    });
+  })();
 
   // Fix placeholder phone numbers in CMS content
   document.querySelectorAll('.blog-article__body').forEach((body) => {

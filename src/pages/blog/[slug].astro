@@ -1117,6 +1117,26 @@ const structuredData = [
   .blog-inline-subscribe__form button:disabled{opacity:.6;cursor:not-allowed}
   .blog-inline-subscribe__hint{margin:.5rem 0 0;font-size:.78rem;color:#6b7280;font-style:italic}
 
+  /* ===== AUTO-CONTRAST: CMS dark-background callout blocks =====
+     .blog-article__body p/strong/etc. rules have high specificity.
+     When CMS creates a block with inline background + inline color (#fff),
+     child elements inherit but CSS class rules override inheritance.
+     We target known dark Viet Anh brand hex values used in CMS callouts: */
+  .blog-article__body *[style*="#0d1b3e"] p,
+  .blog-article__body *[style*="#0d1b3e"] span,
+  .blog-article__body *[style*="#0d1b3e"] strong,
+  .blog-article__body *[style*="#0d1b3e"] em,
+  .blog-article__body *[style*="#0d1b3e"] a,
+  .blog-article__body *[style*="#1a1a5e"] p,
+  .blog-article__body *[style*="#1a1a5e"] span,
+  .blog-article__body *[style*="#1a1a5e"] strong,
+  .blog-article__body *[style*="#1a1a5e"] em,
+  .blog-article__body *[style*="#1a1a5e"] a,
+  .blog-article__body *[style*="rgb(13, 27, 62)"] p,
+  .blog-article__body *[style*="rgb(13, 27, 62)"] span,
+  .blog-article__body *[style*="rgb(26, 26, 94)"] p,
+  .blog-article__body *[style*="rgb(26, 26, 94)"] span { color: #fff !important; }
+
   /* Mobile: smaller hero, full-width */
   @media (max-width:768px){
     .blog-hero-img{padding:0;border-radius:0;margin-top:0}
@@ -1244,26 +1264,27 @@ const structuredData = [
     }
   });
 
-  // Auto-contrast: fix dark-background CMS blocks where text would be invisible
-  (function() {
+  // Auto-contrast: fix dark-background CMS blocks where text would be invisible.
+  // Must use setProperty('color','#fff','important') because .blog-article__body p { color: #1f2937 }
+  // has higher specificity than inherited color — so inherited white does NOT win without !important.
+  (function applyAutoContrast() {
     const body = document.querySelector('.blog-article__body');
     if (!body) return;
-    // Check every element that might have an inline background-color
     body.querySelectorAll('*').forEach(function(el) {
-      const style = el.getAttribute('style') || '';
-      if (!style.includes('background')) return;
-      const cs = window.getComputedStyle(el);
-      const bg = cs.backgroundColor;
+      // Only process elements with an inline background style
+      const inlineStyle = el.getAttribute('style') || '';
+      if (!inlineStyle.toLowerCase().includes('background')) return;
+      // Read computed background color
+      const bg = window.getComputedStyle(el).backgroundColor;
       if (!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') return;
       const m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
       if (!m) return;
       const lum = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
-      if (lum < 0.45) { // dark background → force white text
-        el.style.color = '#ffffff';
-        el.querySelectorAll('p, span, li, h1, h2, h3, h4, strong, em, a').forEach(function(child) {
-          if (!child.getAttribute('style') || !child.getAttribute('style').includes('color')) {
-            child.style.color = '#ffffff';
-          }
+      if (lum < 0.45) {
+        // Dark background detected — force white text with !important to beat CSS specificity
+        el.style.setProperty('color', '#ffffff', 'important');
+        el.querySelectorAll('p, span, li, h1, h2, h3, h4, strong, em, b, a').forEach(function(child) {
+          child.style.setProperty('color', '#ffffff', 'important');
         });
       }
     });

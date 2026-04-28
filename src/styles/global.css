@@ -216,8 +216,10 @@ h3{
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  min-height: 115px;
+  min-height: 60px;
+  height: 60px;
   gap: 0.5rem;
+  overflow: visible;
 }.wp-nav__list{
   list-style: none;
   padding: 0;
@@ -251,16 +253,27 @@ h3{
   transition: transform 0.2s;
 }.wp-nav__item--dropdown:hover .wp-nav__chevron{
   transform: rotate(180deg);
-}/* Logo */
+}/* Logo — fixed-height container, image absolutely positioned so big logo doesn't push header taller */
 .wp-nav__logo{
   display: flex;
   justify-content: center;
-  padding: 0.25rem 1rem;
+  align-items: center;
+  position: relative;
+  height: 60px;
+  min-width: 220px;
+  padding: 0 1rem;
+  overflow: visible;
 }.wp-nav__logo img{
-  height: 100px;
+  height: 92px;
   width: auto;
-  max-width: 340px;
+  max-width: 280px;
   object-fit: contain;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  image-rendering: -webkit-optimize-contrast;
 }/* Dropdown */
 .wp-dropdown{
   position: absolute;
@@ -396,13 +409,19 @@ h3{
     display: none;
   }.wp-nav{
     grid-template-columns: auto 1fr;
-    min-height: 84px;
+    min-height: 56px;
+    height: 56px;
     position: relative;
   }.wp-nav__logo{
-    padding: 0.25rem 0;
+    padding: 0;
+    height: 56px;
+    min-width: 140px;
+    justify-content: flex-start;
   }.wp-nav__logo img{
-    height: 72px;
-    max-width: 240px;
+    height: 76px;
+    max-width: 220px;
+    left: 0;
+    transform: translate(0, -50%);
   }.wp-hamburger{
     display: flex;
   }.wp-top-bar__announcement{ display: none; }.wp-top-bar__inner{ justify-content: center; }.wp-top-bar__link--zalo{

@@ -41,11 +41,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
        {(leftNav.length > 0 ? leftNav : [
          { label: 'Trang chủ', href: '/' },
          { label: 'Giới thiệu', href: '/gioi-thieu' },
-         { label: 'Giáo viên', href: '/ban-lanh-dao', children: [
-           { label: 'Ban Lãnh Đạo', href: '/ban-lanh-dao' },
-           { label: 'Giáo viên Chủ Nhiệm', href: '/giao-vien-chu-nhiem' },
-           { label: 'Giáo viên Bộ Môn', href: '/giao-vien-bo-mon' },
-         ]},
          { label: 'Tuyển sinh', href: '/tuyen-sinh', children: [
            { label: 'Mầm non', href: '/tuyen-sinh/mam-non' },
            { label: 'Tiểu học', href: '/tuyen-sinh/tieu-hoc' },
@@ -120,14 +115,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     <div class="mobile-nav-inner">
       <a href="/" class="mobile-nav-link">Trang chủ</a>
       <a href="/gioi-thieu" class="mobile-nav-link">Giới thiệu</a>
-      <div class="mobile-nav-group">
-        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Giáo viên">Giáo viên <span class="toggle-arrow">▾</span></button>
-        <div class="mobile-nav-sub">
-          <a href="/ban-lanh-dao" class="mobile-nav-sublink">Ban Lãnh Đạo</a>
-          <a href="/giao-vien-chu-nhiem" class="mobile-nav-sublink">Giáo viên Chủ Nhiệm</a>
-          <a href="/giao-vien-bo-mon" class="mobile-nav-sublink">Giáo viên Bộ Môn</a>
-        </div>
-      </div>
       <div class="mobile-nav-group">
         <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Tuyển sinh">Tuyển sinh <span class="toggle-arrow">▾</span></button>
         <div class="mobile-nav-sub">

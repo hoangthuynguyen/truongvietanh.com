@@ -20,21 +20,12 @@ const structuredData = {
       { "@type": "Person", "name": "Nguyễn Thu Thảo", "jobTitle": "Phó Hiệu trưởng Cơ sở Phú Nhuận" },
       { "@type": "Person", "name": "Trần Thị Ngọc Tuyền", "jobTitle": "Hiệu trưởng Cơ sở Bình Tân" },
       { "@type": "Person", "name": "Đậu Thị Hải Yến", "jobTitle": "Hiệu trưởng Trường Mầm Non Việt Anh" },
-      { "@type": "Person", "name": "Nguyễn Thùy Anh", "jobTitle": "Viện trưởng Viện Nghiên cứu & Phát triển Học thuật" }
+      { "@type": "Person", "name": "Nguyễn Thùy Anh", "jobTitle": "Viện trưởng Viện Nghiên cứu & Phát triển Học thuật" },
+      { "@type": "Person", "name": "Nguyễn Duy Khải", "jobTitle": "Regional Manager - Major Education, Giám đốc Trường Mầm Non Nhân Lễ, Giám đốc Trường Mầm Non & Tiểu Học Thái Sơn" }
     ]
   }
 };
 
-const tabs = [
-  { id: 'bgh', label: 'Ban Lãnh Đạo', icon: '🏛️' },
-  { id: 'gv-go-vap', label: 'GV Gò Vấp', icon: '📍' },
-  { id: 'gv-phu-nhuan', label: 'GV Phú Nhuận', icon: '📍' },
-  { id: 'gv-binh-tan', label: 'GV Bình Tân', icon: '📍' },
-  { id: 'gv-mam-non', label: 'GV Mầm Non', icon: '🌱' },
-  { id: 'gv-tieu-hoc', label: 'GV Tiểu Học', icon: '📚' },
-  { id: 'gv-ban-ngu', label: 'GV Bản Ngữ', icon: '🌍' },
-  { id: 'tu-van', label: 'Đội Ngũ Tư Vấn', icon: '💬' },
-];
 
 const bghMembers = [
   {
@@ -52,7 +43,7 @@ const bghMembers = [
     org: 'Hệ Thống Trường Việt Anh',
     role: 'vice-chairman',
     initials: 'PTCT',
-    photo: 'https://truongvietanh.com/wp-content/uploads/2025/03/Ms-tu.jpg',
+    photo: '/pham-thi-cam-tu.jpg',
     description: 'Phó Chủ tịch Hội đồng trường Việt Anh. Phụ trách phát triển kinh doanh và mở rộng hệ thống.',
   },
   {
@@ -71,7 +62,7 @@ const bghMembers = [
     org: 'Phụ trách Tiểu Học – Cơ sở Gò Vấp',
     role: 'vice-principal',
     initials: 'NTL',
-    photo: 'https://truongvietanh.com/wp-content/uploads/2025/07/Nguyen-Thi-Lan-PHT-TiH.jpg',
+    photo: '/nguyen-thi-lan.jpg',
     description: '"Với vai trò là phó hiệu trưởng trường Việt Anh, tôi luôn tâm niệm sống với tuyên ngôn sứ mệnh của mình – Yêu thương và trách nhiệm."',
     quote: true,
   },
@@ -81,7 +72,7 @@ const bghMembers = [
     org: 'Trường Việt Anh – Cơ sở Phú Nhuận',
     role: 'vice-principal',
     initials: 'NTT',
-    photo: 'https://truongvietanh.com/wp-content/uploads/2025/07/Nguyen-Thu-Thao-Pho-Hieu-Truong.jpg',
+    photo: '/nguyen-thu-thao.jpg',
     description: 'Phó Hiệu trưởng trường Việt Anh. Vận hành và phát triển Trường Việt Anh Phú Nhuận.',
   },
   {
@@ -111,6 +102,16 @@ const bghMembers = [
     initials: 'NTA',
     photo: '',
     description: 'Viện trưởng Viện nghiên cứu và phát triển Merdi. Phụ trách phát triển học thuật, huấn luyện giáo viên và quản lý chất lượng giáo dục.',
+  },
+  {
+    name: 'Nguyễn Duy Khải',
+    title: 'Regional Manager – Major Education',
+    org: 'Trường Mầm Non Nhân Lễ & Trường Mầm Non – Tiểu Học Thái Sơn',
+    role: 'regional-manager',
+    initials: 'NDK',
+    photo: '/nguyen-duy-khai.jpg',
+    description: 'Giám đốc Trường Mầm Non Nhân Lễ và Giám đốc Trường Mầm Non & Tiểu Học Thái Sơn.',
+    mission: 'Tôi làm giáo dục với một nguyên tắc rất đơn giản: mọi điều tôi xây dựng tại trường Thái Sơn phải là điều tôi sẵn sàng dành cho chính con của mình.',
   },
 ];
 ---
@@ -149,32 +150,9 @@ const bghMembers = [
       </div>
     </section>
 
-    <!-- ===== TABS ===== -->
-    <div class="bl-tabs-wrap" id="blTabsWrap">
-      <div class="bl-container">
-        <div class="bl-tabs" role="tablist" aria-label="Nhóm thành viên">
-          {tabs.map((tab, i) => (
-            <button
-              class={`bl-tab${i === 0 ? ' bl-tab--active' : ''}`}
-              role="tab"
-              aria-selected={i === 0 ? 'true' : 'false'}
-              aria-controls={`panel-${tab.id}`}
-              data-tab={tab.id}
-              id={`tab-${tab.id}`}
-            >
-              <span class="bl-tab__icon">{tab.icon}</span>
-              <span class="bl-tab__label">{tab.label}</span>
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-
-    <!-- ===== TAB PANELS ===== -->
+    <!-- ===== BAN LÃNH ĐẠO ===== -->
     <div class="bl-container bl-panels">
-
-      <!-- === Ban Lãnh Đạo Panel === -->
-      <div class="bl-panel bl-panel--active" id="panel-bgh" role="tabpanel" aria-labelledby="tab-bgh">
+      <div class="bl-panel bl-panel--active">
         <div class="bl-panel__intro">
           <h2 class="bl-panel__heading">Ban Lãnh Đạo</h2>
           <p class="bl-panel__desc">Đội ngũ lãnh đạo giàu kinh nghiệm, tâm huyết với sứ mệnh xây dựng nền giáo dục vừa nhân văn vừa hiệu quả cho thế hệ trẻ Việt Nam.</p>
@@ -203,97 +181,6 @@ const bghMembers = [
               </div>
             </article>
           ))}
-        </div>
-      </div>
-
-      <!-- === GV Gò Vấp === -->
-      <div class="bl-panel" id="panel-gv-go-vap" role="tabpanel" aria-labelledby="tab-gv-go-vap" hidden>
-        <div class="bl-panel__intro">
-          <h2 class="bl-panel__heading">Giáo Viên Cơ Sở Gò Vấp</h2>
-          <p class="bl-panel__desc">160/72 Phan Huy Ích, phường An Hội Tây, TP. Hồ Chí Minh · Hotline: <a href="tel:+84916961409">0916 961 409</a></p>
-        </div>
-        <div class="bl-coming-soon">
-          <div class="bl-coming-soon__icon">👩‍🏫</div>
-          <p>Nội dung đang được cập nhật. Vui lòng liên hệ hotline để biết thêm về đội ngũ giáo viên tại cơ sở Gò Vấp.</p>
-          <a href="tel:+84916961409" class="bl-btn">📞 Liên hệ ngay</a>
-        </div>
-      </div>
-
-      <!-- === GV Phú Nhuận === -->
-      <div class="bl-panel" id="panel-gv-phu-nhuan" role="tabpanel" aria-labelledby="tab-gv-phu-nhuan" hidden>
-        <div class="bl-panel__intro">
-          <h2 class="bl-panel__heading">Giáo Viên Cơ Sở Phú Nhuận</h2>
-          <p class="bl-panel__desc">269A Nguyễn Trọng Tuyển, phường Phú Nhuận, TP. Hồ Chí Minh · Hotline: <a href="tel:+84916961409">0916 961 409</a></p>
-        </div>
-        <div class="bl-coming-soon">
-          <div class="bl-coming-soon__icon">👩‍🏫</div>
-          <p>Nội dung đang được cập nhật. Vui lòng liên hệ hotline để biết thêm về đội ngũ giáo viên tại cơ sở Phú Nhuận.</p>
-          <a href="tel:+84916961409" class="bl-btn">📞 Liên hệ ngay</a>
-        </div>
-      </div>
-
-      <!-- === GV Bình Tân === -->
-      <div class="bl-panel" id="panel-gv-binh-tan" role="tabpanel" aria-labelledby="tab-gv-binh-tan" hidden>
-        <div class="bl-panel__intro">
-          <h2 class="bl-panel__heading">Giáo Viên Cơ Sở Bình Tân</h2>
-          <p class="bl-panel__desc">951/7 Tỉnh lộ 10, phường Bình Tân, TP. Hồ Chí Minh · Hotline: <a href="tel:+84916961409">0916 961 409</a></p>
-        </div>
-        <div class="bl-coming-soon">
-          <div class="bl-coming-soon__icon">👩‍🏫</div>
-          <p>Nội dung đang được cập nhật. Vui lòng liên hệ hotline để biết thêm về đội ngũ giáo viên tại cơ sở Bình Tân.</p>
-          <a href="tel:+84916961409" class="bl-btn">📞 Liên hệ ngay</a>
-        </div>
-      </div>
-
-      <!-- === GV Mầm Non === -->
-      <div class="bl-panel" id="panel-gv-mam-non" role="tabpanel" aria-labelledby="tab-gv-mam-non" hidden>
-        <div class="bl-panel__intro">
-          <h2 class="bl-panel__heading">Giáo Viên Mầm Non</h2>
-          <p class="bl-panel__desc">Đội ngũ giáo viên Mầm Non tận tâm, yêu trẻ và có chuyên môn vững vàng trong giáo dục sớm.</p>
-        </div>
-        <div class="bl-coming-soon">
-          <div class="bl-coming-soon__icon">🌱</div>
-          <p>Nội dung đang được cập nhật. Vui lòng liên hệ hotline để biết thêm về đội ngũ giáo viên Mầm Non.</p>
-          <a href="tel:+84916961409" class="bl-btn">📞 Liên hệ ngay</a>
-        </div>
-      </div>
-
-      <!-- === GV Tiểu Học === -->
-      <div class="bl-panel" id="panel-gv-tieu-hoc" role="tabpanel" aria-labelledby="tab-gv-tieu-hoc" hidden>
-        <div class="bl-panel__intro">
-          <h2 class="bl-panel__heading">Giáo Viên Tiểu Học</h2>
-          <p class="bl-panel__desc">Đội ngũ giáo viên Tiểu Học được đào tạo theo chuẩn UK curriculum, Cambridge và phương pháp Leader in Me.</p>
-        </div>
-        <div class="bl-coming-soon">
-          <div class="bl-coming-soon__icon">📚</div>
-          <p>Nội dung đang được cập nhật. Vui lòng liên hệ hotline để biết thêm về đội ngũ giáo viên Tiểu Học.</p>
-          <a href="tel:+84916961409" class="bl-btn">📞 Liên hệ ngay</a>
-        </div>
-      </div>
-
-      <!-- === GV Bản Ngữ === -->
-      <div class="bl-panel" id="panel-gv-ban-ngu" role="tabpanel" aria-labelledby="tab-gv-ban-ngu" hidden>
-        <div class="bl-panel__intro">
-          <h2 class="bl-panel__heading">Giáo Viên Bản Ngữ</h2>
-          <p class="bl-panel__desc">Đội ngũ giáo viên bản ngữ người Anh, Mỹ, Úc, Canada đang giảng dạy trực tiếp tại các cơ sở Trường Việt Anh.</p>
-        </div>
-        <div class="bl-coming-soon">
-          <div class="bl-coming-soon__icon">🌍</div>
-          <p>Nội dung đang được cập nhật. Vui lòng liên hệ để biết thêm về đội ngũ giáo viên bản ngữ.</p>
-          <a href="tel:+84916961409" class="bl-btn">📞 Liên hệ ngay</a>
-        </div>
-      </div>
-
-      <!-- === Tư Vấn === -->
-      <div class="bl-panel" id="panel-tu-van" role="tabpanel" aria-labelledby="tab-tu-van" hidden>
-        <div class="bl-panel__intro">
-          <h2 class="bl-panel__heading">Đội Ngũ Tư Vấn Tại Các Cơ Sở</h2>
-          <p class="bl-panel__desc">Đội ngũ tư vấn tuyển sinh chuyên nghiệp, nhiệt tình, sẵn sàng hỗ trợ phụ huynh tại tất cả cơ sở.</p>
-        </div>
-        <div class="bl-coming-soon">
-          <div class="bl-coming-soon__icon">💬</div>
-          <p>Đăng ký tư vấn trực tiếp hoặc liên hệ hotline để được kết nối với tư vấn viên tại cơ sở gần nhất.</p>
-          <a href="tel:+84916961409" class="bl-btn">📞 Đăng ký tư vấn ngay</a>
         </div>
       </div>
 
@@ -404,11 +291,14 @@ const bghMembers = [
   .bl-card__avatar-wrap{
     position: relative; padding: 0; display: block;
     background: linear-gradient(180deg, var(--bg) 0%, var(--white) 100%);
-  }.bl-card__photo, .bl-card__avatar{
-    width: 100%; height: auto; aspect-ratio: 1 / 1; border-radius: 0;
-    object-fit: cover; display: flex; align-items: center; justify-content: center;
-    border: 0;
-    box-shadow: none;
+  }.bl-card__photo{
+    width: 100%; height: auto; aspect-ratio: 3 / 4; border-radius: 0;
+    object-fit: cover; object-position: top center;
+    display: block; border: 0; box-shadow: none;
+  }.bl-card__avatar{
+    width: 100%; aspect-ratio: 3 / 4; border-radius: 0;
+    display: flex; align-items: center; justify-content: center;
+    border: 0; box-shadow: none;
   }.bl-card__avatar{ font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: #fff; letter-spacing: .5px; }/* Avatar colors by role */
   .bl-avatar--chairman{ background: linear-gradient(135deg, #C9A329, var(--gold)); }.bl-avatar--vice-chairman{ background: linear-gradient(135deg, #D4B637, #F5DC85); }.bl-avatar--principal{ background: linear-gradient(135deg, var(--navy-dk), var(--navy-lt)); }.bl-avatar--vice-principal{ background: linear-gradient(135deg, #1e5fa8, #2a7abf); }.bl-avatar--mam-non{ background: linear-gradient(135deg, #1a8a4a, #27ae60); }.bl-avatar--research{ background: linear-gradient(135deg, #6b21a8, #9333ea); }.bl-card__role-dot{
     position: absolute; bottom: 12px; right: 12px;

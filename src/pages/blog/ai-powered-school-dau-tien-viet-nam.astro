@@ -1,0 +1,791 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeaderBase from '../../components/HeaderBase.astro';
+import FooterBase from '../../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+
+const post = {
+  title: 'Trường Việt Anh — AI Powered School Đầu Tiên Của Việt Nam: Lộ Trình 2026-2027 Theo Khung UNESCO',
+  slug: 'ai-powered-school-dau-tien-viet-nam',
+  metaTitle: 'Trường Việt Anh — AI Powered School Đầu Tiên Việt Nam 2026 | Lộ Trình UNESCO',
+  metaDescription:
+    'Trường Việt Anh chính thức trở thành AI Powered School đầu tiên của Việt Nam từ năm học 2026-2027 — triển khai theo khung năng lực AI của UNESCO và 16 kỹ năng WEF Davos 2025.',
+  excerpt:
+    'Từ năm học 2026-2027, Trường Việt Anh chính thức trở thành AI Powered School đầu tiên của Việt Nam, triển khai chương trình AI Education toàn diện cho cấp THCS và THPT theo khung năng lực AI của UNESCO (2024) và 16 kỹ năng cốt lõi WEF Davos 2025.',
+  publishedAt: '2026-04-28',
+  publishedDisplay: '28 tháng 4, 2026',
+  publishedISO: '2026-04-28T00:00:00+07:00',
+  category: { slug: 'tin-tuc', label: 'Tin Tức', icon: '📰' },
+  heroImage: 'https://media.truongvietanh.com/images/vui-ve/4-hoc-sinh-su-dung-laptop-2.webp',
+  midImage: 'https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp',
+};
+
+const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.metaDescription,
+    image: [post.heroImage],
+    datePublished: post.publishedISO,
+    dateModified: post.publishedISO,
+    url: canonicalUrl,
+    inLanguage: 'vi',
+    author: {
+      '@type': 'Person',
+      name: 'Nguyễn Mạnh Dương',
+      jobTitle: 'Chủ tịch Hệ thống Trường Việt Anh',
+      url: 'https://truongvietanh.com/ban-lanh-dao',
+    },
+    publisher: {
+      '@type': 'EducationalOrganization',
+      name: 'Trường Việt Anh',
+      url: 'https://truongvietanh.com',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://truongvietanh.com/logo-crest-80.webp',
+      },
+    },
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Việt Anh',
+    alternateName: 'Viet Anh School',
+    url: 'https://truongvietanh.com',
+    logo: 'https://truongvietanh.com/logo-crest-80.webp',
+    description:
+      'Hệ thống Trường Việt Anh — AI Powered School đầu tiên của Việt Nam từ năm học 2026-2027, triển khai theo khung năng lực AI của UNESCO và 16 kỹ năng cốt lõi WEF Davos 2025.',
+    foundingDate: '2011',
+    sameAs: ['https://www.facebook.com/truongvietanh'],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Blog', item: 'https://truongvietanh.com/blog' },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.category.label,
+        item: `https://truongvietanh.com/blog/danh-muc/${post.category.slug}`,
+      },
+      { '@type': 'ListItem', position: 4, name: post.title, item: canonicalUrl },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'AI Powered School của Việt Anh có nghĩa là học sinh suốt ngày trên máy tính không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Không. AI Powered có nghĩa là dùng AI để tăng hiệu suất học tập, không phải để AI học thay hoặc dùng AI để đỡ phải học. Nhờ tăng hiệu quả, học sinh có thêm thời gian cho thể thao, gia đình, bạn bè, hoạt động xã hội.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Giáo viên Việt Anh có thay bằng AI không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Không. Theo nguyên tắc Human in the Loop, AI là cánh tay nối dài cho giáo viên — không thay thế. Mọi outcome học tập đều có sự review của giáo viên trước khi học sinh quyết định cuối cùng.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học sinh có dùng AI để gian lận không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Việt Anh áp dụng quy trình 4 bước Human in the Loop cho mọi bài tập có AI: AI tạo phác thảo → học sinh phản biện → giáo viên đặt câu hỏi sâu → học sinh quyết định outcome. Quy trình này đảm bảo học sinh thực sự học từ AI, không "copy AI".',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Chương trình AI Powered áp dụng cho cấp học nào?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Năm học 2026-2027 triển khai chính thức cho THCS và THPT tại Việt Anh Gò Vấp và Bình Tân. Cấp Mầm non và Tiểu học vẫn được học tích hợp AI, nhưng không trực tiếp qua màn hình, mà bằng những nội dung và công cụ được giáo viên tạo ra với sự hỗ trợ của AI.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Việt Anh có hợp tác với hãng AI nào không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Việt Anh chọn UNESCO làm nền tảng chính — cố ý không phụ thuộc một hãng cụ thể (như Microsoft, OpenAI, Google). Học sinh sẽ được học cách sử dụng nhiều AI tools khác nhau theo nguyên tắc UNESCO.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học phí có tăng vì AI Powered không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Việt Anh cam kết không tăng học phí đột biến vì chương trình AI. Chi tiết học phí năm học 2026-2027 vui lòng liên hệ phòng tuyển sinh.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Học sinh từ trường khác chuyển sang Việt Anh có theo kịp chương trình AI không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Có. Việt Anh có chương trình hỗ trợ AI Education dành cho học sinh chuyển từ trường khác — đảm bảo các em bắt nhịp với chuẩn UNESCO trong 1-2 tháng đầu.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Phụ huynh không biết AI có hỗ trợ con học được không?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Việt Anh có chương trình huấn luyện AI Education cho phụ huynh miễn phí — giúp phụ huynh hiểu cách đồng hành cùng con thời đại AI.',
+        },
+      },
+    ],
+  },
+];
+
+const relatedPosts = [
+  {
+    title: 'Trường Việt Anh — Trường Tiên Phong K-12 Song Ngữ',
+    slug: 'truong-viet-anh-tien-phong-k12-song-ngu',
+    excerpt: 'Hành trình 15 năm tiên phong giáo dục song ngữ liên cấp tại Việt Nam.',
+  },
+  {
+    title: '16 Kỹ Năng Thế Kỷ 21 — Việt Anh Dạy Gì Khác Biệt?',
+    slug: '16-ky-nang-the-ky-21-truong-viet-anh',
+    excerpt: 'Phân tích 16 kỹ năng cốt lõi WEF và cách Việt Anh tích hợp vào chương trình.',
+  },
+  {
+    title: 'Top Trường Nội Trú Miền Nam 2026 — Hướng Dẫn Cho Phụ Huynh ĐBSCL',
+    slug: 'top-truong-noi-tru-mien-nam-2026',
+    excerpt: 'So sánh các trường nội trú chất lượng cao tại miền Nam dành cho phụ huynh ĐBSCL.',
+  },
+];
+---
+
+<BaseLayout
+  title={post.metaTitle}
+  description={post.metaDescription}
+  canonical={canonicalUrl}
+  ogImage={post.heroImage}
+  structuredData={structuredData}
+>
+  <div class="cf-layout page-wrapper ai-blog">
+    <HeaderBase currentPath={`/blog/${post.slug}`} />
+
+    <!-- Reading progress bar -->
+    <div class="reading-progress" aria-hidden="true">
+      <div class="reading-progress__bar" id="readingBar"></div>
+    </div>
+
+    <!-- Breadcrumb -->
+    <nav class="blog-breadcrumb" aria-label="Breadcrumb">
+      <div class="blog-container">
+        <ol class="blog-breadcrumb__list">
+          <li><a href="/">Trang chủ</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href={`/blog/danh-muc/${post.category.slug}`}>{post.category.icon} {post.category.label}</a></li>
+          <li aria-current="page">AI Powered School Đầu Tiên Việt Nam</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- Hero image -->
+    <div class="blog-hero-img">
+      <img
+        src={`${post.heroImage}?width=1600&quality=85`}
+        alt="Học sinh Trường Việt Anh sử dụng laptop trong giờ học AI Education"
+        width="1600" height="720" fetchpriority="high" decoding="async"
+        srcset={`${post.heroImage}?width=800&quality=80 800w, ${post.heroImage}?width=1600&quality=85 1600w`}
+        sizes="(max-width: 960px) 100vw, 1600px"
+      />
+    </div>
+
+    <!-- Article -->
+    <article class="blog-article blog-article--hubspot">
+      <div class="blog-container blog-container--wide">
+        <div class="blog-grid">
+          <div class="blog-main">
+            <header class="blog-article__header">
+              <h1 class="blog-article__title">{post.title}</h1>
+              <p class="blog-article__tagline">Làm chủ AI — làm chủ tương lai.</p>
+              <div class="blog-article__meta">
+                <time class="blog-article__date" datetime={post.publishedISO}>📅 Đăng: {post.publishedDisplay}</time>
+                <span class="blog-article__updated">🔄 Cập nhật: {post.publishedDisplay}</span>
+                <a href={`/blog/danh-muc/${post.category.slug}`} class="blog-article__badge">{post.category.icon} {post.category.label}</a>
+                <span class="blog-article__readtime">12 phút đọc</span>
+              </div>
+              <div class="blog-author">
+                <img class="blog-author__avatar" src="/logo-crest-80.webp" alt="Trường Việt Anh" width="40" height="40" loading="lazy" />
+                <div>
+                  <p class="blog-author__name">Nguyễn Mạnh Dương</p>
+                  <p class="blog-author__role">Chủ tịch Hệ thống Trường Việt Anh</p>
+                </div>
+              </div>
+              <div class="blog-share">
+                <span class="blog-share__label">Chia sẻ:</span>
+                <a class="blog-share__btn blog-share__btn--fb" href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(canonicalUrl)}`} target="_blank" rel="noopener" aria-label="Chia sẻ lên Facebook">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+                </a>
+                <a class="blog-share__btn blog-share__btn--zalo" href={`https://zalo.me/share?url=${encodeURIComponent(canonicalUrl)}`} target="_blank" rel="noopener" aria-label="Chia sẻ qua Zalo">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </a>
+                <button class="blog-share__btn blog-share__btn--copy" id="copyLinkBtn" aria-label="Sao chép link">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                </button>
+              </div>
+            </header>
+
+            <p class="blog-article__excerpt">{post.excerpt} Đây là biểu hiện mới nhất của hơn một thập kỷ văn hoá tiên phong tại Việt Anh — không phải chuyển đổi theo trend, mà là bước tiếp theo của hành trình luôn đi trước.</p>
+
+            <!-- Quick summary -->
+            <section class="ai-summary">
+              <h2>Tóm tắt nhanh — 5 điều phụ huynh cần biết</h2>
+              <ol>
+                <li><strong>Việt Anh là AI Powered School đầu tiên của Việt Nam</strong> — không phải lần đầu Việt Anh tiên phong. Từ Highscope cho mầm non, Oxford International cho tiểu học, đến cam kết IELTS 6.0+ và tuyển thẳng ĐH Birmingham City — văn hoá tiên phong là DNA, AI là biểu hiện mới nhất.</li>
+                <li><strong>Triển khai theo chuẩn UNESCO + WEF</strong> — không phụ thuộc một hãng công nghệ. Cả giáo viên lẫn học sinh đều được đào tạo theo khung năng lực AI của UNESCO (công bố 9/2024).</li>
+                <li><strong>5 trụ cột AI Education</strong> — AI Mastery, AI Mindset, AI Ethics, AI Application, Human in the Loop. Mỗi trụ cột có triết lý và lộ trình cụ thể.</li>
+                <li><strong>Có thêm AI, học sinh có thêm thời gian — không mất đi.</strong> Đây là điểm khác biệt cốt lõi: AI giúp học sâu hơn, cá nhân hoá hơn, nhanh hơn — để dành thời gian cho thể thao, gia đình, hoạt động xã hội.</li>
+                <li><strong>Bắt đầu năm học 2026-2027</strong> — triển khai chính thức từ tháng 9/2026 tại Việt Anh Gò Vấp + Bình Tân, sau đó nhân rộng toàn hệ thống.</li>
+              </ol>
+            </section>
+
+            <!-- TOC -->
+            <nav class="blog-toc blog-toc--inline" aria-label="Mục lục bài viết">
+              <p class="blog-toc__title">📑 Mục lục</p>
+              <ol class="blog-toc__list">
+                <li><a href="#boi-canh">Bối cảnh: Vì sao AI Education trở thành cấp thiết</a></li>
+                <li><a href="#van-hoa-tien-phong">Văn hoá tiên phong — DNA của Việt Anh</a></li>
+                <li><a href="#ai-la-ket-qua">AI là kết quả, không phải cái gốc</a></li>
+                <li><a href="#nen-tang">Nền tảng học thuật: UNESCO + WEF Davos 2025</a></li>
+                <li><a href="#5-tru-cot">5 trụ cột AI Education tại Việt Anh</a></li>
+                <li><a href="#dot-pha">Điểm đột phá: AI Application + Human in the Loop</a></li>
+                <li><a href="#lo-trinh">Lộ trình triển khai 2026-2027</a></li>
+                <li><a href="#ai-phu-hop">Ai phù hợp với chương trình này?</a></li>
+                <li><a href="#so-sanh">So sánh với các trường khác tại Việt Nam</a></li>
+                <li><a href="#faq">FAQ — Hỏi đáp về AI Powered School</a></li>
+                <li><a href="#dang-ky">Đăng ký tham quan</a></li>
+              </ol>
+            </nav>
+
+            <div class="blog-article__body">
+              <h2 id="boi-canh">1. Bối cảnh: Vì sao AI Education trở thành cấp thiết</h2>
+              <p>Theo Báo cáo <em>Future of Jobs 2025</em> của Diễn đàn Kinh tế Thế giới (công bố tại Davos tháng 1/2025), trong vòng 5 năm tới, <strong>39% kỹ năng cốt lõi của người lao động sẽ thay đổi</strong>, và AI cùng Big Data trở thành kỹ năng có nhu cầu tăng trưởng nhanh nhất toàn cầu (WEF, 2025).</p>
+              <p>Cùng thời điểm, UNESCO công bố khung năng lực AI dành cho học sinh và giáo viên (tháng 9/2024) — lần đầu tiên có một bộ chuẩn quốc tế về việc nhà trường nên dạy gì, đào tạo giáo viên ra sao trong thời đại AI.</p>
+              <p>Tại Việt Nam, nhu cầu của phụ huynh đã rõ rệt: theo khảo sát của HSBC (<em>Quality of Life Report 2024</em>), <strong>68% phụ huynh Việt Nam lo ngại về tác động của AI lên nghề nghiệp tương lai của con</strong> — cao hơn trung bình khu vực châu Á (54%). Nhưng phần lớn các trường K-12 tại Việt Nam vẫn dạy AI như một môn học rời rạc — chưa tích hợp vào triết lý giáo dục cốt lõi.</p>
+              <p>Đây chính là khoảng trống mà Trường Việt Anh chính thức bước vào từ năm học 2026-2027.</p>
+
+              <h2 id="van-hoa-tien-phong">2. Văn hoá tiên phong — DNA của Việt Anh</h2>
+              <p>Trước khi nói về AI, cần hiểu vì sao Việt Anh là người đi đầu.</p>
+              <p>Hơn một thập kỷ qua, Việt Anh đã liên tục là <strong>trường đầu tiên</strong> trong nhiều xu hướng giáo dục lớn:</p>
+              <div class="blog-table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Cột mốc</th><th>Hành động tiên phong</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Mầm non</td><td>Tiên phong áp dụng triết lý <strong>Highscope</strong> và <strong>Responsive Classroom</strong> vào Việt Nam — hai phương pháp giáo dục mầm non hàng đầu thế giới</td></tr>
+                    <tr><td>Tiểu học</td><td>Một trong những trường đầu tiên triển khai <strong>Oxford International Curriculum</strong> kết hợp <strong>CLIL English</strong> (Content and Language Integrated Learning)</td></tr>
+                    <tr><td>THCS</td><td>Tích hợp 16 kỹ năng thế kỷ 21 ngay khi WEF công bố — bao gồm DQ (Digital Intelligence Quotient), Digital Technology, AI Education, Lãnh đạo bản thân, Grit, SteamE</td></tr>
+                    <tr><td>THPT</td><td>Cam kết đầu ra <strong>IELTS 6.0+</strong> với học sinh nhập học từ lớp 9 và thực thi đúng chương trình — tỷ lệ thực tế trên 90%</td></tr>
+                    <tr><td>2026</td><td>Tuyển thẳng <strong>ĐH Birmingham City</strong> (Vương quốc Anh) — thoả thuận hợp tác mới năm 2026</td></tr>
+                    <tr><td>Phương pháp</td><td>Coaching cá nhân hoá hàng tuần có minh chứng cụ thể — không cam kết suông</td></tr>
+                    <tr><td>2026-2027</td><td><strong>AI Powered School đầu tiên Việt Nam</strong> — biểu hiện mới nhất của văn hoá tiên phong</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p>Nhìn vào danh sách này, một điều rõ ràng: <strong>Việt Anh không "ăn theo trend"</strong>. Khi một xu hướng giáo dục mới xuất hiện trên thế giới, Việt Anh là người đầu tiên nghiên cứu và triển khai.</p>
+
+              <h2 id="ai-la-ket-qua">3. AI là kết quả, không phải cái gốc</h2>
+              <p>Đây là nguyên tắc cốt lõi mà chúng tôi muốn phụ huynh hiểu rõ.</p>
+              <p><strong>Trường Việt Anh không dựa vào AI.</strong></p>
+              <p>AI là một <em>kết quả tự nhiên</em> của văn hoá liên tục phát triển, liên tục tiên phong đã có trong DNA Việt Anh từ ngày thành lập.</p>
+              <p>Nếu Việt Anh đột nhiên gọi mình là "trường AI", đó là dấu hiệu của một quyết định marketing thiếu chiều sâu. Nhưng khi Việt Anh tiếp tục bổ sung AI Education vào chuỗi tiên phong dài hơn 10 năm — Highscope → Oxford International → 16 kỹ năng TK21 → IELTS commit → Birmingham City → AI Powered — thì đây là sự liền mạch của một văn hoá, không phải bước nhảy.</p>
+              <p>Đó là lý do chúng tôi dùng tagline <strong>"Lãnh đạo AI đầu tiên của Việt Nam"</strong> — với hai nghĩa cùng đắt giá:</p>
+              <ul>
+                <li><strong>Trường lãnh đạo</strong> trong giáo dục AI tại Việt Nam (institutional leadership)</li>
+                <li><strong>Học sinh trở thành lãnh đạo</strong> trong thời đại AI (personal leadership)</li>
+              </ul>
+              <blockquote>"Chúng tôi không thay đổi để theo trend. Chúng tôi đơn giản là luôn đi trước."</blockquote>
+
+              <h2 id="nen-tang">4. Nền tảng học thuật: UNESCO + WEF Davos 2025</h2>
+              <p>Chương trình AI Education tại Việt Anh không phải sản phẩm marketing nội bộ. Nó được xây dựng trên hai khung tham chiếu quốc tế hàng đầu thế giới.</p>
+
+              <h3>Khung 1 — UNESCO AI Competency Framework (2024-2025)</h3>
+              <p>Tháng 9/2024, UNESCO công bố hai văn bản chính thức:</p>
+              <ul>
+                <li><strong>AI Competency Framework for Teachers</strong> — khung năng lực AI cho giáo viên</li>
+                <li><strong>AI Competency Framework for Students</strong> — khung năng lực AI cho học sinh</li>
+              </ul>
+              <p>Việt Anh triển khai cả hai khung này:</p>
+              <ul>
+                <li><strong>Đối với giáo viên:</strong> đào tạo theo UNESCO Teacher Framework — đảm bảo mỗi giáo viên có năng lực AI literacy chuẩn quốc tế trước khi đứng lớp</li>
+                <li><strong>Đối với học sinh:</strong> chương trình học theo UNESCO Student Framework — đảm bảo mỗi học sinh phát triển năng lực AI theo chuẩn UNESCO ngay từ THCS</li>
+              </ul>
+              <p><strong>Vì sao chúng tôi chọn UNESCO làm nền tảng?</strong></p>
+              <p>Bởi vì UNESCO là tổ chức giáo dục quốc tế trung tính, <strong>không phụ thuộc vào bất kỳ hãng công nghệ nào</strong>. Học sinh Việt Anh không trở thành "nhân lực của Microsoft" hay "người dùng của OpenAI" — mà trở thành công dân toàn cầu có năng lực AI đạt chuẩn UNESCO, được công nhận trên toàn thế giới và không bị vendor lock-in khi công nghệ thay đổi.</p>
+
+              <h3>Khung 2 — 16 kỹ năng cốt lõi WEF Davos 2025</h3>
+              <p>Báo cáo <em>Future of Jobs Report 2025</em> cập nhật 16 kỹ năng cốt lõi cho lực lượng lao động 2030, với những thay đổi quan trọng so với phiên bản 2020:</p>
+              <ul>
+                <li><strong>Tăng trọng số:</strong> AI và Big Data, Khả năng phục hồi (Resilience), Tư duy phân tích</li>
+                <li><strong>Bổ sung mới:</strong> AI Literacy, Tư duy hệ thống (Systems thinking)</li>
+                <li><strong>Vẫn quan trọng:</strong> Tư duy sáng tạo, Học tập suốt đời, Lãnh đạo</li>
+              </ul>
+              <p>Việt Anh tích hợp toàn bộ 16 kỹ năng WEF 2025 vào chương trình THCS-THPT, đảm bảo mỗi học sinh tốt nghiệp đều sẵn sàng cho lực lượng lao động 2030.</p>
+
+              <h2 id="5-tru-cot">5. Năm trụ cột AI Education tại Việt Anh</h2>
+
+              <h3>Trụ cột 1 — AI MASTERY: Làm chủ công cụ</h3>
+              <p>Học sinh Việt Anh không chỉ <em>biết dùng</em> AI, mà biết <strong>khi nào nên dùng và khi nào không</strong>. Họ học cách prompt thông minh, cross-check kết quả AI, tận dụng AI để tăng năng suất học tập một cách có chủ đích — chứ không phụ thuộc.</p>
+
+              <h3>Trụ cột 2 — AI MINDSET: Tư duy thời đại mới</h3>
+              <p>Phát triển <strong>tư duy phản biện, sáng tạo và đạo đức</strong> để làm việc cùng AI — không phải bị AI làm thay. Điểm nhấn: DQ (Digital Intelligence Quotient), kỹ năng phân biệt thông tin thật/giả, suy luận độc lập trong môi trường nội dung số.</p>
+
+              <h3>Trụ cột 3 — AI ETHICS: Đạo đức và trách nhiệm</h3>
+              <p>Hiểu rõ giới hạn của AI, biết phân biệt thật-giả, biết bảo vệ bản thân và cộng đồng trong môi trường số. Đây là phần cốt lõi của khung UNESCO — <strong>AI ethics không phải lý thuyết phụ, mà là kỹ năng sống thiết yếu</strong>.</p>
+
+              <h3>Trụ cột 4 — AI APPLICATION: Ứng dụng thực tế ⭐</h3>
+              <p>Đây là trụ cột nhấn mạnh nhất, vì là <strong>điểm khác biệt cốt lõi</strong> của Việt Anh:</p>
+              <blockquote>"Không chỉ học VỀ AI — mà DÙNG AI VÀO việc học."</blockquote>
+              <p>Mục tiêu cụ thể:</p>
+              <ul>
+                <li><strong>Học sâu hơn</strong> — AI giúp đào sâu mọi nội dung đến mức cá nhân hoá từng học sinh</li>
+                <li><strong>Học cá nhân hoá hơn</strong> — mỗi em một lộ trình, một tốc độ, một phong cách phù hợp với năng lực và mục tiêu</li>
+                <li><strong>Học nhiều hơn trong thời gian ngắn hơn</strong> — hiệu suất tăng đáng kể so với phương pháp truyền thống</li>
+              </ul>
+              <p>Và điều quan trọng nhất — đây là điểm phá tan nỗi sợ "AI = nghiện máy, mất kết nối" mà nhiều phụ huynh đang lo:</p>
+              <p>Việc sử dụng AI không làm mất đi kết nối với con người và thời gian cho bản thân. Ngược lại, <strong>việc tăng hiệu quả học tập giúp học sinh thực sự có thêm thời gian cho nghỉ ngơi, luyện tập thể thao, và các hoạt động xã hội cùng nhau</strong>.</p>
+              <p><strong>AI tại Việt Anh là công cụ giải phóng thời gian sống, không phải chiếm dụng nó.</strong></p>
+
+              <figure>
+                <img src={`${post.midImage}?width=1200&quality=85`} alt="Giáo viên Việt Anh đồng hành cùng học sinh trong giờ học AI Education" loading="lazy" decoding="async" width="1200" height="675" />
+                <figcaption>Human in the Loop — giáo viên luôn đồng hành cùng học sinh trong mỗi quy trình học tập có sự tham gia của AI.</figcaption>
+              </figure>
+
+              <h3>Trụ cột 5 — HUMAN IN THE LOOP: Học sinh trong vòng quyết định</h3>
+              <blockquote>"AI làm việc — học sinh chỉ đạo. Mọi outcome cuối cùng đều có sự tham gia, đánh giá, và quyết định của con người."</blockquote>
+              <p>"Human in the Loop" (HITL) là một khái niệm kỹ thuật chuyên ngành AI mà Việt Anh đưa vào triết lý giáo dục:</p>
+              <ul>
+                <li>Không có AI nào hoạt động độc lập trong giáo dục Việt Anh</li>
+                <li>Học sinh luôn là "người trong vòng" của mọi quy trình — verify kết quả, override khi cần, redirect khi muốn</li>
+                <li>AI là cánh tay nối dài, không phải bộ não thay thế</li>
+              </ul>
+              <p>Bốn trụ cột nền tảng của giáo dục Việt Anh — <strong>Kiến thức, Tiếng Anh, Kỹ năng, Thể chất</strong> — vẫn nguyên vẹn. AI chỉ làm tăng hiệu quả từng trụ cột, không thay thế bất kỳ trụ cột nào.</p>
+
+              <h2 id="dot-pha">6. Điểm đột phá: AI Application + Human in the Loop</h2>
+              <p>Hai trụ cột 4 và 5 là <strong>điểm đột phá thực sự</strong> của AI Powered School Việt Anh, khác biệt với mọi chương trình "dạy AI" khác tại Việt Nam.</p>
+
+              <h3>Quy trình HITL chuẩn cho mọi kết quả</h3>
+              <p>Mọi đầu ra học tập có sự tham gia của AI tại trường Việt Anh đều phải qua quy trình 4 bước:</p>
+              <ol>
+                <li>AI hỗ trợ tạo ra phác thảo ban đầu</li>
+                <li>Học sinh đánh giá, phản biện, chỉnh sửa</li>
+                <li>Giáo viên review và đặt câu hỏi sâu</li>
+                <li>Học sinh quyết định outcome cuối cùng</li>
+              </ol>
+              <p>Quy trình này đảm bảo học sinh không "copy AI" — mà thực sự học từ AI, sau đó <strong>thể hiện tư duy của bản thân</strong>.</p>
+
+              <h2 id="lo-trinh">7. Lộ trình triển khai 2026-2027</h2>
+              <div class="blog-table-wrap">
+                <table>
+                  <thead>
+                    <tr><th>Thời gian</th><th>Hoạt động chính</th></tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Tháng 5-6/2026</td><td>Hoàn thiện chương trình AI Education theo khung UNESCO. Đào tạo giáo viên (4-6 tuần intensive). Chuẩn bị thiết bị và license AI tools.</td></tr>
+                    <tr><td>Tháng 7-8/2026</td><td>Ra mắt chính thức "AI Powered School" tại Việt Anh Gò Vấp + Bình Tân. Họp phụ huynh giới thiệu chương trình mới.</td></tr>
+                    <tr><td>Tháng 9/2026</td><td>Khai giảng năm học mới với AI Education chính thức cho cấp THCS-THPT.</td></tr>
+                    <tr><td>Tháng 10-12/2026</td><td>Triển khai Time Freedom Report đầu tiên. Case study tiến độ học sinh sau 3 tháng.</td></tr>
+                    <tr><td>Năm 2027</td><td>Mở rộng AI Powered cho các cơ sở khác trong hệ thống. Báo cáo năm 1 và điều chỉnh.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <h2 id="ai-phu-hop">8. Ai phù hợp với chương trình AI Powered School?</h2>
+              <p>Chương trình AI Powered tại Việt Anh đặc biệt phù hợp với những phụ huynh có <strong>tinh thần lãnh đạo, cấp tiến</strong>, muốn con trở thành một người hiệu suất cao, làm chủ tương lai.</p>
+              <p>Cụ thể:</p>
+              <ul>
+                <li>Phụ huynh là <strong>lãnh đạo / chủ doanh nghiệp / quản lý cấp cao</strong> trong các ngành tăng trưởng</li>
+                <li>Hiểu giá trị của <strong>hiệu suất (productivity)</strong> và mong con biết dùng đúng công cụ thay vì học vô vọng</li>
+                <li>Đặt mục tiêu cao cho con: không chỉ "đậu ĐH" mà <strong>"trở thành người làm chủ cuộc đời"</strong></li>
+                <li>Sẵn sàng đầu tư cho tương lai con như một <em>investment</em>, không phải chi phí</li>
+              </ul>
+              <p>Nếu anh chị thấy mình trong mô tả này, đây có thể là chương trình phù hợp với gia đình mình.</p>
+
+              <h2 id="so-sanh">9. So sánh với các trường khác tại Việt Nam</h2>
+              <div class="blog-table-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Tiêu chí</th>
+                      <th>Việt Anh AI Powered</th>
+                      <th>Trường tích hợp AI khác</th>
+                      <th>Trường truyền thống</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>Khung tham chiếu</td><td><strong>UNESCO + WEF Davos 2025</strong></td><td>Tự thiết kế hoặc theo 1 hãng</td><td>Không có</td></tr>
+                    <tr><td>Đào tạo giáo viên</td><td>Theo UNESCO Teacher Framework</td><td>Tuỳ trường</td><td>Không có chương trình AI cho GV</td></tr>
+                    <tr><td>Triết lý cốt lõi</td><td>Human in the Loop + AI Application</td><td>"Dạy AI" như môn riêng</td><td>AI chỉ trong môn Tin học</td></tr>
+                    <tr><td>Tích hợp 16 kỹ năng WEF</td><td>Toàn bộ</td><td>Một phần</td><td>Không</td></tr>
+                    <tr><td>Time Freedom Report</td><td>Có</td><td>Không</td><td>Không</td></tr>
+                    <tr><td>Lịch sử tiên phong</td><td>10+ năm (Highscope → Oxford → IELTS commit → AI)</td><td>Mới triển khai</td><td>Không có</td></tr>
+                    <tr><td>Cam kết đầu ra</td><td>IELTS 6.0+ + Birmingham City pathway</td><td>Tuỳ trường</td><td>Đầu ra phụ thuộc HS</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p><em>Nhận định khách quan:</em> Trên thị trường K-12 tại Việt Nam hiện tại, chưa có trường nào tự tuyên bố là "AI Powered School" với nền tảng UNESCO chính thức. <strong>Việt Anh là first-mover ở vị trí này từ năm học 2026-2027.</strong></p>
+            </div>
+
+            <!-- FAQ Section -->
+            <section class="blog-faq" id="faq">
+              <h2 class="blog-faq__title">10. FAQ — Hỏi đáp về AI Powered School</h2>
+              <div class="blog-faq__list">
+                <details class="blog-faq__item" open>
+                  <summary class="blog-faq__question">AI Powered School của Việt Anh có nghĩa là học sinh suốt ngày trên máy tính không?</summary>
+                  <p class="blog-faq__answer"><strong>Không.</strong> AI Powered có nghĩa là dùng AI để tăng hiệu suất học tập, không phải để AI học thay hoặc dùng AI để đỡ phải học (như nhiều người lầm tưởng). Nhờ tăng hiệu quả, học sinh có thêm thời gian cho thể thao, gia đình, bạn bè, hoạt động xã hội.</p>
+                </details>
+                <details class="blog-faq__item">
+                  <summary class="blog-faq__question">Giáo viên Việt Anh có thay bằng AI không?</summary>
+                  <p class="blog-faq__answer"><strong>Không.</strong> Theo nguyên tắc Human in the Loop, AI là cánh tay nối dài cho giáo viên — không thay thế. Mọi outcome học tập đều có sự review của giáo viên trước khi học sinh quyết định cuối cùng.</p>
+                </details>
+                <details class="blog-faq__item">
+                  <summary class="blog-faq__question">Học sinh có dùng AI để gian lận không?</summary>
+                  <p class="blog-faq__answer">Việt Anh áp dụng quy trình 4 bước HITL cho mọi bài tập có AI: AI tạo phác thảo → HS phản biện → GV đặt câu hỏi sâu → HS quyết định outcome. Quy trình này đảm bảo HS thực sự học từ AI, không "copy AI".</p>
+                </details>
+                <details class="blog-faq__item">
+                  <summary class="blog-faq__question">Chương trình AI Powered áp dụng cho cấp học nào?</summary>
+                  <p class="blog-faq__answer">Năm học 2026-2027 triển khai chính thức cho <a href="/trung-hoc-co-so">THCS</a> và <a href="/trung-hoc-pho-thong">THPT</a> tại Việt Anh Gò Vấp và Bình Tân. Cấp <a href="/mam-non">Mầm non</a> và <a href="/tieu-hoc">Tiểu học</a> vẫn được học tích hợp AI, nhưng không phải trực tiếp qua màn hình, mà bằng những nội dung và công cụ được giáo viên tạo ra với sự hỗ trợ của AI.</p>
+                </details>
+                <details class="blog-faq__item">
+                  <summary class="blog-faq__question">Việt Anh có hợp tác với hãng AI nào không?</summary>
+                  <p class="blog-faq__answer">Việt Anh chọn UNESCO làm nền tảng chính — <strong>cố ý không phụ thuộc một hãng cụ thể</strong> (như Microsoft, OpenAI, Google). Học sinh sẽ được học cách sử dụng nhiều AI tools khác nhau theo nguyên tắc UNESCO.</p>
+                </details>
+                <details class="blog-faq__item">
+                  <summary class="blog-faq__question">Học phí có tăng vì AI Powered không?</summary>
+                  <p class="blog-faq__answer">Việt Anh cam kết không tăng học phí đột biến vì chương trình AI. Chi tiết <a href="/hoc-phi">học phí năm học 2026-2027</a> vui lòng liên hệ phòng tuyển sinh.</p>
+                </details>
+                <details class="blog-faq__item">
+                  <summary class="blog-faq__question">Học sinh từ trường khác chuyển sang Việt Anh có theo kịp chương trình AI không?</summary>
+                  <p class="blog-faq__answer"><strong>Có.</strong> Việt Anh có chương trình hỗ trợ AI Education dành cho học sinh chuyển từ trường khác — đảm bảo các em bắt nhịp với chuẩn UNESCO trong 1-2 tháng đầu.</p>
+                </details>
+                <details class="blog-faq__item">
+                  <summary class="blog-faq__question">Phụ huynh không biết AI có hỗ trợ con học được không?</summary>
+                  <p class="blog-faq__answer">Việt Anh có chương trình huấn luyện AI Education cho phụ huynh miễn phí — giúp phụ huynh hiểu cách đồng hành cùng con thời đại AI.</p>
+                </details>
+              </div>
+            </section>
+
+            <!-- Pillar Links -->
+            <nav class="blog-pillar-links" aria-label="Tìm hiểu thêm">
+              <h3 class="blog-pillar-links__title">Khám phá chương trình các cấp</h3>
+              <div class="blog-pillar-links__grid">
+                <a href="/mam-non" class="blog-pillar-links__item">Mầm Non</a>
+                <a href="/tieu-hoc" class="blog-pillar-links__item">Tiểu Học</a>
+                <a href="/trung-hoc-co-so" class="blog-pillar-links__item">THCS</a>
+                <a href="/trung-hoc-pho-thong" class="blog-pillar-links__item">THPT</a>
+                <a href="/hoc-phi" class="blog-pillar-links__item">Học Phí</a>
+                <a href="/co-so" class="blog-pillar-links__item">Cơ Sở Vật Chất</a>
+                <a href="/thanh-tich" class="blog-pillar-links__item">Thành Tích</a>
+                <a href="/triet-ly-giao-duc" class="blog-pillar-links__item">Triết Lý Giáo Dục</a>
+              </div>
+            </nav>
+
+            <!-- Related Posts -->
+            <section class="blog-related">
+              <h2 class="blog-related__title">Bài viết liên quan</h2>
+              <div class="blog-related__grid">
+                {relatedPosts.map(rp => (
+                  <a href={`/blog/${rp.slug}`} class="blog-related__card">
+                    <h3 class="blog-related__card-title">{rp.title}</h3>
+                    <p class="blog-related__card-excerpt">{rp.excerpt}</p>
+                  </a>
+                ))}
+              </div>
+            </section>
+
+            <!-- Bottom CTA -->
+            <section class="blog-bottom-cta" id="dang-ky">
+              <h2 class="blog-bottom-cta__title">11. Đăng ký tham quan</h2>
+              <p class="blog-bottom-cta__desc"><strong>Tương lai bắt đầu từ hôm nay với AI trong tầm tay.</strong><br />Hãy chat với chúng tôi để nhận lịch sự kiện của Trường Việt Anh, và nhìn thấy cách học sinh trưởng thành trong thời đại AI.</p>
+              <div class="blog-bottom-cta__form-wrap" data-form-bg="light">
+                <LeadFormTwoStepEmailFirst
+                  formId="ai-blog-lead-form"
+                  funnelCode="blog-ai-powered-school"
+                  schoolLevel="lien-cap"
+                  submitText="Đăng ký tham quan miễn phí"
+                />
+              </div>
+              <div class="blog-bottom-cta__contact">
+                <p class="blog-bottom-cta__contact-title">Bước tiếp theo</p>
+                <div class="blog-bottom-cta__contact-links">
+                  <a href="/tuyen-sinh" class="blog-contact-btn blog-contact-btn--tour">Đặt lịch tham quan</a>
+                  <a href="tel:0916961409" class="blog-contact-btn blog-contact-btn--phone">📞 0916 961 409</a>
+                  <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noreferrer" class="blog-contact-btn blog-contact-btn--zalo">💬 Chat Zalo OA</a>
+                </div>
+              </div>
+            </section>
+
+            <!-- Author bio -->
+            <section class="blog-author-bio">
+              <h3>Về tác giả</h3>
+              <p><strong>Nguyễn Mạnh Dương</strong> là Chủ tịch Hệ thống Trường Việt Anh — bao gồm các cơ sở Việt Anh Gò Vấp, Bình Tân, MGIS Mekong Xanh (Rạch Giá), Mầm non Nhân Lễ và Mầm non - Tiểu học Thái Sơn (Cần Giuộc). Anh trực tiếp chỉ đạo lộ trình chuyển đổi AI Powered School theo khung UNESCO và là tác giả của triết lý giáo dục <em>"Coaching cá nhân hoá hàng tuần có minh chứng cụ thể"</em> được áp dụng tại toàn hệ thống.</p>
+            </section>
+
+            <!-- References -->
+            <section class="blog-refs">
+              <h3>Nguồn tham khảo</h3>
+              <ol>
+                <li>UNESCO. (2024). <em>AI Competency Framework for Teachers</em>. <a href="https://unesdoc.unesco.org/" target="_blank" rel="noopener">unesdoc.unesco.org</a></li>
+                <li>UNESCO. (2024). <em>AI Competency Framework for Students</em>. <a href="https://unesdoc.unesco.org/" target="_blank" rel="noopener">unesdoc.unesco.org</a></li>
+                <li>World Economic Forum. (2025). <em>Future of Jobs Report 2025</em>. <a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/" target="_blank" rel="noopener">weforum.org</a></li>
+                <li>HSBC. (2024). <em>Quality of Life Report 2024 — Asia Education Trends</em>.</li>
+                <li>McKinsey Global Institute. (2024). <em>The State of AI in Education</em>.</li>
+                <li>Stanford HAI. (2024). <em>AI Index Report 2024</em>.</li>
+              </ol>
+            </section>
+          </div><!-- /.blog-main -->
+
+          <!-- Sticky sidebar -->
+          <aside class="blog-sidebar" aria-label="Sidebar">
+            <div class="blog-side-cta" data-form-bg="light">
+              <div class="blog-side-cta__badge">🤖 AI Powered School</div>
+              <h3 class="blog-side-cta__title">Tham quan trường — gặp giáo viên AI</h3>
+              <p class="blog-side-cta__desc">Đội tuyển sinh phản hồi trong 24h. Đăng ký nhận lịch sự kiện ra mắt AI Powered School 2026-2027.</p>
+              <LeadFormTwoStepEmailFirst
+                formId="ai-blog-side-form"
+                funnelCode="blog-ai-sidebar"
+                schoolLevel="lien-cap"
+                submitText="Đăng ký tư vấn"
+                successMessage="Cảm ơn! Sẽ liên hệ trong 24h."
+              />
+            </div>
+
+            <div class="blog-side-contact">
+              <p class="blog-side-contact__title">Liên hệ ngay</p>
+              <a href="tel:0916961409" class="blog-side-contact__btn">📞 0916 961 409</a>
+              <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="blog-side-contact__btn blog-side-contact__btn--zalo">💬 Chat Zalo OA</a>
+              <a href="/tham-quan-truong" class="blog-side-contact__btn blog-side-contact__btn--magnet">🏫 Đặt lịch tham quan</a>
+            </div>
+          </aside>
+        </div><!-- /.blog-grid -->
+      </div>
+    </article>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style is:global>
+  /* Container & Breadcrumb */
+  .ai-blog .blog-container { max-width: 960px; margin: 0 auto; padding: 0 2rem; }
+  .ai-blog .blog-breadcrumb { background: #f8fafc; border-bottom: 1px solid #e2e8f0; padding: 0.75rem 0; }
+  .ai-blog .blog-breadcrumb__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; font-size: 0.95rem; color: #64748b; }
+  .ai-blog .blog-breadcrumb__list li:not(:last-child)::after { content: '›'; margin-left: 0.4rem; color: #94a3b8; }
+  .ai-blog .blog-breadcrumb__list a { color: #1a1a5e; text-decoration: none; }
+  .ai-blog .blog-breadcrumb__list a:hover { color: #F0D048; text-decoration: underline; }
+  .ai-blog .blog-breadcrumb__list li[aria-current="page"] { color: #334155; font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 300px; }
+
+  /* Reading progress */
+  .ai-blog .reading-progress { position: fixed; top: 0; left: 0; right: 0; z-index: 9999; height: 3px; background: transparent; }
+  .ai-blog .reading-progress__bar { height: 100%; width: 0%; background: linear-gradient(90deg, #F0D048, #2563eb); transition: width 0.1s linear; }
+
+  /* Hero image */
+  .ai-blog .blog-hero-img { width: 100%; max-width: 1200px; margin: 1.5rem auto 0; padding: 0 1rem; }
+  .ai-blog .blog-hero-img img { width: 100%; height: auto; max-height: 480px; object-fit: cover; border-radius: 12px; box-shadow: 0 8px 30px rgba(26,26,94,0.12); aspect-ratio: 16/9; background: #f0f4ff; }
+
+  /* Article container — 2 column */
+  .ai-blog .blog-article { padding: 2.5rem 0 3rem; }
+  .ai-blog .blog-container--wide { max-width: 1240px; padding: 0 1.25rem; }
+  .ai-blog .blog-grid { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 3rem; align-items: start; margin-top: 1.5rem; }
+  .ai-blog .blog-main { min-width: 0; }
+  .ai-blog .blog-sidebar { position: sticky; top: 90px; display: flex; flex-direction: column; gap: 1.25rem; }
+
+  /* Header */
+  .ai-blog .blog-article__header { margin-bottom: 2rem; padding-bottom: 1.25rem; border-bottom: 2px solid #e2e8f0; }
+  .ai-blog .blog-article__title { font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 800; color: #1a1a5e; line-height: 1.3; margin: 0 0 0.5rem; }
+  .ai-blog .blog-article__tagline { font-size: 1.15rem; color: #F0D048; font-weight: 700; font-style: italic; margin: 0 0 1rem; }
+  .ai-blog .blog-article__meta { display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+  .ai-blog .blog-article__date { font-size: 0.9rem; color: #64748b; font-weight: 500; }
+  .ai-blog .blog-article__updated { color: #6b7280; font-size: 0.85rem; }
+  .ai-blog .blog-article__badge { display: inline-block; background: #F0D048; color: #fff; font-size: 0.85rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 4px; text-decoration: none; transition: background 0.15s; }
+  .ai-blog .blog-article__badge:hover { background: #b8891e; }
+  .ai-blog .blog-article__readtime { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
+
+  /* Author micro */
+  .ai-blog .blog-author { display: flex; align-items: center; gap: 0.75rem; margin: 1rem 0; padding: 0.75rem 0; border-top: 1px solid #e5e7eb; border-bottom: 1px solid #e5e7eb; }
+  .ai-blog .blog-author__avatar { width: 40px; height: 40px; border-radius: 50%; background: #fff; object-fit: contain; border: 1px solid #e5e7eb; }
+  .ai-blog .blog-author__name { margin: 0; font-weight: 700; color: #1a1a5e; font-size: 0.95rem; }
+  .ai-blog .blog-author__role { margin: 0; font-size: 0.82rem; color: #64748b; }
+
+  /* Share buttons */
+  .ai-blog .blog-share { display: flex; align-items: center; gap: 0.5rem; margin-top: 0.75rem; }
+  .ai-blog .blog-share__label { font-size: 0.85rem; color: #94a3b8; font-weight: 500; }
+  .ai-blog .blog-share__btn { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; text-decoration: none; transition: transform 0.2s, background 0.2s; border: none; cursor: pointer; }
+  .ai-blog .blog-share__btn:hover { transform: scale(1.1); }
+  .ai-blog .blog-share__btn--fb { background: #1877f2; color: #fff; }
+  .ai-blog .blog-share__btn--zalo { background: #0068ff; color: #fff; }
+  .ai-blog .blog-share__btn--copy { background: #f1f5f9; color: #475569; }
+  .ai-blog .blog-share__btn--copy:hover { background: #e2e8f0; }
+  .ai-blog .blog-share__btn--copied { background: #22c55e !important; color: #fff !important; }
+
+  /* Excerpt */
+  .ai-blog .blog-article__excerpt { font-size: 1.05rem; color: #1a1a5e; line-height: 1.7; margin: 0 0 1.5rem; padding: 1rem 1.25rem; background: #f1f5f9; border-left: 4px solid #F0D048; border-radius: 0 6px 6px 0; }
+
+  /* Quick summary */
+  .ai-blog .ai-summary { background: linear-gradient(135deg, #fff8f0, #fff3e0); border: 2px solid #F0D048; border-radius: 12px; padding: 1.5rem 1.75rem; margin: 0 0 2rem; }
+  .ai-blog .ai-summary h2 { font-size: 1.25rem; font-weight: 800; color: #1a1a5e; margin: 0 0 1rem; padding: 0; border: none; }
+  .ai-blog .ai-summary ol { margin: 0; padding-left: 1.25rem; }
+  .ai-blog .ai-summary li { margin-bottom: 0.7rem; line-height: 1.65; color: #1f2937; }
+  .ai-blog .ai-summary strong { color: #1a1a5e; }
+
+  /* TOC */
+  .ai-blog .blog-toc { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 2rem; }
+  .ai-blog .blog-toc__title { font-weight: 700; color: #1a1a5e; font-size: 0.85rem; margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.03em; }
+  .ai-blog .blog-toc__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.4rem; counter-reset: toc; }
+  .ai-blog .blog-toc__list li { counter-increment: toc; }
+  .ai-blog .blog-toc__list li a { display: block; text-decoration: none; color: #475569; font-size: 0.95rem; line-height: 1.5; padding: 0.25rem 0; transition: color 0.2s; }
+  .ai-blog .blog-toc__list li a::before { content: counter(toc) '. '; color: #F0D048; font-weight: 600; }
+  .ai-blog .blog-toc__list li a:hover { color: #1a1a5e; }
+
+  /* Article body */
+  .ai-blog .blog-article__body { font-size: 1.05rem; line-height: 1.8; color: #1f2937; word-break: break-word; }
+  .ai-blog .blog-article__body h2 { font-size: 1.6rem; font-weight: 800; color: #1a1a5e; margin: 2.5rem 0 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid #e2e8f0; scroll-margin-top: 100px; }
+  .ai-blog .blog-article__body h3 { font-size: 1.25rem; font-weight: 700; color: #1a1a5e; margin: 2rem 0 0.75rem; }
+  .ai-blog .blog-article__body p { margin: 0 0 1.25rem; }
+  .ai-blog .blog-article__body strong { color: #1a1a5e; font-weight: 700; }
+  .ai-blog .blog-article__body a { color: #1a1a5e; text-decoration: underline; text-decoration-color: #F0D048; text-underline-offset: 3px; }
+  .ai-blog .blog-article__body a:hover { color: #F0D048; }
+  .ai-blog .blog-article__body ul, .ai-blog .blog-article__body ol { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+  .ai-blog .blog-article__body li { margin-bottom: 0.4rem; }
+  .ai-blog .blog-article__body blockquote { margin: 1.5rem 0; padding: 1.1rem 1.5rem; background: linear-gradient(135deg, #1a1a5e, #2a2a7e); border-radius: 8px; color: #fff; font-size: 1.1rem; font-weight: 600; font-style: italic; line-height: 1.55; box-shadow: 0 4px 16px rgba(26,26,94,0.15); }
+  .ai-blog .blog-article__body figure { margin: 2rem 0; text-align: center; }
+  .ai-blog .blog-article__body figure img { width: 100%; height: auto; border-radius: 12px; box-shadow: 0 8px 24px rgba(26,26,94,0.1); }
+  .ai-blog .blog-article__body figcaption { margin-top: 0.75rem; font-size: 0.9rem; color: #64748b; font-style: italic; }
+  .ai-blog .blog-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.5rem 0; border-radius: 8px; border: 1px solid #e2e8f0; }
+  .ai-blog .blog-article__body table { width: 100%; border-collapse: collapse; margin: 0; font-size: 0.95rem; background: #fff; }
+  .ai-blog .blog-article__body th, .ai-blog .blog-article__body td { border: 1px solid #e2e8f0; padding: 0.75rem 1rem; text-align: left; vertical-align: top; color: #1a1a5e; }
+  .ai-blog .blog-article__body th { background: #1a1a5e; font-weight: 700; color: #fff; }
+  .ai-blog .blog-article__body tbody tr:nth-child(even) { background: #f8fafc; }
+  .ai-blog .blog-article__body tbody tr:hover { background: #fef9ef; }
+  .ai-blog .blog-article__body td:first-child { font-weight: 600; }
+
+  /* FAQ */
+  .ai-blog .blog-faq { margin: 3rem 0; padding: 2rem; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0; }
+  .ai-blog .blog-faq__title { font-size: 1.5rem; font-weight: 800; color: #1a1a5e; margin: 0 0 1.25rem; }
+  .ai-blog .blog-faq__list { display: flex; flex-direction: column; gap: 0.75rem; }
+  .ai-blog .blog-faq__item { background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; overflow: hidden; transition: border-color 0.2s; }
+  .ai-blog .blog-faq__item[open] { border-color: #F0D048; }
+  .ai-blog .blog-faq__question { padding: 1rem 1.25rem; font-weight: 700; color: #1a1a5e; cursor: pointer; list-style: none; display: flex; align-items: center; justify-content: space-between; font-size: 1rem; }
+  .ai-blog .blog-faq__question::-webkit-details-marker { display: none; }
+  .ai-blog .blog-faq__question::after { content: '+'; font-size: 1.3rem; font-weight: 400; color: #F0D048; flex-shrink: 0; margin-left: 1rem; }
+  .ai-blog .blog-faq__item[open] .blog-faq__question::after { content: '−'; }
+  .ai-blog .blog-faq__answer { padding: 0 1.25rem 1rem; margin: 0; font-size: 0.98rem; line-height: 1.7; color: #475569; }
+  .ai-blog .blog-faq__answer a { color: #1a1a5e; text-decoration: underline; text-decoration-color: #F0D048; text-underline-offset: 3px; }
+  .ai-blog .blog-faq__answer a:hover { color: #F0D048; }
+
+  /* Pillar links */
+  .ai-blog .blog-pillar-links { margin: 2.5rem 0; padding: 1.5rem 2rem; background: #f1f5f9; border-radius: 10px; }
+  .ai-blog .blog-pillar-links__title { font-size: 1.1rem; font-weight: 800; color: #1a1a5e; margin: 0 0 1rem; }
+  .ai-blog .blog-pillar-links__grid { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .ai-blog .blog-pillar-links__item { display: inline-block; padding: 0.45rem 1rem; background: #fff; border: 1px solid #e2e8f0; border-radius: 6px; color: #1a1a5e; font-size: 0.9rem; font-weight: 600; text-decoration: none; transition: background 0.15s; }
+  .ai-blog .blog-pillar-links__item:hover { background: #1a1a5e; color: #fff; }
+
+  /* Related */
+  .ai-blog .blog-related { margin-top: 3rem; padding-top: 2.5rem; border-top: 2px solid #e2e8f0; }
+  .ai-blog .blog-related__title { font-size: 1.4rem; font-weight: 800; color: #1a1a5e; margin: 0 0 1.5rem; }
+  .ai-blog .blog-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+  .ai-blog .blog-related__card { display: block; text-decoration: none; color: inherit; background: #fff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 1.25rem; transition: box-shadow 0.2s, transform 0.2s; }
+  .ai-blog .blog-related__card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); border-color: #F0D048; }
+  .ai-blog .blog-related__card-title { font-size: 1rem; font-weight: 700; color: #1a1a5e; line-height: 1.4; margin: 0 0 0.5rem; }
+  .ai-blog .blog-related__card-excerpt { font-size: 0.88rem; color: #64748b; line-height: 1.55; margin: 0; }
+
+  /* Bottom CTA */
+  .ai-blog .blog-bottom-cta { margin-top: 3rem; padding: 2.5rem; background: #fff; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; display: flex; flex-direction: column; align-items: center; }
+  .ai-blog .blog-bottom-cta__title { font-size: 1.5rem; font-weight: 800; color: #1a1a5e; margin: 0 0 0.5rem; line-height: 1.3; }
+  .ai-blog .blog-bottom-cta__desc { font-size: 1rem; color: #1a1a5e; margin: 0 0 1.5rem; line-height: 1.6; max-width: 540px; }
+  .ai-blog .blog-bottom-cta__form-wrap { display: flex; justify-content: center; width: 100%; max-width: 500px; margin: 0 auto; }
+  .ai-blog .blog-bottom-cta__form-wrap .lead-form { width: 100%; max-width: 100%; }
+  .ai-blog .blog-bottom-cta__contact { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e2e8f0; width: 100%; max-width: 500px; }
+  .ai-blog .blog-bottom-cta__contact-title { font-size: 1rem; font-weight: 800; color: #1a1a5e; margin: 0 0 0.75rem; }
+  .ai-blog .blog-bottom-cta__contact-links { display: flex; justify-content: center; gap: 0.75rem; flex-wrap: wrap; }
+  .ai-blog .blog-contact-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.55rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.92rem; text-decoration: none; transition: transform 0.15s; }
+  .ai-blog .blog-contact-btn:hover { transform: translateY(-1px); }
+  .ai-blog .blog-contact-btn--tour { background: #1a1a5e; color: #fff; }
+  .ai-blog .blog-contact-btn--phone { background: #e2e8f0; color: #1a1a5e; }
+  .ai-blog .blog-contact-btn--zalo { background: #0068ff; color: #fff; }
+
+  /* Author bio + refs */
+  .ai-blog .blog-author-bio, .ai-blog .blog-refs { margin: 2.5rem 0; padding: 1.5rem 1.75rem; background: #f8fafc; border-left: 4px solid #1a1a5e; border-radius: 0 8px 8px 0; }
+  .ai-blog .blog-author-bio h3, .ai-blog .blog-refs h3 { font-size: 1.1rem; font-weight: 800; color: #1a1a5e; margin: 0 0 0.75rem; }
+  .ai-blog .blog-author-bio p { margin: 0; font-size: 0.95rem; line-height: 1.7; color: #1f2937; }
+  .ai-blog .blog-refs ol { margin: 0; padding-left: 1.25rem; }
+  .ai-blog .blog-refs li { margin-bottom: 0.5rem; font-size: 0.9rem; line-height: 1.65; color: #475569; }
+  .ai-blog .blog-refs a { color: #1a1a5e; text-decoration: underline; text-decoration-color: #F0D048; }
+
+  /* Sidebar */
+  .ai-blog .blog-side-cta { background: linear-gradient(135deg, #1a1a5e 0%, #2a2a7e 100%); color: #fff; border-radius: 12px; padding: 1.5rem; box-shadow: 0 8px 24px rgba(26,26,94,0.2); }
+  .ai-blog .blog-side-cta__badge { display: inline-block; background: #F0D048; color: #1a1a5e; font-weight: 700; font-size: 0.72rem; padding: 3px 10px; border-radius: 50px; margin-bottom: 0.75rem; }
+  .ai-blog .blog-side-cta__title { font-size: 1.15rem; font-weight: 800; margin: 0 0 0.5rem; color: #fff; line-height: 1.3; }
+  .ai-blog .blog-side-cta__desc { font-size: 0.85rem; line-height: 1.55; margin: 0 0 1rem; color: #e0e7ff; }
+  .ai-blog .blog-side-cta .lead-form input, .ai-blog .blog-side-cta .lead-form button { font-size: 0.85rem !important; }
+
+  .ai-blog .blog-side-contact { background: #fff; border: 1px solid #e5e7eb; border-radius: 10px; padding: 1rem; }
+  .ai-blog .blog-side-contact__title { font-weight: 700; color: #1a1a5e; font-size: 0.9rem; margin: 0 0 0.65rem; }
+  .ai-blog .blog-side-contact__btn { display: block; padding: 0.55rem 0.85rem; margin-bottom: 0.4rem; background: #1a1a5e; color: #fff; border-radius: 6px; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-align: center; transition: background 0.2s; }
+  .ai-blog .blog-side-contact__btn:hover { background: #2a2a7e; }
+  .ai-blog .blog-side-contact__btn--zalo { background: #0068FF; }
+  .ai-blog .blog-side-contact__btn--zalo:hover { background: #0055d4; }
+  .ai-blog .blog-side-contact__btn--magnet { background: #F0D048; color: #1a1a5e; }
+  .ai-blog .blog-side-contact__btn--magnet:hover { background: #D4B637; }
+
+  /* Responsive */
+  @media (max-width: 960px) {
+    .ai-blog .blog-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+    .ai-blog .blog-sidebar { position: static; order: 99; }
+    .ai-blog .blog-related__grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 768px) {
+    .ai-blog .blog-container { padding: 0 1rem; }
+    .ai-blog .blog-article { padding: 1.5rem 0 2rem; }
+    .ai-blog .blog-article__title { font-size: 1.5rem; }
+    .ai-blog .blog-related__grid { grid-template-columns: 1fr; }
+    .ai-blog .blog-bottom-cta { padding: 1.5rem; }
+    .ai-blog .blog-hero-img { padding: 0; margin-top: 0; }
+    .ai-blog .blog-hero-img img { border-radius: 0; max-height: 240px; }
+    .ai-blog .blog-breadcrumb__list li[aria-current="page"] { max-width: 180px; }
+  }
+</style>
+
+<script>
+  // Reading progress bar
+  const bar = document.getElementById('readingBar');
+  const article = document.querySelector('.ai-blog .blog-article');
+  if (bar && article) {
+    window.addEventListener('scroll', () => {
+      const rect = (article as HTMLElement).getBoundingClientRect();
+      const total = (article as HTMLElement).offsetHeight - window.innerHeight;
+      const scrolled = -rect.top;
+      const pct = Math.max(0, Math.min(100, (scrolled / total) * 100));
+      (bar as HTMLElement).style.width = pct + '%';
+    }, { passive: true });
+  }
+
+  // Copy link button
+  const copyBtn = document.getElementById('copyLinkBtn');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.classList.add('blog-share__btn--copied');
+        setTimeout(() => copyBtn.classList.remove('blog-share__btn--copied'), 2000);
+      } catch {}
+    });
+  }
+</script>

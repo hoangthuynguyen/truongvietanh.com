@@ -1,0 +1,415 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Toán Tư Duy SAM – Phương Pháp Singapore | Trường Việt Anh",
+  "description": "Toán SAM – phương pháp Toán tư duy Singapore. Dạy trẻ hiểu bản chất, tự tìm cách giải, không học thuộc công thức. Áp dụng cho trẻ 4–15 tuổi.",
+  "url": "https://truongvietanh.com/toan-tu-duy",
+  "provider": { "@type": "Organization", "name": "Hệ thống Trường Việt Anh", "url": "https://truongvietanh.com" }
+};
+
+const features = [
+  { icon: '🇸🇬', title: 'Chuẩn Singapore SAM', desc: 'Hệ thống Toán tư duy hàng đầu, phát triển theo triết lý Singapore Math — Top 1 TIMSS, Top 3 PISA toàn cầu liên tiếp nhiều năm.' },
+  { icon: '🧠', title: 'Học từ Bản Chất', desc: 'Không học thuộc công thức. Không luyện bài theo mẫu. Trẻ được dẫn dắt để tự nhìn ra quy luật và tìm cách giải.' },
+  { icon: '👁️', title: 'Tư Duy Trực Quan CPA', desc: 'Concrete → Pictorial → Abstract. Hiểu bằng vật thể và hình ảnh trước, rồi mới chuyển sang ký hiệu số học trừu tượng.' },
+  { icon: '🎯', title: 'Giải Quyết Vấn Đề', desc: 'Mỗi bài toán là một thử thách thực. Trẻ học cách đặt câu hỏi, phân tích và xây dựng chiến lược giải — không chỉ tìm đáp án.' },
+  { icon: '📐', title: 'Cá Nhân Hóa Lộ Trình', desc: 'Mỗi trẻ được kiểm tra đầu vào và xếp lớp phù hợp. Tốc độ học theo từng em — không học đại trà theo độ tuổi.' },
+  { icon: '🏆', title: 'Kết Quả Đo Được', desc: 'Thay đổi tư duy rõ ràng sau 2–4 tuần. Điểm Toán trường, ôn thi chuyên, Olympic — đều cải thiện khi nền tảng tư duy vững.' },
+];
+
+const ageGroups = [
+  { age: '4–6 tuổi', level: 'Mầm Non', color: '#e67e22', icon: '🌱', items: ['Nền tảng số và hình học', 'Tư duy logic qua trò chơi', 'Phương pháp Concrete (vật thể thật)'] },
+  { age: '6–9 tuổi', level: 'Tiểu Học Sớm', color: '#27ae60', icon: '📚', items: ['Số học, phép tính, phân số', 'Tư duy trực quan (hình ảnh)', 'Giải toán có lời văn'] },
+  { age: '9–12 tuổi', level: 'Tiểu Học Nâng Cao', color: '#2980b9', icon: '📐', items: ['Tỉ lệ, diện tích, thống kê', 'Luyện Olympic Toán', 'Abstract — ký hiệu & công thức'] },
+  { age: '12–15 tuổi', level: 'THCS', color: '#8e44ad', icon: '🔢', items: ['Đại số, hình học, phương trình', 'Ôn thi vào 10, thi chuyên', 'Tư duy toán học bậc cao'] },
+];
+
+const comparisons = [
+  { aspect: 'Cách học', traditional: 'Ghi nhớ công thức, làm theo mẫu', sam: 'Tự khám phá, nhìn ra bản chất' },
+  { aspect: 'Khi gặp bài mới', traditional: 'Không giải được vì chưa thấy mẫu', sam: 'Tự phân tích và xây dựng chiến lược' },
+  { aspect: 'Động lực học', traditional: 'Học vì bắt buộc, sợ điểm kém', sam: 'Học vì tò mò, thích thử thách' },
+  { aspect: 'Kết quả lâu dài', traditional: 'Mất gốc sau hè, cần học lại', sam: 'Nền tảng vững, tự học được ở cấp cao hơn' },
+  { aspect: 'Học thêm', traditional: 'Phụ thuộc gia sư/lớp học thêm mãi', sam: 'Độc lập, tự giải quyết vấn đề mới' },
+];
+
+const faqs = [
+  { q: 'Con tôi học yếu Toán có phù hợp không?', a: 'Càng phù hợp. Học yếu Toán thường là do cách học, không phải do con thiếu thông minh. SAM bắt đầu lại từ nền tảng đúng cách — trẻ yếu Toán thường tiến bộ rất nhanh trong 4–6 tuần đầu.' },
+  { q: 'Bao lâu thấy kết quả rõ?', a: 'Thay đổi tư duy thường thấy sau 2–4 tuần đầu. Điểm trường cải thiện sau 1–2 tháng. Trẻ tự giải được bài mới mà không cần hỏi là dấu hiệu rõ nhất.' },
+  { q: 'Toán SAM khác gì học thêm truyền thống?', a: 'Học thêm truyền thống: giải thêm bài, luyện thêm đề, làm quen thêm dạng. SAM: dạy cách suy nghĩ — một nền tảng áp dụng được cho mọi dạng toán, không cần "học trước" từng dạng.' },
+  { q: 'Con đang học tốt có cần học SAM không?', a: 'Nếu con học tốt nhờ luyện nhiều (nhưng vẫn cần hỏi khi gặp bài mới), SAM sẽ đưa con lên tầm khác — tự giải được bài lạ, luyện Olympic, và không bao giờ mất gốc ở cấp học cao hơn.' },
+  { q: 'Học ở đâu? Online hay offline?', a: 'Việt Anh có lớp Toán SAM tại cơ sở Gò Vấp, Phú Nhuận và Bình Tân. Liên hệ hotline để được tư vấn lịch học và xếp lớp phù hợp theo năng lực của con.' },
+];
+---
+
+<BaseLayout
+  title="Toán Tư Duy Singapore (SAM) – Dạy Trẻ Hiểu Bản Chất, Không Học Vẹt | Việt Anh"
+  description="Toán SAM – phương pháp tư duy Singapore giúp trẻ 4–15 tuổi học Toán từ bản chất. Không học thuộc công thức, không luyện bài mẫu — tự tìm cách giải mọi dạng toán."
+  canonical="https://truongvietanh.com/toan-tu-duy"
+  ogImage="https://media.truongvietanh.com/images/thuyet-trinh-09.webp"
+  structuredData={structuredData}
+  noPopup={true}
+>
+  <div class="tt-page">
+    <HeaderBase />
+
+    <!-- ===== HERO ===== -->
+    <section class="tt-hero">
+      <div class="tt-container">
+        <nav class="tt-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a>
+          <span>/</span>
+          <span>Toán Tư Duy</span>
+        </nav>
+        <div class="tt-hero__inner">
+          <div class="tt-hero__text">
+            <div class="tt-hero__tag">🇸🇬 Phương pháp Singapore SAM</div>
+            <h1 class="tt-hero__title">
+              Toán Tư Duy<br/>
+              <span class="tt-hero__accent">Không Học Vẹt — Hiểu Bản Chất</span>
+            </h1>
+            <p class="tt-hero__subtitle">
+              Trẻ không sợ Toán — trẻ chỉ sợ <em>cách học Toán hiện tại</em>.<br/>
+              SAM dạy con <strong>tự nhìn ra quy luật và tự tìm cách giải</strong> — không cần học trước từng dạng bài.
+            </p>
+            <div class="tt-hero__badges">
+              <span class="tt-badge">🧠 Tư duy logic</span>
+              <span class="tt-badge">📐 Trực quan CPA</span>
+              <span class="tt-badge">🎯 4–15 tuổi</span>
+              <span class="tt-badge">🏆 Top 1 TIMSS thế giới</span>
+            </div>
+            <div class="tt-hero__ctas">
+              <a href="tel:+84916961409" class="tt-btn tt-btn--primary">📞 Đăng ký tư vấn miễn phí</a>
+              <a href="#so-sanh" class="tt-btn tt-btn--outline">Xem so sánh ↓</a>
+            </div>
+          </div>
+          <div class="tt-hero__stats">
+            <div class="tt-stat">
+              <strong>#1</strong>
+              <span>TIMSS Toán học quốc tế — Singapore liên tiếp 10+ năm</span>
+            </div>
+            <div class="tt-stat">
+              <strong>Top 3</strong>
+              <span>PISA toàn cầu — tư duy phản biện & giải quyết vấn đề</span>
+            </div>
+            <div class="tt-stat">
+              <strong>2–4 tuần</strong>
+              <span>Thời gian thay đổi tư duy rõ ràng đầu tiên</span>
+            </div>
+            <div class="tt-stat">
+              <strong>4–15</strong>
+              <span>Tuổi — từ Mầm Non đến THCS</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VẤN ĐỀ ===== -->
+    <section class="tt-section tt-section--light">
+      <div class="tt-container">
+        <div class="tt-problem">
+          <div class="tt-problem__text">
+            <h2>Không phải trẻ không giỏi Toán —<br/>trẻ đang <em>học sai cách</em></h2>
+            <p>Hầu hết trẻ em học Toán theo cách:</p>
+            <ul class="tt-problem__list tt-problem__list--bad">
+              <li>❌ Ghi nhớ công thức theo thầy cô</li>
+              <li>❌ Làm bài theo mẫu có sẵn</li>
+              <li>❌ Luyện thật nhiều dạng bài khác nhau</li>
+              <li>❌ Gặp bài mới → hỏi, tra, copy đáp án</li>
+            </ul>
+            <div class="tt-callout">
+              Kết quả: điểm ổn khi học bài quen · "đứng hình" khi gặp bài lạ · <strong>mất gốc sau kỳ nghỉ hè</strong>
+            </div>
+            <p>Vấn đề không nằm ở con. Mà nằm ở <strong>cách học chưa bao giờ được dạy đúng</strong>.</p>
+          </div>
+          <div class="tt-problem__right">
+            <img src="https://media.truongvietanh.com/images/thuyet-trinh-09.webp" alt="Học sinh học Toán tư duy Singapore tại Việt Anh" width="560" height="380" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TÍNH NĂNG ===== -->
+    <section class="tt-section">
+      <div class="tt-container">
+        <h2 class="tt-section__title">Toán SAM Khác Biệt Như Thế Nào?</h2>
+        <p class="tt-section__desc">6 nguyên tắc cốt lõi của phương pháp Singapore — áp dụng tại Việt Anh</p>
+        <div class="tt-feat-grid">
+          {features.map(f => (
+            <div class="tt-feat-card">
+              <div class="tt-feat__icon">{f.icon}</div>
+              <h3 class="tt-feat__title">{f.title}</h3>
+              <p class="tt-feat__desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ĐỘ TUỔI ===== -->
+    <section class="tt-section tt-section--light">
+      <div class="tt-container">
+        <h2 class="tt-section__title">Chương Trình Theo Độ Tuổi</h2>
+        <p class="tt-section__desc">Lộ trình học Toán bài bản từ 4 đến 15 tuổi — mỗi cấp xây nền cho cấp tiếp theo</p>
+        <div class="tt-age-grid">
+          {ageGroups.map(g => (
+            <div class="tt-age-card" style={`--age-color: ${g.color}`}>
+              <div class="tt-age__header">
+                <span class="tt-age__icon">{g.icon}</span>
+                <div>
+                  <div class="tt-age__range">{g.age}</div>
+                  <div class="tt-age__level">{g.level}</div>
+                </div>
+              </div>
+              <ul class="tt-age__list">
+                {g.items.map(item => <li>{item}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SO SÁNH ===== -->
+    <section class="tt-section" id="so-sanh">
+      <div class="tt-container">
+        <h2 class="tt-section__title">SAM vs Học Thêm Truyền Thống</h2>
+        <p class="tt-section__desc">Sự khác biệt không phải ở khối lượng bài tập — mà ở cách tư duy được xây dựng</p>
+        <div class="tt-compare">
+          <div class="tt-compare__header">
+            <div class="tt-compare__col-head"></div>
+            <div class="tt-compare__col-head tt-compare__col-head--bad">Học thêm truyền thống</div>
+            <div class="tt-compare__col-head tt-compare__col-head--good">Toán SAM – Việt Anh</div>
+          </div>
+          {comparisons.map(row => (
+            <div class="tt-compare__row">
+              <div class="tt-compare__aspect">{row.aspect}</div>
+              <div class="tt-compare__cell tt-compare__cell--bad">❌ {row.traditional}</div>
+              <div class="tt-compare__cell tt-compare__cell--good">✅ {row.sam}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SINGAPORE STATS ===== -->
+    <section class="tt-section tt-section--navy">
+      <div class="tt-container">
+        <h2 class="tt-section__title tt-section__title--white">Vì Sao Singapore Dẫn Đầu Thế Giới Về Toán?</h2>
+        <p class="tt-section__desc tt-section__desc--white">Không phải vì học nhiều hơn — mà vì học đúng cách hơn</p>
+        <div class="tt-stats-grid">
+          <div class="tt-stat-card">
+            <div class="tt-stat-card__icon">🏆</div>
+            <strong>TIMSS 2011, 2015, 2019</strong>
+            <p>Top 1 thế giới về Toán học — học sinh Singapore dẫn đầu về giải quyết vấn đề và tư duy logic</p>
+          </div>
+          <div class="tt-stat-card">
+            <div class="tt-stat-card__icon">📊</div>
+            <strong>PISA 2012, 2015, 2018</strong>
+            <p>Top 3 toàn cầu — điểm Toán cao nhất thế giới, dẫn đầu về tư duy phản biện và suy luận</p>
+          </div>
+          <div class="tt-stat-card">
+            <div class="tt-stat-card__icon">🌍</div>
+            <strong>70+ quốc gia áp dụng</strong>
+            <p>Phương pháp Singapore Math được Mỹ, Anh, Úc, Canada áp dụng vào hệ thống giáo dục quốc gia</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="tt-section tt-section--light">
+      <div class="tt-container tt-faq-wrap">
+        <h2 class="tt-section__title">Câu Hỏi Thường Gặp</h2>
+        <div class="tt-faq">
+          {faqs.map((f, i) => (
+            <details class="tt-faq__item" open={i === 0}>
+              <summary class="tt-faq__q">{f.q}</summary>
+              <p class="tt-faq__a">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="tt-cta">
+      <div class="tt-container tt-cta__inner">
+        <div class="tt-cta__text">
+          <h2>Đăng ký khảo sát Tư Duy Toán Học miễn phí</h2>
+          <p>Chuyên viên sẽ kiểm tra năng lực tư duy của con và tư vấn lộ trình học phù hợp — hoàn toàn miễn phí, không ràng buộc.</p>
+        </div>
+        <div class="tt-cta__actions">
+          <a href="tel:+84916961409" class="tt-btn tt-btn--gold">📞 0916 961 409</a>
+          <a href="https://zalo.me/0916961409" class="tt-btn tt-btn--zalo" target="_blank" rel="noopener">💬 Zalo OA</a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  :root {
+    --navy: #1a1a5e;
+    --navy-dk: #0f0f3d;
+    --navy-lt: #2a2a8a;
+    --gold: #F0D048;
+    --gold-lt: #FFFBEA;
+    --bg: #f8f9fc;
+    --white: #ffffff;
+    --sub: #6b7280;
+    --border: #e5e7eb;
+    --radius: 16px;
+    --green: #16a34a;
+    --red: #dc2626;
+  }
+
+  .tt-page { font-family: 'Inter', sans-serif; color: #1a1a2e; }
+  .tt-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  /* BREADCRUMB */
+  .tt-breadcrumb { display: flex; gap: .5rem; align-items: center; font-size: .875rem; color: rgba(255,255,255,.7); margin-bottom: 1.5rem; }
+  .tt-breadcrumb a { color: rgba(255,255,255,.85); text-decoration: none; }
+  .tt-breadcrumb a:hover { color: var(--gold); }
+
+  /* ===== HERO ===== */
+  .tt-hero {
+    background: linear-gradient(135deg, #0f2744 0%, #1a3a5e 50%, #1a1a5e 100%);
+    padding: 4rem 0 5rem; position: relative; overflow: hidden;
+  }
+  .tt-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://media.truongvietanh.com/images/thuyet-trinh-09.webp') center/cover no-repeat;
+    opacity: .06;
+  }
+  .tt-hero__inner { position: relative; display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: center; }
+  .tt-hero__tag { display: inline-block; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: var(--gold); font-size: .875rem; font-weight: 700; padding: .35rem 1rem; border-radius: 50px; margin-bottom: 1rem; letter-spacing: .5px; }
+  .tt-hero__title { font-family: 'Montserrat', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.75rem); font-weight: 900; color: #fff; line-height: 1.15; margin: 0 0 1rem; }
+  .tt-hero__accent { color: var(--gold); }
+  .tt-hero__subtitle { font-size: 1.05rem; color: rgba(255,255,255,.85); line-height: 1.75; margin: 0 0 1.5rem; }
+  .tt-hero__badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.75rem; }
+  .tt-badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: .35rem .85rem; border-radius: 50px; font-size: .8rem; font-weight: 600; }
+  .tt-hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .tt-hero__stats { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; backdrop-filter: blur(8px); }
+  .tt-stat { text-align: center; }
+  .tt-stat strong { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .tt-stat span { font-size: .75rem; color: rgba(255,255,255,.75); line-height: 1.4; margin-top: .25rem; display: block; }
+
+  /* BUTTONS */
+  .tt-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.75rem; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all .2s; }
+  .tt-btn--primary { background: var(--gold); color: var(--navy-dk); }
+  .tt-btn--primary:hover { background: #F5DC85; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(240,208,72,.4); }
+  .tt-btn--outline { background: transparent; border: 2px solid rgba(255,255,255,.4); color: #fff; }
+  .tt-btn--outline:hover { border-color: var(--gold); color: var(--gold); }
+  .tt-btn--gold { background: linear-gradient(135deg, var(--gold), #D4B637); color: var(--navy-dk); }
+  .tt-btn--gold:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(240,208,72,.4); }
+  .tt-btn--zalo { background: #0068FF; color: #fff; }
+  .tt-btn--zalo:hover { background: #0056D6; transform: translateY(-2px); }
+
+  /* SECTIONS */
+  .tt-section { padding: 4rem 0; }
+  .tt-section--light { background: var(--bg); }
+  .tt-section--navy { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); padding: 4rem 0; }
+  .tt-section__title { font-family: 'Montserrat', sans-serif; font-size: 1.875rem; font-weight: 800; color: var(--navy); text-align: center; margin: 0 0 .75rem; }
+  .tt-section__title--white { color: #fff; }
+  .tt-section__desc { font-size: 1rem; color: var(--sub); text-align: center; max-width: 640px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .tt-section__desc--white { color: rgba(255,255,255,.8); }
+
+  /* PROBLEM */
+  .tt-problem { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .tt-problem__text h2 { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--navy); margin: 0 0 1rem; }
+  .tt-problem__text p { font-size: 1rem; color: #555; line-height: 1.7; margin: 0 0 1rem; }
+  .tt-problem__list { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: .5rem; }
+  .tt-problem__list li { font-size: .95rem; line-height: 1.5; }
+  .tt-callout { background: #fff3cd; border-left: 4px solid #F0D048; border-radius: 8px; padding: .9rem 1.25rem; font-size: .95rem; color: #7a5f00; font-weight: 500; margin: 1rem 0; line-height: 1.6; }
+  .tt-problem__right img { width: 100%; height: 320px; object-fit: cover; border-radius: var(--radius); box-shadow: 0 12px 40px rgba(26,26,94,.12); }
+
+  /* FEATURES */
+  .tt-feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .tt-feat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem 1.5rem; transition: all .25s; }
+  .tt-feat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(26,26,94,.1); border-color: var(--gold); }
+  .tt-feat__icon { font-size: 2rem; margin-bottom: .75rem; display: block; }
+  .tt-feat__title { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; color: var(--navy); margin: 0 0 .6rem; }
+  .tt-feat__desc { font-size: .9rem; color: #555; line-height: 1.65; margin: 0; }
+
+  /* AGE GROUPS */
+  .tt-age-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .tt-age-card { background: var(--white); border: 2px solid var(--border); border-top: 4px solid var(--age-color, var(--navy)); border-radius: var(--radius); padding: 1.5rem 1.25rem; transition: all .25s; }
+  .tt-age-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(26,26,94,.1); }
+  .tt-age__header { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+  .tt-age__icon { font-size: 1.75rem; }
+  .tt-age__range { font-family: 'Montserrat', sans-serif; font-size: .9rem; font-weight: 900; color: var(--age-color, var(--navy)); }
+  .tt-age__level { font-size: .8rem; font-weight: 600; color: var(--sub); }
+  .tt-age__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+  .tt-age__list li { font-size: .85rem; color: #444; line-height: 1.5; padding-left: 1.1rem; position: relative; }
+  .tt-age__list li::before { content: '✓'; position: absolute; left: 0; color: var(--age-color, var(--navy)); font-weight: 700; }
+
+  /* COMPARE */
+  .tt-compare { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+  .tt-compare__header { display: grid; grid-template-columns: 160px 1fr 1fr; background: var(--navy); }
+  .tt-compare__col-head { padding: 1rem 1.25rem; font-family: 'Montserrat', sans-serif; font-size: .875rem; font-weight: 800; color: rgba(255,255,255,.6); }
+  .tt-compare__col-head--bad { color: #fca5a5; }
+  .tt-compare__col-head--good { color: #86efac; }
+  .tt-compare__row { display: grid; grid-template-columns: 160px 1fr 1fr; border-top: 1px solid var(--border); }
+  .tt-compare__row:nth-child(even) { background: var(--bg); }
+  .tt-compare__aspect { padding: 1rem 1.25rem; font-size: .875rem; font-weight: 700; color: var(--navy); border-right: 1px solid var(--border); display: flex; align-items: center; }
+  .tt-compare__cell { padding: 1rem 1.25rem; font-size: .875rem; line-height: 1.55; display: flex; align-items: center; }
+  .tt-compare__cell--bad { color: #b91c1c; border-right: 1px solid var(--border); }
+  .tt-compare__cell--good { color: #15803d; font-weight: 500; }
+
+  /* STATS NAVY */
+  .tt-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .tt-stat-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding: 1.75rem 1.5rem; text-align: center; }
+  .tt-stat-card__icon { font-size: 2rem; margin-bottom: .75rem; }
+  .tt-stat-card strong { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: .6rem; }
+  .tt-stat-card p { font-size: .9rem; color: rgba(255,255,255,.8); line-height: 1.65; margin: 0; }
+
+  /* FAQ */
+  .tt-faq-wrap { max-width: 800px; }
+  .tt-faq { display: flex; flex-direction: column; gap: .75rem; }
+  .tt-faq__item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .tt-faq__item[open] { border-color: var(--gold); }
+  .tt-faq__q { padding: 1.1rem 1.5rem; font-size: 1rem; font-weight: 700; color: var(--navy); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .tt-faq__q::after { content: '+'; font-size: 1.25rem; font-weight: 400; flex-shrink: 0; margin-left: 1rem; }
+  .tt-faq__item[open] .tt-faq__q::after { content: '−'; }
+  .tt-faq__a { padding: 0 1.5rem 1.25rem; font-size: .95rem; color: #555; line-height: 1.7; margin: 0; }
+
+  /* CTA */
+  .tt-cta { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); padding: 3.5rem 0; }
+  .tt-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .tt-cta__text h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
+  .tt-cta__text p { font-size: 1rem; color: rgba(255,255,255,.8); line-height: 1.65; margin: 0; }
+  .tt-cta__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+  /* RESPONSIVE */
+  @media (max-width: 1024px) {
+    .tt-hero__inner { grid-template-columns: 1fr; }
+    .tt-hero__stats { grid-template-columns: repeat(4, 1fr); }
+    .tt-age-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .tt-feat-grid { grid-template-columns: 1fr 1fr; }
+    .tt-problem { grid-template-columns: 1fr; }
+    .tt-problem__right { order: -1; }
+    .tt-stats-grid { grid-template-columns: 1fr; }
+    .tt-compare__header, .tt-compare__row { grid-template-columns: 100px 1fr 1fr; }
+    .tt-cta__inner { flex-direction: column; text-align: center; }
+    .tt-cta__actions { justify-content: center; }
+    .tt-hero__stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .tt-feat-grid { grid-template-columns: 1fr; }
+    .tt-compare__header { display: none; }
+    .tt-compare__row { grid-template-columns: 1fr; border-top: 2px solid var(--border); }
+    .tt-compare__aspect { border-right: none; border-bottom: 1px solid var(--border); background: var(--navy); color: #fff; border-radius: 0; }
+    .tt-compare__cell--bad { border-right: none; border-bottom: 1px solid var(--border); }
+    .tt-hero { padding: 2.5rem 0 3rem; }
+    .tt-section { padding: 2.5rem 0; }
+  }
+</style>

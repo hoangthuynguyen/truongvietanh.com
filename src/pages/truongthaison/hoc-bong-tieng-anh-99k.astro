@@ -154,9 +154,7 @@ const faqs = [
     <section class="ts-story" id="cau-chuyen">
       <div class="ts-container ts-story__grid">
         <div class="ts-story__photo">
-          <div class="ts-story__photo-frame" aria-hidden="true">
-            <span>Anh Nguyễn Duy Khải</span>
-          </div>
+          <img class="ts-story__photo-img" src="/nguyen-duy-khai-story.jpg" alt="Anh Nguyễn Duy Khải — Giám đốc Trường Thái Sơn, Regional Manager Major Education" loading="lazy" width="320" height="320" />
           <p class="ts-story__sig">
             <em>— Nguyễn Duy Khải</em><br/>
             Regional Manager đương nhiệm – Major Education<br/>
@@ -725,7 +723,16 @@ const faqs = [
     aspect-ratio: 1/1; background: linear-gradient(135deg, var(--ts-navy), #2a2a8a);
     border-radius: 12px; display: flex; align-items: center; justify-content: center;
     color: rgba(255,255,255,.85); font-size: 16px; padding: 1rem; text-align: center;
-    border: 3px solid var(--ts-yellow);
+    border: 3px solid #F0D048;
+  }
+  .ts-story__photo-img {
+    display: block;
+    width: 100%; aspect-ratio: 1/1;
+    object-fit: cover; object-position: center 18%;
+    border-radius: 14px;
+    border: 3px solid #F0D048;
+    box-shadow: 0 12px 32px rgba(0, 0, 128, .15);
+    background: linear-gradient(135deg, var(--ts-navy), #2a2a8a);
   }
   .ts-story__sig {
     font-size: 16px; color: var(--ts-sub); margin-top: 1rem;

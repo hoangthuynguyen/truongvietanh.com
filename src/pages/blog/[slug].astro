@@ -145,9 +145,23 @@ const categorySlug = post.category || detectCategory(post.title, post.excerpt);
 const categoryInfo = getCategoryBySlug(categorySlug);
 // Featured image: prefer CMS file, fallback to default
 const DIRECTUS_URL = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
-const ogImage = post.featured_image
-  ? `${DIRECTUS_URL}/assets/${post.featured_image}?width=1200&height=630&fit=cover&format=webp`
-  : 'https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp';
+const featuredIsExternal = !!post.featured_image && /^https?:\/\//i.test(post.featured_image);
+function featuredSrc(transform: string): string | null {
+  if (!post.featured_image) return null;
+  if (featuredIsExternal) return post.featured_image;
+  return `${DIRECTUS_URL}/assets/${post.featured_image}?${transform}`;
+}
+const ogImage = featuredSrc('width=1200&height=630&fit=cover&format=webp')
+  || 'https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp';
+
+// Skip the template hero if the article body already shows an image near the top
+// (avoids duplicate banner when CMS post embeds its own hero in content).
+// Strategy: if any <img> appears within the first ~1500 chars of the body, OR if
+// the featured image URL itself is referenced in the body, the body owns the hero.
+const contentHead = cleanedContent.slice(0, 1500);
+const hasEarlyImage = /<img\b/i.test(contentHead);
+const featuredInBody = !!post.featured_image && featuredIsExternal && cleanedContent.includes(post.featured_image);
+const showHero = !!post.featured_image && !hasEarlyImage && !featuredInBody;
 
 const structuredData = [
   {
@@ -270,13 +284,13 @@ const structuredData = [
     </nav>
 
     <!-- Featured Image Hero (HubSpot-style) -->
-    {post.featured_image && (
+    {showHero && (
       <div class="blog-hero-img">
         <img
-          src={`${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85`}
+          src={featuredSrc('width=1600&height=720&fit=cover&format=webp&quality=85')!}
           alt={post.title}
           width="1600" height="720" fetchpriority="high" decoding="async"
-          srcset={`${DIRECTUS_URL}/assets/${post.featured_image}?width=800&height=360&fit=cover&format=webp&quality=80 800w, ${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85 1600w`}
+          srcset={featuredIsExternal ? undefined : `${DIRECTUS_URL}/assets/${post.featured_image}?width=800&height=360&fit=cover&format=webp&quality=80 800w, ${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85 1600w`}
           sizes="(max-width: 960px) 100vw, 1600px"
         />
       </div>

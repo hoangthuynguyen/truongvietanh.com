@@ -380,51 +380,124 @@ body{
 </div>
 
 <script is:inline>
-const ov = document.getElementById('ov');
-function openModal(){
-  ov.classList.add('open');
-  setTimeout(()=>document.getElementById('em').focus(),300);
-}
-function closeModal(){ ov.classList.remove('open'); }
-ov.addEventListener('click', e=>{ if(e.target===ov) closeModal(); });
+(function(){
+  'use strict';
 
-function nextStep(){
-  const em = document.getElementById('em');
-  const err = document.getElementById('emErr');
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if(!re.test(em.value)){
-    em.classList.add('err'); err.classList.add('on'); return;
+  var C = {
+    formId  : 'sq-th',
+    funnel  : 'squeeze-checklist-tieu-hoc',
+    level   : 'tieu-hoc',
+    api     : '/api/lead',
+    redirect: '/cam-on/',
+  };
+
+  var ov = document.getElementById('ov');
+  var capturedEmail = '';
+
+  function noop(){}
+  function gtm(ev){
+    try{ window.dataLayer = window.dataLayer || []; window.dataLayer.push({event:ev, funnel:C.funnel}); }catch(e){}
   }
-  em.classList.remove('err'); err.classList.remove('on');
-  document.getElementById('step1').classList.remove('on');
-  document.getElementById('step2').classList.add('on');
-  document.getElementById('stepLbl').textContent = 'Bước 2 / 2';
-  document.getElementById('progLbl').textContent = '100%';
-  document.getElementById('progFill').style.width = '100%';
-  setTimeout(()=>document.getElementById('nm').focus(),200);
-}
-function backStep(){
-  document.getElementById('step2').classList.remove('on');
-  document.getElementById('step1').classList.add('on');
-  document.getElementById('stepLbl').textContent = 'Bước 1 / 2';
-  document.getElementById('progLbl').textContent = '50%';
-  document.getElementById('progFill').style.width = '50%';
-}
-function finishStep(){
-  const nm = document.getElementById('nm');
-  const ph = document.getElementById('ph');
-  let ok = true;
-  if(nm.value.trim().length < 2){ nm.classList.add('err'); document.getElementById('nmErr').classList.add('on'); ok=false; }
-  else { nm.classList.remove('err'); document.getElementById('nmErr').classList.remove('on'); }
-  const phRe = /^[\d\s+()-]{8,}$/;
-  if(!phRe.test(ph.value)){ ph.classList.add('err'); document.getElementById('phErr').classList.add('on'); ok=false; }
-  else { ph.classList.remove('err'); document.getElementById('phErr').classList.remove('on'); }
-  if(!ok) return;
 
-  document.getElementById('step2').classList.remove('on');
-  document.getElementById('success').classList.add('on');
-  document.querySelector('.pprog').style.display = 'none';
-}
+  window.openModal = function(){
+    ov.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    gtm('popup_open');
+    setTimeout(function(){ var el=document.getElementById('em'); if(el) el.focus(); }, 300);
+  };
+  window.closeModal = function(){
+    ov.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  ov.addEventListener('click', function(e){ if(e.target===ov) window.closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') window.closeModal(); });
+
+  function setErr(inpId, errId, show){
+    var i=document.getElementById(inpId), e=document.getElementById(errId);
+    if(i) i.classList.toggle('err', show);
+    if(e) e.classList.toggle('on', show);
+  }
+
+  window.nextStep = function(){
+    var em = document.getElementById('em');
+    var v  = (em.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){
+      setErr('em','emErr',true); em.focus(); return;
+    }
+    setErr('em','emErr',false);
+    capturedEmail = v;
+
+    /* Partial capture (best-effort) */
+    try{
+      localStorage.setItem('va_partial_email', capturedEmail);
+      fetch(C.api, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({email:capturedEmail, form_id:C.formId, funnel_code:C.funnel, school_level:C.level, partial:true}),
+        keepalive:true
+      }).catch(noop);
+    }catch(e){}
+    gtm('lead_step1');
+
+    document.getElementById('step1').classList.remove('on');
+    document.getElementById('step2').classList.add('on');
+    document.getElementById('stepLbl').textContent = 'Bước 2 / 2';
+    document.getElementById('progLbl').textContent = '100%';
+    document.getElementById('progFill').style.width = '100%';
+    setTimeout(function(){ var n=document.getElementById('nm'); if(n) n.focus(); }, 80);
+  };
+
+  window.backStep = function(){
+    document.getElementById('step2').classList.remove('on');
+    document.getElementById('step1').classList.add('on');
+    document.getElementById('stepLbl').textContent = 'Bước 1 / 2';
+    document.getElementById('progLbl').textContent = '50%';
+    document.getElementById('progFill').style.width = '50%';
+  };
+
+  window.finishStep = function(){
+    var nm = document.getElementById('nm');
+    var ph = document.getElementById('ph');
+    var name  = (nm.value||'').trim();
+    var phone = (ph.value||'').trim();
+    var ok = true;
+    if(name.length < 2){ setErr('nm','nmErr',true); ok=false; } else setErr('nm','nmErr',false);
+    if(!/^[0-9+\s\-\.]{9,15}$/.test(phone)){ setErr('ph','phErr',true); ok=false; } else setErr('ph','phErr',false);
+    if(!ok) return;
+
+    var btn = document.querySelector('#step2 .pbtn');
+    if(btn){ btn.disabled = true; btn.textContent = 'Đang gửi...'; }
+
+    fetch(C.api, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        email: capturedEmail,
+        parent_name: name,
+        phone: phone,
+        form_id: C.formId,
+        funnel_code: C.funnel,
+        school_level: C.level
+      })
+    })
+    .then(function(r){ return r.json().catch(noop); })
+    .catch(noop)
+    .finally(function(){
+      gtm('lead_submitted');
+      try{ localStorage.setItem('va_form_submitted','1'); }catch(e){}
+      document.getElementById('step2').classList.remove('on');
+      document.getElementById('success').classList.add('on');
+      document.querySelector('.pprog').style.display = 'none';
+      setTimeout(function(){ window.location.href = C.redirect; }, 1800);
+    });
+  };
+
+  /* Enter-key UX */
+  var emEl = document.getElementById('em');
+  var phEl = document.getElementById('ph');
+  if(emEl) emEl.addEventListener('keydown', function(e){ if(e.key==='Enter') window.nextStep(); });
+  if(phEl) phEl.addEventListener('keydown', function(e){ if(e.key==='Enter') window.finishStep(); });
+})();
 </script>
 </body>
 </html>

@@ -3,10 +3,11 @@
   "configurations": [
     {
       "name": "astro-dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["astro", "dev"],
       "port": 4321,
       "env": {
+        "ASTRO_TELEMETRY_DISABLED": "1",
         "PUBLIC_DIRECTUS_URL": ""
       }
     }

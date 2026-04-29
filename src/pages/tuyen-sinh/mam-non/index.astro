@@ -15,10 +15,9 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
 
   <!-- HERO -->
   <Fragment slot="hero">
-    <div class="sp-hero__badge">TUYỂN SINH MẦM NON 2026–2027</div>
-    <h1 style="font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.2;text-shadow:0 2px 18px rgba(0,0,0,.55)">
+    <h1 style="font-size:clamp(2.1rem,5.2vw,3.4rem);font-weight:900;color:#F0D048;margin:0 0 1rem;line-height:1.15;text-shadow:0 2px 18px rgba(0,0,0,.55)">
       Mỗi đứa trẻ đều sinh ra với bản năng siêu học tập
-      <span style="display:block;color:#fff;font-size:clamp(1.1rem,2.5vw,1.55rem);font-weight:700;margin-top:.5rem">
+      <span style="display:block;color:#fff;font-size:clamp(1.1rem,2.5vw,1.55rem);font-weight:700;margin-top:.6rem">
         cần được kích hoạt trong môi trường học tập an toàn suốt giai đoạn vàng 0–6 tuổi
       </span>
     </h1>
@@ -59,6 +58,36 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     <p style="font-size:1rem;color:rgba(255,255,255,.5);margin-top:.85rem">
       Khám phá cách Trường Mầm non Việt Anh kích hoạt bản năng siêu học tập của trẻ
     </p>
+  </Fragment>
+
+  <!-- VIDEO + FORM (ngay dưới Hero) -->
+  <Fragment slot="video">
+    <div class="sp-video__head">
+      <h2 class="sp-video__title">Khám Phá Cách Việt Anh Kích Hoạt Bản Năng Siêu Học Tập Của Trẻ</h2>
+    </div>
+
+    <div class="sp-video__frame">
+      <iframe
+        src="https://www.youtube.com/embed/UoSR846JCRM?rel=0"
+        title="Mầm non Việt Anh — Kích hoạt bản năng siêu học tập"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
+    </div>
+
+    <div class="sp-video__form" id="sp-video-form">
+      <div class="sp-video__form-eyebrow">NHẬN TƯ VẤN MIỄN PHÍ</div>
+      <h3>Để Lại Email — Nhận Brochure &amp; Lộ Trình Cá Nhân Hoá</h3>
+      <p>Đội ngũ Việt Anh sẽ liên hệ trong vòng 24h để tư vấn riêng cho con bạn.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="ban-nang-mam-non-video"
+        funnelCode="sales-mam-non-ban-nang-video"
+        schoolLevel="mau-non"
+        submitText="Nhận tư vấn ngay"
+      />
+    </div>
   </Fragment>
 
   <!-- PAIN → Feature intro -->

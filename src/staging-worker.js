@@ -262,6 +262,11 @@ async function handleLeadSubmission(request, env) {
           tags.push('checklist-mam-non-2026');
           tags.push('squeeze-mam-non');
         }
+        if (data.source === 'squeeze-checklist-tieu-hoc') {
+          tags.push('chon-truong-tieu-hoc');   // → GHL workflow trigger
+          tags.push('checklist-tieu-hoc-2026');
+          tags.push('squeeze-tieu-hoc');
+        }
         if (data.source === 'squeeze-checklist') {
           tags.push('checklist-chon-truong-2026');
         }
@@ -295,7 +300,7 @@ async function handleLeadSubmission(request, env) {
           'squeeze-chuyen-truong-lop6', 'squeeze-lo-trinh-ielts-thcs', 'squeeze-phuong-phap-teen',
           'squeeze-so-sanh-thcs', 'squeeze-cam-nang-thpt', 'squeeze-du-hoc-lop10',
           'squeeze-50-truong-ielts', 'squeeze-oxford-cambridge-ib', 'squeeze-conversation-cards',
-          'squeeze-checklist',
+          'squeeze-checklist', 'squeeze-checklist-tieu-hoc',
         ];
         if (data.source && SQUEEZE_SOURCES.includes(data.source)) {
           tags.push('nurture-435-ngay');

@@ -433,7 +433,7 @@ body{
       fetch(C.api, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({email:capturedEmail, form_id:C.formId, funnel_code:C.funnel, school_level:C.level, partial:true}),
+        body: JSON.stringify({email:capturedEmail, source:C.funnel, form_id:C.formId, funnel_code:C.funnel, school_level:C.level, partial:true}),
         keepalive:true
       }).catch(noop);
     }catch(e){}
@@ -475,9 +475,11 @@ body{
         email: capturedEmail,
         parent_name: name,
         phone: phone,
+        source: C.funnel,
         form_id: C.formId,
         funnel_code: C.funnel,
-        school_level: C.level
+        school_level: C.level,
+        tags: ['chon-truong-tieu-hoc', 'checklist-tieu-hoc-2026', 'squeeze-tieu-hoc']
       })
     })
     .then(function(r){ return r.json().catch(noop); })

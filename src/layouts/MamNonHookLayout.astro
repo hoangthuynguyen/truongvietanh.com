@@ -122,7 +122,8 @@ a{color:inherit;text-decoration:none}
 /* ─── HERO ─── */
 .hero{flex:1;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);color:#fff;padding:32px 0 40px;position:relative;overflow:hidden;display:flex;align-items:center}
 .hero.has-img{background:var(--navy-dk)}
-.hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;z-index:0;opacity:1}
+.hero-bg{position:absolute;inset:0;background-size:contain;background-position:right center;background-repeat:no-repeat;z-index:0;opacity:1}
+@media (max-width:960px){.hero-bg{background-size:cover;background-position:center;opacity:.55}}
 .hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,77,.92) 0%,rgba(0,0,128,.78) 35%,rgba(0,0,128,.45) 60%,rgba(0,0,77,.55) 100%);z-index:1;pointer-events:none}
 .hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,0,.12) 0%,transparent 70%);pointer-events:none;z-index:2}
 .hero::after{content:'';position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,0,.08) 0%,transparent 70%);pointer-events:none;z-index:2}

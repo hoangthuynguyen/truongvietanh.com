@@ -5,7 +5,7 @@ import type { BlockHeroPillar } from '../../types/cms';
 interface Props { data: BlockHeroPillar; context: string; }
 const { data } = Astro.props;
 const form = data.form_ref ? await getFormById(data.form_ref) : null;
-const bgStyle = data.bg_image ? `background-image:linear-gradient(160deg,rgba(26,25,60,0.82) 0%,rgba(15,23,42,0.85) 50%,rgba(26,26,94,0.78) 100%),url('${data.bg_image}')` : '';
+const bgStyle = data.bg_image ? `background-image:linear-gradient(160deg,rgba(26,25,60,0.82) 0%,rgba(15,23,42,0.85) 50%,rgba(0,0,128,0.78) 100%),url('${data.bg_image}')` : '';
 ---
 <section class="b-hero-pillar" style={bgStyle}>
   <div class="b-hero-pillar-inner b-container">

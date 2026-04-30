@@ -724,7 +724,7 @@ async function sendEmailNotification(data, env) {
       <tr>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">So dien thoai</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-size:16px;">
-          <a href="tel:${data.phone}" style="color:#D4A843;font-weight:bold;text-decoration:none;">${data.phone}</a>
+          <a href="tel:${data.phone}" style="color:#ffff00;font-weight:bold;text-decoration:none;">${data.phone}</a>
         </td>
       </tr>
       <tr style="background:#f8f9fa;">
@@ -766,12 +766,12 @@ async function sendEmailNotification(data, env) {
       </tr>
     </table>
 
-    <div style="background:#fff8e1;border:2px solid #D4A843;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;">
+    <div style="background:#fff8e1;border:2px solid #ffff00;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;">
       <p style="margin:0 0 12px;font-weight:bold;color:#1a1a5e;font-size:16px;">Lien lac ngay voi phu huynh:</p>
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
         <a href="tel:${data.phone}" style="background:#1a1a5e;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Goi dien: ${data.phone}</a>
         <a href="https://zalo.me/${data.phone}" style="background:#0068ff;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Nhan Zalo</a>
-        <a href="mailto:${data.email}" style="background:#D4A843;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Gui Email</a>
+        <a href="mailto:${data.email}" style="background:#ffff00;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Gui Email</a>
       </div>
     </div>
 
@@ -865,7 +865,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
   const body = `
 <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:560px;margin:0 auto;background:#fff;">
   <!-- Header -->
-  <div style="background:linear-gradient(135deg,#1a1a5e,#2a2a7e);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
+  <div style="background:linear-gradient(135deg,#1a1a5e,#00009a);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
     <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:12px;background:#fff;padding:8px 16px;border-radius:8px;" />
     <h1 style="margin:0;font-size:20px;font-weight:800;">KẾT QUẢ ĐÁNH GIÁ KỸ NĂNG HÈ 2026</h1>
     <p style="margin:6px 0 0;opacity:.85;font-size:14px;">Lion Camp — ${campLvl} ${loc}</p>
@@ -879,7 +879,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- Score Card -->
     <div style="background:#F0F9FF;border:2px solid #7DD3FC;border-radius:14px;padding:20px;text-align:center;margin-bottom:20px;">
-      <div style="font-size:42px;font-weight:800;color:#1F4E79;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 100</span></div>
+      <div style="font-size:42px;font-weight:800;color:#000080;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 100</span></div>
       <!-- Score bar -->
       <div style="background:#E5E7EB;border-radius:6px;height:12px;margin:12px 0;overflow:hidden;">
         <div style="background:${color};height:100%;width:${barWidth}%;border-radius:6px;"></div>
@@ -889,19 +889,19 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- What this means -->
     <div style="background:#F9FAFB;border-radius:10px;padding:16px;margin-bottom:20px;">
-      <p style="font-weight:700;color:#1F4E79;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
+      <p style="font-weight:700;color:#000080;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
       ${score >= 75 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đã có nền tảng tốt! Trại hè sẽ giúp con <strong>tỏa sáng hơn nữa</strong> và phát triển kỹ năng vượt trội so với bạn bè.</p>` : score >= 50 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đang ở giai đoạn <strong>cần hỗ trợ kịp thời</strong>. 6 tuần tại Lion Camp sẽ giúp con tiến bộ rõ rệt về tự tin và kỷ luật.</p>` : `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Đây là <strong>thời điểm vàng để can thiệp</strong>. Mùa hè này là cơ hội quan trọng nhất để giúp con thay đổi toàn diện.</p>`}
     </div>
 
     <!-- Recommended action -->
     <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #F59E0B;border-radius:12px;padding:18px;margin-bottom:20px;">
-      <p style="font-weight:800;color:#D4A843;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
+      <p style="font-weight:800;color:#ffff00;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
       <p style="margin:0 0 12px;font-size:14px;color:#7C2D12;line-height:1.6;">
         Con rất phù hợp với <strong>Lion Camp ${campLvl} tại cơ sở ${loc}</strong>.
         Đăng ký giữ chỗ trong 48 giờ tới để nhận <strong>Học bổng Early Bird đến 30%</strong>.
       </p>
       <div style="text-align:center;">
-        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#D4A843;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
           💬 Chat Zalo giữ chỗ ngay
         </a>
       </div>
@@ -909,7 +909,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- Next steps -->
     <div style="margin-bottom:16px;">
-      <p style="font-weight:700;color:#1F4E79;margin:0 0 8px;">📋 Các bước tiếp theo:</p>
+      <p style="font-weight:700;color:#000080;margin:0 0 8px;">📋 Các bước tiếp theo:</p>
       <ol style="margin:0;padding-left:20px;font-size:14px;color:#555;line-height:1.8;">
         <li><strong>Tư vấn viên sẽ gọi</strong> trong vài phút để giải thích chi tiết kết quả</li>
         <li>Nhận <strong>Báo cáo PDF đầy đủ</strong> qua Zalo trong 24 giờ</li>
@@ -965,7 +965,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
   const body = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;margin:0;padding:20px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
   <!-- Header -->
-  <div style="background:linear-gradient(135deg,#1a1a5e,#12123e);color:#fff;padding:28px 24px;text-align:center;">
+  <div style="background:linear-gradient(135deg,#1a1a5e,#00004d);color:#fff;padding:28px 24px;text-align:center;">
     <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:10px 20px;border-radius:10px;margin-bottom:16px;"/>
     <h1 style="color:#fff;font-size:22px;margin:8px 0;line-height:1.3;">✅ Đã nhận đăng ký tư vấn!</h1>
     <p style="color:#ffd89a;font-size:14px;margin:4px 0 0;">Trại hè Lion Camp 2026 — ${campLvl} ${loc}</p>
@@ -983,7 +983,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
     </p>
 
     <!-- Next steps box -->
-    <div style="background:#f8faff;border-left:4px solid #D4A843;padding:18px 20px;border-radius:10px;margin-bottom:20px;">
+    <div style="background:#f8faff;border-left:4px solid #ffff00;padding:18px 20px;border-radius:10px;margin-bottom:20px;">
       <p style="font-weight:800;color:#1a1a5e;margin:0 0 12px;font-size:15px;">📋 Các bước tiếp theo:</p>
       <ol style="margin:0;padding-left:22px;font-size:14px;color:#2d2d42;line-height:1.9;">
         <li><strong>Tư vấn viên gọi/Zalo</strong> trong 24 giờ</li>
@@ -995,7 +995,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- CTA Zalo -->
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:linear-gradient(135deg,#D4A843,#c09530);color:#12123e;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(212,168,67,.4);">
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:linear-gradient(135deg,#ffff00,#c09530);color:#00004d;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(255,255,0,.4);">
         📞 Chat Zalo tư vấn nhanh hơn
       </a>
     </div>
@@ -1014,7 +1014,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
     </div>
   </div>
 
-  <div style="background:#12123e;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
+  <div style="background:#00004d;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
     Lion Camp 2026 — Trường Việt Anh<br/>
     <a href="https://truongvietanh.com" style="color:#ffd89a;">truongvietanh.com</a>
   </div>
@@ -1240,19 +1240,19 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
 <table width="520" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
   <tr>
-    <td style="background:#0d1b3e;padding:24px;text-align:center;border-bottom:3px solid #d4a843;">
+    <td style="background:#000080;padding:24px;text-align:center;border-bottom:3px solid #ffff00;">
       <img src="https://truongvietanh.com/logo-th-thcs-thpt.png" alt="Trường Việt Anh" height="60" style="background:#fff;padding:6px 16px;border-radius:8px;display:block;margin:0 auto 12px;"/>
     </td>
   </tr>
   <tr>
     <td style="padding:36px 36px 28px;text-align:center;">
       <p style="font-size:36px;margin:0 0 12px;">🎉</p>
-      <h2 style="color:#0d1b3e;font-size:20px;font-family:Arial,sans-serif;margin:0 0 16px;">Cảm ơn bạn đã đăng ký!</h2>
+      <h2 style="color:#000080;font-size:20px;font-family:Arial,sans-serif;margin:0 0 16px;">Cảm ơn bạn đã đăng ký!</h2>
       <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 12px;">
         Chúng tôi đã nhận được thông tin của bạn.
       </p>
       <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 20px;">
-        Vui lòng <strong style="color:#0d1b3e;">đợi vài phút</strong>, tài liệu sẽ được gửi đến email của bạn ngay sau đây.
+        Vui lòng <strong style="color:#000080;">đợi vài phút</strong>, tài liệu sẽ được gửi đến email của bạn ngay sau đây.
       </p>
       <p style="color:#999;font-size:13px;margin:0;">
         Nếu không thấy email, hãy kiểm tra thư mục <strong>Spam</strong> hoặc <strong>Promotions</strong>.
@@ -1267,9 +1267,9 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
     </td>
   </tr>
   <tr>
-    <td style="background:#0d1b3e;padding:16px;text-align:center;">
+    <td style="background:#000080;padding:16px;text-align:center;">
       <p style="color:rgba(255,255,255,.6);font-size:12px;font-family:Arial,sans-serif;margin:0;">
-        Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#d4a843;text-decoration:none;">truongvietanh.com</a> — Hotline: 0916 961 409
+        Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#ffff00;text-decoration:none;">truongvietanh.com</a> — Hotline: 0916 961 409
       </p>
     </td>
   </tr>

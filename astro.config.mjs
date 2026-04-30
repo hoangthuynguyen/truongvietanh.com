@@ -41,6 +41,8 @@ export default defineConfig({
     '/squeeze/oxford-cambridge-ib/':         '/oxford-cambridge-ib/',
     '/squeeze/50-truong-dh-xet-ielts':       '/50-truong-dh-xet-ielts',
     '/squeeze/50-truong-dh-xet-ielts/':      '/50-truong-dh-xet-ielts/',
+    '/giai-ma-tiem-nang':                    '/tuyen-sinh/giai-ma-tiem-nang/',
+    '/giai-ma-tiem-nang/':                   '/tuyen-sinh/giai-ma-tiem-nang/',
   },
   integrations: [
     sitemap({

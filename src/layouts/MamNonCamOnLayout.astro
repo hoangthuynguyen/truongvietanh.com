@@ -1,0 +1,211 @@
+---
+/**
+ * MamNonCamOnLayout — Thank-you page after Mầm non hook landing form submit
+ * Brand: Navy #000080 + Yellow #ffff00 (matches MamNonHookLayout)
+ */
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  location: string;          // "Gò Vấp" | "Cần Giuộc"
+  address: string;
+  funnelCode: string;        // for GTM
+}
+
+const { title, description, canonicalUrl, location, address, funnelCode } = Astro.props;
+
+const HOTLINE = '0916 961 409';
+const HOTLINE_TEL = '+84916961409';
+const ZALO_DEEP = 'https://zalo.me/1678310120468101523?text=' + encodeURIComponent(`Chào thầy/cô, em vừa đăng ký tham quan Mầm Non Việt Anh cơ sở ${location}. Em muốn xác nhận lịch tham quan.`);
+---
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="canonical" href={canonicalUrl} />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet" />
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+<script is:inline define:vars={{ funnelCode }}>
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({ event: 'generate_lead', funnel_code: funnelCode, school_level: 'mam-non' });
+</script>
+
+<style is:inline>
+:root{
+  --navy:#000080;
+  --navy-2:#0a0a99;
+  --navy-dk:#00004d;
+  --gold:#ffff00;
+  --gold-dk:#e6e600;
+  --text:#1a1a2e;
+  --text-muted:#5a5a70;
+  --border:#e5e7eb;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Open Sans',system-ui,sans-serif;color:#fff;background:var(--navy);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
+h1,h2,h3{font-family:'Montserrat',sans-serif;line-height:1.2;font-weight:800}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px;width:100%}
+
+/* HEADER */
+.header{background:#fff;border-bottom:1px solid var(--border);padding:6px 0;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.08);height:64px;display:flex;align-items:center}
+.header .wrap{display:flex;justify-content:center;align-items:center}
+.brand img{height:54px;width:auto;display:block}
+
+/* MAIN */
+.main{flex:1;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);position:relative;overflow:hidden;padding:32px 0 56px;display:flex;align-items:center}
+.main::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,0,.12) 0%,transparent 70%);pointer-events:none}
+.main::after{content:'';position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,0,.08) 0%,transparent 70%);pointer-events:none}
+.main .wrap{position:relative;z-index:1}
+
+/* PROGRESS */
+.steps{display:flex;align-items:center;justify-content:center;gap:0;margin:0 auto 22px;max-width:520px;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:700;color:rgba(255,255,255,.7)}
+.step--done{color:var(--gold)}
+.step--active{color:#fff}
+.step__dot{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0}
+.step--done .step__dot{background:var(--gold);color:var(--navy-dk)}
+.step--active .step__dot{background:var(--gold);color:var(--navy-dk);animation:pulse 2s ease-in-out infinite}
+.step--pending .step__dot{background:rgba(255,255,255,.18);color:rgba(255,255,255,.6)}
+.step__line{width:36px;height:2px;background:rgba(255,255,255,.3);margin:0 6px}
+.step__line--done{background:var(--gold)}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,0,.5)}50%{box-shadow:0 0 0 10px rgba(255,255,0,0)}}
+
+/* HERO */
+.hero-icon{width:88px;height:88px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 18px;box-shadow:0 8px 32px rgba(255,255,0,.4);border:4px solid rgba(255,255,0,.3);background-clip:padding-box}
+h1{color:#fff;font-size:clamp(1.6rem,3vw,2.3rem);text-align:center;margin-bottom:14px;line-height:1.25;letter-spacing:-.4px}
+h1 .name{color:var(--gold)}
+.intro{color:rgba(255,255,255,.85);font-size:16px;text-align:center;max-width:680px;margin:0 auto 28px;line-height:1.65;border-left:4px solid var(--gold);padding-left:14px;text-align:left}
+.intro strong{color:var(--gold)}
+
+/* CARDS */
+.card{background:#fff;color:var(--text);border-radius:16px;padding:24px 26px;margin-bottom:18px;box-shadow:0 8px 28px rgba(0,0,0,.18);border:1px solid rgba(255,255,0,.6)}
+.card-title{font-size:1.15rem;color:var(--navy);margin-bottom:14px;font-weight:900}
+.next{display:flex;flex-direction:column;gap:0}
+.next-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;font-size:15px;color:var(--text-muted);border-bottom:1px solid #f0f0f5;line-height:1.55}
+.next-item:last-child{border-bottom:none}
+.next-item--done{color:var(--navy)}
+.next-item--active{color:var(--navy);font-weight:600}
+.next-dot{width:30px;height:30px;min-width:30px;border-radius:50%;background:#d1d5db;color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;margin-top:1px;flex-shrink:0}
+.next-item--done .next-dot{background:var(--navy);color:var(--gold)}
+.next-item--active .next-dot{background:var(--gold);color:var(--navy-dk);animation:pulse 2s infinite}
+.next-item strong{color:var(--navy)}
+
+.info-rows{display:grid;gap:8px}
+.info-row{display:flex;gap:10px;align-items:flex-start;font-size:15px}
+.info-row strong{color:var(--navy);min-width:120px;font-weight:700}
+.info-row span{color:var(--text)}
+
+/* CTA STACK */
+.cta-stack{display:grid;gap:10px;max-width:560px;margin:8px auto 0}
+.cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 22px;border-radius:12px;font-weight:900;font-size:15px;font-family:'Montserrat',sans-serif;transition:.2s;letter-spacing:.3px}
+.cta-zalo{background:var(--gold);color:var(--navy-dk);box-shadow:0 6px 18px rgba(255,255,0,.4)}
+.cta-zalo:hover{background:var(--gold-dk);transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,255,0,.55)}
+.cta-call{background:transparent;color:#fff;border:2px solid #fff}
+.cta-call:hover{background:#fff;color:var(--navy)}
+
+/* TRUST */
+.trust{display:flex;justify-content:center;gap:22px;flex-wrap:wrap;margin-top:24px;padding-top:18px;border-top:1px solid rgba(255,255,255,.18);font-size:13px;color:rgba(255,255,255,.72);font-weight:600}
+.trust span{display:inline-flex;align-items:center;gap:5px}
+.trust span::before{content:'✓';color:var(--gold);font-weight:900}
+.foot-note{text-align:center;margin-top:14px;font-size:12.5px;color:rgba(255,255,255,.55)}
+
+@media (max-width:640px){
+  .header{height:56px;padding:6px 0}
+  .brand img{height:44px}
+  .main{padding:22px 0 36px}
+  .hero-icon{width:72px;height:72px;font-size:38px;margin-bottom:14px}
+  h1{font-size:1.45rem}
+  .intro{font-size:14.5px;margin-bottom:22px}
+  .card{padding:18px 18px}
+  .card-title{font-size:1.05rem}
+  .next-item{font-size:14px;padding:10px 0;gap:11px}
+  .next-dot{width:26px;height:26px;min-width:26px;font-size:12.5px}
+  .info-row{font-size:14px;flex-direction:column;gap:2px}
+  .info-row strong{min-width:auto}
+  .cta-btn{padding:14px 18px;font-size:14.5px}
+  .step{font-size:12.5px;gap:6px}
+  .step__dot{width:26px;height:26px;font-size:12px}
+  .step__line{width:18px}
+}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<header class="header">
+  <div class="wrap">
+    <a href="/" class="brand" aria-label="Trường Việt Anh">
+      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" />
+    </a>
+  </div>
+</header>
+
+<main class="main">
+  <div class="wrap">
+
+    <div class="steps">
+      <div class="step step--done"><span class="step__dot">✓</span><span>Đăng ký</span></div>
+      <div class="step__line step__line--done"></div>
+      <div class="step step--active"><span class="step__dot">2</span><span>Xác nhận lịch</span></div>
+      <div class="step__line"></div>
+      <div class="step step--pending"><span class="step__dot">3</span><span>Tham quan</span></div>
+    </div>
+
+    <div class="hero-icon">🎉</div>
+    <h1>Cảm ơn Ba/Mẹ<span class="name" id="parentName"></span>!<br/>Đã nhận đăng ký tham quan Mầm Non {location}.</h1>
+    <p class="intro">
+      Bộ phận tuyển sinh Trường Việt Anh sẽ <strong>gọi xác nhận lịch tham quan</strong> trong vòng <strong>24 giờ</strong>.
+      Buổi tham quan kéo dài 45–60 phút: gặp giáo viên, xem lớp học, khu vui chơi, bếp ăn — và đặt mọi câu hỏi của Ba/Mẹ.
+    </p>
+
+    <div class="card">
+      <div class="card-title">📋 Các bước tiếp theo</div>
+      <div class="next">
+        <div class="next-item next-item--done"><span class="next-dot">✓</span><span>Đã gửi thông tin đăng ký</span></div>
+        <div class="next-item next-item--active"><span class="next-dot">2</span><span><strong>Tư vấn viên gọi xác nhận</strong> — chốt ngày & giờ tham quan phù hợp</span></div>
+        <div class="next-item"><span class="next-dot">3</span><span>Đến tham quan trực tiếp tại <strong>{address}</strong></span></div>
+        <div class="next-item"><span class="next-dot">4</span><span>Nhận tư vấn học phí, ưu đãi & lộ trình nhập học (không ràng buộc)</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">📍 Mầm Non Việt Anh — cơ sở {location}</div>
+      <div class="info-rows">
+        <div class="info-row"><strong>Địa chỉ:</strong><span>{address}</span></div>
+        <div class="info-row"><strong>Giờ làm việc:</strong><span>Thứ 2 – Thứ 7 · 7:30 – 17:00</span></div>
+        <div class="info-row"><strong>Hotline:</strong><span>{HOTLINE}</span></div>
+      </div>
+    </div>
+
+    <div class="cta-stack">
+      <a href={ZALO_DEEP} target="_blank" rel="noopener" class="cta-btn cta-zalo">💬 Nhắn Zalo để được phản hồi nhanh nhất</a>
+      <a href={`tel:${HOTLINE_TEL}`} class="cta-btn cta-call">📞 Gọi ngay {HOTLINE}</a>
+    </div>
+
+    <div class="trust">
+      <span>Bộ GD&ĐT cấp phép</span>
+      <span>15 năm K12 từ 2011</span>
+      <span>3 cơ sở TPHCM + Long An</span>
+    </div>
+    <p class="foot-note">Thông tin được bảo mật tuyệt đối theo chính sách của Trường Việt Anh.</p>
+  </div>
+</main>
+
+<script is:inline>
+(function(){
+  var p = new URLSearchParams(window.location.search);
+  var n = p.get('name');
+  if (n) document.getElementById('parentName').textContent = ' ' + n.trim().split(/\s+/).pop();
+})();
+</script>
+</body>
+</html>

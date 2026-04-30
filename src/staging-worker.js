@@ -19,7 +19,8 @@ const SALES_PHONE = '0916961409';
 // Pancake CRM "Khối quan tâm" dropdown UUID mapping
 const KHOI_QUAN_TAM_MAP = {
   // Mầm non
-  'mau-non':  '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',
+  'mam-non':  '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',  // alias đúng
+  'mau-non':  '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',  // legacy
   '2-tuoi':   '2 tuổi-3988-7226-be92-2356-3dc9-c263-55e8',
   '3-tuoi':   '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',
   '4-tuoi':   '4 tuổi-ea52-2cb0-f79e-ffd6-0677-ece1-a07f',
@@ -693,7 +694,7 @@ async function sendEmailViaGHL({ contactId, subject, html, ghlApiKey }) {
 
 async function sendEmailNotification(data, env) {
   const schoolLabel = {
-    'mau-non': 'Mam non', 'tieu-hoc': 'Tieu hoc',
+    'mam-non': 'Mam non', 'mau-non': 'Mam non', 'tieu-hoc': 'Tieu hoc',
     'thcs': 'THCS', 'thpt': 'THPT',
   }[data.schoolLevel] || data.schoolLevel || 'Chua chon';
 

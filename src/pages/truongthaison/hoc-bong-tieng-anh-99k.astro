@@ -160,9 +160,14 @@ const faqs = [
     <section class="ts-story" id="cau-chuyen">
       <div class="ts-container ts-story__grid">
         <div class="ts-story__photo">
-          <div class="ts-story__photo-frame" aria-hidden="true">
-            <span>Anh Nguyễn Duy Khải</span>
-          </div>
+          <img
+            src={KHAI_PORTRAIT}
+            alt="Anh Nguyễn Duy Khải — Giám đốc Trường Thái Sơn"
+            class="ts-story__photo-img"
+            loading="lazy"
+            width="320"
+            height="320"
+          />
           <p class="ts-story__sig">
             <em>— Nguyễn Duy Khải</em><br/>
             Regional Manager đương nhiệm – Major Education<br/>
@@ -672,10 +677,10 @@ const faqs = [
   /* ====== VIDEO STANDALONE ====== */
   .ts-video-section { background: var(--ts-bg); padding: 40px 0; }
   @media (min-width: 768px) { .ts-video-section { padding: 56px 0; } }
-  .ts-video-section .ts-container { max-width: 760px; }
+  .ts-video-section .ts-container { max-width: 420px; }
   .ts-video-wrap {
-    aspect-ratio: 16 / 9;
-    background: var(--ts-navy);
+    aspect-ratio: 9 / 16;
+    background: #000;
     border-radius: 14px;
     overflow: hidden;
     position: relative;
@@ -737,11 +742,14 @@ const faqs = [
     display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start;
   }
   @media (min-width: 1024px) { .ts-story__grid { grid-template-columns: 320px 1fr; gap: 3rem; } }
-  .ts-story__photo-frame {
-    aspect-ratio: 1/1; background: linear-gradient(135deg, var(--ts-navy), #2a2a8a);
-    border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,.85); font-size: 16px; padding: 1rem; text-align: center;
+  .ts-story__photo-img {
+    width: 100%; height: auto;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    border-radius: 12px;
     border: 3px solid var(--ts-yellow-mute);
+    display: block;
+    box-shadow: 0 8px 24px rgba(0, 0, 128, .15);
   }
   .ts-story__sig {
     font-size: 16px; color: var(--ts-sub); margin-top: 1rem;

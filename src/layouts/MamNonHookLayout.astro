@@ -1,38 +1,65 @@
 ---
 /**
- * MamNonHookLayout — Single-screen landing for Mầm non hook campaigns
+ * MamNonHookLayout — Single-screen landing for hook campaigns (generalised)
  * Brand: Navy #000080 + Yellow #ffff00
  * Two-step form (email → name+phone) → POST /api/lead → redirect cam-on
+ *
+ * Despite the name, layout supports any cấp via levelLabel + bullets props.
  */
+interface BulletItem { icon: string; html: string }
 interface Props {
   title: string;
   description: string;
   canonicalUrl: string;
   location: string;
-  locationSlug: string;
+  locationSlug?: string;
   address: string;
   fomoText?: string;
   hookHeadline: string;
   hookSubline: string;
   source: string;
   funnelCode: string;
+  schoolLevel?: string;             // 'mam-non' | 'tieu-hoc' | 'thcs' | 'thpt' | 'mix'
+  levelLabel?: string;              // "Mầm Non" | "Tiểu Học" | "THCS" | "THPT" | "Trại Hè" ...
+  cardTitle?: string;               // "Đặt lịch tham quan ..."
+  cardSub?: string;                 // "45-60 phút · ..."
+  ctaStep2?: string;                // text on submit btn
+  bullets?: BulletItem[];
+  trustMarks?: string[];
   redirectUrl: string;
+  schemaType?: string;              // 'EducationalOrganization' default
 }
+
+const DEFAULT_BULLETS: BulletItem[] = [
+  { icon: '📹', html: '<strong>Camera online 24/7</strong> — mẹ xem con mọi lúc qua app, đi làm vẫn yên tâm' },
+  { icon: '👶', html: '<strong>Lớp siêu nhỏ &lt; 15 bé</strong> · 2 cô/lớp — từng bé được quan tâm riêng' },
+  { icon: '💛', html: '<strong>Cô tận tâm như mẹ thứ hai</strong> — gắn bó nhiều năm, hiểu tính cách từng bé' },
+  { icon: '🍱', html: '<strong>Bếp ăn tại trường</strong> — thực đơn dinh dưỡng xoay vòng theo lứa tuổi' },
+];
 
 const {
   title, description, canonicalUrl,
   location, address,
-  fomoText = '🔥 Đang nhận hồ sơ Mầm Non 2026 · Lớp giới hạn dưới 15 bé · Đặt lịch tham quan miễn phí',
   hookHeadline, hookSubline,
   source, funnelCode, redirectUrl,
+  schoolLevel = 'mam-non',
+  levelLabel = 'Mầm Non',
+  bullets = DEFAULT_BULLETS,
+  fomoText = '🔥 Đang nhận hồ sơ ' + levelLabel + ' 2026 · Đặt lịch tham quan miễn phí',
+  cardTitle = 'Đặt lịch tham quan ' + levelLabel + ' ' + location,
+  cardSub = '45–60 phút · Gặp giáo viên · Xem lớp · Tư vấn lộ trình',
+  ctaStep2 = '🏫 Đặt lịch tham quan',
+  trustMarks = ['Bộ GD&ĐT cấp phép', '15 năm kinh nghiệm', '3 cơ sở TPHCM + Long An'],
+  schemaType = 'EducationalOrganization',
 } = Astro.props;
 
 const HOTLINE = '0916 961 409';
 const HOTLINE_TEL = '+84916961409';
 const ZALO = 'https://zalo.me/1678310120468101523';
 
+const schemaName = `Trường Việt Anh — ${levelLabel}${location ? ' ' + location : ''}`;
 const schema = [
-  { '@context': 'https://schema.org', '@type': 'EducationalOrganization', name: 'Trường Mầm Non Việt Anh — ' + location, url: canonicalUrl, description, address: { '@type': 'PostalAddress', streetAddress: address }, telephone: HOTLINE_TEL },
+  { '@context': 'https://schema.org', '@type': schemaType, name: schemaName, url: canonicalUrl, description, address: address ? { '@type': 'PostalAddress', streetAddress: address } : undefined, telephone: HOTLINE_TEL },
   { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: canonicalUrl, inLanguage: 'vi' },
 ];
 ---
@@ -181,15 +208,12 @@ a{color:inherit;text-decoration:none}
         <h1 class="h1" set:html={hookHeadline} />
         <p class="h-sub">{hookSubline}</p>
         <ul class="h-bullets">
-          <li><span class="ico">📹</span><span><strong>Camera online 24/7</strong> — mẹ xem con mọi lúc qua app, đi làm vẫn yên tâm</span></li>
-          <li><span class="ico">👶</span><span><strong>Lớp siêu nhỏ &lt; 15 bé</strong> · 2 cô/lớp — từng bé được quan tâm riêng</span></li>
-          <li><span class="ico">💛</span><span><strong>Cô tận tâm như mẹ thứ hai</strong> — gắn bó nhiều năm, hiểu tính cách từng bé</span></li>
-          <li><span class="ico">🍱</span><span><strong>Bếp ăn tại trường</strong> — thực đơn dinh dưỡng xoay vòng theo lứa tuổi</span></li>
+          {bullets.map((b) => (
+            <li><span class="ico">{b.icon}</span><span set:html={b.html} /></li>
+          ))}
         </ul>
         <div class="h-trust">
-          <span>Bộ GD&ĐT cấp phép</span>
-          <span>15 năm kinh nghiệm</span>
-          <span>3 cơ sở TPHCM + Long An</span>
+          {trustMarks.map((t) => <span>{t}</span>)}
         </div>
       </div>
 
@@ -197,8 +221,8 @@ a{color:inherit;text-decoration:none}
       <aside class="fcard" id="formArea">
         <div class="fcard-tag">⏰ Tư vấn miễn phí · Phản hồi 24h</div>
         <div class="fcard-body">
-          <h3 class="fcard-title">Đặt lịch tham quan Mầm Non {location}</h3>
-          <p class="fcard-sub">45–60 phút · Gặp cô · Xem lớp · Xem bếp ăn</p>
+          <h3 class="fcard-title">{cardTitle}</h3>
+          <p class="fcard-sub">{cardSub}</p>
 
           <div class="steps">
             <div class="sdot active" id="dot1">1</div>
@@ -215,7 +239,7 @@ a{color:inherit;text-decoration:none}
           <div id="step2" style="display:none">
             <input class="sin" type="text" id="sq-name" placeholder="Họ tên Ba/Mẹ" autocomplete="name" />
             <input class="sin" type="tel" id="sq-phone" placeholder="Số điện thoại" autocomplete="tel" />
-            <button type="button" class="btn-step" onclick="sqSubmit()">🏫 Đặt lịch tham quan</button>
+            <button type="button" class="btn-step" onclick="sqSubmit()">{ctaStep2}</button>
             <button type="button" class="btn-back" onclick="sqBack()">← Quay lại</button>
           </div>
 
@@ -238,9 +262,9 @@ a{color:inherit;text-decoration:none}
   </div>
 </section>
 
-<script define:vars={{ source, funnelCode, redirectUrl }}>
+<script define:vars={{ source, funnelCode, redirectUrl, schoolLevel }}>
 (function(){
-  var SRC = source, FC = funnelCode, REDIRECT = redirectUrl;
+  var SRC = source, FC = funnelCode, REDIRECT = redirectUrl, LEVEL = schoolLevel;
 
   if (localStorage.getItem('sq_' + SRC)) {
     var fa = document.getElementById('formArea');
@@ -295,7 +319,7 @@ a{color:inherit;text-decoration:none}
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         fullName: name, phone: phone, email: email,
-        source: SRC, funnel_code: FC, school_level: 'mam-non',
+        source: SRC, funnel_code: FC, school_level: LEVEL,
         page_url: location.href,
         submitted_at: new Date().toISOString()
       }),

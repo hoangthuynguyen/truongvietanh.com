@@ -7,12 +7,22 @@ interface Props {
   title: string;
   description: string;
   canonicalUrl: string;
-  location: string;          // "Gò Vấp" | "Cần Giuộc"
+  location: string;
   address: string;
-  funnelCode: string;        // for GTM
+  funnelCode: string;
+  schoolLevel?: string;       // 'mam-non' | 'tieu-hoc' | 'thcs' | 'thpt' | 'mix'
+  levelLabel?: string;        // "Mầm Non" | "Tiểu Học" | ...
+  intro?: string;             // override intro paragraph
+  h1Heading?: string;         // override entire h1 text after the comma
 }
 
-const { title, description, canonicalUrl, location, address, funnelCode } = Astro.props;
+const {
+  title, description, canonicalUrl, location, address, funnelCode,
+  schoolLevel = 'mam-non',
+  levelLabel = 'Mầm Non',
+  intro = `Bộ phận tuyển sinh Trường Việt Anh sẽ <strong>gọi xác nhận lịch tham quan</strong> trong vòng <strong>24 giờ</strong>. Buổi tham quan kéo dài 45–60 phút: gặp giáo viên, xem lớp học, cơ sở vật chất — và đặt mọi câu hỏi của Ba/Mẹ.`,
+  h1Heading = `Đã nhận đăng ký tham quan ${levelLabel || ''} ${location || ''}`.trim().replace(/\s+/g, ' '),
+} = Astro.props;
 
 const HOTLINE = '0916 961 409';
 const HOTLINE_TEL = '+84916961409';
@@ -31,9 +41,9 @@ const ZALO_DEEP = 'https://zalo.me/1678310120468101523?text=' + encodeURICompone
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet" />
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
-<script is:inline define:vars={{ funnelCode }}>
+<script is:inline define:vars={{ funnelCode, schoolLevel }}>
   window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: 'generate_lead', funnel_code: funnelCode, school_level: 'mam-non' });
+  window.dataLayer.push({ event: 'generate_lead', funnel_code: funnelCode, school_level: schoolLevel });
 </script>
 
 <style is:inline>
@@ -161,11 +171,8 @@ h1 .name{color:var(--gold)}
     </div>
 
     <div class="hero-icon">🎉</div>
-    <h1>Cảm ơn Ba/Mẹ<span class="name" id="parentName"></span>!<br/>Đã nhận đăng ký tham quan Mầm Non {location}.</h1>
-    <p class="intro">
-      Bộ phận tuyển sinh Trường Việt Anh sẽ <strong>gọi xác nhận lịch tham quan</strong> trong vòng <strong>24 giờ</strong>.
-      Buổi tham quan kéo dài 45–60 phút: gặp giáo viên, xem lớp học, khu vui chơi, bếp ăn — và đặt mọi câu hỏi của Ba/Mẹ.
-    </p>
+    <h1>Cảm ơn Ba/Mẹ<span class="name" id="parentName"></span>!<br/>{h1Heading}.</h1>
+    <p class="intro" set:html={intro} />
 
     <div class="card">
       <div class="card-title">📋 Các bước tiếp theo</div>
@@ -178,7 +185,7 @@ h1 .name{color:var(--gold)}
     </div>
 
     <div class="card">
-      <div class="card-title">📍 Mầm Non Việt Anh — cơ sở {location}</div>
+      <div class="card-title">📍 Trường Việt Anh — {levelLabel} {location}</div>
       <div class="info-rows">
         <div class="info-row"><strong>Địa chỉ:</strong><span>{address}</span></div>
         <div class="info-row"><strong>Giờ làm việc:</strong><span>Thứ 2 – Thứ 7 · 7:30 – 17:00</span></div>

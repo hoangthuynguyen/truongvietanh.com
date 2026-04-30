@@ -1,0 +1,398 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Course",
+  "name": "Tiếng Anh Trẻ Em – Cambridge & Bản Ngữ | Trường Việt Anh",
+  "description": "Chương trình Tiếng Anh Trẻ Em Việt Anh: Cambridge Young Learners, giáo viên bản ngữ 100%, lớp 8–12 bé. Dành cho trẻ 4–12 tuổi.",
+  "url": "https://truongvietanh.com/tieng-anh-tre-em",
+  "provider": { "@type": "Organization", "name": "Hệ thống Trường Việt Anh", "url": "https://truongvietanh.com" }
+};
+
+const features = [
+  { icon: '🌍', title: 'Giáo Viên Bản Ngữ 100%', desc: 'GV người Mỹ, Anh, Úc, Philippines — chứng chỉ TEFL/TESOL chuyên Young Learners. Con quen âm thanh thật và phát âm chuẩn từ đầu.' },
+  { icon: '🏅', title: 'Cambridge Young Learners', desc: 'Lộ trình Starters → Movers → Flyers rõ ràng. Có chứng chỉ quốc tế từng mốc — phụ huynh theo dõi tiến độ chính xác.' },
+  { icon: '🎮', title: 'TPR · Games · Storytelling', desc: 'Học qua hành động, trò chơi, kể chuyện. Não bộ trẻ ghi nhớ tự nhiên — không cần học thuộc, không áp lực thi cử.' },
+  { icon: '👦', title: 'Lớp Tối Đa 8–12 Bé', desc: 'Cô đủ thời gian nghe từng bé nói, phát hiện lỗi phát âm và sửa ngay. Mỗi bé đều có "speaking time" cá nhân.' },
+  { icon: '❤️', title: 'Con Thích Học — Không Bị Ép', desc: 'Môi trường an toàn, vui vẻ. Con tự nguyện muốn đến học — không phải ba mẹ phải thuyết phục mỗi buổi.' },
+  { icon: '📱', title: 'Báo Cáo Tiến Độ Hàng Tháng', desc: 'Phụ huynh biết chính xác con đang ở đâu, tiến bộ thế nào sau mỗi tháng — không phải đợi đến cuối kỳ mới biết.' },
+];
+
+const ageGroups = [
+  { age: '4–5 tuổi', level: 'Pre-Starters', color: '#e67e22', icon: '🌱', items: ['Songs · Games · TPR', 'Làm quen âm thanh tiếng Anh', 'Không áp lực ngữ pháp'] },
+  { age: '6–8 tuổi', level: 'Cambridge Starters', color: '#27ae60', icon: '📚', items: ['Từ vựng cơ bản 250 từ', 'Câu đơn nghe – nói – đọc', 'Thi Starters lấy chứng chỉ'] },
+  { age: '8–10 tuổi', level: 'Cambridge Movers', color: '#2980b9', icon: '📐', items: ['Mở rộng 600 từ vựng', 'Đối thoại tự nhiên', 'Đọc – viết đoạn ngắn'] },
+  { age: '10–12 tuổi', level: 'Cambridge Flyers', color: '#8e44ad', icon: '🏆', items: ['1,500+ từ vựng', 'Nghe – nói trôi chảy', 'Sẵn sàng KET/PET cấp 2'] },
+];
+
+const comparisons = [
+  { aspect: 'Sĩ số lớp', traditional: 'Lớp 20–30 bé', va: 'Tối đa 8–12 bé/lớp' },
+  { aspect: 'Giáo viên', traditional: 'Chủ yếu GV Việt, ít GV bản ngữ', va: 'GV bản ngữ 100% + trợ giảng Việt' },
+  { aspect: 'Phương pháp', traditional: 'Ngữ pháp → dịch, học vẹt', va: 'TPR + Games + Storytelling' },
+  { aspect: 'Chứng chỉ', traditional: 'Không có lộ trình rõ ràng', va: 'Cambridge Starters → Movers → Flyers' },
+  { aspect: 'Phản hồi', traditional: 'Chỉ có báo cáo cuối kỳ', va: 'Báo cáo tiến độ hàng tháng' },
+];
+
+const faqs = [
+  { q: 'Bao nhiêu tuổi có thể bắt đầu học?', a: 'Từ 4 tuổi. Nhóm 4–5 tuổi học qua songs, games và TPR — không áp lực ngữ pháp. Nhóm 6–8 tuổi bắt đầu Cambridge Starters. Bắt đầu sớm = lợi thế phát âm tự nhiên không thể mua được sau này.' },
+  { q: 'Con đã học tiếng Anh trước rồi — xếp lớp thế nào?', a: 'Việt Anh có bài test đơn giản (qua games, không phải thi cử) để xếp đúng cấp độ. Con không bị chán vì quá dễ, cũng không bị overwhelmed vì quá khó.' },
+  { q: 'Giáo viên bản ngữ là người Anh, Mỹ hay Philippines?', a: 'GV người bản ngữ (Mỹ, Anh, Úc, Philippines) đều được kiểm tra chứng chỉ TEFL/TESOL và kỹ năng dạy trẻ em. Có GV Việt hỗ trợ bên cạnh cho trẻ nhỏ khi cần phiên dịch.' },
+  { q: 'Học bao lâu thì thi Cambridge được?', a: 'Cambridge Starters: 6–12 tháng từ beginner. Movers: thêm 12–18 tháng. Flyers: thêm 12–18 tháng nữa. Tùy tần suất học (2–3 buổi/tuần) và mức độ hỗ trợ ở nhà.' },
+  { q: 'Học ở đâu? Online hay offline?', a: 'Việt Anh có lớp Tiếng Anh Trẻ Em tại các cơ sở Gò Vấp, Phú Nhuận, Bình Tân và Long An. Liên hệ hotline để được tư vấn lịch học và xếp lớp phù hợp với con.' },
+];
+---
+
+<BaseLayout
+  title="Tiếng Anh Trẻ Em – Cambridge & Bản Ngữ Từ 4 Tuổi | Trường Việt Anh"
+  description="Tiếng Anh Trẻ Em Việt Anh: Cambridge Young Learners, GV bản ngữ 100%, lớp 8–12 bé, từ 4 tuổi. Phương pháp TPR vui nhộn — con thích học, nói tự nhiên."
+  canonical="https://truongvietanh.com/tieng-anh-tre-em"
+  ogImage="https://media.truongvietanh.com/images/vui-ve-07.webp"
+  structuredData={structuredData}
+  noPopup={true}
+>
+  <div class="ta-page">
+    <HeaderBase />
+
+    <!-- ===== HERO ===== -->
+    <section class="ta-hero">
+      <div class="ta-container">
+        <nav class="ta-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a>
+          <span>/</span>
+          <span>Tiếng Anh Trẻ Em</span>
+        </nav>
+        <div class="ta-hero__inner">
+          <div class="ta-hero__text">
+            <div class="ta-hero__tag">🇬🇧 Cambridge Young Learners</div>
+            <h1 class="ta-hero__title">
+              Tiếng Anh Trẻ Em<br/>
+              <span class="ta-hero__accent">Bản Ngữ · Vui Học · Từ 4 Tuổi</span>
+            </h1>
+            <p class="ta-hero__subtitle">
+              Con không học tiếng Anh — con <em>sống bằng tiếng Anh</em> trong lớp.<br/>
+              Phương pháp TPR + Cambridge giúp con <strong>nói tự nhiên</strong> như tiếng mẹ đẻ — không cần học thuộc, không áp lực.
+            </p>
+            <div class="ta-hero__badges">
+              <span class="ta-badge">🌍 GV bản ngữ 100%</span>
+              <span class="ta-badge">👦 Lớp 8–12 bé</span>
+              <span class="ta-badge">🏅 Cambridge YLE</span>
+              <span class="ta-badge">🎮 TPR · Games</span>
+            </div>
+            <div class="ta-hero__ctas">
+              <a href="tel:+84916961409" class="ta-btn ta-btn--primary">📞 Đăng ký học thử miễn phí</a>
+              <a href="#so-sanh" class="ta-btn ta-btn--outline">Xem so sánh ↓</a>
+            </div>
+          </div>
+          <div class="ta-hero__stats">
+            <div class="ta-stat">
+              <strong>1,500+</strong>
+              <span>Học sinh tại các cơ sở Việt Anh</span>
+            </div>
+            <div class="ta-stat">
+              <strong>15+</strong>
+              <span>Năm dạy tiếng Anh K12 từ 2011</span>
+            </div>
+            <div class="ta-stat">
+              <strong>97%</strong>
+              <span>Phụ huynh thấy tiến bộ rõ sau 3 tháng</span>
+            </div>
+            <div class="ta-stat">
+              <strong>4–12</strong>
+              <span>Tuổi — từ Pre-Starters đến Flyers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== VẤN ĐỀ ===== -->
+    <section class="ta-section ta-section--light">
+      <div class="ta-container">
+        <div class="ta-problem">
+          <div class="ta-problem__text">
+            <h2>Bao nhiêu năm học tiếng Anh — tại sao con vẫn <em>không nói được</em>?</h2>
+            <p>Hàng nghìn phụ huynh tại TP.HCM đã chi tiền cho con học tiếng Anh từ nhỏ, nhưng đến lớp 5–6, con vẫn không dám mở miệng nói một câu trước người nước ngoài.</p>
+            <ul class="ta-problem__list">
+              <li>❌ Lớp trung tâm 20–30 bé — cô không đủ thời gian chú ý từng em</li>
+              <li>❌ Không có giáo viên bản ngữ — con học phát âm sai, về sau khó sửa</li>
+              <li>❌ Phương pháp ngữ pháp → dịch — hiểu lý thuyết nhưng không nói tự nhiên</li>
+              <li>❌ Con học vì bị ép — motivation thấp, học rồi quên</li>
+            </ul>
+            <div class="ta-callout">
+              Vấn đề không phải ở con — mà ở <strong>phương pháp và môi trường</strong>.
+            </div>
+          </div>
+          <div class="ta-problem__right">
+            <img src="https://media.truongvietanh.com/images/vui-ve-07.webp" alt="Trẻ em học tiếng Anh vui vẻ tại Việt Anh" width="560" height="380" loading="lazy" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== TÍNH NĂNG ===== -->
+    <section class="ta-section">
+      <div class="ta-container">
+        <h2 class="ta-section__title">6 Điều Khiến Tiếng Anh Trẻ Em Việt Anh Khác Biệt</h2>
+        <p class="ta-section__desc">Con học tiếng Anh như học tiếng mẹ đẻ — tự nhiên, vui vẻ và hiệu quả thực sự</p>
+        <div class="ta-feat-grid">
+          {features.map(f => (
+            <div class="ta-feat-card">
+              <div class="ta-feat__icon">{f.icon}</div>
+              <h3 class="ta-feat__title">{f.title}</h3>
+              <p class="ta-feat__desc">{f.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ĐỘ TUỔI ===== -->
+    <section class="ta-section ta-section--light">
+      <div class="ta-container">
+        <h2 class="ta-section__title">Lộ Trình Cambridge Theo Độ Tuổi</h2>
+        <p class="ta-section__desc">Từ 4 đến 12 tuổi — mỗi cấp xây nền cho cấp tiếp theo, có chứng chỉ quốc tế từng mốc</p>
+        <div class="ta-age-grid">
+          {ageGroups.map(g => (
+            <div class="ta-age-card" style={`--age-color: ${g.color}`}>
+              <div class="ta-age__header">
+                <span class="ta-age__icon">{g.icon}</span>
+                <div>
+                  <div class="ta-age__range">{g.age}</div>
+                  <div class="ta-age__level">{g.level}</div>
+                </div>
+              </div>
+              <ul class="ta-age__list">
+                {g.items.map(item => <li>{item}</li>)}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== SO SÁNH ===== -->
+    <section class="ta-section" id="so-sanh">
+      <div class="ta-container">
+        <h2 class="ta-section__title">Việt Anh vs Trung Tâm Tiếng Anh Thông Thường</h2>
+        <p class="ta-section__desc">Sự khác biệt không nằm ở học phí — mà ở chất lượng đầu ra của con</p>
+        <div class="ta-compare">
+          <div class="ta-compare__header">
+            <div class="ta-compare__col-head"></div>
+            <div class="ta-compare__col-head ta-compare__col-head--bad">Trung tâm thông thường</div>
+            <div class="ta-compare__col-head ta-compare__col-head--good">Tiếng Anh Việt Anh</div>
+          </div>
+          {comparisons.map(row => (
+            <div class="ta-compare__row">
+              <div class="ta-compare__aspect">{row.aspect}</div>
+              <div class="ta-compare__cell ta-compare__cell--bad">❌ {row.traditional}</div>
+              <div class="ta-compare__cell ta-compare__cell--good">✅ {row.va}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STATS ===== -->
+    <section class="ta-section ta-section--navy">
+      <div class="ta-container">
+        <h2 class="ta-section__title ta-section__title--white">15 Năm — 1,500+ Học Sinh Nói Tiếng Anh Tự Tin</h2>
+        <p class="ta-section__desc ta-section__desc--white">Cambridge Young Learners là chuẩn quốc tế được 130+ quốc gia công nhận</p>
+        <div class="ta-stats-grid">
+          <div class="ta-stat-card">
+            <div class="ta-stat-card__icon">🏆</div>
+            <strong>Cambridge YLE</strong>
+            <p>Chứng chỉ Young Learners do ĐH Cambridge cấp — giá trị quốc tế suốt đời, được 130+ quốc gia công nhận</p>
+          </div>
+          <div class="ta-stat-card">
+            <div class="ta-stat-card__icon">🌍</div>
+            <strong>GV Bản Ngữ 100%</strong>
+            <p>Tất cả GV chính đều là người bản ngữ (Mỹ, Anh, Úc, Philippines) có chứng chỉ TEFL/TESOL</p>
+          </div>
+          <div class="ta-stat-card">
+            <div class="ta-stat-card__icon">📈</div>
+            <strong>97% Tiến Bộ Sau 3 Tháng</strong>
+            <p>Phụ huynh thấy con tự tin nói tiếng Anh ở nhà, xem phim không cần phụ đề trong 3 tháng đầu</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="ta-section ta-section--light">
+      <div class="ta-container ta-faq-wrap">
+        <h2 class="ta-section__title">Câu Hỏi Thường Gặp</h2>
+        <div class="ta-faq">
+          {faqs.map((f, i) => (
+            <details class="ta-faq__item" open={i === 0}>
+              <summary class="ta-faq__q">{f.q}</summary>
+              <p class="ta-faq__a">{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA ===== -->
+    <section class="ta-cta">
+      <div class="ta-container ta-cta__inner">
+        <div class="ta-cta__text">
+          <h2>Đăng ký 1 buổi học thử miễn phí — không cam kết</h2>
+          <p>Con thích thì tiếp tục, không thích thì thôi — không áp lực, không mất tiền.</p>
+        </div>
+        <div class="ta-cta__actions">
+          <a href="tel:+84916961409" class="ta-btn ta-btn--gold">📞 0916 961 409</a>
+          <a href="https://zalo.me/0916961409" class="ta-btn ta-btn--zalo" target="_blank" rel="noopener">💬 Zalo OA</a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  :root {
+    --navy: #000080;
+    --navy-dk: #0f0f3d;
+    --gold: #ffff00;
+    --bg: #f8f9fc;
+    --white: #ffffff;
+    --sub: #6b7280;
+    --border: #e5e7eb;
+    --radius: 16px;
+  }
+
+  .ta-page { font-family: 'Inter', sans-serif; color: #1a1a2e; }
+  .ta-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+
+  .ta-breadcrumb { display: flex; gap: .5rem; align-items: center; font-size: .875rem; color: rgba(255,255,255,.7); margin-bottom: 1.5rem; }
+  .ta-breadcrumb a { color: rgba(255,255,255,.85); text-decoration: none; }
+  .ta-breadcrumb a:hover { color: var(--gold); }
+
+  .ta-hero {
+    background: linear-gradient(135deg, #0f2744 0%, #1a3a5e 50%, #000080 100%);
+    padding: 4rem 0 5rem; position: relative; overflow: hidden;
+  }
+  .ta-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: url('https://media.truongvietanh.com/images/vui-ve-07.webp') center/cover no-repeat;
+    opacity: .06;
+  }
+  .ta-hero__inner { position: relative; display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: center; }
+  .ta-hero__tag { display: inline-block; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); color: var(--gold); font-size: .875rem; font-weight: 700; padding: .35rem 1rem; border-radius: 50px; margin-bottom: 1rem; letter-spacing: .5px; }
+  .ta-hero__title { font-family: 'Montserrat', sans-serif; font-size: clamp(1.8rem, 3.5vw, 2.75rem); font-weight: 900; color: #fff; line-height: 1.15; margin: 0 0 1rem; }
+  .ta-hero__accent { color: var(--gold); }
+  .ta-hero__subtitle { font-size: 1.05rem; color: rgba(255,255,255,.85); line-height: 1.75; margin: 0 0 1.5rem; }
+  .ta-hero__badges { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 1.75rem; }
+  .ta-badge { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: #fff; padding: .35rem .85rem; border-radius: 50px; font-size: .8rem; font-weight: 600; }
+  .ta-hero__ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .ta-hero__stats { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding: 1.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; backdrop-filter: blur(8px); }
+  .ta-stat { text-align: center; }
+  .ta-stat strong { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 900; color: var(--gold); line-height: 1; }
+  .ta-stat span { font-size: .75rem; color: rgba(255,255,255,.75); line-height: 1.4; margin-top: .25rem; display: block; }
+
+  .ta-btn { display: inline-flex; align-items: center; gap: .5rem; padding: .75rem 1.75rem; border-radius: 10px; font-weight: 700; font-size: 1rem; text-decoration: none; transition: all .2s; }
+  .ta-btn--primary { background: var(--gold); color: var(--navy-dk); }
+  .ta-btn--primary:hover { background: #F5DC85; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,255,0,.4); }
+  .ta-btn--outline { background: transparent; border: 2px solid rgba(255,255,255,.4); color: #fff; }
+  .ta-btn--outline:hover { border-color: var(--gold); color: var(--gold); }
+  .ta-btn--gold { background: linear-gradient(135deg, var(--gold), #ffff00); color: var(--navy-dk); }
+  .ta-btn--gold:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(255,255,0,.4); }
+  .ta-btn--zalo { background: #0068FF; color: #fff; }
+  .ta-btn--zalo:hover { background: #0056D6; transform: translateY(-2px); }
+
+  .ta-section { padding: 4rem 0; }
+  .ta-section--light { background: var(--bg); }
+  .ta-section--navy { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); padding: 4rem 0; }
+  .ta-section__title { font-family: 'Montserrat', sans-serif; font-size: 1.875rem; font-weight: 800; color: var(--navy); text-align: center; margin: 0 0 .75rem; }
+  .ta-section__title--white { color: #fff; }
+  .ta-section__desc { font-size: 1rem; color: var(--sub); text-align: center; max-width: 640px; margin: 0 auto 2.5rem; line-height: 1.7; }
+  .ta-section__desc--white { color: rgba(255,255,255,.8); }
+
+  .ta-problem { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+  .ta-problem__text h2 { font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 800; color: var(--navy); margin: 0 0 1rem; }
+  .ta-problem__text p { font-size: 1rem; color: #555; line-height: 1.7; margin: 0 0 1rem; }
+  .ta-problem__list { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: .5rem; }
+  .ta-problem__list li { font-size: .95rem; line-height: 1.5; }
+  .ta-callout { background: #fff3cd; border-left: 4px solid #ffff00; border-radius: 8px; padding: .9rem 1.25rem; font-size: .95rem; color: #7a5f00; font-weight: 500; margin: 1rem 0; line-height: 1.6; }
+  .ta-problem__right img { width: 100%; height: 320px; object-fit: cover; border-radius: var(--radius); box-shadow: 0 12px 40px rgba(0,0,128,.12); }
+
+  .ta-feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .ta-feat-card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.75rem 1.5rem; transition: all .25s; }
+  .ta-feat-card:hover { transform: translateY(-5px); box-shadow: 0 12px 32px rgba(0,0,128,.1); border-color: var(--gold); }
+  .ta-feat__icon { font-size: 2rem; margin-bottom: .75rem; display: block; }
+  .ta-feat__title { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; color: var(--navy); margin: 0 0 .6rem; }
+  .ta-feat__desc { font-size: .9rem; color: #555; line-height: 1.65; margin: 0; }
+
+  .ta-age-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+  .ta-age-card { background: var(--white); border: 2px solid var(--border); border-top: 4px solid var(--age-color, var(--navy)); border-radius: var(--radius); padding: 1.5rem 1.25rem; transition: all .25s; }
+  .ta-age-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,128,.1); }
+  .ta-age__header { display: flex; align-items: center; gap: .75rem; margin-bottom: 1rem; }
+  .ta-age__icon { font-size: 1.75rem; }
+  .ta-age__range { font-family: 'Montserrat', sans-serif; font-size: .9rem; font-weight: 900; color: var(--age-color, var(--navy)); }
+  .ta-age__level { font-size: .8rem; font-weight: 600; color: var(--sub); }
+  .ta-age__list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: .5rem; }
+  .ta-age__list li { font-size: .85rem; color: #444; line-height: 1.5; padding-left: 1.1rem; position: relative; }
+  .ta-age__list li::before { content: '✓'; position: absolute; left: 0; color: var(--age-color, var(--navy)); font-weight: 700; }
+
+  .ta-compare { border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+  .ta-compare__header { display: grid; grid-template-columns: 160px 1fr 1fr; background: var(--navy); }
+  .ta-compare__col-head { padding: 1rem 1.25rem; font-family: 'Montserrat', sans-serif; font-size: .875rem; font-weight: 800; color: rgba(255,255,255,.6); }
+  .ta-compare__col-head--bad { color: #fca5a5; }
+  .ta-compare__col-head--good { color: #86efac; }
+  .ta-compare__row { display: grid; grid-template-columns: 160px 1fr 1fr; border-top: 1px solid var(--border); }
+  .ta-compare__row:nth-child(even) { background: var(--bg); }
+  .ta-compare__aspect { padding: 1rem 1.25rem; font-size: .875rem; font-weight: 700; color: var(--navy); border-right: 1px solid var(--border); display: flex; align-items: center; }
+  .ta-compare__cell { padding: 1rem 1.25rem; font-size: .875rem; line-height: 1.55; display: flex; align-items: center; }
+  .ta-compare__cell--bad { color: #b91c1c; border-right: 1px solid var(--border); }
+  .ta-compare__cell--good { color: #15803d; font-weight: 500; }
+
+  .ta-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .ta-stat-card { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.12); border-radius: var(--radius); padding: 1.75rem 1.5rem; text-align: center; }
+  .ta-stat-card__icon { font-size: 2rem; margin-bottom: .75rem; }
+  .ta-stat-card strong { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.1rem; font-weight: 800; color: var(--gold); margin-bottom: .6rem; }
+  .ta-stat-card p { font-size: .9rem; color: rgba(255,255,255,.8); line-height: 1.65; margin: 0; }
+
+  .ta-faq-wrap { max-width: 800px; }
+  .ta-faq { display: flex; flex-direction: column; gap: .75rem; }
+  .ta-faq__item { background: var(--white); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .ta-faq__item[open] { border-color: var(--gold); }
+  .ta-faq__q { padding: 1.1rem 1.5rem; font-size: 1rem; font-weight: 700; color: var(--navy); cursor: pointer; list-style: none; display: flex; justify-content: space-between; align-items: center; }
+  .ta-faq__q::after { content: '+'; font-size: 1.25rem; font-weight: 400; flex-shrink: 0; margin-left: 1rem; }
+  .ta-faq__item[open] .ta-faq__q::after { content: '−'; }
+  .ta-faq__a { padding: 0 1.5rem 1.25rem; font-size: .95rem; color: #555; line-height: 1.7; margin: 0; }
+
+  .ta-cta { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); padding: 3.5rem 0; }
+  .ta-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .ta-cta__text h2 { font-family: 'Montserrat', sans-serif; font-size: 1.5rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
+  .ta-cta__text p { font-size: 1rem; color: rgba(255,255,255,.8); line-height: 1.65; margin: 0; }
+  .ta-cta__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
+
+  @media (max-width: 1024px) {
+    .ta-hero__inner { grid-template-columns: 1fr; }
+    .ta-hero__stats { grid-template-columns: repeat(4, 1fr); }
+    .ta-age-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 768px) {
+    .ta-feat-grid { grid-template-columns: 1fr 1fr; }
+    .ta-problem { grid-template-columns: 1fr; }
+    .ta-problem__right { order: -1; }
+    .ta-stats-grid { grid-template-columns: 1fr; }
+    .ta-compare__header, .ta-compare__row { grid-template-columns: 100px 1fr 1fr; }
+    .ta-cta__inner { flex-direction: column; text-align: center; }
+    .ta-cta__actions { justify-content: center; }
+    .ta-hero__stats { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .ta-feat-grid { grid-template-columns: 1fr; }
+    .ta-compare__header { display: none; }
+    .ta-compare__row { grid-template-columns: 1fr; border-top: 2px solid var(--border); }
+    .ta-compare__aspect { border-right: none; border-bottom: 1px solid var(--border); background: var(--navy); color: #fff; border-radius: 0; }
+    .ta-compare__cell--bad { border-right: none; border-bottom: 1px solid var(--border); }
+    .ta-hero { padding: 2.5rem 0 3rem; }
+    .ta-section { padding: 2.5rem 0; }
+  }
+</style>

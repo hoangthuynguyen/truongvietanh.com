@@ -1,0 +1,270 @@
+---
+import { videoTestimonials } from '../data/testimonials-video';
+
+const filters = [
+  { key: 'all', label: 'Tất cả' },
+  { key: 'mam-non', label: 'Mầm non' },
+  { key: 'tieu-hoc', label: 'Tiểu học' },
+  { key: 'thcs', label: 'THCS' },
+  { key: 'thpt', label: 'THPT' },
+];
+---
+
+<section class="tv-section" id="video-testimonials">
+  <div class="tv-container">
+    <header class="tv-header">
+      <h2 class="tv-h2">Video phụ huynh & học sinh chia sẻ</h2>
+      <p class="tv-sub">{videoTestimonials.length} chia sẻ thực tế từ phụ huynh và học sinh ở 4 cấp học — quay tại các sự kiện và buổi gặp gỡ tại trường, không dàn dựng.</p>
+    </header>
+
+    <div class="tv-filter" role="tablist" aria-label="Lọc theo cấp học">
+      {filters.map((f, i) => (
+        <button
+          type="button"
+          class={`tv-filter__btn${i === 0 ? ' is-active' : ''}`}
+          data-filter={f.key}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >{f.label}</button>
+      ))}
+    </div>
+
+    <div class="tv-grid">
+      {videoTestimonials.map((t) => (
+        <article
+          class="tv-card"
+          data-level={t.level}
+          data-audience={t.audience}
+        >
+          <button
+            type="button"
+            class="tv-card__player"
+            data-video-id={t.videoId}
+            data-is-short={t.isShort ? 'true' : 'false'}
+            aria-label={`Phát video: ${t.shortQuote}`}
+          >
+            <img
+              src={`https://i.ytimg.com/vi/${t.videoId}/hqdefault.jpg`}
+              alt={`Video chia sẻ — ${t.name}`}
+              loading="lazy"
+              decoding="async"
+              width="480"
+              height="360"
+              class="tv-card__thumb"
+            />
+            <span class="tv-card__play" aria-hidden="true">
+              <svg viewBox="0 0 68 48" width="56" height="40"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#cc0000"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+            </span>
+            <span class="tv-card__badge">{t.audienceLabel} · {t.levelLabel}</span>
+          </button>
+
+          <div class="tv-card__body">
+            <p class="tv-card__short">{t.shortQuote}</p>
+            <p class="tv-card__long">{t.longQuote}</p>
+            <div class="tv-card__meta">
+              <div class="tv-card__name">{t.name}</div>
+              <div class="tv-card__context">{t.context}</div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Filter logic
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.tv-filter__btn');
+  const cards = document.querySelectorAll<HTMLElement>('.tv-card');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter || 'all';
+      buttons.forEach((b) => {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+      });
+      cards.forEach((card) => {
+        const lv = card.dataset.level;
+        card.style.display = (f === 'all' || lv === f) ? '' : 'none';
+      });
+    });
+  });
+
+  // Click-to-play YouTube (lazy iframe)
+  document.querySelectorAll<HTMLButtonElement>('.tv-card__player').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.videoId;
+      if (!id) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = 'YouTube video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.loading = 'lazy';
+      iframe.className = 'tv-card__iframe';
+      btn.replaceWith(iframe);
+    });
+  });
+</script>
+
+<style>
+  .tv-section { padding: 2.5rem 0 1rem; background: #f7f9fc; }
+  .tv-container { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; }
+
+  .tv-header { text-align: center; margin-bottom: 1.5rem; }
+  .tv-h2 {
+    font-size: clamp(1.5rem, 2.6vw, 2rem);
+    font-weight: 800;
+    color: #0f172a;
+    margin: 0 0 0.5rem;
+    letter-spacing: -0.01em;
+  }
+  .tv-sub {
+    font-size: 1rem;
+    color: #475569;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 680px;
+  }
+
+  /* Filter */
+  .tv-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 0 0 1.75rem;
+  }
+  .tv-filter__btn {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s, border-color 0.2s;
+  }
+  .tv-filter__btn:hover { border-color: #000080; color: #000080; }
+  .tv-filter__btn.is-active {
+    background: #000080;
+    border-color: #000080;
+    color: #fff;
+  }
+
+  /* Grid */
+  .tv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px) { .tv-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .tv-grid { grid-template-columns: 1fr; } }
+
+  /* Card */
+  .tv-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
+  }
+  .tv-card:hover {
+    box-shadow: 0 14px 40px rgba(26, 26, 94, 0.1);
+    transform: translateY(-3px);
+    border-color: #ffff00;
+  }
+
+  .tv-card__player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    background: #000;
+    overflow: hidden;
+    display: block;
+  }
+  .tv-card__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s, opacity 0.2s;
+  }
+  .tv-card__player:hover .tv-card__thumb { transform: scale(1.04); opacity: 0.85; }
+  .tv-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: transform 0.2s;
+  }
+  .tv-card__play svg { filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+  .tv-card__player:hover .tv-card__play { transform: scale(1.1); }
+  .tv-card__badge {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    background: rgba(0, 0, 128, 0.9);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    letter-spacing: 0.02em;
+  }
+  .tv-card__iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    display: block;
+  }
+
+  .tv-card__body {
+    padding: 1.25rem 1.25rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    flex: 1;
+  }
+  .tv-card__short {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000080;
+    line-height: 1.45;
+    margin: 0;
+  }
+  .tv-card__long {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #475569;
+    margin: 0;
+    font-style: italic;
+  }
+  .tv-card__meta {
+    margin-top: auto;
+    padding-top: 0.75rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .tv-card__name {
+    font-weight: 700;
+    color: #0f172a;
+    font-size: 0.9rem;
+    line-height: 1.35;
+  }
+  .tv-card__context {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-top: 0.2rem;
+  }
+</style>

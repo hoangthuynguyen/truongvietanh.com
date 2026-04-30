@@ -126,23 +126,24 @@ a{color:inherit;text-decoration:none}
 .h-trust span::before{content:'✓';color:var(--gold);font-weight:900;font-size:14px}
 
 /* ─── FORM CARD ─── */
-.fcard{background:#fff;color:var(--text);border-radius:18px;box-shadow:var(--shadow-lg);padding:22px;border:3px solid var(--gold);position:relative}
-.fcard-tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--gold);color:var(--navy-dk);font-size:11px;font-weight:900;padding:5px 14px;border-radius:30px;letter-spacing:.6px;white-space:nowrap}
-.fcard-title{font-size:1.35rem;font-weight:900;color:var(--navy);text-align:center;margin-bottom:6px;line-height:1.25}
-.fcard-sub{font-size:13.5px;color:var(--text-muted);text-align:center;margin-bottom:16px}
-.steps{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px}
-.sdot{width:26px;height:26px;border-radius:50%;background:#e5e7eb;color:#999;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;transition:.3s}
+.fcard{background:#fff;color:var(--text);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,0,.6);position:relative;overflow:hidden}
+.fcard-tag{background:var(--gold);color:var(--navy-dk);font-size:11.5px;font-weight:900;padding:9px 16px;letter-spacing:.7px;text-align:center;border-bottom:2px solid var(--navy);text-transform:uppercase}
+.fcard-body{padding:24px 24px 20px}
+.fcard-title{font-size:1.32rem;font-weight:900;color:var(--navy);text-align:center;margin-bottom:6px;line-height:1.25}
+.fcard-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:18px;font-weight:500}
+.steps{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px dashed var(--border)}
+.sdot{width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:#999;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;transition:.3s;flex-shrink:0}
 .sdot.active{background:var(--navy);color:var(--gold)}
 .sdot.done{background:#22c55e;color:#fff}
-.sline{width:36px;height:2px;background:#e5e7eb}
-.slabel{font-size:12px;color:var(--text-muted);font-weight:700;margin-left:6px}
-.sin{width:100%;padding:13px 14px;border:2px solid var(--border);border-radius:11px;font-size:15px;font-family:inherit;margin-bottom:10px;transition:.2s;background:var(--bg-alt)}
+.sline{width:30px;height:2px;background:#e5e7eb}
+.slabel{font-size:12px;color:var(--navy);font-weight:700;margin-left:8px}
+.sin{width:100%;padding:13px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:inherit;margin-bottom:10px;transition:.2s;background:var(--bg-alt)}
 .sin:focus{outline:none;border-color:var(--navy);background:#fff;box-shadow:0 0 0 3px rgba(0,0,128,.1)}
 .sin.error{border-color:#ef4444;background:#fff5f5}
-.btn-step{width:100%;background:var(--gold);color:var(--navy-dk);border:none;padding:15px;border-radius:11px;font-size:15px;font-weight:900;font-family:'Montserrat',sans-serif;cursor:pointer;transition:.15s;text-transform:uppercase;letter-spacing:.4px;box-shadow:0 4px 14px rgba(255,255,0,.45)}
+.btn-step{width:100%;background:var(--gold);color:var(--navy-dk);border:none;padding:14px;border-radius:10px;font-size:14.5px;font-weight:900;font-family:'Montserrat',sans-serif;cursor:pointer;transition:.15s;text-transform:uppercase;letter-spacing:.4px;box-shadow:0 4px 14px rgba(255,255,0,.45)}
 .btn-step:hover{background:var(--gold-dk);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,255,0,.55)}
-.btn-back{background:none;border:none;color:var(--text-muted);font-size:13px;font-weight:600;cursor:pointer;text-decoration:underline;padding:10px 0 0;width:100%;text-align:center}
-.fcard-foot{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-top:14px;border-top:1px solid var(--border);padding-top:12px;font-weight:600}
+.btn-back{background:none;border:none;color:var(--text-muted);font-size:12.5px;font-weight:600;cursor:pointer;text-decoration:underline;padding:8px 0 0;width:100%;text-align:center}
+.fcard-foot{display:flex;justify-content:space-around;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-top:14px;padding-top:12px;border-top:1px solid var(--border);font-weight:600}
 .fcard-foot span{display:inline-flex;align-items:center;gap:4px}
 .fcard-success{display:none;text-align:center;padding:14px 4px}
 .fcard-success .icon{font-size:48px;margin-bottom:8px}
@@ -337,33 +338,35 @@ a{color:inherit;text-decoration:none}
 
       <!-- FORM CARD -->
       <aside class="fcard" id="formArea">
-        <div class="fcard-tag">⏰ TƯ VẤN MIỄN PHÍ · 24H</div>
-        <h3 class="fcard-title">Đặt lịch tham quan<br/>Mầm Non {location}</h3>
-        <p class="fcard-sub">45–60 phút · Gặp cô · Xem lớp · Xem bếp ăn</p>
+        <div class="fcard-tag">⏰ Tư vấn miễn phí · Phản hồi 24h</div>
+        <div class="fcard-body">
+          <h3 class="fcard-title">Đặt lịch tham quan Mầm Non {location}</h3>
+          <p class="fcard-sub">45–60 phút · Gặp cô · Xem lớp · Xem bếp ăn</p>
 
-        <div class="steps">
-          <div class="sdot active" id="dot1">1</div>
-          <div class="sline"></div>
-          <div class="sdot" id="dot2">2</div>
-          <span class="slabel" id="slabel">Email của Ba/Mẹ</span>
-        </div>
+          <div class="steps">
+            <div class="sdot active" id="dot1">1</div>
+            <div class="sline"></div>
+            <div class="sdot" id="dot2">2</div>
+            <span class="slabel" id="slabel">Email của Ba/Mẹ</span>
+          </div>
 
-        <div id="step1">
-          <input class="sin" type="email" id="sq-email" placeholder="email@cuabame.com" autocomplete="email" />
-          <button type="button" class="btn-step" onclick="sqNext()">Tiếp tục →</button>
-        </div>
+          <div id="step1">
+            <input class="sin" type="email" id="sq-email" placeholder="email@cuabame.com" autocomplete="email" />
+            <button type="button" class="btn-step" onclick="sqNext()">Tiếp tục →</button>
+          </div>
 
-        <div id="step2" style="display:none">
-          <input class="sin" type="text" id="sq-name" placeholder="Họ tên Ba/Mẹ" autocomplete="name" />
-          <input class="sin" type="tel" id="sq-phone" placeholder="Số điện thoại" autocomplete="tel" />
-          <button type="button" class="btn-step" onclick="sqSubmit()">🏫 Đặt lịch tham quan</button>
-          <button type="button" class="btn-back" onclick="sqBack()">← Quay lại</button>
-        </div>
+          <div id="step2" style="display:none">
+            <input class="sin" type="text" id="sq-name" placeholder="Họ tên Ba/Mẹ" autocomplete="name" />
+            <input class="sin" type="tel" id="sq-phone" placeholder="Số điện thoại" autocomplete="tel" />
+            <button type="button" class="btn-step" onclick="sqSubmit()">🏫 Đặt lịch tham quan</button>
+            <button type="button" class="btn-back" onclick="sqBack()">← Quay lại</button>
+          </div>
 
-        <div class="fcard-foot">
-          <span>🔒 Bảo mật</span>
-          <span>📞 Phản hồi 24h</span>
-          <span>💯 Miễn phí</span>
+          <div class="fcard-foot">
+            <span>🔒 Bảo mật</span>
+            <span>📞 Phản hồi 24h</span>
+            <span>💯 Miễn phí</span>
+          </div>
         </div>
       </aside>
 

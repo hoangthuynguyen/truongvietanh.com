@@ -1401,11 +1401,12 @@ const faqs = [
       if (!validPhone(phone)) { phoneInput.classList.add('ts-input-error'); bad = true; } else phoneInput.classList.remove('ts-input-error');
       if (bad) return;
 
-      leadData.name = name;
+      leadData.fullName = name;
       leadData.phone = phone;
+      leadData.source = 'ts-hoc-bong-99k';
       leadData.funnel_code = 'ts_99k';
       leadData.school_level = 'tieu-hoc';
-      leadData.tag = 'Need_immediate_chat';
+      leadData.tags = ['ts-hoc-bong-99k', 'Need_immediate_chat', 'lead_nong'];
 
       const submitBtn = step2.querySelector('button[type="submit"]');
       submitBtn.disabled = true;

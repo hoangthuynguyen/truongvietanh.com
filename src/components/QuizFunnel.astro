@@ -435,13 +435,13 @@ const quizId = `quiz-${funnelCode}`;
   @keyframes qfSlideIn {from{ opacity: 0; transform: translateY(16px); }to{ opacity: 1; transform: translateY(0); } }/* ===== START SCREEN ===== */
   .qf-start-badge{
     display: inline-flex; align-items: center; gap: .5rem;
-    background: linear-gradient(135deg, #1a1a5e, #2a2a7e); color: #fff;
+    background: linear-gradient(135deg, #000080, #00009a); color: #fff;
     padding: .5rem 1.25rem; border-radius: 50px; font-size: 1rem; font-weight: 600;
     margin-bottom: 1.25rem;
   }.qf-start-title{ font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 800; color: #1F4E79; margin-bottom: .5rem; line-height: 1.3; }.qf-start-subtitle{ font-size: 1rem; color: #666; margin-bottom: 1.25rem; }.qf-start-checklist{ list-style: none; padding: 0; margin: 0 0 1.5rem; display: flex; flex-direction: column; gap: .5rem; text-align: left; }.qf-start-checklist li{
     display: flex; align-items: center; gap: .6rem; font-size: 1rem; color: #1F4E79;
-    font-weight: 500; padding: .6rem 1rem; background: rgba(240, 208, 72,.08);
-    border-radius: 10px; border-left: 3px solid #F0D048;
+    font-weight: 500; padding: .6rem 1rem; background: rgba(255, 255, 0,.08);
+    border-radius: 10px; border-left: 3px solid #ffff00;
   }.qf-check{ color: #16A34A; font-weight: 700; font-size: 1.1rem; }.qf-start-meta{ display: flex; gap: 1.25rem; justify-content: center; margin-top: 1rem; font-size: 1rem; color: #999; }/* ===== BUTTONS ===== */
   .qf-btn{
     display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
@@ -449,25 +449,25 @@ const quizId = `quiz-${funnelCode}`;
     font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.05rem;
     transition: all .25s ease; width: 100%;
   }.qf-btn--start, .qf-btn--result{
-    background: linear-gradient(135deg, #F0D048, #F59E0B); color: #fff;
-    box-shadow: 0 4px 18px rgba(240, 208, 72,.35);
+    background: linear-gradient(135deg, #ffff00, #F59E0B); color: #fff;
+    box-shadow: 0 4px 18px rgba(255, 255, 0,.35);
     animation: qfPulse 2.5s ease-in-out infinite;
   }.qf-btn--start:hover, .qf-btn--result:hover{
-    transform: translateY(-2px); box-shadow: 0 6px 28px rgba(240, 208, 72,.5);
+    transform: translateY(-2px); box-shadow: 0 6px 28px rgba(255, 255, 0,.5);
   }.qf-btn--submit{
     background: linear-gradient(135deg, #16A34A, #22C55E); color: #fff;
     box-shadow: 0 4px 14px rgba(22,163,106,.3);
   }.qf-btn--submit:hover{ transform: translateY(-2px); }.qf-btn--submit:disabled{ opacity: .6; cursor: not-allowed; transform: none; }
-  @keyframes qfPulse {0%,100%{ box-shadow: 0 4px 18px rgba(240, 208, 72,.35); }50%{ box-shadow: 0 4px 30px rgba(240, 208, 72,.6), 0 0 48px rgba(245,158,11,.15); }
+  @keyframes qfPulse {0%,100%{ box-shadow: 0 4px 18px rgba(255, 255, 0,.35); }50%{ box-shadow: 0 4px 30px rgba(255, 255, 0,.6), 0 0 48px rgba(245,158,11,.15); }
   }/* ===== PROGRESS BAR ===== */
-  .qf-progress{ margin-bottom: 1.5rem; }.qf-progress__bar{ height: 8px; background: #E5E7EB; border-radius: 4px; overflow: hidden; }.qf-progress__fill{ height: 100%; background: linear-gradient(90deg, #F0D048, #F59E0B); border-radius: 4px; transition: width .5s ease; }.qf-progress__text{ text-align: right; font-size: 1rem; color: #999; margin-top: .35rem; font-weight: 600; }/* ===== QUESTION ===== */
+  .qf-progress{ margin-bottom: 1.5rem; }.qf-progress__bar{ height: 8px; background: #E5E7EB; border-radius: 4px; overflow: hidden; }.qf-progress__fill{ height: 100%; background: linear-gradient(90deg, #ffff00, #F59E0B); border-radius: 4px; transition: width .5s ease; }.qf-progress__text{ text-align: right; font-size: 1rem; color: #999; margin-top: .35rem; font-weight: 600; }/* ===== QUESTION ===== */
   .qf-question{ font-family: Montserrat, sans-serif; font-size: 1.15rem; font-weight: 700; color: #1F4E79; margin-bottom: 1.25rem; line-height: 1.4; }/* ===== OPTIONS ===== */
   .qf-options{ display: flex; flex-direction: column; gap: .65rem; }.qf-option{
     display: flex; align-items: center; gap: .85rem;
     padding: 1rem 1.25rem; border: 2px solid #E5E7EB; border-radius: 14px;
     background: #fff; cursor: pointer; transition: all .2s ease;
     text-align: left; font-size: 1rem; color: #374151;
-  }.qf-option:hover{ border-color: #F0D048; background: rgba(240, 208, 72,.04); transform: translateX(4px); }.qf-option--selected{ border-color: #16A34A !important; background: #F0FDF4 !important; }.qf-option--selected .qf-option__letter{ background: #16A34A; color: #fff; }.qf-option__letter{
+  }.qf-option:hover{ border-color: #ffff00; background: rgba(255, 255, 0,.04); transform: translateX(4px); }.qf-option--selected{ border-color: #16A34A !important; background: #F0FDF4 !important; }.qf-option--selected .qf-option__letter{ background: #16A34A; color: #fff; }.qf-option__letter{
     width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
     background: #F3F4F6; font-weight: 700; font-size: 1rem; color: #6B7280;
@@ -490,7 +490,7 @@ const quizId = `quiz-${funnelCode}`;
     width: 100%; padding: .9rem 1rem; border: 2px solid #E5E7EB;
     border-radius: 12px; font-size: 1rem; font-family: inherit;
     transition: border-color .2s; background: #fff; outline: none;
-  }.qf-input:focus{ border-color: #F0D048; box-shadow: 0 0 0 3px rgba(240, 208, 72,.15); }.qf-input--error{ border-color: #EF4444 !important; }.qf-error{ font-size: 1rem; color: #EF4444; margin-top: .25rem; display: block; min-height: 1rem; }.qf-form-trust{ display: flex; gap: 1.25rem; justify-content: center; margin-top: .75rem; font-size: 1rem; color: #999; }/* ===== SUCCESS ===== */
+  }.qf-input:focus{ border-color: #ffff00; box-shadow: 0 0 0 3px rgba(255, 255, 0,.15); }.qf-input--error{ border-color: #EF4444 !important; }.qf-error{ font-size: 1rem; color: #EF4444; margin-top: .25rem; display: block; min-height: 1rem; }.qf-form-trust{ display: flex; gap: 1.25rem; justify-content: center; margin-top: .75rem; font-size: 1rem; color: #999; }/* ===== SUCCESS ===== */
   .qf-step--success{ padding: 2rem 0; }.qf-success-icon{ font-size: 3.5rem; margin-bottom: .75rem; }.qf-success-title{ font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; color: #16A34A; margin-bottom: .5rem; }.qf-success-text{ font-size: 1rem; color: #666; margin-bottom: 1.25rem; }.qf-loading-spinner{
     width: 36px; height: 36px; border: 3px solid #E5E7EB;
     border-top-color: #16A34A; border-radius: 50%;

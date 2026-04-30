@@ -497,19 +497,19 @@ function addTraiHe(text: string | undefined | null): string {
     font-size: 1rem; text-decoration: none; transition: all .3s ease;
     font-family: Montserrat, sans-serif; border: none; cursor: pointer;
   }.hero-cta--primary{
-    background: linear-gradient(135deg, #ffff00, #D4B637); color: #12123e;
-    box-shadow: 0 4px 20px rgba(240, 208, 72,.4);
+    background: linear-gradient(135deg, #ffff00, #ffff00); color: #00004d;
+    box-shadow: 0 4px 20px rgba(255, 255, 0,.4);
     animation: heroPulse 2.5s ease-in-out infinite;
-  }.hero-cta--primary:hover{ transform: translateY(-2px); box-shadow: 0 6px 28px rgba(240, 208, 72,.55); }.hero-cta--zalo{
+  }.hero-cta--primary:hover{ transform: translateY(-2px); box-shadow: 0 6px 28px rgba(255, 255, 0,.55); }.hero-cta--zalo{
     background: #fff; color: #000080;
     border: 2px solid #000080;
   }.hero-cta--zalo:hover{ background: #000080; color: #fff; }.hero-cta__icon{ font-size: 1.2rem; }
-  @keyframes heroPulse {0%,100%{ box-shadow: 0 4px 20px rgba(240, 208, 72,.4); }50%{ box-shadow: 0 4px 32px rgba(240, 208, 72,.65), 0 0 48px rgba(240, 208, 72,.2); }
+  @keyframes heroPulse {0%,100%{ box-shadow: 0 4px 20px rgba(255, 255, 0,.4); }50%{ box-shadow: 0 4px 32px rgba(255, 255, 0,.65), 0 0 48px rgba(255, 255, 0,.2); }
   }/* ===== HERO COUNTDOWN — white hero, navy text ===== */
   .hero-countdown{
     display: inline-flex; align-items: center; gap: .6rem;
     margin-top: 1.5rem; padding: .6rem 1.25rem;
-    background: rgba(26,26,94,.06); border: 1px solid rgba(26,26,94,.15);
+    background: rgba(0,0,128,.06); border: 1px solid rgba(0,0,128,.15);
     border-radius: 50px; font-size: 1rem; color: #000080;
   }.hero-countdown__pulse{
     width: 8px; height: 8px; background: #ffff00; border-radius: 50%;
@@ -522,11 +522,11 @@ function addTraiHe(text: string | undefined | null): string {
     position: relative; overflow: hidden;
   }.camp-testimonial::before{
     content: '"'; position: absolute; top: -10px; left: 16px;
-    font-size: 6rem; color: rgba(26,26,94,.05);
+    font-size: 6rem; color: rgba(0,0,128,.05);
     font-family: Georgia, serif; line-height: 1;
   }.camp-testimonial__header{ display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem; position: relative; z-index: 1; }.camp-testimonial__avatar{
     width: 52px; height: 52px; border-radius: 50%;
-    background: linear-gradient(135deg, #000080, #2a2a7e);
+    background: linear-gradient(135deg, #000080, #00009a);
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }.camp-testimonial__avatar-icon{ font-size: 1.5rem; filter: brightness(2); }.camp-testimonial__meta{ display: flex; flex-direction: column; gap: 2px; }.camp-testimonial__stars{ color: #ffff00; font-size: 1.1rem; letter-spacing: 2px; }.camp-testimonial__author{ font-size: 1rem; font-weight: 600; color: #000080; }.camp-testimonial__quote{ font-size: 1.05rem; line-height: 1.75; color: #1a1a1a; font-style: italic; position: relative; z-index: 1; }.camp-testimonial__verified{
@@ -537,16 +537,16 @@ function addTraiHe(text: string | undefined | null): string {
   .camp-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin: 2rem 0; }.camp-card{
     background: #fff; border: 1px solid #e0e0e0; border-radius: 16px;
     padding: 1.75rem 1.5rem; transition: all .3s ease; position: relative; overflow: hidden;
-  }.camp-card:hover{ border-color: #ffff00; box-shadow: 0 8px 24px rgba(26,26,94,.08); transform: translateY(-4px); }.camp-card__icon-wrap{
+  }.camp-card:hover{ border-color: #ffff00; box-shadow: 0 8px 24px rgba(0,0,128,.08); transform: translateY(-4px); }.camp-card__icon-wrap{
     width: 48px; height: 48px; border-radius: 12px;
-    background: rgba(26,26,94,.06); display: flex; align-items: center;
+    background: rgba(0,0,128,.06); display: flex; align-items: center;
     justify-content: center; margin-bottom: 1rem;
   }.camp-card__icon{ font-size: 1.5rem; }.camp-card h3{ font-family: Montserrat, sans-serif; font-size: 1.5rem; font-weight: 700; margin-bottom: .65rem; color: #000080; }.camp-card p{ font-size: 1rem; line-height: 1.65; color: #555; margin: 0; }/* === Highlighted Early Bird card === */
   .camp-card--highlight{
     border: 2px solid #ffff00 !important;
     background: linear-gradient(135deg, #FFFBEB 0%, #FEF3C7 100%);
-    box-shadow: 0 4px 16px rgba(240, 208, 72,.15);
-  }.camp-card--highlight:hover{ box-shadow: 0 8px 28px rgba(240, 208, 72,.25); }.camp-card__badge{
+    box-shadow: 0 4px 16px rgba(255, 255, 0,.15);
+  }.camp-card--highlight:hover{ box-shadow: 0 8px 28px rgba(255, 255, 0,.25); }.camp-card__badge{
     position: absolute; top: 12px; right: 12px;
     background: linear-gradient(135deg, #ffff00, #ffff00); color: #fff;
     font-size: 1rem; font-weight: 800; padding: .25rem .65rem;
@@ -566,7 +566,7 @@ function addTraiHe(text: string | undefined | null): string {
   .camp-social-proof{
     display: flex; align-items: center; gap: .75rem; justify-content: center;
     margin-top: 2rem; padding: .85rem 1.25rem;
-    background: rgba(26,26,94,.04); border-radius: 12px; border: 1px solid rgba(26,26,94,.08);
+    background: rgba(0,0,128,.04); border-radius: 12px; border: 1px solid rgba(0,0,128,.08);
   }.camp-social-proof__avatars{ display: flex; gap: 0; }.camp-social-proof__avatars span{
     width: 28px; height: 28px; border-radius: 50%; background: #e8e8f0;
     display: flex; align-items: center; justify-content: center;
@@ -574,16 +574,16 @@ function addTraiHe(text: string | undefined | null): string {
   }.camp-social-proof__avatars span:first-child{ margin-left: 0; }.camp-social-proof__text{ font-size: 1rem; color: #555; }.camp-social-proof__text strong{ color: #000080; }/* ===== QUIZ FORM INTRO ===== */
   .quiz-intro{ margin-bottom: 1.5rem; }.quiz-badge{
     display: inline-flex; align-items: center; gap: .5rem;
-    background: linear-gradient(135deg, #000080, #2a2a7e); color: #fff;
+    background: linear-gradient(135deg, #000080, #00009a); color: #fff;
     padding: .5rem 1.25rem; border-radius: 50px; font-size: 1rem; font-weight: 600;
     margin-bottom: 1rem;
   }.quiz-badge__icon{ font-size: 1.1rem; }.quiz-checklist{ list-style: none; padding: 0; margin: 1.25rem auto 1.5rem; max-width: 440px; text-align: left; display: flex; flex-direction: column; gap: .6rem; }.quiz-checklist li{
     display: flex; align-items: center; gap: .65rem;
     font-size: 1rem; color: #000080; font-weight: 500;
-    padding: .7rem 1rem; background: rgba(240, 208, 72,.08);
+    padding: .7rem 1rem; background: rgba(255, 255, 0,.08);
     border-radius: 10px; border-left: 3px solid #ffff00;
     transition: all .2s ease;
-  }.quiz-checklist li:hover{ background: rgba(240, 208, 72,.14); transform: translateX(4px); }.quiz-check{ color: #16A34A; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }/* ===== FORM LIVE COUNTER ===== */
+  }.quiz-checklist li:hover{ background: rgba(255, 255, 0,.14); transform: translateX(4px); }.quiz-check{ color: #16A34A; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }/* ===== FORM LIVE COUNTER ===== */
   .form-live-counter{
     display: inline-flex; align-items: center; gap: .5rem;
     margin-top: .75rem; font-size: 1rem; color: #666; padding: .4rem .85rem;
@@ -596,7 +596,7 @@ function addTraiHe(text: string | undefined | null): string {
   .seats-bar{
     background: #fff; border: 1px solid #E5E7EB; border-radius: 14px;
     padding: 1.1rem 1.25rem; margin-bottom: 1.25rem;
-    box-shadow: 0 2px 8px rgba(26,26,94,.05);
+    box-shadow: 0 2px 8px rgba(0,0,128,.05);
   }.seats-bar__header{
     display: flex; justify-content: space-between; align-items: center;
     font-size: 1rem; font-weight: 600; color: #000080; margin-bottom: .65rem;
@@ -621,7 +621,7 @@ function addTraiHe(text: string | undefined | null): string {
     font-size: 1rem; border: 1px solid #F0F0F0; border-left: 3px solid #ffff00;
   }.sq-snotif.show{ transform: translateX(0); }.sq-snotif__avatar{
     width: 34px; height: 34px; border-radius: 50%;
-    background: rgba(26,26,94,.06); display: flex; align-items: center;
+    background: rgba(0,0,128,.06); display: flex; align-items: center;
     justify-content: center; font-size: 1rem; flex-shrink: 0;
   }.sq-snotif__body{ flex: 1; line-height: 1.45; }.sq-snotif__body b{ color: #000080; }.sq-snotif__time{
     display: block; font-size: 1rem; color: #999; margin-top: 2px;
@@ -669,9 +669,9 @@ function addTraiHe(text: string | undefined | null): string {
   /* ===== SECTION TITLE ===== */
   .camp-section-title{ font-family: Montserrat, sans-serif; font-size: 1.6rem; font-weight: 800; color: #000080; text-align: center; margin-bottom: 1.5rem; line-height: 1.35; }/* ===== BEFORE/AFTER TRANSFORMATION ===== */
   .camp-transform{ margin-bottom: 2.5rem; }.camp-transform__grid{ display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem; align-items: stretch; }.camp-transform__col{ padding: 1.5rem; border-radius: 16px; }.camp-transform__col--before{ background: #FEF2F2; border: 2px solid #FECACA; }.camp-transform__col--after{ background: #F0FDF4; border: 2px solid #BBF7D0; }.camp-transform__label{ font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 1rem; }.camp-transform__col--before .camp-transform__label{ color: #991B1B; }.camp-transform__col--after .camp-transform__label{ color: #166534; }.camp-transform__col ul{ list-style: none; padding: 0; margin: 0; }.camp-transform__col li{ padding: .45rem 0; font-size: 1rem; line-height: 1.5; color: #374151; border-bottom: 1px solid rgba(0,0,0,.05); }.camp-transform__col li:last-child{ border-bottom: none; }.camp-transform__col--before li::before{ content: '✗ '; color: #EF4444; font-weight: 700; }.camp-transform__col--after li::before{ content: '✓ '; color: #16A34A; font-weight: 700; }.camp-transform__arrow{ display: flex; align-items: center; justify-content: center; font-size: 2rem; color: #ffff00; font-weight: 800; }/* ===== COMPARISON TABLE ===== */
-  .camp-compare{ margin-bottom: 2.5rem; }.camp-compare__table{ border-radius: 16px; overflow: hidden; border: 1px solid #E5E7EB; }.camp-compare__header{ display: grid; grid-template-columns: 140px 1fr 1fr; background: #F3F4F6; }.camp-compare__col-label{ padding: .75rem 1rem; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1rem; text-align: center; }.camp-compare__col-label--bad{ color: #991B1B; background: #FEF2F2; }.camp-compare__col-label--good{ color: #166534; background: #F0FDF4; }.camp-compare__row{ display: grid; grid-template-columns: 140px 1fr 1fr; border-top: 1px solid #E5E7EB; }.camp-compare__row:hover{ background: rgba(240, 208, 72,.04); }.camp-compare__criteria{ padding: .85rem 1rem; font-weight: 600; font-size: 1rem; color: #000080; background: #F9FAFB; display: flex; align-items: center; }.camp-compare__cell{ padding: .85rem 1rem; font-size: 1rem; line-height: 1.5; color: #555; display: flex; align-items: center; }.camp-compare__cell--bad{ background: #FFFBFB; }.camp-compare__cell--good{ background: #F8FFF8; }/* ===== MID-PAGE CTA RIBBON ===== */
+  .camp-compare{ margin-bottom: 2.5rem; }.camp-compare__table{ border-radius: 16px; overflow: hidden; border: 1px solid #E5E7EB; }.camp-compare__header{ display: grid; grid-template-columns: 140px 1fr 1fr; background: #F3F4F6; }.camp-compare__col-label{ padding: .75rem 1rem; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1rem; text-align: center; }.camp-compare__col-label--bad{ color: #991B1B; background: #FEF2F2; }.camp-compare__col-label--good{ color: #166534; background: #F0FDF4; }.camp-compare__row{ display: grid; grid-template-columns: 140px 1fr 1fr; border-top: 1px solid #E5E7EB; }.camp-compare__row:hover{ background: rgba(255, 255, 0,.04); }.camp-compare__criteria{ padding: .85rem 1rem; font-weight: 600; font-size: 1rem; color: #000080; background: #F9FAFB; display: flex; align-items: center; }.camp-compare__cell{ padding: .85rem 1rem; font-size: 1rem; line-height: 1.5; color: #555; display: flex; align-items: center; }.camp-compare__cell--bad{ background: #FFFBFB; }.camp-compare__cell--good{ background: #F8FFF8; }/* ===== MID-PAGE CTA RIBBON ===== */
   .camp-mid-cta{ margin: 2.5rem -1.5rem; padding: 0; }.camp-mid-cta__inner{
-    background: linear-gradient(135deg, #000080, #2a2a7e); color: #fff;
+    background: linear-gradient(135deg, #000080, #00009a); color: #fff;
     padding: 1.5rem 2rem; display: flex; align-items: center; justify-content: space-between;
     gap: 1.5rem; border-radius: 0;
   }.camp-mid-cta__text{ display: flex; flex-direction: column; gap: .25rem; }.camp-mid-cta__text strong{ font-family: Montserrat, sans-serif; font-size: 1.1rem; }.camp-mid-cta__text span{ font-size: 1rem; opacity: .85; }.camp-mid-cta__btn{
@@ -679,20 +679,20 @@ function addTraiHe(text: string | undefined | null): string {
     background: linear-gradient(135deg, #ffff00, #ffff00); color: #fff;
     padding: .85rem 1.75rem; border-radius: 12px; font-weight: 700; font-size: 1rem;
     text-decoration: none; font-family: Montserrat, sans-serif;
-    box-shadow: 0 4px 14px rgba(240, 208, 72,.35); transition: all .2s;
+    box-shadow: 0 4px 14px rgba(255, 255, 0,.35); transition: all .2s;
     animation: heroPulse 2.5s ease-in-out infinite;
   }.camp-mid-cta__btn:hover{ transform: translateY(-2px); }/* ===== VIDEO PLACEHOLDER ===== */
   .camp-video{ margin: 2.5rem 0; }.camp-video__wrapper{ border-radius: 16px; overflow: hidden; }.camp-video__placeholder{
-    background: linear-gradient(135deg, #000080 0%, #2a2a7e 100%);
+    background: linear-gradient(135deg, #000080 0%, #00009a 100%);
     padding: 3.5rem 2rem; text-align: center; cursor: pointer;
     transition: all .3s; position: relative;
-  }.camp-video__placeholder:hover{ background: linear-gradient(135deg, #12123e 0%, #000080 100%); }.camp-video__play{
+  }.camp-video__placeholder:hover{ background: linear-gradient(135deg, #00004d 0%, #000080 100%); }.camp-video__play{
     width: 72px; height: 72px; border-radius: 50%;
     background: rgba(255,255,255,.15); border: 3px solid rgba(255,255,255,.4);
     display: flex; align-items: center; justify-content: center;
     font-size: 1.5rem; color: #fff; margin: 0 auto 1rem;
     transition: all .3s; backdrop-filter: blur(4px);
-  }.camp-video__placeholder:hover .camp-video__play{ background: rgba(26,26,94,.6); border-color: #ffff00; transform: scale(1.1); }.camp-video__text{ color: #fff; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: .35rem; }.camp-video__subtext{ color: rgba(255,255,255,.7); font-size: 1rem; }/* ===== LOCATION PERSONALIZATION ===== */
+  }.camp-video__placeholder:hover .camp-video__play{ background: rgba(0,0,128,.6); border-color: #ffff00; transform: scale(1.1); }.camp-video__text{ color: #fff; font-family: Montserrat, sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: .35rem; }.camp-video__subtext{ color: rgba(255,255,255,.7); font-size: 1rem; }/* ===== LOCATION PERSONALIZATION ===== */
   .camp-location{
     display: flex; gap: 1.25rem; align-items: flex-start;
     background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border: 2px solid #93C5FD;

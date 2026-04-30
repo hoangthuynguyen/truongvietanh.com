@@ -288,35 +288,6 @@ const faqs = [
       </div>
     </section>
 
-    <!-- ============ FAQ ============ -->
-    <section class="ts-faq">
-      <div class="ts-container">
-        <h2 class="ts-h2-center">Câu Hỏi Anh/Chị Hay Hỏi</h2>
-        <div class="ts-faq__list">
-          {faqs.map((f, i) => (
-            <details class="ts-faq__item" open={i === 0}>
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ COUNTDOWN + SCARCITY ============ -->
-    <section class="ts-scarcity">
-      <div class="ts-container ts-center">
-        <p class="ts-scarcity__eyebrow">⏰ HỌC BỔNG NÀY KHÔNG KÉO DÀI</p>
-        <div class="ts-scarcity__counters">
-          <div><strong data-seats>23</strong><span>SUẤT CÒN LẠI</span></div>
-          <div><strong>7</strong><span>NGÀY ĐẾN HẠN</span></div>
-          <div><strong>99.000Đ</strong><span>THÁNG ĐẦU</span></div>
-        </div>
-        <p class="ts-scarcity__sub"><em>Khi đủ 100 phụ huynh đăng ký, chúng tôi đóng nhận hồ sơ. Sau đó học phí trở về mức thông thường 999.000đ/tháng – sẽ <strong>KHÔNG</strong> còn mức 99.000đ.</em></p>
-        <a href="#dang-ky" class="ts-cta-btn ts-cta-btn--xl ts-cta-track" data-cta="scarcity">GIỮ CHỖ NGAY – CHỈ MẤT 30 GIÂY</a>
-      </div>
-    </section>
-
     <!-- ============ FORM ĐĂNG KÝ ============ -->
     <section class="ts-form-section" id="dang-ky">
       <div class="ts-container ts-form-section__grid">
@@ -394,11 +365,32 @@ const faqs = [
       </div>
     </section>
 
-    <!-- ============ TESTIMONIAL PLACEHOLDER ============ -->
-    <section class="ts-testimonial">
+    <!-- ============ FAQ ============ -->
+    <section class="ts-faq">
+      <div class="ts-container">
+        <h2 class="ts-h2-center">Câu Hỏi Anh/Chị Hay Hỏi</h2>
+        <div class="ts-faq__list">
+          {faqs.map((f, i) => (
+            <details class="ts-faq__item" open={i === 0}>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COUNTDOWN + SCARCITY ============ -->
+    <section class="ts-scarcity">
       <div class="ts-container ts-center">
-        <h2 class="ts-h2-center">Phụ Huynh Đang Nói Gì Về Chương Trình?</h2>
-        <p class="ts-testimonial__placeholder"><em>Khu vực này sẽ cập nhật testimonial từ phụ huynh đăng ký sớm trong những ngày đầu của chương trình.</em></p>
+        <p class="ts-scarcity__eyebrow">⏰ HỌC BỔNG NÀY KHÔNG KÉO DÀI</p>
+        <div class="ts-scarcity__counters">
+          <div><strong data-seats>23</strong><span>SUẤT CÒN LẠI</span></div>
+          <div><strong>7</strong><span>NGÀY ĐẾN HẠN</span></div>
+          <div><strong>99.000Đ</strong><span>THÁNG ĐẦU</span></div>
+        </div>
+        <p class="ts-scarcity__sub"><em>Khi đủ 100 phụ huynh đăng ký, chúng tôi đóng nhận hồ sơ. Sau đó học phí trở về mức thông thường 999.000đ/tháng – sẽ <strong>KHÔNG</strong> còn mức 99.000đ.</em></p>
+        <a href="#dang-ky" class="ts-cta-btn ts-cta-btn--xl ts-cta-track" data-cta="scarcity">GIỮ CHỖ NGAY – CHỈ MẤT 30 GIÂY</a>
       </div>
     </section>
 
@@ -1358,7 +1350,6 @@ const faqs = [
   const nameInput = form.querySelector('#tsName');
   const phoneInput = form.querySelector('#tsPhone');
 
-  // UTM
   const params = new URLSearchParams(window.location.search);
   const utm = {
     utm_source: params.get('utm_source') || '',
@@ -1374,7 +1365,7 @@ const faqs = [
     step1.hidden = n !== 1;
     step2.hidden = n !== 2;
     success.hidden = n !== 'success';
-    progress.dataset.step = n === 'success' ? 2 : n;
+    if (progress) progress.dataset.step = n === 'success' ? 2 : n;
     if (n === 2 && nameInput) setTimeout(() => nameInput.focus(), 100);
   }
 
@@ -1394,11 +1385,9 @@ const faqs = [
       }
       emailInput.classList.remove('ts-input-error');
       leadData.email = email;
-      // Fire intermediate Lead event
       if (typeof window.fbq === 'function') {
         window.fbq('trackCustom', 'StepOneCompleted', { value: 99000, currency: 'VND' });
       }
-      // Send partial lead
       submitLead({ ...leadData, partial: true, funnel_code: 'ts_99k' }).catch(() => {});
       showStep(2);
       return;
@@ -1422,18 +1411,11 @@ const faqs = [
       submitBtn.disabled = true;
       submitBtn.textContent = 'ĐANG XỬ LÝ...';
 
-      try {
-        await submitLead(leadData);
-      } catch (err) {
-        console.warn('Lead submit error', err);
-      }
+      try { await submitLead(leadData); }
+      catch (err) { console.warn('Lead submit error', err); }
 
-      // Fire conversion events
       if (typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', {
-          value: 99000, currency: 'VND',
-          content_name: '100_cong_dan_toan_cau_99k',
-        });
+        window.fbq('track', 'Lead', { value: 99000, currency: 'VND', content_name: '100_cong_dan_toan_cau_99k' });
       }
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'generate_lead', { currency: 'VND', value: 99000 });

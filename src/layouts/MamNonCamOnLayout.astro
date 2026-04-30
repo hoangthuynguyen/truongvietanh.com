@@ -14,6 +14,7 @@ interface Props {
   levelLabel?: string;        // "Mầm Non" | "Tiểu Học" | ...
   intro?: string;             // override intro paragraph
   h1Heading?: string;         // override entire h1 text after the comma
+  heroImage?: string;         // background image URL
 }
 
 const {
@@ -22,6 +23,7 @@ const {
   levelLabel = 'Mầm Non',
   intro = `Bộ phận tuyển sinh Trường Việt Anh sẽ <strong>gọi xác nhận lịch tham quan</strong> trong vòng <strong>24 giờ</strong>. Buổi tham quan kéo dài 45–60 phút: gặp giáo viên, xem lớp học, cơ sở vật chất — và đặt mọi câu hỏi của Ba/Mẹ.`,
   h1Heading = `Đã nhận đăng ký tham quan ${levelLabel || ''} ${location || ''}`.trim().replace(/\s+/g, ' '),
+  heroImage,
 } = Astro.props;
 
 const HOTLINE = '0916 961 409';
@@ -72,7 +74,12 @@ a{color:inherit;text-decoration:none}
 
 /* MAIN */
 .main{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);position:relative;overflow:hidden;padding:36px 0 56px;min-height:calc(100vh - 64px)}
-.main::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,0,.12) 0%,transparent 70%);pointer-events:none}
+.main.has-img{background:var(--navy-dk)}
+.hero-bg{position:absolute;inset:0;background-size:contain;background-position:right center;background-repeat:no-repeat;z-index:0;opacity:1;pointer-events:none}
+@media (max-width:960px){.hero-bg{background-size:cover;background-position:center;opacity:.4}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,77,.94) 0%,rgba(0,0,128,.85) 35%,rgba(0,0,128,.55) 60%,rgba(0,0,77,.6) 100%);z-index:1;pointer-events:none}
+.main::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,0,.12) 0%,transparent 70%);pointer-events:none;z-index:2}
+.main .wrap{position:relative;z-index:3}
 .main::after{content:'';position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,0,.08) 0%,transparent 70%);pointer-events:none}
 .main .wrap{position:relative;z-index:1}
 
@@ -159,7 +166,9 @@ h1 .name{color:var(--gold)}
   </div>
 </header>
 
-<main class="main">
+<main class={`main${heroImage ? ' has-img' : ''}`}>
+  {heroImage && <div class="hero-bg" style={`background-image:url(${heroImage})`}></div>}
+  {heroImage && <div class="hero-overlay"></div>}
   <div class="wrap">
 
     <div class="steps">

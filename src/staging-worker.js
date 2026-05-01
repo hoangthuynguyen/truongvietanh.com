@@ -1104,14 +1104,15 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
     ? 'https://truongvietanh.com/logo-mam-non-yellow.png'
     : 'https://truongvietanh.com/logo-th-thcs-thpt-yellow.png';
   const logoAlt = isMamNon ? 'Trường Mầm Non Việt Anh' : 'Trường TH-THCS-THPT Việt Anh';
-  const logoBlock = `<img src="${logoUrl}" alt="${logoAlt}" style="max-width:260px;height:auto;margin:0 auto 16px;display:block;" />`;
+  const logoBlock = `<img src="${logoUrl}" alt="${logoAlt}" style="max-width:160px;height:auto;margin:0 auto 18px;display:block;" />`;
 
   const body = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-  <div style="background:linear-gradient(135deg,#000080,#00004d);color:#fff;padding:32px 24px;text-align:center;">
+  <div style="background:linear-gradient(135deg,#000080,#00004d);color:#fff;padding:36px 24px 32px;text-align:center;">
     ${logoBlock}
-    <div style="font-size:48px;line-height:1;margin-bottom:8px;">🎉</div>
-    <h1 style="margin:0;font-size:22px;font-weight:800;color:#ffff00;">${headline}</h1>
+    <div style="display:inline-block;background:#ffff00;color:#000080;font-size:12px;font-weight:800;letter-spacing:1.2px;padding:6px 14px;border-radius:20px;text-transform:uppercase;margin-bottom:14px;">✓ Đăng ký thành công</div>
+    <h1 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#ffff00;line-height:1.3;">${headline}</h1>
+    <p style="margin:0;font-size:14px;color:rgba(255,255,255,.85);line-height:1.5;">Trường Việt Anh sẽ liên hệ Ba/Mẹ trong vòng 24 giờ</p>
   </div>
   <div style="padding:28px 24px;">
     <p style="font-size:15px;color:#333;margin:0 0 18px;line-height:1.6;">

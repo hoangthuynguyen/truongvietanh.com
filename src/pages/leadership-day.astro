@@ -1,0 +1,376 @@
+---
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const pageTitle = 'Ngày Hội Lãnh Đạo Zero to Hero — 16.05.2026 | Trường Việt Anh';
+const pageDescription = 'Leadership Day 2026 — Zero to Hero. Thứ Bảy 16.05.2026, 8h00–17h00 tại Trường Việt Anh, 160/72 Phan Huy Ích, P. An Hội Tây, TP.HCM. Tham dự miễn phí + học bổng 10%. Giới hạn 200 suất, đóng đăng ký 10.05.2026.';
+const pageCanonical = 'https://truongvietanh.com/leadership-day';
+const ogImage = 'https://truongvietanh.com/og-image.png';
+---
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#000080" />
+<meta name="description" content={pageDescription} />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={pageCanonical} />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={pageCanonical} />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<title>{pageTitle}</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+<script is:inline type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Event',
+  name: 'Leadership Day 2026 — Zero to Hero',
+  startDate: '2026-05-16T08:00:00+07:00',
+  endDate: '2026-05-16T17:00:00+07:00',
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  eventStatus: 'https://schema.org/EventScheduled',
+  location: {
+    '@type': 'Place',
+    name: 'Trường Việt Anh',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: '160/72 Phan Huy Ích, P. An Hội Tây',
+      addressLocality: 'TP.HCM',
+      addressCountry: 'VN'
+    }
+  },
+  organizer: { '@type': 'Organization', name: 'Trường Việt Anh', url: 'https://truongvietanh.com' },
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'VND',
+    availability: 'https://schema.org/LimitedAvailability',
+    validThrough: '2026-05-10T23:59:00+07:00',
+    url: pageCanonical
+  },
+  description: pageDescription
+})} />
+
+<style is:inline>
+  :root {
+    --navy: #000080;
+    --navy-dark: #00005a;
+    --yellow: #ffff00;
+    --yellow-dark: #e6e600;
+    --white: #ffffff;
+    --text: #1a1a2e;
+    --text-light: #555;
+    --border: #e5e7eb;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    font-family: 'Be Vietnam Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.55;
+    color: var(--text);
+    background: #fff;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ========== A/B VARIANT TOGGLES ========== */
+  .variant-a, .variant-b { display: none; }
+  body[data-variant="A"] .variant-a { display: block; }
+  body[data-variant="B"] .variant-b { display: block; }
+  body[data-variant="A"] li.variant-a { display: flex; }
+  body[data-variant="B"] li.variant-b { display: flex; }
+
+  /* Column color swap: A → navy left + white right; B → white left + navy right */
+  body[data-variant="A"] .ld-content-col { background: var(--navy); color: var(--white); }
+  body[data-variant="A"] .ld-form-col { background: var(--white); color: var(--text); }
+  body[data-variant="B"] .ld-content-col { background: var(--white); color: var(--text); }
+  body[data-variant="B"] .ld-form-col { background: var(--navy); color: var(--white); }
+
+  /* ========== LAYOUT ========== */
+  .ld-page {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100vh;
+    width: 100%;
+  }
+  .ld-col {
+    padding: 2.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+  }
+
+  /* ========== CONTENT ========== */
+  .ld-brand {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    margin-bottom: 2rem;
+    font-size: .95rem;
+    font-weight: 700;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+  }
+  .ld-brand__logo {
+    width: 44px; height: 44px;
+    background: var(--yellow);
+    color: var(--navy);
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.1rem;
+    flex-shrink: 0;
+  }
+  body[data-variant="B"] .ld-content-col .ld-brand { color: var(--navy); }
+
+  .ld-event-tag {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--navy);
+    font-size: .78rem;
+    font-weight: 700;
+    padding: .4rem 1rem;
+    border-radius: 50px;
+    margin-bottom: 1.1rem;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    width: fit-content;
+  }
+
+  .ld-headline {
+    font-size: 2.2rem;
+    line-height: 1.18;
+    font-weight: 800;
+    margin-bottom: 1rem;
+    letter-spacing: -0.01em;
+  }
+  body[data-variant="A"] .ld-content-col .ld-headline { color: var(--white); }
+  body[data-variant="B"] .ld-content-col .ld-headline { color: var(--navy); }
+
+  .ld-subhead {
+    font-size: 1.05rem;
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+    opacity: .92;
+  }
+
+  .ld-meta {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+    margin-bottom: 1.5rem;
+    padding: 1rem 1.15rem;
+    border-left: 3px solid var(--yellow);
+  }
+  body[data-variant="A"] .ld-meta { background: rgba(255, 255, 0, 0.06); }
+  body[data-variant="B"] .ld-meta { background: rgba(0, 0, 128, 0.04); border-left-color: var(--navy); }
+  .ld-meta__item {
+    display: flex;
+    align-items: flex-start;
+    gap: .5rem;
+    font-size: .92rem;
+    font-weight: 500;
+  }
+  .ld-meta__item strong { font-weight: 700; min-width: 70px; display: inline-block; }
+
+  .ld-benefits {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+  }
+  .ld-benefits li {
+    align-items: flex-start;
+    gap: .7rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    font-weight: 500;
+  }
+  .ld-benefits li::before {
+    content: '';
+    width: 22px; height: 22px;
+    background: var(--yellow);
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23000080' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  /* ========== FORM COLUMN ========== */
+  .ld-form-wrap {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+  }
+  .ld-form-heading {
+    font-size: 1.6rem;
+    font-weight: 800;
+    margin-bottom: .55rem;
+    line-height: 1.25;
+  }
+  body[data-variant="A"] .ld-form-col .ld-form-heading { color: var(--navy); }
+  body[data-variant="B"] .ld-form-col .ld-form-heading { color: var(--yellow); }
+
+  .ld-form-sub {
+    font-size: .98rem;
+    margin-bottom: 1.4rem;
+    opacity: .88;
+    font-weight: 400;
+  }
+
+  .ld-trust {
+    font-size: .82rem;
+    margin-top: 1rem;
+    opacity: .7;
+    line-height: 1.5;
+    text-align: center;
+    font-weight: 400;
+  }
+
+  /* ========== MOBILE ========== */
+  @media (max-width: 820px) {
+    .ld-page { grid-template-columns: 1fr; min-height: auto; }
+    .ld-col { padding: 2rem 1.4rem; min-height: auto; }
+    .ld-headline { font-size: 1.65rem; }
+    .ld-form-heading { font-size: 1.35rem; }
+    .ld-subhead { font-size: 1rem; }
+    .ld-benefits li { font-size: 1rem; }
+  }
+
+  @media (max-width: 480px) {
+    .ld-col { padding: 1.6rem 1.1rem; }
+    .ld-headline { font-size: 1.55rem; }
+  }
+</style>
+</head>
+<body data-variant="A">
+
+<main class="ld-page">
+
+  <!-- ========== CONTENT COLUMN ========== -->
+  <section class="ld-col ld-content-col">
+    <div class="ld-brand">
+      <span class="ld-brand__logo">VA</span>
+      <span>Trường Việt Anh</span>
+    </div>
+
+    <span class="ld-event-tag">Leadership Day 2026 · Zero to Hero</span>
+
+    <!-- Variant A — Pain / Curiosity -->
+    <div class="variant-a">
+      <h1 class="ld-headline">Ba mẹ đã thật sự thấy con tự tin chưa?</h1>
+      <p class="ld-subhead">
+        Ngày Hội Lãnh Đạo Việt Anh — nơi hơn 500 phụ huynh đã ngỡ ngàng nhìn thấy một phiên bản của con mà họ chưa từng biết.
+      </p>
+    </div>
+
+    <!-- Variant B — Transformation -->
+    <div class="variant-b">
+      <h1 class="ld-headline">16.05 này, ba mẹ sẽ gặp một phiên bản con mà ba mẹ chưa từng thấy.</h1>
+      <p class="ld-subhead">
+        Một ngày. Mười trạm trải nghiệm. Hàng trăm khoảnh khắc khiến ba mẹ phải dừng lại và mỉm cười.
+      </p>
+    </div>
+
+    <div class="ld-meta">
+      <div class="ld-meta__item"><strong>Ngày:</strong> Thứ Bảy, 16.05.2026 · 8h00 – 17h00</div>
+      <div class="ld-meta__item"><strong>Địa điểm:</strong> Trường Việt Anh, 160/72 Phan Huy Ích, P. An Hội Tây, TP.HCM</div>
+      <div class="ld-meta__item"><strong>Giới hạn:</strong> 200 suất — đóng đăng ký 10.05.2026</div>
+    </div>
+
+    <ul class="ld-benefits">
+      <li class="variant-a">10 trạm trải nghiệm — ba mẹ tham gia cùng con</li>
+      <li class="variant-a">Học bổng 10% học hè &amp; năm học mới</li>
+      <li class="variant-a">Tham dự miễn phí — đóng đăng ký 10.05</li>
+      <li class="variant-a">Quà kỷ niệm Zero to Hero cho mỗi gia đình</li>
+
+      <li class="variant-b">Ba mẹ trực tiếp tham gia cùng con tại 10 trạm</li>
+      <li class="variant-b">Học bổng 10% học hè &amp; năm học 2026-2027</li>
+      <li class="variant-b">Tham dự miễn phí — không bán vé, không cam kết nhập học</li>
+      <li class="variant-b">Tư vấn 1-1 lộ trình học phù hợp với con</li>
+    </ul>
+  </section>
+
+  <!-- ========== FORM COLUMN ========== -->
+  <section class="ld-col ld-form-col">
+    <div class="ld-form-wrap">
+      <div class="variant-a">
+        <h2 class="ld-form-heading">Đăng ký tham dự miễn phí</h2>
+        <p class="ld-form-sub">Chỉ mất 30 giây. Chúng tôi sẽ gọi xác nhận trong 24h.</p>
+      </div>
+      <div class="variant-b">
+        <h2 class="ld-form-heading">Giữ chỗ cho gia đình bạn</h2>
+        <p class="ld-form-sub">Điền email để bắt đầu. Chúng tôi gọi xác nhận trong 24h.</p>
+      </div>
+
+      <LeadFormTwoStepEmailFirst
+        formId="leadership-day-form"
+        funnelCode="leadership-day-2026"
+        schoolLevel="tieu-hoc"
+        submitText="Xác nhận đăng ký"
+        successMessage="Cảm ơn ba mẹ! Chúng tôi sẽ gọi xác nhận trong 24h. Hẹn gặp ba mẹ tại Leadership Day 16.05.2026."
+      />
+
+      <p class="ld-trust">Thông tin chỉ dùng để gửi vé tham dự. Không spam, không chia sẻ với bên thứ ba.</p>
+    </div>
+  </section>
+
+</main>
+
+<script is:inline>
+  // ============================================================
+  // A/B VARIANT ROTATION — switch every 3 hours based on clock
+  // Hours 0–2 → A, 3–5 → B, 6–8 → A, 9–11 → B, 12–14 → A, ...
+  // Override via ?v=a or ?v=b in URL for testing.
+  // ============================================================
+  (function () {
+    var url = new URL(window.location.href);
+    var override = (url.searchParams.get('v') || '').toLowerCase();
+    var variant;
+    if (override === 'a' || override === 'b') {
+      variant = override.toUpperCase();
+    } else {
+      var bucket = Math.floor(new Date().getHours() / 3);
+      variant = (bucket % 2 === 0) ? 'A' : 'B';
+    }
+    document.body.setAttribute('data-variant', variant);
+
+    // Tag the form with variant for styling overrides + send variant in payload
+    var formCol = document.querySelector('.ld-form-col');
+    if (formCol) {
+      // Form on white background → use the form's "light" theme override
+      if (variant === 'A') formCol.setAttribute('data-form-bg', 'light');
+    }
+
+    // Inject hidden field so variant is captured in the lead payload
+    var form = document.getElementById('leadership-day-form-leadership-day-2026');
+    if (form) {
+      var v = document.createElement('input');
+      v.type = 'hidden'; v.name = 'ab_variant'; v.value = variant;
+      form.appendChild(v);
+    }
+
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: 'ab_variant_assigned', variant: variant, page: 'leadership-day' });
+    }
+  })();
+</script>
+
+</body>
+</html>

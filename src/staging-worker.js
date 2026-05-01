@@ -352,23 +352,6 @@ async function handleLeadSubmission(request, env) {
         // Trang thai
         ghlBody.customFields.push({ id: '3U5RWUZqGGoZP0PaMzNS', field_value: 'New_Lead' });
 
-        // Lead-magnet bundle link — map theo cấp học, dùng cho email nurture Day 1
-        // Anh upload PDF lên 5 Drive folder, mỗi cấp 1 bundle 3 PDF.
-        const BUNDLE_LINK_MAP = {
-          'mam-non':  'https://drive.google.com/drive/folders/1cIMRXIwYSusi0XWgn9PnXpktZvBH7_dl?usp=sharing',
-          'tieu-hoc': 'https://drive.google.com/drive/folders/1qZB2MXIZu9Gv1ZCL4GWybr8nFQxjTbp1?usp=sharing',
-          'thcs':     'https://drive.google.com/drive/folders/12IJTCC4iyuL-JQCjEqg1LleL-hgM38Lg?usp=sharing',
-          'thpt':     'https://drive.google.com/drive/folders/12_LzI-WICZrI4B7VHLX-I82ltfGjUHQS?usp=sharing',
-          'trai-he':  'https://drive.google.com/drive/folders/15w0YnbrhpdBc3SKddbKTXw0GzcsPYOuS?usp=sharing',
-        };
-        const bundleSrc = (data.funnelCode || data.source || '').toLowerCase();
-        let bundleLink = '';
-        for (const prefix of ['trai-he', 'mam-non', 'tieu-hoc', 'thcs', 'thpt']) {
-          if (bundleSrc.startsWith(prefix)) { bundleLink = BUNDLE_LINK_MAP[prefix]; break; }
-        }
-        // TODO: thay '__BUNDLE_LINK_FIELD_ID__' bằng GHL Custom Field ID thật của field "Bundle Link"
-        if (bundleLink) ghlBody.customFields.push({ id: '__BUNDLE_LINK_FIELD_ID__', field_value: bundleLink });
-
         // Quiz-specific fields
         if (isQuizLead(data)) {
           ghlBody.customFields.push(

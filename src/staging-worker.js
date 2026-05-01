@@ -1055,22 +1055,27 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
   // Map cấp + cơ sở (vietnamese display)
   const LEVEL_LABEL = { 'mam-non':'Mầm Non','tieu-hoc':'Tiểu Học','thcs':'THCS','thpt':'THPT' };
   const LOC_LABEL = {
-    'go-vap':'Gò Vấp', 'binh-tan':'Bình Tân', 'phu-nhuan':'Phú Nhuận', 'rach-gia':'Rạch Giá',
+    'go-vap':'Gò Vấp', 'binh-tan':'Bình Tân', 'rach-gia':'Rạch Giá',
     'can-giuoc':'Cần Giuộc', 'thai-son':'Thái Sơn (Long Hậu)', 'thai-son-long-hau':'Thái Sơn (Long Hậu)',
   };
+  // Default address per location (TH/THCS/THPT)
   const ADDR = {
-    'go-vap':'123 Phan Huy Ích, P.15, Q.Gò Vấp, TPHCM',
+    'go-vap':'160/72 Phan Huy Ích, Phường 12, An Hội Tây, Hồ Chí Minh',
     'binh-tan':'Số 7 Đường 38A, Tân Tạo, Q.Bình Tân, TPHCM',
-    'phu-nhuan':'269A Nguyễn Trọng Tuyển, P.8, Q.Phú Nhuận, TPHCM',
     'rach-gia':'Lô E7, KĐT Tây Bắc Mekong Xanh, TP. Rạch Giá, Kiên Giang',
     'can-giuoc':'22 Đường D2, KDC Cần Giuộc, H.Cần Giuộc, Long An',
     'thai-son':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
     'thai-son-long-hau':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
   };
+  // Override per full source (eg. Mầm non có cơ sở riêng tách khỏi liên cấp)
+  const ADDR_OVERRIDE = {
+    'mam-non-go-vap':'573 Lê Đức Thọ, P.16, Q.Gò Vấp, TP.HCM',
+  };
 
   let level = LEVEL_LABEL[sl] || '';
   let loc = '', addr = '';
   for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; addr = ADDR[k] || ''; break; } }
+  if (ADDR_OVERRIDE[src]) addr = ADDR_OVERRIDE[src];
 
   // Headline + lead phrase based on source type
   let headline, leadPhrase;
@@ -1096,7 +1101,7 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
   const body = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);">
   <div style="background:linear-gradient(135deg,#000080,#00004d);color:#fff;padding:32px 24px;text-align:center;">
-    <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:16px;background:#fff;padding:8px 16px;border-radius:8px;" />
+    <img src="https://truongvietanh.com/logo-vietanh-yellow.png" alt="Trường Việt Anh" style="max-width:220px;height:auto;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto;" />
     <div style="font-size:48px;line-height:1;margin-bottom:8px;">🎉</div>
     <h1 style="margin:0;font-size:22px;font-weight:800;color:#ffff00;">${headline}</h1>
   </div>
@@ -1112,7 +1117,7 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
       <ol style="margin:0;padding-left:20px;font-size:14px;color:#333;line-height:1.8;">
         <li><strong>Tư vấn viên gọi xác nhận</strong> — chốt ngày & giờ tham quan phù hợp</li>
         <li>Đến tham quan trực tiếp: <strong>gặp giáo viên, xem lớp học, cơ sở vật chất</strong></li>
-        <li>Nhận tư vấn <strong>học phí, ưu đãi & lộ trình nhập học</strong> (không ràng buộc)</li>
+        <li>Nhận <strong>khảo sát tiến độ phát triển tự nhiên của con</strong> và hướng dẫn của chuyên gia</li>
       </ol>
     </div>
 
@@ -1121,18 +1126,22 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
       <div style="font-weight:800;color:#000080;margin-bottom:6px;">📍 Cơ sở ${loc}</div>
       <div style="font-size:14px;color:#333;line-height:1.6;">
         <strong>Địa chỉ:</strong> ${addr}<br/>
-        <strong>Giờ làm việc:</strong> Thứ 2 – Thứ 7 · 7:30 – 17:00
+        <strong>Giờ làm việc:</strong> Thứ Hai – Thứ Bảy: 06:30 – 18:30<br/>
+        <span style="margin-left:88px;">Chủ Nhật: 07:30 – 12:00 (hoặc theo hẹn trước)</span>
       </div>
     </div>` : ''}
 
     <div style="text-align:center;margin:24px 0 16px;">
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#000080;padding:14px 28px;border-radius:10px;font-weight:800;font-size:15px;text-decoration:none;margin:4px;">💬 Chat Zalo ngay</a>
-      <a href="tel:+84916961409" style="display:inline-block;background:#fff;color:#000080;border:2px solid #000080;padding:12px 26px;border-radius:10px;font-weight:800;font-size:15px;text-decoration:none;margin:4px;">📞 0916 961 409</a>
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#000080;padding:14px 24px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">💬 Chat Zalo</a>
+      <a href="https://m.me/truongvietanhhcm" style="display:inline-block;background:#0084ff;color:#fff;padding:14px 24px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">💬 Chat Facebook</a>
+      <a href="tel:+84916961409" style="display:inline-block;background:#fff;color:#000080;border:2px solid #000080;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">📞 0916 961 409</a>
     </div>
 
-    <div style="text-align:center;padding-top:18px;border-top:1px solid #eee;font-size:12px;color:#999;">
-      Trường Việt Anh — 15 năm K12 từ 2011<br/>
-      Mầm non · Tiểu học · THCS · THPT · 3 cơ sở TPHCM + Long An
+    <div style="text-align:center;padding-top:18px;border-top:1px solid #eee;font-size:12px;color:#999;line-height:1.7;">
+      <strong style="color:#000080;font-size:13px;">Trường Việt Anh — since 2011</strong><br/>
+      <em>Từ bình thường trở nên phi thường</em><br/>
+      Mầm non · Tiểu học · THCS · THPT<br/>
+      TP HCM · Tây Ninh · An Giang
     </div>
   </div>
 </div>

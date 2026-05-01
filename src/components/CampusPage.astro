@@ -1,0 +1,735 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from './HeaderBase.astro';
+import FooterBase from './FooterBase.astro';
+
+export interface Props {
+  campusName: string;
+  shortName?: string;
+  cityRegion: string;
+  address: string;
+  hotline: string;
+  siSo: string;
+  level: 'mam-non' | 'lien-cap' | 'mam-non-tieu-hoc';
+  heroImage?: string;
+  heroAlt?: string;
+  vslVideoId?: string;
+  canonical: string;
+  metaTitle: string;
+  metaDescription: string;
+}
+
+const {
+  campusName,
+  shortName,
+  cityRegion,
+  address,
+  hotline,
+  siSo,
+  level,
+  heroImage,
+  heroAlt,
+  vslVideoId,
+  canonical,
+  metaTitle,
+  metaDescription,
+} = Astro.props;
+
+const zaloLink = `https://zalo.me/${hotline.replace(/\s+/g, '')}`;
+const telLink = `tel:+84${hotline.replace(/\s+/g, '').replace(/^0/, '')}`;
+
+const levelLabel: Record<string, string> = {
+  'mam-non': 'Mầm non',
+  'lien-cap': 'Tiểu học · THCS · THPT',
+  'mam-non-tieu-hoc': 'Mầm non · Tiểu học',
+};
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'School',
+  name: campusName,
+  url: `https://truongvietanh.com${canonical}`,
+  telephone: `+84${hotline.replace(/\s+/g, '').replace(/^0/, '')}`,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: address,
+    addressLocality: cityRegion,
+    addressCountry: 'VN',
+  },
+  parentOrganization: {
+    '@type': 'EducationalOrganization',
+    name: 'Hệ thống Trường Liên Cấp Việt Anh',
+    url: 'https://truongvietanh.com',
+  },
+};
+---
+
+<BaseLayout
+  title={metaTitle}
+  description={metaDescription}
+  canonical={`https://truongvietanh.com${canonical}`}
+  structuredData={structuredData}
+>
+  <HeaderBase />
+
+  <main class="campus-page">
+
+    <!-- ============== HERO ============== -->
+    <section class="hero">
+      <div class="hero-bg">
+        {heroImage ? (
+          <img src={heroImage} alt={heroAlt || campusName} loading="eager" />
+        ) : (
+          <div class="hero-placeholder" aria-label="Hình ảnh cơ sở (cập nhật sau)">
+            <span>HÌNH ẢNH CƠ SỞ</span>
+            <small>Sẽ cập nhật sau</small>
+          </div>
+        )}
+        <div class="hero-overlay"></div>
+      </div>
+      <div class="hero-content">
+        <div class="hero-eyebrow">{levelLabel[level]} · {cityRegion}</div>
+        <h1 class="hero-title">{campusName}</h1>
+        <p class="hero-tagline">Đào tạo học sinh giỏi chuyên Anh — từ năm 2011</p>
+        <div class="hero-cta">
+          <a href={zaloLink} class="btn btn-primary" target="_blank" rel="noopener">Nhắn Zalo đặt lịch tham quan</a>
+          <a href={telLink} class="btn btn-secondary">Gọi {hotline}</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== VSL ============== -->
+    <section class="vsl-section">
+      <div class="container">
+        <h2 class="section-title">Thư mời từ Trường {shortName || campusName}</h2>
+        <div class="vsl-wrapper">
+          {vslVideoId ? (
+            <iframe
+              src={`https://www.youtube.com/embed/${vslVideoId}?rel=0`}
+              title={`Video giới thiệu ${campusName}`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              loading="lazy"
+            ></iframe>
+          ) : (
+            <div class="vsl-placeholder">
+              <div class="play-icon">▶</div>
+              <p class="vsl-placeholder-text">VIDEO GIỚI THIỆU CƠ SỞ</p>
+              <small>Sẽ cập nhật sau</small>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== I. TRIẾT LÝ NỀN TẢNG ============== -->
+    <section class="content-section">
+      <div class="container narrow">
+        <div class="section-eyebrow">I. Triết lý nền tảng</div>
+        <h2 class="section-title">"Một đứa trẻ hạnh phúc sẽ học tốt nhất."</h2>
+        <p class="lead">
+          Có những điều chỉ thời gian mới chứng minh được. Từ 2011, Trường Việt Anh đã đồng hành cùng hàng nghìn gia đình Việt Nam trong một hành trình không dễ dàng — hành trình nuôi dưỡng một đứa trẻ không chỉ học giỏi, mà còn sống tốt, sống có mục đích, và sống tự chủ.
+        </p>
+        <p>
+          Triết lý <strong>Vui vẻ</strong> và <strong>Thực dụng</strong> không phải là khẩu hiệu marketing. Đó là kim chỉ nam cho mọi quyết định giáo dục — từ cách thiết kế chương trình học, cách tổ chức không gian trường lớp, đến cách thầy cô lắng nghe và phản hồi từng học sinh.
+        </p>
+        <div class="philosophy-grid">
+          <div class="philosophy-card">
+            <h3>Vui vẻ</h3>
+            <p>Học sinh đến trường trong trạng thái được tôn trọng, được lắng nghe, và được phép mắc sai lầm để học hỏi. Không có áp lực thành tích đè nặng. Không có sự so sánh làm mòn đi sự tự tin. Chỉ có môi trường yêu thương vô điều kiện và hỗ trợ toàn diện.</p>
+          </div>
+          <div class="philosophy-card">
+            <h3>Thực dụng</h3>
+            <p>Mọi kiến thức, kỹ năng và phẩm chất được rèn luyện tại trường đều phải có giá trị ứng dụng thực tế trong cuộc đời của các em — không phải chỉ trong phòng thi.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== II. PDR ============== -->
+    <section class="content-section bg-navy">
+      <div class="container narrow">
+        <div class="section-eyebrow light">II. Hệ thống PDR</div>
+        <h2 class="section-title light">Nền tảng phát triển cá nhân — điều khác biệt của Trường Việt Anh</h2>
+        <p class="lead light">
+          Được xây dựng dựa trên 4 Nguyên Tắc Thực Thi của Sean Covey — hệ thống quản trị mục tiêu được áp dụng bởi hàng nghìn tổ chức hàng đầu thế giới — Trường Việt Anh đã chuyển hóa phương pháp đó thành một hành trình phát triển cá nhân dành riêng cho từng học sinh, từ lớp 1 đến lớp 12.
+        </p>
+        <div class="pdr-grid">
+          <div class="pdr-card">
+            <div class="pdr-icon">🎯</div>
+            <h3>PLAN — Kiến tạo mục tiêu</h3>
+            <p>Đầu năm học, mỗi học sinh tự xác định mục tiêu phát triển trên 4 lĩnh vực: <strong>Kiến thức · Kỹ năng · Tiếng Anh · Thể chất</strong>.</p>
+            <p>Mục tiêu được phân rã có hệ thống — từ năm học → học kỳ → quý → tháng, và cụ thể hóa thành <em>hành động đòn bẩy hàng tuần</em>.</p>
+          </div>
+          <div class="pdr-card">
+            <div class="pdr-icon">⚡</div>
+            <h3>DO — Thực thi có đồng hành</h3>
+            <p>Mỗi tuần học sinh chiêm nghiệm cùng <strong>Buddy</strong> — người bạn đồng hành được ghép cặp.</p>
+            <p>Mỗi tháng có buổi <strong>họp PDR 1-1</strong> với giáo viên chủ nhiệm. Học sinh — không phải giáo viên — chủ động dẫn dắt buổi họp.</p>
+          </div>
+          <div class="pdr-card">
+            <div class="pdr-icon">📋</div>
+            <h3>REVIEW — Trách nhiệm giải trình</h3>
+            <p><strong>5 lần mỗi năm</strong>, học sinh trực tiếp thuyết trình về hành trình phát triển của mình trước phụ huynh.</p>
+            <p>Không có giáo viên báo cáo thay. Phụ huynh nghe trực tiếp từ con — mục tiêu, hành động, kết quả, và điều con cần từ gia đình.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {level !== 'mam-non' && (
+      <!-- ============== III. CAM KẾT ĐẦU RA ============== -->
+      <section class="content-section">
+        <div class="container narrow">
+          <div class="section-eyebrow">III. Cam kết đầu ra</div>
+          <h2 class="section-title">Kết quả đã được ghi nhận — không phải lời hứa</h2>
+          <ul class="commitment-list">
+            <li><strong>100%</strong> học sinh tốt nghiệp đạt điểm IELTS được chuyển đổi thành điểm 10 môn Tiếng Anh kỳ thi THPT Quốc gia</li>
+            <li><strong>100%</strong> học sinh tốt nghiệp sở hữu chứng chỉ Tin học quốc tế ICDL — chuẩn Châu Âu, được công nhận tại hơn 150 quốc gia</li>
+            <li>Lộ trình Tiếng Anh xuyên suốt với <strong>giáo viên bản ngữ từ lớp 1 đến lớp 12</strong> — từ Starters ở bậc Tiểu học đến IELTS 6.0+ khi tốt nghiệp THPT</li>
+            <li><strong>Top 15 toàn cầu</strong> — Cuộc thi Leader in Me 2023, cạnh tranh với các trường từ hơn 50 quốc gia</li>
+            <li>Học sinh tốt nghiệp được nhận thẳng vào <strong>Đại học Buckinghamshire, Birmingham City</strong> tại Việt Nam hoặc UK — không qua thi tuyển</li>
+          </ul>
+        </div>
+      </section>
+    )}
+
+    <!-- ============== IV. CHƯƠNG TRÌNH ĐÀO TẠO ============== -->
+    <section class="content-section bg-soft">
+      <div class="container narrow">
+        <div class="section-eyebrow">{level !== 'mam-non' ? 'IV.' : 'III.'} Chương trình đào tạo toàn diện</div>
+        <h2 class="section-title">Mô hình 4 lĩnh vực — phát triển con người trọn vẹn</h2>
+        <div class="program-tier">
+          <div class="tier-num">1</div>
+          <div class="tier-body">
+            <h3>Học thuật chuẩn quốc gia</h3>
+            <p>Bám sát khung chuẩn của Bộ Giáo dục và Đào tạo, đảm bảo học sinh tự tin trong mọi kỳ thi chuyển cấp. Học sinh Việt Anh có đầy đủ hành trang xét tuyển vào các trường Đại học Công lập hàng đầu Việt Nam.</p>
+          </div>
+        </div>
+        <div class="program-tier">
+          <div class="tier-num">2</div>
+          <div class="tier-body">
+            <h3>Kỹ năng thế kỷ 21</h3>
+            <p><strong>16 kỹ năng thiết yếu</strong> được tích hợp có hệ thống vào từng tiết học — không phải môn học riêng lẻ. Phẩm chất lãnh đạo phát triển qua chương trình <strong>Leader in Me</strong> của FranklinCovey (Hoa Kỳ) — lần đầu được triển khai tại TP.HCM bởi Trường Việt Anh.</p>
+            <p>7 Thói quen lãnh đạo và 5 Giá trị cốt lõi: <em>Tôn trọng · Trách nhiệm · Tài giỏi · Chính trực · Yêu thương</em>.</p>
+          </div>
+        </div>
+        <div class="program-tier">
+          <div class="tier-num">3</div>
+          <div class="tier-body">
+            <h3>Tiếng Anh</h3>
+            <p>Học tiếng Anh với giáo viên bản ngữ theo phương pháp tích hợp nội dung và ngôn ngữ, để học sinh có phát âm chuẩn, có thói quen sử dụng tiếng Anh trong học tập và cuộc sống.</p>
+          </div>
+        </div>
+        <div class="program-tier">
+          <div class="tier-num">4</div>
+          <div class="tier-body">
+            <h3>Thể chất</h3>
+            <p>Học sinh thực hành 5 nguyên tắc sống khỏe: <strong>Ăn tốt · Uống tốt · Nghỉ ngơi tốt · Tập luyện · Niềm vui mỗi ngày</strong>. 100% học sinh tham gia hoạt động thể thao thường xuyên.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== INFO CARD CƠ SỞ ============== -->
+    <section class="content-section">
+      <div class="container narrow">
+        <div class="section-eyebrow">Thông tin cơ sở</div>
+        <h2 class="section-title">{campusName}</h2>
+        <div class="info-card">
+          <div class="info-row">
+            <span class="info-label">📍 Địa chỉ</span>
+            <span class="info-value">{address}, {cityRegion}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">🎓 Cấp học</span>
+            <span class="info-value">{levelLabel[level]}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">👥 Sỹ số mỗi lớp</span>
+            <span class="info-value">{siSo}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">📞 Hotline 24/7</span>
+            <span class="info-value">
+              <a href={telLink}>{hotline}</a> · <a href={zaloLink} target="_blank" rel="noopener">Zalo</a>
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">🏛️ Trực thuộc</span>
+            <span class="info-value">Hệ thống Trường Liên Cấp Việt Anh — từ năm 2011</span>
+          </div>
+        </div>
+        <p class="unity-note">
+          Dù mang những tên gọi khác nhau tại từng địa phương, tất cả các cơ sở đều vận hành theo <strong>một triết lý, một hệ thống PDR, và một cam kết chất lượng thống nhất</strong>.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============== VI. LỜI MỜI / CTA ============== -->
+    <section class="content-section bg-navy final-cta">
+      <div class="container narrow">
+        <div class="section-eyebrow light">Lời mời</div>
+        <h2 class="section-title light">Hãy đến và tự mình quan sát.</h2>
+        <p class="lead light">
+          Chúng tôi hiểu rằng việc lựa chọn môi trường giáo dục cho con là một trong những quyết định quan trọng nhất mà một gia đình phải đưa ra. Vì vậy, chúng tôi không yêu cầu Quý Phụ huynh tin vào bất kỳ điều gì trong bài viết này.
+        </p>
+        <p class="light">
+          Tham quan trường bất kỳ ngày học nào. Gặp gỡ giáo viên. Quan sát một buổi học thực tế. Nếu có thể, hãy yêu cầu được dự một sự kiện cụ thể như <em>Leadership Day, Olympic Day, họp phụ huynh</em> — để tận mắt thấy học sinh dẫn dắt cuộc trò chuyện về chính hành trình phát triển của mình.
+        </p>
+        <p class="light"><strong>Khi đó, Quý Phụ huynh sẽ không cần thêm bất kỳ lời giới thiệu nào nữa.</strong></p>
+        <div class="cta-row">
+          <a href={zaloLink} class="btn btn-yellow" target="_blank" rel="noopener">💬 Nhắn "THAM QUAN" qua Zalo</a>
+          <a href={telLink} class="btn btn-outline-yellow">📞 Gọi {hotline}</a>
+        </div>
+        <p class="cta-note light">Miễn phí · Không ràng buộc · Trả lời trong vòng 1 giờ làm việc</p>
+      </div>
+    </section>
+
+  </main>
+
+  <FooterBase />
+</BaseLayout>
+
+<style>
+  :root {
+    --navy: #000080;
+    --yellow: #ffff00;
+    --navy-dark: #00005a;
+    --navy-soft: #f0f0fa;
+  }
+
+  .campus-page {
+    color: #1a1a2e;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.7;
+  }
+
+  /* ==================== HERO ==================== */
+  .hero {
+    position: relative;
+    min-height: 640px;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  .hero-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .hero-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #000080 0%, #00005a 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffff00;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    border: 4px dashed rgba(255, 255, 0, 0.3);
+  }
+  .hero-placeholder span {
+    font-size: 1.5rem;
+  }
+  .hero-placeholder small {
+    margin-top: 0.5rem;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    letter-spacing: 0.1em;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,128,0.65) 0%, rgba(0,0,90,0.85) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+    text-align: center;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    background: var(--yellow);
+    color: var(--navy);
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+  }
+  .hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.15;
+    margin: 0 0 0.75rem;
+    color: #fff;
+  }
+  .hero-tagline {
+    font-size: 1.15rem;
+    color: var(--yellow);
+    font-style: italic;
+    margin: 0 0 2rem;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+    margin: 0 0 2rem;
+  }
+  .meta-item {
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 0, 0.25);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: left;
+  }
+  .meta-label {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--yellow);
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+  .meta-value {
+    display: block;
+    font-size: 0.95rem;
+    color: #fff;
+    line-height: 1.4;
+  }
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  /* ==================== BUTTONS ==================== */
+  .btn {
+    display: inline-block;
+    padding: 0.95rem 1.75rem;
+    border-radius: 999px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: transform 0.15s, box-shadow 0.15s;
+    font-size: 1rem;
+  }
+  .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+  }
+  .btn-primary {
+    background: var(--yellow);
+    color: var(--navy);
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+  }
+  .btn-yellow {
+    background: var(--yellow);
+    color: var(--navy);
+  }
+  .btn-outline-yellow {
+    background: transparent;
+    color: var(--yellow);
+    border: 2px solid var(--yellow);
+  }
+
+  /* ==================== VSL ==================== */
+  .vsl-section {
+    background: #fafbff;
+    padding: 4rem 1.5rem;
+  }
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .container.narrow {
+    max-width: 820px;
+  }
+  .vsl-wrapper {
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,128,0.18);
+    border: 4px solid var(--yellow);
+  }
+  .vsl-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .vsl-placeholder {
+    height: 100%;
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--yellow);
+  }
+  .vsl-placeholder .play-icon {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: var(--yellow);
+    color: var(--navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    margin-bottom: 1.25rem;
+    padding-left: 8px;
+  }
+  .vsl-placeholder-text {
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    margin: 0;
+    font-size: 1.1rem;
+  }
+  .vsl-placeholder small {
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.5rem;
+    letter-spacing: 0.08em;
+  }
+
+  /* ==================== CONTENT SECTIONS ==================== */
+  .content-section {
+    padding: 5rem 1.5rem;
+  }
+  .content-section.bg-soft {
+    background: var(--navy-soft);
+  }
+  .content-section.bg-navy {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color: #fff;
+  }
+  .section-eyebrow {
+    color: var(--navy);
+    font-weight: 700;
+    font-size: 0.9rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.75rem;
+  }
+  .section-eyebrow.light {
+    color: var(--yellow);
+  }
+  .section-title {
+    font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.25;
+    color: var(--navy);
+    margin: 0 0 1.5rem;
+  }
+  .section-title.light {
+    color: #fff;
+  }
+  .vsl-section .section-title {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .lead {
+    font-size: 1.15rem;
+    line-height: 1.75;
+    color: #2a2a3e;
+    margin-bottom: 1.25rem;
+  }
+  .lead.light, .light {
+    color: rgba(255, 255, 255, 0.92);
+  }
+
+  /* ==================== PHILOSOPHY ==================== */
+  .philosophy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .philosophy-card {
+    background: #fff;
+    border: 2px solid var(--navy);
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: 0 8px 24px rgba(0,0,128,0.06);
+  }
+  .philosophy-card h3 {
+    color: var(--navy);
+    font-size: 1.4rem;
+    margin: 0 0 0.75rem;
+    border-bottom: 3px solid var(--yellow);
+    display: inline-block;
+    padding-bottom: 0.25rem;
+  }
+
+  /* ==================== PDR ==================== */
+  .pdr-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+  .pdr-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 2px solid var(--yellow);
+    border-radius: 16px;
+    padding: 1.75rem;
+    backdrop-filter: blur(10px);
+  }
+  .pdr-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .pdr-card h3 {
+    color: var(--yellow);
+    margin: 0 0 0.75rem;
+    font-size: 1.2rem;
+  }
+  .pdr-card p {
+    color: rgba(255,255,255,0.92);
+    margin: 0 0 0.75rem;
+    font-size: 0.97rem;
+  }
+
+  /* ==================== COMMITMENTS ==================== */
+  .commitment-list {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+  }
+  .commitment-list li {
+    background: #fff;
+    border-left: 5px solid var(--yellow);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.85rem;
+    box-shadow: 0 4px 12px rgba(0,0,128,0.05);
+    position: relative;
+    padding-left: 3rem;
+  }
+  .commitment-list li::before {
+    content: '📌';
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+  }
+
+  /* ==================== PROGRAM TIERS ==================== */
+  .program-tier {
+    display: flex;
+    gap: 1.25rem;
+    margin-bottom: 1.5rem;
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,128,0.05);
+  }
+  .tier-num {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--navy);
+    color: var(--yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1.5rem;
+  }
+  .tier-body h3 {
+    color: var(--navy);
+    margin: 0 0 0.5rem;
+    font-size: 1.2rem;
+  }
+  .tier-body p {
+    margin: 0 0 0.5rem;
+  }
+
+  /* ==================== INFO CARD ==================== */
+  .info-card {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-dark) 100%);
+    color: #fff;
+    border-radius: 16px;
+    padding: 2rem;
+    border: 3px solid var(--yellow);
+    margin-top: 1.5rem;
+  }
+  .info-row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,0,0.2);
+  }
+  .info-row:last-child {
+    border-bottom: 0;
+  }
+  .info-label {
+    color: var(--yellow);
+    font-weight: 600;
+  }
+  .info-value, .info-value a {
+    color: #fff;
+  }
+  .info-value a {
+    text-decoration: underline;
+  }
+  .unity-note {
+    background: var(--navy-soft);
+    border-left: 4px solid var(--navy);
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    font-size: 0.97rem;
+  }
+
+  /* ==================== FINAL CTA ==================== */
+  .final-cta {
+    text-align: center;
+  }
+  .final-cta .section-title {
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+  }
+  .cta-row {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem 0 1rem;
+    flex-wrap: wrap;
+  }
+  .cta-note {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    margin: 0;
+  }
+
+  @media (max-width: 640px) {
+    .info-row {
+      grid-template-columns: 1fr;
+      gap: 0.25rem;
+    }
+    .program-tier {
+      flex-direction: column;
+    }
+    .hero {
+      min-height: 580px;
+    }
+  }
+</style>

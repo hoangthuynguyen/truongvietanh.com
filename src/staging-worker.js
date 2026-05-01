@@ -1115,12 +1115,13 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
 
   const subject = `✅ ${headline} — Trường Việt Anh sẽ liên hệ trong 24h`;
 
-  // Logo theo cấp: Mầm non dùng logo VÀNG (hiện đẹp trên navy header), các cấp khác
-  // dùng logo XANH gốc trong khung trắng để vẫn đọc được trên navy.
+  // Logo theo cấp — cả 2 đều VÀNG hiển thị trực tiếp trên navy header (không cần khung trắng).
   const isMamNon = src.startsWith('mam-non') || sl === 'mam-non';
-  const logoBlock = isMamNon
-    ? `<img src="https://truongvietanh.com/logo-mam-non-yellow.png" alt="Trường Mầm Non Việt Anh" style="max-width:260px;height:auto;margin:0 auto 16px;display:block;" />`
-    : `<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 16px;background:#fff;border-radius:10px;"><tr><td style="padding:10px 18px;background:#fff;border-radius:10px;"><img src="https://truongvietanh.com/logo-th-thcs-thpt.png" alt="Trường TH-THCS-THPT Việt Anh" style="max-width:220px;height:auto;display:block;" /></td></tr></table>`;
+  const logoUrl = isMamNon
+    ? 'https://truongvietanh.com/logo-mam-non-yellow.png'
+    : 'https://truongvietanh.com/logo-th-thcs-thpt-yellow.png';
+  const logoAlt = isMamNon ? 'Trường Mầm Non Việt Anh' : 'Trường TH-THCS-THPT Việt Anh';
+  const logoBlock = `<img src="${logoUrl}" alt="${logoAlt}" style="max-width:260px;height:auto;margin:0 auto 16px;display:block;" />`;
 
   const body = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);">

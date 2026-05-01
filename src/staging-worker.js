@@ -352,6 +352,23 @@ async function handleLeadSubmission(request, env) {
         // Trang thai
         ghlBody.customFields.push({ id: '3U5RWUZqGGoZP0PaMzNS', field_value: 'New_Lead' });
 
+        // Lead-magnet bundle link — map theo cấp học, dùng cho email nurture Day 1
+        // Anh upload PDF lên 5 Drive folder, mỗi cấp 1 bundle 3 PDF.
+        const BUNDLE_LINK_MAP = {
+          'mam-non':  'https://drive.google.com/drive/folders/1cIMRXIwYSusi0XWgn9PnXpktZvBH7_dl?usp=sharing',
+          'tieu-hoc': 'https://drive.google.com/drive/folders/1qZB2MXIZu9Gv1ZCL4GWybr8nFQxjTbp1?usp=sharing',
+          'thcs':     'https://drive.google.com/drive/folders/12IJTCC4iyuL-JQCjEqg1LleL-hgM38Lg?usp=sharing',
+          'thpt':     'https://drive.google.com/drive/folders/12_LzI-WICZrI4B7VHLX-I82ltfGjUHQS?usp=sharing',
+          'trai-he':  'https://drive.google.com/drive/folders/15w0YnbrhpdBc3SKddbKTXw0GzcsPYOuS?usp=sharing',
+        };
+        const bundleSrc = (data.funnelCode || data.source || '').toLowerCase();
+        let bundleLink = '';
+        for (const prefix of ['trai-he', 'mam-non', 'tieu-hoc', 'thcs', 'thpt']) {
+          if (bundleSrc.startsWith(prefix)) { bundleLink = BUNDLE_LINK_MAP[prefix]; break; }
+        }
+        // TODO: thay '__BUNDLE_LINK_FIELD_ID__' bằng GHL Custom Field ID thật của field "Bundle Link"
+        if (bundleLink) ghlBody.customFields.push({ id: '__BUNDLE_LINK_FIELD_ID__', field_value: bundleLink });
+
         // Quiz-specific fields
         if (isQuizLead(data)) {
           ghlBody.customFields.push(
@@ -1098,10 +1115,17 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
 
   const subject = `✅ ${headline} — Trường Việt Anh sẽ liên hệ trong 24h`;
 
+  // Logo theo cấp: Mầm non dùng logo VÀNG (hiện đẹp trên navy header), các cấp khác
+  // dùng logo XANH gốc trong khung trắng để vẫn đọc được trên navy.
+  const isMamNon = src.startsWith('mam-non') || sl === 'mam-non';
+  const logoBlock = isMamNon
+    ? `<img src="https://truongvietanh.com/logo-mam-non-yellow.png" alt="Trường Mầm Non Việt Anh" style="max-width:260px;height:auto;margin:0 auto 16px;display:block;" />`
+    : `<table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center" style="margin:0 auto 16px;background:#fff;border-radius:10px;"><tr><td style="padding:10px 18px;background:#fff;border-radius:10px;"><img src="https://truongvietanh.com/logo-th-thcs-thpt.png" alt="Trường TH-THCS-THPT Việt Anh" style="max-width:220px;height:auto;display:block;" /></td></tr></table>`;
+
   const body = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);">
   <div style="background:linear-gradient(135deg,#000080,#00004d);color:#fff;padding:32px 24px;text-align:center;">
-    <img src="https://truongvietanh.com/logo-vietanh-yellow.png" alt="Trường Việt Anh" style="max-width:220px;height:auto;margin-bottom:16px;display:block;margin-left:auto;margin-right:auto;" />
+    ${logoBlock}
     <div style="font-size:48px;line-height:1;margin-bottom:8px;">🎉</div>
     <h1 style="margin:0;font-size:22px;font-weight:800;color:#ffff00;">${headline}</h1>
   </div>

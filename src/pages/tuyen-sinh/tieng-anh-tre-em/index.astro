@@ -11,24 +11,47 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   heroImage="https://media.truongvietanh.com/images/vui-ve-07.webp"
   programCode="tieng-anh-tre-em"
   schoolLevel="tieu-hoc"
+  heroVariant="white-form"
 >
 
-  <!-- BLOCK 1: HERO -->
-  <div slot="hero">
-    <span class="sp-hero__badge">TIẾNG ANH TRẺ EM — CAMBRIDGE METHODOLOGY</span>
-    <h1 style="font-size:2.5rem;font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3)">
-      Tiếng Anh Từ Nhỏ — Lợi Thế Không Thể Mua Được Sau Này
-    </h1>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      Cambridge Young Learners · GV bản ngữ · Lớp 8-12 bé · Phương pháp TPR vui nhộn · Từ 4 tuổi
-    </p>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      1,500+ học sinh · Cambridge Young Learners · 15+ năm
-    </p>
-    <a href="#sp-form1" style="display:inline-block;margin-top:1.5rem;background:#ffff00;color:#000080;font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
-      Đăng ký học thử miễn phí →
-    </a>
-  </div>
+  <!-- BLOCK 1: HERO — nền trắng + two-step form -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🌍 Tiếng Anh Trẻ Em · 4–12 tuổi</span>
+      <h1>
+        Tiếng Anh Từ Nhỏ — <span class="mn-hl">Lợi Thế</span> Không Thể Mua Được Sau Này
+        <span class="mn-sub">Cambridge Young Learners · GV bản ngữ · Lớp 8–12 bé · Phương pháp TPR vui nhộn</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Hàng nghìn phụ huynh chi tiền cho con học tiếng Anh nhiều năm — nhưng đến lớp 5–6, con vẫn không dám nói. Vấn đề không ở con, mà ở <strong>phương pháp và môi trường</strong>.
+      </p>
+      <p class="mn-hero__lead">
+        Tại Việt Anh, con học tiếng Anh như học tiếng mẹ đẻ — <strong>tự nhiên, vui vẻ và hiệu quả thực sự</strong>.
+      </p>
+      <div class="mn-hero__badges">
+        <span>🌍 GV bản ngữ 100%</span>
+        <span>🏅 Cambridge YLE</span>
+        <span>👦 Lớp tối đa 8–12 bé</span>
+      </div>
+      <div class="mn-hero__trust">
+        <div>👨‍🎓 <b>1.500+ học sinh</b> hiện tại</div>
+        <div>👨‍👩‍👧 <b>97% phụ huynh</b> thấy tiến bộ rõ sau 3 tháng</div>
+        <div>🎓 <b>15+ năm</b> kinh nghiệm</div>
+      </div>
+    </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">🎁 Học thử miễn phí</span>
+      <h2>Đăng Ký 1 Buổi Học Thử Miễn Phí</h2>
+      <p class="mn-hero__form-sub">Để con trải nghiệm trực tiếp với GV bản ngữ trước khi quyết định — không cam kết, không áp lực.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="tienganh-sales-hero"
+        funnelCode="sales-tieng-anh-tre-em-hero"
+        schoolLevel="tieu-hoc"
+        submitText="Đăng ký học thử miễn phí"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 2: PAIN -->
   <div slot="pain">
@@ -174,21 +197,23 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   <div slot="cta">
     <h2>Đăng Ký 1 Buổi Học Thử Miễn Phí — Không Cam Kết</h2>
     <p>Con thích thì tiếp tục, không thích thì thôi — không áp lực, không mất tiền.</p>
-    <a href="#sp-form1" class="sp-cta-btn">Đăng ký học thử ngay →</a>
+    <a href="#mn-hero-form" class="sp-cta-btn">Đăng ký học thử ngay →</a>
   </div>
 
   <!-- BLOCK 9: FORM 1 -->
-  <div slot="form1">
-    <p class="sp-form-block__eyebrow">HỌC THỬ MIỄN PHÍ</p>
-    <h2>Đăng Ký 1 Buổi Học Thử — Hoàn Toàn Miễn Phí</h2>
-    <p>Để con trải nghiệm trực tiếp trước khi quyết định — không cam kết, không áp lực.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="tienganh-sales-form1"
-      funnelCode="sales-tieng-anh-tre-em"
-      schoolLevel="tieu-hoc"
-      submitText="Đăng ký học thử miễn phí"
-    />
-  </div>
+  <Fragment slot="form1">
+    <div class="mn-hero__form" id="sp-form1-card" style="max-width:560px;margin:0 auto;text-align:left">
+      <span class="mn-hero__form-eyebrow">📘 Học thử miễn phí</span>
+      <h2>Đăng Ký 1 Buổi Học Thử — Hoàn Toàn Miễn Phí</h2>
+      <p class="mn-hero__form-sub">Để con trải nghiệm trực tiếp trước khi quyết định — không cam kết, không áp lực.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="tienganh-sales-form1"
+        funnelCode="sales-tieng-anh-tre-em"
+        schoolLevel="tieu-hoc"
+        submitText="Đăng ký học thử miễn phí"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 10: FAQ -->
   <div slot="faq">
@@ -215,19 +240,6 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
       <summary>Học bao lâu thì thi Cambridge được?</summary>
       <div class="sp-faq-answer">Cambridge Starters: 6-12 tháng từ beginner. Movers: thêm 12-18 tháng. Flyers: thêm 12-18 tháng nữa. Tùy tần suất học (2-3 buổi/tuần) và mức độ hỗ trợ ở nhà.</div>
     </details>
-  </div>
-
-  <!-- BLOCK 11: FORM 2 -->
-  <div slot="form2">
-    <p class="sp-form-block__eyebrow">BẮT ĐẦU NGAY HÔM NAY</p>
-    <h2>Đăng Ký Học Thử — Con Sẽ Tự Nhận Xét Có Thích Không</h2>
-    <p>1 buổi học thử miễn phí — để con quyết định, không phải ba mẹ phải thuyết phục.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="tienganh-sales-form2"
-      funnelCode="sales-tieng-anh-tre-em-2"
-      schoolLevel="tieu-hoc"
-      submitText="Đăng ký học thử ngay"
-    />
   </div>
 
 </SalesPageLayout>

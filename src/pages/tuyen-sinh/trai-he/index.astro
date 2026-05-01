@@ -11,24 +11,47 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   heroImage="https://media.truongvietanh.com/images/vui-ve-07.webp"
   programCode="trai-he"
   schoolLevel="tieu-hoc"
+  heroVariant="white-form"
 >
 
-  <!-- BLOCK 1: HERO -->
-  <div slot="hero">
-    <span class="sp-hero__badge">TRẠI HÈ LION CAMP 2026 — HÈ THÁNG 6, 7, 8</span>
-    <h1 style="font-size:2.5rem;font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3)">
-      Mùa Hè Này — Con Sẽ Trở Thành Phiên Bản Tốt Nhất Của Chính Mình
-    </h1>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      Tiếng Anh immersion · Kỹ năng lãnh đạo · Team building · Phiêu lưu ngoài trời · Cho HS 6-16 tuổi
-    </p>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      500+ học sinh mỗi mùa hè · 10+ năm tổ chức · Phụ huynh hài lòng 97%
-    </p>
-    <a href="#sp-form1" style="display:inline-block;margin-top:1.5rem;background:#ffff00;color:#000080;font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
-      Đăng ký Lion Camp ngay →
-    </a>
-  </div>
+  <!-- BLOCK 1: HERO — nền trắng + two-step form -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🦁 Lion Camp 2026 · 6–16 tuổi</span>
+      <h1>
+        Mùa Hè Này — Con Sẽ Trở Thành <span class="mn-hl">Phiên Bản Tốt Nhất</span> Của Chính Mình
+        <span class="mn-sub">Tiếng Anh immersion · Kỹ năng lãnh đạo · Team building · Phiêu lưu ngoài trời</span>
+      </h1>
+      <p class="mn-hero__lead">
+        3 tháng hè không chỉ là nghỉ ngơi — mà là khoảng thời gian con phát triển kỹ năng, sự tự tin và những trải nghiệm đáng nhớ ngoài lớp học.
+      </p>
+      <p class="mn-hero__lead">
+        Tại Lion Camp, mỗi ngày là một thách thức mới — con về nhà <strong>tự tin, năng động và có kỹ năng thực sự</strong>.
+      </p>
+      <div class="mn-hero__badges">
+        <span>🌍 English Immersion</span>
+        <span>👑 Leadership</span>
+        <span>🏕️ Outdoor Adventure</span>
+      </div>
+      <div class="mn-hero__trust">
+        <div>🦁 <b>500+ học sinh</b> mỗi mùa hè</div>
+        <div>👨‍👩‍👧 <b>97% phụ huynh</b> muốn cho con tham gia năm sau</div>
+        <div>🎓 <b>10+ năm</b> tổ chức liên tục</div>
+      </div>
+    </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">🎁 Đăng ký giữ suất Hè 2026</span>
+      <h2>Đăng Ký Lion Camp Hè 2026</h2>
+      <p class="mn-hero__form-sub">Để lại email — đội ngũ Lion Camp sẽ gửi lịch trại chi tiết &amp; tư vấn gói phù hợp với con trong 24h.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="trai-he-sales-hero"
+        funnelCode="sales-trai-he-hero"
+        schoolLevel="tieu-hoc"
+        submitText="Đăng ký Lion Camp ngay"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 2: PAIN -->
   <div slot="pain">
@@ -174,21 +197,23 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   <div slot="cta">
     <h2>Chỉ Còn Ít Suất Cho Hè 2026 — Đăng Ký Giữ Chỗ Ngay</h2>
     <p>Đăng ký sớm giảm 10% và chọn được khung thời gian ưa thích.</p>
-    <a href="#sp-form1" class="sp-cta-btn">Đăng ký giữ suất Lion Camp →</a>
+    <a href="#mn-hero-form" class="sp-cta-btn">Đăng ký giữ suất Lion Camp →</a>
   </div>
 
   <!-- BLOCK 9: FORM 1 -->
-  <div slot="form1">
-    <p class="sp-form-block__eyebrow">ĐĂNG KÝ NGAY</p>
-    <h2>Đăng Ký Lion Camp Hè 2026</h2>
-    <p>Điền thông tin để nhận tư vấn và lịch trại chi tiết — hoàn toàn miễn phí.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="trai-he-sales-form1"
-      funnelCode="sales-trai-he"
-      schoolLevel="tieu-hoc"
-      submitText="Đăng ký Lion Camp ngay"
-    />
-  </div>
+  <Fragment slot="form1">
+    <div class="mn-hero__form" id="sp-form1-card" style="max-width:560px;margin:0 auto;text-align:left">
+      <span class="mn-hero__form-eyebrow">🦁 Đăng ký ngay</span>
+      <h2>Đăng Ký Lion Camp Hè 2026</h2>
+      <p class="mn-hero__form-sub">Điền thông tin để nhận tư vấn và lịch trại chi tiết — hoàn toàn miễn phí.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="trai-he-sales-form1"
+        funnelCode="sales-trai-he"
+        schoolLevel="tieu-hoc"
+        submitText="Đăng ký Lion Camp ngay"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 10: FAQ -->
   <div slot="faq">
@@ -220,19 +245,6 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
       <summary>Sau Lion Camp, con có thay đổi thực sự không?</summary>
       <div class="sp-faq-answer">97% phụ huynh nhận thấy con tự tin hơn rõ rệt sau trại. Cụ thể: dám nói tiếng Anh, chủ động trong nhóm, biết quản lý thời gian. Những thay đổi này được ghi nhận trong portfolio và certificate mà con nhận cuối trại.</div>
     </details>
-  </div>
-
-  <!-- BLOCK 11: FORM 2 -->
-  <div slot="form2">
-    <p class="sp-form-block__eyebrow">ĐỪNG BỎ LỠ HÈ 2026</p>
-    <h2>Giữ Suất Cho Con Trước Khi Hết Chỗ</h2>
-    <p>Suất trại hè có hạn — đăng ký ngay để chọn được khung thời gian và ưu đãi sớm.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="trai-he-sales-form2"
-      funnelCode="sales-trai-he-2"
-      schoolLevel="tieu-hoc"
-      submitText="Giữ suất Lion Camp ngay"
-    />
   </div>
 
 </SalesPageLayout>

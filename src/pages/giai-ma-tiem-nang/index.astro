@@ -11,24 +11,47 @@ import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirs
   heroImage="https://media.truongvietanh.com/images/thuyet-trinh-09.webp"
   programCode="giai-ma-tiem-nang"
   schoolLevel="thpt"
+  heroVariant="white-form"
 >
 
-  <!-- BLOCK 1: HERO -->
-  <div slot="hero">
-    <span class="sp-hero__badge">GIẢI MÃ TIỀM NĂNG · ĐỊNH HƯỚNG TỪ GỐC</span>
-    <h1 style="font-size:2.5rem;font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3)">
-      Bạn Có Chắc Mình Hiểu Con?
-    </h1>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      Con học không tệ… nhưng không có động lực. Con học nhiều… nhưng không biết mình thích gì.
-    </p>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      Vấn đề có thể không nằm ở việc con học chưa đủ — mà là con chưa hiểu chính mình.
-    </p>
-    <a href="#sp-form1" style="display:inline-block;margin-top:1.5rem;background:#ffff00;color:#000080;font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
-      Nhận khảo sát MIỄN PHÍ →
-    </a>
-  </div>
+  <!-- BLOCK 1: HERO — nền trắng + two-step form -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🧬 Giải Mã Tiềm Năng · Định hướng từ gốc</span>
+      <h1>
+        Bạn Có Chắc Mình <span class="mn-hl">Hiểu Con?</span>
+        <span class="mn-sub">Con học không tệ… nhưng không có động lực. Con học nhiều… nhưng không biết mình thích gì.</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Vấn đề có thể không nằm ở việc con học chưa đủ — mà là <em>con chưa hiểu chính mình</em>. Học sinh nào cũng có năng lực đặc biệt, nhưng hầu hết không hiểu đúng về bản thân.
+      </p>
+      <p class="mn-hero__lead">
+        Tại Việt Anh, tôi không đoán. Chúng tôi dùng <strong>khoa học để giúp học sinh nhìn rõ bản thân</strong>, hiểu cách mình vận hành — trước khi ra những quyết định lớn của tuổi 17–18.
+      </p>
+      <div class="mn-hero__badges">
+        <span>🧠 Đánh giá khoa học</span>
+        <span>🎯 Hiểu bản chất</span>
+        <span>🧭 Định hướng từ gốc</span>
+      </div>
+      <div class="mn-hero__trust">
+        <div>🏫 <b>9 cơ sở</b> · TP.HCM, Long An, Kiên Giang</div>
+        <div>👨‍👩‍👧 <b>3.000+ gia đình</b> tin tưởng</div>
+        <div>🎓 <b>15 năm</b> đồng hành K12 từ 2011</div>
+      </div>
+    </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">🎁 Khảo sát miễn phí</span>
+      <h2>Đăng Ký Đánh Giá Tiềm Năng Cho Con</h2>
+      <p class="mn-hero__form-sub">Để lại email — chuyên viên Việt Anh sẽ liên hệ trong 24h. Đánh giá sơ bộ tiềm năng · Gợi ý định hướng · Tư vấn 1-1.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="giai-ma-tiem-nang-hero"
+        funnelCode="giai-ma-tiem-nang-hero"
+        schoolLevel="thpt"
+        submitText="Nhận khảo sát miễn phí"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 2: PAIN -->
   <div slot="pain">
@@ -171,21 +194,23 @@ import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirs
   <div slot="cta">
     <h2>Đừng Đợi Đến Khi Con Chọn Sai Mới Bắt Đầu Hiểu Con</h2>
     <p>Bạn không cần quyết định ngay. Nhưng bạn nên bắt đầu bằng việc hiểu con đúng cách.</p>
-    <a href="#sp-form1" class="sp-cta-btn">Nhận khảo sát MIỄN PHÍ →</a>
+    <a href="#mn-hero-form" class="sp-cta-btn">Nhận khảo sát MIỄN PHÍ →</a>
   </div>
 
   <!-- BLOCK 9: FORM 1 -->
-  <div slot="form1">
-    <p class="sp-form-block__eyebrow">KHẢO SÁT MIỄN PHÍ</p>
-    <h2>Đăng Ký Đánh Giá Tiềm Năng Cho Con</h2>
-    <p>Để lại thông tin — chuyên viên Việt Anh sẽ liên hệ trong vòng 24h. Đánh giá sơ bộ tiềm năng · Gợi ý định hướng · Tư vấn cá nhân hoá 1-1.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="giai-ma-tiem-nang-form"
-      funnelCode="giai-ma-tiem-nang"
-      schoolLevel="thpt"
-      submitText="Nhận khảo sát miễn phí"
-    />
-  </div>
+  <Fragment slot="form1">
+    <div class="mn-hero__form" id="sp-form1-card" style="max-width:560px;margin:0 auto;text-align:left">
+      <span class="mn-hero__form-eyebrow">📘 Khảo sát miễn phí</span>
+      <h2>Đăng Ký Đánh Giá Tiềm Năng Cho Con</h2>
+      <p class="mn-hero__form-sub">Để lại thông tin — chuyên viên Việt Anh sẽ liên hệ trong vòng 24h. Đánh giá sơ bộ tiềm năng · Gợi ý định hướng · Tư vấn cá nhân hoá 1-1.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="giai-ma-tiem-nang-form"
+        funnelCode="giai-ma-tiem-nang"
+        schoolLevel="thpt"
+        submitText="Nhận khảo sát miễn phí"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 10: FAQ -->
   <div slot="faq">
@@ -212,19 +237,6 @@ import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirs
       <summary>Có thay thế tư vấn hướng nghiệp không?</summary>
       <div class="sp-faq-answer">Không thay thế. Đây là <strong>nền tảng</strong> để mọi tư vấn hướng nghiệp sau đó chính xác hơn — vì bất kỳ lời khuyên nào cũng cần bắt đầu từ việc hiểu con là ai.</div>
     </details>
-  </div>
-
-  <!-- BLOCK 11: FORM 2 -->
-  <div slot="form2">
-    <p class="sp-form-block__eyebrow">BẮT ĐẦU NGAY HÔM NAY</p>
-    <h2>Hiểu Con Sớm — Để Con Đi Đúng Hướng</h2>
-    <p>Bạn không cần quyết định ngay. Hãy bắt đầu bằng một bước rất nhỏ: hiểu con đúng cách.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="giai-ma-tiem-nang-form-2"
-      funnelCode="giai-ma-tiem-nang-2"
-      schoolLevel="thpt"
-      submitText="Đăng ký đánh giá miễn phí"
-    />
   </div>
 
 </SalesPageLayout>

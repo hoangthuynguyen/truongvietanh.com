@@ -292,6 +292,10 @@ async function handleLeadSubmission(request, env) {
         if (data.source === 'squeeze-quiz-phuong-phap') tags.push('quiz-phuong-phap-giao-duc');
         if (data.source === 'squeeze-so-sanh-chi-phi') tags.push('so-sanh-chi-phi-truong');
         if (data.source === 'squeeze-so-sanh-thcs') tags.push('so-sanh-truong-thcs');
+        if (data.source === 'squeeze-cha-me-hai-dang') {
+          tags.push('cha-me-hai-dang-2026');   // → GHL workflow trigger (Tag Added)
+          tags.push('squeeze-parenting');
+        }
 
         // Chuỗi nuôi dưỡng chung 435 ngày — kết nối TẤT CẢ squeeze page vào 1 workflow
         const SQUEEZE_SOURCES = [
@@ -301,7 +305,7 @@ async function handleLeadSubmission(request, env) {
           'squeeze-chuyen-truong-lop6', 'squeeze-lo-trinh-ielts-thcs', 'squeeze-phuong-phap-teen',
           'squeeze-so-sanh-thcs', 'squeeze-cam-nang-thpt', 'squeeze-du-hoc-lop10',
           'squeeze-50-truong-ielts', 'squeeze-oxford-cambridge-ib', 'squeeze-conversation-cards',
-          'squeeze-checklist', 'squeeze-checklist-tieu-hoc',
+          'squeeze-checklist', 'squeeze-checklist-tieu-hoc', 'squeeze-cha-me-hai-dang',
         ];
         if (data.source && SQUEEZE_SOURCES.includes(data.source)) {
           tags.push('nurture-435-ngay');

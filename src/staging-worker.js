@@ -473,6 +473,11 @@ async function handleLeadSubmission(request, env) {
       else if ((data.source || '').match(/squeeze-/) && data.email) {
         promises.push(sendSqueezeResourceEmail(data, env, contactId, ghlApiKey).catch(() => {}));
       }
+      // All other landing pages (mam-non/tieu-hoc/thcs/thpt/ngay-mo-cua/dat-lich/brand/future-ready)
+      // → send generic confirmation email "we'll call you in 24h"
+      else if (data.email && (data.source || '').match(/^(mam-non|tieu-hoc|thcs|thpt|ngay-mo-cua|dat-lich-tham-quan|brand-story|future-ready-challenge)/)) {
+        promises.push(sendLandingConfirmEmail(data, env, contactId, ghlApiKey).catch((e) => { console.error('landing confirm email fail', e); }));
+      }
       // Create opportunity for ALL trai-he leads (quiz or sales page)
       if (isQuizLead(data) && contactId) {
         promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
@@ -1038,6 +1043,119 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
       }),
     });
   } catch (_) {}
+}
+
+// === LANDING CONFIRMATION EMAIL (Mầm non / Tiểu học / THCS / THPT / Open House / Brand / Retgt) ===
+async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
+  const src = (data.source || data.funnelCode || '').toLowerCase();
+  const sl = (data.schoolLevel || '').toLowerCase();
+  const nameParts = (data.fullName || '').trim().split(/\s+/);
+  const firstName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0] || 'Ba/Mẹ';
+
+  // Map cấp + cơ sở (vietnamese display)
+  const LEVEL_LABEL = { 'mam-non':'Mầm Non','tieu-hoc':'Tiểu Học','thcs':'THCS','thpt':'THPT' };
+  const LOC_LABEL = {
+    'go-vap':'Gò Vấp', 'binh-tan':'Bình Tân', 'phu-nhuan':'Phú Nhuận', 'rach-gia':'Rạch Giá',
+    'can-giuoc':'Cần Giuộc', 'thai-son':'Thái Sơn (Long Hậu)', 'thai-son-long-hau':'Thái Sơn (Long Hậu)',
+  };
+  const ADDR = {
+    'go-vap':'123 Phan Huy Ích, P.15, Q.Gò Vấp, TPHCM',
+    'binh-tan':'Số 7 Đường 38A, Tân Tạo, Q.Bình Tân, TPHCM',
+    'phu-nhuan':'269A Nguyễn Trọng Tuyển, P.8, Q.Phú Nhuận, TPHCM',
+    'rach-gia':'Lô E7, KĐT Tây Bắc Mekong Xanh, TP. Rạch Giá, Kiên Giang',
+    'can-giuoc':'22 Đường D2, KDC Cần Giuộc, H.Cần Giuộc, Long An',
+    'thai-son':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
+    'thai-son-long-hau':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
+  };
+
+  let level = LEVEL_LABEL[sl] || '';
+  let loc = '', addr = '';
+  for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; addr = ADDR[k] || ''; break; } }
+
+  // Headline + lead phrase based on source type
+  let headline, leadPhrase;
+  if (src.startsWith('ngay-mo-cua')) {
+    headline = `Đã nhận đăng ký Ngày Mở Cửa${loc ? ' ' + loc : ''}`;
+    leadPhrase = 'tham gia Ngày Mở Cửa';
+  } else if (src === 'future-ready-challenge') {
+    headline = 'Đã nhận đăng ký Future Ready Challenge';
+    leadPhrase = 'tham gia Cuộc thi AI Future Ready Challenge';
+  } else if (src === 'dat-lich-tham-quan') {
+    headline = 'Đã nhận đăng ký tham quan Trường Việt Anh';
+    leadPhrase = 'tham quan Trường Việt Anh';
+  } else if (src === 'brand-story') {
+    headline = 'Cảm ơn Ba/Mẹ quan tâm Trường Việt Anh';
+    leadPhrase = 'tìm hiểu Trường Việt Anh';
+  } else {
+    headline = `Đã nhận đăng ký tham quan ${level} ${loc}`.trim();
+    leadPhrase = `tham quan ${level} ${loc}`.trim();
+  }
+
+  const subject = `✅ ${headline} — Trường Việt Anh sẽ liên hệ trong 24h`;
+
+  const body = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
+<div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);">
+  <div style="background:linear-gradient(135deg,#000080,#00004d);color:#fff;padding:32px 24px;text-align:center;">
+    <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:16px;background:#fff;padding:8px 16px;border-radius:8px;" />
+    <div style="font-size:48px;line-height:1;margin-bottom:8px;">🎉</div>
+    <h1 style="margin:0;font-size:22px;font-weight:800;color:#ffff00;">${headline}</h1>
+  </div>
+  <div style="padding:28px 24px;">
+    <p style="font-size:15px;color:#333;margin:0 0 18px;line-height:1.6;">
+      Kính gửi <strong>${firstName}</strong>,<br/><br/>
+      Cảm ơn Ba/Mẹ đã đăng ký <strong>${leadPhrase}</strong>.
+      Bộ phận tuyển sinh Trường Việt Anh sẽ <strong>gọi xác nhận lịch tham quan</strong> trong vòng <strong>24 giờ</strong>.
+    </p>
+
+    <div style="background:#fafbff;border-left:4px solid #ffff00;border-radius:8px;padding:16px 18px;margin-bottom:20px;">
+      <div style="font-weight:800;color:#000080;margin-bottom:10px;">📋 Các bước tiếp theo</div>
+      <ol style="margin:0;padding-left:20px;font-size:14px;color:#333;line-height:1.8;">
+        <li><strong>Tư vấn viên gọi xác nhận</strong> — chốt ngày & giờ tham quan phù hợp</li>
+        <li>Đến tham quan trực tiếp: <strong>gặp giáo viên, xem lớp học, cơ sở vật chất</strong></li>
+        <li>Nhận tư vấn <strong>học phí, ưu đãi & lộ trình nhập học</strong> (không ràng buộc)</li>
+      </ol>
+    </div>
+
+    ${addr ? `
+    <div style="background:#fffde6;border:1px solid #ffff00;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
+      <div style="font-weight:800;color:#000080;margin-bottom:6px;">📍 Cơ sở ${loc}</div>
+      <div style="font-size:14px;color:#333;line-height:1.6;">
+        <strong>Địa chỉ:</strong> ${addr}<br/>
+        <strong>Giờ làm việc:</strong> Thứ 2 – Thứ 7 · 7:30 – 17:00
+      </div>
+    </div>` : ''}
+
+    <div style="text-align:center;margin:24px 0 16px;">
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#000080;padding:14px 28px;border-radius:10px;font-weight:800;font-size:15px;text-decoration:none;margin:4px;">💬 Chat Zalo ngay</a>
+      <a href="tel:+84916961409" style="display:inline-block;background:#fff;color:#000080;border:2px solid #000080;padding:12px 26px;border-radius:10px;font-weight:800;font-size:15px;text-decoration:none;margin:4px;">📞 0916 961 409</a>
+    </div>
+
+    <div style="text-align:center;padding-top:18px;border-top:1px solid #eee;font-size:12px;color:#999;">
+      Trường Việt Anh — 15 năm K12 từ 2011<br/>
+      Mầm non · Tiểu học · THCS · THPT · 3 cơ sở TPHCM + Long An
+    </div>
+  </div>
+</div>
+</body></html>`.trim();
+
+  // Primary: send via GHL Conversations API
+  if (contactId) {
+    try { await sendEmailViaGHL({ contactId, subject, html: body, ghlApiKey }); } catch(e) { console.error('landing confirm via GHL fail', e); }
+  }
+  // Fallback: MailChannels
+  try {
+    await fetch('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: data.email, name: data.fullName }] }],
+        from: { email: 'tailieu@truongvietanh.com', name: 'Trường Việt Anh' },
+        reply_to: { email: 'tu@truongvietanh.com', name: 'Tư vấn Trường Việt Anh' },
+        subject,
+        content: [{ type: 'text/html', value: body }],
+      }),
+    });
+  } catch(e) { console.error('landing confirm via MailChannels fail', e); }
 }
 
 // === TRAI HE CONSULTATION CONFIRMATION EMAIL (non-quiz sales page leads) ===

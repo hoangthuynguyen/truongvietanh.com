@@ -477,6 +477,10 @@ async function handleLeadSubmission(request, env) {
       if (isQuizLead(data) && contactId) {
         promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
       }
+      // Create opportunity for non-quiz landing pages too — so leads appear in pipeline
+      else if (contactId) {
+        promises.push(createLandingOpportunity(contactId, data, ghlApiKey).catch((e) => { console.error('opp fail', e); }));
+      }
       // Add contact to appropriate GHL workflow
       if (contactId) {
         const wfSource = data.funnelCode || data.source;
@@ -626,6 +630,89 @@ async function addContactToWorkflow(contactId, source, ghlApiKey) {
 // === OPPORTUNITY (Pipeline) FOR QUIZ LEADS ===
 const TRAI_HE_PIPELINE_ID = 'wBGA6IWGRd14sCXrasTp'; // Tuyển Sinh 2026
 const TRAI_HE_STAGE_ID = '622d8a0e-c396-422b-a62c-f984652cdaa4'; // New Lead
+
+// === OPPORTUNITY for general landing pages (non-quiz) ===
+// Mỗi submit form từ landing → tạo 1 opportunity mới trong pipeline để sales thấy "lead mới"
+async function createLandingOpportunity(contactId, data, ghlApiKey) {
+  const src = (data.source || data.funnelCode || '').toLowerCase();
+
+  // Map source → tên hiển thị Cấp + Cơ sở
+  const LEVEL_LABEL = {
+    'mam-non':  'Mầm Non',
+    'tieu-hoc': 'Tiểu Học',
+    'thcs':     'THCS',
+    'thpt':     'THPT',
+  };
+  const LOC_LABEL = {
+    'go-vap':              'Gò Vấp',
+    'binh-tan':            'Bình Tân',
+    'phu-nhuan':           'Phú Nhuận',
+    'rach-gia':            'Rạch Giá',
+    'can-giuoc':           'Cần Giuộc',
+    'thai-son':            'Thái Sơn (Long Hậu)',
+    'thai-son-long-hau':   'Thái Sơn (Long Hậu)',
+  };
+
+  // Build opportunity name
+  let oppName;
+  if (src.startsWith('trai-he-')) {
+    const level = src.includes('tieu-hoc') ? 'Tiểu Học' : src.includes('thcs') ? 'THCS' : src.includes('thpt') ? 'THPT' : '';
+    let loc = '';
+    for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; break; } }
+    oppName = `Trại Hè${level ? ' ' + level : ''}${loc ? ' ' + loc : ''} — ${data.fullName}`;
+  } else if (src.startsWith('ngay-mo-cua')) {
+    let loc = '';
+    for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; break; } }
+    oppName = `Ngày Mở Cửa${loc ? ' ' + loc : ''} — ${data.fullName}`;
+  } else if (src === 'future-ready-challenge') {
+    oppName = `Future Ready Challenge — ${data.fullName}`;
+  } else if (src === 'dat-lich-tham-quan') {
+    oppName = `Đặt Lịch Tham Quan — ${data.fullName}`;
+  } else if (src === 'brand-story') {
+    oppName = `Brand Story — ${data.fullName}`;
+  } else {
+    // Cấp + Cơ sở: vd mam-non-go-vap
+    let level = '';
+    let loc = '';
+    for (const k of Object.keys(LEVEL_LABEL)) { if (src.startsWith(k + '-')) { level = LEVEL_LABEL[k]; break; } }
+    for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; break; } }
+    oppName = `${level || 'Tuyển Sinh'}${loc ? ' ' + loc : ''} — ${data.fullName}`;
+  }
+
+  // Estimated annual value by cấp (VND)
+  const sl = (data.schoolLevel || '').toLowerCase();
+  const monetaryValue =
+    sl === 'mam-non'  ?  84000000 :   // 7tr × 12 tháng
+    sl === 'tieu-hoc' ? 108000000 :   // 9tr × 12 tháng
+    sl === 'thcs'     ? 132000000 :   // 11tr × 12 tháng
+    sl === 'thpt'     ? 156000000 :   // 13tr × 12 tháng
+    src.startsWith('trai-he-') ? 19998000 :
+    50000000;
+
+  const res = await fetch('https://services.leadconnectorhq.com/opportunities/', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${ghlApiKey}`,
+      'Version': '2021-07-28',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      pipelineId: TRAI_HE_PIPELINE_ID,
+      locationId: GHL_LOCATION_ID,
+      name: oppName,
+      pipelineStageId: TRAI_HE_STAGE_ID,
+      contactId,
+      status: 'open',
+      monetaryValue,
+      source: `Website - ${src}`,
+    }),
+  });
+  if (!res.ok) {
+    const txt = await res.text();
+    console.error('createLandingOpportunity fail:', res.status, txt.substring(0, 200));
+  }
+  return res;
+}
 
 async function createQuizOpportunity(contactId, data, ghlApiKey) {
   const loc = deriveLocation(data.funnelCode);

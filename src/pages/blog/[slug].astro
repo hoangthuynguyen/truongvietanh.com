@@ -145,9 +145,23 @@ const categorySlug = post.category || detectCategory(post.title, post.excerpt);
 const categoryInfo = getCategoryBySlug(categorySlug);
 // Featured image: prefer CMS file, fallback to default
 const DIRECTUS_URL = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
-const ogImage = post.featured_image
-  ? `${DIRECTUS_URL}/assets/${post.featured_image}?width=1200&height=630&fit=cover&format=webp`
-  : 'https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp';
+const featuredIsExternal = !!post.featured_image && /^https?:\/\//i.test(post.featured_image);
+function featuredSrc(transform: string): string | null {
+  if (!post.featured_image) return null;
+  if (featuredIsExternal) return post.featured_image;
+  return `${DIRECTUS_URL}/assets/${post.featured_image}?${transform}`;
+}
+const ogImage = featuredSrc('width=1200&height=630&fit=cover&format=webp')
+  || 'https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp';
+
+// Skip the template hero if the article body already shows an image near the top
+// (avoids duplicate banner when CMS post embeds its own hero in content).
+// Strategy: if any <img> appears within the first ~1500 chars of the body, OR if
+// the featured image URL itself is referenced in the body, the body owns the hero.
+const contentHead = cleanedContent.slice(0, 1500);
+const hasEarlyImage = /<img\b/i.test(contentHead);
+const featuredInBody = !!post.featured_image && featuredIsExternal && cleanedContent.includes(post.featured_image);
+const showHero = !!post.featured_image && !hasEarlyImage && !featuredInBody;
 
 const structuredData = [
   {
@@ -270,13 +284,13 @@ const structuredData = [
     </nav>
 
     <!-- Featured Image Hero (HubSpot-style) -->
-    {post.featured_image && (
+    {showHero && (
       <div class="blog-hero-img">
         <img
-          src={`${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85`}
+          src={featuredSrc('width=1600&height=720&fit=cover&format=webp&quality=85')!}
           alt={post.title}
           width="1600" height="720" fetchpriority="high" decoding="async"
-          srcset={`${DIRECTUS_URL}/assets/${post.featured_image}?width=800&height=360&fit=cover&format=webp&quality=80 800w, ${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85 1600w`}
+          srcset={featuredIsExternal ? undefined : `${DIRECTUS_URL}/assets/${post.featured_image}?width=800&height=360&fit=cover&format=webp&quality=80 800w, ${DIRECTUS_URL}/assets/${post.featured_image}?width=1600&height=720&fit=cover&format=webp&quality=85 1600w`}
           sizes="(max-width: 960px) 100vw, 1600px"
         />
       </div>
@@ -331,9 +345,9 @@ const structuredData = [
               <aside class="blog-lead-magnet">
                 <div class="blog-lead-magnet__icon">📥</div>
                 <div class="blog-lead-magnet__body">
-                  <h3>Tải miễn phí: Checklist Chọn Trường Phù Hợp Cho Con</h3>
+                  <h3>Tải miễn phí: Danh mục kiểm tra (checklist) Chọn Trường Phù Hợp Cho Con</h3>
                   <p>15 tiêu chí + framework 5C giúp Ba/Mẹ ra quyết định không hối hận. PDF gửi qua email trong 1 phút.</p>
-                  <a href="/squeeze/checklist-chon-truong" class="blog-lead-magnet__btn">Tải checklist miễn phí →</a>
+                  <a href="/squeeze/checklist-chon-truong" class="blog-lead-magnet__btn">Tải danh mục kiểm tra (checklist) miễn phí →</a>
                 </div>
               </aside>
             </template>
@@ -465,7 +479,7 @@ const structuredData = [
             </nav>
 
             <!-- Sticky lead form -->
-            <div class="blog-side-cta" data-form-bg="light">
+            <div class="blog-side-cta">
               <div class="blog-side-cta__badge">🎯 Tư vấn miễn phí</div>
               <h3 class="blog-side-cta__title">Tìm trường phù hợp cho con</h3>
               <p class="blog-side-cta__desc">Đội tuyển sinh phản hồi trong 24h. Cá nhân hóa theo cấp học và ngân sách.</p>
@@ -483,7 +497,7 @@ const structuredData = [
               <p class="blog-side-contact__title">Liên hệ ngay</p>
               <a href="tel:0916961409" class="blog-side-contact__btn">📞 0916 961 409</a>
               <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="blog-side-contact__btn blog-side-contact__btn--zalo">💬 Chat Zalo OA</a>
-              <a href="/squeeze/checklist-chon-truong" class="blog-side-contact__btn blog-side-contact__btn--magnet">📥 Tải checklist miễn phí</a>
+              <a href="/squeeze/checklist-chon-truong" class="blog-side-contact__btn blog-side-contact__btn--magnet">📥 Tải danh mục kiểm tra (checklist) miễn phí</a>
             </div>
           </aside>
         </div><!-- /.blog-grid -->
@@ -519,11 +533,11 @@ const structuredData = [
     margin-left: 0.4rem;
     color: #94a3b8;
   }.blog-breadcrumb__list a{
-    color: #1a1a5e;
+    color: #000080;
     text-decoration: none;
   }.blog-breadcrumb__list a:hover{
     text-decoration: underline;
-    color: #F0D048;
+    color: #000060;
   }.blog-breadcrumb__list li[aria-current="page"]{
     color: #334155;
     font-weight: 500;
@@ -541,7 +555,7 @@ const structuredData = [
   }.blog-article__title{
     font-size: clamp(1.6rem, 4vw, 2.4rem);
     font-weight: 800;
-    color: #1a1a5e;
+    color: #000080;
     line-height: 1.3;
     margin: 0 0 1rem;
   }.blog-article__meta{
@@ -555,7 +569,7 @@ const structuredData = [
     font-weight: 500;
   }.blog-article__badge{
     display: inline-block;
-    background: #F0D048;
+    background: #ffff00;
     color: #fff;
     font-size: 1rem;
     font-weight: 700;
@@ -564,7 +578,7 @@ const structuredData = [
     letter-spacing: 0.02em;
     text-decoration: none;
     transition: background 0.15s;
-  }.blog-article__badge:hover{ background: #b8891e; }.blog-article__readtime{
+  }.blog-article__badge:hover{ background: #000080; }.blog-article__readtime{
     font-size: 1rem;
     color: #94a3b8;
     font-weight: 500;
@@ -573,7 +587,7 @@ const structuredData = [
     background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px;
     padding: 1.25rem 1.5rem; margin-bottom: 2rem;
   }.blog-toc__title{
-    font-weight: 700; color: #1a1a5e; font-size: 1.5rem;
+    font-weight: 700; color: #000080; font-size: 1.5rem;
     margin: 0 0 0.75rem; text-transform: uppercase; letter-spacing: 0.03em;
   }.blog-toc__list{
     list-style: none; padding: 0; margin: 0;
@@ -584,14 +598,14 @@ const structuredData = [
     font-size: 1rem; line-height: 1.5; padding: 0.25rem 0;
     transition: color 0.2s;
   }.blog-toc__list li a::before{
-    content: counter(toc) '. '; color: #F0D048; font-weight: 600;
-  }.blog-toc__list li a:hover{ color: #1a1a5e; }.blog-toc__sub{ padding-left: 1.25rem; }.blog-toc__sub a::before{ content: ''; }/* Reading Progress Bar */
+    content: counter(toc) '. '; color: #000080; font-weight: 600;
+  }.blog-toc__list li a:hover{ color: #000080; }.blog-toc__sub{ padding-left: 1.25rem; }.blog-toc__sub a::before{ content: ''; }/* Reading Progress Bar */
   .reading-progress{
     position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
     height: 3px; background: transparent;
   }.reading-progress__bar{
     height: 100%; width: 0%;
-    background: linear-gradient(90deg, #F0D048, #2563eb);
+    background: linear-gradient(90deg, #ffff00, #2563eb);
     transition: width 0.1s linear;
   }/* Share Buttons */
   .blog-share{
@@ -611,12 +625,12 @@ const structuredData = [
     .announcement-bar, .site-footer, .mobile-nav-drawer{ display: none !important; }.blog-article{ max-width: 100%; padding: 0; }.blog-article__body{ font-size: 11pt; line-height: 1.6; }.blog-article__body a{ color: #000; text-decoration: underline; }.blog-article__body a::after{ content: ' (' attr(href) ')'; font-size: 9pt; color: #666; }
   }.blog-article__excerpt{
     font-size: 1.1rem;
-    color: #1a1a5e;
+    color: #000080;
     line-height: 1.7;
     margin: 0 0 2rem;
     padding: 1rem 1.25rem;
     background: #f1f5f9;
-    border-left: 4px solid #F0D048;
+    border-left: 4px solid #ffff00;
     border-radius: 0 6px 6px 0;
   }/* ===== ARTICLE BODY (HTML from Directus) ===== */
   .blog-article__body{
@@ -627,36 +641,36 @@ const structuredData = [
   }.blog-article__body h2{
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #000080;
     margin: 2.5rem 0 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #e2e8f0;
   }.blog-article__body h3{
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #000080;
     margin: 2rem 0 0.75rem;
   }.blog-article__body h4{
     font-size: 1.5rem;
     font-weight: 600;
-    color: #1a1a5e;
+    color: #000080;
     margin: 1.5rem 0 0.5rem;
   }.blog-article__body p{
     margin: 0 0 1.25rem;
     color: #1f2937;
   }.blog-article__body strong,
   .blog-article__body b{
-    color: #1a1a5e;
+    color: #000080;
     font-weight: 700;
   }.blog-article__body li{
     color: #1f2937;
   }.blog-article__body a{
-    color: #F0D048;
+    color: #000080;
     text-decoration: underline;
-    text-decoration-color: #F0D048;
+    text-decoration-color: #ffff00;
     text-underline-offset: 3px;
   }.blog-article__body a:hover{
-    color: #b8891e;
+    color: #000080;
   }.blog-article__body img{
     max-width: 100%;
     height: auto;
@@ -673,7 +687,7 @@ const structuredData = [
     margin: 1.5rem 0;
     padding: 1rem 1.25rem;
     background: #f8fafc;
-    border-left: 4px solid #F0D048;
+    border-left: 4px solid #ffff00;
     border-radius: 0 6px 6px 0;
     color: #475569;
     font-style: italic;
@@ -696,16 +710,16 @@ const structuredData = [
     padding: 0.75rem 1rem;
     text-align: left;
     vertical-align: top;
-    color: #1a1a5e;
+    color: #000080;
   }.blog-article__body th{
-    background: #1a1a5e;
+    background: #000080;
     font-weight: 600;
     color: #fff;
     white-space: nowrap;
   }.blog-article__body tbody tr:nth-child(even){
     background: #f8fafc;
   }.blog-article__body tbody tr:hover{
-    background: #fef9ef;
+    background: #f8fafc;
   }.blog-article__body td:first-child{
     font-weight: 600;
     white-space: nowrap;
@@ -746,7 +760,7 @@ const structuredData = [
   }.blog-faq__title{
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #000080;
     margin: 0 0 1.25rem;
   }.blog-faq__list{
     display: flex;
@@ -759,11 +773,11 @@ const structuredData = [
     overflow: hidden;
     transition: border-color 0.2s;
   }.blog-faq__item[open]{
-    border-color: #F0D048;
+    border-color: #ffff00;
   }.blog-faq__question{
     padding: 1rem 1.25rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #000080;
     cursor: pointer;
     list-style: none;
     display: flex;
@@ -776,7 +790,7 @@ const structuredData = [
     content: '+';
     font-size: 1.3rem;
     font-weight: 400;
-    color: #F0D048;
+    color: #000080;
     flex-shrink: 0;
     margin-left: 1rem;
   }.blog-faq__item[open] .blog-faq__question::after{
@@ -788,17 +802,17 @@ const structuredData = [
     line-height: 1.7;
     color: #475569;
   }.blog-faq__answer a{
-    color: #1a1a5e;
+    color: #000080;
     text-decoration: underline;
-    text-decoration-color: #F0D048;
+    text-decoration-color: #ffff00;
     text-underline-offset: 3px;
   }.blog-faq__answer a:hover{
-    color: #F0D048;
+    color: #000060;
   }/* ===== INLINE CTA ===== */
   .blog-cta-inline{
     margin: 3rem 0;
   }.blog-cta-inline__inner{
-    background: linear-gradient(135deg, #0d1b3e, #1a1a5e);
+    background: linear-gradient(135deg, #000080, #000080);
     border-radius: 12px;
     padding: 2rem 2.5rem;
     text-align: center;
@@ -806,6 +820,7 @@ const structuredData = [
   }.blog-cta-inline__title{
     font-size: 1.5rem;
     font-weight: 700;
+    color: #fff !important;
     margin: 0 0 0.5rem;
   }.blog-cta-inline__desc{
     font-size: 1rem;
@@ -830,7 +845,7 @@ const structuredData = [
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }.blog-cta-inline__btn--primary{
-    background: #F0D048;
+    background: #ffff00;
     color: #fff;
   }.blog-cta-inline__btn--secondary{
     background: rgba(255, 255, 255, 0.15);
@@ -847,7 +862,7 @@ const structuredData = [
   }.blog-pillar-links__title{
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #000080;
     margin: 0 0 1rem;
   }.blog-pillar-links__grid{
     display: flex;
@@ -859,14 +874,14 @@ const structuredData = [
     background: #fff;
     border: 1px solid #e2e8f0;
     border-radius: 6px;
-    color: #1a1a5e;
+    color: #000080;
     font-size: 1rem;
     font-weight: 600;
     text-decoration: none;
     transition: background 0.15s, border-color 0.15s;
   }.blog-pillar-links__item:hover{
-    background: #1a1a5e;
-    border-color: #1a1a5e;
+    background: #000080;
+    border-color: #000080;
     color: #fff;
   }/* ===== RELATED POSTS ===== */
   .blog-related{
@@ -876,7 +891,7 @@ const structuredData = [
   }.blog-related__title{
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #000080;
     margin: 0 0 1.5rem;
   }.blog-related__grid{
     display: grid;
@@ -897,7 +912,7 @@ const structuredData = [
   }.blog-related__card-title{
     font-size: 1.5rem;
     font-weight: 700;
-    color: #1a1a5e;
+    color: #000080;
     line-height: 1.4;
     margin: 0 0 0.5rem;
     display: -webkit-box;
@@ -931,14 +946,14 @@ const structuredData = [
   }.blog-bottom-cta__title{
     font-size: 1.5rem;
     font-weight: 800;
-    color: #1a1a5e;
+    color: #000080;
     margin: 0 0 0.5rem;
     text-align: center;
     line-height: 1.3;
     white-space: normal;
   }.blog-bottom-cta__desc{
     font-size: 1rem;
-    color: #1a1a5e;
+    color: #000080;
     margin: 0 0 1.5rem;
     line-height: 1.6;
     max-width: 500px;
@@ -960,7 +975,7 @@ const structuredData = [
   }.blog-bottom-cta__contact-title{
     font-size: 1.5rem;
     font-weight: 800;
-    color: #1a1a5e;
+    color: #000080;
     margin: 0 0 0.75rem;
   }.blog-bottom-cta__contact-links{
     display: flex;
@@ -977,7 +992,7 @@ const structuredData = [
     font-size: 1rem;
     text-decoration: none;
     transition: transform 0.15s, background 0.2s;
-  }.blog-contact-btn:hover{ transform: translateY(-1px); }.blog-contact-btn--tour{ background: #1a1a5e; color: #fff; }.blog-contact-btn--tour:hover{ background: #2d2d8a; color: #fff; }.blog-contact-btn--phone{ background: #e2e8f0; color: #1a1a5e; }.blog-contact-btn--phone:hover{ background: #cbd5e1; color: #1a1a5e; }.blog-contact-btn--zalo{ background: #0068ff; color: #fff; }.blog-contact-btn--zalo:hover{ background: #0055d4; color: #fff; }
+  }.blog-contact-btn:hover{ transform: translateY(-1px); }.blog-contact-btn--tour{ background: #000080; color: #fff; }.blog-contact-btn--tour:hover{ background: #00009a; color: #fff; }.blog-contact-btn--phone{ background: #e2e8f0; color: #000080; }.blog-contact-btn--phone:hover{ background: #cbd5e1; color: #000080; }.blog-contact-btn--zalo{ background: #0068ff; color: #fff; }.blog-contact-btn--zalo:hover{ background: #0055d4; color: #fff; }
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 768px) {.blog-container{
@@ -1012,7 +1027,7 @@ const structuredData = [
   }
   .blog-hero-img img{
     width:100%;height:auto;max-height:480px;object-fit:cover;
-    border-radius:12px;box-shadow:0 8px 30px rgba(26,26,94,.12);
+    border-radius:12px;box-shadow:0 8px 30px rgba(0,0,128,.12);
     aspect-ratio:16/9;background:#f0f4ff;
   }
 
@@ -1036,7 +1051,7 @@ const structuredData = [
     border-top:1px solid #e5e7eb;border-bottom:1px solid #e5e7eb;
   }
   .blog-author__avatar{width:40px;height:40px;border-radius:50%;background:#fff;object-fit:contain;border:1px solid #e5e7eb}
-  .blog-author__name{margin:0;font-weight:700;color:#1a1a5e;font-size:.95rem}
+  .blog-author__name{margin:0;font-weight:700;color:#000080;font-size:.95rem}
   .blog-author__role{margin:0;font-size:.82rem;color:#64748b}
 
   .blog-article__updated{color:#6b7280;font-size:.85rem}
@@ -1046,62 +1061,62 @@ const structuredData = [
     background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem;
     max-height:60vh;overflow-y:auto;font-size:.85rem;
   }
-  .blog-toc-sticky .blog-toc__title{font-size:.85rem;font-weight:700;color:#1a1a5e;margin:0 0 .5rem}
+  .blog-toc-sticky .blog-toc__title{font-size:.85rem;font-weight:700;color:#000080;margin:0 0 .5rem}
   .blog-toc-sticky .blog-toc__list{list-style:none;padding:0;margin:0}
   .blog-toc-sticky .blog-toc__list li{margin:.3rem 0;line-height:1.4}
   .blog-toc-sticky .blog-toc__list a{color:#374151;text-decoration:none;display:block;padding:.2rem .35rem;border-radius:4px;border-left:2px solid transparent}
-  .blog-toc-sticky .blog-toc__list a:hover{background:#f3f4f6;color:#1a1a5e}
+  .blog-toc-sticky .blog-toc__list a:hover{background:#f3f4f6;color:#000080}
   .blog-toc-sticky .blog-toc__sub{padding-left:1rem}
   .blog-toc-sticky .blog-toc__sub a{font-size:.78rem;color:#6b7280}
 
   .blog-side-cta{
-    background:linear-gradient(135deg,#1a1a5e 0%,#2a2a7e 100%);color:#fff;
-    border-radius:12px;padding:1.5rem;box-shadow:0 8px 24px rgba(26,26,94,.2);
+    background:linear-gradient(135deg,#000080 0%,#00009a 100%);color:#fff;
+    border-radius:12px;padding:1.5rem;box-shadow:0 8px 24px rgba(0,0,128,.2);
   }
   .blog-side-cta__badge{
-    display:inline-block;background:#F0D048;color:#1a1a5e;font-weight:700;font-size:.72rem;
+    display:inline-block;background:#ffff00;color:#000080;font-weight:700;font-size:.72rem;
     padding:3px 10px;border-radius:50px;margin-bottom:.75rem;
   }
   .blog-side-cta__title{font-size:1.15rem;font-weight:800;margin:0 0 .5rem;color:#fff;line-height:1.3}
   .blog-side-cta__desc{font-size:.85rem;line-height:1.55;margin:0 0 1rem;color:#e0e7ff}
   .blog-side-cta .lead-form input,.blog-side-cta .lead-form button{font-size:.85rem !important}
-  .blog-side-cta[data-form-bg="light"]{background:linear-gradient(135deg,#1a1a5e 0%,#2a2a7e 100%)}
+  .blog-side-cta[data-form-bg="light"]{background:linear-gradient(135deg,#000080 0%,#00009a 100%)}
 
   .blog-side-contact{
     background:#fff;border:1px solid #e5e7eb;border-radius:10px;padding:1rem;
   }
-  .blog-side-contact__title{font-weight:700;color:#1a1a5e;font-size:.9rem;margin:0 0 .65rem}
+  .blog-side-contact__title{font-weight:700;color:#000080;font-size:.9rem;margin:0 0 .65rem}
   .blog-side-contact__btn{
     display:block;padding:.55rem .85rem;margin-bottom:.4rem;
-    background:#1a1a5e;color:#fff;border-radius:6px;text-decoration:none;
+    background:#000080;color:#fff;border-radius:6px;text-decoration:none;
     font-size:.85rem;font-weight:600;text-align:center;transition:background .2s;
   }
-  .blog-side-contact__btn:hover{background:#2a2a7e}
+  .blog-side-contact__btn:hover{background:#00009a}
   .blog-side-contact__btn--zalo{background:#0068FF}
   .blog-side-contact__btn--zalo:hover{background:#0055d4}
-  .blog-side-contact__btn--magnet{background:#F0D048;color:#1a1a5e}
-  .blog-side-contact__btn--magnet:hover{background:#D4B637}
+  .blog-side-contact__btn--magnet{background:#ffff00;color:#000080}
+  .blog-side-contact__btn--magnet:hover{background:#ffff00}
 
   /* ===== INLINE LEAD MAGNET (mid-article) ===== */
   .blog-lead-magnet{
     display:flex;align-items:flex-start;gap:1rem;
     background:linear-gradient(135deg,#fff8f0 0%,#fff3e0 100%);
-    border:2px solid #F0D048;border-radius:12px;padding:1.25rem;margin:2rem 0;
+    border:2px solid #ffff00;border-radius:12px;padding:1.25rem;margin:2rem 0;
   }
   .blog-lead-magnet__icon{font-size:2rem;line-height:1;flex-shrink:0}
-  .blog-lead-magnet__body h3{margin:0 0 .35rem;color:#1a1a5e;font-size:1.05rem;font-weight:800}
+  .blog-lead-magnet__body h3{margin:0 0 .35rem;color:#000080;font-size:1.05rem;font-weight:800}
   .blog-lead-magnet__body p{margin:0 0 .65rem;font-size:.9rem;line-height:1.55;color:#374151}
   .blog-lead-magnet__btn{
-    display:inline-block;background:#1a1a5e;color:#fff;padding:.55rem 1.1rem;
+    display:inline-block;background:#000080;color:#fff;padding:.55rem 1.1rem;
     border-radius:6px;text-decoration:none;font-weight:700;font-size:.9rem;transition:background .2s;
   }
-  .blog-lead-magnet__btn:hover{background:#F0D048;color:#1a1a5e}
+  .blog-lead-magnet__btn:hover{background:#ffff00;color:#000080}
 
   /* ===== INLINE EMAIL SUBSCRIBE ===== */
   .blog-inline-subscribe{
-    background:#f0f4ff;border-left:4px solid #1a1a5e;border-radius:8px;padding:1.25rem;margin:2rem 0;
+    background:#f0f4ff;border-left:4px solid #000080;border-radius:8px;padding:1.25rem;margin:2rem 0;
   }
-  .blog-inline-subscribe h3{margin:0 0 .35rem;color:#1a1a5e;font-size:1.05rem;font-weight:800}
+  .blog-inline-subscribe h3{margin:0 0 .35rem;color:#000080;font-size:1.05rem;font-weight:800}
   .blog-inline-subscribe > p{margin:0 0 .85rem;font-size:.9rem;color:#374151}
   .blog-inline-subscribe__form{display:flex;gap:.5rem;flex-wrap:wrap}
   .blog-inline-subscribe__form input{
@@ -1109,12 +1124,32 @@ const structuredData = [
     font-size:.95rem;background:#fff;
   }
   .blog-inline-subscribe__form button{
-    padding:.6rem 1.25rem;background:#F0D048;color:#1a1a5e;border:none;border-radius:6px;
+    padding:.6rem 1.25rem;background:#ffff00;color:#000080;border:none;border-radius:6px;
     font-weight:700;cursor:pointer;transition:background .2s;
   }
-  .blog-inline-subscribe__form button:hover{background:#D4B637}
+  .blog-inline-subscribe__form button:hover{background:#ffff00}
   .blog-inline-subscribe__form button:disabled{opacity:.6;cursor:not-allowed}
   .blog-inline-subscribe__hint{margin:.5rem 0 0;font-size:.78rem;color:#6b7280;font-style:italic}
+
+  /* ===== AUTO-CONTRAST: CMS dark-background callout blocks =====
+     .blog-article__body p/strong/etc. rules have high specificity.
+     When CMS creates a block with inline background + inline color (#fff),
+     child elements inherit but CSS class rules override inheritance.
+     We target known dark Viet Anh brand hex values used in CMS callouts: */
+  .blog-article__body *[style*="#000080"] p,
+  .blog-article__body *[style*="#000080"] span,
+  .blog-article__body *[style*="#000080"] strong,
+  .blog-article__body *[style*="#000080"] em,
+  .blog-article__body *[style*="#000080"] a,
+  .blog-article__body *[style*="#000080"] p,
+  .blog-article__body *[style*="#000080"] span,
+  .blog-article__body *[style*="#000080"] strong,
+  .blog-article__body *[style*="#000080"] em,
+  .blog-article__body *[style*="#000080"] a,
+  .blog-article__body *[style*="rgb(13, 27, 62)"] p,
+  .blog-article__body *[style*="rgb(13, 27, 62)"] span,
+  .blog-article__body *[style*="rgb(26, 26, 94)"] p,
+  .blog-article__body *[style*="rgb(26, 26, 94)"] span { color: #fff !important; }
 
   /* Mobile: smaller hero, full-width */
   @media (max-width:768px){
@@ -1242,6 +1277,32 @@ const structuredData = [
       wrapper.appendChild(table);
     }
   });
+
+  // Auto-contrast: fix dark-background CMS blocks where text would be invisible.
+  // Must use setProperty('color','#fff','important') because .blog-article__body p { color: #1f2937 }
+  // has higher specificity than inherited color — so inherited white does NOT win without !important.
+  (function applyAutoContrast() {
+    const body = document.querySelector('.blog-article__body');
+    if (!body) return;
+    body.querySelectorAll('*').forEach(function(el) {
+      // Only process elements with an inline background style
+      const inlineStyle = el.getAttribute('style') || '';
+      if (!inlineStyle.toLowerCase().includes('background')) return;
+      // Read computed background color
+      const bg = window.getComputedStyle(el).backgroundColor;
+      if (!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') return;
+      const m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (!m) return;
+      const lum = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
+      if (lum < 0.45) {
+        // Dark background detected — force white text with !important to beat CSS specificity
+        el.style.setProperty('color', '#ffffff', 'important');
+        el.querySelectorAll('p, span, li, h1, h2, h3, h4, strong, em, b, a').forEach(function(child) {
+          child.style.setProperty('color', '#ffffff', 'important');
+        });
+      }
+    });
+  })();
 
   // Fix placeholder phone numbers in CMS content
   document.querySelectorAll('.blog-article__body').forEach((body) => {

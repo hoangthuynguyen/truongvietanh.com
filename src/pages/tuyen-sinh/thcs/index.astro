@@ -11,47 +11,67 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   heroImage="https://media.truongvietanh.com/images/thuyet-trinh-09.webp"
   programCode="thcs"
   schoolLevel="thcs"
+  heroVariant="white-form"
 >
 
-  <!-- HERO -->
+  <!-- HERO — nền trắng + two-step form -->
   <Fragment slot="hero">
-    <div class="sp-hero__badge">TUYỂN SINH THCS 2026–2027</div>
-    <h1 style="font-size:clamp(1.7rem,4vw,2.55rem);font-weight:900;color:#1a1a5e;margin:0 0 1rem;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,.45)">
-      Tuổi dậy thì không phải là giai đoạn "khó bảo"
-      <span style="display:block;color:#fff;font-size:clamp(1rem,2.5vw,1.4rem);font-weight:700;margin-top:.5rem;line-height:1.3">
-        mà là giai đoạn quyết định con bạn sẽ bứt phá… hay lệch hướng
-      </span>
-    </h1>
-
-    <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:1.25rem 1.5rem;margin:.75rem 0 1.25rem;text-align:left;max-width:660px;margin-left:auto;margin-right:auto">
-      <p style="font-size:1rem;color:rgba(255,255,255,.88);line-height:1.85;margin:0">
-        Đây là lúc cảm xúc của con thay đổi mạnh, ảnh hưởng từ bạn bè lớn hơn gia đình, thế giới online bắt đầu chi phối suy nghĩ.<br><br>
-        👉 Và cũng là lúc nhiều phụ huynh cảm thấy: <em>không còn hiểu con, khó kiểm soát, không biết nên "siết" hay "thả"</em>.<br><br>
-        Nhưng sự thật là:<br>
-        👉 Tuổi dậy thì không phải vấn đề cần <em>"xử lý"</em><br>
-        👉 Mà là <strong style="color:#F0D048">nguồn năng lượng mạnh mẽ cần được dẫn dắt đúng cách</strong>
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">💪 THCS Việt Anh · 11–15 tuổi</span>
+      <h1>
+        Tuổi dậy thì không phải là giai đoạn <span class="mn-hl">"khó bảo"</span>
+        <span class="mn-sub">mà là giai đoạn quyết định con bạn sẽ bứt phá… hay lệch hướng</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Đây là lúc cảm xúc của con thay đổi mạnh, ảnh hưởng từ bạn bè lớn hơn gia đình, thế giới online bắt đầu chi phối suy nghĩ — nhiều phụ huynh cảm thấy <em>không còn hiểu con, khó kiểm soát, không biết nên "siết" hay "thả"</em>.
       </p>
+      <p class="mn-hero__lead">
+        👉 Tuổi dậy thì không phải vấn đề cần "xử lý" — mà là <strong>nguồn năng lượng mạnh mẽ cần được dẫn dắt đúng cách</strong>.
+      </p>
+      <div class="mn-hero__badges">
+        <span>💪 Bản lĩnh</span>
+        <span>🧭 Tự chủ</span>
+        <span>🎯 Định hướng tương lai</span>
+      </div>
+      <div class="mn-hero__trust">
+        <div>🏫 <b>9 cơ sở</b> · TP.HCM, Long An, Kiên Giang</div>
+        <div>👨‍👩‍👧 <b>3.000+ gia đình</b> tin tưởng</div>
+        <div>🎓 <b>15 năm</b> đồng hành K12 từ 2011</div>
+      </div>
     </div>
 
-    <!-- Keyword badges -->
-    <div style="display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap;margin:0 0 1.5rem">
-      <span style="background:rgba(240, 208, 72,.22);border:1.5px solid #F0D048;color:#ffe082;font-size:1rem;font-weight:700;padding:.4rem 1.1rem;border-radius:50px">💪 Bản lĩnh</span>
-      <span style="background:rgba(240, 208, 72,.22);border:1.5px solid #F0D048;color:#ffe082;font-size:1rem;font-weight:700;padding:.4rem 1.1rem;border-radius:50px">🧭 Tự chủ</span>
-      <span style="background:rgba(240, 208, 72,.22);border:1.5px solid #F0D048;color:#ffe082;font-size:1rem;font-weight:700;padding:.4rem 1.1rem;border-radius:50px">🎯 Định hướng tương lai</span>
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">📘 Nhận Brochure miễn phí</span>
+      <h2>Hiểu cách Việt Anh đồng hành tuổi dậy thì</h2>
+      <p class="mn-hero__form-sub">Để lại email — đội ngũ Việt Anh sẽ gửi Brochure &amp; tư vấn lộ trình EQ, PDR, Leader in Me cho con trong 24h.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="ban-linh-thcs-hero"
+        funnelCode="sales-thcs-ban-linh-hero"
+        schoolLevel="thcs"
+        submitText="Nhận Brochure ngay"
+      />
+    </div>
+  </Fragment>
+
+  <!-- VSL BLOCK (video + form ngay dưới Hero) -->
+  <Fragment slot="video">
+    <div class="sp-video__head">
+      <span class="sp-video__eyebrow">▶ Xem trước 2 phút</span>
+      <h2 class="sp-video__title">90% phụ huynh đang vô tình huỷ hoại kho báu của con ở tuổi dậy thì</h2>
+      <p class="sp-video__sub">Cách giúp con chẳng những vượt qua khó khăn mà còn bứt phá ở tuổi dậy thì.</p>
     </div>
 
-    <!-- CTAs -->
-    <div style="display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap">
-      <a href="#sp-form1" style="display:inline-block;background:#F0D048;color:#1a1a5e;font-weight:700;padding:.9rem 1.75rem;border-radius:8px;text-decoration:none;font-size:1rem;box-shadow:0 4px 18px rgba(240, 208, 72,.45)">
-        📘 Nhận Brochure THCS Việt Anh
-      </a>
-      <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" style="display:inline-block;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.5);color:#fff;font-weight:700;padding:.9rem 1.75rem;border-radius:8px;text-decoration:none;font-size:.97rem">
-        💬 Chat Zalo ngay
-      </a>
+    <div class="sp-video__frame">
+      <iframe
+        src="https://www.youtube.com/embed/0vU8p-w4dho?rel=0"
+        title="90% phụ huynh đang vô tình huỷ hoại kho báu của con ở tuổi dậy thì"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen
+      ></iframe>
     </div>
-    <p style="font-size:1rem;color:rgba(255,255,255,.5);margin-top:.85rem">
-      Hiểu cách nhà trường đồng hành cùng học sinh tuổi dậy thì
-    </p>
+
   </Fragment>
 
   <!-- PAIN -->
@@ -60,7 +80,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     <h2>Vấn Đề Không Phải Là Tuổi Dậy Thì — Mà Là Không Có Người Dẫn Dắt Đúng</h2>
     <p>Rất nhiều học sinh bắt đầu thay đổi ở THCS: dễ nóng nảy hơn, bị ảnh hưởng bởi bạn bè, dành nhiều thời gian cho điện thoại, mất tập trung vào việc học.</p>
     <p>Phản ứng phổ biến của phụ huynh là kiểm soát chặt hơn, ép học nhiều hơn — hoặc buông xuôi. Nhưng cả 3 cách này đều không giải quyết gốc rễ.</p>
-    <p style="padding:.75rem 1rem;border-left:3px solid #F0D048;margin:1rem 0;font-size:1rem">
+    <p style="padding:.75rem 1rem;border-left:3px solid #ffff00;margin:1rem 0;font-size:1rem">
       Bởi vì trẻ đang có <strong>nhu cầu khẳng định bản thân, năng lượng mạnh mẽ và sự tò mò với thế giới</strong>. Nếu không được dẫn dắt, năng lượng đó sẽ đi vào mạng xã hội và những lựa chọn thiếu kiểm soát.<br><br>
       👉 Nếu được dẫn dắt đúng, chính năng lượng đó sẽ trở thành <strong>động lực học tập, bản lĩnh cá nhân và định hướng tương lai</strong>.
     </p>
@@ -140,7 +160,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
       <p>Buổi sáng, học sinh không chỉ đến lớp — mà mang theo một mục tiêu cá nhân và một kế hoạch học tập.</p>
       <p>Trong lớp, học sinh tranh luận, phản biện. Giáo viên không áp đặt — mà dẫn dắt. Ngoài lớp là các buổi chia sẻ về mạng xã hội, dự án sử dụng AI, bài trình bày về định hướng cá nhân.</p>
       <p><strong>👉 Đây là lúc học sinh bắt đầu hiểu mình, kiểm soát mình và định hình tương lai.</strong></p>
-      <a href="#sp-form1" style="display:inline-block;margin-top:1rem;background:#1a1a5e;color:#fff;font-weight:700;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none;font-size:.92rem">
+      <a href="#mn-hero-form" style="display:inline-block;margin-top:1rem;background:#000080;color:#fff;font-weight:700;padding:.75rem 1.5rem;border-radius:8px;text-decoration:none;font-size:.92rem">
         Tìm hiểu thêm về chương trình →
       </a>
     </div>
@@ -178,7 +198,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
       </div>
     </div>
     <p style="margin-top:2rem;font-size:1rem;color:rgba(226,232,240,.75);line-height:1.8;max-width:680px;margin-left:auto;margin-right:auto">
-      Được dẫn dắt đúng cách, học sinh THCS <strong style="color:#F0D048">trưởng thành nhanh hơn, tự chủ hơn và có định hướng rõ hơn</strong> — thay vì lệch hướng vì thiếu môi trường phù hợp.
+      Được dẫn dắt đúng cách, học sinh THCS <strong style="color:#ffff00">trưởng thành nhanh hơn, tự chủ hơn và có định hướng rõ hơn</strong> — thay vì lệch hướng vì thiếu môi trường phù hợp.
     </p>
   </Fragment>
 
@@ -207,7 +227,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         </a>
         <div>
           <div class="sp-quote__name">Chị Quỳnh</div>
-          <div class="sp-quote__meta">Phụ huynh học sinh THCS · <a href="https://www.youtube.com/watch?v=cZ6S_3MG1Vo" target="_blank" rel="noopener" style="color:#F0D048;font-weight:600;text-decoration:none">Xem video ▶</a></div>
+          <div class="sp-quote__meta">Phụ huynh học sinh THCS · <a href="https://www.youtube.com/watch?v=cZ6S_3MG1Vo" target="_blank" rel="noopener" style="color:#000080;font-weight:600;text-decoration:none">Xem video ▶</a></div>
         </div>
       </div>
     </div>
@@ -227,9 +247,9 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         <ul class="sp-pricing-col__features">
           <li>Kiến thức theo chương trình</li>
           <li>Kiểm soát bằng quy định</li>
-          <li style="color:#1a1a5e">Không xử lý được cảm xúc</li>
-          <li style="color:#1a1a5e">Không có định hướng rõ</li>
-          <li style="color:#1a1a5e">Dễ lệch hướng khi áp lực lớn</li>
+          <li style="color:#000080">Không xử lý được cảm xúc</li>
+          <li style="color:#000080">Không có định hướng rõ</li>
+          <li style="color:#000080">Dễ lệch hướng khi áp lực lớn</li>
         </ul>
       </div>
       <div class="sp-pricing-col sp-pricing-col--promo">
@@ -246,9 +266,9 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
       </div>
     </div>
 
-    <div style="background:#fffbf0;border:1.5px solid #F0D048;border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:left">
+    <div style="background:#fffbf0;border:1.5px solid #ffff00;border-radius:12px;padding:1.5rem;margin-top:1.5rem;text-align:left">
       <p style="font-size:1rem;color:#475569;line-height:1.8;margin:0">
-        Sự khác biệt không nằm ở điểm số — mà nằm ở <strong style="color:#F0D048">con người mà con bạn trở thành</strong> sau 4 năm THCS.
+        Sự khác biệt không nằm ở điểm số — mà nằm ở <strong style="color:#000080">con người mà con bạn trở thành</strong> sau 4 năm THCS.
       </p>
     </div>
     <p class="sp-pricing__note">* Liên hệ để nhận thông tin học phí và chương trình chi tiết.</p>
@@ -258,21 +278,23 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   <Fragment slot="cta">
     <h2>Đừng Đợi Đến Khi Con Lệch Hướng Mới Tìm Giải Pháp</h2>
     <p>Bạn không cần quyết định ngay. Nhưng bạn nên hiểu rõ môi trường mà con sẽ trải qua trong giai đoạn nhạy cảm và quan trọng nhất.</p>
-    <a href="#sp-form1" class="sp-cta-btn">📘 Nhận ngay Brochure chương trình →</a>
+    <a href="#mn-hero-form" class="sp-cta-btn">📘 Nhận ngay Brochure chương trình →</a>
     <p class="sp-cta-block__note">Không spam · Tư vấn riêng theo tình trạng của con</p>
   </Fragment>
 
   <!-- FORM 1 -->
   <Fragment slot="form1">
-    <p class="sp-form-block__eyebrow">NHẬN TÀI LIỆU MIỄN PHÍ</p>
-    <h2>Hiểu Chi Tiết Chương Trình &amp; Phương Pháp THCS Việt Anh</h2>
-    <p>Điền thông tin để nhận Brochure — hiểu rõ cách nhà trường đồng hành cùng học sinh trong giai đoạn tuổi dậy thì.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="ban-linh-thcs-form1"
-      funnelCode="sales-thcs-ban-linh"
-      schoolLevel="thcs"
-      submitText="Nhận Brochure ngay"
-    />
+    <div class="mn-hero__form" id="sp-form1-card" style="max-width:560px;margin:0 auto;text-align:left">
+      <span class="mn-hero__form-eyebrow">📘 Nhận Brochure miễn phí</span>
+      <h2>Hiểu cách Việt Anh đồng hành tuổi dậy thì</h2>
+      <p class="mn-hero__form-sub">Để lại email — đội ngũ Việt Anh sẽ gửi Brochure &amp; tư vấn lộ trình EQ, PDR, Leader in Me cho con trong 24h.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="ban-linh-thcs-form1"
+        funnelCode="sales-thcs-ban-linh"
+        schoolLevel="thcs"
+        submitText="Nhận Brochure ngay"
+      />
+    </div>
   </Fragment>
 
   <!-- FAQ -->
@@ -311,18 +333,6 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         Thông qua PDR định kỳ, phụ huynh sẽ thấy rõ con đang phát triển ở đâu và cần hỗ trợ thêm điều gì.
       </div>
     </details>
-  </Fragment>
-
-  <!-- FORM 2 -->
-  <Fragment slot="form2">
-    <h2>Để Lại Thông Tin — Nhận Tư Vấn Cá Nhân Hoá Cho Con</h2>
-    <p>Đội ngũ Việt Anh sẽ liên hệ để đánh giá mô hình có phù hợp với tình trạng và nhu cầu của con bạn không.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="ban-linh-thcs-form2"
-      funnelCode="sales-thcs-ban-linh-2"
-      schoolLevel="thcs"
-      submitText="Gửi thông tin tư vấn"
-    />
   </Fragment>
 
 </SalesPageLayout>

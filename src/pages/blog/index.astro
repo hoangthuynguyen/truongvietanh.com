@@ -341,12 +341,12 @@ const structuredData = [
 </script>
 
 <style is:inline>
-  .bi-page { --navy: #1a1a5e; --navy-dk: #12123e; --gold: #F0D048; --gold-lt: rgba(240, 208, 72,.12); --sub: #5a5a7a; --border: #E5E7EB; --bg: #F8F9FC; --white: #fff; --radius: 12px; }
+  .bi-page { --navy: #000080; --navy-dk: #00004d; --gold: #ffff00; --gold-lt: rgba(255, 255, 0,.12); --sub: #5a5a7a; --border: #E5E7EB; --bg: #F8F9FC; --white: #fff; --radius: 12px; }
   .bi-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
 
   .bi-hero {
     background:
-      linear-gradient(135deg, rgba(18,18,62,.88) 0%, rgba(26,26,94,.82) 65%, rgba(34,34,116,.88) 100%),
+      linear-gradient(135deg, rgba(18,18,62,.88) 0%, rgba(0,0,128,.82) 65%, rgba(34,34,116,.88) 100%),
       url('https://media.truongvietanh.com/images/vui-ve/4-hoc-sinh-su-dung-laptop-2.webp') center/cover no-repeat;
     color: #fff; padding: 3.5rem 0 4rem; position: relative; overflow: hidden;
   }
@@ -360,7 +360,7 @@ const structuredData = [
 
   .bi-search { position: relative; max-width: 540px; }
   .bi-search__input { width: 100%; padding: .85rem 1rem .85rem 3rem; border-radius: 10px; border: none; font-size: 1rem; color: #1a1a2e; background: #fff; box-shadow: 0 4px 20px rgba(0,0,0,.15); outline: none; transition: box-shadow .2s; }
-  .bi-search__input:focus { box-shadow: 0 4px 24px rgba(240, 208, 72,.35); }
+  .bi-search__input:focus { box-shadow: 0 4px 24px rgba(255, 255, 0,.35); }
   .bi-search__icon { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: #94a3b8; pointer-events: none; }
 
   .bi-section-title { font-size: 1.5rem; font-weight: 800; color: var(--navy); margin: 0 0 1.5rem; }
@@ -368,7 +368,7 @@ const structuredData = [
   .bi-featured { padding: 3rem 0 2rem; background: var(--white); }
   .bi-featured__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 1.25rem; }
   .bi-featured__card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; transition: transform .2s, box-shadow .2s; }
-  .bi-featured__card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,26,94,.1); }
+  .bi-featured__card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,128,.1); }
   .bi-featured__card--main { background: linear-gradient(135deg, var(--navy-dk), var(--navy)); color: #fff; }
   .bi-featured__card-body { padding: 1.5rem; display: flex; flex-direction: column; gap: .6rem; flex: 1; }
   .bi-featured__card-title { font-size: 1.05rem; font-weight: 700; line-height: 1.4; margin: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -378,11 +378,11 @@ const structuredData = [
   .bi-featured__card-date { font-size: .78rem; color: #94a3b8; margin-top: auto; }
   .bi-featured__card--main .bi-featured__card-date { color: rgba(255,255,255,.55); }
 
-  .bi-cat-badge { display: inline-flex; align-items: center; gap: .25rem; font-size: .72rem; font-weight: 700; padding: .25rem .65rem; border-radius: 50px; background: var(--gold-lt); color: var(--navy); border: 1px solid rgba(240, 208, 72,.25); width: fit-content; }
+  .bi-cat-badge { display: inline-flex; align-items: center; gap: .25rem; font-size: .72rem; font-weight: 700; padding: .25rem .65rem; border-radius: 50px; background: var(--gold-lt); color: var(--navy); border: 1px solid rgba(255, 255, 0,.25); width: fit-content; }
   .bi-featured__card--main .bi-cat-badge { background: rgba(255,255,255,.15); color: #fff; border-color: rgba(255,255,255,.25); }
 
   .bi-cat-wrap { background: var(--white); border-bottom: 2px solid var(--border); position: sticky; top: 0; z-index: 100; transition: box-shadow .2s; }
-  .bi-cat-wrap--sticky { box-shadow: 0 4px 20px rgba(26,26,94,.1); }
+  .bi-cat-wrap--sticky { box-shadow: 0 4px 20px rgba(0,0,128,.1); }
   .bi-cats { display: flex; overflow-x: auto; scrollbar-width: none; padding: 0 .25rem; -webkit-overflow-scrolling: touch; }
   .bi-cats::-webkit-scrollbar { display: none; }
   .bi-cat-btn { display: flex; align-items: center; gap: .35rem; padding: .9rem 1.1rem; border: none; background: none; cursor: pointer; white-space: nowrap; font-size: .85rem; font-weight: 600; color: var(--sub); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color .15s, border-color .15s; flex-shrink: 0; }
@@ -395,8 +395,8 @@ const structuredData = [
   .bi-posts { padding: 2.5rem 0 3rem; background: var(--bg); }
   .bi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
   .bi-card { display: flex; flex-direction: column; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.25rem; text-decoration: none; color: inherit; transition: transform .2s, box-shadow .2s; position: relative; }
-  .bi-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), #F5DC85); transform: scaleX(0); transition: transform .25s; border-radius: 0 0 var(--radius) var(--radius); }
-  .bi-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,26,94,.09); }
+  .bi-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--gold), #ffff44); transform: scaleX(0); transition: transform .25s; border-radius: 0 0 var(--radius) var(--radius); }
+  .bi-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,128,.09); }
   .bi-card:hover::after { transform: scaleX(1); }
   .bi-card__top { margin-bottom: .65rem; }
   .bi-card__title { font-size: .95rem; font-weight: 700; color: var(--navy); line-height: 1.4; margin: 0 0 .5rem; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; flex: 1; }
@@ -416,7 +416,7 @@ const structuredData = [
   .bi-cats-overview { padding: 3.5rem 0; background: var(--white); }
   .bi-cats-overview__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
   .bi-cat-card { display: flex; flex-direction: column; text-decoration: none; color: inherit; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem 1.25rem; transition: transform .2s, box-shadow .2s; }
-  .bi-cat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(26,26,94,.09); border-color: var(--gold); }
+  .bi-cat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,128,.09); border-color: var(--gold); }
   .bi-cat-card__icon { font-size: 2rem; margin-bottom: .75rem; display: block; }
   .bi-cat-card__name { font-size: 1.05rem; font-weight: 800; color: var(--navy); margin: 0 0 .4rem; }
   .bi-cat-card__desc { font-size: .83rem; color: var(--sub); line-height: 1.55; margin: 0 0 .75rem; flex: 1; }
@@ -429,7 +429,7 @@ const structuredData = [
   .bi-cta__actions { display: flex; gap: .75rem; flex-wrap: wrap; }
   .bi-btn { display: inline-flex; align-items: center; gap: .4rem; padding: .75rem 1.75rem; border-radius: 8px; font-weight: 700; font-size: .95rem; text-decoration: none; transition: transform .15s, box-shadow .15s; }
   .bi-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.25); }
-  .bi-btn--gold { background: linear-gradient(135deg, var(--gold), #D4B637); color: var(--navy-dk); }
+  .bi-btn--gold { background: linear-gradient(135deg, var(--gold), #cccc00); color: var(--navy-dk); }
   .bi-btn--outline { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.3); }
 
   @media (max-width: 1100px) { .bi-grid { grid-template-columns: repeat(3, 1fr); } .bi-cats-overview__grid { grid-template-columns: repeat(3, 1fr); } }

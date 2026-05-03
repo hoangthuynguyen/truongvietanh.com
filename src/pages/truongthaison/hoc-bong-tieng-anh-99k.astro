@@ -128,10 +128,16 @@ const faqs = [
     <section class="ts-video-section">
       <div class="ts-container">
         <div class="ts-video-wrap">
-          <div class="ts-video-placeholder">
-            <div class="ts-video-play" aria-hidden="true">▶</div>
-            <span class="ts-video-text">Video sắp cập nhật</span>
-          </div>
+          <video
+            class="ts-video"
+            controls
+            preload="metadata"
+            playsinline
+            poster={KHAI_PORTRAIT}
+          >
+            <source src="https://media.truongvietanh.com/videos/%237%20%E2%80%93%20T%C3%94I%20T%C3%8AN%20L%C3%80%20NGUY%E1%BB%84N%20DUY%20KH%E1%BA%A2I.mp4" type="video/mp4" />
+            Trình duyệt của Anh/Chị không hỗ trợ video HTML5.
+          </video>
         </div>
         <p class="ts-video-caption">▶ Anh Nguyễn Duy Khải – Giám đốc Trường Thái Sơn giới thiệu chương trình</p>
       </div>
@@ -154,9 +160,14 @@ const faqs = [
     <section class="ts-story" id="cau-chuyen">
       <div class="ts-container ts-story__grid">
         <div class="ts-story__photo">
-          <div class="ts-story__photo-frame" aria-hidden="true">
-            <span>Anh Nguyễn Duy Khải</span>
-          </div>
+          <img
+            src={KHAI_PORTRAIT}
+            alt="Anh Nguyễn Duy Khải — Giám đốc Trường Thái Sơn"
+            class="ts-story__photo-img"
+            loading="lazy"
+            width="320"
+            height="320"
+          />
           <p class="ts-story__sig">
             <em>— Nguyễn Duy Khải</em><br/>
             Regional Manager đương nhiệm – Major Education<br/>
@@ -277,35 +288,6 @@ const faqs = [
       </div>
     </section>
 
-    <!-- ============ FAQ ============ -->
-    <section class="ts-faq">
-      <div class="ts-container">
-        <h2 class="ts-h2-center">Câu Hỏi Anh/Chị Hay Hỏi</h2>
-        <div class="ts-faq__list">
-          {faqs.map((f, i) => (
-            <details class="ts-faq__item" open={i === 0}>
-              <summary>{f.q}</summary>
-              <p>{f.a}</p>
-            </details>
-          ))}
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ COUNTDOWN + SCARCITY ============ -->
-    <section class="ts-scarcity">
-      <div class="ts-container ts-center">
-        <p class="ts-scarcity__eyebrow">⏰ HỌC BỔNG NÀY KHÔNG KÉO DÀI</p>
-        <div class="ts-scarcity__counters">
-          <div><strong data-seats>23</strong><span>SUẤT CÒN LẠI</span></div>
-          <div><strong>7</strong><span>NGÀY ĐẾN HẠN</span></div>
-          <div><strong>99.000Đ</strong><span>THÁNG ĐẦU</span></div>
-        </div>
-        <p class="ts-scarcity__sub"><em>Khi đủ 100 phụ huynh đăng ký, chúng tôi đóng nhận hồ sơ. Sau đó học phí trở về mức thông thường 999.000đ/tháng – sẽ <strong>KHÔNG</strong> còn mức 99.000đ.</em></p>
-        <a href="#dang-ky" class="ts-cta-btn ts-cta-btn--xl ts-cta-track" data-cta="scarcity">GIỮ CHỖ NGAY – CHỈ MẤT 30 GIÂY</a>
-      </div>
-    </section>
-
     <!-- ============ FORM ĐĂNG KÝ ============ -->
     <section class="ts-form-section" id="dang-ky">
       <div class="ts-container ts-form-section__grid">
@@ -383,11 +365,32 @@ const faqs = [
       </div>
     </section>
 
-    <!-- ============ TESTIMONIAL PLACEHOLDER ============ -->
-    <section class="ts-testimonial">
+    <!-- ============ FAQ ============ -->
+    <section class="ts-faq">
+      <div class="ts-container">
+        <h2 class="ts-h2-center">Câu Hỏi Anh/Chị Hay Hỏi</h2>
+        <div class="ts-faq__list">
+          {faqs.map((f, i) => (
+            <details class="ts-faq__item" open={i === 0}>
+              <summary>{f.q}</summary>
+              <p>{f.a}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ COUNTDOWN + SCARCITY ============ -->
+    <section class="ts-scarcity">
       <div class="ts-container ts-center">
-        <h2 class="ts-h2-center">Phụ Huynh Đang Nói Gì Về Chương Trình?</h2>
-        <p class="ts-testimonial__placeholder"><em>Khu vực này sẽ cập nhật testimonial từ phụ huynh đăng ký sớm trong những ngày đầu của chương trình.</em></p>
+        <p class="ts-scarcity__eyebrow">⏰ HỌC BỔNG NÀY KHÔNG KÉO DÀI</p>
+        <div class="ts-scarcity__counters">
+          <div><strong data-seats>23</strong><span>SUẤT CÒN LẠI</span></div>
+          <div><strong>7</strong><span>NGÀY ĐẾN HẠN</span></div>
+          <div><strong>99.000Đ</strong><span>THÁNG ĐẦU</span></div>
+        </div>
+        <p class="ts-scarcity__sub"><em>Khi đủ 100 phụ huynh đăng ký, chúng tôi đóng nhận hồ sơ. Sau đó học phí trở về mức thông thường 999.000đ/tháng – sẽ <strong>KHÔNG</strong> còn mức 99.000đ.</em></p>
+        <a href="#dang-ky" class="ts-cta-btn ts-cta-btn--xl ts-cta-track" data-cta="scarcity">GIỮ CHỖ NGAY – CHỈ MẤT 30 GIÂY</a>
       </div>
     </section>
 
@@ -473,7 +476,8 @@ const faqs = [
 <style is:global>
   /* ============================================================================
      SALES PAGE — TRƯỜNG THÁI SƠN — 100 CÔNG DÂN TOÀN CẦU
-     Palette: Navy #000080 / CTA cam-đỏ #E63946 / Đỏ #C00000 / Vàng nhạt #FFF7CC
+     Palette: Navy #000080 / Vàng brand #FFFF00 (mute var(--ts-yellow-mute) trên nền tối, #FFF7CC nền sáng)
+              / CTA cam-đỏ #E63946 / Đỏ #C00000
      Mobile-first, font tối thiểu 16px body / 18px button / 24px H3
      ============================================================================ */
   .ts-page{
@@ -484,6 +488,8 @@ const faqs = [
     --ts-cta-dk: #B81D2A;
     --ts-cta-hl: #FF6B35;
     --ts-red: #C00000;
+    --ts-yellow: #FFFF00;
+    --ts-yellow-mute: #FFE066;
     --ts-yellow-soft: #FFF7CC;
     --ts-yellow-softer: #FFFCEB;
     --ts-bg: #F7F9FC;
@@ -539,13 +545,13 @@ const faqs = [
     line-height: 1.65;
   }
 
-  /* ====== CTA BUTTONS — warm orange-red ====== */
+  /* ====== CTA BUTTONS — brand yellow #FFFF00 + navy text ====== */
   .ts-page a.ts-cta-btn,
   .ts-page button.ts-cta-btn,
   .ts-cta-btn {
     display: inline-block;
-    background: linear-gradient(135deg, var(--ts-cta-hl) 0%, var(--ts-cta) 100%);
-    color: #fff;
+    background: var(--ts-yellow);
+    color: var(--ts-navy);
     font-weight: 700;
     text-decoration: none;
     border: none;
@@ -554,12 +560,12 @@ const faqs = [
     font-size: 18px;
     letter-spacing: .01em;
     transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-    box-shadow: 0 4px 14px rgba(230, 57, 70, .35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, .18), 0 0 0 1px rgba(0, 0, 128, .08);
     cursor: pointer;
     line-height: 1.3;
   }
-  .ts-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(230, 57, 70, .45); filter: brightness(1.05); }
-  .ts-cta-btn:active { transform: translateY(0); box-shadow: 0 3px 10px rgba(230, 57, 70, .35); }
+  .ts-cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0, 0, 0, .22), 0 0 0 1px rgba(0, 0, 128, .12); filter: brightness(1.02); }
+  .ts-cta-btn:active { transform: translateY(0); box-shadow: 0 3px 10px rgba(0, 0, 0, .18); }
   .ts-cta-btn--xl { font-size: 19px; padding: 18px 34px; }
   .ts-cta-btn--full { width: 100%; display: block; text-align: center; }
   .ts-cta-btn--zalo { background: #0068FF; box-shadow: 0 4px 14px rgba(0, 104, 255, .35); }
@@ -588,7 +594,7 @@ const faqs = [
   .ts-hero__bg, .ts-hero__overlay { display: none; }
   .ts-hero__inner { position: relative; max-width: 920px; margin: 0 auto; text-align: center; }
   .ts-hero__pre {
-    color: #FFE066;
+    color: var(--ts-yellow-mute);
     font-size: 14px;
     font-weight: 600;
     text-transform: uppercase;
@@ -616,13 +622,14 @@ const faqs = [
   @media (min-width: 768px) { .ts-hero__price { font-size: 44px; } }
   .ts-hero__price em {
     font-style: normal;
-    color: var(--ts-cta-hl);
-    background: rgba(255, 255, 255, .98);
+    color: var(--ts-navy);
+    background: var(--ts-yellow);
     padding: .05em .35em;
     border-radius: 8px;
     font-weight: 700;
     margin: 0 .12em;
     display: inline-block;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, .15);
   }
 
   /* Trust badges: white card with red+blue text */
@@ -657,7 +664,7 @@ const faqs = [
     margin: 1.25rem 0 0;
   }
   @media (min-width: 768px) { .ts-hero__scarcity { font-size: 16px; } }
-  .ts-hero__scarcity span { color: #FFE066; font-weight: 600; }
+  .ts-hero__scarcity span { color: var(--ts-yellow-mute); font-weight: 600; }
 
   /* ====== VIDEO STANDALONE ====== */
   .ts-video-section { background: var(--ts-bg); padding: 40px 0; }
@@ -665,7 +672,7 @@ const faqs = [
   .ts-video-section .ts-container { max-width: 760px; }
   .ts-video-wrap {
     aspect-ratio: 16 / 9;
-    background: var(--ts-navy);
+    background: #000;
     border-radius: 14px;
     overflow: hidden;
     position: relative;
@@ -689,6 +696,12 @@ const faqs = [
     transition: transform .2s ease;
   }
   .ts-video-wrap:hover .ts-video-play { transform: scale(1.08); }
+  .ts-video {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: contain; display: block;
+    background: #000;
+  }
   .ts-video-text { font-size: 14px; opacity: .85; }
   .ts-video-caption { color: var(--ts-sub); font-size: 16px; margin: 1rem 0 0; text-align: center; }
 
@@ -721,11 +734,14 @@ const faqs = [
     display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: start;
   }
   @media (min-width: 1024px) { .ts-story__grid { grid-template-columns: 320px 1fr; gap: 3rem; } }
-  .ts-story__photo-frame {
-    aspect-ratio: 1/1; background: linear-gradient(135deg, var(--ts-navy), #2a2a8a);
-    border-radius: 12px; display: flex; align-items: center; justify-content: center;
-    color: rgba(255,255,255,.85); font-size: 16px; padding: 1rem; text-align: center;
-    border: 3px solid var(--ts-yellow);
+  .ts-story__photo-img {
+    width: 100%; height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    border: 3px solid var(--ts-yellow-mute);
+    display: block;
+    background: #f7f9fc;
+    box-shadow: 0 8px 24px rgba(0, 0, 128, .15);
   }
   .ts-story__sig {
     font-size: 16px; color: var(--ts-sub); margin-top: 1rem;
@@ -790,7 +806,7 @@ const faqs = [
 
   .ts-program__info {
     background: var(--ts-yellow-softer);
-    border: 1px solid #FFE066;
+    border: 1px solid var(--ts-yellow-mute);
     border-radius: 14px;
     padding: 1.5rem;
     margin-top: 2rem;
@@ -889,7 +905,8 @@ const faqs = [
   }
   .ts-guarantee__portrait { text-align: center; }
   .ts-guarantee__portrait img {
-    width: 100%; max-width: 260px; aspect-ratio: 1/1; object-fit: cover;
+    width: 100%; max-width: 260px; aspect-ratio: 1/1;
+    object-fit: cover; object-position: center 18%;
     border-radius: 50%;
     border: 5px solid #fff;
     box-shadow: 0 12px 32px rgba(0, 0, 128, .15);
@@ -974,7 +991,7 @@ const faqs = [
     color: #fff; padding: 56px 0;
   }
   .ts-scarcity__eyebrow {
-    color: #FFE066;
+    color: var(--ts-yellow-mute);
     font-size: 16px; font-weight: 600;
     text-transform: uppercase; letter-spacing: .1em;
     margin: 0 0 1.5rem;
@@ -991,7 +1008,7 @@ const faqs = [
   }
   .ts-scarcity__counters strong {
     display: block; font-family: 'Montserrat', sans-serif;
-    font-size: 32px; font-weight: 700; color: #FFE066; line-height: 1;
+    font-size: 32px; font-weight: 700; color: var(--ts-yellow-mute); line-height: 1;
   }
   @media (min-width: 768px) { .ts-scarcity__counters strong { font-size: 52px; } }
   .ts-scarcity__counters span {
@@ -1005,7 +1022,7 @@ const faqs = [
     max-width: 680px; margin: 0 auto 1.75rem;
     font-size: 16px; color: rgba(255,255,255,.88); line-height: 1.6;
   }
-  .ts-scarcity__sub strong { color: #FFE066; }
+  .ts-scarcity__sub strong { color: var(--ts-yellow-mute); }
 
   /* ====== FORM SECTION ====== */
   .ts-form-section { background: var(--ts-white); padding: 60px 0; scroll-margin-top: 60px; }
@@ -1028,7 +1045,7 @@ const faqs = [
   .ts-progress__bar { height: 8px; background: var(--ts-border); border-radius: 4px; overflow: hidden; margin-bottom: .5rem; }
   .ts-progress__fill {
     height: 100%; width: 50%;
-    background: linear-gradient(90deg, var(--ts-yellow), #ffeb3b);
+    background: linear-gradient(90deg, var(--ts-navy), var(--ts-blue));
     transition: width .3s ease;
   }
   .ts-progress[data-step="2"] .ts-progress__fill { width: 100%; }
@@ -1100,7 +1117,7 @@ const faqs = [
   /* Benefits */
   .ts-benefits__box {
     background: var(--ts-yellow-softer);
-    border: 1px solid #FFE066;
+    border: 1px solid var(--ts-yellow-mute);
     border-radius: 14px;
     padding: 1.5rem;
     box-shadow: 0 4px 16px rgba(255, 224, 102, .15);
@@ -1199,7 +1216,7 @@ const faqs = [
     justify-content: space-between;
   }
   .ts-sticky__count { font-size: 13px; color: #fff; font-weight: 600; }
-  .ts-sticky__count strong { color: #FFE066; font-size: 16px; font-weight: 700; }
+  .ts-sticky__count strong { color: var(--ts-yellow-mute); font-size: 16px; font-weight: 700; }
   .ts-sticky__cta {
     background: #fff; color: var(--ts-cta);
     font-weight: 700; font-size: 14px;
@@ -1215,7 +1232,7 @@ const faqs = [
     color: #fff; padding: 56px 0 1rem;
   }
   .ts-footer p, .ts-footer li { color: #fff; }
-  .ts-footer a { color: #FFE066; text-decoration: none; }
+  .ts-footer a { color: var(--ts-yellow-mute); text-decoration: none; }
   .ts-footer a:hover { color: #fff; text-decoration: underline; }
   .ts-footer__grid {
     display: grid; grid-template-columns: 1fr; gap: 2rem;
@@ -1223,7 +1240,7 @@ const faqs = [
   @media (min-width: 640px) { .ts-footer__grid { grid-template-columns: 1fr 1fr; } }
   @media (min-width: 1024px) { .ts-footer__grid { grid-template-columns: repeat(4, 1fr); } }
   .ts-footer__heading {
-    color: #FFE066; font-weight: 700;
+    color: var(--ts-yellow-mute); font-weight: 700;
     text-transform: uppercase; letter-spacing: .06em;
     font-size: 14px; margin: 0 0 .75rem;
   }
@@ -1333,7 +1350,6 @@ const faqs = [
   const nameInput = form.querySelector('#tsName');
   const phoneInput = form.querySelector('#tsPhone');
 
-  // UTM
   const params = new URLSearchParams(window.location.search);
   const utm = {
     utm_source: params.get('utm_source') || '',
@@ -1349,7 +1365,7 @@ const faqs = [
     step1.hidden = n !== 1;
     step2.hidden = n !== 2;
     success.hidden = n !== 'success';
-    progress.dataset.step = n === 'success' ? 2 : n;
+    if (progress) progress.dataset.step = n === 'success' ? 2 : n;
     if (n === 2 && nameInput) setTimeout(() => nameInput.focus(), 100);
   }
 
@@ -1369,11 +1385,9 @@ const faqs = [
       }
       emailInput.classList.remove('ts-input-error');
       leadData.email = email;
-      // Fire intermediate Lead event
       if (typeof window.fbq === 'function') {
         window.fbq('trackCustom', 'StepOneCompleted', { value: 99000, currency: 'VND' });
       }
-      // Send partial lead
       submitLead({ ...leadData, partial: true, funnel_code: 'ts_99k' }).catch(() => {});
       showStep(2);
       return;
@@ -1387,28 +1401,22 @@ const faqs = [
       if (!validPhone(phone)) { phoneInput.classList.add('ts-input-error'); bad = true; } else phoneInput.classList.remove('ts-input-error');
       if (bad) return;
 
-      leadData.name = name;
+      leadData.fullName = name;
       leadData.phone = phone;
+      leadData.source = 'ts-hoc-bong-99k';
       leadData.funnel_code = 'ts_99k';
       leadData.school_level = 'tieu-hoc';
-      leadData.tag = 'Need_immediate_chat';
+      leadData.tags = ['ts-hoc-bong-99k', 'Need_immediate_chat', 'lead_nong'];
 
       const submitBtn = step2.querySelector('button[type="submit"]');
       submitBtn.disabled = true;
       submitBtn.textContent = 'ĐANG XỬ LÝ...';
 
-      try {
-        await submitLead(leadData);
-      } catch (err) {
-        console.warn('Lead submit error', err);
-      }
+      try { await submitLead(leadData); }
+      catch (err) { console.warn('Lead submit error', err); }
 
-      // Fire conversion events
       if (typeof window.fbq === 'function') {
-        window.fbq('track', 'Lead', {
-          value: 99000, currency: 'VND',
-          content_name: '100_cong_dan_toan_cau_99k',
-        });
+        window.fbq('track', 'Lead', { value: 99000, currency: 'VND', content_name: '100_cong_dan_toan_cau_99k' });
       }
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'generate_lead', { currency: 'VND', value: 99000 });

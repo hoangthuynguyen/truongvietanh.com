@@ -7,7 +7,7 @@ const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc';
 const funnelCode = 'cong-vien-giao-duc';
 
 const MEDIA = 'https://media.truongvietanh.com/images';
-const heroImage = '/images/cong-vien-giao-duc/hero-toan-canh.jpg';
+const heroImage = `${MEDIA}/da-ngoai/hoc-sinh-di-da-ngoai-1.webp`;
 const galleryImages = [
   { src: `${MEDIA}/khong-gian-the-thao/hoc-sinh-chay-bo-1.webp`, alt: 'Bé vận động ngoài trời, chạy nhảy tự do' },
   { src: `${MEDIA}/vui-ve/hoc-sinh-choi-vui-ve-1.webp`, alt: 'Bé vui chơi cùng bạn ngoài sân' },
@@ -22,7 +22,7 @@ const galleryImages = [
 
 const campuses = [
   { value: 'viet-anh', label: 'Trường Mầm non Việt Anh — 573 Lê Đức Thọ, P16, Gò Vấp, TP.HCM', map: 'https://maps.app.goo.gl/5PXx5P9PAmXM5wWv5' },
-  { value: 'nhan-le', label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Tây Ninh', map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
+  { value: 'nhan-le', label: 'Trường Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu, Cần Giuộc, Long An', map: 'https://maps.app.goo.gl/ik7LL54j2szydWGZ9' },
   { value: 'mekong-xanh', label: 'Mầm non & Tiểu học Mekong Xanh — Lô E7, KĐT Tây Bắc, Rạch Giá, An Giang', map: 'https://maps.app.goo.gl/VHG5dxeEtan3wGjz6' },
 ];
 ---
@@ -51,10 +51,6 @@ const campuses = [
 
   <section slot="content">
     <div class="cvgd-content">
-      <figure class="cvgd-hero-img">
-        <img src={heroImage} alt="Phối cảnh tổng thể Công viên Giáo dục Việt Anh — không gian học tập, vận động, vui chơi" loading="eager" width="1200" height="600" />
-      </figure>
-
       <div class="cvgd-panel">
         <h2 class="cvgd-h2">Nếu bạn là cha mẹ của trẻ 1–8 tuổi, hãy đọc kỹ</h2>
         <p class="cvgd-lead">
@@ -284,11 +280,15 @@ const campuses = [
       window.dataLayer.push({ event: 'form_submit', form_id: 'cvgd-form', funnel: FUNNEL_CODE });
     }
 
+    // Form không thu email -> tạo placeholder dạng <phone>@no-email.truongvietanh.com
+    // để pass validate API mà vẫn nhận diện được lead không có email thật.
+    const phEmail = (p) => p.replace(/[^0-9]/g, '') + '@no-email.truongvietanh.com';
+
     const leads = [
       {
         full_name: parentName,
         phone: parentPhone,
-        email: '',
+        email: phEmail(parentPhone),
         campus_ref: campus,
         role: 'registrant',
         notes: 'Đăng ký hội viên Công viên Giáo dục',
@@ -296,7 +296,7 @@ const campuses = [
       {
         full_name: ref1Name,
         phone: ref1Phone,
-        email: '',
+        email: phEmail(ref1Phone),
         campus_ref: campus,
         role: 'referred',
         notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',
@@ -304,7 +304,7 @@ const campuses = [
       {
         full_name: ref2Name,
         phone: ref2Phone,
-        email: '',
+        email: phEmail(ref2Phone),
         campus_ref: campus,
         role: 'referred',
         notes: 'Được giới thiệu bởi: ' + parentName + ' (' + parentPhone + ')',
@@ -327,17 +327,38 @@ const campuses = [
 </script>
 
 <style is:inline>
+  /* Hide empty layout sections not used by this page */
+  section.squeeze-usp,
+  section.squeeze-trust,
+  section.squeeze-faq { display: none !important; }
+
+  /* Hero: phối cảnh campus với overlay nhẹ để hình hiện rõ */
+  section.squeeze-hero {
+    background:
+      linear-gradient(160deg, rgba(0,0,80,0.55) 0%, rgba(0,0,100,0.45) 50%, rgba(0,0,60,0.55) 100%),
+      url('/cong-vien-giao-duc-phoi-canh.png') center / cover no-repeat !important;
+    color: #fff !important;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.45);
+  }
+  section.squeeze-hero .squeeze-hero__heading,
+  section.squeeze-hero .squeeze-hero__sub,
+  section.squeeze-hero .cvgd-hero-cta-line { color: #fff !important; }
+
   .cvgd-badge {
     display: inline-block;
-    background: rgba(240, 208, 72, 0.15);
-    color: #8b6a1e;
+    background: rgba(255, 255, 0, 0.18);
+    color: #ffff00;
     padding: 0.45rem 1rem;
     border-radius: 999px;
     font-weight: 700;
     font-size: 1rem;
     letter-spacing: 0.5px;
     margin-bottom: 1rem;
-    border: 1px solid rgba(240, 208, 72, 0.4);
+    border: 1px solid rgba(255, 255, 0, 0.5);
   }
   .cvgd-rules {
     display: flex;
@@ -347,7 +368,7 @@ const campuses = [
     margin: 1.25rem 0;
   }
   .cvgd-rule {
-    background: #1a1a5e;
+    background: #000080;
     color: #fff;
     padding: 0.5rem 1rem;
     border-radius: 6px;
@@ -356,7 +377,7 @@ const campuses = [
     letter-spacing: 0.3px;
   }
   .cvgd-rule--accent {
-    background: linear-gradient(135deg, #F0D048, #b8922e);
+    background: linear-gradient(135deg, #ffff00, #cccc00);
   }
   .cvgd-hero-cta-line {
     max-width: 640px;
@@ -371,7 +392,7 @@ const campuses = [
     margin: 0;
     border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(26, 26, 94, 0.12);
+    box-shadow: 0 8px 24px rgba(0, 0, 128, 0.12);
   }
   .cvgd-hero-img img {
     display: block;
@@ -409,17 +430,17 @@ const campuses = [
   }
   .cvgd-panel--highlight {
     background: linear-gradient(180deg, #fdf7e6 0%, #ffffff 100%);
-    border-color: rgba(240, 208, 72, 0.4);
+    border-color: rgba(255, 255, 0, 0.4);
   }
-  .cvgd-panel--steps { border-left: 4px solid #F0D048; }
+  .cvgd-panel--steps { border-left: 4px solid #ffff00; }
   .cvgd-h2 {
-    color: #1a1a5e;
+    color: #000080;
     margin-bottom: 1rem;
     line-height: 1.3;
   }
-  .cvgd-lead { font-size: 1.15rem; line-height: 1.65; margin-bottom: 1rem; color: #1a1a5e; }
+  .cvgd-lead { font-size: 1.15rem; line-height: 1.65; margin-bottom: 1rem; color: #000080; }
   .cvgd-para { line-height: 1.7; margin-bottom: 1rem; color: #2d2d42; }
-  .cvgd-para--emphasis { font-weight: 700; color: #1a1a5e; font-size: 1.15rem; }
+  .cvgd-para--emphasis { font-weight: 700; color: #000080; font-size: 1.15rem; }
   .cvgd-pains {
     list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.5rem;
   }
@@ -431,16 +452,16 @@ const campuses = [
   .cvgd-campuses a {
     display: grid; grid-template-columns: auto 1fr auto; gap: 1rem; align-items: center;
     padding: 1rem 1.25rem; background: #f8f9fb; border: 1px solid #e5e7eb;
-    border-radius: 10px; color: #1a1a5e; text-decoration: none; transition: all 0.2s;
+    border-radius: 10px; color: #000080; text-decoration: none; transition: all 0.2s;
   }
-  .cvgd-campuses a:hover { background: #fff; border-color: #F0D048; transform: translateY(-2px); }
+  .cvgd-campuses a:hover { background: #fff; border-color: #ffff00; transform: translateY(-2px); }
   .cvgd-campus__num {
-    width: 36px; height: 36px; border-radius: 50%; background: #1a1a5e; color: #fff;
+    width: 36px; height: 36px; border-radius: 50%; background: #000080; color: #fff;
     display: inline-flex; align-items: center; justify-content: center;
     font-weight: 800; flex-shrink: 0;
   }
   .cvgd-campus__text { font-weight: 600; line-height: 1.5; }
-  .cvgd-campus__go { color: #F0D048; font-weight: 700; white-space: nowrap; }
+  .cvgd-campus__go { color: #ffff00; font-weight: 700; white-space: nowrap; }
   .cvgd-benefits { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; }
   .cvgd-benefits li {
     display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start;
@@ -452,7 +473,7 @@ const campuses = [
     display: inline-flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .cvgd-benefits strong { color: #1a1a5e; display: block; margin-bottom: 0.25rem; }
+  .cvgd-benefits strong { color: #000080; display: block; margin-bottom: 0.25rem; }
   .cvgd-benefits p { color: #475569; line-height: 1.6; margin: 0; }
   .cvgd-who { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.5rem; }
   .cvgd-who li {
@@ -461,15 +482,15 @@ const campuses = [
   }
   .cvgd-steps { margin: 0 0 1rem 1.25rem; padding: 0; display: grid; gap: 0.65rem; }
   .cvgd-steps li { line-height: 1.7; color: #2d2d42; }
-  .cvgd-steps li strong { color: #1a1a5e; }
+  .cvgd-steps li strong { color: #000080; }
   .cvgd-no { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.4rem; }
   .cvgd-no li { color: #475569; font-weight: 500; }
   .cvgd-limit {
-    padding: 1.25rem 1.5rem; background: linear-gradient(135deg, #1a1a5e, #2d2d8a);
+    padding: 1.25rem 1.5rem; background: linear-gradient(135deg, #000080, #00009a);
     color: #fff; border-radius: 14px;
   }
   .cvgd-limit p { margin: 0; line-height: 1.65; color: #fff; }
-  .cvgd-limit strong { color: #F0D048; }
+  .cvgd-limit strong { color: #ffff00; }
 
   /* Form */
   .cvgd-form-intro { margin-bottom: 1.5rem; text-align: center; max-width: 640px; margin-left: auto; margin-right: auto; }
@@ -478,18 +499,22 @@ const campuses = [
   .cvgd-form input, .cvgd-form select { width: 100%; }
   .cvgd-form-intro { text-align: center; }
   .cvgd-fieldset {
-    border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.25rem 1.25rem;
-    background: #fff;
+    border: 1.5px solid #e5e7eb; border-radius: 12px; padding: 0;
+    background: #fff; overflow: hidden; margin: 0;
   }
   .cvgd-fieldset legend {
-    padding: 0 0.65rem; font-weight: 700; color: #1a1a5e;
-    font-size: 1rem;
+    float: left; display: block; width: 100%; box-sizing: border-box;
+    margin: 0; padding: 0.85rem 1.25rem;
+    background: #000080; color: #ffff00;
+    font-weight: 800; font-size: 1.05rem; letter-spacing: 0.2px;
   }
+  .cvgd-fieldset > *:not(legend) { clear: both; }
   .cvgd-form label {
-    display: grid; gap: 0.35rem; margin-top: 0.75rem;
+    display: grid; gap: 0.35rem; margin: 0.85rem 1.25rem 0;
   }
+  .cvgd-fieldset > label:last-of-type { margin-bottom: 1.25rem; }
   .cvgd-form label span {
-    font-weight: 600; color: #1a1a5e;
+    font-weight: 600; color: #000080;
   }
   .cvgd-form label em { color: #dc2626; font-style: normal; }
   .cvgd-form input, .cvgd-form select {
@@ -498,25 +523,25 @@ const campuses = [
     transition: border-color 0.2s;
   }
   .cvgd-form input:focus, .cvgd-form select:focus {
-    outline: none; border-color: #F0D048;
-    box-shadow: 0 0 0 3px rgba(240, 208, 72, 0.15);
+    outline: none; border-color: #ffff00;
+    box-shadow: 0 0 0 3px rgba(255, 255, 0, 0.15);
   }
   .cvgd-submit {
     justify-self: center;
     width: auto;
     max-width: 100%;
     padding: 0.85rem 1.5rem;
-    background: linear-gradient(135deg, #F0D048, #b8922e);
+    background: linear-gradient(135deg, #ffff00, #cccc00);
     color: #1a1a2e; border: none; border-radius: 10px;
     font-weight: 800; font-size: 1rem; line-height: 1.25;
     cursor: pointer; white-space: nowrap;
-    box-shadow: 0 4px 15px rgba(240, 208, 72, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 255, 0, 0.4);
     transition: transform 0.15s, box-shadow 0.15s;
   }
   @media (max-width: 480px) {
     .cvgd-submit { white-space: normal; padding: 0.85rem 1.1rem; font-size: 0.95rem; }
   }
-  .cvgd-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(240, 208, 72, 0.5); }
+  .cvgd-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255, 255, 0, 0.5); }
   .cvgd-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
   .cvgd-consent {
     font-size: 1rem; color: #64748b; text-align: center; line-height: 1.5; margin: 0;
@@ -525,6 +550,49 @@ const campuses = [
     background: #fef2f2; color: #991b1b; padding: 0.85rem 1rem;
     border-radius: 8px; border-left: 3px solid #dc2626; font-weight: 600;
   }
+
+  /* Footer override — match brand navy + vàng */
+  .squeeze-footer {
+    background: linear-gradient(180deg, #000060 0%, #000080 100%) !important;
+    color: #fff !important;
+    padding: 3rem 1.5rem 2rem !important;
+  }
+  .squeeze-footer__contact-title {
+    color: #ffff00 !important;
+    font-weight: 800 !important;
+    font-size: 1rem !important;
+    letter-spacing: 0.3px;
+    margin-bottom: 0.75rem !important;
+  }
+  .squeeze-footer__contact-item {
+    color: rgba(255, 255, 255, 0.9) !important;
+    opacity: 1 !important;
+    line-height: 1.6;
+  }
+  .squeeze-footer__contact-item a {
+    color: #ffff00 !important;
+    font-weight: 600;
+    transition: opacity 0.15s;
+  }
+  .squeeze-footer__contact-item a:hover {
+    opacity: 0.8;
+    text-decoration: underline !important;
+  }
+  .squeeze-footer__copyright {
+    border-top: 1px solid rgba(255, 255, 0, 0.3) !important;
+    color: #fff !important;
+    opacity: 1 !important;
+    margin-top: 1.25rem;
+    padding-top: 1.5rem !important;
+  }
+  .squeeze-footer__copyright p {
+    color: rgba(255, 255, 255, 0.85) !important;
+    background: transparent !important;
+    margin: 0 !important;
+    font-size: 0.85rem;
+    letter-spacing: 0.3px;
+  }
+  .squeeze-footer__copyright p::selection { background: #ffff00; color: #000080; }
 
   @media (max-width: 640px) {
     .cvgd-campuses a { grid-template-columns: auto 1fr; }

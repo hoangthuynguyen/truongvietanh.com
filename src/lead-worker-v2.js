@@ -59,6 +59,23 @@ async function handleLead(request, env) {
     results.turnstile = 'passed';
   }
 
+  // ===== 1b. PARTIAL CAPTURE — only store to KV, do NOT trigger email/notifications =====
+  // Two-step squeeze forms send {email, partial:true} after step 1.
+  // We only want to track the partial email for retargeting/analytics, not send a "thank you" email yet.
+  if (data.partial === true) {
+    try {
+      const pkey = `partial:${(data.email || '').toLowerCase()}`;
+      await env.LEAD_DEDUPE.put(pkey, JSON.stringify({
+        email: data.email,
+        form_id: data.form_id,
+        funnel_code: data.funnel_code,
+        school_level: data.school_level,
+        captured_at: new Date().toISOString(),
+      }), { expirationTtl: 86400 * 30 }); // 30 days
+    } catch (e) {}
+    return json({ status: 'partial_captured' });
+  }
+
   // ===== 2. Idempotency =====
   const key = await idempotencyKey(data);
   const existing = await env.LEAD_DEDUPE.get(key);

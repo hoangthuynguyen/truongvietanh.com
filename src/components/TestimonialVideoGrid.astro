@@ -1,0 +1,352 @@
+---
+import { videoTestimonials } from '../data/testimonials-video';
+
+const filters = [
+  { key: 'all', label: 'Tất cả' },
+  { key: 'mam-non', label: 'Mầm non' },
+  { key: 'tieu-hoc', label: 'Tiểu học' },
+  { key: 'thcs', label: 'THCS' },
+  { key: 'thpt', label: 'THPT' },
+];
+---
+
+<section class="tv-section" id="video-testimonials">
+  <div class="tv-container">
+    <header class="tv-header">
+      <span class="tv-eyebrow">Câu chuyện thật · Video thật</span>
+      <h2 class="tv-h2">Video phụ huynh &amp; học sinh chia sẻ</h2>
+      <p class="tv-sub">{videoTestimonials.length} chia sẻ thực tế từ phụ huynh và học sinh ở 4 cấp học — quay tại các sự kiện và buổi gặp gỡ tại trường, không dàn dựng.</p>
+    </header>
+
+    <div class="tv-filter" role="tablist" aria-label="Lọc theo cấp học">
+      {filters.map((f, i) => (
+        <button
+          type="button"
+          class={`tv-filter__btn${i === 0 ? ' is-active' : ''}`}
+          data-filter={f.key}
+          role="tab"
+          aria-selected={i === 0 ? 'true' : 'false'}
+        >{f.label}</button>
+      ))}
+    </div>
+
+    <div class="tv-grid">
+      {videoTestimonials.map((t) => (
+        <article
+          class="tv-card"
+          data-level={t.level}
+          data-audience={t.audience}
+        >
+          <button
+            type="button"
+            class="tv-card__player"
+            data-video-id={t.videoId}
+            data-is-short={t.isShort ? 'true' : 'false'}
+            aria-label={`Phát video: ${t.shortQuote}`}
+          >
+            <img
+              src={`https://i.ytimg.com/vi/${t.videoId}/hqdefault.jpg`}
+              alt={`Video chia sẻ — ${t.name}`}
+              loading="lazy"
+              decoding="async"
+              width="480"
+              height="360"
+              class="tv-card__thumb"
+            />
+            <span class="tv-card__play" aria-hidden="true">
+              <svg viewBox="0 0 68 48" width="56" height="40"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#cc0000"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+            </span>
+            <span class="tv-card__badge">{t.audienceLabel} · {t.levelLabel}</span>
+          </button>
+
+          <div class="tv-card__body">
+            <p class="tv-card__short">{t.shortQuote}</p>
+            <p class="tv-card__long">{t.longQuote}</p>
+            <div class="tv-card__meta">
+              <div class="tv-card__name">{t.name}</div>
+              <div class="tv-card__context">{t.context}</div>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  // Filter logic
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.tv-filter__btn');
+  const cards = document.querySelectorAll<HTMLElement>('.tv-card');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter || 'all';
+      buttons.forEach((b) => {
+        b.classList.toggle('is-active', b === btn);
+        b.setAttribute('aria-selected', b === btn ? 'true' : 'false');
+      });
+      cards.forEach((card) => {
+        const lv = card.dataset.level;
+        card.style.display = (f === 'all' || lv === f) ? '' : 'none';
+      });
+    });
+  });
+
+  // Click-to-play YouTube (lazy iframe)
+  document.querySelectorAll<HTMLButtonElement>('.tv-card__player').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.videoId;
+      if (!id) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = 'YouTube video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.loading = 'lazy';
+      iframe.className = 'tv-card__iframe';
+      btn.replaceWith(iframe);
+    });
+  });
+</script>
+
+<style>
+  .tv-section {
+    padding: 3.5rem 0 2rem;
+    background:
+      linear-gradient(180deg, #f7f9fc 0%, #fff 100%);
+    position: relative;
+  }
+  .tv-container { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* Header */
+  .tv-header { text-align: center; margin-bottom: 2rem; }
+  .tv-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #000080;
+    background: #ffff00;
+    padding: 0.3rem 0.85rem;
+    border-radius: 999px;
+    margin-bottom: 0.85rem;
+  }
+  .tv-h2 {
+    font-size: clamp(1.6rem, 2.8vw, 2.2rem);
+    font-weight: 800;
+    color: #000080;
+    margin: 0 0 0.6rem;
+    letter-spacing: -0.015em;
+    position: relative;
+    display: inline-block;
+  }
+  .tv-h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 4px;
+    background: #ffff00;
+    border-radius: 2px;
+    margin: 0.85rem auto 0;
+  }
+  .tv-sub {
+    font-size: 1.02rem;
+    color: #475569;
+    line-height: 1.65;
+    margin: 0 auto;
+    max-width: 680px;
+  }
+
+  /* Filter pills */
+  .tv-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.55rem;
+    margin: 0 0 2rem;
+  }
+  .tv-filter__btn {
+    background: #fff;
+    border: 2px solid #e2e8f0;
+    color: #475569;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  .tv-filter__btn:hover {
+    border-color: #000080;
+    color: #000080;
+    transform: translateY(-1px);
+  }
+  .tv-filter__btn.is-active {
+    background: #000080;
+    border-color: #000080;
+    color: #ffff00;
+    box-shadow: 0 6px 18px rgba(0, 0, 128, 0.25);
+  }
+
+  /* Grid */
+  .tv-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+  @media (max-width: 900px) { .tv-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .tv-grid { grid-template-columns: 1fr; } }
+
+  /* Card */
+  .tv-card {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: box-shadow 0.3s, transform 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .tv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #000080 0%, #ffff00 100%);
+    opacity: 0;
+    transition: opacity 0.3s;
+    z-index: 2;
+  }
+  .tv-card:hover {
+    box-shadow: 0 18px 48px rgba(0, 0, 128, 0.18);
+    transform: translateY(-4px);
+    border-color: rgba(0, 0, 128, 0.2);
+  }
+  .tv-card:hover::before { opacity: 1; }
+
+  .tv-card__player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    background: #000080;
+    overflow: hidden;
+    display: block;
+  }
+  .tv-card__thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s, opacity 0.3s;
+  }
+  .tv-card__player:hover .tv-card__thumb { transform: scale(1.06); opacity: 0.75; }
+  .tv-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: transform 0.3s;
+  }
+  .tv-card__play svg {
+    filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5));
+    transition: filter 0.3s;
+  }
+  .tv-card__player:hover .tv-card__play { transform: scale(1.12); }
+  .tv-card__player:hover .tv-card__play svg {
+    filter: drop-shadow(0 6px 20px rgba(255, 255, 0, 0.5));
+  }
+  .tv-card__badge {
+    position: absolute;
+    top: 0.7rem;
+    left: 0.7rem;
+    background: #ffff00;
+    color: #000080;
+    font-size: 0.72rem;
+    font-weight: 800;
+    padding: 0.28rem 0.7rem;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  }
+  .tv-card__iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border: 0;
+    display: block;
+  }
+
+  .tv-card__body {
+    padding: 1.4rem 1.35rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    flex: 1;
+    position: relative;
+  }
+  .tv-card__body::before {
+    content: '"';
+    position: absolute;
+    top: -0.2rem;
+    right: 0.9rem;
+    font-family: Georgia, serif;
+    font-size: 4.5rem;
+    color: rgba(255, 255, 0, 0.5);
+    line-height: 1;
+    pointer-events: none;
+    font-weight: 700;
+  }
+  .tv-card__short {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #000080;
+    line-height: 1.45;
+    margin: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .tv-card__long {
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: #475569;
+    margin: 0;
+    font-style: italic;
+    position: relative;
+    z-index: 1;
+  }
+  .tv-card__meta {
+    margin-top: auto;
+    padding-top: 0.85rem;
+    border-top: 2px solid #f1f5f9;
+    position: relative;
+  }
+  .tv-card__meta::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    width: 32px;
+    height: 2px;
+    background: #ffff00;
+  }
+  .tv-card__name {
+    font-weight: 800;
+    color: #000080;
+    font-size: 0.92rem;
+    line-height: 1.35;
+  }
+  .tv-card__context {
+    font-size: 0.78rem;
+    color: #64748b;
+    line-height: 1.5;
+    margin-top: 0.25rem;
+  }
+</style>

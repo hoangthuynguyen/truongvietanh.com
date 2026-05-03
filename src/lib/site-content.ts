@@ -134,6 +134,7 @@ export const mainNavLeft = [
       { label: 'Trại hè', href: '/tuyen-sinh/trai-he' },
       { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
       { label: 'Toán Tư Duy', href: '/tuyen-sinh/toan-tu-duy' },
+      { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang' },
     ]
   },
 ];
@@ -148,8 +149,9 @@ export const mainNavRight = [
       { label: 'THCS', href: '/thcs' },
       { label: 'THPT', href: '/thpt' },
       { label: 'Trại hè', href: '/trai-he' },
-      { label: 'Tiếng Anh Trẻ Em', href: '/tieng-anh-tre-em' },
-      { label: 'Toán Tư Duy', href: '/toan-tu-duy-sam' },
+      { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
+      { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
+      { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang' },
       { label: 'Du học', href: '/du-hoc' },
     ]
   },
@@ -252,7 +254,7 @@ export const levelCards: LinkItem[] = [
     eyebrow: 'Level Pillar',
     title: 'Mầm Non',
     href: '/mam-non',
-    body: 'Từ 13 tháng đến 5 tuổi, ưu tiên thích nghi, an toàn và phát triển cảm xúc.',
+    body: 'Từ 18 tháng đến 5 tuổi, ưu tiên thích nghi, an toàn và phát triển cảm xúc.',
   },
   {
     eyebrow: 'Level Pillar',
@@ -1777,7 +1779,7 @@ export const pages: PageSpec[] = [
       ],
     },
     stats: [
-      { value: '13 tháng+', label: 'Độ tuổi có thể bắt đầu làm quen với môi trường học' },
+      { value: '18 tháng+', label: 'Độ tuổi có thể bắt đầu làm quen với môi trường học' },
       { value: 'Song ngữ', label: 'Tiếng Anh được đưa vào nhẹ nhàng, gắn với sinh hoạt' },
       { value: 'Thích nghi', label: 'Chủ đề lớn nhất của giai đoạn đầu đời được đặt lên đầu' },
       { value: 'PDR nhẹ', label: 'Bé tập nhận biết và hoàn thành việc nhớ mỗi ngày' },

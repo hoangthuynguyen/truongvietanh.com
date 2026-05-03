@@ -41,11 +41,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
        {(leftNav.length > 0 ? leftNav : [
          { label: 'Trang chủ', href: '/' },
          { label: 'Giới thiệu', href: '/gioi-thieu' },
-         { label: 'Giáo viên', href: '/ban-lanh-dao', children: [
-           { label: 'Ban Lãnh Đạo', href: '/ban-lanh-dao' },
-           { label: 'Giáo viên Chủ Nhiệm', href: '/giao-vien-chu-nhiem' },
-           { label: 'Giáo viên Bộ Môn', href: '/giao-vien-bo-mon' },
-         ]},
          { label: 'Tuyển sinh', href: '/tuyen-sinh', children: [
            { label: 'Mầm non', href: '/tuyen-sinh/mam-non' },
            { label: 'Tiểu học', href: '/tuyen-sinh/tieu-hoc' },
@@ -54,6 +49,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
            { label: 'Trại hè', href: '/tuyen-sinh/trai-he' },
            { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
            { label: 'Toán Tư Duy', href: '/tuyen-sinh/toan-tu-duy' },
+           { label: 'Giải Mã Tiềm Năng', href: '/giai-ma-tiem-nang' },
          ]},
        ]).map((item) => {
          const cmsChildren = getChildren(item.label);
@@ -79,14 +75,15 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 
      <ul class="nav-links right-nav">
        {(rightNav.length > 0 ? rightNav : [
-         { label: 'Chương trình', href: '/cap-hoc', children: [
+         { label: 'Chương trình', href: '/chuong-trinh', children: [
            { label: 'Mầm non', href: '/mam-non' },
            { label: 'Tiểu học', href: '/tieu-hoc' },
            { label: 'THCS', href: '/thcs' },
            { label: 'THPT', href: '/thpt' },
            { label: 'Trại hè', href: '/trai-he' },
            { label: 'Tiếng Anh Trẻ Em', href: '/tieng-anh-tre-em' },
-           { label: 'Toán Tư Duy', href: '/toan-tu-duy-sam' },
+           { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
+           { label: 'Giải Mã Tiềm Năng', href: '/giai-ma-tiem-nang' },
            { label: 'Du học', href: '/du-hoc' },
          ]},
          { label: 'Blog', href: '/blog' },
@@ -121,14 +118,6 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
       <a href="/" class="mobile-nav-link">Trang chủ</a>
       <a href="/gioi-thieu" class="mobile-nav-link">Giới thiệu</a>
       <div class="mobile-nav-group">
-        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Giáo viên">Giáo viên <span class="toggle-arrow">▾</span></button>
-        <div class="mobile-nav-sub">
-          <a href="/ban-lanh-dao" class="mobile-nav-sublink">Ban Lãnh Đạo</a>
-          <a href="/giao-vien-chu-nhiem" class="mobile-nav-sublink">Giáo viên Chủ Nhiệm</a>
-          <a href="/giao-vien-bo-mon" class="mobile-nav-sublink">Giáo viên Bộ Môn</a>
-        </div>
-      </div>
-      <div class="mobile-nav-group">
         <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Tuyển sinh">Tuyển sinh <span class="toggle-arrow">▾</span></button>
         <div class="mobile-nav-sub">
           <a href="/tuyen-sinh/mam-non" class="mobile-nav-sublink">Mầm non</a>
@@ -138,6 +127,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
           <a href="/tuyen-sinh/trai-he" class="mobile-nav-sublink">Trại hè</a>
           <a href="/tuyen-sinh/tieng-anh-tre-em" class="mobile-nav-sublink">Tiếng Anh Trẻ Em</a>
           <a href="/tuyen-sinh/toan-tu-duy" class="mobile-nav-sublink">Toán Tư Duy</a>
+          <a href="/giai-ma-tiem-nang" class="mobile-nav-sublink">Giải Mã Tiềm Năng</a>
         </div>
       </div>
       <div class="mobile-nav-group">
@@ -149,7 +139,8 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
           <a href="/thpt" class="mobile-nav-sublink">THPT</a>
           <a href="/trai-he" class="mobile-nav-sublink">Trại hè</a>
           <a href="/tieng-anh-tre-em" class="mobile-nav-sublink">Tiếng Anh Trẻ Em</a>
-          <a href="/toan-tu-duy-sam" class="mobile-nav-sublink">Toán Tư Duy</a>
+          <a href="/toan-tu-duy" class="mobile-nav-sublink">Toán Tư Duy</a>
+          <a href="/giai-ma-tiem-nang" class="mobile-nav-sublink">Giải Mã Tiềm Năng</a>
           <a href="/du-hoc" class="mobile-nav-sublink">Du học</a>
         </div>
       </div>
@@ -195,7 +186,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
   const searchPages = [
     { title: 'Trang Chủ — Trường Việt Anh', url: '/', desc: 'Hệ thống giáo dục liên cấp song ngữ từ Mầm Non đến THPT tại TP.HCM' },
     { title: 'Giới Thiệu Trường Việt Anh', url: '/gioi-thieu', desc: 'Sứ mệnh, tầm nhìn, lịch sử và giá trị cốt lõi' },
-    { title: 'Mầm Non Song Ngữ', url: '/mam-non', desc: 'Chương trình Montessori, 100% tiếng Anh từ 13 tháng đến 6 tuổi' },
+    { title: 'Mầm Non Song Ngữ', url: '/mam-non', desc: 'Chương trình Montessori, 100% tiếng Anh từ 18 tháng đến 6 tuổi' },
     { title: 'Tiểu Học Song Ngữ', url: '/tieu-hoc', desc: 'Chương trình UK Oxford, STEM, kỹ năng thế kỷ 21' },
     { title: 'Trung Học Cơ Sở (THCS)', url: '/trung-hoc-co-so', desc: 'Chương trình THCS song ngữ, chuẩn bị IELTS từ lớp 6' },
     { title: 'Trung Học Phổ Thông (THPT)', url: '/trung-hoc-pho-thong', desc: 'Luyện IELTS chuyên sâu, hỗ trợ du học, 99% đỗ ĐH' },
@@ -205,7 +196,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     { title: 'Thành Tích Học Sinh', url: '/thanh-tich', desc: 'IELTS 6.0-8.0, 99% đỗ ĐH, 200+ giải thưởng' },
     { title: 'Triết Lý Giáo Dục', url: '/triet-ly-giao-duc', desc: 'PDR, 16 kỹ năng WEF, Leader in Me, giáo dục toàn diện' },
     { title: 'Hệ Thống PDR', url: '/he-thong-pdr', desc: 'Play – Discover – Reflect, phương pháp giáo dục riêng' },
-    { title: 'Các Cấp Học', url: '/cap-hoc', desc: 'Tổng quan Mầm Non, Tiểu Học, THCS, THPT liên cấp' },
+    { title: 'Chương Trình', url: '/chuong-trinh', desc: 'Tổng quan 4 cấp liên cấp: Mầm Non, Tiểu Học, THCS, THPT' },
     { title: 'Ngoại Khóa', url: '/ngoai-khoa', desc: '20+ CLB: thể thao, nghệ thuật, STEM, kỹ năng sống' },
     { title: 'Góc Phụ Huynh', url: '/phu-huynh', desc: 'Dịch vụ hỗ trợ phụ huynh, sổ liên lạc, sự kiện' },
     { title: 'Hình Ảnh', url: '/hinh-anh', desc: 'Thư viện ảnh cơ sở vật chất, hoạt động, sự kiện' },
@@ -293,10 +284,10 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 
 <style>/* UTILS for header */
   .cf-container{ max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }.text-center{ text-align: center; }.text-nowrap{ white-space: nowrap; }/* TOP BAR */
-  .top-bar{ background: var(--cf-blue, #1a193c); color: #e2e8f0; font-size: 1rem; padding: 0.4rem 0; font-weight: 400; font-family: 'Inter', sans-serif;}.top-bar-inner{ display: flex; justify-content: space-between; align-items: center; }.top-left{ display: flex; align-items: center; gap: 1.25rem; }.top-left .icon-text{ display: inline-flex; align-items: center; gap: 0.4rem; }.top-right{ display: flex; align-items: center; gap: 1rem; }.search-btn{ background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; }.btn-yellow{ background: var(--pri-yellow, #fde047); color: #000; font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius:3px; font-size: 1rem; border: none; cursor:pointer;}.btn-yellow:hover{ background: #fef08a; }/* MAIN NAV */
-  .main-header{ background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Inter', sans-serif; }.nav-grid{ max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 60px; gap: 1rem; }.nav-links{ list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; align-items: center; }.right-nav{ justify-content: flex-start; }.left-nav{ justify-content: flex-end; }.nav-links li{ position: relative; }.nav-links a{ text-decoration: none; color: var(--pri-blue, #232252); font-weight: 600; font-size: 1rem; white-space: nowrap; transition: color 0.2s; display: flex; align-items: center; padding: 0.85rem 0; }.nav-links a:hover{ color: var(--cf-blue, #1a193c); }/* DROPDOWN */
-  .dropdown-menu{ position: absolute; top: 100%; left: 0; background: #ffffff; min-width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; border: 1px solid #f1f5f9; padding: 0.5rem 0; display: flex; flex-direction: column; z-index: 200; }.has-dropdown:hover .dropdown-menu{ opacity: 1; visibility: visible; transform: translateY(0); }.dropdown-menu a{ padding: 0.6rem 1.25rem; font-weight: 500; font-size: 1rem; color: var(--text-dark, #0f172a); border-left: 3px solid transparent; }.dropdown-menu a:hover{ background: var(--bg-gray, #f8fafc); color: var(--cf-blue, #1a193c); border-left-color: var(--cf-blue, #1a193c); }/* LOGO ENLARGED */
-  .header-logo{ display: flex; justify-content: center; width: 100%; }.official-logo{ height: 120px; object-fit: contain; }/* SEARCH MODAL */
+  .top-bar{ background: var(--cf-blue, #000080); color: #e2e8f0; font-size: 1rem; padding: 0.4rem 0; font-weight: 400; font-family: 'Inter', sans-serif;}.top-bar-inner{ display: flex; justify-content: space-between; align-items: center; }.top-left{ display: flex; align-items: center; gap: 1.25rem; }.top-left .icon-text{ display: inline-flex; align-items: center; gap: 0.4rem; }.top-right{ display: flex; align-items: center; gap: 1rem; }.search-btn{ background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; }.btn-yellow{ background: var(--pri-yellow, #fde047); color: #000; font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius:3px; font-size: 1rem; border: none; cursor:pointer;}.btn-yellow:hover{ background: #fef08a; }/* MAIN NAV */
+  .main-header{ background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Inter', sans-serif; padding-top: 6px !important; padding-bottom: 6px !important; height: auto !important; overflow: visible; }.nav-grid{ max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 50px; gap: 1rem; overflow: visible; }.nav-links{ list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; align-items: center; }.right-nav{ justify-content: flex-start; }.left-nav{ justify-content: flex-end; }.nav-links li{ position: relative; }.nav-links a{ text-decoration: none; color: var(--pri-blue, #232252); font-weight: 600; font-size: 1rem; white-space: nowrap; transition: color 0.2s; display: flex; align-items: center; padding: 0.5rem 0; }.nav-links a:hover{ color: var(--cf-blue, #000080); }/* DROPDOWN */
+  .dropdown-menu{ position: absolute; top: 100%; left: 0; background: #ffffff; min-width: 180px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 4px; opacity: 0; visibility: hidden; transform: translateY(10px); transition: all 0.2s ease; border: 1px solid #f1f5f9; padding: 0.5rem 0; display: flex; flex-direction: column; z-index: 200; }.has-dropdown:hover .dropdown-menu{ opacity: 1; visibility: visible; transform: translateY(0); }.dropdown-menu a{ padding: 0.6rem 1.25rem; font-weight: 500; font-size: 1rem; color: var(--text-dark, #0f172a); border-left: 3px solid transparent; }.dropdown-menu a:hover{ background: var(--bg-gray, #f8fafc); color: var(--cf-blue, #000080); border-left-color: var(--cf-blue, #000080); }/* LOGO ENLARGED */
+  .header-logo{ display: flex; justify-content: center; align-items: center; width: 100%; height: 50px; min-width: 200px; overflow: visible; position: relative; }.official-logo{ height: 80px; width: auto; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5; }/* SEARCH MODAL */
   .search-overlay{
     display: none; position: fixed; inset: 0; z-index: 9999;
     background: rgba(0,0,0,0.5); backdrop-filter: blur(4px);
@@ -311,20 +302,20 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     display: flex; align-items: center; gap: 0.6rem;
     background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px;
     padding: 0.6rem 1rem; transition: border-color 0.2s;
-  }.search-input-wrap:focus-within{ border-color: #F0D048; }.search-input-icon{ color: #94a3b8; flex-shrink: 0; }.search-modal__input{
+  }.search-input-wrap:focus-within{ border-color: #ffff00; }.search-input-icon{ color: #94a3b8; flex-shrink: 0; }.search-modal__input{
     flex: 1; border: none; outline: none; background: transparent;
-    font-size: 1rem; color: #1a1a5e; font-family: 'Inter', sans-serif;
+    font-size: 1rem; color: #000080; font-family: 'Inter', sans-serif;
   }.search-modal__input::placeholder{ color: #94a3b8; }.search-modal__close{
     background: none; border: none; font-size: 1.5rem; color: #94a3b8;
     cursor: pointer; padding: 0; line-height: 1; transition: color 0.2s;
-  }.search-modal__close:hover{ color: #1a1a5e; }.search-modal__results{ overflow-y: auto; padding: 1rem 1.25rem; flex: 1; }.search-hint{ font-size: 1rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.75rem; }.search-tags{ display: flex; flex-wrap: wrap; gap: 0.5rem; }.search-tag{
+  }.search-modal__close:hover{ color: #000080; }.search-modal__results{ overflow-y: auto; padding: 1rem 1.25rem; flex: 1; }.search-hint{ font-size: 1rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 0.75rem; }.search-tags{ display: flex; flex-wrap: wrap; gap: 0.5rem; }.search-tag{
     padding: 0.4rem 0.9rem; background: #f1f5f9; border-radius: 20px;
     font-size: 1rem; color: #475569; text-decoration: none;
     transition: background 0.2s, color 0.2s;
-  }.search-tag:hover{ background: #1a1a5e; color: #fff; }.search-list{ list-style: none; padding: 0; margin: 0; }.search-list li{ border-bottom: 1px solid #f1f5f9; }.search-list li:last-child{ border: none; }.search-result{
+  }.search-tag:hover{ background: #000080; color: #fff; }.search-list{ list-style: none; padding: 0; margin: 0; }.search-list li{ border-bottom: 1px solid #f1f5f9; }.search-list li:last-child{ border: none; }.search-result{
     display: block; padding: 0.85rem 0; text-decoration: none; transition: background 0.15s;
     border-radius: 8px; padding-left: 0.5rem; padding-right: 0.5rem;
-  }.search-result:hover{ background: #f8fafc; }.search-result strong{ display: block; color: #1a1a5e; font-size: 1rem; margin-bottom: 0.2rem; }.search-result span{ display: block; color: #64748b; font-size: 1rem; line-height: 1.5; }.search-empty{ text-align: center; padding: 2rem 0; color: #64748b; font-size: 1rem; }.search-empty a{ color: #2563eb; }/* HAMBURGER BUTTON */
+  }.search-result:hover{ background: #f8fafc; }.search-result strong{ display: block; color: #000080; font-size: 1rem; margin-bottom: 0.2rem; }.search-result span{ display: block; color: #64748b; font-size: 1rem; line-height: 1.5; }.search-empty{ text-align: center; padding: 2rem 0; color: #64748b; font-size: 1rem; }.search-empty a{ color: #2563eb; }/* HAMBURGER BUTTON */
   .mobile-menu-btn{
     display: none;
     flex-direction: column;
@@ -341,7 +332,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     display: block;
     width: 100%;
     height: 2.5px;
-    background: #1a193c;
+    background: #000080;
     border-radius: 2px;
     transition: transform 0.3s ease, opacity 0.3s ease;
   }.mobile-menu-btn.is-open .hamburger-line:nth-child(1){
@@ -389,7 +380,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     padding: 0.85rem 0;
     font-size: 1rem;
     font-weight: 600;
-    color: #1a193c;
+    color: #000080;
     text-decoration: none;
     border-bottom: 1px solid #f1f5f9;
     transition: color 0.2s;
@@ -415,22 +406,22 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
     text-decoration: none;
     border-bottom: 1px solid #f8fafc;
     transition: color 0.2s;
-  }.mobile-nav-sublink:hover{ color: #1a193c; }.mobile-nav-cta{
+  }.mobile-nav-sublink:hover{ color: #000080; }.mobile-nav-cta{
     display: block;
     margin-top: 1.25rem;
     padding: 0.85rem 1.5rem;
-    background: linear-gradient(135deg, #F8D800, #e8a912);
-    color: #1a1a5e;
+    background: linear-gradient(135deg, #ffff00, #cccc00);
+    color: #000080;
     font-weight: 700;
     font-size: 1rem;
     text-align: center;
     border-radius: 10px;
     text-decoration: none;
-    box-shadow: 0 4px 12px rgba(245,197,24,0.3);
+    box-shadow: 0 4px 12px rgba(255,255,0,0.3);
   }
 
   /* RESPONSIVE */
-  @media (max-width: 1024px) {.nav-grid{ grid-template-columns: auto 1fr auto; justify-content: space-between; }.left-nav, .right-nav{ display: none; }.mobile-menu-btn{ display: flex; }.mobile-nav-drawer{ display: block; }.header-logo{ justify-content: flex-start; }.official-logo{ height: 70px; }
+  @media (max-width: 1024px) {.nav-grid{ grid-template-columns: auto 1fr auto; justify-content: space-between; }.left-nav, .right-nav{ display: none; }.mobile-menu-btn{ display: flex; }.mobile-nav-drawer{ display: block; }.header-logo{ justify-content: flex-start; height: 44px; min-width: 120px; }.official-logo{ height: 64px; left: 0; transform: translate(0, -50%); }
   }
 
   @media (max-width: 768px) {.d-none-mo{ display: none; }

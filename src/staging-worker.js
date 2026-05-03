@@ -19,7 +19,8 @@ const SALES_PHONE = '0916961409';
 // Pancake CRM "Khối quan tâm" dropdown UUID mapping
 const KHOI_QUAN_TAM_MAP = {
   // Mầm non
-  'mau-non':  '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',
+  'mam-non':  '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',  // alias đúng
+  'mau-non':  '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',  // legacy
   '2-tuoi':   '2 tuổi-3988-7226-be92-2356-3dc9-c263-55e8',
   '3-tuoi':   '3 tuổi-89af-8179-5066-cd19-db36-3229-a824',
   '4-tuoi':   '4 tuổi-ea52-2cb0-f79e-ffd6-0677-ece1-a07f',
@@ -262,6 +263,11 @@ async function handleLeadSubmission(request, env) {
           tags.push('checklist-mam-non-2026');
           tags.push('squeeze-mam-non');
         }
+        if (data.source === 'squeeze-checklist-tieu-hoc') {
+          tags.push('chon-truong-tieu-hoc');   // → GHL workflow trigger
+          tags.push('checklist-tieu-hoc-2026');
+          tags.push('squeeze-tieu-hoc');
+        }
         if (data.source === 'squeeze-checklist') {
           tags.push('checklist-chon-truong-2026');
         }
@@ -295,7 +301,7 @@ async function handleLeadSubmission(request, env) {
           'squeeze-chuyen-truong-lop6', 'squeeze-lo-trinh-ielts-thcs', 'squeeze-phuong-phap-teen',
           'squeeze-so-sanh-thcs', 'squeeze-cam-nang-thpt', 'squeeze-du-hoc-lop10',
           'squeeze-50-truong-ielts', 'squeeze-oxford-cambridge-ib', 'squeeze-conversation-cards',
-          'squeeze-checklist',
+          'squeeze-checklist', 'squeeze-checklist-tieu-hoc',
         ];
         if (data.source && SQUEEZE_SOURCES.includes(data.source)) {
           tags.push('nurture-435-ngay');
@@ -467,9 +473,18 @@ async function handleLeadSubmission(request, env) {
       else if ((data.source || '').match(/squeeze-/) && data.email) {
         promises.push(sendSqueezeResourceEmail(data, env, contactId, ghlApiKey).catch(() => {}));
       }
+      // All other landing pages (mam-non/tieu-hoc/thcs/thpt/ngay-mo-cua/dat-lich/brand/future-ready)
+      // → send generic confirmation email "we'll call you in 24h"
+      else if (data.email && (data.source || '').match(/^(mam-non|tieu-hoc|thcs|thpt|ngay-mo-cua|dat-lich-tham-quan|brand-story|future-ready-challenge)/)) {
+        promises.push(sendLandingConfirmEmail(data, env, contactId, ghlApiKey).catch((e) => { console.error('landing confirm email fail', e); }));
+      }
       // Create opportunity for ALL trai-he leads (quiz or sales page)
       if (isQuizLead(data) && contactId) {
         promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
+      }
+      // Create opportunity for non-quiz landing pages too — so leads appear in pipeline
+      else if (contactId) {
+        promises.push(createLandingOpportunity(contactId, data, ghlApiKey).catch((e) => { console.error('opp fail', e); }));
       }
       // Add contact to appropriate GHL workflow
       if (contactId) {
@@ -621,6 +636,89 @@ async function addContactToWorkflow(contactId, source, ghlApiKey) {
 const TRAI_HE_PIPELINE_ID = 'wBGA6IWGRd14sCXrasTp'; // Tuyển Sinh 2026
 const TRAI_HE_STAGE_ID = '622d8a0e-c396-422b-a62c-f984652cdaa4'; // New Lead
 
+// === OPPORTUNITY for general landing pages (non-quiz) ===
+// Mỗi submit form từ landing → tạo 1 opportunity mới trong pipeline để sales thấy "lead mới"
+async function createLandingOpportunity(contactId, data, ghlApiKey) {
+  const src = (data.source || data.funnelCode || '').toLowerCase();
+
+  // Map source → tên hiển thị Cấp + Cơ sở
+  const LEVEL_LABEL = {
+    'mam-non':  'Mầm Non',
+    'tieu-hoc': 'Tiểu Học',
+    'thcs':     'THCS',
+    'thpt':     'THPT',
+  };
+  const LOC_LABEL = {
+    'go-vap':              'Gò Vấp',
+    'binh-tan':            'Bình Tân',
+    'phu-nhuan':           'Phú Nhuận',
+    'rach-gia':            'Rạch Giá',
+    'can-giuoc':           'Cần Giuộc',
+    'thai-son':            'Thái Sơn (Long Hậu)',
+    'thai-son-long-hau':   'Thái Sơn (Long Hậu)',
+  };
+
+  // Build opportunity name
+  let oppName;
+  if (src.startsWith('trai-he-')) {
+    const level = src.includes('tieu-hoc') ? 'Tiểu Học' : src.includes('thcs') ? 'THCS' : src.includes('thpt') ? 'THPT' : '';
+    let loc = '';
+    for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; break; } }
+    oppName = `Trại Hè${level ? ' ' + level : ''}${loc ? ' ' + loc : ''} — ${data.fullName}`;
+  } else if (src.startsWith('ngay-mo-cua')) {
+    let loc = '';
+    for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; break; } }
+    oppName = `Ngày Mở Cửa${loc ? ' ' + loc : ''} — ${data.fullName}`;
+  } else if (src === 'future-ready-challenge') {
+    oppName = `Future Ready Challenge — ${data.fullName}`;
+  } else if (src === 'dat-lich-tham-quan') {
+    oppName = `Đặt Lịch Tham Quan — ${data.fullName}`;
+  } else if (src === 'brand-story') {
+    oppName = `Brand Story — ${data.fullName}`;
+  } else {
+    // Cấp + Cơ sở: vd mam-non-go-vap
+    let level = '';
+    let loc = '';
+    for (const k of Object.keys(LEVEL_LABEL)) { if (src.startsWith(k + '-')) { level = LEVEL_LABEL[k]; break; } }
+    for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; break; } }
+    oppName = `${level || 'Tuyển Sinh'}${loc ? ' ' + loc : ''} — ${data.fullName}`;
+  }
+
+  // Estimated annual value by cấp (VND)
+  const sl = (data.schoolLevel || '').toLowerCase();
+  const monetaryValue =
+    sl === 'mam-non'  ?  84000000 :   // 7tr × 12 tháng
+    sl === 'tieu-hoc' ? 108000000 :   // 9tr × 12 tháng
+    sl === 'thcs'     ? 132000000 :   // 11tr × 12 tháng
+    sl === 'thpt'     ? 156000000 :   // 13tr × 12 tháng
+    src.startsWith('trai-he-') ? 19998000 :
+    50000000;
+
+  const res = await fetch('https://services.leadconnectorhq.com/opportunities/', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${ghlApiKey}`,
+      'Version': '2021-07-28',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      pipelineId: TRAI_HE_PIPELINE_ID,
+      locationId: GHL_LOCATION_ID,
+      name: oppName,
+      pipelineStageId: TRAI_HE_STAGE_ID,
+      contactId,
+      status: 'open',
+      monetaryValue,
+      source: `Website - ${src}`,
+    }),
+  });
+  if (!res.ok) {
+    const txt = await res.text();
+    console.error('createLandingOpportunity fail:', res.status, txt.substring(0, 200));
+  }
+  return res;
+}
+
 async function createQuizOpportunity(contactId, data, ghlApiKey) {
   const loc = deriveLocation(data.funnelCode);
   const campLvl = deriveCampLevel(data.funnelCode);
@@ -688,7 +786,7 @@ async function sendEmailViaGHL({ contactId, subject, html, ghlApiKey }) {
 
 async function sendEmailNotification(data, env) {
   const schoolLabel = {
-    'mau-non': 'Mam non', 'tieu-hoc': 'Tieu hoc',
+    'mam-non': 'Mam non', 'mau-non': 'Mam non', 'tieu-hoc': 'Tieu hoc',
     'thcs': 'THCS', 'thpt': 'THPT',
   }[data.schoolLevel] || data.schoolLevel || 'Chua chon';
 
@@ -719,7 +817,7 @@ async function sendEmailNotification(data, env) {
       <tr>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">So dien thoai</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-size:16px;">
-          <a href="tel:${data.phone}" style="color:#D4A843;font-weight:bold;text-decoration:none;">${data.phone}</a>
+          <a href="tel:${data.phone}" style="color:#ffff00;font-weight:bold;text-decoration:none;">${data.phone}</a>
         </td>
       </tr>
       <tr style="background:#f8f9fa;">
@@ -761,12 +859,12 @@ async function sendEmailNotification(data, env) {
       </tr>
     </table>
 
-    <div style="background:#fff8e1;border:2px solid #D4A843;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;">
+    <div style="background:#fff8e1;border:2px solid #ffff00;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;">
       <p style="margin:0 0 12px;font-weight:bold;color:#1a1a5e;font-size:16px;">Lien lac ngay voi phu huynh:</p>
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
         <a href="tel:${data.phone}" style="background:#1a1a5e;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Goi dien: ${data.phone}</a>
         <a href="https://zalo.me/${data.phone}" style="background:#0068ff;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Nhan Zalo</a>
-        <a href="mailto:${data.email}" style="background:#D4A843;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Gui Email</a>
+        <a href="mailto:${data.email}" style="background:#ffff00;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Gui Email</a>
       </div>
     </div>
 
@@ -860,7 +958,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
   const body = `
 <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:560px;margin:0 auto;background:#fff;">
   <!-- Header -->
-  <div style="background:linear-gradient(135deg,#1a1a5e,#2a2a7e);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
+  <div style="background:linear-gradient(135deg,#1a1a5e,#00009a);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
     <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:12px;background:#fff;padding:8px 16px;border-radius:8px;" />
     <h1 style="margin:0;font-size:20px;font-weight:800;">KẾT QUẢ ĐÁNH GIÁ KỸ NĂNG HÈ 2026</h1>
     <p style="margin:6px 0 0;opacity:.85;font-size:14px;">Lion Camp — ${campLvl} ${loc}</p>
@@ -874,7 +972,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- Score Card -->
     <div style="background:#F0F9FF;border:2px solid #7DD3FC;border-radius:14px;padding:20px;text-align:center;margin-bottom:20px;">
-      <div style="font-size:42px;font-weight:800;color:#1F4E79;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 100</span></div>
+      <div style="font-size:42px;font-weight:800;color:#000080;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 100</span></div>
       <!-- Score bar -->
       <div style="background:#E5E7EB;border-radius:6px;height:12px;margin:12px 0;overflow:hidden;">
         <div style="background:${color};height:100%;width:${barWidth}%;border-radius:6px;"></div>
@@ -884,19 +982,19 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- What this means -->
     <div style="background:#F9FAFB;border-radius:10px;padding:16px;margin-bottom:20px;">
-      <p style="font-weight:700;color:#1F4E79;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
+      <p style="font-weight:700;color:#000080;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
       ${score >= 75 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đã có nền tảng tốt! Trại hè sẽ giúp con <strong>tỏa sáng hơn nữa</strong> và phát triển kỹ năng vượt trội so với bạn bè.</p>` : score >= 50 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đang ở giai đoạn <strong>cần hỗ trợ kịp thời</strong>. 6 tuần tại Lion Camp sẽ giúp con tiến bộ rõ rệt về tự tin và kỷ luật.</p>` : `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Đây là <strong>thời điểm vàng để can thiệp</strong>. Mùa hè này là cơ hội quan trọng nhất để giúp con thay đổi toàn diện.</p>`}
     </div>
 
     <!-- Recommended action -->
     <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #F59E0B;border-radius:12px;padding:18px;margin-bottom:20px;">
-      <p style="font-weight:800;color:#D4A843;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
+      <p style="font-weight:800;color:#ffff00;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
       <p style="margin:0 0 12px;font-size:14px;color:#7C2D12;line-height:1.6;">
         Con rất phù hợp với <strong>Lion Camp ${campLvl} tại cơ sở ${loc}</strong>.
         Đăng ký giữ chỗ trong 48 giờ tới để nhận <strong>Học bổng Early Bird đến 30%</strong>.
       </p>
       <div style="text-align:center;">
-        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#D4A843;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
           💬 Chat Zalo giữ chỗ ngay
         </a>
       </div>
@@ -904,7 +1002,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- Next steps -->
     <div style="margin-bottom:16px;">
-      <p style="font-weight:700;color:#1F4E79;margin:0 0 8px;">📋 Các bước tiếp theo:</p>
+      <p style="font-weight:700;color:#000080;margin:0 0 8px;">📋 Các bước tiếp theo:</p>
       <ol style="margin:0;padding-left:20px;font-size:14px;color:#555;line-height:1.8;">
         <li><strong>Tư vấn viên sẽ gọi</strong> trong vài phút để giải thích chi tiết kết quả</li>
         <li>Nhận <strong>Báo cáo PDF đầy đủ</strong> qua Zalo trong 24 giờ</li>
@@ -947,6 +1045,137 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
   } catch (_) {}
 }
 
+// === LANDING CONFIRMATION EMAIL (Mầm non / Tiểu học / THCS / THPT / Open House / Brand / Retgt) ===
+async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
+  const src = (data.source || data.funnelCode || '').toLowerCase();
+  const sl = (data.schoolLevel || '').toLowerCase();
+  const nameParts = (data.fullName || '').trim().split(/\s+/);
+  const firstName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : nameParts[0] || 'Ba/Mẹ';
+
+  // Map cấp + cơ sở (vietnamese display)
+  const LEVEL_LABEL = { 'mam-non':'Mầm Non','tieu-hoc':'Tiểu Học','thcs':'THCS','thpt':'THPT' };
+  const LOC_LABEL = {
+    'go-vap':'Gò Vấp', 'binh-tan':'Bình Tân', 'rach-gia':'Rạch Giá',
+    'can-giuoc':'Cần Giuộc', 'thai-son':'Thái Sơn (Long Hậu)', 'thai-son-long-hau':'Thái Sơn (Long Hậu)',
+  };
+  // Default address per location (TH/THCS/THPT)
+  const ADDR = {
+    'go-vap':'160/72 Phan Huy Ích, Phường 12, An Hội Tây, Hồ Chí Minh',
+    'binh-tan':'Số 7 Đường 38A, Tân Tạo, Q.Bình Tân, TPHCM',
+    'rach-gia':'Lô E7, KĐT Tây Bắc Mekong Xanh, TP. Rạch Giá, Kiên Giang',
+    'can-giuoc':'22 Đường D2, KDC Cần Giuộc, H.Cần Giuộc, Long An',
+    'thai-son':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
+    'thai-son-long-hau':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
+  };
+  // Override per full source (eg. Mầm non có cơ sở riêng tách khỏi liên cấp)
+  const ADDR_OVERRIDE = {
+    'mam-non-go-vap':'573 Lê Đức Thọ, P.16, Q.Gò Vấp, TP.HCM',
+  };
+
+  let level = LEVEL_LABEL[sl] || '';
+  let loc = '', addr = '';
+  for (const k of Object.keys(LOC_LABEL)) { if (src.endsWith('-' + k)) { loc = LOC_LABEL[k]; addr = ADDR[k] || ''; break; } }
+  if (ADDR_OVERRIDE[src]) addr = ADDR_OVERRIDE[src];
+
+  // Headline + lead phrase based on source type
+  let headline, leadPhrase;
+  if (src.startsWith('ngay-mo-cua')) {
+    headline = `Đã nhận đăng ký Ngày Mở Cửa${loc ? ' ' + loc : ''}`;
+    leadPhrase = 'tham gia Ngày Mở Cửa';
+  } else if (src === 'future-ready-challenge') {
+    headline = 'Đã nhận đăng ký Future Ready Challenge';
+    leadPhrase = 'tham gia Cuộc thi AI Future Ready Challenge';
+  } else if (src === 'dat-lich-tham-quan') {
+    headline = 'Đã nhận đăng ký tham quan Trường Việt Anh';
+    leadPhrase = 'tham quan Trường Việt Anh';
+  } else if (src === 'brand-story') {
+    headline = 'Cảm ơn Ba/Mẹ quan tâm Trường Việt Anh';
+    leadPhrase = 'tìm hiểu Trường Việt Anh';
+  } else {
+    headline = `Đã nhận đăng ký tham quan ${level} ${loc}`.trim();
+    leadPhrase = `tham quan ${level} ${loc}`.trim();
+  }
+
+  const subject = `✅ ${headline} — Trường Việt Anh sẽ liên hệ trong 24h`;
+
+  // Logo theo cấp — cả 2 đều VÀNG hiển thị trực tiếp trên navy header (không cần khung trắng).
+  const isMamNon = src.startsWith('mam-non') || sl === 'mam-non';
+  const logoUrl = isMamNon
+    ? 'https://truongvietanh.com/logo-mam-non-yellow.png'
+    : 'https://truongvietanh.com/logo-th-thcs-thpt-yellow.png';
+  const logoAlt = isMamNon ? 'Trường Mầm Non Việt Anh' : 'Trường TH-THCS-THPT Việt Anh';
+  const logoBlock = `<img src="${logoUrl}" alt="${logoAlt}" style="max-width:160px;height:auto;margin:0 auto 18px;display:block;" />`;
+
+  const body = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
+<div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);">
+  <div style="background:linear-gradient(135deg,#000080,#00004d);color:#fff;padding:36px 24px 32px;text-align:center;">
+    ${logoBlock}
+    <div style="display:inline-block;background:#ffff00;color:#000080;font-size:12px;font-weight:800;letter-spacing:1.2px;padding:6px 14px;border-radius:20px;text-transform:uppercase;margin-bottom:14px;">✓ Đăng ký thành công</div>
+    <h1 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#ffff00;line-height:1.3;">${headline}</h1>
+    <p style="margin:0;font-size:14px;color:rgba(255,255,255,.85);line-height:1.5;">Trường Việt Anh sẽ liên hệ Ba/Mẹ trong vòng 24 giờ</p>
+  </div>
+  <div style="padding:28px 24px;">
+    <p style="font-size:15px;color:#333;margin:0 0 18px;line-height:1.6;">
+      Kính gửi <strong>${firstName}</strong>,<br/><br/>
+      Cảm ơn Ba/Mẹ đã đăng ký <strong>${leadPhrase}</strong>.
+      Bộ phận tuyển sinh Trường Việt Anh sẽ <strong>gọi xác nhận lịch tham quan</strong> trong vòng <strong>24 giờ</strong>.
+    </p>
+
+    <div style="background:#fafbff;border-left:4px solid #ffff00;border-radius:8px;padding:16px 18px;margin-bottom:20px;">
+      <div style="font-weight:800;color:#000080;margin-bottom:10px;">📋 Các bước tiếp theo</div>
+      <ol style="margin:0;padding-left:20px;font-size:14px;color:#333;line-height:1.8;">
+        <li><strong>Tư vấn viên gọi xác nhận</strong> — chốt ngày & giờ tham quan phù hợp</li>
+        <li>Đến tham quan trực tiếp: <strong>gặp giáo viên, xem lớp học, cơ sở vật chất</strong></li>
+        <li>Nhận <strong>khảo sát tiến độ phát triển tự nhiên của con</strong> và hướng dẫn của chuyên gia</li>
+      </ol>
+    </div>
+
+    ${addr ? `
+    <div style="background:#fffde6;border:1px solid #ffff00;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
+      <div style="font-weight:800;color:#000080;margin-bottom:6px;">📍 Cơ sở ${loc}</div>
+      <div style="font-size:14px;color:#333;line-height:1.6;">
+        <strong>Địa chỉ:</strong> ${addr}<br/>
+        <strong>Giờ làm việc:</strong> Thứ Hai – Thứ Bảy: 06:30 – 18:30<br/>
+        <span style="margin-left:88px;">Chủ Nhật: 07:30 – 12:00 (hoặc theo hẹn trước)</span>
+      </div>
+    </div>` : ''}
+
+    <div style="text-align:center;margin:24px 0 16px;">
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#000080;padding:14px 24px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">💬 Chat Zalo</a>
+      <a href="https://m.me/truongvietanhhcm" style="display:inline-block;background:#0084ff;color:#fff;padding:14px 24px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">💬 Chat Facebook</a>
+      <a href="tel:+84916961409" style="display:inline-block;background:#fff;color:#000080;border:2px solid #000080;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">📞 0916 961 409</a>
+    </div>
+
+    <div style="text-align:center;padding-top:18px;border-top:1px solid #eee;font-size:12px;color:#999;line-height:1.7;">
+      <strong style="color:#000080;font-size:13px;">Trường Việt Anh — since 2011</strong><br/>
+      <em>Từ bình thường trở nên phi thường</em><br/>
+      Mầm non · Tiểu học · THCS · THPT<br/>
+      TP HCM · Tây Ninh · An Giang
+    </div>
+  </div>
+</div>
+</body></html>`.trim();
+
+  // Primary: send via GHL Conversations API
+  if (contactId) {
+    try { await sendEmailViaGHL({ contactId, subject, html: body, ghlApiKey }); } catch(e) { console.error('landing confirm via GHL fail', e); }
+  }
+  // Fallback: MailChannels
+  try {
+    await fetch('https://api.mailchannels.net/tx/v1/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        personalizations: [{ to: [{ email: data.email, name: data.fullName }] }],
+        from: { email: 'tailieu@truongvietanh.com', name: 'Trường Việt Anh' },
+        reply_to: { email: 'tu@truongvietanh.com', name: 'Tư vấn Trường Việt Anh' },
+        subject,
+        content: [{ type: 'text/html', value: body }],
+      }),
+    });
+  } catch(e) { console.error('landing confirm via MailChannels fail', e); }
+}
+
 // === TRAI HE CONSULTATION CONFIRMATION EMAIL (non-quiz sales page leads) ===
 async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
   const loc = deriveLocation(data.source) || '';
@@ -960,7 +1189,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
   const body = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;margin:0;padding:20px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
   <!-- Header -->
-  <div style="background:linear-gradient(135deg,#1a1a5e,#12123e);color:#fff;padding:28px 24px;text-align:center;">
+  <div style="background:linear-gradient(135deg,#1a1a5e,#00004d);color:#fff;padding:28px 24px;text-align:center;">
     <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:10px 20px;border-radius:10px;margin-bottom:16px;"/>
     <h1 style="color:#fff;font-size:22px;margin:8px 0;line-height:1.3;">✅ Đã nhận đăng ký tư vấn!</h1>
     <p style="color:#ffd89a;font-size:14px;margin:4px 0 0;">Trại hè Lion Camp 2026 — ${campLvl} ${loc}</p>
@@ -978,7 +1207,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
     </p>
 
     <!-- Next steps box -->
-    <div style="background:#f8faff;border-left:4px solid #D4A843;padding:18px 20px;border-radius:10px;margin-bottom:20px;">
+    <div style="background:#f8faff;border-left:4px solid #ffff00;padding:18px 20px;border-radius:10px;margin-bottom:20px;">
       <p style="font-weight:800;color:#1a1a5e;margin:0 0 12px;font-size:15px;">📋 Các bước tiếp theo:</p>
       <ol style="margin:0;padding-left:22px;font-size:14px;color:#2d2d42;line-height:1.9;">
         <li><strong>Tư vấn viên gọi/Zalo</strong> trong 24 giờ</li>
@@ -990,7 +1219,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- CTA Zalo -->
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:linear-gradient(135deg,#D4A843,#c09530);color:#12123e;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(212,168,67,.4);">
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:linear-gradient(135deg,#ffff00,#c09530);color:#00004d;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(255,255,0,.4);">
         📞 Chat Zalo tư vấn nhanh hơn
       </a>
     </div>
@@ -1009,7 +1238,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
     </div>
   </div>
 
-  <div style="background:#12123e;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
+  <div style="background:#00004d;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
     Lion Camp 2026 — Trường Việt Anh<br/>
     <a href="https://truongvietanh.com" style="color:#ffd89a;">truongvietanh.com</a>
   </div>
@@ -1235,19 +1464,19 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
 <table width="520" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
   <tr>
-    <td style="background:#0d1b3e;padding:24px;text-align:center;border-bottom:3px solid #d4a843;">
+    <td style="background:#000080;padding:24px;text-align:center;border-bottom:3px solid #ffff00;">
       <img src="https://truongvietanh.com/logo-th-thcs-thpt.png" alt="Trường Việt Anh" height="60" style="background:#fff;padding:6px 16px;border-radius:8px;display:block;margin:0 auto 12px;"/>
     </td>
   </tr>
   <tr>
     <td style="padding:36px 36px 28px;text-align:center;">
       <p style="font-size:36px;margin:0 0 12px;">🎉</p>
-      <h2 style="color:#0d1b3e;font-size:20px;font-family:Arial,sans-serif;margin:0 0 16px;">Cảm ơn bạn đã đăng ký!</h2>
+      <h2 style="color:#000080;font-size:20px;font-family:Arial,sans-serif;margin:0 0 16px;">Cảm ơn bạn đã đăng ký!</h2>
       <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 12px;">
         Chúng tôi đã nhận được thông tin của bạn.
       </p>
       <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 20px;">
-        Vui lòng <strong style="color:#0d1b3e;">đợi vài phút</strong>, tài liệu sẽ được gửi đến email của bạn ngay sau đây.
+        Vui lòng <strong style="color:#000080;">đợi vài phút</strong>, tài liệu sẽ được gửi đến email của bạn ngay sau đây.
       </p>
       <p style="color:#999;font-size:13px;margin:0;">
         Nếu không thấy email, hãy kiểm tra thư mục <strong>Spam</strong> hoặc <strong>Promotions</strong>.
@@ -1262,9 +1491,9 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
     </td>
   </tr>
   <tr>
-    <td style="background:#0d1b3e;padding:16px;text-align:center;">
+    <td style="background:#000080;padding:16px;text-align:center;">
       <p style="color:rgba(255,255,255,.6);font-size:12px;font-family:Arial,sans-serif;margin:0;">
-        Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#d4a843;text-decoration:none;">truongvietanh.com</a> — Hotline: 0916 961 409
+        Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#ffff00;text-decoration:none;">truongvietanh.com</a> — Hotline: 0916 961 409
       </p>
     </td>
   </tr>
@@ -1272,12 +1501,9 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
 </td></tr></table>
 </body></html>`;
 
-  // Primary: GHL Conversations API (dùng SES backend — ổn định hơn MailChannels)
-  if (contactId) {
-    await sendEmailViaGHL({ contactId, subject: res.subject, html, ghlApiKey });
-  }
-
-  // Fallback: MailChannels trực tiếp tới email người dùng
+  // NOTE: GHL workflow (addContactToWorkflow) đã tự gửi email welcome/resource ở bước 1.
+  // Không gọi sendEmailViaGHL ở đây để tránh user nhận 2 email trùng từ cùng sender (duong@reply.truongvietanh.com).
+  // MailChannels bên dưới gửi email xác nhận tức thì từ sender khác (tailieu@truongvietanh.com).
   try {
     await fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',

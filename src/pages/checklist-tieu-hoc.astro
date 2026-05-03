@@ -1,0 +1,505 @@
+---
+// squeeze/checklist-tieu-hoc — CRO v1
+// Audience : cold FB + GG traffic, parents 5-7yo (sắp vào Lớp 1)
+// Goal     : max lead (email → name + phone)
+// Psychology: curiosity gap · loss aversion · FOMO · commitment bias · price anchoring
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>9/10 Ba Mẹ Mắc Sai Lầm Này Khi Chọn Trường Tiểu Học – Checklist Miễn Phí | Trường Việt Anh</title>
+<meta name="description" content="Bạn sắp chọn trường tiểu học cho con vào Lớp 1? Checklist 26 tiêu chí + 5 phần đánh giá giúp so sánh bất kỳ trường nào trong 2 phút. 2.547 ba mẹ đã dùng. Miễn phí." />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+*,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#000080;--navy2:#000060;
+  --border:rgba(255,255,255,.08);
+  --text:#eef2ff;--muted:rgba(238,242,255,.58);
+  --red:#dc2626;--orange:#ffff00;--amber:#ffff00;
+  --green:#22c55e;--blue:#0000cc;--r:10px;
+}
+html{height:100%}
+body{
+  min-height:100%;font-family:Inter,sans-serif;
+  background:var(--navy);
+  background-image:
+    radial-gradient(ellipse 90% 60% at 72% 105%,rgba(0,0,100,.55) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 40% at 4% -4%,rgba(0,0,80,.6) 0%,transparent 50%);
+  color:var(--text);overflow-x:hidden;
+  display:flex;flex-direction:column;
+}
+
+/* TOP URGENCY BAR */
+.ubar{flex-shrink:0;background:var(--red);padding:7px 16px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12.5px;font-weight:600;letter-spacing:.1px;animation:slideDown .35s ease both}
+.ubar-dot{width:7px;height:7px;border-radius:50%;background:#fca5a5;animation:blink 1.4s ease infinite}
+.ubar em{font-style:normal;background:#00000040;border-radius:20px;padding:1px 9px;font-weight:800;font-variant-numeric:tabular-nums}
+
+/* LOGO BAR */
+.lbar{flex-shrink:0;background:#fff;padding:10px 40px;display:flex;align-items:center;justify-content:center;gap:14px}
+.lbar img{height:62px;display:block}
+.lbar .lmark{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--navy),#00c);color:#fff;display:flex;align-items:center;justify-content:center;font-family:Montserrat,sans-serif;font-weight:900;font-size:1.2em}
+.lbar-txt{font-family:Montserrat,sans-serif;font-weight:900;font-size:18px;color:var(--navy);line-height:1.1}
+.lbar-txt small{display:block;font-size:11px;color:#666;font-weight:600;margin-top:2px}
+
+/* HERO */
+.hero{
+  flex:1;min-height:0;display:grid;grid-template-columns:1fr 360px;
+  align-items:center;max-width:1060px;width:100%;margin:0 auto;
+  padding:30px 40px 40px;gap:40px;animation:riseUp .6s ease both .07s
+}
+.left{display:flex;flex-direction:column;gap:14px}
+
+.eyebrow{display:inline-flex;align-items:center;gap:7px;background:#dc262624;border:1px solid rgba(220,38,38,.38);border-radius:30px;padding:3px 14px 3px 5px;width:fit-content;font-size:11.5px;font-weight:700;color:#fca5a5}
+.eyebrow b{background:var(--red);color:#fff;font-family:Montserrat,sans-serif;font-size:11px;font-weight:900;border-radius:20px;padding:2px 9px;text-transform:uppercase;letter-spacing:.3px}
+
+.h1{font-family:Montserrat,sans-serif;font-size:clamp(1.5rem,2.6vw,2.2rem);font-weight:900;line-height:1.22;letter-spacing:-.3px}
+.h1 .stat{color:var(--orange);font-style:italic}
+.h1 u{text-decoration:none;border-bottom:2.5px solid rgba(255,255,0,.5)}
+
+.sub{font-size:14px;color:var(--muted);line-height:1.65;padding-left:11px;border-left:3px solid var(--orange)}
+.sub strong{color:var(--text);font-weight:600}
+
+.blist{list-style:none;display:flex;flex-direction:column;gap:7px}
+.blist li{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;color:#eef2ffd4;line-height:1.45}
+.ck{flex-shrink:0;width:19px;height:19px;border-radius:50%;background:var(--green);display:inline-flex;align-items:center;justify-content:center;margin-top:2px;color:#fff;font-size:11px;font-weight:900}
+.blist b{color:var(--text);font-weight:600}
+
+.proof{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--muted)}
+.stars{color:var(--amber);letter-spacing:-1px;font-size:13px}
+.proof strong{color:var(--amber);font-weight:700}
+.proof-sep{width:1px;height:13px;background:var(--border)}
+
+.directive{font-size:13px;color:#eef2ffa6;display:flex;align-items:center;gap:6px;font-weight:500}
+
+.cta-block{display:flex;flex-direction:column;gap:8px}
+.seats-inline{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#fca5a5}
+.seats-dot{width:8px;height:8px;border-radius:50%;background:#ef4444;animation:blink 1s ease infinite;flex-shrink:0}
+.seats-num{background:var(--red);color:#fff;font-family:Montserrat,sans-serif;font-size:13px;font-weight:900;border-radius:20px;padding:1px 9px;font-variant-numeric:tabular-nums}
+
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  background:var(--orange);background-image:linear-gradient(135deg,#ff3,#ff0 45%,#cc0);
+  color:navy;font-family:Montserrat,sans-serif;font-size:clamp(.9rem,1.05vw,1rem);font-weight:900;letter-spacing:.8px;text-transform:uppercase;
+  border:none;border-radius:var(--r);padding:17px 30px;cursor:pointer;
+  max-width:480px;position:relative;overflow:hidden;
+  box-shadow:0 6px 32px #ff09,0 2px 8px #00000073;
+  transition:transform .18s ease,box-shadow .18s ease;
+  animation:btnPulse 2.8s ease-in-out infinite
+}
+.btn:after{content:"";position:absolute;top:0;left:-90%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transition:left .5s ease}
+.btn:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 12px 40px #ffff00bf,0 2px 8px #0006;animation:none}
+.btn:hover:after{left:145%}
+.btn:active{transform:scale(.98)}
+.btn.shake{animation:shake .55s ease}
+
+.micro{font-size:11px;color:#eef2ff59;display:flex;align-items:center;gap:5px}
+
+/* RIGHT: Mockup */
+.right{display:flex;flex-direction:column;align-items:center;gap:14px}
+.mscene{position:relative;padding:18px 10px 14px;width:100%;max-width:300px}
+.m-glow-bg{position:absolute;inset:-10%;background:radial-gradient(ellipse 80% 60% at 50% 65%,rgba(255,255,0,.3) 0%,rgba(255,255,0,.12) 40%,transparent 70%);z-index:0;pointer-events:none;animation:glowPulse 3.5s ease-in-out infinite}
+.m-shadow-el{position:absolute;bottom:4%;left:14%;right:10%;height:35%;background:#0009;filter:blur(26px);border-radius:50%;z-index:1}
+.m-ghost-2,.m-ghost-1{position:absolute;inset:0;border-radius:10px;z-index:2}
+.m-ghost-2{background:linear-gradient(135deg,#00a,#00004d);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(9deg) translate(18px,18px);opacity:.5;box-shadow:0 8px 28px #0006}
+.m-ghost-1{background:linear-gradient(135deg,#008,#00004d);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(4.5deg) translate(9px,9px);opacity:.38}
+.m-card{
+  position:relative;z-index:3;border-radius:10px;overflow:hidden;
+  transform:perspective(700px) rotateY(-5deg) rotateX(4deg);
+  transform-origin:center bottom;
+  filter:drop-shadow(-6px 14px 28px rgba(0,0,0,.6));
+  animation:floatMock 3.8s ease-in-out infinite;
+  transition:transform .35s ease,filter .35s ease;cursor:pointer;
+  background:#0c1b34;padding:0;
+  box-shadow:0 0 0 1px rgba(255,255,255,.05);
+}
+.m-card img{display:block;width:100%;height:auto;border-radius:10px}
+.m-card:hover{transform:perspective(700px) rotateY(-1deg) rotateX(1deg) scale(1.04);filter:drop-shadow(-4px 18px 36px rgba(255,255,0,.4));animation:none}
+.m-shine{position:absolute;inset:0;border-radius:10px;background:linear-gradient(135deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,.06) 35%,transparent 60%);pointer-events:none;z-index:4}
+.m-badge-yr{position:absolute;top:-9px;left:-9px;z-index:5;background:linear-gradient(135deg,navy,#00c);color:#fff;font-family:Montserrat,sans-serif;font-size:10px;font-weight:900;padding:4px 10px;border-radius:20px;box-shadow:0 3px 10px #0000c88c;letter-spacing:.3px}
+
+.m-arrow{margin-top:8px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;font-weight:600;color:#eef2ff80;animation:arrowPulse 2s ease-in-out infinite}
+
+/* Testimonial card */
+.tcard{background:#ffffff0d;border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;max-width:280px;width:100%}
+.tc-stars{color:var(--amber);font-size:12px;letter-spacing:-1px;margin-bottom:5px}
+.tc-q{font-size:12px;color:#eef2ffb3;line-height:1.55;font-style:italic;margin-bottom:8px}
+.tc-auth{display:flex;align-items:center;gap:8px}
+.tc-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
+.tc-name{font-size:11.5px;font-weight:700;color:#eef2ffcc}
+.tc-meta{font-size:10.5px;color:#eef2ff6b}
+
+/* MODAL OVERLAY */
+.ov{display:none;position:fixed;inset:0;z-index:999;background:#040a18d6;backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+.ov.open{display:flex;animation:fadeIn .2s ease}
+.popup{background:#fff;color:#111827;border-radius:18px;width:100%;max-width:420px;padding:26px 24px 22px;position:relative;box-shadow:0 32px 100px #00000080;animation:springUp .3s cubic-bezier(.34,1.56,.64,1)}
+.pcl{position:absolute;top:12px;right:13px;background:#f3f4f6;border:none;border-radius:50%;width:28px;height:28px;font-size:15px;color:#6b7280;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
+.pcl:hover{background:#e5e7eb;color:#111}
+
+.pprog{margin-bottom:18px}
+.pprog-meta{display:flex;justify-content:space-between;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#9ca3af;margin-bottom:6px}
+.pprog-track{height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden}
+.pprog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#cc0,#ff0,#ff3);transition:width .45s ease;width:50%}
+
+.ps{display:none}.ps.on{display:block}
+.p-ico{font-size:26px;margin-bottom:7px;line-height:1}
+.p-title{font-family:Montserrat,sans-serif;font-size:1.05rem;font-weight:800;color:#0c1b34;line-height:1.3;margin-bottom:3px}
+.p-sub{font-size:12.5px;color:#6b7280;margin-bottom:14px;line-height:1.55}
+
+.fg{margin-bottom:10px}
+.fl{display:block;font-size:10.5px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
+.fi{width:100%;padding:12px 13px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;font-family:Inter,sans-serif;color:#111;outline:none;background:#f9fafb;transition:border-color .2s,box-shadow .2s}
+.fi:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ffff001f;background:#fff}
+.fi.err{border-color:#ef4444;box-shadow:0 0 0 3px #ef44441a}
+.fe{font-size:11.5px;color:#ef4444;margin-top:3px;display:none}
+.fe.on{display:block}
+
+.vstack{background:#fffbeb;border:1.5px solid #fde68a;border-radius:10px;padding:11px 13px;margin-bottom:12px}
+.vs-hd{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.vs-row{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#78350f;margin-bottom:5px;line-height:1.35}
+.vs-row:last-of-type{margin-bottom:0}
+.vs-price{margin-left:auto;flex-shrink:0;font-size:11px;color:#b45309;font-weight:700;text-decoration:line-through;opacity:.65;white-space:nowrap}
+.vs-free{color:#16a34a;font-weight:800;text-decoration:none!important;opacity:1!important;font-size:11.5px}
+.vs-total{margin-top:7px;padding-top:7px;border-top:1px dashed #fde68a;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:#92400e}
+.vs-total-val{background:#16a34a;color:#fff;border-radius:5px;padding:2px 9px;font-family:Montserrat,sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.3px}
+
+.s2-urg{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#dc2626;margin-bottom:10px}
+.s2-urg-dot{width:7px;height:7px;border-radius:50%;background:#dc2626;animation:blink 1s ease infinite;flex-shrink:0}
+
+.pbtn{width:100%;background:linear-gradient(135deg,#ff3,#ff0,#cc0);color:navy;font-family:Montserrat,sans-serif;font-size:.93rem;font-weight:900;letter-spacing:.7px;text-transform:uppercase;border:none;border-radius:9px;padding:14px;cursor:pointer;box-shadow:0 4px 20px #ffff0080;transition:transform .18s,box-shadow .18s;margin-top:7px;min-height:50px;display:flex;align-items:center;justify-content:center}
+.pbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px #ffff00a6}
+
+.p-back{background:none;border:none;font-size:12px;color:#9ca3af;cursor:pointer;padding:5px 0;margin-top:4px;display:flex;align-items:center;gap:4px;transition:color .15s}
+.p-back:hover{color:#374151}
+
+.psec{font-size:11px;color:#9ca3af;text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px}
+
+.psuc{display:none;text-align:center;padding:10px 0}
+.psuc.on{display:block}
+.suc-ico{font-size:52px;margin-bottom:12px}
+.suc-h{font-family:Montserrat,sans-serif;font-size:1.2rem;font-weight:900;color:#16a34a;margin-bottom:8px}
+.suc-p{font-size:13.5px;color:#6b7280;line-height:1.65}
+
+/* STICKY MOBILE CTA */
+.sticky{display:none;position:fixed;bottom:0;left:0;right:0;background:#000060;padding:10px 16px;z-index:50;border-top:1px solid var(--border);box-shadow:0 -4px 20px #00000099}
+.sticky .btn{padding:13px 22px;font-size:.9rem;width:100%;max-width:none}
+
+/* ANIMATIONS */
+@keyframes slideDown{0%{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes riseUp{0%{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{0%{opacity:0}to{opacity:1}}
+@keyframes springUp{0%{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes btnPulse{0%,to{box-shadow:0 6px 32px #ff09,0 2px 8px #00000073}50%{box-shadow:0 8px 42px #ffff00d9,0 2px 8px #0006}}
+@keyframes shake{0%,to{transform:translate(0)}15%,45%,75%{transform:translate(-5px) rotate(-.4deg)}30%,60%,90%{transform:translate(5px) rotate(.4deg)}}
+@keyframes blink{0%,to{opacity:1}50%{opacity:.25}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glowPulse{0%,to{opacity:.7}50%{opacity:1}}
+@keyframes floatMock{0%,to{transform:perspective(700px) rotateY(-5deg) rotateX(4deg) translateY(0)}50%{transform:perspective(700px) rotateY(-5deg) rotateX(4deg) translateY(-8px)}}
+@keyframes arrowPulse{0%,to{transform:translateY(0);opacity:.6}50%{transform:translateY(3px);opacity:1}}
+
+@media (max-width:900px){
+  body{overflow-x:hidden;overflow-y:auto}
+  .hero{grid-template-columns:1fr;padding:24px 20px 100px;gap:30px}
+  .right{order:-1}
+  .mscene{max-width:240px}
+  .sticky{display:block}
+  .h1{font-size:1.5rem}
+  .btn{padding:15px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- 1. URGENCY BAR -->
+<div class="ubar">
+  <span class="ubar-dot"></span>
+  Hôm nay chỉ còn <em>9</em> suất nhận checklist + tư vấn miễn phí
+</div>
+
+<!-- 2. LOGO BAR -->
+<div class="lbar">
+  <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh" />
+</div>
+
+<!-- 3. HERO -->
+<section class="hero">
+  <div class="left">
+    <div class="eyebrow">
+      <b>Cảnh báo</b>
+      Dành cho ba mẹ sắp cho con vào Lớp 1
+    </div>
+
+    <h1 class="h1">
+      Bạn sắp chọn trường tiểu học — <u><span class="stat">9 trong 10</span> ba mẹ mắc sai lầm</u> này khi đi tham quan trường
+    </h1>
+
+    <p class="sub">
+      <strong>Checklist 26 tiêu chí + 5 phần đánh giá</strong> giúp bạn so sánh bất kỳ trường nào trong <strong>2 phút</strong> — và không hối hận sau 5 năm tiểu học.
+    </p>
+
+    <ul class="blist">
+      <li><span class="ck">✓</span><span><b>Câu hỏi buộc phải hỏi</b> ban giám hiệu khi tham quan — mà 90% ba mẹ không biết cần hỏi</span></li>
+      <li><span class="ck">✓</span><span><b>Cách tính chi phí THỰC TẾ</b> — trường công "miễn phí" thực ra tốn 1.5–3 triệu/tháng</span></li>
+      <li><span class="ck">✓</span><span><b>Bảng so sánh 3 trường</b> — xếp hạng khách quan trên 1 trang, quyết định trong 2 phút</span></li>
+      <li><span class="ck">✓</span><span><b>PDF in sẵn 8 trang</b> — mang đi tham quan, đánh dấu tại chỗ, quyết định tại chỗ</span></li>
+    </ul>
+
+    <div class="proof">
+      <span class="stars">★★★★★</span>
+      <strong>2.547 ba mẹ</strong> đã dùng checklist này
+      <span class="proof-sep"></span>
+      <strong>96%</strong> tự tin hơn khi chọn trường
+    </div>
+
+    <div class="directive">
+      👇 Nhấn vào nút vàng bên dưới để nhận checklist miễn phí — chỉ mất 10 giây
+    </div>
+
+    <div class="cta-block">
+      <div class="seats-inline">
+        <span class="seats-dot"></span>
+        Hôm nay chỉ còn <span class="seats-num">9</span> suất miễn phí
+      </div>
+      <button class="btn" onclick="openModal()">🎁 Nhận Checklist Miễn Phí — Ngay Bây Giờ</button>
+      <div class="micro">🔒 Không spam · Miễn phí hoàn toàn · Hủy bất cứ lúc nào · 2026</div>
+    </div>
+  </div>
+
+  <div class="right">
+    <div class="mscene">
+      <div class="m-glow-bg"></div>
+      <div class="m-shadow-el"></div>
+      <div class="m-ghost-2"></div>
+      <div class="m-ghost-1"></div>
+      <div class="m-card" onclick="openModal()">
+        <div class="m-badge-yr">PDF 2026</div>
+        <div class="m-shine"></div>
+        <img src="/mockup-checklist-tieu-hoc.png" alt="Checklist Chọn Trường Tiểu Học - Trường Việt Anh" />
+      </div>
+    </div>
+
+    <div class="m-arrow">
+      ↓ Nhấn nút vàng để tải ngay miễn phí
+    </div>
+
+    <div class="tcard">
+      <div class="tc-stars">★★★★★</div>
+      <div class="tc-q">"Tôi tham quan 4 trường tiểu học mà không biết chọn cái nào. Sau khi dùng checklist, tôi tự tin quyết định chỉ trong 1 buổi."</div>
+      <div class="tc-auth">
+        <div class="tc-av">HN</div>
+        <div>
+          <div class="tc-name">Chị Hồng Ngọc</div>
+          <div class="tc-meta">Mẹ bé 6 tuổi · Quận 7, TP.HCM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STICKY MOBILE -->
+<div class="sticky">
+  <button class="btn" onclick="openModal()">🎁 Nhận Checklist Miễn Phí Ngay</button>
+</div>
+
+<!-- MODAL POPUP -->
+<div class="ov" id="ov">
+  <div class="popup">
+    <button class="pcl" onclick="closeModal()">✕</button>
+
+    <div class="pprog">
+      <div class="pprog-meta">
+        <span id="stepLbl">Bước 1 / 2</span>
+        <span id="progLbl">50%</span>
+      </div>
+      <div class="pprog-track"><div class="pprog-fill" id="progFill"></div></div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="ps on" id="step1">
+      <div class="p-ico">📧</div>
+      <h2 class="p-title">Nhập email — nhận checklist trong 60 giây</h2>
+      <p class="p-sub">Chỉ cần email. Không cần điền gì thêm ở bước này.</p>
+
+      <div class="fg">
+        <label class="fl" for="em">Địa chỉ Email của bạn</label>
+        <input type="email" class="fi" id="em" placeholder="bame@email.com" />
+        <div class="fe" id="emErr">Vui lòng nhập email hợp lệ</div>
+      </div>
+
+      <button class="pbtn" onclick="nextStep()">Gửi Checklist Vào Email Tôi →</button>
+      <div class="psec">🔒 Email an toàn · Không spam · Không chia sẻ bên thứ ba</div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="ps" id="step2">
+      <div class="p-ico">🎁</div>
+      <h2 class="p-title">Bước cuối — nhận checklist + 3 quà tặng miễn phí</h2>
+      <div class="s2-urg"><span class="s2-urg-dot"></span>Hôm nay chỉ còn 9 suất · Điền trong 10 giây</div>
+
+      <div class="vstack">
+        <div class="vs-hd">🎁 Bạn sẽ nhận miễn phí hôm nay:</div>
+        <div class="vs-row">✅ <span>PDF Checklist 26 tiêu chí</span><span class="vs-price vs-free">99.000đ</span></div>
+        <div class="vs-row">🎯 <span>Tư vấn chọn trường 1:1 với chuyên gia</span><span class="vs-price vs-free">500.000đ</span></div>
+        <div class="vs-row">🎟️ <span>Voucher học thử 1 buổi tại trường</span><span class="vs-price vs-free">350.000đ</span></div>
+        <div class="vs-total">
+          <span>Tổng trị giá: <s>949.000đ</s></span>
+          <span class="vs-total-val">Miễn phí hoàn toàn</span>
+        </div>
+      </div>
+
+      <div class="fg">
+        <label class="fl" for="nm">Họ và tên ba/mẹ</label>
+        <input type="text" class="fi" id="nm" placeholder="VD: Nguyễn Thị Lan" />
+        <div class="fe" id="nmErr">Vui lòng nhập họ tên của bạn</div>
+      </div>
+      <div class="fg">
+        <label class="fl" for="ph">Số điện thoại / Zalo</label>
+        <input type="tel" class="fi" id="ph" placeholder="VD: 091 xxx xxxx" />
+        <div class="fe" id="phErr">Vui lòng nhập số điện thoại hợp lệ</div>
+      </div>
+
+      <button class="pbtn" onclick="finishStep()">Nhận Tất Cả Ngay — Trong 30 Giây →</button>
+      <button class="p-back" onclick="backStep()">← Quay lại bước trước</button>
+      <div class="psec">🔒 Bảo mật 100% · Thông tin chỉ dùng để gửi checklist và hỗ trợ tư vấn</div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div class="psuc" id="success">
+      <div class="suc-ico">🎉</div>
+      <div class="suc-h">Đăng ký thành công!</div>
+      <div class="suc-p">Checklist đang được gửi vào email của bạn.<br />Nhớ kiểm tra <strong>Spam / Promotions</strong> nếu chưa thấy.<br /><br />Chuyên viên sẽ liên hệ bạn trong 1–2 ngày tới qua Zalo.</div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+(function(){
+  'use strict';
+
+  var C = {
+    formId  : 'sq-th',
+    funnel  : 'squeeze-checklist-tieu-hoc',
+    level   : 'tieu-hoc',
+    api     : '/api/lead',
+    redirect: '/cam-on/',
+  };
+
+  var ov = document.getElementById('ov');
+  var capturedEmail = '';
+
+  function noop(){}
+  function gtm(ev){
+    try{ window.dataLayer = window.dataLayer || []; window.dataLayer.push({event:ev, funnel:C.funnel}); }catch(e){}
+  }
+
+  window.openModal = function(){
+    ov.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    gtm('popup_open');
+    setTimeout(function(){ var el=document.getElementById('em'); if(el) el.focus(); }, 300);
+  };
+  window.closeModal = function(){
+    ov.classList.remove('open');
+    document.body.style.overflow = '';
+  };
+  ov.addEventListener('click', function(e){ if(e.target===ov) window.closeModal(); });
+  document.addEventListener('keydown', function(e){ if(e.key==='Escape') window.closeModal(); });
+
+  function setErr(inpId, errId, show){
+    var i=document.getElementById(inpId), e=document.getElementById(errId);
+    if(i) i.classList.toggle('err', show);
+    if(e) e.classList.toggle('on', show);
+  }
+
+  window.nextStep = function(){
+    var em = document.getElementById('em');
+    var v  = (em.value||'').trim();
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){
+      setErr('em','emErr',true); em.focus(); return;
+    }
+    setErr('em','emErr',false);
+    capturedEmail = v;
+
+    /* Partial capture (best-effort) */
+    try{
+      localStorage.setItem('va_partial_email', capturedEmail);
+      fetch(C.api, {
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({email:capturedEmail, source:C.funnel, form_id:C.formId, funnel_code:C.funnel, school_level:C.level, partial:true}),
+        keepalive:true
+      }).catch(noop);
+    }catch(e){}
+    gtm('lead_step1');
+
+    document.getElementById('step1').classList.remove('on');
+    document.getElementById('step2').classList.add('on');
+    document.getElementById('stepLbl').textContent = 'Bước 2 / 2';
+    document.getElementById('progLbl').textContent = '100%';
+    document.getElementById('progFill').style.width = '100%';
+    setTimeout(function(){ var n=document.getElementById('nm'); if(n) n.focus(); }, 80);
+  };
+
+  window.backStep = function(){
+    document.getElementById('step2').classList.remove('on');
+    document.getElementById('step1').classList.add('on');
+    document.getElementById('stepLbl').textContent = 'Bước 1 / 2';
+    document.getElementById('progLbl').textContent = '50%';
+    document.getElementById('progFill').style.width = '50%';
+  };
+
+  window.finishStep = function(){
+    var nm = document.getElementById('nm');
+    var ph = document.getElementById('ph');
+    var name  = (nm.value||'').trim();
+    var phone = (ph.value||'').trim();
+    var ok = true;
+    if(name.length < 2){ setErr('nm','nmErr',true); ok=false; } else setErr('nm','nmErr',false);
+    if(!/^[0-9+\s\-\.]{9,15}$/.test(phone)){ setErr('ph','phErr',true); ok=false; } else setErr('ph','phErr',false);
+    if(!ok) return;
+
+    var btn = document.querySelector('#step2 .pbtn');
+    if(btn){ btn.disabled = true; btn.textContent = 'Đang gửi...'; }
+
+    fetch(C.api, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        email: capturedEmail,
+        parent_name: name,
+        phone: phone,
+        source: C.funnel,
+        form_id: C.formId,
+        funnel_code: C.funnel,
+        school_level: C.level,
+        tags: ['chon-truong-tieu-hoc', 'checklist-tieu-hoc-2026', 'squeeze-tieu-hoc']
+      })
+    })
+    .then(function(r){ return r.json().catch(noop); })
+    .catch(noop)
+    .finally(function(){
+      gtm('lead_submitted');
+      try{ localStorage.setItem('va_form_submitted','1'); }catch(e){}
+      document.getElementById('step2').classList.remove('on');
+      document.getElementById('success').classList.add('on');
+      document.querySelector('.pprog').style.display = 'none';
+      setTimeout(function(){ window.location.href = C.redirect; }, 1800);
+    });
+  };
+
+  /* Enter-key UX */
+  var emEl = document.getElementById('em');
+  var phEl = document.getElementById('ph');
+  if(emEl) emEl.addEventListener('keydown', function(e){ if(e.key==='Enter') window.nextStep(); });
+  if(phEl) phEl.addEventListener('keydown', function(e){ if(e.key==='Enter') window.finishStep(); });
+})();
+</script>
+</body>
+</html>

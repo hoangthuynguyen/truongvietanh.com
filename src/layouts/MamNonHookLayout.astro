@@ -1,0 +1,367 @@
+---
+/**
+ * MamNonHookLayout — Single-screen landing for hook campaigns (generalised)
+ * Brand: Navy #000080 + Yellow #ffff00
+ * Two-step form (email → name+phone) → POST /api/lead → redirect cam-on
+ *
+ * Despite the name, layout supports any cấp via levelLabel + bullets props.
+ */
+interface BulletItem { icon: string; html: string }
+interface Props {
+  title: string;
+  description: string;
+  canonicalUrl: string;
+  location: string;
+  locationSlug?: string;
+  address: string;
+  fomoText?: string;
+  hookHeadline: string;
+  hookSubline: string;
+  source: string;
+  funnelCode: string;
+  schoolLevel?: string;             // 'mam-non' | 'tieu-hoc' | 'thcs' | 'thpt' | 'mix'
+  levelLabel?: string;              // "Mầm Non" | "Tiểu Học" | "THCS" | "THPT" | "Trại Hè" ...
+  cardTitle?: string;               // "Đặt lịch tham quan ..."
+  cardSub?: string;                 // "45-60 phút · ..."
+  ctaStep2?: string;                // text on submit btn
+  bullets?: BulletItem[];
+  trustMarks?: string[];
+  redirectUrl: string;
+  schemaType?: string;              // 'EducationalOrganization' default
+  heroImage?: string;               // background image URL for hero
+}
+
+const DEFAULT_BULLETS: BulletItem[] = [
+  { icon: '📹', html: '<strong>Camera online 24/7</strong> — mẹ xem con mọi lúc qua app, đi làm vẫn yên tâm' },
+  { icon: '👶', html: '<strong>Lớp siêu nhỏ &lt; 15 bé</strong> · 2 cô/lớp — từng bé được quan tâm riêng' },
+  { icon: '💛', html: '<strong>Cô tận tâm như mẹ thứ hai</strong> — gắn bó nhiều năm, hiểu tính cách từng bé' },
+  { icon: '🍱', html: '<strong>Bếp ăn tại trường</strong> — thực đơn dinh dưỡng xoay vòng theo lứa tuổi' },
+];
+
+const {
+  title, description, canonicalUrl,
+  location, address,
+  hookHeadline, hookSubline,
+  source, funnelCode, redirectUrl,
+  schoolLevel = 'mam-non',
+  levelLabel = 'Mầm Non',
+  bullets = DEFAULT_BULLETS,
+  fomoText = '🔥 Đang nhận hồ sơ ' + levelLabel + ' 2026 · Đặt lịch tham quan miễn phí',
+  cardTitle = 'Đặt lịch tham quan ' + levelLabel + ' ' + location,
+  cardSub = '45–60 phút · Gặp giáo viên · Xem lớp · Tư vấn lộ trình',
+  ctaStep2 = '🏫 Đặt lịch tham quan',
+  trustMarks = ['Bộ GD&ĐT cấp phép', '15 năm kinh nghiệm', '3 cơ sở TPHCM + Long An'],
+  schemaType = 'EducationalOrganization',
+  heroImage,
+} = Astro.props;
+
+const HOTLINE = '0916 961 409';
+const HOTLINE_TEL = '+84916961409';
+const ZALO = 'https://zalo.me/1678310120468101523';
+
+const schemaName = `Trường Việt Anh — ${levelLabel}${location ? ' ' + location : ''}`;
+const schema = [
+  { '@context': 'https://schema.org', '@type': schemaType, name: schemaName, url: canonicalUrl, description, address: address ? { '@type': 'PostalAddress', streetAddress: address } : undefined, telephone: HOTLINE_TEL },
+  { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: canonicalUrl, inLanguage: 'vi' },
+];
+---
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content={description} />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content="https://media.truongvietanh.com/og/og-default.jpg" />
+<meta name="twitter:card" content="summary_large_image" />
+<title>{title}</title>
+<script is:inline type="application/ld+json" set:html={JSON.stringify(schema)} />
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet" />
+
+<style is:inline>
+:root{
+  --navy:#000080;
+  --navy-2:#0a0a99;
+  --navy-dk:#00004d;
+  --navy-soft:#f3f4ff;
+  --gold:#ffff00;
+  --gold-dk:#e6e600;
+  --gold-soft:#fffde6;
+  --text:#1a1a2e;
+  --text-muted:#5a5a70;
+  --border:#e5e7eb;
+  --shadow-lg:0 12px 40px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{font-family:'Open Sans',system-ui,sans-serif;color:#fff;background:var(--navy);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden}
+h1,h3,h4{font-family:'Montserrat',sans-serif;line-height:1.2;font-weight:800}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;width:100%}
+
+/* ─── TOP BAR ─── */
+.topbar{background:var(--navy-dk);color:#fff;padding:8px 0;font-size:13px;font-weight:600;flex-shrink:0}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.topbar a{color:var(--gold);font-weight:700}
+
+/* ─── HEADER ─── */
+.header{background:#fff;border-bottom:1px solid var(--border);padding:6px 0;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,.08);height:64px;display:flex;align-items:center}
+.header .wrap{display:flex;justify-content:center;align-items:center}
+.brand{display:flex;align-items:center;justify-content:center}
+.brand img{height:54px;width:auto;display:block}
+
+/* ─── HERO ─── */
+.hero{flex:1;background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);color:#fff;padding:32px 0 40px;position:relative;overflow:hidden;display:flex;align-items:center}
+.hero.has-img{background:var(--navy-dk)}
+.hero-bg{position:absolute;inset:0;background-size:contain;background-position:right center;background-repeat:no-repeat;z-index:0;opacity:1}
+@media (max-width:960px){.hero-bg{background-size:cover;background-position:center;opacity:.55}}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,77,.92) 0%,rgba(0,0,128,.78) 35%,rgba(0,0,128,.45) 60%,rgba(0,0,77,.55) 100%);z-index:1;pointer-events:none}
+.hero::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,0,.12) 0%,transparent 70%);pointer-events:none;z-index:2}
+.hero::after{content:'';position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,0,.08) 0%,transparent 70%);pointer-events:none;z-index:2}
+.hero .wrap{position:relative;z-index:1}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.fomo{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,0,.15);border:1px solid rgba(255,255,0,.4);color:var(--gold);padding:7px 14px;border-radius:30px;font-size:12.5px;font-weight:700;margin-bottom:16px}
+.h1{font-size:clamp(1.75rem,3.4vw,2.7rem);font-weight:900;line-height:1.12;color:#fff;margin-bottom:14px;letter-spacing:-.5px}
+.h1 .mark{color:var(--gold);display:inline}
+.h1 em{display:block;color:var(--gold);font-style:normal;font-weight:800;font-size:.78em;margin-top:6px}
+.h-sub{font-size:16px;color:rgba(255,255,255,.88);line-height:1.6;font-weight:500;margin-bottom:20px;border-left:4px solid var(--gold);padding-left:14px}
+.h-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:20px}
+.h-bullets li{display:flex;gap:11px;font-size:15px;color:#fff;line-height:1.45}
+.h-bullets .ico{flex:0 0 26px;height:26px;border-radius:50%;background:var(--gold);color:var(--navy-dk);display:inline-flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;margin-top:1px}
+.h-bullets strong{color:var(--gold)}
+.h-trust{display:flex;flex-wrap:wrap;gap:18px;font-size:12.5px;color:rgba(255,255,255,.72);font-weight:600}
+.h-trust span{display:inline-flex;align-items:center;gap:6px}
+.h-trust span::before{content:'✓';color:var(--gold);font-weight:900;font-size:13px}
+
+/* ─── FORM CARD ─── */
+.fcard{background:#fff;color:var(--text);border-radius:16px;box-shadow:var(--shadow-lg);border:1px solid rgba(255,255,0,.6);position:relative;overflow:hidden}
+.fcard-tag{background:var(--gold);color:var(--navy-dk);font-size:11.5px;font-weight:900;padding:9px 16px;letter-spacing:.7px;text-align:center;border-bottom:2px solid var(--navy);text-transform:uppercase}
+.fcard-body{padding:22px 22px 18px}
+.fcard-title{font-size:1.28rem;font-weight:900;color:var(--navy);text-align:center;margin-bottom:6px;line-height:1.25}
+.fcard-sub{font-size:13px;color:var(--text-muted);text-align:center;margin-bottom:16px;font-weight:500}
+.steps{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px dashed var(--border)}
+.sdot{width:24px;height:24px;border-radius:50%;background:#e5e7eb;color:#999;font-size:11.5px;font-weight:800;display:flex;align-items:center;justify-content:center;transition:.3s;flex-shrink:0}
+.sdot.active{background:var(--navy);color:var(--gold)}
+.sdot.done{background:#22c55e;color:#fff}
+.sline{width:30px;height:2px;background:#e5e7eb}
+.slabel{font-size:12px;color:var(--navy);font-weight:700;margin-left:8px}
+.sin{width:100%;padding:12px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:15px;font-family:inherit;margin-bottom:9px;transition:.2s;background:#fafbff}
+.sin:focus{outline:none;border-color:var(--navy);background:#fff;box-shadow:0 0 0 3px rgba(0,0,128,.1)}
+.sin.error{border-color:#ef4444;background:#fff5f5}
+.btn-step{width:100%;background:var(--gold);color:var(--navy-dk);border:none;padding:13px;border-radius:10px;font-size:14.5px;font-weight:900;font-family:'Montserrat',sans-serif;cursor:pointer;transition:.15s;text-transform:uppercase;letter-spacing:.4px;box-shadow:0 4px 14px rgba(255,255,0,.45)}
+.btn-step:hover{background:var(--gold-dk);transform:translateY(-1px);box-shadow:0 6px 20px rgba(255,255,0,.55)}
+.btn-back{background:none;border:none;color:var(--text-muted);font-size:12.5px;font-weight:600;cursor:pointer;text-decoration:underline;padding:8px 0 0;width:100%;text-align:center}
+.fcard-foot{display:flex;justify-content:space-around;gap:8px;flex-wrap:wrap;font-size:11.5px;color:var(--text-muted);margin-top:12px;padding-top:10px;border-top:1px solid var(--border);font-weight:600}
+.fcard-foot span{display:inline-flex;align-items:center;gap:4px}
+.fcard-success{text-align:center;padding:26px 22px}
+.fcard-success .icon{font-size:48px;margin-bottom:8px}
+.fcard-success h3{color:var(--navy);margin-bottom:6px;font-size:1.3rem}
+.fcard-success p{font-size:14px;color:var(--text-muted)}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width:960px){
+  .hero{padding:28px 0 32px;align-items:flex-start}
+  .hero-grid{grid-template-columns:1fr;gap:24px}
+}
+@media (max-width:640px){
+  .topbar{font-size:12px}
+  .topbar .wrap{justify-content:center;text-align:center}
+  .header{height:56px;padding:6px 0}
+  .brand img{height:44px}
+  .hero{padding:22px 0 28px}
+  .h1{font-size:1.7rem}
+  .h-sub{font-size:14.5px}
+  .h-bullets li{font-size:14px}
+  .h-trust{font-size:12px;gap:12px}
+}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="wrap">
+    <span>📍 Cơ sở {location} · Đang nhận hồ sơ Mầm Non 2026</span>
+    <span>📞 Hotline: <a href={`tel:${HOTLINE_TEL}`}>{HOTLINE}</a></span>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="wrap">
+    <a href="/" class="brand" aria-label="Trường Việt Anh">
+      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" />
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class={`hero${heroImage ? ' has-img' : ''}`}>
+  {heroImage && <div class="hero-bg" style={`background-image:url(${heroImage})`}></div>}
+  {heroImage && <div class="hero-overlay"></div>}
+  <div class="wrap">
+    <div class="hero-grid">
+      <div>
+        <div class="fomo">{fomoText}</div>
+        <h1 class="h1" set:html={hookHeadline} />
+        <p class="h-sub">{hookSubline}</p>
+        <ul class="h-bullets">
+          {bullets.map((b) => (
+            <li><span class="ico">{b.icon}</span><span set:html={b.html} /></li>
+          ))}
+        </ul>
+        <div class="h-trust">
+          {trustMarks.map((t) => <span>{t}</span>)}
+        </div>
+      </div>
+
+      <!-- FORM CARD -->
+      <aside class="fcard" id="formArea">
+        <div class="fcard-tag">⏰ Tư vấn miễn phí · Phản hồi 24h</div>
+        <div class="fcard-body">
+          <h3 class="fcard-title">{cardTitle}</h3>
+          <p class="fcard-sub">{cardSub}</p>
+
+          <div class="steps">
+            <div class="sdot active" id="dot1">1</div>
+            <div class="sline"></div>
+            <div class="sdot" id="dot2">2</div>
+            <span class="slabel" id="slabel">Email của Ba/Mẹ</span>
+          </div>
+
+          <div id="step1">
+            <input class="sin" type="email" id="sq-email" placeholder="email@cuabame.com" autocomplete="email" />
+            <button type="button" class="btn-step" onclick="sqNext()">Tiếp tục →</button>
+          </div>
+
+          <div id="step2" style="display:none">
+            <input class="sin" type="text" id="sq-name" placeholder="Họ tên Ba/Mẹ" autocomplete="name" />
+            <input class="sin" type="tel" id="sq-phone" placeholder="Số điện thoại" autocomplete="tel" />
+            <button type="button" class="btn-step" onclick="sqSubmit()">{ctaStep2}</button>
+            <button type="button" class="btn-back" onclick="sqBack()">← Quay lại</button>
+          </div>
+
+          <div class="fcard-foot">
+            <span>🔒 Bảo mật</span>
+            <span>📞 Phản hồi 24h</span>
+            <span>💯 Miễn phí</span>
+          </div>
+        </div>
+      </aside>
+
+      <aside class="fcard" id="sqSuccess" style="display:none">
+        <div class="fcard-success">
+          <div class="icon">🎉</div>
+          <h3>Đã nhận đăng ký!</h3>
+          <p>Đang chuyển hướng…</p>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<script define:vars={{ source, funnelCode, redirectUrl, schoolLevel }}>
+(function(){
+  var SRC = source, FC = funnelCode, REDIRECT = redirectUrl, LEVEL = schoolLevel;
+
+  if (localStorage.getItem('sq_' + SRC)) {
+    var fa = document.getElementById('formArea');
+    var su = document.getElementById('sqSuccess');
+    if (fa) fa.style.display = 'none';
+    if (su) su.style.display = 'block';
+  }
+
+  window.sqNext = function(){
+    var el = document.getElementById('sq-email');
+    var v = el ? el.value.trim() : '';
+    if (!v || v.indexOf('@') < 1) { if (el){ el.classList.add('error'); el.focus(); } return; }
+    el.classList.remove('error');
+    document.getElementById('step1').style.display = 'none';
+    document.getElementById('step2').style.display = 'block';
+    var d1 = document.getElementById('dot1'), d2 = document.getElementById('dot2'), sl = document.getElementById('slabel');
+    if (d1){ d1.classList.remove('active'); d1.classList.add('done'); }
+    if (d2) d2.classList.add('active');
+    if (sl) sl.textContent = 'Họ tên & SĐT';
+    var n = document.getElementById('sq-name'); if (n) n.focus();
+  };
+
+  window.sqBack = function(){
+    document.getElementById('step2').style.display = 'none';
+    document.getElementById('step1').style.display = 'block';
+    var d1 = document.getElementById('dot1'), d2 = document.getElementById('dot2'), sl = document.getElementById('slabel');
+    if (d2) d2.classList.remove('active');
+    if (d1){ d1.classList.remove('done'); d1.classList.add('active'); }
+    if (sl) sl.textContent = 'Email của Ba/Mẹ';
+  };
+
+  window.sqSubmit = function(){
+    var nameEl = document.getElementById('sq-name');
+    var phoneEl = document.getElementById('sq-phone');
+    var name = nameEl ? nameEl.value.trim() : '';
+    var phone = phoneEl ? phoneEl.value.trim() : '';
+    if (!name){ if (nameEl){ nameEl.classList.add('error'); nameEl.focus(); } return; }
+    nameEl.classList.remove('error');
+    if (!phone || phone.replace(/[^0-9]/g,'').length < 9){ if (phoneEl){ phoneEl.classList.add('error'); phoneEl.focus(); } return; }
+    phoneEl.classList.remove('error');
+    var emailEl = document.getElementById('sq-email');
+    var email = emailEl ? emailEl.value.trim() : '';
+
+    localStorage.setItem('sq_' + SRC, '1');
+    var fa = document.getElementById('formArea');
+    var su = document.getElementById('sqSuccess');
+    if (fa) fa.style.display = 'none';
+    if (su) su.style.display = 'block';
+
+    var payload = JSON.stringify({
+      fullName: name, phone: phone, email: email,
+      source: SRC, funnel_code: FC, school_level: LEVEL,
+      page_url: location.href,
+      submitted_at: new Date().toISOString()
+    });
+
+    // Submit lead — keepalive đảm bảo request hoàn thành kể cả khi page navigate
+    var fetchPromise = fetch('https://truongvietanh.com/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload,
+      mode: 'cors',
+      keepalive: true
+    }).then(function(r){
+      if (!r.ok) console.error('[lead] HTTP ' + r.status);
+      return r;
+    }).catch(function(err){
+      console.error('[lead] failed:', err);
+      // Fallback: sendBeacon nếu fetch fail (chắc chắn delivery khi navigate)
+      if (navigator.sendBeacon) {
+        try {
+          navigator.sendBeacon('https://truongvietanh.com/api/lead',
+            new Blob([payload], { type: 'application/json' }));
+        } catch(e){}
+      }
+    });
+
+    // Redirect sau khi fetch settle (dù success hay fail) — max 3s timeout phòng treo
+    var redirected = false;
+    var doRedirect = function(){ if (!redirected) { redirected = true; window.location.href = REDIRECT; } };
+    fetchPromise.finally(doRedirect);
+    setTimeout(doRedirect, 3000);
+  };
+
+  var ein = document.getElementById('sq-email');
+  if (ein) ein.addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); sqNext(); } });
+  var pin = document.getElementById('sq-phone');
+  if (pin) pin.addEventListener('keydown', function(e){ if (e.key === 'Enter'){ e.preventDefault(); sqSubmit(); } });
+})();
+</script>
+</body>
+</html>

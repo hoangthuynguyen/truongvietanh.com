@@ -1,116 +1,808 @@
 ---
-import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
-import USPGrid from '../components/USPGrid.astro';
-import TrustMetrics from '../components/TrustMetrics.astro';
+import SalesPageLayout from '../layouts/SalesPageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import FAQSection from '../components/FAQSection.astro';
-
-const pageTitle = "Trại Hè Lion Camp 2026 — Liên Cấp | Trường Việt Anh";
-const pageDescription = "Phát triển toàn diện qua 6 tuần: Tiếng Anh giao tiếp · STEM · Lãnh đạo · Phiêu lưu. Đăng ký sớm để nhận ưu đãi Early Bird đến 30% học phí.";
-const pageCanonical = "https://truongvietanh.com/trai-he";
-
-const uspItems = [
-    {
-      "icon": "🦁",
-      "text": "6 tuần học hè bao trọn — không phải gửi con đi đâu khác"
-    },
-    {
-      "icon": "🇬🇧",
-      "text": "Giáo viên bản ngữ + giáo viên Việt cùng dạy theo CEFR"
-    },
-    {
-      "icon": "🧪",
-      "text": "STEM — Robotics — Mỹ thuật — Thể thao đa dạng mỗi ngày"
-    },
-    {
-      "icon": "🏕️",
-      "text": "1–2 chuyến field trip / overnight camp tăng tự lập"
-    },
-    {
-      "icon": "🍱",
-      "text": "Bữa ăn 4 bữa do bếp trường nấu — chuyên gia dinh dưỡng giám sát"
-    },
-    {
-      "icon": "💸",
-      "text": "Early Bird giảm 30% học phí · Brother & Sister giảm thêm 10%"
-    }
-  ];
-
-const metrics = [
-  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
-  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
-  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
-  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
-];
-
-const faqItems = [
-    {
-      "question": "Trại hè diễn ra trong bao lâu?",
-      "answer": "Lion Camp 2026 kéo dài 6 tuần, từ tuần đầu tháng 6 đến giữa tháng 7, học từ thứ 2 đến thứ 6, 7h30 — 16h30. Có thể đăng ký theo tuần hoặc trọn khóa."
-    },
-    {
-      "question": "Con tôi chưa học tại Việt Anh có tham gia được không?",
-      "answer": "Có. Lion Camp mở cho cả học sinh ngoài hệ thống. Đây là cơ hội tốt để con và phụ huynh trải nghiệm thực tế trước khi quyết định nhập học chính khóa."
-    },
-    {
-      "question": "Học phí trại hè là bao nhiêu?",
-      "answer": "Học phí phụ thuộc cấp học và cơ sở. Đăng ký Early Bird trước 30/4 giảm 30%. Vui lòng để lại thông tin để được gửi bảng giá chi tiết và chính sách ưu đãi."
-    },
-    {
-      "question": "Có cần đồng phục/dụng cụ riêng không?",
-      "answer": "Trường cung cấp đồng phục Lion Camp + balo + bình nước miễn phí khi đăng ký trọn khóa. Phụ huynh chỉ cần chuẩn bị giày thể thao và đồ dùng cá nhân."
-    },
-    {
-      "question": "Có dịch vụ đưa đón không?",
-      "answer": "Có. Cơ sở TP.HCM/Long An/Kiên Giang có xe đưa đón bán kính 10km. Vui lòng cung cấp địa chỉ nhà để được báo phí xe theo tuyến."
-    }
-  ];
 ---
 
-<SqueezePageLayout
-  title={pageTitle}
-  description={pageDescription}
-  canonicalUrl={pageCanonical}
+<SalesPageLayout
+  title="Lion Camp 2026 — Trại Hè AI 6 Tuần · Nhà Lãnh Đạo Số Tài Ba (L1–L5)"
+  description="Lion Camp 2026 (15/6 – 25/7): trại hè 6 tuần dạy con làm chủ AI theo khung UNESCO + lãnh đạo bản thân. L1–L5, 4 cơ sở TP.HCM. 100 suất ưu đãi giảm 10 triệu. Hoàn tiền 100% sau 4 tuần."
+  canonical="https://truongvietanh.com/trai-he"
+  ogImage="https://media.truongvietanh.com/images/vui-ve-07.webp"
+  heroImage="https://media.truongvietanh.com/images/vui-ve-07.webp"
+  programCode="trai-he"
   schoolLevel="tieu-hoc"
-  funnelCode="trai-he"
+  heroVariant="white-form"
 >
-  <section slot="hero">
-    <h1 class="squeeze-hero__heading">Trại Hè Lion Camp 2026 — Liên Cấp</h1>
-    <p class="squeeze-hero__subheading">Phát triển toàn diện qua 6 tuần: Tiếng Anh giao tiếp · STEM · Lãnh đạo · Phiêu lưu. Đăng ký sớm để nhận ưu đãi Early Bird đến 30% học phí.</p>
-  </section>
 
-  <section slot="usp"><USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} /></section>
-  <section slot="trust"><TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} /></section>
+  <!-- ═══ HERO ═══ -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <div class="th-urgency">
+        <span class="th-urgency__dot"></span>
+        🔴 Trại hè 2026 · Chỉ 100 suất ưu đãi giảm 10 triệu — khi hết là hết
+      </div>
 
-  <section slot="content">
-    <div class="page-content">
-      <h2>Lion Camp 2026 — Phát triển toàn diện trong 6 tuần</h2>
-      <p>Lion Camp Liên Cấp là chương trình trại hè bán trú phát triển toàn diện cho con em Việt Nam, kết hợp <strong>Tiếng Anh giao tiếp với giáo viên bản ngữ</strong>, <strong>STEM/Robotics</strong>, <strong>Kỹ năng lãnh đạo</strong> và <strong>Phiêu lưu — Khám phá ngoài trời</strong>.</p>
-        <p>Mỗi tuần có chủ đề riêng (Tự lập, Sáng tạo, Đồng đội, Trí tuệ cảm xúc…), kết thúc 6 tuần con sẽ có <strong>portfolio học tập + báo cáo phát triển cá nhân</strong> để phụ huynh hiểu rõ điểm mạnh, điểm cần cải thiện của con.</p>
-        <p>Chương trình áp dụng tại cơ sở <strong>Hệ thống Trường Việt Anh — TP.HCM, Long An, Kiên Giang</strong>. Sĩ số lớp tối đa 18 em / nhóm tuổi để giáo viên quan sát và cá nhân hóa từng con.</p>
+      <h1>
+        Mùa Hè Này, Con Bỏ Điện Thoại Xuống —<br>
+        <span class="mn-hl">Cầm Tương Lai Lên</span><br>
+        <span class="mn-sub">Lion Camp 2026 · Trại hè 6 tuần · AI theo khung UNESCO · Lãnh đạo bản thân</span>
+      </h1>
+
+      <p class="mn-hero__lead">
+        Trong khi bạn cùng lứa nằm sofa với iPad 90 ngày — con bạn học cách <strong>dùng AI làm chủ, không để AI dùng mình</strong>. Lion Camp là chương trình AI tiểu học đầu tiên tại Việt Nam áp dụng <strong>khung năng lực UNESCO 4 chiều</strong>, dành riêng cho học sinh Lớp 1 – Lớp 5.
+      </p>
+
+      <div class="th-value-props">
+        <div class="th-vp">
+          <span class="th-vp__icon">🦁</span>
+          <div>
+            <strong>6 tuần liên tục — đủ để thay đổi thói quen</strong>
+            <span>15/6 – 25/7/2026 · 42 ngày nằm trong khung hình thành thói quen 21–66 ngày (UCL)</span>
+          </div>
+        </div>
+        <div class="th-vp">
+          <span class="th-vp__icon">🛡️</span>
+          <div>
+            <strong>Triết lý HITL — Con luôn ra quyết định cuối cùng</strong>
+            <span>L1–L2 unplugged hoàn toàn · L3–L5 dùng Teachable Machine + Gemini có giám sát</span>
+          </div>
+        </div>
+        <div class="th-vp">
+          <span class="th-vp__icon">💯</span>
+          <div>
+            <strong>Cam kết hoàn tiền 100% sau 4 tuần</strong>
+            <span>Không hài lòng — không hỏi lý do, không thủ tục phức tạp. Cam kết bằng văn bản.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="mn-hero__trust">
+        <div>🏫 <b>4 cơ sở</b> · TP.HCM &amp; Kiên Giang</div>
+        <div>👨‍👩‍👧 <b>15 năm</b> kinh nghiệm K12 từ 2011</div>
+        <div>🎓 <b>Khung UNESCO 4D</b> — đầu tiên tại Việt Nam</div>
+      </div>
     </div>
-  </section>
 
-  <section slot="form">
-    <h2 class="squeeze-form-section__heading">Đăng ký Lion Camp 2026 — Nhận tư vấn miễn phí</h2>
-    <p class="squeeze-form-section__description">Để lại thông tin để nhận lịch khai giảng, học phí, ưu đãi sớm và tài liệu chi tiết.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="trai-he-form"
-      funnelCode="trai-he"
-      schoolLevel="tieu-hoc"
-      submitText="Đăng ký ngay"
-      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h."
-    />
-  </section>
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">🎁 Giữ 1 trong 100 suất ưu đãi</span>
+      <h2>Đăng Ký Tư Vấn Miễn Phí</h2>
+      <p class="mn-hero__form-sub">Để lại thông tin — đội ngũ Lion Camp gửi brochure đầy đủ, lịch tham quan cơ sở &amp; tư vấn cho con trong 24 giờ.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="trai-he-hero"
+        funnelCode="sales-trai-he-hero"
+        schoolLevel="tieu-hoc"
+        submitText="Giữ suất Lion Camp ngay →"
+      />
+    </div>
+  </Fragment>
 
-  <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={faqItems} /></section>
-</SqueezePageLayout>
+  <!-- ═══ HÀNH TRÌNH 6 TUẦN (slot=video) ═══ -->
+  <div slot="video">
+    <p class="th-journey__eyebrow">HÀNH TRÌNH 6 TUẦN</p>
+    <h2 class="th-journey__title">Từ Khám Phá Đến Làm Chủ</h2>
+    <p class="th-journey__sub">Mỗi tuần, con đối mặt với một câu hỏi lớn — và tự tìm câu trả lời. Không AI nào nghĩ thay con.</p>
 
-<style is:inline>
-  .page-content { max-width: 800px; margin: 0 auto; padding: 1rem 0; }
-  .page-content h2 { color: #1a1a5e; font-size: 1.6rem; margin-bottom: 1rem; text-align: center; }
-  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
-  .page-content ul { margin: 1rem 0 1rem 1.5rem; }
-  .page-content li { margin-bottom: .5rem; line-height: 1.7; }
-  .page-content strong { color: #1a1a5e; font-weight: 700; }
+    <div class="th-journey">
+      <div class="th-week th-week--1">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 1</span>
+          <span class="th-week__q">"Tôi mạnh ở điều gì?"</span>
+        </div>
+        <p class="th-week__desc">Khám phá bản thân, Pre-assessment UNESCO, 5 bài test thể chất, viết Thư gửi bản thân. L3–L5 tiếp xúc Teachable Machine. L1–L2 hoạt động unplugged.</p>
+        <div class="th-week__take">✦ Mang về: Mục tiêu 6 tuần + bắt đầu Health Log</div>
+      </div>
+
+      <div class="th-week th-week--2">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 2</span>
+          <span class="th-week__q">"Dữ liệu sức khoẻ tôi — ai được biết?"</span>
+        </div>
+        <p class="th-week__desc">Theo dõi sức khoẻ hàng ngày, bài học về quyền riêng tư dữ liệu. Tiếng Anh immersion tăng tốc qua hoạt động thể chất.</p>
+        <div class="th-week__take">✦ Mang về: Thói quen Health Log + ý thức quyền riêng tư</div>
+      </div>
+
+      <div class="th-week th-week--3">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 3</span>
+          <span class="th-week__q">"Ai là tác giả thật sự?"</span>
+        </div>
+        <p class="th-week__desc">Sáng tạo &amp; bản quyền: con vẽ tranh, AI cũng vẽ tranh — "Bức nào là của ai?" Sản phẩm đầu tiên trong Portfolio. Tư duy phản biện bắt đầu.</p>
+        <div class="th-week__take">✦ Mang về: Sản phẩm sáng tạo đầu tiên + hiểu bản quyền</div>
+      </div>
+
+      <div class="th-week th-week--4">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 4</span>
+          <span class="th-week__q">"Khi nào tôi nên nói 'không' với AI?"</span>
+        </div>
+        <p class="th-week__desc">Lõi triết lý HITL: tình huống thực tế — nghe AI hay nghe mình? Health Plan cá nhân hình thành. Kỷ luật đã ổn định.</p>
+        <div class="th-week__take">✦ Mang về: Khả năng tự ra quyết định trước AI</div>
+      </div>
+
+      <div class="th-week th-week--5">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 5</span>
+          <span class="th-week__q">"Tôi chịu trách nhiệm gì trong nhóm?"</span>
+        </div>
+        <p class="th-week__desc">Mission nhóm, vai trò luân phiên. AI là công cụ brainstorm — nhóm quyết định. Thuyết trình tiếng Anh trước lớp.</p>
+        <div class="th-week__take">✦ Mang về: Kỹ năng hợp tác + tự tin nói tiếng Anh</div>
+      </div>
+
+      <div class="th-week th-week--6">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 6</span>
+          <span class="th-week__q">"AI sẽ đóng vai trò gì trong đời tôi?"</span>
+        </div>
+        <p class="th-week__desc">Mở Thư gửi bản thân, thiết kế Life Map, Post-assessment UNESCO. Ngày 25/7: Showcase cho phụ huynh + Lễ trao AI Ethics Certificate.</p>
+        <div class="th-week__take">✦ Mang về: Bộ Hành Trang Công Dân Số hoàn chỉnh</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ PAIN ═══ -->
+  <div slot="pain">
+    <p class="sp-pain__eyebrow">SUMMER SLIDE — NGHIÊN CỨU TỪ DUKE UNIVERSITY</p>
+    <h2>Mùa Hè Đang Lấy Đi Gì Của Con Bạn?</h2>
+    <p>Phân tích tổng hợp 39 nghiên cứu của Cooper, Nye, Charlton &amp; Lindsay (1996 — Review of Educational Research, Vol. 66, No. 3, Duke University) cho thấy: <strong>mỗi mùa hè không có cấu trúc, học sinh trung bình mất 1 tháng kiến thức</strong> — tương đương 25–34% tiến bộ Toán và 17–28% tiến bộ Đọc hiểu đã tích luỹ cả năm. Bây giờ, hãy cộng thêm AI vào mùa hè đó.</p>
+
+    <div class="th-pain-grid">
+      <div class="th-pain-card">
+        <span class="th-pain-icon">📱</span>
+        <h4>Tuần 2: Sofa &amp; iPad</h4>
+        <p>Con xem YouTube, chơi game, hỏi Siri đáp án bài tập hè — không phải để học, mà để xong cho nhanh</p>
+      </div>
+      <div class="th-pain-card">
+        <span class="th-pain-icon">🤖</span>
+        <h4>Tuần 3: Dùng AI sai cách</h4>
+        <p>Con hình thành thói quen copy AI suốt 3 tháng không ai hướng dẫn — nguy hiểm hơn cả mất kiến thức</p>
+      </div>
+      <div class="th-pain-card">
+        <span class="th-pain-icon">😶</span>
+        <h4>Tuần 4: Mất tự lo</h4>
+        <p>Hỏi "con muốn ăn gì?" → "tuỳ mẹ". Hỏi "con muốn làm gì?" → "không biết". Mọi quyết định chờ người lớn</p>
+      </div>
+      <div class="th-pain-card th-pain-card--highlight">
+        <span class="th-pain-icon">📉</span>
+        <h4>78% mất Toán · 73% mất Đọc</h4>
+        <p>Nhưng nghiên cứu cũng chỉ ra: <strong>chương trình có cấu trúc gần như triệt tiêu tổn thất này</strong></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ FEATURES ═══ -->
+  <div slot="features">
+    <p class="sp-features__eyebrow">KHUNG UNESCO 4 CHIỀU + 5 TRỤ PHÁT TRIỂN</p>
+    <h2>Không Phải Trại Hè Vui Chơi — Cũng Không Phải Khóa Lập Trình</h2>
+    <p class="sp-features__sub">Lion Camp đặt <strong>con người làm trung tâm</strong> (Human-centred), dạy đạo đức AI trước kỹ thuật, và rèn lãnh đạo bản thân qua sản phẩm thật</p>
+    <div class="sp-features__grid">
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🦁</div>
+        <h3>Lãnh đạo bản thân</h3>
+        <p>Sư tử là biểu tượng người tự dẫn dắt bản thân trước khi dẫn dắt người khác. Con học tự quyết, tự chịu trách nhiệm, tự đứng dậy khi ngã.</p>
+        <div class="th-outcome">✅ Mang về: Life Map cá nhân + Thư gửi bản thân</div>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🧠</div>
+        <h3>Tư duy phản biện</h3>
+        <p>"Con vẽ tranh, AI cũng vẽ tranh — bức nào là của ai?" Con học đặt câu hỏi đúng, phân biệt thật/giả, hiểu bản quyền và đạo đức.</p>
+        <div class="th-outcome">✅ Mang về: AI Ethics Certificate theo UNESCO</div>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🔁</div>
+        <h3>Hành vi &amp; thói quen</h3>
+        <p>PDR-Lite (Plan – Do – Review): mục tiêu nhỏ &amp; cụ thể, tích hợp sinh hoạt hằng ngày. Giáo viên kèm 1:1 — 3 lần trong 6 tuần.</p>
+        <div class="th-outcome">✅ Mang về: Hệ thống tự quản lý cá nhân</div>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🗣️</div>
+        <h3>Tiếng Anh thực dụng</h3>
+        <p>Tiếng Anh immersion qua hoạt động thể chất, dự án nhóm và thuyết trình tuần 5. Giáo viên native dẫn khởi động mỗi sáng.</p>
+        <div class="th-outcome">✅ Mang về: Tự tin nói trước nhóm bằng tiếng Anh</div>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">💪</div>
+        <h3>Thể chất &amp; sức khoẻ</h3>
+        <p>5 bài test thể chất tuần 1, Health Log mỗi ngày, Health Plan cá nhân hình thành sau 30 ngày. Bơi, bóng đá, cầu lông, võ thuật.</p>
+        <div class="th-outcome">✅ Mang về: Health Plan tiếp tục ở nhà</div>
+      </div>
+      <div class="sp-feat-card">
+        <div class="sp-feat-card__icon">🎓</div>
+        <h3>Bộ Hành Trang Công Dân Số</h3>
+        <p>Google Classroom Portfolio · Life Map · Health Plan · AI Ethics Certificate · Báo cáo PDR-Lite · Thư gửi bản thân — 6 sản phẩm con dùng thật sau trại.</p>
+        <div class="th-outcome">✅ Mang về: Bằng chứng con biết dùng AI đúng cách</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ TEXT + IMAGE → Daily schedule ═══ -->
+  <div slot="textimg">
+    <div class="sp-textimg__text">
+      <p class="sp-textimg__eyebrow">MỘT NGÀY ĐIỂN HÌNH TẠI LION CAMP</p>
+      <h2>Từ 7:30 Sáng Đến 17:00 — Mỗi Giờ Đều Có Mục Đích</h2>
+      <div class="th-schedule">
+        <div class="th-sch-item">
+          <span class="th-sch-time">07:30</span>
+          <div class="th-sch-content">
+            <strong>Đón trại sinh</strong>
+            <p>Con đến trại, cất đồ, gặp bạn. Bắt đầu ngày mới bằng sự thoải mái</p>
+          </div>
+        </div>
+        <div class="th-sch-item">
+          <span class="th-sch-time">08:00</span>
+          <div class="th-sch-content">
+            <strong>Khởi động &amp; Team Building</strong>
+            <p>Vận động buổi sáng — chạy, nhảy, trò chơi đồng đội. GV native dẫn bằng tiếng Anh</p>
+          </div>
+        </div>
+        <div class="th-sch-item">
+          <span class="th-sch-time">08:30</span>
+          <div class="th-sch-content">
+            <strong>Advisory &amp; PDR-Lite</strong>
+            <p>5 phút quan trọng nhất: Buddy hỏi nhau "Hôm qua con hoàn thành mục tiêu chưa? Hôm nay làm gì?"</p>
+          </div>
+        </div>
+        <div class="th-sch-item">
+          <span class="th-sch-time">09:00</span>
+          <div class="th-sch-content">
+            <strong>Hoạt động chính buổi sáng</strong>
+            <p>Theo chủ đề tuần. L1–L2 unplugged · L3–L5 dùng AI có giám sát từng bước</p>
+          </div>
+        </div>
+        <div class="th-sch-item">
+          <span class="th-sch-time">11:30</span>
+          <div class="th-sch-content">
+            <strong>Ăn trưa &amp; Nghỉ ngơi</strong>
+            <p>Thực đơn cân bằng dinh dưỡng, phù hợp Health Plan. Sau ăn: nghỉ, đọc sách, hoạt động nhẹ</p>
+          </div>
+        </div>
+        <div class="th-sch-item">
+          <span class="th-sch-time">13:30</span>
+          <div class="th-sch-content">
+            <strong>Hoạt động buổi chiều</strong>
+            <p>Tiếng Anh qua dự án + sáng tạo + cập nhật Portfolio</p>
+          </div>
+        </div>
+        <div class="th-sch-item">
+          <span class="th-sch-time">15:30</span>
+          <div class="th-sch-content">
+            <strong>Reflection &amp; Journal</strong>
+            <p>Con viết/vẽ "Hôm nay con học được gì?" — không ai chấm, không ai đọc</p>
+          </div>
+        </div>
+        <div class="th-sch-item">
+          <span class="th-sch-time">16:00</span>
+          <div class="th-sch-content">
+            <strong>Thể thao hằng ngày</strong>
+            <p>Bơi lội, bóng đá, cầu lông, gym, võ thuật — thiết lập thói quen vận động lành mạnh</p>
+          </div>
+        </div>
+      </div>
+      <p class="th-schedule-note">* Lion Camp đón–trả mỗi ngày, không ngủ lại. Khung 15:00–16:00 cũng là lúc giáo viên được training AI thực chiến với chuyên gia.</p>
+    </div>
+    <div class="sp-textimg__img">
+      <img src="https://media.truongvietanh.com/images/vui-ve-07.webp" alt="Học sinh Lion Camp Trường Việt Anh tham gia hoạt động ngoài trời" width="600" height="400" loading="lazy" style="border-radius:16px;" />
+      <div class="th-img-badge">
+        <span>3×</span>
+        <p>Số lần GV kèm cặp 1:1 (PDR-Lite) cho mỗi con trong 6 tuần — không một học sinh nào bị bỏ qua</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ STATS ═══ -->
+  <div slot="stats">
+    <h2>Lion Camp — 6 Con Số Bạn Cần Biết</h2>
+    <div class="sp-stats__grid">
+      <div class="sp-stat">
+        <span class="sp-stat__num">6 tuần</span>
+        <span class="sp-stat__label">Liên tục — không phải 1 tuần rồi quên, đủ dài để thay đổi thói quen</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat__num">4D</span>
+        <span class="sp-stat__label">Khung UNESCO: Human-centred → Ethics → Techniques → Design</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat__num">100%</span>
+        <span class="sp-stat__label">Hoàn tiền nếu không hài lòng sau 4 tuần — cam kết bằng văn bản</span>
+      </div>
+      <div class="sp-stat">
+        <span class="sp-stat__num">42 ngày</span>
+        <span class="sp-stat__label">Đúng khung hình thành thói quen 21–66 ngày (Lally et al., UCL 2009)</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ QUOTE — 3 testimonials ═══ -->
+  <div slot="quote">
+    <p class="sp-quote__eyebrow">PHỤ HUYNH NÓI GÌ VỀ TRẠI HÈ TRƯỜNG VIỆT ANH</p>
+    <div class="th-quote-grid">
+      <div class="th-quote-card">
+        <div class="sp-quote__stars">★★★★★</div>
+        <p class="th-quote-text">Con về nhà tự dọn phòng, tự lên lịch học, và lần đầu tiên nói với mẹ: "Con muốn thử cái này". Trước đó con hỏi mẹ mọi thứ.</p>
+        <div class="th-quote-author">
+          <strong>Phụ huynh Thị Yến</strong>
+          <span>Lớp 3 · Trại hè Trường Việt Anh 2025</span>
+        </div>
+      </div>
+      <div class="th-quote-card">
+        <div class="sp-quote__stars">★★★★★</div>
+        <p class="th-quote-text">Tôi lo con nhút nhát sẽ không hoà nhập. Nhưng ngay tuần thứ 2 con đã có bạn mới và dám giơ tay phát biểu. Đó là thay đổi tôi không ngờ tới.</p>
+        <div class="th-quote-author">
+          <strong>Phụ huynh Nguyễn Minh Tuấn</strong>
+          <span>Lớp 2 · Trại hè Trường Việt Anh 2025</span>
+        </div>
+      </div>
+      <div class="th-quote-card">
+        <div class="sp-quote__stars">★★★★★</div>
+        <p class="th-quote-text">Điều tôi ấn tượng nhất là con có sản phẩm mang về — không phải chỉ ảnh chụp. Con khoe bạn bè portfolio của mình cả tháng sau trại.</p>
+        <div class="th-quote-author">
+          <strong>Phụ huynh Trần Thị Hồng Nhung</strong>
+          <span>Lớp 4 · Trại hè Trường Việt Anh 2024</span>
+        </div>
+      </div>
+    </div>
+    <p class="sp-faq__sub" style="text-align:center;margin-top:1.25rem;font-size:0.9rem;">Lion Camp 2026 là mùa đầu tiên — kế thừa kinh nghiệm trại hè Trường Việt Anh nhiều năm và nâng cấp toàn diện với chương trình AI theo khung UNESCO, PDR-Lite, và Bộ Hành Trang Công Dân Số.</p>
+  </div>
+
+  <!-- ═══ PRICING ═══ -->
+  <div slot="pricing">
+    <p class="sp-pricing__eyebrow">HỌC PHÍ &amp; ƯU ĐÃI</p>
+    <h2>Đầu Tư 6 Tuần — Giá Trị Cả Đời</h2>
+    <div class="sp-pricing__table">
+      <div class="sp-pricing-col sp-pricing-col--regular">
+        <p class="sp-pricing-col__label">Học phí gốc</p>
+        <p style="font-size:1.6rem;font-weight:800;color:#94a3b8;text-decoration:line-through;margin:0.5rem 0;">29.998.000 ₫</p>
+        <ul class="sp-pricing-col__features">
+          <li>Toàn bộ chương trình 6 tuần (15/6 – 25/7/2026)</li>
+          <li>Ăn trưa + 2 điểm tâm hằng ngày</li>
+          <li>Toàn bộ vật tư hoạt động, tài liệu</li>
+          <li>Áo trại Lion Camp + Bảo hiểm 24/7</li>
+          <li>Showcase cuối chương trình</li>
+        </ul>
+        <a href="#mn-hero-form" class="th-pricing-cta th-pricing-cta--outline">Tìm hiểu thêm →</a>
+      </div>
+      <div class="sp-pricing-col sp-pricing-col--promo">
+        <div class="th-popular-badge">⭐ 100 SUẤT ƯU ĐÃI ĐẦU TIÊN</div>
+        <p class="sp-pricing-col__label">Early Bird — Tiết kiệm 10 triệu</p>
+        <p style="font-size:2rem;font-weight:900;color:#000080;margin:0.5rem 0;">19.998.000 ₫</p>
+        <ul class="sp-pricing-col__features">
+          <li>✅ Mọi quyền lợi của gói gốc</li>
+          <li>✅ <strong>Bộ Hành Trang Công Dân Số đầy đủ</strong> (Portfolio + Life Map + AI Ethics Certificate)</li>
+          <li>✅ Kèm cặp 1:1 PDR-Lite — 3 lần/6 tuần</li>
+          <li>✅ <strong>Hoàn tiền 100% sau 4 tuần</strong> nếu không hài lòng</li>
+          <li>✅ Giảm thêm cho anh chị em từ 2 con</li>
+          <li>✅ Ưu đãi đặc biệt cho HS Trường Việt Anh</li>
+        </ul>
+        <a href="#mn-hero-form" class="th-pricing-cta th-pricing-cta--primary">Giữ 1 trong 100 suất ngay →</a>
+      </div>
+    </div>
+    <p class="sp-pricing__note">📞 Học phí KHÔNG bao gồm xe đưa đón — vui lòng liên hệ 0916 961 409 để được tư vấn theo cơ sở (VAGV Gò Vấp · VABT Bình Tân · MN&amp;TH Thái Sơn · MN&amp;TH MGIS).</p>
+  </div>
+
+  <!-- ═══ CTA ═══ -->
+  <div slot="cta">
+    <h2>Mùa Hè 2026 Bắt Đầu 15/6 — Chỉ 100 Suất Ưu Đãi</h2>
+    <p>Khi hết 100 suất là hết · Không gia hạn · Hoàn tiền 100% sau 4 tuần nếu không hài lòng</p>
+    <div class="th-cta-actions">
+      <a href="#mn-hero-form" class="sp-cta-btn">Giữ suất Lion Camp ngay →</a>
+      <a href="tel:0916961409" class="th-cta-phone">📞 Gọi 0916 961 409</a>
+    </div>
+  </div>
+
+  <!-- ═══ FORM 1 ═══ -->
+  <Fragment slot="form1">
+    <div class="mn-hero__form" id="sp-form1-card" style="max-width:560px;margin:0 auto;text-align:left">
+      <span class="mn-hero__form-eyebrow">🎁 Giữ 1 trong 100 suất ưu đãi</span>
+      <h2>Đăng Ký Tư Vấn Miễn Phí</h2>
+      <p class="mn-hero__form-sub">Để lại thông tin — đội ngũ Lion Camp gửi brochure đầy đủ &amp; tư vấn cơ sở phù hợp với con trong 24 giờ.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="trai-he-form1"
+        funnelCode="sales-trai-he"
+        schoolLevel="tieu-hoc"
+        submitText="Giữ suất Lion Camp ngay →"
+      />
+    </div>
+  </Fragment>
+
+  <!-- ═══ FAQ ═══ -->
+  <div slot="faq">
+    <p class="sp-faq__eyebrow">CÂU HỎI THƯỜNG GẶP</p>
+    <h2>Phụ Huynh Hỏi Nhiều Nhất Về Lion Camp 2026</h2>
+    <p class="sp-faq__sub">Tất cả câu trả lời để bạn tự tin quyết định cho con tham gia</p>
+
+    <details class="sp-faq-item" open>
+      <summary>Con mới Lớp 1, chưa biết gì về AI — có theo kịp không?</summary>
+      <div class="sp-faq-answer">Hoàn toàn theo kịp. <strong>Lớp 1–2 được thiết kế hoàn toàn unplugged</strong> — con không chạm máy tính hay tablet. AI xuất hiện qua câu chuyện, trò chơi, và sản phẩm do giáo viên tạo. Mục tiêu lứa tuổi này là rèn tư duy và lãnh đạo bản thân — AI chỉ là bối cảnh.</div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Tại sao 6 tuần chứ không phải 1–2 tuần như các trại khác?</summary>
+      <div class="sp-faq-answer">Nghiên cứu hình thành thói quen của <strong>Lally et al. (2009 — University College London)</strong> cho thấy cần <strong>21–66 ngày lặp lại liên tục</strong>. Lion Camp kéo dài 42 ngày — nằm đúng trong khung này. Với 1–2 tuần, con vui nhưng không thay đổi.</div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>HITL nghĩa là gì cụ thể?</summary>
+      <div class="sp-faq-answer"><strong>HITL = Human-in-the-Loop</strong> — con luôn là người ra quyết định cuối cùng. AI giúp con nghĩ nhanh hơn, nhưng con chọn đúng hay sai. Tại Lion Camp, con được đặt vào tình huống phải tự quyết: nghe AI hay nghe mình? Dùng AI hay không? Giống như trong công việc của ba mẹ — AI là trợ lý, nhưng bạn là người phê duyệt.</div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Con sẽ dùng thiết bị gì?</summary>
+      <div class="sp-faq-answer"><strong>Lớp 1–2:</strong> Không dùng thiết bị — hoàn toàn unplugged. <strong>Lớp 3–5:</strong> Teachable Machine và Gemini trên máy tính/tablet của trại, có giám sát từng bước. Con không dùng thiết bị cá nhân, không trẻ nào tự do dùng AI một mình.</div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Con nhút nhát, sợ xa nhà — có hợp không?</summary>
+      <div class="sp-faq-answer"><strong>Lion Camp không yêu cầu ngủ lại</strong> — con được đón–trả mỗi ngày (7:30 – 17:00). Chương trình bắt đầu nhẹ nhàng, tăng dần. Hệ thống Buddy giúp mỗi trẻ có bạn đồng hành từ ngày đầu. Giáo viên không ép, không so sánh.</div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Chế độ ăn và an toàn thế nào?</summary>
+      <div class="sp-faq-answer">Ăn trưa + 2 điểm tâm/ngày, thực đơn cân bằng, điều chỉnh theo dị ứng. <strong>Y tế trực suốt giờ</strong>, tủ thuốc sơ cứu đầy đủ. Quy trình đón–trả nghiêm ngặt — chỉ phụ huynh hoặc người uỷ quyền (có danh sách) mới đón được con. Mỗi nhóm nhỏ luôn có ít nhất 1 GVCN giám sát.</div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Chính sách hoàn tiền cụ thể ra sao?</summary>
+      <div class="sp-faq-answer">Sau 4 tuần (<strong>ngày 13/7/2026</strong>), nếu bạn cảm thấy con không thay đổi, thông báo và nhận hoàn 100% học phí. <strong>Không hỏi lý do. Không thủ tục phức tạp.</strong> Cam kết bằng văn bản trong hợp đồng.</div>
+    </details>
+
+    <details class="sp-faq-item">
+      <summary>Phụ huynh có được cập nhật tiến độ không?</summary>
+      <div class="sp-faq-answer">Mỗi thứ Sáu nhận bản cập nhật qua Zalo/email. Cuối chương trình (<strong>ngày 25/7/2026</strong>), phụ huynh đến Showcase và nhận <strong>Báo cáo PDR-Lite + Portfolio link</strong> ngay tại sự kiện — kèm Lễ trao AI Ethics Certificate cho con.</div>
+    </details>
+  </div>
+
+</SalesPageLayout>
+
+<style is:global>
+/* ── Trai He Custom Styles ── */
+
+/* Urgency banner */
+.th-urgency {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(220,38,38,0.12);
+  border: 1px solid rgba(220,38,38,0.3);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 600;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  margin-bottom: 1.25rem;
+  animation: th-pulse 2s ease-in-out infinite;
+}
+.th-urgency__dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #ef4444;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.3);
+  animation: th-dot-pulse 1.5s ease-in-out infinite;
+}
+@keyframes th-dot-pulse {
+  0%,100% { box-shadow: 0 0 0 3px rgba(239,68,68,0.3); }
+  50%      { box-shadow: 0 0 0 7px rgba(239,68,68,0.05); }
+}
+
+/* Value props in hero */
+.th-value-props {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1.25rem 0 1.5rem;
+}
+.th-vp {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+}
+.th-vp__icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
+.th-vp div { display: flex; flex-direction: column; gap: 0.15rem; }
+.th-vp strong { color: #ffff00; font-size: 0.95rem; font-weight: 700; }
+.th-vp span { color: rgba(255,255,255,0.75); font-size: 0.85rem; line-height: 1.4; }
+
+/* Pain grid */
+.th-pain-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 1.75rem;
+}
+.th-pain-card {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-top: 3px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  text-align: center;
+}
+.th-pain-card--highlight {
+  border-top-color: #000080;
+  background: #f0f4ff;
+}
+.th-pain-icon { font-size: 2rem; display: block; margin-bottom: 0.75rem; }
+.th-pain-card h4 { font-size: 1rem; font-weight: 700; color: #000080; margin: 0 0 0.5rem; }
+.th-pain-card p { font-size: 0.88rem; color: #64748b; margin: 0; line-height: 1.5; }
+
+/* Feature outcome tag */
+.th-outcome {
+  margin-top: 0.75rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #000080;
+  background: rgba(0,0,128,0.06);
+  border-left: 3px solid #ffff00;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Daily schedule */
+.th-schedule {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 1.25rem 0 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+}
+.th-sch-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+}
+.th-sch-item:last-child { border-bottom: none; }
+.th-sch-item:hover { background: #f8fafc; }
+.th-sch-time {
+  background: #000080;
+  color: #ffff00;
+  font-size: 0.8rem;
+  font-weight: 800;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  flex-shrink: 0;
+  min-width: 3.5rem;
+  text-align: center;
+  margin-top: 0.1rem;
+}
+.th-sch-content strong { display: block; font-size: 0.95rem; color: #000080; font-weight: 700; margin-bottom: 0.15rem; }
+.th-sch-content p { font-size: 0.83rem; color: #64748b; margin: 0; line-height: 1.4; }
+.th-schedule-note { font-size: 0.82rem; color: #94a3b8; margin-top: 0.75rem; font-style: italic; }
+
+/* Image badge overlay */
+.th-img-badge {
+  background: #000080;
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.85rem 1.25rem;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.th-img-badge span {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #ffff00;
+  flex-shrink: 0;
+}
+.th-img-badge p { font-size: 0.9rem; margin: 0; color: rgba(255,255,255,0.9); line-height: 1.4; }
+
+/* 3-column quote grid */
+.th-quote-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+.th-quote-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0,0,128,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.th-quote-text {
+  font-size: 0.95rem;
+  color: #334155;
+  line-height: 1.75;
+  font-style: italic;
+  flex: 1;
+  margin: 0;
+}
+.th-quote-text::before { content: '"'; color: #ffff00; font-size: 2rem; line-height: 0; vertical-align: -0.5rem; margin-right: 0.2rem; }
+.th-quote-author { border-top: 1px solid #f1f5f9; padding-top: 0.85rem; }
+.th-quote-author strong { display: block; font-size: 0.95rem; color: #000080; font-weight: 700; }
+.th-quote-author span { font-size: 0.82rem; color: #64748b; }
+
+/* Popular badge on pricing */
+.th-popular-badge {
+  background: #ffff00;
+  color: #000080;
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-align: center;
+  padding: 0.3rem;
+  margin: -1px -1px 1rem;
+  border-radius: 10px 10px 0 0;
+  letter-spacing: 0.03em;
+}
+
+/* Pricing CTAs */
+.th-pricing-cta {
+  display: block;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-top: 1.25rem;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.th-pricing-cta:hover { transform: translateY(-1px); box-shadow: 0 4px 14px rgba(0,0,0,0.2); }
+.th-pricing-cta--outline { border: 2px solid #000080; color: #000080; background: transparent; }
+.th-pricing-cta--outline:hover { background: #f0f4ff; }
+.th-pricing-cta--primary { background: #ffff00; color: #000080; }
+.th-pricing-cta--primary:hover { background: #eeee00; }
+
+/* CTA block actions */
+.th-cta-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; justify-content: center; margin-top: 1.5rem; }
+.th-cta-phone {
+  color: rgba(255,255,255,0.85);
+  font-size: 1rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.75rem 1.25rem;
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+.th-cta-phone:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+/* ── Journey 6 weeks ── */
+/* Lift section above sp-video gradient bg with decorative pattern */
+.sp-video {
+  position: relative;
+  background:
+    radial-gradient(ellipse at top right, rgba(255,255,0,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(255,255,0,0.05) 0%, transparent 50%),
+    linear-gradient(180deg, #000033 0%, #000080 100%) !important;
+}
+.sp-video::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.04) 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.04) 1px, transparent 2px),
+    radial-gradient(circle at 85% 30%, rgba(255,255,0,0.06) 1px, transparent 2px);
+  background-size: 90px 90px, 120px 120px, 150px 150px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.sp-video__inner { position: relative; z-index: 1; }
+
+.th-journey__eyebrow {
+  display: inline-block;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffff00;
+  background: rgba(255,255,0,0.12);
+  border: 1px solid rgba(255,255,0,0.4);
+  padding: 0.35rem 0.95rem;
+  border-radius: 50px;
+  margin: 0 auto 0.85rem;
+  text-transform: uppercase;
+}
+.th-journey__title {
+  text-align: center;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  font-weight: 800;
+  color: #ffff00;
+  margin: 0 0 0.7rem;
+  line-height: 1.25;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.th-journey__sub {
+  text-align: center;
+  color: rgba(255,255,255,0.85);
+  max-width: 720px;
+  margin: 0 auto 2.25rem;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+/* Center the eyebrow tag (since inline-block) */
+.sp-video__inner > .th-journey__eyebrow { display: block; max-width: max-content; }
+.th-journey {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  max-width: 1180px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+.th-week {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.th-week__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.15rem;
+  color: #fff;
+}
+.th-week__num {
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+.th-week__q {
+  font-style: italic;
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.92);
+  text-align: right;
+}
+.th-week__desc {
+  padding: 1rem 1.15rem 0.5rem;
+  margin: 0;
+  color: #334155;
+  line-height: 1.65;
+  font-size: 0.92rem;
+  flex: 1 0 auto;
+}
+.th-week__take {
+  margin: 0.4rem 1.15rem 1.1rem;
+  padding: 0.55rem 0.85rem;
+  background: #f1f5f9;
+  border-left: 3px solid #ffff00;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #000080;
+}
+.th-week--1 .th-week__head { background: #1e3a8a; }
+.th-week--2 .th-week__head { background: #0d9488; }
+.th-week--3 .th-week__head { background: #7c3aed; }
+.th-week--4 .th-week__head { background: #dc2626; }
+.th-week--5 .th-week__head { background: #16a34a; }
+.th-week--6 .th-week__head { background: #000080; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .th-pain-grid { grid-template-columns: repeat(2, 1fr); }
+  .th-quote-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 1024px) {
+  .th-journey { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .th-journey { grid-template-columns: 1fr; }
+  .th-week__head { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+  .th-week__q { text-align: left; }
+}
+@media (max-width: 640px) {
+  .th-pain-grid { grid-template-columns: 1fr; }
+  .th-value-props { gap: 0.5rem; }
+  .th-cta-actions { flex-direction: column; }
+  .th-cta-phone { width: 100%; text-align: center; }
+}
 </style>

@@ -3,6 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import TestimonialVideoGrid from '../components/TestimonialVideoGrid.astro';
+import { videoTestimonials } from '../data/testimonials-video';
 import { getTestimonials } from '../lib/directus';
 
 // Fetch testimonials from Directus CMS
@@ -85,6 +87,8 @@ const testimonials = cmsTestimonials.length > 0
     }))
   : fallbackTestimonials;
 
+const totalReviews = testimonials.length + videoTestimonials.length;
+
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -96,15 +100,38 @@ const structuredData = [
       '@type': 'AggregateRating',
       ratingValue: '4.9',
       bestRating: '5',
-      ratingCount: String(testimonials.length),
+      ratingCount: String(totalReviews),
     },
-    review: testimonials.slice(0, 10).map(t => ({
-      '@type': 'Review',
-      author: { '@type': 'Person', name: t.name },
-      reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-      reviewBody: t.quote,
-    })),
+    review: [
+      ...videoTestimonials.slice(0, 10).map(t => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: t.name },
+        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+        reviewBody: t.longQuote,
+      })),
+      ...testimonials.slice(0, 10).map(t => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: t.name },
+        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+        reviewBody: t.quote,
+      })),
+    ],
   },
+  ...videoTestimonials.map(t => ({
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    name: t.shortQuote,
+    description: t.longQuote,
+    thumbnailUrl: `https://i.ytimg.com/vi/${t.videoId}/hqdefault.jpg`,
+    uploadDate: '2025-01-01',
+    contentUrl: `https://www.youtube.com/watch?v=${t.videoId}`,
+    embedUrl: `https://www.youtube-nocookie.com/embed/${t.videoId}`,
+    publisher: {
+      '@type': 'Organization',
+      name: 'Trường Liên Cấp Việt Anh',
+      logo: { '@type': 'ImageObject', url: 'https://truongvietanh.com/logo-crest-80.webp' },
+    },
+  })),
   {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -118,8 +145,7 @@ const structuredData = [
 
 <BaseLayout
   title="Đánh giá từ phụ huynh & học sinh | Trường Việt Anh"
-  description="Tổng hợp chia sẻ thực tế từ phụ huynh và học sinh Trường Việt Anh — hơn 12.000 gia đình tin tưởng, đánh giá 4.9/5 trên 300+ phản hồi."
-  keywords="đánh giá phụ huynh trường việt anh, review trường vsc, testimonial phụ huynh học sinh, 4.9 sao google"
+  description="Tổng hợp 30+ video chia sẻ thực tế từ phụ huynh và học sinh Trường Việt Anh — quay tại trường, không dàn dựng. Hơn 1.000 gia đình đang đồng hành, đánh giá 4.9/5."
   canonical="https://truongvietanh.com/danh-gia-cua-phu-huynh"
   ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
   structuredData={structuredData}
@@ -129,56 +155,52 @@ const structuredData = [
 
     <!-- HERO -->
     <section class="dg-hero">
-      <div class="dg-container">
+      <div class="dg-hero__deco" aria-hidden="true"></div>
+      <div class="dg-container dg-hero__inner">
         <nav class="dg-breadcrumb" aria-label="Breadcrumb">
           <a href="/">Trang chủ</a>
           <span aria-hidden="true">/</span>
           <span>Đánh giá phụ huynh</span>
         </nav>
-        <h1 class="dg-h1">Phụ huynh & học sinh nói gì về Trường Việt Anh?</h1>
-        <p class="dg-sub">Hơn <strong>12.000 gia đình</strong> đã gửi gắm niềm tin. Dưới đây là những chia sẻ thực tế — không dàn dựng, không chỉnh sửa.</p>
+        <span class="dg-eyebrow">★ Đánh giá thực tế từ cộng đồng phụ huynh</span>
+        <h1 class="dg-h1">Phụ huynh & học sinh nói gì<br/>về <span class="dg-h1__hl">Trường Việt Anh</span>?</h1>
+        <p class="dg-sub">Hơn <strong>1.000 gia đình</strong> đang đồng hành cùng Trường Việt Anh. Dưới đây là những chia sẻ thực tế — quay tại trường, không dàn dựng.</p>
 
-        <div class="dg-rating">
-          <span class="dg-stars" aria-label="4.9 trên 5 sao">★★★★★</span>
-          <span class="dg-rating-score"><strong>4.9</strong>/5</span>
-          <span class="dg-rating-count">·&nbsp;{testimonials.length}+ đánh giá từ phụ huynh</span>
+        <div class="dg-stats">
+          <div class="dg-stat">
+            <div class="dg-stat__num">1.000<span>+</span></div>
+            <div class="dg-stat__label">Gia đình đang đồng hành</div>
+          </div>
+          <div class="dg-stat">
+            <div class="dg-stat__num"><span class="dg-stat__stars">★</span> 4.9<span>/5</span></div>
+            <div class="dg-stat__label">Trên {totalReviews}+ đánh giá</div>
+          </div>
+          <div class="dg-stat">
+            <div class="dg-stat__num">{videoTestimonials.length}<span>+</span></div>
+            <div class="dg-stat__label">Video chia sẻ thực tế</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- TESTIMONIAL CARDS -->
-    <section class="dg-testimonials">
-      <div class="dg-container">
-        <div class="dg-grid">
-          {testimonials.map((t) => (
-            <article class="dg-card">
-              <div class="dg-card__quote-mark" aria-hidden="true">"</div>
-              <div class="dg-card__stars" aria-label={`${t.stars} sao`}>
-                {'★'.repeat(t.stars)}
-              </div>
-              <blockquote class="dg-card__quote">{t.quote}</blockquote>
-              <div class="dg-card__author">
-                <div class="dg-card__avatar" aria-hidden="true">{t.initials}</div>
-                <div class="dg-card__meta">
-                  <div class="dg-card__name">{t.name}</div>
-                  <div class="dg-card__role">{t.role}</div>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </div>
-    </section>
+    <!-- VIDEO TESTIMONIALS -->
+    <TestimonialVideoGrid />
 
     <!-- CTA -->
     <section class="dg-cta">
       <div class="dg-container dg-cta__inner">
-        <div>
-          <h2 class="dg-cta__h2">Muốn trực tiếp gặp phụ huynh đang gửi con tại Việt Anh?</h2>
-          <p class="dg-cta__desc">Đăng ký tham quan trường — bạn sẽ được gặp ban giám hiệu, trò chuyện với phụ huynh hiện hữu và dự giờ lớp học mẫu.</p>
-          <p class="dg-cta__hotline">Hotline: <a href="tel:0916961409">0916 961 409</a> · <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener">Zalo</a></p>
+        <div class="dg-cta__text">
+          <div class="dg-cta__badge">Tư vấn miễn phí</div>
+          <h2 class="dg-cta__h2">Để lại số điện thoại —<br/>chúng tôi gọi lại trong 30 phút</h2>
+          <p class="dg-cta__desc">Chuyên viên tư vấn sẽ lắng nghe mục tiêu của con, giới thiệu chương trình phù hợp và giải đáp mọi thắc mắc của phụ huynh.</p>
+          <ul class="dg-cta__perks">
+            <li>Tư vấn 1-1, không đại trà</li>
+            <li>Xem thực tế lớp học &amp; gặp giáo viên</li>
+            <li>Nhận bảng học phí và ưu đãi hiện hành</li>
+          </ul>
+          <p class="dg-cta__hotline">Hotline: <a href="tel:0916961409">0916 961 409</a> · <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener">Zalo OA</a></p>
         </div>
-        <div class="dg-cta__form lead-form-card--light" data-form-bg="light">
+        <div class="dg-cta__form-wrap" data-form-bg="light">
           <LeadFormTwoStepEmailFirst
             formId="danh-gia-form"
             funnelCode="danh-gia-pillar"
@@ -196,105 +218,213 @@ const structuredData = [
   .dg-page { background: #f7f9fc; }
   .dg-container { max-width: 1180px; margin: 0 auto; padding: 0 1.25rem; }
 
-  /* HERO */
-  .dg-hero { padding: 2.5rem 0 2rem; background: linear-gradient(180deg, #fff 0%, #f7f9fc 100%); }
-  .dg-breadcrumb { font-size: 0.85rem; color: #64748b; margin-bottom: 0.75rem; }
-  .dg-breadcrumb a { color: #1a1a5e; text-decoration: none; }
-  .dg-breadcrumb a:hover { text-decoration: underline; }
-  .dg-h1 { font-size: clamp(1.75rem, 3.5vw, 2.4rem); font-weight: 800; color: #0f172a; margin: 0 0 0.75rem; line-height: 1.2; letter-spacing: -0.01em; }
-  .dg-sub { font-size: 1.05rem; color: #475569; line-height: 1.65; margin: 0 0 1.25rem; max-width: 720px; }
-  .dg-sub strong { color: #1a1a5e; font-weight: 700; }
-  .dg-rating { display: inline-flex; align-items: center; gap: 0.5rem; background: #fff; padding: 0.6rem 1rem; border-radius: 12px; border: 1px solid #e2e8f0; font-size: 0.95rem; color: #475569; }
-  .dg-stars { color: #F0D048; letter-spacing: 2px; font-size: 1.05rem; }
-  .dg-rating-score strong { color: #1a1a5e; font-weight: 800; font-size: 1.1rem; }
-  .dg-rating-count { color: #64748b; }
-
-  /* TESTIMONIAL GRID */
-  .dg-testimonials { padding: 2.5rem 0 3rem; }
-  .dg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-  @media (max-width: 900px) { .dg-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .dg-grid { grid-template-columns: 1fr; } }
-
-  .dg-card {
-    background: #fff;
-    border: 1px solid #e2e8f0;
-    border-radius: 16px;
-    padding: 1.75rem 1.5rem 1.5rem;
+  /* ============ HERO (navy + yellow accents) ============ */
+  .dg-hero {
     position: relative;
-    transition: box-shadow 0.25s, transform 0.25s, border-color 0.25s;
-    display: flex;
-    flex-direction: column;
-    gap: 0.85rem;
+    padding: 3rem 0 4rem;
+    background:
+      radial-gradient(ellipse at top right, rgba(255, 255, 0, 0.12) 0%, transparent 55%),
+      linear-gradient(135deg, #000080 0%, #000064 60%, #00004d 100%);
+    color: #fff;
     overflow: hidden;
   }
-  .dg-card:hover {
-    box-shadow: 0 14px 40px rgba(26, 26, 94, 0.08);
-    transform: translateY(-3px);
-    border-color: #F0D048;
-  }
-  .dg-card__quote-mark {
+  .dg-hero::before {
+    content: '';
     position: absolute;
-    top: -10px;
-    left: 14px;
-    font-size: 5rem;
-    line-height: 1;
-    color: rgba(26, 26, 94, 0.08);
-    font-family: Georgia, serif;
-    font-weight: 700;
+    inset: 0;
+    background-image:
+      radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.06) 1px, transparent 0);
+    background-size: 24px 24px;
+    pointer-events: none;
+    mask-image: linear-gradient(180deg, rgba(0,0,0,0.6), transparent 80%);
+  }
+  .dg-hero__deco {
+    position: absolute;
+    right: -120px;
+    top: -120px;
+    width: 360px;
+    height: 360px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 0, 0.18) 0%, transparent 70%);
+    filter: blur(20px);
     pointer-events: none;
   }
-  .dg-card__stars {
-    color: #F0D048;
-    font-size: 1rem;
-    letter-spacing: 2px;
-    position: relative;
-    z-index: 1;
+  .dg-hero__inner { position: relative; z-index: 1; }
+
+  .dg-breadcrumb { font-size: 0.85rem; color: rgba(255, 255, 255, 0.75); margin-bottom: 1rem; }
+  .dg-breadcrumb a { color: #ffff00; text-decoration: none; font-weight: 600; }
+  .dg-breadcrumb a:hover { text-decoration: underline; }
+  .dg-breadcrumb span[aria-hidden] { margin: 0 0.4rem; opacity: 0.5; }
+
+  .dg-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #ffff00;
+    background: rgba(255, 255, 0, 0.1);
+    border: 1px solid rgba(255, 255, 0, 0.4);
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
   }
-  .dg-card__quote {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: #1f2937;
-    margin: 0;
-    font-style: italic;
-    position: relative;
-    z-index: 1;
-    flex: 1;
-  }
-  .dg-card__author {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-top: 0.5rem;
-    padding-top: 1rem;
-    border-top: 1px solid #f1f5f9;
-  }
-  .dg-card__avatar {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #1a1a5e, #0d2f55);
-    color: #fff;
+
+  .dg-h1 {
+    font-size: clamp(1.85rem, 4vw, 2.8rem);
     font-weight: 800;
+    color: #fff;
+    margin: 0 0 1rem;
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+  }
+  .dg-h1__hl {
+    color: #ffff00;
+    position: relative;
+    display: inline-block;
+    white-space: nowrap;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+  }
+  .dg-h1__hl::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    bottom: -4px;
+    height: 4px;
+    background: #ffff00;
+    border-radius: 2px;
+    opacity: 0.6;
+  }
+
+  .dg-sub {
+    font-size: clamp(1rem, 1.3vw, 1.1rem);
+    color: rgba(255, 255, 255, 0.88);
+    line-height: 1.65;
+    margin: 0 0 2rem;
+    max-width: 720px;
+  }
+  .dg-sub strong { color: #ffff00; font-weight: 700; }
+
+  /* HERO STATS */
+  .dg-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    max-width: 760px;
+  }
+  .dg-stat {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 0, 0.25);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .dg-stat:hover { border-color: #ffff00; transform: translateY(-2px); }
+  .dg-stat__num {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    font-weight: 800;
+    color: #ffff00;
+    line-height: 1;
+    letter-spacing: -0.02em;
     font-family: "Montserrat", sans-serif;
-    font-size: 0.95rem;
+  }
+  .dg-stat__num span { font-size: 0.7em; opacity: 0.85; margin-left: 0.1em; }
+  .dg-stat__stars { font-size: 0.85em; }
+  .dg-stat__label {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.85);
+    margin-top: 0.45rem;
+    line-height: 1.4;
+  }
+  @media (max-width: 600px) {
+    .dg-stats { grid-template-columns: 1fr; gap: 0.6rem; }
+    .dg-stat { padding: 0.85rem 1rem; }
+  }
+
+  /* ============ CTA (navy + yellow) ============ */
+  .dg-cta {
+    background:
+      radial-gradient(ellipse at bottom left, rgba(255, 255, 0, 0.1) 0%, transparent 55%),
+      linear-gradient(135deg, #000080 0%, #00004d 100%);
+    color: #fff;
+    padding: 3.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .dg-cta::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #ffff00, transparent);
+  }
+  .dg-cta__inner { display: grid; grid-template-columns: 1fr 420px; gap: 2.5rem; align-items: center; position: relative; z-index: 1; }
+  .dg-cta__h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); font-weight: 800; color: #fff; margin: 0 0 0.85rem; line-height: 1.25; letter-spacing: -0.015em; }
+  .dg-cta__h2 br + * { color: #ffff00; }
+  .dg-cta__desc { color: rgba(255, 255, 255, 0.88); font-size: 1rem; line-height: 1.65; margin: 0 0 1rem; }
+  .dg-cta__hotline { margin: 0.5rem 0 0; font-size: 1.02rem; color: rgba(255, 255, 255, 0.92); }
+  .dg-cta__hotline a { color: #ffff00; font-weight: 800; text-decoration: none; border-bottom: 1px dashed rgba(255,255,0,0.5); padding-bottom: 1px; }
+  .dg-cta__hotline a:hover { border-bottom-style: solid; }
+  @media (max-width: 900px) {
+    .dg-cta__inner { grid-template-columns: 1fr; }
+  }
+
+  .dg-cta__badge {
+    display: inline-block;
+    background: #ffff00;
+    color: #000080;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+    box-shadow: 0 4px 14px rgba(255, 255, 0, 0.3);
+  }
+  .dg-cta__text { display: flex; flex-direction: column; }
+  .dg-cta__perks {
+    list-style: none;
+    margin: 0 0 1.25rem;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+  .dg-cta__perks li {
+    font-size: 0.98rem;
+    color: rgba(255,255,255,0.92);
+    line-height: 1.55;
+    padding-left: 1.7rem;
+    position: relative;
+  }
+  .dg-cta__perks li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    background: #ffff00;
+    color: #000080;
+    border-radius: 50%;
+    font-size: 0.75rem;
+    font-weight: 900;
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-shrink: 0;
-    letter-spacing: 0.05em;
+    line-height: 1;
   }
-  .dg-card__meta { min-width: 0; }
-  .dg-card__name { font-weight: 700; color: #1a1a5e; font-size: 0.95rem; line-height: 1.3; }
-  .dg-card__role { font-size: 0.82rem; color: #64748b; line-height: 1.4; margin-top: 0.15rem; }
-
-  /* CTA */
-  .dg-cta { background: linear-gradient(135deg, #0d1b3e 0%, #1a1a5e 100%); color: #fff; padding: 2.5rem 0; }
-  .dg-cta__inner { display: grid; grid-template-columns: 1fr 420px; gap: 2rem; align-items: center; }
-  .dg-cta__h2 { font-size: clamp(1.4rem, 2.3vw, 1.75rem); font-weight: 800; color: #fff; margin: 0 0 0.75rem; line-height: 1.25; letter-spacing: -0.01em; }
-  .dg-cta__desc { color: rgba(255, 255, 255, 0.85); font-size: 1rem; line-height: 1.65; margin: 0 0 0.75rem; }
-  .dg-cta__hotline { margin: 0; font-size: 1rem; color: rgba(255, 255, 255, 0.9); }
-  .dg-cta__hotline a { color: #F0D048; font-weight: 800; text-decoration: none; }
-  @media (max-width: 900px) {
-    .dg-cta__inner { grid-template-columns: 1fr; }
+  .dg-cta__form-wrap {
+    background: #fff;
+    border-radius: 18px;
+    padding: 1.85rem 1.6rem;
+    box-shadow: 0 18px 50px rgba(0,0,0,0.3);
+    border-top: 4px solid #ffff00;
   }
 </style>

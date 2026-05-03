@@ -167,7 +167,7 @@ export const mainNavRight = [
     ]
   },
   { label: 'Blog', href: '/blog' },
-  { label: 'Hình ảnh', href: '/hinh-anh' },
+  { label: 'Hình ảnh', href: 'https://photos.truongvietanh.com' },
   { label: 'Liên hệ', href: '/lien-he' },
 ];
 

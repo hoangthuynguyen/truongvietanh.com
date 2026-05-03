@@ -87,10 +87,11 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
            { label: 'Du học', href: '/du-hoc' },
          ]},
          { label: 'Blog', href: '/blog' },
-         { label: 'Hình ảnh', href: '/hinh-anh' },
+         { label: 'Hình ảnh', href: 'https://photos.truongvietanh.com' },
        ]).map((item) => {
          const cmsChildren = getChildren(item.label);
          const allChildren = cmsChildren.length > 0 ? cmsChildren : (item.children || []);
+         const isExternal = /^https?:\/\//.test(item.href);
          return allChildren.length > 0 ? (
            <li class="has-dropdown">
              <a href={item.href}>{item.label} ▾</a>
@@ -99,7 +100,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
              </ul>
            </li>
          ) : (
-           <li><a href={item.href}>{item.label}</a></li>
+           <li><a href={item.href} {...(isExternal ? { target: '_blank', rel: 'noopener' } : {})}>{item.label}</a></li>
          );
        })}
      </ul>
@@ -146,7 +147,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
       </div>
       <div class="mobile-nav-group">
       <a href="/blog" class="mobile-nav-link">Blog</a>
-      <a href="/hinh-anh" class="mobile-nav-link">Hình ảnh</a>
+      <a href="https://photos.truongvietanh.com" target="_blank" rel="noopener" class="mobile-nav-link">Hình ảnh</a>
       <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" class="mobile-nav-cta">Chat Zalo OA</a>
     </div>
   </div>

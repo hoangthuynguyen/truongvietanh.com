@@ -670,28 +670,60 @@ import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.a
 .th-cta-phone:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
 /* ── Journey 6 weeks ── */
+/* Lift section above sp-video gradient bg with decorative pattern */
+.sp-video {
+  position: relative;
+  background:
+    radial-gradient(ellipse at top right, rgba(255,255,0,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(255,255,0,0.05) 0%, transparent 50%),
+    linear-gradient(180deg, #000033 0%, #000080 100%) !important;
+}
+.sp-video::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.04) 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.04) 1px, transparent 2px),
+    radial-gradient(circle at 85% 30%, rgba(255,255,0,0.06) 1px, transparent 2px);
+  background-size: 90px 90px, 120px 120px, 150px 150px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.sp-video__inner { position: relative; z-index: 1; }
+
 .th-journey__eyebrow {
+  display: inline-block;
   text-align: center;
   font-size: 0.85rem;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: #000080;
-  margin: 0 0 0.5rem;
+  color: #ffff00;
+  background: rgba(255,255,0,0.12);
+  border: 1px solid rgba(255,255,0,0.4);
+  padding: 0.35rem 0.95rem;
+  border-radius: 50px;
+  margin: 0 auto 0.85rem;
+  text-transform: uppercase;
 }
 .th-journey__title {
   text-align: center;
-  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
   font-weight: 800;
-  color: #000080;
-  margin: 0 0 0.6rem;
+  color: #ffff00;
+  margin: 0 0 0.7rem;
+  line-height: 1.25;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.3);
 }
 .th-journey__sub {
   text-align: center;
-  color: #475569;
+  color: rgba(255,255,255,0.85);
   max-width: 720px;
-  margin: 0 auto 2rem;
-  line-height: 1.6;
+  margin: 0 auto 2.25rem;
+  line-height: 1.65;
+  font-size: 1rem;
 }
+/* Center the eyebrow tag (since inline-block) */
+.sp-video__inner > .th-journey__eyebrow { display: block; max-width: max-content; }
 .th-journey {
   display: grid;
   grid-template-columns: 1fr;

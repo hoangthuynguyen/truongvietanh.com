@@ -76,6 +76,69 @@ import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.a
     </div>
   </Fragment>
 
+  <!-- ═══ HÀNH TRÌNH 6 TUẦN (slot=video) ═══ -->
+  <div slot="video">
+    <p class="th-journey__eyebrow">HÀNH TRÌNH 6 TUẦN</p>
+    <h2 class="th-journey__title">Từ Khám Phá Đến Làm Chủ</h2>
+    <p class="th-journey__sub">Mỗi tuần, con đối mặt với một câu hỏi lớn — và tự tìm câu trả lời. Không AI nào nghĩ thay con.</p>
+
+    <div class="th-journey">
+      <div class="th-week th-week--1">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 1</span>
+          <span class="th-week__q">"Tôi mạnh ở điều gì?"</span>
+        </div>
+        <p class="th-week__desc">Khám phá bản thân, Pre-assessment UNESCO, 5 bài test thể chất, viết Thư gửi bản thân. L3–L5 tiếp xúc Teachable Machine. L1–L2 hoạt động unplugged.</p>
+        <div class="th-week__take">✦ Mang về: Mục tiêu 6 tuần + bắt đầu Health Log</div>
+      </div>
+
+      <div class="th-week th-week--2">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 2</span>
+          <span class="th-week__q">"Dữ liệu sức khoẻ tôi — ai được biết?"</span>
+        </div>
+        <p class="th-week__desc">Theo dõi sức khoẻ hàng ngày, bài học về quyền riêng tư dữ liệu. Tiếng Anh immersion tăng tốc qua hoạt động thể chất.</p>
+        <div class="th-week__take">✦ Mang về: Thói quen Health Log + ý thức quyền riêng tư</div>
+      </div>
+
+      <div class="th-week th-week--3">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 3</span>
+          <span class="th-week__q">"Ai là tác giả thật sự?"</span>
+        </div>
+        <p class="th-week__desc">Sáng tạo &amp; bản quyền: con vẽ tranh, AI cũng vẽ tranh — "Bức nào là của ai?" Sản phẩm đầu tiên trong Portfolio. Tư duy phản biện bắt đầu.</p>
+        <div class="th-week__take">✦ Mang về: Sản phẩm sáng tạo đầu tiên + hiểu bản quyền</div>
+      </div>
+
+      <div class="th-week th-week--4">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 4</span>
+          <span class="th-week__q">"Khi nào tôi nên nói 'không' với AI?"</span>
+        </div>
+        <p class="th-week__desc">Lõi triết lý HITL: tình huống thực tế — nghe AI hay nghe mình? Health Plan cá nhân hình thành. Kỷ luật đã ổn định.</p>
+        <div class="th-week__take">✦ Mang về: Khả năng tự ra quyết định trước AI</div>
+      </div>
+
+      <div class="th-week th-week--5">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 5</span>
+          <span class="th-week__q">"Tôi chịu trách nhiệm gì trong nhóm?"</span>
+        </div>
+        <p class="th-week__desc">Mission nhóm, vai trò luân phiên. AI là công cụ brainstorm — nhóm quyết định. Thuyết trình tiếng Anh trước lớp.</p>
+        <div class="th-week__take">✦ Mang về: Kỹ năng hợp tác + tự tin nói tiếng Anh</div>
+      </div>
+
+      <div class="th-week th-week--6">
+        <div class="th-week__head">
+          <span class="th-week__num">TUẦN 6</span>
+          <span class="th-week__q">"AI sẽ đóng vai trò gì trong đời tôi?"</span>
+        </div>
+        <p class="th-week__desc">Mở Thư gửi bản thân, thiết kế Life Map, Post-assessment UNESCO. Ngày 25/7: Showcase cho phụ huynh + Lễ trao AI Ethics Certificate.</p>
+        <div class="th-week__take">✦ Mang về: Bộ Hành Trang Công Dân Số hoàn chỉnh</div>
+      </div>
+    </div>
+  </div>
+
   <!-- ═══ PAIN ═══ -->
   <div slot="pain">
     <p class="sp-pain__eyebrow">SUMMER SLIDE — NGHIÊN CỨU TỪ DUKE UNIVERSITY</p>
@@ -606,10 +669,135 @@ import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.a
 }
 .th-cta-phone:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
+/* ── Journey 6 weeks ── */
+/* Lift section above sp-video gradient bg with decorative pattern */
+.sp-video {
+  position: relative;
+  background:
+    radial-gradient(ellipse at top right, rgba(255,255,0,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom left, rgba(255,255,0,0.05) 0%, transparent 50%),
+    linear-gradient(180deg, #000033 0%, #000080 100%) !important;
+}
+.sp-video::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 20%, rgba(255,255,255,0.04) 1px, transparent 2px),
+    radial-gradient(circle at 70% 60%, rgba(255,255,255,0.04) 1px, transparent 2px),
+    radial-gradient(circle at 85% 30%, rgba(255,255,0,0.06) 1px, transparent 2px);
+  background-size: 90px 90px, 120px 120px, 150px 150px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+.sp-video__inner { position: relative; z-index: 1; }
+
+.th-journey__eyebrow {
+  display: inline-block;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: #ffff00;
+  background: rgba(255,255,0,0.12);
+  border: 1px solid rgba(255,255,0,0.4);
+  padding: 0.35rem 0.95rem;
+  border-radius: 50px;
+  margin: 0 auto 0.85rem;
+  text-transform: uppercase;
+}
+.th-journey__title {
+  text-align: center;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  font-weight: 800;
+  color: #ffff00;
+  margin: 0 0 0.7rem;
+  line-height: 1.25;
+  text-shadow: 0 2px 16px rgba(0,0,0,0.3);
+}
+.th-journey__sub {
+  text-align: center;
+  color: rgba(255,255,255,0.85);
+  max-width: 720px;
+  margin: 0 auto 2.25rem;
+  line-height: 1.65;
+  font-size: 1rem;
+}
+/* Center the eyebrow tag (since inline-block) */
+.sp-video__inner > .th-journey__eyebrow { display: block; max-width: max-content; }
+.th-journey {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.1rem;
+  max-width: 1180px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+.th-week {
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.th-week__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.15rem;
+  color: #fff;
+}
+.th-week__num {
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+}
+.th-week__q {
+  font-style: italic;
+  font-size: 0.92rem;
+  color: rgba(255,255,255,0.92);
+  text-align: right;
+}
+.th-week__desc {
+  padding: 1rem 1.15rem 0.5rem;
+  margin: 0;
+  color: #334155;
+  line-height: 1.65;
+  font-size: 0.92rem;
+  flex: 1 0 auto;
+}
+.th-week__take {
+  margin: 0.4rem 1.15rem 1.1rem;
+  padding: 0.55rem 0.85rem;
+  background: #f1f5f9;
+  border-left: 3px solid #ffff00;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #000080;
+}
+.th-week--1 .th-week__head { background: #1e3a8a; }
+.th-week--2 .th-week__head { background: #0d9488; }
+.th-week--3 .th-week__head { background: #7c3aed; }
+.th-week--4 .th-week__head { background: #dc2626; }
+.th-week--5 .th-week__head { background: #16a34a; }
+.th-week--6 .th-week__head { background: #000080; }
+
 /* Responsive */
 @media (max-width: 900px) {
   .th-pain-grid { grid-template-columns: repeat(2, 1fr); }
   .th-quote-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 1024px) {
+  .th-journey { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 640px) {
+  .th-journey { grid-template-columns: 1fr; }
+  .th-week__head { flex-direction: column; align-items: flex-start; gap: 0.25rem; }
+  .th-week__q { text-align: left; }
 }
 @media (max-width: 640px) {
   .th-pain-grid { grid-template-columns: 1fr; }

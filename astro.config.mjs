@@ -43,6 +43,8 @@ export default defineConfig({
     '/squeeze/50-truong-dh-xet-ielts/':      '/50-truong-dh-xet-ielts/',
     '/tuyen-sinh/giai-ma-tiem-nang':         '/giai-ma-tiem-nang/',
     '/tuyen-sinh/giai-ma-tiem-nang/':        '/giai-ma-tiem-nang/',
+    '/thanh-tich':                           '/thanh-tich-hoc-tap',
+    '/thanh-tich/':                          '/thanh-tich-hoc-tap/',
   },
   integrations: [
     sitemap({

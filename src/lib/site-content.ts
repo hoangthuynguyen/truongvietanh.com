@@ -157,7 +157,7 @@ export const mainNavRight = [
   },
   {
     label: 'Thành tích',
-    href: '/thanh-tich',
+    href: '/thanh-tich-hoc-tap',
     children: [
       { label: 'Học tập', href: '/thanh-tich-hoc-tap' },
       { label: 'Thể thao', href: '/thanh-tich-the-thao' },

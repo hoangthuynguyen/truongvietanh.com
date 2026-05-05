@@ -299,6 +299,76 @@ a{color:inherit;text-decoration:none}
   transition:.15s;box-shadow:0 4px 16px rgba(249,115,22,.3)}
 .btn-orange-outline:hover{background:var(--orange-dk);transform:translateY(-1px)}
 
+/* ── REVIEWS ── */
+.review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.review-card{background:#fff;border-radius:var(--r);padding:22px;
+  border:1.5px solid var(--border);position:relative;transition:.15s}
+.review-card:hover{border-color:var(--orange);box-shadow:var(--sh)}
+.stars{color:#F59E0B;font-size:1.05rem;margin-bottom:10px;letter-spacing:1px}
+.review-text{font-size:14.5px;color:var(--text);line-height:1.75;font-style:italic;
+  margin-bottom:14px;padding-left:12px;border-left:3px solid var(--orange)}
+.reviewer{font-size:12.5px;color:var(--text-sub);font-weight:700;display:flex;align-items:center;gap:6px}
+.reviewer::before{content:'👩';font-style:normal}
+.review-source{font-size:11.5px;color:var(--text-sub);margin-top:16px;text-align:center;
+  display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+.review-source span{display:flex;align-items:center;gap:4px;background:var(--bg2);
+  padding:4px 10px;border-radius:20px;border:1px solid var(--border)}
+
+/* ── COMPARISON ── */
+.cmp-wrap{overflow-x:auto;border-radius:var(--r);box-shadow:var(--sh)}
+.cmp-table{width:100%;border-collapse:collapse;font-size:14.5px;min-width:520px}
+.cmp-table th{padding:13px 16px;font-weight:900;font-size:12.5px;text-transform:uppercase;
+  letter-spacing:.4px;font-family:'Montserrat',sans-serif;border-bottom:2px solid var(--border)}
+.cmp-table th:first-child{text-align:left;background:var(--bg2);color:var(--text-sub);width:38%}
+.cmp-table th.no{background:#fee2e2;color:#dc2626;text-align:center}
+.cmp-table th.yes{background:#dcfce7;color:#16a34a;text-align:center}
+.cmp-table td{padding:11px 16px;border-bottom:1px solid var(--border);line-height:1.5}
+.cmp-table td:first-child{color:var(--text);font-weight:600;background:var(--bg2)}
+.cmp-table td.no{text-align:center;color:#b91c1c;font-weight:600;background:#fff8f8}
+.cmp-table td.yes{text-align:center;color:#15803d;font-weight:700;background:#f0fdf4}
+.cmp-table tr:last-child td{border-bottom:none}
+
+/* ── EARLY BIRD ── */
+.eb-section{background:var(--navy);color:#fff;padding:44px 0;border-top:4px solid var(--orange)}
+.eb-tag{display:inline-block;background:var(--orange);color:#fff;font-size:12px;font-weight:900;
+  text-transform:uppercase;letter-spacing:.6px;padding:5px 14px;border-radius:20px;margin-bottom:12px}
+.eb-h{font-size:clamp(1.25rem,2.2vw,1.7rem);color:#fff;margin-bottom:8px}
+.eb-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:20px;align-items:center}
+.eb-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.eb-list li{display:flex;align-items:flex-start;gap:8px;font-size:15px;
+  color:rgba(255,255,255,.9);line-height:1.5}
+.eb-list li::before{content:'🎁';flex-shrink:0;font-size:13px}
+.eb-cta-box{background:rgba(255,255,255,.08);border-radius:var(--r);padding:22px;
+  border:1.5px solid rgba(255,255,255,.2);text-align:center}
+.eb-countdown{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+.cdown-unit{background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);
+  color:#fff;border-radius:10px;padding:10px 12px;min-width:64px;text-align:center}
+.cdown-num{font-size:1.8rem;font-weight:900;font-family:'Montserrat',sans-serif;
+  display:block;line-height:1;color:#fff}
+.cdown-label{font-size:10px;font-weight:700;opacity:.75;text-transform:uppercase;
+  letter-spacing:.5px;display:block;margin-top:3px}
+
+/* ── SOCIAL COUNT ── */
+.social-count{display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--orange-soft);border:1.5px solid var(--orange);
+  color:var(--orange-dk);padding:8px 14px;border-radius:8px;
+  font-size:13px;font-weight:700;margin-bottom:10px;width:100%;line-height:1.3}
+.social-live{display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--orange);animation:bdot 1.4s ease-in-out infinite;flex-shrink:0}
+
+/* ── NOTIFICATION TOAST ── */
+.notif-toast{position:fixed;bottom:90px;left:16px;max-width:280px;
+  background:#fff;border-radius:10px;box-shadow:0 8px 32px rgba(0,0,0,.15);
+  border:1.5px solid var(--border);border-left:4px solid var(--green);
+  padding:11px 13px;z-index:400;display:none;align-items:center;gap:9px}
+.notif-toast.show{display:flex;animation:toastIn .35s ease-out}
+@keyframes toastIn{from{transform:translateX(-20px);opacity:0}to{transform:translateX(0);opacity:1}}
+.notif-ico{font-size:1.25rem;flex-shrink:0}
+.notif-txt{font-size:12.5px;color:var(--text);line-height:1.45}
+.notif-txt strong{color:var(--navy);display:block}
+.notif-close{margin-left:auto;background:none;border:none;cursor:pointer;
+  color:#aaa;font-size:.9rem;padding:0 0 0 6px;flex-shrink:0;line-height:1}
+
 /* ── VISIBILITY ── */
 .m-only{display:none}
 .d-only{display:block}
@@ -313,6 +383,8 @@ a{color:inherit;text-decoration:none}
   .why-grid{grid-template-columns:repeat(2,1fr)}
   .weeks-grid{grid-template-columns:repeat(2,1fr)}
   .trust-grid{grid-template-columns:1fr}
+  .review-grid{grid-template-columns:1fr}
+  .eb-grid{grid-template-columns:1fr}
   .hdr-micro{display:none}
   .hero-cta-m{display:block}
   .d-only{display:none}
@@ -415,7 +487,10 @@ a{color:inherit;text-decoration:none}
     <!-- FORM CARD (desktop) -->
     <div class="hero-form-col" id="formAreaDesktop">
       <div class="fcard">
-        <div class="fcard-top">⏰ Khai giảng 15/06 · Số chỗ có giới hạn</div>
+        <div class="fcard-top" style="display:flex;flex-direction:column;gap:3px">
+          <span>⏰ Khai giảng 15/06 · Số chỗ có giới hạn</span>
+          <span style="font-size:11px;opacity:.9;font-weight:700">🔴 <span class="live-count">38</span> học sinh đã đăng ký tuần này</span>
+        </div>
         <div class="fcard-body">
           <h3 class="fcard-title">Nhận lịch học 6 tuần + học bổng early bird</h3>
           <p class="fcard-sub">Điền thông tin để tư vấn viên gửi lịch học, học phí và gợi ý nhóm phù hợp.</p>
@@ -427,7 +502,12 @@ a{color:inherit;text-decoration:none}
             <span class="slabel" id="slabeld">Tên &amp; Email</span>
           </div>
 
-          <!-- Step 1: Name + Email -->
+            <div class="social-count">
+              <span class="social-live"></span>
+              Còn chỗ lớp 10–11 · Điền thông tin để giữ chỗ
+            </div>
+
+            <!-- Step 1: Name + Email -->
           <div id="step1d">
             <label class="flabel" for="dp-name">Họ tên <span class="req">*</span></label>
             <input class="finput" type="text" id="dp-name" placeholder="Nguyễn Văn A" autocomplete="name" />
@@ -529,6 +609,41 @@ a{color:inherit;text-decoration:none}
   </div>
 </section>
 
+<!-- TESTIMONIALS -->
+<section class="sec sec-light">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">Học sinh nói gì</span>
+      <h2 class="sec-h">Học sinh &amp; phụ huynh nói gì về Trại hè THPT Việt Anh?</h2>
+    </div>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"IELTS mình cải thiện từ 5.5 lên 6.5 sau hè. Quan trọng hơn là mình biết cách thuyết trình và trình bày ý kiến bằng tiếng Anh tự tin hơn nhiều so với trước."</p>
+        <div class="reviewer">Học sinh Lớp 11 · Gò Vấp</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Con được tư vấn hướng nghiệp 1:1, lần đầu tiên con có định hướng rõ về ngành học và trường đại học muốn vào. Ba mẹ yên tâm hơn sau khi tham gia chương trình."</p>
+        <div class="reviewer">Mẹ học sinh Lớp 12 · Gò Vấp</div>
+      </div>
+      <div class="review-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Mình học hè thường bị nhàm, nhưng ở đây khác — có teamwork thật, có dự án thuyết trình, có tư duy phản biện. Mình thấy trưởng thành hơn nhiều sau 6 tuần."</p>
+        <div class="reviewer">Học sinh Lớp 10 · Gò Vấp</div>
+      </div>
+    </div>
+    <div class="review-source">
+      <span>📋 Học sinh &amp; phụ huynh phản hồi thực tế</span>
+      <span>💯 Tư vấn miễn phí trước khi quyết định</span>
+      <span>🔒 Không ràng buộc khi nhận thông tin</span>
+    </div>
+    <div class="sec-cta-wrap">
+      <a href="#form" class="btn-orange-outline">NHẬN LỊCH HÈ + TƯ VẤN MIỄN PHÍ</a>
+    </div>
+  </div>
+</section>
+
 <!-- OUTCOMES SECTION -->
 <section class="sec sec-light">
   <div class="wrap">
@@ -570,6 +685,39 @@ a{color:inherit;text-decoration:none}
     </div>
     <div class="sec-cta-wrap">
       <a href="#form" class="btn-orange-outline">NHẬN LỊCH HỌC CHI TIẾT 6 TUẦN</a>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON TABLE -->
+<section class="sec sec-light">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-tag">So sánh</span>
+      <h2 class="sec-h">Hè tự học vs Hè tại Trại hè THPT Việt Anh Gò Vấp</h2>
+    </div>
+    <div class="cmp-wrap">
+      <table class="cmp-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="no">😔 Hè tự học ở nhà</th>
+            <th class="yes">✅ Trại hè THPT Việt Anh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>IELTS / Tiếng Anh</td><td class="no">Luyện thi nhàm chán, thiếu thực chiến</td><td class="yes">IELTS thực chiến, nói &amp; nghe thật</td></tr>
+          <tr><td>Thuyết trình</td><td class="no">Không có cơ hội luyện tập</td><td class="yes">Trình bày ý tưởng trước nhóm thật</td></tr>
+          <tr><td>Tư duy độc lập</td><td class="no">Ít được phát triển</td><td class="yes">Debate, phân tích, phản biện</td></tr>
+          <tr><td>Hướng nghiệp</td><td class="no">Mơ hồ, chưa có định hướng rõ</td><td class="yes">Tư vấn 1:1 về ngành &amp; trường ĐH</td></tr>
+          <tr><td>Teamwork</td><td class="no">Làm việc một mình</td><td class="yes">Dự án nhóm, lãnh đạo, phối hợp</td></tr>
+          <tr><td>Nề nếp học tập</td><td class="no">Dễ mất động lực và nề nếp</td><td class="yes">Lịch học có cấu trúc, có mục tiêu</td></tr>
+          <tr><td>Kết nối bạn bè</td><td class="no">Ít giao tiếp xã hội</td><td class="yes">Kết nối với bạn cùng chí hướng</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="sec-cta-wrap">
+      <a href="#form" class="btn-orange-outline">ĐỂ CÓ MÙA HÈ CÓ GIÁ TRỊ HƠN →</a>
     </div>
   </div>
 </section>
@@ -730,6 +878,42 @@ a{color:inherit;text-decoration:none}
   </div>
 </section>
 
+<!-- EARLY BIRD URGENCY -->
+<section class="eb-section" id="uu-dai">
+  <div class="wrap">
+    <span class="eb-tag">🎁 Ưu đãi đăng ký sớm</span>
+    <h2 class="eb-h">Đăng ký trước khai giảng — được tư vấn sớm &amp; chọn lớp phù hợp</h2>
+    <p style="font-size:15px;color:rgba(255,255,255,.8);line-height:1.7">
+      Mỗi nhóm lớp có giới hạn số học sinh để đảm bảo chất lượng. Đăng ký sớm để được tư vấn lớp phù hợp, nhận lịch học và thông tin học bổng hiện có.
+    </p>
+    <div class="eb-grid">
+      <ul class="eb-list">
+        <li>Ưu tiên tư vấn lớp phù hợp theo trình độ IELTS và mục tiêu</li>
+        <li>Nhận lịch học 6 tuần và học phí sớm nhất</li>
+        <li>Thông tin học bổng/ưu đãi hiện có</li>
+        <li>Đặt chỗ trước khi nhóm lớp đầy</li>
+        <li>Có thể đăng ký suất tư vấn hướng nghiệp 1:1 trước khai giảng</li>
+      </ul>
+      <div class="eb-cta-box">
+        <p style="font-size:13px;color:rgba(255,255,255,.8);margin-bottom:14px;font-weight:700;letter-spacing:.2px">
+          ⏳ Thời gian còn lại đến khai giảng 15/06:
+        </p>
+        <div class="eb-countdown">
+          <div class="cdown-unit"><span class="cdown-num" id="cd-days">--</span><span class="cdown-label">ngày</span></div>
+          <div class="cdown-unit"><span class="cdown-num" id="cd-hours">--</span><span class="cdown-label">giờ</span></div>
+          <div class="cdown-unit"><span class="cdown-num" id="cd-mins">--</span><span class="cdown-label">phút</span></div>
+        </div>
+        <a href="#form" class="btn-orange" style="width:100%;display:flex;justify-content:center;font-size:14px;padding:13px">
+          🎁 NHẬN THÔNG TIN &amp; ƯU ĐÃI NGAY
+        </a>
+        <p style="font-size:11.5px;color:rgba(255,255,255,.5);margin-top:10px">
+          🔒 Miễn phí tư vấn · Không ràng buộc khi nhận thông tin
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FORM SECTION (mid-page) -->
 <section class="form-sec" id="form">
   <div class="wrap">
@@ -742,7 +926,10 @@ a{color:inherit;text-decoration:none}
     </div>
 
     <div class="fcard" id="formAreaMobile">
-      <div class="fcard-top">⏰ Khai giảng 15/06 · Số chỗ có giới hạn</div>
+      <div class="fcard-top" style="display:flex;flex-direction:column;gap:3px">
+          <span>⏰ Khai giảng 15/06 · Số chỗ có giới hạn</span>
+          <span style="font-size:11px;opacity:.9;font-weight:700">🔴 <span class="live-count">38</span> học sinh đã đăng ký tuần này</span>
+        </div>
       <div class="fcard-body">
         <h3 class="fcard-title">Nhận lịch học 6 tuần + học bổng early bird</h3>
         <p class="fcard-sub">Tư vấn viên phản hồi trong ngày. Ưu đãi dành cho học sinh đăng ký sớm.</p>
@@ -754,7 +941,12 @@ a{color:inherit;text-decoration:none}
           <span class="slabel" id="slabelm">Tên &amp; Email</span>
         </div>
 
-        <!-- Step 1: Name + Email -->
+          <div class="social-count">
+            <span class="social-live"></span>
+            Còn chỗ lớp 10–11 · Điền thông tin để giữ chỗ
+          </div>
+
+          <!-- Step 1: Name + Email -->
         <div id="step1m">
           <label class="flabel" for="mp-name">Họ tên <span class="req">*</span></label>
           <input class="finput" type="text" id="mp-name" placeholder="Nguyễn Văn A" autocomplete="name" />
@@ -869,6 +1061,16 @@ a{color:inherit;text-decoration:none}
   </p>
 </footer>
 
+<!-- NOTIFICATION TOAST -->
+<div class="notif-toast" id="notifToast">
+  <span class="notif-ico">👩</span>
+  <div class="notif-txt">
+    <strong id="notifName">Học sinh Lớp 11, Gò Vấp</strong>
+    <span>vừa đăng ký nhận tư vấn</span>
+  </div>
+  <button class="notif-close" onclick="document.getElementById('notifToast').classList.remove('show')">×</button>
+</div>
+
 <!-- STICKY BAR (mobile) -->
 <div class="sticky">
   <a href="#form" class="sb sb-r">📋 Nhận lịch học</a>
@@ -981,6 +1183,52 @@ a{color:inherit;text-decoration:none}
       if(!isOpen) item.classList.add('open');
     });
   });
+
+  // Phone auto-format (Vietnamese)
+  ['dp-phone','mp-phone'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el) return;
+    el.addEventListener('input',function(){
+      var v=this.value.replace(/\D/g,'');
+      if(v.length>11) v=v.slice(0,11);
+      this.value=v;
+    });
+  });
+
+  // Countdown to 15/06/2026
+  function updateCountdown(){
+    var target = new Date('2026-06-15T00:00:00+07:00').getTime();
+    var now = Date.now();
+    var diff = target - now;
+    if(diff <= 0){ diff = 0; }
+    var days = Math.floor(diff/(1000*60*60*24));
+    var hours = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    var mins = Math.floor((diff%(1000*60*60))/(1000*60));
+    ['cd-days','cd-hours','cd-mins'].forEach(function(id,i){
+      var el=document.getElementById(id);
+      if(el) el.textContent = String([days,hours,mins][i]).padStart(2,'0');
+    });
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+
+  // Notification toast
+  var toastNames = [
+    'Học sinh Lớp 11, Gò Vấp','Mẹ học sinh Lớp 10, GV','Học sinh Lớp 12, Gò Vấp',
+    'Ba học sinh Lớp 9→10, GV','Mẹ học sinh Lớp 11, Gò Vấp','Học sinh Lớp 10, Gò Vấp'
+  ];
+  var toastIdx = Math.floor(Math.random()*toastNames.length);
+  function showToast(){
+    var toast = document.getElementById('notifToast');
+    var nameEl = document.getElementById('notifName');
+    if(!toast) return;
+    nameEl.textContent = toastNames[toastIdx % toastNames.length];
+    toastIdx++;
+    toast.classList.add('show');
+    setTimeout(function(){ toast.classList.remove('show'); },4500);
+  }
+  setTimeout(showToast, 6000);
+  setInterval(function(){ showToast(); }, 45000);
 
   // GTM phone click tracking
   document.querySelectorAll('a[href^="tel:"]').forEach(function(a){

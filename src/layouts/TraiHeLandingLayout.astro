@@ -3,7 +3,7 @@
  * TraiHeLandingLayout — Reusable Landing Page Layout for Trại Hè campaigns
  * ─────────────────────────────────────────────────────────────────────────
  * Features:
- *  - 2-step lead form (phone → name + grade + concerns)
+ *  - 2-step lead form (name + email → phone + grade)
  *  - Responsive: full-width content + sidebar form on desktop; stacked on mobile
  *  - GTM-TMPPWX29 + GTM-KPL2NSR9 both included
  *  - Sticky mobile bottom bar (Zalo + Call)
@@ -70,15 +70,14 @@ interface Props {
   formBadge?: string;
   formTitle?: string;
   formSub?: string;
-  step1Label?: string;      // "Số điện thoại của Ba/Mẹ"
-  step2NameLabel?: string;
-  step2GradeLabel?: string;
+  nameLabel?: string;        // "Họ tên Ba/Mẹ"
+  emailLabel?: string;       // "Email của Ba/Mẹ"
+  phoneLabel?: string;       // "Số điện thoại Ba/Mẹ"
+  gradeLabel?: string;       // "Con đang học lớp / tuổi"
   gradeOptions?: GradeOpt[];
-  concernLabel?: string;
-  concernOptions?: ConcernOpt[];
-  ctaStep1?: string;        // "Tiếp tục →"
-  ctaSubmit?: string;       // "NHẬN LỊCH 6 TUẦN CHO CON"
-  ctaAlt?: string;          // CTA for the section below (mobile)
+  ctaStep1?: string;         // "Nhận thông tin ngay →"
+  ctaSubmit?: string;        // "NHẬN THÔNG TIN CHI TIẾT CHƯƠNG TRÌNH"
+  ctaAlt?: string;           // CTA for the section below (mobile)
 
   /* ── What they get (receive section) ── */
   receiveItems?: string[];  // Simple string list shown below hero on mobile
@@ -108,12 +107,13 @@ const {
   ageTitle = 'Lớp theo độ tuổi', ageSubtitle, ageGroups = [],
   whyTitle = 'Vì sao chọn Việt Anh ' + location + '?', whyItems = [],
   formBadge, formTitle, formSub,
-  step1Label = 'Số điện thoại Ba/Mẹ',
-  step2NameLabel = 'Họ tên Ba/Mẹ',
-  step2GradeLabel = 'Con đang học lớp / tuổi',
-  gradeOptions, concernLabel = 'Ba mẹ quan tâm nhất điều gì?', concernOptions = [],
-  ctaStep1 = 'Tiếp tục →',
-  ctaSubmit = 'NHẬN LỊCH CHO CON',
+  nameLabel  = 'Họ tên Ba/Mẹ',
+  emailLabel = 'Email của Ba/Mẹ',
+  phoneLabel = 'Số điện thoại Ba/Mẹ',
+  gradeLabel = 'Con đang học lớp / tuổi',
+  gradeOptions,
+  ctaStep1 = 'Nhận thông tin ngay →',
+  ctaSubmit = 'NHẬN THÔNG TIN CHI TIẾT CHƯƠNG TRÌNH',
   ctaAlt,
   receiveItems = [],
   redirectUrl, source, funnelCode,
@@ -127,9 +127,9 @@ const ZALO_URL    = 'https://zalo.me/1678310120468101523';
 
 const badge     = heroBadge     ?? `🔔 Đang nhận đăng ký · Khai giảng ${khaigiang}`;
 const fBadge    = formBadge     ?? `⏰ Khai giảng ${khaigiang} · Số chỗ có giới hạn`;
-const fTitle    = formTitle     ?? `Nhận lịch học ${duration} + tư vấn lớp phù hợp cho con`;
+const fTitle    = formTitle     ?? `Nhận thông tin chương trình + học bổng Trại hè ${levelLabel}`;
 const fSub      = formSub       ?? 'Tư vấn miễn phí · Phản hồi trong 24h · Không ràng buộc';
-const bCtaTitle = bottomCtaTitle?? `Mùa hè ${new Date().getFullYear()} — Con vui hơn, tự tin hơn`;
+const bCtaTitle = bottomCtaTitle?? `Đăng ký sớm — nhận học bổng tốt nhất`;
 const bCtaBody  = bottomCtaBody ?? `Trại hè ${levelLabel} Việt Anh ${location} — ${duration} giúp con bớt màn hình, học tiếng Anh vui hơn, vận động nhiều hơn và sẵn sàng cho năm học mới.`;
 
 const defaultGrades: GradeOpt[] = [
@@ -210,13 +210,11 @@ a{color:inherit;text-decoration:none}
 .topbar a{color:var(--gold)}
 
 /* HEADER */
-.hdr{background:#fff;border-bottom:2px solid var(--gold);height:64px;display:flex;align-items:center;
+.hdr{background:#fff;border-bottom:2px solid var(--gold);height:88px;display:flex;align-items:center;
   position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.07)}
-.hdr .inner{display:flex;justify-content:space-between;align-items:center;max-width:1160px;margin:0 auto;padding:0 20px;width:100%}
-.hdr img{height:48px;width:auto}
-.hdr-cta{background:var(--navy);color:var(--gold);font-weight:800;font-size:13px;
-  padding:9px 18px;border-radius:8px;font-family:'Montserrat',sans-serif;display:none}
-@media(min-width:640px){.hdr-cta{display:block}}
+.hdr .inner{display:flex;justify-content:center;align-items:center;max-width:1160px;margin:0 auto;padding:0 20px;width:100%}
+.hdr img{height:72px;width:auto}
+.hdr-cta{display:none}
 
 /* HERO */
 .hero{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);
@@ -306,8 +304,8 @@ a{color:inherit;text-decoration:none}
   margin-top:8px;line-height:1.5}
 
 /* SECTIONS */
-.sec{padding:52px 0}
-.sec.light{background:var(--navy-soft)}
+.sec{padding:52px 0;background:#fff}
+.sec.light{background:#f8f9fc}
 .sec.dark{background:var(--navy);color:#fff}
 .sec.gold{background:var(--gold-soft)}
 .sec-tag{display:inline-block;background:var(--gold);color:var(--navy-dk);
@@ -367,7 +365,7 @@ a{color:inherit;text-decoration:none}
 .mlist li::before{content:'✅';flex-shrink:0;font-size:14px;margin-top:2px}
 
 /* FORM SECTION */
-.form-sec{background:var(--navy-soft);padding:40px 0}
+.form-sec{background:#f8f9fc;padding:40px 0;border-top:1px solid var(--border)}
 .form-sec .fcard{max-width:560px;margin:0 auto}
 
 /* BOTTOM CTA */
@@ -439,9 +437,8 @@ a{color:inherit;text-decoration:none}
 <header class="hdr">
   <div class="inner">
     <a href="https://truongvietanh.com" aria-label="Trường Việt Anh">
-      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" width="160" height="48" loading="eager" />
+      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" width="216" height="72" loading="eager" />
     </a>
-    <a href="#form" class="hdr-cta">Nhận lịch {duration} →</a>
   </div>
 </header>
 
@@ -497,35 +494,27 @@ a{color:inherit;text-decoration:none}
               <div class="sdot active" id="dot1d">1</div>
               <div class="sline"></div>
               <div class="sdot" id="dot2d">2</div>
-              <span class="slabel" id="slabeld">{step1Label}</span>
+              <span class="slabel" id="slabeld">Tên & Email</span>
             </div>
 
-            <!-- Step 1: Phone -->
+            <!-- Step 1: Name + Email -->
             <div id="step1d">
-              <label class="flabel" for="dp-phone">{step1Label} <span style="color:var(--red)">*</span></label>
-              <input class="finput" type="tel" id="dp-phone" placeholder="0912 345 678" autocomplete="tel" inputmode="numeric" />
+              <label class="flabel" for="dp-name">{nameLabel} <span style="color:var(--red)">*</span></label>
+              <input class="finput" type="text" id="dp-name" placeholder="Nguyễn Thị A" autocomplete="name" />
+              <label class="flabel" for="dp-email">{emailLabel} <span style="color:var(--red)">*</span></label>
+              <input class="finput" type="email" id="dp-email" placeholder="tên@email.com" autocomplete="email" inputmode="email" />
               <button type="button" class="btn-submit" onclick="dsNext()">{ctaStep1}</button>
             </div>
 
-            <!-- Step 2: Name + Grade + Concerns -->
+            <!-- Step 2: Phone + Grade -->
             <div id="step2d" style="display:none">
-              <label class="flabel" for="dp-name">{step2NameLabel} <span style="color:var(--red)">*</span></label>
-              <input class="finput" type="text" id="dp-name" placeholder="Nguyễn Văn A" autocomplete="name" />
-              <label class="flabel" for="dp-grade">{step2GradeLabel}</label>
+              <label class="flabel" for="dp-phone">{phoneLabel} <span style="color:var(--red)">*</span></label>
+              <input class="finput" type="tel" id="dp-phone" placeholder="0912 345 678" autocomplete="tel" inputmode="numeric" />
+              <label class="flabel" for="dp-grade">{gradeLabel}</label>
               <select class="finput" id="dp-grade" style="cursor:pointer">
                 <option value="">-- Chọn --</option>
                 {grades.map(g => <option value={g.value}>{g.label}</option>)}
               </select>
-              {concernOptions.length > 0 && <>
-                <label class="flabel">{concernLabel}</label>
-                <div class="checkgroup">
-                  {concernOptions.map(c => (
-                    <label class="checkitem">
-                      <input type="checkbox" name="concern-d" value={c.value} /> {c.label}
-                    </label>
-                  ))}
-                </div>
-              </>}
               <button type="button" class="btn-submit" onclick="dsSubmit()">{ctaSubmit}</button>
               <button type="button" class="btn-back" onclick="dsBack()">← Quay lại</button>
             </div>
@@ -535,7 +524,7 @@ a{color:inherit;text-decoration:none}
               <span>📞 Phản hồi 24h</span>
               <span>💯 Miễn phí</span>
             </div>
-            <p class="fcard-note">Lớp được tư vấn theo độ tuổi. Đăng ký sớm trước {khaigiang}.</p>
+            <p class="fcard-note">Tư vấn viên phản hồi trong 24h. Đăng ký sớm trước {khaigiang}.</p>
           </div>
         </div>
       </div>
@@ -670,35 +659,27 @@ a{color:inherit;text-decoration:none}
           <div class="sdot active" id="dot1m">1</div>
           <div class="sline"></div>
           <div class="sdot" id="dot2m">2</div>
-          <span class="slabel" id="slabelm">{step1Label}</span>
+          <span class="slabel" id="slabelm">Tên & Email</span>
         </div>
 
-        <!-- Step 1 -->
+        <!-- Step 1: Name + Email -->
         <div id="step1m">
-          <label class="flabel" for="mp-phone">{step1Label} <span style="color:var(--red)">*</span></label>
-          <input class="finput" type="tel" id="mp-phone" placeholder="0912 345 678" autocomplete="tel" inputmode="numeric" />
+          <label class="flabel" for="mp-name">{nameLabel} <span style="color:var(--red)">*</span></label>
+          <input class="finput" type="text" id="mp-name" placeholder="Nguyễn Thị A" autocomplete="name" />
+          <label class="flabel" for="mp-email">{emailLabel} <span style="color:var(--red)">*</span></label>
+          <input class="finput" type="email" id="mp-email" placeholder="tên@email.com" autocomplete="email" inputmode="email" />
           <button type="button" class="btn-submit" onclick="msNext()">{ctaStep1}</button>
         </div>
 
-        <!-- Step 2 -->
+        <!-- Step 2: Phone + Grade -->
         <div id="step2m" style="display:none">
-          <label class="flabel" for="mp-name">{step2NameLabel} <span style="color:var(--red)">*</span></label>
-          <input class="finput" type="text" id="mp-name" placeholder="Nguyễn Văn A" autocomplete="name" />
-          <label class="flabel" for="mp-grade">{step2GradeLabel}</label>
+          <label class="flabel" for="mp-phone">{phoneLabel} <span style="color:var(--red)">*</span></label>
+          <input class="finput" type="tel" id="mp-phone" placeholder="0912 345 678" autocomplete="tel" inputmode="numeric" />
+          <label class="flabel" for="mp-grade">{gradeLabel}</label>
           <select class="finput" id="mp-grade" style="cursor:pointer">
             <option value="">-- Chọn --</option>
             {grades.map(g => <option value={g.value}>{g.label}</option>)}
           </select>
-          {concernOptions.length > 0 && <>
-            <label class="flabel">{concernLabel}</label>
-            <div class="checkgroup">
-              {concernOptions.map(c => (
-                <label class="checkitem">
-                  <input type="checkbox" name="concern-m" value={c.value} /> {c.label}
-                </label>
-              ))}
-            </div>
-          </>}
           <button type="button" class="btn-submit" onclick="msSubmit()">{ctaSubmit}</button>
           <button type="button" class="btn-back" onclick="msBack()">← Quay lại</button>
         </div>
@@ -706,7 +687,7 @@ a{color:inherit;text-decoration:none}
         <div class="fcard-foot">
           <span>🔒 Bảo mật</span><span>📞 Phản hồi 24h</span><span>💯 Miễn phí</span>
         </div>
-        <p class="fcard-note">Lớp được sắp xếp theo độ tuổi. Ba mẹ đăng ký sớm trước {khaigiang}.</p>
+        <p class="fcard-note">Tư vấn viên phản hồi trong 24h. Ba mẹ đăng ký sớm trước {khaigiang}.</p>
       </div>
     </div>
 
@@ -760,16 +741,15 @@ a{color:inherit;text-decoration:none}
 (function(){
   var SRC = source, FC = funnelCode, REDIR = redirectUrl, LVL = schoolLevel;
 
-  function checked(name){
-    return Array.from(document.querySelectorAll('input[name="'+name+'"]:checked'))
-      .map(function(el){return el.value}).join(', ');
+  function isValidEmail(v){
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
   }
 
-  function doSubmit(phone, name, grade, concerns, formId){
+  function doSubmit(name, email, phone, grade, formId){
     var el = document.getElementById(formId);
     if(el){ el.style.opacity='.5'; el.style.pointerEvents='none'; }
     var payload = JSON.stringify({
-      fullName:name, phone:phone, childGrade:grade, concerns:concerns,
+      fullName:name, email:email, phone:phone, childGrade:grade,
       source:SRC, funnel_code:FC, school_level:LVL,
       page_url:location.href, submitted_at:new Date().toISOString()
     });
@@ -780,7 +760,7 @@ a{color:inherit;text-decoration:none}
       method:'POST', headers:{'Content-Type':'application/json'},
       body:payload, mode:'cors', keepalive:true
     }).then(function(r){ if(!r.ok) console.error('[lead] '+r.status); })
-    .catch(function(e){
+    .catch(function(){
       if(navigator.sendBeacon)
         try{ navigator.sendBeacon('https://truongvietanh.com/api/lead',
           new Blob([payload],{type:'application/json'})); }catch(ex){}
@@ -788,57 +768,77 @@ a{color:inherit;text-decoration:none}
     setTimeout(go, 3000);
   }
 
-  function stepNext(phoneId, dot1Id, dot2Id, labelId, step1Id, step2Id, nameId){
-    var el = document.getElementById(phoneId);
-    var v = el ? el.value.replace(/[^0-9]/g,'') : '';
-    if(v.length < 9){ if(el){ el.classList.add('error'); el.focus(); } return; }
-    el.classList.remove('error');
+  /* Step 1 → Step 2: validate Name + Email */
+  function stepNext(nameId, emailId, dot1Id, dot2Id, labelId, step1Id, step2Id, phoneId){
+    var nameEl  = document.getElementById(nameId);
+    var emailEl = document.getElementById(emailId);
+    var name  = nameEl  ? nameEl.value.trim()  : '';
+    var email = emailEl ? emailEl.value.trim() : '';
+    var ok = true;
+    if(!name){  if(nameEl){  nameEl.classList.add('error');  nameEl.focus(); }  ok=false; }
+    else nameEl.classList.remove('error');
+    if(!isValidEmail(email)){ if(emailEl){ emailEl.classList.add('error'); if(ok) emailEl.focus(); } ok=false; }
+    else emailEl.classList.remove('error');
+    if(!ok) return;
     document.getElementById(step1Id).style.display='none';
     document.getElementById(step2Id).style.display='block';
     var d1=document.getElementById(dot1Id), d2=document.getElementById(dot2Id), sl=document.getElementById(labelId);
     if(d1){d1.classList.remove('active');d1.classList.add('done');}
     if(d2) d2.classList.add('active');
-    if(sl) sl.textContent='Họ tên & lớp';
-    var n=document.getElementById(nameId); if(n) n.focus();
+    if(sl) sl.textContent='Số điện thoại';
+    var p=document.getElementById(phoneId); if(p) p.focus();
   }
 
-  function stepBack(dot1Id, dot2Id, labelId, step1Id, step2Id, step1Label){
+  /* Step 2 → back to Step 1 */
+  function stepBack(dot1Id, dot2Id, labelId, step1Id, step2Id){
     document.getElementById(step2Id).style.display='none';
     document.getElementById(step1Id).style.display='block';
     var d1=document.getElementById(dot1Id), d2=document.getElementById(dot2Id), sl=document.getElementById(labelId);
     if(d2) d2.classList.remove('active');
     if(d1){d1.classList.remove('done');d1.classList.add('active');}
-    if(sl) sl.textContent=step1Label||'Số điện thoại';
+    if(sl) sl.textContent='Tên & Email';
   }
 
-  function stepSubmit(phoneId, nameId, gradeId, concernName, formId){
-    var nameEl=document.getElementById(nameId);
-    var name = nameEl ? nameEl.value.trim() : '';
-    if(!name){ if(nameEl){nameEl.classList.add('error');nameEl.focus();} return; }
-    nameEl.classList.remove('error');
-    var gradeEl=document.getElementById(gradeId);
-    var grade = gradeEl ? gradeEl.value : '';
-    var concerns = checked(concernName);
-    var phoneEl=document.getElementById(phoneId);
-    var phone = phoneEl ? phoneEl.value.trim() : '';
-    doSubmit(phone, name, grade, concerns, formId);
+  /* Step 2 submit: validate Phone */
+  function stepSubmit(nameId, emailId, phoneId, gradeId, formId){
+    var phoneEl = document.getElementById(phoneId);
+    var phone = phoneEl ? phoneEl.value.replace(/[^0-9]/g,'') : '';
+    if(phone.length < 9){ if(phoneEl){phoneEl.classList.add('error');phoneEl.focus();} return; }
+    phoneEl.classList.remove('error');
+    var nameEl  = document.getElementById(nameId);
+    var emailEl = document.getElementById(emailId);
+    var gradeEl = document.getElementById(gradeId);
+    var name  = nameEl  ? nameEl.value.trim()  : '';
+    var email = emailEl ? emailEl.value.trim() : '';
+    var grade = gradeEl ? gradeEl.value        : '';
+    doSubmit(name, email, phoneEl.value.trim(), grade, formId);
   }
 
   // Desktop form
-  window.dsNext   = function(){ stepNext('dp-phone','dot1d','dot2d','slabeld','step1d','step2d','dp-name'); };
+  window.dsNext   = function(){ stepNext('dp-name','dp-email','dot1d','dot2d','slabeld','step1d','step2d','dp-phone'); };
   window.dsBack   = function(){ stepBack('dot1d','dot2d','slabeld','step1d','step2d'); };
-  window.dsSubmit = function(){ stepSubmit('dp-phone','dp-name','dp-grade','concern-d','formAreaDesktop'); };
+  window.dsSubmit = function(){ stepSubmit('dp-name','dp-email','dp-phone','dp-grade','formAreaDesktop'); };
 
   // Mobile form
-  window.msNext   = function(){ stepNext('mp-phone','dot1m','dot2m','slabelm','step1m','step2m','mp-name'); };
+  window.msNext   = function(){ stepNext('mp-name','mp-email','dot1m','dot2m','slabelm','step1m','step2m','mp-phone'); };
   window.msBack   = function(){ stepBack('dot1m','dot2m','slabelm','step1m','step2m'); };
-  window.msSubmit = function(){ stepSubmit('mp-phone','mp-name','mp-grade','concern-m','formAreaMobile'); };
+  window.msSubmit = function(){ stepSubmit('mp-name','mp-email','mp-phone','mp-grade','formAreaMobile'); };
 
-  // Enter key triggers
-  var pairs = [['dp-phone',dsNext],['mp-phone',msNext]];
-  pairs.forEach(function(p){
-    var el=document.getElementById(p[0]);
-    if(el) el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();p[1]();}});
+  // Enter key on step-1 email field triggers next
+  ['dp-email','mp-email'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'){ e.preventDefault();
+        id.startsWith('dp') ? dsNext() : msNext(); }
+    });
+  });
+  // Enter key on step-2 phone field triggers submit
+  ['dp-phone','mp-phone'].forEach(function(id){
+    var el=document.getElementById(id);
+    if(el) el.addEventListener('keydown',function(e){
+      if(e.key==='Enter'){ e.preventDefault();
+        id.startsWith('dp') ? dsSubmit() : msSubmit(); }
+    });
   });
 })();
 </script>

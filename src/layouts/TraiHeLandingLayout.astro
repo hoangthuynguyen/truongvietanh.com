@@ -128,7 +128,7 @@ const ZALO_URL    = 'https://zalo.me/1678310120468101523';
 const badge     = heroBadge     ?? `🔔 Đang nhận đăng ký · Khai giảng ${khaigiang}`;
 const fBadge    = formBadge     ?? `⏰ Khai giảng ${khaigiang} · Số chỗ có giới hạn`;
 const fTitle    = formTitle     ?? `Nhận thông tin chương trình + học bổng Trại hè ${levelLabel}`;
-const fSub      = formSub       ?? 'Tư vấn miễn phí · Phản hồi trong 24h · Không ràng buộc';
+const fSub      = formSub       ?? 'Điền thông tin để nhận lịch 6 tuần, học phí và học bổng';
 const bCtaTitle = bottomCtaTitle?? `Đăng ký sớm — nhận học bổng tốt nhất`;
 const bCtaBody  = bottomCtaBody ?? `Trại hè ${levelLabel} Việt Anh ${location} — ${duration} giúp con bớt màn hình, học tiếng Anh vui hơn, vận động nhiều hơn và sẵn sàng cho năm học mới.`;
 
@@ -263,7 +263,7 @@ a{color:inherit;text-decoration:none}
 .fcard-title{font-size:1rem;font-weight:900;color:var(--navy);text-align:center;
   line-height:1.3;margin-bottom:3px}
 .fcard-sub{font-size:11.5px;color:var(--text-muted);text-align:center;margin-bottom:12px;
-  line-height:1.45;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 /* Step indicator */
 .step-ind{display:flex;align-items:center;justify-content:center;gap:8px;
   margin-bottom:14px;padding-bottom:12px;border-bottom:1px dashed var(--border)}
@@ -303,7 +303,7 @@ a{color:inherit;text-decoration:none}
 
 /* SECTIONS */
 .sec{padding:52px 0;background:#fff}
-.sec.light{background:#f8f9fc}
+.sec.light{background:#f5f6fa}
 .sec.dark{background:var(--navy);color:#fff}
 .sec.gold{background:var(--gold-soft)}
 .sec-tag{display:inline-block;background:var(--gold);color:var(--navy-dk);
@@ -362,7 +362,7 @@ a{color:inherit;text-decoration:none}
 .mlist li::before{content:'✅';flex-shrink:0;font-size:14px;margin-top:2px}
 
 /* FORM SECTION */
-.form-sec{background:#f8f9fc;padding:40px 0;border-top:1px solid var(--border)}
+.form-sec{background:#fff;padding:40px 0;border-top:1px solid var(--border)}
 .form-sec .fcard{max-width:560px;margin:0 auto}
 
 /* BOTTOM CTA */
@@ -427,20 +427,20 @@ a{color:inherit;text-decoration:none}
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMPPWX29" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
-<!-- TOP BAR -->
-<div class="topbar">
-  <div class="inner">
-    <span class="t-loc">📍 Cơ sở {location} · Khai giảng {khaigiang}</span>
-    <span>📞 <a href={`tel:${HOTLINE_TEL}`}>{HOTLINE}</a></span>
-  </div>
-</div>
-
-<!-- HEADER -->
+<!-- HEADER — logo | center info | right Zalo+phone -->
 <header class="hdr">
   <div class="inner">
     <a href="https://truongvietanh.com" aria-label="Trường Việt Anh">
-      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" width="216" height="72" loading="eager" />
+      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" width="282" height="94" loading="eager" />
     </a>
+    <div class="hdr-center">
+      <strong>📍 Cơ sở {location} · Khai giảng {khaigiang}</strong>
+      {address}
+    </div>
+    <div class="hdr-right">
+      <span class="zalo-tag">💬 Zalo</span>
+      <a href={`tel:${HOTLINE_TEL}`}>{HOTLINE}</a>
+    </div>
   </div>
 </header>
 

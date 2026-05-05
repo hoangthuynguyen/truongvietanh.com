@@ -163,25 +163,27 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:#f7f8fc;
-  line-height:1.65;font-size:16px;-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  display:flex;flex-direction:column;min-height:100vh;padding-bottom:72px}
-h1,h2,h3,h4{font-family:'Montserrat',sans-serif;line-height:1.2;font-weight:800}
+body{font-family:'Open Sans',system-ui,sans-serif;color:var(--text);background:#fff;
+  line-height:1.65;font-size:16px;font-weight:400;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;display:flex;flex-direction:column;min-height:100vh;padding-bottom:80px}
+h1,h2,h3,h4{font-family:'Montserrat',sans-serif;line-height:1.25;font-weight:800}
+h1{font-size:24px}h2{font-size:22px}h3{font-size:18px}
 img{max-width:100%;height:auto;display:block}
 a{text-decoration:none;color:inherit}
-.wrap{max-width:720px;margin:0 auto;padding:0 20px;width:100%}
+.wrap{max-width:900px;margin:0 auto;padding:0 24px;width:100%}
 
 /* ─── CONFETTI ─── */
 #confetti-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999}
 
-/* ─── LOGO BAR ─── */
-.logo-bar{background:var(--navy);padding:14px 0;text-align:center;border-bottom:3px solid var(--gold)}
-.logo-bar img{display:inline-block;height:44px;width:auto}
+/* ─── LOGO BAR — matches landing page header ─── */
+.logo-bar{background:#fff;padding:16px 0;text-align:center;border-bottom:3px solid var(--gold);
+  position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.logo-bar img{display:inline-block;height:88px;width:auto}
 
 /* ─── PROGRESS ─── */
 .progress{display:flex;align-items:center;justify-content:center;gap:0;
-  padding:16px 20px 4px;max-width:420px;margin:0 auto}
-.pstep{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;
+  padding:20px 20px 6px;max-width:480px;margin:0 auto}
+.pstep{display:flex;align-items:center;gap:7px;font-size:14px;font-weight:700;
   color:var(--navy);font-family:'Montserrat',sans-serif}
 .pstep--done{color:var(--navy)}
 .pstep--active{color:var(--navy)}
@@ -196,63 +198,73 @@ a{text-decoration:none;color:inherit}
 @keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,0,.45)}50%{box-shadow:0 0 0 8px rgba(255,255,0,0)}}
 
 /* ─── MAIN ─── */
-.main{flex:1;padding:20px 0 40px}
+.main{flex:1;padding:24px 0 48px}
 
 /* ─── HERO CARD ─── */
 .hero-card{background:linear-gradient(135deg,var(--navy) 0%,var(--navy-dk) 100%);
-  color:#fff;border-radius:var(--r);padding:28px 28px 24px;text-align:center;
-  margin-bottom:16px;position:relative;overflow:hidden}
+  color:#fff;border-radius:var(--r);padding:36px 36px 28px;text-align:center;
+  margin-bottom:20px;position:relative;overflow:hidden}
 .hero-card::before{content:'';position:absolute;top:-60px;right:-60px;width:200px;height:200px;
   background:radial-gradient(circle,rgba(255,255,0,.18) 0%,transparent 70%);pointer-events:none}
 .hero-card::after{content:'';position:absolute;bottom:-80px;left:-60px;width:240px;height:240px;
   background:radial-gradient(circle,rgba(255,255,0,.1) 0%,transparent 70%);pointer-events:none}
-.hero-icon{font-size:3rem;margin-bottom:10px;position:relative;z-index:1}
-.hero-card h1{font-size:clamp(1.3rem,3vw,1.7rem);color:#fff;margin-bottom:10px;
-  position:relative;z-index:1}
+.hero-icon{font-size:3.5rem;margin-bottom:12px;position:relative;z-index:1}
+.hero-card h1{font-size:24px;color:#fff;margin-bottom:12px;position:relative;z-index:1}
 .hero-card h1 .hl{color:var(--gold)}
-.hero-intro{font-size:15px;color:rgba(255,255,255,.88);line-height:1.7;
-  max-width:540px;margin:0 auto 16px;position:relative;z-index:1}
+.hero-intro{font-size:16px;color:rgba(255,255,255,.9);line-height:1.75;
+  max-width:640px;margin:0 auto 20px;position:relative;z-index:1}
 .meta-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;position:relative;z-index:1}
 .meta-chip{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);
-  border:1px solid rgba(255,255,255,.2);color:#fff;padding:6px 12px;border-radius:20px;
-  font-size:13px;font-weight:600}
+  border:1px solid rgba(255,255,255,.2);color:#fff;padding:7px 14px;border-radius:20px;
+  font-size:14px;font-weight:600}
 
 /* ─── ZALO PRIMARY BOX ─── */
-.zalo-primary{background:#fff;border:3px solid var(--gold);border-radius:var(--r);
-  padding:24px;margin-bottom:16px;box-shadow:0 6px 32px rgba(255,255,0,.2)}
-.zalo-primary-header{text-align:center;margin-bottom:16px}
+.zalo-primary{background:#f8f9fc;border-radius:var(--r);
+  padding:28px 32px;margin-bottom:20px}
+.zalo-primary-header{text-align:center;margin-bottom:20px}
 .zalo-primary-header .urgency{display:inline-block;background:var(--gold);color:var(--navy-dk);
-  font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;
-  padding:5px 14px;border-radius:20px;margin-bottom:10px}
-.zalo-primary-header h2{font-size:1.1rem;color:var(--navy);margin-bottom:6px;line-height:1.35}
-.zalo-primary-header p{font-size:14px;color:var(--text-muted);line-height:1.6}
-.receive-list{list-style:none;padding:0;margin:0 0 20px;display:flex;flex-direction:column;gap:9px}
-.receive-list li{display:flex;align-items:flex-start;gap:10px;font-size:14.5px;
-  color:var(--text);line-height:1.5}
-.receive-list li::before{content:'✅';font-size:13px;flex-shrink:0;margin-top:2px}
+  font-size:13px;font-weight:900;text-transform:uppercase;letter-spacing:.6px;
+  padding:6px 16px;border-radius:20px;margin-bottom:12px}
+.zalo-primary-header h2{font-size:22px;color:var(--navy);margin-bottom:8px;line-height:1.3}
+.zalo-primary-header p{font-size:16px;color:var(--text-muted);line-height:1.7}
+.receive-list{list-style:none;padding:0;margin:0 0 24px;display:flex;flex-direction:column;gap:12px}
+.receive-list li{display:flex;align-items:flex-start;gap:12px;font-size:16px;
+  color:var(--text);line-height:1.6}
+.receive-list li::before{content:'✅';font-size:14px;flex-shrink:0;margin-top:3px}
 .receive-list strong{color:var(--navy)}
+
+/* CTA PAIR — Zalo + Call side by side */
+.cta-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:8px}
+@media(max-width:560px){.cta-pair{grid-template-columns:1fr}}
+
 .btn-zalo-primary{display:flex;align-items:center;justify-content:center;gap:10px;
   width:100%;background:var(--navy);color:var(--gold);border:none;
   padding:18px 20px;border-radius:12px;font-size:16px;font-weight:900;
   font-family:'Montserrat',sans-serif;cursor:pointer;transition:.15s;
-  text-decoration:none;box-shadow:0 6px 24px rgba(0,0,128,.3);
+  text-decoration:none;box-shadow:0 6px 24px rgba(0,0,128,.25);
   letter-spacing:.3px;animation:cta-pulse 3s ease-in-out infinite}
-@keyframes cta-pulse{0%,100%{box-shadow:0 6px 24px rgba(0,0,128,.3)}
-  50%{box-shadow:0 6px 32px rgba(0,0,128,.5),0 0 0 6px rgba(255,255,0,.15)}}
+@keyframes cta-pulse{0%,100%{box-shadow:0 6px 24px rgba(0,0,128,.25)}
+  50%{box-shadow:0 6px 32px rgba(0,0,128,.45),0 0 0 6px rgba(255,255,0,.15)}}
 .btn-zalo-primary:hover{background:var(--navy-dk);transform:translateY(-2px);
   box-shadow:0 8px 32px rgba(0,0,128,.4)}
 .btn-zalo-primary:active{transform:translateY(0)}
-.zalo-subtext{text-align:center;font-size:13px;color:var(--text-muted);
-  margin-top:10px;line-height:1.6}
+.btn-call-primary{display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;background:var(--gold);color:var(--navy-dk);border:none;
+  padding:18px 20px;border-radius:12px;font-size:16px;font-weight:900;
+  font-family:'Montserrat',sans-serif;cursor:pointer;transition:.15s;
+  text-decoration:none;box-shadow:0 6px 20px rgba(255,255,0,.35);letter-spacing:.3px}
+.btn-call-primary:hover{background:var(--gold-dk);transform:translateY(-2px)}
+.btn-call-primary:active{transform:translateY(0)}
+.zalo-subtext{text-align:center;font-size:14px;color:var(--text-muted);
+  margin-top:12px;line-height:1.65}
 .zalo-subtext span{color:var(--green);font-weight:700}
 
 /* ─── MESSAGE TEMPLATE ─── */
-.msg-template{background:#f8f9ff;border:1px solid #d0d5ff;border-radius:10px;
-  padding:16px;margin-top:16px}
-.msg-template .msg-title{font-size:12px;font-weight:700;color:var(--text-muted);
-  text-transform:uppercase;letter-spacing:.6px;margin-bottom:10px}
-.msg-box{background:#fff;border:1px solid var(--border);border-radius:8px;
-  padding:12px;font-size:13.5px;color:var(--text);line-height:1.7;
+.msg-template{background:#fff;border-radius:10px;padding:20px;margin-top:20px}
+.msg-template .msg-title{font-size:13px;font-weight:700;color:var(--text-muted);
+  text-transform:uppercase;letter-spacing:.6px;margin-bottom:12px}
+.msg-box{background:#f8f9fc;border-radius:8px;
+  padding:14px;font-size:15px;color:var(--text);line-height:1.75;
   white-space:pre-line;font-family:inherit}
 .btn-copy{display:inline-flex;align-items:center;gap:6px;margin-top:10px;
   background:var(--navy);color:#fff;border:none;padding:9px 16px;
@@ -262,35 +274,23 @@ a{text-decoration:none;color:inherit}
 .btn-copy.copied{background:var(--green);color:#fff}
 
 /* ─── NEXT STEPS ─── */
-.steps-box{background:#fff;border:1px solid var(--border);border-radius:var(--r);
-  padding:20px 22px;margin-bottom:16px}
-.steps-box .stitle{font-size:1rem;font-weight:900;color:var(--navy);margin-bottom:14px}
-.sitem{display:flex;align-items:flex-start;gap:12px;padding:10px 0;
-  border-bottom:1px solid #f0f0f0;font-size:14px;color:var(--text-muted);line-height:1.6}
+.steps-box{background:#f8f9fc;border-radius:var(--r);padding:24px 28px;margin-bottom:20px}
+.steps-box .stitle{font-size:18px;font-weight:900;color:var(--navy);margin-bottom:16px}
+.sitem{display:flex;align-items:flex-start;gap:14px;padding:12px 0;
+  border-bottom:1px solid rgba(0,0,0,.06);font-size:16px;color:var(--text-muted);line-height:1.65}
 .sitem:last-child{border-bottom:none}
 .sitem.done{color:var(--navy)}
 .sitem.active{color:var(--navy);font-weight:600}
-.sdot2{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;
-  justify-content:center;font-size:13px;font-weight:900;flex-shrink:0;margin-top:1px}
+.sdot2{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;
+  justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;margin-top:2px}
 .sitem.done .sdot2{background:var(--navy);color:var(--gold)}
 .sitem.active .sdot2{background:var(--gold);color:var(--navy-dk);animation:pulse 2s infinite}
 .sitem.pending .sdot2{background:#e0e0e0;color:#aaa}
 
-/* ─── PHONE BOX ─── */
-.phone-box{background:#fff;border:1px solid var(--border);border-radius:var(--r);
-  padding:20px 22px;text-align:center;margin-bottom:16px}
-.phone-box p{font-size:14.5px;color:var(--text-muted);margin-bottom:12px;line-height:1.6}
-.btn-call{display:inline-flex;align-items:center;justify-content:center;gap:8px;
-  background:var(--gold);color:var(--navy-dk);padding:14px 28px;border-radius:10px;
-  font-size:15px;font-weight:900;font-family:'Montserrat',sans-serif;
-  transition:.15s;border:none;cursor:pointer;text-decoration:none;
-  box-shadow:0 4px 14px rgba(255,255,0,.3)}
-.btn-call:hover{background:var(--gold-dk);transform:translateY(-2px)}
-
 /* ─── NOTE ─── */
-.note-box{background:var(--navy-soft);border:1px solid #c7c7ff;border-radius:10px;
-  padding:14px 16px;font-size:13.5px;color:var(--text-muted);line-height:1.6;
-  margin-bottom:16px}
+.note-box{background:#f8f9fc;border-radius:10px;
+  padding:18px 22px;font-size:15px;color:var(--text-muted);line-height:1.7;
+  margin-bottom:20px}
 .note-box strong{color:var(--navy)}
 
 /* ─── FOOTER ─── */
@@ -300,21 +300,22 @@ a{text-decoration:none;color:inherit}
 
 /* ─── STICKY BAR ─── */
 .sticky-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;
-  border-top:2px solid var(--gold);z-index:300;padding:10px 16px;display:flex;gap:10px}
-.sb-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:7px;
-  padding:12px 10px;border-radius:9px;font-weight:900;font-size:13.5px;
+  border-top:3px solid var(--gold);z-index:300;padding:10px 16px;display:flex;gap:10px}
+.sb-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:14px 10px;border-radius:10px;font-weight:900;font-size:14px;
   font-family:'Montserrat',sans-serif;text-decoration:none;transition:.15s}
 .sb-zalo{background:var(--navy);color:var(--gold)}
 .sb-call{background:var(--gold);color:var(--navy-dk)}
 .sb-btn:active{opacity:.8}
 
 /* ─── RESPONSIVE ─── */
-@media(max-width:560px){
-  .main{padding:14px 0 32px}
-  .hero-card{padding:22px 18px 18px;border-radius:10px}
-  .zalo-primary{padding:18px 16px;border-radius:10px}
-  .btn-zalo-primary{font-size:15px;padding:16px 16px}
-  .steps-box,.phone-box{padding:16px 16px}
+@media(max-width:600px){
+  .main{padding:16px 0 36px}
+  .hero-card{padding:24px 18px 20px}
+  .zalo-primary{padding:20px 18px}
+  .btn-zalo-primary,.btn-call-primary{font-size:15px;padding:16px 14px}
+  .steps-box{padding:18px 18px}
+  .wrap{padding:0 16px}
 }
 </style>
 <script is:inline define:vars={{ schoolLevel, funnelCode }}>
@@ -335,10 +336,10 @@ window.dataLayer.push({
 
 <canvas id="confetti-canvas"></canvas>
 
-<!-- LOGO BAR -->
+<!-- LOGO BAR — white bg, matches landing page header -->
 <div class="logo-bar">
   <a href="https://truongvietanh.com" aria-label="Trường Việt Anh">
-    <img src="/logo-vietanh-yellow.png" alt="Trường Việt Anh" height="44" />
+    <img src="/logo-vietanh.webp" alt="Trường Việt Anh" height="88" width="264" />
   </a>
 </div>
 
@@ -391,11 +392,17 @@ window.dataLayer.push({
         ))}
       </ul>
 
-      <a href={ZALO_URL} target="_blank" rel="noopener" class="btn-zalo-primary">
-        💬 {zaloBtnText}
-      </a>
+      <!-- CTA: Zalo + Call side by side -->
+      <div class="cta-pair">
+        <a href={ZALO_URL} target="_blank" rel="noopener" class="btn-zalo-primary">
+          💬 {zaloBtnText}
+        </a>
+        <a href={`tel:${HOTLINE_TEL}`} class="btn-call-primary">
+          📞 Gọi ngay — {HOTLINE}
+        </a>
+      </div>
       <p class="zalo-subtext">
-        <span>✅ Phản hồi 15–30 phút</span> · Hoàn toàn miễn phí · Không ràng buộc
+        <span>✅ Phản hồi 15–30 phút</span> · Tư vấn miễn phí · Không ràng buộc
       </p>
 
       <!-- Copyable Zalo message -->
@@ -419,19 +426,24 @@ window.dataLayer.push({
       ))}
     </div>
 
-    <!-- PHONE BOX -->
-    <div class="phone-box">
-      <p>Muốn được tư vấn nhanh hơn? Ba mẹ có thể gọi trực tiếp để được hỗ trợ ngay về lịch học, học phí và lớp phù hợp cho con.</p>
-      <a href={`tel:${HOTLINE_TEL}`} class="btn-call">
-        📞 GỌI TƯ VẤN NGAY — {HOTLINE}
-      </a>
-    </div>
-
     <!-- NOTE -->
     <div class="note-box" set:html={resolvedNoteText} />
 
+    <!-- BOTTOM CTA REPEAT — make it easy to act again after scrolling -->
+    <div style="text-align:center;background:#f8f9fc;border-radius:var(--r);padding:28px 24px;margin-bottom:20px">
+      <p style="font-size:16px;color:var(--navy);font-weight:700;margin-bottom:16px">Ba mẹ sẵn sàng? Liên hệ ngay để nhận thông tin chi tiết:</p>
+      <div class="cta-pair" style="max-width:560px;margin:0 auto">
+        <a href={ZALO_URL} target="_blank" rel="noopener" class="btn-zalo-primary" style="animation:none">
+          💬 Tư vấn Zalo
+        </a>
+        <a href={`tel:${HOTLINE_TEL}`} class="btn-call-primary">
+          📞 Gọi {HOTLINE}
+        </a>
+      </div>
+    </div>
+
     <!-- FOOTER NOTE -->
-    <p style="text-align:center;font-size:13px;color:var(--text-muted);line-height:1.6" set:html={resolvedFooterNote} />
+    <p style="text-align:center;font-size:15px;color:var(--text-muted);line-height:1.7" set:html={resolvedFooterNote} />
 
   </div>
 </main>

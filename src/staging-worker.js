@@ -262,10 +262,10 @@ async function handleLeadSubmission(request, env) {
         if (data.source && data.source.includes('trai-he-') && !isQuizLead(data)) {
           tags.push('warm_sales_page');
           tags.push('lead_nong');
-          // Ưu tiên 1: cấp từ funnel/source (page riêng cấp)
-          // Ưu tiên 2: cấp từ grade dropdown (page chung trai-he-viet-anh)
-          let campLvl = deriveCampLevel(data.source);
-          if (!campLvl) campLvl = deriveLevelFromGrade(data.grade);
+          // Tag theo cấp CHỈ xét từ funnel/source (page riêng cấp)
+          // Page chung trai-he-viet-anh: luôn dùng master tag 'trai-he-2026'
+          // → workflow chung gửi brochure tổng, không phụ thuộc grade
+          const campLvl = deriveCampLevel(data.source);
           if (campLvl) {
             tags.push(`trai-he-${campLvl.toLowerCase()}`);
             // Tag chính trigger workflow GHL — TÁCH theo cấp
@@ -275,7 +275,7 @@ async function handleLeadSubmission(request, env) {
             else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
             else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
           } else {
-            // Page chung không xác định cấp (vd: chua-chac) — fallback master tag
+            // Page chung trai-he-viet-anh — luôn master tag
             tags.push('trai-he-2026');
           }
           const loc = deriveLocation(data.source);

@@ -205,14 +205,7 @@ async function sendToGHL(data, funnel, env) {
   if (!env.GHL_API_KEY) return { skipped: true };
   const [firstName, ...rest] = (data.full_name || '').split(' ');
   const lastName = rest.join(' ') || '';
-
-  // Trai-he campaigns: KHÔNG trigger workflow qua API.
-  // Để tag 'trai_he_2026' tự trigger workflow Lion_Camp_2026 (chỉ 1 chuỗi duy nhất).
-  // Tránh lead nhận chuỗi email trùng (Lion_Camp_2026 + wf-sales-call-now/nurture).
-  const isTraiHe = typeof data.funnel_code === 'string' && /^(search-)?trai-he-/.test(data.funnel_code);
-  const workflowId = isTraiHe
-    ? null
-    : (funnel?.ghl_workflow_id || (data.lead_score >= 70 ? 'wf-sales-call-now' : 'wf-default-nurture'));
+  const workflowId = funnel?.ghl_workflow_id || (data.lead_score >= 70 ? 'wf-sales-call-now' : 'wf-default-nurture');
 
   const body = {
     firstName, lastName, name: data.full_name,

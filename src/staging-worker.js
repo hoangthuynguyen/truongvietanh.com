@@ -249,7 +249,7 @@ async function handleLeadSubmission(request, env) {
           tags.push('warm_sales_page');
           tags.push('lead_nong');
           // Master tag — trigger GHL workflow Lion_Camp_2026 (1 chuỗi email duy nhất)
-          tags.push('trai_he_2026');
+          tags.push('trai-he-2026');
           const campLvl = deriveCampLevel(data.source);
           if (campLvl) tags.push(`trai-he-${campLvl.toLowerCase()}`);
           const loc = deriveLocation(data.source);

@@ -273,8 +273,9 @@ async function handleLeadSubmission(request, env) {
             else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
             else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
           } else {
-            // Page chung — luôn master tag để trigger workflow brochure tổng
+            // Page chung — master tag (brochure tổng) + tag toàn hệ thống (workflow phân nhánh)
             tags.push('trai-he-2026');
+            tags.push('trai-he-2026-toan-he-thong');
             // Thêm level tag từ grade dropdown để trigger workflow cấp tương ứng
             const lvlFromGrade = deriveLevelFromGrade(data.grade);
             if (lvlFromGrade) {

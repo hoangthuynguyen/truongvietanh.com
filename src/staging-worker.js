@@ -248,18 +248,18 @@ async function handleLeadSubmission(request, env) {
         if (data.source && data.source.includes('trai-he-') && !isQuizLead(data)) {
           tags.push('warm_sales_page');
           tags.push('lead_nong');
-          // Master tag — trigger GHL workflow chuỗi email theo cấp lớp
-          // Tách 3 master tag để dựng 3 chuỗi email khác nhau (tiểu học/THCS/THPT)
-          tags.push('trai-he-2026');
           const campLvl = deriveCampLevel(data.source);
           if (campLvl) {
             tags.push(`trai-he-${campLvl.toLowerCase()}`);
-            // Master tag riêng theo cấp — khớp tên workflow GHL của user
-          //   trai-he-2026-tieu-hoc | trai-he-2026-thcs | trai-he-2026-thpt
+            // Tag chính trigger workflow GHL — TÁCH theo cấp, không có tag chung
+            //   trai-he-2026-tieu-hoc | trai-he-2026-thcs | trai-he-2026-thpt
             const cl = campLvl.toLowerCase();
             if (cl === 'tiểu học') tags.push('trai-he-2026-tieu-hoc');
             else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
             else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
+          } else {
+            // Page chung (trai-he-viet-anh, multi level) — fallback master tag
+            tags.push('trai-he-2026');
           }
           const loc = deriveLocation(data.source);
           if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);

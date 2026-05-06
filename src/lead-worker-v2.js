@@ -218,8 +218,9 @@ async function sendToGHL(data, funnel, env) {
       `score:${data.lead_score}`,
       data.lead_score >= 70 && 'hot',
       // Master tag for "Trại hè 2026" campaign — gắn cho mọi lead từ 16 landing trại hè
-      // Dùng để dựng 1 chuỗi email chung (lead magnet → nurture) trong GHL
-      typeof data.funnel_code === 'string' && /^(search-)?trai-he-/.test(data.funnel_code) && 'trai-he-2026',
+      // Dùng để trigger workflow Lion_Camp_2026 trong GHL (lead magnet → nurture)
+      // Lưu ý: GHL workflow listen tag 'trai_he_2026' (gạch dưới) — phải match đúng
+      typeof data.funnel_code === 'string' && /^(search-)?trai-he-/.test(data.funnel_code) && 'trai_he_2026',
     ].filter(Boolean),
     customFields: {
       utm_source: data.utm_source || '',

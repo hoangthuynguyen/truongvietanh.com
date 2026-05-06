@@ -262,21 +262,27 @@ async function handleLeadSubmission(request, env) {
         if (data.source && data.source.includes('trai-he-') && !isQuizLead(data)) {
           tags.push('warm_sales_page');
           tags.push('lead_nong');
-          // Tag theo cấp CHỈ xét từ funnel/source (page riêng cấp)
-          // Page chung trai-he-viet-anh: luôn dùng master tag 'trai-he-2026'
-          // → workflow chung gửi brochure tổng, không phụ thuộc grade
+          // Page riêng cấp: tag level (1 tag duy nhất)
+          // Page chung trai-he-viet-anh: master tag 'trai-he-2026' + level tag từ grade
+          //   → workflow chung gửi brochure tổng + workflow cấp gửi chuỗi nuôi dưỡng
           const campLvl = deriveCampLevel(data.source);
           if (campLvl) {
             tags.push(`trai-he-${campLvl.toLowerCase()}`);
-            // Tag chính trigger workflow GHL — TÁCH theo cấp
-            //   trai-he-2026-tieu-hoc | trai-he-2026-thcs | trai-he-2026-thpt
             const cl = campLvl.toLowerCase();
             if (cl === 'tiểu học') tags.push('trai-he-2026-tieu-hoc');
             else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
             else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
           } else {
-            // Page chung trai-he-viet-anh — luôn master tag
+            // Page chung — luôn master tag để trigger workflow brochure tổng
             tags.push('trai-he-2026');
+            // Thêm level tag từ grade dropdown để trigger workflow cấp tương ứng
+            const lvlFromGrade = deriveLevelFromGrade(data.grade);
+            if (lvlFromGrade) {
+              const cl = lvlFromGrade.toLowerCase();
+              if (cl === 'tiểu học') tags.push('trai-he-2026-tieu-hoc');
+              else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
+              else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
+            }
           }
           const loc = deriveLocation(data.source);
           if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);

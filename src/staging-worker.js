@@ -273,11 +273,17 @@ async function handleLeadSubmission(request, env) {
             else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
             else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
           } else {
-            // Page chung trai-he-viet-anh — CHỈ master tag + tag workflow phân nhánh
-            // KHÔNG add level tag để tránh trigger level workflow trùng
-            // → workflow trai-he-2026-toan-he-thong tự phân nhánh theo grade qua IF/ELSE
+            // Page chung trai-he-viet-anh — master + workflow phân nhánh + level từ grade
+            // Level tag để workflow toan-he-thong IF/ELSE filter Tags match được
             tags.push('trai-he-2026');
             tags.push('trai-he-2026-toan-he-thong');
+            const lvlFromGrade = deriveLevelFromGrade(data.grade);
+            if (lvlFromGrade) {
+              const cl = lvlFromGrade.toLowerCase();
+              if (cl === 'tiểu học') tags.push('trai-he-2026-tieu-hoc');
+              else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
+              else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
+            }
           }
           const loc = deriveLocation(data.source);
           if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);

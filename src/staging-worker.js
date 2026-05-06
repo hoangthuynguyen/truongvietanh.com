@@ -204,6 +204,20 @@ function deriveCampLevel(funnelCode) {
   return '';
 }
 
+// Derive level từ grade dropdown — dùng cho page chung trai-he-viet-anh
+// Khi user chọn lớp, suy ra cấp tương ứng để gắn tag workflow đúng
+function deriveLevelFromGrade(grade) {
+  if (!grade) return '';
+  const g = String(grade).toLowerCase().trim();
+  // Tiểu học: 6 tuổi / lớp 1-5
+  if (g === '6-tuoi' || /^lop-[1-5]$/.test(g)) return 'Tiểu học';
+  // THCS: lớp 6-9
+  if (/^lop-[6-9]$/.test(g)) return 'THCS';
+  // THPT: lớp 10-12
+  if (/^lop-1[0-2]$/.test(g)) return 'THPT';
+  return '';
+}
+
 // Generate quiz result report URL (personalized link)
 function getQuizReportUrl(data) {
   const params = new URLSearchParams({
@@ -248,17 +262,20 @@ async function handleLeadSubmission(request, env) {
         if (data.source && data.source.includes('trai-he-') && !isQuizLead(data)) {
           tags.push('warm_sales_page');
           tags.push('lead_nong');
+          // Tag theo cấp CHỈ xét từ funnel/source (page riêng cấp)
+          // Page chung trai-he-viet-anh: luôn dùng master tag 'trai-he-2026'
+          // → workflow chung gửi brochure tổng, không phụ thuộc grade
           const campLvl = deriveCampLevel(data.source);
           if (campLvl) {
             tags.push(`trai-he-${campLvl.toLowerCase()}`);
-            // Tag chính trigger workflow GHL — TÁCH theo cấp, không có tag chung
+            // Tag chính trigger workflow GHL — TÁCH theo cấp
             //   trai-he-2026-tieu-hoc | trai-he-2026-thcs | trai-he-2026-thpt
             const cl = campLvl.toLowerCase();
             if (cl === 'tiểu học') tags.push('trai-he-2026-tieu-hoc');
             else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
             else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
           } else {
-            // Page chung (trai-he-viet-anh, multi level) — fallback master tag
+            // Page chung trai-he-viet-anh — luôn master tag
             tags.push('trai-he-2026');
           }
           const loc = deriveLocation(data.source);

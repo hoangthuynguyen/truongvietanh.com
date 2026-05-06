@@ -158,7 +158,7 @@ function normalizeFormData(data) {
     phone: normalizePhone(data.phone || ''),
     childName: data.childName || data.child_name || '',
     schoolLevel: data.schoolLevel || data.school_level || '',
-    grade: data.grade || '',
+    grade: data.grade || data.childGrade || '',
     source: data.source || data.funnelCode || data.funnel_code || data.page_variant || 'unknown',
     page: data.page || data.page_url || '',
     utmSource: data.utm_source || data.utmSource || '',

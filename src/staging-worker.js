@@ -254,12 +254,12 @@ async function handleLeadSubmission(request, env) {
           const campLvl = deriveCampLevel(data.source);
           if (campLvl) {
             tags.push(`trai-he-${campLvl.toLowerCase()}`);
-            // Master tag riêng theo cấp — dùng cho workflow GHL nuôi dưỡng
-            //   trai-he-tieu-hoc-2026 | trai-he-thcs-2026 | trai-he-thpt-2026
+            // Master tag riêng theo cấp — khớp tên workflow GHL của user
+          //   trai-he-2026-tieu-hoc | trai-he-2026-thcs | trai-he-2026-thpt
             const cl = campLvl.toLowerCase();
-            if (cl === 'tiểu học') tags.push('trai-he-tieu-hoc-2026');
-            else if (cl === 'thcs') tags.push('trai-he-thcs-2026');
-            else if (cl === 'thpt') tags.push('trai-he-thpt-2026');
+            if (cl === 'tiểu học') tags.push('trai-he-2026-tieu-hoc');
+            else if (cl === 'thcs') tags.push('trai-he-2026-thcs');
+            else if (cl === 'thpt') tags.push('trai-he-2026-thpt');
           }
           const loc = deriveLocation(data.source);
           if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);

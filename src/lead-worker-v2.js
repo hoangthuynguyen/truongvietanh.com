@@ -217,6 +217,9 @@ async function sendToGHL(data, funnel, env) {
       data.campus_ref && `campus:${data.campus_ref}`,
       `score:${data.lead_score}`,
       data.lead_score >= 70 && 'hot',
+      // Master tag for "Trại hè 2026" campaign — gắn cho mọi lead từ 16 landing trại hè
+      // Dùng để dựng 1 chuỗi email chung (lead magnet → nurture) trong GHL
+      typeof data.funnel_code === 'string' && /^(search-)?trai-he-/.test(data.funnel_code) && 'trai-he-2026',
     ].filter(Boolean),
     customFields: {
       utm_source: data.utm_source || '',

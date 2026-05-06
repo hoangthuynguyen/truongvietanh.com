@@ -202,9 +202,120 @@ body{
   animation:none;
 }
 .m-card::before,.m-card::after,.m-shine{display:none}
-.mimg{
-  display:block;width:100%;height:auto;
-  position:relative;z-index:3;
+
+/* === CSS book cover (replaces PNG mockup) === */
+.bk-cover{
+  position:relative;
+  width:100%;
+  aspect-ratio:280/380;
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 0%, #eef2e8 0%, #f5f1e6 38%, #f3ede0 100%);
+  border-radius:3px 7px 7px 3px;
+  padding:0;
+  overflow:hidden;
+  font-family:'Inter',sans-serif;
+  color:#1f3b2e;
+  isolation:isolate;
+  display:flex;flex-direction:column;
+}
+.bk-band{
+  background:
+    linear-gradient(180deg, rgba(190,210,205,.45) 0%, rgba(208,222,212,.55) 100%),
+    radial-gradient(ellipse 60% 80% at 12% 18%, rgba(120,140,160,.22) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 70% at 90% 22%, rgba(180,140,90,.18) 0%, transparent 65%);
+  padding:13px 14px 11px;
+  border-bottom:1px solid rgba(31,59,46,.18);
+  position:relative;
+}
+.bk-title{
+  font-family:'Montserrat',sans-serif;
+  font-weight:900;
+  font-size:clamp(11px,1.45vw,13.5px);
+  line-height:1.2;
+  color:#1f4d2e;
+  letter-spacing:-.1px;
+  text-transform:uppercase;
+  margin-bottom:6px;
+  text-shadow:0 1px 0 rgba(255,255,255,.4);
+}
+.bk-sub{
+  font-size:9.5px;font-weight:600;
+  color:#2a5a3c;
+  margin-bottom:5px;letter-spacing:.1px;
+}
+.bk-author{
+  font-family:'Montserrat',sans-serif;
+  font-size:9px;font-weight:800;
+  color:#1f4d2e;
+  text-align:right;letter-spacing:.4px;
+}
+.bk-body{
+  position:relative;
+  padding:24px 18px 8px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:space-between;
+  flex:1;
+  min-height:200px;
+}
+.bk-quote{
+  font-family:'Inter',sans-serif;
+  font-style:italic;
+  font-size:10.5px;
+  line-height:1.55;
+  color:#1f3b2e;
+  text-align:center;
+  margin:0 0 14px;
+  display:flex;flex-direction:column;gap:1px;
+  font-weight:500;
+}
+.bk-lighthouse{
+  width:62%;
+  max-width:170px;
+  height:auto;
+  margin-top:auto;
+  filter:drop-shadow(0 2px 4px rgba(0,0,0,.08));
+}
+.bk-foot{
+  position:absolute;
+  bottom:8px;left:0;right:0;
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  font-size:8.5px;font-weight:500;
+  color:rgba(31,59,46,.65);
+  letter-spacing:.3px;
+  border-top:1px solid rgba(31,59,46,.12);
+  padding-top:6px;
+  margin:0 18px;
+}
+.bk-foot-dot{
+  width:2.5px;height:2.5px;border-radius:50%;background:rgba(31,59,46,.45);
+}
+.bk-spine{
+  position:absolute;left:0;top:0;bottom:0;width:9px;
+  background:linear-gradient(to right,
+    rgba(0,0,0,.32) 0%,
+    rgba(0,0,0,.16) 40%,
+    rgba(0,0,0,0)   100%);
+  pointer-events:none;z-index:6;
+}
+.bk-pages{
+  position:absolute;top:1.5%;bottom:1.5%;right:-6px;
+  width:6px;
+  background:repeating-linear-gradient(to bottom,
+    #f5f1e6 0px,#f5f1e6 1px,
+    #d8cfb8 1px,#d8cfb8 2px);
+  border-radius:0 2px 2px 0;
+  box-shadow:1px 0 2px rgba(0,0,0,.2);
+  z-index:2;
+}
+.bk-shine{
+  position:absolute;inset:0;
+  background:linear-gradient(115deg,
+    rgba(255,255,255,.28) 0%,
+    rgba(255,255,255,.06) 22%,
+    transparent 50%);
+  pointer-events:none;
+  border-radius:3px 7px 7px 3px;
+  z-index:5;
 }
 .m-badge-yr{
   position:absolute;top:-9px;left:-9px;z-index:5;
@@ -514,16 +625,38 @@ body{
 
     <div class="mscene">
       <div class="m-glow-bg"></div>
-      <div class="m-shadow-el"></div>
-      <div class="m-ghost-2"></div>
-      <div class="m-ghost-1"></div>
-      <div class="m-card">
-        <div class="m-shine"></div>
+      <div class="m-card" role="img" aria-label="Bìa ebook 100 câu nói và cách đặt câu hỏi theo phong cách Cha Mẹ Hải Đăng">
         <span class="m-badge-yr">2026</span>
-        <img src="/mockup-100-cau-noi-cha-me-hai-dang.png"
-             alt="Ebook 100 Câu Nói &amp; Cách Đặt Câu Hỏi theo phong cách Cha Mẹ Hải Đăng"
-             class="mimg"
-             onerror="this.style.opacity='.15'" loading="eager" />
+        <div class="bk-cover">
+          <div class="bk-band">
+            <div class="bk-title">100 câu nói và cách đặt câu hỏi theo phong cách Cha Mẹ Hải Đăng</div>
+            <div class="bk-sub">Nuôi dưỡng 7 thành tố nội lực cho trẻ</div>
+            <div class="bk-author">NGỌC TUYỀN — Mẹ Moca</div>
+          </div>
+          <div class="bk-body">
+            <blockquote class="bk-quote">
+              <span>"Cha mẹ là ngọn hải đăng —</span>
+              <span>đứng vững một chỗ, soi sáng đường đi,</span>
+              <span>để con tự chèo lái con thuyền của mình."</span>
+            </blockquote>
+            <svg class="bk-lighthouse" viewBox="0 0 200 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M10 58 L78 36" stroke="#e07a25" stroke-width="2.2" stroke-linecap="round"/>
+              <path d="M122 36 L190 58" stroke="#e07a25" stroke-width="2.2" stroke-linecap="round"/>
+              <rect x="86" y="60" width="28" height="28" fill="#e88729"/>
+              <path d="M84 60 L116 60 L100 38 Z" fill="#1a1a1a"/>
+              <path d="M82 88 L88 110 L112 110 L118 88 Z" fill="none" stroke="#1a1a1a" stroke-width="1.8" stroke-linejoin="round"/>
+              <line x1="100" y1="60" x2="100" y2="38" stroke="#1a1a1a" stroke-width="1.5"/>
+            </svg>
+          </div>
+          <div class="bk-foot">
+            <span>Ngọc Tuyền</span>
+            <span class="bk-foot-dot"></span>
+            <span>Mẹ Moca</span>
+          </div>
+          <span class="bk-spine" aria-hidden="true"></span>
+          <span class="bk-pages" aria-hidden="true"></span>
+          <span class="bk-shine" aria-hidden="true"></span>
+        </div>
       </div>
       <div class="m-arrow">
         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">

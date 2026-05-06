@@ -248,10 +248,19 @@ async function handleLeadSubmission(request, env) {
         if (data.source && data.source.includes('trai-he-') && !isQuizLead(data)) {
           tags.push('warm_sales_page');
           tags.push('lead_nong');
-          // Master tag — trigger GHL workflow Lion_Camp_2026 (1 chuỗi email duy nhất)
+          // Master tag — trigger GHL workflow chuỗi email theo cấp lớp
+          // Tách 3 master tag để dựng 3 chuỗi email khác nhau (tiểu học/THCS/THPT)
           tags.push('trai-he-2026');
           const campLvl = deriveCampLevel(data.source);
-          if (campLvl) tags.push(`trai-he-${campLvl.toLowerCase()}`);
+          if (campLvl) {
+            tags.push(`trai-he-${campLvl.toLowerCase()}`);
+            // Master tag riêng theo cấp — dùng cho workflow GHL nuôi dưỡng
+            //   trai-he-tieu-hoc-2026 | trai-he-thcs-2026 | trai-he-thpt-2026
+            const cl = campLvl.toLowerCase();
+            if (cl === 'tiểu học') tags.push('trai-he-tieu-hoc-2026');
+            else if (cl === 'thcs') tags.push('trai-he-thcs-2026');
+            else if (cl === 'thpt') tags.push('trai-he-thpt-2026');
+          }
           const loc = deriveLocation(data.source);
           if (loc) tags.push(`cs-${loc.toLowerCase().replace(/\s+/g, '-')}`);
         }

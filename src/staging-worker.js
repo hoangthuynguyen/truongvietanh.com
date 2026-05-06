@@ -248,6 +248,8 @@ async function handleLeadSubmission(request, env) {
         if (data.source && data.source.includes('trai-he-') && !isQuizLead(data)) {
           tags.push('warm_sales_page');
           tags.push('lead_nong');
+          // Master tag — trigger GHL workflow Lion_Camp_2026 (1 chuỗi email duy nhất)
+          tags.push('trai_he_2026');
           const campLvl = deriveCampLevel(data.source);
           if (campLvl) tags.push(`trai-he-${campLvl.toLowerCase()}`);
           const loc = deriveLocation(data.source);

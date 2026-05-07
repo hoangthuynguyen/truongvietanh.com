@@ -1,5 +1,65 @@
 ---
 import DarkLPLayout from '../layouts/DarkLPLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const uspItems = [
+    {
+      "icon": "🎓",
+      "text": "Curriculum Oxford International + IGCSE / A-Level"
+    },
+    {
+      "icon": "🇬🇧",
+      "text": "100% giáo viên bản ngữ — Ph.D / Master từ UK, US, AU"
+    },
+    {
+      "icon": "📜",
+      "text": "Đầu ra: IELTS 7.0+ · IGCSE A* · A-Level A*"
+    },
+    {
+      "icon": "🌍",
+      "text": "Counselor du học riêng — hỗ trợ apply UK / US / AU / SG"
+    },
+    {
+      "icon": "🏆",
+      "text": "92% học sinh vào top 100 thế giới (Oxford, Imperial, NUS, ANU…)"
+    },
+    {
+      "icon": "💰",
+      "text": "Học bổng Oxford Pathway 30–70% cho HS xuất sắc"
+    }
+  ];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
+  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
+  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
+  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
+];
+
+const faqItems = [
+    {
+      "question": "Chương trình Oxford Pathway dành cho lớp nào?",
+      "answer": "Mở từ lớp 7 (Year 8 hệ Anh) đến lớp 12 (Year 13). Lộ trình tối ưu là vào từ lớp 7 để có 6 năm xây nền."
+    },
+    {
+      "question": "Học sinh học chương trình Việt Nam có chuyển sang được không?",
+      "answer": "Có. Trường có lớp Bridge 1 năm cho HS từ trường Việt Nam sang, rèn IELTS 5.5+ và lấp đầy gap kiến thức trước khi vào IGCSE chính thức."
+    },
+    {
+      "question": "Học phí Oxford Pathway khoảng bao nhiêu?",
+      "answer": "Học phí Oxford Pathway từ 250–450 triệu/năm tùy cấp. Có học bổng 30–70% theo thành tích — vui lòng đăng ký để nhận bảng giá chi tiết."
+    },
+    {
+      "question": "Tỷ lệ vào đại học top thế giới là bao nhiêu?",
+      "answer": "92% học sinh tốt nghiệp Oxford Pathway 2024 vào top 100 thế giới (theo QS Rankings), 38% vào top 30 (Oxford, Cambridge, Imperial, UCL, NUS, USYD…)."
+    },
+    {
+      "question": "Có cần đi du học hè để bổ trợ không?",
+      "answer": "Khuyến khích. Trường tổ chức summer school tại Oxford UK + Boston US mỗi năm 3 tuần, học phí riêng 80–120 triệu, đã bao gồm vé máy bay + visa + lưu trú."
+    }
+  ];
 ---
 <DarkLPLayout
   title="Oxford Pathway Programme tại Gò Vấp — Lộ Trình Du Học Anh Quốc | Trường Việt Anh"
@@ -23,4 +83,8 @@ import DarkLPLayout from '../layouts/DarkLPLayout.astro';
   source="oxford-pathway-go-vap"
   funnelCode="oxford-pathway-go-vap"
   schoolLevel="thcs"
-/>
+  extended>
+  <USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} />
+  <TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} />
+  <FAQSection title="Câu hỏi thường gặp" items={faqItems} />
+</DarkLPLayout>

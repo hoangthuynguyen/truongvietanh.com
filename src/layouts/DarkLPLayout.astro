@@ -28,6 +28,7 @@ interface Props {
   mockupImage?: string;
   redirectUrl?: string;
   logoSrc?: string;
+  extended?: boolean;
 }
 
 const {
@@ -50,6 +51,7 @@ const {
   mockupImage,
   redirectUrl = '/cam-on/',
   logoSrc = 'https://media.truongvietanh.com/logo/logo-vietanh-yellow.png',
+  extended = false,
 } = Astro.props;
 
 const phoneDisplay = hotline;
@@ -93,6 +95,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
 body{font-family:'Open Sans',sans-serif;background:#000080;color:#fff;display:flex;flex-direction:column}
+body.extended,html:has(body.extended){height:auto;overflow:auto;overflow-x:hidden}
+body.extended .hero{flex:none;min-height:calc(100vh - 64px)}
+.extra-sections{background:#fff;color:#222}
+.extra-sections > *{max-width:1280px;margin:0 auto;padding:48px 24px}
 
 /* ── HEADER ── */
 .hdr{background:#fff;border-bottom:1px solid rgba(0,0,0,.09);padding:0 28px;height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;position:relative}
@@ -186,7 +192,7 @@ body{font-family:'Open Sans',sans-serif;background:#000080;color:#fff;display:fl
 }
 </style>
 </head>
-<body>
+<body class:list={[extended && 'extended']}>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMPPWX29"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -289,6 +295,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     )}
   </div>
 </section>
+
+{extended && (
+  <div class="extra-sections">
+    <slot />
+  </div>
+)}
 
 <script define:vars={{ source, funnelCode, schoolLevel, redirectUrl }}>
 (function(){

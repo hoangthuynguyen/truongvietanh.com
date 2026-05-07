@@ -1,5 +1,65 @@
 ---
 import DarkLPLayout from '../layouts/DarkLPLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const uspItems = [
+    {
+      "icon": "🥇",
+      "text": "Học bổng Toàn phần 100% — 10 suất / năm cho HS xuất sắc"
+    },
+    {
+      "icon": "🥈",
+      "text": "Học bổng Bán phần 50% — 30 suất / năm theo điểm test"
+    },
+    {
+      "icon": "🎨",
+      "text": "Học bổng Tài năng — Thể thao, Nghệ thuật, STEM (10–30%)"
+    },
+    {
+      "icon": "👫",
+      "text": "Học bổng Anh chị em — giảm 10–15% học sinh thứ 2 trở đi"
+    },
+    {
+      "icon": "💝",
+      "text": "Học bổng Hoàn cảnh — xét riêng từng trường hợp khó khăn"
+    },
+    {
+      "icon": "📅",
+      "text": "Kết quả xét trong 7 ngày làm việc kể từ khi nộp đủ hồ sơ"
+    }
+  ];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
+  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
+  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
+  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
+];
+
+const faqItems = [
+    {
+      "question": "Điều kiện xét học bổng là gì?",
+      "answer": "Học bổng đầu vào: làm bài test (Toán + Tiếng Việt + Tiếng Anh) đạt từ 80% trở lên, kèm phỏng vấn ngắn. Học bổng tài năng: nộp portfolio thành tích 2 năm gần nhất."
+    },
+    {
+      "question": "Hồ sơ xét học bổng cần gì?",
+      "answer": "Học bạ 2 năm gần nhất, giấy khen/chứng nhận, đơn đăng ký, ảnh thẻ, phỏng vấn ngắn với gia đình. Trường hỗ trợ phụ huynh chuẩn bị nếu cần."
+    },
+    {
+      "question": "Học bổng có duy trì hàng năm không?",
+      "answer": "Có, nếu HS giữ kết quả học tập từ Khá trở lên + hạnh kiểm Tốt. Có quy chế rõ ràng trong hợp đồng học bổng."
+    },
+    {
+      "question": "Có thể xét nhiều loại học bổng cùng lúc?",
+      "answer": "Có thể nhận tối đa 2 loại (ví dụ Học bổng đầu vào 30% + Anh chị em 10% = 40%). Không vượt quá 100% học phí."
+    },
+    {
+      "question": "Khi nào nộp hồ sơ học bổng?",
+      "answer": "Đợt 1: trước 30/4/2026 (Early Bird, ưu tiên cao). Đợt 2: trước 30/6/2026. Sau đó xét theo suất còn lại."
+    }
+  ];
 ---
 <DarkLPLayout
   title="Học Bổng Trường Việt Anh tại Rạch Giá 2026 — Đến 50% Học Phí | Trường Việt Anh"
@@ -23,4 +83,8 @@ import DarkLPLayout from '../layouts/DarkLPLayout.astro';
   source="hoc-bong-rach-gia"
   funnelCode="hoc-bong-rach-gia"
   schoolLevel="tieu-hoc"
-/>
+  extended>
+  <USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} />
+  <TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} />
+  <FAQSection title="Câu hỏi thường gặp" items={faqItems} />
+</DarkLPLayout>

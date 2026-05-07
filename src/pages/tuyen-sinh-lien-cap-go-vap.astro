@@ -1,5 +1,65 @@
 ---
 import DarkLPLayout from '../layouts/DarkLPLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const uspItems = [
+    {
+      "icon": "🎓",
+      "text": "Chương trình Liên Cấp Mầm Non — THPT song ngữ — chuẩn quốc tế, sĩ số 22 em/lớp"
+    },
+    {
+      "icon": "🇬🇧",
+      "text": "Giáo viên bản ngữ + Việt cùng dạy — Tiếng Anh từ 8–12 tiết/tuần"
+    },
+    {
+      "icon": "📋",
+      "text": "Test đầu vào miễn phí — đánh giá toàn diện học lực"
+    },
+    {
+      "icon": "💸",
+      "text": "Early Bird trước 30/4 — giảm 30% học phí + tặng đồng phục"
+    },
+    {
+      "icon": "🚌",
+      "text": "Xe đưa đón bán kính 10km từ Gò Vấp"
+    },
+    {
+      "icon": "📞",
+      "text": "Hỗ trợ 24/7 qua Zalo OA — Hiệu trưởng phản hồi trong 12h"
+    }
+  ];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục song ngữ' },
+  { number: '3,000+', label: 'Học sinh đã và đang theo học' },
+  { number: '95%', label: 'Phụ huynh hài lòng & giới thiệu bạn bè' },
+  { number: '9', label: 'Cơ sở tại TP.HCM, Long An, Kiên Giang' },
+];
+
+const faqItems = [
+    {
+      "question": "Hồ sơ nhập học cần gì?",
+      "answer": "Học bạ 2 năm gần nhất, giấy khai sinh, sổ tiêm chủng (Mầm Non/Tiểu Học), 4 ảnh 3x4, đơn nhập học. Trường hướng dẫn từng bước."
+    },
+    {
+      "question": "Có test đầu vào không?",
+      "answer": "Có test Toán + Tiếng Việt + Tiếng Anh 90 phút, làm tại trường hoặc online. Kết quả dùng để xếp lớp và xét học bổng."
+    },
+    {
+      "question": "Lớp sĩ số bao nhiêu?",
+      "answer": "Liên Cấp Mầm Non — THPT sĩ số tối đa 22 em/lớp, có 1 giáo viên chính + 1 trợ giảng + 1 giáo viên bản ngữ. Đảm bảo từng con được quan tâm."
+    },
+    {
+      "question": "Có học phí trả góp không?",
+      "answer": "Có. Trả góp 0% lãi suất qua thẻ TPBank, MB, VPBank, chia 6/9/12 kỳ. Không cần chứng minh thu nhập."
+    },
+    {
+      "question": "Khi nào bắt đầu nhập học?",
+      "answer": "Năm học 2026–2027 khai giảng 5/9/2026. Có lớp tiền nhập học (orientation) tháng 7 cho HS mới làm quen môi trường, miễn phí cho HS đăng ký Early Bird."
+    }
+  ];
 ---
 <DarkLPLayout
   title="Tuyển Sinh Liên Cấp Mầm Non — THPT tại Gò Vấp 2026–2027 | Trường Việt Anh"
@@ -23,4 +83,8 @@ import DarkLPLayout from '../layouts/DarkLPLayout.astro';
   source="tuyen-sinh-lien-cap-go-vap"
   funnelCode="tuyen-sinh-lien-cap-go-vap"
   schoolLevel="tieu-hoc"
-/>
+  extended>
+  <USPGrid title="Vì sao chọn Trường Việt Anh?" items={uspItems} />
+  <TrustMetrics title="Trường Việt Anh trong số liệu" metrics={metrics} />
+  <FAQSection title="Câu hỏi thường gặp" items={faqItems} />
+</DarkLPLayout>

@@ -1,0 +1,37 @@
+name: Health Check (auto-heal stale Cloudflare ASSETS)
+
+# Chạy mỗi 30 phút. Nếu bất kỳ URL critical nào trả !=200 → tự dispatch deploy.yml
+# để re-deploy. Bug: Cloudflare Workers ASSETS thỉnh thoảng bị stale, một số
+# trang trả 404 dù file đã upload — re-deploy heal được.
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'   # mỗi 30 phút
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: Health check + auto-heal
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run smoke test
+        id: smoke
+        continue-on-error: true
+        run: bash scripts/smoke-test.sh
+
+      - name: Trigger deploy.yml để heal
+        if: steps.smoke.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "❌ Smoke test fail — dispatch deploy.yml để heal stale ASSETS"
+          gh workflow run deploy.yml --ref main
+
+      - name: Báo fail (để có notification email)
+        if: steps.smoke.outcome == 'failure'
+        run: |
+          echo "Một số trang đang 404 — đã trigger redeploy để heal."
+          exit 1

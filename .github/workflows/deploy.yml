@@ -30,9 +30,35 @@ jobs:
           PUBLIC_DIRECTUS_URL: ${{ secrets.PUBLIC_DIRECTUS_URL }}
           DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
 
-      - name: Deploy to Cloudflare Workers
+      - name: Deploy to Cloudflare Workers (1st try)
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: deploy -c wrangler.jsonc
+
+      - name: Wait for edge propagation
+        run: sleep 25
+
+      - name: Smoke test (1st)
+        id: smoke1
+        continue-on-error: true
+        run: bash scripts/smoke-test.sh
+
+      # Re-deploy nếu smoke test 1 fail (Cloudflare Workers ASSETS đôi khi
+      # bị stale dù wrangler báo upload thành công — re-deploy heal được)
+      - name: Re-deploy to heal stale assets
+        if: steps.smoke1.outcome == 'failure'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy -c wrangler.jsonc
+
+      - name: Wait after heal
+        if: steps.smoke1.outcome == 'failure'
+        run: sleep 30
+
+      - name: Smoke test (2nd, sau khi heal)
+        if: steps.smoke1.outcome == 'failure'
+        run: bash scripts/smoke-test.sh

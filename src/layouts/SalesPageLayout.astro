@@ -257,7 +257,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </section>
 )}
 
-<!-- FOOTER: CHỈ CHAT BAR -->
+<!-- FOOTER: cho phép page override toàn bộ footer qua slot="footer" -->
+{Astro.slots.has('footer') && <slot name="footer" />}
+{!Astro.slots.has('footer') && (
 <footer class="sp-chat-footer">
   <div class="sp-chat-footer__inner">
     <div class="sp-chat-footer__text">
@@ -280,6 +282,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 </footer>
+)}
 
 <!-- MOBILE STICKY CTA -->
 <div class="sp-mobile-cta">

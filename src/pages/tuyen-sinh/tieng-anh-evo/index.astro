@@ -3,6 +3,17 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
 import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
 ---
 
+<script is:inline>
+  // Tag body for page-scoped styling + clear stale form-submitted flag
+  // (so returning visitors can still fill the test-registration form on this page)
+  (function(){
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.add('ev-evolution-page');
+      try { localStorage.removeItem('va_form_submitted'); } catch(_){}
+    }
+  })();
+</script>
+
 <SalesPageLayout
   title="Evolution English 2026 — Một Nửa Thời Gian, Một Nửa Chi Phí | Trường Việt Anh"
   description="Evolution English mùa hè 2026: 6 triệu/khóa 10 tuần · 5 ngày/tuần · ~15 bé/lớp · cam kết tăng 1 cấp Cambridge bằng văn bản — nếu không hoàn 100% học phí."
@@ -12,11 +23,13 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   programCode="tieng-anh-evo"
   schoolLevel="tieu-hoc"
   heroVariant="white-form"
+  logoSrc="/logo-vietanh.webp"
+  logoAlt="Trường Việt Anh — Đào tạo học sinh giỏi chuyên Anh"
 >
 
-  <!-- ═══ HERO — VSL + Form ═══ -->
+  <!-- ═══ HERO — Text trái · VSL phải ═══ -->
   <Fragment slot="hero">
-    <div class="mn-hero ev-hero-vsl">
+    <div class="mn-hero ev-hero-text">
       <h1>
         Một Nửa Thời Gian —<br>
         <span class="mn-hl">Một Nửa Chi Phí</span>
@@ -26,6 +39,10 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         90% gia đình đang lãng phí 90% thời gian và tiền bạc để nâng cấp tiếng Anh của con vì không biết điều này — và giải pháp với <strong>thời gian cực ngắn, chi phí cực thấp</strong>.
       </p>
 
+      <a href="#sp-form1" class="ev-hero-cta">📝 Đăng ký Test Cambridge YLE miễn phí →</a>
+    </div>
+
+    <div class="ev-hero-video-wrap">
       <div class="ev-hero-video">
         <iframe
           src="https://drive.google.com/file/d/1D5sBMoi9izCn43o4k9P_JlYuCZ4xawyu/preview"
@@ -36,19 +53,6 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         ></iframe>
       </div>
     </div>
-
-    <div class="mn-hero__form" id="mn-hero-form">
-      <span class="mn-hero__form-eyebrow">🎯 Kiểm tra trình độ MIỄN PHÍ</span>
-      <h2>Đăng Ký Test Cambridge YLE 15 Phút</h2>
-      <p class="mn-hero__form-sub">Cô giáo trao đổi với con 15 phút — biết con đang ở đâu trên bản đồ Starters → Movers → Flyers. Hoàn toàn miễn phí, không bắt buộc đăng ký Evolution.</p>
-      <LeadFormTwoStepEmailFirst
-        formId="evolution-hero"
-        funnelCode="sales-tieng-anh-evo-hero"
-        schoolLevel="tieu-hoc"
-        submitText="Đăng ký kiểm tra trình độ miễn phí →"
-        redirectUrl="/cam-on/?source=tieng-anh-evo-hero"
-      />
-    </div>
   </Fragment>
 
   <!-- ═══ PAIN — Ba con đường ═══ -->
@@ -57,68 +61,54 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     <h2>Tại Sao 5 Năm Học Tiếng Anh — Con Vẫn Không Đạt Flyers Ở Lớp 5?</h2>
     <p>Cambridge YLE chia 3 cấp: <strong>Starters (100 giờ) → Movers (175 giờ) → Flyers (250 giờ)</strong> — chuẩn của Cambridge Assessment. Đích đến: <strong>Flyers ở lớp 5</strong>. Câu hỏi không phải <em>"học ở đâu"</em> — mà là <em>"con đường nào đưa con đến đó với chi phí và thời gian hợp lý nhất?"</em></p>
 
-    <p class="ev-paths-note">📌 <em>3 thẻ bên dưới chỉ tính chi phí và thời gian theo năm — không tính trọn gói.</em></p>
+    <p class="ev-paths-note">📌 <em>So sánh chi phí và thời gian cần thiết để con tăng 1 cấp Cambridge.</em></p>
 
     <div class="ev-paths-grid">
-      <div class="ev-path-card ev-path-card--bad">
+      <div class="ev-path-card ev-path-card--blue">
         <div class="ev-path-head">
           <span class="ev-path-num">ĐƯỜNG 1</span>
-          <strong>Trường công TATC + Cambridge ngoài</strong>
+          <strong>Trường công TATC + học thêm</strong>
         </div>
-        <ul class="ev-path-list">
-          <li>📚 Học phí TATC: <b>~150k/tháng × 9 tháng × 5 năm = 6,75 triệu</b></li>
-          <li>📕 Học thêm Cambridge ngoài: <b>~10tr/năm × 5 năm = 50 triệu</b></li>
-          <li>👥 Lớp đông 35–45 HS · giờ học không đủ cường độ</li>
-          <li>⚠️ Nhiều HS sau 5 năm <b>vẫn chưa đạt Flyers</b></li>
-        </ul>
-        <div class="ev-path-total ev-path-total--bad">
-          <span>Tổng 5 năm:</span>
-          <strong>~57 triệu</strong>
-          <em>KHÔNG ĐẢM BẢO đạt Flyers</em>
+        <div class="ev-path-total ev-path-total--blue">
+          <span>Chi phí · Thời gian:</span>
+          <strong>24 triệu / 2 năm</strong>
+          <em>KHÔNG CHẮC CHẮN</em>
         </div>
       </div>
 
-      <div class="ev-path-card ev-path-card--bad">
+      <div class="ev-path-card ev-path-card--blue">
         <div class="ev-path-head">
           <span class="ev-path-num">ĐƯỜNG 2</span>
-          <strong>Trung tâm hàng đầu (ILA · Apollo · VUS)</strong>
+          <strong>Trung tâm hàng đầu</strong>
         </div>
-        <ul class="ev-path-list">
-          <li>💸 Học phí: <b>~20 triệu/khóa 4 tháng (66–108 giờ)</b></li>
-          <li>🕐 Cường độ: 2 buổi/tuần × 1,5h — học cách quãng</li>
-          <li>📊 <b>Cần ~2 khóa để tăng 1 cấp</b> — vẫn không chắc chắn</li>
-          <li>💰 5 năm liên tục: <b>~100–150 triệu</b></li>
-        </ul>
-        <div class="ev-path-total ev-path-total--bad">
-          <span>Tổng 5 năm:</span>
-          <strong>100–150 triệu</strong>
-          <em>VẪN KHÔNG CHẮC CHẮN đạt Flyers</em>
+        <div class="ev-path-total ev-path-total--blue">
+          <span>Chi phí · Thời gian:</span>
+          <strong>40 triệu / 1 năm</strong>
+          <em>KHÔNG CHẮC CHẮN</em>
         </div>
       </div>
 
-      <div class="ev-path-card ev-path-card--good">
-        <div class="ev-path-best">⭐ ĐẦU TIÊN TẠI TP.HCM</div>
+      <div class="ev-path-card ev-path-card--red">
         <div class="ev-path-head">
-          <span class="ev-path-num ev-path-num--good">ĐƯỜNG 3</span>
-          <strong>Evolution English — Trường Việt Anh</strong>
+          <span class="ev-path-num ev-path-num--red">ĐƯỜNG 3</span>
+          <strong>Evolution English</strong>
         </div>
-        <ul class="ev-path-list">
-          <li>☀️ <b>6 triệu/khóa 10 tuần (100 giờ)</b> · 5 ngày/tuần mùa hè</li>
-          <li>👦 Sĩ số trung bình <b>~15 bé/lớp</b> · GV biết tên từng bé</li>
-          <li>📜 <b>Cam kết bằng văn bản</b>: tăng 1 cấp/khóa hoặc hoàn 100%</li>
-          <li>🏆 3 mùa hè (lớp 1→4) → <b>đạt Flyers từ lớp 5</b></li>
-        </ul>
-        <div class="ev-path-total ev-path-total--good">
-          <span>Tổng 3 mùa hè:</span>
-          <strong>~13,5 triệu</strong>
-          <em>CAM KẾT BẰNG VĂN BẢN</em>
+        <div class="ev-path-total ev-path-total--red">
+          <span>Chi phí · Thời gian:</span>
+          <strong>6 triệu / 10 tuần</strong>
+          <em>CÓ CAM KẾT CHẮC CHẮN</em>
         </div>
       </div>
     </div>
 
-    <p class="ev-pain-conclusion">
-      So với <strong>Đường 1: tiết kiệm ~43 triệu (76%)</strong> · So với <strong>Đường 2: tiết kiệm ~86 triệu (87%)</strong>. Đó là lý do chúng tôi gọi chương trình Evolution English là <strong>"Một nửa thời gian — một nửa chi phí"</strong>.
-    </p>
+    <div class="ev-pain-conclusion">
+      <p class="ev-conclusion-title">Để con tăng 1 cấp Cambridge:</p>
+      <ul class="ev-conclusion-list">
+        <li>So với <strong>Đường 1</strong>: Evolution tiết kiệm <b>18 triệu (75% chi phí)</b> và rút ngắn <b>~21 tháng (90% thời gian)</b>.</li>
+        <li>So với <strong>Đường 2</strong>: Evolution tiết kiệm <b>34 triệu (85% chi phí)</b> và rút ngắn <b>~9 tháng (80% thời gian)</b>.</li>
+      </ul>
+      <p class="ev-conclusion-tag">Đó là lý do chúng tôi gọi Evolution English là <strong>"Một nửa thời gian — một nửa chi phí"</strong>.</p>
+    </div>
   </div>
 
   <!-- ═══ FEATURES — 6 USP ═══ -->
@@ -160,13 +150,13 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     </div>
   </div>
 
-  <!-- ═══ TEXT + IMAGE — Cách học + dịch vụ tự chọn ═══ -->
+  <!-- ═══ CÁCH HỌC — full-width centered ═══ -->
   <div slot="textimg">
-    <div class="sp-textimg__text">
-      <p class="sp-textimg__eyebrow">CÁCH HỌC EVOLUTION ENGLISH</p>
-      <h2>Sáng 8h–10h Tiếng Anh · Sĩ Số Trung Bình ~15 Bé/Lớp</h2>
-      <p>Lõi chương trình là <strong>2 tiếng tiếng Anh Cambridge YLE mỗi sáng</strong> — 5 ngày/tuần, 10 tuần. Phương pháp đồng đều 4 kỹ năng nghe–nói–đọc–viết. Cuối khóa con thi YLE chính thức để Cambridge Assessment chấm.</p>
-      <p>Phụ huynh đi làm cả ngày? Việt Anh có <strong>các dịch vụ cộng thêm tùy chọn</strong> — đăng ký theo nhu cầu, không bắt buộc:</p>
+    <div class="ev-howlearn">
+      <p class="sp-textimg__eyebrow ev-howlearn__eyebrow">CÁCH HỌC EVOLUTION ENGLISH</p>
+      <h2 class="ev-howlearn__title">Sáng 8h–10h Tiếng Anh · Sĩ Số Trung Bình ~15 Bé/Lớp</h2>
+      <p class="ev-howlearn__lead">Lõi chương trình là <strong>2 tiếng tiếng Anh Cambridge YLE mỗi sáng</strong> — 5 ngày/tuần, 10 tuần. Phương pháp đồng đều 4 kỹ năng nghe–nói–đọc–viết. Cuối khóa con thi YLE chính thức để Cambridge Assessment chấm.</p>
+      <p class="ev-howlearn__lead">Phụ huynh đi làm cả ngày? Việt Anh có <strong>các dịch vụ cộng thêm tùy chọn</strong> — đăng ký theo nhu cầu, không bắt buộc:</p>
       <ul class="ev-addons">
         <li>🍱 <b>Ăn trưa</b> — thực đơn cân bằng dinh dưỡng</li>
         <li>😴 <b>Nghỉ trưa</b> — phòng nghỉ máy lạnh</li>
@@ -174,13 +164,6 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         <li>⚽ <b>Thể thao</b> — bơi · bóng đá · cầu lông · võ thuật</li>
         <li>🚌 <b>Xe đưa đón</b> — theo cơ sở, tuyến phù hợp</li>
       </ul>
-    </div>
-    <div class="sp-textimg__img">
-      <img src="https://media.truongvietanh.com/images/vui-ve-07.webp" alt="Học sinh Evolution English Trường Việt Anh học Cambridge YLE" width="600" height="400" loading="lazy" style="border-radius:16px;" />
-      <div class="ev-img-badge">
-        <span>100h</span>
-        <p>Cường độ học đủ chuẩn Cambridge cho 1 cấp Starters trong 1 mùa hè duy nhất</p>
-      </div>
     </div>
   </div>
 
@@ -246,7 +229,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
           <li>Báo cáo tiến độ hàng tuần</li>
           <li>Cam kết tăng 1 cấp Cambridge bằng văn bản</li>
         </ul>
-        <a href="#mn-hero-form" class="ev-pricing-cta ev-pricing-cta--outline">Tìm hiểu thêm →</a>
+        <a href="#sp-form1" class="ev-pricing-cta ev-pricing-cta--outline">Tìm hiểu thêm →</a>
       </div>
       <div class="sp-pricing-col sp-pricing-col--promo">
         <div class="ev-popular-badge">⭐ ĐĂNG KÝ TRONG THÁNG 5</div>
@@ -259,7 +242,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
           <li>✅ Tự chọn ăn trưa · tự học chiều · CLB thể thao · xe đưa đón</li>
           <li>✅ Bảng giá <strong>thống nhất 3 cơ sở</strong>: TP.HCM · Cần Giuộc · Rạch Giá</li>
         </ul>
-        <a href="#mn-hero-form" class="ev-pricing-cta ev-pricing-cta--primary">Giữ suất Evolution ngay →</a>
+        <a href="#sp-form1" class="ev-pricing-cta ev-pricing-cta--primary">Giữ suất Evolution ngay →</a>
       </div>
     </div>
     <p class="sp-pricing__note">📞 Hết tháng 5 giá trở lại 6 triệu · Lớp đầy thì đầy — Liên hệ <strong>0916 961 409</strong> để chọn cơ sở.</p>
@@ -270,7 +253,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     <h2>Đừng Để Mùa Hè 2026 Là Một Mùa Hè Lãng Phí</h2>
     <p>Tháng 6 đến · Con thức dậy không có nơi để đến · Sáng dậy muộn xem điện thoại · Tháng 9 quên nửa số từ. Hoặc — con đi 10 tuần Evolution và lên 1 cấp Cambridge thật.</p>
     <div class="ev-cta-actions">
-      <a href="#mn-hero-form" class="sp-cta-btn">Đăng ký test miễn phí ngay →</a>
+      <a href="#sp-form1" class="sp-cta-btn">Đăng ký test miễn phí ngay →</a>
       <a href="tel:0916961409" class="ev-cta-phone">📞 Gọi 0916 961 409</a>
     </div>
   </div>
@@ -341,136 +324,143 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
 </SalesPageLayout>
 
 <style is:global>
-/* ── Evolution English custom styles ── */
+/* ────────────────────────────────────────────────────────────────
+   Evolution English page — scoped to .ev-evolution-page only
+   ──────────────────────────────────────────────────────────────── */
 
-/* BODY TEXT scale */
-.mn-hero__lead { font-size: 1.125rem !important; line-height: 1.7 !important; }
-.ev-vp span { font-size: 0.95rem !important; line-height: 1.5 !important; }
-.sp-pain p, .sp-pain__inner > p { font-size: 1.0625rem !important; line-height: 1.75 !important; }
-.sp-feat-card p, .sp-features__sub { font-size: 1rem !important; line-height: 1.7 !important; }
-.ev-quote-text { font-size: 1.05rem !important; line-height: 1.8 !important; }
-.ev-quote-author span { font-size: 0.9rem !important; }
-.sp-faq-answer { font-size: 1.0625rem !important; line-height: 1.8 !important; }
-.sp-faq-item summary { font-size: 1.0625rem !important; }
-.sp-pricing-col__features li { font-size: 1rem !important; line-height: 1.65 !important; }
-.sp-stat__label { font-size: 1rem !important; line-height: 1.6 !important; }
+/* TYPOGRAPHY: red titles (≥24px) + body min 16px */
+.ev-evolution-page :is(.sp-pain, .sp-features, .sp-textimg, .sp-stats, .sp-quote, .sp-pricing, .sp-cta-block, .sp-faq, .sp-form-block) h2 {
+  color: #dc2626 !important;
+  font-size: clamp(1.5rem, 2.8vw, 2rem) !important;
+}
+.ev-evolution-page :is(.sp-feat-card, .ev-howlearn) h3,
+.ev-evolution-page .sp-feat-card h3 {
+  color: #dc2626 !important;
+  font-size: 1.5rem !important;
+}
+.ev-evolution-page .sp-faq-item summary {
+  color: #dc2626 !important;
+  font-size: 1rem !important;
+}
+.ev-evolution-page .sp-faq-item[open] summary { color: #b91c1c !important; }
+.ev-evolution-page .sp-pain__eyebrow,
+.ev-evolution-page .sp-features__eyebrow,
+.ev-evolution-page .sp-textimg__eyebrow,
+.ev-evolution-page .sp-stats__eyebrow,
+.ev-evolution-page .sp-quote__eyebrow,
+.ev-evolution-page .sp-pricing__eyebrow,
+.ev-evolution-page .sp-faq__eyebrow {
+  color: #dc2626 !important;
+  font-size: 1rem !important;
+}
 
-/* HERO — VSL embedded */
-.ev-hero-vsl h1 {
-  margin-bottom: 0.85rem !important;
+/* BODY min 16px */
+.ev-evolution-page p,
+.ev-evolution-page li,
+.ev-evolution-page .sp-pain p,
+.ev-evolution-page .sp-features__sub,
+.ev-evolution-page .sp-feat-card p,
+.ev-evolution-page .sp-textimg p,
+.ev-evolution-page .sp-stat__label,
+.ev-evolution-page .sp-quote__text,
+.ev-evolution-page .ev-quote-text,
+.ev-evolution-page .ev-quote-author span,
+.ev-evolution-page .sp-pricing-col__features li,
+.ev-evolution-page .sp-faq-answer,
+.ev-evolution-page .ev-addons li,
+.ev-evolution-page .ev-path-list li,
+.ev-evolution-page .ev-conclusion-list li,
+.ev-evolution-page .mn-hero__lead,
+.ev-evolution-page .ev-paths-note {
+  font-size: 1rem !important;
+  line-height: 1.7 !important;
 }
-.ev-hero-vsl .mn-hero__lead {
-  margin-bottom: 1.25rem !important;
-  font-size: 1.05rem !important;
+.ev-evolution-page .sp-faq-answer { font-size: 1.0625rem !important; }
+.ev-evolution-page .ev-quote-text { font-size: 1.0625rem !important; }
+
+/* HERO LAYOUT: text left (smaller) · VSL right (bigger) */
+.ev-evolution-page .sp-hero--white .sp-hero__inner {
+  max-width: 1240px !important;
+  gap: 2.5rem !important;
+  grid-template-columns: 0.85fr 1.15fr !important;
 }
-.ev-hero-video {
+.ev-evolution-page .sp-hero--white {
+  padding: 3rem 1.5rem !important;
+  background-color: #000050 !important;
+}
+.ev-evolution-page .sp-hero--white .sp-hero__overlay {
+  background: linear-gradient(160deg, rgba(0,0,70,0.78) 0%, rgba(0,0,128,0.7) 50%, rgba(0,0,50,0.82) 100%) !important;
+}
+.ev-evolution-page .ev-hero-text h1 {
+  font-size: clamp(2rem, 3.6vw, 2.6rem) !important;
+  margin-bottom: 1rem !important;
+  color: #fff !important;
+}
+.ev-evolution-page .ev-hero-text h1 .mn-hl { color: #ffff00 !important; }
+.ev-evolution-page .ev-hero-text .mn-hero__lead {
+  font-size: 1.0625rem !important;
+  line-height: 1.7 !important;
+  margin-bottom: 1.5rem !important;
+  color: rgba(255,255,255,0.92) !important;
+}
+.ev-evolution-page .ev-hero-text .mn-hero__lead strong { color: #ffff00 !important; }
+
+/* Hero CTA button (replaces removed form card) */
+.ev-evolution-page .ev-hero-cta {
+  display: inline-block;
+  background: linear-gradient(135deg, #ffff00 0%, #ffd000 100%);
+  color: #000080;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  padding: 1rem 1.75rem;
+  border-radius: 10px;
+  text-decoration: none;
+  box-shadow: 0 8px 24px rgba(255,255,0,0.45);
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+.ev-evolution-page .ev-hero-cta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(255,255,0,0.6);
+}
+
+/* VSL on right side — bigger */
+.ev-evolution-page .ev-hero-video-wrap {
+  display: flex;
+  align-items: center;
+}
+.ev-evolution-page .ev-hero-video {
   position: relative;
   width: 100%;
   padding-top: 56.25%;
-  border-radius: 14px;
+  border-radius: 16px;
   overflow: hidden;
   background: #000;
-  box-shadow: 0 18px 50px rgba(0,0,0,0.45);
+  box-shadow: 0 22px 60px rgba(0,0,0,0.55);
 }
-.ev-hero-video iframe {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  border: 0;
+.ev-evolution-page .ev-hero-video iframe {
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
 }
 
-/* HERO */
-.sp-hero--white {
-  padding: 3rem 1.5rem 3rem !important;
-  background-color: #000050 !important;
-}
-.sp-hero--white .sp-hero__bg {
-  background-size: cover !important;
-  background-position: center 25% !important;
-  filter: saturate(1.1);
-}
-.sp-hero--white .sp-hero__overlay {
-  background: linear-gradient(160deg, rgba(0,0,70,0.72) 0%, rgba(0,0,128,0.65) 50%, rgba(0,0,50,0.78) 100%) !important;
-}
-.sp-hero--white .sp-hero__inner {
-  max-width: 1240px !important;
-  gap: 3rem !important;
-}
-@media (max-width: 900px) {
-  .sp-hero--white .sp-hero__bg { background-position: center top !important; }
-}
-
-/* Urgency banner */
-.ev-urgency {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: rgba(220,38,38,0.12);
-  border: 1px solid rgba(220,38,38,0.3);
-  color: #fff;
-  font-size: 0.88rem;
-  font-weight: 600;
-  padding: 0.4rem 0.9rem;
-  border-radius: 20px;
-  margin-bottom: 1.25rem;
-  animation: ev-pulse 2s ease-in-out infinite;
-}
-.ev-urgency__dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  background: #ef4444;
-  flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(239,68,68,0.3);
-  animation: ev-dot-pulse 1.5s ease-in-out infinite;
-}
-@keyframes ev-dot-pulse {
-  0%,100% { box-shadow: 0 0 0 3px rgba(239,68,68,0.3); }
-  50%      { box-shadow: 0 0 0 7px rgba(239,68,68,0.05); }
-}
-@keyframes ev-pulse { 0%,100%{opacity:1} 50%{opacity:.92} }
-
-/* Value props in hero */
-.ev-value-props {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin: 1.25rem 0 1.5rem;
-}
-.ev-vp {
-  display: flex;
-  align-items: flex-start;
-  gap: 0.75rem;
-  background: rgba(255,255,255,0.07);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 10px;
+/* Paths note */
+.ev-evolution-page .ev-paths-note {
+  background: rgba(220,38,38,0.06);
+  border-left: 3px solid #dc2626;
   padding: 0.75rem 1rem;
-}
-.ev-vp__icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 0.1rem; }
-.ev-vp div { display: flex; flex-direction: column; gap: 0.15rem; }
-.ev-vp strong { color: #ffff00; font-size: 0.95rem; font-weight: 700; }
-.ev-vp span { color: rgba(255,255,255,0.78); font-size: 0.85rem; line-height: 1.4; }
-
-/* Paths note above grid */
-.ev-paths-note {
-  background: rgba(0,0,128,0.05);
-  border-left: 3px solid #000080;
-  padding: 0.7rem 1rem;
   border-radius: 6px;
   margin: 1.25rem 0 0;
-  font-size: 0.95rem;
   color: #475569;
 }
-.ev-paths-note em { font-style: normal; color: #1a1a2e; }
+.ev-evolution-page .ev-paths-note em { font-style: normal; color: #1a1a2e; }
 
-/* 3 paths grid */
-.ev-paths-grid {
+/* 3 paths grid (simplified) */
+.ev-evolution-page .ev-paths-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
   margin: 1.5rem 0 1.5rem;
 }
-.ev-path-card {
+.ev-evolution-page .ev-path-card {
   background: #fff;
   border: 1.5px solid #e2e8f0;
   border-radius: 14px;
@@ -479,288 +469,236 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   display: flex;
   flex-direction: column;
 }
-.ev-path-card--bad { background: #fff8f6; border-color: #fad0c4; }
-.ev-path-card--good {
-  background: linear-gradient(160deg, #f0faf4 0%, #e8f5ee 100%);
-  border: 2px solid #16a34a;
-  box-shadow: 0 8px 28px rgba(22,163,74,0.18);
+.ev-evolution-page .ev-path-card--blue {
+  background: #eff6ff;
+  border-color: #bfdbfe;
 }
-.ev-path-best {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #16a34a;
-  color: #fff;
-  font-size: 0.78rem;
-  font-weight: 800;
-  padding: 0.35rem 0.85rem;
-  border-radius: 50px;
-  letter-spacing: 0.04em;
-  white-space: nowrap;
+.ev-evolution-page .ev-path-card--red {
+  background: #fff;
+  border: 2.5px solid #dc2626;
+  box-shadow: 0 10px 32px rgba(220,38,38,0.18);
 }
-.ev-path-head { margin-bottom: 0.85rem; }
-.ev-path-num {
+.ev-evolution-page .ev-path-head { margin-bottom: 0.85rem; }
+.ev-evolution-page .ev-path-num {
   display: inline-block;
-  background: rgba(220,38,38,0.12);
-  color: #b91c1c;
-  font-size: 0.78rem;
+  background: rgba(59,130,246,0.15);
+  color: #1d4ed8;
+  font-size: 0.95rem;
   font-weight: 800;
-  padding: 0.2rem 0.6rem;
+  padding: 0.25rem 0.7rem;
   border-radius: 6px;
-  margin-bottom: 0.5rem;
-  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.04em;
 }
-.ev-path-num--good {
-  background: rgba(22,163,74,0.15);
-  color: #15803d;
+.ev-evolution-page .ev-path-num--red {
+  background: rgba(220,38,38,0.12);
+  color: #dc2626;
 }
-.ev-path-head strong {
+.ev-evolution-page .ev-path-head strong {
   display: block;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.05rem;
+  font-size: 1.25rem;
   font-weight: 800;
-  color: #000080;
+  color: #1d4ed8;
   line-height: 1.3;
 }
-.ev-path-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 1rem;
-  flex: 1;
+.ev-evolution-page .ev-path-card--red .ev-path-head strong {
+  color: #dc2626;
 }
-.ev-path-list li {
-  font-size: 0.95rem;
-  line-height: 1.55;
-  color: #475569;
-  padding: 0.45rem 0;
-  border-bottom: 1px dashed rgba(0,0,0,0.05);
-}
-.ev-path-list li:last-child { border-bottom: none; }
-.ev-path-list b { color: #1a1a2e; }
-.ev-path-total {
+.ev-evolution-page .ev-path-total {
   margin-top: auto;
-  padding: 0.85rem 1rem;
+  padding: 1rem 1rem;
   border-radius: 10px;
   text-align: center;
 }
-.ev-path-total--bad {
-  background: #fef2f2;
-  border: 1px dashed #fca5a5;
+.ev-evolution-page .ev-path-total--blue {
+  background: #fff;
+  border: 1.5px dashed #bfdbfe;
 }
-.ev-path-total--bad strong {
+.ev-evolution-page .ev-path-total--blue strong {
   display: block;
   font-family: 'Montserrat', sans-serif;
   font-size: 1.45rem;
   font-weight: 900;
-  color: #b91c1c;
-  line-height: 1;
-  margin: 0.2rem 0 0.4rem;
+  color: #1d4ed8;
+  line-height: 1.15;
+  margin: 0.3rem 0 0.4rem;
 }
-.ev-path-total--bad em {
+.ev-evolution-page .ev-path-total--blue em {
   display: block;
   font-style: normal;
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   font-weight: 700;
-  color: #dc2626;
-  letter-spacing: 0.04em;
+  color: #475569;
+  letter-spacing: 0.03em;
 }
-.ev-path-total--bad span { font-size: 0.85rem; color: #94a3b8; }
-.ev-path-total--good {
-  background: #fff;
-  border: 2px solid #16a34a;
+.ev-evolution-page .ev-path-total--blue span { font-size: 0.95rem; color: #64748b; }
+.ev-evolution-page .ev-path-total--red {
+  background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+  border: 2px solid #dc2626;
 }
-.ev-path-total--good strong {
+.ev-evolution-page .ev-path-total--red strong {
   display: block;
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.7rem;
+  font-size: 1.65rem;
   font-weight: 900;
-  color: #15803d;
-  line-height: 1;
-  margin: 0.2rem 0 0.4rem;
+  color: #dc2626;
+  line-height: 1.15;
+  margin: 0.3rem 0 0.4rem;
 }
-.ev-path-total--good em {
+.ev-evolution-page .ev-path-total--red em {
   display: block;
   font-style: normal;
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   font-weight: 800;
-  color: #15803d;
-  letter-spacing: 0.04em;
+  color: #dc2626;
+  letter-spacing: 0.03em;
 }
-.ev-path-total--good span { font-size: 0.85rem; color: #475569; }
-.ev-pain-conclusion {
-  background: #fffbf0;
-  border-left: 4px solid #ffff00;
-  padding: 1rem 1.25rem;
-  border-radius: 8px;
-  margin-top: 1.5rem;
-  font-size: 1.0625rem;
-  line-height: 1.7;
-  color: #475569;
-}
-.ev-pain-conclusion strong { color: #000080; }
+.ev-evolution-page .ev-path-total--red span { font-size: 0.95rem; color: #475569; }
 
-/* Schedule */
-.ev-schedule {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin: 1rem 0;
-}
-.ev-sch-item {
-  display: grid;
-  grid-template-columns: 110px 1fr;
-  gap: 0.85rem;
-  align-items: flex-start;
-  padding: 0.65rem 0.85rem;
-  border-radius: 8px;
-  background: #f8fafc;
-  border-left: 3px solid #e2e8f0;
-}
-.ev-sch-item--core {
-  background: linear-gradient(135deg, #fffbe6 0%, #fff8d4 100%);
-  border-left-color: #ffff00;
-}
-.ev-sch-time {
-  font-family: 'Montserrat', sans-serif;
-  font-size: 0.78rem;
-  font-weight: 800;
-  color: #000080;
-  letter-spacing: 0.02em;
-  padding-top: 0.15rem;
-}
-.ev-sch-content strong {
-  display: block;
-  font-size: 0.98rem;
-  color: #1a1a2e;
-  margin-bottom: 0.2rem;
-}
-.ev-sch-content p {
-  font-size: 0.88rem;
-  color: #64748b;
-  line-height: 1.5;
-  margin: 0;
-}
-.ev-schedule-note {
-  font-size: 0.85rem;
-  color: #94a3b8;
-  font-style: italic;
-  margin-top: 0.85rem;
-}
-.ev-img-badge {
-  position: relative;
-  margin-top: -3rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
-  background: #ffff00;
+/* Conclusion under paths */
+.ev-evolution-page .ev-pain-conclusion {
+  background: #fff;
+  border: 2px solid #fee2e2;
   border-radius: 12px;
-  padding: 0.85rem 1.1rem;
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.18);
-  z-index: 2;
+  padding: 1.25rem 1.5rem;
+  margin-top: 1.5rem;
 }
-.ev-img-badge span {
+.ev-evolution-page .ev-conclusion-title {
   font-family: 'Montserrat', sans-serif;
-  font-size: 1.85rem;
-  font-weight: 900;
-  color: #000080;
-  line-height: 1;
-  flex-shrink: 0;
+  font-weight: 800;
+  color: #dc2626 !important;
+  font-size: 1.0625rem !important;
+  margin: 0 0 0.85rem;
 }
-.ev-img-badge p {
-  font-size: 0.82rem;
-  color: #000080;
-  line-height: 1.45;
-  margin: 0;
-  font-weight: 600;
-}
-
-/* Add-on services list */
-.ev-addons {
+.ev-evolution-page .ev-conclusion-list {
   list-style: none;
   padding: 0;
-  margin: 0.85rem 0 0;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.5rem;
+  margin: 0 0 0.85rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
-.ev-addons li {
-  background: #f8fafc;
-  border-left: 3px solid #ffff00;
-  padding: 0.65rem 0.9rem;
+.ev-evolution-page .ev-conclusion-list li {
+  padding: 0.65rem 0.85rem;
+  background: #fef2f2;
+  border-left: 3px solid #dc2626;
   border-radius: 6px;
-  font-size: 0.95rem;
-  line-height: 1.5;
   color: #1a1a2e;
 }
-.ev-addons b { color: #000080; }
+.ev-evolution-page .ev-conclusion-list b { color: #dc2626; font-weight: 800; }
+.ev-evolution-page .ev-conclusion-tag {
+  text-align: center;
+  font-size: 1.05rem !important;
+  margin: 0.5rem 0 0;
+  color: #1a1a2e !important;
+}
+.ev-evolution-page .ev-conclusion-tag strong { color: #dc2626; }
+
+/* Cách học — full-width centered */
+.ev-evolution-page .sp-textimg__inner {
+  grid-template-columns: 1fr !important;
+}
+.ev-evolution-page .ev-howlearn {
+  max-width: 920px;
+  margin: 0 auto;
+  text-align: center;
+}
+.ev-evolution-page .ev-howlearn__eyebrow { text-align: center; }
+.ev-evolution-page .ev-howlearn__title {
+  text-align: center !important;
+  margin: 0 0 1.25rem;
+}
+.ev-evolution-page .ev-howlearn__lead {
+  font-size: 1.05rem !important;
+  text-align: center;
+  margin: 0 auto 1rem;
+  max-width: 760px;
+}
+.ev-evolution-page .ev-howlearn__lead strong { color: #dc2626; }
+.ev-evolution-page .ev-addons {
+  list-style: none;
+  padding: 0;
+  margin: 1rem auto 0;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.6rem;
+  max-width: 920px;
+}
+.ev-evolution-page .ev-addons li {
+  background: #fff;
+  border: 1.5px solid #fee2e2;
+  border-top: 3px solid #dc2626;
+  padding: 0.85rem 0.75rem;
+  border-radius: 8px;
+  text-align: center;
+  color: #1a1a2e;
+}
+.ev-evolution-page .ev-addons b { color: #dc2626; display: block; margin-bottom: 0.2rem; }
 
 /* Quote grid */
-.ev-quote-grid {
+.ev-evolution-page .ev-quote-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.25rem;
   margin-top: 1rem;
 }
-.ev-quote-grid--two {
+.ev-evolution-page .ev-quote-grid--two {
   grid-template-columns: repeat(2, 1fr);
   max-width: 920px;
   margin-left: auto;
   margin-right: auto;
 }
-.ev-quote-note {
+.ev-evolution-page .ev-quote-note {
   text-align: center;
   margin-top: 1.5rem;
-  font-size: 0.95rem;
   color: #64748b;
 }
-.ev-quote-note a { color: #000080; font-weight: 700; }
-.ev-quote-card {
+.ev-evolution-page .ev-quote-note a { color: #dc2626; font-weight: 700; }
+.ev-evolution-page .ev-quote-card {
   background: #fff;
   border-radius: 14px;
   padding: 1.5rem 1.35rem;
-  box-shadow: 0 4px 20px rgba(0,0,128,0.06);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   border: 1px solid #f1f5f9;
 }
-.ev-quote-author strong {
+.ev-evolution-page .ev-quote-author strong {
   display: block;
-  color: #000080;
-  font-size: 0.95rem;
+  color: #dc2626;
+  font-size: 1rem;
   margin-bottom: 0.15rem;
 }
-.ev-quote-author span {
-  color: #64748b;
-}
+.ev-evolution-page .ev-quote-author span { color: #64748b; }
 
-/* Pricing CTA buttons */
-.ev-pricing-cta {
+/* Pricing CTAs */
+.ev-evolution-page .ev-pricing-cta {
   display: inline-block;
   margin-top: 1rem;
-  padding: 0.7rem 1.25rem;
+  padding: 0.85rem 1.4rem;
   border-radius: 8px;
   font-weight: 700;
-  font-size: 0.95rem;
+  font-size: 1rem;
   text-decoration: none;
   transition: transform 0.15s, box-shadow 0.15s;
 }
-.ev-pricing-cta--outline {
+.ev-evolution-page .ev-pricing-cta--outline {
   background: transparent;
   border: 1.5px solid #94a3b8;
   color: #94a3b8;
 }
-.ev-pricing-cta--outline:hover { border-color: #475569; color: #475569; }
-.ev-pricing-cta--primary {
-  background: #ffff00;
-  color: #000080;
-  box-shadow: 0 4px 14px rgba(255,255,0,0.5);
+.ev-evolution-page .ev-pricing-cta--primary {
+  background: #dc2626;
+  color: #fff;
+  box-shadow: 0 4px 14px rgba(220,38,38,0.45);
 }
-.ev-pricing-cta--primary:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(255,255,0,0.65); }
-.ev-popular-badge {
-  background: #ffff00;
-  color: #000080;
-  font-size: 0.75rem;
+.ev-evolution-page .ev-pricing-cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(220,38,38,0.6);
+}
+.ev-evolution-page .ev-popular-badge {
+  background: #dc2626;
+  color: #fff;
+  font-size: 0.85rem;
   font-weight: 800;
   padding: 0.3rem 0.85rem;
   border-radius: 50px;
@@ -770,37 +708,47 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
 }
 
 /* CTA actions */
-.ev-cta-actions {
+.ev-evolution-page .ev-cta-actions {
   display: flex;
   gap: 0.75rem;
   justify-content: center;
   flex-wrap: wrap;
   margin-top: 1.25rem;
 }
-.ev-cta-phone {
+.ev-evolution-page .ev-cta-phone {
   display: inline-block;
   padding: 1rem 2rem;
   border-radius: 10px;
   font-size: 1.05rem;
   font-weight: 700;
   text-decoration: none;
-  background: rgba(0,0,128,0.08);
-  color: #000080;
-  border: 2px solid rgba(0,0,128,0.15);
+  background: rgba(220,38,38,0.08);
+  color: #dc2626;
+  border: 2px solid rgba(220,38,38,0.2);
   transition: all 0.2s;
 }
-.ev-cta-phone:hover { background: rgba(0,0,128,0.12); transform: translateY(-2px); }
+.ev-evolution-page .ev-cta-phone:hover { background: rgba(220,38,38,0.14); transform: translateY(-2px); }
+
+/* Mid-page form section heading red */
+.ev-evolution-page #sp-form1-card h2 { color: #dc2626 !important; }
+
+/* Logo nav: bigger to make brand clearer */
+.ev-evolution-page .sp-nav__logo { height: 56px !important; }
 
 /* Responsive */
 @media (max-width: 900px) {
-  .ev-paths-grid { grid-template-columns: 1fr; }
-  .ev-quote-grid,
-  .ev-quote-grid--two { grid-template-columns: 1fr; }
-  .ev-addons { grid-template-columns: 1fr; }
+  .ev-evolution-page .sp-hero--white .sp-hero__inner {
+    grid-template-columns: 1fr !important;
+    gap: 1.75rem !important;
+  }
+  .ev-evolution-page .ev-paths-grid { grid-template-columns: 1fr; }
+  .ev-evolution-page .ev-quote-grid,
+  .ev-evolution-page .ev-quote-grid--two { grid-template-columns: 1fr; }
+  .ev-evolution-page .ev-addons { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 640px) {
-  .ev-img-badge { margin-top: 0.5rem; margin-left: 0; margin-right: 0; }
-  .ev-hero-vsl h1 { font-size: 1.6rem !important; }
+  .ev-evolution-page .ev-addons { grid-template-columns: 1fr; }
+  .ev-evolution-page .ev-hero-text h1 { font-size: 1.7rem !important; }
 }
 </style>
 </content>

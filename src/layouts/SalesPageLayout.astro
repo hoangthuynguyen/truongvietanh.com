@@ -14,6 +14,8 @@ type Props = {
   schoolLevel?: string;
   noindex?: boolean;
   heroVariant?: 'classic' | 'white-form';
+  logoSrc?: string;
+  logoAlt?: string;
 };
 
 const {
@@ -26,6 +28,8 @@ const {
   schoolLevel = 'tieu-hoc',
   noindex = false,
   heroVariant = 'classic',
+  logoSrc = 'https://lh3.googleusercontent.com/d/1P5RQl9vQ8YCOQPL_Jn6L3Bzw9yepRY-7',
+  logoAlt = 'Trường Việt Anh',
 } = Astro.props;
 const heroClass = heroVariant === 'white-form' ? 'sp-hero sp-hero--white' : 'sp-hero';
 
@@ -139,7 +143,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <div class="sp-nav__inner">
     <div></div>
     <a href="/" class="sp-nav__brand">
-      <img src="https://lh3.googleusercontent.com/d/1P5RQl9vQ8YCOQPL_Jn6L3Bzw9yepRY-7" alt="Trường Việt Anh" class="sp-nav__logo" height="44" />
+      <img src={logoSrc} alt={logoAlt} class="sp-nav__logo" height="44" />
     </a>
     <div class="sp-nav__btns">
       <a href={`tel:${phoneClean}`} class="sp-btn sp-btn--gold">

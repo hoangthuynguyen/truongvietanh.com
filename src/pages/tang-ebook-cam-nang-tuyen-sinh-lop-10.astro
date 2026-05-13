@@ -197,11 +197,11 @@ const faqItems = [
   var obs=new MutationObserver(function(){
     var success=formEl.querySelector('.form-step[data-step="success"]');
     if(success && !success.hidden){
-      // Trigger direct download
-      var a=document.createElement('a');
-      a.href='/downloads/Ebook-Cam-Nang-Tuyen-Sinh-Lop-10.pdf';
-      a.download='Ebook-Cam-Nang-Tuyen-Sinh-Lop-10-VietAnh.pdf';
-      document.body.appendChild(a);a.click();a.remove();
+      var nameInput=formEl.querySelector('input[name="parent_name"]');
+      var n=nameInput?nameInput.value:'';
+      setTimeout(function(){
+        window.location.href='/tang-ebook-cam-nang-tuyen-sinh-lop-10/cam-on?name='+encodeURIComponent(n);
+      },1500);
       obs.disconnect();
     }
   });

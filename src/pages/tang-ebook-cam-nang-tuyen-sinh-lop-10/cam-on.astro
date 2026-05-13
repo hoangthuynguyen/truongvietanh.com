@@ -106,14 +106,8 @@ const zaloDeepLink = 'https://zalo.me/1678310120468101523?text=' + encodeURIComp
     var n = p.get('name');
     if (n) document.getElementById('parentName').textContent = ' ' + n.trim().split(/\s+/).pop();
 
-    // Auto-trigger download after 1.5s
-    var dlBtn = document.getElementById('dlBtn');
-    if (dlBtn && !sessionStorage.getItem('ebook_lop10_dl_done')) {
-      setTimeout(function(){
-        sessionStorage.setItem('ebook_lop10_dl_done', '1');
-        dlBtn.click();
-      }, 1500);
-    }
+    // Auto-download đã tắt theo yêu cầu — phụ huynh nhấn nút "Tải Ebook PDF ngay" để tải.
+    // Email GHL sẽ là kênh chính gửi file.
   })();
 </script>
 </body>

@@ -327,6 +327,11 @@ async function handleLeadSubmission(request, env) {
         if (data.source === 'squeeze-quiz-phuong-phap') tags.push('quiz-phuong-phap-giao-duc');
         if (data.source === 'squeeze-so-sanh-chi-phi') tags.push('so-sanh-chi-phi-truong');
         if (data.source === 'squeeze-so-sanh-thcs') tags.push('so-sanh-truong-thcs');
+        // Master tag cho funnel Ebook Cẩm Nang Tuyển Sinh Lớp 10 — trigger workflow LM-ebook-cam-nang-tuyen-sinh-lop-10 trong GHL
+        if (data.source === 'squeeze-ebook-tuyen-sinh-lop-10') {
+          tags.push('ebook-cam-nang-tuyen-sinh-lop-10');
+          tags.push('squeeze-thpt');
+        }
 
         // Chuỗi nuôi dưỡng chung 435 ngày — kết nối TẤT CẢ squeeze page vào 1 workflow
         const SQUEEZE_SOURCES = [
@@ -337,6 +342,7 @@ async function handleLeadSubmission(request, env) {
           'squeeze-so-sanh-thcs', 'squeeze-cam-nang-thpt', 'squeeze-du-hoc-lop10',
           'squeeze-50-truong-ielts', 'squeeze-oxford-cambridge-ib', 'squeeze-conversation-cards',
           'squeeze-checklist', 'squeeze-checklist-tieu-hoc',
+          'squeeze-ebook-tuyen-sinh-lop-10',
         ];
         if (data.source && SQUEEZE_SOURCES.includes(data.source)) {
           tags.push('nurture-435-ngay');

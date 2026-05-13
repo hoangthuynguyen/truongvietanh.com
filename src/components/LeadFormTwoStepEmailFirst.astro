@@ -527,9 +527,13 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   }
 
   // Helper function to show/hide form steps
+  // FIX: scope vào form (tránh xung đột nếu có data-step khác trong DOM),
+  // và so sánh string để 'success' không bị NaN khi parseInt
   function showStep(stepNumber) {
-    document.querySelectorAll('[data-step]').forEach(step => {
-      step.hidden = parseInt(step.getAttribute('data-step')) !== stepNumber;
+    if (!form) return;
+    const target = String(stepNumber);
+    form.querySelectorAll('[data-step]').forEach(step => {
+      step.hidden = step.getAttribute('data-step') !== target;
     });
     currentStep = stepNumber;
   }

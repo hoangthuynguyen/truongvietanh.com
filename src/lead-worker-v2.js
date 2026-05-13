@@ -210,7 +210,9 @@ async function sendToGHL(data, funnel, env) {
   // Để tag 'trai_he_2026' tự trigger workflow Lion_Camp_2026 (chỉ 1 chuỗi duy nhất).
   // Tránh lead nhận chuỗi email trùng (Lion_Camp_2026 + wf-sales-call-now/nurture).
   const isTraiHe = typeof data.funnel_code === 'string' && /^(search-)?trai-he-/.test(data.funnel_code);
-  const workflowId = isTraiHe
+  // Ebook tuyển sinh lớp 10: cùng pattern — tag 'ebook_tuyen_sinh_lop_10' trigger chuỗi nurture riêng
+  const isEbookLop10 = data.funnel_code === 'squeeze-ebook-tuyen-sinh-lop-10';
+  const workflowId = (isTraiHe || isEbookLop10)
     ? null
     : (funnel?.ghl_workflow_id || (data.lead_score >= 70 ? 'wf-sales-call-now' : 'wf-default-nurture'));
 
@@ -228,6 +230,10 @@ async function sendToGHL(data, funnel, env) {
       // Dùng để trigger workflow Lion_Camp_2026 trong GHL (lead magnet → nurture)
       // Lưu ý: GHL workflow listen tag 'trai_he_2026' (gạch dưới) — phải match đúng
       typeof data.funnel_code === 'string' && /^(search-)?trai-he-/.test(data.funnel_code) && 'trai_he_2026',
+      // Master tag cho funnel Ebook Cẩm Nang Tuyển Sinh Lớp 10 TP.HCM 2026–2027
+      // GHL workflow listen tag 'ebook_tuyen_sinh_lop_10' để trigger chuỗi nurture riêng
+      // (gửi ebook PDF + lịch sử điểm chuẩn + đề thi thử + invite tư vấn 1-1)
+      data.funnel_code === 'squeeze-ebook-tuyen-sinh-lop-10' && 'ebook_tuyen_sinh_lop_10',
     ].filter(Boolean),
     customFields: {
       utm_source: data.utm_source || '',

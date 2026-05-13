@@ -104,6 +104,13 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 .squeeze-form-section__badges{display:flex;align-items:center;justify-content:center;gap:.6rem;margin-top:1.25rem;flex-wrap:wrap}
 .squeeze-form-badge{display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:.35rem .8rem;border-radius:50px;font-size:.75rem;font-weight:500;color:rgba(255,255,255,.9)}
 @media(max-width:480px){.squeeze-form-section__inner{padding:1.5rem 1.15rem;border-radius:16px}.squeeze-form-section__heading{font-size:1.25rem}}
+/* Override: page-specific checklists/direct-dl khi nằm trong navy card → text trắng */
+.squeeze-form-section__inner .chon-checklist li{color:#fff !important;background:rgba(255,255,255,.08) !important;border-left-color:var(--nav-accent) !important}
+.squeeze-form-section__inner .chon-direct-dl{border-top-color:rgba(255,255,255,.2) !important}
+.squeeze-form-section__inner .chon-direct-dl p{color:rgba(255,255,255,.85) !important}
+.squeeze-form-section__inner .chon-direct-dl__btn{background:#fff !important;color:var(--nav-primary) !important;border-color:#fff !important}
+.squeeze-form-section__inner .chon-direct-dl__btn:hover{background:var(--nav-accent) !important;color:var(--nav-primary) !important;border-color:var(--nav-accent) !important}
+.squeeze-form-section__inner .chon-form-intro{text-align:center}
 
 /* ===== URGENCY BAR ===== */
 .squeeze-urgency{background:linear-gradient(90deg,#fff3dc 0%,#fff9ed 100%);border-top:2px solid var(--nav-accent);border-bottom:2px solid var(--nav-accent);padding:.85rem 1rem;text-align:center}

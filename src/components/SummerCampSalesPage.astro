@@ -9,7 +9,7 @@ const { page } = Astro.props;
 
 const canonicalUrl = `https://truongvietanh.com/${page.slug}`;
 const zaloHref = `https://zalo.me/${(page.hotline || '0916961409').replace(/\s/g, '').replace(/^0/, '84')}`;
-const thankYouHref = `/${page.slug}/cam-on`;
+const thankYouHref = '/cam-on';
 const savings = page.price_original && page.price_discounted ? page.price_original - page.price_discounted : 0;
 const discountPct = page.price_original && savings ? Math.round((savings / page.price_original) * 100) : 0;
 ---

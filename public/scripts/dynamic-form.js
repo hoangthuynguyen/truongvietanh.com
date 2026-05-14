@@ -212,15 +212,9 @@
       // Success
       localStorage.setItem('lead_submitted', '1');
 
-      if (config.successMode === 'redirect' && config.thankYouPage) {
-        const name = encodeURIComponent(payload.full_name || '');
-        window.location.href = `${config.thankYouPage}?name=${name}&funnel=${encodeURIComponent(config.funnelCode)}`;
-      } else {
-        // Inline success
-        form.style.display = 'none';
-        const success = wrapper.querySelector('.df-success');
-        if (success) success.hidden = false;
-      }
+      // Tất cả form đều redirect về 1 trang cảm ơn duy nhất
+      const name = encodeURIComponent(payload.full_name || payload.parent_name || '');
+      window.location.href = `/cam-on?name=${name}&funnel=${encodeURIComponent(config.funnelCode)}`;
     } catch (err) {
       console.error('[dynamic-form] Network error:', err);
       if (btn) { btn.disabled = false; btn.textContent = btn.dataset.original || 'Thử lại'; }

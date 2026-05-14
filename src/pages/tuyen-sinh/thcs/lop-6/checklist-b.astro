@@ -333,7 +333,7 @@ const grade = 'lop-6';
         window.dataLayer.push({event:'generate_lead',page_variant:V,funnel:P,school_level:'thcs',grade:'lop-6'});
         fetch(W,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)}).then(function(){showThankYou()}).catch(function(){showThankYou()});
       }
-      function showThankYou(){formContainer.style.display='none';thankYou.style.display='block'}
+      function showThankYou(){window.location.href='/cam-on?name='+encodeURIComponent(nameInput.value||'')}
       document.getElementById('btnStep1').onclick=handleStep1;
       document.getElementById('btnStep2').onclick=handleStep2Submit;
       emailInput.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();handleStep1()}});

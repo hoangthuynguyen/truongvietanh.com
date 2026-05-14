@@ -409,11 +409,9 @@ const quizId = `quiz-${funnelCode}`;
 
         showStep('success');
 
-        // Redirect to cam-on WITHOUT score — score sent to email only
-        var camOnUrl = root.dataset.camOnUrl;
-        var parentName = name.value;
+        // Redirect về 1 trang cảm ơn duy nhất /cam-on — score gửi qua email only
         setTimeout(function() {
-          window.location.href = camOnUrl + '?name=' + encodeURIComponent(parentName);
+          window.location.href = '/cam-on?name=' + encodeURIComponent(name.value);
         }, 1500);
       }).catch(function(err) {
         submitBtn.disabled = false;
@@ -421,7 +419,7 @@ const quizId = `quiz-${funnelCode}`;
         console.error('Quiz form error:', err);
         showStep('success');
         setTimeout(function() {
-          window.location.href = root.dataset.camOnUrl + '?name=' + encodeURIComponent(name.value);
+          window.location.href = '/cam-on?name=' + encodeURIComponent(name.value);
         }, 2000);
       });
     });

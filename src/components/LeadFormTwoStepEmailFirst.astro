@@ -486,7 +486,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   }
 </style>
 
-<script is:inline define:vars={{ formIdWithFunnel, funnelCode, redirectUrl }}>
+<script is:inline define:vars={{ formIdWithFunnel, funnelCode }}>
   const form = document.getElementById(formIdWithFunnel);
   if (!form) {
     console.error('Form not found:', formIdWithFunnel);
@@ -713,17 +713,11 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       console.error('Error submitting form:', error);
     }
 
-    // Nếu có redirectUrl → chuyển trang sau 1.5s (đủ để fetch hoàn thành)
-    if (redirectUrl) {
-      setTimeout(() => { window.location.href = redirectUrl; }, 1500);
-    } else {
-      // Reset form after 5 seconds (longer to let user read success info)
-      setTimeout(() => {
-        form.reset();
-        showStep(1);
-        formData = {};
-      }, 5000);
-    }
+    // Tất cả form đều redirect về 1 trang cảm ơn duy nhất /cam-on (delay 1.5s để fetch hoàn thành)
+    setTimeout(() => {
+      const nm = encodeURIComponent(formData.parent_name || '');
+      window.location.href = '/cam-on?name=' + nm + '&funnel=' + encodeURIComponent(funnelCode);
+    }, 1500);
   });
 
   // Reset form handler

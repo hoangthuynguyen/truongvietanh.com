@@ -302,12 +302,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 )}
 
-<script define:vars={{ source, funnelCode, schoolLevel, redirectUrl }}>
+<script define:vars={{ source, funnelCode, schoolLevel }}>
 (function(){
   var SRC = source;
   var FC  = funnelCode;
   var SL  = schoolLevel;
-  var REDIRECT = redirectUrl;
 
   if (localStorage.getItem('sq_' + SRC)) {
     var fa = document.getElementById('formArea');
@@ -382,7 +381,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       mode: 'cors'
     }).catch(function(){});
 
-    setTimeout(function(){ window.location.href = REDIRECT; }, 2000);
+    setTimeout(function(){ window.location.href = '/cam-on?name=' + encodeURIComponent(name); }, 2000);
   };
 
   var emailInput = document.getElementById('sq-email');

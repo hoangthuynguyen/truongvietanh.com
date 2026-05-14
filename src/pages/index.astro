@@ -1424,7 +1424,6 @@ const newsCards = [
     const form = document.getElementById('hero-lead-form');
     if (!form) return;
 
-    const successEl = form.parentElement?.querySelector('.hero-lead-success') as HTMLElement | null;
     let selectedLevel = '';
 
     // Grade pill toggle
@@ -1461,9 +1460,8 @@ const newsCards = [
         });
       } catch (_) { /* silent — best-effort */ }
 
-      // Show success regardless
-      form.style.display = 'none';
-      if (successEl) successEl.hidden = false;
+      // Redirect về trang cảm ơn duy nhất /cam-on
+      window.location.href = '/cam-on';
     });
   })();
 </script>

@@ -300,8 +300,7 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/lop-6/early-bird
       }
 
       function showThankYou(){
-        formContainer.style.display='none';
-        thankYou.style.display='block';
+        window.location.href='/cam-on?name='+encodeURIComponent(nameInput.value||'');
       }
 
       document.getElementById('btnStep1').onclick=handleStep1;

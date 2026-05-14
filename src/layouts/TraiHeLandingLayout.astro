@@ -741,9 +741,9 @@ a{color:inherit;text-decoration:none}
   <a href={`tel:${HOTLINE_TEL}`} class="sb sb-c">📞 Gọi ngay</a>
 </div>
 
-<script define:vars={{ source, funnelCode, redirectUrl, schoolLevel }}>
+<script define:vars={{ source, funnelCode, schoolLevel }}>
 (function(){
-  var SRC = source, FC = funnelCode, REDIR = redirectUrl, LVL = schoolLevel;
+  var SRC = source, FC = funnelCode, LVL = schoolLevel;
 
   function isValidEmail(v){
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim());
@@ -759,7 +759,7 @@ a{color:inherit;text-decoration:none}
     });
     localStorage.setItem('lp_'+SRC, '1');
     var done=false;
-    var go=function(){ if(!done){ done=true; window.location.href=REDIR; } };
+    var go=function(){ if(!done){ done=true; window.location.href='/cam-on?name=' + encodeURIComponent(name); } };
     fetch('https://truongvietanh.com/api/lead',{
       method:'POST', headers:{'Content-Type':'application/json'},
       body:payload, mode:'cors', keepalive:true

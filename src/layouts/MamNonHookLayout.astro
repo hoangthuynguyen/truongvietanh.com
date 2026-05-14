@@ -285,9 +285,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <div class="extra-sections"><slot /></div>
 
-<script define:vars={{ source, funnelCode, redirectUrl, schoolLevel }}>
+<script define:vars={{ source, funnelCode, schoolLevel }}>
 (function(){
-  var SRC = source, FC = funnelCode, REDIRECT = redirectUrl, LEVEL = schoolLevel;
+  var SRC = source, FC = funnelCode, LEVEL = schoolLevel;
 
   if (localStorage.getItem('sq_' + SRC)) {
     var fa = document.getElementById('formArea');
@@ -367,7 +367,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     // Redirect sau khi fetch settle (dù success hay fail) — max 3s timeout phòng treo
     var redirected = false;
-    var doRedirect = function(){ if (!redirected) { redirected = true; window.location.href = REDIRECT; } };
+    var doRedirect = function(){ if (!redirected) { redirected = true; window.location.href = '/cam-on?name=' + encodeURIComponent(name); } };
     fetchPromise.finally(doRedirect);
     setTimeout(doRedirect, 3000);
   };

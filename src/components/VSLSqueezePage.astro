@@ -247,7 +247,7 @@ const headlineLines = splitHeadline(headline);
   <div><b id="snN">Chị Nguyễn T.</b> <span id="snAc">vừa đăng ký tư vấn</span><span class="st" id="snT">2p trước</span></div>
 </div>
 
-<script is:inline define:vars={{ thankYouUrl, location: shortLocation }}>
+<script is:inline define:vars={{ location: shortLocation }}>
 // Countdown
 (function(){
   var k='vsl_'+window.location.pathname,d=localStorage.getItem(k);
@@ -283,7 +283,7 @@ const headlineLines = splitHeadline(headline);
 // Redirect on submit
 document.addEventListener('DOMContentLoaded',function(){
   var dl=window.dataLayer=window.dataLayer||[],op=dl.push.bind(dl);
-  dl.push=function(e){if(e&&e.event==='form_submit')setTimeout(function(){window.location.href=thankYouUrl},800);return op(e)};
+  dl.push=function(e){if(e&&e.event==='form_submit')setTimeout(function(){window.location.href='/cam-on'},800);return op(e)};
 });
 </script>
 </body>

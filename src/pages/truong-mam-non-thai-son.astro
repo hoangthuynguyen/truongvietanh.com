@@ -1,0 +1,208 @@
+---
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const pageTitle = "Trường Mầm Non Thái Sơn — Long Hậu, Cần Giuộc | Trường Việt Anh";
+const pageDescription = "Trường Mầm Non Thái Sơn — kế thừa triết lý & chương trình mầm non Việt Anh từ 2011. Multi-age, Plan-Do-Review, kỷ luật tích cực, tiếng Anh bản ngữ. Học phí từ 1.999.500 đ/tháng (học bổng 50% — 100 suất đầu tiên). Hotline 0916 961 409.";
+const pageCanonical = "https://truongvietanh.com/truong-mam-non-thai-son";
+
+const uspItems = [
+  { icon: "🧠", text: "Giáo dục sớm tận dụng thời gian vàng của não bộ — không chỉ chăm nuôi, mà là phát triển" },
+  { icon: "👩‍🏫", text: "Giáo viên đào tạo theo chuẩn hệ thống Việt Anh — 15 năm vận hành liên tục" },
+  { icon: "🇬🇧", text: "Tiếng Anh tích hợp suốt ngày — giáo viên bản ngữ dạy trực tiếp mỗi tuần" },
+  { icon: "🍱", text: "Bữa ăn 100% thuỷ hải sản, rau củ tươi — không đồ ăn nhanh, không nước ngọt, không chế biến sẵn" },
+  { icon: "📊", text: "Hệ thống theo dõi phát triển cá nhân 9 lĩnh vực — minh bạch hàng tuần" },
+  { icon: "💛", text: "Kỷ luật tích cực — không thưởng phạt, trẻ được tôn trọng và lắng nghe" },
+];
+
+const metrics = [
+  { number: '15', label: 'Năm kinh nghiệm hệ thống Việt Anh (từ 2011)' },
+  { number: '18m+', label: 'Nhận trẻ từ 18 tháng tuổi' },
+  { number: '9', label: 'Lĩnh vực phát triển được theo dõi mỗi tuần' },
+  { number: '50%', label: 'Học bổng học phí (100 suất đầu tiên)' },
+];
+
+const faqItems = [
+  {
+    question: "Trường nhận trẻ từ độ tuổi nào?",
+    answer: "Trường Mầm Non Thái Sơn nhận trẻ từ 18 tháng — đúng giai đoạn vàng của não bộ. Giờ học từ thứ 2 đến thứ 7, 7:00 – 17:00."
+  },
+  {
+    question: "Học phí cụ thể bao nhiêu, có học bổng không?",
+    answer: "Học phí niêm yết 3.999.000 đ/tháng. Với học bổng 50% trong 2 năm — chỉ áp dụng cho 100 suất đầu tiên — học phí thực tế còn 1.999.500 đ/tháng, tiết kiệm 23.994.000 đ/năm. Để giữ suất, vui lòng để lại email để được tư vấn lịch tham quan và xác nhận sớm."
+  },
+  {
+    question: "Multi-age, Plan-Do-Review là gì?",
+    answer: "Multi-age là mô hình lớp ghép đa độ tuổi — trẻ 18 tháng học cùng các em 4–5 tuổi để học hỏi tự nhiên. Plan-Do-Review là quy trình: mỗi sáng trẻ tự nói mình muốn làm gì → thực hiện → cuối ngày chiêm nghiệm lại — rèn tư duy chủ động ngay từ nhỏ."
+  },
+  {
+    question: "Tiếng Anh có học hằng ngày không?",
+    answer: "Có. Tiếng Anh được tích hợp trong giờ học, chơi và ăn — không phải tiết riêng. Mỗi tuần có giáo viên bản ngữ dạy trực tiếp, giúp trẻ làm quen phát âm chuẩn từ sớm."
+  },
+  {
+    question: "Bữa ăn của bé như thế nào?",
+    answer: "100% nguyên liệu thuỷ hải sản và rau củ tươi. Tuyệt đối không đồ ăn nhanh, không nước ngọt, không thực phẩm chế biến sẵn. Thực đơn xoay vòng theo lứa tuổi, công khai cho phụ huynh."
+  },
+  {
+    question: "Trường có camera, có cập nhật cho phụ huynh không?",
+    answer: "Có camera toàn trường, bé luôn có cô giáo bên cạnh, quy trình đón – trả nghiêm ngặt. Cập nhật cho phụ huynh: mỗi ngày — ảnh & video hoạt động; mỗi tuần — báo cáo phát triển; mỗi kỳ — gặp riêng cô giáo."
+  },
+  {
+    question: "Trường Mầm Non Thái Sơn có cùng hệ thống với Trường Việt Anh không?",
+    answer: "Có. Trường kế thừa toàn bộ triết lý, chương trình và đội ngũ đào tạo của hệ thống Mầm Non Việt Anh đã hoạt động từ 2011. Chúng tôi không giảm chất lượng — chỉ tối ưu mô hình để nhiều gia đình tại Long Hậu có thể tiếp cận giáo dục tốt."
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="mam-non"
+  funnelCode="truong-mam-non-thai-son"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Trường Mầm Non Thái Sơn — Phát Triển Trẻ, Không Chỉ Giữ Trẻ</h1>
+    <p class="squeeze-hero__subheading">
+      Hệ thống giáo dục Việt Anh từ 2011 · Tận dụng thời gian vàng của não bộ · An toàn là ưu tiên số 1, dinh dưỡng là nền tảng phát triển. <strong>Học bổng 50% trong 2 năm — chỉ 100 suất đầu tiên.</strong>
+    </p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Vì sao chọn Trường Mầm Non Thái Sơn?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Trường Mầm Non Thái Sơn trong số liệu" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="page-content">
+      <h2>Con mới 18 tháng — Bạn đã phải đi làm</h2>
+      <p>Trường Mầm Non Thái Sơn kế thừa toàn bộ <strong>triết lý và chương trình từ hệ thống Mầm Non Việt Anh</strong> — đã hoạt động liên tục từ năm 2011. Chúng tôi không giảm chất lượng. Chúng tôi tối ưu mô hình để <em>nhiều gia đình tại Long Hậu có thể tiếp cận giáo dục tốt</em>.</p>
+      <div class="callout">KHÔNG PHẢI "GIỮ TRẺ" — MÀ LÀ "PHÁT TRIỂN TRẺ".<br/>AN TOÀN LÀ ƯU TIÊN SỐ 1 — DINH DƯỠNG LÀ NỀN TẢNG PHÁT TRIỂN.</div>
+
+      <h2>Triết lý &amp; Phương pháp</h2>
+      <ul>
+        <li><strong>Giáo dục sớm</strong> — tận dụng thời gian vàng của não bộ (0–6 tuổi), không phải giai đoạn để "giữ trẻ"</li>
+        <li><strong>Kỷ luật tích cực</strong> — không dùng thưởng phạt, trẻ được tôn trọng và lắng nghe</li>
+        <li><strong>Phát triển toàn diện 9 lĩnh vực</strong> — theo dõi và cập nhật hàng tuần cho phụ huynh</li>
+      </ul>
+
+      <h2>Chương trình học đặc trưng</h2>
+
+      <h3>1. Multi-age — Lớp ghép đa độ tuổi</h3>
+      <p>Trẻ 18 tháng học cùng các em 4–5 tuổi. Mô hình này giúp trẻ nhỏ học từ anh chị, trẻ lớn rèn trách nhiệm và sự kiên nhẫn — giống như môi trường gia đình tự nhiên.</p>
+
+      <h3>2. Student Choice — Lớp có nhiều góc học tập</h3>
+      <p>Lớp được chia thành các góc: mỹ thuật, khoa học, vận động, âm nhạc, đọc sách. <strong>Trẻ tự chọn hoạt động</strong> mỗi sáng — rèn khả năng ra quyết định ngay từ nhỏ.</p>
+
+      <h3>3. Plan-Do-Review — Quy trình tư duy mỗi ngày</h3>
+      <ul>
+        <li><strong>Plan:</strong> Trẻ tự nói điều muốn làm hôm nay</li>
+        <li><strong>Do:</strong> Trẻ thực hiện hoạt động đã chọn — có sự đồng hành của cô</li>
+        <li><strong>Review:</strong> Cuối ngày, trẻ chiêm nghiệm lại điều đã làm, điều đã học, điều muốn cải thiện</li>
+      </ul>
+
+      <h3>4. Tiếng Anh tích hợp</h3>
+      <p>Tiếng Anh xuất hiện trong cả giờ học, giờ chơi và giờ ăn — không phải tiết riêng cứng nhắc. Mỗi tuần có giáo viên bản ngữ dạy trực tiếp, giúp trẻ làm quen với phát âm chuẩn ngay từ giai đoạn vàng.</p>
+
+      <h3>5. Kỷ luật tích cực</h3>
+      <p>Không thưởng-phạt. Trẻ được hướng dẫn nhận diện cảm xúc, hiểu hậu quả tự nhiên của hành động, và đưa ra lựa chọn có trách nhiệm — nền tảng vững vàng cho trí tuệ cảm xúc.</p>
+
+      <h2>5 USP nổi bật</h2>
+      <ol>
+        <li><strong>Giáo dục sớm</strong> tận dụng thời gian vàng của não bộ — không chỉ chăm nuôi</li>
+        <li><strong>Giáo viên đào tạo theo chuẩn hệ thống Việt Anh</strong> (15 năm liên tục từ 2011)</li>
+        <li><strong>Tiếng Anh với giáo viên bản ngữ</strong> dạy trực tiếp mỗi tuần</li>
+        <li><strong>Bữa ăn 100% thuỷ hải sản, rau củ tươi</strong> — không đồ ăn nhanh, không nước ngọt, không chế biến sẵn</li>
+        <li><strong>Hệ thống theo dõi phát triển cá nhân 9 lĩnh vực</strong> — minh bạch hàng tuần</li>
+      </ol>
+
+      <h2>5 nguyên tắc sống khoẻ mỗi ngày</h2>
+      <p><strong>Ăn tốt</strong> · <strong>Uống tốt</strong> · <strong>Nghỉ ngơi tốt</strong> · <strong>Thể dục thể thao</strong> · <strong>Niềm vui mỗi ngày</strong> — được hệ thống hoá vào lịch sinh hoạt của bé.</p>
+
+      <h2>An toàn — Ưu tiên số 1</h2>
+      <ul>
+        <li>Cơ sở vật chất thiết kế riêng cho trẻ nhỏ — bo góc, vật liệu thân thiện</li>
+        <li>Camera toàn trường — phụ huynh có thể đối soát khi cần</li>
+        <li>Bé luôn có cô giáo bên cạnh — không khoảnh khắc nào để bé một mình</li>
+        <li>Quy trình đón – trả nghiêm ngặt — xác thực phụ huynh từng buổi</li>
+      </ul>
+
+      <h2>Cập nhật cho phụ huynh</h2>
+      <ul>
+        <li><strong>Mỗi ngày:</strong> ảnh &amp; video hoạt động gửi qua app</li>
+        <li><strong>Mỗi tuần:</strong> báo cáo phát triển 9 lĩnh vực</li>
+        <li><strong>Mỗi kỳ:</strong> gặp riêng cô giáo, thảo luận lộ trình cá nhân</li>
+      </ul>
+
+      <h2>Học phí 2026</h2>
+      <div class="fee-grid">
+        <div class="fee-card">
+          <div class="fee-name">Niêm yết</div>
+          <div class="fee-price">3.999.000 đ<span>/tháng</span></div>
+          <p>Đã bao gồm chương trình tiếng Anh tích hợp + tiếng Anh bản ngữ hằng tuần</p>
+        </div>
+        <div class="fee-card fee-card--feature">
+          <div class="fee-name">Học bổng 50% × 2 năm</div>
+          <div class="fee-price">1.999.500 đ<span>/tháng</span></div>
+          <p>Chỉ <strong>100 suất đầu tiên</strong> — tiết kiệm 23.994.000 đ/năm</p>
+        </div>
+      </div>
+      <p><em>Để giữ suất học bổng, vui lòng để lại email — đội tuyển sinh phản hồi và xác nhận lịch tham quan trong 24h.</em></p>
+
+      <h2>Lời từ Nhà sáng lập</h2>
+      <blockquote class="founder-quote">
+        "Tôi tin rằng: quyền được học tốt không phải đặc quyền của nhà giàu."<br/>
+        <cite>— Nguyễn Mạnh Dương, Chủ tịch Hệ thống Trường Việt Anh</cite>
+      </blockquote>
+
+      <h2>Thông tin liên hệ</h2>
+      <ul>
+        <li><strong>Địa chỉ:</strong> Xã Long Hậu, huyện Cần Giuộc, tỉnh Tây Ninh (Long An cũ)</li>
+        <li><strong>Hotline:</strong> 0916 961 409 — <a href="https://zalo.me/84916961409" target="_blank" rel="noopener">Zalo</a></li>
+        <li><strong>Email:</strong> hoc@truongvietanh.com</li>
+        <li><strong>Giờ tiếp đón:</strong> Thứ 2 – Thứ 7, 7:00 – 17:00</li>
+      </ul>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Giữ suất học bổng 50% — Mầm Non Thái Sơn</h2>
+    <p class="squeeze-form-section__description">Chỉ 100 suất đầu tiên — học phí chỉ còn 1.999.500 đ/tháng. Đội tuyển sinh phản hồi trong 24h, đặt lịch tham quan và xác nhận suất.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="truong-mam-non-thai-son-form"
+      funnelCode="truong-mam-non-thai-son"
+      schoolLevel="mam-non"
+      submitText="Giữ suất học bổng"
+      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h để xác nhận suất và hẹn tham quan."
+    />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp về Trường Mầm Non Thái Sơn" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  .page-content { max-width: 820px; margin: 0 auto; padding: 1rem 0; }
+  .page-content h2 { color: #000080; font-size: 1.6rem; margin: 2rem 0 1rem; }
+  .page-content h3 { color: #000080; font-size: 1.2rem; margin: 1.5rem 0 .75rem; }
+  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
+  .page-content ul, .page-content ol { margin: 1rem 0 1rem 1.5rem; }
+  .page-content li { margin-bottom: .5rem; line-height: 1.7; color: #333; }
+  .page-content strong { color: #000080; font-weight: 700; }
+  .page-content em { color: #475569; }
+  .page-content a { color: #000080; }
+
+  .callout { background: linear-gradient(135deg, #000080 0%, #00004d 100%); color: #ffff00; padding: 1.25rem 1.5rem; border-radius: 12px; font-weight: 700; font-family: "Montserrat", sans-serif; text-align: center; letter-spacing: .03em; margin: 1.5rem 0; line-height: 1.5; }
+
+  .fee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+  .fee-card { background: #f8faff; border: 2px solid #e6ecf7; border-radius: 12px; padding: 1.25rem; text-align: center; }
+  .fee-card--feature { border-color: #ffff00; background: linear-gradient(180deg, #fffceb 0%, #fff 100%); position: relative; }
+  .fee-card--feature::before { content: "Ưu đãi"; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #000080; color: #ffff00; font-size: .7rem; padding: .2rem .65rem; border-radius: 999px; font-weight: 700; letter-spacing: .03em; }
+  .fee-name { font-family: "Montserrat", sans-serif; font-weight: 800; color: #000080; font-size: 1.05rem; margin-bottom: .35rem; letter-spacing: .03em; text-transform: uppercase; }
+  .fee-price { font-family: "Montserrat", sans-serif; font-size: 1.6rem; font-weight: 800; color: #000080; line-height: 1.1; margin-bottom: .35rem; }
+  .fee-price span { font-size: .85rem; font-weight: 500; color: #64748b; }
+  .fee-card p { font-size: .9rem; color: #475569; margin: 0; }
+
+  .founder-quote { background: #f0f4ff; border-left: 4px solid #ffff00; padding: 1.25rem 1.5rem; border-radius: 8px; font-style: italic; color: #000080; font-size: 1.05rem; margin: 1.5rem 0; }
+  .founder-quote cite { display: block; margin-top: .5rem; font-size: .9rem; font-style: normal; color: #475569; font-weight: 600; }
+</style>

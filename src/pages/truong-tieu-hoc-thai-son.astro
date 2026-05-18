@@ -1,206 +1,849 @@
 ---
-import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
-import USPGrid from '../components/USPGrid.astro';
-import TrustMetrics from '../components/TrustMetrics.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import FAQSection from '../components/FAQSection.astro';
 
-const pageTitle = "Trường Tiểu Học Thái Sơn — Long Hậu, Cần Giuộc | Trường Việt Anh";
-const pageDescription = "Trường Tiểu Học Thái Sơn — thuộc hệ thống giáo dục Việt Anh từ 2011. Tư duy phát triển, tiếng Anh bản ngữ, sức khoẻ, phẩm chất Leader in Me. Top 15 toàn cầu Leader in Me 2023. Học phí từ 1.999.500 đ/tháng (học bổng 50% — 100 suất đầu tiên). Hotline 0902 095 956.";
+const pageTitle = "Trường Tiểu Học Thái Sơn — Long Hậu, Cần Giuộc | Hệ thống Việt Anh từ 2011";
+const pageDescription = "Trường Tiểu Học Thái Sơn — Một đứa trẻ bình thường có thể trở nên phi thường nếu được lớn lên trong môi trường được thiết kế đúng. Học phí 3.999.000 đ/tháng — 100 suất học bổng 50% còn 1.999.500 đ/tháng. Top 15 toàn cầu Leader In Me 2023.";
 const pageCanonical = "https://truongvietanh.com/truong-tieu-hoc-thai-son";
+const ogImage = "https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg";
 
-const uspItems = [
-  { icon: "🧠", text: "Tư duy phát triển — con tự tin học tập, hiểu bài, không học vẹt" },
-  { icon: "🇬🇧", text: "Tiếng Anh nghe – hiểu – giao tiếp tự nhiên với giáo viên bản ngữ" },
-  { icon: "🏆", text: "Top 15 toàn cầu Leader In Me 2023 — phẩm chất là thứ quyết định tương lai" },
-  { icon: "💪", text: "Sức khoẻ được đầu tư như học thuật — 5 nguyên tắc sống khoẻ mỗi ngày" },
-  { icon: "📊", text: "Hệ thống theo dõi tiến bộ minh bạch — phụ huynh cập nhật qua app hằng tuần" },
-  { icon: "🎓", text: "100% học sinh tốt nghiệp đạt điểm 10 Tiếng Anh kỳ thi THPT Quốc gia (hệ thống Việt Anh)" },
-];
-
-const metrics = [
-  { number: '13+', label: 'Năm hoạt động liên tục (từ 2011)' },
-  { number: 'Top 15', label: 'Toàn cầu Leader In Me 2023' },
-  { number: '100%', label: 'HS tốt nghiệp đạt điểm 10 TA THPT QG (hệ thống Việt Anh)' },
-  { number: '50%', label: 'Học bổng học phí (100 suất đầu tiên)' },
-];
-
-const faqItems = [
+const structuredData = [
   {
-    question: "Trường nhận học sinh khối lớp nào?",
-    answer: "Trường Tiểu Học Thái Sơn nhận học sinh từ lớp 1 đến lớp 5, theo khung chương trình của Bộ Giáo dục &amp; Đào tạo — có bổ trợ tiếng Anh bản ngữ và chương trình phẩm chất Leader In Me của Franklin Covey (Hoa Kỳ)."
+    "@context": "https://schema.org",
+    "@type": "EducationalOrganization",
+    "name": "Trường Tiểu Học Thái Sơn",
+    "url": pageCanonical,
+    "description": pageDescription,
+    "telephone": "+84902095956",
+    "email": "khai.nguyen@truongvietanh.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Xã Long Hậu, huyện Cần Giuộc",
+      "addressLocality": "Tỉnh Long An",
+      "addressCountry": "VN"
+    },
+    "parentOrganization": {
+      "@type": "EducationalOrganization",
+      "name": "Hệ thống Trường Việt Anh — Major Education",
+      "url": "https://truongvietanh.com"
+    }
   },
   {
-    question: "Học phí cụ thể bao nhiêu, có học bổng không?",
-    answer: "Học phí niêm yết 3.999.000 đ/tháng. Với học bổng 50% (100 suất đầu tiên), học phí thực tế còn 1.999.500 đ/tháng, tiết kiệm khoảng 19.995.000 đ/năm. Để giữ suất, vui lòng để lại email để được tư vấn và xác nhận sớm."
-  },
-  {
-    question: "4 nền tảng quan trọng của chương trình là gì?",
-    answer: "(1) Tư duy phát triển — con tự tin học tập, hiểu bài; (2) Tiếng Anh — nghe, hiểu, giao tiếp tự nhiên với GV bản ngữ; (3) Sức khoẻ — được đầu tư như học thuật; (4) Phẩm chất — thứ quyết định tương lai, rèn qua Leader In Me."
-  },
-  {
-    question: "Leader In Me là chương trình gì?",
-    answer: "Là chương trình phẩm chất lãnh đạo bản quyền của Franklin Covey (Hoa Kỳ), dựa trên 7 thói quen hiệu quả của Stephen R. Covey. Hệ thống Việt Anh đã được Top 15 toàn cầu cuộc thi Leader In Me 2023."
-  },
-  {
-    question: "Trường có theo dõi tiến bộ học sinh không?",
-    answer: "Có. 'Mọi sự tiến bộ của con đều được theo dõi rõ ràng' — phụ huynh cập nhật qua ứng dụng hằng tuần, không phụ thuộc kỳ họp phụ huynh truyền thống."
-  },
-  {
-    question: "Đầu ra cho học sinh hệ thống Việt Anh thế nào?",
-    answer: "Hệ thống Việt Anh ghi nhận: 100% học sinh tốt nghiệp THPT đạt điểm 10 môn Tiếng Anh kỳ thi THPT Quốc gia nhờ quy đổi IELTS; 100% sở hữu chứng chỉ Tin học quốc tế ICDL; nhận thẳng vào Đại học Buckinghamshire / Birmingham City (UK)."
-  },
-  {
-    question: "Giáo viên có được đào tạo bài bản không?",
-    answer: "Có. 'Giáo viên được đào tạo bài bản — không tuyển tạm.' Đội ngũ giáo viên được đào tạo theo chuẩn hệ thống Việt Anh (15 năm liên tục). Tiếng Anh do giáo viên bản ngữ đảm nhiệm trực tiếp."
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": pageTitle,
+    "description": pageDescription,
+    "url": pageCanonical,
+    "inLanguage": "vi"
   }
 ];
 ---
 
-<SqueezePageLayout
+<BaseLayout
   title={pageTitle}
   description={pageDescription}
-  canonicalUrl={pageCanonical}
-  schoolLevel="tieu-hoc"
-  funnelCode="truong-tieu-hoc-thai-son"
+  canonical={pageCanonical}
+  ogImage={ogImage}
+  structuredData={structuredData}
 >
-  <section slot="hero">
-    <h1 class="squeeze-hero__heading">Trường Tiểu Học Thái Sơn — Giáo Dục Tốt Không Phải Đặc Quyền Của Nhà Giàu</h1>
-    <p class="squeeze-hero__subheading">
-      Một đứa trẻ bình thường có thể trở nên phi thường nếu được lớn lên trong môi trường được thiết kế đúng. Thuộc hệ thống Việt Anh — 13+ năm liên tục, Top 15 toàn cầu Leader In Me 2023. <strong>Học phí chỉ từ 1.999.500 đ/tháng (ưu đãi học bổng 50%).</strong>
-    </p>
-  </section>
+  <main class="ts-page">
 
-  <section slot="usp"><USPGrid title="Vì sao chọn Trường Tiểu Học Thái Sơn?" items={uspItems} /></section>
-  <section slot="trust"><TrustMetrics title="Trường Tiểu Học Thái Sơn trong số liệu" metrics={metrics} /></section>
-
-  <section slot="content">
-    <div class="page-content">
-      <h2>3 nỗi lo lớn nhất của phụ huynh khi chọn trường tiểu học</h2>
-      <p>Trường Tiểu Học Thái Sơn được xây dựng để trả lời <strong>đúng 3 nỗi lo này</strong> — bằng chương trình giáo dục thực chất, hệ thống theo dõi minh bạch và mức học phí mà những gia đình đang làm việc vất vả thực sự có thể chi trả.</p>
-      <div class="callout">CHÚNG TÔI KHÔNG XÂY DỰNG TRƯỜNG ĐỂ "GIỮ TRẺ".<br/>MÀ XÂY DỰNG MỘT MÔI TRƯỜNG NƠI MỖI BÉ ĐƯỢC CHĂM SÓC, THEO DÕI VÀ PHÁT TRIỂN ĐÚNG CÁCH MỖI NGÀY.</div>
-
-      <h2>4 nền tảng quan trọng của con</h2>
-      <div class="pillars">
-        <div class="pillar">
-          <div class="pillar-num">1</div>
-          <h3>Tư duy phát triển</h3>
-          <p>Con tự tin học tập, hiểu bài — không học vẹt, không sợ sai. Học sinh được rèn thói quen tư duy: đặt câu hỏi, đưa giả thuyết, thử nghiệm, rút kinh nghiệm.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">2</div>
-          <h3>Tiếng Anh</h3>
-          <p>Nghe, hiểu, giao tiếp tự nhiên với giáo viên bản ngữ — chứ không phải học từ vựng để thi. Lộ trình Tiếng Anh xuyên suốt từ Tiểu Học → THCS → THPT, đạt điểm 10 Tiếng Anh THPT Quốc gia.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">3</div>
-          <h3>Sức khoẻ</h3>
-          <p>Được đầu tư như học thuật. 5 nguyên tắc sống khoẻ mỗi ngày: <strong>Ăn tốt · Uống tốt · Nghỉ ngơi tốt · Thể dục thể thao · Niềm vui mỗi ngày</strong>.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">4</div>
-          <h3>Phẩm chất</h3>
-          <p>Thứ quyết định tương lai. Triển khai Leader In Me của Franklin Covey (Hoa Kỳ) — 7 thói quen hiệu quả + 5 giá trị cốt lõi. Top 15 toàn cầu Leader In Me 2023.</p>
+    <!-- ============== SECTION 1: HERO ============== -->
+    <section class="ts-hero">
+      <div class="ts-hero__inner">
+        <span class="ts-eyebrow">Hệ thống giáo dục Việt Anh từ 2011</span>
+        <h1 class="ts-h1">MỘT ĐỨA TRẺ BÌNH THƯỜNG CÓ THỂ TRỞ NÊN PHI THƯỜNG NẾU ĐƯỢC LỚN LÊN TRONG MÔI TRƯỜNG ĐƯỢC THIẾT KẾ ĐÚNG</h1>
+        <p class="ts-hero__sub">Chương trình giáo dục hiện đại hệ thống với trường chuyên Anh hàng đầu TP.HCM.</p>
+        <div class="ts-hero__bullets">
+          <div class="ts-hero__bullet">🌍 Tiếng Anh thực dụng</div>
+          <div class="ts-hero__bullet">💡 Kỹ năng thế kỷ 21</div>
+          <div class="ts-hero__bullet">💪 Thể chất toàn diện</div>
         </div>
       </div>
+    </section>
 
-      <h2>Mọi sự tiến bộ của con đều được theo dõi rõ ràng</h2>
-      <p>Không còn cảnh phụ huynh chờ đến kỳ họp mới biết con đang ở đâu. Hệ thống theo dõi tiến bộ <strong>cập nhật hằng tuần qua ứng dụng</strong> — bố mẹ thấy rõ con tiến bộ về kiến thức, kỹ năng, tiếng Anh và phẩm chất.</p>
-      <ul>
-        <li><strong>Hằng tuần:</strong> Báo cáo tiến độ học thuật + Leader In Me</li>
-        <li><strong>Hằng tháng:</strong> Họp PDR 1-1 — học sinh dẫn dắt buổi họp (không phải giáo viên báo cáo thay)</li>
-        <li><strong>Hằng kỳ:</strong> Học sinh thuyết trình hành trình trước phụ huynh — 5 lần/năm</li>
-      </ul>
+    <!-- ============== SECTION 2: FEE BANNER ============== -->
+    <section class="ts-fee-banner">
+      <div class="ts-fee-banner__inner">
+        <h2 class="ts-fee__title">Học phí chỉ từ <strong>1.999.500 VND</strong></h2>
+        <p class="ts-fee__sub">(ưu đãi học bổng 50%)</p>
+        <p class="ts-fee__sub2">Áp dụng số lượng có hạn cho năm học mới</p>
+        <a href="#ts-form" class="ts-btn ts-btn--primary">🚀 Kích hoạt hành trình giáo dục đứa con phi thường</a>
+      </div>
+    </section>
 
-      <h2>Đội ngũ giáo viên</h2>
-      <p><strong>"Giáo viên được đào tạo bài bản — không tuyển tạm."</strong> Đội ngũ giáo viên Việt Anh được đào tạo theo chuẩn hệ thống (15 năm liên tục từ 2011). Tiếng Anh do <strong>giáo viên bản ngữ</strong> giảng dạy trực tiếp, đảm bảo phát âm chuẩn và phương pháp giao tiếp tự nhiên.</p>
-
-      <h2>5 USP nổi bật</h2>
-      <ol>
-        <li><strong>13+ năm hoạt động liên tục</strong> (từ 2011) — không phải dự án thử nghiệm</li>
-        <li><strong>Top 15 toàn cầu</strong> cuộc thi Leader In Me 2023</li>
-        <li><strong>100% học sinh tốt nghiệp đạt điểm 10 Tiếng Anh</strong> kỳ thi THPT Quốc gia (hệ thống Việt Anh)</li>
-        <li><strong>Hệ thống theo dõi tiến bộ minh bạch</strong> — cập nhật hằng tuần qua app</li>
-        <li><strong>Học phí phù hợp</strong> — học bổng 50% giúp gia đình lao động tiếp cận được</li>
-      </ol>
-
-      <h2>5 nguyên tắc sức khoẻ mỗi ngày</h2>
-      <p><strong>Ăn tốt</strong> · <strong>Uống tốt</strong> · <strong>Nghỉ ngơi tốt</strong> · <strong>Thể dục thể thao</strong> · <strong>Niềm vui mỗi ngày</strong> — được tích hợp vào lịch sinh hoạt của học sinh, không phải khẩu hiệu treo tường.</p>
-
-      <h2>Học phí 2026</h2>
-      <div class="fee-grid">
-        <div class="fee-card">
-          <div class="fee-name">Niêm yết</div>
-          <div class="fee-price">3.999.000 đ<span>/tháng</span></div>
-          <p>Đã bao gồm chương trình tiếng Anh bản ngữ + Leader In Me</p>
-        </div>
-        <div class="fee-card fee-card--feature">
-          <div class="fee-name">Học bổng 50%</div>
-          <div class="fee-price">1.999.500 đ<span>/tháng</span></div>
-          <p>Chỉ <strong>100 suất đầu tiên</strong> — tiết kiệm ~19.995.000 đ/năm</p>
+    <!-- ============== SECTION 3: PAIN POINTS ============== -->
+    <section class="ts-pain">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">BẠN CÓ ĐANG NGHĨ ĐẾN ĐIỀU NÀY?</h2>
+        <div class="ts-pain__list">
+          <div class="ts-pain__card">
+            <span class="ts-pain__icon">😟</span>
+            <p>"Mình đi làm cả ngày… không có thời gian kèm con. Chỉ sợ con bị bỏ lại phía sau…"</p>
+          </div>
+          <div class="ts-pain__card">
+            <span class="ts-pain__icon">💸</span>
+            <p>"Trường tốt thì học phí cao quá. Nhưng trường rẻ thì lại sợ không được dạy bài bản.."</p>
+          </div>
+          <div class="ts-pain__card">
+            <span class="ts-pain__icon">🌅</span>
+            <p>"Mình làm lụng vất vả rồi… chỉ mong con sau này có cuộc sống ổn định hơn…"</p>
+          </div>
         </div>
       </div>
-      <p><em>Để giữ suất học bổng, vui lòng để lại email — đội tuyển sinh phản hồi và xác nhận lịch tham quan trong 24h.</em></p>
+    </section>
 
-      <h2>Lời từ Nhà sáng lập</h2>
-      <blockquote class="founder-quote">
-        "Giáo dục tốt không phải đặc quyền của nhà giàu. Tôi tin một đứa trẻ bình thường có thể trở nên phi thường — nếu được lớn lên trong môi trường được thiết kế đúng."<br/>
-        <cite>— Nguyễn Mạnh Dương, Chủ tịch Hệ thống Trường Việt Anh</cite>
-      </blockquote>
+    <!-- ============== SECTION 4: POSITIONING ============== -->
+    <section class="ts-positioning">
+      <div class="ts-section__inner">
+        <p class="ts-positioning__intro">Chúng tôi hiểu những điều đó. Trường Tiểu học Thái Sơn được xây dựng để trả lời đúng <strong>3 nỗi lo này</strong> — bằng chương trình giáo dục thực chất, hệ thống theo dõi minh bạch và mức học phí mà những gia đình đang làm việc vất vả thực sự có thể chi trả.</p>
+        <div class="ts-callout">GIÁO DỤC TỐT KHÔNG PHẢI ĐẶC QUYỀN CỦA NHÀ GIÀU</div>
+      </div>
+    </section>
 
-      <h2>Thông tin liên hệ</h2>
-      <ul>
-        <li><strong>Địa chỉ:</strong> Xã Long Hậu, huyện Cần Giuộc, tỉnh Tây Ninh (Long An cũ)</li>
-        <li><strong>Hotline:</strong> 0902 095 956 — <a href="https://zalo.me/84902095956" target="_blank" rel="noopener">Zalo</a></li>
-        <li><strong>Email:</strong> khai.nguyen@truongvietanh.com</li>
-        <li><strong>Giờ tiếp đón:</strong> Thứ 2 – Thứ 7, 7:00 – 17:00</li>
-      </ul>
-    </div>
-  </section>
+    <!-- ============== SECTION 5: SCHOOL BACKGROUND + 5 CAM KẾT ============== -->
+    <section class="ts-background">
+      <div class="ts-section__inner">
+        <p class="ts-lead">Trường Tiểu học Thái Sơn thuộc <strong>hệ thống Việt Anh</strong> — hoạt động từ năm 2011 tại TP.HCM.</p>
+        <p class="ts-lead"><strong>Chúng tôi không xây dựng trường để "giữ trẻ".</strong> Mà xây dựng một môi trường nơi mỗi bé được chăm sóc, theo dõi và phát triển đúng cách mỗi ngày.</p>
+        <ul class="ts-checklist">
+          <li>Chương trình học rõ ràng — không giữ trẻ đơn thuần</li>
+          <li>Giáo viên được đào tạo bài bản — không tuyển tạm</li>
+          <li>Mỗi bé được theo dõi và đánh giá mỗi ngày</li>
+          <li>Tiếng Anh tiếp cận từ sớm — tự nhiên, không áp lực</li>
+          <li>Phụ huynh luôn biết con học gì, ăn gì và thay đổi ra sao</li>
+        </ul>
+      </div>
+    </section>
 
-  <section slot="form">
-    <h2 class="squeeze-form-section__heading">Giữ suất học bổng 50% — Tiểu Học Thái Sơn</h2>
-    <p class="squeeze-form-section__description">Chỉ 100 suất đầu tiên — học phí chỉ còn 1.999.500 đ/tháng. Đội tuyển sinh phản hồi trong 24h, đặt lịch tham quan và xác nhận suất.</p>
-    <LeadFormTwoStepEmailFirst
-      formId="truong-tieu-hoc-thai-son-form"
-      funnelCode="truong-tieu-hoc-thai-son"
-      schoolLevel="tieu-hoc"
-      submitText="Giữ suất học bổng"
-      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h để xác nhận suất và hẹn tham quan."
-    />
-  </section>
+    <!-- ============== SECTION 6: 3 SỐ LIỆU NỔI BẬT ============== -->
+    <section class="ts-stats">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">❗ NHỮNG ĐIỀU TẠO NÊN SỰ KHÁC BIỆT</h2>
+        <p class="ts-h3 ts-h3--center">3 SỐ LIỆU NỔI BẬT</p>
+        <div class="ts-stats__grid">
+          <div class="ts-stat">
+            <div class="ts-stat__num">13+</div>
+            <p>năm — Hệ thống Việt Anh hoạt động liên tục</p>
+          </div>
+          <div class="ts-stat">
+            <div class="ts-stat__num">Top 15</div>
+            <p>toàn cầu — Cuộc thi Leader In Me 2023 cạnh tranh với trường từ 50+ quốc gia</p>
+          </div>
+          <div class="ts-stat">
+            <div class="ts-stat__num">100%</div>
+            <p>học sinh tốt nghiệp đạt điểm 10 Tiếng Anh kỳ thi THPT Quốc gia</p>
+          </div>
+        </div>
+        <div class="ts-stats__cta">
+          <a href="#ts-form" class="ts-btn ts-btn--primary">👉 Chat với trường</a>
+        </div>
+      </div>
+    </section>
 
-  <section slot="faq"><FAQSection title="Câu hỏi thường gặp về Trường Tiểu Học Thái Sơn" items={faqItems} /></section>
-</SqueezePageLayout>
+    <!-- ============== SECTION 7: 4 TRỤ CỘT ============== -->
+    <section class="ts-pillars">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">4 NỀN TẢNG QUAN TRỌNG GIÚP CON PHÁT TRIỂN TOÀN DIỆN</h2>
+        <div class="ts-pillars__grid">
+          <div class="ts-pillar">
+            <h3>🧠 Trụ cột 1 — Tư duy phát triển</h3>
+            <p>Con tự tin học tập, hiểu bài và <strong>không phụ thuộc vào việc học thêm</strong>.</p>
+          </div>
+          <div class="ts-pillar">
+            <h3>🌍 Trụ cột 2 — Tiếng Anh: Không chỉ thi điểm cao, mà là dùng được</h3>
+            <p>Con nghe – hiểu – giao tiếp tự nhiên, <strong>không áp lực học thêm</strong>.</p>
+          </div>
+          <div class="ts-pillar">
+            <h3>💪 Trụ cột 3 — Sức khỏe: Được đầu tư như học thuật</h3>
+            <p>Con khỏe mạnh, phát triển thể chất tốt và <strong>tập trung hơn</strong>.</p>
+          </div>
+          <div class="ts-pillar">
+            <h3>❤️ Trụ cột 4 — Phẩm chất: Thứ quyết định tương lai</h3>
+            <p>Con tự tin, biết chia sẻ và <strong>thích nghi tốt với môi trường xung quanh</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<style is:inline>
-  .page-content { max-width: 820px; margin: 0 auto; padding: 1rem 0; }
-  .page-content h2 { color: #000080; font-size: 1.6rem; margin: 2rem 0 1rem; }
-  .page-content h3 { color: #000080; font-size: 1.2rem; margin: 1.5rem 0 .75rem; }
-  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
-  .page-content ul, .page-content ol { margin: 1rem 0 1rem 1.5rem; }
-  .page-content li { margin-bottom: .5rem; line-height: 1.7; color: #333; }
-  .page-content strong { color: #000080; font-weight: 700; }
-  .page-content em { color: #475569; }
-  .page-content a { color: #000080; }
+    <!-- ============== SECTION 8: 5 NGUYÊN TẮC SỨC KHOẺ ============== -->
+    <section class="ts-health">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">5 NGUYÊN TẮC GIÚP CON KHỎE MẠNH MỖI NGÀY</h2>
+        <p class="ts-h3 ts-h3--center">Sức khỏe của con được chăm sóc như thế nào?</p>
+        <p class="ts-philosophy">Tại Thái Sơn, sức khỏe của trẻ không phải là phụ — mà là <strong>nền tảng để con học tốt và phát triển toàn diện</strong>.</p>
+        <div class="ts-health__grid">
+          <div class="ts-health__item">🍎 ĂN TỐT</div>
+          <div class="ts-health__item">💧 UỐNG TỐT</div>
+          <div class="ts-health__item">😴 NGHỈ NGƠI TỐT</div>
+          <div class="ts-health__item">⚽ THỂ DỤC THỂ THAO</div>
+          <div class="ts-health__item">💛 NIỀM VUI MỖI NGÀY</div>
+        </div>
+        <blockquote class="ts-quote">"Não bộ được nuôi đúng cách — con học tốt hơn. Đây không phải lý thuyết, đây là <strong>sinh lý học</strong>."</blockquote>
+      </div>
+    </section>
 
-  .callout { background: linear-gradient(135deg, #000080 0%, #00004d 100%); color: #ffff00; padding: 1.25rem 1.5rem; border-radius: 12px; font-weight: 700; font-family: "Montserrat", sans-serif; text-align: center; letter-spacing: .03em; margin: 1.5rem 0; line-height: 1.5; }
+    <!-- ============== SECTION 9: HỆ THỐNG THEO DÕI ============== -->
+    <section class="ts-tracking">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">MỌI SỰ TIẾN BỘ CỦA CON ĐỀU ĐƯỢC THEO DÕI RÕ RÀNG</h2>
+        <p class="ts-lead ts-lead--center">Dù bạn bận rộn cả ngày, bạn vẫn biết con đang học gì, thay đổi ra sao — một cách rõ ràng và liên tục.</p>
 
-  .pillars { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
-  .pillar { background: #f8faff; border: 2px solid #e6ecf7; border-radius: 12px; padding: 1.25rem 1.25rem 1.25rem 3.5rem; position: relative; }
-  .pillar-num { position: absolute; top: 1.25rem; left: 1rem; width: 2rem; height: 2rem; background: #000080; color: #ffff00; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: "Montserrat", sans-serif; font-weight: 800; font-size: 1.05rem; }
-  .pillar h3 { margin: 0 0 .35rem; color: #000080; font-size: 1.1rem; }
-  .pillar p { margin: 0; color: #475569; font-size: .95rem; line-height: 1.6; }
+        <div class="ts-tracking__grid">
+          <div class="ts-tracking__card">
+            <h3>✔️ CÁCH CÁC CON ĐƯỢC KÈM CẶP</h3>
+            <p>Giáo viên ghi nhận sự tiến bộ của con trên từng lĩnh vực: tiếng Anh, tư duy, kỹ năng sống, thể chất. Bạn mở điện thoại là thấy ngay — không cần chờ họp phụ huynh.</p>
+          </div>
+          <div class="ts-tracking__card">
+            <h3>📱 MỖI TUẦN — CẬP NHẬT CỤ THỂ</h3>
+            <p>Báo cáo chi tiết: con học gì, đạt được gì, cần cải thiện gì — gửi qua app.</p>
+          </div>
+          <div class="ts-tracking__card">
+            <h3>🤝 MỖI THÁNG — CON TỰ KỂ CHUYỆN TIẾN BỘ</h3>
+            <p>Buổi gặp 1-1 giữa con và giáo viên chủ nhiệm. Chính con là người dẫn dắt: đã làm gì, đạt được gì, cần cải thiện gì. Con học cách tự đánh giá bản thân từ sớm.</p>
+          </div>
+          <div class="ts-tracking__card">
+            <h3>👨‍👩‍👧 5 LẦN MỖI NĂM CON ĐỨNG TRƯỚC CHA MẸ</h3>
+            <p>Không phải giáo viên báo cáo thay. Chính con nói. Cha mẹ tận mắt thấy con đã lớn lên như thế nào — không chỉ điểm số, mà là <strong>bản lĩnh</strong>.</p>
+          </div>
+        </div>
 
-  .fee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
-  .fee-card { background: #f8faff; border: 2px solid #e6ecf7; border-radius: 12px; padding: 1.25rem; text-align: center; }
-  .fee-card--feature { border-color: #ffff00; background: linear-gradient(180deg, #fffceb 0%, #fff 100%); position: relative; }
-  .fee-card--feature::before { content: "Ưu đãi"; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #000080; color: #ffff00; font-size: .7rem; padding: .2rem .65rem; border-radius: 999px; font-weight: 700; letter-spacing: .03em; }
-  .fee-name { font-family: "Montserrat", sans-serif; font-weight: 800; color: #000080; font-size: 1.05rem; margin-bottom: .35rem; letter-spacing: .03em; text-transform: uppercase; }
-  .fee-price { font-family: "Montserrat", sans-serif; font-size: 1.6rem; font-weight: 800; color: #000080; line-height: 1.1; margin-bottom: .35rem; }
-  .fee-price span { font-size: .85rem; font-weight: 500; color: #64748b; }
-  .fee-card p { font-size: .9rem; color: #475569; margin: 0; }
+        <p class="ts-tracking__closing">Bạn không cần ở bên con cả ngày để biết con đang phát triển như thế nào. Chúng tôi giúp bạn nhìn thấy điều đó — một cách <strong>minh bạch, liên tục và trực quan</strong>.</p>
+        <div class="ts-tracking__cta">
+          <a href="#ts-form" class="ts-btn ts-btn--primary">👉 Đến tham quan trường và nhận học bổng</a>
+        </div>
+      </div>
+    </section>
 
-  .founder-quote { background: #f0f4ff; border-left: 4px solid #ffff00; padding: 1.25rem 1.5rem; border-radius: 8px; font-style: italic; color: #000080; font-size: 1.05rem; margin: 1.5rem 0; }
-  .founder-quote cite { display: block; margin-top: .5rem; font-size: .9rem; font-style: normal; color: #475569; font-weight: 600; }
+    <!-- ============== SECTION 10: FOUNDER ============== -->
+    <section class="ts-founder">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2 ts-h2--light">MỘT NGƯỜI LÀM GIÁO DỤC KHÔNG CHỈ MỞ TRƯỜNG MÀ XÂY DỰNG MỘT TIÊU CHUẨN</h2>
+        <div class="ts-founder__profile">
+          <div class="ts-founder__avatar">👤</div>
+          <div>
+            <div class="ts-founder__name">Nguyễn Mạnh Dương</div>
+            <div class="ts-founder__role">Nhà sáng lập hệ thống giáo dục Việt Anh – Thái Sơn</div>
+          </div>
+        </div>
+        <blockquote class="ts-founder__quote">
+          <p>"Tôi xây trường không phải vì con tôi học ở đây. Tôi xây trường vì có một khoảng trống rất lớn giữa giáo dục Việt Nam, giáo dục thế giới và học sinh Việt Nam đang chịu thiệt thòi vì điều đó. Tôi muốn tạo ra một môi trường nơi một đứa trẻ bình thường cũng có thể phát triển tốt không bị giới hạn bởi xuất phát điểm, ngôn ngữ hay điều kiện gia đình."</p>
+          <p class="ts-founder__creed"><strong>"Tôi tin rằng: quyền được học tốt không phải đặc quyền của nhà giàu. Và một đứa trẻ bình thường, trong môi trường được thiết kế đúng, hoàn toàn có thể trở nên phi thường."</strong></p>
+        </blockquote>
+      </div>
+    </section>
+
+    <!-- ============== SECTION 11: TESTIMONIALS ============== -->
+    <section class="ts-testi">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">CẢM NHẬN CỦA PHỤ HUYNH</h2>
+        <div class="ts-testi__grid">
+          <article class="ts-testi__card">
+            <blockquote>"Hồi đầu tôi không tin con mình học được tiếng Anh ở trường này. Nhưng mới học được một năm, con đã tự xem phim hoạt hình tiếng Anh không cần phụ đề. Tôi sốc thật sự. Chưa bao giờ nghĩ điều đó lại xảy ra với con mình."</blockquote>
+            <cite>
+              <strong>Chị Hương</strong>
+              <span>Phụ huynh học sinh lớp 3 · Hệ thống Việt Anh</span>
+            </cite>
+          </article>
+          <article class="ts-testi__card">
+            <blockquote>"Con tôi trước hay nổi nóng, về nhà hay cãi. Sau một học kỳ, tự nhiên con bình tĩnh hơn, biết nói 'con xin lỗi' khi làm sai. Tôi hỏi con sao ngoan vậy, con nói 'trường dạy con đó mẹ.' Tôi khóc luôn."</blockquote>
+            <cite>
+              <strong>Anh Tuấn</strong>
+              <span>Phụ huynh học sinh lớp 2 · Hệ thống Việt Anh</span>
+            </cite>
+          </article>
+          <article class="ts-testi__card">
+            <blockquote>"Tôi và chồng đều đi làm ca, 6 giờ sáng đã đi rồi. Gửi con ở đây tôi không lo lắng gì — buổi tối mở Zalo ra là biết hôm nay con học gì, ăn gì, chơi gì. Như có người báo cáo cho mình vậy. Lần đầu tiên gửi con đi mà thấy yên tâm thật sự."</blockquote>
+            <cite>
+              <strong>Chị Lan</strong>
+              <span>Phụ huynh học sinh lớp 1 · Hệ thống Việt Anh</span>
+            </cite>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SECTION 12: TRUST FACTORS ============== -->
+    <section class="ts-trust">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">VÌ SAO PHỤ HUYNH TIN TƯỞNG CHỌN TRƯỜNG THÁI SƠN?</h2>
+        <div class="ts-trust__grid">
+          <div class="ts-trust__card">
+            <h3>💖 Tận hưởng niềm vui với sự thay đổi của con</h3>
+            <p>Rõ ràng ngay từ đầu — không phát sinh bất ngờ.</p>
+          </div>
+          <div class="ts-trust__card ts-trust__card--feature">
+            <h3>🎓 HỌC BỔNG KHAI TRƯỜNG — GIẢM 50%</h3>
+            <p>Áp dụng đến khi con hoàn thành lớp 5 — <strong>không cần gia hạn mỗi năm</strong>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SECTION 13: HỌC PHÍ CHÍNH THỨC ============== -->
+    <section class="ts-pricing">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2 ts-h2--light">💸 Học phí chính thức</h2>
+        <div class="ts-pricing__box">
+          <p class="ts-pricing__line">💰 Học phí niêm yết: <strong>3.999.000 VND/tháng</strong></p>
+          <p class="ts-pricing__line">100 học bổng đầu tiên: <strong>50%</strong></p>
+          <p class="ts-pricing__line">≈ tiết kiệm <strong>19.995.000 VND</strong> mỗi năm học</p>
+          <p class="ts-pricing__line">✔ Giữ nguyên mức học phí <strong>đến hết lớp 5</strong></p>
+        </div>
+        <p class="ts-pricing__final">👉 Phụ huynh chỉ đóng: <strong>1.999.500 VND/tháng</strong></p>
+
+        <div class="ts-gift">
+          <h3>🎁 QUÀ TẶNG ĐẶC BIỆT</h3>
+          <p><strong>50 suất học bổng Toán Tư Duy 100%</strong></p>
+          <p class="ts-gift__value">🎁 Trị giá <strong>4.856.000đ</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SECTION 14: HỌC PHÍ ĐÃ BAO GỒM ============== -->
+    <section class="ts-inclusions">
+      <div class="ts-section__inner">
+        <h2 class="ts-h2">Học phí đã bao gồm</h2>
+        <ul class="ts-inclusions__list">
+          <li>Học chính khóa theo chương trình Bộ GD-ĐT Việt Nam</li>
+          <li>Tiếng Anh với giáo viên bản ngữ · Lộ trình <strong>Starters → Movers → Flyers</strong></li>
+          <li>Chương trình kỹ năng sống <strong>5 giá trị &amp; 7 thói quen lãnh đạo</strong></li>
+          <li>Hoạt động thể chất hàng ngày · Đo thể chất định kỳ</li>
+          <li>Hệ thống kèm cặp và theo dõi tiến bộ</li>
+          <li>Khóa học <strong>Siêu ăn giỏi</strong> &amp; <strong>5 nguyên tắc sống khỏe</strong></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============== SECTION 15: CTA FORM ============== -->
+    <section class="ts-cta" id="ts-form">
+      <div class="ts-cta__inner">
+        <h2 class="ts-h2 ts-h2--light">Bước đầu để chọn đúng môi trường cho con</h2>
+        <h3 class="ts-cta__sub">ĐẶT LỊCH THAM QUAN TRƯỜNG NGAY HÔM NAY</h3>
+        <p class="ts-cta__benefits">Gặp trực tiếp ban giám hiệu. Xem lớp học thật. Trải nghiệm môi trường thật. <strong>Không áp lực. Không đặt cọc. Không ràng buộc.</strong></p>
+
+        <div class="ts-cta__form">
+          <LeadFormTwoStepEmailFirst
+            formId="truong-tieu-hoc-thai-son-form"
+            funnelCode="truong-tieu-hoc-thai-son"
+            schoolLevel="tieu-hoc"
+            submitText="GỬI NGAY"
+            successMessage="Cảm ơn! Nhà trường sẽ liên hệ trong 24h để hẹn lịch tham quan và xác nhận suất học bổng."
+          />
+        </div>
+
+        <p class="ts-cta__hint">Cần tư vấn nhanh? Chat ngay</p>
+        <div class="ts-cta__chats">
+          <a href="tel:0902095956" class="ts-btn ts-btn--phone">📞 0902 095 956</a>
+          <a href="https://zalo.me/84902095956" target="_blank" rel="noopener" class="ts-btn ts-btn--zalo">💬 Chat Zalo</a>
+          <a href="https://m.me/truongvietanhhcm" target="_blank" rel="noopener" class="ts-btn ts-btn--msgr">💬 Chat Messenger</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============== SECTION 16: FOOTER ============== -->
+    <section class="ts-footer-contact">
+      <div class="ts-section__inner">
+        <h3 class="ts-footer-contact__brand">TRƯỜNG TIỂU HỌC THÁI SƠN</h3>
+        <p class="ts-footer-contact__tag">Vận hành bởi trường Việt Anh — Major Education · Thành lập từ 2011</p>
+        <ul class="ts-footer-contact__list">
+          <li><strong>📍 Địa chỉ:</strong> Xã Long Hậu, huyện Cần Giuộc, tỉnh Long An</li>
+          <li><strong>📞 Hotline:</strong> <a href="tel:+84902095956">0902 095 956</a></li>
+          <li><strong>✉️ Email:</strong> <a href="mailto:khai.nguyen@truongvietanh.com">khai.nguyen@truongvietanh.com</a></li>
+          <li><strong>💬 Zalo:</strong> <a href="https://zalo.me/84902095956" target="_blank" rel="noopener">zalo.me/84902095956</a></li>
+          <li><strong>📘 Facebook:</strong> <a href="https://www.facebook.com/truongvietanhhcm" target="_blank" rel="noopener">facebook.com/truongvietanhhcm</a></li>
+          <li><strong>📩 Messenger:</strong> <a href="https://m.me/truongvietanhhcm" target="_blank" rel="noopener">m.me/truongvietanhhcm</a></li>
+          <li><strong>🕒 Giờ tiếp đón phụ huynh:</strong> Thứ 2 – Thứ 7, 7:00 – 17:00</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
+</BaseLayout>
+
+<style>
+  :root {
+    --ts-navy: #000080;
+    --ts-navy-dark: #00004d;
+    --ts-yellow: #ffff00;
+    --ts-soft: #f0f4ff;
+  }
+
+  .ts-page {
+    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: #1a1a2e;
+    line-height: 1.7;
+  }
+  .ts-h1, .ts-h2, .ts-h3, .ts-pillar h3, .ts-tracking__card h3, .ts-trust__card h3 { font-family: "Montserrat", sans-serif; }
+
+  .ts-section__inner {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+  }
+
+  .ts-h2 {
+    color: var(--ts-navy);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 800;
+    line-height: 1.25;
+    text-align: center;
+    margin: 0 0 1.25rem;
+    text-transform: uppercase;
+    letter-spacing: 0.01em;
+  }
+  .ts-h2--light { color: #fff; }
+  .ts-h3 {
+    color: var(--ts-navy);
+    font-size: 1.15rem;
+    font-weight: 800;
+    margin: 1.5rem 0 0.85rem;
+  }
+  .ts-h3--center { text-align: center; }
+  .ts-eyebrow {
+    display: inline-block;
+    background: var(--ts-yellow);
+    color: var(--ts-navy);
+    font-weight: 700;
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    letter-spacing: 0.03em;
+    margin-bottom: 1rem;
+  }
+  .ts-lead { font-size: 1.05rem; line-height: 1.7; margin: 0.5rem 0; }
+  .ts-lead--center { text-align: center; }
+
+  /* ============ HERO ============ */
+  .ts-hero {
+    background: linear-gradient(135deg, var(--ts-navy) 0%, var(--ts-navy-dark) 100%);
+    color: #fff;
+    padding: 3rem 1.5rem;
+    text-align: center;
+  }
+  .ts-hero__inner { max-width: 900px; margin: 0 auto; }
+  .ts-h1 {
+    font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1.25;
+    color: #fff;
+    margin: 0.5rem 0 1.25rem;
+  }
+  .ts-hero__sub {
+    font-size: 1.05rem;
+    color: rgba(255,255,255,0.92);
+    margin: 0.5rem 0 1.5rem;
+  }
+  .ts-hero__bullets {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 1rem;
+  }
+  .ts-hero__bullet {
+    background: rgba(255,255,0,0.15);
+    border: 1.5px solid var(--ts-yellow);
+    color: var(--ts-yellow);
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  /* ============ BUTTONS ============ */
+  .ts-btn {
+    display: inline-block;
+    padding: 0.95rem 1.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 700;
+    transition: transform 0.15s, box-shadow 0.15s;
+    font-size: 1rem;
+    line-height: 1.3;
+  }
+  .ts-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+  .ts-btn--primary { background: var(--ts-yellow); color: var(--ts-navy); border: 2px solid var(--ts-yellow); }
+  .ts-btn--phone { background: #27ae60; color: #fff; }
+  .ts-btn--zalo { background: #0068FF; color: #fff; }
+  .ts-btn--msgr { background: #0084FF; color: #fff; }
+
+  /* ============ FEE BANNER ============ */
+  .ts-fee-banner {
+    background: linear-gradient(180deg, #fff9e0 0%, #fff 100%);
+    padding: 2.5rem 1.5rem;
+    text-align: center;
+    border-top: 4px solid var(--ts-yellow);
+    border-bottom: 4px solid var(--ts-yellow);
+  }
+  .ts-fee-banner__inner { max-width: 720px; margin: 0 auto; }
+  .ts-fee__title {
+    color: var(--ts-navy);
+    font-size: clamp(1.4rem, 3vw, 1.9rem);
+    font-weight: 800;
+    margin: 0 0 0.5rem;
+    font-family: "Montserrat", sans-serif;
+  }
+  .ts-fee__title strong { color: #e63946; font-size: 1.2em; }
+  .ts-fee__sub { font-size: 1.05rem; color: #475569; margin: 0.25rem 0; }
+  .ts-fee__sub2 { font-size: 0.95rem; color: #e63946; font-weight: 600; margin: 0.5rem 0 1.5rem; }
+
+  /* ============ PAIN ============ */
+  .ts-pain { background: #fafbff; }
+  .ts-pain__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
+  }
+  .ts-pain__card {
+    background: #fff;
+    border-left: 4px solid #e74c3c;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  }
+  .ts-pain__icon { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+  .ts-pain__card p { font-style: italic; color: #475569; margin: 0; line-height: 1.6; }
+
+  /* ============ POSITIONING ============ */
+  .ts-positioning { background: #fff; }
+  .ts-positioning__intro {
+    font-size: 1.1rem;
+    color: #334155;
+    line-height: 1.75;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 1.5rem;
+  }
+  .ts-callout {
+    background: linear-gradient(135deg, var(--ts-navy) 0%, var(--ts-navy-dark) 100%);
+    color: var(--ts-yellow);
+    padding: 1.5rem 1.5rem;
+    border-radius: 12px;
+    font-weight: 800;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    letter-spacing: 0.02em;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    line-height: 1.4;
+  }
+
+  /* ============ BACKGROUND ============ */
+  .ts-background { background: var(--ts-soft); }
+  .ts-checklist {
+    list-style: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+  }
+  .ts-checklist li {
+    background: #fff;
+    padding: 0.85rem 1rem 0.85rem 3rem;
+    margin-bottom: 0.65rem;
+    border-radius: 10px;
+    position: relative;
+    line-height: 1.6;
+    color: #334155;
+    border-left: 4px solid #27ae60;
+  }
+  .ts-checklist li::before {
+    content: "✔";
+    position: absolute;
+    left: 1rem;
+    top: 0.85rem;
+    color: #27ae60;
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+
+  /* ============ STATS ============ */
+  .ts-stats { background: #fff; }
+  .ts-stats__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .ts-stat {
+    background: var(--ts-soft);
+    border-radius: 12px;
+    padding: 1.75rem 1.25rem;
+    text-align: center;
+    border-top: 4px solid var(--ts-yellow);
+  }
+  .ts-stat__num {
+    font-family: "Montserrat", sans-serif;
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--ts-navy);
+    margin-bottom: 0.5rem;
+    line-height: 1.1;
+  }
+  .ts-stat p { margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.5; }
+  .ts-stats__cta { text-align: center; margin-top: 1.5rem; }
+
+  /* ============ PILLARS ============ */
+  .ts-pillars { background: var(--ts-soft); }
+  .ts-pillars__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .ts-pillar {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--ts-yellow);
+    box-shadow: 0 4px 16px rgba(0,0,128,0.06);
+  }
+  .ts-pillar h3 { color: var(--ts-navy); font-size: 1.1rem; margin: 0 0 0.6rem; font-weight: 800; line-height: 1.3; }
+  .ts-pillar p { margin: 0; color: #334155; line-height: 1.6; }
+
+  /* ============ HEALTH ============ */
+  .ts-health { background: #fff; }
+  .ts-philosophy {
+    background: var(--ts-soft);
+    border-left: 4px solid var(--ts-navy);
+    padding: 1rem 1.25rem;
+    border-radius: 8px;
+    margin: 1rem 0 1.5rem;
+    color: #334155;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    text-align: center;
+  }
+  .ts-health__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 0.85rem;
+    margin: 1.25rem 0;
+  }
+  .ts-health__item {
+    background: linear-gradient(135deg, var(--ts-navy) 0%, var(--ts-navy-dark) 100%);
+    color: #fff;
+    padding: 1.25rem 1rem;
+    border-radius: 12px;
+    text-align: center;
+    font-weight: 800;
+    font-family: "Montserrat", sans-serif;
+    box-shadow: 0 4px 16px rgba(0,0,128,0.15);
+    letter-spacing: 0.02em;
+  }
+  .ts-quote {
+    margin: 1.5rem auto 0;
+    max-width: 720px;
+    background: #fff9e0;
+    border-left: 5px solid var(--ts-yellow);
+    padding: 1.25rem 1.5rem;
+    border-radius: 8px;
+    font-style: italic;
+    color: var(--ts-navy);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    text-align: center;
+  }
+
+  /* ============ TRACKING ============ */
+  .ts-tracking { background: var(--ts-soft); }
+  .ts-tracking__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .ts-tracking__card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-top: 4px solid var(--ts-yellow);
+    box-shadow: 0 4px 16px rgba(0,0,128,0.06);
+  }
+  .ts-tracking__card h3 { color: var(--ts-navy); font-size: 1.05rem; margin: 0 0 0.6rem; font-weight: 800; line-height: 1.3; }
+  .ts-tracking__card p { margin: 0; color: #334155; line-height: 1.65; font-size: 0.97rem; }
+  .ts-tracking__closing {
+    text-align: center;
+    color: var(--ts-navy);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 1.75rem 0 1rem;
+    line-height: 1.65;
+  }
+  .ts-tracking__cta { text-align: center; }
+
+  /* ============ FOUNDER ============ */
+  .ts-founder {
+    background: linear-gradient(135deg, var(--ts-navy) 0%, var(--ts-navy-dark) 100%);
+    color: #fff;
+  }
+  .ts-founder__profile {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255,255,0,0.2);
+  }
+  .ts-founder__avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--ts-yellow);
+    color: var(--ts-navy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  .ts-founder__name { color: var(--ts-yellow); font-weight: 800; font-size: 1.2rem; font-family: "Montserrat", sans-serif; }
+  .ts-founder__role { color: rgba(255,255,255,0.85); font-size: 0.95rem; }
+  .ts-founder__quote { margin: 0; padding: 0; border: 0; }
+  .ts-founder__quote p { color: rgba(255,255,255,0.95); font-size: 1.05rem; line-height: 1.75; margin: 0.85rem 0; font-style: italic; }
+  .ts-founder__creed { background: rgba(255,255,0,0.1); border-radius: 8px; padding: 1rem 1.25rem; border-left: 4px solid var(--ts-yellow); margin-top: 1rem !important; }
+  .ts-founder__creed strong { color: var(--ts-yellow); font-style: normal; }
+
+  /* ============ TESTIMONIALS ============ */
+  .ts-testi { background: #fff; }
+  .ts-testi__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .ts-testi__card {
+    background: var(--ts-soft);
+    border-radius: 12px;
+    padding: 1.5rem;
+    border-top: 4px solid var(--ts-yellow);
+  }
+  .ts-testi__card blockquote { margin: 0 0 1rem; padding: 0; color: #334155; line-height: 1.7; font-style: italic; }
+  .ts-testi__card cite { display: block; font-style: normal; border-top: 1px solid rgba(0,0,128,0.15); padding-top: 0.75rem; }
+  .ts-testi__card cite strong { display: block; color: var(--ts-navy); font-size: 1.05rem; }
+  .ts-testi__card cite span { display: block; color: #64748b; font-size: 0.9rem; }
+
+  /* ============ TRUST ============ */
+  .ts-trust { background: var(--ts-soft); }
+  .ts-trust__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.25rem;
+    margin-top: 1.5rem;
+  }
+  .ts-trust__card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.75rem;
+    text-align: center;
+    border-top: 4px solid #e6ecf7;
+    box-shadow: 0 4px 16px rgba(0,0,128,0.06);
+  }
+  .ts-trust__card--feature { border-top-color: var(--ts-yellow); background: linear-gradient(180deg, #fffceb 0%, #fff 100%); }
+  .ts-trust__card h3 { color: var(--ts-navy); font-size: 1.15rem; margin: 0 0 0.65rem; font-weight: 800; }
+  .ts-trust__card p { margin: 0; color: #475569; line-height: 1.6; }
+
+  /* ============ PRICING ============ */
+  .ts-pricing { background: linear-gradient(135deg, var(--ts-navy) 0%, var(--ts-navy-dark) 100%); color: #fff; text-align: center; }
+  .ts-pricing__box {
+    background: rgba(255,255,0,0.08);
+    border: 2px solid var(--ts-yellow);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1.25rem auto 1.5rem;
+    max-width: 600px;
+  }
+  .ts-pricing__line { font-size: 1.05rem; margin: 0.6rem 0; color: rgba(255,255,255,0.95); }
+  .ts-pricing__line strong { color: var(--ts-yellow); }
+  .ts-pricing__final {
+    background: var(--ts-yellow);
+    color: var(--ts-navy);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+    font-weight: 800;
+    margin: 1rem auto 1.5rem;
+    max-width: 600px;
+    font-family: "Montserrat", sans-serif;
+  }
+  .ts-gift {
+    background: rgba(255,255,255,0.08);
+    border-radius: 12px;
+    padding: 1.5rem;
+    max-width: 600px;
+    margin: 1rem auto 0;
+  }
+  .ts-gift h3 { color: var(--ts-yellow); font-size: 1.15rem; margin: 0 0 0.5rem; font-weight: 800; }
+  .ts-gift p { color: #fff; margin: 0.35rem 0; font-size: 1.05rem; }
+  .ts-gift__value strong { color: var(--ts-yellow); }
+
+  /* ============ INCLUSIONS ============ */
+  .ts-inclusions { background: var(--ts-soft); }
+  .ts-inclusions__list {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+  }
+  .ts-inclusions__list li {
+    background: #fff;
+    padding: 0.85rem 1rem 0.85rem 3rem;
+    margin-bottom: 0.65rem;
+    border-radius: 10px;
+    position: relative;
+    line-height: 1.6;
+    color: #334155;
+    border-left: 4px solid #27ae60;
+    box-shadow: 0 2px 8px rgba(0,0,128,0.04);
+  }
+  .ts-inclusions__list li::before {
+    content: "✔";
+    position: absolute;
+    left: 1rem;
+    top: 0.85rem;
+    color: #27ae60;
+    font-weight: 800;
+    font-size: 1.2rem;
+  }
+  .ts-inclusions__list strong { color: var(--ts-navy); }
+
+  /* ============ CTA ============ */
+  .ts-cta { background: linear-gradient(135deg, var(--ts-navy) 0%, var(--ts-navy-dark) 100%); color: #fff; }
+  .ts-cta__inner { max-width: 580px; margin: 0 auto; padding: 3rem 1.5rem; text-align: center; }
+  .ts-cta__sub { color: var(--ts-yellow); font-size: clamp(1.1rem, 2.5vw, 1.4rem); margin: 0.5rem 0 0.85rem; font-family: "Montserrat", sans-serif; font-weight: 800; }
+  .ts-cta__benefits { color: rgba(255,255,255,0.9); margin: 0 0 1.5rem; line-height: 1.65; }
+  .ts-cta__form {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.5rem 1.35rem;
+    margin: 1rem 0;
+    text-align: left;
+  }
+  .ts-cta__hint { color: rgba(255,255,255,0.85); margin: 1.25rem 0 0.5rem; font-size: 0.95rem; }
+  .ts-cta__chats { display: flex; gap: 0.65rem; justify-content: center; flex-wrap: wrap; }
+
+  /* Override LeadForm bg for light cta__form card */
+  .ts-cta__form :global(.form-step-title) { color: var(--ts-navy); }
+  .ts-cta__form :global(.form-step-description) { color: #475569; }
+  .ts-cta__form :global(.form-social-proof) { color: var(--ts-navy); }
+  .ts-cta__form :global(.form-progress__label) { color: rgba(0,0,128,0.6); }
+  .ts-cta__form :global(.form-progress__step--active .form-progress__label),
+  .ts-cta__form :global(.form-progress__step--done .form-progress__label) { color: var(--ts-navy); }
+
+  /* ============ FOOTER ============ */
+  .ts-footer-contact { background: #0f172a; color: #fff; }
+  .ts-footer-contact .ts-section__inner { padding: 2.5rem 1.5rem; }
+  .ts-footer-contact__brand { color: var(--ts-yellow); font-family: "Montserrat", sans-serif; font-size: 1.3rem; font-weight: 800; margin: 0 0 0.35rem; text-align: center; }
+  .ts-footer-contact__tag { color: rgba(255,255,255,0.7); font-size: 0.9rem; text-align: center; margin: 0 0 1.5rem; }
+  .ts-footer-contact__list { list-style: none; padding: 0; margin: 0 auto; max-width: 580px; }
+  .ts-footer-contact__list li { padding: 0.6rem 0; border-bottom: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); font-size: 0.95rem; }
+  .ts-footer-contact__list li:last-child { border-bottom: 0; }
+  .ts-footer-contact__list strong { color: var(--ts-yellow); }
+  .ts-footer-contact__list a { color: var(--ts-yellow); text-decoration: none; }
+  .ts-footer-contact__list a:hover { text-decoration: underline; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 640px) {
+    .ts-section__inner { padding: 2rem 1rem; }
+    .ts-hero { padding: 2rem 1rem; }
+    .ts-fee-banner { padding: 2rem 1rem; }
+  }
 </style>

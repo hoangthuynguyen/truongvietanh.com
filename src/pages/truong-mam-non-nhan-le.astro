@@ -1,0 +1,183 @@
+---
+import SqueezePageLayout from '../layouts/SqueezePageLayout.astro';
+import USPGrid from '../components/USPGrid.astro';
+import TrustMetrics from '../components/TrustMetrics.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FAQSection from '../components/FAQSection.astro';
+
+const pageTitle = "Trường Mầm Non Nhân Lễ — Long Hậu, Cần Giuộc | Trường Việt Anh";
+const pageDescription = "Trường Mầm Non Nhân Lễ tại KDC Long Hậu, Cần Giuộc, Long An — 100% tiếng Anh với giáo viên bản xứ, kỹ năng sống Leader In Me (Franklin Covey), triết lý Vui Vẻ & Thực Dụng. Hotline 0774 588 988.";
+const pageCanonical = "https://truongvietanh.com/truong-mam-non-nhan-le";
+
+const uspItems = [
+  { icon: "🌍", text: "100% chương trình tiếng Anh — giáo viên bản xứ + Việt Nam, trẻ phát âm chuẩn bản ngữ" },
+  { icon: "🧭", text: "Leader In Me — chương trình kỹ năng sống chuẩn Franklin Covey (Hoa Kỳ)" },
+  { icon: "🏫", text: "Khuôn viên 4.000 m², sức chứa 300 trẻ, 50 giáo viên — khánh thành 15/9/2022" },
+  { icon: "💛", text: "Môi trường Vui Vẻ & Thực Dụng — trẻ tự chủ, dân chủ, được tôn trọng" },
+  { icon: "📋", text: "Học phí minh bạch, 3 gói (High Quality · Bilingual · Premium) — không chi phí ẩn" },
+  { icon: "⏰", text: "Giờ học 8:00 – 17:30, độ tuổi 18 tháng – 5 tuổi, đưa đón an toàn" },
+];
+
+const metrics = [
+  { number: '4,000', label: 'm² khuôn viên trường' },
+  { number: '300', label: 'Sức chứa học sinh' },
+  { number: '50', label: 'Giáo viên Việt Nam & bản xứ' },
+  { number: '5', label: 'Giá trị cốt lõi: Tôn trọng · Trách nhiệm · Tài giỏi · Chính trực · Yêu thương' },
+];
+
+const faqItems = [
+  {
+    question: "Trường Mầm Non Nhân Lễ nhận trẻ từ độ tuổi nào?",
+    answer: "Trường nhận trẻ từ 18 tháng đến 5 tuổi. Giờ học từ 8:00 đến 17:30, từ thứ 2 đến thứ 6 (có nhận trông thứ 7 nếu phụ huynh đăng ký trước)."
+  },
+  {
+    question: "Học phí gồm những gói nào?",
+    answer: "Trường có 3 gói: High Quality 3.390.000 đ/tháng (tiền ăn 1.606.000 đ), Bilingual 6.000.000 đ/tháng (tiền ăn 2.178.000 đ), Premium 6.820.000 đ/tháng (tiền ăn 2.178.000 đ). Phí năm gồm cơ sở vật chất, sinh trắc học, đồng phục, chăn nệm, học liệu — minh bạch trong bảng giá chi tiết gửi qua email."
+  },
+  {
+    question: "Chương trình tiếng Anh được dạy như thế nào?",
+    answer: "100% các hoạt động trong ngày (trừ môn tiếng Việt) đều bằng tiếng Anh — bởi giáo viên bản xứ kết hợp giáo viên Việt Nam. Trẻ học tiếng Anh theo cách trẻ em bản xứ học tiếng mẹ đẻ: nghe, nói, chơi, sinh hoạt — không nhồi từ vựng."
+  },
+  {
+    question: "Leader In Me là chương trình gì?",
+    answer: "Là chương trình giáo dục kỹ năng sống bản quyền của Franklin Covey (Hoa Kỳ), dựa trên 7 thói quen hiệu quả của Stephen R. Covey. Trẻ được hình thành tư duy chủ động, lên kế hoạch độc lập, hợp tác cùng bạn — nền tảng vững vàng cho tiểu học."
+  },
+  {
+    question: "Quy trình ghi danh ra sao?",
+    answer: "4 bước: (1) Tư vấn qua hotline hoặc Zalo, (2) Tham quan trường — gặp giáo viên, xem lớp, xem bếp ăn, (3) Quyết định nhận học, (4) Hoàn thiện hồ sơ nhập học. Hỗ trợ phụ huynh trọn vẹn từng bước."
+  },
+  {
+    question: "Trường có thuộc hệ thống nào không?",
+    answer: "Có. Trường Mầm Non Nhân Lễ thuộc hệ thống Trường Liên Cấp Việt Anh — đã hoạt động liên tục từ 2011, hiện có cơ sở tại TP.HCM, Long An và Kiên Giang."
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonicalUrl={pageCanonical}
+  schoolLevel="mam-non"
+  funnelCode="truong-mam-non-nhan-le"
+>
+  <section slot="hero">
+    <h1 class="squeeze-hero__heading">Trường Mầm Non Nhân Lễ — Học Tiếng Anh Như Trẻ Em Bản Xứ</h1>
+    <p class="squeeze-hero__subheading">
+      Khuôn viên 4.000 m² tại KDC Long Hậu, Cần Giuộc · 100% chương trình tiếng Anh · Kỹ năng sống Leader In Me chuẩn Franklin Covey · Thuộc hệ thống Trường Việt Anh từ 2011.
+    </p>
+  </section>
+
+  <section slot="usp"><USPGrid title="Vì sao chọn Trường Mầm Non Nhân Lễ?" items={uspItems} /></section>
+  <section slot="trust"><TrustMetrics title="Trường Mầm Non Nhân Lễ trong số liệu" metrics={metrics} /></section>
+
+  <section slot="content">
+    <div class="page-content">
+      <h2>Phần lớn thời gian Mầm Non của trẻ đang trôi qua mà không học tập được gì</h2>
+      <p>Trường Mầm Non Nhân Lễ tận dụng <strong>thời điểm vàng của não bộ</strong> — giai đoạn 18 tháng đến 5 tuổi — để giúp trẻ em học tiếng Anh theo cách mà trẻ em đã học tiếng Việt: tự nhiên, qua nghe, chơi, sinh hoạt và tương tác mỗi ngày. Nhờ đó, học sinh Mầm Non Nhân Lễ có được <strong>phát âm như người bản xứ</strong>, chứ không phải học vẹt từ vựng.</p>
+
+      <h3>Triết lý: Vui Vẻ &amp; Thực Dụng</h3>
+      <p>Trường Mầm Non Nhân Lễ thừa hưởng triết lý <strong>Vui Vẻ và Thực Dụng</strong> từ hệ thống Trường Việt Anh — đã được chứng minh trong suốt 15 năm (từ 2011). Trẻ tự chủ động tương tác với con người, vật liệu và ý tưởng. Trẻ tự lên kế hoạch và thực hiện hoạt động do mình lựa chọn — trong một môi trường <em>dân chủ, được tôn trọng và được phép mắc sai lầm để học hỏi</em>.</p>
+
+      <h3>Sứ mệnh &amp; Tầm nhìn</h3>
+      <ul>
+        <li><strong>Sứ mệnh:</strong> Giúp học sinh khám phá thế giới, hình thành các kỹ năng cảm xúc, xã hội, tư duy — trong môi trường tiếng Anh.</li>
+        <li><strong>Tầm nhìn:</strong> Phát triển khả năng tiếng Anh tự nhiên ở trẻ, giúp các em hiểu năng khiếu của bản thân và hoà nhập tích cực vào cộng đồng.</li>
+      </ul>
+
+      <h3>5 giá trị cốt lõi</h3>
+      <p><strong>Tôn trọng &amp; Tự trọng</strong> · <strong>Trách nhiệm</strong> · <strong>Tài giỏi</strong> · <strong>Chính trực</strong> · <strong>Yêu thương</strong>. Năm giá trị này được lồng vào mọi hoạt động hằng ngày — từ giờ ăn, giờ chơi, giờ học đến giờ ngủ trưa.</p>
+
+      <h2>Chương trình đào tạo</h2>
+      <h3>1. Chương trình tiếng Anh (100% Anh ngữ)</h3>
+      <p>Tất cả các hoạt động — trừ môn Tiếng Việt — đều diễn ra hoàn toàn bằng tiếng Anh. Giáo viên bản xứ kết hợp giáo viên Việt Nam vững chuyên môn, giúp trẻ học ngôn ngữ tự nhiên ngay từ giai đoạn vàng của não bộ.</p>
+
+      <h3>2. Chương trình kỹ năng sống — Leader In Me</h3>
+      <p>Trường triển khai <strong>Leader In Me</strong> của Franklin Covey (Hoa Kỳ), dựa trên <em>7 thói quen hiệu quả</em> của Stephen R. Covey. Trẻ học cách lên kế hoạch độc lập, làm việc nhóm, đưa ra lựa chọn có trách nhiệm — những phẩm chất quyết định thành công lâu dài, không phải chỉ điểm số.</p>
+
+      <h3>3. Phát triển toàn diện — chuẩn bị cho Tiểu học</h3>
+      <p>Học sinh tốt nghiệp Mầm Non Nhân Lễ có nền tảng tiếng Anh vững, kỹ năng tự phục vụ thuần thục, biết tự lên kế hoạch — sẵn sàng cho hành trình tiểu học chất lượng cao.</p>
+
+      <h2>Cơ sở vật chất</h2>
+      <ul>
+        <li><strong>Khuôn viên 4.000 m²</strong> tại Khu Dân Cư Long Hậu — không gian xanh, an toàn cho trẻ vận động</li>
+        <li><strong>Phòng học</strong> thiết kế riêng theo lứa tuổi, ánh sáng tự nhiên, không gian mở</li>
+        <li><strong>Phòng thí nghiệm</strong> kích thích tò mò khoa học cho trẻ</li>
+        <li><strong>Thư viện</strong> sách song ngữ phong phú, hỗ trợ giờ đọc cùng cô</li>
+        <li><strong>Nhà ăn</strong> sạch sẽ, dinh dưỡng tươi mới mỗi ngày, không thực phẩm chế biến sẵn</li>
+        <li><strong>Sân chơi</strong> ngoài trời an toàn — phát triển thể chất và vận động tinh – thô</li>
+        <li><strong>Phòng giáo viên</strong> chuyên biệt — đảm bảo môi trường làm việc chuyên nghiệp</li>
+      </ul>
+
+      <h2>Học phí 2026 (minh bạch, không chi phí ẩn)</h2>
+      <div class="fee-grid">
+        <div class="fee-card">
+          <div class="fee-name">High Quality</div>
+          <div class="fee-price">3.390.000 đ<span>/tháng</span></div>
+          <p>Tiền ăn: <strong>1.606.000 đ/tháng</strong></p>
+        </div>
+        <div class="fee-card fee-card--feature">
+          <div class="fee-name">Bilingual</div>
+          <div class="fee-price">6.000.000 đ<span>/tháng</span></div>
+          <p>Tiền ăn: <strong>2.178.000 đ/tháng</strong></p>
+        </div>
+        <div class="fee-card">
+          <div class="fee-name">Premium</div>
+          <div class="fee-price">6.820.000 đ<span>/tháng</span></div>
+          <p>Tiền ăn: <strong>2.178.000 đ/tháng</strong></p>
+        </div>
+      </div>
+      <p><strong>Phí năm (chung cho 3 gói):</strong> Cơ sở vật chất 5.000.000 đ · Sinh trắc học nhập học 2.200.000 đ · Đồng phục + ba-lô 800.000 đ · Bộ chăn nệm 500.000 đ · Học liệu 1.200.000 đ. Sữa hộp 180ml: 12.000 đ/hộp.</p>
+      <p><em>Để nhận bảng giá chi tiết kèm các ưu đãi đầu năm, vui lòng để lại email — đội tuyển sinh phản hồi trong 24h.</em></p>
+
+      <h2>Quy trình ghi danh</h2>
+      <ol>
+        <li><strong>Tư vấn</strong> qua hotline / Zalo — đội tuyển sinh phản hồi trong 24h</li>
+        <li><strong>Tham quan trường</strong> — gặp giáo viên, xem lớp, xem bếp ăn, xem sân chơi</li>
+        <li><strong>Quyết định nhận học</strong> — bố mẹ &amp; trẻ thoải mái với môi trường</li>
+        <li><strong>Hoàn thiện hồ sơ nhập học</strong> — trường hỗ trợ trọn vẹn từng bước</li>
+      </ol>
+
+      <h2>Thông tin liên hệ</h2>
+      <ul>
+        <li><strong>Địa chỉ:</strong> Khu Dân Cư Long Hậu, xã Cần Giuộc, tỉnh Tây Ninh (Long An cũ)</li>
+        <li><strong>Hotline:</strong> 0774 588 988 · 0899 093 988</li>
+        <li><strong>Email:</strong> hoc@truongvietanh.com</li>
+        <li><strong>Giờ làm việc:</strong> 8:00 – 17:30, thứ 2 – thứ 6</li>
+      </ul>
+    </div>
+  </section>
+
+  <section slot="form">
+    <h2 class="squeeze-form-section__heading">Đăng ký tham quan &amp; nhận bảng giá Mầm Non Nhân Lễ</h2>
+    <p class="squeeze-form-section__description">Đội tuyển sinh phản hồi trong 24h. Hỗ trợ đặt lịch tham quan trực tiếp, gặp giáo viên, gửi bảng giá đầy đủ.</p>
+    <LeadFormTwoStepEmailFirst
+      formId="truong-mam-non-nhan-le-form"
+      funnelCode="truong-mam-non-nhan-le"
+      schoolLevel="mam-non"
+      submitText="Đặt lịch tham quan"
+      successMessage="Cảm ơn! Đội tuyển sinh sẽ liên hệ trong 24h để hẹn lịch tham quan."
+    />
+  </section>
+
+  <section slot="faq"><FAQSection title="Câu hỏi thường gặp về Trường Mầm Non Nhân Lễ" items={faqItems} /></section>
+</SqueezePageLayout>
+
+<style is:inline>
+  .page-content { max-width: 820px; margin: 0 auto; padding: 1rem 0; }
+  .page-content h2 { color: #000080; font-size: 1.6rem; margin: 2rem 0 1rem; }
+  .page-content h3 { color: #000080; font-size: 1.2rem; margin: 1.5rem 0 .75rem; }
+  .page-content p { font-size: 1rem; line-height: 1.75; color: #333; margin-bottom: 1rem; }
+  .page-content ul, .page-content ol { margin: 1rem 0 1rem 1.5rem; }
+  .page-content li { margin-bottom: .5rem; line-height: 1.7; color: #333; }
+  .page-content strong { color: #000080; font-weight: 700; }
+  .page-content em { color: #475569; }
+
+  .fee-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin: 1.25rem 0; }
+  .fee-card { background: #f8faff; border: 2px solid #e6ecf7; border-radius: 12px; padding: 1.25rem; text-align: center; }
+  .fee-card--feature { border-color: #ffff00; background: linear-gradient(180deg, #fffceb 0%, #fff 100%); position: relative; }
+  .fee-card--feature::before { content: "Phổ biến nhất"; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #000080; color: #ffff00; font-size: .7rem; padding: .2rem .65rem; border-radius: 999px; font-weight: 700; letter-spacing: .03em; }
+  .fee-name { font-family: "Montserrat", sans-serif; font-weight: 800; color: #000080; font-size: 1.05rem; margin-bottom: .35rem; letter-spacing: .03em; text-transform: uppercase; }
+  .fee-price { font-family: "Montserrat", sans-serif; font-size: 1.6rem; font-weight: 800; color: #000080; line-height: 1.1; margin-bottom: .35rem; }
+  .fee-price span { font-size: .85rem; font-weight: 500; color: #64748b; }
+  .fee-card p { font-size: .9rem; color: #475569; margin: 0; }
+</style>

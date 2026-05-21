@@ -66,13 +66,18 @@ export default {
     }
 
     // Handle CORS preflight
-    if (request.method === 'OPTIONS' && url.pathname === '/api/lead') {
+    if (request.method === 'OPTIONS' && (url.pathname === '/api/lead' || url.pathname === '/api/khieu-nai')) {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
 
     // Handle lead form submissions
     if (request.method === 'POST' && url.pathname === '/api/lead') {
       return handleLeadSubmission(request, env);
+    }
+
+    // Handle complaint form submissions — endpoint riêng, KHÔNG mix với sales lead pipeline
+    if (request.method === 'POST' && url.pathname === '/api/khieu-nai') {
+      return handleKhieuNaiSubmission(request, env);
     }
 
     // Handle report page redirect (short URL for Zalo/Email)
@@ -1568,4 +1573,244 @@ function jsonResponse(data, status = 200) {
       ...CORS_HEADERS,
     },
   });
+}
+
+// ============================================================
+// === KHIẾU NẠI — endpoint riêng, KHÔNG fan-out GHL/Pancake ===
+// ============================================================
+
+const KHIEU_NAI_DPO_EMAIL = 'tu@truongvietanh.com';
+const KHIEU_NAI_CHU_TICH_EMAIL = 'duong@truongvietanh.com';
+
+// Cơ sở → email hiệu trưởng (đầu mối tiếp nhận theo Quy trình Khiếu nại v1.0)
+const KHIEU_NAI_DAU_MOI = {
+  'vietanh-govap':   { ten: 'Ông Phạm Nguyễn Phương Duy', email: 'phuongduy@truongvietanh.com', coSo: 'Việt Anh Gò Vấp' },
+  'vietanh-binhtan': { ten: 'Bà Trần Thị Ngọc Tuyền',     email: 'tuyen@truongvietanh.com',     coSo: 'Việt Anh Bình Tân' },
+  'mgis':            { ten: 'Ông Phạm Nhựt',              email: 'nhut.pham@mgis.edu.vn',       coSo: 'MGIS (Mekong Xanh)' },
+  'vietanh-nhanle':  { ten: 'Ông Nguyễn Duy Khải',        email: 'khai.nguyen@truongvietanh.com', coSo: 'Việt Anh Nhân Lễ' },
+  'vietanh-thaison': { ten: 'Ông Nguyễn Duy Khải',        email: 'khai.nguyen@truongvietanh.com', coSo: 'Việt Anh Thái Sơn' },
+  'he-thong':        { ten: 'Bà Phạm Thị Cẩm Tú (Phó CT)', email: 'tu@truongvietanh.com',        coSo: 'Liên quan nhiều cơ sở / Toàn hệ thống' },
+  'khac':            { ten: 'Bà Phạm Thị Cẩm Tú (Phó CT)', email: 'tu@truongvietanh.com',        coSo: 'Khác / Chưa rõ' },
+};
+
+async function handleKhieuNaiSubmission(request, env) {
+  let data;
+  try {
+    data = await request.json();
+  } catch {
+    return jsonResponse({ ok: false, error: 'invalid_json' }, 400);
+  }
+
+  // === Validation: required fields ===
+  const required = ['name', 'phone', 'email', 'co_so', 'noi_dung'];
+  for (const field of required) {
+    if (!data[field] || !String(data[field]).trim()) {
+      return jsonResponse({ ok: false, error: 'missing_field', field }, 400);
+    }
+  }
+  // 3 checkbox cam kết bắt buộc
+  if (!data.cam_doan || !data.cam_ket_bao_mat || !data.dong_y_dieu_khoan) {
+    return jsonResponse({ ok: false, error: 'missing_consent' }, 400);
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+    return jsonResponse({ ok: false, error: 'invalid_email' }, 400);
+  }
+
+  const phone = normalizePhone(data.phone);
+  const name = String(data.name).trim();
+  const email = String(data.email).trim().toLowerCase();
+  const coSoKey = String(data.co_so).trim();
+  const dauMoi = KHIEU_NAI_DAU_MOI[coSoKey] || KHIEU_NAI_DAU_MOI['khac'];
+
+  // === Idempotency: cùng email + cùng noi_dung snippet trong vòng 1 giờ → reject ===
+  if (env.LEAD_DEDUPE) {
+    try {
+      const snippet = String(data.noi_dung).slice(0, 80).toLowerCase().replace(/\s+/g, ' ');
+      const hourBucket = Math.floor(Date.now() / 3600000);
+      const raw = `kn:${email}|${snippet}|${hourBucket}`;
+      const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(raw));
+      const dupeKey = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+      const existing = await env.LEAD_DEDUPE.get(`kn:${dupeKey}`);
+      if (existing) {
+        return jsonResponse({ ok: false, error: 'duplicate', ma_khieu_nai: existing }, 409);
+      }
+      // Sẽ put sau khi cấp mã
+      var _dedupeKey = `kn:${dupeKey}`;
+    } catch {}
+  }
+
+  // === Cấp mã khiếu nại: KN-YYYYMMDD-XXXX ===
+  const now = new Date();
+  const ymd = now.toISOString().slice(0, 10).replace(/-/g, '');
+  const rand = Array.from(crypto.getRandomValues(new Uint8Array(3)))
+    .map(b => b.toString(16).padStart(2, '0')).join('').toUpperCase().slice(0, 5);
+  const maKhieuNai = `KN-${ymd}-${rand}`;
+
+  if (env.LEAD_DEDUPE && typeof _dedupeKey === 'string') {
+    try {
+      await env.LEAD_DEDUPE.put(_dedupeKey, maKhieuNai, { expirationTtl: 3600 });
+    } catch {}
+  }
+
+  // === Email payload chung ===
+  const relationLabel = {
+    'phu-huynh': 'Phụ huynh',
+    'nguoi-giam-ho': 'Người giám hộ hợp pháp',
+    'hoc-sinh': 'Học sinh',
+    'cuu-hoc-sinh': 'Cựu học sinh',
+    'nhan-vien': 'Nhân viên / Cựu nhân viên',
+    'khac': 'Khác',
+  }[data.relation] || '—';
+
+  const ipAddr = request.headers.get('CF-Connecting-IP') || '—';
+  const userAgent = data.user_agent || '—';
+  const submittedAt = new Date().toLocaleString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' });
+
+  // === Email cho NỘI BỘ (DPO + hiệu trưởng cơ sở) ===
+  const internalSubject = `[KHIẾU NẠI ${maKhieuNai}] ${dauMoi.coSo} — ${escHtml(name)}`;
+  const internalBody = `
+<div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:20px;background:#f5f7fa;">
+  <div style="background:#000080;color:#fff;padding:18px 20px;border-radius:8px 8px 0 0;">
+    <h2 style="margin:0;font-size:18px;">🔔 Đơn khiếu nại mới — ${escHtml(maKhieuNai)}</h2>
+    <p style="margin:6px 0 0;font-size:13px;opacity:0.9;">Theo Quy trình Giải quyết Khiếu nại v1.0 · SLA xác nhận: 3 ngày làm việc</p>
+  </div>
+  <div style="background:#fff;padding:20px;border-radius:0 0 8px 8px;">
+    <table style="width:100%;border-collapse:collapse;font-size:14px;">
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;width:38%;">Mã khiếu nại</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-family:monospace;font-size:15px;color:#000080;">${escHtml(maKhieuNai)}</td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Cơ sở liên quan</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><strong>${escHtml(dauMoi.coSo)}</strong></td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Đầu mối xử lý</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(dauMoi.ten)} — <a href="mailto:${escHtml(dauMoi.email)}">${escHtml(dauMoi.email)}</a></td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Họ tên người khiếu nại</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(name)}</td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Mối quan hệ với HS</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(relationLabel)}</td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Số điện thoại</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><a href="tel:${escHtml(phone)}">${escHtml(phone)}</a></td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Email</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><a href="mailto:${escHtml(email)}">${escHtml(email)}</a></td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Nhân sự liên quan</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(data.nhan_su || '—')}</td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Thời gian / địa điểm</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(data.thoi_gian || '—')}</td></tr>
+    </table>
+
+    <h3 style="margin:18px 0 8px;color:#000080;font-size:15px;">📝 Mô tả vụ việc</h3>
+    <div style="background:#f8fafc;padding:12px 14px;border-left:4px solid #000080;border-radius:4px;white-space:pre-wrap;font-size:14px;line-height:1.6;">${escHtml(data.noi_dung)}</div>
+
+    <h3 style="margin:18px 0 8px;color:#000080;font-size:15px;">🎯 Mong muốn giải quyết</h3>
+    <div style="background:#f8fafc;padding:12px 14px;border-left:4px solid #f59e0b;border-radius:4px;white-space:pre-wrap;font-size:14px;line-height:1.6;">${escHtml(data.mong_muon || '(Không nêu)')}</div>
+
+    <div style="background:#fef3c7;border:1px solid #fbbf24;border-radius:6px;padding:12px;margin-top:18px;font-size:13px;color:#78350f;">
+      <strong>⚠️ Hành động cần thực hiện (theo SLA):</strong><br>
+      • <strong>Trong 3 ngày làm việc</strong>: gửi xác nhận tiếp nhận đến người khiếu nại (đã tự động gửi email xác nhận kèm mã ${escHtml(maKhieuNai)}).<br>
+      • <strong>Trong 5 ngày tiếp theo</strong>: phân loại mức độ và phân công điều tra viên.<br>
+      • <strong>Trong 30 ngày làm việc</strong>: gửi văn bản trả lời chính thức (có thể gia hạn lên 60 ngày nếu phức tạp).<br>
+      • Nếu liên quan <strong>an toàn học sinh</strong>: báo CT HĐT trong 2 giờ, phản hồi sơ bộ trong 24 giờ.<br>
+      • Nếu là <strong>yêu cầu dữ liệu cá nhân</strong> (NĐ 13/2023): phản hồi cứng 72 giờ.
+    </div>
+
+    <table style="width:100%;border-collapse:collapse;font-size:12px;color:#64748b;margin-top:18px;">
+      <tr><td style="padding:4px 8px;">Gửi lúc</td><td style="padding:4px 8px;">${escHtml(submittedAt)} (giờ VN)</td></tr>
+      <tr><td style="padding:4px 8px;">IP</td><td style="padding:4px 8px;font-family:monospace;">${escHtml(ipAddr)}</td></tr>
+      <tr><td style="padding:4px 8px;">User-Agent</td><td style="padding:4px 8px;font-family:monospace;font-size:11px;">${escHtml(userAgent.slice(0, 200))}</td></tr>
+      <tr><td style="padding:4px 8px;">Trang gửi</td><td style="padding:4px 8px;"><a href="${escHtml(data.page || '')}">${escHtml(data.page || '—')}</a></td></tr>
+    </table>
+  </div>
+</div>`.trim();
+
+  // === Email xác nhận cho NGƯỜI KHIẾU NẠI ===
+  const userSubject = `[Trường Việt Anh] Đã tiếp nhận đơn khiếu nại của bạn — Mã ${maKhieuNai}`;
+  const userBody = `
+<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
+  <div style="background:linear-gradient(135deg,#000080,#1e3a8a);color:#fff;padding:24px 20px;border-radius:8px 8px 0 0;text-align:center;">
+    <h2 style="margin:0;font-size:20px;">✓ Đã tiếp nhận đơn khiếu nại</h2>
+    <p style="margin:10px 0 0;font-size:14px;opacity:0.9;">Hệ thống Trường Việt Anh</p>
+  </div>
+  <div style="background:#fff;padding:24px 20px;border:1px solid #e2e8f0;border-top:none;border-radius:0 0 8px 8px;">
+    <p style="font-size:15px;color:#0f172a;margin:0 0 16px;">Kính gửi <strong>${escHtml(name)}</strong>,</p>
+    <p style="font-size:14px;color:#334155;line-height:1.6;margin:0 0 16px;">Trường Việt Anh đã nhận được đơn khiếu nại của quý vị. Mã khiếu nại để tra cứu và bổ sung tài liệu:</p>
+
+    <div style="background:#f0fdf4;border:2px dashed #10b981;border-radius:8px;padding:18px;text-align:center;margin:16px 0;">
+      <p style="margin:0 0 6px;font-size:13px;color:#065f46;">MÃ KHIẾU NẠI</p>
+      <p style="margin:0;font-family:'Courier New',monospace;font-size:22px;font-weight:800;color:#065f46;letter-spacing:0.05em;">${escHtml(maKhieuNai)}</p>
+    </div>
+
+    <h3 style="color:#000080;font-size:15px;margin:20px 0 10px;">⏱ Thời hạn cam kết</h3>
+    <ul style="font-size:14px;color:#334155;line-height:1.7;padding-left:20px;margin:0;">
+      <li>Xác nhận tiếp nhận & phân công đầu mối: <strong>03 ngày làm việc</strong></li>
+      <li>Văn bản trả lời chính thức: tối đa <strong>30 ngày làm việc</strong> (có thể gia hạn 60 ngày với vụ phức tạp — sẽ thông báo trước)</li>
+      <li>Yêu cầu liên quan dữ liệu cá nhân (NĐ 13/2023): <strong>72 giờ</strong> (không gia hạn)</li>
+      <li>Khẩn cấp an toàn học sinh: phản hồi sơ bộ trong <strong>24 giờ</strong></li>
+    </ul>
+
+    <h3 style="color:#000080;font-size:15px;margin:20px 0 10px;">📎 Gửi tài liệu bổ sung</h3>
+    <p style="font-size:14px;color:#334155;line-height:1.6;margin:0;">Nếu quý vị có tài liệu, hình ảnh, video chứng cứ, vui lòng gửi qua email <a href="mailto:${KHIEU_NAI_DPO_EMAIL}" style="color:#000080;font-weight:600;">${KHIEU_NAI_DPO_EMAIL}</a> và <strong>ghi rõ mã ${escHtml(maKhieuNai)}</strong> trong tiêu đề email.</p>
+
+    <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:12px 16px;margin:20px 0;border-radius:4px;">
+      <p style="margin:0;font-size:14px;color:#78350f;line-height:1.5;">
+        <strong>⚠️ Nếu khẩn cấp về an toàn học sinh</strong>, vui lòng gọi ngay Hotline <a href="tel:0916961409" style="color:#b45309;font-weight:800;">0916&nbsp;961&nbsp;409</a> để được hỗ trợ ngay.
+      </p>
+    </div>
+
+    <h3 style="color:#000080;font-size:15px;margin:20px 0 10px;">🤝 Cam kết của Trường</h3>
+    <ul style="font-size:14px;color:#334155;line-height:1.7;padding-left:20px;margin:0;">
+      <li><strong>Bảo mật</strong> danh tính người khiếu nại theo Quy trình v1.0</li>
+      <li><strong>Không trả thù</strong> dưới bất kỳ hình thức nào với người khiếu nại có thiện chí</li>
+      <li><strong>Miễn phí</strong> hoàn toàn quá trình tiếp nhận và giải quyết</li>
+    </ul>
+
+    <p style="font-size:14px;color:#334155;margin:20px 0 0;line-height:1.6;">Trân trọng,<br><strong>Ban Pháp chế — Hệ thống Trường Việt Anh</strong><br>Email: <a href="mailto:${KHIEU_NAI_DPO_EMAIL}" style="color:#000080;">${KHIEU_NAI_DPO_EMAIL}</a> · Hotline: <a href="tel:0916961409" style="color:#000080;">0916 961 409</a></p>
+
+    <p style="font-size:12px;color:#94a3b8;margin-top:20px;text-align:center;border-top:1px solid #e2e8f0;padding-top:14px;">Email tự động xác nhận từ <a href="https://truongvietanh.com/khieu-nai" style="color:#94a3b8;">truongvietanh.com/khieu-nai</a> · Vui lòng không reply email này.</p>
+  </div>
+</div>`.trim();
+
+  // === Gửi 2 email song song ===
+  // Email 1: nội bộ (DPO + hiệu trưởng cơ sở + CC chủ tịch)
+  // Email 2: xác nhận cho người khiếu nại
+  const internalTo = [{ email: KHIEU_NAI_DPO_EMAIL, name: 'Ban Pháp chế Việt Anh' }];
+  if (dauMoi.email && dauMoi.email !== KHIEU_NAI_DPO_EMAIL) {
+    internalTo.push({ email: dauMoi.email, name: dauMoi.ten });
+  }
+
+  const sendInternal = fetch('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      personalizations: [{
+        to: internalTo,
+        cc: [{ email: KHIEU_NAI_CHU_TICH_EMAIL, name: 'Chủ tịch HĐT' }],
+      }],
+      from: { email: 'phap-che@truongvietanh.com', name: 'Hệ thống Khiếu nại Việt Anh' },
+      reply_to: { email: email, name: name },
+      subject: internalSubject,
+      content: [{ type: 'text/html', value: internalBody }],
+    }),
+  }).catch(() => null);
+
+  const sendUser = fetch('https://api.mailchannels.net/tx/v1/send', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      personalizations: [{ to: [{ email: email, name: name }] }],
+      from: { email: 'phap-che@truongvietanh.com', name: 'Trường Việt Anh - Ban Pháp chế' },
+      reply_to: { email: KHIEU_NAI_DPO_EMAIL, name: 'DPO Trường Việt Anh' },
+      subject: userSubject,
+      content: [{ type: 'text/html', value: userBody }],
+    }),
+  }).catch(() => null);
+
+  await Promise.allSettled([sendInternal, sendUser]);
+
+  return jsonResponse({
+    ok: true,
+    ma_khieu_nai: maKhieuNai,
+    co_so: dauMoi.coSo,
+    dau_moi: dauMoi.ten,
+    sla: {
+      xac_nhan: '3 ngày làm việc',
+      phan_hoi: '30 ngày làm việc (tối đa 60 nếu phức tạp)',
+      khan_cap: '24 giờ',
+      du_lieu_ca_nhan: '72 giờ',
+    },
+  });
+}
+
+function escHtml(s) {
+  return String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
 }

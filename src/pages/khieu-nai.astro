@@ -1,0 +1,723 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const dauMoi = [
+  { coSo: 'Việt Anh Gò Vấp', ten: 'Ông Phạm Nguyễn Phương Duy', email: 'phuongduy@truongvietanh.com' },
+  { coSo: 'Việt Anh Bình Tân', ten: 'Bà Trần Thị Ngọc Tuyền', email: 'tuyen@truongvietanh.com' },
+  { coSo: 'MGIS (Mekong Xanh)', ten: 'Ông Phạm Nhựt', email: 'nhut.pham@mgis.edu.vn' },
+  { coSo: 'Việt Anh Nhân Lễ', ten: 'Ông Nguyễn Duy Khải', email: 'khai.nguyen@truongvietanh.com' },
+  { coSo: 'Việt Anh Thái Sơn', ten: 'Ông Nguyễn Duy Khải', email: 'khai.nguyen@truongvietanh.com' },
+  { coSo: 'Cấp trên (Phó Chủ tịch)', ten: 'Bà Phạm Thị Cẩm Tú', email: 'tu@truongvietanh.com' },
+  { coSo: 'Tối cao (Chủ tịch)', ten: 'Ông Nguyễn Mạnh Dương', email: 'duong@truongvietanh.com' },
+];
+
+const structuredData = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Quy trình Giải quyết Khiếu nại — Trường Việt Anh",
+    "url": "https://truongvietanh.com/khieu-nai",
+    "datePublished": "2026-05-25",
+    "dateModified": "2026-05-25",
+    "inLanguage": "vi-VN",
+    "publisher": {
+      "@type": "EducationalOrganization",
+      "name": "Hệ Thống Trường Việt Anh",
+      "url": "https://truongvietanh.com"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
+      { "@type": "ListItem", "position": 2, "name": "Khiếu nại", "item": "https://truongvietanh.com/khieu-nai" }
+    ]
+  }
+];
+---
+
+<BaseLayout
+  title="Quy trình Giải quyết Khiếu nại — Trường Việt Anh"
+  description="Tiếp nhận và giải quyết khiếu nại minh bạch, đúng SLA. Email tu@truongvietanh.com — Hotline 0916961409. Khẩn cấp an toàn HS: phản hồi 24h. Yêu cầu dữ liệu cá nhân: 72h."
+  keywords="khiếu nại trường việt anh, quy trình giải quyết khiếu nại, đầu mối hiệu trưởng, mẫu đơn khiếu nại"
+  canonical="https://truongvietanh.com/khieu-nai"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase />
+
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left" style="flex:1">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true"></span>
+            <span>Khiếu nại</span>
+          </nav>
+          <h1 class="gi-h1">Quy trình Giải quyết Khiếu nại</h1>
+          <p class="gi-subtitle">Tiếp nhận kịp thời · Giải quyết công bằng · Miễn phí · Bảo mật song phương</p>
+          <p class="gi-last-updated">Ngày ban hành: 25/05/2026 &nbsp;·&nbsp; Phiên bản: 1.0</p>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>3 ngày</strong> Xác nhận tiếp nhận</div>
+            <div class="gi-badge"><strong>30 ngày</strong> SLA phản hồi</div>
+            <div class="gi-badge"><strong>24 giờ</strong> Khẩn cấp ATHS</div>
+            <div class="gi-badge"><strong>72 giờ</strong> Dữ liệu cá nhân</div>
+          </div>
+
+          <div class="kn-urgent-bar">
+            <strong>⚠️ Khẩn cấp về an toàn học sinh?</strong>
+            Gọi ngay <a href="tel:0916961409">0916&nbsp;961&nbsp;409</a> — chúng tôi cam kết phản hồi trong 24 giờ.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="gi-container gi-body">
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Mục lục</p>
+        <ol class="gi-toc-list">
+          <li><a href="#nguyen-tac">1. Nguyên tắc</a></li>
+          <li><a href="#pham-vi">2. Phạm vi tiếp nhận</a></li>
+          <li><a href="#kenh">3. Kênh tiếp nhận</a></li>
+          <li><a href="#dau-moi">4. Đầu mối xử lý</a></li>
+          <li><a href="#thong-tin">5. Thông tin cần có</a></li>
+          <li><a href="#quy-trinh">6. Quy trình 5 bước</a></li>
+          <li><a href="#sla">7. Bảng SLA</a></li>
+          <li><a href="#khan-cap">8. Quy trình khẩn cấp</a></li>
+          <li><a href="#du-lieu">9. Yêu cầu dữ liệu cá nhân</a></li>
+          <li><a href="#leo-thang">10. Cơ chế leo thang</a></li>
+          <li><a href="#bao-mat">11. Bảo mật và chống trả thù</a></li>
+          <li><a href="#luu-tru">12. Lưu trữ hồ sơ</a></li>
+          <li><a href="#mau-don">13. Mẫu đơn khiếu nại</a></li>
+        </ol>
+        <a href="#mau-don" class="gi-toc-cta">Gửi đơn online</a>
+      </nav>
+
+      <article class="gi-main">
+        <p class="gi-lead">Trường Việt Anh tôn trọng quyền khiếu nại và cam kết tiếp nhận, giải quyết mọi khiếu nại, phản ánh, kiến nghị một cách <strong>kịp thời, công bằng và minh bạch</strong>, phù hợp với Luật Bảo vệ quyền lợi người tiêu dùng số 19/2023/QH15, Nghị định 13/2023/NĐ-CP về Bảo vệ dữ liệu cá nhân và Luật Trẻ em 2016.</p>
+
+        <section id="nguyen-tac" class="gi-section">
+          <h2>1. Nguyên tắc</h2>
+          <ul>
+            <li><strong>Kịp thời</strong> — tiếp nhận và phản hồi đúng thời hạn cam kết.</li>
+            <li><strong>Công khai, minh bạch</strong> — quy trình rõ ràng, người khiếu nại biết tiến độ.</li>
+            <li><strong>Công bằng</strong> — lắng nghe đầy đủ các bên liên quan trước khi kết luận.</li>
+            <li><strong>Bảo mật danh tính</strong> người khiếu nại trừ khi pháp luật yêu cầu.</li>
+            <li><strong>Không trả thù</strong> — người khiếu nại có thiện chí không bị bất kỳ hình thức phân biệt đối xử nào.</li>
+            <li><strong>Miễn phí</strong> — Trường không thu phí xử lý khiếu nại.</li>
+          </ul>
+        </section>
+
+        <section id="pham-vi" class="gi-section">
+          <h2>2. Phạm vi tiếp nhận</h2>
+          <p>Quy trình áp dụng với các loại khiếu nại sau:</p>
+          <ul>
+            <li><strong>Chất lượng dịch vụ giáo dục:</strong> chương trình học, giáo viên, kết quả học tập của con.</li>
+            <li><strong>Thái độ ứng xử</strong> của giáo viên, nhân viên Trường.</li>
+            <li><strong>An toàn học sinh:</strong> thân thể, tinh thần, tâm lý, an ninh trường học, thực phẩm.</li>
+            <li><strong>Học phí và thanh toán:</strong> tính nhầm, hoàn phí, biên lai.</li>
+            <li><strong>Bảo vệ dữ liệu cá nhân:</strong> yêu cầu liên quan dữ liệu phụ huynh, học sinh.</li>
+            <li><strong>Truyền thông, quảng cáo</strong> có nội dung gây hiểu lầm.</li>
+            <li>Các vấn đề khác liên quan đến quan hệ giữa Trường và người sử dụng dịch vụ.</li>
+          </ul>
+
+          <h3>Điều khoản từ chối tiếp nhận và đóng hồ sơ</h3>
+          <p>Các trường hợp Trường sẽ từ chối tiếp nhận hoặc dừng giải quyết khiếu nại:</p>
+          <ol>
+            <li>Đơn khiếu nại nặc danh, mạo danh, không có thông tin liên hệ chính xác hoặc không xác thực được danh tính người khiếu nại.</li>
+            <li>Người khiếu nại không cung cấp được tài liệu, chứng cứ minh chứng tối thiểu sau <strong>05 ngày làm việc</strong> kể từ khi Trường yêu cầu bổ sung.</li>
+            <li>Người khiếu nại có hành vi lăng mạ, xúc phạm danh dự, nhân phẩm, đe dọa hành hung nhân sự của Trường hoặc có hành vi gây rối trật tự tại khuôn viên Trường.</li>
+            <li>Vụ việc đã được giải quyết bằng văn bản kết luận chính thức hoặc biên bản hòa giải thành công trước đó, nhưng người khiếu nại tiếp tục khiếu nại lại mà không cung cấp được tình tiết hay chứng cứ mới làm thay đổi bản chất vụ việc.</li>
+            <li>Người khiếu nại vi phạm nguyên tắc bảo mật song phương (tự ý đăng tải thông tin sai sự thật hoặc thông tin chưa có kết luận lên mạng xã hội, phương tiện truyền thông). Trong trường hợp này, Trường sẽ dừng giải quyết và chuyển hồ sơ sang cơ quan chức năng để xử lý hành vi bôi nhọ uy tín theo quy định pháp luật.</li>
+          </ol>
+        </section>
+
+        <section id="kenh" class="gi-section">
+          <h2>3. Kênh tiếp nhận khiếu nại</h2>
+          <ul>
+            <li><strong>(a) Email chuyên trách:</strong> <a href="mailto:tu@truongvietanh.com">tu@truongvietanh.com</a> — kênh chính, khuyến nghị sử dụng vì lưu lại bằng chứng đầy đủ.</li>
+            <li><strong>(b) Hotline:</strong> <a href="tel:0916961409">0916 961 409</a> — dành cho trường hợp khẩn cấp liên quan an toàn học sinh.</li>
+            <li><strong>(c) Form trực tuyến:</strong> Tại Mục 13 (Mẫu đơn khiếu nại) ngay dưới trang này.</li>
+            <li><strong>(d) Đơn giấy:</strong> gửi về địa chỉ trụ sở 160/72 Phan Huy Ích, Phường An Hội Tây, TP HCM.</li>
+            <li><strong>(e) Gặp trực tiếp:</strong> đặt lịch với hiệu trưởng cơ sở liên quan qua văn phòng cơ sở.</li>
+          </ul>
+        </section>
+
+        <section id="dau-moi" class="gi-section">
+          <h2>4. Đầu mối xử lý khiếu nại</h2>
+          <p>Khiếu nại được phân công cho hiệu trưởng cơ sở liên quan trực tiếp đến nội dung khiếu nại. Trường hợp khiếu nại liên quan nhiều cơ sở hoặc liên quan đến quản trị toàn hệ thống, được chuyển trực tiếp lên Chủ tịch Hội đồng trường.</p>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th>Cơ sở</th>
+                  <th>Hiệu trưởng — Đầu mối tiếp nhận</th>
+                  <th>Liên hệ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {dauMoi.map((row) => (
+                  <tr>
+                    <td><strong>{row.coSo}</strong></td>
+                    <td>{row.ten}</td>
+                    <td><a href={`mailto:${row.email}`}>{row.email}</a></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="thong-tin" class="gi-section">
+          <h2>5. Thông tin tối thiểu cần có trong đơn khiếu nại</h2>
+          <ul>
+            <li>Họ tên, mối quan hệ với học sinh (nếu liên quan), số điện thoại, email.</li>
+            <li>Cơ sở liên quan và tên giáo viên/nhân viên liên quan (nếu có).</li>
+            <li>Mô tả vụ việc: thời gian, địa điểm, diễn biến.</li>
+            <li>Mong muốn giải quyết của người khiếu nại.</li>
+            <li>Tài liệu, hình ảnh, video chứng cứ (nếu có).</li>
+          </ul>
+        </section>
+
+        <section id="quy-trinh" class="gi-section">
+          <h2>6. Quy trình xử lý — 5 bước</h2>
+          <ol class="kn-steps">
+            <li>
+              <strong>Bước 1 — Tiếp nhận và xác nhận</strong>
+              <p>Trong tối đa <strong>03 ngày làm việc</strong>, đầu mối gửi xác nhận đã nhận, cấp mã khiếu nại và thông báo bộ phận chịu trách nhiệm xử lý.</p>
+            </li>
+            <li>
+              <strong>Bước 2 — Phân loại và phân công</strong>
+              <p>Trong tối đa <strong>05 ngày làm việc</strong> tiếp theo, hiệu trưởng cơ sở phân loại mức độ (thường / phức tạp / khẩn cấp) và phân công người chịu trách nhiệm điều tra.</p>
+            </li>
+            <li>
+              <strong>Bước 3 — Điều tra và thu thập thông tin</strong>
+              <p>Điều tra viên thu thập tài liệu, phỏng vấn các bên liên quan, đối chiếu chứng từ. Người khiếu nại có quyền bổ sung thông tin. Thời hạn điều tra tối đa <strong>20 ngày làm việc</strong>.</p>
+            </li>
+            <li>
+              <strong>Bước 4 — Phản hồi giải pháp</strong>
+              <p>Hiệu trưởng gửi văn bản trả lời chính thức trong tối đa <strong>30 ngày làm việc</strong>. Vụ việc phức tạp có thể gia hạn tối đa <strong>60 ngày làm việc</strong>, với điều kiện hiệu trưởng phải thông báo bằng văn bản cho người khiếu nại về việc gia hạn (kèm lý do) trước khi hết thời hạn ban đầu.</p>
+            </li>
+            <li>
+              <strong>Bước 5 — Theo dõi và đánh giá hài lòng</strong>
+              <p>Trong <strong>07 ngày</strong> sau khi gửi phản hồi giải pháp, đầu mối gửi khảo sát mức độ hài lòng. Hồ sơ khiếu nại được lưu trữ tối thiểu <strong>05 năm</strong> để phục vụ kiểm tra, đối chiếu và cải tiến hệ thống.</p>
+            </li>
+          </ol>
+        </section>
+
+        <section id="sla" class="gi-section">
+          <h2>7. Bảng tóm tắt thời hạn (SLA)</h2>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th>Loại khiếu nại / Yêu cầu</th>
+                  <th>Thời hạn phản hồi tối đa</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Xác nhận đã tiếp nhận khiếu nại</td><td><strong>03 ngày làm việc</strong></td></tr>
+                <tr><td>Khiếu nại dịch vụ thường</td><td><strong>30 ngày làm việc</strong></td></tr>
+                <tr><td>Khiếu nại phức tạp (có gia hạn)</td><td>Tối đa <strong>60 ngày làm việc</strong></td></tr>
+                <tr><td>Khẩn cấp về an toàn học sinh</td><td>Trong vòng <strong>24 giờ</strong></td></tr>
+                <tr><td>Yêu cầu liên quan dữ liệu cá nhân (NĐ 13/2023)</td><td><strong>72 giờ</strong> — không gia hạn</td></tr>
+                <tr><td>Khảo sát mức độ hài lòng sau xử lý</td><td><strong>07 ngày</strong> sau khi đóng vụ việc</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="khan-cap" class="gi-section">
+          <h2>8. Quy trình khẩn cấp về an toàn học sinh</h2>
+          <p>Khi nhận được khiếu nại liên quan đến nguy cơ hoặc hành vi gây tổn hại thân thể, tinh thần, tâm lý, danh dự của học sinh — bao gồm xâm hại, bạo hành, bắt nạt nghiêm trọng, an toàn thực phẩm, tai nạn — đầu mối tiếp nhận phải:</p>
+          <ul>
+            <li>Báo cáo hiệu trưởng cơ sở và Chủ tịch Hội đồng trường ngay trong vòng <strong>02 giờ</strong>.</li>
+            <li>Thực hiện các biện pháp bảo vệ học sinh tức thời, có thể tạm đình chỉ cá nhân bị tố cáo trong thời gian điều tra.</li>
+            <li>Phản hồi sơ bộ cho người khiếu nại trong vòng <strong>24 giờ</strong>.</li>
+            <li>Phối hợp cơ quan chức năng (công an, y tế, ngành giáo dục) khi cần.</li>
+            <li>Thông báo cho cha, mẹ học sinh bị ảnh hưởng theo cách phù hợp, đảm bảo bí mật và an toàn cho học sinh.</li>
+          </ul>
+        </section>
+
+        <section id="du-lieu" class="gi-section">
+          <h2>9. Yêu cầu liên quan đến dữ liệu cá nhân</h2>
+          <p>Đối với các yêu cầu thực hiện quyền của chủ thể dữ liệu (truy cập, xoá, rút lại đồng ý, cung cấp dữ liệu) theo <strong>Điều 9 và Điều 12 Nghị định 13/2023/NĐ-CP</strong>, thời hạn phản hồi là <strong>72 giờ</strong> kể từ khi nhận được yêu cầu hợp lệ.</p>
+          <p>Cụ thể, người yêu cầu phải chứng minh được danh tính chủ thể và quyền giám hộ hợp pháp trước khi tính thời gian 72 giờ. Người yêu cầu phải xuất trình giấy tờ tùy thân (CCCD/Hộ chiếu) và chứng minh quyền giám hộ hợp pháp đối với học sinh (nếu yêu cầu dữ liệu của học sinh). Trường có quyền từ chối cung cấp nếu việc cung cấp dữ liệu gây ảnh hưởng đến quyền và lợi ích hợp pháp của cá nhân khác hoặc không chứng minh được tư cách chủ thể/giám hộ hợp pháp.</p>
+          <p><strong>Đây là thời hạn cứng theo luật, không gia hạn.</strong> Yêu cầu gửi về email DPO: <a href="mailto:tu@truongvietanh.com">tu@truongvietanh.com</a>.</p>
+        </section>
+
+        <section id="leo-thang" class="gi-section">
+          <h2>10. Cơ chế leo thang</h2>
+          <p>Nếu người khiếu nại không đồng ý với kết quả xử lý của hiệu trưởng cơ sở, có quyền khiếu nại lên cấp cao hơn theo trình tự sau:</p>
+          <ol>
+            <li>Khiếu nại lần 2 lên <strong>Chủ tịch Hội đồng trường — ông Nguyễn Mạnh Dương</strong> — trong vòng <strong>15 ngày làm việc</strong> kể từ khi nhận phản hồi lần 1. Chủ tịch trả lời trong tối đa 30 ngày làm việc.</li>
+            <li>Yêu cầu hoà giải bởi <strong>bên thứ ba độc lập</strong> (luật sư, trọng tài viên, tổ chức bảo vệ người tiêu dùng).</li>
+            <li>Khiếu nại tới <strong>cơ quan quản lý nhà nước</strong> có thẩm quyền: Sở Giáo dục và Đào tạo TP. Hồ Chí Minh, Uỷ ban nhân dân cấp quận/huyện, Cục Quản lý cạnh tranh và Bảo vệ người tiêu dùng (Bộ Công Thương).</li>
+            <li>Khởi kiện tại <strong>Toà án nhân dân</strong> có thẩm quyền.</li>
+          </ol>
+          <p>Việc khiếu nại lên cấp cao hơn không làm mất quyền khiếu nại đến cơ quan nhà nước hoặc khởi kiện toà án.</p>
+        </section>
+
+        <section id="bao-mat" class="gi-section">
+          <h2>11. Bảo mật và chống trả thù</h2>
+          <p>Trường cam kết bảo mật danh tính người khiếu nại trừ khi pháp luật yêu cầu hoặc người khiếu nại đồng ý công bố. Không có bất kỳ hình thức phân biệt đối xử nào với học sinh có cha mẹ khiếu nại, không có hình thức kỷ luật nào với nhân viên khiếu nại có thiện chí. Mọi hành vi trả thù người khiếu nại sẽ bị xem là vi phạm nghiêm trọng nội quy Trường và xử lý theo quy định.</p>
+          <p><strong>Bảo mật song phương và tôn trọng lẫn nhau:</strong> Trường cam kết bảo mật danh tính người khiếu nại. Ngược lại, người khiếu nại có trách nhiệm bảo mật toàn bộ thông tin, tài liệu, nội dung làm việc và tiến trình giải quyết vụ việc. Hai bên cam kết không phát tán thông tin (bao gồm mạng xã hội, báo chí hoặc bên thứ ba) khi chưa có kết luận giải quyết chính thức bằng văn bản của người có thẩm quyền thuộc Hệ thống Trường Việt Anh.</p>
+        </section>
+
+        <section id="luu-tru" class="gi-section">
+          <h2>12. Lưu trữ hồ sơ và báo cáo</h2>
+          <p>Hồ sơ khiếu nại (đơn, biên bản, hồ sơ điều tra, văn bản trả lời, kết quả khảo sát hài lòng) được lưu trữ tối thiểu <strong>05 năm</strong>, dưới dạng điện tử và/hoặc giấy. Định kỳ <strong>06 tháng/lần</strong>, bộ phận pháp chế tổng hợp báo cáo lên Ban Giám đốc và Chủ tịch Hội đồng trường để rút kinh nghiệm và cải tiến hệ thống.</p>
+        </section>
+
+        <!-- ====== FORM ĐĂNG KÝ KHIẾU NẠI ====== -->
+        <section id="mau-don" class="gi-section kn-form-section">
+          <h2>13. Mẫu đơn khiếu nại trực tuyến</h2>
+          <p>Vui lòng điền đầy đủ thông tin dưới đây. Trường sẽ cấp mã khiếu nại và gửi xác nhận đến email của quý vị trong vòng <strong>03 ngày làm việc</strong>.</p>
+
+          <form id="kn-form" class="kn-form" novalidate>
+            <div class="kn-grid-2">
+              <div class="kn-group">
+                <label for="kn-name">Họ và tên người khiếu nại <span class="kn-req">*</span></label>
+                <input type="text" id="kn-name" name="name" required autocomplete="name" />
+              </div>
+              <div class="kn-group">
+                <label for="kn-relation">Mối quan hệ với học sinh</label>
+                <select id="kn-relation" name="relation">
+                  <option value="">— Chọn —</option>
+                  <option value="phu-huynh">Phụ huynh</option>
+                  <option value="nguoi-giam-ho">Người giám hộ hợp pháp</option>
+                  <option value="hoc-sinh">Học sinh</option>
+                  <option value="cuu-hoc-sinh">Cựu học sinh</option>
+                  <option value="nhan-vien">Nhân viên / Cựu nhân viên</option>
+                  <option value="khac">Khác</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="kn-grid-2">
+              <div class="kn-group">
+                <label for="kn-phone">Số điện thoại <span class="kn-req">*</span></label>
+                <input type="tel" id="kn-phone" name="phone" pattern="[0-9\+\-\s\(\)]+" required autocomplete="tel" />
+              </div>
+              <div class="kn-group">
+                <label for="kn-email">Email <span class="kn-req">*</span></label>
+                <input type="email" id="kn-email" name="email" required autocomplete="email" />
+              </div>
+            </div>
+
+            <div class="kn-grid-2">
+              <div class="kn-group">
+                <label for="kn-coso">Cơ sở liên quan <span class="kn-req">*</span></label>
+                <select id="kn-coso" name="co_so" required>
+                  <option value="">— Chọn cơ sở —</option>
+                  <option value="vietanh-govap">Việt Anh Gò Vấp</option>
+                  <option value="vietanh-binhtan">Việt Anh Bình Tân</option>
+                  <option value="mgis">MGIS (Mekong Xanh)</option>
+                  <option value="vietanh-nhanle">Việt Anh Nhân Lễ</option>
+                  <option value="vietanh-thaison">Việt Anh Thái Sơn</option>
+                  <option value="he-thong">Liên quan nhiều cơ sở / Toàn hệ thống</option>
+                  <option value="khac">Khác / Chưa rõ</option>
+                </select>
+              </div>
+              <div class="kn-group">
+                <label for="kn-nhansu">Tên giáo viên / nhân viên liên quan (nếu có)</label>
+                <input type="text" id="kn-nhansu" name="nhan_su" />
+              </div>
+            </div>
+
+            <div class="kn-group">
+              <label for="kn-thoigian">Thời gian, địa điểm vụ việc</label>
+              <input type="text" id="kn-thoigian" name="thoi_gian" placeholder="VD: Sáng 20/05/2026 tại sân trường cơ sở Gò Vấp" />
+            </div>
+
+            <div class="kn-group">
+              <label for="kn-noidung">Mô tả vụ việc <span class="kn-req">*</span></label>
+              <textarea id="kn-noidung" name="noi_dung" rows="6" required placeholder="Mô tả diễn biến chi tiết, các bên liên quan, hậu quả (nếu có)"></textarea>
+            </div>
+
+            <div class="kn-group">
+              <label for="kn-mongmuon">Mong muốn giải quyết</label>
+              <textarea id="kn-mongmuon" name="mong_muon" rows="4" placeholder="Quý vị mong Trường giải quyết theo hướng nào?"></textarea>
+            </div>
+
+            <div class="kn-attach-note">
+              <strong>📎 Tài liệu, hình ảnh, video chứng cứ:</strong> Sau khi gửi đơn và nhận được Mã khiếu nại, vui lòng gửi tài liệu kèm theo qua email <a href="mailto:tu@truongvietanh.com">tu@truongvietanh.com</a> kèm Mã khiếu nại trong tiêu đề email để tránh giới hạn dung lượng và đảm bảo bảo mật.
+            </div>
+
+            <div class="kn-consent">
+              <label class="kn-checkbox">
+                <input type="checkbox" name="cam_doan" required />
+                <span>Tôi cam đoan các thông tin, tài liệu cung cấp trong đơn này là hoàn toàn đúng sự thật và chịu trách nhiệm trước pháp luật về tính chính xác của các thông tin này. <span class="kn-req">*</span></span>
+              </label>
+              <label class="kn-checkbox">
+                <input type="checkbox" name="cam_ket_bao_mat" required />
+                <span>Tôi cam kết tuân thủ <strong>Nguyên tắc bảo mật song phương</strong> của Hệ thống Trường Việt Anh; không tự ý sao chép, phát tán đơn thư, tài liệu hoặc chia sẻ thông tin vụ việc lên các phương tiện truyền thông, mạng xã hội khi vụ việc đang trong quá trình giải quyết và chưa có văn bản kết luận chính thức từ Nhà trường. <span class="kn-req">*</span></span>
+              </label>
+              <label class="kn-checkbox">
+                <input type="checkbox" name="dong_y_dieu_khoan" required />
+                <span>Tôi đã đọc, hiểu rõ và đồng ý với <a href="/dieu-khoan-su-dung" target="_blank">Điều khoản Sử dụng</a> và <a href="/chinh-sach-bao-mat" target="_blank">Chính sách Bảo mật</a> của Trường Việt Anh. <span class="kn-req">*</span></span>
+              </label>
+            </div>
+
+            <div class="kn-error" role="alert" aria-live="polite"></div>
+
+            <button type="submit" class="kn-submit">
+              Gửi đơn khiếu nại
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+
+            <p class="kn-note">Mọi yêu cầu liên quan dữ liệu cá nhân theo NĐ 13/2023/NĐ-CP sẽ được phản hồi trong <strong>72 giờ</strong>. Các khiếu nại khác trong <strong>30 ngày làm việc</strong>.</p>
+          </form>
+
+          <div id="kn-success" class="kn-success" hidden>
+            <div class="kn-success-icon">✓</div>
+            <h3>Đã ghi nhận đơn khiếu nại</h3>
+            <p>Mã khiếu nại của quý vị:</p>
+            <div class="kn-code" id="kn-ma"></div>
+            <p>Email xác nhận đã được gửi đến địa chỉ quý vị cung cấp. Trường sẽ phản hồi sơ bộ trong vòng <strong>03 ngày làm việc</strong> và giải quyết hoàn tất tối đa <strong>30 ngày làm việc</strong>.</p>
+            <p class="kn-success-note">Vui lòng lưu lại mã khiếu nại để tra cứu và gửi kèm khi cung cấp tài liệu bổ sung qua email <a href="mailto:tu@truongvietanh.com">tu@truongvietanh.com</a>.</p>
+            <p class="kn-success-urgent">⚠️ Nếu vụ việc khẩn cấp về <strong>an toàn học sinh</strong>, vui lòng gọi ngay <a href="tel:0916961409">0916 961 409</a> — Trường cam kết phản hồi trong 24 giờ.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Văn bản pháp lý liên quan</h2>
+        <div class="gi-related-grid">
+          <a href="/chinh-sach-bao-mat" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #000080 0%, #00009a 100%);"></div>
+            <h3>Chính sách Bảo mật</h3>
+            <p>Tuân thủ NĐ 13/2023/NĐ-CP. 11 quyền của chủ thể dữ liệu. DPO phản hồi 72h.</p>
+          </a>
+          <a href="/dieu-khoan-su-dung" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #ffff00 0%, #cccc00 100%);"></div>
+            <h3>Điều khoản Sử dụng Website</h3>
+            <p>Quyền và nghĩa vụ khi sử dụng truongvietanh.com. Trích dẫn ≤200 từ, dẫn nguồn.</p>
+          </a>
+          <a href="/lien-he" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Liên hệ Trường Việt Anh</h3>
+            <p>Hotline, Zalo, địa chỉ 9 cơ sở. Tư vấn tuyển sinh phản hồi trong 24h.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .kn-urgent-bar{
+    background: #fef3c7;
+    border-left: 4px solid #f59e0b;
+    color: #78350f;
+    padding: 0.85rem 1.1rem;
+    border-radius: 8px;
+    margin-top: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .kn-urgent-bar a{ color: #b45309; font-weight: 700; text-decoration: underline; }
+
+  .kn-steps{
+    list-style: none;
+    counter-reset: kn;
+    padding-left: 0;
+  }
+  .kn-steps > li{
+    counter-increment: kn;
+    padding: 1rem 1rem 1rem 3.5rem;
+    margin-bottom: 0.75rem;
+    position: relative;
+    background: #f8fafc;
+    border-radius: 10px;
+    border-left: 3px solid #000080;
+  }
+  .kn-steps > li::before{
+    content: counter(kn);
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #000080;
+    color: #ffff00;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 1rem;
+  }
+  .kn-steps > li strong{ display:block; margin-bottom: 0.35rem; color: #000080; font-size: 1.05rem; }
+  .kn-steps > li p{ margin: 0; }
+
+  /* ===== FORM ===== */
+  .kn-form-section{ background: #fefefe; border: 2px solid #000080; }
+  .kn-form{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-top: 1.25rem;
+  }
+  .kn-grid-2{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  @media (max-width: 640px){
+    .kn-grid-2{ grid-template-columns: 1fr; }
+  }
+  .kn-group{ display: flex; flex-direction: column; gap: 0.4rem; }
+  .kn-group label{ font-weight: 600; font-size: 0.95rem; color: #0f172a; }
+  .kn-req{ color: #dc2626; }
+  .kn-group input,
+  .kn-group select,
+  .kn-group textarea{
+    padding: 0.7rem 0.9rem;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    background: #fff;
+    color: #0f172a;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .kn-group input:focus,
+  .kn-group select:focus,
+  .kn-group textarea:focus{
+    outline: none;
+    border-color: #000080;
+    box-shadow: 0 0 0 3px rgba(0,0,128,0.12);
+  }
+  .kn-group textarea{ resize: vertical; min-height: 100px; font-family: inherit; }
+
+  .kn-attach-note{
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 8px;
+    padding: 0.85rem 1rem;
+    font-size: 0.95rem;
+    color: #1e3a8a;
+    line-height: 1.55;
+  }
+  .kn-attach-note a{ color: #1d4ed8; font-weight: 600; }
+
+  .kn-consent{ display: flex; flex-direction: column; gap: 0.65rem; margin-top: 0.5rem; }
+  .kn-checkbox{
+    display: flex;
+    align-items: flex-start;
+    gap: 0.65rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: #334155;
+    cursor: pointer;
+  }
+  .kn-checkbox input[type="checkbox"]{
+    margin-top: 3px;
+    width: 18px;
+    height: 18px;
+    accent-color: #000080;
+    flex-shrink: 0;
+  }
+  .kn-checkbox a{ color: #000080; font-weight: 600; }
+
+  .kn-error{
+    color: #dc2626;
+    font-size: 0.95rem;
+    font-weight: 600;
+    min-height: 1.3em;
+  }
+
+  .kn-submit{
+    background: #000080;
+    color: #ffff00;
+    border: none;
+    padding: 1rem 1.5rem;
+    border-radius: 10px;
+    font-family: 'Inter', sans-serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(0,0,128,0.25);
+  }
+  .kn-submit:hover{
+    background: #00009a;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(0,0,128,0.35);
+  }
+  .kn-submit:disabled{ opacity: 0.6; cursor: not-allowed; transform: none; }
+
+  .kn-note{
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* ===== SUCCESS STATE ===== */
+  .kn-success{
+    margin-top: 1.5rem;
+    padding: 2rem;
+    background: linear-gradient(135deg, #ecfdf5 0%, #f0fdf4 100%);
+    border: 2px solid #10b981;
+    border-radius: 12px;
+    text-align: center;
+  }
+  .kn-success-icon{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: #10b981;
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .kn-success h3{ color: #065f46; font-size: 1.5rem; margin: 0 0 0.5rem; }
+  .kn-success p{ color: #064e3b; margin: 0.5rem 0; line-height: 1.6; }
+  .kn-code{
+    display: inline-block;
+    background: #fff;
+    border: 2px dashed #10b981;
+    color: #065f46;
+    font-family: 'Monaco', 'Courier New', monospace;
+    font-size: 1.5rem;
+    font-weight: 800;
+    padding: 0.85rem 1.5rem;
+    border-radius: 10px;
+    letter-spacing: 0.05em;
+    margin: 0.5rem 0 1rem;
+    user-select: all;
+  }
+  .kn-success-note{ font-size: 0.95rem; color: #064e3b; }
+  .kn-success-note a{ color: #047857; font-weight: 700; }
+  .kn-success-urgent{
+    margin-top: 1rem !important;
+    padding: 0.85rem 1rem;
+    background: #fef3c7;
+    border-radius: 8px;
+    color: #78350f !important;
+    font-size: 0.95rem;
+  }
+  .kn-success-urgent a{ color: #b45309; font-weight: 800; }
+</style>
+
+<script is:inline>
+(function(){
+  const form = document.getElementById('kn-form');
+  const successBox = document.getElementById('kn-success');
+  const maEl = document.getElementById('kn-ma');
+  const errEl = form.querySelector('.kn-error');
+  const submitBtn = form.querySelector('.kn-submit');
+  if (!form) return;
+
+  function showError(msg){
+    errEl.textContent = msg || '';
+  }
+
+  function validate(){
+    const required = form.querySelectorAll('[required]');
+    for (const el of required){
+      if (el.type === 'checkbox'){
+        if (!el.checked){
+          showError('Vui lòng tích đầy đủ các cam kết bắt buộc.');
+          el.focus();
+          return false;
+        }
+      } else if (!el.value.trim()){
+        showError('Vui lòng điền đầy đủ các trường bắt buộc (*).');
+        el.focus();
+        return false;
+      }
+    }
+    const email = form.querySelector('[name="email"]').value;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      showError('Email không hợp lệ.');
+      form.querySelector('[name="email"]').focus();
+      return false;
+    }
+    const phone = form.querySelector('[name="phone"]').value.replace(/\s/g,'');
+    if (phone.length < 9){
+      showError('Số điện thoại không hợp lệ.');
+      form.querySelector('[name="phone"]').focus();
+      return false;
+    }
+    showError('');
+    return true;
+  }
+
+  form.addEventListener('submit', async function(e){
+    e.preventDefault();
+    if (!validate()) return;
+
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.innerHTML;
+    submitBtn.innerHTML = 'Đang gửi...';
+
+    const fd = new FormData(form);
+    const payload = {};
+    fd.forEach((v, k) => { payload[k] = v; });
+    payload.page = window.location.href;
+    payload.user_agent = navigator.userAgent;
+    payload.submitted_at = new Date().toISOString();
+
+    try {
+      const resp = await fetch('/api/khieu-nai', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload)
+      });
+      const data = await resp.json().catch(() => ({}));
+
+      if (!resp.ok || !data.ok){
+        const msg = data?.error === 'duplicate'
+          ? 'Đơn khiếu nại với nội dung tương tự vừa được gửi. Vui lòng kiểm tra email xác nhận hoặc liên hệ tu@truongvietanh.com.'
+          : 'Gửi đơn không thành công. Vui lòng thử lại hoặc gửi trực tiếp email tu@truongvietanh.com.';
+        showError(msg);
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalLabel;
+        return;
+      }
+
+      maEl.textContent = data.ma_khieu_nai || 'KN-PENDING';
+      form.hidden = true;
+      successBox.hidden = false;
+      successBox.scrollIntoView({behavior: 'smooth', block: 'start'});
+
+      if (window.dataLayer){
+        window.dataLayer.push({
+          event: 'khieu_nai_submitted',
+          ma_khieu_nai: data.ma_khieu_nai,
+          co_so: payload.co_so
+        });
+      }
+    } catch (err){
+      showError('Lỗi kết nối. Vui lòng kiểm tra mạng và thử lại, hoặc gửi email trực tiếp tu@truongvietanh.com.');
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = originalLabel;
+    }
+  });
+
+  form.querySelectorAll('input, select, textarea').forEach(el => {
+    el.addEventListener('input', () => showError(''));
+    el.addEventListener('change', () => showError(''));
+  });
+})();
+</script>

@@ -92,6 +92,13 @@ const address = '160/72 Phan Huy Ích, phường An Hội Tây, Thành phố H�
   <div class="footer-copyright">
     <div class="footer-container">
       <p>&copy; {new Date().getFullYear()} Hệ Thống Trường Liên Cấp Việt Anh — {address} — Hotline: <a href="tel:0916961409" style="color:#cbd5e1;text-decoration:none;">0916 961 409</a></p>
+      <p class="footer-legal-links">
+        <a href="/chinh-sach-bao-mat">Chính sách Bảo mật</a>
+        <span aria-hidden="true">·</span>
+        <a href="/dieu-khoan-su-dung">Điều khoản Sử dụng</a>
+        <span aria-hidden="true">·</span>
+        <a href="/khieu-nai">Khiếu nại</a>
+      </p>
     </div>
   </div>
 </footer>
@@ -284,6 +291,23 @@ const address = '160/72 Phan Huy Ích, phường An Hội Tây, Thành phố H�
     margin: 0;
     color: #a0aec0;
     font-size: 1rem;
+  }.footer-legal-links{
+    margin-top: 0.5rem !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    font-size: 0.95rem;
+  }.footer-legal-links a{
+    color: #cbd5e1;
+    text-decoration: none;
+    transition: color 0.2s;
+  }.footer-legal-links a:hover{
+    color: #ffff00;
+    text-decoration: underline;
+  }.footer-legal-links span{
+    color: #475569;
   }
 
   /* ===== RESPONSIVE ===== */

@@ -1,0 +1,1534 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SiteFooter from '../../components/SiteFooter.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+import { getTestimonials } from '../../lib/directus';
+
+const cmsTestimonials = await getTestimonials('index');
+
+const productLinks = [
+  { label: 'Mầm non', href: '/mam-non' },
+  { label: 'Tiểu học', href: '/tieu-hoc' },
+  { label: 'THCS', href: '/trung-hoc-co-so' },
+  { label: 'THPT', href: '/trung-hoc-pho-thong' },
+  { label: 'Trại hè', href: '/tuyen-sinh/trai-he/' },
+  { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em/' },
+  { label: 'Toán Tư Duy', href: '/tuyen-sinh/toan-tu-duy/' },
+  { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang/' },
+];
+
+const campusLinks = [
+  { label: 'Trường Mầm non Việt Anh Gò Vấp - HCM', href: '/co-so/mam-non-go-vap' },
+  { label: 'Trường Liên Cấp Việt Anh Gò Vấp - HCM', href: '/co-so/lien-cap-go-vap' },
+  { label: 'Trường Liên Cấp Việt Anh Bình Tân - HCM', href: '/co-so/lien-cap-binh-tan' },
+  { label: 'Trường Mầm non Nhân Lễ - Tây Ninh', href: '/co-so/mam-non-nhan-le' },
+  { label: 'Trường Mầm non và Tiểu học Thái Sơn - Tây Ninh', href: '/co-so/thai-son' },
+  { label: 'Trường Mầm non và Tiểu học Mekong Xanh - TP Rạch Giá - Kiên Giang', href: '/co-so/mekong-xanh' },
+];
+
+const testimonials = cmsTestimonials.length > 0
+  ? cmsTestimonials.map((t: any) => ({ name: t.name, role: t.role, quote: t.quote, img: t.image || '', videoUrl: t.video_url || '' }))
+  : [
+    { name: 'Chị Linh', role: 'Phụ huynh mầm non – bé 2 tuổi', quote: 'Từ em bé bướng bỉnh, con đã biết tự ăn và vào nề nếp. Con thay đổi rõ rệt chỉ sau vài tháng đầu.', img: 'https://img.youtube.com/vi/Bt1yyMil3Tg/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=Bt1yyMil3Tg' },
+    { name: 'Anh Công', role: 'Phụ huynh lớp 1 – chuyển từ mầm non', quote: 'Con luôn háo hức và mong chờ được đến trường mỗi ngày. Đi học vui vẻ, không áp lực.', img: 'https://img.youtube.com/vi/b9eNSFUDd98/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=b9eNSFUDd98' },
+    { name: 'Chị Nga', role: 'Phụ huynh lớp 3 – cơ sở Gò Vấp', quote: 'Sau 2 năm, con thay đổi rõ rệt cả về học tập và kỹ năng — đúng như thầy cô tư vấn từ đầu.', img: 'https://img.youtube.com/vi/3jwB87z-Keg/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=3jwB87z-Keg' },
+    { name: 'Chị Quỳnh', role: 'Phụ huynh lớp 7 – chuyển trường mới', quote: 'Chỉ sau hơn 1 tháng, con đã hòa nhập rất tốt với bạn bè và học tập vui vẻ mỗi ngày.', img: 'https://img.youtube.com/vi/cZ6S_3MG1Vo/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=cZ6S_3MG1Vo' },
+    { name: 'Anh Lê Trung Thành', role: 'Phụ huynh THPT – lựa chọn môi trường', quote: 'Gia đình chọn trường vì môi trường giúp con phát triển toàn diện — từ kiến thức đến thái độ.', img: 'https://img.youtube.com/vi/5T8j_k5VCW4/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=5T8j_k5VCW4' },
+    { name: 'Bạn Chu Anh Tài', role: 'Học sinh lớp 12 – Chủ tịch Hội học sinh', quote: 'Từ một người khép kín, em đã khám phá khả năng lãnh đạo và đảm nhận Chủ tịch Hội học sinh.', img: 'https://img.youtube.com/vi/NAYd7sM0d-8/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=NAYd7sM0d-8' },
+  ];
+
+// Region groupings — AHS-style "campus discover" pattern
+const regions = [
+  {
+    name: 'TP. Hồ Chí Minh',
+    desc: 'Hệ thống cơ sở liên cấp Mầm non đến THPT tại Gò Vấp, Phú Nhuận, Bình Tân.',
+    img: 'https://media.truongvietanh.com/images/trang-chu-3.webp',
+    href: '/co-so',
+    campuses: campusLinks.slice(0, 3),
+  },
+  {
+    name: 'Tây Ninh',
+    desc: 'Trường Mầm non và Tiểu học tại Cần Giuộc và Nhân Lễ, không gian xanh thoáng đãng.',
+    img: 'https://media.truongvietanh.com/images/trang-chu-5.webp',
+    href: '/co-so',
+    campuses: campusLinks.slice(3, 5),
+  },
+  {
+    name: 'Kiên Giang',
+    desc: 'Trường MN và Tiểu học Mekong Xanh tại TP. Rạch Giá — môi trường gắn liền thiên nhiên.',
+    img: 'https://media.truongvietanh.com/images/trang-chu-7.webp',
+    href: '/co-so',
+    campuses: campusLinks.slice(5, 6),
+  },
+];
+
+const pillars = [
+  { num: '01', title: 'Tiếp thu tinh hoa thế giới, nhưng triển khai phù hợp với Việt Nam', lead: 'Trường Việt Anh học hỏi từ thế giới, không phải "bắt chước".', body: 'Chúng ta chọn cái tiến bộ nhất của thế giới, rồi biến nó thành trải nghiệm học tập thực sự vận hành được với học sinh Việt Nam và gia đình Việt Nam.' },
+  { num: '02', title: 'Chất lượng cao nhưng không xây trên logic xa xỉ', lead: 'Giáo dục tốt không nên là đặc quyền của nhà giàu.', body: 'Chúng ta xây dựng nền giáo dục chất lượng, nhưng chỉ có giá trị nếu vẫn trong tầm với của những gia đình trung lưu có trách nhiệm.' },
+  { num: '03', title: 'Không hy sinh tuổi thơ để đổi lấy thành tích', lead: 'Trẻ em xứng đáng có được niềm vui học tập, sự an toàn cảm xúc, và động lực phát triển bền vững.', body: 'Chúng ta không để đứa trẻ nào phải trả giá bằng sự mệt mỏi để có kết quả.' },
+  { num: '04', title: 'Học là để dùng được, sống được, phát triển được', lead: 'Thực dụng là chỉ học cái có giá trị thật, rèn cái dùng được thật, phát triển cái giúp trẻ sống tốt thật.', body: 'Năng lực học tập không chỉ thể hiện trên bài thi, mà phải có thể chuyển hóa thành kết quả dài hạn.' },
+  { num: '05', title: 'Tạo ra những lãnh đạo tự thân, không phải đi theo một con đường duy nhất', lead: 'Chúng ta không tạo ra những sản phẩm đồng bộ.', body: 'Chúng ta phát triển những nhà lãnh đạo tự thân đủ tự tin, đủ phẩm chất, đủ năng lực để quyết định những ngã rẽ riêng — kiến tạo cuộc đời và sống hạnh phúc, vinh quang theo cách của riêng mình.' },
+];
+
+// AHS-style "Highlights" cards
+const highlights = [
+  { eyebrow: 'Tuyển sinh 2026–2027', title: 'Quy trình tuyển sinh Trường Việt Anh: Từ đăng ký đến nhập học', body: 'Hướng dẫn đầy đủ các bước đăng ký tuyển sinh, hồ sơ cần chuẩn bị, lịch thi đầu vào và thời hạn nộp hồ sơ năm học 2026–2027.', href: '/tuyen-sinh', img: 'https://media.truongvietanh.com/images/trang-chu-3.webp' },
+  { eyebrow: 'Học phí & học bổng', title: 'Học phí Trường Việt Anh 2026–2027 và các chính sách học bổng', body: 'Chi tiết học phí theo từng cấp học, chính sách học bổng dành cho học sinh xuất sắc và ưu đãi Early Bird cho phụ huynh đăng ký sớm.', href: '/hoc-phi', img: 'https://media.truongvietanh.com/images/trang-chu-5.webp' },
+  { eyebrow: 'Đời sống học đường', title: 'Một ngày ở Trường Việt Anh: Học sinh làm gì từ 7 giờ sáng đến 5 giờ chiều?', body: 'Lịch học, giờ nghỉ ngơi, hoạt động ngoại khóa, bữa ăn và không gian tự học — tất cả để phụ huynh hình dung rõ cuộc sống của con tại trường.', href: '/tin-tuc', img: 'https://media.truongvietanh.com/images/trang-chu-7.webp' },
+];
+---
+
+<BaseLayout
+  title="Trường Việt Anh | Hệ thống trường học liên cấp từ Mầm non đến THPT"
+  description="Trường Việt Anh — hệ thống giáo dục liên cấp song ngữ tại TP.HCM. Tiếng Anh IELTS 6.0-8.0, kỹ năng thế kỷ 21, 99% đỗ ĐH. Học phí từ 5 triệu/tháng."
+  canonical="https://truongvietanh.com/v3/"
+  noPopup={true}
+  ogImage="https://media.truongvietanh.com/images/trang-chu-3.webp"
+>
+  <div class="ahs">
+    <SiteHeader currentPath="/" />
+
+    <main class="ahs-main">
+
+      <!-- ================= HERO ================= -->
+      <section class="ahs-hero">
+        <div class="ahs-hero__media" aria-hidden="true">
+          <div class="ahs-hero__overlay"></div>
+        </div>
+        <div class="ahs-hero__inner">
+          <span class="ahs-hero__eyebrow">Tuyển sinh 2026–2027 đang mở</span>
+          <h1 class="ahs-hero__title">
+            <span class="ahs-hero__title-line">Trường Việt Anh</span>
+          </h1>
+          <p class="ahs-hero__sub">Hệ thống trường học Mầm non, Tiểu học, THCS và THPT</p>
+          <p class="ahs-hero__tag"><em>Từ bình thường trở nên phi thường.</em></p>
+          <div class="ahs-hero__cta-row">
+            <a href="/tuyen-sinh/tham-quan-truong" class="ahs-btn ahs-btn--primary">
+              Đặt lịch tham quan
+            </a>
+            <a href="/hoc-phi" class="ahs-btn ahs-btn--secondary">
+              Xem học phí
+            </a>
+          </div>
+          <a href="#thanh-tich" class="ahs-hero__scroll">
+            <span>Khám phá</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- ================= STATS RIBBON ================= -->
+      <section class="ahs-ribbon" id="thanh-tich">
+        <div class="ahs-container">
+          <div class="ahs-ribbon__grid">
+            <div class="ahs-ribbon__stat">
+              <strong>2011</strong>
+              <span>Năm hình thành</span>
+            </div>
+            <div class="ahs-ribbon__stat">
+              <strong>6.0+</strong>
+              <span>IELTS đầu ra tối thiểu</span>
+            </div>
+            <div class="ahs-ribbon__stat">
+              <strong>99%</strong>
+              <span>Học sinh vào đại học</span>
+            </div>
+            <div class="ahs-ribbon__stat">
+              <strong>95%</strong>
+              <span>Tiến bộ trên 4 lĩnh vực phát triển</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= POSITIONING / INTRO ================= -->
+      <section class="ahs-section ahs-section--intro">
+        <div class="ahs-container ahs-narrow">
+          <p class="ahs-eyebrow ahs-eyebrow--center">Giới thiệu</p>
+          <h2 class="ahs-h2 ahs-h2--center">Một nơi để con thực sự lớn lên</h2>
+          <p class="ahs-intro__text">
+            <strong>Trường Việt Anh</strong> thành lập năm 2011 tại TP HCM, là lựa chọn yêu thích của các gia đình trí thức trung lưu, khao khát với giáo dục hiện đại, kỳ vọng cao ở kỹ năng và phẩm chất của học sinh. Học sinh Việt Anh trải nghiệm quãng thời gian học tập vui vẻ, hạnh phúc, ra trường với các kỹ năng, phẩm chất lãnh đạo của thế kỷ 21, giành được quyền chọn của riêng mình với các trường đại học danh giá trong và ngoài nước.
+          </p>
+
+          <div class="ahs-recognition">
+            <span class="ahs-recognition__label">— Được công nhận bởi —</span>
+            <div class="ahs-recognition__row">
+              <div class="ahs-recognition__item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
+                <span>Franklin Covey<br/><em>Leader in Me</em></span>
+              </div>
+              <div class="ahs-recognition__item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                <span>Oxford<br/><em>University Press</em></span>
+              </div>
+              <div class="ahs-recognition__item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+                <span>British Council<br/><em>IELTS Test Center</em></span>
+              </div>
+              <div class="ahs-recognition__item">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <span>Birmingham<br/><em>City University</em></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= DISCOVER OUR CAMPUSES (3 regions) ================= -->
+      <section class="ahs-section ahs-section--ivory">
+        <div class="ahs-container">
+          <header class="ahs-heading">
+            <p class="ahs-eyebrow">Hệ thống cơ sở</p>
+            <h2 class="ahs-h2">Khám phá các cơ sở Việt Anh</h2>
+            <p class="ahs-heading__sub">9 cơ sở trải dài 3 tỉnh thành — chọn cơ sở gần bạn để đặt lịch tham quan.</p>
+          </header>
+
+          <div class="ahs-regions">
+            {regions.map((r) => (
+              <article class="ahs-region">
+                <a href={r.href} class="ahs-region__media">
+                  <img src={r.img} alt={r.name} loading="lazy" />
+                  <span class="ahs-region__chip">{r.name}</span>
+                </a>
+                <div class="ahs-region__body">
+                  <p>{r.desc}</p>
+                  <ul class="ahs-region__list">
+                    {r.campuses.map((c) => (
+                      <li><a href={c.href}>{c.label}</a></li>
+                    ))}
+                  </ul>
+                  <a href={r.href} class="ahs-region__link">
+                    Xem cơ sở
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= STUDENT VOICES (Top Stories / Acceptances) ================= -->
+      <section class="ahs-section" id="danh-gia">
+        <div class="ahs-container">
+          <header class="ahs-heading">
+            <p class="ahs-eyebrow">Câu chuyện học sinh & phụ huynh</p>
+            <h2 class="ahs-h2">Phụ huynh và học sinh nói gì về Trường Việt Anh?</h2>
+            <p class="ahs-heading__sub">Những thay đổi thật của trẻ — qua lời kể của chính gia đình các em.</p>
+          </header>
+
+          <div class="ahs-voices">
+            {testimonials.map((t) => (
+              <article class="ahs-voice">
+                <div class="ahs-voice__photo">
+                  {t.videoUrl ? (
+                    <a href={t.videoUrl} target="_blank" rel="noopener noreferrer" aria-label={`Xem video – ${t.name}`}>
+                      <img src={t.img || 'https://media.truongvietanh.com/images/phu-huynh-04.webp'} alt={t.name} loading="lazy" />
+                      <span class="ahs-voice__play" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><polygon points="6,4 20,12 6,20"/></svg>
+                      </span>
+                    </a>
+                  ) : (
+                    <img src={t.img || 'https://media.truongvietanh.com/images/phu-huynh-04.webp'} alt={t.name} loading="lazy" />
+                  )}
+                </div>
+                <div class="ahs-voice__body">
+                  <p class="ahs-voice__quote">"{t.quote}"</p>
+                  <div class="ahs-voice__attrib">
+                    <strong>{t.name}</strong>
+                    <span>{t.role}</span>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= WHY HERITAGE-style (3 khac biet) ================= -->
+      <section class="ahs-section ahs-section--ivory">
+        <div class="ahs-container">
+          <header class="ahs-heading">
+            <p class="ahs-eyebrow">Vì sao chọn Việt Anh</p>
+            <h2 class="ahs-h2">3 khác biệt của học sinh Việt Anh</h2>
+          </header>
+
+          <div class="ahs-why">
+            <article class="ahs-why__row">
+              <div class="ahs-why__media">
+                <img src="https://media.truongvietanh.com/images/du-an-03.webp" alt="Học sinh tiểu học Việt Anh làm dự án thực tế" loading="lazy" />
+                <span class="ahs-why__num">01</span>
+              </div>
+              <div class="ahs-why__text">
+                <p class="ahs-eyebrow">Nội dung học</p>
+                <h3 class="ahs-why__title">Nội dung học thực dụng</h3>
+                <p>Học sinh được phát triển đầy đủ 16 kỹ năng thế kỷ 21 theo chuẩn WEF, nội dung mà các trường K-12 hàng đầu thế giới đang thực hiện.</p>
+                <details class="ahs-more">
+                  <summary>Đọc thêm</summary>
+                  <p>Nghiên cứu của WEF chỉ ra, trong khi các nước tiên tiến đã đầu tư đủ 16 kỹ năng trong giáo dục, mặt bằng chung của Việt Nam còn đang thiếu hụt. Trường Việt Anh dày công xây dựng chương trình phát triển đầy đủ 16 kỹ năng qua các môn học, hoạt động ngoại khoá và văn hoá trường học. Giáo trình cập nhật mỗi năm để đáp ứng sự biến đổi của xã hội do cách mạng AI mang lại.</p>
+                </details>
+              </div>
+            </article>
+
+            <article class="ahs-why__row ahs-why__row--reverse">
+              <div class="ahs-why__media">
+                <img src="/giao-vien-ban-ngu.jpg" alt="Giáo viên bản ngữ dạy tiếng Anh cho học sinh Việt Anh" loading="lazy" />
+                <span class="ahs-why__num">02</span>
+              </div>
+              <div class="ahs-why__text">
+                <p class="ahs-eyebrow">Năng lực tiếng Anh</p>
+                <h3 class="ahs-why__title">Tiếng Anh đủ du học</h3>
+                <p>Học sinh đạt tối thiểu IELTS 6.0 trước khi tốt nghiệp THPT — đủ điều kiện xét tuyển hầu hết các đại học trên thế giới.</p>
+                <details class="ahs-more">
+                  <summary>Đọc thêm</summary>
+                  <p>Lộ trình tiếng Anh xuyên suốt từ Mầm Non (100% immersion), Tiểu học (chương trình Oxford), THCS (giao tiếp + học thuật), đến THPT (luyện IELTS). Tổ Tiếng Anh do giáo viên bản ngữ phụ trách, trường cũng là trung tâm khảo thí IELTS tại TP HCM. Chương trình tiếng Anh được hợp tác triển khai ở hơn 100 trường công tư khác.</p>
+                </details>
+              </div>
+            </article>
+
+            <article class="ahs-why__row">
+              <div class="ahs-why__media">
+                <img src="https://media.truongvietanh.com/images/thuyet-trinh-09.webp" alt="Học sinh Việt Anh thuyết trình, dẫn dắt và trưởng thành sớm" loading="lazy" />
+                <span class="ahs-why__num">03</span>
+              </div>
+              <div class="ahs-why__text">
+                <p class="ahs-eyebrow">Phẩm chất lãnh đạo</p>
+                <h3 class="ahs-why__title">Học sinh sớm trưởng thành</h3>
+                <p>Học sinh được rèn năng lực lãnh đạo bản thân từ sớm, dần mở rộng ảnh hưởng ra đội nhóm, lớp học và xã hội.</p>
+                <details class="ahs-more">
+                  <summary>Đọc thêm</summary>
+                  <p>Chương trình xây dựng trên 5 giá trị cốt lõi và 7 thói quen lãnh đạo (chương trình "Leader in Me" từ Franklin Covey). Phụ huynh tham quan trường đều ngạc nhiên khi thấy dấu ấn của học sinh ở khắp nơi — từ cơ sở vật chất, ngày lễ đến văn hoá và chính sách nhà trường.</p>
+                </details>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PROGRAMS ================= -->
+      <section class="ahs-section" id="san-pham">
+        <div class="ahs-container">
+          <header class="ahs-heading">
+            <p class="ahs-eyebrow">Sản phẩm giáo dục</p>
+            <h2 class="ahs-h2">Khám phá các chương trình của Trường Việt Anh</h2>
+          </header>
+
+          <div class="ahs-programs">
+            {productLinks.map((p) => (
+              <a class="ahs-program" href={p.href}>
+                <span class="ahs-program__label">{p.label}</span>
+                <span class="ahs-program__arrow" aria-hidden="true">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                </span>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PHILOSOPHY (accordion 5 pillars) ================= -->
+      <section class="ahs-section ahs-section--dark">
+        <div class="ahs-container">
+          <header class="ahs-heading ahs-heading--light">
+            <p class="ahs-eyebrow ahs-eyebrow--light">Triết lý giáo dục</p>
+            <h2 class="ahs-h2 ahs-h2--light">Trường Việt Anh xây dựng triết lý giáo dục trên 5 nền tảng</h2>
+          </header>
+
+          <div class="ahs-pillars">
+            {pillars.map((p, i) => (
+              <details class="ahs-pillar" open={i === 0}>
+                <summary>
+                  <span class="ahs-pillar__num">{p.num}</span>
+                  <span class="ahs-pillar__title">{p.title}</span>
+                  <span class="ahs-pillar__chev" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                  </span>
+                </summary>
+                <div class="ahs-pillar__body">
+                  <p class="ahs-pillar__lead">{p.lead}</p>
+                  <p>{p.body}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= LATEST HIGHLIGHTS ================= -->
+      <section class="ahs-section ahs-section--ivory">
+        <div class="ahs-container">
+          <header class="ahs-heading">
+            <p class="ahs-eyebrow">Tin nổi bật</p>
+            <h2 class="ahs-h2">Cập nhật mới nhất từ Việt Anh</h2>
+          </header>
+
+          <div class="ahs-highlights">
+            {highlights.map((h) => (
+              <a class="ahs-highlight" href={h.href}>
+                <div class="ahs-highlight__media">
+                  <img src={h.img} alt={h.title} loading="lazy" />
+                </div>
+                <div class="ahs-highlight__body">
+                  <span class="ahs-eyebrow ahs-eyebrow--sm">{h.eyebrow}</span>
+                  <h3 class="ahs-highlight__title">{h.title}</h3>
+                  <p>{h.body}</p>
+                  <span class="ahs-highlight__cta">
+                    Đọc tiếp
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+                  </span>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= INQUIRY CTA (AHS RSVP-style) ================= -->
+      <section class="ahs-section ahs-section--cta" id="brochure">
+        <div class="ahs-container">
+          <div class="ahs-cta">
+            <div class="ahs-cta__text">
+              <p class="ahs-eyebrow ahs-eyebrow--gold">Tài liệu dành cho phụ huynh</p>
+              <h2 class="ahs-h2 ahs-h2--light">Nhận Brochure của Trường Việt Anh</h2>
+              <p class="ahs-cta__desc">Tài liệu đầy đủ về chương trình, học phí, cơ sở vật chất, lộ trình học và lộ trình đầu ra — được gửi qua email trong vài phút.</p>
+              <ul class="ahs-cta__list">
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Chương trình &amp; phương pháp theo từng cấp học
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Bảng học phí và chính sách học bổng
+                </li>
+                <li>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                  Lịch tuyển sinh &amp; ưu đãi Early bird đến 46%
+                </li>
+              </ul>
+            </div>
+            <div class="ahs-cta__form lead-form-card--light" data-form-bg="light">
+              <LeadFormTwoStepEmailFirst
+                formId="v3-brochure-form"
+                funnelCode="home-brochure"
+                schoolLevel="all"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FAQ ================= -->
+      <section class="ahs-section" id="faq">
+        <div class="ahs-container">
+          <header class="ahs-heading">
+            <p class="ahs-eyebrow">Câu hỏi thường gặp</p>
+            <h2 class="ahs-h2">Phụ huynh thường hỏi gì về Trường Việt Anh?</h2>
+          </header>
+          <div class="ahs-faq">
+            <details class="ahs-faq__item">
+              <summary>Trường Việt Anh tuyển sinh những cấp học nào?</summary>
+              <p>Trường Việt Anh tuyển sinh 4 cấp: Mầm Non (từ 13 tháng), Tiểu Học (lớp 1-5), THCS (lớp 6-9) và THPT (lớp 10-12). Hệ thống liên cấp giúp con được đào tạo xuyên suốt mà không bị gián đoạn chương trình.</p>
+            </details>
+            <details class="ahs-faq__item">
+              <summary>Học phí Trường Việt Anh bao nhiêu?</summary>
+              <p>Học phí dao động từ 5-12 triệu/tháng tùy cấp học và chương trình. So với trường quốc tế (15-30 triệu), Việt Anh mang đến chất lượng tương đương với mức phí hợp lý hơn nhiều. Xem chi tiết tại trang <a href="/hoc-phi">Học phí</a>.</p>
+            </details>
+            <details class="ahs-faq__item">
+              <summary>Trường Việt Anh có mấy cơ sở?</summary>
+              <p>Hiện tại Trường Việt Anh có 9 cơ sở tại 3 tỉnh thành: TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Tây Ninh (Cần Giuộc) và Kiên Giang (Rạch Giá). Xem chi tiết tại trang <a href="/co-so">Hệ thống cơ sở</a>.</p>
+            </details>
+            <details class="ahs-faq__item">
+              <summary>Làm sao để đăng ký tham quan trường?</summary>
+              <p>Phụ huynh đăng ký tham quan miễn phí bằng 3 cách: (1) Điền form trên website, (2) Gọi hotline <a href="tel:0916961409">0916 961 409</a>, hoặc (3) Nhắn Zalo. Buổi tham quan kéo dài 60-90 phút, bao gồm thăm cơ sở, gặp giáo viên và dự giờ lớp học.</p>
+            </details>
+            <details class="ahs-faq__item">
+              <summary>Trình độ tiếng Anh đầu ra của học sinh Trường Việt Anh?</summary>
+              <p>Học sinh tốt nghiệp THPT tại Trường Việt Anh đạt tối thiểu IELTS 6.0, nhiều em đạt 7.0-8.0. Đây là mức đủ để xét tuyển vào hầu hết các đại học trên thế giới và nhận học bổng du học.</p>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= PAA / Related ================= -->
+      <section class="ahs-section ahs-section--ivory" id="xem-them">
+        <div class="ahs-container">
+          <header class="ahs-heading">
+            <p class="ahs-eyebrow">Phụ huynh cũng tìm hiểu</p>
+            <h2 class="ahs-h2">Các chủ đề liên quan</h2>
+          </header>
+          <div class="ahs-paa">
+            <a href="/mam-non" class="ahs-paa__card">
+              <span class="ahs-paa__icon">🌱</span>
+              <strong>Chương trình Mầm Non song ngữ phù hợp cho bé mấy tuổi?</strong>
+              <span>Nhận trẻ từ 13 tháng, 100% tiếng Anh immersion, Montessori + SteamE</span>
+            </a>
+            <a href="/hoc-phi" class="ahs-paa__card">
+              <span class="ahs-paa__icon">💰</span>
+              <strong>So sánh học phí Trường Việt Anh với trường quốc tế?</strong>
+              <span>Chỉ bằng 1/3 trường quốc tế — 5 đến 15 triệu/tháng tùy cấp học</span>
+            </a>
+            <a href="/triet-ly-giao-duc" class="ahs-paa__card">
+              <span class="ahs-paa__icon">🧩</span>
+              <strong>Phương pháp PDR là gì và khác gì trường truyền thống?</strong>
+              <span>Play – Discover – Reflect: học qua trải nghiệm thay vì nhồi nhét</span>
+            </a>
+            <a href="/co-so" class="ahs-paa__card">
+              <span class="ahs-paa__icon">📍</span>
+              <strong>Trường Việt Anh có ở gần nhà tôi không?</strong>
+              <span>9 cơ sở tại TP.HCM, Tây Ninh, Kiên Giang — có xe đưa đón</span>
+            </a>
+            <a href="/ngoai-khoa" class="ahs-paa__card">
+              <span class="ahs-paa__icon">⚽</span>
+              <strong>Con có thể tham gia CLB ngoại khóa nào?</strong>
+              <span>20+ CLB: bóng đá, robotics, piano, debate, bơi lội và nhiều hơn</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= FINAL CTA ================= -->
+      <section class="ahs-section ahs-section--final" id="lien-he">
+        <div class="ahs-container">
+          <div class="ahs-cta">
+            <div class="ahs-cta__text">
+              <p class="ahs-eyebrow">Tài liệu miễn phí</p>
+              <h2 class="ahs-h2">Tải tài liệu: Chương trình, học phí và lịch tham quan 2026–2027</h2>
+              <ul class="ahs-cta__list ahs-cta__list--ink">
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Bảng học phí đầy đủ theo từng cấp học</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lịch tuyển sinh &amp; ngày tham quan mở</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Lộ trình học xuyên suốt 4 cấp</li>
+                <li><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Ưu đãi Early bird chỉ gửi qua email</li>
+              </ul>
+            </div>
+            <div class="ahs-cta__form lead-form-card--light" data-form-bg="light">
+              <LeadFormTwoStepEmailFirst
+                formId="v3-home-brochure-form"
+                funnelCode="brochure-homepage"
+                schoolLevel="lien-cap"
+                submitText="Nhận Brochure miễn phí"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <SiteFooter />
+  </div>
+</BaseLayout>
+
+<!-- Preload serif font for AHS-style prestige headings -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&display=swap" rel="stylesheet" />
+
+<style is:global>
+/* =========================================================
+   V3 — AHS-INSPIRED REDESIGN
+   - Serif headings (Cormorant Garamond) for prestige feel
+   - Editorial whitespace, generous padding
+   - Ivory soft sections instead of pure white blocks
+   - Big numbers, photography-driven, less yellow
+   - Gold accent (#b88a3a) used sparingly as small accents
+   ========================================================= */
+
+.ahs{
+  --c-navy:       #0a1d56;
+  --c-navy-deep:  #050f33;
+  --c-navy-soft:  #1a2f70;
+  --c-gold:       #b88a3a;
+  --c-gold-soft:  #d9b86c;
+  --c-yellow:     #ffff00;       /* keep brand accent rare */
+  --c-ink:        #1a1f2e;
+  --c-ink-soft:   #2c3340;
+  --c-muted:      #5a6478;
+  --c-muted-soft: #8a93a4;
+  --c-line:       rgba(10, 29, 86, 0.10);
+  --c-line-warm:  rgba(184, 138, 58, 0.25);
+  --c-ivory:      #f8f5ef;
+  --c-cream:      #faf8f3;
+  --c-paper:      #ffffff;
+  --maxw:         1240px;
+  --maxw-narrow:  860px;
+  --radius:       2px;          /* almost square — editorial feel */
+  --radius-md:    6px;
+  font-family: "Inter", system-ui, sans-serif;
+  color: var(--c-ink);
+  background: var(--c-paper);
+}
+
+.ahs-main{ background: var(--c-paper); }
+.ahs-container{ max-width: var(--maxw); margin: 0 auto; padding: 0 1.5rem; }
+.ahs-narrow{ max-width: var(--maxw-narrow); }
+
+/* =====================================================
+   TYPOGRAPHY — Serif headings (prestige K-12 look)
+   ===================================================== */
+.ahs-h2{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 600;
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1.08;
+  letter-spacing: -0.005em;
+  color: var(--c-navy);
+  margin: 0;
+}
+.ahs-h2--center{ text-align: center; }
+.ahs-h2--light{ color: #fff; }
+
+.ahs-eyebrow{
+  display: inline-block;
+  font-family: "Inter", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--c-gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin: 0 0 0.85rem;
+}
+.ahs-eyebrow--center{ display: block; text-align: center; }
+.ahs-eyebrow--light{ color: var(--c-gold-soft); }
+.ahs-eyebrow--gold{ color: var(--c-gold-soft); }
+.ahs-eyebrow--sm{ font-size: 0.65rem; margin-bottom: 0.5rem; }
+
+.ahs-heading{
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 3rem;
+}
+.ahs-heading--light *{ color: #fff; }
+.ahs-heading__sub{
+  font-size: 1.05rem;
+  color: var(--c-muted);
+  line-height: 1.65;
+  margin: 1rem auto 0;
+  max-width: 620px;
+}
+.ahs-heading--light .ahs-heading__sub{ color: rgba(255, 255, 255, 0.78); }
+
+/* Section spacing — generous, editorial */
+.ahs-section{ padding: 6rem 0; }
+.ahs-section--intro{ padding: 5rem 0; }
+.ahs-section--ivory{ background: var(--c-ivory); }
+.ahs-section--dark{
+  background: linear-gradient(180deg, var(--c-navy-deep), var(--c-navy));
+  color: #fff;
+}
+
+/* =====================================================
+   HERO — full-bleed image, centered serif title
+   ===================================================== */
+.ahs-hero{
+  position: relative;
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: #fff;
+  isolation: isolate;
+  overflow: hidden;
+}
+.ahs-hero__media{
+  position: absolute;
+  inset: 0;
+  background: url('/hero-bg-home.jpg') center/cover no-repeat, var(--c-navy-deep);
+  z-index: -1;
+}
+.ahs-hero__overlay{
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5,15,51,0.55) 0%, rgba(5,15,51,0.7) 70%, rgba(5,15,51,0.85) 100%);
+}
+.ahs-hero__inner{
+  position: relative;
+  max-width: 820px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.ahs-hero__eyebrow{
+  font-family: "Inter", sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--c-gold-soft);
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--c-gold);
+}
+.ahs-hero__title{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 500;
+  font-size: clamp(3.2rem, 8vw, 6rem);
+  line-height: 1;
+  margin: 0.5rem 0 0;
+  letter-spacing: -0.01em;
+  color: #fff;
+}
+.ahs-hero__title-line{ display: block; }
+.ahs-hero__sub{
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  font-weight: 400;
+  color: rgba(255,255,255,0.85);
+  margin: 0.75rem 0 0;
+  max-width: 560px;
+  line-height: 1.55;
+}
+.ahs-hero__tag{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-style: italic;
+  font-size: clamp(1.15rem, 2vw, 1.45rem);
+  color: var(--c-gold-soft);
+  margin: 0.5rem 0 0;
+  font-weight: 500;
+}
+.ahs-hero__cta-row{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.ahs-hero__scroll{
+  margin-top: 2.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.75rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.ahs-hero__scroll:hover{ color: var(--c-gold-soft); }
+.ahs-hero__scroll svg{ animation: ahsBounce 2s ease-in-out infinite; }
+@keyframes ahsBounce {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(4px); }
+}
+
+/* =====================================================
+   BUTTONS — square, editorial
+   ===================================================== */
+.ahs-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: 0.92rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1.5px solid transparent;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.ahs-btn--primary{
+  background: var(--c-gold);
+  color: #fff;
+  border-color: var(--c-gold);
+}
+.ahs-btn--primary:hover{
+  background: var(--c-gold-soft);
+  border-color: var(--c-gold-soft);
+  transform: translateY(-1px);
+}
+.ahs-btn--secondary{
+  background: transparent;
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.ahs-btn--secondary:hover{
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+}
+.ahs-btn--dark{
+  background: var(--c-navy);
+  color: #fff;
+  border-color: var(--c-navy);
+}
+.ahs-btn--dark:hover{
+  background: var(--c-navy-soft);
+  border-color: var(--c-navy-soft);
+}
+
+/* =====================================================
+   STATS RIBBON — dark band, big numbers
+   ===================================================== */
+.ahs-ribbon{
+  background: linear-gradient(180deg, var(--c-navy), var(--c-navy-deep));
+  color: #fff;
+  padding: 3.25rem 0;
+  border-top: 1px solid var(--c-line-warm);
+  border-bottom: 1px solid var(--c-line-warm);
+}
+.ahs-ribbon__grid{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+.ahs-ribbon__stat{
+  text-align: center;
+  padding: 0 1rem;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+.ahs-ribbon__stat:last-child{ border-right: none; }
+.ahs-ribbon__stat strong{
+  display: block;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 500;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 1;
+  color: var(--c-gold-soft);
+  letter-spacing: -0.02em;
+  margin-bottom: 0.4rem;
+}
+.ahs-ribbon__stat span{
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.7);
+  font-weight: 500;
+}
+
+/* =====================================================
+   INTRO + RECOGNITION
+   ===================================================== */
+.ahs-intro__text{
+  text-align: center;
+  font-size: 1.1rem;
+  line-height: 1.85;
+  color: var(--c-muted);
+  margin: 1.5rem 0 3rem;
+}
+.ahs-intro__text strong{ color: var(--c-ink); font-weight: 600; }
+
+.ahs-recognition{
+  border-top: 1px solid var(--c-line-warm);
+  padding-top: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+.ahs-recognition__label{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--c-gold);
+  letter-spacing: 0.08em;
+}
+.ahs-recognition__row{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+  width: 100%;
+  max-width: 760px;
+}
+.ahs-recognition__item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+  color: var(--c-navy);
+  font-size: 0.82rem;
+  line-height: 1.4;
+  font-weight: 600;
+}
+.ahs-recognition__item em{
+  font-style: normal;
+  font-weight: 400;
+  color: var(--c-muted);
+}
+.ahs-recognition__item svg{ color: var(--c-navy); }
+
+/* =====================================================
+   REGIONS — "Discover Our Campuses"-style 3 image cards
+   ===================================================== */
+.ahs-regions{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+.ahs-region{
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ahs-region:hover{
+  transform: translateY(-6px);
+  box-shadow: 0 24px 50px rgba(10, 29, 86, 0.13);
+}
+.ahs-region__media{
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  display: block;
+  text-decoration: none;
+}
+.ahs-region__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.ahs-region:hover .ahs-region__media img{ transform: scale(1.06); }
+.ahs-region__chip{
+  position: absolute;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  background: var(--c-navy);
+  color: #fff;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 1.4rem;
+  font-weight: 600;
+  padding: 0.45rem 1.1rem;
+  border-radius: var(--radius);
+}
+.ahs-region__body{
+  padding: 1.75rem 1.75rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1;
+}
+.ahs-region__body p{
+  color: var(--c-muted);
+  line-height: 1.65;
+  font-size: 0.95rem;
+  margin: 0;
+}
+.ahs-region__list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-top: 1px solid var(--c-line);
+  padding-top: 1rem;
+}
+.ahs-region__list a{
+  color: var(--c-navy);
+  text-decoration: none;
+  font-size: 0.88rem;
+  font-weight: 500;
+  line-height: 1.4;
+  transition: color 0.15s;
+}
+.ahs-region__list a:hover{ color: var(--c-gold); }
+.ahs-region__link{
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: var(--c-gold);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding-top: 0.5rem;
+}
+.ahs-region__link svg{ transition: transform 0.2s; }
+.ahs-region__link:hover svg{ transform: translateX(4px); }
+
+/* =====================================================
+   VOICES (testimonials) — large editorial cards
+   ===================================================== */
+.ahs-voices{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+.ahs-voice{
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+.ahs-voice:hover{
+  box-shadow: 0 20px 40px rgba(10,29,86,0.1);
+  transform: translateY(-4px);
+}
+.ahs-voice__photo{
+  aspect-ratio: 4 / 3;
+  background: var(--c-ivory);
+  position: relative;
+  overflow: hidden;
+}
+.ahs-voice__photo a, .ahs-voice__photo img{
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.ahs-voice__photo img{
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.ahs-voice:hover .ahs-voice__photo img{ transform: scale(1.05); }
+.ahs-voice__play{
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 29, 86, 0.25);
+  color: #fff;
+  opacity: 1;
+  transition: background 0.2s;
+}
+.ahs-voice__photo a:hover .ahs-voice__play{ background: rgba(10, 29, 86, 0.45); }
+.ahs-voice__play svg{
+  background: var(--c-gold);
+  border-radius: 50%;
+  padding: 14px;
+  width: 56px;
+  height: 56px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+}
+.ahs-voice__body{
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  flex: 1;
+}
+.ahs-voice__quote{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.5;
+  color: var(--c-ink);
+  margin: 0;
+  flex: 1;
+}
+.ahs-voice__attrib{
+  border-top: 1px solid var(--c-line);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.ahs-voice__attrib strong{
+  color: var(--c-navy);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+.ahs-voice__attrib span{
+  color: var(--c-muted);
+  font-size: 0.82rem;
+}
+
+/* =====================================================
+   WHY (3 differentiators) — alternating editorial rows
+   ===================================================== */
+.ahs-why{
+  display: flex;
+  flex-direction: column;
+  gap: 5rem;
+}
+.ahs-why__row{
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+.ahs-why__row--reverse .ahs-why__media{ order: 2; }
+.ahs-why__row--reverse .ahs-why__text{ order: 1; }
+.ahs-why__media{
+  position: relative;
+  aspect-ratio: 5 / 4;
+  background: var(--c-ivory);
+  overflow: hidden;
+}
+.ahs-why__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.ahs-why__num{
+  position: absolute;
+  bottom: -1.25rem;
+  right: -1.25rem;
+  width: 80px;
+  height: 80px;
+  background: var(--c-gold);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 500;
+  font-size: 2rem;
+  letter-spacing: -0.02em;
+}
+.ahs-why__text{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.ahs-why__title{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 600;
+  font-size: clamp(1.7rem, 3vw, 2.4rem);
+  line-height: 1.15;
+  color: var(--c-navy);
+  margin: 0;
+}
+.ahs-why__text p{
+  color: var(--c-muted);
+  font-size: 1.05rem;
+  line-height: 1.75;
+  margin: 0;
+}
+.ahs-more summary{
+  cursor: pointer;
+  list-style: none;
+  color: var(--c-gold);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
+}
+.ahs-more summary::-webkit-details-marker{ display: none; }
+.ahs-more summary::after{ content: " +"; font-size: 1rem; line-height: 1; }
+.ahs-more[open] summary::after{ content: " –"; }
+.ahs-more[open] summary{ color: var(--c-navy); }
+.ahs-more p{
+  margin-top: 1rem !important;
+  padding-top: 1rem;
+  border-top: 1px solid var(--c-line);
+  font-size: 0.95rem !important;
+  color: var(--c-muted) !important;
+}
+
+/* =====================================================
+   PROGRAMS — minimal text list grid
+   ===================================================== */
+.ahs-programs{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+.ahs-program{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 1.5rem;
+  border: 1px solid var(--c-line);
+  background: var(--c-paper);
+  text-decoration: none;
+  color: var(--c-navy);
+  transition: all 0.2s ease;
+}
+.ahs-program:hover{
+  background: var(--c-navy);
+  color: #fff;
+  border-color: var(--c-navy);
+}
+.ahs-program__label{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 600;
+  font-size: 1.2rem;
+  letter-spacing: 0;
+}
+.ahs-program__arrow{ color: var(--c-gold); display: flex; transition: transform 0.2s, color 0.2s; }
+.ahs-program:hover .ahs-program__arrow{ transform: translateX(4px); color: var(--c-gold-soft); }
+
+/* =====================================================
+   PILLARS (philosophy accordion) — dark background
+   ===================================================== */
+.ahs-pillars{
+  max-width: 920px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border-top: 1px solid rgba(255,255,255,0.12);
+}
+.ahs-pillar{
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.ahs-pillar summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 1.6rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  color: rgba(255,255,255,0.92);
+  transition: color 0.2s;
+}
+.ahs-pillar summary:hover{ color: var(--c-gold-soft); }
+.ahs-pillar summary::-webkit-details-marker{ display: none; }
+.ahs-pillar__num{
+  flex-shrink: 0;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 1.5rem;
+  color: var(--c-gold-soft);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  min-width: 3rem;
+}
+.ahs-pillar__title{
+  flex: 1;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  line-height: 1.3;
+  color: #fff;
+}
+.ahs-pillar__chev{
+  flex-shrink: 0;
+  color: rgba(255,255,255,0.5);
+  transition: transform 0.3s ease, color 0.2s;
+}
+.ahs-pillar[open] .ahs-pillar__chev{
+  transform: rotate(180deg);
+  color: var(--c-gold-soft);
+}
+.ahs-pillar__body{
+  padding: 0 0 1.75rem 4.5rem;
+  color: rgba(255,255,255,0.78);
+  line-height: 1.8;
+  max-width: 720px;
+}
+.ahs-pillar__body p{ margin: 0 0 0.6rem; font-size: 1rem; }
+.ahs-pillar__lead{
+  color: var(--c-gold-soft) !important;
+  font-style: italic;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-size: 1.2rem !important;
+  margin-bottom: 1rem !important;
+}
+
+/* =====================================================
+   HIGHLIGHTS — editorial 3-card row with photo top
+   ===================================================== */
+.ahs-highlights{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+.ahs-highlight{
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  text-decoration: none;
+  color: var(--c-ink);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.ahs-highlight:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(10,29,86,0.1);
+}
+.ahs-highlight__media{
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: var(--c-ivory);
+}
+.ahs-highlight__media img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+.ahs-highlight:hover .ahs-highlight__media img{ transform: scale(1.05); }
+.ahs-highlight__body{
+  padding: 1.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+}
+.ahs-highlight__title{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 600;
+  font-size: 1.4rem;
+  line-height: 1.25;
+  color: var(--c-navy);
+  margin: 0;
+}
+.ahs-highlight__body p{
+  color: var(--c-muted);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  margin: 0;
+  flex: 1;
+}
+.ahs-highlight__cta{
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--c-gold);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.ahs-highlight:hover .ahs-highlight__cta svg{ transform: translateX(3px); }
+.ahs-highlight__cta svg{ transition: transform 0.2s; }
+
+/* =====================================================
+   CTA SECTION (dark with form)
+   ===================================================== */
+.ahs-section--cta{
+  background:
+    linear-gradient(135deg, var(--c-navy-deep), var(--c-navy));
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.ahs-section--cta::before{
+  content: "";
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(184, 138, 58, 0.18), transparent 70%);
+}
+.ahs-cta{
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+.ahs-cta__desc{
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.82);
+  margin: 1rem 0 1.5rem;
+}
+.ahs-cta__list{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.ahs-cta__list li{
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  color: rgba(255,255,255,0.9);
+  font-size: 0.98rem;
+}
+.ahs-cta__list svg{ flex-shrink: 0; margin-top: 0.2rem; color: var(--c-gold-soft); }
+.ahs-cta__list--ink li{ color: var(--c-ink); }
+.ahs-cta__list--ink svg{ color: var(--c-gold); }
+
+.ahs-cta__form{
+  background: #fff;
+  padding: 2rem;
+  border-radius: var(--radius-md);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+}
+
+.ahs-section--final{
+  background: var(--c-cream);
+}
+.ahs-section--final .ahs-cta__form{
+  box-shadow: 0 20px 40px rgba(10, 29, 86, 0.08);
+  border: 1px solid var(--c-line);
+}
+
+/* =====================================================
+   FAQ
+   ===================================================== */
+.ahs-faq{
+  max-width: 820px;
+  margin: 0 auto;
+  border-top: 1px solid var(--c-line);
+}
+.ahs-faq__item{ border-bottom: 1px solid var(--c-line); }
+.ahs-faq__item summary{
+  list-style: none;
+  cursor: pointer;
+  padding: 1.5rem 2.5rem 1.5rem 0;
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 600;
+  font-size: 1.25rem;
+  color: var(--c-navy);
+  position: relative;
+  transition: color 0.2s;
+}
+.ahs-faq__item summary::-webkit-details-marker{ display: none; }
+.ahs-faq__item summary:hover{ color: var(--c-gold); }
+.ahs-faq__item summary::after{
+  content: "+";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--c-gold);
+  font-size: 1.5rem;
+  font-weight: 300;
+  transition: transform 0.2s;
+}
+.ahs-faq__item[open] summary::after{ content: "–"; }
+.ahs-faq__item p{
+  padding: 0 0 1.75rem;
+  color: var(--c-muted);
+  line-height: 1.75;
+  font-size: 0.98rem;
+  margin: 0;
+  max-width: 720px;
+}
+.ahs-faq__item a{ color: var(--c-gold); font-weight: 600; }
+
+/* =====================================================
+   PAA cards
+   ===================================================== */
+.ahs-paa{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+.ahs-paa__card{
+  background: var(--c-paper);
+  border: 1px solid var(--c-line);
+  padding: 1.75rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  text-decoration: none;
+  color: var(--c-ink);
+  transition: all 0.25s ease;
+  position: relative;
+}
+.ahs-paa__card::before{
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 3px;
+  background: var(--c-gold);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.ahs-paa__card:hover{
+  border-color: var(--c-gold);
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(10,29,86,0.08);
+}
+.ahs-paa__card:hover::before{ transform: scaleX(1); }
+.ahs-paa__icon{ font-size: 1.6rem; line-height: 1; }
+.ahs-paa__card strong{
+  font-family: "Cormorant Garamond", Georgia, serif !important;
+  font-weight: 600;
+  color: var(--c-navy);
+  font-size: 1.15rem;
+  line-height: 1.3;
+}
+.ahs-paa__card span:not(.ahs-paa__icon){
+  color: var(--c-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .ahs-section{ padding: 4.5rem 0; }
+  .ahs-regions{ grid-template-columns: repeat(2, 1fr); }
+  .ahs-voices{ grid-template-columns: repeat(2, 1fr); }
+  .ahs-highlights{ grid-template-columns: 1fr; max-width: 720px; margin: 0 auto; }
+  .ahs-paa{ grid-template-columns: repeat(2, 1fr); }
+  .ahs-cta{ grid-template-columns: 1fr; gap: 2.5rem; }
+  .ahs-programs{ grid-template-columns: repeat(3, 1fr); }
+  .ahs-recognition__row{ grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+  .ahs-why__row{ gap: 2.5rem; }
+}
+
+/* Mobile */
+@media (max-width: 720px) {
+  .ahs-section{ padding: 3.5rem 0; }
+  .ahs-section--intro{ padding: 3rem 0; }
+  .ahs-container{ padding: 0 1.25rem; }
+  .ahs-heading{ margin-bottom: 2rem; }
+  .ahs-heading__sub{ font-size: 0.95rem; }
+
+  /* Hero */
+  .ahs-hero{ min-height: 70vh; }
+  .ahs-hero__title{ font-size: 3rem; }
+  .ahs-hero__sub{ font-size: 0.95rem; }
+  .ahs-hero__tag{ font-size: 1.1rem; }
+  .ahs-hero__eyebrow{ font-size: 0.7rem; letter-spacing: 0.2em; }
+  .ahs-hero__cta-row{ flex-direction: column; width: 100%; margin-top: 1.5rem; }
+  .ahs-btn{ width: 100%; padding: 1rem 1.5rem; font-size: 0.85rem; }
+
+  /* Ribbon — 2x2 */
+  .ahs-ribbon{ padding: 2.25rem 0; }
+  .ahs-ribbon__grid{ grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0; }
+  .ahs-ribbon__stat{ padding: 0 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 1.5rem; }
+  .ahs-ribbon__stat:nth-child(2n){ border-right: none; }
+  .ahs-ribbon__stat:nth-child(n+3){ border-bottom: none; padding-bottom: 0; padding-top: 1.5rem; }
+  .ahs-ribbon__stat strong{ font-size: 2.4rem; }
+  .ahs-ribbon__stat span{ font-size: 0.72rem; }
+
+  /* Intro */
+  .ahs-intro__text{ font-size: 0.98rem; line-height: 1.75; }
+  .ahs-recognition__row{ grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+  .ahs-recognition__item{ font-size: 0.78rem; }
+
+  /* Regions / Voices / Highlights / PAA / Programs */
+  .ahs-regions,
+  .ahs-voices,
+  .ahs-highlights,
+  .ahs-paa{ grid-template-columns: 1fr; gap: 1.25rem; }
+  .ahs-programs{ grid-template-columns: repeat(2, 1fr); }
+
+  /* Why */
+  .ahs-why{ gap: 3rem; }
+  .ahs-why__row{
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  .ahs-why__row--reverse .ahs-why__media{ order: 0; }
+  .ahs-why__row--reverse .ahs-why__text{ order: 0; }
+  .ahs-why__num{ width: 60px; height: 60px; font-size: 1.5rem; bottom: -0.85rem; right: -0.85rem; }
+  .ahs-why__title{ font-size: 1.6rem; }
+  .ahs-why__text p{ font-size: 0.98rem; }
+
+  /* Pillars */
+  .ahs-pillar summary{ padding: 1.25rem 0; gap: 1rem; }
+  .ahs-pillar__num{ font-size: 1.2rem; min-width: 2.25rem; }
+  .ahs-pillar__title{ font-size: 1.05rem; }
+  .ahs-pillar__body{ padding: 0 0 1.5rem 3.25rem; }
+  .ahs-pillar__lead{ font-size: 1.05rem !important; }
+
+  /* FAQ */
+  .ahs-faq__item summary{ font-size: 1.05rem; padding: 1.25rem 2rem 1.25rem 0; }
+  .ahs-faq__item p{ padding-bottom: 1.5rem; font-size: 0.92rem; }
+
+  /* CTA */
+  .ahs-cta__form{ padding: 1.5rem; }
+}
+</style>

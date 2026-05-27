@@ -10,6 +10,40 @@ import { getTestimonials } from '../lib/directus';
 // Fetch testimonials from Directus CMS
 const cmsTestimonials = await getTestimonials();
 
+// Thư tay phụ huynh đóng khung gửi nhà trường (5/2026)
+const letterTestimonials = [
+  {
+    image: '/thu-cam-on-12c1-ntt-1.jpg',
+    alt: 'Thư cảm ơn viết tay đóng khung gửi cô chủ nhiệm và giáo viên bộ môn lớp 12C1 — Trường Việt Anh cơ sở Nguyễn Trọng Tuyển',
+    title: 'Một chặng đường — Vạn lời tri ân',
+    quote:
+      'Với riêng cô chủ nhiệm Nguyễn Thị Kim Tiền, tôi luôn cảm nhận được sự quan tâm rất cụ thể và tinh tế từ cô — từ việc theo dõi quá trình học tập, nhắc nhở kịp thời, đến những lời động viên đúng lúc khi con gặp áp lực hay chưa ổn định về tinh thần. Chính sự đồng hành ấy đã giúp con tôi trưởng thành hơn rất nhiều trong năm học quan trọng này.',
+    sender: 'Phụ huynh Lê Ngọc Quỳnh Đào',
+    role: 'Phụ huynh học sinh lớp 12C1 · THPT Việt Anh — cơ sở Nguyễn Trọng Tuyển',
+    recipient: 'Gửi cô chủ nhiệm Nguyễn Thị Kim Tiền, cô Nguyễn Thị Diệu và quý thầy/cô dạy bộ môn lớp 12C1',
+  },
+  {
+    image: '/thu-cam-on-12c1-ntt-2.jpg',
+    alt: 'Thư cảm ơn viết tay đóng khung gửi Ban Giám hiệu, cô Hiệu phó Nguyễn Thu Thảo và giáo viên Trường Việt Anh cơ sở Nguyễn Trọng Tuyển',
+    title: 'Dưới mái trường này — Con lớn lên trong những yêu thương thầm lặng',
+    quote:
+      'Xin cảm ơn nhà trường đã luôn xây dựng một môi trường học tập nghiêm túc nhưng giàu yêu thương, nơi các con không chỉ tiếp thu tri thức mà còn được nuôi dưỡng nhân cách và ước mơ. Đặc biệt, chúng tôi xin tri ân sâu sắc đến cô Hiệu phó Nguyễn Thu Thảo — người luôn lặng lẽ quan tâm, theo dõi và hỗ trợ học sinh bằng tất cả sự tận tâm và trách nhiệm.',
+    sender: 'Phụ huynh Lê Ngọc Quỳnh Dao',
+    role: 'Phụ huynh học sinh lớp 12C1 · THPT Việt Anh — cơ sở Nguyễn Trọng Tuyển',
+    recipient: 'Gửi Ban Giám hiệu, cô Hiệu phó Nguyễn Thu Thảo, cô chủ nhiệm và thầy Giám thị',
+  },
+  {
+    image: '/thu-cam-on-11a1-phu-nhuan.jpg',
+    alt: 'Thư cảm ơn gửi cô Thảo — Phó Hiệu trưởng kiêm giáo viên Ngữ văn Trường Việt Anh Phú Nhuận, từ phụ huynh học sinh lớp 11A1',
+    title: '"Tất cả vì học sinh thân yêu"',
+    quote:
+      'Dù bận rộn với công tác quản lý trên cương vị Phó Hiệu trưởng, cô Thảo vẫn dành trọn tâm huyết của một người giáo viên Ngữ văn để kèm cặp, ôn tập và bổ sung kịp thời những phần kiến thức còn thiếu cho con. Nhờ phương pháp giảng dạy khoa học, sự kiên nhẫn và tấm lòng yêu thương học trò của cô, con tôi đã có sự tiến bộ vượt bậc và đạt được kết quả rất tốt trong kỳ thi vừa qua.',
+    sender: 'Phụ huynh Nguyễn Thị Ngọc Hân',
+    role: 'Phụ huynh em Nguyễn Ngọc Minh Anh · Lớp 11A1 · Trường Việt Anh — cơ sở Phú Nhuận',
+    recipient: 'Gửi Ban Giám hiệu, cô Thảo — Phó Hiệu trưởng & GV Ngữ văn, cô chủ nhiệm lớp 11A1',
+  },
+];
+
 // Fallback testimonials nếu CMS trống
 const fallbackTestimonials = [
   {
@@ -115,6 +149,13 @@ const structuredData = [
         reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
         reviewBody: t.quote,
       })),
+      ...letterTestimonials.map(t => ({
+        '@type': 'Review',
+        author: { '@type': 'Person', name: t.sender.replace(/^Phụ huynh\s+/, '') },
+        reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+        name: t.title,
+        reviewBody: t.quote,
+      })),
     ],
   },
   ...videoTestimonials.map(t => ({
@@ -185,6 +226,49 @@ const structuredData = [
 
     <!-- VIDEO TESTIMONIALS -->
     <TestimonialVideoGrid />
+
+    <!-- THƯ CẢM ƠN VIẾT TAY -->
+    <section class="dg-letters" aria-labelledby="dg-letters-h">
+      <div class="dg-container">
+        <header class="dg-letters__head">
+          <span class="dg-letters__eyebrow">✉ Thư cảm ơn từ phụ huynh</span>
+          <h2 id="dg-letters-h" class="dg-letters__h2">Khi phụ huynh gửi thư <span class="dg-letters__hl">cảm ơn thầy cô</span></h2>
+          <p class="dg-letters__sub">
+            Những lá thư phụ huynh đích thân viết, đóng khung trang trọng và gửi đến Ban Giám hiệu, thầy cô chủ nhiệm cùng giáo viên bộ môn của Trường Việt Anh. Đây là minh chứng chân thật nhất cho hành trình thầy trò — không thể dàn dựng, không thể đặt hàng.
+          </p>
+        </header>
+
+        <div class="dg-letters__grid">
+          {letterTestimonials.map((t) => (
+            <article class="dg-letter">
+              <a
+                href={t.image}
+                target="_blank"
+                rel="noopener"
+                class="dg-letter__media"
+                aria-label={`Xem ảnh gốc: ${t.title}`}
+              >
+                <img src={t.image} alt={t.alt} loading="lazy" decoding="async" />
+                <span class="dg-letter__zoom" aria-hidden="true">🔍 Bấm xem ảnh gốc</span>
+              </a>
+              <div class="dg-letter__body">
+                <div class="dg-letter__recipient">{t.recipient}</div>
+                <h3 class="dg-letter__title">{t.title}</h3>
+                <blockquote class="dg-letter__quote">{t.quote}</blockquote>
+                <footer class="dg-letter__meta">
+                  <strong>{t.sender}</strong>
+                  <span>{t.role}</span>
+                </footer>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <p class="dg-letters__note">
+          <span aria-hidden="true">📌</span> Trường Việt Anh trân trọng giữ nguyên bản các bức thư phụ huynh đã gửi. Một số tên giáo viên và lớp học được công khai theo nguyện vọng tri ân của chính phụ huynh.
+        </p>
+      </div>
+    </section>
 
     <!-- CTA -->
     <section class="dg-cta">
@@ -345,6 +429,190 @@ const structuredData = [
     .dg-stats { grid-template-columns: 1fr; gap: 0.6rem; }
     .dg-stat { padding: 0.85rem 1rem; }
   }
+
+  /* ============ THƯ CẢM ƠN VIẾT TAY ============ */
+  .dg-letters {
+    background:
+      radial-gradient(ellipse at top left, rgba(255, 255, 0, 0.06) 0%, transparent 50%),
+      linear-gradient(180deg, #fffdf2 0%, #f7f9fc 100%);
+    padding: 4rem 0 4.5rem;
+    border-top: 1px solid #ececf3;
+  }
+  .dg-letters__head {
+    text-align: center;
+    max-width: 760px;
+    margin: 0 auto 2.5rem;
+  }
+  .dg-letters__eyebrow {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #000080;
+    background: rgba(255, 255, 0, 0.35);
+    border: 1px solid rgba(0, 0, 128, 0.18);
+    padding: 0.35rem 0.9rem;
+    border-radius: 999px;
+    margin-bottom: 1rem;
+  }
+  .dg-letters__h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 800;
+    color: #000080;
+    margin: 0 0 0.85rem;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+  .dg-letters__hl {
+    background: linear-gradient(180deg, transparent 60%, rgba(255, 255, 0, 0.55) 60%);
+    padding: 0 0.15em;
+  }
+  .dg-letters__sub {
+    color: #475569;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  .dg-letters__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.6rem;
+  }
+  @media (max-width: 980px) {
+    .dg-letters__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 640px) {
+    .dg-letters__grid { grid-template-columns: 1fr; gap: 1.2rem; }
+  }
+
+  .dg-letter {
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 22px rgba(0, 0, 64, 0.08), 0 1px 3px rgba(0, 0, 64, 0.04);
+    border: 1px solid #eceff7;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .dg-letter:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 18px 40px rgba(0, 0, 64, 0.14), 0 4px 10px rgba(0, 0, 64, 0.06);
+  }
+
+  .dg-letter__media {
+    position: relative;
+    display: block;
+    background: #0f1230;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    text-decoration: none;
+  }
+  .dg-letter__media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    display: block;
+    transition: transform 0.5s ease, filter 0.3s ease;
+  }
+  .dg-letter:hover .dg-letter__media img {
+    transform: scale(1.04);
+    filter: brightness(0.9);
+  }
+  .dg-letter__zoom {
+    position: absolute;
+    left: 50%;
+    bottom: 16px;
+    transform: translateX(-50%) translateY(8px);
+    background: #000080;
+    color: #ffff00;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 0.5rem 0.95rem;
+    border-radius: 999px;
+    opacity: 0;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  .dg-letter:hover .dg-letter__zoom,
+  .dg-letter__media:focus-visible .dg-letter__zoom {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  @media (hover: none) {
+    /* trên mobile luôn hiển thị nhẹ để user biết bấm được */
+    .dg-letter__zoom { opacity: 0.92; transform: translateX(-50%) translateY(0); }
+  }
+
+  .dg-letter__body {
+    padding: 1.25rem 1.3rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    flex: 1;
+  }
+  .dg-letter__recipient {
+    font-size: 0.78rem;
+    color: #64748b;
+    font-style: italic;
+    line-height: 1.45;
+  }
+  .dg-letter__title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #000080;
+    margin: 0;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+  }
+  .dg-letter__quote {
+    margin: 0;
+    padding: 0.55rem 0 0.6rem 0.95rem;
+    border-left: 3px solid #ffff00;
+    font-size: 0.93rem;
+    line-height: 1.65;
+    color: #1e293b;
+    font-style: italic;
+    background: linear-gradient(90deg, rgba(255, 255, 0, 0.08), transparent 60%);
+  }
+  .dg-letter__meta {
+    margin-top: auto;
+    padding-top: 0.7rem;
+    border-top: 1px dashed #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .dg-letter__meta strong {
+    color: #000080;
+    font-weight: 800;
+    font-size: 0.95rem;
+  }
+  .dg-letter__meta span {
+    color: #64748b;
+    font-size: 0.82rem;
+    line-height: 1.45;
+  }
+
+  .dg-letters__note {
+    margin: 2rem auto 0;
+    text-align: center;
+    max-width: 720px;
+    font-size: 0.85rem;
+    color: #64748b;
+    line-height: 1.6;
+    background: rgba(255, 255, 0, 0.12);
+    border: 1px dashed rgba(0, 0, 128, 0.2);
+    border-radius: 12px;
+    padding: 0.85rem 1.2rem;
+  }
+  .dg-letters__note span { margin-right: 0.35rem; }
 
   /* ============ CTA (navy + yellow) ============ */
   .dg-cta {

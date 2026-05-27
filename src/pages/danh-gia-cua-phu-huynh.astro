@@ -234,38 +234,101 @@ const structuredData = [
           <span class="dg-letters__eyebrow">✉ Thư cảm ơn từ phụ huynh</span>
           <h2 id="dg-letters-h" class="dg-letters__h2">Khi phụ huynh gửi thư <span class="dg-letters__hl">cảm ơn thầy cô</span></h2>
           <p class="dg-letters__sub">
-            Những lá thư phụ huynh đích thân viết, đóng khung trang trọng và gửi đến Ban Giám hiệu, thầy cô chủ nhiệm cùng giáo viên bộ môn của Trường Việt Anh. Đây là minh chứng chân thật nhất cho hành trình thầy trò — không thể dàn dựng, không thể đặt hàng.
+            Những lá thư phụ huynh đích thân viết gửi đến Ban Giám hiệu, thầy cô chủ nhiệm và giáo viên bộ môn Trường Việt Anh — minh chứng chân thật nhất, không thể dàn dựng, không thể đặt hàng.
           </p>
         </header>
 
         <div class="dg-letters__grid">
-          {letterTestimonials.map((t) => (
-            <article class="dg-letter">
-              <a
-                href={t.image}
-                target="_blank"
-                rel="noopener"
-                class="dg-letter__media"
-                aria-label={`Xem ảnh gốc: ${t.title}`}
-              >
-                <img src={t.image} alt={t.alt} loading="lazy" decoding="async" />
-                <span class="dg-letter__zoom" aria-hidden="true">🔍 Bấm xem ảnh gốc</span>
-              </a>
-              <div class="dg-letter__body">
-                <div class="dg-letter__recipient">{t.recipient}</div>
-                <h3 class="dg-letter__title">{t.title}</h3>
-                <blockquote class="dg-letter__quote">{t.quote}</blockquote>
-                <footer class="dg-letter__meta">
-                  <strong>{t.sender}</strong>
-                  <span>{t.role}</span>
-                </footer>
-              </div>
-            </article>
-          ))}
+
+          <!-- THƯ 1 -->
+          <article class="dg-letter">
+            <div class="dg-letter__header">
+              <div class="dg-letter__date">THPT Việt Anh — Cơ sở Nguyễn Trọng Tuyển · 05/2026</div>
+              <h3 class="dg-letter__title">Một Chặng Đường — Vạn Lời Tri Ân</h3>
+            </div>
+            <div class="dg-letter__recipient">
+              <strong>Kính gửi:</strong>
+              Cô chủ nhiệm lớp 12C1 — Nguyễn Thị Kim Tiền &amp; Nguyễn Thị Diệu<br/>
+              Quý Thầy/Cô dạy bộ môn Lớp 12C1
+            </div>
+            <div class="dg-letter__body">
+              <p class="dg-letter__para">Là phụ huynh học sinh lớp 12C1, tôi viết những dòng này với tất cả sự trân trọng và lòng biết ơn sâu sắc dành cho quý thầy cô — những người đã đồng hành, dìu dắt và nâng đỡ các con trong suốt năm học đầy ý nghĩa vừa qua.</p>
+              <p class="dg-letter__para--hl">Với riêng cô chủ nhiệm Nguyễn Thị Kim Tiền, tôi luôn cảm nhận được sự quan tâm rất cụ thể và tinh tế — từ việc theo dõi quá trình học tập, nhắc nhở kịp thời, đến những lời động viên đúng lúc khi con gặp áp lực hay chưa ổn định về tinh thần. Chính sự đồng hành ấy đã giúp con tôi trưởng thành hơn rất nhiều trong năm học quan trọng này.</p>
+              <p class="dg-letter__para">Bên cạnh đó, chúng tôi cũng xin gửi lời tri ân sâu sắc đến Quý Thầy Cô bộ môn dạy lớp 12C1. Mỗi thầy cô đều đã dành rất nhiều tâm huyết trong từng tiết dạy, không chỉ giúp các con nắm vững kiến thức mà còn khơi gợi sự hứng thú và ý thức tự học.</p>
+              <p class="dg-letter__para">Thời gian học dưới mái trường Việt Anh sẽ trở thành một phần ký ức đẹp của các con và với gia đình chúng tôi, đó cũng là một hành trình đầy yên tâm và biết ơn.</p>
+            </div>
+            <div class="dg-letter__footer">
+              <div class="dg-letter__closing">Xin chân thành tri ân và cảm ơn.</div>
+              <div class="dg-letter__sender">Lê Ngọc Quỳnh Đào</div>
+              <div class="dg-letter__role">Phụ huynh học sinh lớp 12C1 · THPT Việt Anh — cơ sở Nguyễn Trọng Tuyển</div>
+            </div>
+            <a href="/thu-cam-on-12c1-ntt-1.jpg" target="_blank" rel="noopener" class="dg-letter__thumb">
+              <img src="/thu-cam-on-12c1-ntt-1.jpg" alt="Thư đóng khung gốc phụ huynh gửi cô chủ nhiệm 12C1" loading="lazy" decoding="async" />
+              <span class="dg-letter__thumb-text"><strong>📄 Xem thư gốc</strong>Bức thư đóng khung phụ huynh gửi tặng nhà trường</span>
+            </a>
+          </article>
+
+          <!-- THƯ 2 -->
+          <article class="dg-letter">
+            <div class="dg-letter__header">
+              <div class="dg-letter__date">THPT Việt Anh — Cơ sở Nguyễn Trọng Tuyển · 05/2026</div>
+              <h3 class="dg-letter__title">Dưới Mái Trường Này — Con Lớn Lên Trong Những Yêu Thương Thầm Lặng</h3>
+            </div>
+            <div class="dg-letter__recipient">
+              <strong>Kính gửi:</strong>
+              Ban Giám hiệu · Cô Hiệu phó Nguyễn Thu Thảo<br/>
+              Cô chủ nhiệm lớp 12C1 — Nguyễn Thị Kim Tiền &amp; Nguyễn Thị Diệu · Thầy Giám thị
+            </div>
+            <div class="dg-letter__body">
+              <p class="dg-letter__para">Khi những ngày cuối của năm học lớp 12 khép lại, trong lòng mỗi phụ huynh chúng tôi là một khoảng lặng đầy xúc động. Nhìn các con trưởng thành hơn từng ngày, chúng tôi không chỉ cảm nhận niềm vui mà còn là lòng biết ơn sâu sắc gửi đến những người đã âm thầm đồng hành trong suốt hành trình ấy.</p>
+              <p class="dg-letter__para--hl">Đặc biệt, chúng tôi xin tri ân sâu sắc đến cô Hiệu phó Nguyễn Thu Thảo — người luôn lặng lẽ quan tâm, theo dõi và hỗ trợ học sinh bằng tất cả sự tận tâm và trách nhiệm. Những lời động viên kịp thời và sự sẻ chia chân thành của cô đã trở thành điểm tựa tinh thần quý giá đối với cả học sinh và phụ huynh trong suốt chặng đường vừa qua.</p>
+              <p class="dg-letter__para">Xin gửi lời biết ơn chân thành đến cô chủ nhiệm lớp 12C1 — người đã dành trọn tâm huyết, sự kiên nhẫn và tình yêu thương để đồng hành cùng các con trong năm học cuối cấp nhiều áp lực. Nhờ sự dẫn dắt của các cô, các con không chỉ tiến bộ trong học tập mà còn trưởng thành hơn, sống trách nhiệm hơn và vững vàng hơn trước tương lai.</p>
+              <p class="dg-letter__para">Chúng tôi cũng xin trân trọng cảm ơn thầy Giám thị — người luôn âm thầm giữ gìn nề nếp, kỷ luật và sự an toàn cho học sinh mỗi ngày.</p>
+            </div>
+            <div class="dg-letter__footer">
+              <div class="dg-letter__closing">Gia đình chúng tôi xin gửi trọn lòng biết ơn và sự tri ân sâu sắc nhất.</div>
+              <div class="dg-letter__sender">Lê Ngọc Quỳnh Dao</div>
+              <div class="dg-letter__role">Phụ huynh học sinh lớp 12C1 · THPT Việt Anh — cơ sở Nguyễn Trọng Tuyển</div>
+            </div>
+            <a href="/thu-cam-on-12c1-ntt-2.jpg" target="_blank" rel="noopener" class="dg-letter__thumb">
+              <img src="/thu-cam-on-12c1-ntt-2.jpg" alt="Thư đóng khung gốc phụ huynh gửi Ban Giám hiệu" loading="lazy" decoding="async" />
+              <span class="dg-letter__thumb-text"><strong>📄 Xem thư gốc</strong>Bức thư đóng khung phụ huynh gửi tặng nhà trường</span>
+            </a>
+          </article>
+
+          <!-- THƯ 3 -->
+          <article class="dg-letter">
+            <div class="dg-letter__header">
+              <div class="dg-letter__date">TP. Hồ Chí Minh, ngày 19 tháng 05 năm 2026</div>
+              <h3 class="dg-letter__title">Thư Cảm Ơn</h3>
+            </div>
+            <div class="dg-letter__recipient">
+              <strong>Kính gửi:</strong>
+              Ban Giám Hiệu Trường Việt Anh Phú Nhuận<br/>
+              Cô Thảo — Phó Hiệu Trưởng, đồng thời là Giáo Viên Ngữ Văn<br/>
+              Cô giáo Chủ nhiệm lớp 11A1
+            </div>
+            <div class="dg-letter__body">
+              <p class="dg-letter__para">Tôi tên là Nguyễn Thị Ngọc Hân — phụ huynh của em Nguyễn Ngọc Minh Anh, lớp 11A1 tại Trường Việt Anh Phú Nhuận. Tôi viết thư này với mong muốn được bày tỏ lòng biết ơn sâu sắc từ gia đình đối với sự đồng hành của Ban Giám hiệu, Cô giáo Chủ nhiệm và đặc biệt là của Cô Thảo.</p>
+              <p class="dg-letter__para--hl">Dù bận rộn với công tác quản lý trên cương vị Phó Hiệu trưởng, Cô Thảo vẫn dành trọn tâm huyết của một người giáo viên Ngữ văn để kèm cặp, ôn tập và bổ sung kịp thời những phần kiến thức còn thiếu cho con. Nhờ phương pháp giảng dạy khoa học, sự kiên nhẫn và tấm lòng yêu thương học trò của cô, con tôi đã có sự tiến bộ vượt bậc và đạt được kết quả rất tốt trong kỳ thi vừa qua.</p>
+              <p class="dg-letter__para">Kết quả này là niềm vui lớn của gia đình, đồng thời là minh chứng rõ nét cho tấm lòng <em>"tất cả vì học sinh thân yêu"</em> của cô.</p>
+              <p class="dg-letter__para">Kính chúc Quý nhà trường ngày càng phát triển vững mạnh, chúc các thầy cô luôn dồi dào sức khỏe, hạnh phúc và gặt hái được nhiều thành công hơn nữa trong sự nghiệp trồng người.</p>
+            </div>
+            <div class="dg-letter__footer">
+              <div class="dg-letter__closing">Trân trọng cảm ơn!</div>
+              <div class="dg-letter__sender">Nguyễn Thị Ngọc Hân</div>
+              <div class="dg-letter__role">Phụ huynh em Nguyễn Ngọc Minh Anh · Lớp 11A1 · Trường Việt Anh — cơ sở Phú Nhuận</div>
+            </div>
+            <a href="/thu-cam-on-11a1-phu-nhuan.jpg" target="_blank" rel="noopener" class="dg-letter__thumb">
+              <img src="/thu-cam-on-11a1-phu-nhuan.jpg" alt="Thư cảm ơn gốc phụ huynh gửi cô Thảo Phú Nhuận" loading="lazy" decoding="async" />
+              <span class="dg-letter__thumb-text"><strong>📄 Xem thư gốc</strong>Bức thư phụ huynh gửi Ban Giám hiệu và cô Thảo</span>
+            </a>
+          </article>
+
         </div>
 
         <p class="dg-letters__note">
-          <span aria-hidden="true">📌</span> Trường Việt Anh trân trọng giữ nguyên bản các bức thư phụ huynh đã gửi. Một số tên giáo viên và lớp học được công khai theo nguyện vọng tri ân của chính phụ huynh.
+          <span aria-hidden="true">📌</span> Trường Việt Anh trân trọng giữ nguyên bản nội dung các bức thư phụ huynh đã gửi. Tên giáo viên và lớp học được công khai theo nguyện vọng tri ân của chính phụ huynh.
         </p>
       </div>
     </section>
@@ -489,116 +552,129 @@ const structuredData = [
 
   .dg-letter {
     background: #fff;
-    border-radius: 18px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 6px 22px rgba(0, 0, 64, 0.08), 0 1px 3px rgba(0, 0, 64, 0.04);
-    border: 1px solid #eceff7;
+    box-shadow: 0 4px 18px rgba(0, 0, 64, 0.06);
+    border: 1px solid #e8ecf6;
     display: flex;
     flex-direction: column;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
   }
   .dg-letter:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 18px 40px rgba(0, 0, 64, 0.14), 0 4px 10px rgba(0, 0, 64, 0.06);
+    transform: translateY(-3px);
+    box-shadow: 0 14px 36px rgba(0, 0, 64, 0.12);
   }
 
-  .dg-letter__media {
-    position: relative;
-    display: block;
-    background: #0f1230;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    text-decoration: none;
-  }
-  .dg-letter__media img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: top center;
-    display: block;
-    transition: transform 0.5s ease, filter 0.3s ease;
-  }
-  .dg-letter:hover .dg-letter__media img {
-    transform: scale(1.04);
-    filter: brightness(0.9);
-  }
-  .dg-letter__zoom {
-    position: absolute;
-    left: 50%;
-    bottom: 16px;
-    transform: translateX(-50%) translateY(8px);
+  /* header navy */
+  .dg-letter__header {
     background: #000080;
-    color: #ffff00;
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    padding: 0.5rem 0.95rem;
-    border-radius: 999px;
-    opacity: 0;
-    transition: opacity 0.25s ease, transform 0.25s ease;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-    pointer-events: none;
-    white-space: nowrap;
+    padding: 1.1rem 1.25rem 0.9rem;
   }
-  .dg-letter:hover .dg-letter__zoom,
-  .dg-letter__media:focus-visible .dg-letter__zoom {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0);
-  }
-  @media (hover: none) {
-    /* trên mobile luôn hiển thị nhẹ để user biết bấm được */
-    .dg-letter__zoom { opacity: 0.92; transform: translateX(-50%) translateY(0); }
-  }
-
-  .dg-letter__body {
-    padding: 1.25rem 1.3rem 1.4rem;
-    display: flex;
-    flex-direction: column;
-    gap: 0.6rem;
-    flex: 1;
-  }
-  .dg-letter__recipient {
-    font-size: 0.78rem;
-    color: #64748b;
-    font-style: italic;
-    line-height: 1.45;
+  .dg-letter__date {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.04em;
+    margin-bottom: 0.3rem;
   }
   .dg-letter__title {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 800;
-    color: #000080;
-    margin: 0;
+    color: #ffff00;
     line-height: 1.35;
-    letter-spacing: -0.005em;
-  }
-  .dg-letter__quote {
     margin: 0;
-    padding: 0.55rem 0 0.6rem 0.95rem;
-    border-left: 3px solid #ffff00;
-    font-size: 0.93rem;
-    line-height: 1.65;
-    color: #1e293b;
-    font-style: italic;
-    background: linear-gradient(90deg, rgba(255, 255, 0, 0.08), transparent 60%);
   }
-  .dg-letter__meta {
-    margin-top: auto;
-    padding-top: 0.7rem;
-    border-top: 1px dashed #e2e8f0;
+
+  /* recipient */
+  .dg-letter__recipient {
+    background: rgba(255,255,0,0.06);
+    border-bottom: 1px solid #f0f2fb;
+    padding: 0.7rem 1.25rem;
+    font-size: 0.8rem;
+    color: #334155;
+    line-height: 1.55;
+  }
+  .dg-letter__recipient strong {
+    color: #000080;
+    display: block;
+    font-weight: 700;
+    margin-bottom: 0.15rem;
+  }
+
+  /* body */
+  .dg-letter__body {
+    padding: 1.15rem 1.25rem;
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
+    gap: 0.75rem;
+    flex: 1;
   }
-  .dg-letter__meta strong {
-    color: #000080;
-    font-weight: 800;
-    font-size: 0.95rem;
+  .dg-letter__para {
+    font-size: 0.92rem;
+    line-height: 1.75;
+    color: #1e293b;
+    margin: 0;
   }
-  .dg-letter__meta span {
-    color: #64748b;
+  .dg-letter__para--hl {
+    font-style: italic;
+    padding: 0.6rem 0.9rem;
+    border-left: 3px solid #ffff00;
+    background: linear-gradient(90deg, rgba(255,255,0,0.09), transparent 70%);
+    border-radius: 0 6px 6px 0;
+    font-size: 0.93rem;
+    color: #0f172a;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  /* footer */
+  .dg-letter__footer {
+    padding: 0.9rem 1.25rem 0.85rem;
+    border-top: 1px dashed #dde3f0;
+  }
+  .dg-letter__closing {
     font-size: 0.82rem;
-    line-height: 1.45;
+    color: #64748b;
+    margin-bottom: 0.4rem;
+    font-style: italic;
   }
+  .dg-letter__sender {
+    font-weight: 800;
+    color: #000080;
+    font-size: 0.93rem;
+  }
+  .dg-letter__role {
+    font-size: 0.8rem;
+    color: #64748b;
+    line-height: 1.45;
+    margin-top: 0.1rem;
+  }
+
+  /* thumbnail ảnh gốc */
+  .dg-letter__thumb {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem 0.9rem;
+    border-top: 1px solid #f0f2fb;
+    background: #fafbff;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .dg-letter__thumb:hover { background: #f0f4ff; }
+  .dg-letter__thumb img {
+    width: 56px;
+    height: 74px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 6px;
+    border: 1px solid #e0e4f0;
+    flex-shrink: 0;
+    box-shadow: 0 2px 8px rgba(0,0,64,0.1);
+    transition: transform 0.2s;
+  }
+  .dg-letter__thumb:hover img { transform: scale(1.06); }
+  .dg-letter__thumb-text { font-size: 0.78rem; color: #64748b; line-height: 1.45; }
+  .dg-letter__thumb-text strong { display: block; color: #000080; font-weight: 700; font-size: 0.8rem; margin-bottom: 0.1rem; }
 
   .dg-letters__note {
     margin: 2rem auto 0;

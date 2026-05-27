@@ -60,4 +60,9 @@ export default defineConfig({
   image: {
     domains: ['truongvietanh.com', 'media.truongvietanh.com', 'images.unsplash.com'],
   },
+  vite: {
+    server: {
+      hmr: { timeout: 120000 },
+    },
+  },
 });

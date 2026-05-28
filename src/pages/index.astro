@@ -250,20 +250,6 @@ const newsCards = [
               <span class="wp-hero__badge">✅ 99% đỗ ĐH</span>
             </div>
           </div>
-          <!-- Right: Form card (desktop only, hidden on mobile) -->
-          <div class="wp-hero__right">
-            <div class="wp-hero__card">
-              <p class="wp-hero__card-title">Đặt lịch tư vấn miễn phí</p>
-              <p class="wp-hero__card-sub">Chuyên viên gọi lại trong 30 phút · Không ràng buộc</p>
-              <LeadFormTwoStepEmailFirst
-                formId="hero-form"
-                funnelCode="homepage-hero"
-                schoolLevel="all"
-                submitText="Nhận tư vấn ngay"
-              />
-              <p class="wp-hero__card-privacy">🔒 Thông tin bảo mật — không spam</p>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -1553,11 +1539,9 @@ const newsCards = [
     padding: 0;
   }
   .wp-hero__inner{
-    display: grid;
-    grid-template-columns: 1fr 420px;
-    gap: 2.5rem;
-    align-items: center;
-    padding: 3.5rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    padding: 4rem 1.5rem;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
@@ -1567,9 +1551,13 @@ const newsCards = [
   .wp-hero__left{
     display: flex;
     flex-direction: column;
-    gap: 1.1rem;
-    text-align: left;
-    align-items: flex-start;
+    gap: 1.25rem;
+    text-align: center;
+    align-items: center;
+    max-width: 860px;
+  }
+  .wp-hero__proof{
+    align-items: center;
   }
   .wp-hero__eyebrow{
     font-size: 0.95rem;

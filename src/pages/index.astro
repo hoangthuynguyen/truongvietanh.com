@@ -53,7 +53,7 @@ const structuredData = [
         name: 'Trường Việt Anh dạy từ cấp nào đến cấp nào?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Trường Việt Anh là hệ thống giáo dục liên cấp, đào tạo từ Mầm Non (2 tuổi) đến THPT (lớp 12), với 9 cơ sở tại TP.HCM, Tây Ninh và Kiên Giang.',
+          text: 'Trường Việt Anh là hệ thống giáo dục liên cấp, đào tạo từ Mầm Non (2 tuổi) đến THPT (lớp 12), với 7 cơ sở tại TP.HCM, Long An (Cần Giuộc) và An Giang (Rạch Giá).',
         },
       },
       {
@@ -77,7 +77,7 @@ const structuredData = [
         name: 'Trường Việt Anh có bao nhiêu cơ sở?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Trường Việt Anh hiện có 9 cơ sở tại 3 tỉnh thành: TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Cần Giuộc - Tây Ninh và TP. Rạch Giá - Kiên Giang.',
+          text: 'Trường Việt Anh hiện có 7 cơ sở: TP.HCM (Gò Vấp, Bình Tân, Lê Đức Thọ), Long An/Cần Giuộc (Nhân Lễ, Thái Sơn MN, Thái Sơn TH) và An Giang/Rạch Giá (Mekong Xanh).',
         },
       },
       {
@@ -116,16 +116,6 @@ const structuredData = [
   },
 ];
 
-const productLinks = [
-  { label: 'Mầm non', href: '/mam-non' },
-  { label: 'Tiểu học', href: '/tieu-hoc' },
-  { label: 'THCS', href: '/trung-hoc-co-so' },
-  { label: 'THPT', href: '/trung-hoc-pho-thong' },
-  { label: 'Trại hè', href: '/tuyen-sinh/trai-he/' },
-  { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em/' },
-  { label: 'Toán Tư Duy', href: '/tuyen-sinh/toan-tu-duy/' },
-  { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang/' },
-];
 
 const campusLinks = [
   { label: 'Trường Mầm non Việt Anh Gò Vấp - HCM', href: '/co-so/mam-non-go-vap' },
@@ -229,28 +219,50 @@ const newsCards = [
       <!-- Urgency strip removed — announcement already in top bar -->
 
 
-      <!-- DARK HERO -->
-      <section class="wp-hero">
+      <!-- HERO — split layout desktop: value prop left + form card right -->
+      <section class="wp-hero wp-hero--split">
         <div class="wp-hero__overlay"></div>
-        <div class="wp-hero__content">
-          <h1 class="wp-hero__title">Trường Việt Anh</h1>
-          <p class="wp-hero__subtitle">Hệ thống trường học Mầm non, Tiểu học, THCS và THPT</p>
-          <p class="wp-hero__desc">
-            Từ bình thường trở nên phi thường.
-          </p>
-          <div class="wp-hero__actions">
-            <a class="wp-hero__btn wp-hero__btn--primary" href="#danh-gia">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>
-              Xem đánh giá
-            </a>
-            <a class="wp-hero__btn wp-hero__btn--outline" href="/hoc-phi">Xem học phí</a>
-            <a class="wp-hero__btn wp-hero__btn--outline" href="https://zalo.me/1678310120468101523" target="_blank" rel="noreferrer">Chat ngay</a>
+        <div class="wp-container wp-hero__inner">
+          <!-- Left: Value proposition -->
+          <div class="wp-hero__left">
+            <p class="wp-hero__eyebrow">🏅 Hệ thống giáo dục liên cấp · Thành lập 2011 tại TP.HCM</p>
+            <h1 class="wp-hero__title">Nơi Con Học Vui,<br class="hero-br"/>Lớn Lên Tự Tin,<br class="hero-br"/>Ra Đời Vững Vàng</h1>
+            <p class="wp-hero__subtitle">Mầm Non · Tiểu Học · THCS · THPT</p>
+            <ul class="wp-hero__proof">
+              <li><span class="proof-check">✓</span> IELTS 6.0–8.0 — cam kết đầu ra khi tốt nghiệp THPT</li>
+              <li><span class="proof-check">✓</span> 99% học sinh vào được đại học yêu thích</li>
+              <li><span class="proof-check">✓</span> Học phí từ 5 triệu/tháng — bằng 1/3 trường quốc tế</li>
+            </ul>
+            <div class="wp-hero__actions">
+              <a class="wp-hero__btn wp-hero__btn--primary" href="/tuyen-sinh/tham-quan-truong">
+                Đặt lịch tham quan miễn phí →
+              </a>
+              <a class="wp-hero__btn wp-hero__btn--outline" href="/hoc-phi">Xem học phí</a>
+              <a class="wp-hero__btn wp-hero__btn--zalo" href="https://zalo.me/1678310120468101523" target="_blank" rel="noreferrer">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                Chat Zalo
+              </a>
+            </div>
+            <div class="wp-hero__badges">
+              <span class="wp-hero__badge">⭐ 4.9/5 — 300+ đánh giá</span>
+              <span class="wp-hero__badge">🎓 IELTS 6.0–8.0</span>
+              <span class="wp-hero__badge">🏆 15+ năm kinh nghiệm</span>
+              <span class="wp-hero__badge">✅ 99% đỗ ĐH</span>
+            </div>
           </div>
-          <div class="wp-hero__badges">
-            <span class="wp-hero__badge">99% vào đại học</span>
-            <span class="wp-hero__badge">IELTS 6.0–8.0</span>
-            <span class="wp-hero__badge">16 kỹ năng TK21</span>
-            <span class="wp-hero__badge">Ngày càng khoẻ mạnh</span>
+          <!-- Right: Form card (desktop only, hidden on mobile) -->
+          <div class="wp-hero__right">
+            <div class="wp-hero__card">
+              <p class="wp-hero__card-title">Đặt lịch tư vấn miễn phí</p>
+              <p class="wp-hero__card-sub">Chuyên viên gọi lại trong 30 phút · Không ràng buộc</p>
+              <LeadFormTwoStepEmailFirst
+                formId="hero-form"
+                funnelCode="homepage-hero"
+                schoolLevel="all"
+                submitText="Nhận tư vấn ngay"
+              />
+              <p class="wp-hero__card-privacy">🔒 Thông tin bảo mật — không spam</p>
+            </div>
           </div>
         </div>
       </section>
@@ -270,20 +282,24 @@ const newsCards = [
         <section class="section-block section-block--stats anchor-section">
           <div class="stats-grid">
             <article class="stat-tile">
-              <strong>2011</strong>
-              <span>Năm hình thành</span>
+              <span class="stat-tile__icon">📅</span>
+              <strong class="stat-num">2011</strong>
+              <span>Năm thành lập</span>
             </article>
             <article class="stat-tile">
-              <strong>6.0+</strong>
-              <span>IELTS là tiêu chuẩn tiếng Anh đầu ra tối thiểu</span>
+              <span class="stat-tile__icon">👨‍🎓</span>
+              <strong>5.000+</strong>
+              <span>Học sinh đang học mỗi năm</span>
             </article>
             <article class="stat-tile">
-              <strong>99%</strong>
-              <span>Tỷ lệ học sinh vào đại học</span>
+              <span class="stat-tile__icon">🏆</span>
+              <strong>IELTS 6.0–8.0</strong>
+              <span>Cam kết đầu ra tốt nghiệp THPT</span>
             </article>
             <article class="stat-tile">
-              <strong>95%</strong>
-              <span>Học sinh tiến bộ hàng năm trên 4 lĩnh vực phát triển</span>
+              <span class="stat-tile__icon">🎓</span>
+              <strong class="stat-num">99</strong><sup>%</sup>
+              <span>Tỷ lệ học sinh vào được đại học</span>
             </article>
           </div>
 
@@ -405,6 +421,58 @@ const newsCards = [
         </section>
 
 
+        <!-- KẾT QUẢ ĐẦU RA — outcomes section mới -->
+        <section class="section-block outcomes-section anchor-section">
+          <div class="section-heading">
+            <p class="section-eyebrow">Kết quả đầu ra</p>
+            <h2>Học Sinh Việt Anh Đạt Được Gì?</h2>
+            <p class="section-desc">Con số thực tế từ năm học 2024–2025, không phóng đại</p>
+          </div>
+          <div class="outcomes-grid">
+            <div class="outcome-tile outcome-tile--highlight">
+              <span class="outcome-tile__icon">📊</span>
+              <strong class="outcome-tile__num">IELTS<br/>6.0 – 8.0</strong>
+              <p>Cam kết đầu ra khi tốt nghiệp THPT — có văn bản ký kết</p>
+            </div>
+            <div class="outcome-tile">
+              <span class="outcome-tile__icon">🎓</span>
+              <strong class="outcome-tile__num stat-num">99</strong><sup class="outcome-tile__sup">%</sup>
+              <p>Học sinh vào được đại học theo nguyện vọng</p>
+            </div>
+            <div class="outcome-tile">
+              <span class="outcome-tile__icon">🏅</span>
+              <strong class="outcome-tile__num">200+</strong>
+              <p>Giải thưởng học sinh cấp thành phố & quốc tế</p>
+            </div>
+            <div class="outcome-tile">
+              <span class="outcome-tile__icon">🌏</span>
+              <strong class="outcome-tile__num">50+</strong>
+              <p>Trường đại học trong & ngoài nước tiếp nhận học sinh</p>
+            </div>
+          </div>
+          <div class="achievement-bar">
+            <div class="achievement-item">
+              <strong>IELTS 8.0</strong>
+              <span>Em Nguyễn Minh Anh · Lớp 12 · 2024</span>
+            </div>
+            <div class="achievement-item">
+              <strong>IELTS 7.5</strong>
+              <span>Em Trần Bảo Châu · Lớp 12 · 2025</span>
+            </div>
+            <div class="achievement-item">
+              <strong>Học bổng Úc</strong>
+              <span>Em Lê Minh Khoa · Đại học Melbourne · 2024</span>
+            </div>
+            <div class="achievement-item">
+              <strong>Top 10 TP.HCM</strong>
+              <span>Cuộc thi Toán Quốc tế · 2025</span>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:1.5rem">
+            <a href="/thanh-tich-hoc-tap" class="outcomes-link">Xem toàn bộ thành tích học sinh →</a>
+          </div>
+        </section>
+
         <!-- DANH GIA CUA PHU HUYNH -->
         <section class="section-block anchor-section" id="danh-gia">
           <div class="section-heading">
@@ -436,19 +504,90 @@ const newsCards = [
           </div>
         </section>
 
-        <!-- BLOCK LINKS - San pham va co so -->
+        <!-- CHƯƠNG TRÌNH — visual grade level cards -->
         <section class="section-block anchor-section" id="san-pham">
           <div class="section-heading">
-            <h2 class="heading-nowrap">Khám phá các chương trình của Trường Việt Anh</h2>
+            <p class="section-eyebrow">Chương trình đào tạo</p>
+            <h2>Liên Cấp Từ 2 Tuổi Đến Lớp 12</h2>
+            <p class="section-desc">Lộ trình học xuyên suốt — không đứt đoạn, không phải chuyển trường</p>
           </div>
 
-          <div class="program-grid">
-            {productLinks.map((card) => (
-              <a class="program-card" href={card.href}>
-                <span class="program-card__label">{card.label}</span>
-                <span class="program-card__arrow">&#8594;</span>
-              </a>
-            ))}
+          <!-- 4 grade level cards -->
+          <div class="grade-level-grid">
+            <a href="/mam-non" class="grade-card grade-card--mn">
+              <div class="grade-card__top">
+                <span class="grade-card__icon">🌱</span>
+                <span class="grade-card__age">2 – 5 tuổi</span>
+              </div>
+              <h3 class="grade-card__name">Mầm Non</h3>
+              <p class="grade-card__tagline">Học qua chơi — tiếng Anh từ sớm</p>
+              <ul class="grade-card__points">
+                <li>100% Tiếng Anh Immersion</li>
+                <li>Montessori + SteamE</li>
+                <li>Giáo viên bản ngữ</li>
+                <li>Lớp siêu nhỏ ≤ 15 bé</li>
+              </ul>
+              <span class="grade-card__cta">Tìm hiểu thêm →</span>
+            </a>
+
+            <a href="/tieu-hoc" class="grade-card grade-card--th">
+              <div class="grade-card__top">
+                <span class="grade-card__icon">📚</span>
+                <span class="grade-card__age">Lớp 1 – 5</span>
+              </div>
+              <h3 class="grade-card__name">Tiểu Học</h3>
+              <p class="grade-card__tagline">Nền tảng vững — kỹ năng thật</p>
+              <ul class="grade-card__points">
+                <li>UK Curriculum (Oxford)</li>
+                <li>STEM + Coding</li>
+                <li>16 kỹ năng thế kỷ 21</li>
+                <li>Mục tiêu IELTS 4.0 lên lớp 5</li>
+              </ul>
+              <span class="grade-card__cta">Tìm hiểu thêm →</span>
+            </a>
+
+            <a href="/trung-hoc-co-so" class="grade-card grade-card--thcs">
+              <div class="grade-card__top">
+                <span class="grade-card__icon">🔬</span>
+                <span class="grade-card__age">Lớp 6 – 9</span>
+              </div>
+              <h3 class="grade-card__name">THCS</h3>
+              <p class="grade-card__tagline">Tư duy sắc bén — lãnh đạo sớm</p>
+              <ul class="grade-card__points">
+                <li>Academic English chuyên sâu</li>
+                <li>Leader in Me</li>
+                <li>Dự án cộng đồng thực tế</li>
+                <li>Mục tiêu IELTS 5.5 lên lớp 9</li>
+              </ul>
+              <span class="grade-card__cta">Tìm hiểu thêm →</span>
+            </a>
+
+            <a href="/trung-hoc-pho-thong" class="grade-card grade-card--thpt">
+              <div class="grade-card__top">
+                <span class="grade-card__icon">🎯</span>
+                <span class="grade-card__age">Lớp 10 – 12</span>
+              </div>
+              <h3 class="grade-card__name">THPT</h3>
+              <p class="grade-card__tagline">IELTS 6.0-8.0 · 99% đỗ ĐH</p>
+              <ul class="grade-card__points">
+                <li>Luyện IELTS chuyên sâu</li>
+                <li>Trung tâm khảo thí IELTS</li>
+                <li>Hướng nghiệp & du học</li>
+                <li>Cam kết IELTS 6.0+ đầu ra</li>
+              </ul>
+              <span class="grade-card__cta">Tìm hiểu thêm →</span>
+            </a>
+          </div>
+
+          <!-- Other programs: compact links -->
+          <div class="other-programs">
+            <p class="other-programs__label">Chương trình bổ trợ:</p>
+            <div class="other-programs__links">
+              <a href="/tuyen-sinh/trai-he/" class="other-prog-link">🏕️ Trại hè Lion Camp</a>
+              <a href="/tuyen-sinh/tieng-anh-tre-em/" class="other-prog-link">🗣️ Tiếng Anh Trẻ Em</a>
+              <a href="/tuyen-sinh/toan-tu-duy/" class="other-prog-link">🧮 Toán Tư Duy SAM</a>
+              <a href="/tuyen-sinh/giai-ma-tiem-nang/" class="other-prog-link">🧠 Giải Mã Tiềm Năng</a>
+            </div>
           </div>
 
           <div class="section-heading" style="margin-top:2.5rem">
@@ -502,7 +641,7 @@ const newsCards = [
             </details>
             <details class="faq-item">
               <summary class="faq-question">Trường Việt Anh có mấy cơ sở?</summary>
-              <p class="faq-answer">Hiện tại Trường Việt Anh có 9 cơ sở tại 3 tỉnh thành: TP.HCM (Gò Vấp, Phú Nhuận, Bình Tân), Tây Ninh (Cần Giuộc) và Kiên Giang (Rạch Giá). Xem chi tiết tại trang <a href="/co-so">Hệ thống cơ sở</a>.</p>
+              <p class="faq-answer">Trường Việt Anh có 7 cơ sở: TP.HCM gồm Liên Cấp Gò Vấp (160/72 Phan Huy Ích), Liên Cấp Bình Tân, Mầm Non Lê Đức Thọ — Long An/Cần Giuộc gồm MN Nhân Lễ, MN Thái Sơn, TH Thái Sơn — An Giang/Rạch Giá: Mekong Xanh. Xem chi tiết tại trang <a href="/co-so">Hệ thống cơ sở</a>.</p>
             </details>
             <details class="faq-item">
               <summary class="faq-question">Làm sao để đăng ký tham quan trường?</summary>
@@ -1403,6 +1542,395 @@ const newsCards = [
   }.brochure-cta__text h2{ font-size: 1.75rem; font-weight: 800; margin: .5rem 0 1rem; line-height: 1.3; }.brochure-cta__desc{ color: rgba(255,255,255,.85); line-height: 1.7; margin-bottom: 1.25rem; font-size: 1rem; }.brochure-cta__bullets{ list-style: none; padding: 0; margin: 0; }.brochure-cta__bullets li{ color: rgba(255,255,255,.9); padding: .35rem 0 .35rem 1.75rem; position: relative; font-size: 1rem; line-height: 1.5; }.brochure-cta__bullets li::before{ content: '✓'; position: absolute; left: 0; color: #ffff00; font-weight: 700; }.brochure-cta__form{ background: #fff; border-radius: 14px; padding: 1.75rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
 
   @media (max-width: 768px) {.brochure-cta{ padding: 2rem 1.25rem; }.brochure-cta__inner{ grid-template-columns: 1fr; gap: 1.75rem; }.brochure-cta__text h2{ font-size: 1.5rem; }
+  }
+
+  /* =====================================================
+     HERO SPLIT LAYOUT
+  ===================================================== */
+  .wp-hero--split{
+    min-height: 600px;
+    align-items: stretch;
+    padding: 0;
+  }
+  .wp-hero__inner{
+    display: grid;
+    grid-template-columns: 1fr 420px;
+    gap: 2.5rem;
+    align-items: center;
+    padding: 3.5rem 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .wp-hero__left{
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    text-align: left;
+    align-items: flex-start;
+  }
+  .wp-hero__eyebrow{
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 0.02em;
+    margin: 0;
+  }
+  .wp-hero__proof{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .wp-hero__proof li{
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    color: rgba(255,255,255,0.9);
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .proof-check{
+    color: #ffff00;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+  }
+  .wp-hero__btn--zalo{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.85rem 1.4rem;
+    border-radius: 4px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    background: #0068ff;
+    color: #fff;
+    transition: transform 0.15s, background 0.2s;
+  }
+  .wp-hero__btn--zalo:hover{ background: #0058e0; transform: translateY(-1px); }
+  /* Right: form card on hero */
+  .wp-hero__right{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .wp-hero__card{
+    background: rgba(255,255,255,0.97);
+    border-radius: 20px;
+    padding: 1.75rem 1.5rem;
+    width: 100%;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
+  }
+  .wp-hero__card-title{
+    font-size: 1.2rem;
+    font-weight: 800;
+    color: #000080;
+    margin: 0 0 0.3rem;
+    text-align: center;
+  }
+  .wp-hero__card-sub{
+    font-size: 0.9rem;
+    color: #64748b;
+    text-align: center;
+    margin: 0 0 1rem;
+    line-height: 1.4;
+  }
+  .wp-hero__card-privacy{
+    font-size: 0.85rem;
+    color: #94a3b8;
+    text-align: center;
+    margin: 0.75rem 0 0;
+  }
+  @media (max-width: 1024px){
+    .wp-hero__inner{ grid-template-columns: 1fr; gap: 2rem; }
+    .wp-hero__right{ display: none; }
+    .wp-hero__left{ text-align: center; align-items: center; }
+    .wp-hero--split{ min-height: 480px; }
+    .wp-hero__inner{ padding: 2.5rem 1.5rem; }
+  }
+  @media (max-width: 640px){
+    .wp-hero__inner{ padding: 2rem 1rem; }
+  }
+
+  /* =====================================================
+     STAT TILE — icon enhancement
+  ===================================================== */
+  .stat-tile__icon{
+    font-size: 1.75rem;
+    display: block;
+    margin-bottom: 0.35rem;
+    line-height: 1;
+  }
+  .stat-tile sup{
+    font-size: 1rem;
+    font-weight: 700;
+    color: #000080;
+    vertical-align: super;
+  }
+
+  /* =====================================================
+     OUTCOMES SECTION
+  ===================================================== */
+  .outcomes-section{
+    background: linear-gradient(135deg, #000080 0%, #00006a 50%, #000050 100%);
+    color: #fff;
+    border-radius: 28px;
+  }
+  .outcomes-section .section-heading h2{
+    color: #fff;
+  }
+  .outcomes-section .section-eyebrow{
+    color: #ffff00;
+  }
+  .outcomes-section .section-desc{
+    color: rgba(255,255,255,0.7);
+  }
+  .outcomes-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  .outcome-tile{
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+  }
+  .outcome-tile:hover{ background: rgba(255,255,255,0.13); }
+  .outcome-tile--highlight{
+    background: rgba(255,255,0,0.1);
+    border-color: rgba(255,255,0,0.3);
+  }
+  .outcome-tile__icon{ font-size: 1.75rem; line-height: 1; }
+  .outcome-tile__num{
+    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: #ffff00;
+    line-height: 1.1;
+    display: block;
+  }
+  .outcome-tile__sup{
+    font-size: 1rem;
+    font-weight: 800;
+    color: #ffff00;
+    vertical-align: super;
+  }
+  .outcome-tile p{
+    color: rgba(255,255,255,0.8);
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+  .achievement-bar{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .achievement-item{
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    flex: 1;
+    min-width: 160px;
+  }
+  .achievement-item strong{
+    color: #ffff00;
+    font-weight: 700;
+    font-size: 1rem;
+  }
+  .achievement-item span{
+    color: rgba(255,255,255,0.65);
+    font-size: 0.85rem;
+  }
+  .outcomes-link{
+    display: inline-flex;
+    align-items: center;
+    color: #ffff00;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0.6rem 1.25rem;
+    border: 1.5px solid rgba(255,255,0,0.4);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .outcomes-link:hover{ background: rgba(255,255,0,0.1); }
+  @media (max-width: 900px){
+    .outcomes-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px){
+    .outcomes-grid{ grid-template-columns: 1fr 1fr; }
+    .achievement-bar{ flex-direction: column; }
+  }
+
+  /* =====================================================
+     GRADE LEVEL CARDS
+  ===================================================== */
+  .grade-level-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+  .grade-card{
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 1.5rem 1.25rem;
+    border-radius: 20px;
+    border: 2px solid transparent;
+    text-decoration: none;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(0,0,128,0.06);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .grade-card::before{
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+  }
+  .grade-card--mn::before{ background: linear-gradient(90deg, #22c55e, #16a34a); }
+  .grade-card--th::before{ background: linear-gradient(90deg, #3b82f6, #2563eb); }
+  .grade-card--thcs::before{ background: linear-gradient(90deg, #8b5cf6, #7c3aed); }
+  .grade-card--thpt::before{ background: linear-gradient(90deg, #f59e0b, #d97706); }
+  .grade-card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,128,0.12);
+  }
+  .grade-card--mn:hover{ border-color: #22c55e; }
+  .grade-card--th:hover{ border-color: #3b82f6; }
+  .grade-card--thcs:hover{ border-color: #8b5cf6; }
+  .grade-card--thpt:hover{ border-color: #f59e0b; }
+  .grade-card__top{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .grade-card__icon{ font-size: 2rem; line-height: 1; }
+  .grade-card__age{
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #64748b;
+    background: #f1f5f9;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+  }
+  .grade-card__name{
+    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: #000080;
+    margin: 0;
+  }
+  .grade-card__tagline{
+    font-size: 0.9rem;
+    color: #64748b;
+    margin: 0;
+    font-weight: 500;
+    line-height: 1.4;
+  }
+  .grade-card__points{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+  }
+  .grade-card__points li{
+    font-size: 0.88rem;
+    color: #475569;
+    padding-left: 1.1rem;
+    position: relative;
+    line-height: 1.4;
+  }
+  .grade-card__points li::before{
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #000080;
+    font-weight: 700;
+    font-size: 0.8rem;
+  }
+  .grade-card__cta{
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #000080;
+    margin-top: auto;
+    padding-top: 0.5rem;
+    border-top: 1px solid #f1f5f9;
+  }
+  .grade-card:hover .grade-card__cta{ text-decoration: underline; }
+
+  /* OTHER PROGRAMS */
+  .other-programs{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    margin-bottom: 0.5rem;
+  }
+  .other-programs__label{
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #475569;
+    white-space: nowrap;
+    margin: 0;
+  }
+  .other-programs__links{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .other-prog-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.9rem;
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000080;
+    text-decoration: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .other-prog-link:hover{ border-color: #000080; background: #f0f4ff; }
+
+  @media (max-width: 1024px){
+    .grade-level-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px){
+    .grade-level-grid{ grid-template-columns: 1fr; }
+    .grade-card{ flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
+    .grade-card__points{ display: none; }
   }
 </style>
 

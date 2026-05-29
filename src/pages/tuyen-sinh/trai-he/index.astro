@@ -170,38 +170,17 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
     </div>
   </div>
 
-  <!-- ═══ FEATURES → NỘI DUNG HỌC THEO 3 CẤP (TABS) ═══ -->
+  <!-- ═══ FEATURES → NỘI DUNG HỌC THEO 3 CẤP ═══ -->
   <div slot="features">
     <p class="sp-features__eyebrow">NỘI DUNG CON ĐƯỢC HỌC — THEO TỪNG CẤP</p>
     <h2>Một Mùa Hè, Ba Chương Trình Riêng Cho Từng Độ Tuổi</h2>
-    <p class="sp-features__sub">Không phải trại hè vui chơi, cũng không phải khoá lập trình. Mỗi cấp có nội dung học, trụ cột và sản phẩm mang về được thiết kế riêng — chọn cấp của con để xem chi tiết.</p>
+    <p class="sp-features__sub">Không phải trại hè vui chơi, cũng không phải khoá lập trình. Mỗi cấp có nội dung học, trụ cột và sản phẩm mang về được thiết kế riêng — xem đầy đủ cả ba bên dưới.</p>
 
     <div class="lc-tabs">
-      <input type="radio" name="lc-level" id="lc-tab-th" class="lc-tab-input" checked />
-      <input type="radio" name="lc-level" id="lc-tab-thcs" class="lc-tab-input" />
-      <input type="radio" name="lc-level" id="lc-tab-thpt" class="lc-tab-input" />
-
-      <div class="lc-tablist" role="tablist">
-        <label for="lc-tab-th" class="lc-tab lc-tab--th">
-          <span class="lc-tab__icon">🦁</span>
-          <span class="lc-tab__name">Tiểu học</span>
-          <span class="lc-tab__grade">Lớp 1 – 5</span>
-        </label>
-        <label for="lc-tab-thcs" class="lc-tab lc-tab--thcs">
-          <span class="lc-tab__icon">🚀</span>
-          <span class="lc-tab__name">THCS</span>
-          <span class="lc-tab__grade">Lớp 6 – 9</span>
-        </label>
-        <label for="lc-tab-thpt" class="lc-tab lc-tab--thpt">
-          <span class="lc-tab__icon">🎯</span>
-          <span class="lc-tab__name">THPT</span>
-          <span class="lc-tab__grade">Lớp 10 – 12</span>
-        </label>
-      </div>
-
-      <!-- ── PANEL: TIỂU HỌC ── -->
+      <!-- ── KHỐI: TIỂU HỌC ── -->
       <div class="lc-panel lc-panel--th">
         <div class="lc-panel__head">
+          <span class="lc-level-badge lc-level-badge--th">🦁 Tiểu học · Lớp 1 – 5</span>
           <h3>Tiểu học — "Nhà Lãnh Đạo Số Tài Ba"</h3>
           <p>Lứa tuổi Lớp 1–5 chưa cần lãnh đạo ai — nhưng cần biết <strong>lãnh đạo chính mình</strong>: tự quyết định, tự chịu trách nhiệm, tự đứng dậy khi ngã. Lớp 1–2 hoàn toàn unplugged; Lớp 3–5 dùng Teachable Machine &amp; Gemini có giám sát từng bước (triết lý HITL — con luôn ra quyết định cuối cùng).</p>
         </div>
@@ -220,9 +199,10 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         <p class="lc-seats">🦁 Chỉ <strong>100 suất</strong> Tiểu học toàn hệ thống</p>
       </div>
 
-      <!-- ── PANEL: THCS ── -->
+      <!-- ── KHỐI: THCS ── -->
       <div class="lc-panel lc-panel--thcs">
         <div class="lc-panel__head">
+          <span class="lc-level-badge lc-level-badge--thcs">🚀 THCS · Lớp 6 – 9</span>
           <h3>THCS — "Bản Lĩnh Tuổi Teen"</h3>
           <p>Lớp 6–9 là 4 năm con thay đổi mạnh nhất về cảm xúc, hành vi và suy nghĩ. Lion Camp THCS không cấm, không ép — mà dẫn dắt con trở thành người <strong>có bản lĩnh, có chính kiến và biết tự chủ</strong> trong một thế giới AI. Kỹ năng &amp; phẩm chất là cốt lõi, AI khuếch đại — không lấn át.</p>
         </div>
@@ -240,9 +220,10 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
         <p class="lc-seats">🚀 Chỉ <strong>90 suất</strong> THCS · hỗ trợ nội trú cho học sinh tỉnh xa</p>
       </div>
 
-      <!-- ── PANEL: THPT ── -->
+      <!-- ── KHỐI: THPT ── -->
       <div class="lc-panel lc-panel--thpt">
         <div class="lc-panel__head">
+          <span class="lc-level-badge lc-level-badge--thpt">🎯 THPT · Lớp 10 – 12</span>
           <h3>THPT — "Định Hình Tương Lai"</h3>
           <p>Lớp 10–12 không chỉ để học thi — đây là 3 năm con chọn mình sẽ trở thành ai. Lion Camp THPT giúp con trả lời ba câu hỏi lớn: <strong>theo ngành gì, học gì cho đáng đầu tư, và làm sao thật sự suy nghĩ trong thời đại AI</strong> — bằng một dự án Capstone thật, một nền tiếng Anh học thuật thật.</p>
         </div>
@@ -925,55 +906,16 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
 .th-quote-tag--thcs { background: #0d9488; }
 .th-quote-tag--thpt { background: #7c3aed; }
 
-/* ══ 3-LEVEL CURRICULUM TABS ══ */
-.lc-tabs { position: relative; max-width: 1100px; margin: 1.75rem auto 0; }
-.lc-tab-input { position: absolute; opacity: 0; width: 1px; height: 1px; pointer-events: none; }
-.lc-tablist {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.6rem;
-  margin-bottom: 1.5rem;
-}
-.lc-tab {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
-  padding: 0.9rem 0.5rem;
-  border: 2px solid #e2e8f0;
-  border-radius: 14px;
-  background: #fff;
-  cursor: pointer;
-  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
-  text-align: center;
-}
-.lc-tab:hover { border-color: #cbd5e1; transform: translateY(-1px); }
-.lc-tab__icon { font-size: 1.6rem; }
-.lc-tab__name { font-weight: 800; color: #000080; font-size: 1.05rem; }
-.lc-tab__grade { font-size: 0.82rem; color: #64748b; font-weight: 600; }
-
-/* Active tab highlight per level */
-#lc-tab-th:checked   ~ .lc-tablist .lc-tab--th,
-#lc-tab-thcs:checked ~ .lc-tablist .lc-tab--thcs,
-#lc-tab-thpt:checked ~ .lc-tablist .lc-tab--thpt {
-  border-color: #000080;
-  background: #f0f4ff;
-  box-shadow: 0 6px 18px rgba(0,0,128,0.12);
-}
-.lc-tab-input:focus-visible ~ .lc-tablist .lc-tab { outline: none; }
-#lc-tab-th:focus-visible   ~ .lc-tablist .lc-tab--th,
-#lc-tab-thcs:focus-visible ~ .lc-tablist .lc-tab--thcs,
-#lc-tab-thpt:focus-visible ~ .lc-tablist .lc-tab--thpt {
-  outline: 3px solid #ffd400; outline-offset: 2px;
-}
-
-/* Panels */
-.lc-panel { display: none; }
-#lc-tab-th:checked   ~ .lc-panel--th,
-#lc-tab-thcs:checked ~ .lc-panel--thcs,
-#lc-tab-thpt:checked ~ .lc-panel--thpt { display: block; animation: lc-fade 0.25s ease; }
-@keyframes lc-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
+/* ══ 3-LEVEL CURRICULUM — 3 KHỐI HIỂN THỊ LIỀN NHAU ══ */
+.lc-tabs { max-width: 1100px; margin: 1.75rem auto 0; display: flex; flex-direction: column; gap: 1.5rem; }
+.lc-panel { background: #fff; border: 1px solid #e2e8f0; border-top: 5px solid #1e3a8a; border-radius: 16px; padding: 1.5rem 1.5rem 1.75rem; box-shadow: 0 6px 20px rgba(0,0,128,0.06); }
+.lc-panel--th   { border-top-color: #1e3a8a; }
+.lc-panel--thcs { border-top-color: #0d9488; }
+.lc-panel--thpt { border-top-color: #7c3aed; }
+.lc-level-badge { display: inline-block; font-size: 0.82rem; font-weight: 800; letter-spacing: 0.02em; color: #fff; padding: 0.3rem 0.85rem; border-radius: 50px; margin-bottom: 0.7rem; }
+.lc-level-badge--th   { background: #1e3a8a; }
+.lc-level-badge--thcs { background: #0d9488; }
+.lc-level-badge--thpt { background: #7c3aed; }
 .lc-panel__head { margin-bottom: 1.25rem; }
 .lc-panel__head h3 {
   font-size: clamp(1.25rem, 2.4vw, 1.6rem);
@@ -1032,9 +974,7 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
 
 @media (max-width: 700px) {
   .lc-pillars { grid-template-columns: 1fr; }
-  .lc-tab__name { font-size: 0.95rem; }
-  .lc-tab__grade { font-size: 0.75rem; }
-  .lc-tab { padding: 0.7rem 0.35rem; }
+  .lc-panel { padding: 1.25rem 1.1rem 1.4rem; }
 }
 
 /* Responsive */

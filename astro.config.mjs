@@ -45,6 +45,8 @@ export default defineConfig({
     '/tuyen-sinh/giai-ma-tiem-nang/':        '/giai-ma-tiem-nang/',
     '/thanh-tich':                           '/thanh-tich-hoc-tap',
     '/thanh-tich/':                          '/thanh-tich-hoc-tap/',
+    // Tạm tắt trang Bảng giá — redirect sang Liên hệ (gỡ dòng này + đổi tên hoc-phi.astro.off để bật lại)
+    '/hoc-phi/':                             '/lien-he/',
   },
   integrations: [
     sitemap({

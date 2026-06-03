@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview thu nhỏ hero — SalesPageLayout</title>
+<style>
+  body{font-family:'Inter',system-ui,sans-serif;margin:0;background:#eef1f6;color:#1a2236}
+  .wrap{max-width:1180px;margin:0 auto;padding:1.5rem 1rem 4rem}
+  h1{font-size:1.5rem;color:#26275D;margin:.3rem 0}
+  .lbl{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin:1.6rem 0 .5rem}
+  /* shared hero shell */
+  .hero{position:relative;overflow:hidden;background:linear-gradient(160deg,#18193a,#26275D);color:#fff;border-radius:14px}
+  .inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;align-items:center}
+  .eyebrow{display:inline-block;background:#F9DD0E;color:#26275D;font-size:.82rem;font-weight:800;padding:.3rem 1rem;border-radius:50px;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.06em}
+  h2{font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.18}
+  .hl{color:#F9DD0E}
+  .lead{color:rgba(255,255,255,.85);margin:0 0 1.1rem}
+  .badges{display:flex;gap:.5rem;flex-wrap:wrap}
+  .badges span{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.9);font-size:.9rem;font-weight:600;padding:.35rem .9rem;border-radius:50px}
+  /* form card — GIỮ NGUYÊN ở cả 2 bên */
+  .formcard{background:linear-gradient(160deg,#26275D,#18193a);border:1.5px solid #26275D;border-radius:18px;padding:1.75rem 1.5rem;box-shadow:0 18px 50px rgba(38,39,93,.35)}
+  .formcard .fe{display:inline-block;background:#F9DD0E;color:#26275D;font-size:.78rem;font-weight:700;padding:.3rem .85rem;border-radius:50px;margin-bottom:.6rem;text-transform:uppercase}
+  .formcard h3{font-size:1.25rem;margin:0 0 .4rem;color:#fff}
+  .formcard p{color:rgba(255,255,255,.78);font-size:.95rem;margin:0 0 1rem}
+  .formcard input{width:100%;box-sizing:border-box;padding:.8rem;border-radius:10px;border:none;margin-bottom:.6rem;font-size:.95rem}
+  .formcard .btn{width:100%;background:#F9DD0E;color:#26275D;font-weight:800;border:none;border-radius:10px;padding:.85rem;font-size:.95rem;cursor:pointer}
+  /* OLD sizes */
+  .old .hero{padding:0}
+  .old .pad{padding:2.75rem 1.5rem 2.5rem}
+  .old .inner{gap:2.5rem}
+  .old h2{font-size:2.6rem}
+  .old .lead{font-size:1rem;line-height:1.75}
+  .old .badges{margin:1rem 0 1.25rem}
+  /* NEW sizes */
+  .new .pad{padding:1.75rem 1.5rem 1.5rem}
+  .new .inner{gap:2rem}
+  .new h2{font-size:2.05rem;margin-bottom:.75rem;line-height:1.2}
+  .new .lead{font-size:.95rem;line-height:1.6;margin-bottom:.7rem}
+  .new .badges{margin:.7rem 0 .85rem}
+  .note{background:#fff;border-left:4px solid #F9DD0E;border-radius:10px;padding:.9rem 1.1rem;margin-top:1.5rem;font-size:.9rem}
+  .note b{color:#26275D}
+</style></head>
+<body><div class="wrap">
+<h1>Thu nhỏ block hero (trang sales: THCS, THPT, Tiểu học, Mầm non…)</h1>
+
+<div class="lbl">TRƯỚC — hero phóng to</div>
+<div class="old"><div class="hero"><div class="pad"><div class="inner">
+  <div>
+    <span class="eyebrow">💪 THCS Việt Anh · 11–15 tuổi</span>
+    <h2>Đồng hành tuổi dậy thì, <span class="hl">bứt phá không lệch hướng</span></h2>
+    <p class="lead">Tuổi dậy thì không phải vấn đề cần "xử lý" — mà là nguồn năng lượng cần được dẫn dắt đúng.</p>
+    <div class="badges"><span>EQ</span><span>PDR</span><span>Leader in Me</span><span>AI Education</span></div>
+  </div>
+  <div class="formcard">
+    <span class="fe">📘 Nhận Brochure miễn phí</span>
+    <h3>Nhận Brochure &amp; tư vấn lộ trình</h3>
+    <p>Để lại email — đội ngũ Việt Anh gửi trong 24h.</p>
+    <input placeholder="Email của phụ huynh"><button class="btn">Nhận Brochure →</button>
+  </div>
+</div></div></div></div>
+
+<div class="lbl">SAU — hero gọn lại (two-step form giữ NGUYÊN)</div>
+<div class="new"><div class="hero"><div class="pad"><div class="inner">
+  <div>
+    <span class="eyebrow">💪 THCS Việt Anh · 11–15 tuổi</span>
+    <h2>Đồng hành tuổi dậy thì, <span class="hl">bứt phá không lệch hướng</span></h2>
+    <p class="lead">Tuổi dậy thì không phải vấn đề cần "xử lý" — mà là nguồn năng lượng cần được dẫn dắt đúng.</p>
+    <div class="badges"><span>EQ</span><span>PDR</span><span>Leader in Me</span><span>AI Education</span></div>
+  </div>
+  <div class="formcard">
+    <span class="fe">📘 Nhận Brochure miễn phí</span>
+    <h3>Nhận Brochure &amp; tư vấn lộ trình</h3>
+    <p>Để lại email — đội ngũ Việt Anh gửi trong 24h.</p>
+    <input placeholder="Email của phụ huynh"><button class="btn">Nhận Brochure →</button>
+  </div>
+</div></div></div></div>
+
+<div class="note"><b>Đã chỉnh:</b> padding section 2.75/2.5rem → 1.75/1.5rem · gap 2.5→2rem · tiêu đề tối đa 2.6rem → 2.05rem · lead & badges gọn lại. <b>Giữ nguyên:</b> thẻ form (.mn-hero__form) và component two-step form. Áp dụng chung 13 trang sales; trang Giải Mã (layout riêng) không đổi.</div>
+</div></body></html>

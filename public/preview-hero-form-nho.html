@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview hero — two-step form thu nhỏ</title>
+<style>
+  body{font-family:'Inter',system-ui,sans-serif;margin:0;background:#e9edf3;color:#1a2236}
+  .wrap{max-width:1180px;margin:0 auto;padding:1.2rem 1rem 3rem}
+  h1{font-size:1.4rem;color:#26275D;margin:.2rem 0 1rem}
+  .lbl{font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;font-weight:700;margin:1.4rem 0 .5rem}
+  .frame{border-radius:14px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.1)}
+  .hero{background:linear-gradient(160deg,#18193a,#26275D);color:#fff;padding:1.5rem}
+  .inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:center}
+  .eyebrow{display:inline-block;background:#F9DD0E;color:#26275D;font-size:.82rem;font-weight:800;padding:.3rem 1rem;border-radius:50px;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.06em}
+  h2{font-size:2.05rem;font-weight:900;margin:0 0 .75rem;line-height:1.2}
+  .hl{color:#F9DD0E}
+  .lead{color:rgba(255,255,255,.88);font-size:.95rem;line-height:1.6;margin:0 0 .7rem}
+  .badges{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
+  .badges span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);font-size:.85rem;font-weight:600;padding:.3rem .8rem;border-radius:50px}
+  .card{background:linear-gradient(160deg,#26275D,#18193a);border:1.5px solid #26275D;border-radius:18px;padding:1.25rem 1.25rem;box-shadow:0 18px 50px rgba(38,39,93,.35)}
+  .fe{display:inline-block;background:#F9DD0E;color:#26275D;font-size:.78rem;font-weight:700;padding:.3rem .85rem;border-radius:50px;margin-bottom:.45rem;text-transform:uppercase}
+  .card h3{font-size:1.08rem;margin:0 0 .3rem}
+  .card .sub{color:rgba(255,255,255,.78);font-size:.9rem;margin:0 0 .7rem}
+  /* progress */
+  .prog{display:flex;align-items:center;margin-bottom:var(--pm)}
+  .prog .st{display:flex;flex-direction:column;align-items:center;gap:.35rem}
+  .prog .dot{display:flex;align-items:center;justify-content:center;border-radius:50%;font-weight:700;background:#F9DD0E;color:#26275D}
+  .prog .dot.off{background:rgba(255,255,255,.18);color:rgba(255,255,255,.6)}
+  .prog .lab{text-transform:uppercase;letter-spacing:.5px;color:#fff}
+  .prog .line{height:3px;background:rgba(255,255,255,.2);border-radius:2px}
+  .title{font-family:Montserrat,sans-serif;font-weight:700;margin:.2rem 0 .1rem}
+  .desc{color:rgba(255,255,255,.72);margin:0 0 .6rem}
+  .inp{width:100%;box-sizing:border-box;border:none;border-radius:10px;background:#fff}
+  .btn{width:100%;margin-top:.6rem;background:#F9DD0E;color:#26275D;font-weight:800;border:none;border-radius:10px;cursor:pointer}
+  .sp{margin-top:.5rem;color:rgba(255,255,255,.78);text-align:center}
+  /* ===== OLD (to) ===== */
+  .old .prog{--pm:.5rem}
+  .old .dot{width:32px;height:32px;font-size:1rem}
+  .old .line{width:60px;margin:0 1rem 1.2rem}
+  .old .lab{font-size:1rem}
+  .old .title{font-size:1.5rem;line-height:1.3}
+  .old .desc{font-size:1rem}
+  .old .inp{padding:1rem 1.15rem;font-size:1rem}
+  .old .btn{padding:.95rem 1.2rem;font-size:1.05rem}
+  .old .sp{font-size:.95rem}
+  /* ===== NEW (nhỏ) ===== */
+  .new .prog{--pm:.25rem}
+  .new .dot{width:26px;height:26px;font-size:.85rem}
+  .new .line{width:48px;margin:0 1rem 1rem}
+  .new .lab{font-size:.7rem}
+  .new .title{font-size:1.12rem;line-height:1.3}
+  .new .desc{font-size:.85rem}
+  .new .inp{padding:.7rem .9rem;font-size:.95rem}
+  .new .btn{padding:.75rem 1.1rem;font-size:1rem}
+  .new .sp{font-size:.78rem}
+  .note{background:#fff;border-left:4px solid #F9DD0E;border-radius:10px;padding:.9rem 1.1rem;margin-top:1.2rem;font-size:.9rem}
+  .note b{color:#26275D}
+</style></head>
+<body><div class="wrap">
+<h1>Thu nhỏ two-step form trong hero (navy kín — không còn dải trắng)</h1>
+
+<div class="lbl">TRƯỚC — form to</div>
+<div class="frame old"><div class="hero"><div class="inner">
+  <div><span class="eyebrow">🎓 THPT Việt Anh · 15–18 tuổi</span>
+    <h2>THPT không phải là 3 năm để <span class="hl">chạy theo kỳ thi</span></h2>
+    <p class="lead">mà là 3 năm để học sinh làm rõ bản thân và chọn đúng con đường tương lai.</p>
+    <div class="badges"><span>🎯 Hiểu mình</span><span>💪 Năng lực thật</span><span>🧭 Định hướng</span></div></div>
+  <div class="card"><span class="fe">📘 Nhận Brochure miễn phí</span><h3>Xem lộ trình IELTS &amp; hướng nghiệp THPT</h3>
+    <p class="sub">Để lại email — Việt Anh gửi Brochure &amp; tư vấn trong 24h.</p>
+    <div class="prog"><div class="st"><span class="dot">1</span><span class="lab">Điền email</span></div><span class="line"></span><div class="st"><span class="dot off">2</span><span class="lab">Nhận thông tin</span></div></div>
+    <div class="title">Đăng ký ngay để được tư vấn cá nhân hoá 1:1 lộ trình học tập qua Zalo</div>
+    <p class="desc">Đảm bảo tối ưu hoá lợi ích và phù hợp nhất cho con.</p>
+    <input class="inp" placeholder="Nhập email của bạn"><button class="btn">Nhận tư vấn ngay →</button>
+    <div class="sp">● Hơn 100 phụ huynh đã đăng ký tuần này</div></div>
+</div></div></div>
+
+<div class="lbl">SAU — form nhỏ gọn, hero cân đối hơn</div>
+<div class="frame new"><div class="hero"><div class="inner">
+  <div><span class="eyebrow">🎓 THPT Việt Anh · 15–18 tuổi</span>
+    <h2>THPT không phải là 3 năm để <span class="hl">chạy theo kỳ thi</span></h2>
+    <p class="lead">mà là 3 năm để học sinh làm rõ bản thân và chọn đúng con đường tương lai.</p>
+    <div class="badges"><span>🎯 Hiểu mình</span><span>💪 Năng lực thật</span><span>🧭 Định hướng</span></div></div>
+  <div class="card"><span class="fe">📘 Nhận Brochure miễn phí</span><h3>Xem lộ trình IELTS &amp; hướng nghiệp THPT</h3>
+    <p class="sub">Để lại email — Việt Anh gửi Brochure &amp; tư vấn trong 24h.</p>
+    <div class="prog"><div class="st"><span class="dot">1</span><span class="lab">Điền email</span></div><span class="line"></span><div class="st"><span class="dot off">2</span><span class="lab">Nhận thông tin</span></div></div>
+    <div class="title">Đăng ký ngay để được tư vấn cá nhân hoá 1:1 lộ trình học tập qua Zalo</div>
+    <p class="desc">Đảm bảo tối ưu hoá lợi ích và phù hợp nhất cho con.</p>
+    <input class="inp" placeholder="Nhập email của bạn"><button class="btn">Nhận tư vấn ngay →</button>
+    <div class="sp">● Hơn 100 phụ huynh đã đăng ký tuần này</div></div>
+</div></div></div>
+
+<div class="note"><b>Đã thu nhỏ (chỉ trong hero):</b> tiêu đề form 1.5rem → 1.12rem · mô tả 1rem → .85rem · ô nhập & nút gọn hơn · chấm tiến trình 32→26px · khoảng cách thưa bớt. <b>Form vẫn đủ 2 bước, ô email & nút nguyên chức năng.</b> Các form ở trang khác KHÔNG đổi.</div>
+</div></body></html>

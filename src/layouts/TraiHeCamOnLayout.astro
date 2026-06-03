@@ -155,8 +155,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet" />
 <style is:inline>
 :root{
-  --navy:#000080;--navy-dk:#00004d;--navy-soft:#f0f0ff;
-  --gold:#ffff00;--gold-dk:#e6e600;--gold-soft:#fffde6;--gold-border:rgba(255,255,0,.4);
+  --navy:#26275D;--navy-dk:#18193a;--navy-soft:#f0f0ff;
+  --gold:#f9dd0e;--gold-dk:#e6e600;--gold-soft:#fffde6;--gold-border:rgba(249,221,14,.4);
   --text:#1a1a2e;--text-muted:#5a5a70;--border:#e5e7eb;
   --green:#16a34a;
   --r:14px;
@@ -189,7 +189,7 @@ a{text-decoration:none;color:inherit}
   background:var(--navy);color:var(--navy);
   padding:7px 14px;border-radius:8px;font-weight:900;font-size:12.5px;
   font-family:'Montserrat',sans-serif;white-space:nowrap;text-decoration:none;
-  box-shadow:0 3px 10px rgba(0,0,128,.22);transition:.15s}
+  box-shadow:0 3px 10px rgba(38,39,93,.22);transition:.15s}
 .lb-zalo:hover{background:var(--navy-dk);transform:translateY(-1px)}
 
 /* ─── PROGRESS ─── */
@@ -207,7 +207,7 @@ a{text-decoration:none;color:inherit}
 .pstep--pending .pdot{background:#ddd;color:#aaa}
 .pline{flex:1;height:2px;background:var(--navy);min-width:28px}
 .pline--pending{background:#ddd}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,0,.45)}50%{box-shadow:0 0 0 8px rgba(255,255,0,0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(249,221,14,.45)}50%{box-shadow:0 0 0 8px rgba(249,221,14,0)}}
 
 /* ─── MAIN ─── */
 .main{flex:1;padding:20px 0 48px}
@@ -244,11 +244,11 @@ a{text-decoration:none;color:inherit}
   width:100%;background:var(--navy);color:var(--navy);border:none;
   padding:18px 24px;border-radius:12px;font-size:16px;font-weight:900;
   font-family:'Montserrat',sans-serif;cursor:pointer;transition:.15s;
-  text-decoration:none;box-shadow:0 6px 24px rgba(0,0,128,.25);
+  text-decoration:none;box-shadow:0 6px 24px rgba(38,39,93,.25);
   white-space:nowrap;overflow:hidden;
   animation:cta-pulse 3s ease-in-out infinite;margin-bottom:12px}
-@keyframes cta-pulse{0%,100%{box-shadow:0 6px 24px rgba(0,0,128,.25)}
-  50%{box-shadow:0 6px 32px rgba(0,0,128,.45),0 0 0 6px rgba(255,255,0,.15)}}
+@keyframes cta-pulse{0%,100%{box-shadow:0 6px 24px rgba(38,39,93,.25)}
+  50%{box-shadow:0 6px 32px rgba(38,39,93,.45),0 0 0 6px rgba(249,221,14,.15)}}
 .btn-zalo-primary:hover{background:var(--navy-dk);transform:translateY(-2px)}
 .btn-zalo-primary:active{transform:translateY(0)}
 .btn-call-primary{display:flex;align-items:center;justify-content:center;gap:10px;
@@ -493,7 +493,7 @@ window.dataLayer.push({
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
   var pieces = [];
-  var colors = ['#ffff00','#000080','#ffffff','#ffe066','#00cc66','#ff6633'];
+  var colors = ['#f9dd0e','#26275D','#ffffff','#ffe066','#00cc66','#ff6633'];
   for(var i=0;i<90;i++){
     pieces.push({
       x: Math.random()*canvas.width,

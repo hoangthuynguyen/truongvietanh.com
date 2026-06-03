@@ -863,7 +863,7 @@ async function sendEmailNotification(data, env) {
       <tr>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">So dien thoai</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-size:16px;">
-          <a href="tel:${data.phone}" style="color:#ffff00;font-weight:bold;text-decoration:none;">${data.phone}</a>
+          <a href="tel:${data.phone}" style="color:#f9dd0e;font-weight:bold;text-decoration:none;">${data.phone}</a>
         </td>
       </tr>
       <tr style="background:#f8f9fa;">
@@ -905,12 +905,12 @@ async function sendEmailNotification(data, env) {
       </tr>
     </table>
 
-    <div style="background:#fff8e1;border:2px solid #ffff00;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;">
+    <div style="background:#fff8e1;border:2px solid #f9dd0e;border-radius:8px;padding:16px;text-align:center;margin-bottom:16px;">
       <p style="margin:0 0 12px;font-weight:bold;color:#1a1a5e;font-size:16px;">Lien lac ngay voi phu huynh:</p>
       <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
         <a href="tel:${data.phone}" style="background:#1a1a5e;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Goi dien: ${data.phone}</a>
         <a href="https://zalo.me/${data.phone}" style="background:#0068ff;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Nhan Zalo</a>
-        <a href="mailto:${data.email}" style="background:#ffff00;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Gui Email</a>
+        <a href="mailto:${data.email}" style="background:#f9dd0e;color:#fff;padding:10px 20px;border-radius:6px;text-decoration:none;font-weight:bold;display:inline-block;">Gui Email</a>
       </div>
     </div>
 
@@ -1004,7 +1004,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
   const body = `
 <div style="font-family:'Segoe UI',Arial,sans-serif;max-width:560px;margin:0 auto;background:#fff;">
   <!-- Header -->
-  <div style="background:linear-gradient(135deg,#1a1a5e,#00009a);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
+  <div style="background:linear-gradient(135deg,#1a1a5e,#363876);color:#fff;padding:24px;border-radius:12px 12px 0 0;text-align:center;">
     <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;margin-bottom:12px;background:#fff;padding:8px 16px;border-radius:8px;" />
     <h1 style="margin:0;font-size:20px;font-weight:800;">KẾT QUẢ ĐÁNH GIÁ KỸ NĂNG HÈ 2026</h1>
     <p style="margin:6px 0 0;opacity:.85;font-size:14px;">Lion Camp — ${campLvl} ${loc}</p>
@@ -1018,7 +1018,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- Score Card -->
     <div style="background:#F0F9FF;border:2px solid #7DD3FC;border-radius:14px;padding:20px;text-align:center;margin-bottom:20px;">
-      <div style="font-size:42px;font-weight:800;color:#000080;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 100</span></div>
+      <div style="font-size:42px;font-weight:800;color:#26275D;font-family:Montserrat,Arial,sans-serif;">${score}<span style="font-size:18px;color:#999;font-weight:400;"> / 100</span></div>
       <!-- Score bar -->
       <div style="background:#E5E7EB;border-radius:6px;height:12px;margin:12px 0;overflow:hidden;">
         <div style="background:${color};height:100%;width:${barWidth}%;border-radius:6px;"></div>
@@ -1028,19 +1028,19 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- What this means -->
     <div style="background:#F9FAFB;border-radius:10px;padding:16px;margin-bottom:20px;">
-      <p style="font-weight:700;color:#000080;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
+      <p style="font-weight:700;color:#26275D;margin:0 0 8px;">📋 Kết quả này có nghĩa là gì?</p>
       ${score >= 75 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đã có nền tảng tốt! Trại hè sẽ giúp con <strong>tỏa sáng hơn nữa</strong> và phát triển kỹ năng vượt trội so với bạn bè.</p>` : score >= 50 ? `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Con đang ở giai đoạn <strong>cần hỗ trợ kịp thời</strong>. 6 tuần tại Lion Camp sẽ giúp con tiến bộ rõ rệt về tự tin và kỷ luật.</p>` : `<p style="margin:0;font-size:14px;color:#555;line-height:1.6;">Đây là <strong>thời điểm vàng để can thiệp</strong>. Mùa hè này là cơ hội quan trọng nhất để giúp con thay đổi toàn diện.</p>`}
     </div>
 
     <!-- Recommended action -->
     <div style="background:linear-gradient(135deg,#FFFBEB,#FEF3C7);border:2px solid #F59E0B;border-radius:12px;padding:18px;margin-bottom:20px;">
-      <p style="font-weight:800;color:#ffff00;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
+      <p style="font-weight:800;color:#f9dd0e;margin:0 0 8px;font-size:15px;">🎁 Khuyến nghị cho gia đình ${firstName}:</p>
       <p style="margin:0 0 12px;font-size:14px;color:#7C2D12;line-height:1.6;">
         Con rất phù hợp với <strong>Lion Camp ${campLvl} tại cơ sở ${loc}</strong>.
         Đăng ký giữ chỗ trong 48 giờ tới để nhận <strong>Học bổng Early Bird đến 30%</strong>.
       </p>
       <div style="text-align:center;">
-        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#f9dd0e;color:#fff;padding:14px 28px;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;">
           💬 Chat Zalo giữ chỗ ngay
         </a>
       </div>
@@ -1048,7 +1048,7 @@ async function sendQuizResultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- Next steps -->
     <div style="margin-bottom:16px;">
-      <p style="font-weight:700;color:#000080;margin:0 0 8px;">📋 Các bước tiếp theo:</p>
+      <p style="font-weight:700;color:#26275D;margin:0 0 8px;">📋 Các bước tiếp theo:</p>
       <ol style="margin:0;padding-left:20px;font-size:14px;color:#555;line-height:1.8;">
         <li><strong>Tư vấn viên sẽ gọi</strong> trong vài phút để giải thích chi tiết kết quả</li>
         <li>Nhận <strong>Báo cáo PDF đầy đủ</strong> qua Zalo trong 24 giờ</li>
@@ -1154,10 +1154,10 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
 
   const body = `<!doctype html><html><head><meta charset="UTF-8"/></head><body style="font-family:Arial,Helvetica,sans-serif;background:#f4f6f9;margin:0;padding:32px 16px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.08);">
-  <div style="background:linear-gradient(135deg,#000080,#00004d);color:#fff;padding:36px 24px 32px;text-align:center;">
+  <div style="background:linear-gradient(135deg,#26275D,#18193a);color:#fff;padding:36px 24px 32px;text-align:center;">
     ${logoBlock}
-    <div style="display:inline-block;background:#ffff00;color:#000080;font-size:12px;font-weight:800;letter-spacing:1.2px;padding:6px 14px;border-radius:20px;text-transform:uppercase;margin-bottom:14px;">✓ Đăng ký thành công</div>
-    <h1 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#ffff00;line-height:1.3;">${headline}</h1>
+    <div style="display:inline-block;background:#f9dd0e;color:#26275D;font-size:12px;font-weight:800;letter-spacing:1.2px;padding:6px 14px;border-radius:20px;text-transform:uppercase;margin-bottom:14px;">✓ Đăng ký thành công</div>
+    <h1 style="margin:0 0 8px;font-size:24px;font-weight:800;color:#f9dd0e;line-height:1.3;">${headline}</h1>
     <p style="margin:0;font-size:14px;color:rgba(255,255,255,.85);line-height:1.5;">Trường Việt Anh sẽ liên hệ Ba/Mẹ trong vòng 24 giờ</p>
   </div>
   <div style="padding:28px 24px;">
@@ -1167,8 +1167,8 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
       Bộ phận tuyển sinh Trường Việt Anh sẽ <strong>gọi xác nhận lịch tham quan</strong> trong vòng <strong>24 giờ</strong>.
     </p>
 
-    <div style="background:#fafbff;border-left:4px solid #ffff00;border-radius:8px;padding:16px 18px;margin-bottom:20px;">
-      <div style="font-weight:800;color:#000080;margin-bottom:10px;">📋 Các bước tiếp theo</div>
+    <div style="background:#fafbff;border-left:4px solid #f9dd0e;border-radius:8px;padding:16px 18px;margin-bottom:20px;">
+      <div style="font-weight:800;color:#26275D;margin-bottom:10px;">📋 Các bước tiếp theo</div>
       <ol style="margin:0;padding-left:20px;font-size:14px;color:#333;line-height:1.8;">
         <li><strong>Tư vấn viên gọi xác nhận</strong> — chốt ngày & giờ tham quan phù hợp</li>
         <li>Đến tham quan trực tiếp: <strong>gặp giáo viên, xem lớp học, cơ sở vật chất</strong></li>
@@ -1177,8 +1177,8 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
     </div>
 
     ${addr ? `
-    <div style="background:#fffde6;border:1px solid #ffff00;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
-      <div style="font-weight:800;color:#000080;margin-bottom:6px;">📍 Cơ sở ${loc}</div>
+    <div style="background:#fffde6;border:1px solid #f9dd0e;border-radius:8px;padding:14px 18px;margin-bottom:20px;">
+      <div style="font-weight:800;color:#26275D;margin-bottom:6px;">📍 Cơ sở ${loc}</div>
       <div style="font-size:14px;color:#333;line-height:1.6;">
         <strong>Địa chỉ:</strong> ${addr}<br/>
         <strong>Giờ làm việc:</strong> Thứ Hai – Thứ Bảy: 06:30 – 18:30<br/>
@@ -1187,13 +1187,13 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
     </div>` : ''}
 
     <div style="text-align:center;margin:24px 0 16px;">
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#ffff00;color:#000080;padding:14px 24px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">💬 Chat Zalo</a>
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:#f9dd0e;color:#26275D;padding:14px 24px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">💬 Chat Zalo</a>
       <a href="https://m.me/truongvietanhhcm" style="display:inline-block;background:#0084ff;color:#fff;padding:14px 24px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">💬 Chat Facebook</a>
-      <a href="tel:+84916961409" style="display:inline-block;background:#fff;color:#000080;border:2px solid #000080;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">📞 0916 961 409</a>
+      <a href="tel:+84916961409" style="display:inline-block;background:#fff;color:#26275D;border:2px solid #26275D;padding:12px 22px;border-radius:10px;font-weight:800;font-size:14px;text-decoration:none;margin:4px;">📞 0916 961 409</a>
     </div>
 
     <div style="text-align:center;padding-top:18px;border-top:1px solid #eee;font-size:12px;color:#999;line-height:1.7;">
-      <strong style="color:#000080;font-size:13px;">Trường Việt Anh — since 2011</strong><br/>
+      <strong style="color:#26275D;font-size:13px;">Trường Việt Anh — since 2011</strong><br/>
       <em>Từ bình thường trở nên phi thường</em><br/>
       Mầm non · Tiểu học · THCS · THPT<br/>
       TP HCM · Tây Ninh · An Giang
@@ -1235,7 +1235,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
   const body = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;margin:0;padding:20px;">
 <div style="max-width:600px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 12px rgba(0,0,0,.08);">
   <!-- Header -->
-  <div style="background:linear-gradient(135deg,#1a1a5e,#00004d);color:#fff;padding:28px 24px;text-align:center;">
+  <div style="background:linear-gradient(135deg,#1a1a5e,#18193a);color:#fff;padding:28px 24px;text-align:center;">
     <img src="https://truongvietanh.com/logo-vietanh.webp" alt="Trường Việt Anh" style="max-width:200px;height:auto;background:#fff;padding:10px 20px;border-radius:10px;margin-bottom:16px;"/>
     <h1 style="color:#fff;font-size:22px;margin:8px 0;line-height:1.3;">✅ Đã nhận đăng ký tư vấn!</h1>
     <p style="color:#ffd89a;font-size:14px;margin:4px 0 0;">Trại hè Lion Camp 2026 — ${campLvl} ${loc}</p>
@@ -1253,7 +1253,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
     </p>
 
     <!-- Next steps box -->
-    <div style="background:#f8faff;border-left:4px solid #ffff00;padding:18px 20px;border-radius:10px;margin-bottom:20px;">
+    <div style="background:#f8faff;border-left:4px solid #f9dd0e;padding:18px 20px;border-radius:10px;margin-bottom:20px;">
       <p style="font-weight:800;color:#1a1a5e;margin:0 0 12px;font-size:15px;">📋 Các bước tiếp theo:</p>
       <ol style="margin:0;padding-left:22px;font-size:14px;color:#2d2d42;line-height:1.9;">
         <li><strong>Tư vấn viên gọi/Zalo</strong> trong 24 giờ</li>
@@ -1265,7 +1265,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
 
     <!-- CTA Zalo -->
     <div style="text-align:center;margin:24px 0;">
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:linear-gradient(135deg,#ffff00,#c09530);color:#00004d;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(255,255,0,.4);">
+      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:linear-gradient(135deg,#f9dd0e,#c09530);color:#18193a;padding:14px 28px;border-radius:12px;font-weight:800;font-size:15px;text-decoration:none;box-shadow:0 4px 14px rgba(249,221,14,.4);">
         📞 Chat Zalo tư vấn nhanh hơn
       </a>
     </div>
@@ -1284,7 +1284,7 @@ async function sendTraiHeConsultEmail(data, env, contactId, ghlApiKey) {
     </div>
   </div>
 
-  <div style="background:#00004d;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
+  <div style="background:#18193a;color:#ffd89a;padding:16px 20px;text-align:center;font-size:12px;">
     Lion Camp 2026 — Trường Việt Anh<br/>
     <a href="https://truongvietanh.com" style="color:#ffd89a;">truongvietanh.com</a>
   </div>
@@ -1510,19 +1510,19 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
 <table width="100%" cellpadding="0" cellspacing="0"><tr><td align="center">
 <table width="520" cellpadding="0" cellspacing="0" style="background:#ffffff;border-radius:12px;overflow:hidden;box-shadow:0 4px 24px rgba(0,0,0,.08);">
   <tr>
-    <td style="background:#000080;padding:24px;text-align:center;border-bottom:3px solid #ffff00;">
+    <td style="background:#26275D;padding:24px;text-align:center;border-bottom:3px solid #f9dd0e;">
       <img src="https://truongvietanh.com/logo-th-thcs-thpt.png" alt="Trường Việt Anh" height="60" style="background:#fff;padding:6px 16px;border-radius:8px;display:block;margin:0 auto 12px;"/>
     </td>
   </tr>
   <tr>
     <td style="padding:36px 36px 28px;text-align:center;">
       <p style="font-size:36px;margin:0 0 12px;">🎉</p>
-      <h2 style="color:#000080;font-size:20px;font-family:Arial,sans-serif;margin:0 0 16px;">Cảm ơn bạn đã đăng ký!</h2>
+      <h2 style="color:#26275D;font-size:20px;font-family:Arial,sans-serif;margin:0 0 16px;">Cảm ơn bạn đã đăng ký!</h2>
       <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 12px;">
         Chúng tôi đã nhận được thông tin của bạn.
       </p>
       <p style="color:#444;font-size:15px;line-height:1.8;margin:0 0 20px;">
-        Vui lòng <strong style="color:#000080;">đợi vài phút</strong>, tài liệu sẽ được gửi đến email của bạn ngay sau đây.
+        Vui lòng <strong style="color:#26275D;">đợi vài phút</strong>, tài liệu sẽ được gửi đến email của bạn ngay sau đây.
       </p>
       <p style="color:#999;font-size:13px;margin:0;">
         Nếu không thấy email, hãy kiểm tra thư mục <strong>Spam</strong> hoặc <strong>Promotions</strong>.
@@ -1537,9 +1537,9 @@ async function sendSqueezeResourceEmail(data, env, contactId, ghlApiKey) {
     </td>
   </tr>
   <tr>
-    <td style="background:#000080;padding:16px;text-align:center;">
+    <td style="background:#26275D;padding:16px;text-align:center;">
       <p style="color:rgba(255,255,255,.6);font-size:12px;font-family:Arial,sans-serif;margin:0;">
-        Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#ffff00;text-decoration:none;">truongvietanh.com</a> — Hotline: 0916 961 409
+        Trường Việt Anh — <a href="https://truongvietanh.com" style="color:#f9dd0e;text-decoration:none;">truongvietanh.com</a> — Hotline: 0916 961 409
       </p>
     </td>
   </tr>
@@ -1670,13 +1670,13 @@ async function handleKhieuNaiSubmission(request, env) {
   const internalSubject = `[KHIẾU NẠI ${maKhieuNai}] ${dauMoi.coSo} — ${escHtml(name)}`;
   const internalBody = `
 <div style="font-family:Arial,sans-serif;max-width:680px;margin:0 auto;padding:20px;background:#f5f7fa;">
-  <div style="background:#000080;color:#fff;padding:18px 20px;border-radius:8px 8px 0 0;">
+  <div style="background:#26275D;color:#fff;padding:18px 20px;border-radius:8px 8px 0 0;">
     <h2 style="margin:0;font-size:18px;">🔔 Đơn khiếu nại mới — ${escHtml(maKhieuNai)}</h2>
     <p style="margin:6px 0 0;font-size:13px;opacity:0.9;">Theo Quy trình Giải quyết Khiếu nại v1.0 · SLA xác nhận: 3 ngày làm việc</p>
   </div>
   <div style="background:#fff;padding:20px;border-radius:0 0 8px 8px;">
     <table style="width:100%;border-collapse:collapse;font-size:14px;">
-      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;width:38%;">Mã khiếu nại</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-family:monospace;font-size:15px;color:#000080;">${escHtml(maKhieuNai)}</td></tr>
+      <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;width:38%;">Mã khiếu nại</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-family:monospace;font-size:15px;color:#26275D;">${escHtml(maKhieuNai)}</td></tr>
       <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Cơ sở liên quan</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;"><strong>${escHtml(dauMoi.coSo)}</strong></td></tr>
       <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Đầu mối xử lý</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(dauMoi.ten)} — <a href="mailto:${escHtml(dauMoi.email)}">${escHtml(dauMoi.email)}</a></td></tr>
       <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Họ tên người khiếu nại</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(name)}</td></tr>
@@ -1687,10 +1687,10 @@ async function handleKhieuNaiSubmission(request, env) {
       <tr><td style="padding:8px;border-bottom:1px solid #e2e8f0;font-weight:700;">Thời gian / địa điểm</td><td style="padding:8px;border-bottom:1px solid #e2e8f0;">${escHtml(data.thoi_gian || '—')}</td></tr>
     </table>
 
-    <h3 style="margin:18px 0 8px;color:#000080;font-size:15px;">📝 Mô tả vụ việc</h3>
-    <div style="background:#f8fafc;padding:12px 14px;border-left:4px solid #000080;border-radius:4px;white-space:pre-wrap;font-size:14px;line-height:1.6;">${escHtml(data.noi_dung)}</div>
+    <h3 style="margin:18px 0 8px;color:#26275D;font-size:15px;">📝 Mô tả vụ việc</h3>
+    <div style="background:#f8fafc;padding:12px 14px;border-left:4px solid #26275D;border-radius:4px;white-space:pre-wrap;font-size:14px;line-height:1.6;">${escHtml(data.noi_dung)}</div>
 
-    <h3 style="margin:18px 0 8px;color:#000080;font-size:15px;">🎯 Mong muốn giải quyết</h3>
+    <h3 style="margin:18px 0 8px;color:#26275D;font-size:15px;">🎯 Mong muốn giải quyết</h3>
     <div style="background:#f8fafc;padding:12px 14px;border-left:4px solid #f59e0b;border-radius:4px;white-space:pre-wrap;font-size:14px;line-height:1.6;">${escHtml(data.mong_muon || '(Không nêu)')}</div>
 
     <div style="background:#fef3c7;border:1px solid #fbbf24;border-radius:6px;padding:12px;margin-top:18px;font-size:13px;color:#78350f;">
@@ -1715,7 +1715,7 @@ async function handleKhieuNaiSubmission(request, env) {
   const userSubject = `[Trường Việt Anh] Đã tiếp nhận đơn khiếu nại của bạn — Mã ${maKhieuNai}`;
   const userBody = `
 <div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;">
-  <div style="background:linear-gradient(135deg,#000080,#1e3a8a);color:#fff;padding:24px 20px;border-radius:8px 8px 0 0;text-align:center;">
+  <div style="background:linear-gradient(135deg,#26275D,#1e3a8a);color:#fff;padding:24px 20px;border-radius:8px 8px 0 0;text-align:center;">
     <h2 style="margin:0;font-size:20px;">✓ Đã tiếp nhận đơn khiếu nại</h2>
     <p style="margin:10px 0 0;font-size:14px;opacity:0.9;">Hệ thống Trường Việt Anh</p>
   </div>
@@ -1728,7 +1728,7 @@ async function handleKhieuNaiSubmission(request, env) {
       <p style="margin:0;font-family:'Courier New',monospace;font-size:22px;font-weight:800;color:#065f46;letter-spacing:0.05em;">${escHtml(maKhieuNai)}</p>
     </div>
 
-    <h3 style="color:#000080;font-size:15px;margin:20px 0 10px;">⏱ Thời hạn cam kết</h3>
+    <h3 style="color:#26275D;font-size:15px;margin:20px 0 10px;">⏱ Thời hạn cam kết</h3>
     <ul style="font-size:14px;color:#334155;line-height:1.7;padding-left:20px;margin:0;">
       <li>Xác nhận tiếp nhận & phân công đầu mối: <strong>03 ngày làm việc</strong></li>
       <li>Văn bản trả lời chính thức: tối đa <strong>30 ngày làm việc</strong> (có thể gia hạn 60 ngày với vụ phức tạp — sẽ thông báo trước)</li>
@@ -1736,8 +1736,8 @@ async function handleKhieuNaiSubmission(request, env) {
       <li>Khẩn cấp an toàn học sinh: phản hồi sơ bộ trong <strong>24 giờ</strong></li>
     </ul>
 
-    <h3 style="color:#000080;font-size:15px;margin:20px 0 10px;">📎 Gửi tài liệu bổ sung</h3>
-    <p style="font-size:14px;color:#334155;line-height:1.6;margin:0;">Nếu quý vị có tài liệu, hình ảnh, video chứng cứ, vui lòng gửi qua email <a href="mailto:${KHIEU_NAI_DPO_EMAIL}" style="color:#000080;font-weight:600;">${KHIEU_NAI_DPO_EMAIL}</a> và <strong>ghi rõ mã ${escHtml(maKhieuNai)}</strong> trong tiêu đề email.</p>
+    <h3 style="color:#26275D;font-size:15px;margin:20px 0 10px;">📎 Gửi tài liệu bổ sung</h3>
+    <p style="font-size:14px;color:#334155;line-height:1.6;margin:0;">Nếu quý vị có tài liệu, hình ảnh, video chứng cứ, vui lòng gửi qua email <a href="mailto:${KHIEU_NAI_DPO_EMAIL}" style="color:#26275D;font-weight:600;">${KHIEU_NAI_DPO_EMAIL}</a> và <strong>ghi rõ mã ${escHtml(maKhieuNai)}</strong> trong tiêu đề email.</p>
 
     <div style="background:#fef3c7;border-left:4px solid #f59e0b;padding:12px 16px;margin:20px 0;border-radius:4px;">
       <p style="margin:0;font-size:14px;color:#78350f;line-height:1.5;">
@@ -1745,14 +1745,14 @@ async function handleKhieuNaiSubmission(request, env) {
       </p>
     </div>
 
-    <h3 style="color:#000080;font-size:15px;margin:20px 0 10px;">🤝 Cam kết của Trường</h3>
+    <h3 style="color:#26275D;font-size:15px;margin:20px 0 10px;">🤝 Cam kết của Trường</h3>
     <ul style="font-size:14px;color:#334155;line-height:1.7;padding-left:20px;margin:0;">
       <li><strong>Bảo mật</strong> danh tính người khiếu nại theo Quy trình v1.0</li>
       <li><strong>Không trả thù</strong> dưới bất kỳ hình thức nào với người khiếu nại có thiện chí</li>
       <li><strong>Miễn phí</strong> hoàn toàn quá trình tiếp nhận và giải quyết</li>
     </ul>
 
-    <p style="font-size:14px;color:#334155;margin:20px 0 0;line-height:1.6;">Trân trọng,<br><strong>Ban Pháp chế — Hệ thống Trường Việt Anh</strong><br>Email: <a href="mailto:${KHIEU_NAI_DPO_EMAIL}" style="color:#000080;">${KHIEU_NAI_DPO_EMAIL}</a> · Hotline: <a href="tel:0916961409" style="color:#000080;">0916 961 409</a></p>
+    <p style="font-size:14px;color:#334155;margin:20px 0 0;line-height:1.6;">Trân trọng,<br><strong>Ban Pháp chế — Hệ thống Trường Việt Anh</strong><br>Email: <a href="mailto:${KHIEU_NAI_DPO_EMAIL}" style="color:#26275D;">${KHIEU_NAI_DPO_EMAIL}</a> · Hotline: <a href="tel:0916961409" style="color:#26275D;">0916 961 409</a></p>
 
     <p style="font-size:12px;color:#94a3b8;margin-top:20px;text-align:center;border-top:1px solid #e2e8f0;padding-top:14px;">Email tự động xác nhận từ <a href="https://truongvietanh.com/khieu-nai" style="color:#94a3b8;">truongvietanh.com/khieu-nai</a> · Vui lòng không reply email này.</p>
   </div>

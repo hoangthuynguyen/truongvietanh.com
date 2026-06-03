@@ -1,0 +1,98 @@
+/* ============================================================
+   BLOG REBRAND — màu brand mới CHỈ áp dụng cho các trang blog
+   navy  #26275D -> #26275D
+   vàng  #f9dd0e -> #F9DD0E
+   (file này chỉ được import trong src/pages/blog/*, không ảnh hưởng trang khác)
+   ============================================================ */
+
+/* --- Nền navy đặc -> #26275D --- */
+.top-bar,
+.hamburger-line,
+.skip-to-content,
+.blog-article table th,
+.blog-article__body table th,
+.form-progress__dot,
+.blog-contact-btn,
+.blog-side-contact__btn,
+.site-footer,
+.footer-cta-btn { background-color: #26275D !important; }
+
+/* --- Gradient navy (card sidebar CTA, v.v.) -> gradient #26275D --- */
+.blog-side-cta,
+.blog-bottom-cta__aside { background-image: linear-gradient(135deg, #26275D, #34356f) !important; }
+
+/* --- Chữ navy -> #26275D : header + nội dung blog + footer
+       (KHÔNG đụng chữ trắng nằm trên card form navy của sidebar) --- */
+.mobile-nav-link,
+.toggle-arrow,
+.mobile-nav-cta,
+.search-modal__input,
+.blog-article__title,
+.blog-article__excerpt,
+.blog-toc__title,
+.blog-faq__title,
+.blog-faq__question,
+.blog-pillar-links__title,
+.blog-pillar-links__item,
+.blog-related__title,
+.blog-related__card-title,
+.blog-bottom-cta__title,
+.blog-bottom-cta__desc,
+.blog-bottom-cta__contact-title,
+.blog-side-contact__title,
+.form-btn,
+.footer-trust-num,
+.footer-cta-btn,
+.mobile-sticky-cta__call,
+.mobile-sticky-cta__register,
+.blog-breadcrumb a,
+.blog-main a:not(.blog-article__badge):not(.blog-side-cta__badge),
+.blog-article__body h2,
+.blog-article__body h3,
+.blog-article__body strong,
+.blog-article table td,
+.blog-bottom-cta .form-step-title,
+.blog-bottom-cta .form-progress__label,
+.blog-bottom-cta .form-social-proof { color: #26275D !important; }
+
+/* --- Nền vàng -> #F9DD0E --- */
+.blog-article__badge,
+.blog-cta-inline__btn,
+.form-btn,
+.blog-side-cta__badge,
+.blog-side-contact__btn,
+.mobile-sticky-cta__register { background-color: #F9DD0E !important; }
+
+/* --- Chữ vàng -> #F9DD0E --- */
+.footer-intro-label { color: #F9DD0E !important; }
+
+/* --- Viền vàng -> #F9DD0E --- */
+.blog-faq__item,
+.footer-trust-strip { border-color: #F9DD0E !important; }
+
+/* --- Viền navy (accent trái) -> #26275D --- */
+.blog-article__excerpt { border-left-color: #26275D !important; }
+
+/* --- SVG icon: theo currentColor để đổi theo màu chữ mới --- */
+.top-bar svg,
+.blog-main svg,
+.site-footer svg { fill: currentColor !important; stroke: currentColor !important; }
+
+/* --- QUAN TRỌNG: chữ trong các box NỀN TỐI (hero/quote/cta) phải GIỮ TRẮNG,
+       không bị quy tắc "strong/h2/h3 -> navy" ở trên làm navy-trên-navy --- */
+.blog-article__body .hero-section strong,
+.blog-article__body .hero-section h2,
+.blog-article__body .hero-section h3,
+.blog-article__body .brand-quote strong,
+.blog-article__body .cta-section strong,
+.blog-article__body .cta-section h2,
+.blog-article__body .cta-section h3,
+.blog-article__body .cta-box strong { color: #fff !important; }
+
+/* link số điện thoại / link phụ trong box tối -> giữ TRẮNG (trừ nút vàng .cta-button) */
+.blog-article__body .cta-section a.cta-link-secondary,
+.blog-article__body .cta-links a:not(.cta-button),
+.blog-article__body .cta-box a:not(.cta-button) { color: #fff !important; }
+
+/* em nhấn mạnh trong brand-quote vẫn là vàng mới */
+.blog-article__body .brand-quote em { color: #F9DD0E !important; }

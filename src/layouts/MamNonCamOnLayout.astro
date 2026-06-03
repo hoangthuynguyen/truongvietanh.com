@@ -1,7 +1,7 @@
 ---
 /**
  * MamNonCamOnLayout — Thank-you page after Mầm non hook landing form submit
- * Brand: Navy #000080 + Yellow #ffff00 (matches MamNonHookLayout)
+ * Brand: Navy #26275D + Yellow #f9dd0e (matches MamNonHookLayout)
  */
 interface Props {
   title: string;
@@ -57,10 +57,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
 <style is:inline>
 :root{
-  --navy:#000080;
+  --navy:#26275D;
   --navy-2:#0a0a99;
-  --navy-dk:#00004d;
-  --gold:#ffff00;
+  --navy-dk:#18193a;
+  --gold:#f9dd0e;
   --gold-dk:#e6e600;
   --text:#1a1a2e;
   --text-muted:#5a5a70;
@@ -84,10 +84,10 @@ a{color:inherit;text-decoration:none}
 .main.has-img{background:var(--navy-dk)}
 .hero-bg{position:absolute;inset:0;background-size:contain;background-position:right center;background-repeat:no-repeat;z-index:0;opacity:1;pointer-events:none}
 @media (max-width:960px){.hero-bg{background-size:cover;background-position:center;opacity:.4}}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,77,.94) 0%,rgba(0,0,128,.85) 35%,rgba(0,0,128,.55) 60%,rgba(0,0,77,.6) 100%);z-index:1;pointer-events:none}
-.main::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(255,255,0,.12) 0%,transparent 70%);pointer-events:none;z-index:2}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(90deg,rgba(26,27,66,.94) 0%,rgba(38,39,93,.85) 35%,rgba(38,39,93,.55) 60%,rgba(26,27,66,.6) 100%);z-index:1;pointer-events:none}
+.main::before{content:'';position:absolute;top:-100px;right:-100px;width:400px;height:400px;background:radial-gradient(circle,rgba(249,221,14,.12) 0%,transparent 70%);pointer-events:none;z-index:2}
 .main .wrap{position:relative;z-index:3}
-.main::after{content:'';position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(255,255,0,.08) 0%,transparent 70%);pointer-events:none}
+.main::after{content:'';position:absolute;bottom:-200px;left:-150px;width:500px;height:500px;background:radial-gradient(circle,rgba(249,221,14,.08) 0%,transparent 70%);pointer-events:none}
 .main .wrap{position:relative;z-index:1}
 
 /* PROGRESS */
@@ -101,17 +101,17 @@ a{color:inherit;text-decoration:none}
 .step--pending .step__dot{background:rgba(255,255,255,.18);color:rgba(255,255,255,.6)}
 .step__line{width:36px;height:2px;background:rgba(255,255,255,.3);margin:0 6px}
 .step__line--done{background:var(--gold)}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,255,0,.5)}50%{box-shadow:0 0 0 10px rgba(255,255,0,0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(249,221,14,.5)}50%{box-shadow:0 0 0 10px rgba(249,221,14,0)}}
 
 /* HERO */
-.hero-icon{width:88px;height:88px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 18px;box-shadow:0 8px 32px rgba(255,255,0,.4);border:4px solid rgba(255,255,0,.3);background-clip:padding-box}
+.hero-icon{width:88px;height:88px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:48px;margin:0 auto 18px;box-shadow:0 8px 32px rgba(249,221,14,.4);border:4px solid rgba(249,221,14,.3);background-clip:padding-box}
 h1{color:#fff;font-size:clamp(1.6rem,3vw,2.3rem);text-align:center;margin-bottom:14px;line-height:1.25;letter-spacing:-.4px}
 h1 .name{color:var(--gold)}
 .intro{color:rgba(255,255,255,.85);font-size:16px;text-align:center;max-width:680px;margin:0 auto 28px;line-height:1.65;border-left:4px solid var(--gold);padding-left:14px;text-align:left}
 .intro strong{color:var(--gold)}
 
 /* CARDS */
-.card{background:#fff;color:var(--text);border-radius:16px;padding:24px 26px;margin-bottom:18px;box-shadow:0 8px 28px rgba(0,0,0,.18);border:1px solid rgba(255,255,0,.6)}
+.card{background:#fff;color:var(--text);border-radius:16px;padding:24px 26px;margin-bottom:18px;box-shadow:0 8px 28px rgba(0,0,0,.18);border:1px solid rgba(249,221,14,.6)}
 .card-title{font-size:1.15rem;color:var(--navy);margin-bottom:14px;font-weight:900}
 .next{display:flex;flex-direction:column;gap:0}
 .next-item{display:flex;align-items:flex-start;gap:14px;padding:12px 0;font-size:15px;color:var(--text-muted);border-bottom:1px solid #f0f0f5;line-height:1.55}
@@ -131,8 +131,8 @@ h1 .name{color:var(--gold)}
 /* CTA STACK */
 .cta-stack{display:grid;gap:10px;max-width:560px;margin:8px auto 0}
 .cta-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:16px 22px;border-radius:12px;font-weight:900;font-size:15px;font-family:'Montserrat',sans-serif;transition:.2s;letter-spacing:.3px}
-.cta-zalo{background:var(--gold);color:var(--navy-dk);box-shadow:0 6px 18px rgba(255,255,0,.4)}
-.cta-zalo:hover{background:var(--gold-dk);transform:translateY(-2px);box-shadow:0 10px 24px rgba(255,255,0,.55)}
+.cta-zalo{background:var(--gold);color:var(--navy-dk);box-shadow:0 6px 18px rgba(249,221,14,.4)}
+.cta-zalo:hover{background:var(--gold-dk);transform:translateY(-2px);box-shadow:0 10px 24px rgba(249,221,14,.55)}
 .cta-call{background:transparent;color:#fff;border:2px solid #fff}
 .cta-call:hover{background:#fff;color:var(--navy)}
 

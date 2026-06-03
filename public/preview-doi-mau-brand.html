@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview đổi màu brand — Trường Việt Anh</title>
+<style>
+  :root{
+    --old-navy:#000080; --old-gold:#ffff00;
+    --navy:#26275D; --gold:#F9DD0E;
+  }
+  body{font-family:'Inter','Be Vietnam Pro',system-ui,sans-serif;margin:0;background:#f4f6fa;color:#1a2236;line-height:1.6}
+  .wrap{max-width:1080px;margin:0 auto;padding:2rem 1.5rem 4rem}
+  h1{font-size:1.9rem;margin:.2rem 0 .4rem;color:var(--navy)}
+  .sub{color:#64748b;margin-bottom:2rem}
+  .swatches{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2.5rem}
+  .sw{border-radius:14px;overflow:hidden;border:1px solid #e2e8f0;background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.05)}
+  .sw .chip{height:90px}.sw .lbl{padding:.7rem .9rem;font-size:.9rem}
+  .sw .lbl b{display:block;font-size:1rem}
+  .sw .lbl small{color:#94a3b8}
+  h2{font-size:1.2rem;color:var(--navy);margin:2.2rem 0 1rem;border-bottom:3px solid var(--gold);padding-bottom:.4rem;display:inline-block}
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;align-items:start}
+  .col h3{font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;color:#94a3b8;margin:0 0 .6rem}
+  /* mock header */
+  .hd{border-radius:12px 12px 0 0;overflow:hidden;border:1px solid #e2e8f0}
+  .hd .top{display:flex;justify-content:space-between;align-items:center;padding:.4rem .9rem;font-size:.8rem;color:#cbd5e1}
+  .hd .nav{background:#fff;display:flex;gap:1rem;align-items:center;padding:.7rem .9rem;font-weight:500;font-size:.85rem}
+  .hd .cta{margin-left:auto;font-weight:700;padding:.35rem .9rem;border-radius:4px}
+  /* hero */
+  .hero{color:#fff;border-radius:0 0 12px 12px;padding:1.6rem;border:1px solid #e2e8f0;border-top:0}
+  .hero h4{margin:.2rem 0 .5rem;font-size:1.3rem;line-height:1.2}
+  .hero .hl{padding:0 .1rem}
+  .hero p{font-size:.85rem;opacity:.9;margin:0 0 1rem}
+  .btn-gold{font-weight:800;border:none;border-radius:8px;padding:.7rem 1.2rem;font-size:.85rem;cursor:pointer}
+  /* card / pricing */
+  .pcard{border-radius:14px;padding:1.2rem;color:#fff}
+  .pcard .price{font-size:1.8rem;font-weight:900}
+  .pcard ul{list-style:none;padding:0;margin:.6rem 0 0;font-size:.85rem}
+  .pcard li{margin:.3rem 0}
+  .badge{display:inline-block;font-weight:700;font-size:.75rem;padding:.3rem .7rem;border-radius:999px;margin:.2rem .2rem 0 0}
+  table{width:100%;border-collapse:collapse;font-size:.82rem;border-radius:10px;overflow:hidden;border:1px solid #e2e8f0}
+  th{color:#fff;padding:.6rem;text-align:left}
+  td{padding:.55rem;border-bottom:1px solid #eef2f7}
+  .note{background:#fff;border:1px solid #e2e8f0;border-left:4px solid var(--gold);border-radius:10px;padding:1rem 1.2rem;margin-top:2.5rem;font-size:.9rem}
+  .note b{color:var(--navy)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Đổi màu toàn site sang bộ màu logo gốc</h1>
+  <p class="sub">Navy <code>#26275D</code> + Vàng <code>#F9DD0E</code> &nbsp;·&nbsp; thay cho Navy <code>#000080</code> + Vàng <code>#ffff00</code></p>
+
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#000080"></div><div class="lbl"><b>#000080</b><small>Navy CŨ</small></div></div>
+    <div class="sw"><div class="chip" style="background:#26275D"></div><div class="lbl"><b>#26275D</b><small>Navy MỚI ✓</small></div></div>
+    <div class="sw"><div class="chip" style="background:#ffff00"></div><div class="lbl"><b>#ffff00</b><small>Vàng CŨ</small></div></div>
+    <div class="sw"><div class="chip" style="background:#F9DD0E"></div><div class="lbl"><b>#F9DD0E</b><small>Vàng MỚI ✓</small></div></div>
+  </div>
+
+  <h2>So sánh giao diện Trước / Sau</h2>
+  <div class="cols">
+    <!-- OLD -->
+    <div class="col">
+      <h3>Trước (màu cũ)</h3>
+      <div class="hd">
+        <div class="top" style="background:#000080"><span>Hotline 1900 …</span><span style="color:#ffff00;font-weight:700">Ưu đãi 2026</span></div>
+        <div class="nav" style="color:#000080"><span>Giới thiệu</span><span>Tuyển sinh</span><span>Học phí</span><span class="cta" style="background:#ffff00;color:#000080">Đăng ký</span></div>
+      </div>
+      <div class="hero" style="background:linear-gradient(160deg,#000080,#00004d)">
+        <h4>Trường Việt Anh <span class="hl" style="color:#ffff00">15 năm K12</span></h4>
+        <p>Đồng hành cùng con từ Mầm non đến THPT.</p>
+        <button class="btn-gold" style="background:#ffff00;color:#000080">Nhận tư vấn ngay</button>
+      </div>
+      <div style="margin-top:1rem">
+        <span class="badge" style="background:rgba(0,0,128,.12);color:#000080">Song ngữ</span>
+        <span class="badge" style="background:rgba(255,255,0,.18);color:#000080">Học bổng</span>
+      </div>
+      <div class="pcard" style="background:#000080;margin-top:1rem">
+        <small>Trại hè 2026</small>
+        <div class="price" style="color:#ffff00">19.990k</div>
+        <ul><li>✓ 3 cấp TH / THCS / THPT</li><li>✓ Capstone THPT</li></ul>
+      </div>
+      <table style="margin-top:1rem">
+        <tr><th style="background:#000080">Hạng mục</th><th style="background:#000080">Chi tiết</th></tr>
+        <tr><td style="color:#000080;font-weight:600">Cơ sở</td><td>4 cơ sở TP.HCM</td></tr>
+        <tr style="background:#f8fafc"><td style="color:#000080;font-weight:600">Sĩ số</td><td>Giới hạn theo suất</td></tr>
+      </table>
+    </div>
+    <!-- NEW -->
+    <div class="col">
+      <h3>Sau (màu mới ✓)</h3>
+      <div class="hd">
+        <div class="top" style="background:#26275D"><span>Hotline 1900 …</span><span style="color:#F9DD0E;font-weight:700">Ưu đãi 2026</span></div>
+        <div class="nav" style="color:#26275D"><span>Giới thiệu</span><span>Tuyển sinh</span><span>Học phí</span><span class="cta" style="background:#F9DD0E;color:#26275D">Đăng ký</span></div>
+      </div>
+      <div class="hero" style="background:linear-gradient(160deg,#26275D,#18193A)">
+        <h4>Trường Việt Anh <span class="hl" style="color:#F9DD0E">15 năm K12</span></h4>
+        <p>Đồng hành cùng con từ Mầm non đến THPT.</p>
+        <button class="btn-gold" style="background:#F9DD0E;color:#26275D">Nhận tư vấn ngay</button>
+      </div>
+      <div style="margin-top:1rem">
+        <span class="badge" style="background:rgba(38,39,93,.12);color:#26275D">Song ngữ</span>
+        <span class="badge" style="background:rgba(249,221,14,.22);color:#26275D">Học bổng</span>
+      </div>
+      <div class="pcard" style="background:#26275D;margin-top:1rem">
+        <small>Trại hè 2026</small>
+        <div class="price" style="color:#F9DD0E">19.990k</div>
+        <ul><li>✓ 3 cấp TH / THCS / THPT</li><li>✓ Capstone THPT</li></ul>
+      </div>
+      <table style="margin-top:1rem">
+        <tr><th style="background:#26275D">Hạng mục</th><th style="background:#26275D">Chi tiết</th></tr>
+        <tr><td style="color:#26275D;font-weight:600">Cơ sở</td><td>4 cơ sở TP.HCM</td></tr>
+        <tr style="background:#f8fafc"><td style="color:#26275D;font-weight:600">Sĩ số</td><td>Giới hạn theo suất</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Phạm vi:</b> đổi 3.169 chỗ trong 198 file (token <code>--brand-*</code>, toàn bộ hex &amp; rgba navy/vàng + sắc độ đậm/nhạt phái sinh). Build thành công 1.721 trang.
+    Trang <code>hoc-phi.astro.off</code> đang TẮT nên chưa đổi (sẽ đổi khi bật lại). Đây là swap 1:1 nên độ tương phản được giữ nguyên hoặc tốt hơn.
+  </div>
+</div>
+</body>
+</html>

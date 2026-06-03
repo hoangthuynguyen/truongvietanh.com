@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Preview hero overlap — form nhô khỏi dải navy</title>
+<style>
+  body{font-family:'Inter',system-ui,sans-serif;margin:0;background:#e9edf3;color:#1a2236}
+  .wrap{max-width:1180px;margin:0 auto;padding:1.2rem 1rem 3rem}
+  h1{font-size:1.4rem;color:#26275D;margin:.2rem 0 .2rem}
+  .desc{color:#64748b;font-size:.92rem;margin-bottom:1.2rem}
+  .frame{border:1px solid #d4dae4;border-radius:12px;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,.08)}
+  /* ==== mô phỏng đúng SalesPageLayout (.sp-hero--white) ==== */
+  .sp-hero--white{--hband:340px;background:#f4f6fa;color:#fff;padding:1.5rem 1.5rem 1.75rem;position:relative;overflow:hidden}
+  .sp-hero__bg{position:absolute;top:0;left:0;right:0;height:var(--hband);
+    background:url('https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/mam-non-banner-chinh-1.jpg') center/cover no-repeat;z-index:0}
+  .sp-hero__overlay{position:absolute;top:0;left:0;right:0;height:var(--hband);
+    background:linear-gradient(160deg,rgba(24,25,58,.72),rgba(38,39,93,.6) 50%,rgba(16,16,36,.78));z-index:1}
+  .sp-hero__inner{position:relative;z-index:2;max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;gap:2rem;align-items:start}
+  .eyebrow{display:inline-block;background:#F9DD0E;color:#26275D;font-size:.82rem;font-weight:800;padding:.3rem 1rem;border-radius:50px;margin-bottom:1rem;text-transform:uppercase;letter-spacing:.06em}
+  h2{font-size:2.05rem;font-weight:900;color:#fff;margin:0 0 .75rem;line-height:1.2}
+  .hl{color:#F9DD0E}
+  .lead{color:rgba(255,255,255,.9);font-size:.95rem;line-height:1.6;margin:0 0 .7rem}
+  .badges{display:flex;gap:.5rem;flex-wrap:wrap;margin:.7rem 0 0}
+  .badges span{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);color:#fff;font-size:.85rem;font-weight:600;padding:.3rem .8rem;border-radius:50px}
+  /* thẻ form — GIỮ NGUYÊN widget bên trong */
+  .formcard{background:linear-gradient(160deg,#26275D,#18193a);border:1.5px solid #26275D;border-radius:18px;padding:1.25rem 1.25rem;box-shadow:0 18px 50px rgba(38,39,93,.35)}
+  .formcard .fe{display:inline-block;background:#F9DD0E;color:#26275D;font-size:.78rem;font-weight:700;padding:.3rem .85rem;border-radius:50px;margin-bottom:.45rem;text-transform:uppercase}
+  .formcard h3{font-size:1.08rem;margin:0 0 .3rem;color:#fff}
+  .formcard p{color:rgba(255,255,255,.78);font-size:.9rem;margin:0 0 .7rem}
+  .formcard label{display:block;font-size:.8rem;color:rgba(255,255,255,.7);margin:.5rem 0 .2rem}
+  .formcard input{width:100%;box-sizing:border-box;padding:.8rem;border-radius:10px;border:none;font-size:.95rem}
+  .formcard .prog{display:flex;gap:.4rem;margin:.8rem 0}
+  .formcard .prog i{flex:1;height:5px;border-radius:9px;background:rgba(255,255,255,.2)}
+  .formcard .prog i.on{background:#F9DD0E}
+  .formcard .btn{width:100%;margin-top:.6rem;background:#F9DD0E;color:#26275D;font-weight:800;border:none;border-radius:10px;padding:.85rem;font-size:.95rem;cursor:pointer}
+  .formcard .sp{margin-top:.6rem;font-size:.78rem;color:rgba(255,255,255,.75);text-align:center}
+  /* section kế dưới để thấy form không đè */
+  .next{background:#fff;padding:2.2rem 1.5rem}
+  .next h4{color:#26275D;margin:0 0 .4rem}
+  .next p{color:#64748b;font-size:.92rem;margin:0}
+  .note{background:#fff;border-left:4px solid #F9DD0E;border-radius:10px;padding:.9rem 1.1rem;margin-top:1.2rem;font-size:.9rem}
+  .note b{color:#26275D}
+</style></head>
+<body><div class="wrap">
+<h1>Hero kiểu OVERLAP — dải navy ngắn, form nhô xuống vùng sáng</h1>
+<p class="desc">Dải navy (ảnh + tiêu đề) chỉ cao cố định ở trên; thẻ two-step form nhô xuống nền sáng — hero "ngắn" lại nhưng form vẫn trên màn hình đầu. Mọi thứ gói gọn trong hero, không đè section dưới.</p>
+
+<div class="frame">
+  <section class="sp-hero--white">
+    <div class="sp-hero__bg"></div>
+    <div class="sp-hero__overlay"></div>
+    <div class="sp-hero__inner">
+      <div>
+        <span class="eyebrow">🌱 Mầm Non Việt Anh · 0–6 tuổi</span>
+        <h2>Khởi đầu vững vàng, <span class="hl">con tự tin lớn lên mỗi ngày</span></h2>
+        <p class="lead">Môi trường song ngữ, cá nhân hoá theo từng bé — nuôi dưỡng cảm xúc, ngôn ngữ và sự tự lập.</p>
+        <div class="badges"><span>Song ngữ</span><span>Montessori</span><span>9 lĩnh vực</span></div>
+      </div>
+      <div class="formcard">
+        <span class="fe">📘 Nhận Brochure miễn phí</span>
+        <h3>Nhận Brochure &amp; tư vấn lộ trình</h3>
+        <p>Để lại email — đội ngũ Việt Anh gửi trong 24h.</p>
+        <div class="prog"><i class="on"></i><i></i></div>
+        <label>Email của phụ huynh</label>
+        <input placeholder="vidu@email.com">
+        <button class="btn">Tiếp tục →</button>
+        <div class="sp">🔒 Hơn 5.000 phụ huynh đã nhận tài liệu</div>
+      </div>
+    </div>
+  </section>
+  <section class="next">
+    <h4>Phần nội dung tiếp theo (Pain/Features…)</h4>
+    <p>Form ở trên kết thúc gọn trong hero, không tràn đè lên khối này.</p>
+  </section>
+</div>
+
+<div class="note"><b>Cơ chế:</b> ảnh + lớp phủ navy giới hạn chiều cao <code>--hband</code> (≈360–420px tuỳ màn); nền hero phía dưới là màu sáng <code>#f4f6fa</code>; <code>align-items:start</code> để chữ canh trên. Thẻ form nửa trên nằm trên navy, nửa dưới trên nền sáng → hiệu ứng "nhô". <b>Widget two-step form giữ NGUYÊN.</b> Mobile: tự về navy full (không overlap) để tránh tràn chữ.</div>
+</div></body></html>

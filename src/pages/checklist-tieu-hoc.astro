@@ -20,11 +20,11 @@
 <style>
 *,*:before,*:after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --navy:#000080;--navy2:#000060;
+  --navy:#26275D;--navy2:#1F2050;
   --border:rgba(255,255,255,.08);
   --text:#eef2ff;--muted:rgba(238,242,255,.58);
-  --red:#dc2626;--orange:#ffff00;--amber:#ffff00;
-  --green:#22c55e;--blue:#0000cc;--r:10px;
+  --red:#dc2626;--orange:#f9dd0e;--amber:#f9dd0e;
+  --green:#22c55e;--blue:#3a3c80;--r:10px;
 }
 html{height:100%}
 body{
@@ -62,7 +62,7 @@ body{
 
 .h1{font-family:Montserrat,sans-serif;font-size:clamp(1.5rem,2.6vw,2.2rem);font-weight:900;line-height:1.22;letter-spacing:-.3px}
 .h1 .stat{color:var(--orange);font-style:italic}
-.h1 u{text-decoration:none;border-bottom:2.5px solid rgba(255,255,0,.5)}
+.h1 u{text-decoration:none;border-bottom:2.5px solid rgba(249,221,14,.5)}
 
 .sub{font-size:14px;color:var(--muted);line-height:1.65;padding-left:11px;border-left:3px solid var(--orange)}
 .sub strong{color:var(--text);font-weight:600}
@@ -95,7 +95,7 @@ body{
   animation:btnPulse 2.8s ease-in-out infinite
 }
 .btn:after{content:"";position:absolute;top:0;left:-90%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transition:left .5s ease}
-.btn:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 12px 40px #ffff00bf,0 2px 8px #0006;animation:none}
+.btn:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 12px 40px #f9dd0ebf,0 2px 8px #0006;animation:none}
 .btn:hover:after{left:145%}
 .btn:active{transform:scale(.98)}
 .btn.shake{animation:shake .55s ease}
@@ -105,11 +105,11 @@ body{
 /* RIGHT: Mockup */
 .right{display:flex;flex-direction:column;align-items:center;gap:14px}
 .mscene{position:relative;padding:18px 10px 14px;width:100%;max-width:300px}
-.m-glow-bg{position:absolute;inset:-10%;background:radial-gradient(ellipse 80% 60% at 50% 65%,rgba(255,255,0,.3) 0%,rgba(255,255,0,.12) 40%,transparent 70%);z-index:0;pointer-events:none;animation:glowPulse 3.5s ease-in-out infinite}
+.m-glow-bg{position:absolute;inset:-10%;background:radial-gradient(ellipse 80% 60% at 50% 65%,rgba(249,221,14,.3) 0%,rgba(249,221,14,.12) 40%,transparent 70%);z-index:0;pointer-events:none;animation:glowPulse 3.5s ease-in-out infinite}
 .m-shadow-el{position:absolute;bottom:4%;left:14%;right:10%;height:35%;background:#0009;filter:blur(26px);border-radius:50%;z-index:1}
 .m-ghost-2,.m-ghost-1{position:absolute;inset:0;border-radius:10px;z-index:2}
-.m-ghost-2{background:linear-gradient(135deg,#00a,#00004d);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(9deg) translate(18px,18px);opacity:.5;box-shadow:0 8px 28px #0006}
-.m-ghost-1{background:linear-gradient(135deg,#008,#00004d);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(4.5deg) translate(9px,9px);opacity:.38}
+.m-ghost-2{background:linear-gradient(135deg,#00a,#18193a);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(9deg) translate(18px,18px);opacity:.5;box-shadow:0 8px 28px #0006}
+.m-ghost-1{background:linear-gradient(135deg,#008,#18193a);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(4.5deg) translate(9px,9px);opacity:.38}
 .m-card{
   position:relative;z-index:3;border-radius:10px;overflow:hidden;
   transform:perspective(700px) rotateY(-5deg) rotateX(4deg);
@@ -121,9 +121,9 @@ body{
   box-shadow:0 0 0 1px rgba(255,255,255,.05);
 }
 .m-card img{display:block;width:100%;height:auto;border-radius:10px}
-.m-card:hover{transform:perspective(700px) rotateY(-1deg) rotateX(1deg) scale(1.04);filter:drop-shadow(-4px 18px 36px rgba(255,255,0,.4));animation:none}
+.m-card:hover{transform:perspective(700px) rotateY(-1deg) rotateX(1deg) scale(1.04);filter:drop-shadow(-4px 18px 36px rgba(249,221,14,.4));animation:none}
 .m-shine{position:absolute;inset:0;border-radius:10px;background:linear-gradient(135deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,.06) 35%,transparent 60%);pointer-events:none;z-index:4}
-.m-badge-yr{position:absolute;top:-9px;left:-9px;z-index:5;background:linear-gradient(135deg,navy,#00c);color:#fff;font-family:Montserrat,sans-serif;font-size:10px;font-weight:900;padding:4px 10px;border-radius:20px;box-shadow:0 3px 10px #0000c88c;letter-spacing:.3px}
+.m-badge-yr{position:absolute;top:-9px;left:-9px;z-index:5;background:linear-gradient(135deg,navy,#00c);color:#fff;font-family:Montserrat,sans-serif;font-size:10px;font-weight:900;padding:4px 10px;border-radius:20px;box-shadow:0 3px 10px #3a3c808c;letter-spacing:.3px}
 
 .m-arrow{margin-top:8px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;font-weight:600;color:#eef2ff80;animation:arrowPulse 2s ease-in-out infinite}
 
@@ -156,7 +156,7 @@ body{
 .fg{margin-bottom:10px}
 .fl{display:block;font-size:10.5px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
 .fi{width:100%;padding:12px 13px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;font-family:Inter,sans-serif;color:#111;outline:none;background:#f9fafb;transition:border-color .2s,box-shadow .2s}
-.fi:focus{border-color:var(--orange);box-shadow:0 0 0 3px #ffff001f;background:#fff}
+.fi:focus{border-color:var(--orange);box-shadow:0 0 0 3px #f9dd0e1f;background:#fff}
 .fi.err{border-color:#ef4444;box-shadow:0 0 0 3px #ef44441a}
 .fe{font-size:11.5px;color:#ef4444;margin-top:3px;display:none}
 .fe.on{display:block}
@@ -173,8 +173,8 @@ body{
 .s2-urg{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#dc2626;margin-bottom:10px}
 .s2-urg-dot{width:7px;height:7px;border-radius:50%;background:#dc2626;animation:blink 1s ease infinite;flex-shrink:0}
 
-.pbtn{width:100%;background:linear-gradient(135deg,#ff3,#ff0,#cc0);color:navy;font-family:Montserrat,sans-serif;font-size:.93rem;font-weight:900;letter-spacing:.7px;text-transform:uppercase;border:none;border-radius:9px;padding:14px;cursor:pointer;box-shadow:0 4px 20px #ffff0080;transition:transform .18s,box-shadow .18s;margin-top:7px;min-height:50px;display:flex;align-items:center;justify-content:center}
-.pbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px #ffff00a6}
+.pbtn{width:100%;background:linear-gradient(135deg,#ff3,#ff0,#cc0);color:navy;font-family:Montserrat,sans-serif;font-size:.93rem;font-weight:900;letter-spacing:.7px;text-transform:uppercase;border:none;border-radius:9px;padding:14px;cursor:pointer;box-shadow:0 4px 20px #f9dd0e80;transition:transform .18s,box-shadow .18s;margin-top:7px;min-height:50px;display:flex;align-items:center;justify-content:center}
+.pbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px #f9dd0ea6}
 
 .p-back{background:none;border:none;font-size:12px;color:#64748b;cursor:pointer;padding:5px 0;margin-top:4px;display:flex;align-items:center;gap:4px;transition:color .15s}
 .p-back:hover{color:#374151}
@@ -188,7 +188,7 @@ body{
 .suc-p{font-size:13.5px;color:#6b7280;line-height:1.65}
 
 /* STICKY MOBILE CTA */
-.sticky{display:none;position:fixed;bottom:0;left:0;right:0;background:#000060;padding:10px 16px;z-index:50;border-top:1px solid var(--border);box-shadow:0 -4px 20px #00000099}
+.sticky{display:none;position:fixed;bottom:0;left:0;right:0;background:#1F2050;padding:10px 16px;z-index:50;border-top:1px solid var(--border);box-shadow:0 -4px 20px #00000099}
 .sticky .btn{padding:13px 22px;font-size:.9rem;width:100%;max-width:none}
 
 /* ANIMATIONS */
@@ -196,7 +196,7 @@ body{
 @keyframes riseUp{0%{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{0%{opacity:0}to{opacity:1}}
 @keyframes springUp{0%{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes btnPulse{0%,to{box-shadow:0 6px 32px #ff09,0 2px 8px #00000073}50%{box-shadow:0 8px 42px #ffff00d9,0 2px 8px #0006}}
+@keyframes btnPulse{0%,to{box-shadow:0 6px 32px #ff09,0 2px 8px #00000073}50%{box-shadow:0 8px 42px #f9dd0ed9,0 2px 8px #0006}}
 @keyframes shake{0%,to{transform:translate(0)}15%,45%,75%{transform:translate(-5px) rotate(-.4deg)}30%,60%,90%{transform:translate(5px) rotate(.4deg)}}
 @keyframes blink{0%,to{opacity:1}50%{opacity:.25}}
 @keyframes spin{to{transform:rotate(360deg)}}

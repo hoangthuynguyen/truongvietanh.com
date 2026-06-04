@@ -135,7 +135,7 @@ function payload(stage){return JSON.stringify({
   utm_campaign:qp('utm_campaign'),utm_content:qp('utm_content'),utm_term:qp('utm_term')
 });}
 function sendLead(stage){
-  try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}
+  try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}
   // Lead hoàn tất: đẩy thêm sang CRM (Pancake + GHL) qua /api/lead. school_level=thpt → Khối "Lớp 10".
   if(stage==='complete'){try{
     var ph=document.getElementById('lp10-phone').value.replace(/\D/g,'');
@@ -158,8 +158,7 @@ function lp10Step2(){
 }
 function lp10Submit(){
   sendLead('complete');
-  document.getElementById('lp10-s2').style.display='none';
-  document.getElementById('lp10-ok').style.display='block';
-  document.getElementById('lp10-prog').style.display='none';
+  // Chuyển sang trang cảm ơn gộp (/cam-on). keepalive ở sendLead đảm bảo lead vẫn gửi xong khi điều hướng.
+  window.location.href='/cam-on?name='+encodeURIComponent(document.getElementById('lp10-name').value.trim());
 }
 </script>

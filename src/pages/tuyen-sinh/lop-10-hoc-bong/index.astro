@@ -116,7 +116,7 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
 </SalesPageLayout>
 
 <script is:inline>
-const WEBHOOK="PASTE_APPS_SCRIPT_WEBAPP_URL_HERE",SECRET="VA_LOP10_2026_SECRET",SOURCE="lop10-hocbong";
+const WEBHOOK="https://script.google.com/macros/s/AKfycby7hFPL8uZercenEVNc5vO9LLX7hMNgwNPSGnESBhDaH3kVp7L0hQWSS3YN64KTEs7b3A/exec",SECRET="VA_TRAIHE_2026_SECRET",SOURCE="lop10-hocbong";
 function qp(k){return new URLSearchParams(location.search).get(k)||"";}
 function getVal(id){var el=document.getElementById(id);return el?el.value:"";}
 function payload(stage){return JSON.stringify({secret:SECRET,source:SOURCE,stage,name:getVal('hb-name'),phone:getVal('hb-phone').replace(/\D/g,''),level:getVal('hb-level'),province:getVal('hb-province'),need:getVal('hb-need'),page_url:location.href,gclid:qp('gclid'),utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),utm_campaign:qp('utm_campaign'),utm_content:qp('utm_content'),utm_term:qp('utm_term')});}

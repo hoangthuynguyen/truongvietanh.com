@@ -1,0 +1,345 @@
+---
+/**
+ * /tuyen-sinh/lop-10 — Landing tuyển sinh Lớp 10 (lộ trình ĐH Anh Quốc)
+ * Dựng lại theo chuẩn /lop-10 (hoc-bong): MamNonHookLayout → form 2 bước
+ * POST /api/lead → fan-out Pancake (Khối "Lớp 10" qua school_level=thpt) + GHL.
+ *
+ * Hàng rào chính trực: giữ cụm "lộ trình xét tuyển thẳng có điều kiện" + minh
+ * bạch phạm vi UIT–BCU; IELTS 6.0 theo điều khoản bảo hành.
+ */
+import MamNonHookLayout from '../../../layouts/MamNonHookLayout.astro';
+
+const FAQ = [
+  {
+    q: 'Con chưa có điểm thi lớp 10, đăng ký được không?',
+    a: 'Được. Việt Anh xét học bạ — con có chỗ ngay, không cần chờ điểm, không cần thi lại.',
+  },
+  {
+    q: '"Tấm bằng Cử nhân Anh Quốc tại Sài Gòn" thực hư thế nào?',
+    a: 'Con học theo lộ trình xét tuyển thẳng có điều kiện vào chương trình Cử nhân của Đại học Birmingham City (Anh Quốc) qua hợp tác UIT–BCU — xét học bạ, học ngay tại TP.HCM, không qua kỳ thi đại học. Đội tư vấn sẽ nói rõ điều kiện cụ thể với từng hồ sơ.',
+  },
+  {
+    q: 'Cam kết IELTS 6.0 nghĩa là sao?',
+    a: 'Chúng tôi cam kết đầu ra IELTS 6.0 và kèm con đến khi đạt theo điều khoản bảo hành (đi học đủ, dự các buổi kèm). Con học để nói được, dùng được — đủ bước vào một chương trình đại học Anh Quốc.',
+  },
+  {
+    q: 'Con tôi mất gốc / mất tự tin sau kỳ thi, có theo kịp không?',
+    a: '6 tuần đầu (học kỳ Foundation) chúng tôi giúp con lấy lại nền tảng và sự tự tin trước khi vào guồng. Mỗi con có một Mentor riêng đồng hành suốt 3 năm.',
+  },
+  {
+    q: 'Ghi danh đợt này con nhận những gì?',
+    a: 'Trọn bộ: lộ trình ĐH Anh Quốc, cam kết IELTS 6.0, Mentor 1-1 ba năm, tặng Macbook, học bổng Trại hè Lion Camp 100%, cùng học kỳ Foundation + Capstone + Portfolio tiếng Anh.',
+  },
+  {
+    q: 'Còn nhận hồ sơ không?',
+    a: 'Còn, nhưng ưu đãi trọn bộ chỉ dành cho nhóm ghi danh sớm — khớp cửa sổ kết quả thi lớp 10. Để lại thông tin sớm để giữ suất cho con.',
+  },
+];
+
+const STACK = [
+  { icon: '🎓', t: 'Lộ trình xét tuyển thẳng Cử nhân ĐH Anh Quốc', d: 'Xét học bạ, miễn thi đại học, học ngay tại Sài Gòn (theo điều kiện UIT–BCU).' },
+  { icon: '🗣️', t: 'Cam kết IELTS 6.0', d: 'Không đạt, trường kèm tiếp đến khi đạt — theo điều khoản bảo hành.' },
+  { icon: '👤', t: 'Mentor 1-1 suốt 3 năm', d: 'Đồng hành lộ trình học thuật + hồ sơ năng lực (PDR).' },
+  { icon: '💻', t: 'Tặng Macbook', d: 'Công cụ học tập thời đại AI — nhận khi nhập học.' },
+  { icon: '🏕️', t: 'Học bổng Trại hè Lion Camp 100%', d: 'Hòa nhập ngay từ hè này.' },
+  { icon: '🏅', t: 'Foundation + Capstone + Portfolio', d: 'Hồ sơ năng lực thật, không chỉ điểm số.' },
+];
+---
+<MamNonHookLayout
+  title="Tuyển Sinh Lớp 10 — Lộ Trình Cử Nhân Anh Quốc Tại Sài Gòn | Trường Việt Anh"
+  description="Vào lớp 10 bằng học bạ, 3 năm sau lộ trình xét tuyển thẳng có điều kiện Cử nhân Đại học Birmingham City (Anh Quốc) ngay tại Sài Gòn — không thi đại học. Cam kết IELTS 6.0. Mentor 1-1 ba năm + tặng Macbook + Lion Camp 100%."
+  canonicalUrl="https://truongvietanh.com/tuyen-sinh/lop-10"
+  location="TP.HCM"
+  address="Gò Vấp: 160/72 Phan Huy Ích, P.15, Q.Gò Vấp · Bình Tân: Số 7 Đường 38A, Tân Tạo, Q.Bình Tân, TPHCM"
+  hookHeadline={`Con vừa thi xong lớp 10 — <span class="mark">tấm vé thẳng đến Đại học Anh Quốc</span> đang chờ<em>Xét học bạ · Không thi đại học · Ngay tại Sài Gòn</em>`}
+  hookSubline="Có một con đường ít ba mẹ biết: học lớp 10 hôm nay → 3 năm sau lộ trình xét tuyển thẳng Cử nhân ĐH Anh Quốc — không cần bỏ 2–3 tỷ đi du học. Cam kết IELTS 6.0, Mentor 1-1 ba năm."
+  source="lop-10-tuyen-sinh"
+  funnelCode="lop-10-tuyen-sinh"
+  heroImage="https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/banner-chinh.jpg"
+  redirectUrl="/cam-on"
+  schoolLevel="thpt"
+  levelLabel="Lớp 10"
+  fomoText="🎓 Tuyển sinh Lớp 10 hệ quốc tế · Ưu đãi trọn bộ cho nhóm ghi danh sớm · Tặng Macbook + Lion Camp"
+  cardTitle="Nhận tư vấn lộ trình Lớp 10"
+  cardSub="Đội tư vấn gọi lại trong hôm nay · Miễn phí"
+  ctaStep2="🎓 NHẬN TƯ VẤN LỘ TRÌNH LỚP 10"
+  trustMarks={['15 năm K12 từ 2011', 'Lộ trình bằng Cử nhân Birmingham City (Anh Quốc)', 'Minh bạch điều kiện UIT–BCU']}
+  bullets={[
+    { icon: '🎓', html: '<strong>Lộ trình xét tuyển thẳng Cử nhân ĐH Anh Quốc</strong> — xét học bạ, không thi đại học' },
+    { icon: '🗣️', html: '<strong>Cam kết IELTS 6.0</strong> — kèm con đến khi đạt' },
+    { icon: '👤', html: '<strong>Mentor 1-1 suốt 3 năm</strong> — học thuật + hồ sơ năng lực (PDR)' },
+    { icon: '🎁', html: '<strong>Tặng Macbook + Lion Camp 100%</strong> — nhận khi nhập học' },
+  ]}
+>
+  <!-- ============ PROBLEM ============ -->
+  <section class="lp-sec lp-sec--soft">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Con vừa thi xong lớp 10 — và có lẽ đêm qua cả nhà khó ngủ</h2>
+      <ul class="lp-pain">
+        <li>Cả nhà <strong>nín thở chờ điểm</strong> — chưa biết con sẽ học ở đâu.</li>
+        <li>Lỡ điểm không như ý, <strong>không biết phương án 2</strong> là gì.</li>
+        <li>Con học tiếng Anh nhiều năm vẫn <strong>không nói được một câu cho ra hồn</strong>.</li>
+        <li>Muốn cho con học trường tốt, định hướng quốc tế, nhưng <strong>sợ chi phí du học tiền tỷ</strong>.</li>
+        <li>Lo con vào cấp 3 rồi <strong>trôi đi 3 năm</strong>, không ai đồng hành, không có đích đến.</li>
+      </ul>
+      <p class="lp-note">Tôi là <strong>Nguyễn Mạnh Dương, Chủ tịch Trường Việt Anh</strong>. Tôi muốn nói thẳng một điều ít ai nói: <strong>tấm vé vào trường công không quyết định con bạn sẽ thành người thế nào sau 3 năm nữa</strong>.</p>
+    </div>
+  </section>
+
+  <!-- ============ AGITATION ============ -->
+  <section class="lp-sec lp-sec--dark">
+    <div class="lp-wrap">
+      <h2 class="lp-h2 lp-h2--light">Vì sao không nên để mọi thứ "chờ tới ngày báo điểm"?</h2>
+      <div class="lp-warn">
+        <p>⚠️ Điểm thi lớp 10 chỉ đo <strong>một lát cắt rất hẹp</strong> — nó không nói được 3 năm tới con đi xa tới đâu.</p>
+        <p>⚠️ Khi điểm công bố, <strong>hồ sơ về rất nhanh</strong> và các suất ưu đãi đóng lại trong vài ngày.</p>
+        <p>⚠️ Càng chờ, con càng dễ rơi vào trường "có chỗ thì học" — rồi 3 năm trôi qua không định hướng.</p>
+        <p>⚠️ Ưu đãi trọn bộ chỉ dành cho <strong>nhóm ghi danh sớm</strong> — khớp cửa sổ kết quả thi lớp 10.</p>
+      </div>
+      <p class="lp-cost">Cái giá thật của việc chờ không phải mất một suất học. Là mất cơ hội đặt con lên một lộ trình mà rất ít cha mẹ biết tới — trong khi con nhà người khác đã bắt đầu.</p>
+    </div>
+  </section>
+
+  <!-- ============ SOLUTION ============ -->
+  <section class="lp-sec">
+    <div class="lp-wrap">
+      <span class="lp-kicker">Giải pháp</span>
+      <h2 class="lp-h2">Lớp 10 Trường Việt Anh — lộ trình bằng Cử nhân Anh Quốc tại Sài Gòn</h2>
+      <p class="lp-lead">Ở Việt Anh, chúng tôi không hứa "điểm cao". Chúng tôi mở một con đường cụ thể cho con bạn:</p>
+      <blockquote class="lp-quote">Con học lớp 10 hôm nay. Ba năm sau, con dùng <strong>chính học bạ của mình</strong> theo lộ trình xét tuyển thẳng có điều kiện vào chương trình Cử nhân của <strong>Đại học Birmingham City — Vương quốc Anh</strong> qua hợp tác UIT–BCU — học ngay tại TP.HCM.</blockquote>
+      <ul class="lp-check">
+        <li><strong>Vào lớp 10 bằng xét học bạ</strong> — con có chỗ ngay, không phải chờ điểm, không thi lại.</li>
+        <li><strong>Bằng Anh Quốc, học phí nội địa</strong> — không một kỳ thi đại học nào.</li>
+        <li><strong>6 tuần đầu (Foundation)</strong> — giúp con lấy lại nền tảng và sự tự tin trước khi vào guồng.</li>
+      </ul>
+      <p class="lp-note"><strong>Minh bạch:</strong> phạm vi "tuyển thẳng + học bổng" áp dụng theo điều kiện trong thoả thuận hợp tác UIT–BCU. Đội tư vấn sẽ nói rõ điều kiện cụ thể với từng hồ sơ.</p>
+    </div>
+  </section>
+
+  <!-- ============ VALUE STACK ============ -->
+  <section class="lp-sec lp-sec--soft">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Ghi danh đợt này, con nhận trọn bộ</h2>
+      <div class="lp-stack">
+        {STACK.map((s) => (
+          <div class="lp-card">
+            <div class="lp-card__ico">{s.icon}</div>
+            <div>
+              <h3 class="lp-card__t">{s.t}</h3>
+              <p class="lp-card__d">{s.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div class="lp-cta-row">
+        <a href="#formArea" class="lp-btn">🎓 Nhận tư vấn lộ trình Lớp 10</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LỘ TRÌNH ============ -->
+  <section class="lp-sec">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Con đường của con — rõ ràng từng bước</h2>
+      <ol class="lp-steps">
+        <li><span class="lp-steps__n">1</span><div><strong>Ghi danh &amp; xét học bạ</strong><br/>Con có chỗ ngay, không chờ điểm thi.</div></li>
+        <li><span class="lp-steps__n">2</span><div><strong>6 tuần Foundation</strong><br/>Lấy lại nền tảng, tìm lại sự tự tin.</div></li>
+        <li><span class="lp-steps__n">3</span><div><strong>Lớp 10 – 11 – 12</strong><br/>Học cùng Mentor riêng + Portfolio, đạt cam kết IELTS 6.0.</div></li>
+        <li><span class="lp-steps__n">4</span><div><strong>Tốt nghiệp</strong><br/>Lộ trình xét tuyển thẳng có điều kiện vào Cử nhân ĐH Birmingham City — học tại TP.HCM.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL PROOF ============ -->
+  <section class="lp-sec lp-sec--soft">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Vì sao cha mẹ tin Việt Anh?</h2>
+      <div class="lp-stats">
+        <div><b>15 năm</b><span>Xây dựng giáo dục K12 (từ 2011)</span></div>
+        <div><b>95%</b><span>Học sinh tiến bộ mỗi năm — đo bằng 4 khía cạnh</span></div>
+        <div><b>BCU</b><span>Lộ trình tới bằng Cử nhân Birmingham City (Anh Quốc)</span></div>
+        <div><b>IELTS 6.0</b><span>Cam kết đầu ra, kèm đến khi đạt</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GUARANTEE ============ -->
+  <section class="lp-sec lp-sec--guarantee">
+    <div class="lp-wrap">
+      <div class="lp-badge">🛡️ Cam kết</div>
+      <h2 class="lp-h2">Cam kết IELTS 6.0 — không đạt, trường kèm tiếp đến khi đạt</h2>
+      <p class="lp-lead">Điều quan trọng hơn điểm thi lớp 10 là câu hỏi: <em>3 năm nữa con sẽ cầm tấm bằng gì, và trở thành người như thế nào?</em></p>
+      <ol class="lp-flow">
+        <li>Ghi danh &amp; xét học bạ</li>
+        <li>Con học theo lộ trình cùng Mentor riêng</li>
+        <li>Luyện IELTS theo điều khoản bảo hành</li>
+        <li>Chưa đạt 6.0 — trường kèm tiếp miễn phí</li>
+        <li>Đạt đầu ra, sẵn sàng vào chương trình ĐH Anh Quốc</li>
+      </ol>
+      <p class="lp-note"><strong>Vì sao tôi dám?</strong> Vì 95% học sinh của chúng tôi tiến bộ mỗi năm — và chúng tôi đo được điều đó.</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="lp-sec">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Câu hỏi thường gặp</h2>
+      <div class="lp-faq">
+        {FAQ.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ URGENCY + FINAL CTA ============ -->
+  <section class="lp-sec lp-sec--final">
+    <div class="lp-wrap">
+      <div class="lp-urgency">
+        <span>⏳ Ưu đãi trọn bộ chỉ dành cho nhóm ghi danh sớm — khớp cửa sổ kết quả thi lớp 10</span>
+        <span>🎁 Ghi danh đợt này mới trọn bộ quà: Macbook + Lion Camp 100% + Học bổng Tài năng</span>
+      </div>
+      <h2 class="lp-h2 lp-h2--light">Cho con — và cho chính mình — một quyết định đúng lúc này</h2>
+      <p class="lp-final-sub">Mỗi năm, một quyết định đúng của ba mẹ có thể thay đổi cả con đường của con. Việc cần làm bây giờ không phải tiếp tục chờ — là một quyết định bình tĩnh về bước đi tiếp theo.</p>
+      <div class="lp-cta-row">
+        <a href="#formArea" class="lp-btn lp-btn--lg">🎓 Nhận tư vấn lộ trình Lớp 10</a>
+        <a href="tel:+84916961409" class="lp-btn lp-btn--ghost">📞 Gọi 0916 961 409</a>
+      </div>
+      <p class="lp-sign">Vì những đứa con yêu thương — từ bình thường trở nên phi thường.<br/><strong>Nguyễn Mạnh Dương</strong> · Chủ tịch Trường Việt Anh</p>
+    </div>
+  </section>
+</MamNonHookLayout>
+
+<style>
+  /* ============ LOP-10 LANDING — thân bài long-form ============ */
+  /* Brand: Navy #26275D · Gold #F9DD0E (kế thừa biến từ layout :root) */
+
+  .lp-sec { position: relative; padding: 64px 0; background: #fff; color: var(--text, #1a1a2e); scroll-margin-top: 76px; }
+  .lp-sec--soft { background: var(--navy-soft, #f3f4ff); }
+  .lp-sec--dark { background: linear-gradient(135deg, var(--navy, #26275D) 0%, var(--navy-dk, #18193a) 100%); color: #fff; }
+  .lp-wrap { width: min(900px, 92%); margin: 0 auto; }
+  .lp-sec ::selection { background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); }
+
+  /* ---- Eyebrow + heading ---- */
+  .lp-kicker { display: inline-block; background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); font-weight: 900; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; padding: 6px 13px; border-radius: 999px; margin-bottom: 14px; box-shadow: 0 4px 14px rgba(249,221,14,.4); }
+  .lp-h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(1.5rem, 4vw, 2.05rem); line-height: 1.18; letter-spacing: -.3px; color: var(--navy, #26275D); margin: 0 0 22px; }
+  .lp-h2--light { color: #fff; }
+  .lp-h2:not(.lp-h2--light)::after { content: ''; display: block; width: 56px; height: 4px; border-radius: 4px; background: var(--gold, #f9dd0e); margin-top: 14px; }
+  .lp-lead { font-size: 1.06rem; line-height: 1.75; margin: 0 0 16px; }
+  .lp-note { font-size: 1rem; line-height: 1.7; background: rgba(249,221,14,.16); border-left: 4px solid var(--gold, #f9dd0e); padding: 15px 18px; border-radius: 10px; margin-top: 22px; }
+  .lp-sec--dark .lp-note { background: rgba(255,255,255,.08); border-left-color: var(--gold, #f9dd0e); }
+
+  /* ---- Pain list ---- */
+  .lp-pain { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .lp-pain li { position: relative; padding: 14px 16px 14px 48px; background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 12px; line-height: 1.55; box-shadow: 0 2px 8px rgba(38,39,93,.04); transition: transform .15s ease, box-shadow .15s ease; }
+  .lp-pain li:hover { transform: translateX(3px); box-shadow: 0 6px 18px rgba(38,39,93,.08); }
+  .lp-pain li::before { content: '✕'; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; border-radius: 50%; background: #fde8e8; color: #d11; font-weight: 900; font-size: 12px; display: grid; place-items: center; }
+
+  /* ---- Agitation warnings (nền tối) ---- */
+  .lp-warn { display: grid; gap: 12px; }
+  .lp-warn p { margin: 0; line-height: 1.6; background: rgba(255,255,255,.06); border: 1px solid rgba(249,221,14,.28); border-radius: 12px; padding: 14px 16px; }
+  .lp-cost { margin-top: 24px; font-size: 1.1rem; font-weight: 700; line-height: 1.6; color: var(--gold, #f9dd0e); }
+
+  /* ---- Solution quote + checklist ---- */
+  .lp-quote { position: relative; margin: 22px 0; padding: 22px 24px 22px 30px; background: var(--navy, #26275D); color: #fff; border-radius: 14px; font-size: 1.12rem; line-height: 1.62; box-shadow: 0 10px 30px rgba(38,39,93,.22); }
+  .lp-quote::before { content: '“'; position: absolute; top: 2px; left: 12px; font-family: 'Montserrat', sans-serif; font-size: 3.2rem; line-height: 1; color: rgba(249,221,14,.55); }
+  .lp-quote strong { color: var(--gold, #f9dd0e); }
+  .lp-check { list-style: none; padding: 0; margin: 22px 0 0; display: grid; gap: 13px; }
+  .lp-check li { position: relative; padding-left: 36px; line-height: 1.6; }
+  .lp-check li::before { content: '✓'; position: absolute; left: 0; top: 0; width: 24px; height: 24px; border-radius: 50%; background: var(--navy, #26275D); color: var(--gold, #f9dd0e); font-weight: 900; font-size: .85rem; display: grid; place-items: center; }
+
+  /* ---- Value stack cards ---- */
+  .lp-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .lp-card { position: relative; display: flex; gap: 14px; background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 14px; padding: 18px; box-shadow: 0 4px 16px rgba(38,39,93,.05); overflow: hidden; transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+  .lp-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px; background: var(--gold, #f9dd0e); transform: scaleX(0); transform-origin: left; transition: transform .25s ease; }
+  .lp-card:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(38,39,93,.14); border-color: rgba(249,221,14,.7); }
+  .lp-card:hover::before { transform: scaleX(1); }
+  .lp-card__ico { flex: 0 0 auto; width: 48px; height: 48px; border-radius: 12px; background: var(--gold-soft, #fffde6); border: 1px solid rgba(249,221,14,.5); display: grid; place-items: center; font-size: 1.5rem; line-height: 1; }
+  .lp-card__t { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: var(--navy, #26275D); margin: 2px 0 5px; line-height: 1.3; }
+  .lp-card__d { margin: 0; font-size: .94rem; line-height: 1.55; color: var(--text-muted, #5a5a70); }
+
+  /* ---- Lộ trình: timeline có đường nối ---- */
+  .lp-steps { position: relative; list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; }
+  .lp-steps::before { content: ''; position: absolute; left: 21px; top: 22px; bottom: 22px; width: 2px; background: linear-gradient(var(--navy, #26275D), var(--gold, #f9dd0e)); z-index: 0; }
+  .lp-steps li { position: relative; z-index: 1; display: flex; gap: 18px; align-items: flex-start; line-height: 1.55; }
+  .lp-steps__n { flex: 0 0 auto; width: 44px; height: 44px; border-radius: 50%; background: var(--navy, #26275D); color: var(--gold, #f9dd0e); font-weight: 900; display: grid; place-items: center; font-family: 'Montserrat', sans-serif; box-shadow: 0 0 0 5px #fff, 0 6px 16px rgba(38,39,93,.18); }
+
+  /* ---- Stats ---- */
+  .lp-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 16px; }
+  .lp-stats div { background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 14px; padding: 24px 16px; text-align: center; box-shadow: 0 4px 16px rgba(38,39,93,.05); transition: transform .18s ease, box-shadow .18s ease; }
+  .lp-stats div:hover { transform: translateY(-3px); box-shadow: 0 14px 30px rgba(38,39,93,.12); }
+  .lp-stats b { display: inline-block; font-family: 'Montserrat', sans-serif; font-size: 2rem; color: var(--navy, #26275D); line-height: 1; padding-bottom: 8px; border-bottom: 3px solid var(--gold, #f9dd0e); }
+  .lp-stats span { display: block; margin-top: 12px; font-size: .9rem; color: var(--text-muted, #5a5a70); line-height: 1.45; }
+
+  /* ---- Guarantee ---- */
+  .lp-sec--guarantee { background: radial-gradient(120% 120% at 50% 0%, #fffef2 0%, var(--gold-soft, #fffde6) 60%); border-top: 3px solid var(--gold, #f9dd0e); border-bottom: 3px solid var(--gold, #f9dd0e); }
+  .lp-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--navy, #26275D); color: var(--gold, #f9dd0e); font-weight: 900; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; padding: 7px 16px; border-radius: 999px; margin-bottom: 14px; box-shadow: 0 6px 18px rgba(38,39,93,.25); }
+  .lp-flow { list-style: none; counter-reset: f; padding: 0; margin: 22px 0 0; display: grid; gap: 12px; }
+  .lp-flow li { counter-increment: f; position: relative; padding: 4px 0 4px 44px; line-height: 1.5; min-height: 30px; display: flex; align-items: center; }
+  .lp-flow li::before { content: counter(f); position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 50%; background: var(--navy, #26275D); color: var(--gold, #f9dd0e); font-weight: 800; display: grid; place-items: center; font-size: .9rem; box-shadow: 0 4px 12px rgba(38,39,93,.2); }
+
+  /* ---- FAQ ---- */
+  .lp-faq { display: grid; gap: 12px; }
+  .lp-faq details { background: var(--navy-soft, #f3f4ff); border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 2px 18px; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+  .lp-faq details[open] { background: #fff; border-color: rgba(249,221,14,.7); box-shadow: 0 10px 26px rgba(38,39,93,.1); }
+  .lp-faq summary { cursor: pointer; font-weight: 700; padding: 15px 0; list-style: none; color: var(--navy, #26275D); display: flex; align-items: flex-start; gap: 12px; transition: color .15s ease; }
+  .lp-faq summary:hover { color: var(--navy-dk, #18193a); }
+  .lp-faq summary::-webkit-details-marker { display: none; }
+  .lp-faq summary::before { content: '＋'; flex: 0 0 auto; width: 22px; height: 22px; border-radius: 6px; background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); font-weight: 900; font-size: 14px; display: grid; place-items: center; transition: transform .2s ease; }
+  .lp-faq details[open] summary::before { content: '－'; }
+  .lp-faq summary:focus-visible { outline: 2px solid var(--navy, #26275D); outline-offset: 3px; border-radius: 6px; }
+  .lp-faq p { margin: 0 0 16px; padding-left: 34px; line-height: 1.65; color: var(--text, #1a1a2e); }
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-faq details[open] p { animation: lpFaqIn .25s ease both; }
+    @keyframes lpFaqIn { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+  }
+
+  /* ---- Final CTA ---- */
+  .lp-sec--final { background: linear-gradient(135deg, var(--navy, #26275D) 0%, var(--navy-dk, #18193a) 100%); color: #fff; text-align: center; }
+  .lp-urgency { display: grid; gap: 10px; max-width: 640px; margin: 0 auto 26px; }
+  .lp-urgency span { background: rgba(255,255,255,.08); border: 1px solid rgba(249,221,14,.4); border-radius: 999px; padding: 10px 18px; font-size: .92rem; line-height: 1.45; }
+  .lp-final-sub { max-width: 620px; margin: 0 auto 26px; line-height: 1.65; opacity: .92; }
+  .lp-sign { margin-top: 26px; font-size: .95rem; line-height: 1.6; opacity: .85; }
+  .lp-sign strong { color: var(--gold, #f9dd0e); }
+
+  /* ---- CTA buttons ---- */
+  .lp-cta-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: 28px; }
+  .lp-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; min-height: 52px; background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: .4px; text-decoration: none; padding: 14px 28px; border-radius: 12px; box-shadow: 0 6px 18px rgba(249,221,14,.45); overflow: hidden; transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
+  .lp-btn::after { content: ''; position: absolute; top: 0; left: -120%; width: 60%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,.55), transparent); transform: skewX(-20deg); transition: left .55s ease; }
+  .lp-btn:hover { background: var(--gold-dk, #e6e600); transform: translateY(-2px); box-shadow: 0 10px 26px rgba(249,221,14,.55); }
+  .lp-btn:hover::after { left: 130%; }
+  .lp-btn:active { transform: translateY(0); }
+  .lp-btn:focus-visible { outline: 3px solid #fff; outline-offset: 3px; }
+  .lp-btn--lg { font-size: 1.08rem; padding: 18px 36px; min-height: 60px; }
+  .lp-btn--ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); box-shadow: none; }
+  .lp-btn--ghost::after { display: none; }
+  .lp-btn--ghost:hover { background: rgba(255,255,255,.12); border-color: var(--gold, #f9dd0e); }
+  @media (prefers-reduced-motion: no-preference) {
+    .lp-sec--final .lp-btn--lg { animation: lpPulse 2.4s ease-in-out infinite; }
+    @keyframes lpPulse { 0%, 100% { box-shadow: 0 6px 18px rgba(249,221,14,.45); } 50% { box-shadow: 0 6px 30px rgba(249,221,14,.75); } }
+    .lp-sec--final .lp-btn--lg:hover { animation: none; }
+  }
+
+  /* ---- Reveal khi cuộn (progressive enhancement) ---- */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .lp-sec { animation: lpReveal linear both; animation-timeline: view(); animation-range: entry 2% cover 14%; }
+      @keyframes lpReveal { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+    }
+  }
+
+  /* ---- Responsive ---- */
+  @media (max-width: 640px) {
+    .lp-sec { padding: 46px 0; }
+    .lp-h2 { margin-bottom: 18px; }
+    .lp-quote { font-size: 1rem; padding: 20px 18px 20px 24px; }
+    .lp-quote::before { font-size: 2.6rem; left: 8px; }
+    .lp-steps { gap: 18px; }
+    .lp-steps::before { left: 19px; }
+    .lp-steps__n { width: 40px; height: 40px; }
+    .lp-cta-row .lp-btn { width: 100%; }
+  }
+</style>

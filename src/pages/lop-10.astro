@@ -75,6 +75,29 @@ const STACK = [
     { icon: '🤖', html: '<strong>AI Education + Mentor riêng 3 năm</strong> — học nhanh gấp 3 lần' },
   ]}
 >
+  <!-- ============ VSL VIDEO ============ -->
+  <section class="lp-sec lp-sec--vsl">
+    <div class="lp-wrap">
+      <span class="lp-kicker">Xem trước 1 phút</span>
+      <h2 class="lp-h2 lp-h2--light">Tôi gói toàn bộ lộ trình lớp 10 trong video này</h2>
+      <p class="lp-vsl-sub">Trước khi đọc tiếp, hãy nghe tôi nói trực tiếp — đủ để bạn quyết hôm nay.</p>
+      <div class="lp-video">
+        <iframe
+          src="https://www.youtube-nocookie.com/embed/ZawrgluGkk4?rel=0&modestbranding=1"
+          title="Lộ trình Lớp 10 Trường Việt Anh — Nguyễn Mạnh Dương"
+          loading="lazy"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div class="lp-cta-row">
+        <a href="#formArea" class="lp-btn">🎓 Giữ suất Lớp 10 cho con</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ PROBLEM ============ -->
   <section class="lp-sec lp-sec--soft">
     <div class="lp-wrap">
@@ -222,7 +245,13 @@ const STACK = [
   .lp-sec { padding: 48px 0; background: #fff; color: var(--text, #1a1a2e); }
   .lp-sec--soft { background: var(--navy-soft, #f3f4ff); }
   .lp-sec--dark { background: linear-gradient(135deg, var(--navy, #26275D) 0%, var(--navy-dk, #18193a) 100%); color: #fff; }
+  .lp-sec--vsl { background: linear-gradient(135deg, var(--navy-dk, #18193a) 0%, var(--navy, #26275D) 100%); color: #fff; text-align: center; }
   .lp-wrap { width: min(900px, 92%); margin: 0 auto; }
+
+  .lp-vsl-sub { max-width: 620px; margin: 0 auto 22px; line-height: 1.6; opacity: .9; }
+  .lp-video { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden; box-shadow: 0 16px 48px rgba(0,0,0,.4); border: 2px solid rgba(249,221,14,.5); background: #000; }
+  .lp-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  @supports not (aspect-ratio: 1) { .lp-video { height: 0; padding-bottom: 56.25%; } }
 
   .lp-kicker { display: inline-block; background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); font-weight: 900; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; }
   .lp-h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(1.45rem, 4vw, 2rem); line-height: 1.2; color: var(--navy, #26275D); margin: 0 0 20px; }

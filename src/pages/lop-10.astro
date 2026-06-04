@@ -1,0 +1,295 @@
+---
+/**
+ * /lop-10 — Landing tuyển sinh Lớp 10 (remarketing + chờ điểm thi)
+ * Hero + form 2 bước qua MamNonHookLayout → POST /api/lead → redirect /cam-on
+ * Long-form sales sections (Problem→Agitation→Solution→Value stack→Lộ trình
+ * →Social proof→Guarantee→FAQ→Urgency→Final CTA) render qua <slot/>.
+ *
+ * Hàng rào chính trực: IELTS 6.0 (không phải 6.5) · giữ cụm "lộ trình xét
+ * tuyển thẳng" cho tới khi có văn bản phạm vi UIT–BCU.
+ */
+import MamNonHookLayout from '../layouts/MamNonHookLayout.astro';
+
+const FAQ = [
+  {
+    q: 'Con chưa có điểm thi lớp 10, đăng ký được không?',
+    a: 'Được. Việt Anh xét học bạ — con có chỗ ngay, không cần chờ điểm, không cần thi lại.',
+  },
+  {
+    q: '"Bằng Cử nhân Anh Quốc tại Sài Gòn" nghe khó tin — thực hư thế nào?',
+    a: 'Con học theo lộ trình xét tuyển thẳng vào chương trình Cử nhân của Đại học Birmingham City (Anh Quốc), học ngay tại TP.HCM, dùng học bạ — không qua kỳ thi đại học. Đội ngũ sẽ gửi bạn lộ trình cụ thể khi bạn để lại thông tin.',
+  },
+  {
+    q: 'Cam kết IELTS 6.0 nghĩa là sao?',
+    a: 'Chúng tôi cam kết đầu ra IELTS 6.0 và kèm con đến khi đạt. Con học để nói được, dùng được — đủ để bước vào một chương trình đại học Anh Quốc.',
+  },
+  {
+    q: '"Học thử 4 tuần hoàn 100% học phí" có điều kiện gì không?',
+    a: 'Bốn tuần đầu (học kỳ Foundation) con học thật, bạn nhìn thật. Nếu không hài lòng, chúng tôi hoàn lại toàn bộ học phí. Bạn không mất gì để thử.',
+  },
+  {
+    q: 'Con tôi mất gốc / mất tự tin sau kỳ thi, có theo kịp không?',
+    a: '6 tuần đầu chúng tôi giúp con lấy lại nền tảng và sự tự tin trước khi vào guồng. Mỗi con có một Mentor riêng đồng hành suốt 3 năm.',
+  },
+  {
+    q: 'Còn nhận hồ sơ không?',
+    a: 'Còn, nhưng điểm thi sắp công bố — khi đó hồ sơ về rất nhanh và 100 suất Hồ sơ Vàng đóng lại. Để lại thông tin sớm để giữ suất cho con.',
+  },
+];
+
+const STACK = [
+  { icon: '🛡️', t: 'Học thử 4 tuần', d: 'Không hài lòng, tôi hoàn lại 100% học phí. Con thử mà không mất gì.' },
+  { icon: '🎓', t: 'Lộ trình xét tuyển thẳng Cử nhân ĐH Anh Quốc', d: 'Bằng học bạ, không thi đại học, học ngay tại Sài Gòn.' },
+  { icon: '🗣️', t: 'Cam kết IELTS 6.0', d: 'Kèm con đến khi đạt — tiếng Anh dùng được, không học để quên sau kỳ thi.' },
+  { icon: '📈', t: '95% học sinh tiến bộ mỗi năm', d: 'Đo bằng 4 khía cạnh, không chỉ điểm số.' },
+  { icon: '🤖', t: 'AI Education', d: 'Con học nhanh gấp 3 lần — kỹ năng cả thế giới đang đòi hỏi.' },
+  { icon: '👤', t: 'Một Mentor riêng', d: 'Đi cùng con suốt 3 năm.' },
+  { icon: '💻', t: 'Tặng Macbook', d: 'Công cụ học tập theo đúng thời đại.' },
+  { icon: '🏕️', t: 'Học bổng Trại hè Lion Camp 100%', d: 'Trị giá 29 triệu.' },
+  { icon: '🏅', t: 'Học bổng Tài năng + 100 suất Hồ sơ Vàng', d: 'Dành cho người ghi danh sớm.' },
+];
+---
+<MamNonHookLayout
+  title="Tuyển Sinh Lớp 10 — Lộ Trình Cử Nhân Anh Quốc Tại Sài Gòn | Trường Việt Anh"
+  description="Vào lớp 10 bằng học bạ, 3 năm sau lộ trình xét tuyển thẳng Cử nhân Đại học Anh Quốc ngay tại Sài Gòn — không thi đại học. Cam kết IELTS 6.0 kèm đến khi đạt. Học thử 4 tuần, không hài lòng hoàn 100% học phí."
+  canonicalUrl="https://truongvietanh.com/lop-10"
+  location="Gò Vấp & Bình Tân"
+  address="Gò Vấp: 160/72 Phan Huy Ích, P.15, Q.Gò Vấp · Bình Tân: Số 7 Đường 38A, Tân Tạo, Q.Bình Tân, TPHCM"
+  hookHeadline={`Vào <span class="mark">Lớp 10 bằng học bạ</span> — 3 năm sau cầm bằng Cử nhân Anh Quốc<em>Không thi đại học · Không tiền tỷ du học · Ngay tại Sài Gòn</em>`}
+  hookSubline="Cam kết IELTS 6.0 kèm con đến khi đạt. Học thử 4 tuần — không hài lòng hoàn 100% học phí. Mentor riêng 3 năm + AI Education giúp con học nhanh gấp 3 lần."
+  source="lop-10"
+  funnelCode="lop-10"
+  heroImage="https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/thpt-banner-chinh-1.jpg"
+  redirectUrl="/cam-on"
+  schoolLevel="thpt"
+  levelLabel="Lớp 10"
+  fomoText="🔥 Điểm thi lớp 10 sắp công bố · 100 suất Hồ sơ Vàng cho người ghi danh sớm · Tặng Macbook + Lion Camp 29tr"
+  cardTitle="Giữ một suất Lớp 10 cho con"
+  cardSub="Tư vấn lộ trình · Đội ngũ gọi lại trong hôm nay · Miễn phí"
+  ctaStep2="🎓 GIỮ SUẤT LỚP 10 CHO CON"
+  trustMarks={['15 năm K12 từ 2011', 'Lộ trình bằng Cử nhân Birmingham City (Anh Quốc)', 'Hoàn 100% học phí nếu thử không hài lòng']}
+  bullets={[
+    { icon: '🎓', html: '<strong>Lộ trình xét tuyển thẳng Cử nhân ĐH Anh Quốc</strong> — bằng học bạ, không thi đại học' },
+    { icon: '🗣️', html: '<strong>Cam kết IELTS 6.0</strong> — kèm con đến khi đạt' },
+    { icon: '🛡️', html: '<strong>Học thử 4 tuần</strong> — không hài lòng hoàn 100% học phí' },
+    { icon: '🤖', html: '<strong>AI Education + Mentor riêng 3 năm</strong> — học nhanh gấp 3 lần' },
+  ]}
+>
+  <!-- ============ PROBLEM ============ -->
+  <section class="lp-sec lp-sec--soft">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Bạn có đang ở trong tình cảnh này?</h2>
+      <ul class="lp-pain">
+        <li>Con vừa thi xong lớp 10, cả nhà <strong>nín thở chờ điểm</strong> — chưa biết con sẽ học ở đâu.</li>
+        <li>Lỡ điểm không như ý, <strong>không biết phương án 2</strong> là gì.</li>
+        <li>Con học tiếng Anh 7 năm vẫn <strong>không nói được một câu cho ra hồn</strong>.</li>
+        <li>Muốn cho con học trường tốt, định hướng quốc tế, nhưng <strong>sợ chi phí du học tiền tỷ</strong>.</li>
+        <li>Lo con vào cấp 3 rồi <strong>trôi đi 3 năm</strong>, không ai đồng hành, không có đích đến rõ ràng.</li>
+      </ul>
+      <p class="lp-note">Bạn không đơn độc. Những ngày này tôi gặp rất nhiều cha mẹ cùng một nỗi lo. Vấn đề không nằm ở con bạn — mà ở chỗ con chưa được đặt vào một <strong>con đường có đích đến thật</strong>.</p>
+    </div>
+  </section>
+
+  <!-- ============ AGITATION ============ -->
+  <section class="lp-sec lp-sec--dark">
+    <div class="lp-wrap">
+      <h2 class="lp-h2 lp-h2--light">Vì sao không nên để mọi thứ "chờ tới ngày báo điểm"?</h2>
+      <div class="lp-warn">
+        <p>⚠️ Điểm thi lớp 10 chỉ đo <strong>một lát cắt rất hẹp</strong> của con — nó không nói được 3 năm tới con đi xa tới đâu.</p>
+        <p>⚠️ Khi điểm công bố, <strong>hồ sơ về rất nhanh</strong> và các suất ưu đãi đóng lại trong vài ngày.</p>
+        <p>⚠️ Càng chờ, con càng dễ rơi vào trường "có chỗ thì học" — rồi 3 năm trôi qua không định hướng.</p>
+        <p>⚠️ <strong>100 suất Hồ sơ Vàng</strong> cho người ghi danh sớm hết rất nhanh — chờ thêm là mất phần ưu đãi lớn nhất.</p>
+      </div>
+      <p class="lp-cost">Cái giá thật của việc chờ không phải mất một suất học. Là mất cơ hội đặt con lên một lộ trình mà rất ít cha mẹ biết tới — trong khi con nhà người khác đã bắt đầu.</p>
+    </div>
+  </section>
+
+  <!-- ============ SOLUTION ============ -->
+  <section class="lp-sec">
+    <div class="lp-wrap">
+      <span class="lp-kicker">Giải pháp</span>
+      <h2 class="lp-h2">Lớp 10 Trường Việt Anh — lộ trình bằng Cử nhân Anh Quốc tại Sài Gòn</h2>
+      <p class="lp-lead">Tôi là <strong>Nguyễn Mạnh Dương, Chủ tịch Trường Việt Anh</strong>. 15 năm làm giáo dục K12 từ 2011, tôi xây một con đường cụ thể cho con bạn:</p>
+      <blockquote class="lp-quote">Con học lớp 10 ở Việt Anh hôm nay. Ba năm sau, con dùng <strong>chính học bạ của mình</strong> để xét tuyển thẳng vào chương trình Cử nhân của <strong>Đại học Birmingham City — Vương quốc Anh — học ngay tại TP.HCM</strong>.</blockquote>
+      <ul class="lp-check">
+        <li><strong>Vào lớp 10 bằng xét học bạ</strong> — con có chỗ ngay, không phải chờ điểm, không thi lại.</li>
+        <li><strong>Bằng Anh Quốc thật, học phí nội địa</strong> — không một kỳ thi đại học nào.</li>
+        <li><strong>6 tuần đầu (Foundation)</strong> — giúp con lấy lại nền tảng và sự tự tin trước khi vào guồng.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============ VALUE STACK ============ -->
+  <section class="lp-sec lp-sec--soft">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Đây là toàn bộ cam kết của tôi với con bạn</h2>
+      <div class="lp-stack">
+        {STACK.map((s) => (
+          <div class="lp-card">
+            <div class="lp-card__ico">{s.icon}</div>
+            <div>
+              <h3 class="lp-card__t">{s.t}</h3>
+              <p class="lp-card__d">{s.d}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+      <p class="lp-note">Bạn đếm thử xem — chỉ riêng cam kết hoàn 100% học phí thôi đã đủ để con bạn thử mà không mất gì. Còn lại, là một con đường có đích đến thật.</p>
+      <div class="lp-cta-row">
+        <a href="#formArea" class="lp-btn">🎓 Giữ suất Lớp 10 cho con</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LỘ TRÌNH / HOW IT WORKS ============ -->
+  <section class="lp-sec">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Con đường của con — rõ ràng từng bước</h2>
+      <ol class="lp-steps">
+        <li><span class="lp-steps__n">1</span><div><strong>Ghi danh &amp; xét học bạ</strong><br/>Con có chỗ ngay, không chờ điểm thi.</div></li>
+        <li><span class="lp-steps__n">2</span><div><strong>6 tuần Foundation</strong><br/>Lấy lại nền tảng, tìm lại sự tự tin.</div></li>
+        <li><span class="lp-steps__n">3</span><div><strong>Lớp 10 – 11 – 12</strong><br/>Học cùng Mentor riêng + AI Education, đạt cam kết IELTS 6.0.</div></li>
+        <li><span class="lp-steps__n">4</span><div><strong>Tốt nghiệp</strong><br/>Dùng học bạ xét tuyển thẳng vào Cử nhân ĐH Birmingham City — học tại TP.HCM.</div></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ SOCIAL PROOF ============ -->
+  <section class="lp-sec lp-sec--soft">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Vì sao cha mẹ tin Việt Anh?</h2>
+      <div class="lp-stats">
+        <div><b>15 năm</b><span>Xây dựng giáo dục K12 (từ 2011)</span></div>
+        <div><b>95%</b><span>Học sinh tiến bộ mỗi năm — đo bằng 4 khía cạnh</span></div>
+        <div><b>BCU</b><span>Lộ trình tới bằng Cử nhân Birmingham City (Anh Quốc)</span></div>
+        <div><b>IELTS 6.0</b><span>Cam kết đầu ra, kèm đến khi đạt</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GUARANTEE ============ -->
+  <section class="lp-sec lp-sec--guarantee">
+    <div class="lp-wrap">
+      <div class="lp-badge">🛡️ Bảo đảm</div>
+      <h2 class="lp-h2">Học thử 4 tuần — không hài lòng, hoàn 100% học phí</h2>
+      <p class="lp-lead">Phần lớn nỗi sợ của cha mẹ khi chọn trường là: <em>lỡ chọn sai thì sao?</em> Nên tôi nhận lấy rủi ro đó về phía mình.</p>
+      <ol class="lp-flow">
+        <li>Ghi danh hôm nay</li>
+        <li>Con học thật 4 tuần Foundation</li>
+        <li>Bạn quan sát kết quả thật</li>
+        <li>Không hài lòng, báo với chúng tôi</li>
+        <li>Hoàn lại toàn bộ học phí</li>
+      </ol>
+      <p class="lp-note"><strong>Vì sao tôi dám?</strong> Vì 95% học sinh của chúng tôi tiến bộ mỗi năm — và chúng tôi đo được điều đó. Một ngôi trường dám cam kết như vậy, vì nó biết con bạn sẽ tiến bộ.</p>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="lp-sec">
+    <div class="lp-wrap">
+      <h2 class="lp-h2">Câu hỏi thường gặp</h2>
+      <div class="lp-faq">
+        {FAQ.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ URGENCY + FINAL CTA ============ -->
+  <section class="lp-sec lp-sec--final">
+    <div class="lp-wrap">
+      <div class="lp-urgency">
+        <span>⏰ Điểm thi lớp 10 sắp công bố — sau đó hồ sơ về rất nhanh, ưu đãi đóng lại</span>
+        <span>🔥 100 suất Hồ sơ Vàng cho người ghi danh sớm — hết là dừng</span>
+        <span>🎁 Ghi danh đợt này mới trọn bộ quà: Macbook + Lion Camp 29 triệu + Học bổng Tài năng</span>
+      </div>
+      <h2 class="lp-h2 lp-h2--light">Cho con — và cho chính mình — một quyết định đúng lúc này</h2>
+      <p class="lp-final-sub">Bạn đã cân nhắc đủ lâu rồi. Việc cần làm bây giờ không phải tiếp tục chờ — là một quyết định bình tĩnh về bước đi tiếp theo của con.</p>
+      <div class="lp-cta-row">
+        <a href="#formArea" class="lp-btn lp-btn--lg">🎓 Giữ một suất Lớp 10 cho con</a>
+        <a href="tel:+84916961409" class="lp-btn lp-btn--ghost">📞 Gọi 0916 961 409</a>
+      </div>
+      <p class="lp-sign">Vì những đứa con yêu thương — từ bình thường trở nên phi thường.<br/><strong>Nguyễn Mạnh Dương</strong> · Chủ tịch Trường Việt Anh</p>
+    </div>
+  </section>
+</MamNonHookLayout>
+
+<style>
+  .lp-sec { padding: 48px 0; background: #fff; color: var(--text, #1a1a2e); }
+  .lp-sec--soft { background: var(--navy-soft, #f3f4ff); }
+  .lp-sec--dark { background: linear-gradient(135deg, var(--navy, #26275D) 0%, var(--navy-dk, #18193a) 100%); color: #fff; }
+  .lp-wrap { width: min(900px, 92%); margin: 0 auto; }
+
+  .lp-kicker { display: inline-block; background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); font-weight: 900; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; margin-bottom: 12px; }
+  .lp-h2 { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: clamp(1.45rem, 4vw, 2rem); line-height: 1.2; color: var(--navy, #26275D); margin: 0 0 20px; }
+  .lp-h2--light { color: #fff; }
+  .lp-lead { font-size: 1.05rem; line-height: 1.7; margin: 0 0 16px; }
+  .lp-note { font-size: 1rem; line-height: 1.7; background: rgba(249,221,14,.16); border-left: 4px solid var(--gold, #f9dd0e); padding: 14px 18px; border-radius: 8px; margin-top: 20px; }
+  .lp-sec--dark .lp-note { background: rgba(255,255,255,.08); border-left-color: var(--gold, #f9dd0e); }
+
+  .lp-pain { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; }
+  .lp-pain li { position: relative; padding: 12px 14px 12px 44px; background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 10px; line-height: 1.55; }
+  .lp-pain li::before { content: '✕'; position: absolute; left: 14px; top: 12px; color: #d11; font-weight: 900; }
+
+  .lp-warn { display: grid; gap: 12px; }
+  .lp-warn p { margin: 0; line-height: 1.65; }
+  .lp-cost { margin-top: 22px; font-size: 1.08rem; font-weight: 700; line-height: 1.6; color: var(--gold, #f9dd0e); }
+
+  .lp-quote { margin: 18px 0; padding: 18px 22px; background: var(--navy, #26275D); color: #fff; border-radius: 12px; font-size: 1.1rem; line-height: 1.6; }
+  .lp-quote strong { color: var(--gold, #f9dd0e); }
+  .lp-check { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; }
+  .lp-check li { position: relative; padding-left: 32px; line-height: 1.6; }
+  .lp-check li::before { content: '✓'; position: absolute; left: 0; top: 0; color: var(--navy, #000080); font-weight: 900; font-size: 1.1rem; }
+
+  .lp-stack { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .lp-card { display: flex; gap: 14px; background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 16px; box-shadow: 0 4px 16px rgba(0,0,0,.05); }
+  .lp-card__ico { font-size: 1.8rem; line-height: 1; flex: 0 0 auto; }
+  .lp-card__t { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1rem; color: var(--navy, #26275D); margin: 0 0 4px; }
+  .lp-card__d { margin: 0; font-size: .94rem; line-height: 1.55; color: var(--text-muted, #5a5a70); }
+
+  .lp-steps { list-style: none; counter-reset: s; padding: 0; margin: 0; display: grid; gap: 16px; }
+  .lp-steps li { display: flex; gap: 16px; align-items: flex-start; line-height: 1.55; }
+  .lp-steps__n { flex: 0 0 auto; width: 40px; height: 40px; border-radius: 50%; background: var(--navy, #26275D); color: var(--gold, #f9dd0e); font-weight: 900; display: grid; place-items: center; font-family: 'Montserrat', sans-serif; }
+
+  .lp-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+  .lp-stats div { background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 20px 16px; text-align: center; }
+  .lp-stats b { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: var(--navy, #26275D); line-height: 1; }
+  .lp-stats span { display: block; margin-top: 8px; font-size: .9rem; color: var(--text-muted, #5a5a70); line-height: 1.45; }
+
+  .lp-sec--guarantee { background: var(--gold-soft, #fffde6); border-top: 3px solid var(--gold, #f9dd0e); border-bottom: 3px solid var(--gold, #f9dd0e); }
+  .lp-badge { display: inline-block; background: var(--navy, #26275D); color: var(--gold, #f9dd0e); font-weight: 900; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 12px; }
+  .lp-flow { list-style: none; counter-reset: f; padding: 0; margin: 18px 0 0; display: grid; gap: 10px; }
+  .lp-flow li { counter-increment: f; position: relative; padding-left: 40px; line-height: 1.5; }
+  .lp-flow li::before { content: counter(f); position: absolute; left: 0; top: -2px; width: 26px; height: 26px; border-radius: 50%; background: var(--navy, #26275D); color: #fff; font-weight: 800; display: grid; place-items: center; font-size: .85rem; }
+
+  .lp-faq { display: grid; gap: 10px; }
+  .lp-faq details { background: var(--navy-soft, #f3f4ff); border: 1px solid var(--border, #e5e7eb); border-radius: 10px; padding: 4px 16px; }
+  .lp-faq summary { cursor: pointer; font-weight: 700; padding: 12px 0; list-style: none; color: var(--navy, #26275D); }
+  .lp-faq summary::-webkit-details-marker { display: none; }
+  .lp-faq summary::before { content: '＋'; margin-right: 10px; color: var(--gold-dk, #e6e600); font-weight: 900; }
+  .lp-faq details[open] summary::before { content: '－'; }
+  .lp-faq p { margin: 0 0 14px; line-height: 1.6; color: var(--text, #1a1a2e); }
+
+  .lp-sec--final { background: linear-gradient(135deg, var(--navy, #26275D) 0%, var(--navy-dk, #18193a) 100%); color: #fff; text-align: center; }
+  .lp-urgency { display: grid; gap: 8px; max-width: 640px; margin: 0 auto 24px; }
+  .lp-urgency span { background: rgba(255,255,255,.08); border: 1px solid rgba(249,221,14,.4); border-radius: 999px; padding: 8px 16px; font-size: .92rem; }
+  .lp-final-sub { max-width: 620px; margin: 0 auto 24px; line-height: 1.65; opacity: .92; }
+  .lp-sign { margin-top: 24px; font-size: .95rem; line-height: 1.6; opacity: .85; }
+  .lp-sign strong { color: var(--gold, #f9dd0e); }
+
+  .lp-cta-row { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: 24px; }
+  .lp-btn { display: inline-block; background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); font-family: 'Montserrat', sans-serif; font-weight: 900; text-transform: uppercase; letter-spacing: .4px; text-decoration: none; padding: 14px 26px; border-radius: 10px; box-shadow: 0 4px 14px rgba(249,221,14,.45); transition: .15s; }
+  .lp-btn:hover { background: var(--gold-dk, #e6e600); transform: translateY(-1px); }
+  .lp-btn--lg { font-size: 1.05rem; padding: 16px 32px; }
+  .lp-btn--ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); box-shadow: none; }
+  .lp-btn--ghost:hover { background: rgba(255,255,255,.12); }
+
+  @media (max-width: 640px) {
+    .lp-sec { padding: 36px 0; }
+    .lp-quote { font-size: 1rem; }
+  }
+</style>

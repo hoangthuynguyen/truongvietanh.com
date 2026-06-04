@@ -37,6 +37,32 @@ const FAQ = [
   },
 ];
 
+// Testimonial video THẬT từ kho testimonials-video.ts (cấp THPT).
+// Phụ huynh THPT hiện có 1 video; bổ sung 2 học sinh THPT để phần social proof đủ dày.
+const TESTIMONIALS = [
+  {
+    videoId: '5T8j_k5VCW4',
+    role: 'Phụ huynh',
+    name: 'Anh Lê Trung Thành',
+    meta: 'Phụ huynh bạn Quỳnh Anh · lớp 11, cơ sở Gò Vấp',
+    quote: 'Khi chọn trường cho con ở giai đoạn quan trọng, gia đình không chỉ quan tâm đến học tập mà còn là môi trường. Điều khiến chúng tôi tin tưởng là môi trường giúp con phát triển toàn diện — từ kiến thức đến kỹ năng và thái độ.',
+  },
+  {
+    videoId: 'wqYxSOZMIAE',
+    role: 'Học sinh',
+    name: 'Bạn Huyền',
+    meta: 'Học sinh lớp 10A1, cơ sở Gò Vấp',
+    quote: 'Trước đây em học theo sự sắp xếp và chưa thực sự chủ động. Khi học tại trường, em dần biết tự học, tự định hướng và tham gia nhiều hoạt động — em trưởng thành và tự tin hơn rất nhiều.',
+  },
+  {
+    videoId: 'v2MRJXlEPWE',
+    role: 'Học sinh',
+    name: 'Mỹ Uyên',
+    meta: 'Học sinh lớp 11, cơ sở Gò Vấp',
+    quote: 'Trước đây em phải học thêm rất nhiều, kéo dài đến tối muộn nên khá áp lực. Khi chuyển sang học tại trường, em thấy nhẹ nhàng hơn, có nhiều thời gian tự học và chủ động hơn.',
+  },
+];
+
 const STACK = [
   { icon: '🛡️', t: 'Học thử 4 tuần', d: 'Không hài lòng, tôi hoàn lại 100% học phí. Con thử mà không mất gì.' },
   { icon: '🎓', t: 'Lộ trình xét tuyển thẳng Cử nhân ĐH Anh Quốc', d: 'Bằng học bạ, không thi đại học, học ngay tại Sài Gòn.' },
@@ -187,6 +213,24 @@ const STACK = [
         <div><b>BCU</b><span>Lộ trình tới bằng Cử nhân Birmingham City (Anh Quốc)</span></div>
         <div><b>IELTS 6.0</b><span>Cam kết đầu ra, kèm đến khi đạt</span></div>
       </div>
+
+      <h3 class="lp-tm-head">Phụ huynh &amp; học sinh THPT nói gì</h3>
+      <div class="lp-tm-grid">
+        {TESTIMONIALS.map((t) => (
+          <a class="lp-tm" href={`https://www.youtube.com/watch?v=${t.videoId}`} target="_blank" rel="noopener" aria-label={`Xem video: ${t.name}`}>
+            <div class="lp-tm__thumb" style={`background-image:url(https://img.youtube.com/vi/${t.videoId}/hqdefault.jpg)`}>
+              <span class="lp-tm__role">{t.role}</span>
+              <span class="lp-tm__play" aria-hidden="true">▶</span>
+            </div>
+            <div class="lp-tm__body">
+              <div class="lp-tm__stars">★★★★★</div>
+              <p class="lp-tm__quote">“{t.quote}”</p>
+              <div class="lp-tm__name">{t.name}</div>
+              <div class="lp-tm__meta">{t.meta} · <span class="lp-tm__watch">Xem video ▶</span></div>
+            </div>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 
@@ -288,6 +332,21 @@ const STACK = [
   .lp-stats div { background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 12px; padding: 20px 16px; text-align: center; }
   .lp-stats b { display: block; font-family: 'Montserrat', sans-serif; font-size: 1.8rem; color: var(--navy, #26275D); line-height: 1; }
   .lp-stats span { display: block; margin-top: 8px; font-size: .9rem; color: var(--text-muted, #5a5a70); line-height: 1.45; }
+
+  .lp-tm-head { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.15rem; color: var(--navy, #26275D); text-align: center; margin: 36px 0 18px; }
+  .lp-tm-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+  .lp-tm { display: flex; flex-direction: column; background: #fff; border: 1px solid var(--border, #e5e7eb); border-radius: 14px; overflow: hidden; text-decoration: none; color: inherit; box-shadow: 0 4px 16px rgba(0,0,0,.06); transition: .15s; }
+  .lp-tm:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(38,39,93,.16); }
+  .lp-tm__thumb { position: relative; aspect-ratio: 16 / 9; background-size: cover; background-position: center; }
+  .lp-tm__role { position: absolute; top: 10px; left: 10px; background: var(--gold, #f9dd0e); color: var(--navy-dk, #18193a); font-size: 11px; font-weight: 900; text-transform: uppercase; letter-spacing: .4px; padding: 4px 9px; border-radius: 999px; }
+  .lp-tm__play { position: absolute; inset: 0; margin: auto; width: 52px; height: 52px; display: grid; place-items: center; background: rgba(0,0,0,.55); color: #fff; border-radius: 50%; font-size: 18px; padding-left: 3px; }
+  .lp-tm:hover .lp-tm__play { background: #c00; }
+  .lp-tm__body { padding: 16px; text-align: left; display: flex; flex-direction: column; gap: 6px; }
+  .lp-tm__stars { color: #f5b50a; font-size: .9rem; letter-spacing: 1px; }
+  .lp-tm__quote { margin: 0; font-size: .92rem; line-height: 1.55; color: var(--text, #1a1a2e); }
+  .lp-tm__name { font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: .95rem; color: var(--navy, #26275D); margin-top: 4px; }
+  .lp-tm__meta { font-size: .8rem; color: var(--text-muted, #5a5a70); }
+  .lp-tm__watch { color: var(--navy, #26275D); font-weight: 700; }
 
   .lp-sec--guarantee { background: var(--gold-soft, #fffde6); border-top: 3px solid var(--gold, #f9dd0e); border-bottom: 3px solid var(--gold, #f9dd0e); }
   .lp-badge { display: inline-block; background: var(--navy, #26275D); color: var(--gold, #f9dd0e); font-weight: 900; font-size: 12px; letter-spacing: .6px; text-transform: uppercase; padding: 6px 14px; border-radius: 999px; margin-bottom: 12px; }

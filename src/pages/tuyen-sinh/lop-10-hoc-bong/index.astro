@@ -31,7 +31,7 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
     </p>
   </div>
 
-  <Fragment slot="body">
+  <div slot="pain">
     <section style="padding:2rem 0 1rem">
       <p style="font-size:1.05rem;line-height:1.75">
         Tôi là Dương, Chủ tịch Trường Việt Anh. Tôi viết những dòng này cho cả hai nhóm gia đình:
@@ -44,75 +44,73 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
         Mentor 1-1, Macbook và Lion Camp.
       </p>
     </section>
+  </div>
 
-    <section style="padding:1.5rem 0">
-      <h2 style="font-size:1.6rem;font-weight:800;color:#000080;margin-bottom:1rem">Cơ chế học bổng — minh bạch, hai loại</h2>
-      <ul style="list-style:none;padding:0;margin:0">
-        {[
-          "Học bổng Tài năng: số suất giới hạn cho HS giỏi/có thành tích — xét hồ sơ + phỏng vấn, nhận trọn bộ quyền lợi",
-          "100 Hồ sơ Vàng: 100 hồ sơ ghi danh sớm nhất nhận học bổng 10% + Macbook + Mentor 3 năm + Lion Camp",
-          "Học kỳ Foundation 6 tuần đầu: giúp con lỡ nhịp lấy lại nền tảng + tìm lại chính mình — không bỏ ai lại phía sau",
-          "Lộ trình xét tuyển thẳng có điều kiện ĐH Birmingham City (UK) + cam kết IELTS 6.0",
-        ].map((item) => (
-          <li style="display:flex;align-items:flex-start;gap:.75rem;padding:.8rem 0;border-bottom:1px solid #eef0f6;font-size:1rem;line-height:1.6">
-            <span style="flex-shrink:0;width:26px;height:26px;background:#000080;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;margin-top:.1rem">✓</span>
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-      <div style="background:#fff8d6;border-left:5px solid #ffff00;padding:1rem 1.2rem;border-radius:8px;margin-top:1.25rem;font-size:.95rem">
-        <strong>Minh bạch:</strong> Học bổng Tài năng xét theo học thuật; ưu đãi ghi danh/tài chính là loại riêng — tiêu chí từng loại được công bố rõ. "Tuyển thẳng + học bổng" UIT–BCU áp dụng theo điều kiện thoả thuận.
-      </div>
-    </section>
+  <div slot="features">
+    <h2 style="font-size:1.6rem;font-weight:800;color:#000080;margin-bottom:1rem">Cơ chế học bổng — minh bạch, hai loại</h2>
+    <ul style="list-style:none;padding:0;margin:0">
+      {[
+        "Học bổng Tài năng: số suất giới hạn cho HS giỏi/có thành tích — xét hồ sơ + phỏng vấn, nhận trọn bộ quyền lợi",
+        "100 Hồ sơ Vàng: 100 hồ sơ ghi danh sớm nhất nhận học bổng 10% + Macbook + Mentor 3 năm + Lion Camp",
+        "Học kỳ Foundation 6 tuần đầu: giúp con lỡ nhịp lấy lại nền tảng + tìm lại chính mình — không bỏ ai lại phía sau",
+        "Lộ trình xét tuyển thẳng có điều kiện ĐH Birmingham City (UK) + cam kết IELTS 6.0",
+      ].map((item) => (
+        <li style="display:flex;align-items:flex-start;gap:.75rem;padding:.8rem 0;border-bottom:1px solid #eef0f6;font-size:1rem;line-height:1.6">
+          <span style="flex-shrink:0;width:26px;height:26px;background:#000080;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700;margin-top:.1rem">✓</span>
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
+    <div style="background:#fff8d6;border-left:5px solid #ffff00;padding:1rem 1.2rem;border-radius:8px;margin-top:1.25rem;font-size:.95rem">
+      <strong>Minh bạch:</strong> Học bổng Tài năng xét theo học thuật; ưu đãi ghi danh/tài chính là loại riêng — tiêu chí từng loại được công bố rõ. "Tuyển thẳng + học bổng" UIT–BCU áp dụng theo điều kiện thoả thuận.
+    </div>
+  </div>
 
-    <section id="sp-form1" style="background:#000080;border-radius:16px;padding:2rem;margin:2rem 0;text-align:center">
-      <h2 style="color:#ffff00;font-size:1.5rem;font-weight:800;margin:0 0 .5rem">Điểm thi sắp công bố — nhắn tin trước khi hết suất</h2>
-      <div style="display:flex;gap:12px;justify-content:center;margin:.75rem 0 1.5rem;flex-wrap:wrap">
-        {[["100","Hồ sơ Vàng"],["6 tuần","Foundation"],["3 năm","Mentor 1-1"]].map(([n,l])=>(
-          <div style="background:#fff;color:#000080;border-radius:10px;padding:.6rem 1rem;min-width:80px;text-align:center">
-            <div style="font-weight:800;font-size:1.3rem">{n}</div>
-            <div style="font-size:.75rem;font-weight:600;color:#667">{l}</div>
-          </div>
-        ))}
+  <div slot="form1">
+    <h2 style="color:#ffff00;font-size:1.5rem;font-weight:800;margin:0 0 .5rem">Điểm thi sắp công bố — nhắn tin trước khi hết suất</h2>
+    <div style="display:flex;gap:12px;justify-content:center;margin:.75rem 0 1.5rem;flex-wrap:wrap">
+      {[["100","Hồ sơ Vàng"],["6 tuần","Foundation"],["3 năm","Mentor 1-1"]].map(([n,l])=>(
+        <div style="background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.4);color:#fff;border-radius:10px;padding:.6rem 1rem;min-width:80px;text-align:center">
+          <div style="font-weight:800;font-size:1.3rem">{n}</div>
+          <div style="font-size:.75rem;font-weight:600;opacity:.8">{l}</div>
+        </div>
+      ))}
+    </div>
+    <div style="background:#fff;border-radius:12px;padding:1.5rem;max-width:420px;margin:0 auto;text-align:left" id="hb-wrap">
+      <div style="font-size:.8rem;color:#888;font-weight:600;text-align:center;margin-bottom:.75rem" id="hb-prog">Bước 1/2 — 15 giây</div>
+      <div id="hb-s1">
+        <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Họ tên ba/mẹ</label>
+        <input id="hb-name" type="text" placeholder="VD: Nguyễn Văn A" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
+        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Số điện thoại (Zalo)</label>
+        <input id="hb-phone" type="tel" placeholder="VD: 0901 234 567" inputmode="numeric" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
+        <div id="hb-err" style="color:#c00;font-size:.85rem;margin:.4rem 0;display:none">Vui lòng nhập số điện thoại hợp lệ (10 số).</div>
+        <button onclick="hbStep2()" style="width:100%;background:#000080;color:#ffff00;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Xét học bổng cho con →</button>
+        <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Tôi cam kết bảo mật thông tin.</p>
       </div>
-      <div style="background:#fff;border-radius:12px;padding:1.5rem;max-width:420px;margin:0 auto;text-align:left" id="hb-wrap">
-        <div style="font-size:.8rem;color:#888;font-weight:600;text-align:center;margin-bottom:.75rem" id="hb-prog">Bước 1/2 — 15 giây</div>
-        <div id="hb-s1">
-          <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Họ tên ba/mẹ</label>
-          <input id="hb-name" type="text" placeholder="VD: Nguyễn Văn A" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-          <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Số điện thoại (Zalo)</label>
-          <input id="hb-phone" type="tel" placeholder="VD: 0901 234 567" inputmode="numeric" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-          <div id="hb-err" style="color:#c00;font-size:.85rem;margin:.4rem 0;display:none">Vui lòng nhập số điện thoại hợp lệ (10 số).</div>
-          <button onclick="hbStep2()" style="width:100%;background:#000080;color:#ffff00;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Xét học bổng cho con →</button>
-          <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Tôi cam kết bảo mật thông tin.</p>
-        </div>
-        <div id="hb-s2" style="display:none">
-          <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Con đang học lớp mấy?</label>
-          <select id="hb-level" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-            <option>Lớp 9 (vừa thi lớp 10)</option><option>Đã có kết quả thi</option><option>Khác</option>
-          </select>
-          <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Khu vực gia đình</label>
-          <input id="hb-province" type="text" placeholder="VD: TP.HCM, Cà Mau, Đà Nẵng..." style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-          <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Tình huống của con</label>
-          <select id="hb-need" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-            <option>Đang lo / chờ kết quả thi</option><option>Trượt nguyện vọng trường công</option><option>HS giỏi — xét Học bổng Tài năng</option><option>Chỉ đang tìm hiểu</option>
-          </select>
-          <button onclick="hbSubmit()" style="width:100%;background:#000080;color:#ffff00;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Hoàn tất — Giữ suất xét học bổng</button>
-          <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Đội tư vấn sẽ gọi trong vài giờ tới.</p>
-        </div>
-        <div id="hb-ok" style="display:none;text-align:center;padding:.5rem">
-          <div style="font-size:1.4rem;color:#000080;font-weight:800">✅ Cảm ơn bạn!</div>
-          <p style="margin:.75rem 0">Đội tư vấn sẽ liên hệ về điều kiện học bổng cho con. Nhắn Zalo để được ưu tiên:</p>
-          <a href="https://zalo.me/truongvietanh" target="_blank" style="display:block;background:#000080;color:#ffff00;font-weight:800;padding:.9rem;border-radius:10px;text-decoration:none;font-size:1rem">Nhắn Zalo Trường Việt Anh</a>
-        </div>
+      <div id="hb-s2" style="display:none">
+        <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Con đang học lớp mấy?</label>
+        <select id="hb-level" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box"><option>Lớp 9 (vừa thi lớp 10)</option><option>Đã có kết quả thi</option><option>Khác</option></select>
+        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Khu vực gia đình</label>
+        <input id="hb-province" type="text" placeholder="VD: TP.HCM, Cà Mau, Đà Nẵng..." style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
+        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Tình huống của con</label>
+        <select id="hb-need" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box"><option>Đang lo / chờ kết quả thi</option><option>Trượt nguyện vọng trường công</option><option>HS giỏi — xét Học bổng Tài năng</option><option>Chỉ đang tìm hiểu</option></select>
+        <button onclick="hbSubmit()" style="width:100%;background:#000080;color:#ffff00;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Hoàn tất — Giữ suất xét học bổng</button>
+        <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Đội tư vấn sẽ gọi trong vài giờ tới.</p>
       </div>
-    </section>
+      <div id="hb-ok" style="display:none;text-align:center;padding:.5rem">
+        <div style="font-size:1.4rem;color:#000080;font-weight:800">✅ Cảm ơn bạn!</div>
+        <p style="margin:.75rem 0">Đội tư vấn sẽ liên hệ về điều kiện học bổng cho con. Nhắn Zalo để được ưu tiên:</p>
+        <a href="https://zalo.me/truongvietanh" target="_blank" style="display:block;background:#000080;color:#ffff00;font-weight:800;padding:.9rem;border-radius:10px;text-decoration:none;font-size:1rem">Nhắn Zalo Trường Việt Anh</a>
+      </div>
+    </div>
+  </div>
 
-    <section style="border-top:2px solid #000080;padding-top:1.25rem;margin-top:.5rem">
-      <p style="font-size:.95rem;line-height:1.7;color:#333">Trượt một nguyện vọng không phải là dấu chấm hết. Đôi khi, nó là khởi đầu của một con đường tốt hơn — nếu con được trao đúng cơ hội, đúng người đồng hành.</p>
-      <p style="margin-top:.75rem;font-size:.95rem"><strong style="color:#000080">Nguyễn Mạnh Dương</strong><br>Chủ tịch / Nhà sáng lập · Hệ thống Trường Việt Anh · truongvietanh.com</p>
-    </section>
-  </Fragment>
+  <div slot="quote">
+    <blockquote style="border:none;padding:0;margin:0">
+      <p style="font-size:1.05rem;line-height:1.75;color:#fff;font-style:normal">"Trượt một nguyện vọng không phải là dấu chấm hết. Đôi khi, nó là khởi đầu của một con đường tốt hơn — nếu con được trao đúng cơ hội, đúng người đồng hành."</p>
+      <footer style="margin-top:.75rem;font-size:.95rem;color:rgba(255,255,255,.8)">— <strong>Nguyễn Mạnh Dương</strong>, Chủ tịch / Nhà sáng lập Trường Việt Anh</footer>
+    </blockquote>
+  </div>
 </SalesPageLayout>
 
 <script is:inline>

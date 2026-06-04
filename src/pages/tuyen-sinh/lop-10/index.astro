@@ -134,7 +134,20 @@ function payload(stage){return JSON.stringify({
   utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),
   utm_campaign:qp('utm_campaign'),utm_content:qp('utm_content'),utm_term:qp('utm_term')
 });}
-function sendLead(stage){try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}}
+function sendLead(stage){
+  try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}
+  // Lead hoàn tất: đẩy thêm sang CRM (Pancake + GHL) qua /api/lead. school_level=thpt → Khối "Lớp 10".
+  if(stage==='complete'){try{
+    var ph=document.getElementById('lp10-phone').value.replace(/\D/g,'');
+    fetch('https://truongvietanh.com/api/lead',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      fullName:document.getElementById('lp10-name').value.trim(),
+      phone:ph,email:(ph||'lead')+'@lead.truongvietanh.com',
+      source:SOURCE,funnel_code:SOURCE,school_level:'thpt',
+      province:(document.getElementById('lp10-province')||{}).value||'',
+      need:(document.getElementById('lp10-need')||{}).value||'',
+      page_url:location.href,utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),utm_campaign:qp('utm_campaign')
+    })});}catch(e){}}
+}
 function lp10Step2(){
   var p=document.getElementById('lp10-phone').value.replace(/\D/g,'');
   if(p.length<9||p.length>11){document.getElementById('lp10-err1').style.display='block';return;}

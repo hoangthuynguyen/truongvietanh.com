@@ -111,7 +111,18 @@ const WEBHOOK="https://script.google.com/macros/s/AKfycby7hFPL8uZercenEVNc5vO9LL
 function qp(k){return new URLSearchParams(location.search).get(k)||"";}
 function getVal(id){var el=document.getElementById(id);return el?el.value:"";}
 function payload(stage){return JSON.stringify({secret:SECRET,source:SOURCE,stage,name:getVal('nt-name'),phone:getVal('nt-phone').replace(/\D/g,''),level:getVal('nt-level'),province:getVal('nt-province'),need:getVal('nt-need'),page_url:location.href,gclid:qp('gclid'),utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),utm_campaign:qp('utm_campaign'),utm_content:qp('utm_content'),utm_term:qp('utm_term')});}
-function sendLead(stage){try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}}
+function sendLead(stage){
+  try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}
+  // Lead hoàn tất: đẩy thêm sang CRM (Pancake + GHL) qua /api/lead. school_level=thpt → Khối "Lớp 10".
+  if(stage==='complete'){try{
+    var ph=getVal('nt-phone').replace(/\D/g,'');
+    fetch('https://truongvietanh.com/api/lead',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({
+      fullName:getVal('nt-name'),phone:ph,email:(ph||'lead')+'@lead.truongvietanh.com',
+      source:SOURCE,funnel_code:SOURCE,school_level:'thpt',
+      province:getVal('nt-province'),need:getVal('nt-need'),
+      page_url:location.href,utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),utm_campaign:qp('utm_campaign')
+    })});}catch(e){}}
+}
 function ntStep2(){var p=getVal('nt-phone').replace(/\D/g,'');if(p.length<9||p.length>11){document.getElementById('nt-err').style.display='block';return;}sendLead('partial');document.getElementById('nt-s1').style.display='none';document.getElementById('nt-s2').style.display='block';document.getElementById('nt-prog').textContent='Bước 2/2 — gần xong';}
 function ntSubmit(){sendLead('complete');document.getElementById('nt-s2').style.display='none';document.getElementById('nt-ok').style.display='block';document.getElementById('nt-prog').style.display='none';}
 </script>

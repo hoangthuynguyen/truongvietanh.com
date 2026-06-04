@@ -183,53 +183,67 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 )}
 
 <!-- BLOCK 2: PAIN -->
+{Astro.slots.has('pain') && (
 <section class="sp-pain" id="sp-pain">
   <div class="sp-pain__inner">
     <slot name="pain" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 3: FEATURES -->
+{Astro.slots.has('features') && (
 <section class="sp-features" id="sp-features">
   <div class="sp-features__inner">
     <slot name="features" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 4: TEXT WITH IMAGE -->
+{Astro.slots.has('textimg') && (
 <section class="sp-textimg" id="sp-textimg">
   <div class="sp-textimg__inner">
     <slot name="textimg" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 5: STATS -->
+{Astro.slots.has('stats') && (
 <section class="sp-stats" id="sp-stats">
   <div class="sp-stats__inner">
     <slot name="stats" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 6: QUOTE -->
+{Astro.slots.has('quote') && (
 <section class="sp-quote" id="sp-quote">
   <div class="sp-quote__inner">
     <slot name="quote" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 7: PRICING -->
+{Astro.slots.has('pricing') && (
 <section class="sp-pricing" id="sp-pricing">
   <div class="sp-pricing__inner">
     <slot name="pricing" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 8: CTA -->
+{Astro.slots.has('cta') && (
 <section class="sp-cta-block" id="sp-cta">
   <div class="sp-cta-block__inner">
     <slot name="cta" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 9: FORM 1 (chỉ render khi có slot) -->
 {Astro.slots.has('form1') && (
@@ -246,11 +260,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 )}
 
 <!-- BLOCK 10: FAQ -->
+{Astro.slots.has('faq') && (
 <section class="sp-faq" id="sp-faq">
   <div class="sp-faq__inner">
     <slot name="faq" />
   </div>
 </section>
+)}
 
 <!-- BLOCK 11: FORM 2 (chỉ render khi có slot) -->
 {Astro.slots.has('form2') && (

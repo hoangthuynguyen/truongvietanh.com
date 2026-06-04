@@ -565,6 +565,8 @@ const WORKFLOW_MAP = {
   'tuyen-sinh-tieu-hoc':    'e621dee0-eae8-483e-997c-3912704bc9ba',
   'tuyen-sinh-thcs':        'e621dee0-eae8-483e-997c-3912704bc9ba',
   'tuyen-sinh-thpt':        'e621dee0-eae8-483e-997c-3912704bc9ba',
+  // Landing Tuyển Sinh Lớp 10 (/lop-10) → workflow nurture lớp 10 riêng
+  'lop-10':                 '9a7391a0-57fa-4e05-8ca7-16320e7386fc',
   // WF8: Post-Tour Follow-up
   'post-tour':              'faf0eeab-253d-4c29-bce3-9152f7f36637',
   'post-hoc-thu':           'faf0eeab-253d-4c29-bce3-9152f7f36637',

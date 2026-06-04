@@ -37,6 +37,9 @@ const FAQ = [
   },
 ];
 
+// Bật/tắt khối testimonial. Để false = ẩn; đổi true khi cần hiện lại.
+const SHOW_TESTIMONIALS = false;
+
 // Testimonial video THẬT từ kho testimonials-video.ts (cấp THPT).
 // Phụ huynh THPT hiện có 1 video; bổ sung 2 học sinh THPT để phần social proof đủ dày.
 const TESTIMONIALS = [
@@ -214,23 +217,28 @@ const STACK = [
         <div><b>IELTS 6.0</b><span>Cam kết đầu ra, kèm đến khi đạt</span></div>
       </div>
 
-      <h3 class="lp-tm-head">Phụ huynh &amp; học sinh THPT nói gì</h3>
-      <div class="lp-tm-grid">
-        {TESTIMONIALS.map((t) => (
-          <a class="lp-tm" href={`https://www.youtube.com/watch?v=${t.videoId}`} target="_blank" rel="noopener" aria-label={`Xem video: ${t.name}`}>
-            <div class="lp-tm__thumb" style={`background-image:url(https://img.youtube.com/vi/${t.videoId}/hqdefault.jpg)`}>
-              <span class="lp-tm__role">{t.role}</span>
-              <span class="lp-tm__play" aria-hidden="true">▶</span>
-            </div>
-            <div class="lp-tm__body">
-              <div class="lp-tm__stars">★★★★★</div>
-              <p class="lp-tm__quote">“{t.quote}”</p>
-              <div class="lp-tm__name">{t.name}</div>
-              <div class="lp-tm__meta">{t.meta} · <span class="lp-tm__watch">Xem video ▶</span></div>
-            </div>
-          </a>
-        ))}
-      </div>
+      {/* Đổi SHOW_TESTIMONIALS = true ở frontmatter để hiện lại khối testimonial */}
+      {SHOW_TESTIMONIALS && (
+        <>
+          <h3 class="lp-tm-head">Phụ huynh &amp; học sinh THPT nói gì</h3>
+          <div class="lp-tm-grid">
+            {TESTIMONIALS.map((t) => (
+              <a class="lp-tm" href={`https://www.youtube.com/watch?v=${t.videoId}`} target="_blank" rel="noopener" aria-label={`Xem video: ${t.name}`}>
+                <div class="lp-tm__thumb" style={`background-image:url(https://img.youtube.com/vi/${t.videoId}/hqdefault.jpg)`}>
+                  <span class="lp-tm__role">{t.role}</span>
+                  <span class="lp-tm__play" aria-hidden="true">▶</span>
+                </div>
+                <div class="lp-tm__body">
+                  <div class="lp-tm__stars">★★★★★</div>
+                  <p class="lp-tm__quote">“{t.quote}”</p>
+                  <div class="lp-tm__name">{t.name}</div>
+                  <div class="lp-tm__meta">{t.meta} · <span class="lp-tm__watch">Xem video ▶</span></div>
+                </div>
+              </a>
+            ))}
+          </div>
+        </>
+      )}
     </div>
   </section>
 

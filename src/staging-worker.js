@@ -443,6 +443,14 @@ async function handleLeadSubmission(request, env) {
           record.khoi_quan_tam = khoiId;
         }
 
+        // Người phụ trách (owner) — Pancake bắt buộc trường này, thiếu sẽ lỗi 422.
+        // Map theo source (mở rộng dần khi cần). /lop-10 → claudia.
+        const PANCAKE_OWNER_MAP = {
+          'lop-10': 'd421cb2d-a2ee-426c-a932-7875b2d08060', // claudia@truongvietanh.com
+        };
+        const pancakeOwner = PANCAKE_OWNER_MAP[data.source];
+        if (pancakeOwner) record.owner = [pancakeOwner];
+
         const pancakeRes = await fetch(
           `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records?api_key=${pancakeApiKey}`,
           {

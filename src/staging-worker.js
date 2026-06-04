@@ -443,16 +443,11 @@ async function handleLeadSubmission(request, env) {
           record.khoi_quan_tam = khoiId;
         }
 
-        // Người phụ trách (owner) — Pancake BẮT BUỘC trường này, thiếu sẽ lỗi 422
-        // và lead KHÔNG vào Pancake. Vì vậy MỌI lead form web đều được gán owner
-        // để đồng bộ thành công. Mặc định = claudia; có thể override theo source
-        // (phân về đúng người/đội) bằng PANCAKE_OWNER_MAP.
-        const PANCAKE_DEFAULT_OWNER = 'd421cb2d-a2ee-426c-a932-7875b2d08060'; // claudia@truongvietanh.com
-        const PANCAKE_OWNER_MAP = {
-          // 'source-cu-the': '<user-id>',  // thêm khi muốn phân lead về người/đội riêng
-          // ví dụ: 'mam-non-go-vap': '...', 'trai-he-thpt': '...'
-        };
-        record.owner = [PANCAKE_OWNER_MAP[data.source] || PANCAKE_DEFAULT_OWNER];
+        // KHÔNG set "Người phụ trách" (owner) — để rule tự phân SO của Pancake xử lý.
+        // Thay vào đó ghi nguồn vào trường "Nguồn Khách Hàng" để nhận diện lead web.
+        // LƯU Ý: Pancake phải bỏ "bắt buộc" ở trường Người phụ trách, nếu không API
+        // trả 422 và lead không vào được.
+        record.nguon_khach_hang_omi = 'Website' + (data.source ? ' - ' + data.source : '');
 
         const pancakeRes = await fetch(
           `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records?api_key=${pancakeApiKey}`,

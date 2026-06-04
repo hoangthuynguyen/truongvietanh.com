@@ -1,0 +1,139 @@
+{
+  "name": "VA Insight Harvester — Hourly",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {"field": "cronExpression", "expression": "0 */2 * * *"}
+          ]
+        }
+      },
+      "id": "cron",
+      "name": "Every 2 hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1400, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://trends.google.com/trends/api/dailytrends?hl=vi&tz=-420&geo=VN&ns=15",
+        "options": {"timeout": 30000}
+      },
+      "id": "google-trends",
+      "name": "Google Trends VN",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1180, -240]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://services.leadconnectorhq.com/contacts/?locationId={{ $env.GHL_LOCATION_ID }}&query=&limit=50",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.GHL_API_TOKEN }}"},
+            {"name": "Version", "value": "2021-07-28"}
+          ]
+        },
+        "options": {"timeout": 30000}
+      },
+      "id": "ghl-contacts",
+      "name": "GHL: Recent Form Submissions",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1180, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://graph.facebook.com/v18.0/{{ $env.FB_PAGE_ID }}/feed?fields=message,comments.limit(25){message,created_time},created_time&limit=10&access_token={{ $env.FB_PAGE_ACCESS_TOKEN }}",
+        "options": {"timeout": 30000}
+      },
+      "id": "fb-owned-comments",
+      "name": "FB Page Owned Comments",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1180, 240]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalize all sources into standard insight format\nconst now = new Date().toISOString();\nconst insights = [];\n\n// Google Trends (response is JSONP-wrapped, strip 5 leading chars)\ntry {\n  const trendsRaw = $('Google Trends VN').first().json;\n  const cleaned = typeof trendsRaw === 'string' ? trendsRaw.replace(/^\\)\\]\\}',?\\n?/, '') : JSON.stringify(trendsRaw);\n  const trends = JSON.parse(cleaned);\n  const stories = trends?.default?.trendingSearchesDays?.[0]?.trendingSearches || [];\n  for (const s of stories.slice(0, 15)) {\n    const title = s.title?.query || '';\n    if (!title) continue;\n    insights.push({\n      date: now,\n      source: 'google_trends',\n      raw_text: title + ' — ' + (s.articles?.[0]?.title || ''),\n      topic_tag: ['trending', 'search'],\n      audience_segment: ['general'],\n      intent_level: Math.min(5, Math.ceil((s.formattedTraffic || '0').replace(/[^0-9]/g, '') / 50000) || 2),\n    });\n  }\n} catch (e) { /* skip if parse failed */ }\n\n// GHL form submissions — extract latest queries from contacts\ntry {\n  const ghl = $('GHL: Recent Form Submissions').first().json;\n  const contacts = ghl.contacts || [];\n  for (const c of contacts.slice(0, 25)) {\n    const text = [c.firstName, c.lastName, c.tags?.join(','), c.source].filter(Boolean).join(' | ');\n    if (!text) continue;\n    insights.push({\n      date: now,\n      source: 'ghl_form',\n      raw_text: 'Form submission: ' + text + ' | locationId=' + ($env.GHL_LOCATION_ID || ''),\n      topic_tag: c.tags || ['parent_interest'],\n      audience_segment: c.tags || ['parent'],\n      intent_level: 5,\n    });\n  }\n} catch (e) {}\n\n// FB owned comments\ntry {\n  const fb = $('FB Page Owned Comments').first().json;\n  const posts = fb.data || [];\n  for (const post of posts) {\n    const comments = post.comments?.data || [];\n    for (const cm of comments.slice(0, 5)) {\n      if (!cm.message || cm.message.length < 15) continue;\n      insights.push({\n        date: cm.created_time || now,\n        source: 'owned_comments',\n        raw_text: cm.message,\n        topic_tag: ['fb_comment'],\n        audience_segment: ['parent'],\n        intent_level: 4,\n      });\n    }\n  }\n} catch (e) {}\n\nreturn insights.map(i => ({ json: i }));"
+      },
+      "id": "normalize",
+      "name": "Normalize Insights",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-840, 0]
+    },
+    {
+      "parameters": {
+        "batchSize": 10,
+        "options": {}
+      },
+      "id": "batch-airtable",
+      "name": "Batch 10 for Airtable",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-580, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Wrap batch into Airtable records array\nconst items = $input.all();\nconst records = items.map(item => ({ fields: item.json }));\nreturn [{ json: { records, typecast: true } }];"
+      },
+      "id": "wrap-airtable",
+      "name": "Wrap as Airtable Records",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-340, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/insights",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json) }}",
+        "options": {}
+      },
+      "id": "write-airtable",
+      "name": "Write Insights to Airtable",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-100, 0]
+    }
+  ],
+  "connections": {
+    "Every 2 hours": {
+      "main": [[
+        {"node": "Google Trends VN", "type": "main", "index": 0},
+        {"node": "GHL: Recent Form Submissions", "type": "main", "index": 0},
+        {"node": "FB Page Owned Comments", "type": "main", "index": 0}
+      ]]
+    },
+    "Google Trends VN": {"main": [[{"node": "Normalize Insights", "type": "main", "index": 0}]]},
+    "GHL: Recent Form Submissions": {"main": [[{"node": "Normalize Insights", "type": "main", "index": 0}]]},
+    "FB Page Owned Comments": {"main": [[{"node": "Normalize Insights", "type": "main", "index": 0}]]},
+    "Normalize Insights": {"main": [[{"node": "Batch 10 for Airtable", "type": "main", "index": 0}]]},
+    "Batch 10 for Airtable": {
+      "main": [
+        [{"node": "Wrap as Airtable Records", "type": "main", "index": 0}],
+        []
+      ]
+    },
+    "Wrap as Airtable Records": {"main": [[{"node": "Write Insights to Airtable", "type": "main", "index": 0}]]},
+    "Write Insights to Airtable": {"main": [[{"node": "Batch 10 for Airtable", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "active": false,
+  "id": "va-insight-harvester-v1"
+}

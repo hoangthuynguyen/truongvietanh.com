@@ -1,0 +1,205 @@
+{
+  "name": "VA Review Dispatcher — Telegram 06:55",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "cronExpression", "expression": "55 6 * * *"}]
+        }
+      },
+      "id": "cron-0655",
+      "name": "Cron 06:55 Daily",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1400, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "filterByFormula", "value": "=AND({status}='ready_for_review', IS_AFTER({created_at}, DATEADD(NOW(), -12, 'hours')))"},
+            {"name": "pageSize", "value": "100"}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-ready",
+      "name": "Fetch ready_for_review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1180, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{ JSON.stringify($env.TELEGRAM_FALLBACK_CHAT_ID) }},\n  \"text\": {{ JSON.stringify('☀️ Chào buổi sáng anh Dương!\\n\\n📊 Pipeline 24:00 → 07:00 đã sẵn sàng:\\n• Tổng: ' + ($json.records || []).length + ' bài chờ duyệt\\n• Carousel: ' + (($json.records || []).filter(r => r.fields.format === 'carousel').length) + '\\n• Reel: ' + (($json.records || []).filter(r => r.fields.format === 'reel').length) + '\\n• Text: ' + (($json.records || []).filter(r => r.fields.format === 'text').length) + '\\n• Blog: ' + (($json.records || []).filter(r => r.fields.format === 'blog').length) + '\\n\\nXem từng bài qua các message tiếp theo. Bấm ✅/✏️/❌ để xử lý.') }},\n  \"parse_mode\": \"Markdown\"\n}",
+        "options": {}
+      },
+      "id": "morning-summary",
+      "name": "Morning Summary to anh Dương",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-960, 0]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "records",
+        "options": {}
+      },
+      "id": "split-records",
+      "name": "Split Records",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [-740, 0]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {"reset": false}
+      },
+      "id": "batch-1",
+      "name": "Loop 1 at a time",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-520, 0]
+    },
+    {
+      "parameters": {
+        "amount": 3,
+        "unit": "seconds"
+      },
+      "id": "throttle",
+      "name": "Throttle 3s (Telegram rate limit)",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [-300, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "loose"},
+          "conditions": [
+            {
+              "id": "has-media",
+              "leftValue": "={{ ($json.fields.media_urls || '').length }}",
+              "rightValue": 5,
+              "operator": {"type": "number", "operation": "gt"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-has-media",
+      "name": "IF has media",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [-80, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMediaGroup",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{ JSON.stringify($json.fields.telegram_chat_id_resolved || $env.TELEGRAM_FALLBACK_CHAT_ID) }},\n  \"media\": {{ JSON.stringify(($json.fields.media_urls || '').split('\\n').filter(u => u).slice(0, 10).map((u, i) => ({ type: u.endsWith('.mp4') || u.endsWith('.mov') ? 'video' : 'photo', media: u, caption: i === 0 ? '🟡 *' + ($json.fields.tier_routed||'').toUpperCase() + '* — ' + ($json.fields.generated_title||'') + '\\nScore: ' + ($json.fields.score_total||0) + '/20\\n\\n' + ($json.fields.generated_body||'').slice(0, 800) : undefined, parse_mode: i === 0 ? 'Markdown' : undefined }))) }}\n}",
+        "options": {}
+      },
+      "id": "send-media-group",
+      "name": "Send Media Group",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, -120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{ JSON.stringify($('Loop 1 at a time').first().json.fields.telegram_chat_id_resolved || $env.TELEGRAM_FALLBACK_CHAT_ID) }},\n  \"text\": {{ JSON.stringify('📎 CTA: ' + ($('Loop 1 at a time').first().json.fields.generated_cta || '') + '\\n🔗 ' + ($('Loop 1 at a time').first().json.fields.cta_url_with_utm || '') + '\\n🏷 ' + ($('Loop 1 at a time').first().json.fields.hashtags || '')) }},\n  \"parse_mode\": \"Markdown\",\n  \"reply_markup\": {\n    \"inline_keyboard\": [[\n      {\"text\": \"✅ Duyệt\", \"callback_data\": {{ JSON.stringify('approve:' + $('Loop 1 at a time').first().json.fields.utm_content) }}},\n      {\"text\": \"✏️ Sửa\", \"callback_data\": {{ JSON.stringify('edit:' + $('Loop 1 at a time').first().json.fields.utm_content) }}},\n      {\"text\": \"❌ Bỏ\", \"callback_data\": {{ JSON.stringify('reject:' + $('Loop 1 at a time').first().json.fields.utm_content) }}}\n    ]]\n  }\n}",
+        "options": {}
+      },
+      "id": "send-cta-buttons",
+      "name": "Send CTA + Buttons",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [380, -120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{ JSON.stringify($json.fields.telegram_chat_id_resolved || $env.TELEGRAM_FALLBACK_CHAT_ID) }},\n  \"text\": {{ JSON.stringify('🟡 *' + ($json.fields.tier_routed||'').toUpperCase() + '* — ' + ($json.fields.generated_title||'') + '\\nScore: ' + ($json.fields.score_total||0) + '/20\\n\\n' + ($json.fields.generated_body||'') + '\\n\\n📎 CTA: ' + ($json.fields.generated_cta||'') + '\\n🔗 ' + ($json.fields.cta_url_with_utm||'') + '\\n🏷 ' + ($json.fields.hashtags||'')) }},\n  \"parse_mode\": \"Markdown\",\n  \"reply_markup\": {\n    \"inline_keyboard\": [[\n      {\"text\": \"✅ Duyệt\", \"callback_data\": {{ JSON.stringify('approve:' + $json.fields.utm_content) }}},\n      {\"text\": \"✏️ Sửa\", \"callback_data\": {{ JSON.stringify('edit:' + $json.fields.utm_content) }}},\n      {\"text\": \"❌ Bỏ\", \"callback_data\": {{ JSON.stringify('reject:' + $json.fields.utm_content) }}}\n    ]]\n  }\n}",
+        "options": {}
+      },
+      "id": "send-text-only",
+      "name": "Send Text-Only Post",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, 120]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $('Loop 1 at a time').first().json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"fields\": {\"status\": \"pending_review\", \"dispatched_at\": {{ JSON.stringify(new Date().toISOString()) }}}}",
+        "options": {}
+      },
+      "id": "mark-dispatched",
+      "name": "Mark pending_review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 0]
+    }
+  ],
+  "connections": {
+    "Cron 06:55 Daily": {"main": [[{"node": "Fetch ready_for_review", "type": "main", "index": 0}]]},
+    "Fetch ready_for_review": {"main": [[{"node": "Morning Summary to anh Dương", "type": "main", "index": 0}]]},
+    "Morning Summary to anh Dương": {"main": [[{"node": "Split Records", "type": "main", "index": 0}]]},
+    "Split Records": {"main": [[{"node": "Loop 1 at a time", "type": "main", "index": 0}]]},
+    "Loop 1 at a time": {
+      "main": [
+        [{"node": "Throttle 3s (Telegram rate limit)", "type": "main", "index": 0}],
+        []
+      ]
+    },
+    "Throttle 3s (Telegram rate limit)": {"main": [[{"node": "IF has media", "type": "main", "index": 0}]]},
+    "IF has media": {
+      "main": [
+        [{"node": "Send Media Group", "type": "main", "index": 0}],
+        [{"node": "Send Text-Only Post", "type": "main", "index": 0}]
+      ]
+    },
+    "Send Media Group": {"main": [[{"node": "Send CTA + Buttons", "type": "main", "index": 0}]]},
+    "Send CTA + Buttons": {"main": [[{"node": "Mark pending_review", "type": "main", "index": 0}]]},
+    "Send Text-Only Post": {"main": [[{"node": "Mark pending_review", "type": "main", "index": 0}]]},
+    "Mark pending_review": {"main": [[{"node": "Loop 1 at a time", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "active": false,
+  "id": "va-review-dispatcher-v1"
+}

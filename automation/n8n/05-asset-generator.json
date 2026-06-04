@@ -1,0 +1,504 @@
+{
+  "name": "VA Asset Generator — Image + Video (poll every 10 min)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "cronExpression", "expression": "*/10 0-6 * * *"}]
+        }
+      },
+      "id": "cron",
+      "name": "Every 10 min (00:10-06:50)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1600, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "filterByFormula", "value": "=OR({status}='needs_image', {status}='needs_video', {status}='needs_text_only')"},
+            {"name": "pageSize", "value": "10"}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-needs-assets",
+      "name": "Fetch needs_assets records",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1380, 0]
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "records",
+        "options": {}
+      },
+      "id": "split-records",
+      "name": "Split into items",
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [-1160, 0]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"fields\": {\"status\": \"generating_assets\"}}",
+        "options": {}
+      },
+      "id": "lock-record",
+      "name": "Lock: status=generating_assets",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-940, 0]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "needs_video",
+                    "leftValue": "={{ $('Split into items').first().json.fields.status }}",
+                    "rightValue": "needs_video",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Video"
+            },
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "needs_image",
+                    "leftValue": "={{ $('Split into items').first().json.fields.status }}",
+                    "rightValue": "needs_image",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Image"
+            },
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "text_only",
+                    "leftValue": "={{ $('Split into items').first().json.fields.status }}",
+                    "rightValue": "needs_text_only",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Text"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "switch-asset-type",
+      "name": "Switch: Video / Image / Text",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [-720, 0]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "engine_veo",
+                    "leftValue": "={{ $('Split into items').first().json.fields.video_engine }}",
+                    "rightValue": "veo3",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Veo3"
+            },
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "engine_kling",
+                    "leftValue": "={{ $('Split into items').first().json.fields.video_engine }}",
+                    "rightValue": "kling",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Kling"
+            },
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "engine_heygen",
+                    "leftValue": "={{ $('Split into items').first().json.fields.video_engine }}",
+                    "rightValue": "heygen",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "HeyGen"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "switch-video-engine",
+      "name": "Switch Video Engine",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [-500, -240]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://aiplatform.googleapis.com/v1/projects/{{ $env.GCP_PROJECT_ID }}/locations/us-central1/publishers/google/models/veo-3.0-generate-preview:predictLongRunning",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.GCP_ACCESS_TOKEN }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"instances\": [{\n    \"prompt\": {{ JSON.stringify($('Split into items').first().json.fields.visual_brief + ' | Style: cinematic, warm, education brand') }},\n    \"negativePrompt\": \"text, watermark, low quality\"\n  }],\n  \"parameters\": {\n    \"sampleCount\": 1,\n    \"aspectRatio\": \"9:16\",\n    \"durationSeconds\": 8,\n    \"generateAudio\": true\n  }\n}",
+        "options": {"timeout": 30000}
+      },
+      "id": "veo3-submit",
+      "name": "Veo 3: Submit Long-Running",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-280, -360]
+    },
+    {
+      "parameters": {
+        "amount": 60,
+        "unit": "seconds"
+      },
+      "id": "wait-veo",
+      "name": "Wait 60s",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [-60, -360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://aiplatform.googleapis.com/v1/projects/{{ $env.GCP_PROJECT_ID }}/locations/us-central1/publishers/google/models/veo-3.0-generate-preview:fetchPredictOperation",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.GCP_ACCESS_TOKEN }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"operationName\": {{ JSON.stringify($('Veo 3: Submit Long-Running').first().json.name) }}}",
+        "options": {"timeout": 30000}
+      },
+      "id": "veo3-poll",
+      "name": "Veo 3: Poll Operation",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, -360]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://queue.fal.run/fal-ai/kling-video/v2.1/standard/text-to-video",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Key {{ $env.FAL_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"prompt\": {{ JSON.stringify($('Split into items').first().json.fields.visual_brief + ' | Style: warm cartoon character, children-friendly, education') }},\n  \"duration\": \"5\",\n  \"aspect_ratio\": \"9:16\"\n}",
+        "options": {"timeout": 30000}
+      },
+      "id": "kling-submit",
+      "name": "Kling 2.1: Submit (fal.ai)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-280, -240]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.heygen.com/v2/video/generate",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "X-Api-Key", "value": "={{ $env.HEYGEN_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"video_inputs\": [{\n    \"character\": {\n      \"type\": \"avatar\",\n      \"avatar_id\": {{ JSON.stringify($env.HEYGEN_ANH_DUONG_AVATAR_ID) }},\n      \"avatar_style\": \"normal\"\n    },\n    \"voice\": {\n      \"type\": \"text\",\n      \"input_text\": {{ JSON.stringify($('Split into items').first().json.fields.generated_body.slice(0, 500)) }},\n      \"voice_id\": {{ JSON.stringify($env.HEYGEN_ANH_DUONG_VOICE_ID) }}\n    },\n    \"background\": {\"type\": \"color\", \"value\": \"#f8fafc\"}\n  }],\n  \"dimension\": {\"width\": 720, \"height\": 1280}\n}",
+        "options": {"timeout": 30000}
+      },
+      "id": "heygen-submit",
+      "name": "HeyGen: Anh Dương Avatar",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-280, -120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.minimaxi.chat/v1/t2a_v2",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.MINIMAX_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"speech-02-hd\",\n  \"text\": {{ JSON.stringify($('Split into items').first().json.fields.generated_body.slice(0, 500)) }},\n  \"voice_setting\": {\n    \"voice_id\": {{ JSON.stringify($env.MINIMAX_VOICE_ID) }},\n    \"speed\": 1.0,\n    \"vol\": 1.0,\n    \"pitch\": 0\n  },\n  \"audio_setting\": {\n    \"sample_rate\": 32000,\n    \"format\": \"mp3\"\n  }\n}",
+        "options": {"timeout": 60000}
+      },
+      "id": "minimax-voiceover",
+      "name": "MiniMax: Voiceover (TTS Vi)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [380, -240]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build carousel slide prompts from slide_briefs (string with \\n---\\n separator)\nconst rec = $('Split into items').first().json;\nconst briefs = (rec.fields.slide_briefs || '').split('\\n---\\n').filter(s => s.trim());\nreturn briefs.map((brief, idx) => ({\n  json: {\n    record_id: rec.id,\n    utm_content: rec.fields.utm_content,\n    slide_idx: idx,\n    prompt: brief.trim() + ' | Style: warm, education brand Trường Việt Anh, no text overlay, square 1:1',\n  },\n}));"
+      },
+      "id": "build-slide-prompts",
+      "name": "Build Carousel Slide Prompts",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-500, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key={{ $env.GEMINI_API_KEY }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"contents\": [{\n    \"parts\": [{\"text\": {{ JSON.stringify($json.prompt) }}}]\n  }],\n  \"generationConfig\": {\n    \"responseModalities\": [\"IMAGE\"]\n  }\n}",
+        "options": {"timeout": 60000}
+      },
+      "id": "nano-banana-image",
+      "name": "nano-banana: Generate Slide",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-280, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Extract base64 image from Gemini response\nconst resp = $input.first().json;\nconst part = resp.candidates?.[0]?.content?.parts?.find(p => p.inlineData?.data);\nif (!part) return [{ json: { error: 'no_image_returned', resp } }];\nreturn [{\n  json: {\n    record_id: $('Build Carousel Slide Prompts').first().json.record_id,\n    utm_content: $('Build Carousel Slide Prompts').first().json.utm_content,\n    slide_idx: $('Build Carousel Slide Prompts').first().json.slide_idx,\n    image_base64: part.inlineData.data,\n    mime_type: part.inlineData.mimeType || 'image/png',\n  },\n}];"
+      },
+      "id": "extract-image",
+      "name": "Extract Base64 Image",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-60, 0]
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "=https://{{ $env.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com/{{ $env.R2_BUCKET }}/content/{{ $json.utm_content }}/slide-{{ $json.slide_idx }}.png",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.R2_API_TOKEN }}"},
+            {"name": "Content-Type", "value": "={{ $json.mime_type }}"}
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "binaryPropertyName": "data",
+        "options": {}
+      },
+      "id": "upload-r2",
+      "name": "Upload to Cloudflare R2",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [160, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate all uploaded slides per record_id, then mark ready_for_review\nconst all = $input.all();\nconst byRecord = {};\nfor (const item of all) {\n  const id = item.json.record_id || ($('Extract Base64 Image').first().json.record_id);\n  const utm = item.json.utm_content;\n  if (!byRecord[id]) byRecord[id] = { record_id: id, utm_content: utm, urls: [] };\n  const idx = item.json.slide_idx;\n  byRecord[id].urls[idx] = `https://${process.env.R2_PUBLIC_DOMAIN}/content/${utm}/slide-${idx}.png`;\n}\nreturn Object.values(byRecord).map(r => ({ json: r }));"
+      },
+      "id": "aggregate-slides",
+      "name": "Aggregate Slide URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [380, 0]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $json.record_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"media_urls\": {{ JSON.stringify(($json.urls || []).join('\\n')) }},\n    \"status\": \"ready_for_review\"\n  }\n}",
+        "options": {}
+      },
+      "id": "mark-ready",
+      "name": "Mark ready_for_review",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [600, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// For video: collect video URL + voiceover URL into single ready_for_review update\nconst rec = $('Split into items').first().json;\nconst veo = (() => { try { return $('Veo 3: Poll Operation').first()?.json; } catch (e) { return null; } })();\nconst kling = (() => { try { return $('Kling 2.1: Submit (fal.ai)').first()?.json; } catch (e) { return null; } })();\nconst heygen = (() => { try { return $('HeyGen: Anh Dương Avatar').first()?.json; } catch (e) { return null; } })();\nconst minimax = (() => { try { return $('MiniMax: Voiceover (TTS Vi)').first()?.json; } catch (e) { return null; } })();\n\nlet videoUrl = '';\nif (veo?.response?.videos?.[0]?.gcsUri) videoUrl = veo.response.videos[0].gcsUri;\nelse if (kling?.video?.url) videoUrl = kling.video.url;\nelse if (heygen?.data?.video_url) videoUrl = heygen.data.video_url;\n\nconst voiceUrl = minimax?.data?.audio || '';\n\nreturn [{\n  json: {\n    record_id: rec.id,\n    media_urls: [videoUrl, voiceUrl].filter(Boolean).join('\\n'),\n  },\n}];"
+      },
+      "id": "aggregate-video",
+      "name": "Aggregate Video URLs",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [600, -240]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $json.record_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"media_urls\": {{ JSON.stringify($json.media_urls) }},\n    \"status\": \"ready_for_review\"\n  }\n}",
+        "options": {}
+      },
+      "id": "mark-ready-video",
+      "name": "Mark ready_for_review (Video)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [820, -240]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $('Split into items').first().json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"fields\": {\"status\": \"ready_for_review\"}}",
+        "options": {}
+      },
+      "id": "mark-ready-text",
+      "name": "Mark ready_for_review (Text only)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-280, 240]
+    }
+  ],
+  "connections": {
+    "Every 10 min (00:10-06:50)": {"main": [[{"node": "Fetch needs_assets records", "type": "main", "index": 0}]]},
+    "Fetch needs_assets records": {"main": [[{"node": "Split into items", "type": "main", "index": 0}]]},
+    "Split into items": {"main": [[{"node": "Lock: status=generating_assets", "type": "main", "index": 0}]]},
+    "Lock: status=generating_assets": {"main": [[{"node": "Switch: Video / Image / Text", "type": "main", "index": 0}]]},
+    "Switch: Video / Image / Text": {
+      "main": [
+        [{"node": "Switch Video Engine", "type": "main", "index": 0}],
+        [{"node": "Build Carousel Slide Prompts", "type": "main", "index": 0}],
+        [{"node": "Mark ready_for_review (Text only)", "type": "main", "index": 0}]
+      ]
+    },
+    "Switch Video Engine": {
+      "main": [
+        [{"node": "Veo 3: Submit Long-Running", "type": "main", "index": 0}],
+        [{"node": "Kling 2.1: Submit (fal.ai)", "type": "main", "index": 0}],
+        [{"node": "HeyGen: Anh Dương Avatar", "type": "main", "index": 0}]
+      ]
+    },
+    "Veo 3: Submit Long-Running": {"main": [[{"node": "Wait 60s", "type": "main", "index": 0}]]},
+    "Wait 60s": {"main": [[{"node": "Veo 3: Poll Operation", "type": "main", "index": 0}]]},
+    "Veo 3: Poll Operation": {"main": [[{"node": "MiniMax: Voiceover (TTS Vi)", "type": "main", "index": 0}]]},
+    "Kling 2.1: Submit (fal.ai)": {"main": [[{"node": "MiniMax: Voiceover (TTS Vi)", "type": "main", "index": 0}]]},
+    "HeyGen: Anh Dương Avatar": {"main": [[{"node": "Aggregate Video URLs", "type": "main", "index": 0}]]},
+    "MiniMax: Voiceover (TTS Vi)": {"main": [[{"node": "Aggregate Video URLs", "type": "main", "index": 0}]]},
+    "Aggregate Video URLs": {"main": [[{"node": "Mark ready_for_review (Video)", "type": "main", "index": 0}]]},
+    "Build Carousel Slide Prompts": {"main": [[{"node": "nano-banana: Generate Slide", "type": "main", "index": 0}]]},
+    "nano-banana: Generate Slide": {"main": [[{"node": "Extract Base64 Image", "type": "main", "index": 0}]]},
+    "Extract Base64 Image": {"main": [[{"node": "Upload to Cloudflare R2", "type": "main", "index": 0}]]},
+    "Upload to Cloudflare R2": {"main": [[{"node": "Aggregate Slide URLs", "type": "main", "index": 0}]]},
+    "Aggregate Slide URLs": {"main": [[{"node": "Mark ready_for_review", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "active": false,
+  "id": "va-asset-generator-v1"
+}

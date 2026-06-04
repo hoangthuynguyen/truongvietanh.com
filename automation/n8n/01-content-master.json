@@ -1,0 +1,357 @@
+{
+  "name": "VA Content Master — Daily Pipeline (00:00 trigger)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {"field": "cronExpression", "expression": "0 0 * * *"}
+          ]
+        }
+      },
+      "id": "cron-trigger",
+      "name": "Cron 00:00 Daily",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1600, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/system_flags",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "filterByFormula", "value": "={flag_name}='kill_switch'"}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "check-killswitch",
+      "name": "Check Kill Switch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1380, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+          "conditions": [
+            {
+              "id": "killswitch-off",
+              "leftValue": "={{ $json.records[0].fields.flag_value }}",
+              "rightValue": "off",
+              "operator": {"type": "string", "operation": "equals"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-killswitch-off",
+      "name": "IF Kill Switch == off",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [-1160, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/voice_cards",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "filterByFormula", "value": "={active}=TRUE()"},
+            {"name": "pageSize", "value": "100"}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-voice-cards",
+      "name": "Fetch Active Voice Cards",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-940, -120]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/insights",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "filterByFormula", "value": "=IS_AFTER({date}, DATEADD(NOW(), -24, 'hours'))"},
+            {"name": "pageSize", "value": "100"}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-insights",
+      "name": "Fetch Insights Last 24h",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-940, 120]
+    },
+    {
+      "parameters": {
+        "jsCode": "const voiceCards = $('Fetch Active Voice Cards').first().json.records;\nconst insights = $('Fetch Insights Last 24h').first().json.records;\n\nconst pairs = [];\nfor (const card of voiceCards) {\n  const cardAudienceTags = (card.fields.audience_tags || []).map(t => t.toLowerCase());\n  const matchedInsights = insights\n    .filter(ins => {\n      const insTags = (ins.fields.audience_segment || []).map(t => t.toLowerCase());\n      return insTags.some(t => cardAudienceTags.includes(t));\n    })\n    .sort((a, b) => (b.fields.intent_level || 0) - (a.fields.intent_level || 0))\n    .slice(0, 5);\n  pairs.push({\n    json: {\n      voice_card_id: card.id,\n      voice_card: card.fields,\n      insights: matchedInsights.map(i => ({\n        id: i.id,\n        raw_text: i.fields.raw_text,\n        topic_tag: i.fields.topic_tag,\n        intent_level: i.fields.intent_level,\n      })),\n    },\n  });\n}\nreturn pairs;"
+      },
+      "id": "pair-cards-insights",
+      "name": "Pair Cards × Insights",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-720, 0]
+    },
+    {
+      "parameters": {
+        "batchSize": 3,
+        "options": {}
+      },
+      "id": "split-batches",
+      "name": "Loop 3 cards in parallel",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-500, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "x-api-key", "value": "={{ $env.ANTHROPIC_API_KEY }}"},
+            {"name": "anthropic-version", "value": "2023-06-01"},
+            {"name": "content-type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-sonnet-4-6\",\n  \"max_tokens\": 2048,\n  \"system\": {{ JSON.stringify($json.voice_card.system_prompt) }},\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify(\n        'Hôm nay ' + new Date().toISOString().slice(0,10) + '. Dựa trên INSIGHT sau, sinh 3 ý tưởng post cho kênh ' + $json.voice_card.channel_name + ' (Tier ' + $json.voice_card.channel_tier + ', platform: ' + ($json.voice_card.platforms||[]).join(', ') + ').\\n\\nINSIGHTS:\\n' + ($json.insights.map((i,idx) => (idx+1) + '. [' + (i.topic_tag||[]).join(',') + '] ' + i.raw_text).join('\\n')) + '\\n\\nYÊU CẦU:\\n- Format mix: ' + $json.voice_card.format_mix + '\\n- CTA pattern: ' + $json.voice_card.cta_pattern + '\\n- Cho mỗi idea kèm \"visual_brief\" (1 câu mô tả ảnh/video sẽ generate) + \"slide_briefs\" cho carousel (array 8 prompts)\\n- Trả về JSON THUẦN: { \"ideas\": [{ \"format\": \"carousel|reel|text|blog\", \"title\": \"...\", \"body\": \"...\", \"cta\": \"...\", \"hashtags\": [\"#...\"], \"insight_used_id\": \"recXXX\", \"visual_brief\": \"...\", \"slide_briefs\": [\"prompt1\", ...], \"video_engine\": \"veo3|kling|heygen|none\" }] }'\n      ) }}\n    }\n  ]\n}",
+        "options": {"timeout": 90000}
+      },
+      "id": "claude-ideate",
+      "name": "Claude: Ideate 3 Posts",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-280, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.content?.[0]?.text || '';\nconst card = $('Loop 3 cards in parallel').first().json.voice_card;\nconst voiceCardId = $('Loop 3 cards in parallel').first().json.voice_card_id;\n\nlet parsed;\ntry {\n  const m = raw.match(/\\{[\\s\\S]*\\}/);\n  parsed = JSON.parse(m[0]);\n} catch (e) {\n  return [{ json: { error: 'parse_failed', raw, voice_card_id: voiceCardId } }];\n}\n\nconst forbidden = (card.forbidden_words || '').toLowerCase().split(/[,\\n]/).map(w => w.trim()).filter(Boolean);\nconst verified = (card.verified_claims_only ?? true);\n\nconst checked = (parsed.ideas || []).map((idea, idx) => {\n  const full = (idea.title + ' ' + idea.body + ' ' + idea.cta).toLowerCase();\n  const violations = [];\n  for (const w of forbidden) if (w && full.includes(w)) violations.push('forbidden_word:' + w);\n  const limits = { text: 1300, carousel: 1300, reel: 800, blog: 8000 };\n  if ((idea.body || '').length > (limits[idea.format] || 1300)) violations.push('length_exceeded');\n  const claimPat = /(\\d+(\\.\\d+)?%|top \\d|số 1|nhất|duy nhất|đầu tiên|cam kết \\d+)/i;\n  if (verified && claimPat.test(full)) violations.push('unverified_claim');\n  if (!idea.cta || idea.cta.length < 5) violations.push('missing_cta');\n  const childPat = /(bé tên|con anh|con chị|học sinh tên|cháu tên)/i;\n  const childFlag = childPat.test(full);\n  return { ...idea, idx, violations, passed_hard_rules: violations.length === 0, requires_consent_check: childFlag };\n});\n\nreturn [{\n  json: {\n    voice_card_id: voiceCardId,\n    voice_card: card,\n    ideas: checked,\n    passed_ideas: checked.filter(i => i.passed_hard_rules),\n  },\n}];"
+      },
+      "id": "hard-rules",
+      "name": "Parse + Hard Rules",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-60, 0]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "loose"},
+          "conditions": [
+            {
+              "id": "has-passed",
+              "leftValue": "={{ ($json.passed_ideas || []).length }}",
+              "rightValue": 0,
+              "operator": {"type": "number", "operation": "gt"}
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "if-has-passed",
+      "name": "IF has passed ideas",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [160, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "x-api-key", "value": "={{ $env.ANTHROPIC_API_KEY }}"},
+            {"name": "anthropic-version", "value": "2023-06-01"},
+            {"name": "content-type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"claude-haiku-4-5-20251001\",\n  \"max_tokens\": 1024,\n  \"system\": \"Bạn là chuyên gia chấm content marketing trường K-12 VN. Chấm 0-5 trên 4 tiêu chí: brand_fit, insight_depth, conversion_potential, educational_value. Trả về JSON thuần.\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": {{ JSON.stringify(\n        'BRAND VOICE:\\n' + $json.voice_card.voice_archetype + '\\nTone: ' + ($json.voice_card.tone_words||[]).join(', ') + '\\n\\nIDEAS:\\n' + $json.passed_ideas.map((idea,i) => '--- idx=' + idea.idx + ' ---\\nFormat: ' + idea.format + '\\nTitle: ' + idea.title + '\\nBody: ' + idea.body + '\\nCTA: ' + idea.cta).join('\\n\\n') + '\\n\\nTrả về: { \"scores\": [{ \"idx\": <số>, \"brand_fit\": 0-5, \"insight_depth\": 0-5, \"conversion_potential\": 0-5, \"educational_value\": 0-5, \"total\": 0-20, \"note\": \"...\" }] }'\n      ) }}\n    }\n  ]\n}",
+        "options": {"timeout": 60000}
+      },
+      "id": "claude-score",
+      "name": "Claude Haiku: Soft Score",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [380, -120]
+    },
+    {
+      "parameters": {
+        "jsCode": "const raw = $input.first().json.content?.[0]?.text || '';\nconst prev = $('Parse + Hard Rules').first().json;\n\nlet scored = [];\ntry {\n  const m = raw.match(/\\{[\\s\\S]*\\}/);\n  scored = JSON.parse(m[0]).scores || [];\n} catch (e) {}\n\nconst byIdx = new Map(scored.map(s => [s.idx, s]));\nconst ranked = prev.passed_ideas\n  .map(i => ({ ...i, score: byIdx.get(i.idx) || { total: 0 } }))\n  .sort((a, b) => (b.score.total || 0) - (a.score.total || 0));\n\nconst best = ranked[0];\nconst tier = String(prev.voice_card.channel_tier);\n\n// Routing — KHÔNG có tier 1 auto. Tất cả route to needs_assets (trừ tier 3 → ekip shoot)\nlet route, status;\nif (tier === '3') {\n  route = 'tier3_ekip_shoot';\n  status = 'needs_shoot';\n} else {\n  // tier 1, 2, 2.5 — tất cả đều cần asset gen + duyệt sáng\n  route = 'tier' + tier + '_pre_approval';\n  status = best.video_engine && best.video_engine !== 'none' ? 'needs_video' : (best.format === 'carousel' || best.format === 'blog' ? 'needs_image' : 'needs_text_only');\n}\n\nconst now = new Date();\nconst utm_campaign = now.toISOString().slice(0,10) + '-' + (prev.voice_card.channel_name || 'unknown').toLowerCase().replace(/[^a-z0-9]+/g, '-');\nconst utm_content = 'auto-' + now.getTime() + '-' + Math.random().toString(36).slice(2, 8);\nconst utm_suffix = '?utm_source=' + (prev.voice_card.platforms||[''])[0] + '&utm_medium=organic&utm_campaign=' + utm_campaign + '&utm_content=' + utm_content;\n\nreturn [{\n  json: {\n    voice_card_id: prev.voice_card_id,\n    voice_card: prev.voice_card,\n    best_idea: best,\n    route,\n    status,\n    utm_campaign,\n    utm_content,\n    cta_url_with_utm: (prev.voice_card.cta_url || '') + utm_suffix,\n    score_total: best.score.total,\n    score_breakdown: best.score,\n  },\n}];"
+      },
+      "id": "pick-route",
+      "name": "Pick Best + Route",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [600, -120]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "tier3",
+                    "leftValue": "={{ $json.route }}",
+                    "rightValue": "tier3_ekip_shoot",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Tier3_Ekip"
+            }
+          ],
+          "fallbackOutput": "extra"
+        },
+        "options": {}
+      },
+      "id": "switch-route",
+      "name": "Switch: Tier 3 vs Asset Pipeline",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [820, -120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://open.larksuite.com/open-apis/task/v2/tasks",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.LARK_TENANT_ACCESS_TOKEN }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"summary\": {{ JSON.stringify('[' + $json.voice_card.channel_name + '] Quay video: ' + $json.best_idea.title) }},\n  \"description\": {{ JSON.stringify('SCRIPT:\\n' + $json.best_idea.body + '\\n\\nCTA: ' + $json.best_idea.cta + '\\n\\nVisual brief: ' + ($json.best_idea.visual_brief || '') + '\\n\\nHashtags: ' + ($json.best_idea.hashtags||[]).join(' ')) }},\n  \"due\": {\"timestamp\": \"{{ Math.floor(Date.now()/1000) + 172800 }}\", \"is_all_day\": false}\n}",
+        "options": {}
+      },
+      "id": "lark-tier3",
+      "name": "Lark Task → Ekip (Tier 3)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1060, -240]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"created_at\": {{ JSON.stringify(new Date().toISOString()) }},\n    \"voice_card\": [{{ JSON.stringify($('Pick Best + Route').first().json.voice_card_id) }}],\n    \"generated_title\": {{ JSON.stringify($('Pick Best + Route').first().json.best_idea.title) }},\n    \"generated_body\": {{ JSON.stringify($('Pick Best + Route').first().json.best_idea.body) }},\n    \"generated_cta\": {{ JSON.stringify($('Pick Best + Route').first().json.best_idea.cta) }},\n    \"format\": {{ JSON.stringify($('Pick Best + Route').first().json.best_idea.format) }},\n    \"visual_brief\": {{ JSON.stringify($('Pick Best + Route').first().json.best_idea.visual_brief || '') }},\n    \"slide_briefs\": {{ JSON.stringify(($('Pick Best + Route').first().json.best_idea.slide_briefs || []).join('\\n---\\n')) }},\n    \"video_engine\": {{ JSON.stringify($('Pick Best + Route').first().json.best_idea.video_engine || 'none') }},\n    \"hard_rules_passed\": true,\n    \"score_brand_fit\": {{ $('Pick Best + Route').first().json.score_breakdown.brand_fit || 0 }},\n    \"score_insight_depth\": {{ $('Pick Best + Route').first().json.score_breakdown.insight_depth || 0 }},\n    \"score_conversion\": {{ $('Pick Best + Route').first().json.score_breakdown.conversion_potential || 0 }},\n    \"score_education\": {{ $('Pick Best + Route').first().json.score_breakdown.educational_value || 0 }},\n    \"score_total\": {{ $('Pick Best + Route').first().json.score_total || 0 }},\n    \"tier_routed\": {{ JSON.stringify($('Pick Best + Route').first().json.route) }},\n    \"status\": {{ JSON.stringify($('Pick Best + Route').first().json.status) }},\n    \"utm_campaign\": {{ JSON.stringify($('Pick Best + Route').first().json.utm_campaign) }},\n    \"utm_content\": {{ JSON.stringify($('Pick Best + Route').first().json.utm_content) }},\n    \"cta_url_with_utm\": {{ JSON.stringify($('Pick Best + Route').first().json.cta_url_with_utm) }},\n    \"hashtags\": {{ JSON.stringify(($('Pick Best + Route').first().json.best_idea.hashtags||[]).join(' ')) }}\n  }\n}",
+        "options": {}
+      },
+      "id": "log-pipeline",
+      "name": "Log to content_pipeline",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1280, -120]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/sendMessage",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"chat_id\": {{ JSON.stringify($env.TELEGRAM_FALLBACK_CHAT_ID) }},\n  \"text\": \"🛑 *KILL SWITCH ACTIVE* — pipeline đã DỪNG. Bật lại: Airtable system_flags.kill_switch = 'off'.\",\n  \"parse_mode\": \"Markdown\"\n}",
+        "options": {}
+      },
+      "id": "killswitch-notify",
+      "name": "Notify Kill Switch",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-940, 280]
+    }
+  ],
+  "connections": {
+    "Cron 00:00 Daily": {"main": [[{"node": "Check Kill Switch", "type": "main", "index": 0}]]},
+    "Check Kill Switch": {"main": [[{"node": "IF Kill Switch == off", "type": "main", "index": 0}]]},
+    "IF Kill Switch == off": {
+      "main": [
+        [
+          {"node": "Fetch Active Voice Cards", "type": "main", "index": 0},
+          {"node": "Fetch Insights Last 24h", "type": "main", "index": 0}
+        ],
+        [{"node": "Notify Kill Switch", "type": "main", "index": 0}]
+      ]
+    },
+    "Fetch Active Voice Cards": {"main": [[{"node": "Pair Cards × Insights", "type": "main", "index": 0}]]},
+    "Fetch Insights Last 24h": {"main": [[{"node": "Pair Cards × Insights", "type": "main", "index": 0}]]},
+    "Pair Cards × Insights": {"main": [[{"node": "Loop 3 cards in parallel", "type": "main", "index": 0}]]},
+    "Loop 3 cards in parallel": {
+      "main": [
+        [{"node": "Claude: Ideate 3 Posts", "type": "main", "index": 0}],
+        []
+      ]
+    },
+    "Claude: Ideate 3 Posts": {"main": [[{"node": "Parse + Hard Rules", "type": "main", "index": 0}]]},
+    "Parse + Hard Rules": {"main": [[{"node": "IF has passed ideas", "type": "main", "index": 0}]]},
+    "IF has passed ideas": {
+      "main": [
+        [{"node": "Claude Haiku: Soft Score", "type": "main", "index": 0}],
+        [{"node": "Loop 3 cards in parallel", "type": "main", "index": 0}]
+      ]
+    },
+    "Claude Haiku: Soft Score": {"main": [[{"node": "Pick Best + Route", "type": "main", "index": 0}]]},
+    "Pick Best + Route": {"main": [[{"node": "Switch: Tier 3 vs Asset Pipeline", "type": "main", "index": 0}]]},
+    "Switch: Tier 3 vs Asset Pipeline": {
+      "main": [
+        [{"node": "Lark Task → Ekip (Tier 3)", "type": "main", "index": 0}],
+        [{"node": "Log to content_pipeline", "type": "main", "index": 0}]
+      ]
+    },
+    "Lark Task → Ekip (Tier 3)": {"main": [[{"node": "Log to content_pipeline", "type": "main", "index": 0}]]},
+    "Log to content_pipeline": {"main": [[{"node": "Loop 3 cards in parallel", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "active": false,
+  "id": "va-content-master-v2"
+}

@@ -149,7 +149,7 @@ export const mainNavRight = [
       { label: 'Tiểu học', href: '/tieu-hoc' },
       { label: 'THCS', href: '/thcs' },
       { label: 'THPT', href: '/thpt' },
-      { label: 'Trại hè', href: '/trai-he' },
+      { label: 'Trại hè', href: '/trai-he-2026' },
       { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
       { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
       { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang' },

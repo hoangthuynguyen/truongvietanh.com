@@ -1,0 +1,259 @@
+{
+  "name": "VA Content — Telegram Approval Callback",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": ["callback_query"],
+        "additionalFields": {}
+      },
+      "id": "telegram-trigger",
+      "name": "Telegram Callback Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1.1,
+      "position": [-1200, 0],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-bot",
+          "name": "VA Approval Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse callback_data: 'approve:utm_content' | 'edit:...' | 'reject:...'\nconst cb = $input.first().json.callback_query;\nconst [action, utm_content] = (cb.data || '').split(':');\nreturn [{\n  json: {\n    action,\n    utm_content,\n    callback_id: cb.id,\n    chat_id: cb.message.chat.id,\n    message_id: cb.message.message_id,\n    user_name: cb.from.first_name || cb.from.username,\n  },\n}];"
+      },
+      "id": "parse-callback",
+      "name": "Parse Callback",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-960, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "filterByFormula",
+              "value": "={{ \"{utm_content}='\" + $json.utm_content + \"'\" }}"
+            },
+            {
+              "name": "maxRecords",
+              "value": "1"
+            }
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "lookup-record",
+      "name": "Lookup Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-720, 0]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "approve",
+                    "leftValue": "={{ $('Parse Callback').first().json.action }}",
+                    "rightValue": "approve",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Approve"
+            },
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "edit",
+                    "leftValue": "={{ $('Parse Callback').first().json.action }}",
+                    "rightValue": "edit",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Edit"
+            },
+            {
+              "conditions": {
+                "options": {"caseSensitive": true, "leftValue": "", "typeValidation": "strict"},
+                "conditions": [
+                  {
+                    "id": "reject",
+                    "leftValue": "={{ $('Parse Callback').first().json.action }}",
+                    "rightValue": "reject",
+                    "operator": {"type": "string", "operation": "equals"}
+                  }
+                ],
+                "combinator": "and"
+              },
+              "renameOutput": true,
+              "outputKey": "Reject"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "switch-action",
+      "name": "Switch by Action",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.2,
+      "position": [-480, 0]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.bufferapp.com/2/updates/create.json",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"text\": {{ JSON.stringify($json.records[0].fields.generated_body + ' ' + ($json.records[0].fields.hashtags || '')) }},\n  \"profile_ids\": [{{ JSON.stringify($json.records[0].fields.buffer_profile_id_resolved || '') }}],\n  \"access_token\": {{ JSON.stringify($env.BUFFER_ACCESS_TOKEN) }}\n}",
+        "options": {}
+      },
+      "id": "publish-on-approve",
+      "name": "Publish via Buffer",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-240, -200]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $('Lookup Record').first().json.records[0].id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"status\": \"published\",\n    \"approved_by\": {{ JSON.stringify($('Parse Callback').first().json.user_name) }},\n    \"published_at\": {{ JSON.stringify(new Date().toISOString()) }}\n  }\n}",
+        "options": {}
+      },
+      "id": "update-approve",
+      "name": "Mark Approved + Published",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-20, -200]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $('Lookup Record').first().json.records[0].id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"status\": \"editing\",\n    \"reviewed_by\": {{ JSON.stringify($('Parse Callback').first().json.user_name) }}\n  }\n}",
+        "options": {}
+      },
+      "id": "update-edit",
+      "name": "Mark Editing",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-240, 0]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $('Lookup Record').first().json.records[0].id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"fields\": {\n    \"status\": \"rejected\",\n    \"reviewed_by\": {{ JSON.stringify($('Parse Callback').first().json.user_name) }},\n    \"rejected_at\": {{ JSON.stringify(new Date().toISOString()) }}\n  }\n}",
+        "options": {}
+      },
+      "id": "update-reject",
+      "name": "Mark Rejected (training data)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-240, 200]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://api.telegram.org/bot{{ $env.TELEGRAM_BOT_TOKEN }}/answerCallbackQuery",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"callback_query_id\": {{ JSON.stringify($('Parse Callback').first().json.callback_id) }},\n  \"text\": {{ JSON.stringify('Đã ghi nhận: ' + $('Parse Callback').first().json.action) }}\n}",
+        "options": {}
+      },
+      "id": "ack-callback",
+      "name": "Acknowledge to Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [220, 0]
+    }
+  ],
+  "connections": {
+    "Telegram Callback Trigger": {
+      "main": [[{"node": "Parse Callback", "type": "main", "index": 0}]]
+    },
+    "Parse Callback": {
+      "main": [[{"node": "Lookup Record", "type": "main", "index": 0}]]
+    },
+    "Lookup Record": {
+      "main": [[{"node": "Switch by Action", "type": "main", "index": 0}]]
+    },
+    "Switch by Action": {
+      "main": [
+        [{"node": "Publish via Buffer", "type": "main", "index": 0}],
+        [{"node": "Mark Editing", "type": "main", "index": 0}],
+        [{"node": "Mark Rejected (training data)", "type": "main", "index": 0}]
+      ]
+    },
+    "Publish via Buffer": {
+      "main": [[{"node": "Mark Approved + Published", "type": "main", "index": 0}]]
+    },
+    "Mark Approved + Published": {
+      "main": [[{"node": "Acknowledge to Telegram", "type": "main", "index": 0}]]
+    },
+    "Mark Editing": {
+      "main": [[{"node": "Acknowledge to Telegram", "type": "main", "index": 0}]]
+    },
+    "Mark Rejected (training data)": {
+      "main": [[{"node": "Acknowledge to Telegram", "type": "main", "index": 0}]]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "active": false,
+  "id": "va-approval-callback-v1"
+}

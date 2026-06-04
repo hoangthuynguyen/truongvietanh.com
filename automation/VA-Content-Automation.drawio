@@ -1,0 +1,709 @@
+<mxfile host="app.diagrams.net" modified="2026-05-26T00:00:00.000Z" agent="Mozilla/5.0" version="24.0.0" type="device">
+  <diagram name="1. Architecture Overview" id="page1">
+    <mxGraphModel dx="2400" dy="1500" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1920" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="VA Content Automation — Architecture Overview&#10;25 kênh • Cron 00:00 → 07:00 • Tất cả pre-approval" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=22;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1820" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lane-cron" value="⏰ TRIGGERS (n8n cron)" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=1;fontColor=#78350f;" vertex="1" parent="1">
+          <mxGeometry x="40" y="110" width="200" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wf03-box" value="📡 03 Insight Harvester&#10;━━━━━━━━━━━━━━━━━&#10;⏰ Every 2 hours&#10;&#10;• Google Trends VN&#10;• GHL form submits&#10;• FB owned comments&#10;&#10;→ insights table" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#f59e0b;strokeWidth=2;align=left;verticalAlign=top;fontSize=12;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="150" width="290" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wf01-box" value="🕛 01 Content Master&#10;━━━━━━━━━━━━━━━━━&#10;⏰ Daily 00:00&#10;&#10;• Kill switch check&#10;• Ideate (Claude Sonnet 4.6)&#10;• Hard rules + Soft score&#10;• Route by tier 1/2/2.5/3&#10;&#10;→ content_pipeline (needs_*)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;strokeWidth=3;align=left;verticalAlign=top;fontSize=12;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="350" y="150" width="290" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wf05-box" value="⚙️ 05 Asset Generator&#10;━━━━━━━━━━━━━━━━━&#10;⏰ */10 min (00:10–06:50)&#10;&#10;• Poll needs_image/video&#10;• Veo 3 / Kling / HeyGen&#10;• nano-banana (image)&#10;• MiniMax (voiceover)&#10;&#10;→ R2 upload + ready_for_review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;strokeWidth=3;align=left;verticalAlign=top;fontSize=12;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="660" y="150" width="290" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wf06-box" value="📢 06 Review Dispatcher&#10;━━━━━━━━━━━━━━━━━&#10;⏰ Daily 06:55&#10;&#10;• Fetch ready_for_review&#10;• Morning summary&#10;• Send Telegram + 3 buttons&#10;• Throttle 3s/msg&#10;&#10;→ pending_review" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cffafe;strokeColor=#06b6d4;strokeWidth=3;align=left;verticalAlign=top;fontSize=12;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="970" y="150" width="290" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wf02-box" value="☀️ 02 Approval Callback&#10;━━━━━━━━━━━━━━━━━&#10;🔔 Telegram webhook&#10;&#10;• Parse callback data&#10;• ✅ Duyệt → Publer publish&#10;• ✏️ Sửa → status=editing&#10;• ❌ Bỏ → training data&#10;&#10;→ published / editing / rejected" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#22c55e;strokeWidth=3;align=left;verticalAlign=top;fontSize=12;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1280" y="150" width="290" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="wf04-box" value="📊 04 Performance Tracker&#10;━━━━━━━━━━━━━━━━━&#10;⏰ Every :30&#10;&#10;• Fetch published 24h/72h&#10;• FB Insights API&#10;• GHL leads + enrollments&#10;&#10;→ engagement_24h/72h + CPE-C" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e8ff;strokeColor=#a855f7;strokeWidth=2;align=left;verticalAlign=top;fontSize=12;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1590" y="150" width="270" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="airtable-hub" value="📦 AIRTABLE — Source of Truth" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce7f3;strokeColor=#ec4899;strokeWidth=3;verticalAlign=top;fontSize=16;fontStyle=1;spacingTop=10;" vertex="1" parent="1">
+          <mxGeometry x="40" y="410" width="1820" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tbl-vc" value="🎙️ voice_cards&#10;━━━━━━━━━━&#10;25 records (1/kênh)&#10;• channel_name&#10;• channel_tier (1/2/2.5/3)&#10;• system_prompt&#10;• telegram_chat_id&#10;• video_engine default&#10;• active checkbox" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ec4899;align=left;verticalAlign=top;fontSize=11;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="70" y="450" width="280" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tbl-ins" value="💡 insights&#10;━━━━━━━━━━&#10;Rolling 24h window&#10;• date, source&#10;• raw_text&#10;• topic_tag&#10;• audience_segment&#10;• intent_level (1-5)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ec4899;align=left;verticalAlign=top;fontSize=11;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="370" y="450" width="280" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tbl-pipe" value="📰 content_pipeline ⭐&#10;━━━━━━━━━━&#10;Generated posts (main table)&#10;• generated_body, format&#10;• status (state machine)&#10;• tier_routed, score_total&#10;• utm_content (callback key)&#10;• media_urls (R2 URLs)&#10;• engagement_24h/72h&#10;• enrollments_attributed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=2;align=left;verticalAlign=top;fontSize=11;spacingLeft=10;spacingTop=8;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="670" y="450" width="320" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tbl-flags" value="🚦 system_flags&#10;━━━━━━━━━━&#10;Runtime control&#10;• kill_switch = on/off&#10;• updated_at, updated_by&#10;&#10;⚠️ Set kill_switch=on để&#10;dừng toàn bộ pipeline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;align=left;verticalAlign=top;fontSize=11;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1010" y="450" width="280" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r2-storage" value="☁️ Cloudflare R2&#10;━━━━━━━━━━&#10;Asset storage&#10;(anh đã có sẵn)&#10;&#10;• /content/{utm}/slide-N.png&#10;• /content/{utm}/video.mp4&#10;• /content/{utm}/voice.mp3&#10;&#10;Public CDN qua&#10;assets.truongvietanh.com" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#ea580c;align=left;verticalAlign=top;fontSize=11;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1310" y="450" width="280" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tools-section" value="🛠️ EXTERNAL AI TOOLS" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="640" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-claude" value="🤖 Claude AI&#10;━━━━━━━━&#10;Sonnet 4.6 (ideate)&#10;Haiku 4.5 (score)&#10;.ai cowork (blog manual)&#10;&#10;~$60/mo API" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-veo" value="🎬 Veo 3&#10;━━━━━━━━&#10;Vertex AI&#10;Cinematic 8s + audio&#10;&#10;$0.75/clip&#10;~$112/mo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="215" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-kling" value="🎨 Kling 2.1&#10;━━━━━━━━&#10;fal.ai queue API&#10;Cartoon 5s&#10;&#10;$0.30/clip&#10;~$45/mo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="390" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-heygen" value="👤 HeyGen&#10;━━━━━━━━&#10;CHỈ avatar&#10;Anh Dương (1 cái)&#10;&#10;$89/mo Creator" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="565" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-nano" value="🖼 nano-banana&#10;━━━━━━━━&#10;Gemini 2.5&#10;Flash Image&#10;&#10;$0.039/img&#10;~$30/mo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="740" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-minimax" value="🎙 MiniMax&#10;━━━━━━━━&#10;TTS tiếng Việt&#10;Voice clone&#10;&#10;~$15/mo" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="915" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tools-dist" value="📤 DISTRIBUTION + ANALYTICS" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="640" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-tg" value="📱 Telegram Bot&#10;━━━━━━━━&#10;Approval UI&#10;3 buttons&#10;&#10;Free" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cffafe;strokeColor=#06b6d4;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-publer" value="📤 Publer&#10;━━━━━━━━&#10;25 kênh schedule&#10;FB / TikTok / IG&#10;Threads / YT / Zalo&#10;&#10;$12/mo unlimited" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cffafe;strokeColor=#06b6d4;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1265" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-lark" value="📋 Lark Task&#10;━━━━━━━━&#10;Tier 3 ekip&#10;Quay video 48h&#10;&#10;Free for VA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cffafe;strokeColor=#06b6d4;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1440" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="tool-ghl" value="💰 GHL&#10;━━━━━━━━&#10;CRM attribution&#10;Lead + Enrollment&#10;Chatbot built-in&#10;&#10;Anh đã có" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cffafe;strokeColor=#06b6d4;align=center;verticalAlign=top;fontSize=11;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1615" y="680" width="160" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="human-section" value="👥 HUMANS IN THE LOOP" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="850" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="anh-duong" value="👤 Anh Dương&#10;Founder &amp; Final Approver&#10;━━━━━━━━━━&#10;07:00+ mở Telegram&#10;~5-10 phút/post × 25 = 1.5-2h&#10;Bấm ✅ / ✏️ / ❌" style="shape=actor;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=2;align=center;verticalAlign=top;fontSize=11;spacingTop=70;" vertex="1" parent="1">
+          <mxGeometry x="40" y="890" width="240" height="220" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pod1" value="Pod Adult-A&#10;3 người&#10;━━━━━━━&#10;VA Page chính&#10;Mẹ Bỉm + Bố Dạy Con" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;align=center;verticalAlign=top;fontSize=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="300" y="900" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pod2" value="Pod Adult-B&#10;3 người&#10;━━━━━━━&#10;VA THPT + Du Học&#10;Blog SEO" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;align=center;verticalAlign=top;fontSize=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="495" y="900" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pod3" value="Pod Kids&#10;3 người&#10;━━━━━━━&#10;Bé Linh AI + Robo Bin&#10;VA Mầm Non" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;align=center;verticalAlign=top;fontSize=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="690" y="900" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pod4" value="Pod Teen&#10;3 người&#10;━━━━━━━&#10;VA Học Sinh&#10;TikTok + thầy/cô KOL" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;align=center;verticalAlign=top;fontSize=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="885" y="900" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pod5" value="Pod Ops&#10;3 người&#10;━━━━━━━&#10;n8n + Airtable&#10;Analytics dashboard" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;align=center;verticalAlign=top;fontSize=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1080" y="900" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ekip" value="🎥 Ekip Video&#10;1-2 người&#10;━━━━━━━&#10;Quay Tier 3&#10;48h deadline" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce7f3;strokeColor=#ec4899;align=center;verticalAlign=top;fontSize=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1275" y="900" width="180" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="kpi-box" value="⭐ KPI BẮC ĐẨU&#10;━━━━━━━━━━━━━━━&#10;Cost per Enrollment qua&#10;Content Channel (CPE-C)&#10;&#10;Attribution chain:&#10;Post → UTM → Click → Lead&#10;→ Meeting → Enrollment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;strokeWidth=2;align=left;verticalAlign=top;fontSize=11;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1480" y="900" width="295" height="180" as="geometry" />
+        </mxCell>
+
+        <mxCell id="legend" value="🚫 ĐÃ BỎ: AIKTP (→ Claude cowork), Botcake (→ GHL chatbot), Minigo (→ n8n), Base44 (→ Astro), AutoVis.ai (DIY Veo+Kling), Vuna.ai (→ Kling), ChatGPT image (→ nano-banana)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontStyle=2;fontColor=#6b7280;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1120" width="1820" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cost-summary" value="💰 ~$668/mo (~16 triệu VND) • 750 post/tháng × 25 kênh = ~22k VND/post automated" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=13;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1165" width="1820" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;strokeColor=#f59e0b;strokeWidth=2;endArrow=classic;" edge="1" parent="1" source="wf03-box" target="tbl-ins">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#3b82f6;strokeWidth=2;dashed=1;endArrow=classic;" edge="1" parent="1" source="wf01-box" target="tbl-vc">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="495" y="390" />
+              <mxPoint x="210" y="390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e2b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#3b82f6;strokeWidth=2;endArrow=classic;" edge="1" parent="1" source="wf01-box" target="tbl-pipe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#ef4444;strokeWidth=2;dashed=1;endArrow=classic;startArrow=classic;" edge="1" parent="1" source="wf05-box" target="tbl-pipe">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e3b" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#ef4444;strokeWidth=2;endArrow=classic;" edge="1" parent="1" source="wf05-box" target="r2-storage">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="805" y="395" />
+              <mxPoint x="1450" y="395" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#06b6d4;strokeWidth=2;dashed=1;endArrow=classic;" edge="1" parent="1" source="wf06-box" target="tbl-pipe">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1115" y="400" />
+              <mxPoint x="830" y="400" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#22c55e;strokeWidth=2;endArrow=classic;" edge="1" parent="1" source="wf02-box" target="tbl-pipe">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1425" y="410" />
+              <mxPoint x="830" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;strokeColor=#a855f7;strokeWidth=2;dashed=1;endArrow=classic;" edge="1" parent="1" source="wf04-box" target="tbl-pipe">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1725" y="420" />
+              <mxPoint x="910" y="420" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;strokeColor=#0891b2;strokeWidth=2;endArrow=classic;" edge="1" parent="1" source="tool-tg" target="anh-duong">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1170" y="845" />
+              <mxPoint x="160" y="845" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#ca8a04;strokeWidth=2;endArrow=classic;" edge="1" parent="1" source="anh-duong" target="wf02-box">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1425" y="260" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="e8label" value="✅ ✏️ ❌&#10;Bấm nút" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fillColor=#fff;strokeColor=#ca8a04;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1400" y="850" width="80" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#16a34a;strokeWidth=2;endArrow=classic;" edge="1" parent="1" source="wf02-box" target="tool-publer">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1345" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="2. Pipeline Detail Flow" id="page2">
+    <mxGraphModel dx="2400" dy="3000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="2400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="p2-title" value="VA Content Automation — Pipeline Detail Flow (00:00 → 07:00+)" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=20;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1320" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-cron" value="🕛 Cron 00:00 Daily&#10;0 0 * * *" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=2;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="640" y="100" width="160" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-ks" value="Check Kill Switch&#10;Airtable: system_flags" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="640" y="200" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-ksoff" value="off → continue" style="text;html=1;fontSize=10;fontColor=#16a34a;" vertex="1" parent="1">
+          <mxGeometry x="810" y="230" width="100" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-kson" value="on → STOP&#10;Telegram alert" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="900" y="220" width="140" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-fvc" value="📦 Fetch Active Voice Cards&#10;GET /airtable/voice_cards&#10;filter: active=TRUE" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fce7f3;strokeColor=#ec4899;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="420" y="320" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-fins" value="📦 Fetch Insights Last 24h&#10;GET /airtable/insights&#10;filter: date &gt; NOW-24h" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fce7f3;strokeColor=#ec4899;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="820" y="320" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-pair" value="🧠 Pair Cards × Insights&#10;n8n Code node&#10;Match audience_tags ↔ audience_segment" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="560" y="430" width="320" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-loop" value="🔁 Loop 3 cards parallel&#10;SplitInBatches" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="530" width="240" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-ide" value="🤖 Claude Sonnet 4.6&#10;━━━━━━━━━━━━&#10;POST anthropic.com/v1/messages&#10;system: voice_card.system_prompt&#10;user: insights + format mix + CTA pattern&#10;Output: JSON 3 ideas + visual_brief + slide_briefs + video_engine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="630" width="440" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-hr" value="✅ Hard Rules Check&#10;━━━━━━━━━━━&#10;• forbidden_words&#10;• unverified claim (số 1, %, top)&#10;• length per format&#10;• missing CTA&#10;• child mention → flag consent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="540" y="790" width="360" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-ifp" value="Pass ≥1 idea?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#dc2626;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="640" y="950" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-fail" value="No → back to Loop&#10;(retry next card)" style="text;html=1;fontSize=10;fontColor=#dc2626;" vertex="1" parent="1">
+          <mxGeometry x="820" y="975" width="160" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-score" value="🤖 Claude Haiku 4.5&#10;━━━━━━━━━━━━&#10;Soft score 4 dimensions:&#10;brand_fit / insight_depth / conversion / education&#10;0-5 each → total 0-20" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1070" width="440" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-pick" value="🎯 Pick Best + Route&#10;━━━━━━━━━━━&#10;Sort by score_total DESC&#10;Generate utm_content (callback key)&#10;Determine status by tier + format:&#10;• carousel/blog → needs_image&#10;• reel → needs_video&#10;• text → needs_text_only&#10;• Tier 3 → needs_shoot + Lark task" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1210" width="440" height="160" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-tier3" value="📋 Lark Task → Ekip&#10;(Tier 3 only)&#10;deadline 48h" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cffafe;strokeColor=#06b6d4;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="160" y="1240" width="240" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-log" value="📦 Log to content_pipeline&#10;POST /airtable/content_pipeline&#10;status = needs_image | needs_video | needs_text_only | needs_shoot" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#fff7ed;strokeColor=#ea580c;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="1410" width="440" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-loop-back" value="↑ Loop back to next batch" style="text;html=1;fontSize=10;fontColor=#d97706;fontStyle=2;" vertex="1" parent="1">
+          <mxGeometry x="980" y="1430" width="200" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-divider1" value="━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=12;fontColor=#94a3b8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1510" width="1320" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-phase2" value="⚙️ 00:10–06:50 — ASSET GENERATOR (Workflow 05) polls every 10 min" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=14;fontStyle=1;fontColor=#ef4444;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1540" width="1320" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-cron5" value="⏰ Cron */10 min (00:10-06:50)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="600" y="1590" width="240" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-fetchN" value="📦 Fetch needs_image / needs_video / needs_text_only&#10;GET /airtable/content_pipeline (limit 10)" style="shape=cylinder3;whiteSpace=wrap;html=1;fillColor=#fce7f3;strokeColor=#ec4899;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="540" y="1670" width="360" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-lock" value="🔒 Lock status=generating_assets&#10;(prevents double-processing)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#ea580c;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1760" width="320" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-swformat" value="Switch by format" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f3e8ff;strokeColor=#a855f7;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="640" y="1840" width="160" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-img" value="🖼 carousel / blog&#10;━━━━━━━━━━&#10;Build slide prompts&#10;(8 slides for carousel)&#10;↓&#10;nano-banana (Gemini 2.5)&#10;POST generativelanguage/v1beta&#10;responseModalities=IMAGE" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1960" width="280" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-reel" value="🎬 reel&#10;━━━━━━━━━━&#10;Switch by video_engine" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;fontSize=11;align=center;verticalAlign=top;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="560" y="1960" width="320" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-veo" value="Veo 3 (Vertex AI)&#10;Long-running operation&#10;Wait 60s + poll&#10;9:16 / 8s / audio=true" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="430" y="2050" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-kling" value="Kling 2.1 (fal.ai)&#10;queue.fal.run&#10;POST kling-video/v2.1&#10;5s / 9:16" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="640" y="2050" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-hg" value="HeyGen&#10;avatar Anh Dương ONLY&#10;avatar_id + voice_id&#10;720×1280" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="850" y="2050" width="200" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-mm" value="🎙 MiniMax TTS&#10;speech-02-hd&#10;Vietnamese voice clone&#10;(voiceover cho Veo/Kling)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef2f2;strokeColor=#ef4444;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="540" y="2170" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-r2" value="☁️ Upload Cloudflare R2&#10;PUT /content/{utm}/slide-N.png&#10;PUT /content/{utm}/video.mp4&#10;PUT /content/{utm}/voice.mp3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff7ed;strokeColor=#ea580c;fontSize=10;align=left;verticalAlign=top;spacingLeft=8;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="380" y="2280" width="580" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-ready" value="📦 PATCH content_pipeline&#10;media_urls = R2 URLs&#10;status = ready_for_review&#10;━━━━━━━━━━━━━━━━━━━━━━━━━&#10;✅ Ready for anh Dương sáng mai" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="500" y="2380" width="440" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p2-e1" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-cron" target="p2-ks">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e2" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.5;strokeColor=#dc2626;" edge="1" parent="1" source="p2-ks" target="p2-kson">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e3" style="endArrow=classic;html=1;exitX=0;exitY=1;entryX=0.5;entryY=0;strokeColor=#16a34a;" edge="1" parent="1" source="p2-ks" target="p2-fvc">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="520" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2-e4" style="endArrow=classic;html=1;exitX=1;exitY=1;entryX=0.5;entryY=0;strokeColor=#16a34a;" edge="1" parent="1" source="p2-ks" target="p2-fins">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="920" y="300" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2-e5" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#475569;" edge="1" parent="1" source="p2-fvc" target="p2-pair">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e6" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0.5;strokeColor=#475569;" edge="1" parent="1" source="p2-fins" target="p2-pair">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e7" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-pair" target="p2-loop">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e8" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-loop" target="p2-ide">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e9" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-ide" target="p2-hr">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e10" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-hr" target="p2-ifp">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e11" style="endArrow=classic;html=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#dc2626;dashed=1;" edge="1" parent="1" source="p2-ifp" target="p2-loop">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1020" y="990" />
+              <mxPoint x="1020" y="560" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2-e12" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#16a34a;" edge="1" parent="1" source="p2-ifp" target="p2-score">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e13" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-score" target="p2-pick">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e14" style="endArrow=classic;html=1;exitX=0;exitY=0.5;entryX=1;entryY=0.5;strokeColor=#ec4899;" edge="1" parent="1" source="p2-pick" target="p2-tier3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e15" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-pick" target="p2-log">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e16" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=1;strokeColor=#d97706;dashed=1;" edge="1" parent="1" source="p2-tier3" target="p2-log">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e17" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-cron5" target="p2-fetchN">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e18" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-fetchN" target="p2-lock">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e19" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-lock" target="p2-swformat">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e20" style="endArrow=classic;html=1;exitX=0;exitY=1;entryX=0.5;entryY=0;strokeColor=#ef4444;" edge="1" parent="1" source="p2-swformat" target="p2-img">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="1940" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2-e21" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#ef4444;" edge="1" parent="1" source="p2-swformat" target="p2-reel">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e22" style="endArrow=classic;html=1;exitX=0;exitY=1;entryX=0.5;entryY=0;strokeColor=#dc2626;" edge="1" parent="1" source="p2-reel" target="p2-veo">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e23" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#dc2626;" edge="1" parent="1" source="p2-reel" target="p2-kling">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e24" style="endArrow=classic;html=1;exitX=1;exitY=1;entryX=0.5;entryY=0;strokeColor=#dc2626;" edge="1" parent="1" source="p2-reel" target="p2-hg">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e25" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#475569;" edge="1" parent="1" source="p2-veo" target="p2-mm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e26" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-kling" target="p2-mm">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e27" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-mm" target="p2-r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e28" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=1;entryY=0;strokeColor=#475569;" edge="1" parent="1" source="p2-hg" target="p2-r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="p2-e29" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0;entryY=0.5;strokeColor=#475569;" edge="1" parent="1" source="p2-img" target="p2-r2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="220" y="2320" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="p2-e30" style="endArrow=classic;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;strokeColor=#16a34a;strokeWidth=2;" edge="1" parent="1" source="p2-r2" target="p2-ready">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+
+  <diagram name="3. State Machine + Tier Tree" id="page3">
+    <mxGraphModel dx="2000" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1300" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="p3-title" value="State Machine: content_pipeline.status" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1520" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-start" value="● Start" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#0f172a;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="120" width="80" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-ni" value="needs_image" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="80" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-nv" value="needs_video" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="150" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-nt" value="needs_text_only" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="220" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-ns" value="needs_shoot&#10;(Tier 3 ekip)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce7f3;strokeColor=#ec4899;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="290" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-gen" value="generating_assets&#10;(locked)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="115" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-fail" value="failed&#10;(alert Telegram)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="460" y="40" width="180" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-ready" value="ready_for_review&#10;✅ assets done" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=2;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="720" y="195" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-pending" value="pending_review&#10;📱 sent to Telegram" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#cffafe;strokeColor=#06b6d4;strokeWidth=2;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="195" width="180" height="60" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-edit" value="editing&#10;✏️ anh Dương edit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef9c3;strokeColor=#ca8a04;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="100" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-rej" value="rejected&#10;❌ training data" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fee2e2;strokeColor=#dc2626;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="170" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-pub" value="published&#10;✅ live trên kênh" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=2;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="240" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-track" value="tracking&#10;24h/72h metrics" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f3e8ff;strokeColor=#a855f7;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1240" y="310" width="160" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="s-end" value="◉ End" style="ellipse;whiteSpace=wrap;html=1;fillColor=#1e293b;strokeColor=#0f172a;fontColor=#ffffff;fontSize=12;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1460" y="240" width="80" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="se1" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="s-start" target="s-ni">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se2" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="s-start" target="s-nv">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se3" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="s-start" target="s-nt">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se4" style="endArrow=classic;html=1;strokeColor=#ec4899;" edge="1" parent="1" source="s-start" target="s-ns">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se5" style="endArrow=classic;html=1;strokeColor=#3b82f6;" edge="1" parent="1" source="s-ni" target="s-gen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se6" style="endArrow=classic;html=1;strokeColor=#3b82f6;" edge="1" parent="1" source="s-nv" target="s-gen">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se7" style="endArrow=classic;html=1;strokeColor=#16a34a;" edge="1" parent="1" source="s-nt" target="s-ready">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="245" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="se8" style="endArrow=classic;html=1;strokeColor=#16a34a;" edge="1" parent="1" source="s-ns" target="s-ready">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="500" y="315" />
+              <mxPoint x="500" y="225" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="se9" style="endArrow=classic;html=1;strokeColor=#dc2626;" edge="1" parent="1" source="s-gen" target="s-fail">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se10" style="endArrow=classic;html=1;strokeColor=#16a34a;" edge="1" parent="1" source="s-gen" target="s-ready">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se11" style="endArrow=classic;html=1;strokeColor=#06b6d4;" edge="1" parent="1" source="s-ready" target="s-pending">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se12" style="endArrow=classic;html=1;strokeColor=#ca8a04;" edge="1" parent="1" source="s-pending" target="s-edit">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se13" style="endArrow=classic;html=1;strokeColor=#dc2626;" edge="1" parent="1" source="s-pending" target="s-rej">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se14" style="endArrow=classic;html=1;strokeColor=#16a34a;strokeWidth=2;" edge="1" parent="1" source="s-pending" target="s-pub">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se15" style="endArrow=classic;html=1;strokeColor=#a855f7;" edge="1" parent="1" source="s-pub" target="s-track">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se16" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="s-track" target="s-end">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="se17" style="endArrow=classic;html=1;strokeColor=#ca8a04;dashed=1;" edge="1" parent="1" source="s-edit" target="s-ready">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1320" y="50" />
+              <mxPoint x="810" y="50" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+
+        <mxCell id="p3-title2" value="Tier Decision Tree — Voice Card → Engine → Approver" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=18;fontStyle=1;fontColor=#1e3a8a;" vertex="1" parent="1">
+          <mxGeometry x="40" y="450" width="1520" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-start" value="Loại kênh?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#f3e8ff;strokeColor=#a855f7;strokeWidth=2;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="520" width="200" height="90" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t1" value="🟢 TIER 1&#10;━━━━━━━━&#10;Pages chính thức VA&#10;(VA Mầm Non, VA THPT,&#10;VA Mẹ Bỉm...)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dcfce7;strokeColor=#16a34a;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="680" width="280" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t2" value="🟡 TIER 2&#10;━━━━━━━━&#10;AI Character trẻ em&#10;(Bé Linh, Robo Bin...)&#10;⚠️ BẮT BUỘC disclose AI" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fef3c7;strokeColor=#d97706;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="680" width="280" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t25" value="🔵 TIER 2.5&#10;━━━━━━━━&#10;Thầy/cô THẬT của VA&#10;(có HĐ KOL nội bộ)&#10;Có thể: HeyGen Anh Dương&#10;HOẶC clip thầy/cô tự quay" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dbeafe;strokeColor=#3b82f6;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="780" y="680" width="280" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t3" value="🔴 TIER 3&#10;━━━━━━━━&#10;Cần quay người thật&#10;(testimonial phụ huynh,&#10;event thật, BTS trường)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fce7f3;strokeColor=#ec4899;strokeWidth=2;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="680" width="280" height="100" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t1e" value="Engine:&#10;• Carousel/Text → nano-banana&#10;• Reel → Veo 3 (cinematic)&#10;&#10;Approver: Anh Dương" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#16a34a;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="800" width="280" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t2e" value="Engine:&#10;• Kling 2.1 cartoon character&#10;• MiniMax voiceover&#10;&#10;Approver: Anh Dương&#10;⚠️ Bio: 'Nhân vật AI'&#10;⚠️ Hashtag: #AICharacter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#d97706;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="800" width="280" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t25e" value="Engine:&#10;• HeyGen avatar Anh Dương&#10;HOẶC&#10;• Real footage + Descript edit&#10;&#10;Approver: Thầy/cô THẬT&#10;(qua Telegram chat riêng)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#3b82f6;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="780" y="800" width="280" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-t3e" value="Engine: KHÔNG AI gen&#10;━━━━━━━━━━━&#10;• Lark Task → Ekip&#10;• Deadline 48h&#10;• Quay phone/máy&#10;• Upload R2 → ready_for_review&#10;&#10;Approver: Anh Dương" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#ec4899;fontSize=10;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;" vertex="1" parent="1">
+          <mxGeometry x="1140" y="800" width="280" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="t-budget" value="📊 Dự kiến tỷ lệ trong 25 kênh:&#10;Tier 1 (10 Pages chính thức)  ▓▓▓▓▓▓▓▓▓▓ 40%&#10;Tier 2 (5-7 AI character)         ▓▓▓▓▓▓▓ 28%&#10;Tier 2.5 (3-5 thầy/cô KOL)      ▓▓▓▓▓ 20%&#10;Tier 3 (2-3 cần quay thật)     ▓▓▓ 12%" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f9fafb;strokeColor=#6b7280;fontSize=11;align=left;verticalAlign=top;spacingLeft=10;spacingTop=8;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="450" y="980" width="640" height="120" as="geometry" />
+        </mxCell>
+
+        <mxCell id="te1" style="endArrow=classic;html=1;strokeColor=#16a34a;strokeWidth=2;" edge="1" parent="1" source="t-start" target="t-t1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="200" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="te2" style="endArrow=classic;html=1;strokeColor=#d97706;strokeWidth=2;" edge="1" parent="1" source="t-start" target="t-t2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te3" style="endArrow=classic;html=1;strokeColor=#3b82f6;strokeWidth=2;" edge="1" parent="1" source="t-start" target="t-t25">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te4" style="endArrow=classic;html=1;strokeColor=#ec4899;strokeWidth=2;" edge="1" parent="1" source="t-start" target="t-t3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1280" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="te5" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="t-t1" target="t-t1e">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te6" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="t-t2" target="t-t2e">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te7" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="t-t25" target="t-t25e">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="te8" style="endArrow=classic;html=1;strokeColor=#475569;" edge="1" parent="1" source="t-t3" target="t-t3e">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="p3-footer" value="✏️ Hướng dẫn sử dụng file này: Mở tại https://app.diagrams.net → File → Open → chọn file .drawio. Có thể export PNG/SVG/PDF từ menu File → Export As. Mỗi tab phía dưới là 1 trang riêng." style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;fontSize=11;fontStyle=2;fontColor=#6b7280;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1140" width="1520" height="50" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,147 @@
+{
+  "name": "VA Performance Tracker — 24h & 72h",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "cronExpression", "expression": "30 * * * *"}]
+        }
+      },
+      "id": "cron",
+      "name": "Every hour at :30",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [-1400, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "filterByFormula",
+              "value": "=AND({status}='published', OR(AND(IS_AFTER(NOW(), DATEADD({published_at}, 24, 'hours')), {engagement_24h}=BLANK()), AND(IS_AFTER(NOW(), DATEADD({published_at}, 72, 'hours')), {engagement_72h}=BLANK())))"
+            },
+            {"name": "pageSize", "value": "50"}
+          ]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "fetch-due",
+      "name": "Fetch Posts Due for Tracking",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-1180, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Split each record into its own item, decide if 24h or 72h check\nconst now = Date.now();\nconst out = [];\nfor (const rec of $input.first().json.records || []) {\n  const publishedAt = new Date(rec.fields.published_at).getTime();\n  const ageHours = (now - publishedAt) / 3600000;\n  const window = ageHours >= 72 && !rec.fields.engagement_72h ? '72h' : (ageHours >= 24 && !rec.fields.engagement_24h ? '24h' : null);\n  if (!window) continue;\n  out.push({\n    json: {\n      record_id: rec.id,\n      platform_post_id: rec.fields.platform_post_id,\n      utm_campaign: rec.fields.utm_campaign,\n      utm_content: rec.fields.utm_content,\n      window,\n    },\n  });\n}\nreturn out;"
+      },
+      "id": "decide-window",
+      "name": "Decide 24h vs 72h",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-940, 0]
+    },
+    {
+      "parameters": {
+        "batchSize": 1,
+        "options": {}
+      },
+      "id": "loop",
+      "name": "Loop Posts",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [-700, 0]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://graph.facebook.com/v18.0/{{ $json.platform_post_id }}/insights?metric=post_impressions,post_engaged_users,post_reactions_by_type_total,post_clicks&access_token={{ $env.FB_PAGE_ACCESS_TOKEN }}",
+        "options": {"timeout": 30000}
+      },
+      "id": "fb-insights",
+      "name": "FB Post Insights",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-460, -120]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://services.leadconnectorhq.com/contacts/?locationId={{ $env.GHL_LOCATION_ID }}&query={{ $('Loop Posts').first().json.utm_content }}&limit=50",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.GHL_API_TOKEN }}"},
+            {"name": "Version", "value": "2021-07-28"}
+          ]
+        },
+        "options": {"timeout": 30000}
+      },
+      "id": "ghl-attribution",
+      "name": "GHL: Attributed Leads",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [-460, 120]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Aggregate metrics + attribution into single update payload\nconst current = $('Loop Posts').first().json;\nconst fbRaw = $('FB Post Insights').first().json;\nconst ghlRaw = $('GHL: Attributed Leads').first().json;\n\nconst fbMap = {};\nfor (const m of (fbRaw.data || [])) {\n  fbMap[m.name] = m.values?.[0]?.value || 0;\n}\n\nconst leadsAttributed = (ghlRaw.contacts || []).length;\nconst enrollmentsAttributed = (ghlRaw.contacts || []).filter(c => (c.tags || []).includes('enrolled')).length;\n\nconst engagementJson = JSON.stringify({\n  impressions: fbMap.post_impressions || 0,\n  engaged_users: fbMap.post_engaged_users || 0,\n  reactions: fbMap.post_reactions_by_type_total || {},\n  clicks: fbMap.post_clicks || 0,\n  measured_at: new Date().toISOString(),\n});\n\nconst field = current.window === '72h' ? 'engagement_72h' : 'engagement_24h';\nconst fields = {\n  [field]: engagementJson,\n};\nif (current.window === '72h') {\n  fields.ghl_leads_attributed = leadsAttributed;\n  fields.enrollments_attributed = enrollmentsAttributed;\n}\n\nreturn [{\n  json: {\n    record_id: current.record_id,\n    update_body: { fields },\n  },\n}];"
+      },
+      "id": "aggregate",
+      "name": "Aggregate Metrics",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [-220, 0]
+    },
+    {
+      "parameters": {
+        "method": "PATCH",
+        "url": "=https://api.airtable.com/v0/{{ $env.AIRTABLE_BASE_ID }}/content_pipeline/{{ $json.record_id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "Authorization", "value": "=Bearer {{ $env.AIRTABLE_API_KEY }}"},
+            {"name": "Content-Type", "value": "application/json"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify($json.update_body) }}",
+        "options": {}
+      },
+      "id": "update-record",
+      "name": "Update Pipeline Record",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [20, 0]
+    }
+  ],
+  "connections": {
+    "Every hour at :30": {"main": [[{"node": "Fetch Posts Due for Tracking", "type": "main", "index": 0}]]},
+    "Fetch Posts Due for Tracking": {"main": [[{"node": "Decide 24h vs 72h", "type": "main", "index": 0}]]},
+    "Decide 24h vs 72h": {"main": [[{"node": "Loop Posts", "type": "main", "index": 0}]]},
+    "Loop Posts": {
+      "main": [[
+        {"node": "FB Post Insights", "type": "main", "index": 0},
+        {"node": "GHL: Attributed Leads", "type": "main", "index": 0}
+      ], []]
+    },
+    "FB Post Insights": {"main": [[{"node": "Aggregate Metrics", "type": "main", "index": 0}]]},
+    "GHL: Attributed Leads": {"main": [[{"node": "Aggregate Metrics", "type": "main", "index": 0}]]},
+    "Aggregate Metrics": {"main": [[{"node": "Update Pipeline Record", "type": "main", "index": 0}]]},
+    "Update Pipeline Record": {"main": [[{"node": "Loop Posts", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "active": false,
+  "id": "va-performance-tracker-v1"
+}

@@ -430,7 +430,9 @@ async function handleLeadSubmission(request, env) {
       // === Pancake CRM: Create Lead ===
       try {
         const record = {
-          name: data.fullName,
+          // Pancake bắt buộc có Tên. Form chỉ thu email/SĐT (popup exit-intent,
+          // blog subscribe) không có tên → fallback để lead vẫn vào CRM, không bị 422.
+          name: data.fullName || data.phone || data.email || 'Lead Web (chưa rõ tên)',
           email: data.email,
           phone_number: data.phone,
           utm_source: data.utmSource || 'website',

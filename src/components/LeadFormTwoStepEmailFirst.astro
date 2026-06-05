@@ -6,6 +6,12 @@ type Props = {
   submitText?: string;
   successMessage?: string;
   redirectUrl?: string;          // nếu set, redirect sau khi submit (delay 1.5s để fetch hoàn thành)
+  title?: string;                // tiêu đề bước 1 (để '' để ẩn nếu trang đã có heading riêng)
+  description?: string;          // mô tả bước 1 (để '' để ẩn)
+  socialProof?: string;          // dòng social proof (để '' để ẩn)
+  askProvince?: boolean;         // bật ô Tỉnh/Thành ở bước 2 (gửi kèm /api/lead)
+  provinceLabel?: string;
+  provincePlaceholder?: string;
 };
 
 const {
@@ -15,6 +21,12 @@ const {
   submitText = 'Đăng ký ngay',
   successMessage = 'Cảm ơn bạn đã đăng ký! Chúng tôi sẽ liên hệ với bạn trong 24 giờ.',
   redirectUrl = '',
+  title = 'Đăng ký ngay để được tư vấn cá nhân hoá 1:1 lộ trình học tập qua Zalo',
+  description = 'Đảm bảo tối ưu hóa lợi ích và phù hợp nhất cho con.',
+  socialProof = 'Hơn 100 phụ huynh đã đăng ký tuần này',
+  askProvince = false,
+  provinceLabel = 'Tỉnh/Thành phố',
+  provincePlaceholder = 'VD: Cà Mau, Kiên Giang, Đà Nẵng...',
 } = Astro.props;
 
 const formIdWithFunnel = `${formId}-${funnelCode}`;
@@ -41,8 +53,8 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         </div>
       </div>
 
-      <h3 class="form-step-title">Đăng ký ngay để được tư vấn cá nhân hoá 1:1 lộ trình học tập qua Zalo</h3>
-      <p class="form-step-description">Đảm bảo tối ưu hóa lợi ích và phù hợp nhất cho con.</p>
+      {title && <h3 class="form-step-title">{title}</h3>}
+      {description && <p class="form-step-description">{description}</p>}
 
       <div class="form-group">
         <input
@@ -62,7 +74,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
 
-      <p class="form-social-proof">Hơn 100 phụ huynh đã đăng ký tuần này</p>
+      {socialProof && <p class="form-social-proof">{socialProof}</p>}
     </div>
   </div>
 
@@ -111,6 +123,20 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         />
         <span class="form-error" role="alert"></span>
       </div>
+
+      {askProvince && (
+        <div class="form-group">
+          <input
+            type="text"
+            id={`province-${formIdWithFunnel}`}
+            name="province"
+            class="form-input"
+            placeholder={provincePlaceholder}
+            aria-label={provinceLabel}
+          />
+          <span class="form-error" role="alert"></span>
+        </div>
+      )}
 
       <div class="form-actions">
         <button type="button" class="form-btn form-btn--back" data-action="prev-step">← Quay lại</button>
@@ -694,6 +720,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
         phone: formData.phone || '',
         childName: formData.child_name || '',
         schoolLevel: formData.school_level || '',
+        province: formData.province || '',
         source: funnelCode,
         page: window.location.href,
         timestamp: new Date().toISOString(),

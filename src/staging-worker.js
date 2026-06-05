@@ -164,6 +164,7 @@ function normalizeFormData(data) {
     childName: data.childName || data.child_name || '',
     schoolLevel: data.schoolLevel || data.school_level || '',
     grade: data.grade || data.childGrade || '',
+    province: data.province || '',
     source: data.source || data.funnelCode || data.funnel_code || data.page_variant || 'unknown',
     page: data.page || data.page_url || '',
     utmSource: data.utm_source || data.utmSource || '',
@@ -888,6 +889,10 @@ async function sendEmailNotification(data, env) {
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">Ten con em</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;">${data.childName}</td>
       </tr>` : ''}
+      ${data.province ? `<tr>
+        <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">Tinh/Thanh</td>
+        <td style="padding:10px 12px;border:1px solid #e0e0e0;font-size:16px;font-weight:bold;">${data.province}</td>
+      </tr>` : ''}
       ${isQuizLead(data) ? `<tr style="background:#fff8e1;">
         <td style="padding:10px 12px;border:1px solid #e0e0e0;font-weight:bold;color:#1a1a5e;">📊 Quiz Score</td>
         <td style="padding:10px 12px;border:1px solid #e0e0e0;">
@@ -962,6 +967,8 @@ async function sendZaloNotification(data, env) {
     `🎓 ${schoolLabel}`,
     `📄 Nguồn: ${data.source}`,
   ];
+
+  if (data.province) lines.push(`📍 Tỉnh/Thành: ${data.province}`);
 
   // Add quiz info if available
   if (isQuizLead(data)) {

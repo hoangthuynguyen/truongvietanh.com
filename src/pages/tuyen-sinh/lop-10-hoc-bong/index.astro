@@ -1,5 +1,6 @@
 ---
 import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
 ---
 
 <SalesPageLayout
@@ -76,32 +77,8 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
         </div>
       ))}
     </div>
-    <div style="background:#fff;border-radius:12px;padding:1.5rem;max-width:420px;margin:0 auto;text-align:left" id="hb-wrap">
-      <div style="font-size:.8rem;color:#888;font-weight:600;text-align:center;margin-bottom:.75rem" id="hb-prog">Bước 1/2 — 15 giây</div>
-      <div id="hb-s1">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Họ tên ba/mẹ</label>
-        <input id="hb-name" type="text" placeholder="VD: Nguyễn Văn A" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Số điện thoại (Zalo)</label>
-        <input id="hb-phone" type="tel" placeholder="VD: 0901 234 567" inputmode="numeric" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-        <div id="hb-err" style="color:#c00;font-size:.85rem;margin:.4rem 0;display:none">Vui lòng nhập số điện thoại hợp lệ (10 số).</div>
-        <button onclick="hbStep2()" style="width:100%;background:#26275D;color:#F9DD0E;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Xét học bổng cho con →</button>
-        <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Tôi cam kết bảo mật thông tin.</p>
-      </div>
-      <div id="hb-s2" style="display:none">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Con đang học lớp mấy?</label>
-        <select id="hb-level" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box"><option>Lớp 9 (vừa thi lớp 10)</option><option>Đã có kết quả thi</option><option>Khác</option></select>
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Khu vực gia đình</label>
-        <input id="hb-province" type="text" placeholder="VD: TP.HCM, Cà Mau, Đà Nẵng..." style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Tình huống của con</label>
-        <select id="hb-need" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box"><option>Đang lo / chờ kết quả thi</option><option>Trượt nguyện vọng trường công</option><option>HS giỏi — xét Học bổng Tài năng</option><option>Chỉ đang tìm hiểu</option></select>
-        <button onclick="hbSubmit()" style="width:100%;background:#26275D;color:#F9DD0E;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Hoàn tất — Giữ suất xét học bổng</button>
-        <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Đội tư vấn sẽ gọi trong vài giờ tới.</p>
-      </div>
-      <div id="hb-ok" style="display:none;text-align:center;padding:.5rem">
-        <div style="font-size:1.4rem;color:#26275D;font-weight:800">✅ Cảm ơn bạn!</div>
-        <p style="margin:.75rem 0">Đội tư vấn sẽ liên hệ về điều kiện học bổng cho con. Nhắn Zalo để được ưu tiên:</p>
-        <a href="https://zalo.me/1678310120468101523" target="_blank" style="display:block;background:#26275D;color:#F9DD0E;font-weight:800;padding:.9rem;border-radius:10px;text-decoration:none;font-size:1rem">Nhắn Zalo Trường Việt Anh</a>
-      </div>
+    <div style="background:#fff;border-radius:16px;padding:1.75rem 1.5rem;max-width:440px;margin:0 auto;box-shadow:0 16px 44px rgba(38,39,93,.16);border:1px solid #e8ecf5" data-form-bg="light">
+      <LeadFormTwoStepEmailFirst formId="lop10-hocbong" funnelCode="lop10-hocbong" schoolLevel="thpt" submitText="Giữ suất xét học bổng cho con" title="" description="" />
     </div>
   </div>
 
@@ -112,13 +89,3 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
     </blockquote>
   </div>
 </SalesPageLayout>
-
-<script is:inline>
-const WEBHOOK="https://script.google.com/macros/s/AKfycby7hFPL8uZercenEVNc5vO9LLX7hMNgwNPSGnESBhDaH3kVp7L0hQWSS3YN64KTEs7b3A/exec",SECRET="VA_TRAIHE_2026_SECRET",SOURCE="lop10-hocbong";
-function qp(k){return new URLSearchParams(location.search).get(k)||"";}
-function getVal(id){var el=document.getElementById(id);return el?el.value:"";}
-function payload(stage){return JSON.stringify({secret:SECRET,source:SOURCE,stage,name:getVal('hb-name'),phone:getVal('hb-phone').replace(/\D/g,''),level:getVal('hb-level'),province:getVal('hb-province'),need:getVal('hb-need'),page_url:location.href,gclid:qp('gclid'),utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),utm_campaign:qp('utm_campaign'),utm_content:qp('utm_content'),utm_term:qp('utm_term')});}
-function sendLead(stage){try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}}
-function hbStep2(){var p=getVal('hb-phone').replace(/\D/g,'');if(p.length<9||p.length>11){document.getElementById('hb-err').style.display='block';return;}sendLead('partial');document.getElementById('hb-s1').style.display='none';document.getElementById('hb-s2').style.display='block';document.getElementById('hb-prog').textContent='Bước 2/2 — gần xong';}
-function hbSubmit(){sendLead('complete');document.getElementById('hb-s2').style.display='none';document.getElementById('hb-ok').style.display='block';document.getElementById('hb-prog').style.display='none';}
-</script>

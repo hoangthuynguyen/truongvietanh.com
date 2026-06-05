@@ -1,5 +1,6 @@
 ---
 import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailFirst.astro';
 ---
 
 <SalesPageLayout
@@ -69,32 +70,8 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
   <div slot="form1">
     <h2 style="color:#26275D;font-size:1.5rem;font-weight:800;margin:0 0 .5rem">Giữ chỗ nội trú cho con — để lại số điện thoại</h2>
     <p style="color:#475569;margin:0 0 1.5rem">Đội tư vấn sẽ gọi lại và gửi ba mẹ thông tin chi tiết về nội trú, học phí, lịch thăm trường.</p>
-    <div style="background:#fff;border-radius:12px;padding:1.5rem;max-width:420px;margin:0 auto;text-align:left" id="nt-wrap">
-      <div style="font-size:.8rem;color:#888;font-weight:600;text-align:center;margin-bottom:.75rem" id="nt-prog">Bước 1/2 — 15 giây</div>
-      <div id="nt-s1">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Họ tên ba/mẹ</label>
-        <input id="nt-name" type="text" placeholder="VD: Nguyễn Văn A" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Số điện thoại (Zalo)</label>
-        <input id="nt-phone" type="tel" placeholder="VD: 0901 234 567" inputmode="numeric" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-        <div id="nt-err" style="color:#c00;font-size:.85rem;margin:.4rem 0;display:none">Vui lòng nhập số điện thoại hợp lệ (10 số).</div>
-        <button onclick="ntStep2()" style="width:100%;background:#26275D;color:#F9DD0E;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Giữ chỗ nội trú cho con →</button>
-        <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Tôi cam kết bảo mật thông tin.</p>
-      </div>
-      <div id="nt-s2" style="display:none">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.6rem 0 .3rem">Con đang học lớp mấy?</label>
-        <select id="nt-level" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box"><option>Lớp 9 (vừa thi lớp 10)</option><option>Đã có kết quả thi</option><option>Khác</option></select>
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Gia đình ở tỉnh/thành nào?</label>
-        <input id="nt-province" type="text" placeholder="VD: Cà Mau, Kiên Giang, Phú Quốc, Đà Nẵng..." style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box">
-        <label style="display:block;font-weight:600;font-size:.95rem;margin:.75rem 0 .3rem">Bạn quan tâm nhất điều gì?</label>
-        <select id="nt-need" style="width:100%;padding:.8rem;font-size:1rem;border:2px solid #cdd2e6;border-radius:8px;box-sizing:border-box"><option>Nội trú &amp; an toàn cho con</option><option>Mentor 1-1 &amp; báo cáo cho ba mẹ</option><option>Học phí nội trú</option><option>Lịch thăm trường</option></select>
-        <button onclick="ntSubmit()" style="width:100%;background:#26275D;color:#F9DD0E;border:none;font-weight:800;font-size:1.1rem;padding:.9rem;border-radius:10px;margin-top:1rem;cursor:pointer">Hoàn tất — Giữ suất nội trú ưu tiên</button>
-        <p style="font-size:.78rem;color:#999;text-align:center;margin-top:.6rem">Đội tư vấn sẽ gọi trong vài giờ tới.</p>
-      </div>
-      <div id="nt-ok" style="display:none;text-align:center;padding:.5rem">
-        <div style="font-size:1.4rem;color:#26275D;font-weight:800">✅ Cảm ơn ba/mẹ!</div>
-        <p style="margin:.75rem 0">Đội tư vấn nội trú Việt Anh sẽ liên hệ sớm.</p>
-        <a href="https://zalo.me/1678310120468101523" target="_blank" style="display:block;background:#26275D;color:#F9DD0E;font-weight:800;padding:.9rem;border-radius:10px;text-decoration:none;font-size:1rem">Nhắn Zalo Trường Việt Anh</a>
-      </div>
+    <div style="background:#fff;border-radius:16px;padding:1.75rem 1.5rem;max-width:440px;margin:0 auto;box-shadow:0 16px 44px rgba(38,39,93,.16);border:1px solid #e8ecf5" data-form-bg="light">
+      <LeadFormTwoStepEmailFirst formId="lop10-noitru" funnelCode="lop10-noitru" schoolLevel="thpt" submitText="Giữ chỗ nội trú cho con" title="" description="" askProvince provinceLabel="Gia đình ở tỉnh/thành nào?" provincePlaceholder="VD: Cà Mau, Kiên Giang, Phú Quốc, Đà Nẵng..." />
     </div>
   </div>
 
@@ -106,23 +83,3 @@ import SalesPageLayout from '../../../layouts/SalesPageLayout.astro';
   </div>
 </SalesPageLayout>
 
-<script is:inline>
-const WEBHOOK="https://script.google.com/macros/s/AKfycby7hFPL8uZercenEVNc5vO9LLX7hMNgwNPSGnESBhDaH3kVp7L0hQWSS3YN64KTEs7b3A/exec",SECRET="VA_TRAIHE_2026_SECRET",SOURCE="lop10-noitru";
-function qp(k){return new URLSearchParams(location.search).get(k)||"";}
-function getVal(id){var el=document.getElementById(id);return el?el.value:"";}
-function payload(stage){return JSON.stringify({secret:SECRET,source:SOURCE,stage,name:getVal('nt-name'),phone:getVal('nt-phone').replace(/\D/g,''),level:getVal('nt-level'),province:getVal('nt-province'),need:getVal('nt-need'),page_url:location.href,gclid:qp('gclid'),utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),utm_campaign:qp('utm_campaign'),utm_content:qp('utm_content'),utm_term:qp('utm_term')});}
-function sendLead(stage){
-  try{fetch(WEBHOOK,{method:'POST',mode:'no-cors',keepalive:true,headers:{'Content-Type':'text/plain;charset=utf-8'},body:payload(stage)});}catch(e){}
-  // Lead hoàn tất: đẩy thêm sang CRM (Pancake + GHL) qua /api/lead. school_level=thpt → Khối "Lớp 10".
-  if(stage==='complete'){try{
-    var ph=getVal('nt-phone').replace(/\D/g,'');
-    fetch('https://truongvietanh.com/api/lead',{method:'POST',keepalive:true,headers:{'Content-Type':'application/json'},body:JSON.stringify({
-      fullName:getVal('nt-name'),phone:ph,email:(ph||'lead')+'@lead.truongvietanh.com',
-      source:SOURCE,funnel_code:SOURCE,school_level:'thpt',
-      province:getVal('nt-province'),need:getVal('nt-need'),
-      page_url:location.href,utm_source:qp('utm_source'),utm_medium:qp('utm_medium'),utm_campaign:qp('utm_campaign')
-    })});}catch(e){}}
-}
-function ntStep2(){var p=getVal('nt-phone').replace(/\D/g,'');if(p.length<9||p.length>11){document.getElementById('nt-err').style.display='block';return;}sendLead('partial');document.getElementById('nt-s1').style.display='none';document.getElementById('nt-s2').style.display='block';document.getElementById('nt-prog').textContent='Bước 2/2 — gần xong';}
-function ntSubmit(){sendLead('complete');window.location.href='/cam-on?name='+encodeURIComponent(getVal('nt-name'));}
-</script>

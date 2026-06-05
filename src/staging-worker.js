@@ -428,7 +428,11 @@ async function handleLeadSubmission(request, env) {
       }
 
       // === Pancake CRM: Create Lead ===
-      try {
+      // Pancake bắt buộc SĐT. Form chỉ thu email (newsletter blog) không có SĐT
+      // → bỏ qua Pancake, chỉ vào GHL. Mọi form có SĐT đều vào cả 2 CRM.
+      if (!data.phone) {
+        results.pancake = { skipped: true, reason: 'no_phone', note: 'Email-only lead → GHL only' };
+      } else try {
         const record = {
           // Pancake bắt buộc có Tên. Form chỉ thu email/SĐT (popup exit-intent,
           // blog subscribe) không có tên → fallback để lead vẫn vào CRM, không bị 422.

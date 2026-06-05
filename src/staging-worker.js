@@ -433,7 +433,6 @@ async function handleLeadSubmission(request, env) {
           name: data.fullName,
           email: data.email,
           phone_number: data.phone,
-          nguon_khach_hang_omi: 'website',
           utm_source: data.utmSource || 'website',
           utm_medium: data.utmMedium || 'lead-form',
           utm_campaign: data.source || '',
@@ -446,10 +445,11 @@ async function handleLeadSubmission(request, env) {
         }
 
         // KHÔNG set "Người phụ trách" (owner) — để rule tự phân SO của Pancake xử lý.
-        // Thay vào đó ghi nguồn vào trường "Nguồn Khách Hàng" để nhận diện lead web.
-        // LƯU Ý: Pancake phải bỏ "bắt buộc" ở trường Người phụ trách, nếu không API
-        // trả 422 và lead không vào được.
-        record.nguon_khach_hang_omi = 'Website' + (data.source ? ' - ' + data.source : '');
+        // Ghi nguồn vào trường "Nguồn Khách Hàng" để nhận diện lead web.
+        // LƯU Ý: nguon_khach_hang_omi là DROPDOWN — chỉ nhận option có sẵn ('website').
+        // Giá trị tự ghép kiểu "Website - <funnel>" KHÔNG phải option hợp lệ → Pancake
+        // trả 422 và lead bị loại. Funnel/campaign đã được lưu riêng ở utm_campaign.
+        record.nguon_khach_hang_omi = 'website';
 
         const pancakeRes = await fetch(
           `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records?api_key=${pancakeApiKey}`,

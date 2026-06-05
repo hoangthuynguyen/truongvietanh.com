@@ -251,7 +251,7 @@ async function handleLeadSubmission(request, env) {
 
     // Read secrets from env bindings (fallback to hardcoded for dev)
     const ghlApiKey = env.GHL_API_KEY || 'pit-3a3f370c-7e6a-47f0-977f-053d093bc06c';
-    const pancakeApiKey = env.PANCAKE_API_KEY || 'd49378937bc14bae97d2b61a698265ce';
+    const pancakeApiKey = env.PANCAKE_API_KEY || '975c1a3c4a864327975d8bfa43e2e89f';
 
     const data = normalizeFormData(rawData);
     const results = { ghl: null, pancake: null };
@@ -433,6 +433,7 @@ async function handleLeadSubmission(request, env) {
           name: data.fullName,
           email: data.email,
           phone_number: data.phone,
+          nguon_khach_hang_omi: 'website',
           utm_source: data.utmSource || 'website',
           utm_medium: data.utmMedium || 'lead-form',
           utm_campaign: data.source || '',
@@ -1123,10 +1124,10 @@ async function sendLandingConfirmEmail(data, env, contactId, ghlApiKey) {
   const ADDR = {
     'go-vap':'160/72 Phan Huy Ích, Phường 12, An Hội Tây, Hồ Chí Minh',
     'binh-tan':'Số 7 Đường 38A, Tân Tạo, Q.Bình Tân, TPHCM',
-    'rach-gia':'Lô E7, KĐT Tây Bắc Mekong Xanh, TP. Rạch Giá, Kiên Giang',
-    'can-giuoc':'22 Đường D2, KDC Cần Giuộc, H.Cần Giuộc, Long An',
-    'thai-son':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
-    'thai-son-long-hau':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Long An',
+    'rach-gia':'Lô E7, KĐT Tây Bắc Mekong Xanh, TP. Rạch Giá, An Giang',
+    'can-giuoc':'22 Đường D2, KDC Cần Giuộc, H.Cần Giuộc, Tây Ninh',
+    'thai-son':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Tây Ninh',
+    'thai-son-long-hau':'KDC Thái Sơn, Long Hậu, Cần Giuộc, Tây Ninh',
   };
   // Override per full source (eg. Mầm non có cơ sở riêng tách khỏi liên cấp)
   const ADDR_OVERRIDE = {

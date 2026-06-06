@@ -3,11 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import { getGalleryCategories } from '../lib/directus';
 import { getFotoowlAlbums } from '../lib/fotoowl';
-
-// Fetch gallery categories from CMS
-const cmsGallery = await getGalleryCategories();
 
 // Album sự kiện thật từ photos.truongvietanh.com (FotoOwl) — ảnh giữ trên FotoOwl, ở đây chỉ liệt kê + link
 const fotoowlAlbums = await getFotoowlAlbums();
@@ -73,28 +69,6 @@ const faqItems = [
   { question: 'Phụ huynh có thể đặt lịch tham quan trường trước khi quyết định cho con nhập học không?', answer: 'Hoàn toàn có thể. Phụ huynh đăng ký tham quan trường qua hotline 0916 961 409, form trên website hoặc nhắn tin fanpage. Đội ngũ tuyển sinh sẽ đón tiếp, giới thiệu cơ sở vật chất và tư vấn chương trình phù hợp với con.' },
 ];
 
-const imgBase = 'https://media.truongvietanh.com/images';
-
-// Gallery — 100% from CMS, compact fallback if CMS down
-const fallbackGallery = [
-  { title: 'Thể Thao', heading: 'Thể Thao & Vận Động', slug: 'the-thao', description: 'Bóng đá, bóng rổ, bơi lội, cầu lông.', image_count: 4, image_base_url: imgBase },
-  { title: 'Dã Ngoại', heading: 'Dã Ngoại & Trải Nghiệm', slug: 'da-ngoai', description: 'Tham quan học tập và trải nghiệm thực tế.', image_count: 4, image_base_url: imgBase },
-  { title: 'Giáo Viên', heading: 'Giáo Viên & Học Sinh', slug: 'giao-vien', description: 'Khoảnh khắc giữa giáo viên và học sinh.', image_count: 4, image_base_url: imgBase },
-  { title: 'Thuyết Trình', heading: 'Thuyết Trình & Kỹ Năng', slug: 'thuyet-trinh', description: 'Thuyết trình, tranh biện, kỹ năng mềm.', image_count: 4, image_base_url: imgBase },
-];
-const activeGallery = cmsGallery.length > 0 ? cmsGallery : fallbackGallery;
-
-const galleryData = activeGallery.map((cat: any) => ({
-  id: cat.slug || cat.id,
-  title: cat.title,
-  heading: cat.heading,
-  desc: cat.description || cat.desc,
-  slug: cat.slug,
-  images: Array.from({ length: cat.image_count || cat.count || 4 }, (_, i) => ({
-    src: `${cat.image_base_url || imgBase}/${cat.slug}-0${i + 1}.webp`,
-    alt: `${cat.heading} — Trường Việt Anh ${i + 1}`,
-  })),
-}));
 
 ---
 
@@ -177,21 +151,6 @@ const galleryData = activeGallery.map((cat: any) => ({
         </div>
       </div>
     </section>
-
-    <!-- Real photo gallery grid -->
-    {galleryData.map((cat) => (
-      <section class="gallery-section" id={cat.id}>
-        <div class="cf-container">
-          <h2 class="section-title">{cat.heading}</h2>
-          <p class="section-desc">{cat.desc}</p>
-          <div class="real-gallery-grid">
-            {cat.images.map((img) => (
-              <img src={img.src} alt={img.alt} loading="lazy" width="400" height="220" style="border-radius:8px;width:100%;height:220px;object-fit:cover" />
-            ))}
-          </div>
-        </div>
-      </section>
-    ))}
 
     <!-- Album sự kiện thật (FotoOwl) -->
     {fotoowlAlbums.length > 0 && (

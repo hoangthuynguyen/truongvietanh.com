@@ -51,7 +51,8 @@ export async function getFotoowlAlbums(): Promise<FotoowlAlbum[]> {
         link: ev.link,
         cover: pickCover(ev),
       }))
-      .filter((a) => a.name && a.cover);
+      // giữ mọi album công khai có tên; album không có ảnh bìa sẽ dùng placeholder ở UI
+      .filter((a) => a.name);
   } catch {
     return [];
   }

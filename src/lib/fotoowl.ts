@@ -67,23 +67,28 @@ export async function getFotoowlAlbums(): Promise<FotoowlAlbum[]> {
         name: (ev.name || '').trim(),
         date: ev.date || null,
         link: ev.link as string,
-        cover: pickCover(ev),
+        cover: null as string | null,
+        fallbackCover: pickCover(ev), // cover_image_info (nhiều cái 404 nên chỉ dùng dự phòng)
         accessKey: (ev.event_access_key as string) || null,
       }))
       // giữ mọi album công khai có tên
       .filter((a) => a.name);
 
-    // Album không có ảnh bìa → lấy tấm đầu tiên trong album (chạy song song).
-    // Album rỗng thật sẽ vẫn cover=null và dùng placeholder ở UI.
-    await Promise.all(
-      albums
-        .filter((a) => !a.cover)
-        .map(async (a) => {
-          a.cover = await fetchFirstImageCover(a.id, a.accessKey);
+    // Lấy tấm ảnh đầu tiên TRONG album làm bìa cho MỌI album (cover_image_info của FotoOwl
+    // nhiều cái bị 404). Nếu album rỗng/không lấy được thì dùng cover_image_info, cuối cùng
+    // mới để null → placeholder ở UI. Giới hạn 8 request song song để không quá tải API.
+    const CONCURRENCY = 8;
+    for (let i = 0; i < albums.length; i += CONCURRENCY) {
+      const batch = albums.slice(i, i + CONCURRENCY);
+      await Promise.all(
+        batch.map(async (a) => {
+          const fromAlbum = await fetchFirstImageCover(a.id, a.accessKey);
+          a.cover = fromAlbum || a.fallbackCover;
         })
-    );
+      );
+    }
 
-    return albums.map(({ accessKey, ...rest }) => rest);
+    return albums.map(({ accessKey, fallbackCover, ...rest }) => rest);
   } catch {
     return [];
   }

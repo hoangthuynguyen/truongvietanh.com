@@ -309,7 +309,9 @@ const faqItems = [
   }
 
   @media (max-width: 600px) {.links-grid{ grid-template-columns: 1fr; }
-  }.albums-section{ padding: 2.5rem 0; background: #fff; }.albums-grid{
+  }.albums-section{ padding: 2.5rem 0; background: #fff; }
+  /* Album section quá cao (>8000px) nên hiệu ứng reveal (threshold 8%) không kích hoạt khi ở đầu trang → kẹt opacity:0. Ép luôn hiển thị. */
+  .albums-section.reveal{ opacity: 1 !important; transform: none !important; }.albums-grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 1.25rem;

@@ -92,6 +92,31 @@ const faqItems = [
       </div>
     </section>
 
+    <!-- Album sự kiện thật (FotoOwl) -->
+    {fotoowlAlbums.length > 0 && (
+      <section class="albums-section" id="album-su-kien">
+        <div class="cf-container">
+          <h2 class="section-title">Album Sự Kiện Trường Việt Anh</h2>
+          <p class="section-desc">Toàn bộ {fotoowlAlbums.length} album ảnh sự kiện từ <a href="https://photos.truongvietanh.com" target="_blank" rel="noopener" style="color:#26275D;font-weight:600;">photos.truongvietanh.com</a> — lễ tổng kết, trưởng thành, dã ngoại, kỷ yếu, ngày hội lãnh đạo và nhiều hoạt động khác. Bấm vào từng album để xem và tải ảnh chất lượng cao.</p>
+          <div class="albums-grid">
+            {fotoowlAlbums.map((album) => (
+              <a class="album-card" href={album.link} target="_blank" rel="noopener">
+                <div class="album-thumb">
+                  {album.cover
+                    ? <img src={album.cover} alt={`Album: ${album.name} — Trường Việt Anh`} loading="lazy" width="400" height="260" />
+                    : <div class="album-thumb-placeholder"><span>📷</span><small>{album.name}</small></div>}
+                </div>
+                <div class="album-info">
+                  <strong class="album-name">{album.name}</strong>
+                  {album.date && <span class="album-date">{album.date}</span>}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </section>
+    )}
+
     <!-- AIO intro -->
     <section class="gallery-intro">
       <div class="cf-container">
@@ -151,31 +176,6 @@ const faqItems = [
         </div>
       </div>
     </section>
-
-    <!-- Album sự kiện thật (FotoOwl) -->
-    {fotoowlAlbums.length > 0 && (
-      <section class="albums-section" id="album-su-kien">
-        <div class="cf-container">
-          <h2 class="section-title">Album Sự Kiện Trường Việt Anh</h2>
-          <p class="section-desc">Toàn bộ {fotoowlAlbums.length} album ảnh sự kiện — lễ tổng kết, trưởng thành, dã ngoại, kỷ yếu, ngày hội lãnh đạo và nhiều hoạt động khác. Bấm vào từng album để xem và tải ảnh chất lượng cao.</p>
-          <div class="albums-grid">
-            {fotoowlAlbums.map((album) => (
-              <a class="album-card" href={album.link} target="_blank" rel="noopener">
-                <div class="album-thumb">
-                  {album.cover
-                    ? <img src={album.cover} alt={`Album: ${album.name} — Trường Việt Anh`} loading="lazy" width="400" height="260" />
-                    : <div class="album-thumb-placeholder"><span>📷</span><small>{album.name}</small></div>}
-                </div>
-                <div class="album-info">
-                  <strong class="album-name">{album.name}</strong>
-                  {album.date && <span class="album-date">{album.date}</span>}
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-    )}
 
     <!-- Internal links -->
     <section class="internal-links">

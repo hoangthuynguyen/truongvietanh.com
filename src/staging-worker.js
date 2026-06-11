@@ -65,6 +65,11 @@ export default {
       return Response.redirect('https://truongvietanh.com/blog/', 301);
     }
 
+    // Gộp trang nội trú trùng: /tuyen-sinh/lop-10-noi-tru → URL ngắn /lop-10-noi-tru/ (301)
+    if (url.pathname === '/tuyen-sinh/lop-10-noi-tru' || url.pathname === '/tuyen-sinh/lop-10-noi-tru/') {
+      return Response.redirect('https://truongvietanh.com/lop-10-noi-tru/', 301);
+    }
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS' && (url.pathname === '/api/lead' || url.pathname === '/api/khieu-nai')) {
       return new Response(null, { status: 204, headers: CORS_HEADERS });

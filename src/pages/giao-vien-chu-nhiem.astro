@@ -6,7 +6,6 @@ import FooterBase from '../components/FooterBase.astro';
 const tabs = [
   { id: 'bgh', label: 'Ban Lãnh Đạo', icon: '🏛️' },
   { id: 'gv-go-vap', label: 'GV Gò Vấp', icon: '📍' },
-  { id: 'gv-phu-nhuan', label: 'GV Phú Nhuận', icon: '📍' },
   { id: 'gv-binh-tan', label: 'GV Bình Tân', icon: '📍' },
   { id: 'gv-mam-non', label: 'GV Mầm Non', icon: '🌱' },
   { id: 'gv-tieu-hoc', label: 'GV Tiểu Học', icon: '📚' },
@@ -50,7 +49,7 @@ const bghMembers = [
   {
     name: 'Nguyễn Thu Thảo',
     title: 'Phó Hiệu Trưởng',
-    org: 'Cơ sở Phú Nhuận',
+    org: 'Trường Việt Anh',
     role: 'vice-principal',
     initials: 'NTT',
     photo: 'https://truongvietanh.com/wp-content/uploads/2025/07/Nguyen-Thu-Thao-Pho-Hieu-Truong.jpg',
@@ -96,9 +95,6 @@ const goVapTeachers = [
   'La-Rochelle Amanda Bouwer',
   'Hoàng Kim Phương Tú',
   'Đinh Thị Triệu Vy',
-];
-
-const phuNhuanTeachers = [
   'Võ Trần Quỳnh Như',
   'Từ Hòa Tài',
   'Trần Tuấn Cảnh',
@@ -209,7 +205,7 @@ const roleColors: Record<string, { bg: string; color: string; label: string }> =
 
 <BaseLayout
   title="Ban Lãnh Đạo & Đội Ngũ Giáo Viên – Trường Việt Anh"
-  description="Ban Lãnh Đạo & đội ngũ giáo viên chủ nhiệm tại các cơ sở Gò Vấp, Phú Nhuận, Bình Tân của Trường Việt Anh. Bằng cấp chính quy, chuyên môn giỏi, giàu kinh nghiệm."
+  description="Ban Lãnh Đạo & đội ngũ giáo viên chủ nhiệm tại các cơ sở Gò Vấp, Bình Tân của Trường Việt Anh. Bằng cấp chính quy, chuyên môn giỏi, giàu kinh nghiệm."
   canonical="https://truongvietanh.com/giao-vien-chu-nhiem"
   noPopup={true}
 >
@@ -290,24 +286,6 @@ const roleColors: Record<string, { bg: string; color: string; label: string }> =
       </div>
       <div class="gvcn-teacher-grid">
         {goVapTeachers.map(name => (
-          <div class="gvcn-teacher-card">
-            <div class="gvcn-teacher-card__avatar" style={`background:${getAvatarColor(name)}`}>
-              {getInitials(name)}
-            </div>
-            <span class="gvcn-teacher-card__name">{name}</span>
-          </div>
-        ))}
-      </div>
-    </div>
-
-    <!-- PHÚ NHUẬN PANEL -->
-    <div id="panel-gv-phu-nhuan" role="tabpanel" class="gvcn-panel" hidden>
-      <div class="gvcn-section-hd">
-        <h2>Giáo Viên Cơ Sở Phú Nhuận</h2>
-        <p>Đội ngũ giáo viên chủ nhiệm tại cơ sở Phú Nhuận – {phuNhuanTeachers.length} thành viên</p>
-      </div>
-      <div class="gvcn-teacher-grid">
-        {phuNhuanTeachers.map(name => (
           <div class="gvcn-teacher-card">
             <div class="gvcn-teacher-card__avatar" style={`background:${getAvatarColor(name)}`}>
               {getInitials(name)}

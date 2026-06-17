@@ -323,7 +323,7 @@ const priorityPages: PageSpec[] = [
       ],
     },
     stats: [
-      { value: '4', label: 'Cơ sở trọng điểm đang được ưu tiên hiển thị trong đợt đầu' },
+      { value: '3', label: 'Cơ sở trọng điểm đang được ưu tiên hiển thị trong đợt đầu' },
       { value: '4 cấp học', label: 'Hành trình liên cấp từ Mầm non đến THPT' },
       { value: '1 hub', label: 'Một điểm điều hướng cho local trust và tuyển sinh' },
       { value: '2 CTA', label: 'Tập trung vào tham quan trường và tư vấn' },
@@ -350,13 +350,6 @@ const priorityPages: PageSpec[] = [
             body: 'Điểm bắt đầu mạnh cho nhóm phụ huynh đang tìm môi trường mầm non gần nhà, cần cảm giác an tâm và nhịp sinh hoạt phù hợp.',
             href: '/co-so/mam-non-go-vap-le-duc-tho',
             cta: 'Xem cơ sở Lê Đức Thọ',
-          },
-          {
-            eyebrow: 'Kết nối trung tâm',
-            title: 'Phú Nhuận Nguyễn Trọng Tuyển',
-            body: 'Phù hợp với các gia đình cần vị trí kết nối thuận tiện, dễ tham quan và có đường vào rõ ràng sang tuyển sinh theo cấp học.',
-            href: '/co-so/phu-nhuan-nguyen-trong-tuyen',
-            cta: 'Xem cơ sở Phú Nhuận',
           },
           {
             eyebrow: 'Khu Tây TP.HCM',
@@ -618,77 +611,6 @@ const priorityPages: PageSpec[] = [
           {
             question: 'Phụ huynh nên gọi ngay hay đặt lịch trước?',
             answer: 'Nếu gia đình đã xác định được khu vực và độ tuổi của con, đặt lịch trước sẽ giúp buổi tham quan có giá trị hơn và được chuẩn bị kỹ hơn.',
-          },
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'co-so/phu-nhuan-nguyen-trong-tuyen',
-    title: 'Cơ Sở Phú Nhuận Nguyễn Trọng Tuyển | Trường Việt Anh',
-    description:
-      'Trang cơ sở Phú Nhuận Nguyễn Trọng Tuyển của Trường Việt Anh, tập trung local trust, kết nối thuận tiện và chuyển đổi sang tư vấn hoặc tham quan.',
-    templateClass: 'Master Campus Profile',
-    pageType: 'Campus profile',
-    theme: 'brand',
-    hero: {
-      eyebrow: 'Campus profile',
-      title: 'Cơ sở Phú Nhuận cần mang lại cảm giác gần, thuận tiện và đủ tin cậy để phụ huynh muốn đến xem thật.',
-      body:
-        'Campus page này nên giúp phụ huynh nhanh chóng đối chiếu vị trí, cấp học, lịch tham quan và bước tuyển sinh tiếp theo mà không bị chìm trong mô tả thương hiệu chung.',
-      primaryCta: { label: 'Đăng ký tư vấn cho cơ sở này', href: '/tuyen-sinh/dang-ky-tu-van' },
-      secondaryCta: { label: 'Đặt lịch tham quan', href: '/tuyen-sinh/tham-quan-truong' },
-      badges: ['Phú Nhuận', 'Kết nối trung tâm', 'Local trust'],
-      asideTitle: 'Campus page này nên nhấn mạnh',
-      asideItems: [
-        'Tính thuận tiện về vị trí và quãng đường di chuyển.',
-        'Các cấp học phù hợp với nhóm gia đình ở khu vực trung tâm.',
-        'Liên kết rõ sang tư vấn, tham quan và học phí.',
-      ],
-    },
-    stats: [
-      { value: 'Central', label: 'Phù hợp với nhóm phụ huynh cần vị trí kết nối nhanh' },
-      { value: 'Local SEO', label: 'Bắt truy vấn trường tại Phú Nhuận và khu vực lân cận' },
-      { value: '2 hướng', label: 'Tập trung vào tham quan và tư vấn' },
-      { value: 'Brand bridge', label: 'Nối local trust với thương hiệu mẹ một cách nhất quán' },
-    ],
-    sections: [
-      {
-        type: 'cards',
-        eyebrow: 'Nội dung cần rõ',
-        title: 'Một campus page tốt luôn nói rõ điều phụ huynh muốn kiểm tra nhanh nhất.',
-        intro: 'Trang này không cần nói quá nhiều, nhưng phải nói đúng và đủ để phụ huynh tự tin bấm sang bước tiếp.',
-        columns: 2,
-        items: [
-          { title: 'Địa chỉ và chỉ dẫn', body: 'Thông tin vị trí rõ ràng giúp local SEO mạnh hơn và cũng giảm ma sát cho quyết định tham quan.' },
-          { title: 'Chất lượng trải nghiệm', body: 'Review, hình ảnh thật và thông tin campus cụ thể tạo cảm giác đây là một nơi có thể đến thật, không phải một lời hứa chung.' },
-          { title: 'Cấp học phù hợp', body: 'Campus page nên cho phụ huynh biết ngay lộ trình nào phù hợp để tránh chuyển qua lại giữa nhiều trang.' },
-          { title: 'Bước tiếp theo rõ ràng', body: 'CTA tốt nhất thường là tham quan trường hoặc đăng ký tư vấn chứ không nên phân tán quá nhiều.' },
-        ],
-      },
-      {
-        type: 'links',
-        eyebrow: 'Đi tiếp từ Phú Nhuận',
-        title: 'Những trang nên được nối trực tiếp từ cơ sở này.',
-        intro: 'Đây là cụm link giúp local traffic đi sang các trang giàu ý định hơn.',
-        items: [
-          {
-            eyebrow: 'Admissions',
-            title: 'Đăng ký tư vấn',
-            href: '/tuyen-sinh/dang-ky-tu-van',
-            body: 'Bước đi phù hợp khi phụ huynh đã thấy campus thuận tiện nhưng còn cần chốt cấp học, học phí hoặc thời điểm nhập học.',
-          },
-          {
-            eyebrow: 'Visit',
-            title: 'Tham quan trường',
-            href: '/tuyen-sinh/tham-quan-truong',
-            body: 'Dành cho gia đình muốn kiểm chứng không gian, nề nếp và trải nghiệm thực tế trước khi nói sâu về hồ sơ.',
-          },
-          {
-            eyebrow: 'Hub',
-            title: 'Tổng quan các cơ sở',
-            href: '/co-so',
-            body: 'Nếu phụ huynh vẫn còn đang cân nhắc giữa các khu vực, trang hub là nơi phù hợp để so lại phương án.',
           },
         ],
       },
@@ -1066,76 +988,6 @@ const priorityPages: PageSpec[] = [
             question: 'Nếu tôi muốn xem trường trước thì sao?',
             answer: 'Khi phụ huynh đã nghiêng về một khu vực hoặc một cơ sở cụ thể, tham quan trường có thể là bước tiếp theo tốt hơn so với tư vấn qua điện thoại.',
           },
-        ],
-      },
-    ],
-  },
-  {
-    slug: 'tuyen-sinh/tham-quan-truong',
-    title: 'Tham Quan Trường | Trường Việt Anh',
-    description:
-      'Trang đặt lịch tham quan Trường Việt Anh, giúp phụ huynh chọn cơ sở quan tâm và chuyển nhanh từ tìm hiểu online sang trải nghiệm thực tế.',
-    templateClass: 'Campus Tour / Local Admission Landing',
-    pageType: 'Visit booking',
-    theme: 'admissions',
-    hero: {
-      eyebrow: 'School tour',
-      title: 'Với nhiều gia đình, tham quan trường là khoảnh khắc chuyển từ cảm giác hứng thú sang niềm tin thật.',
-      body:
-        'Trang này nên rất rõ: chọn cơ sở nào, nên đi vào lúc nào, đi để xem điều gì và sau buổi tham quan phụ huynh có thể bước tiếp ra sao.',
-      primaryCta: { label: 'Gọi để đặt lịch tham quan', href: contactLinks.phoneHref },
-      secondaryCta: { label: 'Nhắn Zalo đặt lịch', href: contactLinks.zaloHref },
-      badges: ['School tour', 'Local conversion', 'High-quality lead'],
-      asideTitle: 'Một buổi tham quan tốt giúp phụ huynh',
-      asideItems: [
-        'Nhìn thấy campus thật thay vì chỉ đọc mô tả.',
-        'Cảm nhận nề nếp, không gian và cách đội ngũ làm việc.',
-        'Đặt câu hỏi đúng hơn về học phí, chương trình và hồ sơ.',
-      ],
-    },
-    stats: [
-      { value: 'High intent', label: 'Đây thường là nhóm lead chất lượng cao hơn lead đọc thông tin đơn thuần' },
-      { value: '4 cơ sở', label: 'Trang nên điều hướng tới campus phù hợp thay vì để chung chung' },
-      { value: 'Tour-first', label: 'Rất phù hợp cho local SEO và quảng cáo khu vực' },
-      { value: 'Next step', label: 'Sau tour có thể đi tiếp sang hồ sơ, học phí hoặc học thử' },
-    ],
-    sections: [
-      {
-        type: 'cards',
-        eyebrow: 'Chọn cơ sở để tham quan',
-        title: 'Điểm bắt đầu của một buổi tham quan luôn là campus phù hợp với nhịp sống của gia đình.',
-        intro:
-          'Ở giai đoạn hoàn chỉnh, mỗi card có thể nối sang lịch riêng. Hiện tại, chúng đóng vai trò giúp phụ huynh chọn đúng ngữ cảnh trước khi liên hệ.',
-        columns: 2,
-        items: [
-          { title: 'Gò Vấp Phan Huy Ích', body: 'Phù hợp cho nhóm gia đình muốn xem một cơ sở có nhiều điểm chạm tuyển sinh và local trust.', href: '/co-so/go-vap-phan-huy-ich', cta: 'Xem campus này' },
-          { title: 'Mầm non Gò Vấp Lê Đức Thọ', body: 'Phù hợp cho gia đình có trẻ nhỏ, muốn bắt đầu từ cảm giác an tâm, sinh hoạt và sự thích nghi.', href: '/co-so/mam-non-go-vap-le-duc-tho', cta: 'Xem campus này' },
-          { title: 'Phú Nhuận Nguyễn Trọng Tuyển', body: 'Phù hợp cho gia đình cần vị trí kết nối thuận tiện và muốn kiểm chứng campus trước khi đi tiếp.', href: '/co-so/phu-nhuan-nguyen-trong-tuyen', cta: 'Xem campus này' },
-          { title: 'Bình Tân Tỉnh Lộ 10', body: 'Điểm vào phù hợp cho nhóm phụ huynh ở khu Tây TP.HCM đang tìm local option gần hơn.', href: '/co-so/binh-tan-tinh-lo-10', cta: 'Xem campus này' },
-        ],
-      },
-      {
-        type: 'steps',
-        eyebrow: 'Chuẩn bị tham quan',
-        title: 'Ba bước giúp buổi tham quan có giá trị hơn và ít cảm giác “đi xem cho biết”.',
-        intro:
-          'Khi phụ huynh được chuẩn bị đúng, chất lượng trao đổi tại campus sẽ tốt hơn rất nhiều.',
-        items: [
-          { title: 'Chốt trước cấp học và cơ sở', body: 'Điều này giúp đội tuyển sinh chuẩn bị tuyến nội dung phù hợp hơn cho gia đình.' },
-          { title: 'Mang theo câu hỏi thật sự quan trọng', body: 'Ví dụ về học phí, lịch sinh hoạt, nề nếp học tập, khả năng thích nghi hoặc bước nhập học tiếp theo.' },
-          { title: 'Xác định ngay hành động sau buổi tham quan', body: 'Sau khi xem trường, gia đình nên biết mình sẽ đi tiếp sang tư vấn, học phí, hồ sơ hay học thử.' },
-        ],
-      },
-      {
-        type: 'links',
-        eyebrow: 'Sau khi tham quan',
-        title: 'Những trang phụ huynh thường cần xem tiếp sau một buổi school tour.',
-        intro:
-          'Đây là cụm link nên xuất hiện rõ để giữ đà chuyển đổi sau khi gia đình đã đầu tư thời gian tới trường.',
-        items: [
-          { eyebrow: 'Money page', title: 'Học phí', href: '/hoc-phi', body: 'Khi campus đã tạo niềm tin, học phí thường là câu hỏi tiếp theo cần được đặt trong đúng bối cảnh.' },
-          { eyebrow: 'Checklist', title: 'Hồ sơ nhập học', href: '/tuyen-sinh/ho-so-nhap-hoc', body: 'Dành cho gia đình đã khá chắc về quyết định và muốn biết cần chuẩn bị gì tiếp theo.' },
-          { eyebrow: 'Trial', title: 'Học thử', href: '/hoc-thu', body: 'Đặc biệt phù hợp với nhóm phụ huynh mầm non hoặc tiểu học còn muốn kiểm chứng thêm mức độ hòa nhập của con.' },
         ],
       },
     ],

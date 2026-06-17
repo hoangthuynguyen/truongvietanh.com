@@ -5,8 +5,8 @@ import { getSiteSettings } from '../lib/directus';
 const settings = await getSiteSettings();
 const hotline = settings?.hotline || '0916 961 409';
 
-type Props = { title?: string; description?: string; keywords?: string; schoolLevel?: 'mau-non' | 'tieu-hoc' | 'thcs' | 'thpt'; funnelCode?: string; ogImage?: string; canonicalUrl?: string; };
-const { title = 'Trường Việt Anh', description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.', keywords = 'trường, tiếng Anh, song ngữ, Việt Anh', schoolLevel = 'tieu-hoc', funnelCode = 'squeeze-landing', ogImage = 'https://truongvietanh.com/og-image.png', canonicalUrl = 'https://truongvietanh.com', } = Astro.props;
+type Props = { title?: string; description?: string; keywords?: string; schoolLevel?: 'mau-non' | 'tieu-hoc' | 'thcs' | 'thpt'; funnelCode?: string; ogImage?: string; canonicalUrl?: string; hideUrgency?: boolean; };
+const { title = 'Trường Việt Anh', description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.', keywords = 'trường, tiếng Anh, song ngữ, Việt Anh', schoolLevel = 'tieu-hoc', funnelCode = 'squeeze-landing', ogImage = 'https://truongvietanh.com/og-image.png', canonicalUrl = 'https://truongvietanh.com', hideUrgency = false, } = Astro.props;
 const phoneIntl = `+84${hotline.replace(/\s/g,'').replace(/^0/,'')}`;
 const levelNames: Record<string, string> = { 'mam-non': 'Mầm Non', 'tieu-hoc': 'Tiểu Học', 'thcs': 'THCS', 'thpt': 'THPT' };
 const schemaData = [
@@ -169,11 +169,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <section class="squeeze-trust"><div class="squeeze-trust__inner"><slot name="trust" /></div></section>
 <section class="squeeze-content"><slot name="content" /></section>
 
+{!hideUrgency && (
 <div class="squeeze-urgency"><div class="squeeze-urgency__inner">
 <span class="squeeze-urgency__pulse"></span>
 <span class="squeeze-urgency__text">⚠️ Học bổng Early Bird kết thúc trong <span class="squeeze-urgency__timer" id="urgencyLayoutTimer">--:--:--</span></span>
 <a href="#form-section" class="squeeze-urgency__cta">Đăng ký ngay →</a>
 </div></div>
+)}
 
 <section class="squeeze-form-section" id="form-section"><div class="squeeze-form-section__inner">
 <slot name="form" />

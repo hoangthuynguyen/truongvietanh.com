@@ -52,6 +52,27 @@
   .quote .who{ display:block; margin-top:8px; font-size:15px; color:var(--grey); font-weight:600; }
   .ph{ background:#fff3b0; border:1px dashed #c9a800; color:#6b5600; font-size:14px; padding:4px 8px; border-radius:6px; }
 
+  /* VIDEO TESTIMONIAL */
+  .vgrid{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:6px 0 18px; }
+  .vcard{ display:flex; flex-direction:column; background:#fff; border:1px solid var(--line); border-radius:14px; overflow:hidden; box-shadow:0 4px 16px rgba(0,0,128,.06); }
+  .vthumb{ position:relative; width:100%; aspect-ratio:16/9; border:0; padding:0; margin:0; cursor:pointer; background-color:var(--navy); background-position:center; background-size:cover; background-repeat:no-repeat; display:block; }
+  .vthumb .role{ position:absolute; top:8px; left:8px; background:var(--yellow); color:var(--navy); font-size:12px; font-weight:700; padding:3px 9px; border-radius:20px; }
+  .vthumb .play{ position:absolute; inset:0; margin:auto; width:50px; height:50px; display:grid; place-items:center; background:var(--navy); color:var(--yellow); border-radius:50%; font-size:18px; padding-left:3px; box-shadow:0 4px 14px rgba(0,0,0,.4); }
+  .vthumb:hover .play{ background:#c00; color:#fff; }
+  .vbody{ padding:14px 15px 16px; text-align:left; }
+  .vbody .vq{ font-size:14px; line-height:1.55; color:var(--ink); margin:0 0 8px; font-style:italic; }
+  .vbody .vn{ font-weight:700; color:var(--navy); font-size:14px; }
+  .vbody .vm{ font-size:13px; color:var(--grey); }
+  .vframe{ width:100%; aspect-ratio:16/9; border:0; display:block; }
+  @media (max-width:520px){ .vgrid{ grid-template-columns:1fr; } }
+
+  /* GALLERY — dải ảnh hoạt động THPT */
+  .gallery{ display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin-top:6px; }
+  .gallery figure{ margin:0; aspect-ratio:4/3; border-radius:12px; overflow:hidden; border:1px solid var(--line); }
+  .gallery img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .35s ease; }
+  .gallery figure:hover img{ transform:scale(1.05); }
+  @media (max-width:520px){ .gallery{ grid-template-columns:repeat(2,1fr); } }
+
   .urgent{ background:var(--navy); color:#fff; border-radius:14px; padding:24px; text-align:center; border:none; }
   .urgent h2{ color:var(--yellow); }
   .urgent p{ color:#e9e9ff; }
@@ -140,15 +161,57 @@
   </div>
 </section>
 
-<!-- PROOF -->
+<!-- PROOF: VIDEO TESTIMONIAL -->
 <section>
   <div class="wrap">
-    <h2>Phụ huynh đi trước nói gì</h2>
-    <div class="quote">
-      "Khi đi học thì cái thái độ sống cũng như là niềm vui, cái hạnh phúc khi được học tập thì nó phải được đảm bảo. Áp lực quá về vấn đề học thức và kiến thức thì cũng làm cho các bé sẽ không cảm thấy được vui vẻ."
-      <span class="who">— Anh Lê Trung Thành, phụ huynh học sinh THPT — Hệ thống Trường Việt Anh</span>
+    <h2>Phụ huynh &amp; học sinh THPT nói gì</h2>
+    <p>Video thật, quay tại trường — phụ huynh và chính các bạn học sinh cấp 3 chia sẻ. Bấm vào để xem.</p>
+
+    <div class="vgrid">
+      <div class="vcard">
+        <button class="vthumb" data-yt="5T8j_k5VCW4" style="background-image:url(https://i.ytimg.com/vi/5T8j_k5VCW4/hqdefault.jpg)" aria-label="Xem video: Anh Lê Trung Thành"><span class="role">Phụ huynh</span><span class="play">▶</span></button>
+        <div class="vbody"><p class="vq">"Niềm vui, sự hạnh phúc khi được học tập phải được đảm bảo — chứ không phải áp lực kiến thức."</p><div class="vn">Anh Lê Trung Thành</div><div class="vm">Phụ huynh HS lớp 11 · Gò Vấp</div></div>
+      </div>
+      <div class="vcard">
+        <button class="vthumb" data-yt="1dYGdWZT20E" style="background-image:url(https://i.ytimg.com/vi/1dYGdWZT20E/hqdefault.jpg)" aria-label="Xem video: Huỳnh Hà Nam Anh"><span class="role">Học sinh</span><span class="play">▶</span></button>
+        <div class="vbody"><p class="vq">"Em chưa từng nghĩ mình đứng được trên sân khấu lớn như TEDx — vậy mà em đã làm được."</p><div class="vn">Huỳnh Hà Nam Anh</div><div class="vm">Lớp 11A3 · Bình Tân · TEDx</div></div>
+      </div>
+      <div class="vcard">
+        <button class="vthumb" data-yt="NAYd7sM0d-8" style="background-image:url(https://i.ytimg.com/vi/NAYd7sM0d-8/hqdefault.jpg)" aria-label="Xem video: Chu Anh Tài"><span class="role">Học sinh</span><span class="play">▶</span></button>
+        <div class="vbody"><p class="vq">"Từ một người khép kín, em khám phá khả năng lãnh đạo — và làm Chủ tịch Hội học sinh."</p><div class="vn">Chu Anh Tài</div><div class="vm">Lớp 12B2 · Chủ tịch Hội HS</div></div>
+      </div>
+      <div class="vcard">
+        <button class="vthumb" data-yt="v2MRJXlEPWE" style="background-image:url(https://i.ytimg.com/vi/v2MRJXlEPWE/hqdefault.jpg)" aria-label="Xem video: Mỹ Uyên"><span class="role">Học sinh</span><span class="play">▶</span></button>
+        <div class="vbody"><p class="vq">"Không còn áp lực học thêm tới khuya — em chủ động hơn và có thời gian tự học."</p><div class="vn">Mỹ Uyên</div><div class="vm">Lớp 11 nội trú · Gò Vấp</div></div>
+      </div>
+      <div class="vcard">
+        <button class="vthumb" data-yt="KfEgq0oyGn4" style="background-image:url(https://i.ytimg.com/vi/KfEgq0oyGn4/hqdefault.jpg)" aria-label="Xem video: Minh Anh"><span class="role">Học sinh</span><span class="play">▶</span></button>
+        <div class="vbody"><p class="vq">"Từ chỗ né tránh, em đã tự tin thuyết trình và chia sẻ quan điểm trước đám đông."</p><div class="vn">Minh Anh</div><div class="vm">Lớp 11 · Gò Vấp</div></div>
+      </div>
+      <div class="vcard">
+        <button class="vthumb" data-yt="wqYxSOZMIAE" style="background-image:url(https://i.ytimg.com/vi/wqYxSOZMIAE/hqdefault.jpg)" aria-label="Xem video: Bạn Huyền"><span class="role">Học sinh</span><span class="play">▶</span></button>
+        <div class="vbody"><p class="vq">"Em biết tự học, tự định hướng và tham gia nhiều hoạt động — trưởng thành hơn hẳn."</p><div class="vn">Bạn Huyền</div><div class="vm">Lớp 10A1 · Gò Vấp</div></div>
+      </div>
     </div>
-    <p style="margin-top:16px;">Hoạt động từ năm 2012, Việt Anh đã đồng hành cùng hàng nghìn gia đình qua từng giai đoạn — từ mầm non đến THPT. Học sinh THPT Đăng Khoa đạt <strong>IELTS 7.0</strong> sau những năm học tại Việt Anh. <span class="ph">[Đội ngũ bổ sung: % học sinh lớp 10 đạt IELTS 6.0+ và tổng học sinh THPT khi có số liệu chính thức]</span></p>
+
+    <p style="margin-top:6px;">Hoạt động từ năm 2012, Việt Anh đã đồng hành cùng hàng nghìn gia đình qua từng giai đoạn — từ mầm non đến THPT. Học sinh THPT Đăng Khoa đạt <strong>IELTS 7.0</strong> sau những năm học tại Việt Anh. <span class="ph">[Đội ngũ bổ sung: % học sinh lớp 10 đạt IELTS 6.0+ và tổng học sinh THPT khi có số liệu chính thức]</span></p>
+  </div>
+</section>
+
+<!-- HÌNH ẢNH HOẠT ĐỘNG THPT -->
+<section>
+  <div class="wrap">
+    <h2>Khoảnh khắc học sinh THPT Việt Anh</h2>
+    <p>Một vài hình ảnh đời thường trong lớp học, sân chơi và các hoạt động của học sinh cấp 3 tại Việt Anh — nơi con vừa học, vừa được là chính mình.</p>
+    <div class="gallery">
+      <figure><img src="https://media.truongvietanh.com/images/thuyet-trinh-13.webp" alt="Học sinh THPT Việt Anh thuyết trình trước lớp" loading="lazy" decoding="async" width="640" height="480"></figure>
+      <figure><img src="https://media.truongvietanh.com/images/thuyet-trinh-04.webp" alt="Học sinh THPT Việt Anh tự tin trình bày trước đám đông" loading="lazy" decoding="async" width="640" height="480"></figure>
+      <figure><img src="https://media.truongvietanh.com/images/olympic-03.webp" alt="Học sinh THPT Việt Anh tại sân chơi học thuật" loading="lazy" decoding="async" width="640" height="480"></figure>
+      <figure><img src="https://media.truongvietanh.com/images/thuyet-trinh-09.webp" alt="Hoạt động học tập của học sinh THPT Việt Anh" loading="lazy" decoding="async" width="640" height="480"></figure>
+      <figure><img src="https://media.truongvietanh.com/images/du-an-03.webp" alt="Học sinh THPT Việt Anh làm dự án nhóm" loading="lazy" decoding="async" width="640" height="480"></figure>
+      <figure><img src="https://media.truongvietanh.com/images/olympic-06.webp" alt="Học sinh THPT Việt Anh trong hoạt động trải nghiệm" loading="lazy" decoding="async" width="640" height="480"></figure>
+    </div>
+    <p style="margin-top:14px;font-size:14px;color:var(--grey);">Ảnh thật tại Hệ thống Trường Việt Anh. Có thể thay bằng ảnh học sinh lớp 10 mới nhất nếu muốn.</p>
   </div>
 </section>
 
@@ -274,6 +337,25 @@
       btn.textContent = 'Gửi đăng ký — Nhận tư vấn trong 24 giờ';
       btn.disabled = false;
       alert('Có lỗi xảy ra. Vui lòng thử lại hoặc gọi trực tiếp 0916 961 409.');
+    });
+  });
+})();
+</script>
+
+<!-- Video testimonial: bấm thumbnail → nhúng YouTube -->
+<script>
+(function(){
+  document.querySelectorAll('.vthumb').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var id = btn.getAttribute('data-yt'); if(!id) return;
+      var f = document.createElement('iframe');
+      f.className = 'vframe';
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0';
+      f.title = 'Video testimonial Trường Việt Anh';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      f.allowFullscreen = true;
+      f.loading = 'lazy';
+      btn.replaceWith(f);
     });
   });
 })();

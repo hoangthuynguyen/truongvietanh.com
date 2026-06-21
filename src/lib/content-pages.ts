@@ -913,8 +913,15 @@ export async function getContentPageBySlug(slug: string) {
   return cmsPage || getStaticPageBySlug(slug);
 }
 
+// Slug được phục vụ bởi file TĨNH trong public/ (vd: public/tuyen-sinh-lop-10/index.html).
+// KHÔNG để route động [...slug].astro sinh trang cho các slug này — tránh collision khiến
+// file public bị đè bằng trang CMS/404 (gây 404 lúc team build có kết nối Directus).
+const PUBLIC_FILE_SLUGS = new Set(['tuyen-sinh-lop-10']);
+
 export async function getAllContentPageSlugs() {
   const cmsSlugs = await getCmsPageSlugs();
   const staticSlugs = staticPages.map((page) => page.slug);
-  return Array.from(new Set([...staticSlugs, ...cmsSlugs]));
+  return Array.from(new Set([...staticSlugs, ...cmsSlugs])).filter(
+    (slug) => !PUBLIC_FILE_SLUGS.has(slug),
+  );
 }

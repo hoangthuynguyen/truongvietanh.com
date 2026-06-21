@@ -90,7 +90,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
 <!-- End Google Tag Manager -->
 <link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;500;600&display=swap&subset=vietnamese" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;500;600&display=swap&subset=vietnamese" as="style" onload="this.onload=null;this.rel='stylesheet'" />
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Open+Sans:wght@400;500;600&display=swap&subset=vietnamese" /></noscript>
 <style is:inline>
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
@@ -203,7 +205,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <header class="hdr">
   <a href="https://truongvietanh.com">
-    <img src={logoSrc} alt="Trường Việt Anh" class="hdr-logo" />
+    <img src={logoSrc} alt="Trường Việt Anh" class="hdr-logo" width="200" height="60" loading="eager" fetchpriority="high" />
   </a>
   <div class="hdr-right">
     <a href={phoneHref} class="btn-ph">
@@ -291,7 +293,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     {mockupImage && (
       <div class="mockup-wrap">
-        <img src={mockupImage} alt={headline} onerror="this.parentElement.style.display='none'" />
+        <img src={mockupImage} alt={headline} width="480" height="640" loading="lazy" onerror="this.parentElement.style.display='none'" />
       </div>
     )}
   </div>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bản đồ phát triển của con — Trắc nghiệm Việt Anh (K-12)</title>
+<style>
+  :root{
+    --ink:#0f2540; --ink2:#33506f; --muted:#6b7c93;
+    --brand:#0a5ad6; --brand-dk:#063e95; --teal:#0fb5a6; --gold:#f5a524;
+    --bg:#eef3fb; --card:#ffffff; --line:#dce6f4; --good:#19b36b;
+    --shadow:0 18px 50px rgba(10,40,90,.14);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    color:var(--ink); background:radial-gradient(1200px 600px at 50% -10%,#e0ecff 0%,var(--bg) 55%);
+    min-height:100vh; display:flex; align-items:flex-start; justify-content:center; padding:26px 14px 60px;}
+  .app{width:100%; max-width:560px}
+  .topbar{display:flex; align-items:center; gap:10px; margin-bottom:14px}
+  .logo{display:flex; align-items:center; gap:9px; font-weight:800; color:var(--brand-dk); letter-spacing:.3px}
+  .logo .mark{width:30px;height:30px;border-radius:9px;background:linear-gradient(135deg,var(--brand),var(--teal));
+    display:grid;place-items:center;color:#fff;font-weight:900;font-size:15px;box-shadow:0 6px 14px rgba(10,90,214,.35)}
+  .topbar .spacer{flex:1}
+  .proofpill{font-size:12px;color:var(--ink2);background:#fff;border:1px solid var(--line);padding:6px 11px;border-radius:999px;font-weight:600}
+  .progress-wrap{margin:6px 2px 16px;display:none}
+  .progress-meta{display:flex;justify-content:space-between;font-size:12.5px;color:var(--muted);margin-bottom:6px;font-weight:600}
+  .bar{height:10px;background:#dfe8f6;border-radius:999px;overflow:hidden}
+  .bar > i{display:block;height:100%;width:0;border-radius:999px;background:linear-gradient(90deg,var(--teal),var(--brand));transition:width .55s cubic-bezier(.4,0,.2,1)}
+  .milestones{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+  .ms{font-size:11.5px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:999px;padding:4px 9px;font-weight:600}
+  .ms.done{color:#0c7a4d;background:#e7f8ef;border-color:#bfeed6}
+  .ms.done::before{content:"✓ ";font-weight:900}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:26px 22px;animation:rise .45s ease both}
+  @keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+  .eyebrow{font-size:12.5px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:var(--teal);margin:0 0 8px}
+  h1{font-size:25px;line-height:1.22;margin:0 0 12px;color:var(--ink)}
+  h2{font-size:21px;line-height:1.3;margin:0 0 6px;color:var(--ink)}
+  p.lead{font-size:15.5px;color:var(--ink2);line-height:1.55;margin:0 0 18px}
+  .qcount{font-size:13px;color:var(--gold);font-weight:800;margin:0 0 12px;display:flex;align-items:center;gap:6px}
+  .opts{display:flex;flex-direction:column;gap:11px;margin:14px 0 4px}
+  .opt{display:flex;align-items:center;gap:13px;text-align:left;width:100%;cursor:pointer;background:#fff;border:1.6px solid var(--line);
+    border-radius:14px;padding:15px 15px;font-size:15px;color:var(--ink);transition:.16s;font-weight:600;line-height:1.35}
+  .opt:hover{border-color:var(--brand);background:#f5f9ff;transform:translateY(-1px)}
+  .opt .ic{width:30px;height:30px;min-width:30px;border-radius:9px;background:#eef3fb;display:grid;place-items:center;font-size:16px}
+  .opt.sel{border-color:var(--brand);background:#eef5ff;box-shadow:0 0 0 3px rgba(10,90,214,.12)}
+  .grid{display:flex;flex-direction:column;gap:11px}
+  .gradecard{cursor:pointer;border:1.6px solid var(--line);border-radius:16px;padding:16px 16px;background:#fff;transition:.16s;display:flex;gap:14px;align-items:center}
+  .gradecard:hover{border-color:var(--teal);transform:translateY(-2px);box-shadow:0 10px 24px rgba(10,90,214,.12)}
+  .gradecard .emo{font-size:30px}
+  .gradecard .gt{font-weight:800;margin:0 0 3px;font-size:16px}
+  .gradecard .gs{font-size:12.8px;color:var(--muted);line-height:1.4}
+  .gradecard .chev{margin-left:auto;color:var(--muted);font-size:20px}
+  .feedback{margin-top:16px;border:1px solid #cfeede;background:#f2fbf6;border-radius:14px;padding:14px 15px;display:none;animation:rise .35s ease both}
+  .feedback .fb-top{display:flex;align-items:center;gap:8px;font-weight:800;color:#0c7a4d;font-size:14px;margin-bottom:6px}
+  .feedback .fb-body{font-size:13.6px;color:var(--ink2);line-height:1.55}
+  .feedback .src{display:block;margin-top:7px;font-size:11.5px;color:var(--muted);font-style:italic}
+  .fb-stake{background:#fff5e6;border:1px solid #f3dca7;border-radius:10px;padding:10px 12px;margin-bottom:10px;font-size:13.4px;color:#7a5212;line-height:1.5}
+  .fb-stake b{color:#9a5b00}
+  .proofbar{display:flex;flex-direction:column;gap:3px;background:#fff8ec;border:1px solid #f3e3bd;border-radius:13px;padding:12px 14px;margin-bottom:16px}
+  .proofbar .stars{color:var(--gold);font-size:13px;letter-spacing:1px}
+  .proofbar .pq{font-size:13.5px;color:var(--ink);font-style:italic;line-height:1.5}
+  .proofbar .pw{font-size:11.5px;color:var(--muted);font-weight:600}
+  .btn{appearance:none;border:0;cursor:pointer;font-weight:800;font-size:15.5px;border-radius:13px;padding:15px 20px;background:linear-gradient(135deg,var(--brand),var(--brand-dk));color:#fff;width:100%;margin-top:18px;box-shadow:0 12px 24px rgba(10,90,214,.32);transition:.16s}
+  .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+  .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+  .btn.ghost{background:#fff;color:var(--brand-dk);border:1.6px solid var(--line);box-shadow:none}
+  .btn.gold{background:linear-gradient(135deg,var(--gold),#e08600);box-shadow:0 12px 24px rgba(245,165,36,.35)}
+  .backlink{display:inline-block;margin-top:14px;color:var(--muted);font-size:13px;cursor:pointer;font-weight:600}
+  .backlink:hover{color:var(--brand)}
+  .analysis{text-align:center;padding:42px 22px}
+  .spinner{width:54px;height:54px;border-radius:50%;border:5px solid #e3ecfa;border-top-color:var(--brand);margin:0 auto 22px;animation:spin 1s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .analysis .step{font-size:15px;color:var(--ink2);min-height:24px;font-weight:600}
+  .radar-wrap{display:flex;justify-content:center;margin:6px 0 4px}
+  .scoreline{display:flex;flex-direction:column;gap:9px;margin:16px 0 4px}
+  .axisrow{display:flex;align-items:center;gap:10px;font-size:13.5px}
+  .axisrow .nm{width:118px;min-width:118px;font-weight:700;color:var(--ink2)}
+  .axisrow .track{flex:1;height:9px;background:#e6eefa;border-radius:999px;overflow:hidden}
+  .axisrow .track > i{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--teal),var(--brand))}
+  .axisrow .pc{width:38px;text-align:right;font-weight:800;color:var(--brand-dk)}
+  .insightbox{margin-top:16px;border-radius:14px;padding:15px 16px;font-size:14px;line-height:1.6}
+  .insightbox.strong{background:#eafaf1;border:1px solid #c3edd3}
+  .insightbox.grow{background:#fff7e9;border:1px solid #f5e0b0;margin-top:11px}
+  .insightbox b{color:var(--ink)}
+  .todo{margin-top:16px;border:1px solid var(--line);border-radius:14px;padding:15px 16px;background:#f7fbff}
+  .todo h3{margin:0 0 8px;font-size:15px;color:var(--brand-dk)}
+  .todo ol{margin:0;padding-left:20px;color:var(--ink2);font-size:13.8px;line-height:1.65}
+  .gate .teaser{border:1px dashed var(--brand);border-radius:14px;padding:16px;background:#f5f9ff;margin:6px 0 16px}
+  .gate .teaser .ga{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--ink2);font-weight:600;margin-top:8px}
+  .gate .teaser .ga .blur{flex:1;height:10px;border-radius:6px;background:linear-gradient(90deg,#bcd4f3,#e6eefb);filter:blur(1.5px)}
+  .field{width:100%;padding:14px 14px;border:1.6px solid var(--line);border-radius:12px;font-size:15px;margin-top:10px;font-family:inherit}
+  .field:focus{outline:none;border-color:var(--brand);box-shadow:0 0 0 3px rgba(10,90,214,.12)}
+  .consent{display:flex;gap:9px;align-items:flex-start;margin-top:12px;font-size:12px;color:var(--muted);line-height:1.5}
+  .consent input{margin-top:2px}
+  .offer .guarantee{display:flex;gap:10px;align-items:flex-start;background:#eafaf1;border:1px solid #c3edd3;border-radius:13px;padding:13px 14px;margin-top:14px;font-size:13.5px;color:var(--ink2);line-height:1.5}
+  .offer .guarantee .g-ic{font-size:20px}
+  .pts{display:flex;flex-direction:column;gap:9px;margin:14px 0 4px}
+  .pt{display:flex;gap:10px;font-size:14.2px;color:var(--ink2);line-height:1.5}
+  .pt .c{color:var(--good);font-weight:900}
+  .note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.5}
+  .demo-tag{position:fixed;left:10px;bottom:10px;background:#0f2540;color:#fff;font-size:11px;padding:6px 10px;border-radius:8px;opacity:.85;font-weight:600;z-index:9}
+  .hide{display:none !important}
+</style>
+<!-- quiz-canonical --></head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="logo"><span class="mark">VA</span><span>TRƯỜNG VIỆT ANH</span></div>
+    <div class="spacer"></div>
+    <div class="proofpill">12.000+ phụ huynh đã làm</div>
+  </div>
+  <div class="progress-wrap" id="progressWrap">
+    <div class="progress-meta"><span id="pmLabel">Bắt đầu</span><span id="pmPct">0%</span></div>
+    <div class="bar"><i id="pmBar"></i></div>
+    <div class="milestones" id="milestones"></div>
+  </div>
+  <div id="screen"></div>
+</div>
+<div class="demo-tag">BẢN MẪU DEMO • Marketing Việt Anh</div>
+<script>
+/* ============================================================
+   DỮ LIỆU PHỄU K-12 — Trường Việt Anh (game-hoá)
+   7 nhánh: Mầm non (3 nhóm) · Tiểu học (2 nhóm) · THCS · THPT
+   4 trục lõi: Kiến thức · Kỹ năng · Tiếng Anh · Thể chất
+   + trục 5 Hướng nghiệp & Đại học (chỉ THCS & THPT)
+   ============================================================ */
+const AX4 = ["Kiến thức","Kỹ năng","Tiếng Anh","Thể chất"];
+const AX5 = ["Kiến thức","Kỹ năng","Tiếng Anh","Thể chất","Hướng nghiệp & Đại học"];
+const AXSHORT = {"Kiến thức":"Kiến thức","Kỹ năng":"Kỹ năng","Tiếng Anh":"Tiếng Anh","Thể chất":"Thể chất","Hướng nghiệp & Đại học":"Hướng nghiệp"};
+const SC = [90,68,45,28]; // A→đã vững ... D→khoảng trống lớn
+
+/* Việc làm ngay (phần thưởng thật) — theo trục yếu nhất.
+   Bộ "young" cho Mầm non; bộ "school" cho Tiểu học/THCS/THPT (có trục 4). */
+const TODO_YOUNG = {
+ 0:["Mỗi ngày đọc sách / kể chuyện cùng bé ~15 phút, hỏi 'tại sao', 'rồi sao nữa' để kích thích ngôn ngữ & tư duy.",
+    "Giảm thời gian màn hình; thay bằng chơi phân loại, xếp hình, đếm đồ vật quanh nhà.",
+    "Cho bé tự chọn hoạt động rồi cùng nhìn lại 'hôm nay con làm được gì' (kiểu Plan-Do-Review)."],
+ 1:["Giao cho bé 1 việc tự phục vụ mỗi ngày (cất dép, dọn đồ chơi) và khen thật cụ thể.",
+    "Khi bé giận, gọi tên cảm xúc giúp con: 'Con đang buồn vì…' thay vì mắng.",
+    "Tạo cơ hội chơi cùng bạn / anh chị để con tập chia sẻ và chờ tới lượt."],
+ 2:["Cho bé nghe bài hát / hội thoại tiếng Anh đơn giản mỗi ngày, ưu tiên giọng bản ngữ.",
+    "Không ép dịch; để con 'tắm' ngôn ngữ tự nhiên qua trò chơi và hình ảnh.",
+    "Khen mỗi lần con bật ra một từ tiếng Anh để con tự tin, không sợ sai."],
+ 3:["Bỏ nước ngọt có gas & snack; ưu tiên nước lọc, sữa không đường, rau và đạm cân đối.",
+    "Cho bé vận động / chơi ngoài trời ít nhất 60 phút mỗi ngày.",
+    "Giữ giờ ăn – ngủ cố định để tạo nề nếp (routine) — nền của sức khoẻ và tập trung."]
+};
+const TODO_SCHOOL = {
+ 0:["Hỏi con 'vì sao' và 'còn cách nào khác' khi học, để đẩy con lên phân tích thay vì học thuộc.",
+    "Cùng con lập thời gian biểu tự học cố định mỗi tối, có ô tự đánh giá cuối ngày.",
+    "Khuyến khích con giảng lại bài cho người khác — dạy lại là cách hiểu sâu nhất."],
+ 1:["Giao cho con một việc/nhiệm vụ con tự chịu trách nhiệm trọn vẹn (ở nhà hoặc ở lớp).",
+    "Khuyến khích con tham gia một CLB / dự án / hoạt động tập thể để rèn hợp tác & lãnh đạo.",
+    "Khi con gặp khó, hỏi 'con định giải quyết thế nào' thay vì làm hộ — rèn chủ động & bền chí."],
+ 2:["Cho con tiếp xúc tiếng Anh thật mỗi ngày (phim, podcast, nói chuyện) ngoài giờ học ngữ pháp.",
+    "Đặt mục tiêu IELTS / chứng chỉ có mốc thời gian rõ ràng và theo dõi định kỳ.",
+    "Tạo cơ hội con dùng tiếng Anh làm việc thật (thuyết trình, viết, giao tiếp), không chỉ làm bài."],
+ 3:["Bỏ nước ngọt có gas & đồ ăn nhanh; ưu tiên bữa ăn cân đối, ngủ đủ giờ.",
+    "Đảm bảo con vận động/thể thao tối thiểu 3 lần/tuần, mỗi ngày ≥ 60 phút.",
+    "Giới hạn thời gian màn hình giải trí; giữ giờ giấc sinh hoạt đều đặn."],
+ 4:["Cùng con khám phá thế mạnh & sở thích qua trắc nghiệm nghề và trải nghiệm thực tế.",
+    "Tìm hiểu sớm các tổ hợp môn / ngành học để con chọn có hiểu biết, không theo cảm tính.",
+    "Cho con gặp gỡ người làm nghề con tò mò, hoặc tham gia hoạt động định hướng."]
+};
+
+const MN_GROW=[
+ "khơi dậy tò mò & ngôn ngữ đúng 'giai đoạn vàng' qua Story time, dự án và Plan-Do-Review hằng ngày",
+ "rèn cảm xúc-xã hội & tự lập qua Morning Meeting, 5 giá trị và routine — nền của bản lĩnh sau này",
+ "cho bé 'tắm' ngôn ngữ với ~6 tiết/tuần cùng giáo viên nước ngoài, đúng cửa sổ phát âm gần bản ngữ",
+ "xây thể lực & nề nếp bằng vận động hằng ngày, aerobic/bơi, dinh dưỡng nghiêm ngặt và ngủ trưa tại trường"];
+const MN_STRONG=[
+ "Bé có nền nhận thức & ngôn ngữ tốt — Việt Anh nuôi tiếp bằng học qua dự án & khám phá.",
+ "Bé giàu kỹ năng cảm xúc-xã hội — Việt Anh củng cố bằng 5 giá trị & vai trò nhỏ trong lớp.",
+ "Tiếng Anh là điểm sáng của bé — Việt Anh nâng tiếp với giáo viên nước ngoài & Story time.",
+ "Bé khoẻ & nề nếp tốt — Việt Anh duy trì bằng vận động hằng ngày & bữa ăn dinh dưỡng."];
+const SCHOOL_GROW=[
+ "đẩy con từ 'học để nhớ' lên 'phân tích – đánh giá – sáng tạo' qua lớp ≤24 em, dạy phân tầng năng lực & Tutor sau giờ",
+ "rèn kỹ năng & phẩm chất đo được qua 25 hành động giá trị, vai trò lãnh đạo và Học kỳ Foundation 28 ngày",
+ "đưa con theo lộ trình tiếng Anh cam kết với giáo viên nước ngoài, đo bằng PDR (đủ năng lực từ lớp 9 đạt IELTS 6.0+)",
+ "xây thể lực & sức khoẻ tinh thần bằng thể thao hằng ngày, dinh dưỡng nghiêm ngặt và sự đồng hành sát sao",
+ "giúp con khám phá thế mạnh sớm & chọn đúng hướng (trường cấp 3, tổ hợp môn, đại học) qua Foundation, TLIM và tư vấn định hướng"];
+const SCHOOL_STRONG=[
+ "Con có nền tư duy tốt — Việt Anh giữ lửa bằng Active Learning & dự án bậc cao.",
+ "Kỹ năng & phẩm chất là điểm sáng — Việt Anh nâng tiếp bằng vai trò lãnh đạo & dự án thật.",
+ "Tiếng Anh là điểm sáng — Việt Anh nâng lên chuẩn quốc tế & luyện IELTS 1-1.",
+ "Con khoẻ & cân bằng tốt — Việt Anh duy trì bằng thể thao hằng ngày & dinh dưỡng nghiêm ngặt.",
+ "Con có định hướng khá rõ — Việt Anh hiện thực hoá bằng tư vấn tổ hợp môn & lộ trình đại học."];
+
+/* offer theo cấp */
+const OFFER = {
+ mn:{ pts:["Dự một buổi học: Story time, Plan-Do-Review, giờ tiếng Anh với giáo viên nước ngoài",
+           "Tham quan bếp ăn dinh dưỡng, phòng ngủ trưa & khu vận động",
+           "Gặp cô chủ nhiệm — trao đổi riêng về Bản đồ phát triển của bé"],
+      book:"Đặt lịch tham quan & học thử cho bé" },
+ th:{ pts:["Dự một tiết học theo phương pháp Active Learning (lớp ≤ 24 em)",
+           "Tham quan CLB, khu vận động & bếp ăn dinh dưỡng",
+           "Gặp giáo viên chủ nhiệm — trao đổi về Bản đồ phát triển của con"],
+      book:"Đặt lịch tham quan & học thử cho con" },
+ thcs:{ pts:["Dự một tiết Active Learning & Critical Thinking (lớp ≤ 24 em)",
+           "Tìm hiểu lộ trình IELTS đo bằng PDR và CLB thể thao",
+           "Gặp tổ định hướng — tư vấn lộ trình & chọn trường cấp 3 cho con"],
+      book:"Đặt lịch School Tour cho con" },
+ thpt:{ pts:["Dự một tiết học theo phương pháp Active Learning (lớp ≤ 24 em)",
+           "Gặp tổ định hướng — tư vấn tổ hợp môn & lộ trình đại học cho con",
+           "Tham quan lộ trình IELTS, CLB thể thao & bếp ăn dinh dưỡng"],
+      book:"Đặt lịch School Tour cho con" }
+};
+
+/* ----- MENU màn hình đầu ----- */
+const MENU = [
+ { id:"mn", label:"Mầm non", emoji:"🧸", sub:"Dưới 3 / 3–4 / 5 tuổi", groups:[
+     {quiz:"mn_u3", emoji:"🍼", label:"Dưới 3 tuổi", sub:"Nhà trẻ — gắn kết, ngôn ngữ, vận động sớm"},
+     {quiz:"mn_34", emoji:"🧸", label:"3–4 tuổi", sub:"Mẫu giáo — ngôn ngữ, xã hội, tự lập"},
+     {quiz:"mn_5",  emoji:"✏️", label:"5 tuổi · sắp vào lớp 1", sub:"Lớp Lá — sẵn sàng vào lớp 1"} ]},
+ { id:"th", label:"Tiểu học", emoji:"🎒", sub:"Lớp 1–5", groups:[
+     {quiz:"th_12", emoji:"🎒", label:"Lớp 1–2 · Đầu cấp", sub:"Nề nếp, đọc–viết–toán, tiếng Anh sớm"},
+     {quiz:"th_35", emoji:"📐", label:"Lớp 3–5 · Cuối cấp", sub:"Tư duy, tự học, chuẩn bị lên lớp 6"} ]},
+ { id:"thcs", label:"THCS", emoji:"🔬", sub:"Lớp 6–9 · có trục Hướng nghiệp", quiz:"thcs" },
+ { id:"thpt", label:"THPT", emoji:"🎓", sub:"Lớp 10–12 · có trục Hướng nghiệp", quiz:"thpt" }
+];
+
+/* ===================== BỘ CÂU HỎI ===================== */
+const QUIZZES = {
+
+ /* ---------- MẦM NON: DƯỚI 3 TUỔI ---------- */
+ mn_u3:{ axes:AX4, childWord:"bé", proofAfter:4, todo:TODO_YOUNG, grow:MN_GROW, strong:MN_STRONG, offer:"mn",
+   confirm:["Dưới 1 tuổi","1 tuổi","2 tuổi"],
+   proof:{q:"Bé nhà mình đi trẻ tuần đầu khóc dữ lắm, các cô Việt Anh kiên nhẫn ôm ấp từng buổi. Giờ sáng nào con cũng đòi đi học.", w:"— Mẹ bé Su, lớp nhà trẻ"},
+   questions:[
+    {axis:0,icon:"🗣️",q:"Bé bắt đầu nói / ghép từ đến đâu rồi?",
+     opts:[{t:"Nói nhiều từ, bắt đầu ghép 2–3 từ",s:0},{t:"Nói được một số từ đơn",s:1},{t:"Mới bi bô, chưa rõ từ",s:2},{t:"Con chậm nói hơn bạn, mình lo",s:3}],
+     fb:"Trong 3 năm đầu, não bé tạo <b>hơn 1 triệu kết nối thần kinh mỗi giây</b> và đạt ~90% kích thước người lớn trước 5 tuổi. Story time + Plan-Do-Review hằng ngày + cô trò chuyện liên tục kích thích ngôn ngữ đúng 'giai đoạn vàng'.",
+     src:"Harvard Center on the Developing Child; chương trình Mầm non Việt Anh.",
+     stake:"Giai đoạn vàng ngôn ngữ trôi qua một lần và không lấy lại được — kích thích muộn khiến con mất lợi thế nền tảng."},
+    {axis:0,icon:"📱",q:"Mỗi ngày bé được trò chuyện – đọc sách – khám phá cùng người lớn bao nhiêu?",
+     opts:[{t:"Rất nhiều, cả nhà cùng chơi & đọc sách",s:0},{t:"Khá thường xuyên",s:1},{t:"Ít — người lớn bận, con hay xem màn hình",s:2},{t:"Con chủ yếu tự chơi / xem màn hình",s:3}],
+     fb:"Việt Anh theo dõi <b>9 lĩnh vực phát triển (COR Advantage)</b> và giữ lớp sĩ số nhỏ để mỗi bé được tương tác người-thật thay vì màn hình.",
+     src:"COR Advantage; chương trình Mầm non Việt Anh.",
+     stake:"Thời gian màn hình sớm thay cho tương tác người-thật làm chậm ngôn ngữ và khả năng chú ý của con."},
+    {axis:1,icon:"🤱",q:"Khi xa bố mẹ (đi gửi trẻ), bé phản ứng thế nào?",
+     opts:[{t:"Khá ổn, thích nghi nhanh",s:0},{t:"Khóc lúc đầu rồi quen",s:1},{t:"Bám chặt, khó rời",s:2},{t:"Mình rất lo chuyện con đi trẻ",s:3}],
+     fb:"Việt Anh có giai đoạn làm quen & Morning Meeting gắn kết cảm xúc; giáo viên theo tôn chỉ 'yêu thương học sinh vô điều kiện' để giúp bé chuyển tiếp an toàn (SEL).",
+     src:"Tôn chỉ giáo viên & SEL Trường Việt Anh.",
+     stake:"Chuyển tiếp đi trẻ không khéo có thể tạo lo âu chia ly kéo dài, ảnh hưởng cảm xúc của con."},
+    {axis:1,icon:"🥄",q:"Bé tự làm được những việc cơ bản nào? (tự xúc ăn, tự uống nước…)",
+     opts:[{t:"Tự xúc ăn, tự uống khá tốt",s:0},{t:"Đang tập, làm được một phần",s:1},{t:"Còn phải đút hoàn toàn",s:2},{t:"Chưa làm được gì, mình làm hết",s:3}],
+     fb:"<b>Routine giờ giấc cố định</b> (ăn–ngủ–chơi) + Plan-Do-Review giúp bé hình thành tự lập sớm — nền của tính chủ động và tự tin sau này.",
+     src:"Routine & PDR Mầm non Việt Anh.",
+     stake:"Bỏ lỡ cửa sổ tập tự lập khiến con phụ thuộc lâu hơn và khó hoà nhập nề nếp lớp."},
+    {axis:2,icon:"🎧",q:"Bé đã được tiếp xúc tiếng Anh chưa?",
+     opts:[{t:"Có, nghe tiếng Anh gần như hằng ngày",s:0},{t:"Thỉnh thoảng qua bài hát / clip",s:1},{t:"Hầu như chưa",s:2},{t:"Mình nghĩ con còn quá nhỏ để học",s:3}],
+     fb:"Cửa sổ ngôn ngữ mở rộng nhất ở những năm đầu; nghe tiếng Anh sớm với <b>người bản ngữ</b> giúp phát âm gần bản ngữ. Mầm non Việt Anh có <b>~6 tiết tiếng Anh/tuần với giáo viên nước ngoài</b>; gói International có giáo viên nước ngoài toàn thời gian.",
+     src:"Hartshorne et al., Cognition 2018; chương trình Mầm non Việt Anh.",
+     stake:"Mỗi năm trì hoãn là một phần cửa sổ 'phát âm gần bản ngữ' khép lại — sau này luyện lại tốn kém và khó hơn nhiều."},
+    {axis:2,icon:"🌟",q:"Anh/chị mong tiếng Anh đến với con thế nào?",
+     opts:[{t:"Tự nhiên như tiếng mẹ đẻ, càng sớm càng tốt",s:1},{t:"Quan trọng, nhưng sợ con loạn ngôn ngữ",s:2},{t:"Đợi con lớn hơn chút đã",s:2},{t:"Chưa nghĩ tới",s:3}],
+     fb:"Trẻ hoàn toàn có thể <b>song ngữ tự nhiên</b>; tiếp xúc sớm với người bản ngữ không gây 'loạn ngôn ngữ' mà tạo nền phát âm & phản xạ. Việt Anh cho bé 'tắm' ngôn ngữ qua bài hát, trò chơi, Story time.",
+     src:"Tâm lý ngôn ngữ trẻ song ngữ; phương pháp Mầm non Việt Anh.",
+     stake:"Chờ con lớn mới học khiến con bỏ lỡ giai đoạn tiếp thu âm chuẩn dễ nhất của cả cuộc đời."},
+    {axis:3,icon:"🍚",q:"Chuyện ăn uống của bé hiện tại?",
+     opts:[{t:"Ăn ngoan, đa dạng món",s:0},{t:"Tạm ổn, hơi kén",s:1},{t:"Biếng ăn, bữa ăn là 'cuộc chiến'",s:2},{t:"Mình rất lo con nhẹ cân / biếng ăn",s:3}],
+     fb:"Việt Anh có <b>dinh dưỡng học đường nghiêm ngặt</b> (cấm nước ngọt có gas, snack; sữa thanh trùng không đường), ăn xế bắt buộc, cô đồng hành bữa ăn theo routine.",
+     src:"Quy chế dinh dưỡng Mầm non Việt Anh.",
+     stake:"Dinh dưỡng & thói quen ăn những năm đầu đặt nền cho thể chất, chiều cao và miễn dịch cả đời con."},
+    {axis:3,icon:"🤸",q:"Bé vận động – ngủ nghỉ thế nào?",
+     opts:[{t:"Vận động nhiều, ngủ đủ giấc",s:0},{t:"Tạm ổn",s:1},{t:"Ít vận động, ngủ thất thường",s:2},{t:"Hay ốm vặt, nề nếp lộn xộn",s:3}],
+     fb:"Mầm non Việt Anh có <b>vận động hằng ngày, aerobic 2 buổi/tuần</b>, ngủ trưa tại trường theo routine. WHO khuyến nghị trẻ vận động đủ mỗi ngày.",
+     src:"WHO Guidelines 2020; TKB Mầm non Việt Anh.",
+     stake:"Thiếu vận động và giấc ngủ ổn định ở tuổi này ảnh hưởng trực tiếp tới phát triển não bộ và miễn dịch."}
+   ]},
+
+ /* ---------- MẦM NON: 3–4 TUỔI ---------- */
+ mn_34:{ axes:AX4, childWord:"bé", proofAfter:4, todo:TODO_YOUNG, grow:MN_GROW, strong:MN_STRONG, offer:"mn",
+   confirm:["3 tuổi","4 tuổi"],
+   proof:{q:"Con dạn hẳn, về nhà hát được cả bài tiếng Anh. Chuyện biếng ăn cũng đỡ vì con ăn cùng các bạn.", w:"— Mẹ bé Bắp, lớp mẫu giáo"},
+   questions:[
+    {axis:0,icon:"❓",q:"Bé có hay đặt câu hỏi 'tại sao', tò mò khám phá không?",
+     opts:[{t:"Rất tò mò, hỏi liên tục",s:0},{t:"Khá tò mò",s:1},{t:"Ít hỏi, khá thụ động",s:2},{t:"Chủ yếu xem màn hình, ít khám phá",s:3}],
+     fb:"3–4 tuổi là <b>đỉnh tò mò</b>. Việt Anh học qua dự án (Project-based) + khám phá, theo dõi 9 lĩnh vực COR Advantage — nuôi 'động cơ học' thay vì nhồi kiến thức.",
+     src:"Project-based learning & COR Advantage Việt Anh.",
+     stake:"Tò mò không được nuôi dưỡng sẽ tắt dần; con quen thụ động sẽ khó ham học về sau."},
+    {axis:0,icon:"⏳",q:"Bé tập trung vào một hoạt động được bao lâu?",
+     opts:[{t:"Khá lâu, kiên trì hoàn thành",s:0},{t:"Tuỳ hứng",s:1},{t:"Mau chán, nhảy việc liên tục",s:2},{t:"Rất khó ngồi yên",s:3}],
+     fb:"<b>Plan-Do-Review</b> hằng ngày dạy bé tự chọn việc → làm → nhìn lại, rèn chú ý & kiên trì có chủ đích — kỹ năng quyết định khi vào lớp 1.",
+     src:"Phương pháp PDR Mầm non Việt Anh.",
+     stake:"Khả năng tập trung là nền của học tập; không rèn sớm, con dễ đuối khi vào lớp 1 phải ngồi yên ~35 phút."},
+    {axis:1,icon:"🧒",q:"Bé chơi với bạn thế nào?",
+     opts:[{t:"Hoà đồng, biết chia sẻ",s:0},{t:"Chơi cùng nhưng đôi khi tranh giành",s:1},{t:"Thích chơi một mình",s:2},{t:"Hay xung đột / ăn vạ",s:3}],
+     fb:"Morning Meeting + hoạt động nhóm + <b>5 giá trị cốt lõi</b> (Tôn trọng, Yêu thương…) dạy bé kỹ năng xã hội-cảm xúc; cô làm mẫu cách xử lý xung đột.",
+     src:"5 giá trị cốt lõi & Morning Meeting Việt Anh.",
+     stake:"Kỹ năng xã hội học ở tuổi này theo con suốt đời; thiếu nó con dễ bị cô lập hoặc hay xung đột."},
+    {axis:1,icon:"😤",q:"Khi giận / không được đáp ứng, bé phản ứng sao?",
+     opts:[{t:"Bình tĩnh dần, nói được cảm xúc",s:0},{t:"Cần dỗ một chút",s:1},{t:"Hay ăn vạ, khóc lăn",s:2},{t:"Bùng nổ dữ dội, mình bất lực",s:3}],
+     fb:"Giáo dục cảm xúc-xã hội (SEL) + The Leader in Me (TLIM) dạy bé <b>gọi tên & điều tiết cảm xúc</b> — gốc của tự kỷ luật và bản lĩnh sau này.",
+     src:"SEL & TLIM Việt Anh.",
+     stake:"Không học điều tiết cảm xúc sớm, con mang theo cách phản ứng bốc đồng lên các cấp học sau."},
+    {axis:2,icon:"🎵",q:"Phản ứng của bé với tiếng Anh hiện tại?",
+     opts:[{t:"Thích, bắt chước nói theo",s:0},{t:"Nghe hiểu vài từ",s:1},{t:"Chưa tiếp xúc mấy",s:2},{t:"Con ngại / né tiếng Anh",s:3}],
+     fb:"<b>6 tiết/tuần với giáo viên nước ngoài</b> + học qua bài hát, trò chơi, Story time — bé 'tắm ngôn ngữ' tự nhiên. Tuổi này khả năng bắt chước âm cực nhanh.",
+     src:"Chương trình tiếng Anh Mầm non Việt Anh.",
+     stake:"Bỏ lỡ giai đoạn bắt chước âm khiến phát âm sau này khó đạt chuẩn bản ngữ (cửa sổ ngôn ngữ)."},
+    {axis:2,icon:"🌏",q:"Anh/chị kỳ vọng gì về tiếng Anh cho bé giai đoạn này?",
+     opts:[{t:"Làm quen tự nhiên, dạn nói",s:1},{t:"Có nền tốt trước khi vào lớp 1",s:1},{t:"Sợ ảnh hưởng tiếng Việt",s:2},{t:"Chưa ưu tiên lúc này",s:3}],
+     fb:"Song ngữ sớm <b>không hại tiếng Việt</b>; trẻ phân biệt ngữ cảnh rất tốt. Học với giáo viên bản ngữ cho con phản xạ & sự tự tin — thứ trung tâm ngoài khó tạo lại.",
+     src:"Tâm lý trẻ song ngữ; phương pháp Việt Anh.",
+     stake:"Quan niệm 'cứng tiếng Việt rồi mới học tiếng Anh' là cách cũ, làm con lỡ cửa sổ vàng."},
+    {axis:3,icon:"🍎",q:"Thói quen ăn uống của bé?",
+     opts:[{t:"Ăn ngoan, đa dạng",s:0},{t:"Hơi kén chọn",s:1},{t:"Biếng ăn",s:2},{t:"Nghiện đồ ngọt / snack",s:3}],
+     fb:"Dinh dưỡng nghiêm ngặt (cấm nước ngọt có gas, snack), ăn cùng bạn theo nề nếp, sữa không đường — biếng ăn thường cải thiện trong môi trường ăn tập thể có cô đồng hành.",
+     src:"Quy chế dinh dưỡng Mầm non Việt Anh.",
+     stake:"Thói quen ăn đồ ngọt sớm rất khó bỏ và làm tăng nguy cơ thừa cân — trẻ nội thành TP.HCM đã vượt 50%."},
+    {axis:3,icon:"⚽",q:"Bé vận động hằng ngày thế nào?",
+     opts:[{t:"Năng động, chơi vận động nhiều",s:0},{t:"Vừa phải",s:1},{t:"Ít, thích ngồi yên / xem màn hình",s:2},{t:"Hay ốm vặt",s:3}],
+     fb:"Mầm non Việt Anh có <b>vận động hằng ngày + aerobic 2 buổi/tuần</b>, ngủ trưa tại trường. Vận động đủ giúp phát triển vận động thô và cả não bộ.",
+     src:"WHO 2020; TKB Mầm non Việt Anh.",
+     stake:"Lối sống ít vận động hình thành sớm đi theo con và bào mòn sức khoẻ về dài hạn."}
+   ]},
+
+ /* ---------- MẦM NON: 5 TUỔI ---------- */
+ mn_5:{ axes:AX4, childWord:"bé", proofAfter:4, todo:TODO_YOUNG, grow:MN_GROW, strong:MN_STRONG, offer:"mn",
+   confirm:["5 tuổi","Gần 6 tuổi, sắp vào lớp 1"],
+   proof:{q:"Con vào lớp 1 nhẹ tênh — đã quen nề nếp, nhận mặt chữ và tự tin phát biểu trước lớp.", w:"— Mẹ bé Nim, lớp Lá"},
+   questions:[
+    {axis:0,icon:"✏️",q:"Bé đã sẵn sàng cho lớp 1 đến đâu? (nhận mặt chữ – số, cầm bút…)",
+     opts:[{t:"Khá sẵn sàng: nhận chữ-số, cầm bút tốt",s:0},{t:"Đang làm quen",s:1},{t:"Chưa nhiều, mình lo con không theo kịp",s:2},{t:"Rất lo con vào lớp 1 đuối hơn bạn",s:3}],
+     fb:"Việt Anh chuẩn bị 'sẵn sàng vào lớp 1' qua làm quen chữ-số theo hướng <b>vui – khám phá</b> (không ép học chữ kiểu nhồi), PDR rèn nề nếp học. Mục tiêu là con <b>thích học</b>, không sợ học.",
+     src:"Chương trình lớp Lá Mầm non Việt Anh.",
+     stake:"Vào lớp 1 mà chưa có nền nề nếp & tiền học vấn, con dễ choáng và mất tự tin ngay học kỳ đầu."},
+    {axis:0,icon:"⏱️",q:"Bé ngồi tập trung làm một việc được bao lâu?",
+     opts:[{t:"20–30 phút, kiên trì",s:0},{t:"10–15 phút",s:1},{t:"Mau chán",s:2},{t:"Khó ngồi yên",s:3}],
+     fb:"Lớp 1 đòi ngồi học ~35 phút/tiết. PDR + dự án ở lớp Lá rèn <b>chú ý có chủ đích</b>, giúp con chuyển tiếp mượt sang tiểu học.",
+     src:"Phương pháp PDR & lớp Lá Việt Anh.",
+     stake:"Thiếu khả năng tập trung là lý do hàng đầu khiến trẻ lớp 1 'không theo kịp' dù không hề kém thông minh."},
+    {axis:1,icon:"🧦",q:"Bé tự lo cho mình thế nào? (tự thay đồ, vệ sinh, dọn đồ…)",
+     opts:[{t:"Tự lập tốt",s:0},{t:"Làm được phần lớn",s:1},{t:"Còn phụ thuộc nhiều",s:2},{t:"Hầu như bố mẹ / cô làm hết",s:3}],
+     fb:"Tự lập là một tiêu chí 'sẵn sàng lớp 1'. <b>TLIM</b> + routine giúp con tự phục vụ & chủ động — lên lớp 1 cô không kèm sát từng em như mầm non.",
+     src:"TLIM & routine Việt Anh.",
+     stake:"Con chưa tự lập sẽ chật vật khi lên tiểu học, môi trường ít được chăm sát hơn."},
+    {axis:1,icon:"🙋",q:"Bé tự tin giao tiếp, kết bạn, phát biểu không?",
+     opts:[{t:"Tự tin, dạn dĩ",s:0},{t:"Bình thường",s:1},{t:"Nhút nhát, ngại đám đông",s:2},{t:"Rất rụt rè, khó hoà nhập",s:3}],
+     fb:"Sự kiện có trẻ tham gia, Morning Meeting, Show &amp; Tell (kể chuyện trước lớp) nuôi sự tự tin; 5 giá trị + SEL giúp con vững vàng cảm xúc khi chuyển cấp.",
+     src:"Hoạt động phát triển tự tin & SEL Việt Anh.",
+     stake:"Thiếu tự tin ở ngưỡng vào lớp 1 dễ khiến con thu mình, ngại phát biểu suốt cấp tiểu học."},
+    {axis:2,icon:"💬",q:"Nền tiếng Anh của bé trước khi vào lớp 1?",
+     opts:[{t:"Nghe-nói cơ bản tốt, tự tin",s:0},{t:"Có làm quen, biết vài chủ đề",s:1},{t:"Rất ít",s:2},{t:"Chưa có gì",s:3}],
+     fb:"Trẻ có nền tiếng Anh mầm non với <b>giáo viên nước ngoài</b> vào lớp 1 sẽ không bị 'vỡ' khi chương trình tăng tốc. Cửa sổ phát âm gần bản ngữ vẫn đang mở.",
+     src:"Hartshorne 2018; lộ trình tiếng Anh Việt Anh.",
+     stake:"Vào lớp 1 mới bắt đầu tiếng Anh, con dễ tụt lại và sợ môn này ngay từ đầu."},
+    {axis:2,icon:"🎒",q:"Anh/chị muốn tiếng Anh của con khi vào lớp 1 ở đâu?",
+     opts:[{t:"Tự tin nghe-nói, yêu thích",s:1},{t:"Có nền đủ theo chương trình",s:1},{t:"Lo con quá tải khi vừa lớp 1 vừa tiếng Anh",s:2},{t:"Chưa đặt nặng",s:3}],
+     fb:"Học sớm & đúng cách khiến tiếng Anh <b>nhẹ nhàng</b> chứ không quá tải; nền vững từ mầm non giúp con vào lớp 1 <b>bớt áp lực</b>.",
+     src:"Lộ trình tiếng Anh liên cấp Việt Anh.",
+     stake:"Để con xuất phát từ số 0 ở lớp 1 mới là áp lực thật — vì lúc đó con còn gánh cả đọc-viết tiếng Việt."},
+    {axis:3,icon:"😴",q:"Sức khoẻ & nề nếp sinh hoạt của bé?",
+     opts:[{t:"Khoẻ, nề nếp tốt, ngủ đủ",s:0},{t:"Tạm ổn",s:1},{t:"Nề nếp thất thường",s:2},{t:"Hay ốm, ăn ngủ lộn xộn",s:3}],
+     fb:"Việt Anh nâng <b>routine giờ giấc cố định</b> thành nguyên lý sư phạm + dinh dưỡng nghiêm ngặt + vận động/bơi — con vào lớp 1 với thể lực & nề nếp sẵn sàng.",
+     src:"Routine, dinh dưỡng & vận động Việt Anh.",
+     stake:"Lớp 1 ngày học dài và sớm hơn; con thiếu nề nếp ăn-ngủ sẽ uể oải, khó tiếp thu."},
+    {axis:3,icon:"🏃",q:"Bé có thích vận động / thể thao không?",
+     opts:[{t:"Rất thích, vận động nhiều",s:0},{t:"Vừa phải",s:1},{t:"Ít vận động",s:2},{t:"Thích màn hình hơn vận động",s:3}],
+     fb:"Vận động hằng ngày + aerobic/bơi không chỉ khoẻ mà còn <b>giúp học tốt hơn</b> (vận động đều ↔ điểm Toán +6%).",
+     src:"Frontiers in Public Health 2025; TKB vận động Việt Anh.",
+     stake:"Nếu giờ đã nghiện màn hình & lười vận động, lên tiểu học áp lực học càng đẩy con xa vận động hơn."}
+   ]},
+
+ /* ---------- TIỂU HỌC: LỚP 1–2 ---------- */
+ th_12:{ axes:AX4, childWord:"con", proofAfter:4, todo:TODO_SCHOOL, grow:SCHOOL_GROW, strong:SCHOOL_STRONG, offer:"th",
+   confirm:["Lớp 1","Lớp 2"],
+   proof:{q:"Con vào lớp 1 mà nề nếp sẵn, đọc viết theo kịp ngay, lại mê đi học. Cô sĩ số ít nên kèm rất sát.", w:"— Mẹ bé Bo, lớp 1"},
+   questions:[
+    {axis:0,icon:"📖",q:"Con theo kịp đọc – viết – toán ở lớp đến đâu?",
+     opts:[{t:"Theo tốt, nắm bài nhanh",s:0},{t:"Theo được, cần nhắc thêm",s:1},{t:"Chật vật, hay quên",s:2},{t:"Mình lo con đuối hơn bạn",s:3}],
+     fb:"Lớp <b>≤24 em + dạy phân tầng năng lực (Level 1/2/3)</b> giúp cô kèm đúng mức của con; Tutor sau giờ vá lỗ hổng sớm. Active Learning đặt sàn ở Phân tích chứ không học vẹt.",
+     src:"Quy chế lớp & phương pháp Trường Việt Anh.",
+     stake:"Hổng nền đọc-viết-toán ở lớp 1–2 kéo theo cả cấp tiểu học; càng để lâu càng khó lấp."},
+    {axis:0,icon:"✨",q:"Con có thích đi học, ham tìm hiểu không?",
+     opts:[{t:"Rất thích, tò mò",s:0},{t:"Bình thường",s:1},{t:"Hay than chán học",s:2},{t:"Sợ / né việc học",s:3}],
+     fb:"Việt Anh giữ 'động cơ học' bằng học qua dự án (SteamE) + Likeability (con tự chọn cách thể hiện) — học mà vui.",
+     src:"4 phương pháp dạy học & SteamE Việt Anh.",
+     stake:"Mất hứng thú học ở đầu cấp là gốc của chán học kéo dài; điểm số chỉ là phần nổi."},
+    {axis:1,icon:"🪑",q:"Con ngồi học tập trung & tự giác làm bài tới đâu?",
+     opts:[{t:"Tự giác, tập trung tốt",s:0},{t:"Cần nhắc nhở",s:1},{t:"Phải kèm sát mới làm",s:2},{t:"Rất khó, mỗi tối là 'cuộc chiến'",s:3}],
+     fb:"<b>TLIM + 7 thói quen + routine</b> rèn tự lãnh đạo bản thân & thói quen học; PDR dạy con tự lên kế hoạch và nhìn lại.",
+     src:"TLIM, 7 thói quen & PDR Việt Anh.",
+     stake:"Không tự giác sớm, bố mẹ kèm bài thành gánh nặng mỗi tối và con không tự lập được."},
+    {axis:1,icon:"🤝",q:"Con hoà nhập bạn bè & xử lý cảm xúc thế nào?",
+     opts:[{t:"Hoà đồng, biết kiềm chế",s:0},{t:"Ổn, đôi lúc giận dỗi",s:1},{t:"Hay tị nạnh / khó kết bạn",s:2},{t:"Dễ xung đột hoặc thu mình",s:3}],
+     fb:"<b>5 giá trị (25 hành động chấm tuần)</b> + Morning Meeting + Foundation 28 ngày dạy kỹ năng xã hội-cảm xúc đo được.",
+     src:"5 giá trị cốt lõi & Học kỳ Foundation Việt Anh.",
+     stake:"Kỹ năng xã hội yếu ở tiểu học ảnh hưởng sự tự tin và cả việc học của con."},
+    {axis:2,icon:"💬",q:"Tiếng Anh của con hiện tại?",
+     opts:[{t:"Nghe-nói khá, tự tin",s:0},{t:"Biết cơ bản",s:1},{t:"Chỉ học ở lớp, ngại nói",s:2},{t:"Yếu / sợ tiếng Anh",s:3}],
+     fb:"Tiểu học Việt Anh học tiếng Anh nhiều buổi với <b>giáo viên nước ngoài</b> (so với trường công 4 tiết/tuần toàn giáo viên Việt). Cửa sổ phát âm gần bản ngữ vẫn rộng ở tuổi này.",
+     src:"GDPT 2018; chương trình tiếng Anh Tiểu học Việt Anh.",
+     stake:"Bỏ lỡ tiểu học, sau này phải đi trung tâm luyện lại tốn kém mà phát âm khó chuẩn."},
+    {axis:2,icon:"🌟",q:"Anh/chị muốn tiếng Anh thành thế mạnh của con không?",
+     opts:[{t:"Có, muốn con giỏi & tự tin",s:1},{t:"Đủ dùng là được",s:1},{t:"Lo con quá tải",s:2},{t:"Chưa ưu tiên",s:3}],
+     fb:"Học sớm & đều khiến tiếng Anh nhẹ nhàng; nền tiểu học vững giúp lên THCS đạt lộ trình IELTS (đủ năng lực từ lớp 9 → 6.0+).",
+     src:"Lộ trình IELTS liên cấp Việt Anh.",
+     stake:"Để muộn, tiếng Anh thành môn 'đuổi theo' thay vì thế mạnh của con."},
+    {axis:3,icon:"🍎",q:"Thói quen ăn uống & cân nặng của con?",
+     opts:[{t:"Cân đối, ăn đa dạng",s:0},{t:"Tạm ổn",s:1},{t:"Kén ăn hoặc bắt đầu thừa cân",s:2},{t:"Nghiện đồ ngọt / đồ ăn nhanh",s:3}],
+     fb:"Dinh dưỡng nghiêm ngặt (cấm nước ngọt có gas, snack), bán trú ăn xế, sữa không đường. Trẻ nội thành TP.HCM thừa cân–béo phì <b>vượt 50%</b>.",
+     src:"Quy chế dinh dưỡng Việt Anh; Viện Dinh dưỡng QG 2019–2020.",
+     stake:"Thói quen ăn xấu + ít vận động ở tiểu học đặt nền cho béo phì và bệnh mạn tính."},
+    {axis:3,icon:"📵",q:"Con vận động và dùng màn hình thế nào?",
+     opts:[{t:"Vận động nhiều, ít màn hình",s:0},{t:"Khá cân bằng",s:1},{t:"Ít vận động, nhiều màn hình",s:2},{t:"Gần như chỉ ngồi / màn hình",s:3}],
+     fb:"Việt Anh thể thao hằng ngày + CLB; vận động đều ↔ điểm Toán +6%. WHO khuyến nghị trẻ ≥ 60 phút/ngày.",
+     src:"WHO 2020; Frontiers in Public Health 2025; TKB Việt Anh.",
+     stake:"Ít vận động + nhiều màn hình ở tiểu học gây cận thị sớm, kém tập trung và sức khoẻ yếu."}
+   ]},
+
+ /* ---------- TIỂU HỌC: LỚP 3–5 ---------- */
+ th_35:{ axes:AX4, childWord:"con", proofAfter:4, todo:TODO_SCHOOL, grow:SCHOOL_GROW, strong:SCHOOL_STRONG, offer:"th",
+   confirm:["Lớp 3","Lớp 4","Lớp 5"],
+   proof:{q:"Con lớp 4 giờ tự giác học, nói tiếng Anh tự tin với thầy nước ngoài. Mình không phải kèm từng tối nữa.", w:"— Mẹ bé Na, lớp 4"},
+   questions:[
+    {axis:0,icon:"🧠",q:"Con học theo kiểu hiểu bản chất hay học thuộc?",
+     opts:[{t:"Hiểu sâu, vận dụng linh hoạt",s:0},{t:"Hiểu là chính",s:1},{t:"Chủ yếu học thuộc",s:2},{t:"Học vẹt, đối phó",s:3}],
+     fb:"Việt Anh đặt sàn ở <b>Phân tích (Bloom)</b> + Critical Thinking 5 bước; Active Learning tăng điểm ~6%. Học hiểu mới bền khi lên cấp 2.",
+     src:"Freeman et al., PNAS 2014; khung Critical Thinking Việt Anh.",
+     stake:"Quen học thuộc ở tiểu học sẽ đuối khi THCS đòi tư duy phân tích."},
+    {axis:0,icon:"📚",q:"Con tự xoay được bài khó hay phải đi học thêm nhiều?",
+     opts:[{t:"Tự xoay tốt, ít cần học thêm",s:0},{t:"Thỉnh thoảng cần",s:1},{t:"Học thêm khá nhiều",s:2},{t:"Chạy show học thêm liên miên",s:3}],
+     fb:"<b>Tutor sau giờ (18:00–20:00)</b> + dạy phân tầng năng lực ngay tại trường — đỡ phải đưa đón học thêm.",
+     src:"Dịch vụ học thuật Trường Việt Anh.",
+     stake:"Phụ thuộc học thêm vừa tốn kém vừa khiến con không tự học được."},
+    {axis:1,icon:"⏰",q:"Con tự lập trong học tập & quản lý thời gian tới đâu?",
+     opts:[{t:"Tự lên kế hoạch, chủ động",s:0},{t:"Khá ổn",s:1},{t:"Cần nhắc thường xuyên",s:2},{t:"Phụ thuộc bố mẹ hoàn toàn",s:3}],
+     fb:"PDR + 7 thói quen + TLIM rèn tự lập có hệ thống; con tự quản việc học trước khi vào THCS.",
+     src:"PDR, 7 thói quen & TLIM Việt Anh.",
+     stake:"Lên THCS mà chưa tự học, con dễ ngợp khi số môn và bài tập tăng vọt."},
+    {axis:1,icon:"🎤",q:"Con có dám thể hiện, lãnh đạo, làm việc nhóm không?",
+     opts:[{t:"Tự tin, hay xung phong dẫn dắt",s:0},{t:"Tham gia tốt",s:1},{t:"Ngại thể hiện",s:2},{t:"Rụt rè, né tránh",s:3}],
+     fb:"HS Việt Anh tự tổ chức sự kiện, ứng cử vai trò lãnh đạo, jigsaw (Crossability — giảng lại cho bạn) — kỹ năng thật, không lý thuyết.",
+     src:"4 phương pháp & vai trò lãnh đạo HS Việt Anh.",
+     stake:"Thiếu kỹ năng thể hiện & hợp tác, con khó nổi bật dù học giỏi."},
+    {axis:2,icon:"🗣️",q:"Tiếng Anh của con đã đạt mức nào?",
+     opts:[{t:"Nghe-nói tốt, đọc hiểu khá",s:0},{t:"Trên trung bình",s:1},{t:"Chỉ đủ điểm trên lớp",s:2},{t:"Yếu, ngại giao tiếp",s:3}],
+     fb:"Việt Anh nhiều tiết với <b>giáo viên nước ngoài</b> + lộ trình đo bằng PDR; nền cuối tiểu học tốt giúp lớp 9 đạt IELTS 6.0+.",
+     src:"Lộ trình tiếng Anh & IELTS Việt Anh.",
+     stake:"Cuối tiểu học còn yếu, lên THCS chương trình tăng tốc con sẽ tụt lại."},
+    {axis:2,icon:"🌏",q:"Anh/chị có định hướng IELTS / quốc tế cho con không?",
+     opts:[{t:"Có, muốn lộ trình rõ ràng",s:1},{t:"Đang cân nhắc",s:1},{t:"Chưa nghĩ tới",s:2},{t:"Không đặt nặng",s:3}],
+     fb:"Việt Anh có lộ trình IELTS cam kết (đủ năng lực từ lớp 9 → 6.0+ trước tốt nghiệp) + luyện 1-1. Bắt đầu nền sớm là lợi thế.",
+     src:"Lộ trình IELTS cam kết Việt Anh.",
+     stake:"Không có lộ trình sớm, IELTS thành cuộc chạy nước rút tốn kém ở cấp 3."},
+    {axis:3,icon:"👓",q:"Sức khoẻ & thị lực của con (cận thị, cân nặng…)?",
+     opts:[{t:"Khoẻ mạnh, thị lực tốt",s:0},{t:"Tạm ổn",s:1},{t:"Bắt đầu cận / tăng cân",s:2},{t:"Cận nặng hoặc thừa cân rõ",s:3}],
+     fb:"Việt Anh vận động hằng ngày + dinh dưỡng nghiêm ngặt + hạn chế lạm dụng màn hình; vận động đều ↔ học tốt hơn.",
+     src:"5 nguyên tắc sống khoẻ Việt Anh; WHO 2020.",
+     stake:"Cận thị & thừa cân tích tụ ở cuối tiểu học theo con suốt đời học sinh."},
+    {axis:3,icon:"⚽",q:"Con có duy trì ít nhất 1 môn thể thao đều không?",
+     opts:[{t:"Có, chơi đều đặn",s:0},{t:"Thỉnh thoảng",s:1},{t:"Hiếm khi",s:2},{t:"Gần như không",s:3}],
+     fb:"Việt Anh yêu cầu HS cam kết tối thiểu 1 môn thể thao (trong 25 hành động: tập thể thao ≥ 3 lần/tuần) — vượt khuyến nghị WHO.",
+     src:"25 hành động giá trị & CLB thể thao Việt Anh.",
+     stake:"Không có thói quen thể thao trước tuổi teen, lên cấp 2–3 áp lực học càng khó bắt đầu."}
+   ]},
+
+ /* ---------- THCS: LỚP 6–9 (5 trục) ---------- */
+ thcs:{ axes:AX5, childWord:"con", proofAfter:5, todo:TODO_SCHOOL, grow:SCHOOL_GROW, strong:SCHOOL_STRONG, offer:"thcs",
+   confirm:["Lớp 6","Lớp 7","Lớp 8","Lớp 9"],
+   proof:{q:"Con mình lớp 8 trước hay cãi và ham game; vào Việt Anh con chững chạc, tự giác học và đã bắt đầu luyện IELTS. Mình nhẹ cả người.", w:"— Mẹ bạn Minh, lớp 8"},
+   questions:[
+    {axis:0,icon:"🧠",q:"Con học hiểu bản chất hay vẫn học thuộc đối phó?",
+     opts:[{t:"Phân tích, phản biện, tự đặt câu hỏi",s:0},{t:"Hiểu bản chất",s:1},{t:"Học thuộc là chính",s:2},{t:"Học vẹt, đối phó",s:3}],
+     fb:"Việt Anh sàn Bloom = Phân tích, khung <b>Critical Thinking 5 bước</b> (Gắn kết→Khảo sát→Lập luận→Phản biện→Chiêm nghiệm). Đây là tầng tư duy AI khó thay.",
+     src:"Khung Critical Thinking & Bloom Việt Anh.",
+     stake:"THCS học thuộc thì lên THPT và đại học — nơi đòi tư duy phân tích — con sẽ đuối."},
+    {axis:0,icon:"📚",q:"Số môn tăng, con xoay xở việc học thế nào?",
+     opts:[{t:"Tự quản tốt, ít cần học thêm",s:0},{t:"Ổn, đôi khi cần hỗ trợ",s:1},{t:"Học thêm nhiều môn",s:2},{t:"Quá tải, chạy show",s:3}],
+     fb:"Lớp ≤24 + phân tầng năng lực + <b>Tutor sau giờ (18:00–20:00)</b>; con được vá lỗ hổng tại trường.",
+     src:"Quy chế lớp & dịch vụ học thuật Việt Anh.",
+     stake:"Quá tải học thêm ở THCS bào mòn sức khoẻ và thời gian phát triển toàn diện của con."},
+    {axis:1,icon:"🎯",q:"Con tự lập, tự quản thời gian & mục tiêu tới đâu?",
+     opts:[{t:"Chủ động, tự đặt mục tiêu",s:0},{t:"Khá ổn",s:1},{t:"Cần nhắc nhiều",s:2},{t:"Phụ thuộc bố mẹ",s:3}],
+     fb:"<b>TLIM + 7 thói quen + GRIT</b> rèn tự lãnh đạo & kiên định; đo bằng VAAR đa lăng kính.",
+     src:"TLIM, GRIT & rubric VAAR Việt Anh.",
+     stake:"Thiếu tự lập ở THCS, lên cấp 3 con khó tự chịu trách nhiệm việc học và cuộc sống."},
+    {axis:1,icon:"🏅",q:"Con có vai trò lãnh đạo, làm dự án, hoạt động cộng đồng không?",
+     opts:[{t:"Tích cực dẫn dắt, tổ chức",s:0},{t:"Có tham gia",s:1},{t:"Chủ yếu chỉ học",s:2},{t:"Gần như không",s:3}],
+     fb:"HS Việt Anh ứng cử vai trò lãnh đạo cấp lớp–trường, tự tổ chức sự kiện, chấm <b>25 hành động giá trị/tuần</b> — hồ sơ năng lực dày thật.",
+     src:"Vai trò lãnh đạo & 25 hành động Việt Anh.",
+     stake:"Hồ sơ chỉ có điểm ngày càng yếu thế khi xét tuyển & xin học bổng cấp 3."},
+    {axis:2,icon:"💬",q:"Trình độ tiếng Anh của con hiện tại?",
+     opts:[{t:"Giao tiếp tốt / đã luyện IELTS",s:0},{t:"Đọc hiểu ổn, ngại nói",s:1},{t:"Chỉ học ngữ pháp để thi",s:2},{t:"Yếu",s:3}],
+     fb:"THCS Việt Anh <b>9–10 tiết tiếng Anh/tuần</b> (có giáo viên nước ngoài); lộ trình IELTS đo bằng PDR — đủ năng lực từ lớp 9 đạt 6.0+. Về số tiết, 1 năm ở Việt Anh ≈ 3 năm trường công.",
+     src:"TKB THCS & lộ trình IELTS Việt Anh; GDPT 2018.",
+     stake:"Lớp 9 chưa có nền IELTS, lên cấp 3 phải chạy nước rút tốn kém và áp lực."},
+    {axis:2,icon:"🌏",q:"Anh/chị có lộ trình IELTS / du học cho con không?",
+     opts:[{t:"Có, rõ ràng",s:1},{t:"Đang cân nhắc",s:1},{t:"Chưa có",s:2},{t:"Không đặt nặng",s:3}],
+     fb:"Việt Anh luyện IELTS 1-1 + cam kết đo được; người giỏi tiếng Anh được trả <b>cao hơn 30–50%</b>, công ty FDI trả hơn nội địa <b>26–33%</b>.",
+     src:"EF EPI; Talentnet–Mercer 2025.",
+     stake:"Không có lộ trình, con lỡ cơ hội học bổng & du học khi cánh cửa mở ở cấp 3."},
+    {axis:3,icon:"❤️",q:"Tuổi dậy thì, sức khoẻ tinh thần & cảm xúc của con?",
+     opts:[{t:"Cân bằng, chia sẻ được với bố mẹ",s:0},{t:"Tạm ổn",s:1},{t:"Stress, dễ cáu, khép kín",s:2},{t:"Mình thật sự lo lắng về con",s:3}],
+     fb:"Việt Anh có SEL, TLIM, Morning Meeting + sĩ số nhỏ để cô sát sao; thể thao hằng ngày giúp giảm stress. Tuổi teen cần được lắng nghe.",
+     src:"SEL, TLIM & môi trường sĩ số nhỏ Việt Anh.",
+     stake:"Khủng hoảng tâm lý tuổi dậy thì không được đồng hành ảnh hưởng cả học tập lẫn sức khoẻ lâu dài."},
+    {axis:3,icon:"🏃",q:"Con vận động & lối sống thế nào?",
+     opts:[{t:"Chơi thể thao đều, ăn ngủ điều độ",s:0},{t:"Tạm ổn",s:1},{t:"Ít vận động, nghiện màn hình",s:2},{t:"Lối sống thất thường",s:3}],
+     fb:"Việt Anh yêu cầu cam kết ≥ 1 môn thể thao thường xuyên + dinh dưỡng nghiêm ngặt; vận động đều ↔ điểm Toán +6% và cộng nhiều năm sống khoẻ.",
+     src:"25 hành động giá trị; WHO 2020; Frontiers 2025.",
+     stake:"Thói quen ít vận động + màn hình ở tuổi teen rất khó đảo ngược và bào mòn sức khoẻ."},
+    {axis:4,icon:"🧭",q:"Con đã bắt đầu hiểu sở thích/thế mạnh & định hướng nghề chưa?",
+     opts:[{t:"Đã có hình dung khá rõ",s:0},{t:"Đang khám phá",s:1},{t:"Mơ hồ, theo bạn bè",s:2},{t:"Hoàn toàn chưa nghĩ tới",s:3}],
+     fb:"Foundation 28 ngày + TLIM + 4 phương pháp (Likeability cho con tự chọn) giúp con khám phá thế mạnh sớm — nền để chọn đúng trường cấp 3 & tổ hợp môn.",
+     src:"Học kỳ Foundation & TLIM Việt Anh.",
+     stake:"Vào lớp 10 phải chọn tổ hợp môn ngay; mơ hồ từ THCS dễ dẫn tới chọn sai, mất 1–2 năm."},
+    {axis:4,icon:"🚪",q:"Anh/chị lo gì nhất cho bước chuyển cấp lên lớp 10 của con?",
+     opts:[{t:"Con đã sẵn sàng, chỉ cần giữ đà",s:0},{t:"Điểm thi vào 10",s:1},{t:"Chọn đúng trường / định hướng",s:2},{t:"Con chưa biết mình muốn gì",s:3}],
+     fb:"Thị trường 2030: <b>39% kỹ năng đổi mới, 70% doanh nghiệp cần tư duy phân tích</b> (WEF). Việt Anh liên cấp giúp con chuyển tiếp mượt + định hướng sớm.",
+     src:"WEF Future of Jobs Report 2025.",
+     stake:"Chuyển cấp không có định hướng khiến con chọn trường/ngành theo cảm tính, trả giá bằng thời gian."}
+   ]},
+
+ /* ---------- THPT: LỚP 10–12 (5 trục) ---------- */
+ thpt:{ axes:AX5, childWord:"con", proofAfter:5, todo:TODO_SCHOOL, grow:SCHOOL_GROW, strong:SCHOOL_STRONG, offer:"thpt",
+   confirm:["Lớp 9 (sắp lên 10)","Lớp 10","Lớp 11","Lớp 12"],
+   proof:{q:"Con vào lớp 10 còn mơ hồ chuyện chọn tổ hợp. Sau Học kỳ Foundation, con tự nói được muốn theo hướng nào và vì sao.", w:"— Chị H., phụ huynh lớp 10"},
+   questions:[
+    {axis:0,icon:"🧠",q:"Khi con gặp một bài khó, điều anh/chị mong con làm được nhất là gì?",
+     opts:[{t:"Phân tích – phản biện – tự đặt câu hỏi ngược lại",s:0},{t:"Hiểu bản chất, tự giải được dạng bài mới chưa gặp",s:1},{t:"Nhớ và làm đúng bài mẫu để được điểm cao",s:2},{t:"Con đang học vẹt, học để đối phó kỳ thi",s:3}],
+     fb:"Ở Việt Anh, <b>sàn tối thiểu của mỗi bài học là bậc Phân tích</b> trong thang Bloom. Active Learning giúp điểm thi tăng ~6% và giảm ~1,5 lần nguy cơ trượt môn.",
+     src:"Freeman et al., PNAS 2014; Krathwohl 2001.",
+     stake:"Nếu con quen học thuộc, con dễ 'khựng' trước đề lạ và đuối ở môi trường đại học/công việc đòi tư duy phân tích — kỹ năng 70% doanh nghiệp xếp số 1 (WEF 2025)."},
+    {axis:0,icon:"👥",q:"Sĩ số lớp con hiện tại khoảng bao nhiêu học sinh?",
+     opts:[{t:"Dưới 25 em",s:0},{t:"25 – 35 em",s:1},{t:"35 – 45 em",s:2},{t:"Trên 45 em",s:3}],
+     fb:"Việt Anh giữ <b>tối đa 24 học sinh/lớp</b>, trong khi nhiều lớp ở TP.HCM lên tới 45–50+ em. 1 thầy/24 em nghĩa là con được chú ý <b>gấp đôi</b>.",
+     src:"Sở GD-ĐT TP.HCM 2025; quy chế lớp Việt Anh.",
+     stake:"Lớp 45–50+ em khiến thầy cô khó theo sát: con yếu dễ bị bỏ lại, con giỏi không được đẩy xa hơn."},
+    {axis:0,icon:"📚",q:"Sau giờ học, con củng cố phần kiến thức còn yếu bằng cách nào?",
+     opts:[{t:"Có thầy cô kèm sát ngay, con không bị hổng",s:0},{t:"Gia đình tự kèm ở nhà",s:1},{t:"Chạy show học thêm / trung tâm bên ngoài",s:2},{t:"Chưa có ai kèm, con tự xoay",s:3}],
+     fb:"Việt Anh có <b>Tutor sau giờ (18:00–20:00)</b> kèm bài ngay tại trường — con được vá lỗ hổng trước khi tích tụ.",
+     src:"Dịch vụ học thuật Việt Anh 2026–2027.",
+     stake:"Lỗ hổng kiến thức ở cấp 3 tích tụ rất nhanh; chạy show học thêm vừa tốn kém vừa bào mòn thời gian nghỉ của con."},
+    {axis:1,icon:"🏆",q:"Ngoài điểm số, con đang tích luỹ gì cho 'hồ sơ vào đời'?",
+     opts:[{t:"Vai trò lãnh đạo, tổ chức sự kiện, dự án cộng đồng",s:0},{t:"Chứng chỉ quốc tế (IELTS…)",s:1},{t:"Chủ yếu chỉ có điểm số trên lớp",s:2},{t:"Gần như chưa có gì đáng kể",s:3}],
+     fb:"HS Việt Anh <b>tự tổ chức lễ hội, dự án</b>, ứng cử vai trò lãnh đạo, được chấm <b>25 hành động giá trị mỗi tuần</b> — hồ sơ dày bằng trải nghiệm thật.",
+     src:"5 giá trị → 25 hành động; vai trò lãnh đạo Việt Anh.",
+     stake:"Thiếu trải nghiệm lãnh đạo và dự án thật, con khó nổi bật khi xin học bổng hay phỏng vấn."},
+    {axis:1,icon:"🌱",q:"Anh/chị mong con rời ghế nhà trường với điều gì nhất?",
+     opts:[{t:"Tất cả: tự lập, có chính kiến, tử tế & trách nhiệm",s:1},{t:"Tự lập, biết quản lý bản thân & thời gian",s:1},{t:"Có chính kiến, dám nghĩ dám làm",s:1},{t:"Hiện con còn khá phụ thuộc, thiếu định hướng",s:3}],
+     fb:"<b>5 giá trị cốt lõi</b> — Tôn trọng & Tự trọng · Trách nhiệm · Tài giỏi · Chính trực · Yêu thương — phân rã thành <b>25 hành động chấm mỗi tuần</b>. Phẩm chất đo được, không hô khẩu hiệu.",
+     src:"5 giá trị cốt lõi & VAAR Việt Anh.",
+     stake:"Giỏi mà thiếu bản lĩnh và tự lập, con dễ chông chênh khi rời vòng tay gia đình vào đại học."},
+    {axis:2,icon:"💬",q:"Trình độ tiếng Anh hiện tại của con đang ở mức nào?",
+     opts:[{t:"Giao tiếp tốt / đã có IELTS",s:0},{t:"Đọc hiểu ổn nhưng ngại nói",s:1},{t:"Chỉ học ngữ pháp để thi, không giao tiếp được",s:2},{t:"Yếu — con sợ tiếng Anh",s:3}],
+     fb:"Việt Nam xếp <b>63/116</b> về tiếng Anh (nhóm 'thấp'). THPT Việt Anh học <b>11 tiết/tuần (6 tiết với giáo viên nước ngoài)</b> + lộ trình IELTS cam kết: đủ năng lực từ lớp 9 đạt <b>6.0+ trước tốt nghiệp</b>.",
+     src:"EF EPI 2024; TKB THPT & lộ trình IELTS Việt Anh.",
+     stake:"Tiếng Anh 'học để thi' nhưng không nói được khiến con lỡ cơ hội du học, học bổng và việc làm FDI."},
+    {axis:2,icon:"🌏",q:"Anh/chị kỳ vọng tiếng Anh mở ra điều gì cho con?",
+     opts:[{t:"Xét tuyển đại học / du học",s:1},{t:"Vào công ty đa quốc gia, thu nhập cao",s:1},{t:"Tự tin hội nhập, không thua bạn quốc tế",s:1},{t:"Hiện con chưa coi tiếng Anh là ưu tiên",s:3}],
+     fb:"Người thành thạo tiếng Anh được trả <b>cao hơn 30–50%</b>; công ty FDI trả hơn nội địa <b>~26–33%</b>. Mỗi năm trì hoãn là một năm 'cửa sổ ngôn ngữ' khép lại.",
+     src:"EF EPI; Talentnet–Mercer 2025; Hartshorne 2018.",
+     stake:"Mỗi năm trì hoãn tiếng Anh chuẩn là một phần 'cửa sổ ngôn ngữ' khép lại — gần như bản ngữ giảm dần sau ~17–18 tuổi."},
+    {axis:3,icon:"❤️",q:"Ở tuổi teen của con, anh/chị lo lắng nhất điều gì?",
+     opts:[{t:"Con đã cân bằng tốt, em chỉ muốn giữ vững",s:0},{t:"Áp lực thi cử, stress, sức khoẻ tinh thần",s:2},{t:"Nghiện điện thoại/mạng xã hội, lười vận động",s:3},{t:"Thiếu vận động, hay ốm vặt, ăn uống thất thường",s:3}],
+     fb:"Trẻ nội thành TP.HCM thừa cân–béo phì <b>vượt 50%</b>. Việt Anh: <b>thể thao hằng ngày</b> + dinh dưỡng nghiêm ngặt + TLIM/GRIT. Vận động đều còn giúp <b>điểm Toán +6%</b>.",
+     src:"Viện Dinh dưỡng QG 2019–2020; Frontiers 2025; WHO 2020.",
+     stake:"Stress kéo dài, ít vận động và nghiện màn hình ảnh hưởng cả kết quả học lẫn sức khoẻ tinh thần về lâu dài."},
+    {axis:3,icon:"🏃",q:"Con có duy trì thể thao & lối sống lành mạnh không?",
+     opts:[{t:"Chơi thể thao đều, ăn ngủ điều độ",s:0},{t:"Tạm ổn",s:1},{t:"Ít vận động, hay thức khuya",s:2},{t:"Gần như không vận động, sống thất thường",s:3}],
+     fb:"Việt Anh yêu cầu HS cam kết <b>≥ 1 môn thể thao thường xuyên</b> (25 hành động: thể thao ≥ 3 lần/tuần) + dinh dưỡng nghiêm ngặt; vận động đều ↔ điểm Toán +6% và cộng nhiều năm sống khoẻ.",
+     src:"25 hành động giá trị; WHO 2020; Frontiers in Public Health 2025.",
+     stake:"Tuổi 15–18 ít vận động + thức khuya ôn thi bào mòn sức khoẻ và hiệu suất học ngay trước kỳ thi quan trọng nhất."},
+    {axis:4,icon:"🧭",q:"Con đã chọn được tổ hợp môn / định hướng nghề chưa?",
+     opts:[{t:"Đã rõ ràng, con hiểu mình muốn gì",s:0},{t:"Còn phân vân giữa vài hướng",s:1},{t:"Chọn theo điểm số / theo bạn bè, chưa hiểu mình",s:2},{t:"Hoàn toàn mơ hồ, gần như chọn đại",s:3}],
+     fb:"Theo GDPT 2018, <b>từ lớp 10 con đã phải chọn tổ hợp môn</b> — chọn sai là mất 1–2 năm. Việt Anh có <b>Học kỳ Foundation 28 ngày</b> + định hướng môn + TLIM giúp con hiểu mình <i>trước khi</i> chọn.",
+     src:"GDPT 2018; Foundation & TLIM Việt Anh.",
+     stake:"Chọn tổ hợp/định hướng theo cảm tính có thể khiến con mất 1–2 năm điều chỉnh, hoặc vào nhầm ngành rồi mới nhận ra."},
+    {axis:4,icon:"🎓",q:"Anh/chị lo nhất điều gì trên chặng đường vào đại học của con?",
+     opts:[{t:"Hồ sơ năng lực mỏng, thiếu kỹ năng mềm",s:3},{t:"Con chọn sai ngành, vào rồi mới hối",s:2},{t:"Điểm thi tốt nghiệp / xét tuyển",s:1},{t:"Con đã có nền vững, chỉ cần giữ phong độ",s:0}],
+     fb:"Thị trường 2030: <b>39% kỹ năng cốt lõi sẽ đổi mới</b>, <b>70% doanh nghiệp coi tư duy phân tích là số 1</b>. Điểm số mở cánh cửa, nhưng kỹ năng & phẩm chất giữ con đứng vững.",
+     src:"WEF Future of Jobs Report 2025.",
+     stake:"Hồ sơ chỉ dựa vào điểm số ngày càng yếu thế khi xét tuyển kết hợp lên ngôi và 39% kỹ năng đổi mới đến 2030."}
+   ]}
+};
+
+</script>
+<script>
+/* ============================================================
+   ENGINE — render generic theo QUIZZES / MENU (quiz-data.js)
+   Luồng: chọn cấp → (chọn nhóm) → 1 chạm xác nhận lớp/tuổi →
+          câu hỏi (progress + phản hồi + stake + proof inline) →
+          ảo giác phân tích → CỔNG FORM ZALO → kết quả → offer
+   ============================================================ */
+const el = document.getElementById('screen');
+const progressWrap = document.getElementById('progressWrap');
+const state = { quizId:null, idx:0, picked:null, answers:[], childName:null, classLabel:null };
+const CUR = ()=> QUIZZES[state.quizId];
+
+function buildMilestones(){
+  const q=CUR();
+  document.getElementById('milestones').innerHTML =
+    q.axes.map((a,i)=>`<span class="ms" data-axis="${i}">${AXSHORT[a]}</span>`).join('');
+}
+function setProgress(){
+  const q=CUR(), list=q.questions, total=list.length;
+  const pct=Math.round((state.idx)/total*100);
+  document.getElementById('pmBar').style.width=pct+'%';
+  document.getElementById('pmPct').textContent=pct+'%';
+  document.getElementById('pmLabel').textContent =
+     state.idx>=total ? 'Hoàn thành' : ('Câu '+(state.idx+1)+'/'+total+' • '+AXSHORT[q.axes[list[Math.min(state.idx,total-1)].axis]]);
+  const asked=Array(q.axes.length).fill(0), tot=Array(q.axes.length).fill(0);
+  list.forEach((qq,i)=>{ tot[qq.axis]++; if(i<state.idx) asked[qq.axis]++; });
+  document.querySelectorAll('.ms').forEach(m=>{ const a=+m.dataset.axis;
+    m.classList.toggle('done', asked[a]>0 && asked[a]===tot[a]); });
+}
+
+/* ---------- MÀN HÌNH ĐẦU: chọn cấp ---------- */
+function renderWelcome(){
+  progressWrap.style.display='none';
+  el.innerHTML = `
+   <div class="card">
+     <p class="eyebrow">Trắc nghiệm 2 phút • Miễn phí</p>
+     <h1>Con của anh/chị đang phát triển tới đâu?</h1>
+     <p class=”lead”>Cùng dựng <b>”Bản đồ phát triển”</b> riêng cho con theo đúng 4 lĩnh vực phát triển — <b>Kiến thức · Kỹ năng · Tiếng Anh · Thể chất</b> — thêm <b>Hướng nghiệp</b> ở cấp 2–3. Hãy chọn cấp học của con để bắt đầu.</p>
+     <div class="grid" id="levels"></div>
+     <p class="note">Mỗi cấp có bộ câu hỏi riêng, phân rã theo giai đoạn phát triển của con.</p>
+   </div>`;
+  const wrap=document.getElementById('levels');
+  MENU.forEach(lv=>{
+    const d=document.createElement('div'); d.className='gradecard';
+    d.innerHTML=`<div class="emo">${lv.emoji}</div><div><div class="gt">${lv.label}</div><div class="gs">${lv.sub}</div></div><div class="chev">›</div>`;
+    d.onclick=()=> lv.groups ? renderGroups(lv) : startQuiz(lv.quiz);
+    wrap.appendChild(d);
+  });
+}
+
+function renderGroups(lv){
+  progressWrap.style.display='none';
+  el.innerHTML = `
+   <div class="card">
+     <p class="eyebrow">${lv.label}</p>
+     <h2>Con đang ở nhóm nào?</h2>
+     <p class="lead">Chọn đúng nhóm để em hỏi những điều sát nhất với giai đoạn của con.</p>
+     <div class="grid" id="groups"></div>
+     <span class="backlink" id="bk">← Chọn lại cấp học</span>
+   </div>`;
+  const wrap=document.getElementById('groups');
+  lv.groups.forEach(g=>{
+    const d=document.createElement('div'); d.className='gradecard';
+    d.innerHTML=`<div class="emo">${g.emoji}</div><div><div class="gt">${g.label}</div><div class="gs">${g.sub}</div></div><div class="chev">›</div>`;
+    d.onclick=()=>startQuiz(g.quiz);
+    wrap.appendChild(d);
+  });
+  document.getElementById('bk').onclick=renderWelcome;
+}
+
+function startQuiz(id){
+  state.quizId=id; state.idx=0; state.answers=[]; state.childName=null; state.classLabel=null;
+  progressWrap.style.display='block'; buildMilestones(); renderConfirm();
+}
+
+/* micro-commitment 1 chạm */
+function renderConfirm(){
+  setProgress();
+  const q=CUR();
+  el.innerHTML = `
+   <div class="card">
+     <p class="eyebrow">Bước 1 • 1 chạm</p>
+     <h2>${q.childWord==='bé'?'Bé nhà mình mấy tuổi?':'Con đang học lớp mấy?'}</h2>
+     <p class="lead">Chọn xong, em sẽ hỏi đúng những điều quan trọng nhất cho giai đoạn của ${q.childWord}.</p>
+     <div class="opts" id="cf"></div>
+     <span class="backlink" id="bk">← Quay lại</span>
+   </div>`;
+  const box=document.getElementById('cf');
+  q.confirm.forEach(c=>{ const b=document.createElement('button'); b.className='opt';
+    b.innerHTML=`<span class="ic">🎯</span><span>${c}</span>`;
+    b.onclick=()=>{ state.classLabel=c; renderQuestion(); }; box.appendChild(b); });
+  document.getElementById('bk').onclick=renderWelcome;
+}
+
+function renderQuestion(){
+  setProgress();
+  const q=CUR(), list=q.questions, i=state.idx, item=list[i], total=list.length, remain=total-i;
+  state.picked=null;
+  const cw=q.childWord;
+  const proofBanner = (i===q.proofAfter) ? `
+     <div class="proofbar"><span class="stars">★★★★★</span>
+       <span class="pq">“${q.proof.q}”</span>
+       <span class="pw">${q.proof.w} · cùng <b>12.000+</b> phụ huynh đã làm trắc nghiệm</span></div>` : '';
+  el.innerHTML = `
+   <div class="card">
+     ${proofBanner}
+     <p class="qcount">🔓 Còn ${remain} câu để mở khoá Bản đồ của ${cw}</p>
+     <p class="eyebrow">${q.axes[item.axis]}</p>
+     <h2>${item.q}</h2>
+     <div class="opts" id="opts">
+       ${item.opts.map((o,k)=>`<button class="opt" data-k="${k}"><span class="ic">${["A","B","C","D"][k]}</span><span>${o.t}</span></button>`).join('')}
+     </div>
+     <div class="feedback" id="fb"><div class="fb-top">✓ Cảm ơn anh/chị — điều này giúp hiểu ${cw} hơn</div><div class="fb-body" id="fbBody"></div></div>
+     <button class="btn" id="next" disabled>Tiếp tục</button>
+     ${i>0?'<span class="backlink" id="bk">← Câu trước</span>':''}
+   </div>`;
+  el.querySelectorAll('#opts .opt').forEach(b=>{
+    b.onclick=()=>{
+      el.querySelectorAll('#opts .opt').forEach(x=>x.classList.remove('sel'));
+      b.classList.add('sel');
+      const bucket=item.opts[+b.dataset.k].s; state.picked=bucket;
+      const stake=(bucket>=2 && item.stake)?`<div class="fb-stake"><b>💡 Nếu để như hiện tại:</b> ${item.stake}</div>`:'';
+      document.getElementById('fbBody').innerHTML = stake + item.fb + `<span class="src">Nguồn: ${item.src}</span>`;
+      document.getElementById('fb').style.display='block';
+      const nx=document.getElementById('next'); nx.disabled=false;
+      nx.textContent=(i===total-1)?('Xem Bản đồ của '+cw+' →'):'Tiếp tục';
+    };
+  });
+  document.getElementById('next').onclick=()=>{
+    if(state.picked===null) return;
+    state.answers[i]={axis:item.axis,bucket:state.picked}; state.idx++;
+    if(state.idx>=total){ renderAnalysis(); } else { renderQuestion(); }
+  };
+  const bk=document.getElementById('bk'); if(bk) bk.onclick=()=>{ state.idx--; renderQuestion(); };
+}
+
+function renderAnalysis(){
+  setProgress();
+  document.getElementById('pmLabel').textContent='Hoàn thành';
+  document.getElementById('pmBar').style.width='100%';
+  document.getElementById('pmPct').textContent='100%';
+  document.querySelectorAll('.ms').forEach(m=>m.classList.add('done'));
+  const q=CUR(), n=q.axes.length, cw=q.childWord;
+  el.innerHTML = `<div class="card analysis"><div class="spinner"></div><div class="step" id="st">Đang đối chiếu câu trả lời với ${n} lĩnh vực phát triển của ${cw}…</div></div>`;
+  const steps=[`Đang đối chiếu câu trả lời với ${n} lĩnh vực phát triển của ${cw}…`,"Đang xác định điểm sáng &amp; vùng cần đồng hành…",`Đang dựng Bản đồ phát triển cho ${cw}…`];
+  let k=0; const st=document.getElementById('st');
+  const tk=setInterval(()=>{ k++; if(k<steps.length){ st.innerHTML=steps[k]; } else { clearInterval(tk); renderLeadGate(); } },850);
+}
+
+/* === CỔNG THU LEAD: form Zalo TRƯỚC khi xem kết quả === */
+function renderLeadGate(){
+  const q=CUR(), cw=q.childWord;
+  const axRows=q.axes.map(a=>`<div class="ga"><span>🔒</span> ${AXSHORT[a]} <span class="blur"></span></div>`).join('');
+  el.innerHTML = `
+   <div class="card gate">
+     <p class="eyebrow">🎉 Bản đồ của ${cw} đã sẵn sàng</p>
+     <h2>Đã chấm xong ${q.axes.length} trục phát triển của ${cw}</h2>
+     <p class="lead" style="margin-bottom:10px">Nhập thông tin để mở Bản đồ phát triển + <b>3 việc làm ngay tuần này</b>. Báo cáo cũng được gửi tới Zalo để anh/chị lưu lại.</p>
+     <div class="teaser">${axRows}</div>
+     <input class="field" id="pname" placeholder="Tên anh/chị (để xưng hô)" />
+     <input class="field" id="cname" placeholder="${cw==='bé'?'Tên ở nhà của bé':'Tên / biệt danh của con'} (để gọi)" />
+     <input class="field" id="zalo" placeholder="Số Zalo nhận báo cáo (vd: 09xx xxx xxx)" inputmode="numeric" type="tel" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+     <label class="consent"><input type="checkbox" id="cs" /> Tôi đồng ý Trường Việt Anh liên hệ tư vấn và xử lý dữ liệu của tôi &amp; của con theo <b>Nghị định 13/2023/NĐ-CP</b> về bảo vệ dữ liệu cá nhân (bao gồm dữ liệu trẻ em).</label>
+     <button class="btn gold" id="unlock" disabled>Xem Bản đồ của ${cw} + 3 việc làm ngay</button>
+     <span class="backlink" id="bk">← Quay lại</span>
+     <p class="note">Bản đồ mang tính tham khảo để cùng đồng hành, không thay thế chẩn đoán giáo dục/tâm lý chuyên môn.</p>
+   </div>`;
+  const z=document.getElementById('zalo'), cs=document.getElementById('cs'), btn=document.getElementById('unlock'), cn=document.getElementById('cname');
+  function chk(){ btn.disabled=!( z.value.replace(/\D/g,'').length>=9 && cs.checked ); }
+  z.oninput=chk; cs.onchange=chk;
+  btn.onclick=async()=>{
+    state.childName=(cn.value||'').trim()||cw;
+    btn.disabled=true; btn.textContent='Đang xử lý…';
+
+    // Thu thập dữ liệu quiz để gửi lên webhook
+    const scores=computeScores(), q=CUR();
+    const scoreMap={}; q.axes.forEach((a,i)=>{ scoreMap[a]=scores[i]; });
+    let gradeLabel='';
+    MENU.forEach(lv=>{
+      if(lv.quiz===state.quizId) gradeLabel=lv.label;
+      if(lv.groups) lv.groups.forEach(g=>{ if(g.quiz===state.quizId) gradeLabel=lv.label+' · '+g.label; });
+    });
+    const payload={
+      parentName:(document.getElementById('pname').value||'').trim(),
+      childName:state.childName,
+      phone:z.value.trim(),
+      quizId:state.quizId,
+      classLabel:state.classLabel||'',
+      gradeLabel,
+      offerType:q.offer,
+      scores:scoreMap,
+      source:'quiz-vietanh',
+      submittedAt:new Date().toISOString()
+    };
+    try{
+      await fetch('https://n8n.truongvietanh.com/webhook/quiz-vietanh-lead',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload)
+      });
+    }catch(e){ console.warn('Webhook error:',e); }
+
+    renderResult();
+  };
+  document.getElementById('bk').onclick=()=>{ state.idx=CUR().questions.length-1; renderQuestion(); };
+}
+
+function computeScores(){
+  const q=CUR(), n=q.axes.length;
+  const sum=Array(n).fill(0), cnt=Array(n).fill(0);
+  state.answers.forEach(a=>{ sum[a.axis]+=SC[a.bucket]; cnt[a.axis]++; });
+  return sum.map((s,i)=> cnt[i]? Math.round(s/cnt[i]) : 60);
+}
+
+function renderResult(){
+  const q=CUR(), scores=computeScores(), nm=state.childName||q.childWord;
+  let hi=0, lo=0; scores.forEach((s,i)=>{ if(s>scores[hi])hi=i; if(s<scores[lo])lo=i; });
+  el.innerHTML = `
+   <div class="card">
+     <p class="eyebrow">✅ Đã mở khoá • Bản đồ phát triển</p>
+     <h2>Bản đồ phát triển của ${nm}</h2>
+     <p class="lead" style="margin-bottom:8px">Theo đúng ${q.axes.length} trục của Việt Anh — mang tính tham khảo để cùng đồng hành, không phải đánh giá xếp loại.</p>
+     <div class="radar-wrap" id="radar"></div>
+     <div class="scoreline">
+       ${scores.map((s,i)=>`<div class="axisrow"><span class="nm">${AXSHORT[q.axes[i]]}</span><span class="track"><i style="width:${s}%"></i></span><span class="pc">${s}</span></div>`).join('')}
+     </div>
+     <div class="insightbox strong"><b>✨ Điểm sáng: ${AXSHORT[q.axes[hi]]}.</b> ${q.strong[hi]}</div>
+     <div class="insightbox grow"><b>🌱 Vùng nên đồng hành: ${AXSHORT[q.axes[lo]]}.</b> Việt Anh có thể ${q.grow[lo]}.</div>
+     <div class="todo"><h3>📌 3 việc làm ngay tuần này cho ${nm}</h3>
+       <ol>${q.todo[lo].map(t=>`<li>${t}</li>`).join('')}</ol></div>
+     <button class="btn" id="toOffer">Cho ${q.childWord} trải nghiệm thật một buổi tại trường →</button>
+     <p class="note">Số liệu trong báo cáo đều có nguồn. Bản đồ không thay thế chẩn đoán chuyên môn.</p>
+   </div>`;
+  drawRadar(scores, q.axes.map(a=>AXSHORT[a]));
+  document.getElementById('toOffer').onclick=renderOffer;
+}
+
+function drawRadar(scores, labels){
+  const size=260, c=size/2, R=84, N=scores.length;
+  const ang=i=>(-Math.PI/2)+i*2*Math.PI/N;
+  const pt=(i,r)=>[c+r*Math.cos(ang(i)), c+r*Math.sin(ang(i))];
+  let rings=''; [0.25,0.5,0.75,1].forEach(f=>{ let p='';
+    for(let i=0;i<N;i++){const[x,y]=pt(i,R*f); p+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)+' ';}
+    rings+=`<path d="${p}Z" fill="none" stroke="#dbe7f8" stroke-width="1"/>`; });
+  let axesL=''; for(let i=0;i<N;i++){const[x,y]=pt(i,R); axesL+=`<line x1="${c}" y1="${c}" x2="${x}" y2="${y}" stroke="#dbe7f8"/>`;}
+  let poly=''; for(let i=0;i<N;i++){const[x,y]=pt(i,R*scores[i]/100); poly+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1)+' ';}
+  let dots=''; for(let i=0;i<N;i++){const[x,y]=pt(i,R*scores[i]/100); dots+=`<circle cx="${x}" cy="${y}" r="3.4" fill="#0a5ad6"/>`;}
+  let lbl=''; for(let i=0;i<N;i++){ const a=ang(i), cx=Math.cos(a), cy=Math.sin(a);
+    const lx=c+(R+16)*cx, ly=c+(R+16)*cy;
+    const anchor=cx>0.3?'start':(cx<-0.3?'end':'middle'); const dy=cy<-0.3?-2:(cy>0.3?12:4);
+    lbl+=`<text x="${lx.toFixed(1)}" y="${(ly+dy).toFixed(1)}" font-size="10.5" font-weight="700" fill="#33506f" text-anchor="${anchor}">${labels[i]}</text>`; }
+  document.getElementById('radar').innerHTML =
+    `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" overflow="visible">
+       ${rings}${axesL}<path d="${poly}Z" fill="rgba(15,181,166,.22)" stroke="#0fb5a6" stroke-width="2"/>${dots}${lbl}</svg>`;
+}
+
+function renderOffer(){
+  const q=CUR(), cfg=OFFER[q.offer], nm=state.childName||q.childWord;
+  el.innerHTML = `
+   <div class="card offer">
+     <p class="eyebrow">Bước cuối</p>
+     <h2>Để ${nm} trải nghiệm thật một buổi tại trường</h2>
+     <p class="lead">Báo cáo đầy đủ đã được gửi tới Zalo của anh/chị. Nhưng không gì bằng để ${q.childWord} <b>trải nghiệm thật một buổi</b> — anh/chị nhìn tận mắt lớp ≤24 em, giáo viên nước ngoài và cách thầy cô đồng hành.</p>
+     <div class="pts">${cfg.pts.map(p=>`<div class="pt"><span class="c">✓</span> ${p}</div>`).join('')}</div>
+     <div class="guarantee"><span class="g-ic">🛡️</span><span><b>Bảo đảm:</b> Trải nghiệm miễn phí, không đặt cọc, không ràng buộc. Phụ huynh/học sinh có thêm trải nghiệm để nâng cao chất lượng quyết định.</span></div>
+     <button class="btn" id="book">${cfg.book}</button>
+     <button class="btn ghost" id="restart" style="margin-top:10px">Làm lại cho con khác</button>
+     <p class="note">Lịch tham quan theo đợt tuyển sinh thật của trường — anh/chị chọn khung giờ phù hợp với gia đình.</p>
+   </div>`;
+  document.getElementById('book').onclick=()=>{
+    el.querySelector('h2').textContent='Cảm ơn anh/chị! 🌷';
+    el.querySelector('.lead').innerHTML='Bộ phận Tuyển sinh Việt Anh sẽ gọi qua Zalo trong hôm nay để hẹn khung giờ tham quan & học thử phù hợp với gia đình. Hẹn gặp anh/chị và con tại trường!';
+    el.querySelectorAll('.pts,.guarantee,#book').forEach(n=>n&&n.classList.add('hide'));
+  };
+  document.getElementById('restart').onclick=()=>{ progressWrap.style.display='none'; renderWelcome(); };
+}
+
+/* ---------------- INIT ---------------- */
+renderWelcome();
+
+</script>
+</body>
+</html>

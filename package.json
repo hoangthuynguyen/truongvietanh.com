@@ -17,6 +17,7 @@
     "deploy:v2": "ENV=prod node scripts/deploy-v2.mjs",
     "deploy": "npm run build && npx wrangler deploy -c wrangler.jsonc",
     "deploy:prod": "npm run build && npx wrangler deploy -c wrangler.jsonc",
+    "deploy:fast": "node scripts/sync-standalone.mjs && npx wrangler deploy -c wrangler.jsonc",
     "directus:up": "docker compose -f directus/docker-compose.yml up -d",
     "directus:down": "docker compose -f directus/docker-compose.yml down",
     "directus:setup": "node scripts/setup-directus.mjs",

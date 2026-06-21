@@ -70,6 +70,11 @@ export default {
       return Response.redirect('https://truongvietanh.com/lop-10-noi-tru/', 301);
     }
 
+    // Quiz: /quiz-vietanh → /quiz (301 permanent — canonical short URL)
+    if (url.pathname === '/quiz-vietanh' || url.pathname === '/quiz-vietanh/') {
+      return Response.redirect('https://truongvietanh.com/quiz', 301);
+    }
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS' && (url.pathname === '/api/lead' || url.pathname === '/api/khieu-nai')) {
       return new Response(null, { status: 204, headers: CORS_HEADERS });

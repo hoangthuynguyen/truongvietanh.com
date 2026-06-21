@@ -189,6 +189,7 @@ const structuredData = [
         url: 'https://truongvietanh.com/logo-crest-80.webp',
       },
     },
+    ...(ogImage ? { image: { '@type': 'ImageObject', url: ogImage } } : {}),
     mainEntityOfPage: {
       '@type': 'WebPage',
       '@id': canonicalUrl,

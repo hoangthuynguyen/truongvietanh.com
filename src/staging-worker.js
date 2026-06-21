@@ -75,6 +75,17 @@ export default {
       return Response.redirect('https://truongvietanh.com/quiz', 301);
     }
 
+    // Quiz: explicit fetch by file path to bypass Cloudflare asset manifest routing issues
+    if (url.pathname === '/quiz' || url.pathname === '/quiz/') {
+      const assetReq = new Request(new URL('/quiz/index.html', url.origin).toString());
+      const assetResp = await env.ASSETS.fetch(assetReq);
+      if (assetResp.ok) {
+        const h = new Headers(assetResp.headers);
+        h.set('cache-control', 'public, max-age=0, must-revalidate');
+        return new Response(assetResp.body, { status: 200, headers: h });
+      }
+    }
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS' && (url.pathname === '/api/lead' || url.pathname === '/api/khieu-nai')) {
       return new Response(null, { status: 204, headers: CORS_HEADERS });

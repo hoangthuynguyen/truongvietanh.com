@@ -266,8 +266,9 @@ async function handleLeadSubmission(request, env) {
   try {
     const rawData = await request.json();
 
-    if (!rawData.email) {
-      return jsonResponse({ success: false, error: 'Email is required' }, 400);
+    // Cần ít nhất 1 cách liên hệ. Lead từ quiz chỉ có SĐT (không email) → vẫn nhận.
+    if (!rawData.email && !rawData.phone) {
+      return jsonResponse({ success: false, error: 'Email or phone is required' }, 400);
     }
 
     // Read secrets from env bindings (fallback to hardcoded for dev)
@@ -395,7 +396,7 @@ async function handleLeadSubmission(request, env) {
           firstName: ghlFirstName,
           lastName: ghlLastName,
           name: data.fullName,
-          email: data.email,
+          email: data.email || undefined,
           phone: data.phone,
           source: `Website - ${data.source}`,
           tags,

@@ -780,6 +780,33 @@ function renderLeadGate(){
       });
     }catch(e){ console.warn('Webhook error:',e); }
 
+    // Gửi lead vào GHL + Pancake qua /api/lead (giống form 2-step cũ). Đọc ?src từ trang pillar.
+    try{
+      const sp=new URLSearchParams(location.search);
+      const src=sp.get('src')||'quiz-vietanh';
+      const levelMap={'mam-non-pillar':'mau-non','tieu-hoc-pillar':'tieu-hoc','thcs-pillar':'thcs','thpt-pillar':'thpt'};
+      let schoolLevel=levelMap[src]||'';
+      if(!schoolLevel){ const g=(gradeLabel||'').toLowerCase(); if(g.includes('mầm'))schoolLevel='mau-non'; else if(g.includes('tiểu'))schoolLevel='tieu-hoc'; else if(g.includes('thcs'))schoolLevel='thcs'; else if(g.includes('thpt'))schoolLevel='thpt'; }
+      await fetch('/api/lead',{
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({
+          step:'full_submit',
+          fullName:payload.parentName, parent_name:payload.parentName,
+          email:'',
+          phone:payload.phone,
+          childName:payload.childName, child_name:payload.childName,
+          schoolLevel, school_level:schoolLevel,
+          grade:gradeLabel,
+          source:src, funnelCode:src, funnel_code:src,
+          page:location.href,
+          timestamp:payload.submittedAt,
+          utm_source:sp.get('utm_source')||'', utm_medium:sp.get('utm_medium')||'',
+          utm_campaign:sp.get('utm_campaign')||'', utm_term:sp.get('utm_term')||'',
+          utm_content:sp.get('utm_content')||'', referrer:document.referrer||''
+        })
+      });
+    }catch(e){ console.warn('Lead API error:',e); }
+
     renderResult();
   };
   document.getElementById('bk').onclick=()=>{ state.idx=CUR().questions.length-1; renderQuestion(); };

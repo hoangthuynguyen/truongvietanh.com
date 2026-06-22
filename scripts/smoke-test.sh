@@ -27,6 +27,7 @@ CRITICAL_PATHS=(
   "/cam-on/"
   "/blog/"
   "/sitemap-0.xml"
+  "/tuyen-sinh-lop-10/"
 )
 
 # Auto-discover top-level .astro pages → thêm vào danh sách check

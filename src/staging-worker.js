@@ -65,6 +65,27 @@ export default {
       return Response.redirect('https://truongvietanh.com/blog/', 301);
     }
 
+    // Gộp trang nội trú trùng: /tuyen-sinh/lop-10-noi-tru → URL ngắn /lop-10-noi-tru/ (301)
+    if (url.pathname === '/tuyen-sinh/lop-10-noi-tru' || url.pathname === '/tuyen-sinh/lop-10-noi-tru/') {
+      return Response.redirect('https://truongvietanh.com/lop-10-noi-tru/', 301);
+    }
+
+    // Quiz: /quiz-vietanh → /quiz (301 permanent — canonical short URL)
+    if (url.pathname === '/quiz-vietanh' || url.pathname === '/quiz-vietanh/') {
+      return Response.redirect('https://truongvietanh.com/quiz', 301);
+    }
+
+    // Quiz: explicit fetch by file path to bypass Cloudflare asset manifest routing issues
+    if (url.pathname === '/quiz' || url.pathname === '/quiz/') {
+      const assetReq = new Request(new URL('/quiz/index.html', url.origin).toString());
+      const assetResp = await env.ASSETS.fetch(assetReq);
+      if (assetResp.ok) {
+        const h = new Headers(assetResp.headers);
+        h.set('cache-control', 'public, max-age=0, must-revalidate');
+        return new Response(assetResp.body, { status: 200, headers: h });
+      }
+    }
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS' && (url.pathname === '/api/lead' || url.pathname === '/api/khieu-nai')) {
       return new Response(null, { status: 204, headers: CORS_HEADERS });

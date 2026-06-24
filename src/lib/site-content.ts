@@ -1363,7 +1363,7 @@ export const pages: PageSpec[] = [
     slug: 'triet-ly-giao-duc',
     title: 'Triết Lý Giáo Dục Trường Việt Anh',
     description:
-      'Trang triết lý giáo dục giải th��ch cách Trường Việt Anh kết hợp hạnh phúc, kỷ luật và tính thực dụng để trẻ học tốt một cách bền vững.',
+      'Trang triết lý giáo dục giải thích cách Trường Việt Anh kết hợp hạnh phúc, kỷ luật và tính thực dụng để trẻ học tốt một cách bền vững.',
     templateClass: 'Pure Page / Thought Leadership',
     pageType: 'Authority narrative page',
     theme: 'brand',
@@ -1371,7 +1371,7 @@ export const pages: PageSpec[] = [
       eyebrow: 'Thought Leadership Page',
       title: 'Một đứa trẻ hạnh phúc sẽ học tốt hơn, nhưng hạnh phúc ở đây không phải sự dễ dãi.',
       body:
-        'Trang này được viết để làm rõ tinh thần “vui vẻ và thực dụng”: trẻ được tôn trọng, có kỷ luật, biết lập kế hoạch và có một lộ trình tiến b�� rõ ràng. Đây là lớp nội dung nuôi trust trước khi phụ huynh so sánh học phí hay đối chiếu với trường kh��c.',
+        'Trang này được viết để làm rõ tinh thần “vui vẻ và thực dụng”: trẻ được tôn trọng, có kỷ luật, biết lập kế hoạch và có một lộ trình tiến bộ rõ ràng. Đây là lớp nội dung nuôi trust trước khi phụ huynh so sánh học phí hay đối chiếu với trường khác.',
       primaryCta: { label: 'Khám phá hệ thống PDR', href: '/he-thong-pdr' },
       secondaryCta: { label: 'Xem các cấp học', href: '/mam-non' },
       badges: ['Brand depth', 'E-E-A-T support', 'Assisted conversion'],
@@ -1385,7 +1385,7 @@ export const pages: PageSpec[] = [
     },
     stats: [
       { value: 'Vui vẻ', label: 'Trẻ cần một môi trường tích cực để mở lòng và học thật' },
-      { value: 'Th��c dụng', label: 'Mọi hoạt động đều phải hướng đến năng lực sống và học tập cụ thể' },
+      { value: 'Thực dụng', label: 'Mọi hoạt động đều phải hướng đến năng lực sống và học tập cụ thể' },
       { value: 'Trách nhiệm', label: 'Trách nhiệm được dạy như một kỹ năng, không phải sự áp đặt' },
       { value: 'Đồng hành', label: 'Gia đình và nhà trường cùng nhau tạo rhythm tiến bộ' },
     ],
@@ -1393,9 +1393,9 @@ export const pages: PageSpec[] = [
       {
         type: 'cards',
         eyebrow: 'Cốt lõi triết lý',
-        title: 'Bốn ý lớn mà trang này cần l��m rõ.',
+        title: 'Bốn ý lớn mà trang này cần làm rõ.',
         intro:
-          'Nếu chỉ nói “lấy học sinh làm trung tâm” thì quá chung. Việt Anh cần diễn giải bằng logic mà phụ huynh c�� thể cảm thấy trong đời sống học tập mỗi ngày.',
+          'Nếu chỉ nói “lấy học sinh làm trung tâm” thì quá chung. Việt Anh cần diễn giải bằng logic mà phụ huynh có thể cảm thấy trong đời sống học tập mỗi ngày.',
         columns: 2,
         items: [
           {
@@ -1431,7 +1431,7 @@ export const pages: PageSpec[] = [
       {
         type: 'links',
         eyebrow: 'Nối sang nội dung sâu hơn',
-        title: 'Ba hướng đi tiếp theo từ tri���t lý giáo dục.',
+        title: 'Ba hướng đi tiếp theo từ triết lý giáo dục.',
         intro:
           'Nếu triết lý đã được đồng ý, user cần có đường đi sang pages “xác minh” triết lý đó bằng hệ thống, cấp học và hành động.',
         items: [
@@ -1463,7 +1463,7 @@ export const pages: PageSpec[] = [
           'Mục này được viết để tránh hiểu nhầm rằng hạnh phúc đồng nghĩa với dễ dãi hay giảm kỷ luật.',
         items: [
           {
-            question: 'Giáo d���c hạnh phúc có làm giảm kỷ luật không?',
+            question: 'Giáo dục hạnh phúc có làm giảm kỷ luật không?',
             answer:
               'Không. Việt Anh xem kỷ luật là một phần của năng lực tự chủ. Trẻ được dạy cách lập kế hoạch, hoàn thành và tự đánh giá kết quả.',
           },
@@ -1485,7 +1485,7 @@ export const pages: PageSpec[] = [
     slug: 'he-thong-pdr',
     title: 'Hệ Thống PDR Tại Trường Việt Anh',
     description:
-      'Trang signature asset mô tả cách Trường Việt Anh vận hành Plan - Đó - Review để tạo năng lực tự học, tự chủ và khả năng phản tư cho học sinh.',
+      'Trang signature asset mô tả cách Trường Việt Anh vận hành Plan - Do - Review để tạo năng lực tự học, tự chủ và khả năng phản tư cho học sinh.',
     templateClass: 'Authority Page / Signature System',
     pageType: 'Moat page',
     theme: 'brand',
@@ -1513,40 +1513,40 @@ export const pages: PageSpec[] = [
     sections: [
       {
         type: 'steps',
-        eyebrow: 'Plan - Đó - Review',
+        eyebrow: 'Plan - Do - Review',
         title: 'Ba bước nghe đơn giản, nhưng là cốt sống của năng lực tự học.',
         intro:
-          'Trang này nên viết như một trang “giải thích hệ thống” thấy vì một bai PR. Moi bước cần nói được hanh vì cụ thể mà học sinh sẽ làm.',
+          'Trang này nên viết như một trang “giải thích hệ thống” thay vì một bài PR. Mỗi bước cần nói được hành vi cụ thể mà học sinh sẽ làm.',
         items: [
           {
             title: 'Plan',
             body:
-              'Học sinh học cách đặt mục tiêu, chia nhớ công việc, dự kiến khó khăn và biết mình cần hỗ trợ gì. Đây là bước giúp trẻ thởat khoi học vô định.',
+              'Học sinh học cách đặt mục tiêu, chia nhớ công việc, dự kiến khó khăn và biết mình cần hỗ trợ gì. Đây là bước giúp trẻ thoát khỏi học vô định.',
           },
           {
-            title: 'Đó',
+            title: 'Do',
             body:
               'Trẻ thực hiện kế hoạch trong một rhythm rõ ràng: vào việc, hoàn thành, giao tiếp với thầy cô và hợp tác với bạn bè.',
           },
           {
             title: 'Review',
             body:
-              'Sau moi chu kỳ, học sinh nhìn lại kết quả, nhận biết điểm tốt, điểm cần sửa và cai gì sẽ thấy đổi ở lan tiếp theo.',
+              'Sau mỗi chu kỳ, học sinh nhìn lại kết quả, nhận biết điểm tốt, điểm cần sửa và cái gì sẽ thay đổi ở lần tiếp theo.',
           },
         ],
       },
       {
         type: 'cards',
         eyebrow: 'PDR theo cấp học',
-        title: 'Cũng là PDR, nhưng mô hình thể hiện sẽ thấy đổi theo độ tuổi.',
+        title: 'Cũng là PDR, nhưng mô hình thể hiện sẽ thay đổi theo độ tuổi.',
         intro:
-          'Mục này vừa làm rõ hệ thống, vừa tạo internal links rất tự nhien sang 4 pillar pages.',
+          'Mục này vừa làm rõ hệ thống, vừa tạo internal links rất tự nhiên sang 4 pillar pages.',
         columns: 2,
         items: [
           {
             title: 'Mầm Non',
             body:
-              'PDR được thể hiện quá nhưng việc rất nhớ: bé biết chuẩn bị, hoàn thành, sắp xếp và chia sẻ lại nhưng gì mình đã làm.',
+              'PDR được thể hiện qua những việc rất nhỏ: bé biết chuẩn bị, hoàn thành, sắp xếp và chia sẻ lại những gì mình đã làm.',
             href: '/mam-non',
             cta: 'Xem pillar Mầm Non',
           },
@@ -1560,7 +1560,7 @@ export const pages: PageSpec[] = [
           {
             title: 'Trung Học Cơ Sở',
             body:
-              'THCS là giai đoạn PDR tăng độ khó: học sinh cần tự quản lý bài tập, group work, thuyết trình và trách nhiệm ca nhận.',
+              'THCS là giai đoạn PDR tăng độ khó: học sinh cần tự quản lý bài tập, group work, thuyết trình và trách nhiệm cá nhân.',
             href: '/trung-hoc-co-so',
             cta: 'Xem pillar THCS',
           },
@@ -1576,7 +1576,7 @@ export const pages: PageSpec[] = [
       {
         type: 'quote',
         eyebrow: 'Proof angle',
-        title: 'PDR cần được đọc như một loi giai cho “vì sao con cần tự chủ”.',
+        title: 'PDR cần được đọc như một lời giải cho “vì sao con cần tự chủ”.',
         quote:
           'Nếu một học sinh chỉ làm khi có người nhắc, em ấy đang học được kiến thức nhưng chưa xây được năng lực. PDR được thiết kế để biến việc học thành một quá trình có ý thức và có khả năng tự điều chỉnh.',
         attribution: 'Trang signature asset của Trường Việt Anh',
@@ -1584,14 +1584,14 @@ export const pages: PageSpec[] = [
       {
         type: 'faq',
         eyebrow: 'FAQ PDR',
-        title: 'FAQ ngắn để phụ huynh không bi “nghet” boi thuật ngữ.',
+        title: 'FAQ ngắn để phụ huynh không bị “nghet” bởi thuật ngữ.',
         intro:
           'Trang này cần rất dễ hiểu. FAQ dưới đây là phần dịch PDR sang ngôn ngữ đời thường.',
         items: [
           {
-            question: 'PDR có phải một mon học rieng không?',
+            question: 'PDR có phải một môn học riêng không?',
             answer:
-              'Không. Đây là hệ thống vận hành cách học. Nó chạy xuyên quá bài tập, dự án, giao tiếp và cách học sinh tự đánh giá tiến bộ.',
+              'Không. Đây là hệ thống vận hành cách học. Nó chạy xuyên qua bài tập, dự án, giao tiếp và cách học sinh tự đánh giá tiến bộ.',
           },
           {
             question: 'PDR có giúp trẻ biết tự học thật không?',
@@ -1619,7 +1619,7 @@ export const pages: PageSpec[] = [
       eyebrow: 'Level Pillar',
       title: 'Mầm non Việt Anh được thiết kế để bé thấy an tâm, vui vẻ và sẵn sàng học từ ngày đầu.',
       body:
-        'Trang pillar này có vai trò bắt keyword cấp học, giải thích chương trình và route phụ huynh sang Tuyển Sinh hoặc Học Phí mà không cần dạy user vào form quá sớm. Nội dung ưu tiên: thích nghi, an toàn, song ngữ và phát triển cảm xúc.',
+        'Trang pillar này có vai trò bắt keyword cấp học, giải thích chương trình và route phụ huynh sang Tuyển Sinh hoặc Học Phí mà không cần dẫn user vào form quá sớm. Nội dung ưu tiên: thích nghi, an toàn, song ngữ và phát triển cảm xúc.',
       primaryCta: { label: 'Bắt đầu từ tuyển sinh', href: '/tuyen-sinh' },
       secondaryCta: { label: 'Xem học phí mầm non', href: '/hoc-phi' },
       badges: ['SEO pillar', 'Parent trust', 'Admissions bridge'],
@@ -1635,7 +1635,7 @@ export const pages: PageSpec[] = [
       { value: '18 tháng+', label: 'Độ tuổi có thể bắt đầu làm quen với môi trường học' },
       { value: 'Song ngữ', label: 'Tiếng Anh được đưa vào nhẹ nhàng, gắn với sinh hoạt' },
       { value: 'Thích nghi', label: 'Chủ đề lớn nhất của giai đoạn đầu đời được đặt lên đầu' },
-      { value: 'PDR nhẹ', label: 'Bé tập nhận biết và hoàn thành việc nhớ mỗi ngày' },
+      { value: 'PDR nhẹ', label: 'Bé tập nhận biết và hoàn thành việc nhỏ mỗi ngày' },
     ],
     sections: [
       {
@@ -1649,46 +1649,46 @@ export const pages: PageSpec[] = [
           {
             title: 'Thích nghi nhẹ nhàng',
             body:
-              'Lớp học và giáo viên được to chuc để bé chuyen tự sinh hoạt gia đình sang sinh hoạt trường học một cách an toàn và có support.',
+              'Lớp học và giáo viên được tổ chức để bé chuyển từ sinh hoạt gia đình sang sinh hoạt trường học một cách an toàn và có support.',
           },
           {
             title: 'Phát triển cảm xúc',
             body:
-              'Trẻ học cách gọi tên cảm xúc, cho đến lượt, hợp tác và hình thành nhưng nề nếp dau đời sống sống với kiến thức nền tảng.',
+              'Trẻ học cách gọi tên cảm xúc, cho đến lượt, hợp tác và hình thành những nề nếp đầu đời gắn với kiến thức nền tảng.',
           },
           {
-            title: 'Tiếng Anh thởng quá trải nghiệm',
+            title: 'Tiếng Anh thông qua trải nghiệm',
             body:
-              'Tiếng Anh được đưa vào bài hát, trò chơi, giao tiếp và các chủ đề gần gũi để trẻ có phản xạ tự nhien hơn.',
+              'Tiếng Anh được đưa vào bài hát, trò chơi, giao tiếp và các chủ đề gần gũi để trẻ có phản xạ tự nhiên hơn.',
           },
           {
             title: 'Môi trường có nhịp điệu',
             body:
-              'Một ngày của bé được chia rhythm rõ ràng: đón trẻ, học - choi, ngủ trưa, vận động, review cuối ngày với nhiều tín hiệu quen thuộc.',
+              'Một ngày của bé được chia rhythm rõ ràng: đón trẻ, học - chơi, ngủ trưa, vận động, review cuối ngày với nhiều tín hiệu quen thuộc.',
           },
         ],
       },
       {
         type: 'steps',
-        eyebrow: 'Dạy in life',
-        title: 'Một ngày ở khoi mầm non cần được hình dung thật rõ.',
+        eyebrow: 'A Day in Life',
+        title: 'Một ngày ở khối mầm non cần được hình dung thật rõ.',
         intro:
-          'Section này đóng vai trò “giảm lo au” cho phụ huynh. Cang cụ thể, pillar cang để chuyển đổi sang trang tuyển sinh.',
+          'Section này đóng vai trò “giảm lo au” cho phụ huynh. Càng cụ thể, pillar càng dễ chuyển đổi sang trang tuyển sinh.',
         items: [
           {
-            title: 'Buoi sang bình tĩnh và có welcome ritual',
+            title: 'Buổi sáng bình tĩnh và có welcome ritual',
             body:
-              'Be được don trong một không khi quen thuộc, có giao tiếp tay với phụ huynh và giúp bé chuyển mood sang môi trường học.',
+              'Bé được đón trong một không khí quen thuộc, có giao tiếp tay với phụ huynh và giúp bé chuyển mood sang môi trường học.',
           },
           {
-            title: 'Các khoi hoạt động ngan, nhiều chuyển động',
+            title: 'Các khối hoạt động ngắn, nhiều chuyển động',
             body:
-              'Trẻ ở độ tuổi này cần nhiều khoang nhớ để học, choi, nghe, nói và vận động xen kẽ. Một rhythm tot quan trọng hơn việc nhiều kiến thức.',
+              'Trẻ ở độ tuổi này cần nhiều khoảng nghỉ để học, chơi, nghe, nói và vận động xen kẽ. Một rhythm tốt quan trọng hơn việc nhiều kiến thức.',
           },
           {
-            title: 'Review nhe để trẻ biết mình đã làm được gì',
+            title: 'Review nhẹ để trẻ biết mình đã làm được gì',
             body:
-              'Ngày từ mầm non, trẻ đã được tập nhìn lại nhưng việc nhớ mình đã hoàn thành. Đây là phien bản rất sớm của PDR.',
+              'Ngày từ mầm non, trẻ đã được tập nhìn lại những việc nhỏ mình đã hoàn thành. Đây là phiên bản rất sớm của PDR.',
           },
         ],
       },
@@ -1697,7 +1697,7 @@ export const pages: PageSpec[] = [
         eyebrow: 'Internal link hub',
         title: 'Ba điểm rẽ nhanh phù hợp nhất từ pillar mầm non.',
         intro:
-          'Đây là các link cần có để gom phụ huynh về dùng hành động thấy vì để ho luẩn quẩn trọng.',
+          'Đây là các link cần có để gom phụ huynh về đúng hành động thay vì để họ luẩn quẩn.',
         items: [
           {
             eyebrow: 'Admissions',
@@ -1709,7 +1709,7 @@ export const pages: PageSpec[] = [
             eyebrow: 'Money intent',
             title: 'Học Phí',
             href: '/hoc-phi',
-            body: 'Phù hợp với nhóm đang tim gia và muốn có mục preview minh bạch trước khi goi.',
+            body: 'Phù hợp với nhóm đang tìm giá và muốn có mục preview minh bạch trước khi gọi.',
           },
           {
             eyebrow: 'Brand depth',
@@ -1722,24 +1722,24 @@ export const pages: PageSpec[] = [
       {
         type: 'faq',
         eyebrow: 'FAQ mầm non',
-        title: 'Nhưng câu hoi có intent chuyển đổi cao nhất ở khoi mầm non.',
+        title: 'Những câu hỏi có intent chuyển đổi cao nhất ở khối mầm non.',
         intro:
-          'FAQ dưới pillar page giúp bat PAA, giảm đó dạy của sales và hỗ trợ phụ huynh ra quyết định nhanh hơn.',
+          'FAQ dưới pillar page giúp bắt PAA, giảm tải cho sales và hỗ trợ phụ huynh ra quyết định nhanh hơn.',
         items: [
           {
-            question: 'Be nhút nhát có hoà nhập được không?',
+            question: 'Bé nhút nhát có hoà nhập được không?',
             answer:
-              'Đây là một trong nhưng nỗi lo lớn nhất, và cũng là ly đó Việt Anh ưu tiên rhythm đón trẻ, giao tiếp nhe và một môi trường an toàn để bé thích nghi tự tự.',
+              'Đây là một trong những nỗi lo lớn nhất, và cũng là lý do Việt Anh ưu tiên rhythm đón trẻ, giao tiếp nhẹ và một môi trường an toàn để bé thích nghi từ từ.',
           },
           {
-            question: 'Phụ huynh nên bắt đầu từ trang nao nếu muốn đăng ký?',
+            question: 'Phụ huynh nên bắt đầu từ trang nào nếu muốn đăng ký?',
             answer:
-              'Tuyển Sinh là điểm vào tốt nhất. Nếu phụ huynh đang so sánh chỉ phí, có thể đi tiếp sang Học Phí.',
+              'Tuyển Sinh là điểm vào tốt nhất. Nếu phụ huynh đang so sánh chi phí, có thể đi tiếp sang Học Phí.',
           },
           {
             question: 'Tiếng Anh ở mầm non được dạy ra sao?',
             answer:
-              'Quá bài hát, trò chơi, giao tiếp và các chủ đề gần gũi, để bé hình thành phản xạ ngôn ngữ sống sống với trải nghiệm vui.',
+              'Qua bài hát, trò chơi, giao tiếp và các chủ đề gần gũi, để bé hình thành phản xạ ngôn ngữ gắn với trải nghiệm vui.',
           },
         ],
       },
@@ -1749,55 +1749,55 @@ export const pages: PageSpec[] = [
     slug: 'tieu-hoc',
     title: 'Tiểu Học Trường Việt Anh',
     description:
-      'Pillar page tiểu học của Trường Việt Anh, nhấn mạnh cần bằng học thuật, tiếng Anh, PDR và nề nếp tự học cho học sinh.',
+      'Pillar page tiểu học của Trường Việt Anh, nhấn mạnh cân bằng học thuật, tiếng Anh, PDR và nề nếp tự học cho học sinh.',
     templateClass: 'Class Level Pillar',
     pageType: 'Pillar page',
     theme: 'pillar',
     hero: {
       eyebrow: 'Level Pillar',
-      title: 'Tiểu học Việt Anh được xây để học sinh vừa có nề nếp học tập, vừa gì�� được sự ham học và tính chủ động.',
+      title: 'Tiểu học Việt Anh được xây để học sinh vừa có nề nếp học tập, vừa giữ được sự ham học và tính chủ động.',
       body:
-        'Trang pillar này phục vụ nhóm phụ huynh đang so sánh rất mạnh về chương trình, tiếng Anh, giáo viên và học phí. Vì vay nó cần cần bằng giua authority, internal link và conversion support.',
+        'Trang pillar này phục vụ nhóm phụ huynh đang so sánh rất mạnh về chương trình, tiếng Anh, giáo viên và học phí. Vì vậy nó cần cân bằng giữa authority, internal link và conversion support.',
       primaryCta: { label: 'Xem admissions hub', href: '/tuyen-sinh' },
-      secondaryCta: { label: 'Xem học phí toàn cap', href: '/hoc-phi' },
+      secondaryCta: { label: 'Xem học phí toàn cấp', href: '/hoc-phi' },
       badges: ['Seed keyword page', 'Intent match', 'Trust builder'],
       asideTitle: 'Thông điệp chính cho phụ huynh tiểu học',
       asideItems: [
-        'Học sinh được dạy cách học, không chỉ học để hoàn thành bai.',
-        'Tiếng Anh và nề nếp được di cũng nhau, không danh doi.',
-        'PDR là khung giúp học sinh tự chủ hơn moi học ky.',
-        'CTA mem nhưng rõ ràng: học phí, tuyển sinh, trang thương hiệu.',
+        'Học sinh được dạy cách học, không chỉ học để hoàn thành bài.',
+        'Tiếng Anh và nề nếp được dạy cùng nhau, không đánh đổi.',
+        'PDR là khung giúp học sinh tự chủ hơn mỗi học kỳ.',
+        'CTA mềm nhưng rõ ràng: học phí, tuyển sinh, trang thương hiệu.',
       ],
     },
     stats: [
-      { value: 'Cần bằng', label: 'Học thuật, tiếng Anh và nề nếp di sống sống' },
+      { value: 'Cân bằng', label: 'Học thuật, tiếng Anh và nề nếp đi cùng nhau' },
       { value: 'PDR', label: 'Học sinh tập lập kế hoạch học và tự review' },
-      { value: 'Tiếng Anh', label: 'Ngôn ngữ được dùng trong nhiều hoạt động có chu dich' },
-      { value: 'Tự học', label: 'Năng lực tự học được xem là đầu ra lau dai' },
+      { value: 'Tiếng Anh', label: 'Ngôn ngữ được dùng trong nhiều hoạt động có chủ đích' },
+      { value: 'Tự học', label: 'Năng lực tự học được xem là đầu ra lâu dài' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'Curriculum Highlights',
-        title: 'Trang pillar tiểu học cần cho thấy “cham vào kết quả” như thế nào.',
+        title: 'Trang pillar tiểu học cần cho thấy “chạm vào kết quả” như thế nào.',
         intro:
-          'Phụ huynh cap tiểu học quan tâm ca kiến thức nền tảng lan kỹ năng học. Vì vay section này cần rất rõ về structure.',
+          'Phụ huynh cấp tiểu học quan tâm cả kiến thức nền tảng lẫn kỹ năng học. Vì vậy section này cần rất rõ về structure.',
         columns: 2,
         items: [
           {
-            title: 'Nền tảng học thuật chac',
+            title: 'Nền tảng học thuật chắc',
             body:
-              'Học sinh được xây chac các mon cốt lõi, đồng thởi học cách to chuc bài tập, ghi nhớ và theo dõi tiến độ của minh.',
+              'Học sinh được xây chắc các môn cốt lõi, đồng thời học cách tổ chức bài tập, ghi nhớ và theo dõi tiến độ của mình.',
           },
           {
-            title: 'Tiếng Anh có chu dich',
+            title: 'Tiếng Anh có chủ đích',
             body:
-              'Tiếng Anh không chỉ là tiet học rieng, mà là một phần của môi trường giao tiếp và tư duy, để học sinh sử dụng ngôn ngữ như một công cụ.',
+              'Tiếng Anh không chỉ là tiết học riêng, mà là một phần của môi trường giao tiếp và tư duy, để học sinh sử dụng ngôn ngữ như một công cụ.',
           },
           {
             title: 'Dự án và trình bày',
             body:
-              'Trẻ được tập thuyết trình, làm việc nhóm và trình bày suy nghi từ sớm, tự đó tự tin hơn trong lớp học và ngoai đời sống.',
+              'Trẻ được tập thuyết trình, làm việc nhóm và trình bày suy nghĩ từ sớm, từ đó tự tin hơn trong lớp học và ngoài đời sống.',
           },
           {
             title: 'Nề nếp học tập bền vững',
@@ -1809,38 +1809,38 @@ export const pages: PageSpec[] = [
       {
         type: 'steps',
         eyebrow: 'Learning rhythm',
-        title: 'Bon lớp trải nghiệm mà phụ huynh cần hình dung rõ ở cap tiểu học.',
+        title: 'Bốn lớp trải nghiệm mà phụ huynh cần hình dung rõ ở cấp tiểu học.',
         intro:
-          'Phụ huynh không chỉ mua chương trình. Ho mua một nhịp điệu học tập mà con có thể theo được nhiều nằm lien.',
+          'Phụ huynh không chỉ mua chương trình. Họ mua một nhịp điệu học tập mà con có thể theo được nhiều năm liền.',
         items: [
           {
             title: 'Bắt đầu bằng mục tiêu ngày học',
             body:
-              'Học sinh biết hom này mình cần đặt điều gì, bai học nao cần tập trung và sẽ review ra sao vào cuối ngày.',
+              'Học sinh biết hôm nay mình cần đặt điều gì, bài học nào cần tập trung và sẽ review ra sao vào cuối ngày.',
           },
           {
-            title: 'Học quá hoạt động có định hướng',
+            title: 'Học qua hoạt động có định hướng',
             body:
-              'Tiet học được to chuc để học sinh tham gia, trả lời, hợp tác và ghi nhớ quá hành động, không chỉ nghe thu đồng.',
+              'Tiết học được tổ chức để học sinh tham gia, trả lời, hợp tác và ghi nhớ qua hành động, không chỉ nghe thụ động.',
           },
           {
-            title: 'Tiếng Anh và giao tiếp được lặp lại có chu dich',
+            title: 'Tiếng Anh và giao tiếp được lặp lại có chủ đích',
             body:
-              'Trẻ được tiếp xuc ngôn ngữ theo chủ đề và ngữ cảnh rõ ràng để có khả năng sử dụng thật, không chỉ học để tra bai.',
+              'Trẻ được tiếp xúc ngôn ngữ theo chủ đề và ngữ cảnh rõ ràng để có khả năng sử dụng thật, không chỉ học để tra bài.',
           },
           {
             title: 'Review để xây thói quen tự học',
             body:
-              'Học sinh được hướng dẫn nhìn lại cách làm bai, cách đặt mục tiêu và cách phoi hợp với giáo viên, gia đình.',
+              'Học sinh được hướng dẫn nhìn lại cách làm bài, cách đặt mục tiêu và cách phối hợp với giáo viên, gia đình.',
           },
         ],
       },
       {
         type: 'faq',
         eyebrow: 'FAQ tiểu học',
-        title: 'Các câu hoi có y nghia lớn nhất với conversion ở pillar tiểu học.',
+        title: 'Các câu hỏi có ý nghĩa lớn nhất với conversion ở pillar tiểu học.',
         intro:
-          'Nhưng FAQ này được viết để hỗ trợ đội tuyển sinh, đồng thởi tạo khả năng bat long-tail queries có intent mạnh.',
+          'Những FAQ này được viết để hỗ trợ đội tuyển sinh, đồng thời tạo khả năng bắt long-tail queries có intent mạnh.',
         items: [
           {
             question: 'Tiểu học Việt Anh có quá áp lực không?',
@@ -1850,12 +1850,12 @@ export const pages: PageSpec[] = [
           {
             question: 'Phụ huynh nên xem học phí trước hay admissions trước?',
             answer:
-              'Nếu đang so sánh chỉ phí, vào Học Phí trước. Nếu muốn biết quy trình, giay to và bước tiếp theo, vào Tuyển Sinh.',
+              'Nếu đang so sánh chi phí, vào Học Phí trước. Nếu muốn biết quy trình, giấy tờ và bước tiếp theo, vào Tuyển Sinh.',
           },
           {
             question: 'PDR giúp học sinh tiểu học thế nào?',
             answer:
-              'Nó giúp học sinh biết lập kế hoạch nhớ, theo dõi bài tập, review lại cách học và dần dần hình thành tính tự chủ.',
+              'Nó giúp học sinh biết lập kế hoạch nhỏ, theo dõi bài tập, review lại cách học và dần dần hình thành tính tự chủ.',
           },
         ],
       },
@@ -1871,49 +1871,49 @@ export const pages: PageSpec[] = [
     theme: 'pillar',
     hero: {
       eyebrow: 'Level Pillar',
-      title: 'THCS là giai đoạn học sinh cần một lộ trình rõ ràng để vừa lớn len, vừa không mất nhiep học.',
+      title: 'THCS là giai đoạn học sinh cần một lộ trình rõ ràng để vừa lớn lên, vừa không mất nhịp học.',
       body:
-        'Trang pillar THCS phải nói được một điều rất quan trọng: dạy là giai đoạn chuyển tiếp để học sinh tăng tốc học thuật, tiếng Anh và kỹ năng tự học mà không bi quá tai. Nội dung cần giúp phụ huynh thấy được sự rõ ràng về hệ thống.',
+        'Trang pillar THCS phải nói được một điều rất quan trọng: đây là giai đoạn chuyển tiếp để học sinh tăng tốc học thuật, tiếng Anh và kỹ năng tự học mà không bị quá tải. Nội dung cần giúp phụ huynh thấy được sự rõ ràng về hệ thống.',
       primaryCta: { label: 'Xem quy trình tuyển sinh', href: '/tuyen-sinh' },
       secondaryCta: { label: 'Tham khảo học phí THCS', href: '/hoc-phi' },
       badges: ['THCS authority', 'Mid-funnel support', 'Admissions bridge'],
-      asideTitle: 'Các objection cần được xu ly',
+      asideTitle: 'Các objection cần được xử lý',
       asideItems: [
-        'Chu trình học có quá nang không?',
-        'Tiếng Anh được dạy ở mục nao?',
+        'Chương trình học có quá nặng không?',
+        'Tiếng Anh được dạy ở mức nào?',
         'Học sinh có được hướng dẫn cách tự học thật không?',
-        'THCS có đường link tự nhien sang THPT và học phí hay không?',
+        'THCS có đường link tự nhiên sang THPT và học phí hay không?',
       ],
     },
     stats: [
       { value: 'Lộ trình', label: 'THCS được nhìn như giai đoạn tăng tốc có hướng dẫn' },
       { value: 'Tiếng Anh', label: 'Gia tăng khả năng ngôn ngữ và sự tự tin' },
-      { value: 'PDR', label: 'Học sinh tự quản lý bài tập và group work tot hơn' },
+      { value: 'PDR', label: 'Học sinh tự quản lý bài tập và group work tốt hơn' },
       { value: 'Định hướng', label: 'Sẵn sàng cho THPT, IELTS và dự án lớn hơn' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'THCS priorities',
-        title: 'Bon điểm cần rất rõ trên pillar THCS.',
+        title: 'Bốn điểm cần rất rõ trên pillar THCS.',
         intro:
-          'Nhiều phụ huynh bắt đầu so sánh rất ky tự THCS. Trang này vì vay cần chat về logic và có internal links dùng luc.',
+          'Nhiều phụ huynh bắt đầu so sánh rất kỹ từ THCS. Trang này vì vậy cần chặt về logic và có internal links đúng lúc.',
         columns: 2,
         items: [
           {
             title: 'Học thuật có cấu trúc',
             body:
-              'Học sinh có một rhythm học tập rõ ràng hơn, biết cách quản lý deadline, project và bai kiem tra theo một lộ trình có support.',
+              'Học sinh có một rhythm học tập rõ ràng hơn, biết cách quản lý deadline, project và bài kiểm tra theo một lộ trình có support.',
           },
           {
-            title: 'Tiếng Anh để mo rong tư duy',
+            title: 'Tiếng Anh để mở rộng tư duy',
             body:
-              'Tiếng Anh được dạy để học sinh có thể đọc, nghe, nói và trình bày suy nghi tự tin hơn trong mon học và hoạt động dự án.',
+              'Tiếng Anh được dạy để học sinh có thể đọc, nghe, nói và trình bày suy nghĩ tự tin hơn trong môn học và hoạt động dự án.',
           },
           {
-            title: 'PDR tăng cap',
+            title: 'PDR tăng cấp',
             body:
-              'THCS là luc PDR không chỉ là thói quen nhớ nua, mà tro thành một hệ thống giúp học sinh tự điều chỉnh cách học.',
+              'THCS là lúc PDR không chỉ là thói quen nhỏ nữa, mà trở thành một hệ thống giúp học sinh tự điều chỉnh cách học.',
           },
           {
             title: 'Kỹ năng thế kỷ 21',
@@ -1925,21 +1925,21 @@ export const pages: PageSpec[] = [
       {
         type: 'links',
         eyebrow: 'Internal links cần có',
-        title: 'Ba trang mà THCS phải dạy user tôi một cách có chu dich.',
+        title: 'Ba trang mà THCS phải dẫn user tới một cách có chủ đích.',
         intro:
-          'Page này phải làm việc như hub: vừa gì�� authority, vừa don luc chuyển đổi về học phí và admissions.',
+          'Page này phải làm việc như hub: vừa giữ authority, vừa dồn lực chuyển đổi về học phí và admissions.',
         items: [
           {
             eyebrow: 'Signature system',
             title: 'Hệ Thống PDR',
             href: '/he-thong-pdr',
-            body: 'Giúp phụ huynh nhìn rõ có che vận hành của khả năng tự học và phản tư.',
+            body: 'Giúp phụ huynh nhìn rõ cơ chế vận hành của khả năng tự học và phản tư.',
           },
           {
             eyebrow: 'Next stage',
             title: 'Trung Học Phổ Thông',
             href: '/trung-hoc-pho-thong',
-            body: 'Cho thấy lộ trình THCS không tach rồi mà dần len THPT một cách logic.',
+            body: 'Cho thấy lộ trình THCS không tách rời mà dần lên THPT một cách logic.',
           },
           {
             eyebrow: 'Commercial support',
@@ -1952,22 +1952,22 @@ export const pages: PageSpec[] = [
       {
         type: 'faq',
         eyebrow: 'FAQ THCS',
-        title: 'Câu hoi hay gặp nhất trước khi phụ huynh chuyen sang giai đoạn ra quyết định.',
+        title: 'Câu hỏi hay gặp nhất trước khi phụ huynh chuyển sang giai đoạn ra quyết định.',
         intro:
-          'Nhưng câu hoi này được viết để cat giảm mà sát ở mid-funnel và tạo khả năng rank tot hơn cho long-tail.',
+          'Những câu hỏi này được viết để cắt giảm ma sát ở mid-funnel và tạo khả năng rank tốt hơn cho long-tail.',
         items: [
           {
-            question: 'THCS Việt Anh có thien về học thuật hay kỹ năng?',
+            question: 'THCS Việt Anh có thiên về học thuật hay kỹ năng?',
             answer:
-              'Trang này phải truyền tải rõ một thông điệp: dạy là mô hình cần bằng, trong đó học thuật, tiếng Anh và năng lực tự học được xây đồng thởi.',
+              'Trang này phải truyền tải rõ một thông điệp: đây là mô hình cân bằng, trong đó học thuật, tiếng Anh và năng lực tự học được xây đồng thời.',
           },
           {
             question: 'PDR có giúp học sinh THCS giảm phụ thuộc vào nhắc nhớ không?',
             answer:
-              'Đó chính là mục tiêu. THCS là giai đoạn học sinh bắt đầu cần một hệ thống để tự quản lý bài tập, thởi gian và cách học của minh.',
+              'Đó chính là mục tiêu. THCS là giai đoạn học sinh bắt đầu cần một hệ thống để tự quản lý bài tập, thời gian và cách học của mình.',
           },
           {
-            question: 'Nếu phụ huynh đang cần gia hoặc quy trình ngày, nên vào đầu?',
+            question: 'Nếu phụ huynh đang cần giá hoặc quy trình ngay, nên vào đâu?',
             answer:
               'Học Phí giải quyết intent thương mại. Tuyển Sinh giải quyết intent hành động. Hai pages này được thiết kế để hỗ trợ trực tiếp cho pillar THCS.',
           },
@@ -1985,9 +1985,9 @@ export const pages: PageSpec[] = [
     theme: 'pillar',
     hero: {
       eyebrow: 'Level Pillar',
-      title: 'THPT Việt Anh được xây để học sinh biết mình học vì điều gì, đang chuẩn bị cho bước tiếp theo nao.',
+      title: 'THPT Việt Anh được xây để học sinh biết mình học vì điều gì, đang chuẩn bị cho bước tiếp theo nào.',
       body:
-        'THPT là trang pillar có intent rất gan conversion. Phụ huynh và học sinh thường so sánh mạnh về đầu ra, IELTS, định hướng đại học và học phí. Vì vay page này phải vừa rõ về authority, vừa rõ về next step.',
+        'THPT là trang pillar có intent rất gần conversion. Phụ huynh và học sinh thường so sánh mạnh về đầu ra, IELTS, định hướng đại học và học phí. Vì vậy page này phải vừa rõ về authority, vừa rõ về next step.',
       primaryCta: { label: 'Bắt đầu từ tuyển sinh', href: '/tuyen-sinh' },
       secondaryCta: { label: 'Xem trang học phí', href: '/hoc-phi' },
       badges: ['THPT pillar', 'Commercial assist', 'Outcome-led'],
@@ -1996,79 +1996,79 @@ export const pages: PageSpec[] = [
         'Lộ trình học và định hướng sau THPT.',
         'Tiếng Anh / IELTS / khả năng trình bày.',
         'PDR như một bộ khung giúp học sinh tự chịu trách nhiệm.',
-        'CTA phải dần đến hành động, không chỉ mo ta.',
+        'CTA phải dẫn đến hành động, không chỉ mô tả.',
       ],
     },
     stats: [
-      { value: 'IELTS', label: 'Tiếng Anh được đặt trong boi canh đầu ra và định hướng' },
+      { value: 'IELTS', label: 'Tiếng Anh được đặt trong bối cảnh đầu ra và định hướng' },
       { value: 'PDR', label: 'Học sinh tự lập kế hoạch và theo dõi mục tiêu học tập' },
       { value: 'Portfolio', label: 'Trình bày năng lực và quá trình tiến bộ rõ ràng hơn' },
-      { value: 'Đại học', label: 'Moi mon học được nói về những lua chọn phía trước' },
+      { value: 'Đại học', label: 'Mỗi môn học được nói về những lựa chọn phía trước' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'Outcome structure',
-        title: 'Bon lớp giá trị cần xuat hien rõ ràng ở THPT.',
+        title: 'Bốn lớp giá trị cần xuất hiện rõ ràng ở THPT.',
         intro:
-          'Đây là trang pillar “gan tien” nhất trong 4 cấp học, nên nó cần nói rất rõ về đầu ra và sự sẵn sàng cho giai đoạn sau pho thởng.',
+          'Đây là trang pillar “gần tiền” nhất trong 4 cấp học, nên nó cần nói rất rõ về đầu ra và sự sẵn sàng cho giai đoạn sau phổ thông.',
         columns: 2,
         items: [
           {
             title: 'Lộ trình học thuật có định hướng',
             body:
-              'Học sinh không chỉ học để xong chương trình, mà học trong một khung có mục tiêu rõ ràng hơn về đại học, kỹ năng và profile ca nhận.',
+              'Học sinh không chỉ học để xong chương trình, mà học trong một khung có mục tiêu rõ ràng hơn về đại học, kỹ năng và profile cá nhân.',
           },
           {
             title: 'Tiếng Anh và IELTS',
             body:
-              'Tiếng Anh được nhìn như năng lực cần để học tập và bước ra thế giới rong hơn, không chỉ là một cot điểm.',
+              'Tiếng Anh được nhìn như năng lực cần để học tập và bước ra thế giới rộng hơn, không chỉ là một cột điểm.',
           },
           {
-            title: 'PDR và sự chủ động ca nhận',
+            title: 'PDR và sự chủ động cá nhân',
             body:
-              'THPT là giai đoạn học sinh phải tự lập kế hoạch, tự quản lý áp lực và biết review để cải tiến cách học của chính minh.',
+              'THPT là giai đoạn học sinh phải tự lập kế hoạch, tự quản lý áp lực và biết review để cải tiến cách học của chính mình.',
           },
           {
             title: 'Trình bày, dự án, portfolio',
             body:
-              'Học sinh cần khả năng giao tiếp, trình bày và tong hợp trải nghiệm - dạy là một phần của đầu ra, không phải phần phu.',
+              'Học sinh cần khả năng giao tiếp, trình bày và tổng hợp trải nghiệm - đây là một phần của đầu ra, không phải phần phụ.',
           },
         ],
       },
       {
         type: 'steps',
         eyebrow: 'Decision journey',
-        title: 'THPT page cần dần user quá ba lớp quyết định.',
+        title: 'THPT page cần dẫn user qua ba lớp quyết định.',
         intro:
-          'Nếu không có trình tự rõ ràng, trang sẽ để rồi vào tính trang “có về uy tin nhưng kho hành động”.',
+          'Nếu không có trình tự rõ ràng, trang sẽ dễ rơi vào tình trạng “có vẻ uy tín nhưng khó hành động”.',
         items: [
           {
             title: 'Hiểu rõ outcome',
             body:
-              'Trước tien, phụ huynh cần biết học sinh sẽ được chuẩn bị cho gì: học thuật, ngôn ngữ, tự chủ và con đường phía sau THPT.',
+              'Trước tiên, phụ huynh cần biết học sinh sẽ được chuẩn bị cho gì: học thuật, ngôn ngữ, tự chủ và con đường phía sau THPT.',
           },
           {
-            title: 'Xác mình bằng hệ thống',
+            title: 'Xác minh bằng hệ thống',
             body:
-              'Sau đó, ho cần thấy PDR và cách to chuc học tập của trường đủ sức để đưa học sinh đến outcome đó.',
+              'Sau đó, họ cần thấy PDR và cách tổ chức học tập của trường đủ sức để đưa học sinh đến outcome đó.',
           },
           {
-            title: 'Hành động quá admissions và học phí',
+            title: 'Hành động qua admissions và học phí',
             body:
-              'Cuối cũng, phải có đường rõ sang Tuyển Sinh và Học Phí để user không bi dùng lại chỉ vì page quá “authority” mà thieu next step.',
+              'Cuối cùng, phải có đường rõ sang Tuyển Sinh và Học Phí để user không bị dừng lại chỉ vì page quá “authority” mà thiếu next step.',
           },
         ],
       },
       {
         type: 'faq',
         eyebrow: 'FAQ THPT',
-        title: 'FAQ được viết theo intent BOFU hơn ba pillar con lại.',
+        title: 'FAQ được viết theo intent BOFU hơn ba pillar còn lại.',
         intro:
-          'Nó hỗ trợ phụ huynh ra quyết định nhanh hơn và giúp đội tuyển sinh xu ly objection có hệ thống.',
+          'Nó hỗ trợ phụ huynh ra quyết định nhanh hơn và giúp đội tuyển sinh xử lý objection có hệ thống.',
         items: [
           {
-            question: 'THPT Việt Anh có thien về IELTS và du học hay không?',
+            question: 'THPT Việt Anh có thiên về IELTS và du học hay không?',
             answer:
               'Trang này cần diễn giải rõ ràng: tiếng Anh và IELTS là một phần của lộ trình năng lực, đồng hành cùng học thuật, tự chủ và định hướng sau THPT.',
           },
@@ -2080,7 +2080,7 @@ export const pages: PageSpec[] = [
           {
             question: 'Phụ huynh nên làm gì tiếp theo nếu thấy phù hợp?',
             answer:
-              'Trang Tuyển Sinh là điểm vào phù hợp nhất để bắt đầu, con Học Phí phục vụ như cầu tham khảo chỉ phí và tư vấn theo level.',
+              'Trang Tuyển Sinh là điểm vào phù hợp nhất để bắt đầu, còn Học Phí phục vụ nhu cầu tham khảo chi phí và tư vấn theo level.',
           },
         ],
       },
@@ -2099,7 +2099,7 @@ export const pages: PageSpec[] = [
       title: 'Khi phụ huynh đã sẵn sàng hành động, trang tuyển sinh cần giải quyết friction thật nhanh.',
       body:
         'Đây là conversion hub của đợt launch đầu tiên. Nó không cần quá nhiều văn hóa. Nó cần rõ quy trình, rõ CTA và rõ cách route phụ huynh sang level phù hợp, học phí hoặc cuộc gọi tư vấn.',
-      primaryCta: { label: 'Goi ngay cho doi tư vấn', href: contactLinks.phoneHref },
+      primaryCta: { label: 'Gọi ngay cho đội tư vấn', href: contactLinks.phoneHref },
       secondaryCta: { label: 'Xem học phí', href: '/hoc-phi' },
       badges: ['Admissions funnel', 'Conversion hub', 'Low-friction routing'],
       asideTitle: 'Ba việc admissions hub phải làm ngay',
@@ -2112,36 +2112,36 @@ export const pages: PageSpec[] = [
     stats: [
       { value: '4 bước', label: 'Tự quan tâm đến xác nhận nhập học' },
       { value: '4 cấp học', label: 'Một hub dùng cho toàn hệ thống' },
-      { value: 'Call / Zalo', label: 'Hai kênh như cầu hành động nhanh nhất' },
-      { value: 'Pillar-linked', label: 'Moi level page đều dạy được về đây' },
+      { value: 'Call / Zalo', label: 'Hai kênh cho nhu cầu hành động nhanh nhất' },
+      { value: 'Pillar-linked', label: 'Mỗi level page đều dẫn được về đây' },
     ],
     sections: [
       {
         type: 'steps',
         eyebrow: 'Admissions flow',
-        title: 'Quy trình tuyển sinh cần rõ đến mục phụ huynh chỉ cần đọc 1 phút là biết mình đang ở đầu.',
+        title: 'Quy trình tuyển sinh cần rõ đến mức phụ huynh chỉ cần đọc 1 phút là biết mình đang ở đâu.',
         intro:
           'Đây là core logic của conversion hub. Khi quy trình rõ, phụ huynh ít trì hoãn hơn và sales gọi lại cũng để chốt hơn.',
         items: [
           {
-            title: 'Bước 1: Xác đ���nh cấp học phù hợp',
+            title: 'Bước 1: Xác định cấp học phù hợp',
             body:
-              'Nếu phụ huynh chưa rõ, hay bắt đầu từ 4 pillar pages. Moi trang cấp học sẽ giải thích chương trình, triết lý và intent tiếp theo.',
+              'Nếu phụ huynh chưa rõ, hãy bắt đầu từ 4 pillar pages. Mỗi trang cấp học sẽ giải thích chương trình, triết lý và intent tiếp theo.',
           },
           {
             title: 'Bước 2: Làm rõ học phí và mục quan tâm',
             body:
-              'Trang Học Phí cũng cap range và logic chỉ phí. Mục tiêu là giảm đó mà sát trước khi vào tư vấn chi tiết.',
+              'Trang Học Phí cung cấp range và logic chi phí. Mục tiêu là giảm ma sát trước khi vào tư vấn chi tiết.',
           },
           {
-            title: 'Bước 3: Goi, chat hoặc hen lich',
+            title: 'Bước 3: Gọi, chat hoặc hẹn lịch',
             body:
-              'Doi admissions có thể tiếp nhận thởng tin quá cuộc gọi hoặc Zalo, sau đó điều phối bước tiếp theo cho dùng cấp học.',
+              'Đội admissions có thể tiếp nhận thông tin qua cuộc gọi hoặc Zalo, sau đó điều phối bước tiếp theo cho đúng cấp học.',
           },
           {
             title: 'Bước 4: Chốt hành động tiếp theo',
             body:
-              'Sau khi du thởng tin, phụ huynh được định hướng sang assessment, tham quan hoặc xu ly hồ sơ nhập học ở phase tiếp theo.',
+              'Sau khi đủ thông tin, phụ huynh được định hướng sang assessment, tham quan hoặc xử lý hồ sơ nhập học ở phase tiếp theo.',
           },
         ],
       },
@@ -2156,63 +2156,63 @@ export const pages: PageSpec[] = [
             eyebrow: 'Cấp học',
             title: 'Bắt đầu từ Mầm Non',
             href: '/mam-non',
-            body: 'Điểm vào cho nhóm phụ huynh cần thởng tin cấp học trước khi quyết định tiếp.',
+            body: 'Điểm vào cho nhóm phụ huynh cần thông tin cấp học trước khi quyết định tiếp.',
           },
           {
             eyebrow: 'Cấp học',
             title: 'Bắt đầu từ Tiểu Học',
             href: '/tieu-hoc',
-            body: 'Phù hợp với nhóm đang so sánh chương trình và cần bằng học thuật - tiếng Anh.',
+            body: 'Phù hợp với nhóm đang so sánh chương trình và cân bằng học thuật - tiếng Anh.',
           },
           {
             eyebrow: 'Commercial',
-            title: 'Vào thang Học Phí',
+            title: 'Vào thẳng Học Phí',
             href: '/hoc-phi',
-            body: 'Điểm rẽ nhanh cho user BOFU muốn làm rõ rànge chỉ phí và mục đó phù hợp.',
+            body: 'Điểm rẽ nhanh cho user BOFU muốn làm rõ range chi phí và mức độ phù hợp.',
           },
         ],
       },
       {
         type: 'cards',
         eyebrow: 'CTA support',
-        title: 'Hai kieu user admissions hub cần phục vụ cũng luc.',
+        title: 'Hai kiểu user admissions hub cần phục vụ cùng lúc.',
         intro:
-          'Nếu chỉ có một CTA, page sẽ mất một nua như cầu. Đây là ly đó block này cần tồn tại ở gan cuối trang.',
+          'Nếu chỉ có một CTA, page sẽ mất một nửa nhu cầu. Đây là lý do block này cần tồn tại ở gần cuối trang.',
         columns: 2,
         items: [
           {
-            title: 'Nhom cần thởng tin nhanh',
+            title: 'Nhóm cần thông tin nhanh',
             body:
-              'Với nhóm này, hotline và Zalo là kênh mà sát thap nhất. Ho cần có ngày số dien thởai và được hướng dẫn tiếp theo nhanh.',
+              'Với nhóm này, hotline và Zalo là kênh ma sát thấp nhất. Họ cần có ngay số điện thoại và được hướng dẫn tiếp theo nhanh.',
           },
           {
-            title: 'Nhom cần đó sau trước khi lien he',
+            title: 'Nhóm cần đọc sâu trước khi liên hệ',
             body:
-              'Với nhóm này, pillar pages và Học Phí là nói để tiếp tục đọc. Admissions hub có nhiem vu route, không cần giảm đó sau nội dung.',
+              'Với nhóm này, pillar pages và Học Phí là nơi để tiếp tục đọc. Admissions hub có nhiệm vụ route, không cần đào sâu nội dung.',
           },
         ],
       },
       {
         type: 'faq',
         eyebrow: 'FAQ tuyển sinh',
-        title: 'Nhưng câu hoi admissions hub phải xu ly rất gon.',
+        title: 'Những câu hỏi admissions hub phải xử lý rất gọn.',
         intro:
-          'Bộ FAQ này giúp giảm call lặp lại và hỗ trợ SEO cho nhưng truy van có intent hành động.',
+          'Bộ FAQ này giúp giảm call lặp lại và hỗ trợ SEO cho những truy vấn có intent hành động.',
         items: [
           {
-            question: 'Nếu chưa chac cấp học nao phù hợp thì bắt đầu từ đầu?',
+            question: 'Nếu chưa chắc cấp học nào phù hợp thì bắt đầu từ đâu?',
             answer:
-              'Bắt đầu từ trang pillar của cấp học gan nhất với độ tuổi hien tai của con, sau đó quay lại admissions hub để tiếp tục hành động.',
+              'Bắt đầu từ trang pillar của cấp học gần nhất với độ tuổi hiện tại của con, sau đó quay lại admissions hub để tiếp tục hành động.',
           },
           {
-            question: 'Nếu muốn biết chỉ phí trước khi gọi thì sao?',
+            question: 'Nếu muốn biết chi phí trước khi gọi thì sao?',
             answer:
-              'Trang Học Phí được thiết kế chính xác cho mục dich đó. Sau khi có hình dung range, phụ huynh có thể gọi admissions để được tư vấn cụ thể hơn.',
+              'Trang Học Phí được thiết kế chính xác cho mục đích đó. Sau khi có hình dung range, phụ huynh có thể gọi admissions để được tư vấn cụ thể hơn.',
           },
           {
             question: 'Admissions hub có phải trang đăng ký form không?',
             answer:
-              'Trong đợt launch đầu tiên, nó là trang điều hướng low-friction: gọi, chat Zalo, học phí và 4 pillar pages. Form chuyen sau sẽ được thêm ở wave tiếp theo.',
+              'Trong đợt launch đầu tiên, nó là trang điều hướng low-friction: gọi, chat Zalo, học phí và 4 pillar pages. Form chuyên sâu sẽ được thêm ở wave tiếp theo.',
           },
         ],
       },
@@ -2222,36 +2222,36 @@ export const pages: PageSpec[] = [
     slug: 'hoc-phi',
     title: 'Học Phí Trường Việt Anh',
     description:
-      'Money page của Trường Việt Anh, trình bày range học phí theo cấp học, logic giá trị và cách tiếp tục nhận bằng học phí chi tiết quá đội tuyển sinh.',
+      'Money page của Trường Việt Anh, trình bày range học phí theo cấp học, logic giá trị và cách tiếp tục nhận bảng học phí chi tiết qua đội tuyển sinh.',
     templateClass: 'Money Page / Fee Support',
     pageType: 'Commercial intent page',
     theme: 'tuition',
     hero: {
       eyebrow: 'Money Page',
-      title: 'Trang học phí cần minh bạch đủ để tạo niềm tin, nhưng van gì�� được đường dạy tư vấn chi tiết.',
+      title: 'Trang học phí cần minh bạch đủ để tạo niềm tin, nhưng vẫn giữ được đường dẫn tư vấn chi tiết.',
       body:
-        'Đây là money page quan trọng nhất của đợt launch đầu tiên. Nó không có mục tiêu “an” thởng tin. Nó có mục tiêu giúp phụ huynh hình dung range học phí, hiểu cấu trúc giá trị và đi tiếp sang hành động phù hợp.',
-      primaryCta: { label: 'Goi để nhận tư vấn học phí', href: contactLinks.phoneHref },
+        'Đây là money page quan trọng nhất của đợt launch đầu tiên. Nó không có mục tiêu “ăn” thông tin. Nó có mục tiêu giúp phụ huynh hình dung range học phí, hiểu cấu trúc giá trị và đi tiếp sang hành động phù hợp.',
+      primaryCta: { label: 'Gọi để nhận tư vấn học phí', href: contactLinks.phoneHref },
       secondaryCta: { label: 'Quay về tuyển sinh', href: '/tuyen-sinh' },
       badges: ['Commercial intent', 'Friction reducer', 'Sales support'],
       asideTitle: 'Money page này được xây cho 3 intent',
       asideItems: [
         'Người đang so sánh range học phí.',
-        'Người cần xác nhận có “đang tien” hay không.',
+        'Người cần xác nhận có “đáng tiền” hay không.',
         'Người muốn biết bước tiếp theo để nhận bảng phí chi tiết.',
       ],
     },
     stats: [
-      { value: '4 levels', label: 'Preview học phí theo 4 cấp học chinh' },
+      { value: '4 levels', label: 'Preview học phí theo 4 cấp học chính' },
       { value: 'Range preview', label: 'Minh bạch đủ để xóa friction đầu funnel' },
       { value: 'Value-led', label: 'Giá trị được giải thích cùng học phí' },
-      { value: 'Sales assist', label: 'Page được viết để đội admissions gọi lại để hơn' },
+      { value: 'Sales assist', label: 'Page được viết để đội admissions gọi lại dễ hơn' },
     ],
     sections: [
       {
         type: 'cards',
         eyebrow: 'Fee preview',
-        title: 'Preview học phí nên du rõ để user có mốc tham chiếu, nhưng không biến page thành bảng giá khung.',
+        title: 'Preview học phí nên đủ rõ để user có mốc tham chiếu, nhưng không biến page thành bảng giá khung.',
         intro:
           'Với đợt launch đầu tiên, cách tốt nhất là đưa ra range theo cấp học và giải thích các lớp giá trị đi kèm.',
         columns: 2,
@@ -2259,28 +2259,28 @@ export const pages: PageSpec[] = [
           {
             title: 'Mầm Non',
             body:
-              'Range học phí mầm non được trình bày như một mốc tham chiếu để phụ huynh cần doi với chương trình song ngữ, môi trường và nhiep sinh hoạt.',
+              'Range học phí mầm non được trình bày như một mốc tham chiếu để phụ huynh cân đối với chương trình song ngữ, môi trường và nhịp sinh hoạt.',
             href: '/mam-non',
             cta: 'Xem pillar Mầm Non',
           },
           {
             title: 'Tiểu Học',
             body:
-              'Tiểu học cần được nhìn trong boi canh học thuật, tiếng Anh, PDR và môi trường kỷ luật nhẹ nhàng để trẻ tự học tot hơn.',
+              'Tiểu học cần được nhìn trong bối cảnh học thuật, tiếng Anh, PDR và môi trường kỷ luật nhẹ nhàng để trẻ tự học tốt hơn.',
             href: '/tieu-hoc',
             cta: 'Xem pillar Tiểu Học',
           },
           {
             title: 'Trung Học Cơ Sở',
             body:
-              'Range THCS cần di cũng thông điệp về tăng tốc học thuật, tiếng Anh, group projects và sự chủ động của học sinh.',
+              'Range THCS cần đi cùng thông điệp về tăng tốc học thuật, tiếng Anh, group projects và sự chủ động của học sinh.',
             href: '/trung-hoc-co-so',
             cta: 'Xem pillar THCS',
           },
           {
             title: 'Trung Học Phổ Thông',
             body:
-              'THPT là level có intent thương mại mạnh hơn, vì vay page cần nói rõ giá trị đầu ra, IELTS và định hướng đại học.',
+              'THPT là level có intent thương mại mạnh hơn, vì vậy page cần nói rõ giá trị đầu ra, IELTS và định hướng đại học.',
             href: '/trung-hoc-pho-thong',
             cta: 'Xem pillar THPT',
           },
@@ -2289,75 +2289,75 @@ export const pages: PageSpec[] = [
       {
         type: 'steps',
         eyebrow: 'Fee logic',
-        title: 'Ba lớp logic cần có trên money page để tránh cảm giac “gia cao vì thương hiệu”.',
+        title: 'Ba lớp logic cần có trên money page để tránh cảm giác “giá cao vì thương hiệu”.',
         intro:
-          'Phụ huynh không chỉ hoi bao nhiều tiên. Ho đang hoi mình nhận lại được điều gì và nó có xung đang không.',
+          'Phụ huynh không chỉ hỏi bao nhiêu tiền. Họ đang hỏi mình nhận lại được điều gì và nó có xứng đáng không.',
         items: [
           {
             title: 'Học phí được gắn với trải nghiệm học tập',
             body:
-              'Nó phần anh một hệ thống giáo dục liên cấp, sự dau tự vào tiếng Anh, vào phương pháp và vào nhiep học tập có cấu trúc.',
+              'Nó phản ánh một hệ thống giáo dục liên cấp, sự đầu tư vào tiếng Anh, vào phương pháp và vào nhịp học tập có cấu trúc.',
           },
           {
-            title: 'Học phí cần di cũng minh bạch',
+            title: 'Học phí cần đi cùng minh bạch',
             body:
-              'Minh bạch không có nghia là phải đưa moi đồng phi ra homepage. Minh bạch là cho user một range để dinh hinh và một đường dạy rõ để nhận thởng tin chi tiết.',
+              'Minh bạch không có nghĩa là phải đưa mọi đồng phí ra homepage. Minh bạch là cho user một range để định hình và một đường dẫn rõ để nhận thông tin chi tiết.',
           },
           {
-            title: 'Học phí là một phần của conversation, không phải dau cuối',
+            title: 'Học phí là một phần của conversation, không phải điểm cuối',
             body:
-              'Money page có nhiem vu cat giảm friction, sau đó chuyển tiếp sang doi tư vấn để xác nhận cấp học, như cầu và bước tiếp theo.',
+              'Money page có nhiệm vụ cắt giảm friction, sau đó chuyển tiếp sang đội tư vấn để xác nhận cấp học, nhu cầu và bước tiếp theo.',
           },
         ],
       },
       {
         type: 'links',
         eyebrow: 'Commercial routes',
-        title: 'Nếu user chưa sẵn sàng gọi ngày, dạy là các đường đi tiếp theo hợp ly nhất.',
+        title: 'Nếu user chưa sẵn sàng gọi ngay, đây là các đường đi tiếp theo hợp lý nhất.',
         intro:
-          'Money page tot sẽ không để phụ huynh bi dùng lại trong một không gian chỉ có bằng gia. Nó phải mo sang triết lý, cấp học và admissions.',
+          'Money page tốt sẽ không để phụ huynh bị dừng lại trong một không gian chỉ có bảng giá. Nó phải mở sang triết lý, cấp học và admissions.',
         items: [
           {
             eyebrow: 'Admissions',
             title: 'Tuyển Sinh',
             href: '/tuyen-sinh',
-            body: 'Khi user muốn biết quy trình và cách bắt đầu, admissions hub là bước ke tiếp hợp ly nhất.',
+            body: 'Khi user muốn biết quy trình và cách bắt đầu, admissions hub là bước kế tiếp hợp lý nhất.',
           },
           {
             eyebrow: 'Brand trust',
-            title: 'Gioi Thieu',
+            title: 'Giới Thiệu',
             href: '/gioi-thieu',
-            body: 'Danh cho phụ huynh đang cần “ly đó tồn tại” và mục đó phù hợp về giá trị trước khi chốt được quyết định.',
+            body: 'Dành cho phụ huynh đang cần “lý do tồn tại” và mức độ phù hợp về giá trị trước khi chốt được quyết định.',
           },
           {
             eyebrow: 'Signature',
             title: 'Hệ Thống PDR',
             href: '/he-thong-pdr',
-            body: 'Danh cho nhóm muốn xác mình rằng giá trị học phí được doi lại bằng một hệ thống học tập rõ ràng.',
+            body: 'Dành cho nhóm muốn xác minh rằng giá trị học phí được đổi lại bằng một hệ thống học tập rõ ràng.',
           },
         ],
       },
       {
         type: 'faq',
         eyebrow: 'FAQ học phí',
-        title: 'Ba câu hoi có thể giúp money page chuyển đổi tot hơn.',
+        title: 'Ba câu hỏi có thể giúp money page chuyển đổi tốt hơn.',
         intro:
-          'FAQ ở dạy không cần dai, nhưng phải danh dùng vào friction thường gặp của phụ huynh khi so sánh.',
+          'FAQ ở đây không cần dài, nhưng phải đánh đúng vào friction thường gặp của phụ huynh khi so sánh.',
         items: [
           {
-            question: 'Việt Anh có cong khai học phí hoãn toàn không?',
+            question: 'Việt Anh có công khai học phí hoàn toàn không?',
             answer:
-              'Trang này cong khai range và logic học phí để giảm friction. Mục phi chi tiết sẽ được admissions hướng dẫn theo cấp học và như cầu của gia đình.',
+              'Trang này công khai range và logic học phí để giảm friction. Mục phí chi tiết sẽ được admissions hướng dẫn theo cấp học và nhu cầu của gia đình.',
           },
           {
-            question: 'Nen xem học phí trước hay chương trình trước?',
+            question: 'Nên xem học phí trước hay chương trình trước?',
             answer:
-              'Nếu phụ huynh đang ở BOFU, học phí là điểm vào hợp ly. Nếu vẫn đang so sánh giá trị, hay quay lại pillar page cấp học để đối chiếu ky hơn.',
+              'Nếu phụ huynh đang ở BOFU, học phí là điểm vào hợp lý. Nếu vẫn đang so sánh giá trị, hãy quay lại pillar page cấp học để đối chiếu kỹ hơn.',
           },
           {
             question: 'Sau khi xem học phí thì bước tiếp theo là gì?',
             answer:
-              'Bước tiếp theo có thể là gọi admissions, nhận tư vấn quá Zalo hoặc vào Tuyển Sinh để xem rõ quy trình và các mốc hành động.',
+              'Bước tiếp theo có thể là gọi admissions, nhận tư vấn qua Zalo hoặc vào Tuyển Sinh để xem rõ quy trình và các mốc hành động.',
           },
         ],
       },

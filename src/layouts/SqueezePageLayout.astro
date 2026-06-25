@@ -197,5 +197,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 document.querySelector('.squeeze-mobile-cta__btn')?.addEventListener('click',function(){if(window.dataLayer){window.dataLayer.push({'event':'click_mobile_cta','section':'mobile_sticky'})}});
 let maxScroll=0;window.addEventListener('scroll',function(){const p=(window.scrollY/(document.documentElement.scrollHeight-window.innerHeight))*100;if(p>maxScroll){maxScroll=p;if(maxScroll>25&&maxScroll<=50&&window.dataLayer){window.dataLayer.push({'event':'scroll_depth','depth':'25'})}else if(maxScroll>50&&maxScroll<=75&&window.dataLayer){window.dataLayer.push({'event':'scroll_depth','depth':'50'})}else if(maxScroll>75&&window.dataLayer){window.dataLayer.push({'event':'scroll_depth','depth':'75'})}}});
 </script>
-</body>
+    <script src="/js/phone-vn.js" defer></script>
+  </body>
 </html>

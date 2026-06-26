@@ -1,0 +1,293 @@
+---
+import ThaiSonLayout from '../../layouts/ThaiSonLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
+
+const pageTitle = 'Trường Mầm Non & Tiểu Học Thái Sơn — Long Hậu, Cần Giuộc | Từ bình thường trở nên phi thường';
+const pageDescription = 'Trường Mầm Non & Tiểu Học Thái Sơn tại Long Hậu, Cần Giuộc — thuộc Hệ thống giáo dục Việt Anh từ 2011. Học bổng 50% còn 1.999.500đ/tháng. Đặt lịch tham quan trường hôm nay.';
+const pageCanonical = 'https://truongthaison.com/';
+const ogImage = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg';
+
+// Ảnh PLACEHOLDER — chờ ảnh thật của cơ sở Thái Sơn để thay vào
+const heroImg = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg';
+const mnImg = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/mam-non-banner-chinh-1.jpg';
+const thImg = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Mầm Non & Tiểu Học Thái Sơn',
+    url: pageCanonical,
+    description: pageDescription,
+    slogan: 'Từ bình thường trở nên phi thường',
+    telephone: '+84902095956',
+    email: 'hoc@truongvietanh.com',
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: 'Xã Long Hậu, huyện Cần Giuộc',
+      addressLocality: 'Tỉnh Tây Ninh',
+      addressCountry: 'VN',
+    },
+    parentOrganization: {
+      '@type': 'EducationalOrganization',
+      name: 'Hệ thống Trường Việt Anh — Major Education',
+      url: 'https://truongvietanh.com',
+    },
+  },
+];
+---
+
+<ThaiSonLayout
+  title={pageTitle}
+  description={pageDescription}
+  canonical={pageCanonical}
+  ogImage={ogImage}
+  structuredData={structuredData}
+  activeNav="home"
+>
+  <!-- ============== HERO ============== -->
+  <section class="th-hero">
+    <div class="th-hero__inner">
+      <div class="th-hero__copy">
+        <span class="th-eyebrow">📍 Long Hậu, Cần Giuộc · Hệ thống Việt Anh từ 2011</span>
+        <h1 class="th-hero__title">Từ một đứa trẻ <span>bình thường</span><br />trở nên <span class="th-hl">phi thường</span></h1>
+        <p class="th-hero__sub">Trường Mầm Non &amp; Tiểu Học Thái Sơn — môi trường được thiết kế đúng để mỗi đứa trẻ được chăm sóc, theo dõi và phát triển toàn diện mỗi ngày.</p>
+        <ul class="th-hero__bullets">
+          <li>🌍 Tiếng Anh bản ngữ — dùng được, không chỉ thi điểm</li>
+          <li>💡 Tư duy &amp; kỹ năng thế kỷ 21</li>
+          <li>💛 Học phí mọi gia đình tiếp cận được</li>
+        </ul>
+        <div class="th-hero__cta">
+          <a href="#dat-lich" class="th-btn th-btn--primary">🎒 Đặt lịch tham quan trường</a>
+          <a href="#th-levels" class="th-btn th-btn--ghost">Khám phá chương trình</a>
+        </div>
+      </div>
+      <div class="th-hero__media">
+        <img src={heroImg} alt="Học sinh Trường Thái Sơn" width="640" height="480" fetchpriority="high" />
+        <div class="th-hero__badge">
+          <strong>Học bổng 50%</strong>
+          <span>còn 1.999.500đ/tháng</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== TRUST STRIP ============== -->
+  <section class="th-trust">
+    <div class="th-trust__inner">
+      <div class="th-trust__item"><div class="th-trust__num">15 năm</div><p>Hệ thống Việt Anh, từ 2011</p></div>
+      <div class="th-trust__item"><div class="th-trust__num">Top 15</div><p>Toàn cầu — Leader In Me 2023</p></div>
+      <div class="th-trust__item"><div class="th-trust__num">≤ 24</div><p>Học sinh mỗi lớp — sĩ số nhỏ</p></div>
+      <div class="th-trust__item"><div class="th-trust__num">2 cấp</div><p>Mầm non &amp; Tiểu học liền mạch</p></div>
+    </div>
+  </section>
+
+  <!-- ============== INTRO ============== -->
+  <section class="th-intro">
+    <div class="th-wrap th-wrap--narrow">
+      <span class="th-kicker">Vì sao là Thái Sơn</span>
+      <h2 class="th-h2">Giáo dục tốt không phải đặc quyền của nhà giàu</h2>
+      <p class="th-lead">Thái Sơn kế thừa trọn vẹn triết lý và chương trình của Hệ thống Việt Anh — nhưng tối ưu mô hình để nhiều gia đình ở Long Hậu, Cần Giuộc có thể tiếp cận một nền giáo dục thực chất. <strong>Chúng tôi không giảm chất lượng — chúng tôi mở rộng cơ hội.</strong></p>
+      <div class="th-pillars">
+        <div class="th-pillar"><span>🧠</span><h3>Tư duy phát triển</h3><p>Con tự tin học, hiểu bài, không phụ thuộc học thêm.</p></div>
+        <div class="th-pillar"><span>🌍</span><h3>Tiếng Anh dùng được</h3><p>Giáo viên bản ngữ, lộ trình Starters → Movers → Flyers.</p></div>
+        <div class="th-pillar"><span>💪</span><h3>Sức khỏe nền tảng</h3><p>Dinh dưỡng &amp; thể chất được đầu tư như học thuật.</p></div>
+        <div class="th-pillar"><span>❤️</span><h3>Phẩm chất &amp; lãnh đạo</h3><p>5 giá trị &amp; 7 thói quen lãnh đạo (Leader In Me).</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== 2 LEVELS ============== -->
+  <section class="th-levels" id="th-levels">
+    <div class="th-wrap">
+      <span class="th-kicker th-kicker--center">Chọn cấp học cho con</span>
+      <h2 class="th-h2 th-h2--center">Hai cấp học, một hành trình liền mạch</h2>
+      <div class="th-levels__grid">
+        <article class="th-level-card">
+          <div class="th-level-card__media"><img src={mnImg} alt="Khối Mầm non Thái Sơn" width="560" height="360" loading="lazy" /><span class="th-level-card__tag">18 tháng – 5 tuổi</span></div>
+          <div class="th-level-card__body">
+            <h3>Mầm Non Thái Sơn</h3>
+            <p>Môi trường an toàn, yêu thương; 9 lĩnh vực phát triển, Multi-age, Plan–Do–Review và bữa ăn lành mạnh.</p>
+            <a href="/truong-mam-non-thai-son" class="th-link">Xem chi tiết Mầm non →</a>
+          </div>
+        </article>
+        <article class="th-level-card">
+          <div class="th-level-card__media"><img src={thImg} alt="Khối Tiểu học Thái Sơn" width="560" height="360" loading="lazy" /><span class="th-level-card__tag">Lớp 1 – Lớp 5</span></div>
+          <div class="th-level-card__body">
+            <h3>Tiểu Học Thái Sơn</h3>
+            <p>Chương trình Bộ GD-ĐT + Tiếng Anh bản ngữ, Leader In Me, hệ thống theo dõi tiến bộ minh bạch mỗi tuần.</p>
+            <a href="/truong-tieu-hoc-thai-son" class="th-link">Xem chi tiết Tiểu học →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== SCHOLARSHIP BANNER ============== -->
+  <section class="th-scholar">
+    <div class="th-wrap th-wrap--narrow th-scholar__inner">
+      <h2 class="th-h2 th-h2--light">Học bổng Khai trường — Giảm 50% học phí</h2>
+      <p class="th-scholar__line">Học phí niêm yết <s>3.999.000đ</s> → chỉ còn <strong>1.999.500đ/tháng</strong></p>
+      <p class="th-scholar__note">100 suất đầu tiên · giữ nguyên ưu đãi đến hết cấp học · tặng kèm suất Toán Tư Duy</p>
+      <a href="#dat-lich" class="th-btn th-btn--primary">Nhận suất học bổng — Đặt lịch tham quan</a>
+    </div>
+  </section>
+
+  <!-- ============== FOUNDER ============== -->
+  <section class="th-founder">
+    <div class="th-wrap th-wrap--narrow">
+      <blockquote class="th-founder__quote">
+        “Tôi tin rằng quyền được học tốt không phải đặc quyền của nhà giàu. Và một đứa trẻ bình thường, trong môi trường được thiết kế đúng, hoàn toàn có thể trở nên phi thường.”
+      </blockquote>
+      <div class="th-founder__by">
+        <strong>Nguyễn Mạnh Dương</strong>
+        <span>Nhà sáng lập Hệ thống giáo dục Việt Anh – Thái Sơn</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============== CTA FORM ============== -->
+  <section class="th-cta" id="dat-lich">
+    <div class="th-wrap th-wrap--narrow th-cta__inner">
+      <h2 class="th-h2 th-h2--light">Bước đầu để chọn đúng môi trường cho con</h2>
+      <p class="th-cta__sub">Gặp trực tiếp ban giám hiệu · xem lớp học thật · trải nghiệm môi trường thật.<br /><strong>Không áp lực. Không đặt cọc.</strong></p>
+      <div class="th-cta__form">
+        <LeadFormTwoStepEmailFirst
+          formId="truong-thai-son-home"
+          funnelCode="truong-thai-son"
+          schoolLevel="lien-cap"
+          submitText="ĐẶT LỊCH THAM QUAN"
+          title="Để lại thông tin — nhà trường liên hệ trong 24h"
+          description="Xác nhận lịch tham quan và suất học bổng cho con."
+          socialProof="Hơn 100 phụ huynh đã đăng ký tham quan"
+          successMessage="Cảm ơn! Nhà trường sẽ liên hệ trong 24h để hẹn lịch tham quan và xác nhận suất học bổng."
+        />
+      </div>
+    </div>
+  </section>
+</ThaiSonLayout>
+
+<style>
+  .th-wrap { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+  .th-wrap--narrow { max-width: 820px; }
+
+  .th-eyebrow {
+    display: inline-block; background: rgba(249,221,14,0.16); border: 1px solid rgba(249,221,14,0.5);
+    color: #f9dd0e; font-weight: 700; font-size: 0.85rem; padding: 0.4rem 0.9rem; border-radius: 999px;
+  }
+  .th-kicker {
+    display: inline-block; color: #26275D; background: #fff6c2; font-weight: 800;
+    font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 0.35rem 0.85rem; border-radius: 999px; margin-bottom: 0.85rem;
+  }
+  .th-kicker--center { display: block; width: max-content; margin-left: auto; margin-right: auto; }
+  .th-h2 { font-size: clamp(1.5rem, 3.2vw, 2.1rem); font-weight: 800; color: #26275D; line-height: 1.25; margin: 0 0 1rem; }
+  .th-h2--center { text-align: center; }
+  .th-h2--light { color: #fff; }
+  .th-lead { font-size: 1.1rem; color: #334155; line-height: 1.75; margin: 0 0 2rem; }
+
+  .th-btn {
+    display: inline-block; text-decoration: none; font-weight: 800; border-radius: 999px;
+    padding: 0.9rem 1.6rem; font-size: 1rem; transition: transform 0.15s, box-shadow 0.15s;
+  }
+  .th-btn--primary { background: #f9dd0e; color: #26275D; box-shadow: 0 6px 20px rgba(249,221,14,0.4); }
+  .th-btn--primary:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(249,221,14,0.5); }
+  .th-btn--ghost { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,0.5); }
+  .th-btn--ghost:hover { border-color: #fff; }
+
+  /* ===== HERO ===== */
+  .th-hero { background: linear-gradient(135deg, #26275D 0%, #18193a 100%); color: #fff; overflow: hidden; }
+  .th-hero__inner {
+    max-width: 1180px; margin: 0 auto; padding: 3.5rem 1.5rem;
+    display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; align-items: center;
+  }
+  .th-hero__title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.12; margin: 1rem 0 1.1rem; color: #fff; }
+  .th-hero__title span { white-space: nowrap; }
+  .th-hero__title .th-hl { color: #f9dd0e; }
+  .th-hero__sub { font-size: 1.1rem; color: rgba(255,255,255,0.9); line-height: 1.7; margin: 0 0 1.25rem; }
+  .th-hero__bullets { list-style: none; padding: 0; margin: 0 0 1.75rem; display: grid; gap: 0.55rem; }
+  .th-hero__bullets li { font-weight: 600; color: rgba(255,255,255,0.95); }
+  .th-hero__cta { display: flex; gap: 0.85rem; flex-wrap: wrap; }
+  .th-hero__media { position: relative; }
+  .th-hero__media img { width: 100%; height: auto; border-radius: 20px; display: block; box-shadow: 0 24px 60px rgba(0,0,0,0.35); object-fit: cover; }
+  .th-hero__badge {
+    position: absolute; bottom: -18px; left: -18px; background: #f9dd0e; color: #26275D;
+    border-radius: 14px; padding: 0.85rem 1.15rem; box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+    display: flex; flex-direction: column; line-height: 1.15;
+  }
+  .th-hero__badge strong { font-size: 1.3rem; font-family: 'Montserrat', sans-serif; }
+  .th-hero__badge span { font-size: 0.85rem; font-weight: 600; }
+
+  /* ===== TRUST ===== */
+  .th-trust { background: #fff6c2; }
+  .th-trust__inner {
+    max-width: 1100px; margin: 0 auto; padding: 1.75rem 1.5rem;
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; text-align: center;
+  }
+  .th-trust__num { font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.6rem; color: #26275D; line-height: 1.1; }
+  .th-trust__item p { margin: 0.25rem 0 0; font-size: 0.9rem; color: #475569; }
+
+  /* ===== INTRO ===== */
+  .th-intro { padding: 4rem 0; background: #fff; }
+  .th-pillars { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.1rem; margin-top: 0.5rem; }
+  .th-pillar { background: #f0f4ff; border-radius: 14px; padding: 1.35rem; border-top: 3px solid #f9dd0e; }
+  .th-pillar span { font-size: 1.8rem; }
+  .th-pillar h3 { font-size: 1.05rem; color: #26275D; margin: 0.5rem 0 0.4rem; }
+  .th-pillar p { margin: 0; color: #475569; font-size: 0.95rem; line-height: 1.6; }
+
+  /* ===== LEVELS ===== */
+  .th-levels { padding: 4rem 0; background: #f0f4ff; }
+  .th-levels__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.75rem; margin-top: 1.5rem; }
+  .th-level-card { background: #fff; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 30px rgba(38,39,93,0.08); transition: transform 0.2s, box-shadow 0.2s; }
+  .th-level-card:hover { transform: translateY(-4px); box-shadow: 0 18px 44px rgba(38,39,93,0.14); }
+  .th-level-card__media { position: relative; }
+  .th-level-card__media img { width: 100%; height: 220px; object-fit: cover; display: block; }
+  .th-level-card__tag { position: absolute; top: 12px; left: 12px; background: #26275D; color: #f9dd0e; font-weight: 700; font-size: 0.8rem; padding: 0.3rem 0.75rem; border-radius: 999px; }
+  .th-level-card__body { padding: 1.5rem; }
+  .th-level-card__body h3 { font-size: 1.3rem; color: #26275D; margin: 0 0 0.5rem; }
+  .th-level-card__body p { color: #475569; margin: 0 0 1rem; line-height: 1.65; }
+  .th-link { color: #26275D; font-weight: 800; text-decoration: none; border-bottom: 2px solid #f9dd0e; padding-bottom: 2px; }
+  .th-link:hover { color: #14153a; }
+
+  /* ===== SCHOLARSHIP ===== */
+  .th-scholar { background: linear-gradient(135deg, #26275D 0%, #18193a 100%); padding: 3.5rem 0; }
+  .th-scholar__inner { text-align: center; }
+  .th-scholar__line { font-size: 1.25rem; color: rgba(255,255,255,0.92); margin: 0 0 0.5rem; }
+  .th-scholar__line s { color: rgba(255,255,255,0.5); }
+  .th-scholar__line strong { color: #f9dd0e; font-size: 1.5rem; font-family: 'Montserrat', sans-serif; }
+  .th-scholar__note { color: rgba(255,255,255,0.75); font-size: 0.95rem; margin: 0 0 1.75rem; }
+
+  /* ===== FOUNDER ===== */
+  .th-founder { padding: 4rem 0; background: #fff; text-align: center; }
+  .th-founder__quote { font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 2.6vw, 1.6rem); font-weight: 600; font-style: italic; color: #26275D; line-height: 1.55; margin: 0 0 1.5rem; border: 0; }
+  .th-founder__by strong { display: block; color: #26275D; font-size: 1.1rem; }
+  .th-founder__by span { color: #64748b; font-size: 0.95rem; }
+
+  /* ===== CTA ===== */
+  .th-cta { background: linear-gradient(180deg, #18193a 0%, #26275D 100%); padding: 4rem 0; }
+  .th-cta__inner { text-align: center; }
+  .th-cta__sub { color: rgba(255,255,255,0.88); line-height: 1.7; margin: 0 0 1.75rem; }
+  .th-cta__form { background: #fff; border-radius: 18px; padding: 1.75rem 1.5rem; text-align: left; max-width: 560px; margin: 0 auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+  /* Form vốn thiết kế cho nền navy → ép chữ sang tối để không bị chìm trên thẻ trắng */
+  .th-cta__form :global(.form-step-title) { color: #26275D; }
+  .th-cta__form :global(.form-step-description) { color: #475569; }
+  .th-cta__form :global(.form-social-proof) { color: #26275D; }
+  .th-cta__form :global(.form-progress__label) { color: rgba(38,39,93,0.55); }
+  .th-cta__form :global(.form-progress__step--active .form-progress__label),
+  .th-cta__form :global(.form-progress__step--done .form-progress__label) { color: #26275D; }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 900px) {
+    .th-hero__inner { grid-template-columns: 1fr; gap: 2rem; }
+    .th-hero__media { order: -1; }
+    .th-trust__inner { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
+    .th-pillars { grid-template-columns: repeat(2, 1fr); }
+    .th-levels__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .th-hero__inner { padding: 2.5rem 1.25rem; }
+    .th-hero__cta { flex-direction: column; }
+    .th-hero__cta .th-btn { text-align: center; }
+    .th-pillars { grid-template-columns: 1fr; }
+  }
+</style>

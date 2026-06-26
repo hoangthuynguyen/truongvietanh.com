@@ -1,0 +1,283 @@
+---
+// ThaiSonLayout — khung giao diện ĐỘC LẬP cho truongthaison.com
+// (nhận diện riêng: header lockup navy + footer lockup vàng trên nền navy)
+type Props = {
+  title?: string;
+  description?: string;
+  canonical?: string;
+  ogImage?: string;
+  noindex?: boolean;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+  activeNav?: string;
+};
+
+const {
+  title = 'Trường Mầm Non & Tiểu Học Thái Sơn',
+  description = 'Trường Mầm Non & Tiểu Học Thái Sơn — Long Hậu, Cần Giuộc. Từ bình thường trở nên phi thường. Hệ thống giáo dục Việt Anh từ 2011.',
+  canonical,
+  ogImage = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg',
+  noindex = false,
+  structuredData,
+  activeNav,
+} = Astro.props;
+
+const robots = noindex ? 'noindex, nofollow' : 'index, follow';
+const schemaPayload = structuredData
+  ? JSON.stringify(Array.isArray(structuredData) ? structuredData : [structuredData])
+  : null;
+
+// NOTE: Giới thiệu / Học phí / Liên hệ sẽ thêm lại khi 3 trang đó được dựng.
+// Tạm thời chỉ giữ các link đã hoạt động để live không có link gãy.
+const navItems = [
+  { label: 'Trang chủ', href: '/truong-thai-son', key: 'home' },
+  { label: 'Mầm non', href: '/truong-mam-non-thai-son', key: 'mn' },
+  { label: 'Tiểu học', href: '/truong-tieu-hoc-thai-son', key: 'th' },
+  { label: 'Đặt lịch tham quan', href: '/truong-thai-son#dat-lich', key: 'book' },
+];
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#26275D" />
+    <link rel="icon" type="image/png" href="/images/thai-son/crest-navy.png" />
+    <link rel="apple-touch-icon" href="/images/thai-son/crest-navy.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://media.truongvietanh.com" />
+    <link rel="preconnect" href="https://media.truongvietanh.com" crossorigin />
+    <script is:inline>
+      (function(){var l=document.createElement('link');l.rel='stylesheet';l.href='https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap&subset=vietnamese';document.head.appendChild(l)})();
+    </script>
+    <noscript>
+      <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@600;700;800;900&display=swap&subset=vietnamese" />
+    </noscript>
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content={robots} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Trường Thái Sơn" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    {ogImage && <meta property="og:image" content={ogImage} />}
+    <meta name="twitter:card" content="summary_large_image" />
+    {schemaPayload && <script is:inline type="application/ld+json" set:html={schemaPayload} />}
+  </head>
+  <body class="ts-site">
+    <a href="#main-content" class="ts-skip">Bỏ qua đến nội dung chính</a>
+
+    <!-- ============ HEADER ============ -->
+    <header class="ts-header" id="tsHeader">
+      <div class="ts-header__inner">
+        <a href="/truong-thai-son" class="ts-header__logo" aria-label="Trang chủ Trường Thái Sơn">
+          <img src="/images/thai-son/lockup-navy.png" alt="Trường Mầm Non & Tiểu Học Thái Sơn" width="260" height="90" />
+        </a>
+
+        <nav class="ts-nav" id="tsNav" aria-label="Điều hướng chính">
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={['ts-nav__link', { 'ts-nav__link--active': activeNav === item.key }]}
+            >{item.label}</a>
+          ))}
+        </nav>
+
+        <a href="/truong-thai-son#dat-lich" class="ts-header__cta">Đặt lịch tham quan</a>
+
+        <button class="ts-burger" id="tsBurger" aria-label="Mở menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <footer class="ts-footer">
+      <div class="ts-footer__inner">
+        <div class="ts-footer__brand">
+          <img src="/images/thai-son/lockup-yellow.png" alt="Trường Mầm Non & Tiểu Học Thái Sơn" width="280" height="96" />
+          <p class="ts-footer__slogan">“Từ bình thường trở nên phi thường.”</p>
+          <p class="ts-footer__op">Vận hành bởi Hệ thống Trường Việt Anh — Major Education · Thành lập từ 2011</p>
+        </div>
+
+        <div class="ts-footer__col">
+          <h4>Khám phá</h4>
+          <a href="/truong-mam-non-thai-son">Khối Mầm non</a>
+          <a href="/truong-tieu-hoc-thai-son">Khối Tiểu học</a>
+          <a href="/truong-thai-son#dat-lich">Đặt lịch tham quan</a>
+        </div>
+
+        <div class="ts-footer__col">
+          <h4>Liên hệ</h4>
+          <p>📍 Xã Long Hậu, huyện Cần Giuộc, tỉnh Tây Ninh</p>
+          <p>📞 <a href="tel:+84902095956">0902 095 956</a> (Tiểu học)</p>
+          <p>📞 <a href="tel:+84916961409">0916 961 409</a> (Mầm non)</p>
+          <p>✉️ <a href="mailto:hoc@truongvietanh.com">hoc@truongvietanh.com</a></p>
+          <div class="ts-footer__social">
+            <a href="https://zalo.me/84902095956" target="_blank" rel="noopener">Zalo</a>
+            <a href="https://www.facebook.com/truongvietanhhcm" target="_blank" rel="noopener">Facebook</a>
+            <a href="https://m.me/truongvietanhhcm" target="_blank" rel="noopener">Messenger</a>
+          </div>
+        </div>
+      </div>
+      <div class="ts-footer__bar">
+        <p>© 2026 Trường Mầm Non &amp; Tiểu Học Thái Sơn. Mọi quyền được bảo lưu.</p>
+      </div>
+    </footer>
+
+    <!-- Sticky CTA mobile -->
+    <div class="ts-mobile-cta">
+      <a href="tel:+84902095956" class="ts-mobile-cta__call">📞 Gọi ngay</a>
+      <a href="/truong-thai-son#dat-lich" class="ts-mobile-cta__book">Đặt lịch tham quan</a>
+    </div>
+
+    <script is:inline>
+      (function(){
+        var burger = document.getElementById('tsBurger');
+        var nav = document.getElementById('tsNav');
+        if(burger && nav){
+          burger.addEventListener('click', function(){
+            var open = nav.classList.toggle('ts-nav--open');
+            burger.classList.toggle('ts-burger--open', open);
+            burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+          });
+        }
+        var header = document.getElementById('tsHeader');
+        if(header){
+          window.addEventListener('scroll', function(){
+            header.classList.toggle('ts-header--scrolled', window.scrollY > 20);
+          }, {passive:true});
+        }
+      })();
+    </script>
+
+    <style is:global>
+      .ts-site {
+        margin: 0;
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+        color: #1a1a2e;
+        line-height: 1.7;
+        background: #fff;
+        -webkit-font-smoothing: antialiased;
+      }
+      .ts-site h1, .ts-site h2, .ts-site h3, .ts-site h4 { font-family: 'Montserrat', sans-serif; }
+      .ts-site * { box-sizing: border-box; }
+      .ts-site a { color: inherit; }
+      .ts-skip {
+        position: absolute; top: -100px; left: 50%; transform: translateX(-50%);
+        background: #26275D; color: #fff; padding: 0.75rem 1.5rem; border-radius: 0 0 8px 8px;
+        font-weight: 700; z-index: 99999; text-decoration: none; transition: top 0.2s;
+      }
+      .ts-skip:focus { top: 0; }
+
+      /* ============ HEADER ============ */
+      .ts-header {
+        position: sticky; top: 0; z-index: 100;
+        background: #fff;
+        border-bottom: 1px solid #eef1f8;
+        transition: box-shadow 0.25s;
+      }
+      .ts-header--scrolled { box-shadow: 0 4px 20px rgba(38,39,93,0.10); }
+      .ts-header__inner {
+        max-width: 1180px; margin: 0 auto;
+        padding: 0.6rem 1.5rem;
+        display: flex; align-items: center; gap: 1.25rem;
+      }
+      .ts-header__logo { display: flex; align-items: center; flex-shrink: 0; }
+      .ts-header__logo img { height: 56px; width: auto; display: block; }
+      .ts-nav { display: flex; align-items: center; gap: 0.35rem; margin-left: auto; }
+      .ts-nav__link {
+        text-decoration: none; color: #26275D; font-weight: 600; font-size: 0.95rem;
+        padding: 0.5rem 0.7rem; border-radius: 8px; transition: background 0.15s, color 0.15s;
+        white-space: nowrap;
+      }
+      .ts-nav__link:hover { background: #f0f4ff; }
+      .ts-nav__link--active { color: #26275D; background: #fff6c2; }
+      .ts-header__cta {
+        flex-shrink: 0;
+        background: #f9dd0e; color: #26275D; font-weight: 800;
+        text-decoration: none; padding: 0.65rem 1.15rem; border-radius: 999px;
+        font-size: 0.92rem; white-space: nowrap;
+        box-shadow: 0 4px 14px rgba(249,221,14,0.4);
+        transition: transform 0.15s;
+      }
+      .ts-header__cta:hover { transform: translateY(-2px); }
+      .ts-burger {
+        display: none; flex-direction: column; gap: 5px; background: none; border: 0;
+        cursor: pointer; padding: 6px; margin-left: auto;
+      }
+      .ts-burger span { width: 26px; height: 3px; background: #26275D; border-radius: 3px; transition: 0.25s; }
+      .ts-burger--open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+      .ts-burger--open span:nth-child(2) { opacity: 0; }
+      .ts-burger--open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+      @media (max-width: 980px) {
+        .ts-header__cta { display: none; }
+        .ts-burger { display: flex; }
+        .ts-nav {
+          position: absolute; top: 100%; left: 0; right: 0;
+          flex-direction: column; align-items: stretch; gap: 0;
+          background: #fff; border-bottom: 1px solid #eef1f8;
+          box-shadow: 0 12px 24px rgba(38,39,93,0.12);
+          padding: 0.5rem 1rem 1rem;
+          max-height: 0; overflow: hidden; transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+        .ts-nav--open { max-height: 460px; }
+        .ts-nav__link { padding: 0.85rem 0.5rem; border-bottom: 1px solid #f4f6fc; }
+      }
+
+      /* ============ FOOTER ============ */
+      .ts-footer { background: #18193a; color: rgba(255,255,255,0.85); }
+      .ts-footer__inner {
+        max-width: 1180px; margin: 0 auto; padding: 3rem 1.5rem 2rem;
+        display: grid; grid-template-columns: 1.6fr 1fr 1.4fr; gap: 2rem;
+      }
+      .ts-footer__brand img { height: 64px; width: auto; margin-bottom: 0.85rem; }
+      .ts-footer__slogan { color: #f9dd0e; font-weight: 700; font-style: italic; margin: 0 0 0.5rem; font-family: 'Montserrat', sans-serif; }
+      .ts-footer__op { font-size: 0.88rem; color: rgba(255,255,255,0.6); margin: 0; }
+      .ts-footer__col h4 { color: #f9dd0e; font-size: 1rem; margin: 0 0 0.85rem; }
+      .ts-footer__col a, .ts-footer__col p { display: block; color: rgba(255,255,255,0.82); text-decoration: none; margin: 0 0 0.55rem; font-size: 0.92rem; }
+      .ts-footer__col a:hover { color: #fff; text-decoration: underline; }
+      .ts-footer__social { display: flex; gap: 0.6rem; margin-top: 0.75rem; }
+      .ts-footer__social a {
+        display: inline-block; margin: 0; padding: 0.4rem 0.85rem;
+        border: 1px solid rgba(249,221,14,0.4); border-radius: 999px;
+        font-size: 0.85rem; color: #f9dd0e;
+      }
+      .ts-footer__social a:hover { background: rgba(249,221,14,0.12); text-decoration: none; }
+      .ts-footer__bar {
+        border-top: 1px solid rgba(255,255,255,0.08);
+        text-align: center; padding: 1.1rem 1.5rem;
+      }
+      .ts-footer__bar p { margin: 0; font-size: 0.85rem; color: rgba(255,255,255,0.55); }
+
+      @media (max-width: 820px) {
+        .ts-footer__inner { grid-template-columns: 1fr; gap: 1.75rem; }
+      }
+
+      /* ============ MOBILE STICKY CTA ============ */
+      .ts-mobile-cta { display: none; }
+      @media (max-width: 820px) {
+        .ts-mobile-cta {
+          display: flex; gap: 0.6rem; position: fixed; bottom: 0; left: 0; right: 0; z-index: 999;
+          background: #fff; border-top: 1px solid #e2e8f0; padding: 0.6rem 1rem;
+          box-shadow: 0 -4px 20px rgba(0,0,0,0.1);
+        }
+        .ts-mobile-cta a {
+          flex: 1; text-align: center; text-decoration: none; font-weight: 700;
+          padding: 0.75rem 1rem; border-radius: 10px; font-size: 0.95rem;
+        }
+        .ts-mobile-cta__call { background: #f1f5f9; color: #26275D; flex: 0 0 38%; }
+        .ts-mobile-cta__book { background: #f9dd0e; color: #26275D; }
+        .ts-site { padding-bottom: 4.5rem; }
+      }
+    </style>
+  </body>
+</html>

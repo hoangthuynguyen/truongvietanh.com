@@ -64,7 +64,17 @@
     }
   }
 
+  function injectFormCss() {
+    if (document.getElementById('vn-forms-square')) return;
+    var l = document.createElement('link');
+    l.id = 'vn-forms-square';
+    l.rel = 'stylesheet';
+    l.href = '/css/forms-square.css';
+    (document.head || document.documentElement).appendChild(l);
+  }
+
   function init() {
+    injectFormCss();
     enhanceAll();
     // form 2 bước hé lộ step sau → định vị lại khi click / focus / resize
     document.addEventListener('focusin', function (e) {

@@ -440,12 +440,17 @@ const structuredData = [
 
   /* ============ HERO ============ */
   .mn-hero {
-    background: linear-gradient(135deg, var(--mn-navy) 0%, var(--mn-navy-dark) 100%);
+    position: relative;
+    background: var(--mn-navy-dark) url('/images/thai-son/mn-hero.webp') center / cover no-repeat;
     color: #fff;
-    padding: 3rem 1.5rem;
+    padding: 3.5rem 1.5rem;
     text-align: center;
   }
-  .mn-hero__inner { max-width: 900px; margin: 0 auto; }
+  .mn-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(38,39,93,0.80) 0%, rgba(24,25,58,0.9) 100%);
+  }
+  .mn-hero__inner { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; }
   .mn-h1 {
     font-size: clamp(1.6rem, 4vw, 2.6rem);
     font-weight: 800;

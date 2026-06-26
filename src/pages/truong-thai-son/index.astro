@@ -7,10 +7,10 @@ const pageDescription = 'Trường Mầm Non & Tiểu Học Thái Sơn tại Lon
 const pageCanonical = 'https://truongthaison.com/';
 const ogImage = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg';
 
-// Ảnh PLACEHOLDER — chờ ảnh thật của cơ sở Thái Sơn để thay vào
-const heroImg = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg';
-const mnImg = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/mam-non-banner-chinh-1.jpg';
-const thImg = 'https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/tieu-hoc-banner-chinh-1.jpg';
+// Ảnh block hero nội bộ (webp nén) — không phụ thuộc CDN remote.
+// TODO: thay bằng ảnh thật cơ sở Thái Sơn khi có.
+const mnImg = '/images/thai-son/mn-card.webp';
+const thImg = '/images/thai-son/th-card.webp';
 
 const structuredData = [
   {
@@ -58,15 +58,23 @@ const structuredData = [
           <li>💛 Học phí mọi gia đình tiếp cận được</li>
         </ul>
         <div class="th-hero__cta">
-          <a href="#dat-lich" class="th-btn th-btn--primary">🎒 Đặt lịch tham quan trường</a>
-          <a href="#th-levels" class="th-btn th-btn--ghost">Khám phá chương trình</a>
+          <a href="#th-levels" class="th-btn th-btn--ghost">Khám phá chương trình ↓</a>
         </div>
       </div>
-      <div class="th-hero__media">
-        <img src={heroImg} alt="Học sinh Trường Thái Sơn" width="640" height="480" fetchpriority="high" />
-        <div class="th-hero__badge">
-          <strong>Học bổng 50%</strong>
-          <span>còn 1.999.500đ/tháng</span>
+
+      <div class="th-hero__form-wrap" id="dat-lich">
+        <div class="th-hero__badge-top">🎁 Học bổng 50% — chỉ còn <strong>1.999.500đ/tháng</strong></div>
+        <div class="th-hero__form th-form-light">
+          <LeadFormTwoStepEmailFirst
+            formId="truong-thai-son-hero"
+            funnelCode="truong-thai-son"
+            schoolLevel="lien-cap"
+            submitText="ĐẶT LỊCH THAM QUAN"
+            title="Đăng ký tham quan trường"
+            description="Để lại email — nhà trường liên hệ trong 24h để xác nhận lịch & suất học bổng."
+            socialProof="Hơn 100 phụ huynh đã đăng ký tham quan"
+            successMessage="Cảm ơn! Nhà trường sẽ liên hệ trong 24h để hẹn lịch tham quan và xác nhận suất học bổng."
+          />
         </div>
       </div>
     </div>
@@ -147,7 +155,7 @@ const structuredData = [
   </section>
 
   <!-- ============== CTA FORM ============== -->
-  <section class="th-cta" id="dat-lich">
+  <section class="th-cta" id="dang-ky">
     <div class="th-wrap th-wrap--narrow th-cta__inner">
       <h2 class="th-h2 th-h2--light">Bước đầu để chọn đúng môi trường cho con</h2>
       <p class="th-cta__sub">Gặp trực tiếp ban giám hiệu · xem lớp học thật · trải nghiệm môi trường thật.<br /><strong>Không áp lực. Không đặt cọc.</strong></p>
@@ -196,10 +204,19 @@ const structuredData = [
   .th-btn--ghost:hover { border-color: #fff; }
 
   /* ===== HERO ===== */
-  .th-hero { background: linear-gradient(135deg, #26275D 0%, #18193a 100%); color: #fff; overflow: hidden; }
+  .th-hero {
+    position: relative;
+    background: #14152e url('/images/thai-son/hero-bg.webp') center / cover no-repeat;
+    color: #fff; overflow: hidden;
+  }
+  .th-hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(100deg, rgba(20,21,46,0.97) 0%, rgba(20,21,46,0.9) 30%, rgba(20,21,46,0.55) 58%, rgba(20,21,46,0.74) 100%);
+  }
   .th-hero__inner {
-    max-width: 1180px; margin: 0 auto; padding: 4.5rem 1.5rem;
-    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 2.75rem; align-items: stretch;
+    position: relative; z-index: 1;
+    max-width: 1180px; margin: 0 auto; padding: 4rem 1.5rem;
+    display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 2.75rem; align-items: center;
   }
   .th-hero__title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 900; line-height: 1.12; margin: 1rem 0 1.1rem; color: #fff; }
   .th-hero__title span { white-space: nowrap; }
@@ -208,15 +225,27 @@ const structuredData = [
   .th-hero__bullets { list-style: none; padding: 0; margin: 0 0 1.75rem; display: grid; gap: 0.55rem; }
   .th-hero__bullets li { font-weight: 600; color: rgba(255,255,255,0.95); }
   .th-hero__cta { display: flex; gap: 0.85rem; flex-wrap: wrap; }
-  .th-hero__media { position: relative; display: flex; min-height: 480px; }
-  .th-hero__media img { width: 100%; height: 100%; min-height: 480px; border-radius: 20px; display: block; box-shadow: 0 24px 60px rgba(0,0,0,0.35); object-fit: cover; }
-  .th-hero__badge {
-    position: absolute; bottom: -18px; left: -18px; background: #f9dd0e; color: #26275D;
-    border-radius: 14px; padding: 0.85rem 1.15rem; box-shadow: 0 12px 30px rgba(0,0,0,0.25);
-    display: flex; flex-direction: column; line-height: 1.15;
+
+  /* Hero form card */
+  .th-hero__form-wrap { display: flex; flex-direction: column; }
+  .th-hero__badge-top {
+    align-self: flex-start; position: relative; z-index: 2;
+    background: #f9dd0e; color: #26275D; font-weight: 700; font-size: 0.9rem;
+    padding: 0.5rem 1.05rem; border-radius: 12px 12px 12px 0;
+    margin: 0 0 -0.55rem 0.75rem; box-shadow: 0 8px 20px rgba(0,0,0,0.3);
   }
-  .th-hero__badge strong { font-size: 1.3rem; font-family: 'Montserrat', sans-serif; }
-  .th-hero__badge span { font-size: 0.85rem; font-weight: 600; }
+  .th-hero__badge-top strong { font-family: 'Montserrat', sans-serif; }
+  .th-hero__form {
+    background: #fff; border-radius: 18px; padding: 1.7rem 1.45rem 1.45rem;
+    box-shadow: 0 26px 64px rgba(0,0,0,0.45); text-align: left;
+  }
+  /* Form vốn thiết kế cho nền navy → ép chữ tối để không chìm trên thẻ trắng */
+  .th-form-light :global(.form-step-title) { color: #26275D; }
+  .th-form-light :global(.form-step-description) { color: #475569; }
+  .th-form-light :global(.form-social-proof) { color: #26275D; }
+  .th-form-light :global(.form-progress__label) { color: rgba(38,39,93,0.55); }
+  .th-form-light :global(.form-progress__step--active .form-progress__label),
+  .th-form-light :global(.form-progress__step--done .form-progress__label) { color: #26275D; }
 
   /* ===== TRUST ===== */
   .th-trust { background: #fff6c2; }
@@ -278,9 +307,7 @@ const structuredData = [
 
   /* ===== RESPONSIVE ===== */
   @media (max-width: 900px) {
-    .th-hero__inner { grid-template-columns: 1fr; gap: 2rem; padding: 3rem 1.5rem; }
-    .th-hero__media { order: -1; min-height: 260px; }
-    .th-hero__media img { min-height: 260px; }
+    .th-hero__inner { grid-template-columns: 1fr; gap: 1.75rem; padding: 2.75rem 1.5rem; }
     .th-trust__inner { grid-template-columns: repeat(2, 1fr); gap: 1.25rem; }
     .th-pillars { grid-template-columns: repeat(2, 1fr); }
     .th-levels__grid { grid-template-columns: 1fr; }

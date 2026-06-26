@@ -1,0 +1,27 @@
+/*!
+ * forms-square.css — Bo góc vuông (6px) đồng bộ cho mọi form submit toàn site:
+ * thẻ form (card), ô nhập, nút bấm. Nạp qua /js/phone-vn.js trên mọi trang.
+ * Tắt toàn site: làm rỗng file này.
+ */
+
+/* Thẻ form (card) */
+.lead-form,
+.gi-form-card,
+.sp-form-block,
+.lead-form-card--light,
+.lead-form-card,
+[data-form-bg="light"],
+.F {
+  border-radius: 6px !important;
+}
+
+/* Ô nhập + nút bấm bên trong form (giữ checkbox/radio/range tròn) */
+form input:not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+form select,
+form textarea,
+form button,
+form .btn,
+form [type="submit"],
+form [type="button"] {
+  border-radius: 6px !important;
+}

@@ -1,10 +1,11 @@
 ---
 import '../styles/global.css';
 import { getSiteSettings } from '../lib/directus';
+import { GOOGLE_SITE_VERIFICATION } from '../data/school-facts';
 
 // Fetch site settings from Directus CMS (cached at build time)
 const siteSettings = await getSiteSettings();
-const announcementText = siteSettings?.announcement_text || 'Tuyển sinh 2026–2027 đang mở — Ưu đãi Early bird giảm đến 46% học phí.';
+const announcementText = siteSettings?.announcement_text || 'Tuyển sinh 2026–2027 đã mở — đặt lịch tham quan để nhận tư vấn lộ trình & chính sách ưu đãi Early bird.';
 const announcementLink = siteSettings?.announcement_link || '/tuyen-sinh';
 const announcementActive = siteSettings?.announcement_active ?? true;
 const hotline = siteSettings?.hotline || '0916 961 409';
@@ -105,7 +106,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
     <!-- End Google Tag Manager -->
-    <meta name="google-site-verification" content="google-site-verification-placeholder" />
+    {GOOGLE_SITE_VERIFICATION !== 'google-site-verification-placeholder' && (
+      <meta name="google-site-verification" content={GOOGLE_SITE_VERIFICATION} />
+    )}
   </head>
   <body>
 <!-- Google Tag Manager (noscript) -->

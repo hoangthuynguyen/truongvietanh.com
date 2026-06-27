@@ -5,6 +5,7 @@ import SiteHeader from '../components/SiteHeader.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { defaultSiteUrl } from '../lib/site-content';
 import { getTestimonials } from '../lib/directus';
+import { schoolFacts } from '../data/school-facts';
 
 const siteUrl = import.meta.env.PUBLIC_SITE_URL || defaultSiteUrl;
 
@@ -236,10 +237,10 @@ const newsCards = [
               </a>
             </div>
             <div class="wp-hero__badges">
-              <span class="wp-hero__badge">⭐ 4.9/5 — 300+ đánh giá</span>
-              <span class="wp-hero__badge">🎓 IELTS 6.0–8.0</span>
-              <span class="wp-hero__badge">🏆 15+ năm kinh nghiệm</span>
-              <span class="wp-hero__badge">✅ 99% đỗ ĐH</span>
+              <span class="wp-hero__badge">⭐ {schoolFacts.rating}/5 — {schoolFacts.reviewCount} đánh giá</span>
+              <span class="wp-hero__badge">🎓 IELTS {schoolFacts.ielts}</span>
+              <span class="wp-hero__badge">🏆 {schoolFacts.yearsRunning}+ năm kinh nghiệm</span>
+              <span class="wp-hero__badge">✅ {schoolFacts.collegeRate} đỗ ĐH</span>
             </div>
           </div>
         </div>
@@ -257,33 +258,64 @@ const newsCards = [
       <!-- REST OF HOMEPAGE CONTENT -->
       <div class="page-flow">
 
+        <!-- NỖI LO PHỤ HUYNH — gọi tên trăn trở trước khi đưa giải pháp -->
+        <section class="section-block worries-section anchor-section">
+          <div class="section-heading">
+            <p class="section-eyebrow">Có phải bạn đang băn khoăn?</p>
+            <h2>Những điều khiến cha mẹ trăn trở khi chọn trường</h2>
+            <p class="section-desc">Chúng tôi hiểu — và đã xây cả ngôi trường để trả lời từng nỗi lo này.</p>
+          </div>
+          <div class="worries-grid">
+            <article class="worry-card">
+              <span class="worry-card__icon">😟</span>
+              <h3 class="worry-card__title">"Con học vẹt, học để đối phó"</h3>
+              <p>Điểm cao nhưng không dùng được vào đời thực, học xong là quên.</p>
+            </article>
+            <article class="worry-card">
+              <span class="worry-card__icon">🙊</span>
+              <h3 class="worry-card__title">"Con ngại nói tiếng Anh"</h3>
+              <p>Học nhiều năm vẫn không dám mở lời, thiếu tự tin khi giao tiếp.</p>
+            </article>
+            <article class="worry-card">
+              <span class="worry-card__icon">🤖</span>
+              <h3 class="worry-card__title">"Con lệ thuộc vào AI, lười tư duy"</h3>
+              <p>Cái gì cũng hỏi máy, mất dần khả năng tự suy nghĩ và phản biện.</p>
+            </article>
+            <article class="worry-card">
+              <span class="worry-card__icon">🤔</span>
+              <h3 class="worry-card__title">"Phân vân không biết chọn trường nào"</h3>
+              <p>Trường quốc tế thì quá đắt, trường thường thì chưa yên tâm.</p>
+            </article>
+          </div>
+        </section>
+
         <section class="section-block section-block--stats anchor-section">
           <div class="stats-grid">
             <article class="stat-tile">
               <span class="stat-tile__icon">📅</span>
-              <strong class="stat-num">2011</strong>
+              <strong class="stat-num">{schoolFacts.foundedYear}</strong>
               <span>Năm thành lập</span>
             </article>
             <article class="stat-tile">
               <span class="stat-tile__icon">👨‍🎓</span>
-              <strong>1.000+</strong>
+              <strong>{schoolFacts.currentEnrollment}</strong>
               <span>Học sinh đang học mỗi năm</span>
             </article>
             <article class="stat-tile">
               <span class="stat-tile__icon">🏆</span>
-              <strong>IELTS 6.0–8.0</strong>
+              <strong>IELTS {schoolFacts.ielts}</strong>
               <span>Cam kết đầu ra tốt nghiệp THPT</span>
             </article>
             <article class="stat-tile">
               <span class="stat-tile__icon">🎓</span>
-              <strong class="stat-num">99</strong><sup>%</sup>
+              <strong class="stat-num">{schoolFacts.collegeRate}</strong>
               <span>Tỷ lệ học sinh vào được đại học</span>
             </article>
           </div>
 
           <!-- TRUST LOGOS -->
-          <div class="trust-logos">
-            <span class="trust-logos__label">Được công nhận bởi</span>
+          <div class="trust-logos trust-logos--prominent">
+            <span class="trust-logos__label">Được công nhận &amp; hợp tác bởi</span>
             <div class="trust-logos__row">
               <div class="trust-logo-item">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#26275D" stroke-width="2"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11"/></svg>
@@ -409,22 +441,22 @@ const newsCards = [
           <div class="outcomes-grid">
             <div class="outcome-tile outcome-tile--highlight">
               <span class="outcome-tile__icon">📊</span>
-              <strong class="outcome-tile__num">IELTS<br/>6.0 – 8.0</strong>
+              <strong class="outcome-tile__num">IELTS<br/>{schoolFacts.ielts}</strong>
               <p>Cam kết đầu ra khi tốt nghiệp THPT — có văn bản ký kết</p>
             </div>
             <div class="outcome-tile">
               <span class="outcome-tile__icon">🎓</span>
-              <strong class="outcome-tile__num stat-num">99</strong><sup class="outcome-tile__sup">%</sup>
+              <strong class="outcome-tile__num stat-num">{schoolFacts.collegeRate}</strong>
               <p>Học sinh vào được đại học theo nguyện vọng</p>
             </div>
             <div class="outcome-tile">
               <span class="outcome-tile__icon">🏅</span>
-              <strong class="outcome-tile__num">200+</strong>
+              <strong class="outcome-tile__num">{schoolFacts.awards}</strong>
               <p>Giải thưởng học sinh cấp thành phố & quốc tế</p>
             </div>
             <div class="outcome-tile">
               <span class="outcome-tile__icon">🌏</span>
-              <strong class="outcome-tile__num">50+</strong>
+              <strong class="outcome-tile__num">{schoolFacts.universitiesCount}</strong>
               <p>Trường đại học trong & ngoài nước tiếp nhận học sinh</p>
             </div>
           </div>
@@ -629,6 +661,50 @@ const newsCards = [
               <summary class="faq-question">Trình độ tiếng Anh đầu ra của học sinh Trường Việt Anh?</summary>
               <p class="faq-answer">Học sinh tốt nghiệp THPT tại Trường Việt Anh đạt tối thiểu IELTS 6.0, nhiều em đạt 7.0-8.0. Đây là mức đủ để xét tuyển vào hầu hết các đại học trên thế giới và nhận học bổng du học.</p>
             </details>
+          </div>
+        </section>
+
+        <!-- CAM KẾT — block nổi bật, nền navy, nhấn mạnh VĂN BẢN KÝ KẾT -->
+        <section class="section-block commitment-section anchor-section" id="cam-ket">
+          <div class="commitment-inner">
+            <div class="commitment-heading">
+              <p class="commitment-eyebrow">Khác biệt của Trường Việt Anh</p>
+              <h2>Cam kết của chúng tôi — có <span class="commitment-hl">văn bản ký kết</span></h2>
+              <p class="commitment-sub">Không phải lời hứa suông. Mỗi gia đình nhận một bản cam kết bằng văn bản khi nhập học.</p>
+            </div>
+            <ul class="commitment-list">
+              <li class="commitment-item">
+                <span class="commitment-item__icon">📜</span>
+                <div>
+                  <strong>Cam kết đầu ra IELTS {schoolFacts.ieltsFloor}+ khi tốt nghiệp THPT</strong>
+                  <p>Có văn bản ký kết. Dải đầu ra IELTS {schoolFacts.ielts}, trung bình 6.5.</p>
+                </div>
+              </li>
+              <li class="commitment-item">
+                <span class="commitment-item__icon">🎯</span>
+                <div>
+                  <strong>Đồng hành đến khi đạt mục tiêu</strong>
+                  <p>Lộ trình cá nhân hoá; nhà trường theo sát từng học sinh cho tới khi đạt chuẩn cam kết.</p>
+                </div>
+              </li>
+              <li class="commitment-item">
+                <span class="commitment-item__icon">💎</span>
+                <div>
+                  <strong>Học phí minh bạch, công bố từ đầu</strong>
+                  <p>Bảng phí rõ ràng theo từng cấp học, không phát sinh bất ngờ trong năm học.</p>
+                </div>
+              </li>
+              <li class="commitment-item">
+                <span class="commitment-item__icon">🤝</span>
+                <div>
+                  <strong>Lộ trình liên cấp xuyên suốt 2–18 tuổi</strong>
+                  <p>Con học một mạch từ Mầm Non đến THPT, không gián đoạn, không phải chuyển trường.</p>
+                </div>
+              </li>
+            </ul>
+            <div class="commitment-cta">
+              <a class="commitment-btn" href="/tuyen-sinh/tham-quan-truong">Đặt lịch tham quan để tìm hiểu chi tiết →</a>
+            </div>
           </div>
         </section>
 
@@ -1258,7 +1334,51 @@ const newsCards = [
     font-weight: 600;
     opacity: 0.75;
     transition: opacity 0.2s;
-  }.trust-logo-item:hover{ opacity: 1; }/* =====================================================
+  }.trust-logo-item:hover{ opacity: 1; }
+  /* Dải đối tác trang trọng hơn — logo lớn, card nền trắng, nhiều khoảng trắng */
+  .trust-logos--prominent{
+    margin-top: 2.5rem;
+    padding: 2rem 1.5rem 0.5rem;
+    gap: 1.5rem;
+    border-top: 1px solid rgba(18, 57, 103, 0.12);
+  }
+  .trust-logos--prominent .trust-logos__label{
+    font-size: 1.05rem;
+    color: #26275D;
+    letter-spacing: 0.1em;
+  }
+  .trust-logos--prominent .trust-logos__row{
+    gap: 1.25rem;
+    width: 100%;
+  }
+  .trust-logos--prominent .trust-logo-item{
+    flex: 1 1 200px;
+    max-width: 260px;
+    justify-content: center;
+    gap: 0.7rem;
+    padding: 1.1rem 1.25rem;
+    background: #fff;
+    border: 1px solid rgba(18, 57, 103, 0.1);
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(18, 57, 103, 0.05);
+    color: #26275D;
+    font-size: 1.02rem;
+    opacity: 1;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .trust-logos--prominent .trust-logo-item svg{
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+  }
+  .trust-logos--prominent .trust-logo-item:hover{
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(18, 57, 103, 0.12);
+    border-color: rgba(249, 221, 14, 0.6);
+  }
+  @media (max-width: 640px){
+    .trust-logos--prominent .trust-logo-item{ flex-basis: 45%; max-width: none; font-size: 0.9rem; padding: 0.9rem; }
+  }/* =====================================================
      MID-PAGE CTA STRIP
   ===================================================== */
   .mid-cta-strip{
@@ -1913,6 +2033,107 @@ const newsCards = [
     .grade-level-grid{ grid-template-columns: 1fr; }
     .grade-card{ flex-direction: row; flex-wrap: wrap; gap: 0.5rem; }
     .grade-card__points{ display: none; }
+  }
+
+  /* =====================================================
+     NỖI LO PHỤ HUYNH (worries)
+  ===================================================== */
+  .worries-grid{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.25rem;
+  }
+  .worry-card{
+    background: #fff;
+    border: 1px solid rgba(18, 57, 103, 0.1);
+    border-left: 4px solid #f9dd0e;
+    border-radius: 14px;
+    padding: 1.4rem 1.3rem;
+    box-shadow: 0 2px 12px rgba(18, 57, 103, 0.05);
+  }
+  .worry-card__icon{ font-size: 1.9rem; line-height: 1; display: block; margin-bottom: 0.6rem; }
+  .worry-card__title{
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: #26275D;
+    margin: 0 0 0.4rem;
+    line-height: 1.35;
+  }
+  .worry-card p{
+    margin: 0;
+    color: #5a6b7b;
+    font-size: 0.92rem;
+    line-height: 1.55;
+  }
+  @media (max-width: 1024px){
+    .worries-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px){
+    .worries-grid{ grid-template-columns: 1fr; }
+  }
+
+  /* =====================================================
+     CAM KẾT (commitment) — navy block nổi bật
+  ===================================================== */
+  .commitment-section{ padding-left: 0; padding-right: 0; }
+  .commitment-inner{
+    background: linear-gradient(135deg, #26275D 0%, #212255 55%, #18193A 100%);
+    color: #fff;
+    border-radius: 28px;
+    padding: clamp(2rem, 5vw, 3.25rem);
+  }
+  .commitment-heading{ text-align: center; max-width: 760px; margin: 0 auto 2rem; }
+  .commitment-eyebrow{
+    color: #f9dd0e;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    margin: 0 0 0.5rem;
+  }
+  .commitment-heading h2{ color: #fff; margin: 0 0 0.75rem; }
+  .commitment-hl{
+    color: #26275D;
+    background: #f9dd0e;
+    padding: 0 0.35em;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .commitment-sub{ color: rgba(255,255,255,0.78); margin: 0; line-height: 1.6; }
+  .commitment-list{
+    list-style: none;
+    margin: 0 0 2rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.1rem;
+  }
+  .commitment-item{
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 1.15rem 1.25rem;
+  }
+  .commitment-item__icon{ font-size: 1.6rem; line-height: 1.1; flex-shrink: 0; }
+  .commitment-item strong{ display: block; color: #fff; font-size: 1.04rem; margin-bottom: 0.25rem; }
+  .commitment-item p{ margin: 0; color: rgba(255,255,255,0.72); font-size: 0.9rem; line-height: 1.5; }
+  .commitment-cta{ text-align: center; }
+  .commitment-btn{
+    display: inline-block;
+    background: #f9dd0e;
+    color: #26275D;
+    font-weight: 700;
+    padding: 0.9rem 1.75rem;
+    border-radius: 999px;
+    text-decoration: none;
+    transition: transform 0.18s ease, box-shadow 0.18s ease;
+  }
+  .commitment-btn:hover{ transform: translateY(-2px); box-shadow: 0 10px 24px rgba(249, 221, 14, 0.3); }
+  @media (max-width: 640px){
+    .commitment-list{ grid-template-columns: 1fr; }
   }
 </style>
 

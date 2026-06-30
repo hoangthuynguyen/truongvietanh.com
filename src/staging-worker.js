@@ -331,6 +331,11 @@ async function handleLeadSubmission(request, env) {
           tags.push('checklist-tieu-hoc-2026');
           tags.push('squeeze-tieu-hoc');
         }
+        if (data.source === 'squeeze-checklist-cap3') {
+          tags.push('chon-truong-cap3');       // → GHL workflow trigger (checklist thăm trường cấp 3 / lớp 10)
+          tags.push('checklist-cap3-2026');
+          tags.push('squeeze-thpt');
+        }
         if (data.source === 'squeeze-checklist') {
           tags.push('checklist-chon-truong-2026');
         }

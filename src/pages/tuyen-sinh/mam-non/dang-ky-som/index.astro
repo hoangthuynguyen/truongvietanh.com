@@ -1,0 +1,128 @@
+---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
+
+const pageTitle = 'Đăng Ký Sớm Mầm Non 2026–2027 — Ưu Đãi Học Phí & Suất Ưu Tiên';
+const pageDescription = 'Đăng ký sớm Mầm Non năm học 2026–2027 tại Trường Việt Anh: ưu đãi Early Bird học phí, ưu tiên lớp nhỏ tối đa 15 bé, bé làm quen lớp trước khai giảng. Số suất giới hạn.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/dang-ky-som';
+
+const uspItems = [
+  { icon: '💰', text: 'Ưu đãi Early Bird học phí năm đầu — Mức tốt nhất trong năm, giảm đến 46% theo chương trình' },
+  { icon: '👥', text: 'Ưu tiên giữ chỗ lớp nhỏ tối đa 15 bé — Bé được cô chăm sóc sát sao' },
+  { icon: '🧸', text: 'Bé được mời tham gia buổi làm quen lớp miễn phí trước khai giảng' },
+  { icon: '🎁', text: 'Tặng bộ đồ dùng nhập học cho bé — đồng phục, balo, học liệu' },
+  { icon: '📋', text: 'Tư vấn lộ trình theo độ tuổi — nhà trẻ, mầm, chồi, lá' },
+  { icon: '⏰', text: 'Số suất Early Bird giới hạn theo từng cơ sở — hết suất là hết ưu đãi' }
+];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục' },
+  { number: '≤15', label: 'Bé mỗi lớp — sĩ số giới hạn' },
+  { number: '3', label: 'Cơ sở mầm non tại TPHCM' },
+  { number: '24h', label: 'Xác nhận sau khi đăng ký' }
+];
+
+const faqItems = [
+  {
+    question: 'Ưu đãi đăng ký sớm bao gồm cụ thể những gì?',
+    answer: 'Gói Early Bird năm học 2026–2027 bao gồm: (1) Ưu đãi học phí năm đầu ở mức tốt nhất trong năm — giảm đến 46% tùy chương trình và cơ sở, (2) Ưu tiên giữ chỗ trong lớp sĩ số nhỏ tối đa 15 bé, (3) Tặng bộ đồ dùng nhập học gồm đồng phục, balo và học liệu, (4) Bé được mời tham gia buổi làm quen lớp miễn phí trước khai giảng để không bỡ ngỡ, (5) Tư vấn lộ trình học phù hợp theo độ tuổi của bé. Mức ưu đãi cụ thể theo từng cơ sở sẽ được bộ phận Tuyển sinh thông báo chi tiết khi liên hệ xác nhận.'
+  },
+  {
+    question: 'Còn suất Early Bird không? Đăng ký đến khi nào?',
+    answer: 'Số suất Early Bird được phân bổ giới hạn theo từng cơ sở và từng độ tuổi (nhà trẻ, mầm, chồi, lá) để đảm bảo sĩ số nhỏ. Suất còn lại thay đổi liên tục trong mùa tuyển sinh — ba/mẹ đăng ký sớm sẽ được ưu tiên. Khi hết suất ở độ tuổi của bé, học phí trở về mức chính thức và nhà trường sẽ xếp danh sách chờ. Sau khi ba/mẹ để lại thông tin, bộ phận Tuyển sinh sẽ kiểm tra suất còn lại tại cơ sở gần nhà và phản hồi trong vòng 24 giờ.'
+  },
+  {
+    question: 'Bé mấy tuổi thì đăng ký được? Giữa năm có nhận bé không?',
+    answer: 'Mầm Non Việt Anh nhận bé từ 13 tháng đến 5 tuổi, xếp lớp theo độ tuổi: nhà trẻ (13 tháng–3 tuổi), mầm (3–4 tuổi), chồi (4–5 tuổi) và lá (5–6 tuổi, chuẩn bị vào lớp 1). Nhà trường nhận bé cả trong năm học nếu lớp còn chỗ, nhưng ưu đãi Early Bird chỉ áp dụng cho đăng ký sớm trước khai giảng. Nếu bé chưa đủ tuổi năm nay, ba/mẹ có thể đăng ký giữ chỗ trước cho năm sau — bộ phận Tuyển sinh sẽ tư vấn phương án phù hợp.'
+  },
+  {
+    question: 'Bé lần đầu đi học hay khóc, nhà trường hỗ trợ thế nào?',
+    answer: 'Đây là lo lắng phổ biến nhất của ba/mẹ có bé lần đầu đến trường. Trường có quy trình làm quen riêng: bé đăng ký sớm được mời tham gia buổi làm quen lớp miễn phí trước khai giảng — chơi cùng cô và các bạn khi có ba/mẹ ở bên. Tuần đầu nhập học, cô giáo phối hợp với ba/mẹ theo giờ linh hoạt để bé thích nghi dần. Với sĩ số tối đa 15 bé mỗi lớp, cô có đủ thời gian ôm ấp, dỗ dành và cập nhật tình hình của bé cho ba/mẹ mỗi ngày.'
+  },
+  {
+    question: 'Nếu đăng ký rồi mà đổi ý, có được hoàn tiền không?',
+    answer: 'Giai đoạn đăng ký sớm, ba/mẹ chỉ cần để lại thông tin liên hệ — chưa cần đóng bất kỳ khoản phí nào. Bộ phận Tuyển sinh sẽ liên hệ tư vấn, mời tham quan trường cùng bé, và khi ba/mẹ thực sự quyết định mới tiến hành thủ tục nhập học. Nếu sau khi tham quan mà ba/mẹ thấy chưa phù hợp, hoàn toàn không có ràng buộc gì. Chúng tôi muốn ba/mẹ chọn Việt Anh vì thật sự tin tưởng, không phải vì áp lực hay sợ mất tiền.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="đăng ký sớm mầm non, early bird mầm non, trường Việt Anh, ưu đãi học phí mầm non 2026, giữ chỗ mầm non"
+  schoolLevel="mau-non"
+  funnelCode="early-bird-mam-non"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">Đăng Ký Sớm Mầm Non 2026–2027<br/>Ưu Đãi Học Phí & Suất Ưu Tiên</h1>
+    <p class="hero-subtitle">Ưu đãi Early Bird đến 46% + Ưu tiên lớp nhỏ ≤15 bé + Buổi làm quen lớp miễn phí — Số suất giới hạn</p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section hero-image-section">
+      <img src="https://media.truongvietanh.com/images/giao-vien-07.webp" alt="Cô giáo Mầm Non Việt Anh cùng các bé trong hoạt động lớp học" class="hero-content-image" width="800" height="450" loading="lazy" />
+      <p class="image-caption">Lớp học sĩ số nhỏ giúp mỗi bé được cô quan tâm sát sao tại Mầm Non Việt Anh</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Tại Sao Đăng Ký Sớm Là Quyết Định Thông Minh Nhất?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Mức Học Phí Tốt Nhất Trong Năm</h3>
+          <p>Ưu đãi Early Bird là chính sách học phí tốt nhất mà nhà trường áp dụng trong năm — giảm đến 46% tùy chương trình và cơ sở, chỉ dành cho phụ huynh đăng ký trước khai giảng. Sau giai đoạn Early Bird, học phí trở về mức chính thức và không còn ưu đãi kèm theo. Với chi phí giáo dục mầm non song ngữ nhiều năm liên tục, khoản tiết kiệm từ đăng ký sớm là con số đáng kể — ba/mẹ vừa yên tâm về chất lượng, vừa chủ động kế hoạch tài chính cho gia đình.</p>
+        </div>
+        <div class="content-card">
+          <h3>Giữ Chỗ Lớp Nhỏ Tối Đa 15 Bé</h3>
+          <p>Khác với nhiều trường mầm non có lớp 25–30 bé, Việt Anh giới hạn sĩ số tối đa 15 bé mỗi lớp — để cô giáo thực sự quan sát, chăm sóc và hỗ trợ từng bé theo tiến trình riêng. Chính vì sĩ số nhỏ, số chỗ mỗi độ tuổi rất giới hạn và thường kín trước khai giảng. Đăng ký sớm giúp ba/mẹ chắc chắn có chỗ cho bé ở cơ sở gần nhà, đúng độ tuổi, không phải chờ danh sách dự bị hay chuyển sang cơ sở xa hơn.</p>
+        </div>
+        <div class="content-card">
+          <h3>Bé Được Làm Quen Lớp Trước Khai Giảng</h3>
+          <p>Nỗi lo lớn nhất của ba/mẹ có bé lần đầu đi học là con khóc, con không quen cô, không quen lớp. Bé đăng ký sớm được mời tham gia buổi làm quen lớp miễn phí trước khai giảng: chơi cùng cô và các bạn, khám phá đồ chơi, ăn thử bữa xế — tất cả khi có ba/mẹ ở bên. Nhờ vậy, ngày khai giảng với bé không phải nơi xa lạ mà là nơi quen thuộc đã từng chơi vui. Trải nghiệm chuyển tiếp nhẹ nhàng này chỉ sắp xếp được khi nhà trường biết trước danh sách bé nhập học.</p>
+        </div>
+        <div class="content-card">
+          <h3>Trọn Bộ Đồ Dùng Nhập Học Cho Bé</h3>
+          <p>Ba/mẹ không cần chạy đi mua sắm — bé sẽ nhận trọn bộ đồ dùng nhập học gồm đồng phục, balo và học liệu cần thiết cho năm học đầu tiên. Mọi thứ đều đạt tiêu chuẩn an toàn cho trẻ nhỏ và đồng nhất cùng các bạn, giúp bé tự tin và hào hứng với trường lớp mới. Ba/mẹ tiết kiệm thời gian chuẩn bị để dành trọn sự quan tâm cho việc đồng hành cảm xúc cùng con trong giai đoạn đầu đi học.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #f9dd0e;">Bonus: Lộ Trình Nhập Học Mầm Non — Từng Bước Cụ Thể</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        <strong>Bước 1:</strong> Ba/mẹ để lại thông tin đăng ký sớm — bộ phận Tuyển sinh xác nhận suất và ưu đãi trong 24h. <strong>Bước 2:</strong> Tham quan cơ sở cùng bé, gặp cô giáo, bé chơi thử lớp trải nghiệm. <strong>Bước 3:</strong> Hoàn tất thủ tục nhập học với mức ưu đãi Early Bird đã giữ. <strong>Bước 4:</strong> Bé tham gia buổi làm quen lớp trước khai giảng và bước vào năm học mới tự tin, vui vẻ. Ba/mẹ đăng ký càng sớm, bé càng có nhiều thời gian làm quen — gọi <strong>0916 961 409</strong> ngay hôm nay.
+      </p>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Giữ Chỗ Early Bird Cho Bé — Năm Học 2026–2027</h2>
+    <p class="form-subheading">Chỉ cần 2 phút đăng ký — Bộ phận Tuyển sinh sẽ liên hệ xác nhận suất và ưu đãi trong 24h</p>
+    <LeadFormTwoStepEmailFirst
+      formId="early-bird-mam-non-form"
+      funnelCode="early-bird-mam-non"
+      schoolLevel="mau-non"
+      submitText="Giữ chỗ Early Bird"
+      successMessage="Cảm ơn Ba/Mẹ! Bộ phận Tuyển sinh sẽ gửi thông tin ưu đãi chi tiết qua email trong 24h và liên hệ xác nhận."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi về Đăng ký sớm Mầm Non 2026–2027" />
+  </div>
+</SqueezePageLayout>
+
+<style>.hero-h1{ font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #26275D; }.hero-subtitle{ font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #f9dd0e; }.content-section{ margin-bottom: 3rem; }.content-section h2{ font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #26275D; text-align: center; }.content-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }.content-card{ padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }.content-card:hover{ border-color: #f9dd0e; box-shadow: 0 8px 20px rgba(249, 221, 14, 0.12); transform: translateY(-4px); }.content-card h3{ font-family: "Montserrat", sans-serif; font-size: 1.5rem; font-weight: 700; color: #f9dd0e; margin-bottom: 1rem; }.content-card p{ font-size: 1rem; line-height: 1.7; color: #555; }.bonus-section{ background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #f9dd0e; border-radius: 8px; }.form-heading{ font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #f9dd0e; margin-bottom: 0.5rem; }.form-subheading{ font-size: 1rem; color: #555; margin-bottom: 2rem; font-weight: 500; }.hero-image-section{ text-align: center; margin-bottom: 2rem; }.hero-content-image{ width: 100%; max-width: 800px; height: auto; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }.image-caption{ font-size: 1rem; color: #777; margin-top: 0.75rem; font-style: italic; }
+  @media (max-width: 768px) {.content-grid{ grid-template-columns: 1fr; }.content-card{ padding: 1.5rem; }.bonus-section{ padding: 1.5rem; } }
+</style>

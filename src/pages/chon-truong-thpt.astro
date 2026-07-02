@@ -56,14 +56,8 @@ const pageCanonical = `https://truongvietanh.com/${data.slug}`;
       funnelCode={data.slug}
       schoolLevel={data.levelKey as any}
       submitText="Nhận cẩm nang miễn phí ngay"
-      successMessage="Cảm ơn Ba/Mẹ! Cẩm nang đang được tải xuống..."
+      successMessage="Cảm ơn Ba/Mẹ! Cẩm nang sẽ được gửi qua email trong ít phút."
     />
-    <div class="chon-direct-dl">
-      <p>Hoặc tải trực tiếp không cần đăng ký:</p>
-      <a href={`/downloads/${data.pdfFile}`} class="chon-direct-dl__btn" download={`Checklist-Chon-Truong-${data.levelLabel.replace(/\s/g,'-')}.pdf`}>
-        📥 Tải PDF ngay ({data.pdfSizeKB} KB)
-      </a>
-    </div>
   </section>
 
   <section slot="faq"><FAQSection title="Câu hỏi thường gặp" items={data.faqItems} /></section>

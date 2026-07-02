@@ -358,6 +358,7 @@ async function submitLead(){
     body:JSON.stringify({step:'full_submit',fullName:parentName,parent_name:parentName,email,phone,
       schoolLevel:'thpt',school_level:'thpt',grade:'Lớp 10',
       quizScore:lastScore,quizTier:lastResult?lastResult.tier:'',
+      quizLevel:lastResult?lastResult.tier:'',
       source:src,funnelCode:src,funnel_code:src,page:location.href,timestamp:submittedAt,
       utm_source:sp.get('utm_source')||'',utm_medium:sp.get('utm_medium')||'',
       utm_campaign:sp.get('utm_campaign')||'',utm_term:sp.get('utm_term')||'',

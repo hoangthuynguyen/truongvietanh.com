@@ -79,8 +79,17 @@ const campusLinks = [
   { label: 'Trường Mầm non và Tiểu học Mekong Xanh - TP Rạch Giá - An Giang', href: '/co-so/mekong-xanh' },
 ];
 
-const testimonials = cmsTestimonials.length > 0
-  ? cmsTestimonials.map((t: any) => ({ name: t.name, role: t.role, quote: t.quote, img: t.image || '', videoUrl: t.video_url || '' }))
+// Section này thiết kế cho VIDEO clip phụ huynh — chỉ dùng dữ liệu CMS khi
+// bản ghi có video_url; CMS toàn text thì giữ 6 clip mặc định bên dưới.
+const cmsVideoTestimonials = cmsTestimonials.filter((t: any) => (t.video_url || '').trim());
+const testimonials = cmsVideoTestimonials.length > 0
+  ? cmsVideoTestimonials.map((t: any) => ({
+      name: t.name,
+      role: t.role,
+      quote: t.quote,
+      img: t.image && /^https?:\/\//.test(t.image) ? t.image : '',
+      videoUrl: t.video_url,
+    }))
   : [
     { name: 'Chị Nguyễn Thị Linh', role: 'Phụ huynh mầm non – bé 2 tuổi', quote: 'Từ em bé bướng bỉnh, con đã biết tự ăn và vào nề nếp. Con thay đổi rõ rệt chỉ sau vài tháng đầu.', img: 'https://img.youtube.com/vi/Bt1yyMil3Tg/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=Bt1yyMil3Tg' },
     { name: 'Anh Trần Minh Công', role: 'Phụ huynh lớp 1 – chuyển từ mầm non Việt Anh', quote: 'Con luôn háo hức và mong chờ được đến trường mỗi ngày. Đi học vui vẻ, không áp lực.', img: 'https://img.youtube.com/vi/b9eNSFUDd98/hqdefault.jpg', videoUrl: 'https://www.youtube.com/watch?v=b9eNSFUDd98' },

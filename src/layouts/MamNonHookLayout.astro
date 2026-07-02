@@ -14,6 +14,7 @@ interface Props {
   location: string;
   locationSlug?: string;
   address: string;
+  mapsUrl?: string;                 // link Google Maps — một số trang truyền vào, layout chưa render
   fomoText?: string;
   hookHeadline: string;
   hookSubline: string;
@@ -29,6 +30,12 @@ interface Props {
   redirectUrl: string;
   schemaType?: string;              // 'EducationalOrganization' default
   heroImage?: string;               // background image URL for hero
+  // Các prop dưới đây được vài trang truyền vào nhưng layout HIỆN CHƯA render —
+  // khai báo để type-safe; muốn hiển thị cần bổ sung markup trong layout này.
+  extended?: boolean;
+  testimonial1?: { quote: string; author: string };
+  testimonial2?: { quote: string; author: string };
+  testimonial3?: { quote: string; author: string };
 }
 
 const DEFAULT_BULLETS: BulletItem[] = [
@@ -69,7 +76,7 @@ const schema = [
 <html lang="vi">
 <head>
 <!-- Google Tag Manager -->
-<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);

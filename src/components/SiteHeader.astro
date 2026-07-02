@@ -193,9 +193,9 @@ function isChildActive(item: NavItem, path: string): boolean {
     { title: 'Liên Hệ', url: '/lien-he', desc: 'Hotline, Zalo, địa chỉ' },
   ];
   const overlay = document.getElementById('searchOverlay');
-  const input = document.getElementById('searchInput');
+  const input = document.getElementById('searchInput') as HTMLInputElement | null;
   const list = document.getElementById('searchList');
-  const defaultEl = document.querySelector('.search-default');
+  const defaultEl = document.querySelector<HTMLElement>('.search-default');
   const closeBtn = document.getElementById('searchClose');
   const openBtns = document.querySelectorAll('.search-btn');
   function openSearch() { if(!overlay) return; overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; setTimeout(()=>input?.focus(),100); }

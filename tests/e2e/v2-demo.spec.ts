@@ -20,7 +20,7 @@ const BASE = process.env.BASE_URL || 'http://localhost:3000';
 
 test.describe('/v2/demo — proof of concept page', () => {
   // Disable reduced-motion gate so scroll-reveal CSS doesn't hide below-fold blocks
-  test.use({ reducedMotion: 'reduce' });
+  test.use({ contextOptions: { reducedMotion: 'reduce' } });
 
   test('renders all 7 expected blocks', async ({ page }) => {
     await page.goto(`${BASE}/v2/demo`);

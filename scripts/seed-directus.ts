@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// @ts-nocheck — script seed dev-only, gọi Directus SDK với collection động (as any)
 /**
  * Seed Directus CMS from directus/seed/*.json.
  *
@@ -23,7 +24,7 @@ const DIRECTUS_URL = process.env.DIRECTUS_URL || 'https://cms.truongvietanh.com'
 const DIRECTUS_TOKEN = process.env.DIRECTUS_ADMIN_TOKEN;
 if (!DIRECTUS_TOKEN) { console.error('Set DIRECTUS_ADMIN_TOKEN env'); process.exit(1); }
 
-const client = createDirectus(DIRECTUS_URL).with(rest()).with(staticToken(DIRECTUS_TOKEN));
+const client = createDirectus<any>(DIRECTUS_URL).with(rest()).with(staticToken(DIRECTUS_TOKEN));
 
 function loadJson<T>(name: string): T {
   return JSON.parse(fs.readFileSync(path.join(seedDir, name), 'utf8'));

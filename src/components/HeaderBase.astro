@@ -9,9 +9,10 @@ const zaloUrl = settings?.zalo_url || 'https://zalo.me/0916961409';
 const logoUrl = "/logo-vietanh.webp";
 
 // Build nav structure from CMS
+type NavLink = { label: string; href: string; children?: NavLink[] };
 const leftNav = navItems.filter(n => n.position === 'left' && !n.parent_label);
 const rightNav = navItems.filter(n => n.position === 'right' && !n.parent_label);
-const getChildren = (parent: string) => navItems.filter(n => n.parent_label === parent);
+const getChildren = (parent: string): NavLink[] => navItems.filter(n => n.parent_label === parent) as NavLink[];
 ---
 
 <div class="top-bar">
@@ -38,7 +39,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 <header class="main-header">
   <nav class="nav-grid">
      <ul class="nav-links left-nav">
-       {(leftNav.length > 0 ? leftNav : [
+       {((leftNav.length > 0 ? leftNav : [
          { label: 'Trang chủ', href: '/' },
          { label: 'Giới thiệu', href: '/gioi-thieu' },
          { label: 'Tuyển sinh', href: '/tuyen-sinh', children: [
@@ -51,7 +52,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
            { label: 'Toán Tư Duy', href: '/tuyen-sinh/toan-tu-duy' },
            { label: 'Giải Mã Tiềm Năng', href: '/giai-ma-tiem-nang' },
          ]},
-       ]).map((item) => {
+       ]) as NavLink[]).map((item) => {
          const cmsChildren = getChildren(item.label);
          const allChildren = cmsChildren.length > 0 ? cmsChildren : (item.children || []);
          return allChildren.length > 0 ? (
@@ -74,7 +75,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
      </div>
 
      <ul class="nav-links right-nav">
-       {(rightNav.length > 0 ? rightNav : [
+       {((rightNav.length > 0 ? rightNav : [
          { label: 'Chương trình', href: '/chuong-trinh', children: [
            { label: 'Mầm non', href: '/mam-non' },
            { label: 'Tiểu học', href: '/tieu-hoc' },
@@ -88,7 +89,7 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
          ]},
          { label: 'Blog', href: '/blog' },
          { label: 'Hình ảnh', href: '/hinh-anh' },
-       ]).map((item) => {
+       ]) as NavLink[]).map((item) => {
          const cmsChildren = getChildren(item.label);
          const allChildren = cmsChildren.length > 0 ? cmsChildren : (item.children || []);
          return allChildren.length > 0 ? (
@@ -209,48 +210,50 @@ const getChildren = (parent: string) => navItems.filter(n => n.parent_label === 
 
   // Search functionality
   const overlay = document.getElementById('searchOverlay');
-  const input = document.getElementById('searchInput');
+  const input = document.getElementById('searchInput') as HTMLInputElement | null;
   const list = document.getElementById('searchList');
-  const defaultEl = document.querySelector('.search-default');
+  const defaultEl = document.querySelector<HTMLElement>('.search-default');
   const closeBtn = document.getElementById('searchClose');
   const openBtns = document.querySelectorAll('.search-btn');
 
-  function openSearch() {
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    setTimeout(() => input.focus(), 100);
-  }
-  function closeSearch() {
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    input.value = '';
-    list.innerHTML = '';
-    defaultEl.style.display = '';
-  }
+  if (overlay && input && list && defaultEl && closeBtn) {
+    const openSearch = () => {
+      overlay.classList.add('is-open');
+      overlay.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => input.focus(), 100);
+    };
+    const closeSearch = () => {
+      overlay.classList.remove('is-open');
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      input.value = '';
+      list.innerHTML = '';
+      defaultEl.style.display = '';
+    };
 
-  openBtns.forEach(btn => btn.addEventListener('click', openSearch));
-  closeBtn.addEventListener('click', closeSearch);
-  overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeSearch();
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
-  });
+    openBtns.forEach(btn => btn.addEventListener('click', openSearch));
+    closeBtn.addEventListener('click', closeSearch);
+    overlay.addEventListener('click', e => { if (e.target === overlay) closeSearch(); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeSearch();
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+    });
 
-  input.addEventListener('input', () => {
-    const q = input.value.trim().toLowerCase();
-    if (!q) { list.innerHTML = ''; defaultEl.style.display = ''; return; }
-    defaultEl.style.display = 'none';
-    const results = searchPages.filter(p =>
-      p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.url.includes(q)
-    );
-    if (results.length === 0) {
-      list.innerHTML = '<li class="search-empty">Không tìm thấy kết quả. Thử từ khóa khác hoặc <a href="/lien-he">liên hệ tư vấn</a>.</li>';
-    } else {
-      list.innerHTML = results.map(r => `<li><a href="${r.url}" class="search-result"><strong>${r.title}</strong><span>${r.desc}</span></a></li>`).join('');
-    }
-  });
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      if (!q) { list.innerHTML = ''; defaultEl.style.display = ''; return; }
+      defaultEl.style.display = 'none';
+      const results = searchPages.filter(p =>
+        p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q) || p.url.includes(q)
+      );
+      if (results.length === 0) {
+        list.innerHTML = '<li class="search-empty">Không tìm thấy kết quả. Thử từ khóa khác hoặc <a href="/lien-he">liên hệ tư vấn</a>.</li>';
+      } else {
+        list.innerHTML = results.map(r => `<li><a href="${r.url}" class="search-result"><strong>${r.title}</strong><span>${r.desc}</span></a></li>`).join('');
+      }
+    });
+  }
 
   // Mobile menu toggle
   const menuBtn = document.querySelector('.mobile-menu-btn');

@@ -3,12 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { readItems } from '@directus/sdk';
+import { createCmsClient } from '../lib/directus';
 
 type Post = {
   id: number | string;
   title: string;
   slug: string;
+  status?: string | null;
   excerpt?: string | null;
   published_at?: string | null;
 };
@@ -21,12 +23,8 @@ let posts: Post[] = [];
 let error: string | null = null;
 
 try {
-  const url = import.meta.env.PUBLIC_DIRECTUS_URL?.trim() || 'http://45.88.188.169:8055';
-  const token = import.meta.env.DIRECTUS_TOKEN?.trim() || '';
-
-  const client = token
-    ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
-    : createDirectus<DirectusSchema>(url).with(rest());
+  const client = createCmsClient<DirectusSchema>();
+  if (!client) throw new Error('CMS chưa cấu hình');
 
   posts = await client.request(
     readItems('posts', {

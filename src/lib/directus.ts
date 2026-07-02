@@ -22,12 +22,33 @@ export type HomepageState = {
   error: string | null;
 };
 
-function getDirectusUrl() {
+export function getDirectusUrl() {
   return import.meta.env.PUBLIC_DIRECTUS_URL?.trim() || null;
 }
 
-function getServerToken() {
+export function getDirectusToken() {
   return import.meta.env.DIRECTUS_TOKEN?.trim() || '';
+}
+
+function getServerToken() {
+  return getDirectusToken();
+}
+
+/**
+ * Factory client CMS dùng chung cho mọi trang. Trả về null (kèm cảnh báo
+ * trong log build) khi PUBLIC_DIRECTUS_URL chưa cấu hình — caller phải xử lý.
+ * Credentials chỉ đọc từ biến môi trường; không hard-code URL/token vào source.
+ */
+export function createCmsClient<Schema extends object = any>() {
+  const url = getDirectusUrl();
+  if (!url) {
+    console.warn('[Directus] PUBLIC_DIRECTUS_URL chưa được cấu hình — bỏ qua fetch CMS.');
+    return null;
+  }
+  const token = getServerToken();
+  return token
+    ? createDirectus<Schema>(url).with(staticToken(token)).with(rest())
+    : createDirectus<Schema>(url).with(rest());
 }
 
 export async function getHomepageState(): Promise<HomepageState> {
@@ -97,6 +118,7 @@ export async function getHomepageState(): Promise<HomepageState> {
 export type PillarPage = {
   id: number;
   slug: string;
+  sort?: number | null;
   status: string;
   title: string;
   description: string;
@@ -139,11 +161,9 @@ function cached<T>(key: string, fn: () => Promise<T>): Promise<T> {
 }
 
 function getPillarClient() {
-  const url = getDirectusUrl() || 'http://45.88.188.169:8055';
-  const token = getServerToken();
-  return token
-    ? createDirectus<PillarSchema>(url).with(staticToken(token)).with(rest())
-    : createDirectus<PillarSchema>(url).with(rest());
+  const client = createCmsClient<PillarSchema>();
+  if (!client) throw new Error('PUBLIC_DIRECTUS_URL chưa được cấu hình');
+  return client;
 }
 
 /**

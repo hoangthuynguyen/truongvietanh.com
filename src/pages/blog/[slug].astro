@@ -4,7 +4,8 @@ import HeaderBase from '../../components/HeaderBase.astro';
 import FooterBase from '../../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
 import '../../styles/blog-rebrand.css';
-import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { readItems } from '@directus/sdk';
+import { createCmsClient, getDirectusUrl } from '../../lib/directus';
 import { CATEGORIES, detectCategory, getCategoryBySlug } from '../../lib/blog-categories';
 
 type Post = {
@@ -24,12 +25,8 @@ type DirectusSchema = {
 };
 
 export async function getStaticPaths() {
-  const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
-  const token = (import.meta.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7').trim();
-
-  const client = token
-    ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
-    : createDirectus<DirectusSchema>(url).with(rest());
+  const client = createCmsClient<DirectusSchema>();
+  if (!client) return [];
 
   // Fetch all published posts — paginate to get all 552+
   let allPosts: Post[] = [];
@@ -142,14 +139,15 @@ const pageDesc = post.excerpt || `${post.title} — Tìm hiểu chi tiết tại
 const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
 
 // Category: prefer CMS field, fallback to keyword detection
-const categorySlug = post.category || detectCategory(post.title, post.excerpt);
+const categorySlug = post.category || detectCategory(post.title, post.excerpt ?? undefined);
 const categoryInfo = getCategoryBySlug(categorySlug);
 // Featured image: prefer CMS file, fallback to default
-const DIRECTUS_URL = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
+const DIRECTUS_URL = getDirectusUrl() || '';
 const featuredIsExternal = !!post.featured_image && /^https?:\/\//i.test(post.featured_image);
 function featuredSrc(transform: string): string | null {
   if (!post.featured_image) return null;
   if (featuredIsExternal) return post.featured_image;
+  if (!DIRECTUS_URL) return null;
   return `${DIRECTUS_URL}/assets/${post.featured_image}?${transform}`;
 }
 const ogImage = featuredSrc('width=1200&height=630&fit=cover&format=webp')
@@ -1162,6 +1160,7 @@ const structuredData = [
 </style>
 
 <script>
+// @ts-nocheck
   // Reading progress bar
   const bar = document.getElementById('readingBar');
   const article = document.querySelector('.blog-article');

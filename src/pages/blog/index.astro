@@ -3,7 +3,8 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import HeaderBase from '../../components/HeaderBase.astro';
 import FooterBase from '../../components/FooterBase.astro';
 import '../../styles/blog-rebrand.css';
-import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { readItems } from '@directus/sdk';
+import { createCmsClient } from '../../lib/directus';
 import { CATEGORIES, detectCategory, getCategoryBySlug } from '../../lib/blog-categories';
 
 type Post = {
@@ -20,16 +21,12 @@ type Post = {
 type DirectusSchema = { posts: Post[] };
 
 // ─── Fetch posts ──────────────────────────────────────────────────────────────
-const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
-const token = (import.meta.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7').trim();
-
-const client = token
-  ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
-  : createDirectus<DirectusSchema>(url).with(rest());
+const client = createCmsClient<DirectusSchema>();
 
 let allPosts: Post[] = [];
 
 try {
+  if (!client) throw new Error('CMS chưa cấu hình');
   let page = 1;
   let hasMore = true;
   while (hasMore) {
@@ -54,7 +51,7 @@ try {
 // ─── Attach category ──────────────────────────────────────────────────────────
 const postsWithCategory = allPosts.map(p => ({
   ...p,
-  _category: p.category || detectCategory(p.title, p.excerpt),
+  _category: p.category || detectCategory(p.title, p.excerpt ?? undefined),
 }));
 
 const featuredPosts = postsWithCategory.slice(0, 3);

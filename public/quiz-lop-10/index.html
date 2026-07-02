@@ -126,7 +126,52 @@
   .consent b{color:var(--navy);}
   .gate .backlink{display:block;text-align:center;margin-top:14px;color:var(--muted);font-size:13.5px;font-weight:600;cursor:pointer;}
   .gate .note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.45;}
-</style>
+
+  /* ===== Support card (hotline + tham quan) ===== */
+  .support-card{background:var(--white);border:1.5px solid var(--line);border-radius:18px;padding:20px;margin-bottom:18px;}
+  .support-card h3{font-size:17px;font-weight:800;color:var(--navy);line-height:1.3;margin-bottom:8px;}
+  .support-card p{font-size:14px;color:var(--muted);line-height:1.55;margin-bottom:14px;}
+  .support-card .btn{width:100%;display:flex;align-items:center;justify-content:center;gap:8px;text-decoration:none;font-size:14.5px;padding:14px 18px;}
+  .support-card .btn+.btn{margin-top:9px;}
+  .btn-navy{background:var(--navy);color:var(--white);}
+  .btn-outline{background:transparent;border:1.5px solid var(--navy);color:var(--navy);}
+
+  /* ===== Desktop layout (≥768px) ===== */
+  @media(min-width:768px){
+    body{padding:36px 24px;}
+    .stage{max-width:920px;min-height:0;border-radius:24px;box-shadow:0 32px 90px -36px rgba(0,0,0,.6);}
+    .topbar{padding:14px 32px;border-radius:24px 24px 0 0;}
+    .screen{padding:46px 56px 56px;}
+    .footer{border-radius:0 0 24px 24px;}
+
+    /* Intro */
+    .intro h1{font-size:40px;}
+    .intro .lede{font-size:17px;max-width:580px;margin-left:auto;margin-right:auto;}
+    .meta{max-width:480px;margin:26px auto;}
+    .scene{max-width:600px;margin:0 auto 28px;}
+    .scene .q{font-size:18px;}
+    .intro .btn-block{max-width:420px;margin:0 auto;display:flex;}
+
+    /* Questions: 2 cột đáp án */
+    .qtext{font-size:24px;max-width:640px;}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:stretch;}
+    .opt{font-size:15.5px;}
+    .navrow{margin-top:32px;}
+
+    /* Gate: teaser trái · form phải */
+    .gate-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:start;}
+    .gate .eyebrow{margin-left:0;}
+    .gate h2{font-size:28px;}
+    .gate .lede{font-size:15.5px;}
+    .gate-form{background:var(--paper-2);border:1.5px solid var(--line);border-radius:18px;padding:24px;}
+    .gate .note{margin-top:22px;}
+
+    /* Result: nội dung trái · CTA + hỗ trợ phải */
+    .result-grid{display:grid;grid-template-columns:1.15fr 1fr;gap:40px;align-items:start;}
+    .result h2{font-size:28px;}
+    .result-grid .cta-card{margin-top:0;}
+    .restart{margin-top:18px;}
+  }</style>
 </head>
 <body>
 <div class="stage">
@@ -172,39 +217,64 @@
     </section>
 
     <section class="screen gate" id="gate">
-      <span class="eyebrow">Đã chấm xong · Kết quả sẵn sàng</span>
-      <h2>Kết quả của con đã được chấm xong</h2>
-      <p class="lede">Nhập thông tin để mở <b>kết quả chi tiết + hướng vá lỗ hổng</b> cho con. Trường Việt Anh cũng nhắn kết quả qua Zalo để anh/chị lưu lại.</p>
-      <div class="teaser">
-        <div class="trow">🔒 Mức độ hổng gốc của con <span class="blur"></span></div>
-        <div class="trow">🔒 Điểm dấu hiệu chi tiết <span class="blur"></span></div>
-        <div class="trow">🔒 Hướng vá &amp; bước tiếp theo <span class="blur"></span></div>
+      <div class="gate-grid">
+        <div class="gate-info">
+          <span class="eyebrow">Đã chấm xong · Kết quả sẵn sàng</span>
+          <h2>Kết quả của con đã được chấm xong</h2>
+          <p class="lede">Nhập thông tin để mở <b>kết quả chi tiết + hướng vá lỗ hổng</b> cho con. Trường Việt Anh cũng nhắn kết quả qua Zalo để anh/chị lưu lại.</p>
+          <div class="teaser">
+            <div class="trow">🔒 Mức độ hổng gốc của con <span class="blur"></span></div>
+            <div class="trow">🔒 Điểm dấu hiệu chi tiết <span class="blur"></span></div>
+            <div class="trow">🔒 Hướng vá &amp; bước tiếp theo <span class="blur"></span></div>
+          </div>
+        </div>
+        <div class="gate-form">
+          <input class="field" id="pname" placeholder="Tên anh/chị (để xưng hô)" />
+          <input class="field" id="pemail" type="email" inputmode="email" autocomplete="email" placeholder="Email của anh/chị (nhận kết quả chi tiết)" />
+          <input class="field" id="zalo" placeholder="Số Zalo nhận kết quả (vd: 09xx xxx xxx)" inputmode="numeric" type="tel" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+          <label class="consent"><input type="checkbox" id="cs" /> Tôi đồng ý để Trường Việt Anh liên hệ tư vấn và xử lý dữ liệu của tôi &amp; của con theo <b>Nghị định 13/2023/NĐ-CP</b> về bảo vệ dữ liệu cá nhân.</label>
+          <button class="btn btn-primary btn-block" id="unlock" onclick="submitLead()" disabled>Mở kết quả của con
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+          <span class="backlink" onclick="gateBack()">← Quay lại câu hỏi</span>
+        </div>
       </div>
-      <input class="field" id="pname" placeholder="Tên anh/chị (để xưng hô)" />
-      <input class="field" id="zalo" placeholder="Số Zalo nhận kết quả (vd: 09xx xxx xxx)" inputmode="numeric" type="tel" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
-      <label class="consent"><input type="checkbox" id="cs" /> Tôi đồng ý để Trường Việt Anh liên hệ tư vấn và xử lý dữ liệu của tôi &amp; của con theo <b>Nghị định 13/2023/NĐ-CP</b> về bảo vệ dữ liệu cá nhân.</label>
-      <button class="btn btn-primary btn-block" id="unlock" onclick="submitLead()" disabled>Mở kết quả của con
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </button>
-      <span class="backlink" onclick="gateBack()">← Quay lại câu hỏi</span>
       <p class="note">Kết quả mang tính tham khảo để cùng đồng hành, không thay thế chẩn đoán chuyên môn.</p>
     </section>
 
     <section class="screen result" id="result">
-      <div class="result-badge" id="rbadge"></div>
-      <div class="tier" id="rtier"></div>
-      <h2 id="rtitle"></h2>
-      <div class="score-chip"><b id="rscore"></b><span id="rmax"></span></div>
-      <p class="body" id="rbody"></p>
-      <ul class="diff-list">
-        <li><span class="mk">1</span><div><b>Kiểm tra phân tầng</b> — dò đúng chỗ con đang thủng, học đúng trình độ.</div></li>
-        <li><span class="mk">2</span><div><b>Coach + tutor kèm riêng</b> — vá đúng lỗ hổng, không dạy tràn lan.</div></li>
-        <li><span class="mk">3</span><div><b>Tự rà tiến bộ (PDR)</b> mỗi buổi — con thấy mình khá lên từng tuần.</div></li>
-      </ul>
-      <div class="cta-card">
-        <h3 id="ctahead"></h3>
-        <p id="ctabody"></p>
-        <a class="btn btn-gold btn-block" href="/tuyen-sinh-lop-10/" rel="noopener">Đăng ký kiểm tra phân tầng miễn phí</a>
+      <div class="result-grid">
+        <div class="rmain">
+          <div class="result-badge" id="rbadge"></div>
+          <div class="tier" id="rtier"></div>
+          <h2 id="rtitle"></h2>
+          <div class="score-chip"><b id="rscore"></b><span id="rmax"></span></div>
+          <p class="body" id="rbody"></p>
+          <ul class="diff-list">
+            <li><span class="mk">1</span><div><b>Kiểm tra phân tầng</b> — dò đúng chỗ con đang thủng, học đúng trình độ.</div></li>
+            <li><span class="mk">2</span><div><b>Coach + tutor kèm riêng</b> — vá đúng lỗ hổng, không dạy tràn lan.</div></li>
+            <li><span class="mk">3</span><div><b>Tự rà tiến bộ (PDR)</b> mỗi buổi — con thấy mình khá lên từng tuần.</div></li>
+          </ul>
+        </div>
+        <div class="rside">
+          <div class="cta-card">
+            <h3 id="ctahead"></h3>
+            <p id="ctabody"></p>
+            <a class="btn btn-gold btn-block" href="/tuyen-sinh-lop-10/" rel="noopener">Đăng ký kiểm tra phân tầng miễn phí</a>
+          </div>
+          <div class="support-card">
+            <h3>Đội ngũ trường luôn sẵn sàng hỗ trợ anh/chị</h3>
+            <p>Gọi đến hotline của trường để được đội ngũ tư vấn hỗ trợ trực tiếp về lộ trình phù hợp cho con, hoặc đặt lịch tham quan trường để trải nghiệm tận nơi.</p>
+            <a class="btn btn-navy" href="tel:0916961409">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Gọi hotline 0916 961 409
+            </a>
+            <a class="btn btn-outline" href="/tuyen-sinh/tham-quan-truong/">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V7l7-4 7 4v14M9 21v-5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v5"/></svg>
+              Đặt lịch tham quan trường
+            </a>
+          </div>
+        </div>
       </div>
       <div class="restart"><button onclick="restart()">Làm lại từ đầu</button></div>
     </section>
@@ -269,6 +339,7 @@ function gateBack(){renderQ();}
 async function submitLead(){
   const btn=$("unlock");
   const parentName=($("pname").value||'').trim();
+  const email=($("pemail").value||'').trim();
   const phone=($("zalo").value||'').trim();
   if(phone.replace(/\D/g,'').length<9||!$("cs").checked)return;
   btn.disabled=true;btn.textContent='Đang mở…';
@@ -276,7 +347,7 @@ async function submitLead(){
   const src=sp.get('src')||'quiz-lop-10';
   const submittedAt=new Date().toISOString();
   const answerDetail=QUESTIONS.map((q,i)=>({g:q.g,q:q.q,a:answers[i]===null?null:q.o[answers[i]]}));
-  const payload={parentName,phone,quizId:'quiz-lop-10',score:lastScore,maxScore:39,
+  const payload={parentName,email,phone,quizId:'quiz-lop-10',score:lastScore,maxScore:39,
     tier:lastResult?lastResult.tier:'',resultCls:lastResult?lastResult.cls:'',
     gradeLabel:'Lớp 10 · THPT',offerType:'kiem-tra-phan-tang',answers:answerDetail,
     source:src,submittedAt};
@@ -284,7 +355,7 @@ async function submitLead(){
     method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
   }catch(e){console.warn('Webhook error:',e);}
   try{await fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({step:'full_submit',fullName:parentName,parent_name:parentName,email:'',phone,
+    body:JSON.stringify({step:'full_submit',fullName:parentName,parent_name:parentName,email,phone,
       schoolLevel:'thpt',school_level:'thpt',grade:'Lớp 10',
       quizScore:lastScore,quizTier:lastResult?lastResult.tier:'',
       source:src,funnelCode:src,funnel_code:src,page:location.href,timestamp:submittedAt,

@@ -7,6 +7,12 @@ import '../../styles/blog-rebrand.css';
 import { readItems } from '@directus/sdk';
 import { createCmsClient, getDirectusUrl } from '../../lib/directus';
 import { CATEGORIES, detectCategory, getCategoryBySlug } from '../../lib/blog-categories';
+import noindexSlugs from '../../data/blog-noindex-slugs.json';
+import blogRedirects from '../../data/blog-redirects.json';
+
+// Bài văn mẫu (ruột placeholder từ đợt migrate cũ) — noindex chờ viết lại.
+// Danh sách sinh bởi audit chữ ký nội dung; xoá slug khỏi file JSON để mở index lại.
+const NOINDEX_SLUGS = new Set(noindexSlugs as string[]);
 
 type Post = {
   id: number | string;
@@ -51,7 +57,10 @@ export async function getStaticPaths() {
 
   // Filter out posts with slugs that contain characters invalid for file paths
   // (e.g. a URL accidentally saved as slug: "https:--truongvietanh.com")
-  const validPosts = allPosts.filter((post) => post.slug && !/[:\*\?"<>|]/.test(post.slug));
+  // + slug đã 301 sang bài chính (khai báo trong astro.config) — không render nữa
+  const validPosts = allPosts.filter(
+    (post) => post.slug && !/[:\*\?"<>|]/.test(post.slug) && !(post.slug in blogRedirects),
+  );
 
   return validPosts.map((post) => ({
     params: { slug: post.slug },
@@ -262,6 +271,7 @@ const structuredData = [
   canonical={canonicalUrl}
   structuredData={structuredData}
   ogImage={ogImage}
+  noindex={NOINDEX_SLUGS.has(post.slug)}
 >
   <div class="cf-layout page-wrapper">
     <HeaderBase currentPath={`/blog/${post.slug}`} />

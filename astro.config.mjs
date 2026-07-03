@@ -1,5 +1,15 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { readFileSync } from 'node:fs';
+
+// Bài blog văn mẫu (noindex, chờ viết lại) — loại khỏi sitemap
+const NOINDEX_BLOG = new Set(
+  JSON.parse(readFileSync(new URL('./src/data/blog-noindex-slugs.json', import.meta.url), 'utf8')),
+);
+// Bài trùng lặp → 301 về bài chính
+const BLOG_REDIRECTS = JSON.parse(
+  readFileSync(new URL('./src/data/blog-redirects.json', import.meta.url), 'utf8'),
+);
 
 export default defineConfig({
   site: 'https://truongvietanh.com',
@@ -34,16 +44,27 @@ export default defineConfig({
     '/checklist-thcs':                       '/chon-truong-thcs',
     '/birmingham-city-hcm':                  '/tuyen-sinh/lop-10',
     '/blog/sgk-thong-nhat-2026':             '/blog/7-dieu-phu-huynh-can-biet-sgk-thong-nhat-2026',
+
+    // Bài blog trùng lặp → 301 về bài chính (danh sách: src/data/blog-redirects.json)
+    ...Object.fromEntries(
+      Object.entries(BLOG_REDIRECTS).map(([slug, target]) => ['/blog/' + slug, target]),
+    ),
   },
   integrations: [
     sitemap({
-      filter: (page) =>
-        !page.includes('/mau-template/') &&
-        !page.includes('/mau/') &&
-        !page.includes('/samples/') &&
-        !page.includes('/mau-cms-') &&
-        !page.includes('/admin') &&
-        !page.includes('/cam-on/'),
+      filter: (page) => {
+        // Bài blog văn mẫu (noindex) không đưa vào sitemap
+        const blogSlug = page.match(/\/blog\/([^/]+)\/?$/);
+        if (blogSlug && NOINDEX_BLOG.has(blogSlug[1])) return false;
+        return (
+          !page.includes('/mau-template/') &&
+          !page.includes('/mau/') &&
+          !page.includes('/samples/') &&
+          !page.includes('/mau-cms-') &&
+          !page.includes('/admin') &&
+          !page.includes('/cam-on/')
+        );
+      },
     }),
   ],
   image: {

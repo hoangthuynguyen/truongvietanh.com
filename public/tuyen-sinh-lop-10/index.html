@@ -235,7 +235,7 @@
         <label>Tên phụ huynh <span class="req">*</span></label>
         <input type="text" name="parent_name" required placeholder="Ví dụ: Chị Lan">
         <label>Số điện thoại / Zalo <span class="req">*</span></label>
-        <input type="tel" name="phone" required placeholder="Số bạn đang dùng Zalo">
+        <input type="tel" name="phone" required pattern="(\+?84|0)[35789][0-9\s]{8,12}" placeholder="Số bạn đang dùng Zalo">
         <label>Điểm thi lớp 10 của con (nếu có)</label>
         <input type="text" name="score" placeholder="Ví dụ: 19,5 — để tư vấn sát hơn">
         <label>Bạn quan tâm hình thức nào? <span class="req">*</span></label>
@@ -292,6 +292,9 @@
     var btn  = form.querySelector('button[type="submit"]');
     var card = btn.closest('.form-card');
 
+    var phoneEl = form.querySelector('input[name="phone"]');
+    var pv = (phoneEl.value||'').replace(/[\s\-\.\(\)]/g,'').replace(/^\+?84/,'0');
+    if(!/^0[35789][0-9]{8}$/.test(pv)){ alert('Số điện thoại chưa đúng — vui lòng nhập số di động Việt Nam 10 số (VD: 0912 345 678).'); phoneEl.focus(); return; }
     btn.textContent = 'Đang gửi…';
     btn.disabled = true;
 

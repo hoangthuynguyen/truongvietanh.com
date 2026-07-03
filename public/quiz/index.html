@@ -740,14 +740,14 @@ function renderLeadGate(){
      <div class="teaser">${axRows}</div>
      <input class="field" id="pname" placeholder="Tên anh/chị (để xưng hô)" />
      <input class="field" id="cname" placeholder="${cw==='bé'?'Tên ở nhà của bé':'Tên / biệt danh của con'} (để gọi)" />
-     <input class="field" id="zalo" placeholder="Số Zalo nhận báo cáo (vd: 09xx xxx xxx)" inputmode="numeric" type="tel" pattern="[0-9]*" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
+     <input class="field" id="zalo" placeholder="Số Zalo nhận báo cáo (vd: 09xx xxx xxx)" inputmode="numeric" type="tel" pattern="0[35789][0-9]{8}" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
      <label class="consent"><input type="checkbox" id="cs" /> Tôi đồng ý Trường Việt Anh liên hệ tư vấn và xử lý dữ liệu của tôi &amp; của con theo <b>Nghị định 13/2023/NĐ-CP</b> về bảo vệ dữ liệu cá nhân (bao gồm dữ liệu trẻ em).</label>
      <button class="btn gold" id="unlock" disabled>Xem Bản đồ của ${cw} + 3 việc làm ngay</button>
      <span class="backlink" id="bk">← Quay lại</span>
      <p class="note">Bản đồ mang tính tham khảo để cùng đồng hành, không thay thế chẩn đoán giáo dục/tâm lý chuyên môn.</p>
    </div>`;
   const z=document.getElementById('zalo'), cs=document.getElementById('cs'), btn=document.getElementById('unlock'), cn=document.getElementById('cname');
-  function chk(){ btn.disabled=!( z.value.replace(/\D/g,'').length>=9 && cs.checked ); }
+  function chk(){ btn.disabled=!( /^0[35789]\d{8}$/.test(z.value.replace(/\D/g,'').replace(/^84(?=\d{9}$)/,'0')) && cs.checked ); }
   z.oninput=chk; cs.onchange=chk;
   btn.onclick=async()=>{
     state.childName=(cn.value||'').trim()||cw;

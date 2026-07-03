@@ -301,7 +301,7 @@ const structuredData = [
             <div class="kn-grid-2">
               <div class="kn-group">
                 <label for="kn-phone">Số điện thoại <span class="kn-req">*</span></label>
-                <input type="tel" id="kn-phone" name="phone" pattern="[0-9\+\-\s\(\)]+" required autocomplete="tel" />
+                <input type="tel" id="kn-phone" name="phone" pattern="(\+?84|0)[35789][0-9\s]{8,12}" required autocomplete="tel" />
               </div>
               <div class="kn-group">
                 <label for="kn-email">Email <span class="kn-req">*</span></label>
@@ -653,9 +653,9 @@ const structuredData = [
       form.querySelector('[name="email"]').focus();
       return false;
     }
-    const phone = form.querySelector('[name="phone"]').value.replace(/\s/g,'');
-    if (phone.length < 9){
-      showError('Số điện thoại không hợp lệ.');
+    const phone = form.querySelector('[name="phone"]').value.replace(/[\s\-\.\(\)]/g,'').replace(/^\+?84/,'0');
+    if (!/^0[35789][0-9]{8}$/.test(phone)){
+      showError('Số điện thoại không hợp lệ — nhập số di động VN 10 số (VD: 0912 345 678).');
       form.querySelector('[name="phone"]').focus();
       return false;
     }

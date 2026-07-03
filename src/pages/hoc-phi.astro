@@ -496,7 +496,7 @@ function setProgress(n){
 }
 
 function okEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
-function okPhone(v){return /^[0-9+\s\-\.]{9,15}$/.test(v)}
+function okPhone(v){v=String(v).replace(/[\s\-\.\(\)]/g,'').replace(/^\+?84/,'0');return /^0[35789][0-9]{8}$/.test(v)}
 function fieldErr(inpId,errId,show){
   var i=document.getElementById(inpId),e=document.getElementById(errId);
   if(i)i.classList.toggle('err',show);

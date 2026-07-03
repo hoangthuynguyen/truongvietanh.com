@@ -521,9 +521,10 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
-  // Helper function to validate phone
+  // Validate số di động VN: 10 số bắt đầu 03/05/07/08/09, chấp nhận +84/84 gõ vào
   function isValidPhone(phone) {
-    return /^[0-9\+\-\s\(\)]{10,}$/.test(phone.replace(/\s/g, ''));
+    const p = String(phone).replace(/[\s\-\.\(\)]/g, '').replace(/^\+?84/, '0');
+    return /^0[35789][0-9]{8}$/.test(p);
   }
 
   // Helper function to show/hide form steps

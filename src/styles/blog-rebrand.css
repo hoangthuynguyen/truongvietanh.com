@@ -101,3 +101,74 @@
 .blog-contact-btn *,
 .footer-cta-btn,
 .footer-cta-btn * { color: #fff !important; }
+
+/* --- FIX layout "Bài viết liên quan" — card đang display:inline gây chồng chữ --- */
+.blog-article__body .related-grid { margin: 2.4rem 0; }
+.blog-article__body .related-title { font-weight: 700; color: #26275D; margin-bottom: 0.9rem; font-size: 1.05rem; }
+.blog-article__body .related-cards {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.blog-article__body .related-card {
+  display: flex !important;
+  flex-direction: column;
+  gap: 7px;
+  background: #F7F9FC;
+  border: 1px solid #E5EAF0;
+  border-radius: 12px;
+  padding: 16px 18px;
+  text-decoration: none !important;
+}
+.blog-article__body .related-card:hover { border-color: #26275D; box-shadow: 0 4px 14px rgba(38,39,93,.1); }
+.blog-article__body .related-tag {
+  display: inline-block;
+  align-self: flex-start;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #F9DD0E;
+  background: #26275D;
+  padding: 3px 10px;
+  border-radius: 20px;
+}
+.blog-article__body .related-card strong { color: #26275D; font-size: 0.98rem; line-height: 1.35; }
+.blog-article__body .related-desc { font-size: 0.85rem; color: #555; line-height: 1.5; }
+
+
+/* --- Nút nền vàng phải dùng chữ navy (trắng trên vàng chìm ~1.4:1) --- */
+.blog-article__badge,
+.blog-side-contact__btn,
+.blog-cta-inline__btn,
+.mobile-sticky-cta__register { color: #26275D !important; }
+.blog-side-contact__btn:hover { background-color: #e8cd0d !important; }
+
+/* --- Box CTA nền navy #000080 trong nội dung bài (CMS): ép chữ trắng,
+       thắng rule ".blog-article__body strong/h3 { color:#26275D !important }" phía trên --- */
+.blog-article__body [style*="background:#000080"],
+.blog-article__body [style*="background: #000080"],
+.blog-article__body [style*="background-color:#000080"],
+.blog-article__body [style*="background-color: #000080"],
+.blog-article__body [style*="background:#000080"] *,
+.blog-article__body [style*="background: #000080"] *,
+.blog-article__body [style*="background-color:#000080"] *,
+.blog-article__body [style*="background-color: #000080"] * { color: #fff !important; }
+
+/* --- Ngoại lệ theme .va-* trong bài viết (CMS): các khối nền navy #000080
+       phải giữ chữ trắng/vàng gốc — thắng các rule ép navy !important ở trên --- */
+.blog-article__body .va-cta,
+.blog-article__body .va-cta p,
+.blog-article__body .va-cta li,
+.blog-article__body .va-cta a,
+.blog-article__body .va-author,
+.blog-article__body .va-author p,
+.blog-article__body .va-author a,
+.blog-article__body .va-author h3,
+.blog-article__body .va-author h4 { color: #fff !important; }
+.blog-article__body .va-cta h2,
+.blog-article__body .va-cta h3,
+.blog-article__body .va-cta strong,
+.blog-article__body .va-author strong { color: #ffff00 !important; }
+.blog-article__body .va-cat { color: #ffff00 !important; }
+/* a trong khối va-* cần specificity cao hơn rule ".blog-main a:not()x3" phía trên */
+.blog-article__body .va-cta a:not(#_),
+.blog-article__body .va-author a:not(#_) { color: #fff !important; text-decoration-color: #ffff00 !important; }

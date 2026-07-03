@@ -19,8 +19,8 @@ Directus CMS (sửa nội dung)
 
 ## Bước 2: Thêm GitHub Secrets
 Vào repo Settings → Secrets → Actions:
-- `PUBLIC_DIRECTUS_URL`: `http://45.88.188.169:8055`
-- `DIRECTUS_TOKEN`: `tva_0b80f9b6cc9c494d98faf0a2a1a966e7`
+- `PUBLIC_DIRECTUS_URL`: `<PUBLIC_DIRECTUS_URL — xem .env, không commit>`
+- `DIRECTUS_TOKEN`: `<DIRECTUS_TOKEN — lấy từ trình quản lý mật khẩu, KHÔNG commit vào git>`
 - `GH_DISPATCH_TOKEN`: (token từ bước 1)
 
 ## Bước 3: Cấu hình Directus Webhook

@@ -2,7 +2,7 @@
 # Deploy khoahoc landing page lên Contabo VPS
 # Chạy: bash deploy-khoahoc.sh
 
-SERVER="root@45.88.188.169"
+SERVER="${KHOAHOC_SERVER:?Cần set KHOAHOC_SERVER=root@<ip-server>}"
 REMOTE_DIR="/var/www/khoatruongvietanh.com"
 LOCAL_FILE="$(dirname "$0")/khoahoc/index.html"
 

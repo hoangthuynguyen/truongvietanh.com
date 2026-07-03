@@ -12,8 +12,8 @@ import { fileURLToPath } from 'url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CSV_FILE = path.join(__dirname, '../docs/directus-import-master.csv');
 
-const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055';
-const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7';
+const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL;
+const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN;
 const DRY_RUN = process.argv.includes('--dry-run');
 const BATCH_SIZE = 50;
 

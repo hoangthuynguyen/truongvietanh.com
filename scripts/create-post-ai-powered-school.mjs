@@ -4,8 +4,8 @@
  *       node scripts/create-post-ai-powered-school.mjs --update   (cập nhật nếu đã tồn tại)
  */
 
-const DIRECTUS_URL = (process.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
-const DIRECTUS_TOKEN = (process.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7').trim();
+const DIRECTUS_URL = (process.env.PUBLIC_DIRECTUS_URL).trim();
+const DIRECTUS_TOKEN = (process.env.DIRECTUS_TOKEN).trim();
 const UPDATE = process.argv.includes('--update');
 
 const IMG = {

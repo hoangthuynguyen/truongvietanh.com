@@ -9,8 +9,8 @@
  * - 500-800 words per post
  */
 
-const DIRECTUS_URL = 'http://45.88.188.169:8055';
-const TOKEN = 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7';
+const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL;
+const TOKEN = process.env.DIRECTUS_TOKEN;
 
 // Content templates based on topic keywords
 function generateContent(title, slug) {

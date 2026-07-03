@@ -3,7 +3,7 @@
 // production Directus instance. Idempotent: safe to run multiple times.
 //
 // Usage:
-//   DIRECTUS_URL=http://45.88.188.169:8055 \
+//   DIRECTUS_URL=<PUBLIC_DIRECTUS_URL> \
 //   DIRECTUS_TOKEN=tva_xxxxx \
 //   node scripts/setup-directus-trai-he.mjs
 
@@ -14,8 +14,8 @@ import { dirname, resolve } from 'node:path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const DIRECTUS_URL = (process.env.DIRECTUS_URL || 'http://45.88.188.169:8055').replace(/\/$/, '');
-const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7';
+const DIRECTUS_URL = (process.env.DIRECTUS_URL).replace(/\/$/, '');
+const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN;
 const COLLECTION = 'trai_he_squeeze_pages';
 
 const SCHEMA_PATH = resolve(__dirname, '../directus/snapshots/trai-he-squeeze-pages.json');

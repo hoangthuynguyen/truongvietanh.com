@@ -276,9 +276,13 @@ async function handleLeadSubmission(request, env) {
       return jsonResponse({ success: false, error: 'Email or phone is required' }, 400);
     }
 
-    // Read secrets from env bindings (fallback to hardcoded for dev)
-    const ghlApiKey = env.GHL_API_KEY || 'pit-3a3f370c-7e6a-47f0-977f-053d093bc06c';
-    const pancakeApiKey = env.PANCAKE_API_KEY || '975c1a3c4a864327975d8bfa43e2e89f';
+    // API keys đọc từ Cloudflare secrets (wrangler secret put GHL_API_KEY / PANCAKE_API_KEY).
+    // KHÔNG hard-code key vào file này — repo nằm trên GitHub.
+    const ghlApiKey = env.GHL_API_KEY || '';
+    const pancakeApiKey = env.PANCAKE_API_KEY || '';
+    if (!ghlApiKey || !pancakeApiKey) {
+      console.error('[lead] Thiếu secret GHL_API_KEY / PANCAKE_API_KEY — kiểm tra wrangler secret list');
+    }
 
     const data = normalizeFormData(rawData);
 
@@ -874,7 +878,7 @@ async function sendEmailViaGHL({ contactId, subject, html, ghlApiKey }) {
     const res = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${ghlApiKey || 'pit-3a3f370c-7e6a-47f0-977f-053d093bc06c'}`,
+        'Authorization': `Bearer ${ghlApiKey}`,
         'Version': '2021-07-28',
         'Content-Type': 'application/json',
       },

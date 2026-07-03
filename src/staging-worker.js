@@ -164,10 +164,15 @@ async function handleR2Media(request, env, url) {
 
 function normalizePhone(phone) {
   if (!phone) return '';
-  let p = phone.replace(/[\s\-\(\)]/g, '');
+  let p = String(phone).replace(/[\s\-\.\(\)]/g, '');
   if (p.startsWith('+84')) p = '0' + p.slice(3);
   if (p.startsWith('84') && p.length === 11) p = '0' + p.slice(2);
   return p;
+}
+
+// Số di động VN hợp lệ: 10 số, bắt đầu 03/05/07/08/09 (sau khi đã normalize +84/84 → 0)
+function isValidVnPhone(p) {
+  return /^0[35789][0-9]{8}$/.test(p);
 }
 
 function resolveKhoiQuanTam(schoolLevel, grade) {
@@ -271,11 +276,29 @@ async function handleLeadSubmission(request, env) {
       return jsonResponse({ success: false, error: 'Email or phone is required' }, 400);
     }
 
-    // Read secrets from env bindings (fallback to hardcoded for dev)
-    const ghlApiKey = env.GHL_API_KEY || 'pit-3a3f370c-7e6a-47f0-977f-053d093bc06c';
-    const pancakeApiKey = env.PANCAKE_API_KEY || '975c1a3c4a864327975d8bfa43e2e89f';
+    // API keys đọc từ Cloudflare secrets (wrangler secret put GHL_API_KEY / PANCAKE_API_KEY).
+    // KHÔNG hard-code key vào file này — repo nằm trên GitHub.
+    const ghlApiKey = env.GHL_API_KEY || '';
+    const pancakeApiKey = env.PANCAKE_API_KEY || '';
+    if (!ghlApiKey || !pancakeApiKey) {
+      console.error('[lead] Thiếu secret GHL_API_KEY / PANCAKE_API_KEY — kiểm tra wrangler secret list');
+    }
 
     const data = normalizeFormData(rawData);
+
+    // Chặn SĐT sai định dạng VN ngay tại cổng — tránh đổ rác vào CRM.
+    // Có email thì vẫn nhận lead (bỏ số rác); chỉ có SĐT mà sai → trả 400 để form báo người dùng.
+    if (data.phone && !isValidVnPhone(data.phone)) {
+      if (rawData.email) {
+        data.phone = '';
+      } else {
+        return jsonResponse(
+          { success: false, error: 'Số điện thoại không hợp lệ. Vui lòng nhập số di động Việt Nam 10 số, bắt đầu bằng 03/05/07/08/09.' },
+          400
+        );
+      }
+    }
+
     const results = { ghl: null, pancake: null };
 
     if (data.step !== 'partial_capture') {
@@ -855,7 +878,7 @@ async function sendEmailViaGHL({ contactId, subject, html, ghlApiKey }) {
     const res = await fetch('https://services.leadconnectorhq.com/conversations/messages', {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${ghlApiKey || 'pit-3a3f370c-7e6a-47f0-977f-053d093bc06c'}`,
+        'Authorization': `Bearer ${ghlApiKey}`,
         'Version': '2021-07-28',
         'Content-Type': 'application/json',
       },

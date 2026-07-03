@@ -1,0 +1,118 @@
+---
+import { schoolFacts } from '../../data/school-facts';
+---
+<section class="section-block outcomes-section anchor-section">
+  <div class="section-heading">
+    <p class="section-eyebrow">Kết quả đầu ra</p>
+    <h2>Kết Quả Thực Tế — Không Phóng Đại</h2>
+    <p class="section-desc">Con số thực tế từ năm học 2024–2025, có <a href="/thanh-tich-hoc-tap" class="outcomes-desc-link">kiểm chứng</a></p>
+  </div>
+  <div class="outcomes-grid">
+    <div class="outcome-tile outcome-tile--highlight">
+      <span class="outcome-tile__icon">📊</span>
+      <strong class="outcome-tile__num">IELTS<br/>{schoolFacts.ielts}</strong>
+      <p>Cam kết đầu ra khi tốt nghiệp THPT — có văn bản ký kết</p>
+    </div>
+    <div class="outcome-tile">
+      <span class="outcome-tile__icon">🎓</span>
+      <strong class="outcome-tile__num stat-num">{schoolFacts.collegeRate}</strong>
+      <p>Học sinh vào được <a href="/thanh-tich-hoc-tap" class="outcome-internal-link">đại học</a> theo nguyện vọng</p>
+    </div>
+    <div class="outcome-tile">
+      <span class="outcome-tile__icon">🏅</span>
+      <strong class="outcome-tile__num">{schoolFacts.awards}</strong>
+      <p>Giải thưởng học sinh cấp thành phố &amp; quốc tế</p>
+    </div>
+    <div class="outcome-tile">
+      <span class="outcome-tile__icon">🌏</span>
+      <strong class="outcome-tile__num">{schoolFacts.universitiesCount}</strong>
+      <p>Trường đại học trong &amp; ngoài nước tiếp nhận học sinh</p>
+    </div>
+  </div>
+  <div class="achievement-bar">
+    <div class="achievement-item">
+      <strong>IELTS 8.0</strong>
+      <span>Em Nguyễn Minh Anh · Lớp 12 · 2024</span>
+    </div>
+    <div class="achievement-item">
+      <strong>IELTS 7.5</strong>
+      <span>Em Trần Bảo Châu · Lớp 12 · 2025</span>
+    </div>
+    <div class="achievement-item">
+      <strong>Học bổng Đại học Melbourne</strong>
+      <span>Em Lê Minh Khoa · Úc · 2024</span>
+    </div>
+    <div class="achievement-item">
+      <strong>Top 10 TP.HCM</strong>
+      <span>Cuộc thi Toán Quốc tế · 2025</span>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:1.5rem">
+    <a href="/thanh-tich-hoc-tap" class="outcomes-link">Xem toàn bộ thành tích học sinh →</a>
+  </div>
+</section>
+
+<style>
+  .outcomes-section {
+    background: linear-gradient(135deg, #26275D 0%, #212255 50%, #18193A 100%);
+    color: #fff;
+    border-radius: 28px;
+  }
+  .outcomes-section :global(.section-heading h2) { color: #fff; }
+  .outcomes-section :global(.section-eyebrow) { color: #f9dd0e; }
+  .outcomes-section :global(.section-desc) { color: rgba(255,255,255,0.7); }
+  .outcomes-desc-link { color: #f9dd0e; }
+  .outcomes-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .outcome-tile {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 1.5rem 1.25rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    transition: background 0.2s;
+  }
+  .outcome-tile:hover { background: rgba(255,255,255,0.13); }
+  .outcome-tile--highlight { background: rgba(249,221,14,0.1); border-color: rgba(249,221,14,0.3); }
+  .outcome-tile__icon { font-size: 1.75rem; line-height: 1; }
+  .outcome-tile__num {
+    font-family: "Montserrat", "Be Vietnam Pro", sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 800;
+    color: #f9dd0e;
+    line-height: 1.1;
+    display: block;
+  }
+  .outcome-tile p { color: rgba(255,255,255,0.8); font-size: 0.9rem; line-height: 1.5; margin: 0; }
+  .outcome-internal-link { color: #f9dd0e; }
+  .achievement-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .achievement-item { display: flex; flex-direction: column; gap: 0.2rem; flex: 1; min-width: 160px; }
+  .achievement-item strong { color: #f9dd0e; font-weight: 700; font-size: 1rem; }
+  .achievement-item span { color: rgba(255,255,255,0.65); font-size: 0.85rem; }
+  .outcomes-link {
+    display: inline-flex;
+    align-items: center;
+    color: #f9dd0e;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    padding: 0.6rem 1.25rem;
+    border: 1.5px solid rgba(249,221,14,0.4);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .outcomes-link:hover { background: rgba(249,221,14,0.1); }
+  @media (max-width: 900px) { .outcomes-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .outcomes-grid { grid-template-columns: 1fr 1fr; } .achievement-bar { flex-direction: column; } }
+</style>

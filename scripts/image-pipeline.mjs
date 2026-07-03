@@ -25,8 +25,8 @@ const OPTIMIZED_DIR = path.join(ROOT, 'images/drive-webp');
 const R2_BUCKET = 'truongvietanh-media';
 const R2_PREFIX = 'images';
 const MEDIA_BASE = 'https://media.truongvietanh.com/images';
-const DIRECTUS_URL = 'http://45.88.188.169:8055';
-const DIRECTUS_TOKEN = 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7';
+const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL;
+const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN;
 
 // Max dimensions for optimization
 const MAX_WIDTH = 1200;

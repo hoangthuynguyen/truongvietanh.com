@@ -1,0 +1,52 @@
+---
+import LeadFormTwoStepEmailFirst from '../LeadFormTwoStepEmailFirst.astro';
+---
+<section class="section-block anchor-section brochure-cta" id="brochure">
+  <div class="brochure-cta__inner">
+    <div class="brochure-cta__text">
+      <h2>Nhận Brochure của Trường Việt Anh</h2>
+      <p class="brochure-cta__desc">Tài liệu đầy đủ về chương trình, học phí, cơ sở vật chất, lộ trình học và lộ trình đầu ra — được gửi qua email trong vài phút.</p>
+      <ul class="brochure-cta__bullets">
+        <li>Chương trình &amp; phương pháp theo từng cấp học</li>
+        <li>Bảng học phí và chính sách học bổng</li>
+        <li>Lịch tuyển sinh &amp; ưu đãi Early bird đến 46%</li>
+      </ul>
+    </div>
+    <div class="brochure-cta__form lead-form-card--light" data-form-bg="light">
+      <LeadFormTwoStepEmailFirst
+        formId="brochure-form"
+        funnelCode="home-brochure"
+        schoolLevel="all"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .brochure-cta {
+    background: linear-gradient(135deg, #26275D 0%, #26275D 100%);
+    border-radius: 18px;
+    padding: 3rem 2rem;
+    margin-top: 1rem;
+  }
+  .brochure-cta__inner {
+    max-width: 1050px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+  .brochure-cta__text h2 { font-size: 1.75rem; font-weight: 800; margin: .5rem 0 1rem; line-height: 1.3; color: #fff; }
+  .brochure-cta__desc { color: rgba(255,255,255,.85); line-height: 1.7; margin-bottom: 1.25rem; font-size: 1rem; }
+  .brochure-cta__bullets { list-style: none; padding: 0; margin: 0; }
+  .brochure-cta__bullets li { color: rgba(255,255,255,.9); padding: .35rem 0 .35rem 1.75rem; position: relative; font-size: 1rem; line-height: 1.5; }
+  .brochure-cta__bullets li::before { content: '✓'; position: absolute; left: 0; color: #f9dd0e; font-weight: 700; }
+  .brochure-cta__form { background: #fff; border-radius: 14px; padding: 1.75rem 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.2); }
+
+  @media (max-width: 768px) {
+    .brochure-cta { padding: 2rem 1.25rem; }
+    .brochure-cta__inner { grid-template-columns: 1fr; gap: 1.75rem; }
+    .brochure-cta__text h2 { font-size: 1.5rem; }
+  }
+</style>

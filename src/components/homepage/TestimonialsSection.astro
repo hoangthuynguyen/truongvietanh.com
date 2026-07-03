@@ -1,0 +1,148 @@
+---
+interface Testimonial {
+  name: string;
+  role: string;
+  quote: string;
+  img: string;
+  videoUrl: string;
+}
+
+interface Props {
+  testimonials: Testimonial[];
+}
+
+const { testimonials } = Astro.props;
+
+function getYouTubeId(url: string): string | null {
+  const m = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : null;
+}
+---
+
+<section class="section-block anchor-section" id="danh-gia">
+  <div class="section-heading">
+    <h2>Phụ huynh Nói Gì Về Trường Việt Anh TP.HCM?</h2>
+  </div>
+
+  <div class="testi-grid">
+    {testimonials.map((item) => {
+      const videoId = getYouTubeId(item.videoUrl);
+      const thumb = item.img || (videoId ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg` : 'https://media.truongvietanh.com/images/phu-huynh-04.webp');
+      return (
+        <article class="testi-card">
+          {videoId ? (
+            <button
+              type="button"
+              class="testi-card__player"
+              data-video-id={videoId}
+              aria-label={`Phát video chia sẻ của ${item.name}`}
+            >
+              <img
+                src={thumb}
+                alt={`Phụ huynh ${item.name} chia sẻ về Trường Việt Anh`}
+                loading="lazy"
+                decoding="async"
+                width="480"
+                height="270"
+                class="testi-card__thumb"
+              />
+              <span class="testi-card__play" aria-hidden="true">
+                <svg viewBox="0 0 68 48" width="48" height="34"><path d="M66.52 7.74c-.78-2.93-2.49-5.41-5.42-6.19C55.79.13 34 0 34 0S12.21.13 6.9 1.55c-2.93.78-4.63 3.26-5.42 6.19C.06 13.05 0 24 0 24s.06 10.95 1.48 16.26c.78 2.93 2.49 5.41 5.42 6.19C12.21 47.87 34 48 34 48s21.79-.13 27.1-1.55c2.93-.78 4.64-3.26 5.42-6.19C67.94 34.95 68 24 68 24s-.06-10.95-1.48-16.26z" fill="#cc0000"/><path d="M45 24 27 14v20" fill="#fff"/></svg>
+              </span>
+            </button>
+          ) : (
+            <div class="testi-card__avatar">
+              <img src={thumb} alt={item.name} loading="lazy" width="72" height="72" />
+            </div>
+          )}
+          <div class="testi-card__body">
+            <blockquote class="testi-card__quote">
+              <p>&ldquo;{item.quote}&rdquo;</p>
+            </blockquote>
+            <div class="testi-card__info">
+              <strong>{item.name}</strong>
+              <span>{item.role}</span>
+            </div>
+          </div>
+        </article>
+      );
+    })}
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.testi-card__player').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const id = btn.dataset.videoId;
+      if (!id) return;
+      const iframe = document.createElement('iframe');
+      iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+      iframe.title = 'YouTube video';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.loading = 'lazy';
+      iframe.className = 'testi-card__iframe';
+      btn.replaceWith(iframe);
+    });
+  });
+</script>
+
+<style>
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+  .testi-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid rgba(18, 57, 103, 0.08);
+    box-shadow: 0 4px 16px rgba(18, 57, 103, 0.04);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: box-shadow 0.25s, transform 0.25s;
+  }
+  .testi-card:hover { box-shadow: 0 12px 36px rgba(38,39,93,0.12); transform: translateY(-3px); }
+
+  /* Click-to-play player */
+  .testi-card__player {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    cursor: pointer;
+    background: #26275D;
+    overflow: hidden;
+    display: block;
+  }
+  .testi-card__thumb { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s, opacity 0.3s; }
+  .testi-card__player:hover .testi-card__thumb { transform: scale(1.05); opacity: 0.75; }
+  .testi-card__play {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    transition: transform 0.3s;
+  }
+  .testi-card__play svg { filter: drop-shadow(0 4px 14px rgba(0,0,0,0.5)); transition: filter 0.3s; }
+  .testi-card__player:hover .testi-card__play { transform: scale(1.1); }
+  .testi-card__iframe { width: 100%; aspect-ratio: 16/9; border: 0; display: block; }
+
+  /* No-video variant */
+  .testi-card__avatar { display: flex; justify-content: center; padding: 1.5rem 0 0; }
+  .testi-card__avatar img { width: 72px; height: 72px; border-radius: 50%; object-fit: cover; border: 3px solid #26275D; }
+
+  .testi-card__body { padding: 1.25rem 1.5rem 1.5rem; display: flex; flex-direction: column; gap: 0.85rem; flex: 1; }
+  .testi-card__quote { margin: 0; padding: 0; border: none; }
+  .testi-card__quote p { color: #5c6e80; font-style: italic; line-height: 1.7; font-size: 1rem; text-align: center; margin: 0; }
+  .testi-card__info { text-align: center; display: flex; flex-direction: column; gap: 0.2rem; margin-top: auto; padding-top: 0.75rem; border-top: 1px solid #f1f5f9; }
+  .testi-card__info strong { color: #26275D; font-size: 1rem; }
+  .testi-card__info span { color: #64748b; font-size: 0.88rem; font-weight: 500; }
+
+  @media (max-width: 640px) { .testi-grid { grid-template-columns: 1fr; } }
+</style>

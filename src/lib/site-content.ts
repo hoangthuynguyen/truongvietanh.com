@@ -156,17 +156,9 @@ export const mainNavRight = [
       { label: 'Du học', href: '/du-hoc' },
     ]
   },
-  {
-    label: 'Thành tích',
-    href: '/thanh-tich-hoc-tap',
-    children: [
-      { label: 'Học tập', href: '/thanh-tich-hoc-tap' },
-      { label: 'Thể thao', href: '/thanh-tich-the-thao' },
-      { label: 'Kỹ năng', href: '/thanh-tich-ky-nang' },
-      { label: 'Ngoại khóa', href: '/thanh-tich-ngoai-khoa' },
-      { label: 'Giáo viên', href: '/thanh-tich-giao-vien' },
-    ]
-  },
+  // Các trang thành tích thể thao / kỹ năng / ngoại khóa / giáo viên chưa tồn tại —
+  // khi nào có trang thì thêm lại children ở đây.
+  { label: 'Thành tích', href: '/thanh-tich-hoc-tap' },
   { label: 'Blog', href: '/blog' },
   { label: 'Hình ảnh', href: '/hinh-anh' },
   { label: 'Liên hệ', href: '/lien-he' },

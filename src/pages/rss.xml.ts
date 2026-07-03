@@ -1,16 +1,13 @@
 import type { APIRoute } from 'astro';
-import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { readItems } from '@directus/sdk';
+import { createCmsClient } from '../lib/directus';
 
 export const GET: APIRoute = async () => {
-  const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
-  const token = (import.meta.env.DIRECTUS_TOKEN || '').trim();
-
-  const client = token
-    ? createDirectus(url).with(staticToken(token)).with(rest())
-    : createDirectus(url).with(rest());
+  const client = createCmsClient();
 
   let posts: any[] = [];
   try {
+    if (!client) throw new Error('CMS chưa cấu hình');
     posts = await client.request(
       readItems('posts', {
         fields: ['title', 'slug', 'excerpt', 'published_at'],

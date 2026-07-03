@@ -123,7 +123,7 @@ npm run directus:setup:m2a
 
 Contabo chi chay Directus:
 
-- App URL tam thoi: `http://45.88.188.169:8055`
+- App URL tam thoi: `<PUBLIC_DIRECTUS_URL — xem .env, không commit>`
 - URL muc tieu nen dung: `https://admin.truongvietanh.com`
 
 Tren VPS:
@@ -156,7 +156,7 @@ Gia tri khuyen nghi:
 
 Neu DNS admin chua xong, tam thoi co the build bang IP:
 
-- `PUBLIC_DIRECTUS_URL=http://45.88.188.169:8055`
+- `PUBLIC_DIRECTUS_URL=<PUBLIC_DIRECTUS_URL — xem .env, không commit>`
 
 ## Quy trinh editor
 

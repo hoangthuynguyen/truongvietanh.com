@@ -4,8 +4,15 @@ import HeaderBase from '../../components/HeaderBase.astro';
 import FooterBase from '../../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirst.astro';
 import '../../styles/blog-rebrand.css';
-import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { readItems } from '@directus/sdk';
+import { createCmsClient, getDirectusUrl } from '../../lib/directus';
 import { CATEGORIES, detectCategory, getCategoryBySlug } from '../../lib/blog-categories';
+import noindexSlugs from '../../data/blog-noindex-slugs.json';
+import blogRedirects from '../../data/blog-redirects.json';
+
+// Bài văn mẫu (ruột placeholder từ đợt migrate cũ) — noindex chờ viết lại.
+// Danh sách sinh bởi audit chữ ký nội dung; xoá slug khỏi file JSON để mở index lại.
+const NOINDEX_SLUGS = new Set(noindexSlugs as string[]);
 
 type Post = {
   id: number | string;
@@ -24,12 +31,8 @@ type DirectusSchema = {
 };
 
 export async function getStaticPaths() {
-  const url = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
-  const token = (import.meta.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7').trim();
-
-  const client = token
-    ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
-    : createDirectus<DirectusSchema>(url).with(rest());
+  const client = createCmsClient<DirectusSchema>();
+  if (!client) return [];
 
   // Fetch all published posts — paginate to get all 552+
   let allPosts: Post[] = [];
@@ -54,7 +57,10 @@ export async function getStaticPaths() {
 
   // Filter out posts with slugs that contain characters invalid for file paths
   // (e.g. a URL accidentally saved as slug: "https:--truongvietanh.com")
-  const validPosts = allPosts.filter((post) => post.slug && !/[:\*\?"<>|]/.test(post.slug));
+  // + slug đã 301 sang bài chính (khai báo trong astro.config) — không render nữa
+  const validPosts = allPosts.filter(
+    (post) => post.slug && !/[:\*\?"<>|]/.test(post.slug) && !(post.slug in blogRedirects),
+  );
 
   return validPosts.map((post) => ({
     params: { slug: post.slug },
@@ -142,14 +148,15 @@ const pageDesc = post.excerpt || `${post.title} — Tìm hiểu chi tiết tại
 const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
 
 // Category: prefer CMS field, fallback to keyword detection
-const categorySlug = post.category || detectCategory(post.title, post.excerpt);
+const categorySlug = post.category || detectCategory(post.title, post.excerpt ?? undefined);
 const categoryInfo = getCategoryBySlug(categorySlug);
 // Featured image: prefer CMS file, fallback to default
-const DIRECTUS_URL = (import.meta.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055').trim();
+const DIRECTUS_URL = getDirectusUrl() || '';
 const featuredIsExternal = !!post.featured_image && /^https?:\/\//i.test(post.featured_image);
 function featuredSrc(transform: string): string | null {
   if (!post.featured_image) return null;
   if (featuredIsExternal) return post.featured_image;
+  if (!DIRECTUS_URL) return null;
   return `${DIRECTUS_URL}/assets/${post.featured_image}?${transform}`;
 }
 const ogImage = featuredSrc('width=1200&height=630&fit=cover&format=webp')
@@ -264,6 +271,7 @@ const structuredData = [
   canonical={canonicalUrl}
   structuredData={structuredData}
   ogImage={ogImage}
+  noindex={NOINDEX_SLUGS.has(post.slug)}
 >
   <div class="cf-layout page-wrapper">
     <HeaderBase currentPath={`/blog/${post.slug}`} />
@@ -572,7 +580,7 @@ const structuredData = [
   }.blog-article__badge{
     display: inline-block;
     background: #f9dd0e;
-    color: #fff;
+    color: #26275D;
     font-size: 1rem;
     font-weight: 700;
     padding: 0.2rem 0.6rem;
@@ -580,7 +588,7 @@ const structuredData = [
     letter-spacing: 0.02em;
     text-decoration: none;
     transition: background 0.15s;
-  }.blog-article__badge:hover{ background: #26275D; }.blog-article__readtime{
+  }.blog-article__badge:hover{ background: #26275D; color: #fff; }.blog-article__readtime{
     font-size: 1rem;
     color: #64748b;
     font-weight: 500;
@@ -1162,6 +1170,7 @@ const structuredData = [
 </style>
 
 <script>
+// @ts-nocheck
   // Reading progress bar
   const bar = document.getElementById('readingBar');
   const article = document.querySelector('.blog-article');

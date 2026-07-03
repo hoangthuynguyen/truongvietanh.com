@@ -116,8 +116,9 @@ function getClient() {
   const url = getDirectusUrl();
   if (!url) return null;
   const token = getServerToken();
-  const base = createDirectus<Schema>(url).with(rest());
-  return token ? base.with(staticToken(token)) : base;
+  return token
+    ? createDirectus<Schema>(url).with(staticToken(token)).with(rest())
+    : createDirectus<Schema>(url).with(rest());
 }
 
 /**
@@ -129,7 +130,7 @@ export async function getTraiHePageBySlug(slug: string): Promise<TraiHePage | nu
     if (client) {
       try {
         const items = await client.request(
-          readItems('trai_he_squeeze_pages', {
+          readItems('trai_he_squeeze_pages' as never, {
             filter: { slug: { _eq: slug }, status: { _eq: 'published' } },
             limit: 1,
           }) as never,
@@ -157,7 +158,7 @@ export async function getAllTraiHeSlugs(): Promise<string[]> {
     if (client) {
       try {
         const items = await client.request(
-          readItems('trai_he_squeeze_pages', {
+          readItems('trai_he_squeeze_pages' as never, {
             filter: { status: { _eq: 'published' } },
             fields: ['slug'],
             limit: 100,

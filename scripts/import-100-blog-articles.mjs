@@ -19,8 +19,8 @@ import fs from 'fs';
 import path from 'path';
 
 const SRC_DIR = '/Users/manhduongnguyen/Library/CloudStorage/GoogleDrive-duong@truongvietanh.com/My Drive/2. Areas/AI/Codex Blog/truongvietanh.com articles/100 bài tách riêng';
-const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL || 'http://45.88.188.169:8055';
-const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN || 'tva_0b80f9b6cc9c494d98faf0a2a1a966e7';
+const DIRECTUS_URL = process.env.PUBLIC_DIRECTUS_URL;
+const DIRECTUS_TOKEN = process.env.DIRECTUS_TOKEN;
 
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes('--dry-run');

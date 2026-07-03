@@ -3,12 +3,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import { createDirectus, readItems, rest, staticToken } from '@directus/sdk';
+import { readItems } from '@directus/sdk';
+import { createCmsClient } from '../lib/directus';
 
 type Post = {
   id: number | string;
   title: string;
   slug: string;
+  status?: string | null;
   excerpt?: string | null;
   published_at?: string | null;
 };
@@ -21,12 +23,8 @@ let posts: Post[] = [];
 let error: string | null = null;
 
 try {
-  const url = import.meta.env.PUBLIC_DIRECTUS_URL?.trim() || 'http://45.88.188.169:8055';
-  const token = import.meta.env.DIRECTUS_TOKEN?.trim() || '';
-
-  const client = token
-    ? createDirectus<DirectusSchema>(url).with(staticToken(token)).with(rest())
-    : createDirectus<DirectusSchema>(url).with(rest());
+  const client = createCmsClient<DirectusSchema>();
+  if (!client) throw new Error('CMS chưa cấu hình');
 
   posts = await client.request(
     readItems('posts', {
@@ -333,7 +331,7 @@ const faqItems = [
     </section>
 
     <!-- CTA -->
-    <section style="max-width: 600px; margin: 0 auto 3rem; padding: 0 1.5rem; text-align: center;">
+    <section style="max-width: 600px; margin: 0 auto 3rem; padding: 0 1.5rem; text-align: center;" data-form-bg="light">
       <h2 style="font-size: 1.4rem; font-weight: 700; color: #26275D; margin-bottom: 0.5rem;">Đăng ký nhận tư vấn cá nhân hóa lộ trình học tập</h2>
       <p style="color: #64748b; margin-bottom: 1.5rem; font-size: 1rem;">Tìm hiểu chương trình phù hợp cho con — phản hồi trong 24 giờ</p>
       <LeadFormTwoStepEmailFirst

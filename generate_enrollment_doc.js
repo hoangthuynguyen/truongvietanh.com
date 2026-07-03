@@ -381,7 +381,7 @@ children.push(
     'Library (resources, quiet space)',
     'Playground/Sports (facilities)',
     'Cafeteria (nutrition, safety)',
-    'Teacher's lounge (expert staff)',
+    "Teacher's lounge (expert staff)",
     'Admin office (tổ chức hành chính)'
   ]),
   createParagraph('Highlight points: Safety features, technology integration, student feedback posted.'),

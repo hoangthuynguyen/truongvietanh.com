@@ -1,0 +1,128 @@
+---
+import SqueezePageLayout from '../../../../layouts/SqueezePageLayout.astro';
+import LeadFormTwoStepEmailFirst from '../../../../components/LeadFormTwoStepEmailFirst.astro';
+import USPGrid from '../../../../components/USPGrid.astro';
+import TrustMetrics from '../../../../components/TrustMetrics.astro';
+import FAQSection from '../../../../components/FAQSection.astro';
+
+const pageTitle = 'Tham Quan Mầm Non Việt Anh — Trải Nghiệm Cơ Sở Trước Khi Quyết Định';
+const pageDescription = 'Đặt lịch tham quan miễn phí Mầm Non Việt Anh: xem lớp học, khu vui chơi, phòng ngủ, bếp ăn, gặp cô giáo và giáo viên bản ngữ, bé chơi thử lớp trải nghiệm, tư vấn 1-1.';
+const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/tham-quan-truong';
+
+const uspItems = [
+  { icon: '👀', text: 'Tham quan toàn bộ cơ sở — Lớp học, khu vui chơi trong nhà & ngoài trời, phòng ngủ, bếp ăn' },
+  { icon: '👩‍🏫', text: 'Gặp cô giáo Việt Nam & giáo viên bản ngữ — Hiểu cách chăm sóc và dạy bé thực tế' },
+  { icon: '🧸', text: 'Bé tham gia lớp trải nghiệm — Chơi và học thử cùng các bạn trong lớp thật' },
+  { icon: '🤝', text: 'Tư vấn 1-1 từ chuyên gia Tuyển sinh — Trả lời mọi thắc mắc về chăm sóc bé' },
+  { icon: '🕐', text: 'Linh hoạt lịch hẹn — Sáng, chiều, thứ 7 đều được' },
+  { icon: '💝', text: 'Quà tặng cho bé + Brochure chi tiết cho ba/mẹ' }
+];
+
+const metrics = [
+  { number: '15+', label: 'Năm kinh nghiệm giáo dục' },
+  { number: '≤15', label: 'Bé mỗi lớp — chăm sóc sát sao' },
+  { number: '4.9/5', label: 'Đánh giá từ 300+ phụ huynh' },
+  { number: '60-90', label: 'Phút tham quan trọn vẹn' }
+];
+
+const faqItems = [
+  {
+    question: 'Buổi tham quan bao gồm những gì và kéo dài bao lâu?',
+    answer: 'Buổi tham quan kéo dài 60-90 phút và bao gồm 4 phần: (1) Tham quan toàn bộ cơ sở — lớp học với góc Montessori, khu vui chơi trong nhà và ngoài trời, phòng ngủ, bếp ăn và thực đơn dinh dưỡng, (2) Gặp gỡ và trao đổi với cô giáo Việt Nam và giáo viên bản ngữ, (3) Bé tham gia lớp trải nghiệm để chơi và làm quen với các bạn, (4) Tư vấn cá nhân 1-1 với chuyên gia Tuyển sinh — trả lời mọi câu hỏi về chương trình, học phí, chế độ chăm sóc và lộ trình phù hợp cho bé. Chúng tôi không vội vã — ba/mẹ có đủ thời gian để cảm nhận và đặt câu hỏi.'
+  },
+  {
+    question: 'Bé có thể đi cùng và tham gia lớp trải nghiệm không?',
+    answer: 'Không chỉ được mà chúng tôi rất khuyến khích! Bé sẽ được vào lớp học thật, chơi và tham gia hoạt động cùng các bạn đồng trang lứa dưới sự hướng dẫn của cô giáo. Đây là cách tốt nhất để ba/mẹ quan sát: bé có thích không gian lớp học không, có thoải mái với cô và các bạn không. Nhiều bé sau buổi trải nghiệm đã quấn quýt không muốn về — vì các con cảm thấy vui và được chào đón. Cô giáo cũng sẽ chia sẻ nhận xét ban đầu về bé với ba/mẹ.'
+  },
+  {
+    question: 'Có cần đặt lịch trước không? Lịch tham quan linh hoạt thế nào?',
+    answer: 'Ba/mẹ nên đặt lịch trước để nhà trường chuẩn bị tốt nhất — mỗi buổi chỉ nhận tối đa 5 gia đình để đảm bảo mỗi gia đình nhận được sự chú ý cá nhân đầy đủ. Lịch tham quan rất linh hoạt: ba/mẹ có thể chọn buổi sáng (8h-11h), buổi chiều (14h-16h), hoặc thứ 7 (9h-12h) — phù hợp với lịch làm việc bận rộn. Sau khi ba/mẹ đăng ký, bộ phận Tuyển sinh sẽ liên hệ trong vòng 24 giờ để xác nhận lịch hẹn và hướng dẫn đường đi đến cơ sở gần nhất.'
+  },
+  {
+    question: 'Tham quan cơ sở nào? Địa chỉ ở đâu?',
+    answer: 'Cơ sở chuyên Mầm non của Việt Anh tại TP.HCM đặt tại 573 Lê Đức Thọ, P.16, Q. Gò Vấp — toàn bộ không gian được thiết kế riêng cho trẻ 13 tháng đến 6 tuổi, có bể bơi riêng cho bé, sân chơi ngoài trời và phòng nghệ thuật. Hệ thống còn có các cơ sở mầm non tại Tây Ninh (Nhân Lễ, Thái Sơn) và An Giang (Mekong Xanh) với cùng chương trình và tiêu chuẩn. Khi đăng ký, chuyên viên Tuyển sinh sẽ xác nhận lịch và hướng dẫn đường đi thuận tiện nhất cho ba/mẹ.'
+  },
+  {
+    question: 'Sau buổi tham quan, tôi có bị áp lực đăng ký ngay không?',
+    answer: 'Tuyệt đối không. Buổi tham quan là để ba/mẹ và bé trải nghiệm thực tế, thu thập thông tin, và đặt mọi câu hỏi cần thiết. Chúng tôi không bao giờ gây áp lực hay "ép" phụ huynh đăng ký tại chỗ. Sau tham quan, ba/mẹ có thể về nhà suy nghĩ, trao đổi với gia đình, so sánh với các trường khác. Chuyên viên Tuyển sinh sẽ follow-up lịch sự để giải đáp thêm thắc mắc, nhưng quyết định hoàn toàn thuộc về ba/mẹ. Chúng tôi muốn ba/mẹ chọn Việt Anh vì thật sự tin tưởng, không phải vì bị thúc ép.'
+  }
+];
+---
+
+<SqueezePageLayout
+  title={pageTitle}
+  description={pageDescription}
+  keywords="tham quan trường mầm non, school tour, mầm non song ngữ, trường Việt Anh, lớp trải nghiệm, tư vấn tuyển sinh"
+  schoolLevel="mau-non"
+  funnelCode="tour-mam-non"
+  canonicalUrl={canonicalUrl}
+>
+  <div slot="hero">
+    <h1 class="hero-h1">Tham Quan Mầm Non Việt Anh<br/>Trải Nghiệm Cơ Sở Trước Khi Quyết Định</h1>
+    <p class="hero-subtitle">Miễn phí — Bé chơi thử lớp thật + Gặp cô giáo & giáo viên bản ngữ + Tư vấn 1-1 từ chuyên gia</p>
+  </div>
+
+  <div slot="usp">
+    <USPGrid items={uspItems} />
+  </div>
+
+  <div slot="trust">
+    <TrustMetrics metrics={metrics} />
+  </div>
+
+  <div slot="content">
+    <div class="content-section hero-image-section">
+      <img src="https://media.truongvietanh.com/images/giao-vien-07.webp" alt="Cô giáo Mầm Non Việt Anh cùng các bé trong lớp học" class="hero-content-image" width="800" height="450" loading="lazy" />
+      <p class="image-caption">Không khí ấm áp và an toàn tại lớp học Mầm Non Việt Anh</p>
+    </div>
+
+    <div class="content-section">
+      <h2>Buổi Tham Quan — Ba/Mẹ và Bé Sẽ Trải Nghiệm Gì?</h2>
+      <div class="content-grid">
+        <div class="content-card">
+          <h3>Tham Quan Toàn Bộ Không Gian Của Bé</h3>
+          <p>Ba/mẹ sẽ được nhân viên tuyển sinh dẫn tham quan tất cả khu vực bé sinh hoạt mỗi ngày: lớp học với góc Montessori và học liệu SteamE, khu vui chơi trong nhà và sân chơi ngoài trời, phòng ngủ sạch sẽ thoáng mát, bếp ăn một chiều với thực đơn do chuyên gia dinh dưỡng thiết kế. Ba/mẹ có thể quan sát trực tiếp quy trình an toàn — từ camera lớp học, cổng đón trả bé, đến cách cô giáo vệ sinh đồ chơi. Mỗi không gian được thiết kế cho trẻ 2–5 tuổi: vừa tầm với của bé, an toàn tối đa và khơi gợi khám phá.</p>
+        </div>
+        <div class="content-card">
+          <h3>Gặp Gỡ Cô Giáo — Cảm Nhận Cách Chăm Sóc Thực Tế</h3>
+          <p>Ba/mẹ sẽ gặp trực tiếp cô giáo Việt Nam và giáo viên bản ngữ — những người sẽ đồng hành cùng bé mỗi ngày. Đây là dịp để trao đổi về phương pháp học qua chơi có chủ đích, môi trường tiếng Anh immersion tự nhiên, cách cô xử lý khi bé khóc, biếng ăn hay chưa quen lớp. Với sĩ số nhỏ tối đa 15 bé mỗi lớp, mỗi bé đều được cô quan sát và hỗ trợ theo tiến trình riêng — ba/mẹ sẽ cảm nhận được sự tận tâm của đội ngũ ngay trong buổi gặp đầu tiên.</p>
+        </div>
+        <div class="content-card">
+          <h3>Bé Chơi Thử Lớp Trải Nghiệm — Quan Sát Phản Ứng Thực Tế</h3>
+          <p>Thay vì chỉ nghe giới thiệu, bé nhà ba/mẹ sẽ được vào lớp thật, chơi cùng các bạn đồng trang lứa và tham gia hoạt động với cô giáo. Ba/mẹ có thể quan sát từ bên ngoài — bé có hào hứng với đồ chơi và hoạt động không? Bé có thoải mái với cô và các bạn không? Đây là "phép thử" chính xác nhất mà không có brochure hay video quảng cáo nào thay thế được, đặc biệt quan trọng với các bé lần đầu đi học.</p>
+        </div>
+        <div class="content-card">
+          <h3>Tư Vấn Cá Nhân 1-1 — Mọi Câu Hỏi Đều Được Giải Đáp</h3>
+          <p>Sau phần tham quan, ba/mẹ sẽ có 20-30 phút riêng với chuyên gia Tuyển sinh để trao đổi chi tiết: chương trình phù hợp theo độ tuổi của bé, mức học phí cụ thể và các ưu đãi hiện tại, chế độ bán trú và dinh dưỡng, cách nhà trường hỗ trợ bé trong giai đoạn làm quen trường lớp. Không có câu hỏi nào bị bỏ qua — từ chính sách xe đưa đón đến cách cô thông tin tình hình của bé cho ba/mẹ mỗi ngày. Chúng tôi muốn ba/mẹ ra về với đầy đủ thông tin để đưa ra quyết định đúng đắn nhất cho con.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-section bonus-section">
+      <h2 style="color: #26275D;">Bonus: Quà Tặng Cho Bé & Brochure Chi Tiết Cho Ba/Mẹ</h2>
+      <p style="font-size: 1.05rem; line-height: 1.8; color: #333; text-align: center; max-width: 800px; margin: 0 auto;">
+        Mỗi bé tham quan sẽ nhận <strong>một phần quà nhỏ</strong> từ nhà trường — để bé có kỷ niệm vui vẻ với buổi đến trường đầu tiên và cảm thấy được chào đón. Ba/mẹ sẽ nhận <strong>brochure chi tiết</strong> về chương trình Mầm Non song ngữ (100% tiếng Anh immersion, Montessori + SteamE), bảng học phí minh bạch không phụ phí ẩn, thực đơn dinh dưỡng mẫu, và thông tin các cơ sở tại TP.HCM. Tất cả thông tin ba/mẹ cần để so sánh, trao đổi với gia đình, và đưa ra quyết định — đều có trong brochure này. Nếu cần thêm thông tin sau buổi tham quan, gọi <strong>0916 961 409</strong> hoặc nhắn Zalo — chuyên viên Tuyển sinh luôn sẵn sàng hỗ trợ.
+      </p>
+    </div>
+  </div>
+
+  <div slot="form">
+    <h2 class="form-heading">Đặt Lịch Tham Quan Miễn Phí Ngay Hôm Nay</h2>
+    <p class="form-subheading">Linh hoạt sáng, chiều, thứ 7 — Bộ phận Tuyển sinh sẽ xác nhận lịch trong 24h</p>
+    <LeadFormTwoStepEmailFirst
+      formId="tour-mam-non-form"
+      funnelCode="tour-mam-non"
+      schoolLevel="mau-non"
+      submitText="Đặt lịch tham quan"
+      successMessage="Đã nhận yêu cầu! Bộ phận Tuyển sinh sẽ liên hệ trong 24h để xác nhận lịch tham quan và hướng dẫn đường đi."
+    />
+  </div>
+
+  <div slot="faq">
+    <FAQSection items={faqItems} title="Câu hỏi về Tham quan Mầm Non Việt Anh" />
+  </div>
+</SqueezePageLayout>
+
+<style>.hero-h1{ font-family: "Montserrat", sans-serif; font-size: clamp(1.75rem, 5vw, 2.75rem); font-weight: 800; line-height: 1.2; margin-bottom: 1rem; color: #26275D; }.hero-subtitle{ font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 500; opacity: 0.95; color: #26275D; }.content-section{ margin-bottom: 3rem; }.content-section h2{ font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; margin-bottom: 2rem; color: #26275D; text-align: center; }.content-grid{ display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; }.content-card{ padding: 2rem; background: white; border: 2px solid #e0e0e0; border-radius: 12px; transition: all 0.3s ease; }.content-card:hover{ border-color: #f9dd0e; box-shadow: 0 8px 20px rgba(249, 221, 14, 0.12); transform: translateY(-4px); }.content-card h3{ font-family: "Montserrat", sans-serif; font-size: 1.5rem; font-weight: 700; color: #26275D; margin-bottom: 1rem; }.content-card p{ font-size: 1rem; line-height: 1.7; color: #555; }.bonus-section{ background: linear-gradient(135deg, #FFF8F0 0%, #FFFBF7 100%); padding: 2rem; border-left: 5px solid #f9dd0e; border-radius: 8px; }.form-heading{ font-family: "Montserrat", sans-serif; font-size: clamp(1.5rem, 4vw, 2rem); font-weight: 700; color: #f9dd0e; margin-bottom: 0.5rem; }.form-subheading{ font-size: 1rem; color: rgba(255,255,255,0.85); margin-bottom: 2rem; font-weight: 500; }.hero-image-section{ text-align: center; margin-bottom: 2rem; }.hero-content-image{ width: 100%; max-width: 800px; height: auto; border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.12); }.image-caption{ font-size: 1rem; color: #5c6e80; margin-top: 0.75rem; font-style: italic; }
+  @media (max-width: 768px) {.content-grid{ grid-template-columns: 1fr; }.content-card{ padding: 1.5rem; }.bonus-section{ padding: 1.5rem; } }
+</style>

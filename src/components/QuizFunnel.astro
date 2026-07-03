@@ -369,8 +369,9 @@ const quizId = `quiz-${funnelCode}`;
       if (!name.value || name.value.trim().length < 2) {
         setError(name, 'Vui lòng nhập họ tên');
       }
-      if (!phone.value || phone.value.replace(/\D/g,'').length < 9) {
-        setError(phone, 'Vui lòng nhập số điện thoại hợp lệ');
+      var phoneNorm = String(phone.value || '').replace(/[\s\-\.\(\)]/g, '').replace(/^\+?84/, '0');
+      if (!/^0[35789][0-9]{8}$/.test(phoneNorm)) {
+        setError(phone, 'Số điện thoại chưa đúng — nhập số di động VN 10 số (VD: 0912 345 678)');
       }
 
       if (!valid) return;

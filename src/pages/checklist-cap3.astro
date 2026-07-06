@@ -806,6 +806,7 @@ var UTM=(function(){
     if(v)out[k]=v;
   });
   if(!out.utm_source){out.utm_source='direct';out.utm_medium='none';}
+  out.page_url=location.href;
   return out;
 })();
 

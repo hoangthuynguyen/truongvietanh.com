@@ -184,12 +184,20 @@ function resolveKhoiQuanTam(schoolLevel, grade) {
 // Suy ra nhãn kênh MKT từ utm_source/utm_medium để sales đọc nhanh:
 // "Google Ads" / "Facebook Ads" / "Organic"... — chịu được cả tên chiến dịch
 // lộn xộn (vd 'New-Search-VA-...-PerformanMaxCamp' → Google Ads).
-function channelLabel(src, med) {
+function channelLabel(src, med, url) {
   const s = String(src || '').toLowerCase().trim();
   const m = String(med || '').toLowerCase().trim();
+  const u = String(url || '').toLowerCase();
+  const noSrc = !s || s === 'direct' || s === 'website' || s === '(direct)';
+  // Ads dù KHÔNG gắn UTM thủ công: Facebook tự thêm fbclid, Google tự thêm
+  // gclid/gbraid/wbraid, TikTok tự thêm ttclid vào URL khi user click.
+  if (noSrc) {
+    if (/[?&]fbclid=/.test(u)) return 'Facebook Ads';
+    if (/[?&](gclid|gbraid|wbraid|gclsrc)=/.test(u)) return 'Google Ads';
+    if (/[?&]ttclid=/.test(u)) return 'TikTok Ads';
+  }
   // Vào thẳng / không có UTM quảng cáo → Organic
-  if (!s || s === 'direct' || s === 'website' || s === '(direct)' ||
-      m === 'none' || m === 'lead-form' || m === 'organic' || m === 'referral') {
+  if (noSrc || m === 'none' || m === 'lead-form' || m === 'organic' || m === 'referral') {
     return 'Organic';
   }
   const t = s + ' ' + m;
@@ -535,7 +543,7 @@ async function handleLeadSubmission(request, env) {
         // page + nhãn kênh trong ngoặc để sales đọc nhanh, vd:
         //   "lop10-noitru (Google Ads)" · "squeeze-hoc-phi (Facebook Ads)" · "tieu-hoc-pillar (Organic)"
         if (data.source) {
-          record.dien_giai_nguon_mkt = data.source + ' (' + channelLabel(data.utmSource, data.utmMedium) + ')';
+          record.dien_giai_nguon_mkt = data.source + ' (' + channelLabel(data.utmSource, data.utmMedium, data.page) + ')';
         }
 
         const pancakeRes = await fetch(

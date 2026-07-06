@@ -127,7 +127,61 @@ export default {
     }
     return response;
   },
+
+  // Cron (khai báo ở wrangler.jsonc "triggers.crons"): tự gắn nhãn kênh cho
+  // lead Facebook/Zalo Messenger MỚI (do Pancake kéo về, không qua website).
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(labelNewInboxLeads(env));
+  },
 };
+
+// Suy nhãn kênh cho lead INBOX (Messenger/Zalo) từ ad_id + source của Pancake.
+// Chỉ đụng lead inbox đang TRỐNG nhãn — KHÔNG chạm lead website (đã có nhãn sẵn).
+function inboxChannelLabel(e) {
+  if (e.dien_giai_nguon_mkt) return null;                      // đã có nhãn
+  if (!e.conversation_id && !e.ad_id && !e.ad_id_fb) return null; // không phải inbox → bỏ
+  const adId = e.ad_id || (Array.isArray(e.ad_id_fb) ? e.ad_id_fb[0] : e.ad_id_fb);
+  const src = Array.isArray(e.source) ? e.source : [];
+  const s0 = String(src[0] || '');
+  const s1 = String(src[1] || '').toLowerCase();
+  if (adId) return 'Facebook Ads';
+  if (s0 === '-2' || /^p?zl_/.test(s1)) return 'Zalo';
+  if (s0 === '-1') return 'Facebook (organic)';
+  return null;
+}
+
+async function labelNewInboxLeads(env) {
+  const key = env.PANCAKE_API_KEY;
+  if (!key) { console.error('[cron] thiếu PANCAKE_API_KEY'); return; }
+  const BASE = `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records`;
+  const MAX_PAGES = 3, MAX_UPDATES = 40;
+  let cursor = '', scanned = 0, updated = 0;
+  for (let p = 0; p < MAX_PAGES && updated < MAX_UPDATES; p++) {
+    let d;
+    try {
+      const res = await fetch(`${BASE}?api_key=${key}&page_size=100${cursor ? '&cursor=' + encodeURIComponent(cursor) : ''}`,
+        { headers: { Accept: 'application/json' } });
+      d = await res.json();
+    } catch (err) { console.error('[cron] fetch lỗi', err); break; }
+    const rows = (d.data && d.data.entries) || [];
+    if (!rows.length) break;
+    for (const e of rows) {
+      scanned++;
+      const label = inboxChannelLabel(e);
+      if (!label || updated >= MAX_UPDATES) continue;
+      try {
+        const r = await fetch(`${BASE}?api_key=${key}`, {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ record: { id: e.id, dien_giai_nguon_mkt: label } }),
+        });
+        if (r.ok) updated++;
+      } catch (err) { /* lead lỗi (trùng SĐT 422...) → bỏ qua */ }
+    }
+    cursor = d.data && d.data.cursor;
+    if (!cursor) break;
+  }
+  console.log(`[cron] inbox labels: quét ${scanned}, gắn ${updated}`);
+}
 
 // === R2 MEDIA HANDLER ===
 async function handleR2Media(request, env, url) {

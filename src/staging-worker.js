@@ -207,7 +207,7 @@ function channelLabel(src, med, url) {
   if (/tiktok|\btt\b|ttclid/.test(s))      return paid ? 'TikTok Ads'    : 'TikTok';
   if (/zalo/.test(s))                      return paid ? 'Zalo Ads'      : 'Zalo';
   if (/instagram|\big\b/.test(s))          return paid ? 'Instagram Ads' : 'Instagram';
-  if (/facebook|\bfb\b|meta|messenger|fanpage/.test(s)) return paid ? 'Facebook Ads' : 'Facebook (Fanpage)';
+  if (/facebook|\bfb\b|meta|messenger|fanpage/.test(s)) return paid ? 'Facebook Ads' : 'Facebook Fanpage';
   if (/email|edm|newsletter/.test(s) || /email|edm/.test(m)) return 'Email';
   if (m === 'none' || m === 'lead-form' || m === 'organic' || m === 'referral') return 'Organic';
   if (paid) return 'Paid Ads';

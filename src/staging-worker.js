@@ -181,6 +181,30 @@ function resolveKhoiQuanTam(schoolLevel, grade) {
   return KHOI_QUAN_TAM_MAP[key] || null;
 }
 
+// Suy ra nhãn kênh MKT từ utm_source/utm_medium để sales đọc nhanh:
+// "Google Ads" / "Facebook Ads" / "Organic"... — chịu được cả tên chiến dịch
+// lộn xộn (vd 'New-Search-VA-...-PerformanMaxCamp' → Google Ads).
+function channelLabel(src, med) {
+  const s = String(src || '').toLowerCase().trim();
+  const m = String(med || '').toLowerCase().trim();
+  // Vào thẳng / không có UTM quảng cáo → Organic
+  if (!s || s === 'direct' || s === 'website' || s === '(direct)' ||
+      m === 'none' || m === 'lead-form' || m === 'organic' || m === 'referral') {
+    return 'Organic';
+  }
+  const t = s + ' ' + m;
+  if (/facebook|fbclid|\bfb\b|meta|instagram|\big\b|messenger|zalo/.test(t)) {
+    return /zalo/.test(t) ? 'Zalo Ads' : 'Facebook Ads';
+  }
+  if (/google|gclid|adwords|gads|\bgg\b|youtube|\byt\b|gdn|pmax|performanmax|performancemax|search/.test(t)) {
+    return 'Google Ads';
+  }
+  if (/tiktok|\btt\b|ttclid/.test(t)) return 'TikTok Ads';
+  if (/email|edm|newsletter/.test(t)) return 'Email';
+  if (/cpc|ppc|paid|cpm|\bads\b|display/.test(m)) return 'Paid Ads';
+  return src ? String(src) : 'Organic';
+}
+
 function normalizeFormData(data) {
   return {
     step: data.step || 'full_submit',
@@ -507,9 +531,12 @@ async function handleLeadSubmission(request, env) {
         // trả 422 và lead bị loại. Funnel/campaign đã được lưu riêng ở utm_campaign.
         record.nguon_khach_hang_omi = 'website';
 
-        // "Diễn giải nguồn MKT" (dien_giai_nguon_mkt) là TEXT tự do → ghi rõ funnel/landing
-        // page để sales biết lead đến từ trang nào (giống nguồn chi tiết bên GHL).
-        if (data.source) record.dien_giai_nguon_mkt = data.source;
+        // "Diễn giải nguồn MKT" (dien_giai_nguon_mkt) là TEXT tự do → ghi funnel/landing
+        // page + nhãn kênh trong ngoặc để sales đọc nhanh, vd:
+        //   "lop10-noitru (Google Ads)" · "squeeze-hoc-phi (Facebook Ads)" · "tieu-hoc-pillar (Organic)"
+        if (data.source) {
+          record.dien_giai_nguon_mkt = data.source + ' (' + channelLabel(data.utmSource, data.utmMedium) + ')';
+        }
 
         const pancakeRes = await fetch(
           `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records?api_key=${pancakeApiKey}`,

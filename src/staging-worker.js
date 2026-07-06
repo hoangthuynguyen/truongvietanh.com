@@ -181,35 +181,36 @@ function resolveKhoiQuanTam(schoolLevel, grade) {
   return KHOI_QUAN_TAM_MAP[key] || null;
 }
 
-// Suy ra nhãn kênh MKT từ utm_source/utm_medium để sales đọc nhanh:
-// "Google Ads" / "Facebook Ads" / "Organic"... — chịu được cả tên chiến dịch
-// lộn xộn (vd 'New-Search-VA-...-PerformanMaxCamp' → Google Ads).
+// Suy ra nhãn kênh MKT từ utm_source/utm_medium để sales đọc nhanh.
+// Tách NỀN TẢNG (Facebook/YouTube/TikTok...) và PHÂN BIỆT trả phí vs organic:
+//   - có utm_medium cpc/paid... → "<nền tảng> Ads"  (vd "Facebook Ads")
+//   - còn lại (social/post/bio)  → nền tảng organic  (vd "YouTube", "Facebook (Fanpage)")
+// Chịu được tên chiến dịch lộn xộn (vd 'New-Search-VA-...-PerformanMaxCamp' → Google Ads).
 function channelLabel(src, med, url) {
   const s = String(src || '').toLowerCase().trim();
   const m = String(med || '').toLowerCase().trim();
   const u = String(url || '').toLowerCase();
   const noSrc = !s || s === 'direct' || s === 'website' || s === '(direct)';
-  // Ads dù KHÔNG gắn UTM thủ công: Facebook tự thêm fbclid, Google tự thêm
-  // gclid/gbraid/wbraid, TikTok tự thêm ttclid vào URL khi user click.
+
+  // KHÔNG có utm_source → dựa vào click-id nền tảng tự thêm vào URL khi user click.
   if (noSrc) {
-    if (/[?&]fbclid=/.test(u)) return 'Facebook Ads';
-    if (/[?&](gclid|gbraid|wbraid|gclsrc)=/.test(u)) return 'Google Ads';
-    if (/[?&]ttclid=/.test(u)) return 'TikTok Ads';
-  }
-  // Vào thẳng / không có UTM quảng cáo → Organic
-  if (noSrc || m === 'none' || m === 'lead-form' || m === 'organic' || m === 'referral') {
+    if (/[?&](gclid|gbraid|wbraid|gclsrc)=/.test(u)) return 'Google Ads'; // gclid CHỈ có từ Google Ads
+    if (/[?&]fbclid=/.test(u)) return 'Facebook';   // fbclid có ở cả ads LẪN post organic → chỉ chắc "từ Facebook"
+    if (/[?&]ttclid=/.test(u)) return 'TikTok';
     return 'Organic';
   }
-  const t = s + ' ' + m;
-  if (/facebook|fbclid|\bfb\b|meta|instagram|\big\b|messenger|zalo/.test(t)) {
-    return /zalo/.test(t) ? 'Zalo Ads' : 'Facebook Ads';
-  }
-  if (/google|gclid|adwords|gads|\bgg\b|youtube|\byt\b|gdn|pmax|performanmax|performancemax|search/.test(t)) {
-    return 'Google Ads';
-  }
-  if (/tiktok|\btt\b|ttclid/.test(t)) return 'TikTok Ads';
-  if (/email|edm|newsletter/.test(t)) return 'Email';
-  if (/cpc|ppc|paid|cpm|\bads\b|display/.test(m)) return 'Paid Ads';
+
+  const paid = /cpc|ppc|paid|cpm|display|banner|\bads?\b/.test(m);
+  // Google Search / Performance Max / GDN — luôn là quảng cáo trả phí
+  if (/google|gclid|adwords|gads|\bgg\b|gdn|pmax|performanmax|performancemax|\bsearch\b/.test(s)) return 'Google Ads';
+  if (/youtube|\byt\b/.test(s))            return paid ? 'YouTube Ads'   : 'YouTube';
+  if (/tiktok|\btt\b|ttclid/.test(s))      return paid ? 'TikTok Ads'    : 'TikTok';
+  if (/zalo/.test(s))                      return paid ? 'Zalo Ads'      : 'Zalo';
+  if (/instagram|\big\b/.test(s))          return paid ? 'Instagram Ads' : 'Instagram';
+  if (/facebook|\bfb\b|meta|messenger|fanpage/.test(s)) return paid ? 'Facebook Ads' : 'Facebook (Fanpage)';
+  if (/email|edm|newsletter/.test(s) || /email|edm/.test(m)) return 'Email';
+  if (m === 'none' || m === 'lead-form' || m === 'organic' || m === 'referral') return 'Organic';
+  if (paid) return 'Paid Ads';
   return src ? String(src) : 'Organic';
 }
 

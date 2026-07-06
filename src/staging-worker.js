@@ -507,6 +507,10 @@ async function handleLeadSubmission(request, env) {
         // trả 422 và lead bị loại. Funnel/campaign đã được lưu riêng ở utm_campaign.
         record.nguon_khach_hang_omi = 'website';
 
+        // "Diễn giải nguồn MKT" (dien_giai_nguon_mkt) là TEXT tự do → ghi rõ funnel/landing
+        // page để sales biết lead đến từ trang nào (giống nguồn chi tiết bên GHL).
+        if (data.source) record.dien_giai_nguon_mkt = data.source;
+
         const pancakeRes = await fetch(
           `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records?api_key=${pancakeApiKey}`,
           {

@@ -754,11 +754,11 @@ a{color:inherit;text-decoration:none}
   function doSubmit(name, email, phone, grade, formId){
     var el = document.getElementById(formId);
     if(el){ el.style.opacity='.5'; el.style.pointerEvents='none'; }
-    var payload = JSON.stringify({
+    var payload = JSON.stringify(Object.assign({
       fullName:name, email:email, phone:phone, childGrade:grade,
       source:SRC, funnel_code:FC, school_level:LVL,
       page_url:location.href, submitted_at:new Date().toISOString()
-    });
+    },(window.__vaUTM||(window.__vaUTM=function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}return o}))()));
     localStorage.setItem('lp_'+SRC, '1');
     var done=false;
     var go=function(){ if(!done){ done=true; window.location.href='/cam-on?name=' + encodeURIComponent(name); } };

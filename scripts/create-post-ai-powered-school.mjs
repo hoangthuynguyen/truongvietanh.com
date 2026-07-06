@@ -226,7 +226,7 @@ const post = {
   status: 'published',
   excerpt: 'Trường Việt Anh chính thức trở thành AI Powered School đầu tiên của Việt Nam từ năm học 2026-2027 — triển khai theo khung năng lực AI của UNESCO và 16 kỹ năng WEF Davos 2025.',
   content,
-  published_at: '2026-04-28T08:00:00',
+  published_at: '2026-06-09T08:00:00',
   category: 'tin-tuc',
   featured_image: IMG.hero,
 };

@@ -15,15 +15,17 @@ import type { Form } from '../types/cms';
 interface Props { form: Form; }
 const { form } = Astro.props;
 
-const step1Fields = form.fields.filter((f) => f.step === 1);
-const step2Fields = form.fields.filter((f) => f.step === 2);
-const step3Fields = form.fields.filter((f) => f.step === 3);
+// Guard: một form thiếu `fields` (dữ liệu CMS/seed lỗi) không được làm sập cả build.
+const allFields = Array.isArray(form?.fields) ? form.fields : [];
+const step1Fields = allFields.filter((f) => f.step === 1);
+const step2Fields = allFields.filter((f) => f.step === 2);
+const step3Fields = allFields.filter((f) => f.step === 3);
 const hasStep3 = step3Fields.length > 0;
 ---
 <div class="df-wrapper" data-form-id={form.id} data-variant={form.variant} data-funnel={form.funnel_code}>
   <form class="df-form" id={`form-${form.id}`} novalidate>
     {/* Honeypot (anti-spam) */}
-    {form.anti_spam.honeypot && (
+    {form.anti_spam?.honeypot && (
       <input type="text" name="_hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true" />
     )}
 
@@ -120,7 +122,7 @@ const hasStep3 = step3Fields.length > 0;
     )}
 
     {/* Turnstile (Cloudflare anti-bot) */}
-    {form.anti_spam.turnstile && (
+    {form.anti_spam?.turnstile && (
       <div class="cf-turnstile" data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITEKEY}></div>
     )}
 
@@ -130,7 +132,7 @@ const hasStep3 = step3Fields.length > 0;
     {form.school_level_default && <input type="hidden" name="school_level" value={form.school_level_default} />}
     {form.campus_default && <input type="hidden" name="campus_ref" value={form.campus_default} />}
     <input type="hidden" name="ghl_workflow_id" value={form.ghl_workflow_id || ''} />
-    <input type="hidden" name="lead_score_weight" value={form.lead_score_weight.toString()} />
+    <input type="hidden" name="lead_score_weight" value={(form.lead_score_weight ?? 0).toString()} />
   </form>
 
   <div class="df-success" hidden>
@@ -146,7 +148,7 @@ const hasStep3 = step3Fields.length > 0;
     funnelCode: form.funnel_code,
     thankYouPage: form.thank_you_page,
     successMode: form.success_mode,
-    turnstile: form.anti_spam.turnstile,
+    turnstile: form.anti_spam?.turnstile ?? false,
   }}
 >
   // Minimal client logic — full implementation delegated to /scripts/dynamic-form.js

@@ -272,11 +272,22 @@ function channelLabel(src, med, url) {
 //   paid = quảng cáo trả phí · organic = organic social (YouTube/Fanpage) · none = vào thẳng · email.
 // Nhờ vậy lọc "UTM Medium = paid" bắt đúng MỌI ads (kể cả chiến dịch Google ghi lộn xộn).
 function utmMediumFromChannel(ch, rawMedium) {
+  const m = String(rawMedium || '').toLowerCase().trim();
+  // GIỮ NGUYÊN giá trị chuẩn của team; chỉ đồng bộ cpc→paid, social→organic, lead-form→none.
+  const clean = {
+    paid: 'paid', cpc: 'paid', ppc: 'paid', ads: 'paid', cpm: 'paid',
+    organic: 'organic', social: 'organic',
+    referral: 'referral', direct: 'direct', email: 'email', edm: 'email',
+    affiliate: 'affiliate', affilicate: 'affiliate', offline: 'offline',
+    none: 'none', 'lead-form': 'none',
+  };
+  if (clean[m]) return clean[m];
+  // Giá trị LỘN XỘN (tên chiến dịch Google...) → suy từ nhãn kênh
   if (/Ads$/.test(ch)) return 'paid';
   if (ch === 'Email') return 'email';
   if (ch === 'YouTube' || ch === 'Facebook Fanpage' || ch === 'Instagram' || ch === 'TikTok' || ch === 'Zalo') return 'organic';
   if (ch === 'Organic') return 'none';
-  return rawMedium || 'lead-form';
+  return m || 'lead-form';
 }
 
 function normalizeFormData(data) {

@@ -268,13 +268,13 @@ function channelLabel(src, med, url) {
   return src ? String(src) : 'Organic';
 }
 
-// Chuẩn hóa utm_medium về giá trị LỌC ĐƯỢC trong Pancake, suy từ nhãn kênh:
-//   cpc = quảng cáo trả phí · social = organic social (YouTube/Fanpage) · none = organic/vào thẳng.
-// Nhờ vậy lọc "UTM Medium = cpc" bắt đúng MỌI ads (kể cả chiến dịch Google ghi lộn xộn).
+// Chuẩn hóa utm_medium về đúng CHUẨN TEAM (file build UTM của sếp), suy từ nhãn kênh:
+//   paid = quảng cáo trả phí · organic = organic social (YouTube/Fanpage) · none = vào thẳng · email.
+// Nhờ vậy lọc "UTM Medium = paid" bắt đúng MỌI ads (kể cả chiến dịch Google ghi lộn xộn).
 function utmMediumFromChannel(ch, rawMedium) {
-  if (/Ads$/.test(ch)) return 'cpc';
+  if (/Ads$/.test(ch)) return 'paid';
   if (ch === 'Email') return 'email';
-  if (ch === 'YouTube' || ch === 'Facebook Fanpage' || ch === 'Instagram' || ch === 'TikTok' || ch === 'Zalo') return 'social';
+  if (ch === 'YouTube' || ch === 'Facebook Fanpage' || ch === 'Instagram' || ch === 'TikTok' || ch === 'Zalo') return 'organic';
   if (ch === 'Organic') return 'none';
   return rawMedium || 'lead-form';
 }

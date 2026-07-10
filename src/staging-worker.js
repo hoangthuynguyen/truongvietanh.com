@@ -268,6 +268,17 @@ function channelLabel(src, med, url) {
   return src ? String(src) : 'Organic';
 }
 
+// Chuẩn hóa utm_medium về giá trị LỌC ĐƯỢC trong Pancake, suy từ nhãn kênh:
+//   cpc = quảng cáo trả phí · social = organic social (YouTube/Fanpage) · none = organic/vào thẳng.
+// Nhờ vậy lọc "UTM Medium = cpc" bắt đúng MỌI ads (kể cả chiến dịch Google ghi lộn xộn).
+function utmMediumFromChannel(ch, rawMedium) {
+  if (/Ads$/.test(ch)) return 'cpc';
+  if (ch === 'Email') return 'email';
+  if (ch === 'YouTube' || ch === 'Facebook Fanpage' || ch === 'Instagram' || ch === 'TikTok' || ch === 'Zalo') return 'social';
+  if (ch === 'Organic') return 'none';
+  return rawMedium || 'lead-form';
+}
+
 function normalizeFormData(data) {
   return {
     step: data.step || 'full_submit',
@@ -570,6 +581,7 @@ async function handleLeadSubmission(request, env) {
       if (!data.phone) {
         results.pancake = { skipped: true, reason: 'no_phone', note: 'Email-only lead → GHL only' };
       } else try {
+        const mktChannel = channelLabel(data.utmSource, data.utmMedium, data.page);
         const record = {
           // Pancake bắt buộc có Tên. Form chỉ thu email/SĐT (popup exit-intent,
           // blog subscribe) không có tên → fallback để lead vẫn vào CRM, không bị 422.
@@ -577,7 +589,7 @@ async function handleLeadSubmission(request, env) {
           email: data.email,
           phone_number: data.phone,
           utm_source: data.utmSource || 'website',
-          utm_medium: data.utmMedium || 'lead-form',
+          utm_medium: utmMediumFromChannel(mktChannel, data.utmMedium),
           utm_campaign: data.source || '',
         };
 
@@ -598,7 +610,7 @@ async function handleLeadSubmission(request, env) {
         // page + nhãn kênh trong ngoặc để sales đọc nhanh, vd:
         //   "lop10-noitru (Google Ads)" · "squeeze-hoc-phi (Facebook Ads)" · "tieu-hoc-pillar (Organic)"
         if (data.source) {
-          record.dien_giai_nguon_mkt = data.source + ' (' + channelLabel(data.utmSource, data.utmMedium, data.page) + ')';
+          record.dien_giai_nguon_mkt = data.source + ' (' + mktChannel + ')';
         }
 
         const pancakeRes = await fetch(

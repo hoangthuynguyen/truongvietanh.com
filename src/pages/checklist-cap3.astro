@@ -797,7 +797,7 @@ var email     = '';
 // ── UTM capture: đọc từ URL (?utm_source=...), lưu sessionStorage để giữ qua các bước,
 //    mặc định direct/none nếu không có → phân biệt lead quảng cáo vs organic/direct
 var UTM=(function(){
-  var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter'];
+  var keys=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'];
   var params=new URLSearchParams(location.search);
   keys.forEach(function(k){var v=params.get(k);if(v){try{sessionStorage.setItem('va_'+k,v);}catch(e){}}});
   var out={};

@@ -606,7 +606,8 @@ async function handleLeadSubmission(request, env) {
           phone_number: data.phone,
           utm_source: data.utmSource || 'website',
           utm_medium: utmMediumFromChannel(mktChannel, data.utmMedium),
-          utm_campaign: data.source || '',
+          // Giữ tên chiến dịch marketer đặt (file build UTM); nếu link không có thì dùng funnel trang.
+          utm_campaign: data.utmCampaign || data.source || '',
         };
         if (data.utmContent) record.utm_content = data.utmContent;
         if (data.utmTerm) record.utm_term = data.utmTerm;

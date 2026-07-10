@@ -294,6 +294,11 @@ function normalizeFormData(data) {
     utmSource: data.utm_source || data.utmSource || '',
     utmMedium: data.utm_medium || data.utmMedium || '',
     utmCampaign: data.utm_campaign || data.utmCampaign || '',
+    utmContent: data.utm_content || data.utmContent || '',
+    utmTerm: data.utm_term || data.utmTerm || '',
+    // "người chạy quảng cáo" — Pancake gán vào trường nguoi_chay để phân biệt lead
+    // của từng người (vd van.le / nghia.pham / huong.vo03). Marketer gắn ?utm_pke_mkter=<username> vào link ads.
+    pkeMkter: data.utm_pke_mkter || data.utmPkeMkter || data.pke_mkter || '',
     // Quiz funnel fields — support both camelCase and snake_case
     quizScore: parseInt(data.quizScore ?? data.quiz_score, 10) || 0,
     quizLevel: data.quizLevel || data.quiz_level || '',
@@ -592,6 +597,10 @@ async function handleLeadSubmission(request, env) {
           utm_medium: utmMediumFromChannel(mktChannel, data.utmMedium),
           utm_campaign: data.source || '',
         };
+        if (data.utmContent) record.utm_content = data.utmContent;
+        if (data.utmTerm) record.utm_term = data.utmTerm;
+        // Người chạy quảng cáo → filter theo từng người trong Pancake
+        if (data.pkeMkter) record.nguoi_chay = data.pkeMkter;
 
         // Map schoolLevel/grade to Pancake dropdown UUID
         const khoiId = resolveKhoiQuanTam(data.schoolLevel, data.grade);

@@ -619,7 +619,8 @@ async function handleLeadSubmission(request, env) {
         // page + nhãn kênh trong ngoặc để sales đọc nhanh, vd:
         //   "lop10-noitru (Google Ads)" · "squeeze-hoc-phi (Facebook Ads)" · "tieu-hoc-pillar (Organic)"
         if (data.source) {
-          record.dien_giai_nguon_mkt = data.source + ' (' + mktChannel + ')';
+          record.dien_giai_nguon_mkt = data.source + ' (' + mktChannel + ')' +
+            (data.pkeMkter ? ' · ' + data.pkeMkter : '');
         }
 
         const pancakeRes = await fetch(

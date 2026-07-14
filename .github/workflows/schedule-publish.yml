@@ -1,0 +1,38 @@
+name: Đăng dần blog theo lịch
+
+# Mỗi sáng bật các bài blog tới hạn (draft → published) trong đúng dải id của đợt
+# nội dung này, rồi trigger deploy.yml nếu có bài mới lên. Chạy hoàn toàn trên
+# GitHub Actions — không phụ thuộc máy local. Tự dừng vô hại khi hết bài tới hạn.
+
+on:
+  schedule:
+    - cron: '0 1 * * *'   # 01:00 UTC ~ 08:00 giờ VN hằng ngày
+  workflow_dispatch:
+
+jobs:
+  publish-due:
+    runs-on: ubuntu-latest
+    name: Bật bài tới hạn + deploy
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Bật bài blog tới hạn (draft → published)
+        id: flip
+        env:
+          PUBLIC_DIRECTUS_URL: ${{ secrets.PUBLIC_DIRECTUS_URL }}
+          DIRECTUS_TOKEN: ${{ secrets.DIRECTUS_TOKEN }}
+        run: node scripts/publish-due-posts.mjs
+
+      - name: Trigger deploy.yml nếu có bài mới lên
+        if: steps.flip.outputs.flipped != '0' && steps.flip.outputs.flipped != ''
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Có ${{ steps.flip.outputs.flipped }} bài vừa lên published — dispatch deploy.yml"
+          gh workflow run deploy.yml --ref main

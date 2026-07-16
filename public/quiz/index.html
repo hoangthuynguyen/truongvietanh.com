@@ -783,13 +783,15 @@ function renderLeadGate(){
     // Gửi lead vào GHL + Pancake qua /api/lead (giống form 2-step cũ). Đọc ?src từ trang pillar.
     try{
       const sp=new URLSearchParams(location.search);
-      const src=sp.get('src')||'quiz-vietanh';
+      // schoolLevel: ưu tiên ?src (trang pillar), nếu không có thì suy từ cấp học đã chọn
       const levelMap={'mam-non-pillar':'mau-non','tieu-hoc-pillar':'tieu-hoc','thcs-pillar':'thcs','thpt-pillar':'thpt'};
-      let schoolLevel=levelMap[src]||'';
+      let schoolLevel=levelMap[sp.get('src')]||'';
       if(!schoolLevel){ const g=(gradeLabel||'').toLowerCase(); if(g.includes('mầm'))schoolLevel='mau-non'; else if(g.includes('tiểu'))schoolLevel='tieu-hoc'; else if(g.includes('thcs'))schoolLevel='thcs'; else if(g.includes('thpt'))schoolLevel='thpt'; }
+      // funnel_code RIÊNG theo cấp học (giữ ?src marketer đặt nếu có) → cột "Diễn giải nguồn MKT" tách được cấp
+      const src=sp.get('src')||('quiz-vietanh'+(schoolLevel?'-'+schoolLevel:''));
       await fetch('/api/lead',{
         method:'POST', headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({
+        body:JSON.stringify(Object.assign({
           step:'full_submit',
           fullName:payload.parentName, parent_name:payload.parentName,
           email:'',
@@ -800,10 +802,8 @@ function renderLeadGate(){
           source:src, funnelCode:src, funnel_code:src,
           page:location.href,
           timestamp:payload.submittedAt,
-          utm_source:sp.get('utm_source')||'', utm_medium:sp.get('utm_medium')||'',
-          utm_campaign:sp.get('utm_campaign')||'', utm_term:sp.get('utm_term')||'',
-          utm_content:sp.get('utm_content')||'', referrer:document.referrer||''
-        })
+          referrer:document.referrer||''
+        },(window.__vaUTM||(window.__vaUTM=function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))()))
       });
     }catch(e){ console.warn('Lead API error:',e); }
 

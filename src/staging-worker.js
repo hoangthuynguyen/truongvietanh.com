@@ -230,9 +230,12 @@ function isValidVnPhone(p) {
 }
 
 function resolveKhoiQuanTam(schoolLevel, grade) {
-  // Try grade first (more specific), then schoolLevel
-  const key = (grade || schoolLevel || '').toLowerCase().trim();
-  return KHOI_QUAN_TAM_MAP[key] || null;
+  // Try grade first (more specific), THEN fall back to schoolLevel.
+  // Quiz gửi grade dạng "Mầm non · 3–4 tuổi" (không phải key trong map) → phải lùi
+  // về schoolLevel ('mau-non'/'thcs'…) để cột "Khối quan tâm" vẫn được điền.
+  const g = (grade || '').toLowerCase().trim();
+  const s = (schoolLevel || '').toLowerCase().trim();
+  return KHOI_QUAN_TAM_MAP[g] || KHOI_QUAN_TAM_MAP[s] || null;
 }
 
 // Suy ra nhãn kênh MKT từ utm_source/utm_medium để sales đọc nhanh.
@@ -635,7 +638,7 @@ async function handleLeadSubmission(request, env) {
             (data.pkeMkter ? ' · ' + data.pkeMkter : '');
         }
 
-        const pancakeRes = await fetch(
+        const postPancake = (rec) => fetch(
           `https://crm.pancake.vn/api/workspaces/${PANCAKE_WORKSPACE_ID}/lead/records?api_key=${pancakeApiKey}`,
           {
             method: 'POST',
@@ -644,11 +647,22 @@ async function handleLeadSubmission(request, env) {
               'User-Agent': 'TruongVietAnh-LeadForm/1.0',
               'Accept': 'application/json',
             },
-            body: JSON.stringify({ record }),
+            body: JSON.stringify({ record: rec }),
           }
         );
 
-        const pancakeText = await pancakeRes.text();
+        let pancakeRes = await postPancake(record);
+        let pancakeText = await pancakeRes.text();
+        // nguoi_chay là DROPDOWN — chỉ nhận username đã có trong workspace. Nếu marketer
+        // gắn utm_pke_mkter chưa được thêm vào Pancake (hoặc gõ sai), Pancake trả
+        // 422 "Value X not found" và LOẠI CẢ LEAD. → Bỏ nguoi_chay rồi thử lại để lead
+        // vẫn vào CRM; tên người chạy vẫn được giữ trong dien_giai_nguon_mkt (text tự do).
+        if (pancakeRes.status === 422 && /not found/i.test(pancakeText) && record.nguoi_chay) {
+          console.warn(`[lead] Pancake từ chối nguoi_chay="${record.nguoi_chay}" (không có trong dropdown) — thử lại không kèm nguoi_chay`);
+          delete record.nguoi_chay;
+          pancakeRes = await postPancake(record);
+          pancakeText = await pancakeRes.text();
+        }
         try {
           const pancakeData = JSON.parse(pancakeText);
           if (pancakeRes.status >= 200 && pancakeRes.status < 300) {

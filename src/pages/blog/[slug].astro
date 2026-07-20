@@ -392,6 +392,18 @@ const structuredData = [
                     socialProof=""
                   />
                 </div>
+                <script is:inline define:vars={{ formSel: `lead-magnet-form-${leadMagnet.funnelCode}`, dest: leadMagnet.redirectUrl }}>
+                  // Khi form báo thành công → chuyển sang trang tải PDF (tự chứa, không phụ thuộc /cam-on).
+                  (function(){
+                    var f=document.getElementById(formSel);
+                    if(!f) return;
+                    var o=new MutationObserver(function(){
+                      var s=f.querySelector('.form-step[data-step="success"]');
+                      if(s && !s.hidden){ o.disconnect(); window.location.replace(dest); }
+                    });
+                    o.observe(f,{attributes:true,subtree:true,attributeFilter:['hidden']});
+                  })();
+                </script>
               </section>
             )}
 

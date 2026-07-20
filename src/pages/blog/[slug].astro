@@ -143,6 +143,25 @@ function cleanContent(html: string | null | undefined): string {
 }
 
 const cleanedContent = cleanContent(post.content);
+
+// Lead magnet theo bài (form nhúng dưới bài + tặng PDF). Chỉ render cho slug có khai báo;
+// mọi bài khác không đổi. Mỗi magnet có funnel_code RIÊNG (chuẩn UTM), redirect sang trang tải.
+type LeadMagnet = { title: string; desc: string; checklist: string[]; funnelCode: string; redirectUrl: string };
+const LEAD_MAGNETS: Record<string, LeadMagnet> = {
+  'cho-con-dung-ai-sai-cach-diem-thi-giam-20': {
+    title: 'Tải miễn phí: Cẩm nang "Giúp con dùng AI đúng cách"',
+    desc: 'Checklist đầy đủ từ bài viết — cách nhận biết con đang dùng AI sai, câu lệnh "study mode" giúp con tư duy thật, và 7 việc Ba/Mẹ làm ngay tuần này. PDF gửi ngay sau khi điền.',
+    checklist: [
+      '✓ 3 tín hiệu nhận biết con đang dùng AI sai cách',
+      '✓ Câu lệnh mẫu chuyển AI sang "study mode" (Socratic)',
+      '✓ 7 việc Ba/Mẹ nên làm ngay tuần này',
+    ],
+    funnelCode: 'leadmagnet-ai-cam-nang',
+    redirectUrl: '/cam-on-cam-nang-ai',
+  },
+};
+const leadMagnet: LeadMagnet | undefined = LEAD_MAGNETS[post.slug];
+
 const pageTitle = post.title.length > 55 ? post.title : `${post.title} | Trường Việt Anh`;
 const pageDesc = post.excerpt || `${post.title} — Tìm hiểu chi tiết tại blog Trường Việt Anh.`;
 const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
@@ -349,6 +368,32 @@ const structuredData = [
             </nav>
 
             <div class="blog-article__body" id="blogArticleBody" set:html={cleanedContent} />
+
+            {leadMagnet && (
+              <section class="blog-magnet" id="leadMagnetForm" aria-label="Nhận tài liệu miễn phí">
+                <div class="blog-magnet__left">
+                  <span class="blog-magnet__badge">🎁 Quà tặng miễn phí</span>
+                  <h2 class="blog-magnet__title">{leadMagnet.title}</h2>
+                  <p class="blog-magnet__desc">{leadMagnet.desc}</p>
+                  <ul class="blog-magnet__list">
+                    {leadMagnet.checklist.map((c) => <li>{c}</li>)}
+                  </ul>
+                </div>
+                <div class="blog-magnet__right" data-form-bg="light">
+                  <LeadFormTwoStepEmailFirst
+                    formId="lead-magnet-form"
+                    funnelCode={leadMagnet.funnelCode}
+                    schoolLevel="lien-cap"
+                    submitText="Nhận Cẩm nang miễn phí"
+                    successMessage="Cảm ơn Ba/Mẹ! Đang mở Cẩm nang..."
+                    redirectUrl={leadMagnet.redirectUrl}
+                    title=""
+                    description=""
+                    socialProof=""
+                  />
+                </div>
+              </section>
+            )}
 
             <!-- Inline lead magnet (auto-injected mid-article via JS at #midCta) -->
             <template id="midCtaTpl">
@@ -942,7 +987,25 @@ const structuredData = [
     font-size: 1rem;
     color: #64748b;
     font-weight: 500;
-  }/* ===== BOTTOM CTA ===== */
+  }/* ===== INLINE LEAD MAGNET (per-post) ===== */
+  .blog-magnet{
+    display:grid;grid-template-columns:1fr 380px;gap:2rem;align-items:center;
+    margin:2.5rem 0;padding:2rem;border-radius:16px;
+    background:linear-gradient(135deg,#26275D 0%,#363876 100%);color:#fff;
+    box-shadow:0 12px 30px rgba(38,39,93,.2);
+  }.blog-magnet__badge{
+    display:inline-block;background:#f9dd0e;color:#26275D;font-weight:800;
+    font-size:.8rem;padding:4px 12px;border-radius:50px;margin-bottom:.75rem;
+  }.blog-magnet__title{
+    font-size:1.4rem;font-weight:800;color:#fff !important;margin:0 0 .6rem;line-height:1.3;
+  }.blog-magnet__desc{
+    font-size:1rem;line-height:1.6;color:#e0e7ff;margin:0 0 1rem;
+  }.blog-magnet__list{
+    list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.4rem;
+  }.blog-magnet__list li{font-size:.95rem;color:#fff;line-height:1.45}
+  .blog-magnet__right{background:#fff;border-radius:12px;padding:1.25rem}
+  @media(max-width:768px){.blog-magnet{grid-template-columns:1fr;gap:1.25rem;padding:1.5rem}}
+  /* ===== BOTTOM CTA ===== */
   .blog-bottom-cta{
     margin-top: 3rem;
     padding: 2.5rem;

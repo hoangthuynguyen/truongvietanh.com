@@ -30,6 +30,10 @@ import SiteFooter from '../components/SiteFooter.astro';
         <script is:inline>
           const params = new URLSearchParams(window.location.search);
           const name = params.get('name');
+          // Lead magnet "Cẩm nang dùng AI đúng cách" → chuyển sang trang tải PDF riêng.
+          if (params.get('funnel') === 'leadmagnet-ai-cam-nang') {
+            window.location.replace('/cam-on-cam-nang-ai' + (name ? '?name=' + encodeURIComponent(name) : ''));
+          }
           if (name) {
             document.getElementById('thankyou-text').textContent =
               'Cảm ơn ' + decodeURIComponent(name) + ' đã quan tâm đến Trường Việt Anh';

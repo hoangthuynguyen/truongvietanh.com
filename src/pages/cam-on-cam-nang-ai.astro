@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const PDF_URL = '/downloads/Cam-nang-giup-con-dung-AI-dung-cach.pdf';
+const pageTitle = 'Cảm ơn — Tải Cẩm nang "Giúp con dùng AI đúng cách" | Trường Việt Anh';
+const pageDesc = 'Cảm ơn Ba/Mẹ đã đăng ký. Tải Cẩm nang PDF "Giúp con dùng AI đúng cách" — checklist đầy đủ để đồng hành cùng con.';
+---
+
+<BaseLayout title={pageTitle} description={pageDesc} noindex={true}>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase currentPath="/cam-on-cam-nang-ai" />
+
+    <main class="ty-wrap">
+      <div class="ty-card">
+        <div class="ty-icon" aria-hidden="true">✅</div>
+        <h1 class="ty-title">Cảm ơn Ba/Mẹ đã đăng ký!</h1>
+        <p class="ty-sub">Cẩm nang <strong>"Giúp con dùng AI đúng cách"</strong> đã sẵn sàng. Nếu file không tự mở, bấm nút bên dưới để tải.</p>
+
+        <a
+          id="dlBtn"
+          href={PDF_URL}
+          class="ty-btn"
+          download="Cam-nang-giup-con-dung-AI-dung-cach-VietAnh.pdf"
+        >📥 Tải Cẩm nang PDF ngay</a>
+
+        <p class="ty-note">Đội ngũ Việt Anh cũng sẽ liên hệ qua Zalo để đồng hành cùng gia đình nếu Ba/Mẹ cần. Trong lúc chờ, Ba/Mẹ có thể:</p>
+        <div class="ty-links">
+          <a href="/blog/cho-con-dung-ai-sai-cach-diem-thi-giam-20" class="ty-link">← Quay lại bài viết</a>
+          <a href="/blog/danh-muc/giao-duc" class="ty-link">Đọc thêm bài về giáo dục</a>
+        </div>
+      </div>
+    </main>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style is:inline>
+  .ty-wrap{min-height:60vh;display:flex;align-items:center;justify-content:center;padding:3rem 1.25rem}
+  .ty-card{max-width:560px;width:100%;background:#fff;border:1px solid #e2e8f0;border-radius:16px;padding:2.5rem 2rem;text-align:center;box-shadow:0 10px 30px rgba(38,39,93,.08)}
+  .ty-icon{font-size:3rem;line-height:1;margin-bottom:.5rem}
+  .ty-title{font-family:Montserrat,sans-serif;font-size:1.6rem;font-weight:800;color:#26275D;margin:.25rem 0 .75rem}
+  .ty-sub{font-size:1.05rem;line-height:1.6;color:#2d2d42;margin:0 0 1.5rem}
+  .ty-btn{display:inline-block;background:#f9dd0e;color:#26275D;font-weight:800;font-size:1.1rem;padding:.9rem 1.75rem;border-radius:10px;text-decoration:none;transition:transform .15s,box-shadow .15s}
+  .ty-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(249,221,14,.4)}
+  .ty-note{font-size:.95rem;color:#5a5a70;line-height:1.6;margin:1.75rem 0 .75rem}
+  .ty-links{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+  .ty-link{color:#26275D;font-weight:600;font-size:.95rem;text-decoration:underline;text-underline-offset:3px;text-decoration-color:#f9dd0e}
+</style>
+
+<script is:inline>
+  // Tự động tải file sau 800ms (không chặn nút thủ công)
+  (function(){
+    setTimeout(function(){
+      var a=document.getElementById('dlBtn');
+      if(a){ var t=document.createElement('a'); t.href=a.href; t.download=a.getAttribute('download')||''; document.body.appendChild(t); t.click(); t.remove(); }
+    }, 800);
+  })();
+</script>

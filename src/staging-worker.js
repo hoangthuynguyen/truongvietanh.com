@@ -505,6 +505,11 @@ async function handleLeadSubmission(request, env) {
           tags.push('ebook-cam-nang-tuyen-sinh-lop-10');
           tags.push('squeeze-thpt');
         }
+        // Lead magnet "Cẩm nang giúp con dùng AI đúng cách" (form dưới bài blog AI)
+        // → GHL tag để gom Smart List / kích workflow "AI Powered School"
+        if (data.source === 'leadmagnet-ai-cam-nang') {
+          tags.push('ai-powered-school');
+        }
 
         // Chuỗi nuôi dưỡng chung 435 ngày — kết nối TẤT CẢ squeeze page vào 1 workflow
         const SQUEEZE_SOURCES = [

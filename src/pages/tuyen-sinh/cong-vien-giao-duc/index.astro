@@ -200,6 +200,7 @@ const campuses = [
   <FooterBase slot="footer" />
 </SqueezePageLayout>
 
+<script src="/js/va-utm.js" is:inline></script>
 <script is:inline>
 (function () {
   const form = document.getElementById('cvgd-form');
@@ -210,11 +211,7 @@ const campuses = [
 
   const urlParams = new URLSearchParams(window.location.search);
   const utm = {
-    utm_source: urlParams.get('utm_source') || '',
-    utm_medium: urlParams.get('utm_medium') || '',
-    utm_campaign: urlParams.get('utm_campaign') || '',
-    utm_term: urlParams.get('utm_term') || '',
-    utm_content: urlParams.get('utm_content') || '',
+    ...(window.__vaUTM ? window.__vaUTM() : {}),
     referrer: document.referrer || '',
     landing_page: window.location.pathname,
   };

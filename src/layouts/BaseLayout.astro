@@ -47,6 +47,7 @@ const schemaPayload = structuredData
 <html lang="vi">
   <head>
 <!-- Google Tag Manager -->
+<script src="/js/va-utm.js" is:inline></script>
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -266,7 +267,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               if(closeTimer) clearTimeout(closeTimer);
               localStorage.setItem('lead_submitted','1');
               this.innerHTML='<p style="color:#22c55e;font-weight:700;padding:1rem 0">Cảm ơn! Tư vấn viên sẽ gọi bạn sớm.</p>';
-              fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({step:'exit_intent',phone:phone,email:'exit-intent@truongvietanh.com',source:'exit-intent',page:location.href,timestamp:new Date().toISOString()})}).catch(function(){});
+              fetch('/api/lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(Object.assign({step:'exit_intent',phone:phone,email:'exit-intent@truongvietanh.com',source:'exit-intent',page:location.href,timestamp:new Date().toISOString()},(window.__vaUTM?window.__vaUTM():{})))}).catch(function(){});
               setTimeout(closePopup, 3000);
             }
           });

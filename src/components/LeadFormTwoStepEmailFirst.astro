@@ -512,6 +512,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   }
 </style>
 
+<script src="/js/va-utm.js" is:inline></script>
 <script is:inline define:vars={{ formIdWithFunnel, funnelCode }}>
   const form = document.getElementById(formIdWithFunnel);
   if (!form) {
@@ -529,11 +530,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   // Capture UTM parameters from URL
   const urlParams = new URLSearchParams(window.location.search);
   const utmData = {
-    utm_source: urlParams.get('utm_source') || '',
-    utm_medium: urlParams.get('utm_medium') || '',
-    utm_campaign: urlParams.get('utm_campaign') || '',
-    utm_term: urlParams.get('utm_term') || '',
-    utm_content: urlParams.get('utm_content') || '',
+    ...(window.__vaUTM ? window.__vaUTM() : {}),
     referrer: document.referrer || '',
     landing_page: window.location.pathname,
   };

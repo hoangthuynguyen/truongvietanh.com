@@ -1260,6 +1260,7 @@ const faqs = [
   .ts-anim-show { opacity: 1; transform: translateY(0); }
 </style>
 
+<script src="/js/va-utm.js" is:inline></script>
 <script is:inline>
 (function () {
   const HOTLINE = '0902095956';
@@ -1351,13 +1352,7 @@ const faqs = [
   const phoneInput = form.querySelector('#tsPhone');
 
   const params = new URLSearchParams(window.location.search);
-  const utm = {
-    utm_source: params.get('utm_source') || '',
-    utm_medium: params.get('utm_medium') || '',
-    utm_campaign: params.get('utm_campaign') || '',
-    utm_content: params.get('utm_content') || '',
-    utm_term: params.get('utm_term') || '',
-  };
+  const utm = (window.__vaUTM ? window.__vaUTM() : {});
 
   let leadData = { ...utm };
 

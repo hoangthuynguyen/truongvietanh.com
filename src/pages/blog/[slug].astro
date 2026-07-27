@@ -1169,6 +1169,7 @@ const structuredData = [
   }
 </style>
 
+<script src="/js/va-utm.js" is:inline></script>
 <script>
 // @ts-nocheck
   // Reading progress bar
@@ -1260,7 +1261,7 @@ const structuredData = [
         await fetch('/api/lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ email, funnel_code: 'blog-inline-subscribe', school_level: 'lien-cap', source: 'blog-inline' }),
+          body: JSON.stringify(Object.assign({ email, funnel_code: 'blog-inline-subscribe', school_level: 'lien-cap', source: 'blog-inline' }, (window.__vaUTM ? window.__vaUTM() : {}))),
         });
         btn.textContent = '✓ Đã đăng ký!';
         form.querySelector('input').value = '';

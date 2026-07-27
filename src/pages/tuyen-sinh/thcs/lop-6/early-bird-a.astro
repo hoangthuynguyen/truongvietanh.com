@@ -244,6 +244,7 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/lop-6/early-bird
     }
   </script>
 
+  <script src="/js/va-utm.js" is:inline></script>
   <script>
 // @ts-nocheck
 
@@ -255,7 +256,7 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/lop-6/early-bird
 
       // Collect UTM params
       var ps=new URLSearchParams(window.location.search);
-      var utm={source:ps.get('utm_source')||'',medium:ps.get('utm_medium')||'',campaign:ps.get('utm_campaign')||'',content:ps.get('utm_content')||'',term:ps.get('utm_term')||'',fbclid:ps.get('fbclid')||'',gclid:ps.get('gclid')||'',ttclid:ps.get('ttclid')||''};
+      var _v=(window.__vaUTM?window.__vaUTM():{});var utm={source:_v.utm_source||'',medium:_v.utm_medium||'',campaign:_v.utm_campaign||'',content:_v.utm_content||'',term:_v.utm_term||'',pke:_v.pke_mkter||'',fbclid:ps.get('fbclid')||'',gclid:ps.get('gclid')||'',ttclid:ps.get('ttclid')||''};
 
       var emailInput=document.getElementById('emailInput');
       var step1=document.getElementById('step1');
@@ -293,7 +294,7 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/thcs/lop-6/early-bird
         if(!phoneRegex.test(phone)){phoneInput.style.borderColor='#EF4444';ok=false}else{phoneInput.style.borderColor=''}
         if(!ok)return;
 
-        var data={email:storedEmail,parent_name:name,phone:phone,school_level:'thcs',grade:'lop-6',funnel_code:P,page_variant:V,extra_field:extra,utm_source:utm.source,utm_medium:utm.medium,utm_campaign:utm.campaign,utm_content:utm.content,utm_term:utm.term,fbclid:utm.fbclid,gclid:utm.gclid,ttclid:utm.ttclid,submitted_at:new Date().toISOString(),page_url:window.location.href};
+        var data={email:storedEmail,parent_name:name,phone:phone,school_level:'thcs',grade:'lop-6',funnel_code:P,page_variant:V,extra_field:extra,utm_source:utm.source,utm_medium:utm.medium,utm_campaign:utm.campaign,utm_content:utm.content,utm_term:utm.term,pke_mkter:utm.pke,fbclid:utm.fbclid,gclid:utm.gclid,ttclid:utm.ttclid,submitted_at:new Date().toISOString(),page_url:window.location.href};
 
         window.dataLayer=window.dataLayer||[];
         window.dataLayer.push({event:'generate_lead',page_variant:V,funnel:P,school_level:'thcs',grade:'lop-6'});

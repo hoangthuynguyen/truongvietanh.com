@@ -405,6 +405,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
+  <script src="/js/va-utm.js" is:inline></script>
   <script is:inline>
     const WEBHOOK = '/api/lead';
     const $ = s => document.getElementById(s);
@@ -424,9 +425,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             email: v,
             source: 'testimonial_mn',
             page: window.location.href,
-            utm_source: new URLSearchParams(location.search).get('utm_source') || '',
-            utm_medium: new URLSearchParams(location.search).get('utm_medium') || '',
-            utm_campaign: new URLSearchParams(location.search).get('utm_campaign') || '',
+            ...(window.__vaUTM ? window.__vaUTM() : {}),
             timestamp: new Date().toISOString()
           })
         });

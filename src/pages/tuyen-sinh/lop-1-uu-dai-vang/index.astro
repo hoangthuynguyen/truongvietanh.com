@@ -780,6 +780,10 @@ strong{font-weight:700}
       var id = b.getAttribute('data-yt');
       if (!id) return;
       var f = document.createElement('iframe');
+      // Style đặt thẳng inline: CSS scoped của Astro gắn theo data-astro-cid-* của
+      // element CÓ TRONG template, nên iframe tạo lúc chạy KHÔNG ăn `.video-frame iframe`
+      // → sẽ rơi về 300x150 mặc định nếu chỉ dựa vào stylesheet.
+      f.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block';
       f.src = 'https://www.youtube-nocookie.com/embed/' + id +
               '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
       f.title = b.getAttribute('data-title') || 'Video phụ huynh Việt Anh';

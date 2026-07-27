@@ -18,6 +18,8 @@ const TIEU_HOC_1 = `${SRC}/tieu-hoc-banner-chinh-1.jpg`; // 2 bé chạy (trái)
 const TIEU_HOC_2 = `${SRC}/tieu-hoc-banner-chinh-2.jpg`; // cô giáo + 3 bé (trái) · bé trai chỉ tay (phải)
 const THCS_1     = `${SRC}/thcs-banner-chinh-1.jpg`;     // thầy bản ngữ + 2 HS + laptop + đồ hoạ AI (trái) · bé trai giơ ngón cái (phải)
 const CHUNG      = `${SRC}/banner-chinh.jpg`;            // mầm non (trái) · nhóm HS lớn tự học (phải)
+const THPT_1     = `${SRC}/thpt-banner-chinh-1.jpg`;     // nhóm HS đập tay + đồ hoạ não AI (trái) · HS cầm sách Cambridge MINDSET FOR IELTS (phải)
+const THPT_2     = `${SRC}/thpt-banner-chinh-2.jpg`;     // 2 HS + laptop + robot AI (trái) · HS cầm sách (phải)
 
 const PAGES = [
   {
@@ -52,6 +54,18 @@ const PAGES = [
       { src: THCS_1, box: { left: 1460, top: 90, width: 460, height: 560 }, name: 'card-vui.webp' },
     ],
     poster: { id: 'T3HyL8vN0GU', vertical: false },  // video 16:9 thường → giữ nguyên khung
+  },
+  {
+    out: 'public/lp/lop-10',
+    hero: THPT_2,
+    og: ['TUYỂN SINH LỚP 10 · 2026–2027', 'Cam kết IELTS 6.0+', 'Học thử 4 tuần — hoàn 100% nếu không hài lòng'],
+    cards: [
+      { src: THPT_2, box: { left: 10, top: 120, width: 560, height: 530 }, name: 'card-ai.webp' },
+      // vùng cắt gần vuông để resize cover không xén mất chữ trên bìa sách IELTS
+      { src: THPT_1, box: { left: 1450, top: 180, width: 470, height: 470 }, name: 'card-ielts.webp' },
+      { src: THPT_1, box: { left: 10, top: 180, width: 470, height: 470 }, name: 'card-tuchu.webp' },
+    ],
+    poster: { id: '5T8j_k5VCW4', vertical: false },  // 16:9 nhưng chỉ có sddefault 4:3 → script tự cắt viền
   },
 ];
 
@@ -111,19 +125,30 @@ for (const page of PAGES) {
   }
 
   // 4. Ảnh bìa video phụ huynh (facade — trang không nạp YouTube tới khi bấm play)
-  const res = await fetch(`https://i.ytimg.com/vi/${page.poster.id}/maxresdefault.jpg`);
-  if (res.ok) {
-    const raw = Buffer.from(await res.arrayBuffer());
+  //    Không phải video nào cũng có maxresdefault: thiếu thì YouTube trả ảnh giữ chỗ 120x90.
+  //    → dò lần lượt, lấy bản đầu tiên đủ lớn.
+  let raw = null;
+  for (const name of ['maxresdefault', 'sddefault', 'hqdefault']) {
+    const res = await fetch(`https://i.ytimg.com/vi/${page.poster.id}/${name}.jpg`);
+    if (!res.ok) continue;
+    const buf = Buffer.from(await res.arrayBuffer());
+    if ((await sharp(buf).metadata()).width >= 480) { raw = buf; break; }
+  }
+  if (raw) {
+    const m = await sharp(raw).metadata();
     let img = sharp(raw);
     if (page.poster.vertical) {
       // Short bị YouTube độn nền mờ hai bên cho vừa 16:9 → cắt lấy khung dọc thật
-      const m = await sharp(raw).metadata();
       const w = Math.round((m.height * 9) / 16);
       img = img.extract({ left: Math.round((m.width - w) / 2), top: 0, width: w, height: m.height });
+    } else if (m.width / m.height < 1.6) {
+      // sddefault/hqdefault là khung 4:3, video 16:9 nằm giữa với viền đen trên dưới → cắt viền
+      const h = Math.round((m.width * 9) / 16);
+      img = img.extract({ left: 0, top: Math.round((m.height - h) / 2), width: m.width, height: h });
     }
     await img.webp({ quality: 82 }).toFile(`${page.out}/testimonial-1.webp`);
   } else {
-    console.log(`    ! bỏ qua testimonial-1.webp: thumbnail HTTP ${res.status}`);
+    console.log('    ! bỏ qua testimonial-1.webp: không tìm được thumbnail đủ lớn');
   }
 
   for (const f of ['hero.webp', 'og.jpg', ...page.cards.map((c) => c.name), 'testimonial-1.webp']) {

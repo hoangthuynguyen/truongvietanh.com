@@ -36,16 +36,22 @@ const CFG = {
 // ─────────────────────────────────────────────────────────────
 // 🎥 TESTIMONIAL — thêm phụ huynh mới bằng cách bỏ comment / thêm object
 // ─────────────────────────────────────────────────────────────
+// poster   = ảnh bìa của mình → trạng thái mặc định KHÔNG hiện logo/nút "Watch on YouTube"
+//            của YouTube; player chỉ nạp khi phụ huynh bấm play (nhanh hơn, ít rời trang hơn).
+//            Tạo ảnh bìa bằng: node scripts/build-lp-lop1-images.mjs
+// vertical = true cho video dạng Short (9:16) để không phải độn nền mờ hai bên.
 const testimonials = [
   {
     youtubeId: 'xh2YHEItrvU',
     title: 'Bí quyết giúp con lấy Chứng chỉ Oxford quốc tế từ lớp 2 tại Trường Việt Anh',
     caption:
       'Một phụ huynh Việt Anh kể hành trình thật của con ở bậc Tiểu học — điều bắt đầu từ một quyết định chọn trường đúng ở Lớp 1.',
+    poster: '/lp/lop-1/testimonial-1.webp',
+    vertical: true,
   },
   // ⬇️ Ô TRỐNG chờ bổ sung — copy khối dưới, điền ID video YouTube rồi bỏ comment:
-  // { youtubeId: '', title: '', caption: '' },
-  // { youtubeId: '', title: '', caption: '' },
+  // { youtubeId: '', title: '', caption: '', poster: '', vertical: true },
+  // { youtubeId: '', title: '', caption: '', poster: '', vertical: true },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -280,10 +286,27 @@ strong{font-weight:700}
 .promise .big{font-size:20px;font-weight:800;line-height:1.55;margin-bottom:18px}
 .promise p:last-child{margin-bottom:0}
 
-/* ═══ 9 · VIDEO ═══ */
+/* ═══ 9 · VIDEO (facade: ảnh bìa của mình, chỉ nạp YouTube khi bấm play) ═══ */
 .video{margin-bottom:22px}
 .video-frame{position:relative;padding-top:56.25%;border-radius:var(--r);overflow:hidden;background:#000}
+.video-frame.is-vertical{padding-top:0;aspect-ratio:9/16;max-width:340px;margin-left:auto;margin-right:auto}
 .video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vfacade{
+  position:absolute;inset:0;width:100%;height:100%;
+  padding:0;border:0;background:#000;cursor:pointer;display:block
+}
+.vfacade img{width:100%;height:100%;object-fit:cover}
+.vplay{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:74px;height:74px;border-radius:50%;
+  background:rgba(38,39,93,.88);border:2.5px solid var(--accent);
+  display:grid;place-items:center;
+  box-shadow:0 6px 22px rgba(0,0,0,.4);transition:transform .18s,background .18s
+}
+.vplay svg{width:28px;height:28px;fill:var(--accent);margin-left:4px}
+/* video dọc: hạ nút play xuống để không che mặt người kể */
+.video-frame.is-vertical .vplay{top:64%}
+.vfacade:hover .vplay,.vfacade:focus-visible .vplay{transform:translate(-50%,-50%) scale(1.08);background:var(--primary)}
 .video h3{margin:16px 0 8px;font-size:20px}
 .video p{font-size:16.5px;color:var(--muted);margin:0}
 
@@ -552,14 +575,13 @@ strong{font-weight:700}
     <h2>Nghe phụ huynh Việt Anh kể — bằng chứng thật, không phải lời quảng cáo</h2>
     {testimonials.filter((t) => t.youtubeId).map((t) => (
       <div class="video">
-        <div class="video-frame">
-          <iframe
-            src={`https://www.youtube-nocookie.com/embed/${t.youtubeId}`}
-            title={t.title}
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen
-          />
+        <div class={t.vertical ? 'video-frame is-vertical' : 'video-frame'}>
+          <button class="vfacade" type="button" data-yt={t.youtubeId} data-title={t.title} aria-label={`Phát video: ${t.title}`}>
+            <img src={t.poster} alt={t.title} loading="lazy" decoding="async" width="405" height="720" />
+            <span class="vplay" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+          </button>
         </div>
         <h3>{t.title}</h3>
         <p>{t.caption}</p>
@@ -749,6 +771,24 @@ strong{font-weight:700}
       ));
     } catch (e) {}
   }
+
+  // ── Video: chỉ nạp player khi phụ huynh bấm play, phát ngay tại chỗ.
+  //    Trước khi bấm, trang chỉ có ảnh bìa của mình → không có logo/nút "Watch on
+  //    YouTube" nào hiện, và không tải JS của YouTube (nhẹ hơn hẳn).
+  Array.prototype.forEach.call(document.querySelectorAll('.vfacade'), function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-yt');
+      if (!id) return;
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id +
+              '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+      f.title = b.getAttribute('data-title') || 'Video phụ huynh Việt Anh';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.setAttribute('allowfullscreen', '');
+      b.parentNode.replaceChild(f, b);
+      gtm('video_play', { video_id: id });
+    });
+  });
 
   // Mọi CTA đều cuộn về form (một CTA duy nhất, lặp lại)
   Array.prototype.forEach.call(document.querySelectorAll('.js-cta'), function (a) {

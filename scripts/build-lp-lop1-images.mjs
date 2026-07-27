@@ -78,7 +78,23 @@ for (const c of cards) {
     .webp({ quality: 80 }).toFile(`${OUT}/${c.name}`);
 }
 
+// 4. ẢNH BÌA VIDEO PHỤ HUYNH — lấy thumbnail của video rồi cắt lấy khung dọc thật
+//    (video là Short 9:16, YouTube độn nền mờ hai bên cho vừa khung 16:9).
+//    Dùng làm facade: trang chỉ nạp player YouTube khi phụ huynh bấm play.
+const POSTERS = [{ id: 'xh2YHEItrvU', name: 'testimonial-1.webp' }];
+for (const p of POSTERS) {
+  const res = await fetch(`https://i.ytimg.com/vi/${p.id}/maxresdefault.jpg`);
+  if (!res.ok) { console.warn(`  ! bỏ qua ${p.name}: thumbnail HTTP ${res.status}`); continue; }
+  const raw = Buffer.from(await res.arrayBuffer());
+  const m = await sharp(raw).metadata();
+  const w = Math.round((m.height * 9) / 16);
+  await sharp(raw)
+    .extract({ left: Math.round((m.width - w) / 2), top: 0, width: w, height: m.height })
+    .webp({ quality: 82 })
+    .toFile(`${OUT}/${p.name}`);
+}
+
 console.log('Đã tạo:');
-for (const f of ['hero.webp', 'og.jpg', ...cards.map((c) => c.name)]) {
+for (const f of ['hero.webp', 'og.jpg', ...cards.map((c) => c.name), ...POSTERS.map((p) => p.name)]) {
   await log(`${OUT}/${f}`);
 }

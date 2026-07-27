@@ -1,0 +1,979 @@
+---
+// LP tuyển sinh TIỂU HỌC LỚP 2–5 (chuyển trường) — chiến dịch "4 Tuần Vàng" 2026–2027
+// Brief: Google Doc "brief landing tiểu học lớp 2–5" (Grand-Slam Offer · giọng Nguyễn Mạnh Dương)
+// Khác trang Lớp 1 (/tuyen-sinh/lop-1-uu-dai-vang): đối tượng là phụ huynh đang CHUYỂN TRƯỜNG
+// giữa chừng, nên nỗi đau và dòng tin cậy xoáy vào "sợ chọn sai thêm lần nữa" + "sợ con hụt bài".
+// Lead → POST /api/lead (worker) → GHL + Pancake. grade 'lop-2'…'lop-5' map đúng dropdown
+// "Khối quan tâm" của Pancake (xem KHOI_QUAN_TAM_MAP trong staging-worker.js).
+
+// ─────────────────────────────────────────────────────────────
+// ⚙️ CẤU HÌNH — sửa ở đây, không cần đụng phần dưới
+// ─────────────────────────────────────────────────────────────
+const CFG = {
+  funnel: 'tieu-hoc-uu-dai-vang',  // funnel_code gốc; khi submit sẽ nối '-go-vap' / '-binh-tan'
+  formId: 'lp-tieu-hoc-uu-dai-vang',
+  level: 'tieu-hoc',
+  api: '/api/lead',
+  redirect: '/cam-on',
+  // Người phụ trách traffic website/organic (mã trong dropdown "Người chạy" của Pancake).
+  // Lead vào thẳng website, không qua link quảng cáo → ghi công cho người này.
+  organicOwner: 'van.le',
+  hotline: '0916 961 409',
+  hotlineTel: '+84916961409',
+  deadline: '10/08/2026',          // ⚠️ ngày đóng "4 Tuần Vàng" — xác nhận lại với BGH
+  // Khối chuyển trường; value khớp KHOI_QUAN_TAM_MAP của worker
+  grades: [
+    { value: 'lop-2', label: 'Lớp 2', seats: 9 },
+    { value: 'lop-3', label: 'Lớp 3', seats: 7 },
+    { value: 'lop-4', label: 'Lớp 4', seats: 6 },
+    { value: 'lop-5', label: 'Lớp 5', seats: 5 },
+  ],
+  campuses: [
+    {
+      value: 'go-vap',
+      label: 'Cơ sở Gò Vấp',
+      address: '160/72 Phan Huy Ích, phường An Hội Tây, Thành phố Hồ Chí Minh',
+    },
+    {
+      value: 'binh-tan',
+      label: 'Cơ sở Bình Tân',
+      address: 'Số 7 Đường 38A, Phường Tân Tạo, Quận Bình Tân, Thành phố Hồ Chí Minh',
+    },
+  ],
+};
+
+// ─────────────────────────────────────────────────────────────
+// 🎥 TESTIMONIAL — thêm phụ huynh mới bằng cách bỏ comment / thêm object
+// ─────────────────────────────────────────────────────────────
+// poster   = ảnh bìa của mình → trạng thái mặc định KHÔNG hiện logo/nút "Watch on YouTube"
+//            của YouTube; player chỉ nạp khi phụ huynh bấm play (nhanh hơn, ít rời trang hơn).
+//            Tạo ảnh bìa bằng: node scripts/build-lp-images.mjs
+// vertical = true cho video dạng Short (9:16) để không phải độn nền mờ hai bên.
+const testimonials = [
+  {
+    youtubeId: 'xh2YHEItrvU',
+    title: 'Bí quyết giúp con lấy Chứng chỉ Oxford quốc tế từ lớp 2 tại Trường Việt Anh',
+    caption:
+      'Một phụ huynh Việt Anh kể hành trình thật của con — bằng chứng cho điều con bạn có thể đạt được sau khi chuyển về.',
+    poster: '/lp/tieu-hoc/testimonial-1.webp',
+    vertical: true,
+  },
+  // ⬇️ Ô TRỐNG chờ bổ sung — copy khối dưới, điền ID video YouTube rồi bỏ comment:
+  // { youtubeId: '', title: '', caption: '', poster: '', vertical: true },
+  // { youtubeId: '', title: '', caption: '', poster: '', vertical: true },
+];
+
+// ─────────────────────────────────────────────────────────────
+// 💬 TRÍCH DẪN PHỤ HUYNH (chữ) — để trống, chưa hiển thị gì cho tới khi có câu thật.
+//    KHÔNG bịa testimonial (yêu cầu bắt buộc trong brief, mục 8).
+// ─────────────────────────────────────────────────────────────
+const quotes: { text: string; author: string; context: string }[] = [
+  // { text: 'Câu nói thật của phụ huynh…', author: 'Chị …', context: 'PH lớp 3 — Cơ sở Gò Vấp' },
+];
+
+const CANONICAL = 'https://truongvietanh.com/tuyen-sinh/tieu-hoc-uu-dai-vang';
+const TITLE = 'Chuyển Trường Tiểu Học – Việt Anh TP.HCM · Học Thử Hoàn 100%';
+const DESC =
+  'Chuyển trường Tiểu học không rủi ro: học thử 4 tuần, không hài lòng hoàn 100%. 4 tuần đầu là kỹ năng nên con không mất bài. Coach kèm sát, tiếng Anh bản ngữ, xe cả năm.';
+const OG_IMAGE = 'https://truongvietanh.com/lp/tieu-hoc/og.jpg';
+
+const faqs = [
+  {
+    q: 'Hoàn phí có thật không, hay lại “chữ nhỏ”?',
+    a: 'Thật, và không chữ nhỏ. Trong 4 tuần đầu, nếu bạn không hài lòng, nhà trường hoàn 100% học phí, không yêu cầu giải trình. Điều kiện duy nhất: con có đi học.',
+  },
+  {
+    q: 'Con thử rồi rút có bị hụt năm học không?',
+    a: 'Không. 4 tuần đầu tháng 8 là kỹ năng, phẩm chất, tiếng Anh bản ngữ và thể thao — không phải chương trình chính khoá, nên con không mất bài và vẫn kịp nhịp chung.',
+  },
+  {
+    q: 'Chuyển giữa năm (Lớp 2–5) con có hụt kiến thức không?',
+    a: '4 tuần đầu là kỹ năng, phẩm chất, tiếng Anh — không phải chính khoá, nên con không mất bài. Con trải nghiệm thật 4 tuần rồi gia đình mới quyết; có Coach kèm sát để con bắt nhịp.',
+  },
+  {
+    q: 'Gói Bảo chứng 50 triệu là tặng thật hay tính vào học phí?',
+    a: 'Tặng kèm khi ghi danh trong 4 Tuần Vàng, không cộng thêm học phí.',
+  },
+  {
+    q: 'Học phí Lớp 2–5 bao nhiêu?',
+    a: 'Học phí thay đổi theo khối, theo cơ sở và lộ trình gia đình chọn cho con, nên nhà trường không niêm yết một con số chung. Bạn để lại số điện thoại, chuyên viên tuyển sinh sẽ tư vấn đúng mức phí của khối và cơ sở bạn chọn.',
+  },
+  {
+    q: 'Tôi cần làm gì tiếp theo?',
+    a: 'Để lại tên và số điện thoại. Nhà trường gọi lại trong 15 phút để giữ suất học thử và hẹn bạn một buổi tham quan.',
+  },
+];
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Tiểu học Việt Anh',
+    url: CANONICAL,
+    logo: 'https://truongvietanh.com/logo-vietanh.png',
+    image: OG_IMAGE,
+    telephone: CFG.hotline,
+    address: CFG.campuses.map((c) => ({
+      '@type': 'PostalAddress',
+      name: c.label,
+      streetAddress: c.address,
+      addressLocality: 'TP. Hồ Chí Minh',
+      addressCountry: 'VN',
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{TITLE}</title>
+<meta name="description" content={DESC} />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={CANONICAL} />
+
+<meta property="og:type" content="website" />
+<meta property="og:url" content={CANONICAL} />
+<meta property="og:title" content={TITLE} />
+<meta property="og:description" content={DESC} />
+<meta property="og:image" content={OG_IMAGE} />
+<meta property="og:locale" content="vi_VN" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={TITLE} />
+<meta name="twitter:description" content={DESC} />
+<meta name="twitter:image" content={OG_IMAGE} />
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;600;700;800&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="/lp/tieu-hoc/hero.webp" fetchpriority="high" />
+
+<script src="/js/va-utm.js" is:inline></script>
+<script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+
+<style>
+/* ═══ 0 · TOKENS + RESET ═══ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --primary:#26275D;
+  --primary-2:#1c1d47;
+  --accent:#f9dd0e;
+  --light-bg:#f0f4f8;
+  --text:#1a1a2e;
+  --muted:#4b5168;
+  --border:#e2e8f0;
+  --tint:#fdf6cf;
+  --red:#e03c31;
+  --r:13px;
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Be Vietnam Pro',system-ui,-apple-system,sans-serif;
+  font-size:18px;line-height:1.7;color:var(--text);background:#fff;
+  padding-bottom:0;
+}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:780px;margin:0 auto;padding:0 20px}
+section{padding:56px 0}
+h1,h2,h3{line-height:1.28;letter-spacing:-.4px}
+h1{font-size:clamp(32px,5.6vw,44px);font-weight:800}
+h2{font-size:clamp(26px,4.2vw,34px);font-weight:800}
+h3{font-size:clamp(20px,3vw,24px);font-weight:700}
+p{margin:0 0 18px}
+strong{font-weight:700}
+.eyebrow{
+  font-size:13px;font-weight:800;letter-spacing:1.3px;text-transform:uppercase;
+  color:var(--primary);opacity:.75;margin-bottom:14px
+}
+.lead{font-size:19px}
+.center{text-align:center}
+
+/* ═══ 1 · URGENCY BAR ═══ */
+.ubar{
+  background:var(--red);color:#fff;text-align:center;
+  padding:9px 16px;font-size:14.5px;font-weight:700;line-height:1.45
+}
+.ubar em{font-style:normal;background:rgba(0,0,0,.22);border-radius:20px;padding:1px 10px;font-variant-numeric:tabular-nums}
+
+/* ═══ 2 · LOGO BAR ═══ */
+.lbar{background:#fff;padding:14px 20px;display:flex;justify-content:center;border-bottom:1px solid var(--border)}
+.lbar img{height:66px;width:auto}
+
+/* ═══ 3 · HERO ═══ */
+.hero{
+  position:relative;background:var(--primary);color:#fff;
+  padding:60px 0 52px;overflow:hidden
+}
+/* Banner gốc là dải 1920×650 — cover sẽ cắt mất 2 bé ở rìa trái/phải.
+   → desktop: trải đủ chiều ngang, neo đáy; phần trên là navy phẳng, hoà bằng gradient. */
+.hero::before{
+  content:'';position:absolute;inset:0;
+  background-image:url('/lp/tieu-hoc/hero.webp');
+  background-size:100% auto;background-position:center bottom;background-repeat:no-repeat
+}
+.hero::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(180deg,var(--primary) 0%,rgba(38,39,93,.97) 32%,rgba(38,39,93,.78) 56%,rgba(38,39,93,.6) 100%)
+}
+.hero .wrap{position:relative;z-index:2;text-align:center}
+.hero .eyebrow{color:var(--accent);opacity:1}
+.hero h1{margin-bottom:20px;text-shadow:0 2px 18px rgba(0,0,0,.35)}
+.hero h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{font-size:19px;color:#e8ebff;margin-bottom:22px;text-shadow:0 1px 10px rgba(0,0,0,.35)}
+.trust{
+  display:inline-block;background:rgba(255,255,255,.1);border:1px solid rgba(249,221,14,.42);
+  border-radius:var(--r);padding:13px 18px;font-size:16.5px;color:#fff;margin-bottom:26px;
+  max-width:620px;backdrop-filter:blur(2px)
+}
+.hero-note{font-size:15px;color:#c9cef0;margin-top:16px}
+
+/* ═══ 4 · CTA ═══ */
+.cta{
+  display:inline-block;background:var(--accent);color:var(--primary);
+  font-family:inherit;font-size:19px;font-weight:800;line-height:1.35;
+  padding:17px 34px;border:0;border-radius:var(--r);cursor:pointer;text-decoration:none;
+  box-shadow:0 8px 22px rgba(249,221,14,.34);transition:transform .15s,box-shadow .15s;
+  max-width:100%
+}
+.cta:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(249,221,14,.44)}
+.cta-note{display:block;font-size:14.5px;font-weight:600;margin-top:10px;opacity:.85}
+.hero .cta-note{color:#dfe3ff;opacity:1}
+.cta-block{text-align:center;margin-top:8px}
+
+/* ═══ 5 · LISTS ═══ */
+.list{list-style:none;display:grid;gap:14px;margin:0 0 22px}
+.list li{
+  display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start;
+  background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:15px 17px
+}
+.list .ic{font-weight:800;font-size:18px;line-height:1.5}
+.list-pain .ic{color:var(--red)}
+.list-win .ic{color:var(--primary)}
+.list-win li{background:var(--light-bg);border-color:#dbe3ee}
+
+/* ═══ 6 · CARDS ẢNH ═══ */
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0 8px}
+.cards figure{border-radius:var(--r);overflow:hidden;background:var(--primary)}
+.cards img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
+.cards figcaption{font-size:14.5px;font-weight:600;color:#fff;padding:10px 12px;text-align:center;line-height:1.45}
+
+/* ═══ 7 · VALUE STACK ═══ */
+.stack{background:#fff;border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:18px}
+.stack-row{
+  display:grid;grid-template-columns:1fr auto;gap:14px;align-items:center;
+  padding:16px 18px;border-bottom:1px solid var(--border);font-size:17px
+}
+.stack-row:last-child{border-bottom:0}
+.stack-row .no{color:var(--primary);font-weight:800;margin-right:6px}
+.stack-row .val{font-weight:700;color:var(--muted);white-space:nowrap;font-size:16px}
+.stack-row.total{background:var(--primary);color:#fff;font-weight:800;font-size:18px}
+.stack-row.total .val{color:#fff;font-size:19px}
+.stack-row.free{background:var(--accent);color:var(--primary);font-weight:800;font-size:18px}
+.stack-row.free .val{color:var(--primary);font-size:20px}
+.fineprint{font-size:15.5px;color:var(--muted);margin-bottom:24px}
+
+/* ═══ 8 · KHỐI CAM KẾT (closer) ═══ */
+.promise{
+  background:var(--tint);border:2px solid var(--primary);border-radius:var(--r);
+  padding:26px 24px;margin:22px 0
+}
+.promise .big{font-size:20px;font-weight:800;line-height:1.55;margin-bottom:18px}
+.promise p:last-child{margin-bottom:0}
+
+/* ═══ 9 · VIDEO (facade: ảnh bìa của mình, chỉ nạp YouTube khi bấm play) ═══ */
+.video{margin-bottom:22px}
+.video-frame{position:relative;padding-top:56.25%;border-radius:var(--r);overflow:hidden;background:#000}
+.video-frame.is-vertical{padding-top:0;aspect-ratio:9/16;max-width:340px;margin-left:auto;margin-right:auto}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vfacade{
+  position:absolute;inset:0;width:100%;height:100%;
+  padding:0;border:0;background:#000;cursor:pointer;display:block
+}
+.vfacade img{width:100%;height:100%;object-fit:cover}
+.vplay{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:74px;height:74px;border-radius:50%;
+  background:rgba(38,39,93,.88);border:2.5px solid var(--accent);
+  display:grid;place-items:center;
+  box-shadow:0 6px 22px rgba(0,0,0,.4);transition:transform .18s,background .18s
+}
+.vplay svg{width:28px;height:28px;fill:var(--accent);margin-left:4px}
+/* video dọc: hạ nút play xuống để không che mặt người kể */
+.video-frame.is-vertical .vplay{top:64%}
+.vfacade:hover .vplay,.vfacade:focus-visible .vplay{transform:translate(-50%,-50%) scale(1.08);background:var(--primary)}
+.video h3{margin:16px 0 8px;font-size:20px}
+.video p{font-size:16.5px;color:var(--muted);margin:0}
+
+/* ═══ 10 · KHAN HIẾM ═══ */
+.dark{background:var(--primary);color:#fff}
+.dark .eyebrow{color:var(--accent);opacity:1}
+.dark p{color:#dfe3ff}
+.seats{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0 22px}
+.seat{
+  background:var(--red);border-radius:var(--r);padding:18px 16px;text-align:center;color:#fff
+}
+.seat b{display:block;font-size:34px;font-weight:800;line-height:1.1;font-variant-numeric:tabular-nums}
+.seat span{display:block;font-size:15px;font-weight:600;margin-top:4px}
+.seat small{display:block;font-size:13.5px;opacity:.9;margin-top:2px}
+
+/* ═══ 11 · FORM (2 bước: email → tên/SĐT/cơ sở) ═══ */
+.formbox{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px 22px;box-shadow:0 6px 24px rgba(38,39,93,.07)}
+.fprog{margin-bottom:20px}
+.fprog-bar{height:7px;border-radius:20px;background:var(--border);overflow:hidden}
+.fprog-bar i{display:block;height:100%;width:50%;border-radius:20px;background:var(--accent);transition:width .3s ease}
+.fprog-meta{display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--muted);margin-top:7px}
+.fstep{display:none}
+.fstep.on{display:block;animation:fadeUp .28s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.fhint{font-size:15px;color:var(--muted);text-align:center;margin:12px 0 0}
+.fback{
+  display:block;margin:12px auto 0;background:none;border:0;cursor:pointer;
+  font-family:inherit;font-size:15.5px;font-weight:700;color:var(--muted);text-decoration:underline
+}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:15.5px;font-weight:700;margin-bottom:6px}
+.field input,.field select,.field textarea{
+  width:100%;font-family:inherit;font-size:17px;color:var(--text);
+  padding:14px 15px;border:1.5px solid var(--border);border-radius:10px;background:#fff
+}
+.field textarea{resize:vertical;min-height:82px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:0;border-color:var(--primary);box-shadow:0 0 0 3px rgba(38,39,93,.1)}
+.field input.err,.field select.err{border-color:var(--red);background:#fff5f4}
+.errmsg{display:none;font-size:14.5px;font-weight:600;color:var(--red);margin-top:6px}
+.errmsg.on{display:block}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.formbox .cta{width:100%;text-align:center}
+.formbox .cta.loading{opacity:.6;pointer-events:none}
+.form-foot{font-size:15px;color:var(--muted);text-align:center;margin-top:14px}
+.form-foot a{color:var(--primary);font-weight:700}
+.formsuccess{display:none;text-align:center;padding:12px 0}
+.formsuccess.on{display:block}
+.formsuccess .tick{font-size:44px;line-height:1}
+
+/* ═══ 12 · FAQ ═══ */
+.faq{border-top:1px solid var(--border)}
+.faq details{border-bottom:1px solid var(--border);padding:4px 0}
+.faq summary{
+  list-style:none;cursor:pointer;padding:16px 34px 16px 0;position:relative;
+  font-size:18px;font-weight:700;line-height:1.5
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:'+';position:absolute;right:4px;top:14px;font-size:24px;font-weight:700;
+  color:var(--primary);transition:transform .2s
+}
+.faq details[open] summary::after{content:'–'}
+.faq .ans{padding:0 0 18px;color:var(--muted);font-size:17px}
+
+/* ═══ 13 · CHỮ KÝ + FOOTER ═══ */
+.sign{border-left:4px solid var(--accent);padding-left:18px;margin:22px 0 26px}
+.sign b{display:block;font-size:19px}
+.sign span{display:block;font-size:16px;color:var(--muted)}
+.foot{background:var(--primary-2);color:#c9cef0;font-size:15px;padding:32px 0 90px;line-height:1.65}
+.foot b{color:#fff}
+.foot .campus{margin-top:12px}
+.foot a{color:var(--accent);font-weight:700;text-decoration:none}
+
+/* ═══ 14 · STICKY CTA MOBILE ═══ */
+.sticky{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;
+  background:rgba(255,255,255,.97);border-top:1px solid var(--border);
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  box-shadow:0 -4px 18px rgba(38,39,93,.13)
+}
+.sticky .cta{width:100%;text-align:center;font-size:17.5px;padding:15px 18px;box-shadow:none}
+
+/* ═══ 15 · RESPONSIVE ═══ */
+@media (max-width:760px){
+  body{font-size:17px}
+  section{padding:44px 0}
+  .hero{padding:44px 0 40px}
+  /* mobile: dải quá dẹt nếu trải ngang → cover, neo vào bé gái đọc sách bên phải */
+  .hero::before{background-size:cover;background-position:88% center}
+  .hero::after{background:radial-gradient(ellipse 96% 74% at 50% 46%,rgba(38,39,93,.95) 0%,rgba(38,39,93,.88) 58%,rgba(38,39,93,.66) 100%)}
+  .cards{grid-template-columns:1fr 1fr;gap:10px}
+  .cards figure:first-child{grid-column:1 / -1}
+  .cards figure:first-child img{aspect-ratio:16/10}
+  .stack-row{grid-template-columns:1fr;gap:4px;font-size:16.5px}
+  .stack-row .val{white-space:normal}
+  .sticky{display:block}
+  .foot{padding-bottom:96px}
+}
+@media (max-width:380px){
+  .wrap{padding:0 15px}
+  .cta{font-size:17px;padding:15px 20px}
+  .seats{grid-template-columns:1fr}
+  .promise{padding:20px 17px}
+  .formbox{padding:19px 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .cta{transition:none}
+}
+</style>
+</head>
+
+<body>
+
+<!-- ① URGENCY BAR -->
+<div class="ubar">
+  Ghi danh <strong>4 Tuần Vàng</strong> — đóng cổng ngày <em>{CFG.deadline}</em>
+</div>
+
+<!-- ② LOGO -->
+<div class="lbar">
+  <a href="/" aria-label="Trường Việt Anh — trang chủ">
+    <img src="/logo-vietanh.webp" width="135" height="66" alt="Logo Hệ thống Trường Việt Anh" />
+  </a>
+</div>
+
+<!-- ③ HERO -->
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Trường Tiểu học Việt Anh · TP.HCM — Chuyển trường Tiểu học (Lớp 2–5) · 2026–2027</p>
+    <h1>Con bạn xứng đáng một ngôi trường con <em>muốn</em> đến — ngay từ học kỳ này. Con lấy lại niềm vui học, tự lập hơn, và nói tiếng Anh tự nhiên với thầy cô bản ngữ.</h1>
+    <p class="hero-sub">Chuyển về Việt Anh, tháng đầu tiên con được xây lại cái gốc: kỹ năng, phẩm chất, tiếng Anh với giáo viên bản ngữ và thể thao mỗi ngày.</p>
+    <p class="trust">Và chuyển trường không còn là canh bạc: học thử 4 tuần, không hài lòng <strong>hoàn 100% học phí</strong> — mà 4 tuần đầu là kỹ năng, không phải chính khoá, nên <strong>con không mất bài.</strong></p>
+    <div class="cta-block">
+      <a class="cta js-cta" href="#dang-ky">Giữ suất học thử cho con →</a>
+      <span class="cta-note">Chỉ nhận đến hết {CFG.deadline} — hết chỗ là dừng</span>
+    </div>
+    <p class="hero-note">Dành cho học sinh chuyển trường Lớp 2 · 3 · 4 · 5 — Trường Việt Anh TP.HCM.</p>
+  </div>
+</header>
+
+<!-- ④ NỖI ĐAU -->
+<section>
+  <div class="wrap">
+    <h2>Tôi biết vì sao bạn còn cân nhắc</h2>
+    <p class="lead">Con bạn đang học ở đâu đó, nhưng có điều gì đó không ổn. Và bạn đang phân vân:</p>
+    <ul class="list list-pain">
+      <li><span class="ic" aria-hidden="true">✕</span><span>Mỗi ngày đi học con một uể oải — bạn thấy con đang tắt dần niềm vui học.</span></li>
+      <li><span class="ic" aria-hidden="true">✕</span><span>Con mất gốc tiếng Anh, hoặc chững lại, mà trường hiện tại không giải quyết được.</span></li>
+      <li><span class="ic" aria-hidden="true">✕</span><span>Chuyển giữa năm, tôi sợ con hụt kiến thức, sợ chọn lại vẫn sai thêm một lần nữa.</span></li>
+    </ul>
+    <p>Tôi không trách bạn. Điều bạn sợ không phải là chuyển trường — mà là <strong>chọn sai thêm một lần nữa cho con.</strong> Vậy nên tôi quyết định gánh rủi ro đó thay bạn.</p>
+  </div>
+</section>
+
+<!-- ⑤ KẾT QUẢ MƠ ƯỚC -->
+<section>
+  <div class="wrap">
+    <h2>Một môi trường con MUỐN đến — bắt đầu ngay từ tháng đầu tiên</h2>
+    <p class="lead">4 tuần đầu tiên ở Việt Anh, con chưa vội vào bài vở. Con được xây cái gốc:</p>
+    <ul class="list list-win">
+      <li><span class="ic" aria-hidden="true">✓</span><span><strong>Tự lập &amp; yêu thích việc học</strong> — con biết tự làm, tự chịu trách nhiệm, và thấy học là niềm vui chứ không phải nghĩa vụ.</span></li>
+      <li><span class="ic" aria-hidden="true">✓</span><span><strong>Tiếng Anh giao tiếp tự nhiên với giáo viên bản ngữ</strong> mỗi ngày — con dạn dĩ, không sợ hãi.</span></li>
+      <li><span class="ic" aria-hidden="true">✓</span><span><strong>Thể dục thể thao</strong> đều đặn — con khoẻ, con vui, con muốn đến trường.</span></li>
+      <li><span class="ic" aria-hidden="true">✓</span><span><strong>Coach đồng hành kèm sát mỗi ngày</strong> — không đứa trẻ nào bị bỏ lại phía sau.</span></li>
+    </ul>
+
+    <div class="cards">
+      <figure>
+        <img src="/lp/tieu-hoc/card-english.webp" width="620" height="620" loading="lazy" decoding="async"
+             alt="Học sinh tiểu học Trường Việt Anh học tiếng Anh cùng giáo viên bản ngữ" />
+        <figcaption>Tiếng Anh mỗi ngày với giáo viên bản ngữ</figcaption>
+      </figure>
+      <figure>
+        <img src="/lp/tieu-hoc/card-sport.webp" width="620" height="620" loading="lazy" decoding="async"
+             alt="Học sinh tiểu học Trường Việt Anh trong giờ thể thao ngoài sân" />
+        <figcaption>Thể thao đều đặn — con khoẻ, con vui</figcaption>
+      </figure>
+      <figure>
+        <img src="/lp/tieu-hoc/card-coach.webp" width="620" height="620" loading="lazy" decoding="async"
+             alt="Học sinh tiểu học Trường Việt Anh tự đọc sách, rèn tính tự lập" />
+        <figcaption>Tự lập &amp; yêu thích việc học</figcaption>
+      </figure>
+    </div>
+
+    <p>Nhà tâm lý học Carol Dweck gọi đây là “tư duy phát triển”: đứa trẻ tiến bộ không phải đứa thông minh nhất, mà là đứa được tin và được kèm đúng cách ngay từ đầu.</p>
+  </div>
+</section>
+
+<!-- ⑥ GÓI BẢO CHỨNG -->
+<section style="background:var(--light-bg)">
+  <div class="wrap">
+    <p class="eyebrow">Ghi danh trong 4 Tuần Vàng</p>
+    <h2>Con nhận trọn Gói Bảo chứng Việt Anh</h2>
+    <p class="lead">Không chỉ là một suất học. Là toàn bộ những gì bảo chứng cho một năm đầu vững vàng của con:</p>
+
+    <div class="stack">
+      <div class="stack-row">
+        <span><span class="no">①</span><strong>Cam kết học thử — hoàn 100%</strong> nếu không hài lòng</span>
+        <span class="val">Vô giá</span>
+      </div>
+      <div class="stack-row">
+        <span><span class="no">②</span><strong>Xe đưa đón nguyên năm học</strong> — an toàn, đúng giờ, tận nơi</span>
+        <span class="val">10–15 triệu</span>
+      </div>
+      <div class="stack-row">
+        <span><span class="no">③</span><strong>Coach đồng hành kèm sát mỗi ngày</strong></span>
+        <span class="val">15–20 triệu</span>
+      </div>
+      <div class="stack-row">
+        <span><span class="no">④</span><strong>Tiếng Anh giao tiếp tự nhiên với giáo viên bản ngữ + thể thao mỗi ngày</strong></span>
+        <span class="val">Có trong học phí</span>
+      </div>
+      <div class="stack-row">
+        <span><span class="no">⑤</span><strong>Cam kết đầu ra đúng lứa tuổi</strong>: con tự lập, yêu thích việc học &amp; giao tiếp tiếng Anh tự nhiên với người bản ngữ (kèm tiến bộ 4 lĩnh vực, có minh chứng)</span>
+        <span class="val">Có minh chứng</span>
+      </div>
+      <div class="stack-row total">
+        <span>Tổng giá trị bạn nhận</span>
+        <span class="val">~50.000.000đ</span>
+      </div>
+      <div class="stack-row free">
+        <span>Hôm nay, khi ghi danh trong 4 Tuần Vàng</span>
+        <span class="val">MIỄN PHÍ</span>
+      </div>
+    </div>
+
+    <p class="fineprint">Học phí Lớp 2–5 thay đổi theo khối, theo cơ sở và lộ trình gia đình chọn cho con — chuyên viên tuyển sinh sẽ tư vấn trực tiếp mức phí đúng với khối và cơ sở bạn chọn. Gói Bảo chứng ở trên được tặng kèm, không cộng thêm chi phí.</p>
+
+    <div class="cta-block">
+      <a class="cta js-cta" href="#dang-ky">Nhận Gói Bảo chứng cho con →</a>
+      <span class="cta-note">Trị giá ~50 triệu — tặng khi ghi danh trước {CFG.deadline}</span>
+    </div>
+  </div>
+</section>
+
+<!-- ⑦ CLOSER -->
+<section>
+  <div class="wrap">
+    <h2>Vì sao đây không phải một canh bạc</h2>
+    <div class="promise">
+      <p class="big">Con học thử trọn 4 tuần. Nếu bạn hoặc con không thấy giá trị — tôi hoàn lại 100% học phí. Không cần giải trình, không một câu hỏi.</p>
+      <p>Và đây là điều tôi muốn bạn yên tâm nhất: <strong>4 tuần đầu tháng 8 dành trọn cho kỹ năng, phẩm chất, tiếng Anh bản ngữ và thể thao — không phải chương trình chính khoá.</strong> Nghĩa là dù cuối cùng gia đình chọn thế nào, con cũng <strong>không mất bài vở, không hụt năm học</strong>, và vẫn kịp nhịp học chung.</p>
+      <p><strong>Nói thẳng: dù con ở lại hay không, gia đình vẫn LỜI trọn 4 tuần rèn những điều mà giáo dục Việt Nam đang thiếu nhất. Đây không phải canh bạc. Đây là một món quà cho con — và bạn không mất gì.</strong></p>
+    </div>
+    <p class="fineprint">Điều kiện duy nhất để công bằng: con có đi học trong 4 tuần đó.</p>
+  </div>
+</section>
+
+<!-- ⑧ LỜI HỨA 3 ĐIỀU -->
+<section>
+  <div class="wrap">
+    <h2>Vì sao tôi dám cam kết như vậy</h2>
+    <p class="lead">Tôi không hứa con bạn sẽ “xuất sắc” hay “vào trường top”. Tôi không bán giấc mơ. Tôi hứa đúng ba điều — và tôi giữ được:</p>
+    <ul class="list list-win">
+      <li><span class="ic" aria-hidden="true">✓</span><span><strong>Một môi trường vui vẻ, có văn hoá 5 giá trị cốt lõi.</strong> Con đến trường vì muốn đến.</span></li>
+      <li><span class="ic" aria-hidden="true">✓</span><span><strong>Tiếng Anh giao tiếp tự nhiên với người bản ngữ và 16 kỹ năng thế kỷ 21.</strong> Nền tảng con dùng được cả đời.</span></li>
+      <li><span class="ic" aria-hidden="true">✓</span><span><strong>Tiến bộ so với chính con — có minh chứng, có người kèm suốt năm.</strong> Chúng tôi đo sự lớn lên của con, không xếp con lên bàn cân với đứa trẻ khác.</span></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ⑨ VIDEO PHỤ HUYNH -->
+<section style="background:var(--light-bg)">
+  <div class="wrap">
+    <h2>Nghe phụ huynh đã chuyển con về Việt Anh kể — bằng chứng thật, không phải lời quảng cáo</h2>
+    {testimonials.filter((t) => t.youtubeId).map((t) => (
+      <div class="video">
+        <div class={t.vertical ? 'video-frame is-vertical' : 'video-frame'}>
+          <button class="vfacade" type="button" data-yt={t.youtubeId} data-title={t.title} aria-label={`Phát video: ${t.title}`}>
+            <img src={t.poster} alt={t.title} loading="lazy" decoding="async" width="405" height="720" />
+            <span class="vplay" aria-hidden="true">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M8 5v14l11-7z" /></svg>
+            </span>
+          </button>
+        </div>
+        <h3>{t.title}</h3>
+        <p>{t.caption}</p>
+      </div>
+    ))}
+
+    {quotes.length > 0 && (
+      <ul class="list list-win">
+        {quotes.map((q) => (
+          <li><span class="ic" aria-hidden="true">”</span><span>“{q.text}”<br /><strong>{q.author}</strong> — {q.context}</span></li>
+        ))}
+      </ul>
+    )}
+  </div>
+</section>
+
+<!-- ⑩ KHAN HIẾM -->
+<section class="dark">
+  <div class="wrap">
+    <h2>Vì sao là “4 Tuần Vàng”, và vì sao là bây giờ</h2>
+    <p class="lead">Mỗi lớp chỉ có một số chỗ. Một chỗ trống sẽ bị bỏ phí đúng vào ngày khai giảng — không để dành cho sang năm được. Vì vậy Gói Bảo chứng này chỉ mở trong 4 tuần trước thềm năm học.</p>
+    <div class="seats">
+      {CFG.grades.map((g) => (
+        <div class="seat">
+          <b data-seat={g.value}>{g.seats}</b>
+          <span>suất còn lại</span>
+          <small>{g.label}</small>
+        </div>
+      ))}
+    </div>
+    <p>Khi đủ sĩ số, tôi đóng cổng đúng hạn.</p>
+    <div class="cta-block">
+      <a class="cta js-cta" href="#dang-ky">Giữ suất học thử cho con →</a>
+      <span class="cta-note">Đóng cổng ngày {CFG.deadline}</span>
+    </div>
+  </div>
+</section>
+
+<!-- ⑪ BONUS -->
+<section>
+  <div class="wrap">
+    <h3>Và, khi bạn đến cùng người thân:</h3>
+    <p>Giới thiệu một gia đình cùng cho con vào Việt Anh — <strong>cả hai nhà cùng nhận 5.000.000đ học bổng.</strong> Đưa con đi cùng nhóm bạn thân — mỗi bé thêm một phần ưu đãi ghi danh nhóm. Vì hành trình của con vui hơn khi có bạn đồng hành.</p>
+  </div>
+</section>
+
+<!-- ⑫ FORM -->
+<section id="dang-ky" style="background:var(--light-bg)">
+  <div class="wrap">
+    <h3>Chỉ một quyết định đúng của cha mẹ có thể đổi cả một năm tuổi thơ của con.</h3>
+    <p>Nếu bạn hành động hôm nay, điều xấu nhất có thể xảy ra là con được học thử 4 tuần ở một ngôi trường tử tế, và nếu không hợp, bạn nhận lại đủ tiền. Nếu bạn chờ, chỗ trống có thể không còn khi năm học bắt đầu.</p>
+
+    <div class="formbox">
+      <div class="fprog" id="fProg">
+        <div class="fprog-bar"><i id="pFill"></i></div>
+        <div class="fprog-meta"><span id="pLabel">Bước 1 / 2</span><span id="pPct">50%</span></div>
+      </div>
+
+      <form id="leadForm" novalidate>
+        <!-- BƯỚC 1 — email (cam kết nhỏ trước; bỏ giữa chừng vẫn giữ được đầu mối) -->
+        <div class="fstep on" id="s1">
+          <div class="field">
+            <label for="fEmail">Email của bạn <span aria-hidden="true">*</span></label>
+            <input id="fEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="lan.nguyen@gmail.com" required />
+            <p class="errmsg" id="eEmail">Email chưa đúng định dạng.</p>
+          </div>
+          <button class="cta" id="btnNext" type="button">Tiếp tục →</button>
+          <p class="fhint">Bước sau chỉ còn tên, số điện thoại và cơ sở — khoảng 20 giây.</p>
+        </div>
+
+        <!-- BƯỚC 2 — thông tin để gọi lại -->
+        <div class="fstep" id="s2">
+          <div class="field">
+            <label for="fName">Họ tên phụ huynh <span aria-hidden="true">*</span></label>
+            <input id="fName" name="parent_name" type="text" autocomplete="name" placeholder="Nguyễn Thị Lan" required />
+            <p class="errmsg" id="eName">Vui lòng nhập họ tên của bạn.</p>
+          </div>
+          <div class="field">
+            <label for="fPhone">Số điện thoại <span aria-hidden="true">*</span></label>
+            <input id="fPhone" name="parent_phone" type="tel" autocomplete="tel" placeholder="0912 345 678" required />
+            <p class="errmsg" id="ePhone">Số điện thoại chưa đúng định dạng Việt Nam.</p>
+          </div>
+          <div class="field">
+            <label for="fGrade">Khối lớp con sẽ vào <span aria-hidden="true">*</span></label>
+            <select id="fGrade" name="grade" required>
+              <option value="">— Chọn khối lớp —</option>
+              {CFG.grades.map((g) => <option value={g.value}>{g.label}</option>)}
+            </select>
+            <p class="errmsg" id="eGrade">Vui lòng chọn khối lớp của con.</p>
+          </div>
+          <div class="field">
+            <label for="fCampus">Cơ sở bạn quan tâm <span aria-hidden="true">*</span></label>
+            <select id="fCampus" name="campus" required>
+              <option value="">— Chọn cơ sở —</option>
+              {CFG.campuses.map((c) => <option value={c.value}>{c.label}</option>)}
+            </select>
+            <p class="errmsg" id="eCampus">Vui lòng chọn cơ sở gần nhà bạn.</p>
+          </div>
+          <div class="field">
+            <label for="fSchool">Trường con đang học <span style="font-weight:400;color:#4b5168">(không bắt buộc)</span></label>
+            <input id="fSchool" name="current_school" type="text" placeholder="Ví dụ: Tiểu học Nguyễn Văn Trỗi" />
+          </div>
+          <div class="field">
+            <label for="fNote">Tên con &amp; lời nhắn cho nhà trường <span style="font-weight:400;color:#4b5168">(không bắt buộc)</span></label>
+            <textarea id="fNote" name="note" placeholder="Ví dụ: bé Minh, đang học lớp 3, nhà gần Phan Huy Ích…"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="fWebsite">Website</label>
+            <input id="fWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <button class="cta" id="btnSubmit" type="submit">Giữ suất học thử cho con</button>
+          <p class="errmsg" id="eForm" style="text-align:center">Có lỗi khi gửi. Vui lòng gọi {CFG.hotline} để được hỗ trợ.</p>
+          <button class="fback" id="btnBack" type="button">← Quay lại sửa email</button>
+        </div>
+      </form>
+
+      <div class="formsuccess" id="formOk">
+        <p class="tick" aria-hidden="true">✓</p>
+        <p><strong>Đã nhận thông tin của bạn.</strong><br />Nhà trường sẽ gọi lại trong 15 phút để giữ suất học thử cho con.</p>
+      </div>
+
+      <p class="form-foot">Nhà trường gọi lại trong 15 phút · Hotline: <a href={`tel:${CFG.hotlineTel}`}>{CFG.hotline}</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ⑬ FAQ -->
+<section>
+  <div class="wrap">
+    <h2>Câu hỏi thường gặp</h2>
+    <div class="faq">
+      {faqs.map((f, i) => (
+        <details open={i === 0}>
+          <summary><h3 style="display:inline;font-size:inherit;font-weight:inherit">{f.q}</h3></summary>
+          <p class="ans">{f.a}</p>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ⑭ CHỮ KÝ -->
+<section style="background:var(--light-bg)">
+  <div class="wrap">
+    <p class="lead">Tôi viết những dòng này với đúng sự thẳng thắn mà tôi mong bạn nhận được từ ngôi trường của con mình. Nếu bạn cho chúng tôi 4 tuần, tôi tin con bạn sẽ cho bạn một câu trả lời.</p>
+    <div class="sign">
+      <b>Nguyễn Mạnh Dương</b>
+      <span>Nhà sáng lập &amp; Chủ tịch</span>
+      <span>Hệ thống Trường Việt Anh</span>
+      <span>truongvietanh.com</span>
+    </div>
+    <div class="cta-block">
+      <a class="cta js-cta" href="#dang-ky">Giữ suất học thử cho con ngay hôm nay →</a>
+      <span class="cta-note">4 Tuần Vàng đóng cổng ngày {CFG.deadline}</span>
+    </div>
+  </div>
+</section>
+
+<!-- ⑮ FOOTER -->
+<footer class="foot">
+  <div class="wrap">
+    <p style="margin-bottom:6px"><b>Hệ thống Trường Liên cấp Việt Anh</b> · Hotline: <a href={`tel:${CFG.hotlineTel}`}>{CFG.hotline}</a></p>
+    {CFG.campuses.map((c) => (
+      <p class="campus" style="margin:0"><b>{c.label}</b> — {c.address}</p>
+    ))}
+    <p style="margin:16px 0 0;font-size:14px">© 2026 Hệ Thống Trường Liên Cấp Việt Anh</p>
+  </div>
+</footer>
+
+<!-- ⑯ STICKY CTA (mobile) -->
+<div class="sticky">
+  <a class="cta js-cta" href="#dang-ky">Giữ suất học thử cho con →</a>
+</div>
+
+<script is:inline define:vars={{ CFG }}>
+/* eslint-disable */
+(function () {
+  'use strict';
+
+  // ── UTM chuẩn __vaUTM (bắt buộc theo CLAUDE.md): đọc UTM từ URL, giữ qua sessionStorage,
+  //    fallback direct/none, kèm page_url để worker bắt fbclid/gclid khi ads quên gắn UTM.
+  var UTM = (window.__vaUTM||(window.__vaUTM=function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))();
+
+  // ── Lead vào THẲNG website (không qua link quảng cáo) → theo quy ước file UTM của team:
+  //    utm_source=website · utm_medium=organic · Người chạy = người phụ trách organic.
+  //    CHỈ áp khi vừa không có UTM chiến dịch VỪA không có click-id của nền tảng: nếu ads
+  //    quên gắn UTM mà URL còn fbclid/gclid thì để worker nhận đúng kênh, không cướp công ads.
+  (function () {
+    var src = String(UTM.utm_source || '').toLowerCase();
+    var organicish = !src || src === 'direct' || src === 'website';
+    var hasClickId = /[?&](fbclid|gclid|gbraid|wbraid|ttclid|msclkid)=/i.test(UTM.page_url || '');
+    if (organicish && !hasClickId) {
+      UTM.utm_source = 'website';
+      UTM.utm_medium = 'organic';
+      if (!UTM.pke_mkter && !UTM.utm_pke_mkter) UTM.pke_mkter = CFG.organicOwner;
+    }
+  })();
+
+  var form   = document.getElementById('leadForm');
+  var okBox  = document.getElementById('formOk');
+  var btn    = document.getElementById('btnSubmit');
+  var prog   = document.getElementById('fProg');
+  var s1     = document.getElementById('s1');
+  var s2     = document.getElementById('s2');
+  var email  = '';
+  if (!form) return;
+
+  function gtm(evt, extra) {
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(Object.assign(
+        { event: evt, form_id: CFG.formId, funnel_code: CFG.funnel, school_level: CFG.level },
+        extra || {}, UTM
+      ));
+    } catch (e) {}
+  }
+
+  // ── Video: chỉ nạp player khi phụ huynh bấm play, phát ngay tại chỗ.
+  //    Trước khi bấm, trang chỉ có ảnh bìa của mình → không có logo/nút "Watch on
+  //    YouTube" nào hiện, và không tải JS của YouTube (nhẹ hơn hẳn).
+  Array.prototype.forEach.call(document.querySelectorAll('.vfacade'), function (b) {
+    b.addEventListener('click', function () {
+      var id = b.getAttribute('data-yt');
+      if (!id) return;
+      var f = document.createElement('iframe');
+      // Style đặt thẳng inline: CSS scoped của Astro gắn theo data-astro-cid-* của
+      // element CÓ TRONG template, nên iframe tạo lúc chạy KHÔNG ăn `.video-frame iframe`
+      // → sẽ rơi về 300x150 mặc định nếu chỉ dựa vào stylesheet.
+      f.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;border:0;display:block';
+      f.src = 'https://www.youtube-nocookie.com/embed/' + id +
+              '?autoplay=1&playsinline=1&rel=0&modestbranding=1';
+      f.title = b.getAttribute('data-title') || 'Video phụ huynh Việt Anh';
+      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      f.setAttribute('allowfullscreen', '');
+      b.parentNode.replaceChild(f, b);
+      gtm('video_play', { video_id: id });
+    });
+  });
+
+  // Mọi CTA đều cuộn về form (một CTA duy nhất, lặp lại)
+  Array.prototype.forEach.call(document.querySelectorAll('.js-cta'), function (a) {
+    a.addEventListener('click', function () { gtm('cta_click'); });
+  });
+
+  function okPhone(v) {
+    v = String(v).replace(/[\s\-\.\(\)]/g, '').replace(/^\+?84/, '0');
+    return /^0[35789][0-9]{8}$/.test(v);
+  }
+  function okEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function mark(inputId, errId, bad) {
+    var i = document.getElementById(inputId), e = document.getElementById(errId);
+    if (i) i.classList.toggle('err', bad);
+    if (e) e.classList.toggle('on', bad);
+  }
+  function setStep(n) {
+    var fill = document.getElementById('pFill');
+    if (fill) fill.style.width = n === 1 ? '50%' : '100%';
+    document.getElementById('pLabel').textContent = 'Bước ' + n + ' / 2';
+    document.getElementById('pPct').textContent = n === 1 ? '50%' : '100%';
+    s1.classList.toggle('on', n === 1);
+    s2.classList.toggle('on', n === 2);
+  }
+
+  // ── BƯỚC 1: email. Gửi partial ngay để giữ đầu mối nếu phụ huynh bỏ giữa chừng.
+  //    Lead chỉ-email KHÔNG có SĐT → worker bỏ qua Pancake, chỉ vào GHL (upsert theo
+  //    email) nên submit đầy đủ ở bước 2 không tạo bản ghi trùng.
+  document.getElementById('btnNext').addEventListener('click', function () {
+    var v = (document.getElementById('fEmail').value || '').trim();
+    if (!okEmail(v)) { mark('fEmail', 'eEmail', true); document.getElementById('fEmail').focus(); return; }
+    mark('fEmail', 'eEmail', false);
+    var firstTime = v !== email;   // quay lại rồi tiến tiếp với cùng email → không bắn lại
+    email = v;
+
+    if (firstTime) {
+      gtm('lead_step1');
+      try {
+      fetch(CFG.api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({
+          email: email,
+          form_id: CFG.formId,
+          funnel_code: CFG.funnel,
+          school_level: CFG.level,
+          partial: true
+        }, UTM)),
+        keepalive: true
+      }).catch(function () {});
+      } catch (e) {}
+    }
+
+    setStep(2);
+    setTimeout(function () { document.getElementById('fName').focus(); }, 90);
+  });
+
+  document.getElementById('btnBack').addEventListener('click', function () { setStep(1); });
+
+  document.getElementById('fEmail').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('btnNext').click(); }
+  });
+
+  // ── BƯỚC 2: submit đầy đủ
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    if (!s2.classList.contains('on')) return;
+
+    var name   = (document.getElementById('fName').value   || '').trim();
+    var phone  = (document.getElementById('fPhone').value  || '').trim();
+    var grade  = (document.getElementById('fGrade').value  || '').trim();
+    var campus = (document.getElementById('fCampus').value || '').trim();
+    var school = (document.getElementById('fSchool').value || '').trim();
+    var note   = (document.getElementById('fNote').value   || '').trim();
+    var trap   = (document.getElementById('fWebsite').value || '').trim();
+
+    if (trap) return; // honeypot: bot điền → nuốt lặng lẽ
+
+    var bad = false;
+    mark('fName',   'eName',   !name);   if (!name)   bad = true;
+    mark('fPhone',  'ePhone',  !okPhone(phone)); if (!okPhone(phone)) bad = true;
+    mark('fGrade',  'eGrade',  !grade);  if (!grade)  bad = true;
+    mark('fCampus', 'eCampus', !campus); if (!campus) bad = true;
+    if (bad) { document.getElementById('eForm').classList.remove('on'); return; }
+
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    var campusObj = CFG.campuses.filter(function (c) { return c.value === campus; })[0] || {};
+    // funnel_code kèm cơ sở → cột "Diễn giải nguồn MKT" của Pancake hiện luôn nơi cần chuyển lead
+    var funnelCode = CFG.funnel + '-' + campus;
+    // email lấy từ bước 1; phòng trường hợp bị bỏ qua thì dựng placeholder theo SĐT
+    var mail = email || (phone.replace(/[^0-9]/g, '') + '@no-email.truongvietanh.com');
+
+    // worker normalizeFormData() KHÔNG đọc 'note' lẫn 'current_school' → gộp vào child_name
+    // để cả hai thật sự tới được người gọi (GHL custom field "Tên con"). Pancake hiện chưa có
+    // ô free-text cho phần này — muốn hiện bên Pancake thì phải sửa worker.
+    var forSales = [school ? 'Đang học: ' + school : '', note].filter(Boolean).join(' · ');
+
+    var body = Object.assign({
+      parent_name:    name,
+      phone:          phone,
+      email:          mail,
+      note:           note,
+      current_school: school,
+      child_name:     forSales,
+      campus_ref:     campus,
+      campus_label:   campusObj.label || '',
+      form_id:        CFG.formId,
+      funnel_code:    funnelCode,
+      school_level:   CFG.level,
+      grade:          grade      // 'lop-2'…'lop-5' → dropdown "Khối quan tâm" của Pancake
+    }, UTM);
+
+    fetch(CFG.api, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .then(function (r) { return r.ok; })
+      .catch(function () { return false; })
+      .then(function () {
+        gtm('generate_lead', { campus: campus, grade: grade, funnel_code: funnelCode });
+        try { localStorage.setItem('va_form_submitted', '1'); } catch (e) {}
+        form.style.display = 'none';
+        if (prog) prog.style.display = 'none';
+        okBox.classList.add('on');
+        setTimeout(function () {
+          window.location.href = CFG.redirect + '?name=' + encodeURIComponent(name) + '&campus=' + encodeURIComponent(campus);
+        }, 1600);
+      });
+  });
+
+  // Đếm suất: giảm chậm theo thời gian thực, không bao giờ xuống dưới 3 (không bịa "cháy hàng")
+  Array.prototype.forEach.call(document.querySelectorAll('[data-seat]'), function (el) {
+    var n = parseInt(el.textContent, 10) || 0;
+    var t = setInterval(function () {
+      if (n <= 3) { clearInterval(t); return; }
+      n--; el.textContent = String(n);
+    }, (240 + Math.random() * 360) * 1000);
+  });
+})();
+</script>
+
+<script src="/js/phone-vn.js" defer is:inline></script>
+</body>
+</html>

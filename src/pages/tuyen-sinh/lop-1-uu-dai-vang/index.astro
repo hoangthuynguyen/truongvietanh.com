@@ -14,6 +14,9 @@ const CFG = {
   level: 'lop-1',
   api: '/api/lead',
   redirect: '/cam-on',
+  // Người phụ trách traffic website/organic (mã trong dropdown "Người chạy" của Pancake).
+  // Lead vào thẳng website, không qua link quảng cáo → ghi công cho người này.
+  organicOwner: 'van.le',
   hotline: '0916 961 409',
   hotlineTel: '+84916961409',
   deadline: '10/08/2026',          // ⚠️ ngày đóng "4 Tuần Vàng" — xác nhận lại với BGH
@@ -752,6 +755,21 @@ strong{font-weight:700}
   // ── UTM chuẩn __vaUTM (bắt buộc theo CLAUDE.md): đọc UTM từ URL, giữ qua sessionStorage,
   //    fallback direct/none, kèm page_url để worker bắt fbclid/gclid khi ads quên gắn UTM.
   var UTM = (window.__vaUTM||(window.__vaUTM=function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))();
+
+  // ── Lead vào THẲNG website (không qua link quảng cáo) → theo quy ước file UTM của team:
+  //    utm_source=website · utm_medium=organic · Người chạy = người phụ trách organic.
+  //    CHỈ áp khi vừa không có UTM chiến dịch VỪA không có click-id của nền tảng: nếu ads
+  //    quên gắn UTM mà URL còn fbclid/gclid thì để worker nhận đúng kênh, không cướp công ads.
+  (function () {
+    var src = String(UTM.utm_source || '').toLowerCase();
+    var organicish = !src || src === 'direct' || src === 'website';
+    var hasClickId = /[?&](fbclid|gclid|gbraid|wbraid|ttclid|msclkid)=/i.test(UTM.page_url || '');
+    if (organicish && !hasClickId) {
+      UTM.utm_source = 'website';
+      UTM.utm_medium = 'organic';
+      if (!UTM.pke_mkter && !UTM.utm_pke_mkter) UTM.pke_mkter = CFG.organicOwner;
+    }
+  })();
 
   var form   = document.getElementById('leadForm');
   var okBox  = document.getElementById('formOk');

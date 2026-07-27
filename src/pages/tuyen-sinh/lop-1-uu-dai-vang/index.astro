@@ -299,8 +299,20 @@ strong{font-weight:700}
 .seat span{display:block;font-size:15px;font-weight:600;margin-top:4px}
 .seat small{display:block;font-size:13.5px;opacity:.9;margin-top:2px}
 
-/* ═══ 11 · FORM ═══ */
+/* ═══ 11 · FORM (2 bước: email → tên/SĐT/cơ sở) ═══ */
 .formbox{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:24px 22px;box-shadow:0 6px 24px rgba(38,39,93,.07)}
+.fprog{margin-bottom:20px}
+.fprog-bar{height:7px;border-radius:20px;background:var(--border);overflow:hidden}
+.fprog-bar i{display:block;height:100%;width:50%;border-radius:20px;background:var(--accent);transition:width .3s ease}
+.fprog-meta{display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--muted);margin-top:7px}
+.fstep{display:none}
+.fstep.on{display:block;animation:fadeUp .28s ease both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+.fhint{font-size:15px;color:var(--muted);text-align:center;margin:12px 0 0}
+.fback{
+  display:block;margin:12px auto 0;background:none;border:0;cursor:pointer;
+  font-family:inherit;font-size:15.5px;font-weight:700;color:var(--muted);text-decoration:underline
+}
 .field{margin-bottom:16px}
 .field label{display:block;font-size:15.5px;font-weight:700;margin-bottom:6px}
 .field input,.field select,.field textarea{
@@ -601,35 +613,55 @@ strong{font-weight:700}
     <p>Nếu bạn hành động hôm nay, điều xấu nhất có thể xảy ra là con được học thử 4 tuần ở một ngôi trường tử tế, và nếu không hợp, bạn nhận lại đủ tiền. Nếu bạn chờ, chỗ trống có thể không còn khi năm học bắt đầu.</p>
 
     <div class="formbox">
+      <div class="fprog" id="fProg">
+        <div class="fprog-bar"><i id="pFill"></i></div>
+        <div class="fprog-meta"><span id="pLabel">Bước 1 / 2</span><span id="pPct">50%</span></div>
+      </div>
+
       <form id="leadForm" novalidate>
-        <div class="field">
-          <label for="fName">Họ tên phụ huynh <span aria-hidden="true">*</span></label>
-          <input id="fName" name="parent_name" type="text" autocomplete="name" placeholder="Nguyễn Thị Lan" required />
-          <p class="errmsg" id="eName">Vui lòng nhập họ tên của bạn.</p>
+        <!-- BƯỚC 1 — email (cam kết nhỏ trước; bỏ giữa chừng vẫn giữ được đầu mối) -->
+        <div class="fstep on" id="s1">
+          <div class="field">
+            <label for="fEmail">Email của bạn <span aria-hidden="true">*</span></label>
+            <input id="fEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="lan.nguyen@gmail.com" required />
+            <p class="errmsg" id="eEmail">Email chưa đúng định dạng.</p>
+          </div>
+          <button class="cta" id="btnNext" type="button">Tiếp tục →</button>
+          <p class="fhint">Bước sau chỉ còn tên, số điện thoại và cơ sở — khoảng 20 giây.</p>
         </div>
-        <div class="field">
-          <label for="fPhone">Số điện thoại <span aria-hidden="true">*</span></label>
-          <input id="fPhone" name="parent_phone" type="tel" autocomplete="tel" placeholder="0912 345 678" required />
-          <p class="errmsg" id="ePhone">Số điện thoại chưa đúng định dạng Việt Nam.</p>
+
+        <!-- BƯỚC 2 — thông tin để gọi lại -->
+        <div class="fstep" id="s2">
+          <div class="field">
+            <label for="fName">Họ tên phụ huynh <span aria-hidden="true">*</span></label>
+            <input id="fName" name="parent_name" type="text" autocomplete="name" placeholder="Nguyễn Thị Lan" required />
+            <p class="errmsg" id="eName">Vui lòng nhập họ tên của bạn.</p>
+          </div>
+          <div class="field">
+            <label for="fPhone">Số điện thoại <span aria-hidden="true">*</span></label>
+            <input id="fPhone" name="parent_phone" type="tel" autocomplete="tel" placeholder="0912 345 678" required />
+            <p class="errmsg" id="ePhone">Số điện thoại chưa đúng định dạng Việt Nam.</p>
+          </div>
+          <div class="field">
+            <label for="fCampus">Cơ sở bạn quan tâm <span aria-hidden="true">*</span></label>
+            <select id="fCampus" name="campus" required>
+              <option value="">— Chọn cơ sở —</option>
+              {CFG.campuses.map((c) => <option value={c.value}>{c.label}</option>)}
+            </select>
+            <p class="errmsg" id="eCampus">Vui lòng chọn cơ sở gần nhà bạn.</p>
+          </div>
+          <div class="field">
+            <label for="fNote">Tên con &amp; lời nhắn cho nhà trường <span style="font-weight:400;color:#4b5168">(không bắt buộc)</span></label>
+            <textarea id="fNote" name="note" placeholder="Ví dụ: bé Minh, sinh năm 2020, nhà gần Phan Huy Ích…"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="fWebsite">Website</label>
+            <input id="fWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <button class="cta" id="btnSubmit" type="submit">Giữ suất học thử cho con</button>
+          <p class="errmsg" id="eForm" style="text-align:center">Có lỗi khi gửi. Vui lòng gọi {CFG.hotline} để được hỗ trợ.</p>
+          <button class="fback" id="btnBack" type="button">← Quay lại sửa email</button>
         </div>
-        <div class="field">
-          <label for="fCampus">Cơ sở bạn quan tâm <span aria-hidden="true">*</span></label>
-          <select id="fCampus" name="campus" required>
-            <option value="">— Chọn cơ sở —</option>
-            {CFG.campuses.map((c) => <option value={c.value}>{c.label}</option>)}
-          </select>
-          <p class="errmsg" id="eCampus">Vui lòng chọn cơ sở gần nhà bạn.</p>
-        </div>
-        <div class="field">
-          <label for="fNote">Tên con &amp; lời nhắn cho nhà trường <span style="font-weight:400;color:#4b5168">(không bắt buộc)</span></label>
-          <textarea id="fNote" name="note" placeholder="Ví dụ: bé Minh, sinh năm 2020, nhà gần Phan Huy Ích…"></textarea>
-        </div>
-        <div class="hp" aria-hidden="true">
-          <label for="fWebsite">Website</label>
-          <input id="fWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
-        </div>
-        <button class="cta" id="btnSubmit" type="submit">Giữ suất học thử cho con</button>
-        <p class="errmsg" id="eForm" style="text-align:center">Có lỗi khi gửi. Vui lòng gọi {CFG.hotline} để được hỗ trợ.</p>
       </form>
 
       <div class="formsuccess" id="formOk">
@@ -702,6 +734,10 @@ strong{font-weight:700}
   var form   = document.getElementById('leadForm');
   var okBox  = document.getElementById('formOk');
   var btn    = document.getElementById('btnSubmit');
+  var prog   = document.getElementById('fProg');
+  var s1     = document.getElementById('s1');
+  var s2     = document.getElementById('s2');
+  var email  = '';
   if (!form) return;
 
   function gtm(evt, extra) {
@@ -723,14 +759,64 @@ strong{font-weight:700}
     v = String(v).replace(/[\s\-\.\(\)]/g, '').replace(/^\+?84/, '0');
     return /^0[35789][0-9]{8}$/.test(v);
   }
+  function okEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
   function mark(inputId, errId, bad) {
     var i = document.getElementById(inputId), e = document.getElementById(errId);
     if (i) i.classList.toggle('err', bad);
     if (e) e.classList.toggle('on', bad);
   }
+  function setStep(n) {
+    var fill = document.getElementById('pFill');
+    if (fill) fill.style.width = n === 1 ? '50%' : '100%';
+    document.getElementById('pLabel').textContent = 'Bước ' + n + ' / 2';
+    document.getElementById('pPct').textContent = n === 1 ? '50%' : '100%';
+    s1.classList.toggle('on', n === 1);
+    s2.classList.toggle('on', n === 2);
+  }
 
+  // ── BƯỚC 1: email. Gửi partial ngay để giữ đầu mối nếu phụ huynh bỏ giữa chừng.
+  //    Lead chỉ-email KHÔNG có SĐT → worker bỏ qua Pancake, chỉ vào GHL (upsert theo
+  //    email) nên submit đầy đủ ở bước 2 không tạo bản ghi trùng.
+  document.getElementById('btnNext').addEventListener('click', function () {
+    var v = (document.getElementById('fEmail').value || '').trim();
+    if (!okEmail(v)) { mark('fEmail', 'eEmail', true); document.getElementById('fEmail').focus(); return; }
+    mark('fEmail', 'eEmail', false);
+    var firstTime = v !== email;   // quay lại rồi tiến tiếp với cùng email → không bắn lại
+    email = v;
+
+    if (firstTime) {
+      gtm('lead_step1');
+      try {
+      fetch(CFG.api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign({
+          email: email,
+          form_id: CFG.formId,
+          funnel_code: CFG.funnel,
+          school_level: CFG.level,
+          grade: 'lop-1',
+          partial: true
+        }, UTM)),
+        keepalive: true
+      }).catch(function () {});
+      } catch (e) {}
+    }
+
+    setStep(2);
+    setTimeout(function () { document.getElementById('fName').focus(); }, 90);
+  });
+
+  document.getElementById('btnBack').addEventListener('click', function () { setStep(1); });
+
+  document.getElementById('fEmail').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('btnNext').click(); }
+  });
+
+  // ── BƯỚC 2: submit đầy đủ
   form.addEventListener('submit', function (ev) {
     ev.preventDefault();
+    if (!s2.classList.contains('on')) return;
 
     var name   = (document.getElementById('fName').value   || '').trim();
     var phone  = (document.getElementById('fPhone').value  || '').trim();
@@ -752,13 +838,13 @@ strong{font-weight:700}
     var campusObj = CFG.campuses.filter(function (c) { return c.value === campus; })[0] || {};
     // funnel_code kèm cơ sở → cột "Diễn giải nguồn MKT" của Pancake hiện luôn nơi cần chuyển lead
     var funnelCode = CFG.funnel + '-' + campus;
-    // Form không thu email → email placeholder để lead vẫn qua được validate của GHL
-    var email = phone.replace(/[^0-9]/g, '') + '@no-email.truongvietanh.com';
+    // email lấy từ bước 1; phòng trường hợp bị bỏ qua thì dựng placeholder theo SĐT
+    var mail = email || (phone.replace(/[^0-9]/g, '') + '@no-email.truongvietanh.com');
 
     var body = Object.assign({
       parent_name:  name,
       phone:        phone,
-      email:        email,
+      email:        mail,
       // worker normalizeFormData() KHÔNG đọc 'note' → gửi kèm child_name để lời nhắn
       // thật sự tới được người gọi (GHL custom field "Tên con"). Pancake hiện chưa có
       // ô free-text cho lời nhắn — muốn hiện bên Pancake thì phải sửa worker.
@@ -783,6 +869,7 @@ strong{font-weight:700}
         gtm('generate_lead', { campus: campus, funnel_code: funnelCode });
         try { localStorage.setItem('va_form_submitted', '1'); } catch (e) {}
         form.style.display = 'none';
+        if (prog) prog.style.display = 'none';
         okBox.classList.add('on');
         setTimeout(function () {
           window.location.href = CFG.redirect + '?name=' + encodeURIComponent(name) + '&campus=' + encodeURIComponent(campus);

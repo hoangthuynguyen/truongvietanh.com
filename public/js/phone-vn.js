@@ -7,6 +7,10 @@
 (function () {
   var SEL = 'input[type="tel"], input[name="phone"], input[name="parent_phone"], input[name="sdt"]';
   var PREFIX = '🇻🇳 +84';
+  // Đệm trái tạm cho tới khi đo được prefix thật. Ô điện thoại thường bị ẨN lúc
+  // script chạy lần đầu (form 2 bước, modal, tab) → không đo được offsetWidth.
+  // Đệm sẵn để placeholder KHÔNG BAO GIỜ nằm đè lên prefix trong lúc chờ đo.
+  var FALLBACK_PAD = 68;
 
   function ensurePrefix(input) {
     if (input.__vnPhone) return input.__vnPhonePfx;
@@ -30,11 +34,23 @@
       'position:absolute', 'display:flex', 'align-items:center',
       'pointer-events:none', 'white-space:nowrap', 'z-index:3',
       'font-family:inherit', 'font-size:inherit', 'line-height:normal',
-      'color:#475569'
+      'color:#475569',
+      // Vị trí mặc định: ô input gần như luôn là con đầu của .form-group nên
+      // (12, 0) đã đúng. place() sẽ chỉnh lại chính xác khi ô hiện ra.
+      // KHÔNG để trống left/top — nếu không prefix rơi về vị trí tĩnh (dưới ô input).
+      'left:12px', 'top:0'
     ].join(';');
     parent.appendChild(pfx);
     input.__vnPhonePfx = pfx;
+
+    // Đệm NGAY, không chờ đo — đây là thứ chặn lỗi chữ đè chữ.
+    padAtLeast(input, FALLBACK_PAD);
     return pfx;
+  }
+
+  function padAtLeast(input, need) {
+    var basePad = parseFloat(window.getComputedStyle(input).paddingLeft) || 0;
+    if (basePad < need) input.style.paddingLeft = need + 'px';
   }
 
   function place(input) {
@@ -50,9 +66,7 @@
     pfx.style.height = h + 'px';
     var w = pfx.offsetWidth;
     // pad input để chữ người dùng gõ không đè lên prefix (chỉ tăng, không phá padding gốc nếu đã lớn hơn)
-    var basePad = parseFloat(window.getComputedStyle(input).paddingLeft) || 0;
-    var need = w + 18;
-    if (basePad < need) input.style.paddingLeft = need + 'px';
+    if (w) padAtLeast(input, w + 18);
   }
 
   function enhanceAll() {
@@ -73,9 +87,38 @@
     (document.head || document.documentElement).appendChild(l);
   }
 
+  // Nội dung động (form 2 bước hé lộ bước sau, modal, tab, accordion) có thể hiện ô
+  // điện thoại BẤT KỲ LÚC NÀO — sau khi loạt quét mở màn đã dừng. Theo dõi DOM để
+  // định vị lại, thay vì trông chờ đúng thời điểm.
+  function watchDom() {
+    if (!window.MutationObserver) return;
+    var pending = false;
+    var mo = new MutationObserver(function (records) {
+      // Bỏ qua chính thay đổi do script này gây ra, tránh vòng lặp vô tận.
+      var relevant = false;
+      for (var i = 0; i < records.length; i++) {
+        var t = records[i].target;
+        if (t && t.classList && t.classList.contains('vn-phone-cc')) continue;
+        if (t && t.__vnPhone && records[i].attributeName === 'style') continue;
+        relevant = true;
+        break;
+      }
+      if (!relevant || pending) return;
+      pending = true;
+      setTimeout(function () { pending = false; enhanceAll(); }, 50);
+    });
+    mo.observe(document.body, {
+      subtree: true,
+      childList: true,
+      attributes: true,
+      attributeFilter: ['style', 'class', 'hidden']
+    });
+  }
+
   function init() {
     injectFormCss();
     enhanceAll();
+    watchDom();
     // form 2 bước hé lộ step sau → định vị lại khi click / focus / resize
     document.addEventListener('focusin', function (e) {
       if (e.target && e.target.matches && e.target.matches(SEL)) { ensurePrefix(e.target); place(e.target); }

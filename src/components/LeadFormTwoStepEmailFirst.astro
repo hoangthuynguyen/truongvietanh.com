@@ -59,7 +59,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       <div class="form-group">
         <input
           type="email"
-          id="email-{formIdWithFunnel}"
+          id={`email-${formIdWithFunnel}`}
           name="email"
           class="form-input form-input--large"
           placeholder="Nhập email của bạn"
@@ -100,7 +100,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       <div class="form-group">
         <input
           type="text"
-          id="parent-name-{formIdWithFunnel}"
+          id={`parent-name-${formIdWithFunnel}`}
           name="parent_name"
           class="form-input"
           placeholder="Họ và tên phụ huynh"
@@ -113,7 +113,7 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
       <div class="form-group">
         <input
           type="tel"
-          id="phone-{formIdWithFunnel}"
+          id={`phone-${formIdWithFunnel}`}
           name="phone"
           class="form-input"
           placeholder="Số điện thoại"
@@ -519,8 +519,20 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     console.error('Form not found:', formIdWithFunnel);
   }
 
-  // Returning user check — hide form if already submitted
-  if (form && localStorage.getItem('va_form_submitted')) {
+  // Returning user check — CHỈ ẩn form khi đã đăng ký ĐÚNG funnel này, và còn trong hạn.
+  // Trước đây dùng một cờ CHUNG 'va_form_submitted' cho toàn site, không hạn dùng:
+  // phụ huynh điền bất kỳ form nào (checklist, học phí…) là MỌI landing page sau đó
+  // đều mất sạch ô nhập, chỉ còn dòng "Bạn đã đăng ký thành công" — vĩnh viễn.
+  // Lead thật bị chặn ngay tại chỗ mà không ai biết, vì trang vẫn tính có traffic.
+  const SUBMIT_KEY = 'va_submitted_' + funnelCode;
+  const SUBMIT_TTL = 7 * 24 * 60 * 60 * 1000;   // 7 ngày
+  function submittedRecently() {
+    try {
+      const t = parseInt(localStorage.getItem(SUBMIT_KEY), 10);
+      return !!t && (Date.now() - t) < SUBMIT_TTL;
+    } catch (e) { return false; }
+  }
+  if (form && submittedRecently()) {
     form.innerHTML = '<div style="padding:1.5rem;text-align:center;color:#27ae60;font-weight:600;font-family:Inter,sans-serif"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="display:block;margin:0 auto 0.75rem"><path d="M20 6 9 17l-5-5"/></svg>Bạn đã đăng ký thành công.<br><span style="font-weight:400;font-size:1rem;color:#475569">Chúng tôi sẽ liên hệ trong 24 giờ.</span></div>';
   }
 
@@ -706,8 +718,9 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
     // Show success step
     showStep('success');
 
-    // Mark user as having submitted — hide form on future visits
-    localStorage.setItem('va_form_submitted', '1');
+    // Đánh dấu đã đăng ký RIÊNG funnel này, kèm mốc thời gian để còn hết hạn.
+    // KHÔNG ghi cờ chung toàn site nữa — xem giải thích ở phần đọc cờ phía trên.
+    try { localStorage.setItem(SUBMIT_KEY, String(Date.now())); } catch (e) {}
 
     // Send full_submit to Make.com webhook -> Pancake CRM + GHL
     try {

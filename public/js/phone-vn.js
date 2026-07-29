@@ -50,7 +50,10 @@
 
   function padAtLeast(input, need) {
     var basePad = parseFloat(window.getComputedStyle(input).paddingLeft) || 0;
-    if (basePad < need) input.style.paddingLeft = need + 'px';
+    // Phải dùng !important: nhiều layout đặt padding cho ô nhập bằng !important
+    // (vd SalesPageLayout: `.mn-hero__form .form-input{padding:.7rem .9rem!important}`),
+    // inline thường sẽ THUA và chữ lại đè lên prefix. Inline !important thắng tất.
+    if (basePad < need) input.style.setProperty('padding-left', need + 'px', 'important');
   }
 
   function place(input) {

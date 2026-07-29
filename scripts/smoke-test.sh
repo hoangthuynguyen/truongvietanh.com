@@ -28,6 +28,10 @@ CRITICAL_PATHS=(
   "/blog/"
   "/sitemap-0.xml"
   "/tuyen-sinh-lop-10/"
+  # JS dùng chung của MỌI form lead — mất file này thì UTM/validate SĐT chết âm thầm,
+  # trang vẫn 200 nên không cách nào phát hiện qua URL trang.
+  "/js/va-utm.js"
+  "/js/phone-vn.js"
 )
 
 # Auto-discover top-level .astro pages → thêm vào danh sách check
@@ -41,6 +45,19 @@ if [ -d "src/pages" ]; then
       *) CRITICAL_PATHS+=("/$name/") ;;
     esac
   done < <(find src/pages -maxdepth 1 -name "*.astro" -type f)
+fi
+
+# Landing page chiến dịch nằm trong THƯ MỤC CON (vd src/pages/tuyen-sinh/lop-1-uu-dai-vang/
+# index.astro) nên vòng maxdepth-1 ở trên KHÔNG thấy. Đây chính là lỗ hổng khiến 4 trang
+# "4 Tuần Vàng" nằm 404 hai ngày (27→29/07/2026) mà health-check vẫn báo khoẻ.
+# Chỉ auto-discover các trang có hậu tố -uu-dai-vang: đó là trang đích của quảng cáo đang
+# chạy, bắt buộc phải sống. KHÔNG quét cả tuyen-sinh/** để tránh một trang cũ đã gỡ làm
+# smoke test fail vĩnh viễn → dispatch deploy lặp vô hạn mỗi 30 phút.
+if [ -d "src/pages" ]; then
+  while IFS= read -r f; do
+    dir=$(dirname "$f")
+    CRITICAL_PATHS+=("${dir#src/pages}/")
+  done < <(find src/pages -mindepth 2 -name "index.astro" -type f -path "*-uu-dai-vang/*")
 fi
 
 # Dedupe

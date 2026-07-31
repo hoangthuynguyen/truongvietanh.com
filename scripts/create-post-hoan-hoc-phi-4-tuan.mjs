@@ -47,6 +47,9 @@ const content = `
 <p><strong>Nguyễn Mạnh Dương — Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh</strong></p>
 
 <h2 id="toan-van-quyet-dinh">Toàn văn Quyết định ban hành chính sách</h2>
+<!-- Bọc cả công văn trong 1 div: script blog chèn CTA vào :scope > p/h2 của body,
+     không bọc thì hộp "đăng ký nhận email" rơi vào giữa các Điều của quyết định. -->
+<div class="cong-van">
 <p><strong>CÔNG TY CP GIÁO DỤC MAJOR — HỆ THỐNG TRƯỜNG VIỆT ANH</strong><br />
 Số: 0728.1/2026/QĐ-MAJOR<br />
 TP. Hồ Chí Minh, ngày 29 tháng 7 năm 2026</p>
@@ -89,6 +92,7 @@ Về việc ban hành Chính sách "Cam kết Giá trị 4 Tuần"<br />
 </figure>
 
 <p><a href="/van-ban/quyet-dinh-0728-1-2026-cam-ket-gia-tri-4-tuan.pdf" target="_blank" rel="noopener">Tải bản PDF Quyết định số 0728.1/2026/QĐ-MAJOR</a></p>
+</div>
 
 <h2 id="dang-ky-trai-nghiem">Đăng ký trải nghiệm 4 tuần có bảo chứng hoàn phí</h2>
 <p>Phụ huynh muốn tìm hiểu trực tiếp trước khi quyết định, mời <a href="/dat-lich-tham-quan">đặt lịch tham quan trường</a> hoặc <a href="/tuyen-sinh">đăng ký tư vấn tuyển sinh</a> để giữ chỗ cho con. Mọi thắc mắc về chính sách, phụ huynh có thể gọi <a href="tel:0916961409">0916 961 409</a>.</p>

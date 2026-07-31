@@ -1214,7 +1214,8 @@ const structuredData = [
     const headings = articleBody.querySelectorAll('h2, h3');
     if (headings.length >= 3) {
       headings.forEach((h, i) => {
-        const id = 'section-' + i;
+        // Giữ id tác giả đặt trong nội dung CMS — ghi đè sẽ làm hỏng link neo trong bài
+        const id = h.id || 'section-' + i;
         h.id = id;
         [tocList, tocStickyList].forEach(list => {
           if (!list) return;

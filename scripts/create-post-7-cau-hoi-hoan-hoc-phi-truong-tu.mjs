@@ -71,7 +71,9 @@ const content = `
 <p>Tùy từng trường — đây chính là khoản cần hỏi rõ ở câu hỏi số 3 trong danh sách trên, trước khi chuyển tiền.</p>
 </div>
 
-<h2 id="buoc-tiep-theo">Bước tiếp theo</h2>
+<!-- ĐỪNG đặt tiêu đề mục này là đúng chữ "Bước tiếp theo": cleanContent trong
+     src/pages/blog/[slug].astro xoá thẻ h2 đó VÀ toàn bộ nội dung phía sau nó. -->
+<h2 id="viec-nen-lam-tiep">Việc anh chị nên làm tiếp theo</h2>
 <p>Anh chị hãy mang bảy câu hỏi này đi hỏi mọi ngôi trường đang cân nhắc — và hỏi cả Việt Anh. Chúng tôi trả lời bằng văn bản có số hiệu, và mời gia đình đến kiểm chứng trong 28 ngày đầu tiên mà không phải đánh cược.</p>
 <p><a href="/squeeze/checklist-chon-truong">Tải danh mục kiểm tra chọn trường (PDF miễn phí)</a> · <a href="/dat-lich-tham-quan">Đăng ký tham quan trường &amp; tìm hiểu Cam kết Giá trị 4 Tuần</a> · <a href="/blog/truong-viet-anh-co-tra-lai-hoc-phi-khong/">Trường Việt Anh có trả lại học phí không?</a></p>
 <p><em>Tác giả: Nguyễn Mạnh Dương — Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh. Nguồn: Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026; Luật Bảo vệ quyền lợi người tiêu dùng 2023 (hiệu lực 01/7/2024).</em></p>

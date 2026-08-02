@@ -412,6 +412,28 @@ strong{font-weight:700}
 .foot .campus{margin-top:12px}
 .foot a{color:var(--accent);font-weight:700;text-decoration:none}
 
+/* ═══ 13B · POPUP FORM (chỉ bật cho khách từ quảng cáo) ═══ */
+.pop{
+  position:fixed;inset:0;z-index:80;display:none;
+  align-items:center;justify-content:center;padding:20px 16px;
+  background:rgba(12,13,40,.74);overflow-y:auto
+}
+.pop.on{display:flex;animation:popIn .22s ease both}
+@keyframes popIn{from{opacity:0}to{opacity:1}}
+.pop-box{position:relative;width:100%;max-width:470px;margin:auto}
+.pop-box .hero-form{box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.pop-close{
+  position:absolute;top:-15px;right:-7px;z-index:2;
+  width:38px;height:38px;border-radius:50%;border:0;cursor:pointer;
+  background:#fff;color:var(--primary);font-size:26px;line-height:1;font-weight:700;
+  box-shadow:0 5px 16px rgba(0,0,0,.34)
+}
+.pop-close:hover{background:var(--accent)}
+@media (max-width:400px){
+  .pop{padding:16px 12px}
+  .pop-close{top:-12px;right:-4px;width:34px;height:34px;font-size:23px}
+}
+
 /* ═══ 14 · STICKY CTA MOBILE ═══ */
 .sticky{
   display:none;position:fixed;left:0;right:0;bottom:0;z-index:60;
@@ -792,6 +814,14 @@ strong{font-weight:700}
   </div>
 </footer>
 
+<!-- POPUP FORM — khung rỗng; JS chuyển .hero-form vào đây khi mở -->
+<div class="pop" id="pop" role="dialog" aria-modal="true" aria-label="Giữ suất học thử cho con">
+  <div class="pop-box">
+    <button class="pop-close" id="popClose" type="button" aria-label="Đóng">×</button>
+    <div id="popSlot"></div>
+  </div>
+</div>
+
 <!-- ⑯ STICKY CTA (mobile) -->
 <div class="sticky">
   <a class="cta js-cta" href="#dang-ky">Giữ suất học thử cho con →</a>
@@ -861,6 +891,46 @@ strong{font-weight:700}
       gtm('video_play', { video_id: id });
     });
   });
+
+  // ── POPUP FORM: chỉ bật cho khách đến từ QUẢNG CÁO.
+  //    Khách vào từ Google tìm kiếm KHÔNG thấy popup — Google phạt "intrusive interstitial"
+  //    (nội dung che phần chính ngay khi vừa từ kết quả tìm kiếm vào), mà 4 trang này đang
+  //    để index,follow nên dính phạt sẽ tụt hạng mobile.
+  //    Popup KHÔNG chứa form riêng: nó mượn chính .hero-form rồi trả về khi đóng, nên
+  //    trang luôn chỉ có đúng một form, không bao giờ trùng id.
+  (function () {
+    var pop = document.getElementById('pop');
+    var slot = document.getElementById('popSlot');
+    var closeBtn = document.getElementById('popClose');
+    var hf = document.querySelector('.hero-form');
+    if (!pop || !slot || !hf) return;
+    var home = hf.parentNode;
+
+    var tuQuangCao = /[?&](utm_source|utm_medium|utm_campaign|gclid|gbraid|wbraid|fbclid|ttclid|msclkid)=/i.test(location.search);
+    if (!tuQuangCao) return;
+    try { if (sessionStorage.getItem('va_pop_seen')) return; } catch (e) {}
+    try { if (localStorage.getItem('va_form_submitted')) return; } catch (e) {}
+
+    function moPopup() {
+      slot.appendChild(hf);
+      pop.classList.add('on');
+      document.body.style.overflow = 'hidden';
+      try { sessionStorage.setItem('va_pop_seen', '1'); } catch (e) {}
+      gtm('popup_open');
+      setTimeout(function () { var el = document.getElementById('fEmail'); if (el) el.focus(); }, 260);
+    }
+    function dongPopup() {
+      home.appendChild(hf);          // trả form về hero để trang vẫn dùng được
+      pop.classList.remove('on');
+      document.body.style.overflow = '';
+    }
+
+    closeBtn.addEventListener('click', dongPopup);
+    pop.addEventListener('click', function (e) { if (e.target === pop) dongPopup(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && pop.classList.contains('on')) dongPopup(); });
+
+    setTimeout(moPopup, 700);        // chờ trang vẽ xong, tránh giật khi mới vào
+  })();
 
   // Thanh CTA dính ở mobile chỉ hiện khi form ở hero ĐÃ trôi khỏi màn hình.
   // Form nằm ngay hero nên lúc còn thấy form, thanh này vừa thừa vừa che mất tiêu đề form.

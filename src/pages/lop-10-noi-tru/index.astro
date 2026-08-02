@@ -9,28 +9,41 @@ import LeadFormTwoStepEmailFirst from '../../components/LeadFormTwoStepEmailFirs
   canonical="https://truongvietanh.com/lop-10-noi-tru"
   programCode="thpt-lop10-noitru"
   schoolLevel="thpt"
+  heroVariant="white-form"
 >
-  <div slot="hero">
-    <span class="sp-hero__badge">🏠 Lớp 10 Nội trú · Việt Anh · TP.HCM</span>
-    <h1 style="font-size:clamp(1.8rem,4.5vw,2.9rem);font-weight:900;color:#F9DD0E;margin:0 0 1rem;line-height:1.2;text-shadow:0 2px 18px rgba(0,0,0,.55)">
-      Gửi ba mẹ ở Cà Mau, Kiên Giang,<br>
-      <span style="color:#fff">Phú Quốc, Đà Nẵng và các tỉnh</span>
-    </h1>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.92);line-height:1.65;margin:.75rem 0 1.5rem">
-      Ở quê mình chưa có trường quốc tế tốt — điều đó không có nghĩa con mình phải chịu thiệt.
-    </p>
-    <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center">
-      <a href="#sp-form1" style="display:inline-block;background:#F9DD0E;color:#26275D;font-weight:800;padding:.9rem 2.2rem;border-radius:8px;text-decoration:none;font-size:1.05rem">
-        Giữ chỗ nội trú cho con →
-      </a>
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.9rem 1.8rem;border-radius:8px;text-decoration:none;font-size:1rem;border:2px solid rgba(255,255,255,.6)">
-        Nhắn Zalo ngay →
-      </a>
+  <!-- HERO — 2 cột: nội dung trái · form giữ chỗ nội trú phải (điền ngay, không phải cuộn) -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🏠 Lớp 10 Nội trú · Việt Anh · TP.HCM</span>
+      <h1>
+        <span class="mn-hl">Gửi ba mẹ ở Cà Mau, Kiên Giang,</span>
+        <span class="mn-sub">Phú Quốc, Đà Nẵng và các tỉnh</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Ở quê mình chưa có trường quốc tế tốt — điều đó <strong>không có nghĩa con mình phải chịu thiệt</strong>.
+      </p>
+      <div class="mn-hero__badges">
+        <span>🛏️ Nội trú trọn gói</span>
+        <span>🧑‍🏫 Mentor 1-1 báo cáo mỗi tuần</span>
+        <span>🏅 Cam kết IELTS 6.0</span>
+      </div>
+      <div class="mn-hero__trust">
+        <div>🏠 <b>Số chỗ nội trú có hạn</b> theo sức chứa ký túc xá — giữ chỗ cho con</div>
+      </div>
+      <p style="margin-top:.9rem">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.65rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.95rem;border:2px solid rgba(255,255,255,.6)">
+          Nhắn Zalo ngay →
+        </a>
+      </p>
     </div>
-    <p style="margin-top:1rem;font-size:.95rem;color:rgba(255,255,255,.7)">
-      🏠 Số chỗ nội trú có hạn theo sức chứa ký túc xá — giữ chỗ cho con
-    </p>
-  </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">🏠 Giữ chỗ nội trú</span>
+      <h2>Giữ chỗ nội trú cho con — để lại số điện thoại</h2>
+      <p class="mn-hero__form-sub">Đội tư vấn sẽ gọi lại và gửi ba mẹ thông tin chi tiết về nội trú, học phí, lịch thăm trường.</p>
+      <LeadFormTwoStepEmailFirst formId="lop10-noitru-hero" funnelCode="lop10-noitru-hero" schoolLevel="thpt" submitText="Giữ chỗ nội trú cho con" title="" description="" askProvince provinceLabel="Gia đình ở tỉnh/thành nào?" provincePlaceholder="VD: Cà Mau, Kiên Giang, Phú Quốc, Đà Nẵng..." />
+    </div>
+  </Fragment>
 
   <div slot="pain">
     <section style="padding:2rem 0 1rem">

@@ -9,30 +9,42 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   canonical="https://truongvietanh.com/tuyen-sinh/lop-10-ban-tru"
   programCode="thpt-lop10"
   schoolLevel="thpt"
+  heroVariant="white-form"
 >
 
-  <!-- HERO -->
-  <div slot="hero">
-    <span class="sp-hero__badge">🎓 Tuyển sinh Lớp 10 · Hệ Quốc tế · TP.HCM</span>
-    <h1 style="font-size:clamp(1.8rem,4.5vw,2.9rem);font-weight:900;color:#F9DD0E;margin:0 0 1rem;line-height:1.2;text-shadow:0 2px 18px rgba(0,0,0,.55)">
-      Con vừa thi xong lớp 10.<br>
-      <span style="color:#fff">Và có lẽ đêm qua cả nhà mình đều khó ngủ.</span>
-    </h1>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.92);line-height:1.65;margin:.75rem 0 1.5rem">
-      Có một con đường ít ba mẹ biết: học lớp 10 hôm nay → 3 năm sau con cầm tấm bằng Cử nhân Đại học Anh Quốc — ngay tại Sài Gòn. Không thi đại học. Không cần bỏ 2–3 tỷ đi du học.
-    </p>
-    <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center">
-      <a href="#sp-form1" style="display:inline-block;background:#F9DD0E;color:#26275D;font-weight:800;padding:.9rem 2.2rem;border-radius:8px;text-decoration:none;font-size:1.05rem">
-        Đăng ký tư vấn lộ trình lớp 10 →
-      </a>
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.9rem 1.8rem;border-radius:8px;text-decoration:none;font-size:1rem;border:2px solid rgba(255,255,255,.6)">
-        Nhắn Zalo ngay →
-      </a>
+  <!-- HERO — 2 cột: nội dung trái · form đăng ký phải (điền ngay, không phải cuộn) -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🎓 Tuyển sinh Lớp 10 · Hệ Quốc tế · TP.HCM</span>
+      <h1>
+        <span class="mn-hl">Con vừa thi xong lớp 10.</span>
+        <span class="mn-sub">Và có lẽ đêm qua cả nhà mình đều khó ngủ.</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Có một con đường ít ba mẹ biết: học lớp 10 hôm nay → 3 năm sau con cầm tấm bằng <strong>Cử nhân Đại học Anh Quốc</strong> — ngay tại Sài Gòn. Không thi đại học. Không cần bỏ 2–3 tỷ đi du học.
+      </p>
+      <div class="mn-hero__badges">
+        <span>🎓 Cử nhân ĐH Anh Quốc</span>
+        <span>🏅 Cam kết IELTS 6.0</span>
+        <span>💻 Tặng Macbook</span>
+      </div>
+      <div class="mn-hero__trust">
+        <div>⏳ <b>Ưu đãi trọn bộ</b> chỉ dành cho nhóm ghi danh sớm — khớp cửa sổ kết quả thi lớp 10</div>
+      </div>
+      <p style="margin-top:.9rem">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.65rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.95rem;border:2px solid rgba(255,255,255,.6)">
+          Nhắn Zalo ngay →
+        </a>
+      </p>
     </div>
-    <p style="margin-top:1rem;font-size:.95rem;color:rgba(255,255,255,.7)">
-      ⏳ Ưu đãi trọn bộ chỉ dành cho nhóm ghi danh sớm — khớp cửa sổ kết quả thi lớp 10
-    </p>
-  </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">📞 Tư vấn miễn phí</span>
+      <h2>Để lại số điện thoại — đội tư vấn gọi lại trong hôm nay</h2>
+      <p class="mn-hero__form-sub">Mỗi năm, một quyết định đúng của ba mẹ có thể thay đổi cả tuổi thơ của con.</p>
+      <LeadFormTwoStepEmailFirst formId="lop10-bantru2-hero" funnelCode="lop10-bantru2-hero" schoolLevel="thpt" submitText="Nhận tư vấn lộ trình Lớp 10" title="" description="" />
+    </div>
+  </Fragment>
 
   <!-- PAIN: lời anh Dương + value stack -->
   <div slot="pain">

@@ -11,32 +11,42 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   heroImage="https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/thpt-banner-chinh-1.jpg"
   programCode="trai-he-thpt"
   schoolLevel="thpt"
+  heroVariant="white-form"
 >
 
-  <!-- BLOCK 1: HERO -->
-  <div slot="hero">
-    <span class="sp-hero__badge">🦁 Lion Camp 2026 – Trại hè định hướng tương lai</span>
-    <h1 style="font-size:2.5rem;font-weight:900;color:#e53e3e;margin:0 0 .5rem;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3)">
-      THPT không thiếu người học giỏi
-    </h1>
-    <p style="font-size:1.35rem;font-weight:600;color:#fff;margin:0 0 1rem;line-height:1.3">
-      chỉ thiếu người biết mình muốn gì
-    </p>
-    <p style="font-size:1.05rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      Lion Camp là chương trình 6 tuần giúp học sinh THPT làm rõ bản thân, xây dựng năng lực và bắt đầu định hình con đường tương lai của chính mình.
-    </p>
-    <div style="display:flex;flex-wrap:wrap;gap:.75rem;margin-top:1.5rem;align-items:center">
-      <a href="#sp-form1" style="display:inline-block;background:#f9dd0e;color:#26275D;font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
-        Xem chương trình &amp; Ghi danh →
-      </a>
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem;border:2px solid rgba(255,255,255,.6)">
-        Nhận tư vấn định hướng →
-      </a>
+  <!-- BLOCK 1: HERO — 2 cột: nội dung trái · form nhận Brochure phải (điền ngay, không phải cuộn) -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🦁 Lion Camp 2026 – Trại hè định hướng tương lai</span>
+      <h1>
+        <span style="color:#e53e3e">THPT không thiếu người học giỏi</span>
+        <span class="mn-sub">chỉ thiếu người biết mình muốn gì</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Lion Camp là chương trình <strong>6 tuần</strong> giúp học sinh THPT làm rõ bản thân, xây dựng năng lực và bắt đầu định hình con đường tương lai của chính mình.
+      </p>
+      <div class="mn-hero__trust">
+        <div>📅 <b>6 tuần</b> · Giới hạn số lượng · Có phân nhóm theo định hướng</div>
+      </div>
+      <p style="margin-top:.9rem">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.65rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.95rem;border:2px solid rgba(255,255,255,.6)">
+          Nhận tư vấn định hướng →
+        </a>
+      </p>
     </div>
-    <p style="margin-top:1rem;font-size:1rem;color:rgba(255,255,255,.75)">
-      📅 6 tuần · Giới hạn số lượng · Có phân nhóm theo định hướng
-    </p>
-  </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">📘 Xem chương trình chi tiết</span>
+      <h2>Hiểu Rõ Lộ Trình Định Hướng Trước Khi Quyết Định</h2>
+      <p class="mn-hero__form-sub">Điền email để nhận Brochure — nội dung 6 tuần, phương pháp coaching và cách chương trình giúp học sinh THPT tìm ra hướng đi của mình.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="lion-camp-thpt-hero"
+        funnelCode="lion-camp-2026-thpt-hero"
+        schoolLevel="thpt"
+        submitText="Nhận Brochure ngay"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 2: PAIN -->
   <div slot="pain">

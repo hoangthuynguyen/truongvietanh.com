@@ -9,28 +9,41 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   canonical="https://truongvietanh.com/tuyen-sinh/lop-10-hoc-bong"
   programCode="thpt-lop10-hocbong"
   schoolLevel="thpt"
+  heroVariant="white-form"
 >
-  <div slot="hero">
-    <span class="sp-hero__badge">🎓 Học bổng Lớp 10 · Việt Anh · 2026</span>
-    <h1 style="font-size:clamp(1.8rem,4.5vw,2.9rem);font-weight:900;color:#F9DD0E;margin:0 0 1rem;line-height:1.2;text-shadow:0 2px 18px rgba(0,0,0,.55)">
-      Nếu con vừa trượt nguyện vọng trường công —<br>
-      <span style="color:#fff">xin đừng để con nghĩ rằng mình thất bại.</span>
-    </h1>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.92);line-height:1.65;margin:.75rem 0 1.5rem">
-      Kết quả một kỳ thi không định nghĩa 3 năm tới của con. Có một con đường có đích đến quốc tế — và đang mở học bổng.
-    </p>
-    <div style="display:flex;flex-wrap:wrap;gap:.75rem;align-items:center">
-      <a href="#sp-form1" style="display:inline-block;background:#F9DD0E;color:#26275D;font-weight:800;padding:.9rem 2.2rem;border-radius:8px;text-decoration:none;font-size:1.05rem">
-        Xét học bổng cho con →
-      </a>
-      <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.9rem 1.8rem;border-radius:8px;text-decoration:none;font-size:1rem;border:2px solid rgba(255,255,255,.6)">
-        Nhắn Zalo ngay →
-      </a>
+  <!-- HERO — 2 cột: nội dung trái · form xét học bổng phải (điền ngay, không phải cuộn) -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🎓 Học bổng Lớp 10 · Việt Anh · 2026</span>
+      <h1>
+        <span class="mn-hl">Nếu con vừa trượt nguyện vọng trường công —</span>
+        <span class="mn-sub">xin đừng để con nghĩ rằng mình thất bại.</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Kết quả một kỳ thi không định nghĩa 3 năm tới của con. Có một con đường có <strong>đích đến quốc tế</strong> — và đang mở học bổng.
+      </p>
+      <div class="mn-hero__badges">
+        <span>🏆 Học bổng Tài năng</span>
+        <span>📄 100 Hồ sơ Vàng</span>
+        <span>🏅 Cam kết IELTS 6.0</span>
+      </div>
+      <div class="mn-hero__trust">
+        <div>🎓 <b>Học bổng Tài năng + 100 suất "Hồ sơ Vàng"</b> — đếm ngược theo ngày công bố điểm thi</div>
+      </div>
+      <p style="margin-top:.9rem">
+        <a href="https://zalo.me/1678310120468101523" style="display:inline-block;background:transparent;color:#fff;font-weight:600;padding:.65rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.95rem;border:2px solid rgba(255,255,255,.6)">
+          Nhắn Zalo ngay →
+        </a>
+      </p>
     </div>
-    <p style="margin-top:1rem;font-size:.95rem;color:rgba(255,255,255,.7)">
-      🎓 Học bổng Tài năng + 100 suất "Hồ sơ Vàng" — đếm ngược theo ngày công bố điểm thi
-    </p>
-  </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">🎓 Xét học bổng</span>
+      <h2>Điểm thi sắp công bố — nhắn tin trước khi hết suất</h2>
+      <p class="mn-hero__form-sub">Để lại thông tin — đội tư vấn gọi lại, hướng dẫn hồ sơ và giữ suất xét học bổng cho con.</p>
+      <LeadFormTwoStepEmailFirst formId="lop10-hocbong-hero" funnelCode="lop10-hocbong-hero" schoolLevel="thpt" submitText="Giữ suất xét học bổng cho con" title="" description="" />
+    </div>
+  </Fragment>
 
   <div slot="pain">
     <section style="padding:2rem 0 1rem">

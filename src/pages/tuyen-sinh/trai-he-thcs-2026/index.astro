@@ -11,32 +11,42 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   heroImage="https://media.truongvietanh.com/images/Block%20Hero%20_%20BG%20-%20website/thcs-banner-chinh-1.jpg"
   programCode="trai-he-thcs"
   schoolLevel="thcs"
+  heroVariant="white-form"
 >
 
-  <!-- BLOCK 1: HERO -->
-  <div slot="hero">
-    <span class="sp-hero__badge">🦁 Lion Camp 2026 – Trại hè dành cho học sinh THCS</span>
-    <h1 style="font-size:2.5rem;font-weight:900;line-height:1.15;text-shadow:0 2px 8px rgba(0,0,0,.3);margin:0 0 .5rem">
-      <span style="color:#ef5350">Tuổi dậy thì không cần bị "kiểm soát"</span>
-    </h1>
-    <h2 style="font-size:1.75rem;font-weight:800;color:#fff;margin:0 0 1.25rem;line-height:1.2;text-shadow:0 2px 8px rgba(0,0,0,.3)">
-      mà cần được dẫn dắt đúng cách
-    </h2>
-    <p style="font-size:1.1rem;color:rgba(255,255,255,.88);line-height:1.65;margin:.75rem 0">
-      Lion Camp là chương trình 6 tuần giúp học sinh THCS chuyển năng lượng bùng nổ của tuổi dậy thì thành bản lĩnh, kỹ năng và định hướng tích cực.
-    </p>
-    <div style="display:flex;flex-wrap:wrap;gap:.75rem;justify-content:center;margin-top:1.75rem">
-      <a href="#sp-form1" style="display:inline-block;background:#f9dd0e;color:#26275D;font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
-        Nhận Brochure chi tiết ngay →
-      </a>
-      <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" style="display:inline-block;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);font-weight:700;padding:.85rem 2rem;border-radius:8px;text-decoration:none;font-size:1rem">
-        Trò chuyện 1-1 →
-      </a>
+  <!-- BLOCK 1: HERO — 2 cột: nội dung trái · form nhận Brochure phải (điền ngay, không phải cuộn) -->
+  <Fragment slot="hero">
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">🦁 Lion Camp 2026 – Trại hè dành cho học sinh THCS</span>
+      <h1>
+        <span style="color:#ef5350">Tuổi dậy thì không cần bị "kiểm soát"</span>
+        <span class="mn-sub">mà cần được dẫn dắt đúng cách</span>
+      </h1>
+      <p class="mn-hero__lead">
+        Lion Camp là chương trình <strong>6 tuần</strong> giúp học sinh THCS chuyển năng lượng bùng nổ của tuổi dậy thì thành bản lĩnh, kỹ năng và định hướng tích cực.
+      </p>
+      <div class="mn-hero__trust">
+        <div>📅 <b>6 tuần</b> · 15/6 – 25/7/2026 · Giới hạn số lượng</div>
+      </div>
+      <p style="margin-top:.9rem">
+        <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" style="display:inline-block;background:transparent;color:#fff;border:2px solid rgba(255,255,255,.6);font-weight:700;padding:.65rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.95rem">
+          Trò chuyện 1-1 →
+        </a>
+      </p>
     </div>
-    <p style="font-size:1rem;color:rgba(255,255,255,.7);margin-top:1.25rem">
-      📅 6 tuần · 15/6 – 25/7/2026 · Giới hạn số lượng
-    </p>
-  </div>
+
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">📘 Nhận Brochure miễn phí</span>
+      <h2>Hiểu Rõ Chương Trình Trước Khi Quyết Định</h2>
+      <p class="mn-hero__form-sub">Điền email để nhận Brochure — nội dung 6 tuần, phương pháp và cách chương trình đồng hành cùng học sinh THCS.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="lion-camp-thcs-hero"
+        funnelCode="lion-camp-2026-thcs-hero"
+        schoolLevel="thcs"
+        submitText="Nhận Brochure ngay"
+      />
+    </div>
+  </Fragment>
 
   <!-- BLOCK 2: PAIN -->
   <div slot="pain">

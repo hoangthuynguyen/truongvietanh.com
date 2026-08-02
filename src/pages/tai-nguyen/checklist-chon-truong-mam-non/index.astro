@@ -13,43 +13,53 @@ import LeadFormTwoStepEmailFirst from '../../../components/LeadFormTwoStepEmailF
   schoolLevel="mau-non"
   logoSrc="/logo-mam-non-trans.png"
   logoAlt="Trường Mầm Non Việt Anh"
+  heroVariant="white-form"
 >
 
-  <!-- HERO -->
+  <!-- HERO — 2 cột: nội dung trái · form nhận checklist phải (điền ngay, không phải cuộn) -->
   <Fragment slot="hero">
-    <div class="sp-hero__badge">📋 MIỄN PHÍ · CHO BA MẸ CÓ CON 2–5 TUỔI</div>
-    <h1 style="font-size:clamp(1.7rem,4vw,2.6rem);font-weight:900;color:#fff;margin:0 0 1rem;line-height:1.2;text-shadow:0 2px 12px rgba(0,0,0,.45)">
-      Giúp ba mẹ chọn đúng trường mầm non song ngữ cho con
-      <span style="display:block;color:#f9dd0e;font-size:clamp(1.1rem,2.5vw,1.55rem);font-weight:800;margin-top:.5rem">
-        chỉ sau 1 buổi tham quan
-      </span>
-    </h1>
+    <div class="mn-hero">
+      <span class="mn-hero__eyebrow">📋 MIỄN PHÍ · CHO BA MẸ CÓ CON 2–5 TUỔI</span>
+      <h1>
+        Giúp ba mẹ chọn đúng trường mầm non song ngữ cho con
+        <span class="mn-sub" style="color:#f9dd0e;font-weight:800">chỉ sau 1 buổi tham quan</span>
+      </h1>
 
-    <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:1.1rem 1.4rem;margin:1rem 0 1.25rem;text-align:left;max-width:640px;margin-left:auto;margin-right:auto">
-      <p style="font-size:1rem;color:rgba(255,255,255,.92);line-height:1.8;margin:0">
-        Checklist <strong style="color:#f9dd0e">15 tiêu chí</strong> + <strong style="color:#f9dd0e">Framework 5C</strong> giúp bạn đánh giá <strong>bất kỳ trường nào</strong> một cách khách quan, không lo chọn sai.
+      <div style="background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:1rem 1.2rem;margin:.9rem 0 1rem;text-align:left">
+        <p style="font-size:.95rem;color:rgba(255,255,255,.92);line-height:1.7;margin:0">
+          Checklist <strong style="color:#f9dd0e">15 tiêu chí</strong> + <strong style="color:#f9dd0e">Framework 5C</strong> giúp bạn đánh giá <strong>bất kỳ trường nào</strong> một cách khách quan, không lo chọn sai.
+        </p>
+      </div>
+
+      <!-- Keyword badges -->
+      <div class="mn-hero__badges">
+        <span>✅ 15 Tiêu Chí</span>
+        <span>🧭 Framework 5C</span>
+        <span>🚩 5 Red Flags</span>
+      </div>
+
+      <div class="mn-hero__trust">
+        <div>📱 Tick trực tiếp trên điện thoại · In ra mang theo khi tham quan · <b>Không spam</b></div>
+      </div>
+      <p style="margin-top:.9rem">
+        <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" style="display:inline-block;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.5);color:#fff;font-weight:700;padding:.65rem 1.4rem;border-radius:8px;text-decoration:none;font-size:.95rem">
+          💬 Hỏi qua Zalo
+        </a>
       </p>
     </div>
 
-    <!-- Keyword badges -->
-    <div style="display:flex;gap:.65rem;justify-content:center;flex-wrap:wrap;margin:.75rem 0 1.5rem">
-      <span style="background:rgba(249, 221, 14,.22);border:1.5px solid #f9dd0e;color:#ffe082;font-size:1rem;font-weight:700;padding:.4rem 1.1rem;border-radius:50px;letter-spacing:.03em">✅ 15 Tiêu Chí</span>
-      <span style="background:rgba(249, 221, 14,.22);border:1.5px solid #f9dd0e;color:#ffe082;font-size:1rem;font-weight:700;padding:.4rem 1.1rem;border-radius:50px;letter-spacing:.03em">🧭 Framework 5C</span>
-      <span style="background:rgba(249, 221, 14,.22);border:1.5px solid #f9dd0e;color:#ffe082;font-size:1rem;font-weight:700;padding:.4rem 1.1rem;border-radius:50px;letter-spacing:.03em">🚩 5 Red Flags</span>
+    <div class="mn-hero__form" id="mn-hero-form">
+      <span class="mn-hero__form-eyebrow">📥 Tải checklist miễn phí</span>
+      <h2>Nhập Email Để Nhận Checklist Ngay</h2>
+      <p class="mn-hero__form-sub">Checklist 15 tiêu chí + Framework 5C + 5 red flags sẽ được gửi qua email trong 5 phút.</p>
+      <LeadFormTwoStepEmailFirst
+        formId="checklist-mn-hero"
+        funnelCode="squeeze-checklist-mn-hero"
+        schoolLevel="mau-non"
+        submitText="Nhận checklist miễn phí"
+        successMessage="Cảm ơn! Checklist đã được gửi qua email. Kiểm tra cả hộp thư Spam / Promotions nhé."
+      />
     </div>
-
-    <!-- CTAs -->
-    <div style="display:flex;gap:.85rem;justify-content:center;flex-wrap:wrap">
-      <a href="#sp-form1" style="display:inline-block;background:#f9dd0e;color:#26275D;font-weight:800;padding:.95rem 1.85rem;border-radius:8px;text-decoration:none;font-size:1rem;box-shadow:0 4px 18px rgba(249, 221, 14,.45)">
-        📥 Nhận checklist miễn phí
-      </a>
-      <a href="https://zalo.me/1678310120468101523" target="_blank" rel="noopener" style="display:inline-block;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.5);color:#fff;font-weight:700;padding:.95rem 1.85rem;border-radius:8px;text-decoration:none;font-size:1rem">
-        💬 Hỏi qua Zalo
-      </a>
-    </div>
-    <p style="font-size:1rem;color:rgba(255,255,255,.6);margin-top:.85rem">
-      Tick trực tiếp trên điện thoại · In ra mang theo khi tham quan · Không spam
-    </p>
   </Fragment>
 
   <!-- PAIN – INSIGHT BLOCK -->

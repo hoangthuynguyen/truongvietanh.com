@@ -40,7 +40,19 @@ import FooterBase from '../../../components/FooterBase.astro';
         90% gia đình đang lãng phí 90% thời gian và tiền bạc để nâng cấp tiếng Anh của con vì không biết điều này — và giải pháp với <strong>thời gian cực ngắn, chi phí cực thấp</strong>.
       </p>
 
-      <a href="#sp-form1" class="ev-hero-cta">📝 Đăng ký Test Cambridge YLE miễn phí →</a>
+      <!-- Form ngay trong hero — phụ huynh điền được liền, không phải cuộn xuống cuối -->
+      <div class="mn-hero__form ev-form-card" id="mn-hero-form" style="margin-top:1.1rem;text-align:left">
+        <span class="mn-hero__form-eyebrow">🎯 Bước đầu tiên · không cam kết</span>
+        <h2>Đăng Ký Test Cambridge YLE Miễn Phí</h2>
+        <p class="mn-hero__form-sub">Cô giáo trao đổi với con 15 phút · gửi báo cáo PDF cá nhân hóa qua email · sau đó ba mẹ tự quyết định.</p>
+        <LeadFormTwoStepEmailFirst
+          formId="evolution-hero"
+          funnelCode="sales-tieng-anh-evo-hero"
+          schoolLevel="tieu-hoc"
+          submitText="Đăng ký kiểm tra trình độ miễn phí →"
+          redirectUrl="/cam-on/?source=tieng-anh-evo-hero"
+        />
+      </div>
     </div>
 
     <div class="ev-hero-video-wrap">
@@ -261,7 +273,7 @@ import FooterBase from '../../../components/FooterBase.astro';
 
   <!-- ═══ FORM 1 (mid-page) ═══ -->
   <Fragment slot="form1">
-    <div class="mn-hero__form" id="sp-form1-card" style="max-width:560px;margin:0 auto;text-align:left">
+    <div class="mn-hero__form ev-form-card" id="sp-form1-card" style="max-width:560px;margin:0 auto;text-align:left">
       <span class="mn-hero__form-eyebrow">🎯 Bước đầu tiên · không cam kết</span>
       <h2>Đăng Ký Test Cambridge YLE Miễn Phí</h2>
       <p class="mn-hero__form-sub">Cô giáo trao đổi với con 15 phút (online hoặc tại cơ sở) · gửi báo cáo PDF cá nhân hóa qua email · sau đó phụ huynh tự quyết định có học Evolution hay không.</p>
@@ -518,6 +530,13 @@ import FooterBase from '../../../components/FooterBase.astro';
 .ev-evolution-page .ev-hero-video iframe {
   position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
 }
+
+/* Form trong hero — nén lại để ô nhập nằm trong màn hình đầu (hero còn có VSL bên phải) */
+.ev-evolution-page #mn-hero-form { padding: 1.35rem 1.35rem !important; margin-top: 0.85rem !important; }
+.ev-evolution-page #mn-hero-form h2 { font-size: 1.18rem !important; margin-bottom: 0.4rem !important; }
+.ev-evolution-page #mn-hero-form .mn-hero__form-eyebrow { margin-bottom: 0.6rem !important; }
+.ev-evolution-page #mn-hero-form .mn-hero__form-sub { font-size: 0.88rem !important; margin-bottom: 0.8rem !important; }
+.ev-evolution-page #mn-hero-form .form-progress { margin: 0.1rem 0 0.6rem !important; }
 
 /* ───── PAIN — 3 con đường ───── */
 .ev-evolution-page .ev-paths-note {
@@ -1089,7 +1108,7 @@ import FooterBase from '../../../components/FooterBase.astro';
   background: linear-gradient(180deg, var(--ev-cream) 0%, #fff 100%) !important;
 }
 /* ───── FORM CARD — NAVY bg + GOLD CTA (premium brand style) ───── */
-.ev-evolution-page #sp-form1-card {
+.ev-evolution-page .ev-form-card {
   max-width: 560px !important;
   margin: 0 auto !important;
   background: linear-gradient(155deg, #1F2050 0%, var(--ev-navy) 50%, #1a1a7e 100%) !important;
@@ -1102,7 +1121,7 @@ import FooterBase from '../../../components/FooterBase.astro';
   color: #fff !important;
   overflow: hidden;
 }
-.ev-evolution-page #sp-form1-card::before {
+.ev-evolution-page .ev-form-card::before {
   content: '';
   position: absolute;
   top: -30%; right: -20%;
@@ -1111,11 +1130,11 @@ import FooterBase from '../../../components/FooterBase.astro';
   pointer-events: none;
   z-index: 0;
 }
-.ev-evolution-page #sp-form1-card > * { position: relative; z-index: 1; }
-.ev-evolution-page #sp-form1-card * { color: inherit; }
+.ev-evolution-page .ev-form-card > * { position: relative; z-index: 1; }
+.ev-evolution-page .ev-form-card * { color: inherit; }
 
 /* Eyebrow gold pill */
-.ev-evolution-page #sp-form1-card .mn-hero__form-eyebrow {
+.ev-evolution-page .ev-form-card .mn-hero__form-eyebrow {
   display: inline-block;
   background: linear-gradient(135deg, var(--ev-gold) 0%, var(--ev-gold-warm) 100%) !important;
   color: var(--ev-navy) !important;
@@ -1127,7 +1146,7 @@ import FooterBase from '../../../components/FooterBase.astro';
   margin-bottom: 1rem;
   box-shadow: 0 4px 14px rgba(255,212,0,0.35);
 }
-.ev-evolution-page #sp-form1-card h2 {
+.ev-evolution-page .ev-form-card h2 {
   color: #fff !important;
   font-size: 1.4rem !important;
   margin: 0 0 0.65rem !important;
@@ -1135,7 +1154,7 @@ import FooterBase from '../../../components/FooterBase.astro';
   font-weight: 800 !important;
   letter-spacing: -0.005em;
 }
-.ev-evolution-page #sp-form1-card .mn-hero__form-sub {
+.ev-evolution-page .ev-form-card .mn-hero__form-sub {
   color: rgba(255,255,255,0.78) !important;
   font-size: 0.95rem !important;
   margin-bottom: 1.25rem !important;
@@ -1143,50 +1162,50 @@ import FooterBase from '../../../components/FooterBase.astro';
 }
 
 /* Lead form on navy bg */
-.ev-evolution-page #sp-form1-card .lead-form { color: #fff !important; }
+.ev-evolution-page .ev-form-card .lead-form { color: #fff !important; }
 
 /* Progress dots — gold active, white-faded inactive */
-.ev-evolution-page #sp-form1-card .form-progress { margin: 0.25rem 0 1rem !important; }
-.ev-evolution-page #sp-form1-card .form-progress__dot {
+.ev-evolution-page .ev-form-card .form-progress { margin: 0.25rem 0 1rem !important; }
+.ev-evolution-page .ev-form-card .form-progress__dot {
   background: rgba(255,255,255,0.15) !important;
   color: rgba(255,255,255,0.6) !important;
   font-weight: 800 !important;
 }
-.ev-evolution-page #sp-form1-card .form-progress__step--active .form-progress__dot {
+.ev-evolution-page .ev-form-card .form-progress__step--active .form-progress__dot {
   background: var(--ev-gold) !important;
   color: var(--ev-navy) !important;
   box-shadow: 0 0 0 4px rgba(249,221,14,0.18);
 }
-.ev-evolution-page #sp-form1-card .form-progress__step--done .form-progress__dot {
+.ev-evolution-page .ev-form-card .form-progress__step--done .form-progress__dot {
   background: var(--ev-gold) !important;
   color: var(--ev-navy) !important;
 }
-.ev-evolution-page #sp-form1-card .form-progress__line {
+.ev-evolution-page .ev-form-card .form-progress__line {
   background: rgba(255,255,255,0.18) !important;
 }
-.ev-evolution-page #sp-form1-card .form-progress__line--active {
+.ev-evolution-page .ev-form-card .form-progress__line--active {
   background: var(--ev-gold) !important;
 }
-.ev-evolution-page #sp-form1-card .form-progress__label {
+.ev-evolution-page .ev-form-card .form-progress__label {
   color: rgba(255,255,255,0.6) !important;
   font-size: 0.78rem !important;
   font-weight: 700 !important;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
-.ev-evolution-page #sp-form1-card .form-progress__step--active .form-progress__label {
+.ev-evolution-page .ev-form-card .form-progress__step--active .form-progress__label {
   color: #fff !important;
 }
 
 /* Step title — big white */
-.ev-evolution-page #sp-form1-card .form-step-title {
+.ev-evolution-page .ev-form-card .form-step-title {
   color: #fff !important;
   font-size: 1.15rem !important;
   font-weight: 800 !important;
   line-height: 1.35 !important;
   margin: 0.5rem 0 0.5rem !important;
 }
-.ev-evolution-page #sp-form1-card .form-step-description {
+.ev-evolution-page .ev-form-card .form-step-description {
   color: rgba(255,255,255,0.72) !important;
   font-size: 0.92rem !important;
   margin: 0 0 1rem !important;
@@ -1194,7 +1213,7 @@ import FooterBase from '../../../components/FooterBase.astro';
 }
 
 /* Input — white card */
-.ev-evolution-page #sp-form1-card .form-input {
+.ev-evolution-page .ev-form-card .form-input {
   background: #fff !important;
   color: var(--ev-ink) !important;
   border: none !important;
@@ -1204,18 +1223,18 @@ import FooterBase from '../../../components/FooterBase.astro';
   width: 100% !important;
   box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;
 }
-.ev-evolution-page #sp-form1-card .form-input::placeholder {
+.ev-evolution-page .ev-form-card .form-input::placeholder {
   color: var(--ev-muted) !important;
 }
-.ev-evolution-page #sp-form1-card .form-input:focus {
+.ev-evolution-page .ev-form-card .form-input:focus {
   outline: none !important;
   box-shadow: 0 0 0 3px rgba(249,221,14,0.45), 0 4px 12px rgba(0,0,0,0.12) !important;
 }
 
 /* CTA button — BIG gold */
-.ev-evolution-page #sp-form1-card .form-btn,
-.ev-evolution-page #sp-form1-card .form-btn--next,
-.ev-evolution-page #sp-form1-card .form-btn--submit {
+.ev-evolution-page .ev-form-card .form-btn,
+.ev-evolution-page .ev-form-card .form-btn--next,
+.ev-evolution-page .ev-form-card .form-btn--submit {
   background: linear-gradient(135deg, var(--ev-gold) 0%, var(--ev-gold-warm) 100%) !important;
   color: var(--ev-navy) !important;
   border-radius: 14px !important;
@@ -1233,15 +1252,15 @@ import FooterBase from '../../../components/FooterBase.astro';
   gap: 0.5rem;
   margin-top: 0.85rem;
 }
-.ev-evolution-page #sp-form1-card .form-btn:hover,
-.ev-evolution-page #sp-form1-card .form-btn--next:hover,
-.ev-evolution-page #sp-form1-card .form-btn--submit:hover {
+.ev-evolution-page .ev-form-card .form-btn:hover,
+.ev-evolution-page .ev-form-card .form-btn--next:hover,
+.ev-evolution-page .ev-form-card .form-btn--submit:hover {
   transform: translateY(-2px) !important;
   box-shadow: 0 14px 36px rgba(255,212,0,0.55) !important;
 }
 
 /* Social proof — light dot */
-.ev-evolution-page #sp-form1-card .form-social-proof {
+.ev-evolution-page .ev-form-card .form-social-proof {
   color: rgba(255,255,255,0.78) !important;
   font-size: 0.88rem !important;
   margin-top: 1rem !important;
@@ -1251,7 +1270,7 @@ import FooterBase from '../../../components/FooterBase.astro';
   justify-content: center;
   gap: 0.45rem;
 }
-.ev-evolution-page #sp-form1-card .form-social-proof::before {
+.ev-evolution-page .ev-form-card .form-social-proof::before {
   content: '';
   width: 8px; height: 8px;
   border-radius: 50%;
@@ -1265,7 +1284,7 @@ import FooterBase from '../../../components/FooterBase.astro';
 }
 
 /* Error message visible on navy */
-.ev-evolution-page #sp-form1-card .form-error {
+.ev-evolution-page .ev-form-card .form-error {
   color: #fca5a5 !important;
   font-size: 0.85rem !important;
   margin-top: 0.4rem;
@@ -1426,7 +1445,7 @@ import FooterBase from '../../../components/FooterBase.astro';
   .ev-evolution-page .sp-features__grid { grid-template-columns: 1fr !important; }
   .ev-evolution-page .ev-addons { grid-template-columns: repeat(2, 1fr); }
   .ev-evolution-page .ev-hero-text h1 { font-size: 1.85rem !important; }
-  .ev-evolution-page #sp-form1-card { padding: 1.75rem 1.25rem !important; }
+  .ev-evolution-page .ev-form-card { padding: 1.75rem 1.25rem !important; }
 }
 </style>
 </content>

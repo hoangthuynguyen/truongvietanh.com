@@ -237,6 +237,34 @@ strong{font-weight:700}
 }
 .hero-note{font-size:15px;color:#c9cef0;margin-top:16px}
 
+/* ═══ 3B · HERO 2 CỘT — form nằm ngay màn hình đầu, cột phải ═══ */
+.hero-grid{display:grid;gap:30px}
+.hero-form{
+  background:#fff;border-radius:var(--r);
+  box-shadow:0 18px 44px rgba(0,0,0,.34);
+  padding:20px 20px 4px
+}
+.hero-form-head{margin-bottom:16px;text-align:center}
+.hero-form-head b{display:block;font-size:20px;font-weight:800;color:var(--primary);line-height:1.35}
+.hero-form-head span{display:block;font-size:14.5px;font-weight:600;color:var(--red);margin-top:5px}
+/* formbox nằm trong hero thì bỏ khung/nền riêng, dùng khung của .hero-form */
+.hero-form .formbox{background:none;border:0;box-shadow:none;padding:0 0 18px}
+
+.hero-extra{display:contents}
+@media (min-width:980px){
+  .hero .wrap{max-width:1180px}
+  .hero-grid{grid-template-columns:1.04fr .96fr;gap:0 46px;align-items:start;text-align:left}
+  .hero-copy {grid-column:1;grid-row:1}
+  .hero-form {grid-column:2;grid-row:1 / span 2}
+  .hero-extra{display:block;grid-column:1;grid-row:2}
+  .hero h1{font-size:clamp(30px,3.3vw,40px)}
+  .hero .trust{max-width:none}
+  .hero .cta-block{text-align:left}
+}
+@media (max-width:979px){
+  .hero-form{margin-top:4px}
+}
+
 /* ═══ 4 · CTA ═══ */
 .cta{
   display:inline-block;background:var(--accent);color:var(--primary);
@@ -394,8 +422,15 @@ strong{font-weight:700}
 .sticky .cta{width:100%;text-align:center;font-size:17.5px;padding:15px 18px;box-shadow:none}
 
 /* ═══ 15 · RESPONSIVE ═══ */
+.sticky.hide{display:none !important}
+
 @media (max-width:760px){
   body{font-size:17px}
+  /* thu gọn hero để form lên gần màn hình đầu hơn */
+  .hero{padding:34px 0 36px}
+  .hero h1{line-height:1.2}
+  .hero-sub{font-size:17.5px;margin-bottom:0}
+  .hero-grid{gap:22px}
   section{padding:44px 0}
   .hero{padding:44px 0 40px}
   /* mobile: dải quá dẹt nếu trải ngang → cover, neo vào bé gái đọc sách bên phải */
@@ -438,17 +473,86 @@ strong{font-weight:700}
 </div>
 
 <!-- ③ HERO -->
-<header class="hero">
+<header class="hero" id="dang-ky">
   <div class="wrap">
+    <div class="hero-grid">
+      <div class="hero-copy">
     <p class="eyebrow">Trường Tiểu học Việt Anh · TP.HCM — Tuyển sinh Lớp 1 · 2026–2027</p>
     <h1>Một năm Lớp 1 nơi con đi học vì <em>muốn</em> đến — con tự lập, yêu thích việc học, và nói tiếng Anh tự nhiên với thầy cô bản ngữ.</h1>
     <p class="hero-sub">Ngay từ tháng đầu tiên, con được xây thứ giáo dục Việt Nam đang thiếu nhất: kỹ năng, phẩm chất, tiếng Anh với giáo viên bản ngữ và thể thao mỗi ngày.</p>
-    <p class="trust">Và tôi tin điều đó đến mức: học thử 4 tuần, không hài lòng — <strong>hoàn 100% học phí, không hỏi một câu.</strong></p>
-    <div class="cta-block">
-      <a class="cta js-cta" href="#dang-ky">Giữ suất học thử cho con →</a>
-      <span class="cta-note">Chỉ nhận đến hết {CFG.deadline} — hết chỗ là dừng</span>
+      </div>
+
+      <div class="hero-form">
+        <div class="hero-form-head">
+          <b>Giữ suất học thử cho con</b>
+          <span>Chỉ nhận đến hết {CFG.deadline} — hết chỗ là dừng</span>
+        </div>
+        <div class="formbox">
+          <div class="fprog" id="fProg">
+            <div class="fprog-bar"><i id="pFill"></i></div>
+            <div class="fprog-meta"><span id="pLabel">Bước 1 / 2</span><span id="pPct">50%</span></div>
+          </div>
+
+          <form id="leadForm" novalidate>
+            <!-- BƯỚC 1 — email (cam kết nhỏ trước; bỏ giữa chừng vẫn giữ được đầu mối) -->
+            <div class="fstep on" id="s1">
+              <div class="field">
+                <label for="fEmail">Email của bạn <span aria-hidden="true">*</span></label>
+                <input id="fEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="lan.nguyen@gmail.com" required />
+                <p class="errmsg" id="eEmail">Email chưa đúng định dạng.</p>
+              </div>
+              <button class="cta" id="btnNext" type="button">Tiếp tục →</button>
+              <p class="fhint">Bước sau chỉ còn tên, số điện thoại và cơ sở — khoảng 20 giây.</p>
+            </div>
+
+            <!-- BƯỚC 2 — thông tin để gọi lại -->
+            <div class="fstep" id="s2">
+              <div class="field">
+                <label for="fName">Họ tên phụ huynh <span aria-hidden="true">*</span></label>
+                <input id="fName" name="parent_name" type="text" autocomplete="name" placeholder="Nguyễn Thị Lan" required />
+                <p class="errmsg" id="eName">Vui lòng nhập họ tên của bạn.</p>
+              </div>
+              <div class="field">
+                <label for="fPhone">Số điện thoại <span aria-hidden="true">*</span></label>
+                <input id="fPhone" name="parent_phone" type="tel" autocomplete="tel" placeholder="0912 345 678" required />
+                <p class="errmsg" id="ePhone">Số điện thoại chưa đúng định dạng Việt Nam.</p>
+              </div>
+              <div class="field">
+                <label for="fCampus">Cơ sở bạn quan tâm <span aria-hidden="true">*</span></label>
+                <select id="fCampus" name="campus" required>
+                  <option value="">— Chọn cơ sở —</option>
+                  {CFG.campuses.map((c) => <option value={c.value}>{c.label}</option>)}
+                </select>
+                <p class="errmsg" id="eCampus">Vui lòng chọn cơ sở gần nhà bạn.</p>
+              </div>
+              <div class="field">
+                <label for="fNote">Tên con &amp; lời nhắn cho nhà trường <span style="font-weight:400;color:#4b5168">(không bắt buộc)</span></label>
+                <textarea id="fNote" name="note" placeholder="Ví dụ: bé Minh, sinh năm 2020, nhà gần Phan Huy Ích…"></textarea>
+              </div>
+              <div class="hp" aria-hidden="true">
+                <label for="fWebsite">Website</label>
+                <input id="fWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
+              </div>
+              <button class="cta" id="btnSubmit" type="submit">Giữ suất học thử cho con</button>
+              <p class="errmsg" id="eForm" style="text-align:center">Có lỗi khi gửi. Vui lòng gọi {CFG.hotline} để được hỗ trợ.</p>
+              <button class="fback" id="btnBack" type="button">← Quay lại sửa email</button>
+            </div>
+          </form>
+
+          <div class="formsuccess" id="formOk">
+            <p class="tick" aria-hidden="true">✓</p>
+            <p><strong>Đã nhận thông tin của bạn.</strong><br />Nhà trường sẽ gọi lại trong 15 phút để giữ suất học thử cho con.</p>
+          </div>
+
+          <p class="form-foot">Nhà trường gọi lại trong 15 phút · Hotline: <a href={`tel:${CFG.hotlineTel}`}>{CFG.hotline}</a></p>
+        </div>
+      </div>
+
+      <div class="hero-extra">
+       <p class="trust">Và tôi tin điều đó đến mức: học thử 4 tuần, không hài lòng — <strong>hoàn 100% học phí, không hỏi một câu.</strong></p>
+       <p class="hero-note">Dành cho Lớp 1 — Trường Việt Anh TP.HCM (cả 2 cơ sở).</p>
+      </div>
     </div>
-    <p class="hero-note">Dành cho Lớp 1 — Trường Việt Anh TP.HCM (cả 2 cơ sở).</p>
   </div>
 </header>
 
@@ -633,69 +737,14 @@ strong{font-weight:700}
 </section>
 
 <!-- ⑫ FORM -->
-<section id="dang-ky" style="background:var(--light-bg)">
+<section style="background:var(--light-bg)">
   <div class="wrap">
     <h3>Chỉ một quyết định đúng của cha mẹ có thể đổi cả một năm tuổi thơ của con.</h3>
     <p>Nếu bạn hành động hôm nay, điều xấu nhất có thể xảy ra là con được học thử 4 tuần ở một ngôi trường tử tế, và nếu không hợp, bạn nhận lại đủ tiền. Nếu bạn chờ, chỗ trống có thể không còn khi năm học bắt đầu.</p>
 
-    <div class="formbox">
-      <div class="fprog" id="fProg">
-        <div class="fprog-bar"><i id="pFill"></i></div>
-        <div class="fprog-meta"><span id="pLabel">Bước 1 / 2</span><span id="pPct">50%</span></div>
-      </div>
-
-      <form id="leadForm" novalidate>
-        <!-- BƯỚC 1 — email (cam kết nhỏ trước; bỏ giữa chừng vẫn giữ được đầu mối) -->
-        <div class="fstep on" id="s1">
-          <div class="field">
-            <label for="fEmail">Email của bạn <span aria-hidden="true">*</span></label>
-            <input id="fEmail" name="email" type="email" autocomplete="email" inputmode="email" placeholder="lan.nguyen@gmail.com" required />
-            <p class="errmsg" id="eEmail">Email chưa đúng định dạng.</p>
-          </div>
-          <button class="cta" id="btnNext" type="button">Tiếp tục →</button>
-          <p class="fhint">Bước sau chỉ còn tên, số điện thoại và cơ sở — khoảng 20 giây.</p>
-        </div>
-
-        <!-- BƯỚC 2 — thông tin để gọi lại -->
-        <div class="fstep" id="s2">
-          <div class="field">
-            <label for="fName">Họ tên phụ huynh <span aria-hidden="true">*</span></label>
-            <input id="fName" name="parent_name" type="text" autocomplete="name" placeholder="Nguyễn Thị Lan" required />
-            <p class="errmsg" id="eName">Vui lòng nhập họ tên của bạn.</p>
-          </div>
-          <div class="field">
-            <label for="fPhone">Số điện thoại <span aria-hidden="true">*</span></label>
-            <input id="fPhone" name="parent_phone" type="tel" autocomplete="tel" placeholder="0912 345 678" required />
-            <p class="errmsg" id="ePhone">Số điện thoại chưa đúng định dạng Việt Nam.</p>
-          </div>
-          <div class="field">
-            <label for="fCampus">Cơ sở bạn quan tâm <span aria-hidden="true">*</span></label>
-            <select id="fCampus" name="campus" required>
-              <option value="">— Chọn cơ sở —</option>
-              {CFG.campuses.map((c) => <option value={c.value}>{c.label}</option>)}
-            </select>
-            <p class="errmsg" id="eCampus">Vui lòng chọn cơ sở gần nhà bạn.</p>
-          </div>
-          <div class="field">
-            <label for="fNote">Tên con &amp; lời nhắn cho nhà trường <span style="font-weight:400;color:#4b5168">(không bắt buộc)</span></label>
-            <textarea id="fNote" name="note" placeholder="Ví dụ: bé Minh, sinh năm 2020, nhà gần Phan Huy Ích…"></textarea>
-          </div>
-          <div class="hp" aria-hidden="true">
-            <label for="fWebsite">Website</label>
-            <input id="fWebsite" name="website" type="text" tabindex="-1" autocomplete="off" />
-          </div>
-          <button class="cta" id="btnSubmit" type="submit">Giữ suất học thử cho con</button>
-          <p class="errmsg" id="eForm" style="text-align:center">Có lỗi khi gửi. Vui lòng gọi {CFG.hotline} để được hỗ trợ.</p>
-          <button class="fback" id="btnBack" type="button">← Quay lại sửa email</button>
-        </div>
-      </form>
-
-      <div class="formsuccess" id="formOk">
-        <p class="tick" aria-hidden="true">✓</p>
-        <p><strong>Đã nhận thông tin của bạn.</strong><br />Nhà trường sẽ gọi lại trong 15 phút để giữ suất học thử cho con.</p>
-      </div>
-
-      <p class="form-foot">Nhà trường gọi lại trong 15 phút · Hotline: <a href={`tel:${CFG.hotlineTel}`}>{CFG.hotline}</a></p>
+    <div class="cta-block">
+      <a class="cta js-cta" href="#dang-ky">Giữ suất học thử cho con →</a>
+      <span class="cta-note">Nhà trường gọi lại trong 15 phút · Hotline: {CFG.hotline}</span>
     </div>
   </div>
 </section>
@@ -812,6 +861,18 @@ strong{font-weight:700}
       gtm('video_play', { video_id: id });
     });
   });
+
+  // Thanh CTA dính ở mobile chỉ hiện khi form ở hero ĐÃ trôi khỏi màn hình.
+  // Form nằm ngay hero nên lúc còn thấy form, thanh này vừa thừa vừa che mất tiêu đề form.
+  (function () {
+    var sticky = document.querySelector('.sticky');
+    var heroForm = document.querySelector('.hero-form');
+    if (!sticky || !heroForm || !('IntersectionObserver' in window)) return;
+    sticky.classList.add('hide');
+    new IntersectionObserver(function (entries) {
+      sticky.classList.toggle('hide', entries[0].isIntersecting);
+    }, { threshold: 0.12 }).observe(heroForm);
+  })();
 
   // Mọi CTA đều cuộn về form (một CTA duy nhất, lặp lại)
   Array.prototype.forEach.call(document.querySelectorAll('.js-cta'), function (a) {

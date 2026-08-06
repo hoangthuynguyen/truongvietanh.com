@@ -171,6 +171,46 @@ const hasEarlyImage = /<img\b/i.test(contentHead);
 const featuredInBody = !!post.featured_image && featuredIsExternal && cleanedContent.includes(post.featured_image);
 const showHero = !!post.featured_image && !hasEarlyImage && !featuredInBody;
 
+// FAQ schema theo đúng nội dung bài.
+// Bài nào có mục "Câu hỏi thường gặp" (h2) với các cặp h3 hỏi + đáp thì phát FAQPage
+// bằng chính các câu đó; bài không có thì giữ nguyên khối FAQ chung như trước.
+// Chỉ lấy phần nằm giữa h2 FAQ và h2 kế tiếp — không quét lẫn h3 của mục khác.
+// Google chỉ dùng 1 FAQPage mỗi trang, nên hai nguồn này loại trừ nhau, không phát cả hai.
+function stripTags(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;|&apos;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractPostFaq(html: string): { q: string; a: string }[] {
+  if (!html) return [];
+  const heading = /<h2[^>]*>[^<]*câu hỏi thường gặp[^<]*<\/h2>/i.exec(html);
+  if (!heading) return [];
+  const after = html.slice(heading.index + heading[0].length);
+  const nextH2 = after.search(/<h2[\s>]/i);
+  const scope = nextH2 === -1 ? after : after.slice(0, nextH2);
+  const pairs: { q: string; a: string }[] = [];
+  const re = /<h3[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3[\s>]|$)/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(scope)) !== null) {
+    // bỏ số thứ tự "1." / "2)" nếu tác giả đánh số câu hỏi trong bài
+    const q = stripTags(m[1]).replace(/^\d+\s*[.)]\s*/, '');
+    const a = stripTags(m[2]);
+    // bỏ cặp rỗng hoặc câu trả lời cụt — schema thiếu nội dung còn hại hơn không có
+    if (q.length > 5 && a.length > 20) pairs.push({ q, a: a.slice(0, 1200) });
+  }
+  return pairs.length >= 2 ? pairs : [];
+}
+
+const postFaq = extractPostFaq(cleanedContent);
+
 const structuredData = [
   {
     '@context': 'https://schema.org',
@@ -219,7 +259,11 @@ const structuredData = [
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: [
+    mainEntity: postFaq.length ? postFaq.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })) : [
       {
         '@type': 'Question',
         name: 'Trường Việt Anh dạy chương trình gì?',

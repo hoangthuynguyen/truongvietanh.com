@@ -30,7 +30,7 @@ const content = `
 <p><strong>Mẹo thực tế:</strong> In bảy câu này ra giấy và mang theo buổi tư vấn. Ghi lại câu trả lời của từng trường vào cùng một tờ. Khi đặt cạnh nhau, sự khác biệt giữa các trường hiện ra rất nhanh — thường rõ hơn cả sự khác biệt về cơ sở vật chất.</p>
 
 <h2 id="viet-anh-tra-loi">Trường Việt Anh trả lời bảy câu hỏi này như thế nào</h2>
-<p>Chúng tôi đưa ra bộ câu hỏi trên thì cũng phải tự trả lời trước. Toàn bộ nội dung dưới đây được quy định tại Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026 về Chính sách "Cam kết Giá trị 4 Tuần", <a href="/blog/truong-viet-anh-co-tra-lai-hoc-phi-khong/#toan-van-quyet-dinh">đăng công khai toàn văn trên website nhà trường</a>.</p>
+<p>Chúng tôi đưa ra bộ câu hỏi trên thì cũng phải tự trả lời trước. Toàn bộ nội dung dưới đây được quy định tại Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026 về Chính sách "Cam kết Giá trị 4 Tuần", <a href="/chinh-sach#cam-ket-4-tuan">đăng công khai toàn văn trên website nhà trường</a>.</p>
 <div class="blog-table-wrap">
 <table>
   <thead>

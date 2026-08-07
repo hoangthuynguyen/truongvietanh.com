@@ -61,7 +61,7 @@ const content = `
 </ol>
 
 <h2 id="bat-dau-bang-28-ngay">Nếu chưa chắc chắn, hãy bắt đầu bằng 28 ngày</h2>
-<p>Không gia đình nào nên cam kết 1,55 tỷ đồng dựa trên một bài viết. Đó là lý do chúng tôi ban hành Chính sách Cam kết Giá trị 4 Tuần theo <a href="/blog/truong-viet-anh-co-tra-lai-hoc-phi-khong/#toan-van-quyet-dinh">Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026</a>: trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, nhà trường hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc.</p>
+<p>Không gia đình nào nên cam kết 1,55 tỷ đồng dựa trên một bài viết. Đó là lý do chúng tôi ban hành Chính sách Cam kết Giá trị 4 Tuần theo <a href="/chinh-sach#cam-ket-4-tuan">Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026</a>: trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, nhà trường hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc.</p>
 <p>Hành trình 12 năm bắt đầu bằng một quyết định 28 ngày. Đó là cách duy nhất chúng tôi biết để biến một con số lớn thành một bước đi vừa sức.</p>
 
 <h2 id="faq">Câu hỏi thường gặp</h2>

@@ -62,7 +62,7 @@ const content = `
 <p><strong>Thứ ba là sức khỏe.</strong> Tỷ lệ thừa cân, béo phì ở trẻ em Việt Nam tăng gấp 2,2 lần trong một thập kỷ, từ 8,5% năm 2010 lên 19% năm 2020, riêng trẻ nội thành TP.HCM vượt 50% (Viện Dinh dưỡng Quốc gia, Tổng điều tra 2019–2020). Thể thao mỗi ngày trong lịch học, cấm tuyệt đối nước ngọt có gas và snack, bữa ăn có định lượng — đó là những khoản đầu tư không có hóa đơn nhưng theo con suốt đời.</p>
 
 <h2 id="neu-chon-sai">Và nếu gia đình chọn sai?</h2>
-<p>Đây là chỗ khác biệt lớn nhất so với mọi phép so sánh học phí thông thường. Theo <a href="/blog/truong-viet-anh-co-tra-lai-hoc-phi-khong/#toan-van-quyet-dinh">Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026</a>, trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, nhà trường hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc. Điều kiện duy nhất: con đi học đầy đủ trong 4 tuần đó.</p>
+<p>Đây là chỗ khác biệt lớn nhất so với mọi phép so sánh học phí thông thường. Theo <a href="/chinh-sach#cam-ket-4-tuan">Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026</a>, trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, nhà trường hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc. Điều kiện duy nhất: con đi học đầy đủ trong 4 tuần đó.</p>
 <p>Nghĩa là 125.757.000 đồng không phải một ván cược. Đó là khoản đầu tư có cửa rút trong 28 ngày đầu tiên — 28 ngày trùng đúng với Học kỳ Foundation, giai đoạn đậm đặc giá trị nhất của cả năm học.</p>
 
 <h2 id="truong-cong-hop-ly">Trường công vẫn hợp lý với gia đình nào?</h2>

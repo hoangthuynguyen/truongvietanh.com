@@ -1,0 +1,233 @@
+---
+// Trang Chính sách — nơi đăng công khai toàn văn các văn bản chính sách có số hiệu.
+// Bản thảo cụm bài hoàn phí yêu cầu "toàn văn Quyết định đăng công khai trên trang Chính sách";
+// trước khi có trang này, các bài phải trỏ tạm về mục #toan-van-quyet-dinh trong bài 1.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const canonical = 'https://truongvietanh.com/chinh-sach';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Chính sách & Văn bản công khai — Trường Việt Anh',
+    description: 'Nơi Hệ thống Trường Việt Anh đăng công khai toàn văn các văn bản chính sách có số hiệu, chữ ký và con dấu — bắt đầu với Chính sách Cam kết Giá trị 4 Tuần.',
+    url: canonical,
+    inLanguage: 'vi-VN',
+    publisher: {
+      '@type': 'EducationalOrganization',
+      name: 'Hệ Thống Trường Việt Anh',
+      url: 'https://truongvietanh.com',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Chính sách', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'DigitalDocument',
+    name: 'Quyết định số 0728.1/2026/QĐ-MAJOR về việc ban hành Chính sách "Cam kết Giá trị 4 Tuần"',
+    datePublished: '2026-07-29',
+    inLanguage: 'vi-VN',
+    url: `${canonical}#cam-ket-4-tuan`,
+    encodingFormat: 'application/pdf',
+    associatedMedia: {
+      '@type': 'MediaObject',
+      contentUrl: 'https://truongvietanh.com/van-ban/quyet-dinh-0728-1-2026-cam-ket-gia-tri-4-tuan.pdf',
+      encodingFormat: 'application/pdf',
+    },
+    author: {
+      '@type': 'Organization',
+      name: 'Công ty CP Giáo dục Major — Hệ thống Trường Việt Anh',
+    },
+  },
+];
+---
+
+<BaseLayout
+  title="Chính sách & Văn bản công khai — Trường Việt Anh"
+  description="Toàn văn các văn bản chính sách của Hệ thống Trường Việt Anh, có số hiệu, chữ ký và con dấu. Gồm Quyết định 0728.1/2026/QĐ-MAJOR — hoàn 100% học phí trong 4 tuần đầu năm học."
+  keywords="chính sách trường việt anh, quyết định 0728.1/2026, cam kết giá trị 4 tuần, hoàn học phí trường việt anh, văn bản công khai"
+  canonical={canonical}
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase currentPath="/chinh-sach" />
+
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left" style="flex:1">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">›</span>
+            <span>Chính sách</span>
+          </nav>
+          <h1 class="gi-h1">Chính sách &amp; Văn bản công khai</h1>
+          <p class="gi-subtitle">Hệ thống Trường Việt Anh — Công ty CP Giáo dục Major</p>
+          <p class="gi-last-updated">Cập nhật: 05/08/2026</p>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>Có số hiệu</strong> Chữ ký &amp; con dấu</div>
+            <div class="gi-badge"><strong>Toàn văn</strong> Không rút gọn</div>
+            <div class="gi-badge"><strong>Bản PDF</strong> Tải về được</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="gi-container gi-body">
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Văn bản</p>
+        <ol class="gi-toc-list">
+          <li><a href="#cam-ket-4-tuan">Cam kết Giá trị 4 Tuần</a></li>
+          <li><a href="#van-ban-khac">Các văn bản khác</a></li>
+        </ol>
+        <a href="/dat-lich-tham-quan" class="gi-toc-cta">Đặt lịch tham quan</a>
+      </nav>
+
+      <article class="gi-main">
+        <p class="gi-lead">Trang này đăng công khai toàn văn các văn bản chính sách của Hệ thống Trường Việt Anh — nguyên văn, có số hiệu, chữ ký và con dấu, kèm bản PDF để phụ huynh tải về và đối chiếu. Chúng tôi cho rằng một cam kết chỉ có giá trị khi nó tồn tại bằng văn bản mà bất kỳ ai cũng đọc được, chứ không phải bằng lời hứa trong buổi tư vấn.</p>
+
+        <section id="cam-ket-4-tuan" class="gi-section">
+          <h2>Chính sách "Cam kết Giá trị 4 Tuần"</h2>
+          <p><strong>Quyết định số 0728.1/2026/QĐ-MAJOR</strong> · Ngày ban hành 29/7/2026 · Hiệu lực từ năm học 2026–2027 · Áp dụng tại toàn Hệ thống Trường Việt Anh.</p>
+          <p>Trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, nhà trường hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc. Điều kiện duy nhất: con đi học đầy đủ trong 4 tuần đó.</p>
+
+          <p class="vb-download">
+            <a href="/van-ban/quyet-dinh-0728-1-2026-cam-ket-gia-tri-4-tuan.pdf" target="_blank" rel="noopener">Tải bản PDF Quyết định 0728.1/2026/QĐ-MAJOR</a>
+          </p>
+
+          <h3>Toàn văn</h3>
+          <div class="vb-toanvan">
+            <p><strong>CÔNG TY CP GIÁO DỤC MAJOR — HỆ THỐNG TRƯỜNG VIỆT ANH</strong><br />
+            Số: 0728.1/2026/QĐ-MAJOR<br />
+            TP. Hồ Chí Minh, ngày 29 tháng 7 năm 2026</p>
+
+            <p><strong>QUYẾT ĐỊNH</strong><br />
+            Về việc ban hành Chính sách "Cam kết Giá trị 4 Tuần"<br />
+            <em>Hoàn 100% học phí trong 4 tuần lễ đầu năm học</em></p>
+
+            <p><strong>Kính gửi: Quý Phụ huynh học sinh Hệ thống Trường Việt Anh.</strong></p>
+            <p>Trường Việt Anh tin rằng một gia đình chỉ nên trả tiền cho giá trị mà con thực sự nhận được. Bốn tuần lễ đầu tiên của mỗi năm học tại Việt Anh là Học kỳ Foundation — 28 ngày nền tảng đậm đặc nhất về giá trị, đủ để Quý Phụ huynh kiểm chứng lựa chọn của mình. Vì vậy, Nhà trường ban hành chính sách sau đây, thay thế quy định "học phí không hoàn lại sau ghi danh" trong phạm vi 4 tuần lễ đầu năm học.</p>
+
+            <h4>Điều 1. Nội dung cam kết</h4>
+            <p>Trong 04 tuần lễ đầu tiên của năm học, nếu Quý Phụ huynh hoặc học sinh nhận thấy không nhận được giá trị như mong đợi, Nhà trường hoàn lại 100% các khoản đã đóng, bao gồm: học phí, phí cơ sở vật chất và phí bản quyền chương trình Oxford International Curriculum (OIC).</p>
+
+            <h4>Điều 2. Các khoản không hoàn lại</h4>
+            <p>Tiền ăn, phí nội trú, đồng phục và đồ dùng học tập đã sử dụng hoặc đã bàn giao cho học sinh.</p>
+
+            <h4>Điều 3. Điều kiện áp dụng</h4>
+            <p>Điều kiện duy nhất: học sinh đi học đầy đủ trong 04 tuần lễ đầu năm học. Nhà trường không yêu cầu Quý Phụ huynh giải thích lý do và không đặt thêm bất kỳ điều kiện nào khác.</p>
+
+            <h4>Điều 4. Thủ tục</h4>
+            <p>Quý Phụ huynh không phải nộp đơn. Quý Phụ huynh chỉ cần liên hệ thông báo với chuyên viên chăm sóc học sinh của lớp. Chuyên viên có thể đề nghị Quý Phụ huynh ký xác nhận nội dung đã trao đổi để làm căn cứ thực hiện.</p>
+
+            <h4>Điều 5. Thời hạn giải quyết</h4>
+            <p>Nhà trường hoàn tất việc hoàn phí trong 07 ngày làm việc kể từ ngày tiếp nhận thông báo. Nhà trường bàn giao đầy đủ hồ sơ và hỗ trợ Quý Phụ huynh hoàn tất các thủ tục chuyển trường cho con.</p>
+
+            <h4>Điều 6. Hiệu lực thi hành</h4>
+            <p>Chính sách có hiệu lực từ năm học 2026 – 2027, áp dụng tại toàn Hệ thống Trường Việt Anh. Giám đốc Tuyển sinh, Kế toán trưởng và Hiệu trưởng các cơ sở chịu trách nhiệm thi hành. Mọi trường hợp phát sinh ngoài văn bản được giải quyết theo hướng có lợi cho Quý Phụ huynh.</p>
+
+            <p><em>Nơi nhận:</em> Quý Phụ huynh học sinh; Ban Giám hiệu các cơ sở; Phòng Tuyển sinh, Phòng Kế toán; Lưu: VT.</p>
+            <p><strong>CHỦ TỊCH HỘI ĐỒNG TRƯỜNG</strong><br />(đã ký và đóng dấu)<br /><strong>NGUYỄN MẠNH DƯƠNG</strong></p>
+          </div>
+
+          <h3>Bản scan có chữ ký và con dấu</h3>
+          <figure class="vb-scan">
+            <img src="/van-ban/quyet-dinh-cam-ket-gia-tri-4-tuan-trang-1.jpg" alt="Trang 1 Quyết định số 0728.1/2026/QĐ-MAJOR ban hành Chính sách Cam kết Giá trị 4 Tuần của Hệ thống Trường Việt Anh" width="1400" height="1981" loading="lazy" decoding="async" />
+            <figcaption>Trang 1 — Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026.</figcaption>
+          </figure>
+          <figure class="vb-scan">
+            <img src="/van-ban/quyet-dinh-cam-ket-gia-tri-4-tuan-trang-2.jpg" alt="Trang 2 Quyết định Cam kết Giá trị 4 Tuần có chữ ký và con dấu của Chủ tịch Hội đồng Trường Nguyễn Mạnh Dương" width="1400" height="1981" loading="lazy" decoding="async" />
+            <figcaption>Trang 2 — có chữ ký và con dấu của Chủ tịch Hội đồng Trường.</figcaption>
+          </figure>
+
+          <h3>Đọc thêm</h3>
+          <ul>
+            <li><a href="/blog/truong-viet-anh-co-tra-lai-hoc-phi-khong/">Trường Việt Anh có trả lại học phí không?</a> — giải thích chính sách bằng ngôn ngữ đời thường</li>
+            <li><a href="/blog/chinh-sach-hoan-hoc-phi-truong-tu-tphcm/">7 câu hỏi phải hỏi trước khi đóng học phí</a> — bộ câu hỏi để phụ huynh kiểm tra chính sách hoàn phí của bất kỳ trường nào</li>
+          </ul>
+        </section>
+
+        <section id="van-ban-khac" class="gi-section">
+          <h2>Các văn bản khác</h2>
+          <ul>
+            <li><a href="/chinh-sach-bao-mat">Chính sách Bảo mật</a> — tuân thủ Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân.</li>
+            <li><a href="/dieu-khoan-su-dung">Điều khoản Sử dụng Website</a> — quyền và nghĩa vụ người dùng, sở hữu trí tuệ, hình ảnh học sinh.</li>
+            <li><a href="/khieu-nai">Quy trình Giải quyết Khiếu nại</a> — 5 bước, có mẫu đơn trực tuyến.</li>
+            <li><a href="/hoc-phi">Bảng học phí năm học 2026–2027</a> — kèm cam kết không phát sinh chi phí bắt buộc trong năm.</li>
+          </ul>
+          <p class="gi-policy-end"><em>Văn bản mới sẽ được bổ sung vào trang này khi ban hành.</em></p>
+        </section>
+      </article>
+    </div>
+
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Có thể quý vị cần</h2>
+        <div class="gi-related-grid">
+          <a href="/dat-lich-tham-quan" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #26275D 0%, #363876 100%);"></div>
+            <h3>Đặt lịch tham quan trường</h3>
+            <p>Đến xem một buổi học thật trước khi quyết định. Đội tuyển sinh phản hồi trong 24h.</p>
+          </a>
+          <a href="/hoc-phi" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #f9dd0e 0%, #cbb30a 100%);"></div>
+            <h3>Học phí 2026–2027</h3>
+            <p>Bảng phí từng cấp, các khoản ưu đãi và cam kết không phát sinh chi phí bắt buộc.</p>
+          </a>
+          <a href="/khieu-nai" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Gửi khiếu nại</h3>
+            <p>Quy trình 5 bước, SLA 30 ngày. Yêu cầu về dữ liệu cá nhân phản hồi trong 72h.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .vb-download a {
+    display: inline-block;
+    background: #26275D;
+    color: #fff;
+    padding: 0.6rem 1.2rem;
+    border-radius: 8px;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .vb-download a:hover { background: #363876; color: #fff; }
+  .vb-toanvan {
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #f9dd0e;
+    border-radius: 8px;
+    background: #f8fafc;
+    padding: 1.25rem 1.5rem;
+    margin: 1rem 0 2rem;
+  }
+  .vb-toanvan h4 {
+    margin: 1.25rem 0 0.4rem;
+    color: #26275D;
+    font-size: 1.05rem;
+  }
+  .vb-toanvan p { margin: 0 0 0.85rem; }
+  .vb-scan { margin: 1.5rem 0; text-align: center; }
+  .vb-scan img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+  }
+  .vb-scan figcaption { font-size: 0.9rem; color: #64748b; margin-top: 0.5rem; }
+  .gi-policy-end { text-align: center; color: #64748b; margin-top: 2rem; }
+</style>

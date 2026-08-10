@@ -95,7 +95,7 @@ const content = `
      src/pages/blog/[slug].astro xoá thẻ h2 đó VÀ toàn bộ nội dung phía sau nó. -->
 <h2 id="viec-nen-lam-tiep">Việc anh chị nên làm tiếp theo</h2>
 <p>Anh chị hãy làm một việc rất nhỏ tối nay: tìm dòng tương ứng với con trong bảng thời gian ở trên, và tự trả lời câu hỏi "nếu đợi thêm một năm, phần còn lại của quỹ thời gian ấy giảm bao nhiêu?". Câu trả lời sẽ khác nhau với mỗi gia đình — và đó chính là điều khiến nó đáng để tự hỏi.</p>
-<p><a href="/dat-lich-tham-quan">Đăng ký tham quan trường &amp; giữ chỗ trải nghiệm 4 tuần có bảo chứng hoàn phí</a> · <a href="/so-sanh-chi-phi-hoc">Nhận bảng so sánh chi phí thật 2026</a> · <a href="/blog/dau-tu-12-nam-truong-tu-het-bao-nhieu-roi/">Đầu tư 12 năm trường tư hết bao nhiêu?</a></p>
+<p><a href="/dat-lich-tham-quan">Đăng ký tham quan trường &amp; giữ chỗ trải nghiệm 4 tuần có bảo chứng hoàn phí</a> · <a href="/bang-tinh-chi-phi-12-nam">Nháº­n báº£ng tÃ­nh chi phÃ­ giÃ¡o dá»¥c 12 nÄm (cÃ´ng cá»¥ miá»n phÃ­)</a> · <a href="/blog/dau-tu-12-nam-truong-tu-het-bao-nhieu-roi/">Đầu tư 12 năm trường tư hết bao nhiêu?</a></p>
 <p><em>Tác giả: Nguyễn Mạnh Dương — Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh (Major Education, thành lập 2011). Nguồn: Hartshorne, Tenenbaum &amp; Pinker, Cognition 2018; Harvard Center on the Developing Child; James Heckman, heckmanequation.org; Moore et al., PLOS Medicine 2012; EF English Proficiency Index 2024; Viện Dinh dưỡng Quốc gia, Tổng điều tra 2019–2020; WEF Future of Jobs Report 2025; Quyết định 0728.1/2026/QĐ-MAJOR ngày 29/7/2026.</em></p>
 `.trim();
 

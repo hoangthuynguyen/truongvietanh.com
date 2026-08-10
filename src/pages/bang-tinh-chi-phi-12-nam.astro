@@ -1,0 +1,298 @@
+---
+// Bảng tính chi phí giáo dục 12 năm — công cụ CTA chính của bài 4, 5, 6 cụm chi phí.
+// Nguyên tắc giữ từ bản thảo: KHÔNG chốt con số cứng cho chi phí trường công. Cột "khoảng
+// tham khảo" chỉ hiện ở hai dòng mà bài 4 đã công bố; các dòng khác để trống cho phụ huynh
+// tự điền. Mốc đối chiếu 1.549.684.000đ là HỌC PHÍ 12 năm, phải nói rõ chưa gồm ăn uống.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const canonical = 'https://truongvietanh.com/bang-tinh-chi-phi-12-nam';
+
+// Học phí 12 năm tại VAGV theo bảng phí 2026–2027 (khớp bài 6 — bài pillar).
+const VA_TUITION_12Y = 1549684000;
+
+const ROWS = [
+  { id: 'hocphi', label: 'Học phí trường công + các khoản thu theo quy định', hint: 'Vài triệu' },
+  { id: 'hocthem', label: 'Học thêm các môn văn hóa (toán, văn, lý, hóa…)', hint: 'Phổ biến 10–40 triệu' },
+  { id: 'tienganh', label: 'Trung tâm tiếng Anh', hint: 'Phổ biến 15–40 triệu' },
+  { id: 'bantru', label: 'Bán trú / người trông con buổi trưa, buổi chiều', hint: '' },
+  { id: 'duadon', label: 'Đưa đón (xăng xe, xe ôm, tài xế)', hint: '' },
+  { id: 'nangkhieu', label: 'Năng khiếu: thể thao, nhạc, vẽ', hint: '' },
+  { id: 'kynang', label: 'Kỹ năng sống, trại hè', hint: '' },
+  { id: 'sachvo', label: 'Sách vở, đồng phục, thiết bị học', hint: '' },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: 'Bảng tính chi phí giáo dục 12 năm',
+    applicationCategory: 'FinanceApplication',
+    operatingSystem: 'Web',
+    url: canonical,
+    inLanguage: 'vi-VN',
+    description: 'Công cụ miễn phí giúp phụ huynh cộng đủ chi phí giáo dục thật của gia đình trong một năm và ước tính cho cả 12 năm phổ thông.',
+    offers: { '@type': 'Offer', price: '0', priceCurrency: 'VND' },
+    publisher: { '@type': 'EducationalOrganization', name: 'Hệ Thống Trường Việt Anh', url: 'https://truongvietanh.com' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Bảng tính chi phí 12 năm', item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Bảng tính chi phí giáo dục 12 năm — công cụ miễn phí"
+  description="Cộng đủ chi phí giáo dục thật của gia đình: học thêm, trung tâm tiếng Anh, bán trú, đưa đón. Nhập số của chính mình, ra tổng một năm và cả 12 năm phổ thông."
+  keywords="bảng tính chi phí giáo dục, chi phí học 12 năm, tổng chi phí học trường công, so sánh học phí trường công trường tư"
+  canonical={canonical}
+  structuredData={structuredData}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase currentPath="/bang-tinh-chi-phi-12-nam" />
+
+    <section class="bt-hero">
+      <div class="bt-container">
+        <nav class="bt-crumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a> <span aria-hidden="true">›</span> <span>Bảng tính chi phí 12 năm</span>
+        </nav>
+        <h1>Bảng tính chi phí giáo dục 12 năm</h1>
+        <p class="bt-sub">Phần lớn tiền học của con nằm ngoài biên lai nhà trường. Bảng này cộng giúp anh chị — bằng con số của chính gia đình mình, không phải con số của ai khác.</p>
+      </div>
+    </section>
+
+    <div class="bt-container bt-body">
+      <section class="bt-card">
+        <h2>1. Gia đình đang chi bao nhiêu mỗi năm?</h2>
+        <p class="bt-note">Điền theo <strong>12 tháng gần nhất</strong>, đơn vị <strong>triệu đồng/năm</strong>. Bỏ trống những khoản gia đình không chi. Cột "khoảng tham khảo" chỉ để gợi ý thứ tự độ lớn, không phải mức chuẩn.</p>
+
+        <div class="bt-table-wrap">
+          <table class="bt-table">
+            <thead>
+              <tr><th>Khoản chi</th><th class="bt-hint-col">Khoảng tham khảo</th><th class="bt-num-col">Gia đình tôi<br /><span>(triệu đ/năm)</span></th></tr>
+            </thead>
+            <tbody>
+              {ROWS.map((r) => (
+                <tr>
+                  <td>{r.label}</td>
+                  <td class="bt-hint-col">{r.hint || '—'}</td>
+                  <td class="bt-num-col">
+                    <input type="number" min="0" step="0.5" inputmode="decimal" placeholder="0"
+                      id={`bt-${r.id}`} class="bt-input" data-bt-input aria-label={r.label} />
+                  </td>
+                </tr>
+              ))}
+              <tr class="bt-total-row">
+                <td><strong>Tổng mỗi năm</strong></td>
+                <td class="bt-hint-col"></td>
+                <td class="bt-num-col"><strong id="bt-total-year">0</strong></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bt-years">
+          <label for="bt-nam">Con còn bao nhiêu năm học phổ thông?</label>
+          <input type="number" id="bt-nam" min="1" max="12" step="1" value="12" class="bt-input bt-input--sm" />
+          <span class="bt-note">Mầm non đến hết lớp 12 là 12 năm. Con đang lớp 6 thì còn 7 năm.</span>
+        </div>
+      </section>
+
+      <section class="bt-card bt-result" id="bt-result">
+        <h2>2. Kết quả</h2>
+        <div class="bt-result-grid">
+          <div class="bt-stat">
+            <span class="bt-stat-label">Chi phí mỗi năm của gia đình</span>
+            <span class="bt-stat-value" id="bt-out-year">—</span>
+          </div>
+          <div class="bt-stat">
+            <span class="bt-stat-label">Cộng cho <span id="bt-out-nam">12</span> năm</span>
+            <span class="bt-stat-value" id="bt-out-total">—</span>
+          </div>
+          <div class="bt-stat bt-stat--alt">
+            <span class="bt-stat-label">Học phí cùng số năm đó tại Trường Việt Anh</span>
+            <span class="bt-stat-value" id="bt-out-va">—</span>
+          </div>
+        </div>
+        <p class="bt-compare" id="bt-compare">Điền vài dòng ở trên để xem kết quả.</p>
+
+        <details class="bt-caveat">
+          <summary>Đọc kỹ trước khi so sánh hai con số này</summary>
+          <ul>
+            <li>Mốc Việt Anh là <strong>học phí</strong> theo bảng phí 2026–2027 tại cơ sở Gò Vấp — tổng 12 năm là 1.549.684.000đ. Con số này <strong>chưa gồm</strong> ăn uống, phí cơ sở vật chất, tài liệu, dã ngoại, nội trú, hay phí bản quyền Oxford nếu con học lớp OIC.</li>
+            <li>Ngược lại, tổng của gia đình ở trên có thể đã bao gồm những thứ mà mô hình trọn gói tính trong học phí: tiếng Anh với giáo viên nước ngoài, kỹ năng, thể thao, phụ đạo. Đây là lý do phép so sánh đúng không phải "học phí với học phí".</li>
+            <li>Cả hai đều <strong>chưa tính trượt giá</strong>. Học phí Việt Anh điều chỉnh hằng năm 5–10%, công bố minh bạch trước; chi phí ngoài thị trường cũng tăng theo thời gian.</li>
+            <li>Bảng này không nhằm nói trường công đắt hay trường tư rẻ. Nó chỉ giúp gia đình nhìn thấy cùng lúc những khoản vốn nằm rải rác ở năm sáu đầu mối khác nhau.</li>
+          </ul>
+        </details>
+
+        <p class="bt-actions">
+          <button type="button" id="bt-print" class="bt-btn bt-btn--ghost">In hoặc lưu PDF</button>
+          <button type="button" id="bt-reset" class="bt-btn bt-btn--ghost">Xoá hết để nhập lại</button>
+        </p>
+      </section>
+
+      <section class="bt-card">
+        <h2>3. Muốn ai đó cùng đọc con số này với anh chị?</h2>
+        <p class="bt-note">Để lại thông tin, đội tuyển sinh sẽ trao đổi về lộ trình phù hợp với ngân sách thật của gia đình — kể cả khi kết luận là con nên tiếp tục ở trường hiện tại.</p>
+        <div data-form-bg="light">
+          <LeadFormTwoStepEmailFirst
+            formId="bang-tinh-form"
+            funnelCode="bang-tinh-chi-phi-12-nam"
+            schoolLevel="lien-cap"
+            submitText="Nhận tư vấn lộ trình"
+            title=""
+            description=""
+            socialProof=""
+          />
+        </div>
+      </section>
+
+      <section class="bt-card bt-links">
+        <h2>Đọc thêm</h2>
+        <ul>
+          <li><a href="/blog/tong-chi-phi-that-hoc-truong-cong/">Học trường công có thật sự "gần như miễn phí"?</a> — bốn khoản phụ huynh hay quên cộng vào</li>
+          <li><a href="/blog/dau-tu-12-nam-truong-tu-het-bao-nhieu-roi/">Đầu tư 12 năm hết bao nhiêu, bao giờ "hoàn vốn"?</a> — phân tích đầy đủ, kèm bốn giới hạn của chính phép tính</li>
+          <li><a href="/blog/hoc-phi-lop-6-truong-viet-anh-doi-lai-gi/">Chênh lệch học phí lớp 6: mỗi ngày thêm bao nhiêu?</a></li>
+          <li><a href="/hoc-phi">Bảng học phí 2026–2027</a> · <a href="/chinh-sach#cam-ket-4-tuan">Chính sách hoàn 100% học phí trong 4 tuần đầu</a></li>
+        </ul>
+      </section>
+    </div>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<!-- Bộ thu UTM dùng chung: component form đã tự nạp, để đây cho chắc và để tự kiểm bằng grep. -->
+<script src="/js/va-utm.js" is:inline></script>
+
+<script is:inline define:vars={{ VA_TUITION_12Y }}>
+  (function () {
+    var inputs = Array.prototype.slice.call(document.querySelectorAll('[data-bt-input]'));
+    var namEl = document.getElementById('bt-nam');
+    var fmtVND = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND', maximumFractionDigits: 0 });
+    var fmtNum = new Intl.NumberFormat('vi-VN', { maximumFractionDigits: 1 });
+
+    function readYear() {
+      return inputs.reduce(function (sum, el) {
+        var v = parseFloat(el.value);
+        return sum + (isFinite(v) && v > 0 ? v : 0);
+      }, 0); // triệu đồng
+    }
+
+    function readNam() {
+      var n = parseInt(namEl.value, 10);
+      if (!isFinite(n) || n < 1) n = 1;
+      if (n > 12) n = 12;
+      return n;
+    }
+
+    function render() {
+      var perYearTrieu = readYear();
+      var nam = readNam();
+      var perYear = perYearTrieu * 1000000;
+      var total = perYear * nam;
+      // Mốc Việt Anh: chia đều học phí 12 năm rồi nhân số năm còn lại
+      var va = Math.round(VA_TUITION_12Y / 12 * nam);
+
+      document.getElementById('bt-total-year').textContent = perYearTrieu ? fmtNum.format(perYearTrieu) : '0';
+      document.getElementById('bt-out-nam').textContent = String(nam);
+      document.getElementById('bt-out-year').textContent = perYear ? fmtVND.format(perYear) : '—';
+      document.getElementById('bt-out-total').textContent = total ? fmtVND.format(total) : '—';
+      document.getElementById('bt-out-va').textContent = fmtVND.format(va);
+
+      var el = document.getElementById('bt-compare');
+      if (!total) {
+        el.textContent = 'Điền vài dòng ở trên để xem kết quả.';
+        el.className = 'bt-compare';
+        return;
+      }
+      var diff = va - total;
+      var absDiff = fmtVND.format(Math.abs(diff));
+      if (Math.abs(diff) < va * 0.05) {
+        el.innerHTML = 'Hai con số <strong>xấp xỉ bằng nhau</strong> trong ' + nam + ' năm tới. Lúc này câu hỏi không còn là tiền, mà là mỗi bên đổi lại cho con những gì.';
+      } else if (diff > 0) {
+        el.innerHTML = 'Học phí Việt Anh trong ' + nam + ' năm cao hơn phần gia đình đang chi khoảng <strong>' + absDiff + '</strong>. Chia ra, đó là phần chênh mỗi năm mà anh chị cần cân nhắc xem đổi lại được gì.';
+      } else {
+        el.innerHTML = 'Phần gia đình đang chi trong ' + nam + ' năm <strong>cao hơn</strong> học phí Việt Anh cùng kỳ khoảng <strong>' + absDiff + '</strong>. Nhiều gia đình bất ngờ ở đúng chỗ này — không phải vì tiêu hoang, mà vì các khoản ấy vốn nằm rải rác nên chưa từng được nhìn cùng lúc.';
+      }
+      el.className = 'bt-compare bt-compare--filled';
+    }
+
+    inputs.forEach(function (el) { el.addEventListener('input', render); });
+    namEl.addEventListener('input', render);
+
+    document.getElementById('bt-print').addEventListener('click', function () { window.print(); });
+    document.getElementById('bt-reset').addEventListener('click', function () {
+      inputs.forEach(function (el) { el.value = ''; });
+      namEl.value = '12';
+      render();
+      inputs[0].focus();
+    });
+
+    render();
+  })();
+</script>
+
+<style is:global>
+  .bt-container { max-width: 900px; margin: 0 auto; padding: 0 1.25rem; }
+  .bt-hero { background: linear-gradient(135deg, #26275D 0%, #363876 100%); color: #fff; padding: 2rem 0 2.5rem; }
+  .bt-crumb { font-size: .9rem; color: #cbd5e1; margin-bottom: .75rem; }
+  .bt-crumb a { color: #f9dd0e; text-decoration: none; }
+  .bt-hero h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 800; margin: 0 0 .75rem; color: #fff; line-height: 1.25; }
+  .bt-sub { margin: 0; color: #e0e7ff; line-height: 1.65; max-width: 65ch; }
+
+  .bt-body { padding: 2rem 1.25rem 3rem; display: flex; flex-direction: column; gap: 1.5rem; }
+  .bt-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; }
+  .bt-card h2 { font-size: 1.25rem; font-weight: 800; color: #26275D; margin: 0 0 .75rem; }
+  .bt-note { font-size: .95rem; color: #475569; line-height: 1.6; margin: 0 0 1rem; }
+
+  .bt-table-wrap { overflow-x: auto; }
+  .bt-table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+  .bt-table th, .bt-table td { border: 1px solid #e2e8f0; padding: .6rem .75rem; text-align: left; vertical-align: middle; color: #1f2937; }
+  .bt-table th { background: #26275D; color: #fff; font-weight: 600; }
+  .bt-table th span { font-weight: 400; font-size: .8rem; }
+  .bt-hint-col { color: #64748b; white-space: nowrap; }
+  .bt-num-col { text-align: right; width: 9.5rem; }
+  .bt-total-row td { background: #f8fafc; color: #26275D; }
+  .bt-input { width: 100%; padding: .45rem .6rem; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 1rem; text-align: right; }
+  .bt-input:focus { outline: 2px solid #f9dd0e; outline-offset: 1px; border-color: #26275D; }
+  .bt-input--sm { width: 5rem; }
+
+  .bt-years { display: flex; align-items: center; gap: .6rem; flex-wrap: wrap; margin-top: 1rem; }
+  .bt-years label { font-weight: 700; color: #26275D; }
+  .bt-years .bt-note { margin: 0; font-size: .85rem; }
+
+  .bt-result-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+  .bt-stat { background: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #f9dd0e; border-radius: 8px; padding: .9rem 1rem; }
+  .bt-stat--alt { border-left-color: #26275D; }
+  .bt-stat-label { display: block; font-size: .85rem; color: #64748b; margin-bottom: .3rem; }
+  .bt-stat-value { display: block; font-size: 1.25rem; font-weight: 800; color: #26275D; }
+  .bt-compare { background: #fffbe6; border: 1px solid #f9dd0e; border-radius: 8px; padding: .9rem 1rem; color: #26275D; line-height: 1.65; margin: 0 0 1rem; }
+  .bt-compare--filled { background: #eef2ff; border-color: #c7d2fe; }
+
+  .bt-caveat { border: 1px solid #e2e8f0; border-radius: 8px; padding: .75rem 1rem; background: #f8fafc; }
+  .bt-caveat summary { cursor: pointer; font-weight: 700; color: #26275D; }
+  .bt-caveat ul { margin: .75rem 0 0; padding-left: 1.2rem; color: #475569; line-height: 1.65; font-size: .95rem; }
+  .bt-caveat li { margin-bottom: .5rem; }
+
+  .bt-actions { display: flex; gap: .6rem; flex-wrap: wrap; margin: 1rem 0 0; }
+  .bt-btn { padding: .55rem 1.1rem; border-radius: 8px; font-weight: 700; font-size: .95rem; cursor: pointer; border: 1px solid #26275D; background: #fff; color: #26275D; }
+  .bt-btn:hover { background: #26275D; color: #fff; }
+
+  .bt-links ul { margin: 0; padding-left: 1.2rem; line-height: 1.9; color: #1f2937; }
+  .bt-links a { color: #26275D; text-decoration: underline; text-decoration-color: #f9dd0e; text-underline-offset: 3px; }
+
+  @media print {
+    .main-header, .top-bar, .site-footer, .bt-hero, .bt-links, .mobile-sticky-cta,
+    .back-to-top, .zalo-float, .announcement-bar, .bt-actions, .lead-form { display: none !important; }
+    .bt-card { border: none; padding: 0; margin-bottom: 1rem; }
+  }
+</style>

@@ -97,7 +97,7 @@ const content = `
      src/pages/blog/[slug].astro xoá thẻ h2 đó VÀ toàn bộ nội dung phía sau nó. -->
 <h2 id="viec-nen-lam-tiep">Việc anh chị nên làm tiếp theo</h2>
 <p>Anh chị hãy dành hai mươi phút tối nay cộng đủ bảng trên. Rất nhiều phụ huynh bất ngờ với con số cuối cùng — không phải vì họ tiêu hoang, mà vì các khoản ấy vốn nằm rải rác nên chưa từng được nhìn cùng lúc.</p>
-<p><a href="/bang-tinh-chi-phi-12-nam">Nháº­n báº£ng tÃ­nh chi phÃ­ giÃ¡o dá»¥c 12 nÄm (cÃ´ng cá»¥ miá»n phÃ­)</a> · <a href="/dat-lich-tham-quan">Đăng ký tham quan trường &amp; tìm hiểu Cam kết Giá trị 4 Tuần</a> · <a href="/blog/chinh-sach-hoan-hoc-phi-truong-tu-tphcm/">7 câu hỏi phải hỏi trước khi đóng học phí</a></p>
+<p><a href="/bang-tinh-chi-phi-12-nam">Nhận bảng tính chi phí giáo dục 12 năm (công cụ miễn phí)</a> · <a href="/dat-lich-tham-quan">Đăng ký tham quan trường &amp; tìm hiểu Cam kết Giá trị 4 Tuần</a> · <a href="/blog/chinh-sach-hoan-hoc-phi-truong-tu-tphcm/">7 câu hỏi phải hỏi trước khi đóng học phí</a></p>
 <p><em>Tác giả: Nguyễn Mạnh Dương — Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh. Nguồn: Chương trình GDPT 2018 (Bộ GD&amp;ĐT); Thông tư 29/2024/TT-BGDĐT về dạy thêm, học thêm; Báo Người Lao Động 30/11/2025; WEF Future of Jobs Report 2025; Hartshorne et al., Cognition 2018; Bảng học phí và phí dịch vụ Trường Việt Anh 2026–2027; Quyết định 0728.1/2026/QĐ-MAJOR ngày 29/7/2026.</em></p>
 `.trim();
 

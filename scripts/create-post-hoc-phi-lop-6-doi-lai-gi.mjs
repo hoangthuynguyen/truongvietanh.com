@@ -87,7 +87,7 @@ const content = `
      src/pages/blog/[slug].astro xoá thẻ h2 đó VÀ toàn bộ nội dung phía sau nó. -->
 <h2 id="viec-nen-lam-tiep">Việc anh chị nên làm tiếp theo</h2>
 <p>Trước khi quyết định, anh chị hãy làm hai việc. Một, cộng đủ chi phí thật mà gia đình đang chi cho việc học của con trong 12 tháng qua — <a href="/blog/tong-chi-phi-that-hoc-truong-cong/">bài "Học trường công có thật sự gần như miễn phí?"</a> có sẵn bảng tính. Hai, đến xem một buổi học lớp 6 tại trường, ngồi cuối lớp mười lăm phút. Con số trên giấy không thay thế được điều anh chị nhìn thấy.</p>
-<p><a href="/dat-lich-tham-quan">Đăng ký tham quan một buổi học lớp 6</a> · <a href="/bang-tinh-chi-phi-12-nam">Nháº­n báº£ng tÃ­nh chi phÃ­ giÃ¡o dá»¥c 12 nÄm (cÃ´ng cá»¥ miá»n phÃ­)</a> · <a href="/blog/truong-viet-anh-co-tra-lai-hoc-phi-khong/">Chính sách hoàn 100% học phí trong 4 tuần đầu</a></p>
+<p><a href="/dat-lich-tham-quan">Đăng ký tham quan một buổi học lớp 6</a> · <a href="/bang-tinh-chi-phi-12-nam">Nhận bảng tính chi phí giáo dục 12 năm (công cụ miễn phí)</a> · <a href="/blog/truong-viet-anh-co-tra-lai-hoc-phi-khong/">Chính sách hoàn 100% học phí trong 4 tuần đầu</a></p>
 <p><em>Tác giả: Nguyễn Mạnh Dương — Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh (Major Education, thành lập 2011). Nguồn: Bảng học phí và phí dịch vụ Trường Việt Anh 2026–2027; Chương trình GDPT 2018 (Bộ GD&amp;ĐT); Báo Người Lao Động 30/11/2025; Freeman et al., PNAS 2014; Viện Dinh dưỡng Quốc gia, Tổng điều tra 2019–2020; Quyết định 0728.1/2026/QĐ-MAJOR ngày 29/7/2026.</em></p>
 `.trim();
 

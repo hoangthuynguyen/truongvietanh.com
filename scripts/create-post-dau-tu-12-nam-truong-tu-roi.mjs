@@ -84,7 +84,7 @@ const content = `
      src/pages/blog/[slug].astro xoá thẻ h2 đó VÀ toàn bộ nội dung phía sau nó. -->
 <h2 id="viec-nen-lam-tiep">Việc anh chị nên làm tiếp theo</h2>
 <p>Hãy dành một buổi tối cộng đủ chi phí giáo dục thật của gia đình trong 12 tháng qua, rồi nhân với 12 năm. Con số ấy — chứ không phải con số trong bài này — mới là mốc so sánh đúng của gia đình anh chị.</p>
-<p><a href="/bang-tinh-chi-phi-12-nam">Nháº­n báº£ng tÃ­nh chi phÃ­ giÃ¡o dá»¥c 12 nÄm (cÃ´ng cá»¥ miá»n phÃ­)</a> · <a href="/dat-lich-tham-quan">Đăng ký tham quan trường &amp; tìm hiểu Cam kết Giá trị 4 Tuần</a> · <a href="/blog/hoc-phi-lop-6-truong-viet-anh-doi-lai-gi/">Học phí lớp 6: mỗi ngày thêm bao nhiêu, đổi lại con nhận gì?</a></p>
+<p><a href="/bang-tinh-chi-phi-12-nam">Nhận bảng tính chi phí giáo dục 12 năm (công cụ miễn phí)</a> · <a href="/dat-lich-tham-quan">Đăng ký tham quan trường &amp; tìm hiểu Cam kết Giá trị 4 Tuần</a> · <a href="/blog/hoc-phi-lop-6-truong-viet-anh-doi-lai-gi/">Học phí lớp 6: mỗi ngày thêm bao nhiêu, đổi lại con nhận gì?</a></p>
 <p><em>Tác giả: Nguyễn Mạnh Dương — Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh (Major Education, thành lập 2011). Nguồn: Bảng học phí Trường Việt Anh 2026–2027; WEF Future of Jobs Report 2025; EF English Proficiency Index 2024; khảo sát Talentnet–Mercer 2025; Moore et al., PLOS Medicine 2012; Harvard/BMJ 2020; Freeman et al., PNAS 2014; Quyết định 0728.1/2026/QĐ-MAJOR ngày 29/7/2026.</em></p>
 `.trim();
 

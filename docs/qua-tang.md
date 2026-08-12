@@ -119,10 +119,28 @@ trúng — thêm quà chưa có file cũng an toàn.
       nút Zalo tự ẩn, trang vẫn chạy.
 - [ ] Ảnh OG 1200×630 tại `public/og-qua-tang.jpg`.
 - [ ] PDF thực đơn mầm non: upload, dán link vào món `Qua2`, đổi `hien:true`.
-- [ ] Đối chiếu nội dung 8 món THCS/THPT/du học (LM19, LM20, LM21, LM24, LM26,
-      LM27, LM29, LM33) — chữ trên thẻ đang suy từ tên file.
-- [ ] Sửa trong file quà: **LM01** có dòng "chỉ áp dụng cho 30 ba mẹ đăng ký sớm
-      nhất trong tháng" chạy trên mọi trang — dán link quanh năm thành nói dối.
-      **LM47** ghi tiêu đề "50 câu hỏi" nhưng bên trong chỉ có 30 thẻ.
-- [ ] **LM07 không được đưa lên trang**: đó là tài liệu nội bộ chứa đáp án bài
-      quiz. Trang đang dùng `/quiz` thay thế.
+- [x] ~~Đối chiếu nội dung 8 món THCS/THPT/du học~~ — xong 12/08/2026, chữ trên
+      thẻ đã viết lại theo đúng ruột file.
+
+### Cần người soạn tài liệu sửa (không sửa được từ trang này)
+
+- [ ] **LM07 không được đưa lên trang** — tài liệu nội bộ, in cả đáp án bài quiz.
+      Trang đang dùng `/quiz` thay thế.
+- [ ] **LM01** có dòng "chỉ áp dụng cho 30 ba mẹ đăng ký sớm nhất trong tháng"
+      chạy trên mọi trang — dán link quanh năm thành nói dối. Bỏ hoặc đổi thành
+      ưu đãi có hạn thật.
+- [ ] **LM47** tiêu đề ghi "50 câu hỏi" nhưng bên trong chỉ có 30 thẻ.
+- [ ] **LM15** hứa gửi chứng nhận qua Zalo khi con làm đủ 30 ngày — cần người
+      thật phụ trách, nếu không thì bỏ lời hứa.
+- [ ] **LM19** dẫn phụ huynh sang "LM-22 (Template Notion)" — tài liệu này không
+      có trong bộ quà. Bỏ dòng đó hoặc bổ sung LM22.
+- [ ] **Danh sách cơ sở không khớp nhau giữa các file.** LM21 và LM24 ghi có
+      *Phú Nhuận — 269A Nguyễn Trọng Tuyển* và bỏ An Giang, Nhân Lễ; sáu file còn
+      lại ghi 7 cơ sở nhưng không có Phú Nhuận. LM01 còn tự mâu thuẫn ngay trong
+      một file. Phụ huynh lấy hai món là thấy hai danh sách chi nhánh khác nhau.
+- [ ] **Bảng trong LM24 và LM29 có dấu hiệu vỡ layout** — cột lệch khỏi hàng khi
+      đọc bằng máy. Nên mở lại bản PDF xem trên điện thoại có đọc được không.
+- [ ] **Các con số thành tích cần có nguồn**: "85% HS lớp 9 đạt IELTS 5.0+",
+      "95% đạt Cambridge Starters", "97% phụ huynh ở lại sau năm đầu",
+      "80% trường ĐH top chấp nhận IELTS". Đây là tài liệu phát công khai —
+      nên có số liệu thật đứng sau.

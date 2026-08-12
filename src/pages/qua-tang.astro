@@ -186,6 +186,58 @@ input.err{border-color:var(--red);background:rgba(220,38,38,.1)}
 .tel{color:var(--yellow);font-weight:800;text-decoration:none}
 .disc{font-size:11.5px;color:var(--muted);margin-top:20px;line-height:1.6}
 .foot{text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;line-height:1.75}
+
+/* ==========================================================================
+   BỐ CỤC HAI CỘT TRÊN DESKTOP
+   Mặc định (mobile) hai cột xếp chồng. Từ 900px trở lên tách đôi theo đúng
+   khuôn các landing page khác của site: cột nội dung + cột hành động.
+   ========================================================================== */
+.doi{display:grid;gap:18px}
+
+@media(min-width:900px){
+  .wrap{max-width:1080px;padding:34px 28px 72px}
+  .lbar{padding:10px 16px}
+  .lbar img{height:56px}
+
+  .doi{grid-template-columns:minmax(0,1fr) 420px;gap:48px;align-items:start}
+  #man3 .doi{grid-template-columns:minmax(0,1fr) 380px}
+
+  h1{font-size:2.45rem;line-height:1.16;margin-bottom:14px}
+  .eyebrow{font-size:12.5px;padding:5px 15px;margin-bottom:16px}
+  .sub{font-size:16px;line-height:1.6;max-width:44ch}
+  .tem{margin-bottom:0}
+  .tem span{font-size:13px;padding:6px 14px}
+
+  .nhom{padding:16px 18px;min-height:76px}
+  .nhom .ic{font-size:28px}
+  .nhom .t b{font-size:16.5px}
+  .nhom .t span{font-size:13px}
+
+  .lui{font-size:14px;margin-bottom:14px}
+  .hop{padding:24px 22px 22px}
+  .hop h2,.doi-trai h2{font-size:26px;line-height:1.24;margin-bottom:10px}
+  .why{font-size:15px;margin-bottom:20px}
+  .trongho{padding:16px 18px}
+  .trongho p{font-size:11.5px;margin-bottom:10px}
+  .trongho li{font-size:14px}
+
+  .the{padding:26px 24px 22px}
+  .the h3{font-size:22px}
+  .the .loi{font-size:15px}
+  .the li{font-size:14px}
+  .mo-dau{margin-bottom:24px}
+  .mo-dau .qua-ic{font-size:54px}
+  .mo-dau h2{font-size:24px}
+  .cta{margin-top:14px}
+
+  .note{margin-top:30px;padding:18px;font-size:14px}
+  .disc,.foot{max-width:72ch;margin-left:auto;margin-right:auto}
+}
+
+@media(min-width:1240px){
+  .wrap{max-width:1140px}
+  h1{font-size:2.7rem}
+}
 </style>
 </head>
 <body>
@@ -196,35 +248,45 @@ input.err{border-color:var(--red);background:rgba(220,38,38,.1)}
 
   <!-- ================= MÀN 1 ================= -->
   <section class="man on" id="man1">
-    <span class="eyebrow" id="eyebrow">QUÀ TẶNG MIỄN PHÍ CHO BA MẸ</span>
-    <h1>Bé nhà mình đang ở <u>giai đoạn nào</u> ạ?</h1>
-    <p class="sub">Trường có sẵn một kho tài liệu làm cho ba mẹ. Ba mẹ bấm vào giai đoạn của con, trường gửi món hợp tuổi — <b>miễn phí, không cần là phụ huynh của trường.</b></p>
+    <div class="doi">
+      <div class="doi-trai">
+        <span class="eyebrow" id="eyebrow">QUÀ TẶNG MIỄN PHÍ CHO BA MẸ</span>
+        <h1>Bé nhà mình đang ở <u>giai đoạn nào</u> ạ?</h1>
+        <p class="sub">Trường có sẵn một kho tài liệu làm cho ba mẹ. Ba mẹ bấm vào giai đoạn của con, trường gửi món hợp tuổi — <b>miễn phí, không cần là phụ huynh của trường.</b></p>
 
-    <div class="tem">
-      <span><b>✓</b> Miễn phí</span>
-      <span><b>✓</b> Mở ngay, không chờ email</span>
-      <span><b>✓</b> Không spam</span>
+        <div class="tem">
+          <span><b>✓</b> Miễn phí</span>
+          <span><b>✓</b> Mở ngay, không chờ email</span>
+          <span><b>✓</b> Không spam</span>
+        </div>
+      </div>
+
+      <div class="doi-phai">
+        <div class="nhoms" id="nhoms"></div>
+      </div>
     </div>
-
-    <div class="nhoms" id="nhoms"></div>
   </section>
 
   <!-- ================= MÀN 2 ================= -->
   <section class="man" id="man2">
     <button type="button" class="lui" id="lui">← Chọn lại giai đoạn</button>
+    <div class="doi">
+      <div class="doi-trai">
+        <h2 id="f-tieude">Quà cho bé nhà mình</h2>
+        <p class="why">Trường gửi bản lưu vào email, và cô gọi lại nếu ba mẹ cần hỏi thêm. <b>Không gọi bán hàng, không nhắn hàng loạt.</b></p>
+
+        <div class="trongho">
+          <p id="f-nhan">Trong hộp quà giai đoạn này có</p>
+          <ul id="f-ds"></ul>
+        </div>
+      </div>
+
+      <div class="doi-phai">
     <div class="hop">
       <div class="buoc">
         <span class="cham on" id="c1">1</span><span class="nhan on" id="n1">Email</span>
         <span class="vach" id="v"></span>
         <span class="cham" id="c2">2</span><span class="nhan" id="n2">Nhận quà</span>
-      </div>
-
-      <h2 id="f-tieude">Quà cho bé nhà mình</h2>
-      <p class="why">Trường gửi bản lưu vào email, và cô gọi lại nếu ba mẹ cần hỏi thêm. <b>Không gọi bán hàng, không nhắn hàng loạt.</b></p>
-
-      <div class="trongho">
-        <p id="f-nhan">Trong hộp quà giai đoạn này có</p>
-        <ul id="f-ds"></ul>
       </div>
 
       <form id="lead" novalidate>
@@ -261,6 +323,8 @@ input.err{border-color:var(--red);background:rgba(220,38,38,.1)}
         </div>
       </form>
     </div>
+      </div>
+    </div>
   </section>
 
   <!-- ================= MÀN 3 ================= -->
@@ -271,15 +335,21 @@ input.err{border-color:var(--red);background:rgba(220,38,38,.1)}
       <p id="mo-phu">Trường gửi ba mẹ món này</p>
     </div>
 
-    <article class="the" id="the"></article>
+    <div class="doi">
+      <div class="doi-trai">
+        <article class="the" id="the"></article>
+      </div>
 
-    <div class="con-lai" id="con-lai">
-      <h3>Mấy món còn lại trong nhóm của con</h3>
-      <p class="ghi">Mở sẵn hết rồi — ba mẹ lấy thêm không phải điền lại ạ.</p>
-      <div class="ds" id="ds"></div>
+      <div class="doi-phai">
+        <div class="con-lai" id="con-lai">
+          <h3>Mấy món còn lại trong nhóm của con</h3>
+          <p class="ghi">Mở sẵn hết rồi — ba mẹ lấy thêm không phải điền lại ạ.</p>
+          <div class="ds" id="ds"></div>
+        </div>
+
+        <a class="cta" id="cta-zalo" href="#" target="_blank" rel="noopener">Có gì chưa rõ, nhắn Zalo cho cô</a>
+      </div>
     </div>
-
-    <a class="cta" id="cta-zalo" href="#" target="_blank" rel="noopener">Có gì chưa rõ, nhắn Zalo cho cô</a>
 
     <div class="note">
       <b>Cô làm việc này mỗi tuần cho phụ huynh.</b> Ba mẹ vướng chỗ nào — chọn trường, hồ sơ, chuyện ăn uống của con, chuẩn bị vào lớp 1 — cứ gọi <a class="tel" id="tel" href="#">hotline</a> hỏi, không mất gì. Ba mẹ không cho con học trường mình, cô vẫn chỉ ạ.

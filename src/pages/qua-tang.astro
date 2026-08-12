@@ -1,0 +1,834 @@
+---
+/* /qua-tang — TRANG QUÀ TẶNG TỔNG HỢP
+   Một link duy nhất dán được ở mọi kênh MXH. Luồng 3 màn:
+     1. Bé nhà mình đang ở giai đoạn nào?  (6 nút)
+     2. Two-step form: email → tên + số điện thoại
+     3. Bốc ngẫu nhiên 1 món hợp tuổi, mở ngay + các món còn lại trong nhóm
+
+   Lead đi về /api/lead giống mọi squeeze page khác, cùng bộ tên trường:
+     email · parent_name · phone · form_id · funnel_code · school_level · utm_*
+   Thêm 3 trường riêng của trang này: qua_id · qua_ten · giai_doan · co_so
+
+   Tham số link cho đội content — xem docs/qua-tang.md:
+     ?nhom=  ?qua=  ?cs=  ?nguon=  (+ utm_* như thường lệ)
+
+   ⚠️ THÊM QUÀ MỚI: thêm một khối vào mảng QUA bên dưới. Món không có `link`
+   hoặc `hien:false` tự bị loại khỏi kho, không bao giờ bốc trúng.
+*/
+/* Tiêu đề và mô tả để literal trong thẻ <title>/<meta> bên dưới, không dùng
+   biến — scripts/audit-pages.mjs đọc chúng bằng regex để dựng báo cáo trang. */
+---
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quà tặng cho ba mẹ — Trường Việt Anh</title>
+<meta name="description" content="Chọn giai đoạn của con, để lại thông tin, nhận ngay một món quà từ trường: checklist chọn trường, lộ trình tiếng Anh, bộ trò chơi, bảng kiểm mốc phát triển. Miễn phí." />
+<link rel="canonical" href="https://truongvietanh.com/qua-tang" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Bé nhà mình đang ở giai đoạn nào? — Nhận quà từ Trường Việt Anh" />
+<meta property="og:description" content="Chọn giai đoạn của con → để lại thông tin → mở quà ngay trên màn hình. Miễn phí, không cần là phụ huynh của trường." />
+<!-- ĐIỀN: ảnh 1200x630 đặt tại public/og-qua-tang.jpg — thumbnail khi dán link vào comment -->
+<meta property="og:image" content="https://truongvietanh.com/og-qua-tang.jpg" />
+<meta property="og:url" content="https://truongvietanh.com/qua-tang" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<!-- is:global BẮT BUỘC: thẻ quà, nút nhóm và danh sách món còn lại đều do JS tạo
+     lúc chạy, không có thuộc tính scope của Astro nên style scoped sẽ không ăn. -->
+<style is:global>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#26275D; --navy2:#1F2050; --card:#2E2F6B;
+  --border:rgba(255,255,255,.10); --border2:rgba(255,255,255,.18);
+  --text:#eef2ff; --muted:rgba(238,242,255,.62); --muted2:rgba(238,242,255,.82);
+  --yellow:#f9dd0e; --red:#dc2626; --green:#22c55e;
+  --r:12px;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+  min-height:100vh;font-family:'Inter',system-ui,sans-serif;background:var(--navy);
+  background-image:
+    radial-gradient(ellipse 90% 60% at 72% 105%,rgba(31,32,80,.55) 0%,transparent 55%),
+    radial-gradient(ellipse 55% 40% at 4% -4%,rgba(24,25,58,.6) 0%,transparent 50%);
+  color:var(--text);line-height:1.55;
+}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:2px;border-radius:8px}
+
+.lbar{background:#fff;padding:8px 16px;display:flex;align-items:center;justify-content:center}
+.lbar img{height:46px;display:block}
+.wrap{max-width:600px;margin:0 auto;padding:22px 18px 56px}
+.man{display:none}
+.man.on{display:block;animation:len .35s ease both}
+@keyframes len{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.man.on{animation:none}}
+
+.eyebrow{display:inline-block;background:rgba(249,221,14,.13);border:1px solid rgba(249,221,14,.35);
+  border-radius:30px;padding:4px 13px;font-size:11.5px;font-weight:700;color:var(--yellow);
+  letter-spacing:.04em;margin-bottom:12px}
+h1{font-family:'Montserrat',sans-serif;font-size:clamp(1.42rem,5.4vw,1.85rem);
+   font-weight:900;line-height:1.22;letter-spacing:-.3px;margin-bottom:9px}
+h1 u{text-decoration:none;border-bottom:3px solid rgba(249,221,14,.55)}
+.sub{font-size:14.5px;color:var(--muted);margin-bottom:16px}
+.sub b{color:var(--text);font-weight:600}
+.tem{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:22px}
+.tem span{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:30px;
+  padding:5px 12px;font-size:12.5px;font-weight:600;color:var(--muted2)}
+.tem b{color:var(--green)}
+
+/* --- Màn 1 --- */
+.nhoms{display:grid;gap:10px}
+.nhom{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);
+  padding:14px 15px;text-align:left;font-family:inherit;color:var(--text);cursor:pointer;
+  width:100%;display:flex;align-items:center;gap:13px;min-height:66px;transition:border-color .15s,transform .1s}
+.nhom:hover,.nhom:focus-visible{border-color:var(--yellow);transform:translateY(-1px)}
+.nhom .ic{font-size:25px;line-height:1;flex:0 0 auto}
+.nhom .t{flex:1;min-width:0}
+.nhom .t b{display:block;font-family:'Montserrat',sans-serif;font-size:15.5px;font-weight:800;line-height:1.3}
+.nhom .t span{font-size:12.5px;color:var(--muted)}
+.nhom .mui{color:var(--yellow);font-weight:900;font-size:19px;flex:0 0 auto}
+
+/* --- Màn 2 --- */
+.lui{background:none;border:none;font-family:inherit;font-size:13.5px;font-weight:600;
+  color:var(--muted);cursor:pointer;padding:6px 0;margin-bottom:10px}
+.hop{background:var(--card);border:1.5px solid var(--border2);border-radius:16px;padding:19px 17px 17px}
+.hop h2{font-family:'Montserrat',sans-serif;font-size:19px;font-weight:900;line-height:1.28;margin-bottom:7px}
+.hop .why{font-size:13.5px;color:var(--muted);margin-bottom:15px}
+.hop .why b{color:var(--text);font-weight:600}
+
+.buoc{display:flex;align-items:center;gap:8px;margin-bottom:15px}
+.buoc .cham{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.09);
+  color:var(--muted);font-size:12px;font-weight:800;display:flex;align-items:center;
+  justify-content:center;flex:0 0 auto}
+.buoc .cham.on{background:var(--yellow);color:var(--navy)}
+.buoc .nhan{font-size:12px;font-weight:600;color:var(--muted)}
+.buoc .nhan.on{color:var(--text)}
+.buoc .vach{flex:1;height:2px;background:rgba(255,255,255,.1);border-radius:2px}
+.buoc .vach.on{background:var(--yellow)}
+
+.trongho{background:rgba(0,0,0,.16);border-radius:11px;padding:12px 13px;margin-bottom:16px}
+.trongho p{font-size:11px;font-weight:800;letter-spacing:.07em;color:var(--muted);
+  text-transform:uppercase;margin-bottom:8px}
+.trongho ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.trongho li{font-size:13px;color:var(--muted2);display:flex;gap:8px;line-height:1.45}
+.trongho li::before{content:"·";color:var(--yellow);font-weight:900;font-size:17px;line-height:1.05}
+
+.buoc-o{display:none}
+.buoc-o.on{display:block}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12.5px;font-weight:600;margin-bottom:6px;color:var(--muted2)}
+input[type=text],input[type=tel],input[type=email]{
+  width:100%;padding:14px 13px;border:1.5px solid var(--border2);border-radius:11px;
+  background:rgba(0,0,0,.22);font-family:inherit;font-size:16px;color:var(--text)}
+input::placeholder{color:rgba(238,242,255,.34)}
+input:focus{outline:none;border-color:var(--yellow);background:rgba(0,0,0,.3)}
+input.err{border-color:var(--red);background:rgba(220,38,38,.1)}
+.msg{font-size:12.5px;color:#fca5a5;margin-top:6px;display:none}
+.msg.on{display:block}
+.mat{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.rieng{font-size:11.5px;color:var(--muted);margin-top:11px;line-height:1.5}
+.go{width:100%;padding:16px;border:none;border-radius:12px;background:var(--yellow);
+  color:var(--navy);font-family:'Montserrat',sans-serif;font-weight:900;font-size:16px;
+  cursor:pointer;margin-top:6px;min-height:52px}
+.go:disabled{opacity:.5;cursor:default}
+
+/* --- Màn 3 --- */
+.mo-dau{text-align:center;margin-bottom:17px}
+.mo-dau .qua-ic{font-size:46px;line-height:1;display:inline-block;animation:rung .55s ease-out}
+@keyframes rung{0%{transform:scale(.4) rotate(-12deg);opacity:0}
+  60%{transform:scale(1.13) rotate(7deg);opacity:1}100%{transform:scale(1) rotate(0)}}
+@media(prefers-reduced-motion:reduce){.mo-dau .qua-ic{animation:none}}
+.mo-dau h2{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:900;margin:11px 0 5px}
+.mo-dau p{font-size:13.5px;color:var(--muted)}
+
+.the{background:var(--card);border:2px solid var(--yellow);border-radius:16px;
+  padding:18px 17px 16px;margin-bottom:24px;box-shadow:0 6px 26px rgba(249,221,14,.13)}
+.the .nhan{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.08em;
+  text-transform:uppercase;background:rgba(249,221,14,.15);color:var(--yellow);
+  border-radius:5px;padding:4px 9px;margin-bottom:10px}
+.the h3{font-family:'Montserrat',sans-serif;font-size:18px;font-weight:900;line-height:1.3;margin-bottom:9px}
+.the .loi{font-size:14px;color:var(--muted2);margin-bottom:12px}
+.the ul{list-style:none;margin-bottom:13px}
+.the li{font-size:13px;color:var(--muted2);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.45}
+.the li::before{content:"·";position:absolute;left:5px;top:-2px;color:var(--yellow);font-weight:900;font-size:18px}
+.the .meta{font-size:11.5px;color:var(--muted);margin-bottom:13px}
+
+.nut{display:block;width:100%;padding:15px;border:none;border-radius:12px;background:var(--green);
+  color:#fff;font-family:'Montserrat',sans-serif;font-weight:800;font-size:15.5px;
+  text-align:center;text-decoration:none;min-height:50px}
+.nut.phu{background:transparent;color:var(--text);border:1.5px solid var(--border2);
+  font-size:14px;padding:12px;margin-top:8px;font-weight:700}
+
+.con-lai h3{font-family:'Montserrat',sans-serif;font-size:14.5px;font-weight:800;margin-bottom:4px}
+.con-lai .ghi{font-size:12.5px;color:var(--muted);margin-bottom:12px}
+.ds{display:flex;flex-direction:column;gap:9px}
+.ds a{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.05);
+  border:1px solid var(--border);border-radius:11px;padding:12px 13px;text-decoration:none}
+.ds a:hover{border-color:var(--border2)}
+.ds a .ic{font-size:21px;flex:0 0 auto}
+.ds a .t{flex:1;min-width:0}
+.ds a .t b{display:block;font-size:14px;font-weight:700;line-height:1.32}
+.ds a .t span{font-size:11.5px;color:var(--muted)}
+.ds a .mui{color:var(--yellow);font-weight:900;font-size:16px;flex:0 0 auto}
+
+.cta{display:block;text-align:center;background:rgba(249,221,14,.13);
+  border:1px solid rgba(249,221,14,.4);color:var(--yellow);font-family:'Montserrat',sans-serif;
+  font-weight:800;font-size:15px;border-radius:12px;padding:14px;margin-top:20px;text-decoration:none}
+.note{background:rgba(0,0,0,.22);border:1px solid var(--border);border-radius:13px;
+  padding:15px;font-size:13px;color:var(--muted2);margin-top:22px}
+.note b{color:var(--yellow)}
+.tel{color:var(--yellow);font-weight:800;text-decoration:none}
+.disc{font-size:11.5px;color:var(--muted);margin-top:20px;line-height:1.6}
+.foot{text-align:center;font-size:11.5px;color:var(--muted);margin-top:18px;line-height:1.75}
+</style>
+</head>
+<body>
+
+<div class="lbar"><img src="/logo-vietanh-header.webp" alt="Trường Việt Anh" width="180" height="46" /></div>
+
+<div class="wrap">
+
+  <!-- ================= MÀN 1 ================= -->
+  <section class="man on" id="man1">
+    <span class="eyebrow" id="eyebrow">QUÀ TẶNG MIỄN PHÍ CHO BA MẸ</span>
+    <h1>Bé nhà mình đang ở <u>giai đoạn nào</u> ạ?</h1>
+    <p class="sub">Trường có sẵn một kho tài liệu làm cho ba mẹ. Ba mẹ bấm vào giai đoạn của con, trường gửi món hợp tuổi — <b>miễn phí, không cần là phụ huynh của trường.</b></p>
+
+    <div class="tem">
+      <span><b>✓</b> Miễn phí</span>
+      <span><b>✓</b> Mở ngay, không chờ email</span>
+      <span><b>✓</b> Không spam</span>
+    </div>
+
+    <div class="nhoms" id="nhoms"></div>
+  </section>
+
+  <!-- ================= MÀN 2 ================= -->
+  <section class="man" id="man2">
+    <button type="button" class="lui" id="lui">← Chọn lại giai đoạn</button>
+    <div class="hop">
+      <div class="buoc">
+        <span class="cham on" id="c1">1</span><span class="nhan on" id="n1">Email</span>
+        <span class="vach" id="v"></span>
+        <span class="cham" id="c2">2</span><span class="nhan" id="n2">Nhận quà</span>
+      </div>
+
+      <h2 id="f-tieude">Quà cho bé nhà mình</h2>
+      <p class="why">Trường gửi bản lưu vào email, và cô gọi lại nếu ba mẹ cần hỏi thêm. <b>Không gọi bán hàng, không nhắn hàng loạt.</b></p>
+
+      <div class="trongho">
+        <p id="f-nhan">Trong hộp quà giai đoạn này có</p>
+        <ul id="f-ds"></ul>
+      </div>
+
+      <form id="lead" novalidate>
+        <!-- Bước 1 -->
+        <div class="buoc-o on" id="b1">
+          <div class="field">
+            <label for="email">Email của ba mẹ</label>
+            <input type="email" id="email" autocomplete="email" inputmode="email" placeholder="dexemlai@email.com" />
+            <div class="msg" id="msg-email">Email chưa đúng, ba mẹ xem lại giúp ạ</div>
+          </div>
+          <button type="button" class="go" id="tiep">Tiếp tục →</button>
+          <p class="rieng">Trường dùng email này để gửi bản lưu món quà, không chia sẻ cho bên thứ ba.</p>
+        </div>
+
+        <!-- Bước 2 -->
+        <div class="buoc-o" id="b2">
+          <div class="field">
+            <label for="ten">Tên ba / mẹ</label>
+            <input type="text" id="ten" autocomplete="name" placeholder="Ví dụ: chị Lan" />
+            <div class="msg" id="msg-ten">Ba mẹ điền tên giúp em ạ</div>
+          </div>
+          <div class="field">
+            <label for="sdt">Số điện thoại</label>
+            <input type="tel" id="sdt" inputmode="numeric" autocomplete="tel" placeholder="09xx xxx xxx" />
+            <div class="msg" id="msg-sdt">Số điện thoại chưa đúng, ba mẹ xem lại giúp ạ</div>
+          </div>
+          <!-- Bẫy bot: người thật không nhìn thấy ô này -->
+          <div class="mat" aria-hidden="true">
+            <label for="website">Đừng điền ô này</label>
+            <input type="text" id="website" tabindex="-1" autocomplete="off" />
+          </div>
+          <button type="submit" class="go" id="go">Mở quà cho ba mẹ 🎁</button>
+          <p class="rieng">Bấm nút này là ba mẹ đồng ý để trường liên hệ tư vấn về việc học của con.</p>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- ================= MÀN 3 ================= -->
+  <section class="man" id="man3">
+    <div class="mo-dau">
+      <div class="qua-ic" aria-hidden="true">🎁</div>
+      <h2>Quà của ba mẹ đây ạ</h2>
+      <p id="mo-phu">Trường gửi ba mẹ món này</p>
+    </div>
+
+    <article class="the" id="the"></article>
+
+    <div class="con-lai" id="con-lai">
+      <h3>Mấy món còn lại trong nhóm của con</h3>
+      <p class="ghi">Mở sẵn hết rồi — ba mẹ lấy thêm không phải điền lại ạ.</p>
+      <div class="ds" id="ds"></div>
+    </div>
+
+    <a class="cta" id="cta-zalo" href="#" target="_blank" rel="noopener">Có gì chưa rõ, nhắn Zalo cho cô</a>
+
+    <div class="note">
+      <b>Cô làm việc này mỗi tuần cho phụ huynh.</b> Ba mẹ vướng chỗ nào — chọn trường, hồ sơ, chuyện ăn uống của con, chuẩn bị vào lớp 1 — cứ gọi <a class="tel" id="tel" href="#">hotline</a> hỏi, không mất gì. Ba mẹ không cho con học trường mình, cô vẫn chỉ ạ.
+    </div>
+  </section>
+
+  <p class="disc"><b>Về các tài liệu này:</b> trường tự soạn từ việc mình làm hằng ngày, tặng ba mẹ dùng tham khảo — không thay thế hướng dẫn chính thức của cơ quan nhà nước hay tư vấn của bác sĩ.</p>
+  <p class="foot" id="foot"></p>
+</div>
+
+<script is:inline>
+/* ==========================================================================
+   1. CẤU HÌNH
+   ========================================================================== */
+var C = {
+  api: '/api/lead',
+  funnel: 'qua-tang'
+};
+
+/* Cơ sở — dán link ở kênh nào thì thêm ?cs=<mã> để hiện đúng số của cơ sở đó */
+var COSO = {
+  vietanh: {
+    ten:'Trường Việt Anh',
+    chan:'Trường Việt Anh · Gò Vấp · Bình Tân · Lê Đức Thọ · Thái Sơn · An Giang · Nhân Lễ',
+    hotline:'0916 961 409', tel:'0916961409',
+    zalo:''   /* ĐIỀN: link Zalo OA hệ thống. Bỏ trống thì nút Zalo tự ẩn. */
+  },
+  thaison: {
+    ten:'Trường Thái Sơn',
+    chan:'Mầm non & Tiểu học Thái Sơn · Cần Giuộc',
+    hotline:'0902 095 956', tel:'0902095956',
+    zalo:'https://zalo.me/84902095956'
+  },
+  govap: {
+    ten:'Mầm non Việt Anh Gò Vấp',
+    chan:'Mầm non Việt Anh · 573 Lê Đức Thọ, Gò Vấp, TP.HCM',
+    hotline:'0774 588 988', tel:'0774588988',
+    zalo:''   /* ĐIỀN: Zalo OA Mầm Non Việt Anh */
+  }
+};
+
+var NHOM = [
+  { ma:'mam-non',    icon:'🧸', ten:'Mầm non',           phu:'18 tháng đến 5 tuổi', level:'mam-non' },
+  { ma:'vao-lop-1',  icon:'🎒', ten:'Sắp vào lớp 1',     phu:'5 đến 6 tuổi',        level:'tieu-hoc' },
+  { ma:'tieu-hoc',   icon:'📖', ten:'Đang học tiểu học', phu:'Lớp 1 đến lớp 5',     level:'tieu-hoc' },
+  { ma:'len-lop-6',  icon:'🧭', ten:'Sắp lên lớp 6',     phu:'Đang lớp 5',          level:'thcs' },
+  { ma:'thcs',       icon:'🔬', ten:'Đang học THCS',     phu:'Lớp 6 đến lớp 9',     level:'thcs' },
+  { ma:'thpt-duhoc', icon:'🎓', ten:'THPT và du học',    phu:'Lớp 9 trở lên',       level:'thpt' }
+];
+
+/* ==========================================================================
+   2. KHO QUÀ  — nhom: mảng, một món nằm được ở nhiều giai đoạn
+                 uu:   trọng số bốc ngẫu nhiên (2 = ra nhiều gấp đôi)
+                 hien: false hoặc thiếu link  →  tự loại khỏi kho
+   ========================================================================== */
+var QUA = [
+  { id:'LM01', icon:'📋', loai:'Checklist in được',
+    ten:'15 tiêu chí chọn trường mầm non song ngữ',
+    loi:'Mang theo khi đi xem trường: 15 câu phải hỏi, và 5 dấu hiệu trường không ổn.',
+    trong:['Khung 5C — chương trình, giáo viên, văn hoá, chăm sóc, chi phí',
+           'Bảng chấm điểm 3 trường cạnh nhau để so cho khách quan',
+           '5 dấu hiệu cảnh báo, ví dụ trường chỉ cho xem phòng trống chứ không cho xem lớp đang học'],
+    meta:'PDF 14 trang · in ra mang đi tham quan', nhom:['mam-non'], uu:2,
+    link:'https://drive.google.com/file/d/1Kd8XdWSDU5zJnM3K1gyMETyJI4rz5oBT/view',
+    linkChu:'Mở checklist', hien:true },
+
+  { id:'LM02', icon:'🗣️', loai:'Cẩm nang',
+    ten:'Giai đoạn vàng học ngôn ngữ, từ 0 đến 6 tuổi',
+    loi:'Vì sao 6 năm đầu quyết định chuyện con nói tiếng Anh tự nhiên hay phải học vẹt về sau.',
+    trong:['Từng mốc một: 0–6 tháng, 6–12 tháng, 1–2, 2–3, 3–4, 4–5, 5–6 tuổi',
+           'Mỗi mốc kèm việc ba mẹ làm được ngay ở nhà',
+           'Dẫn nghiên cứu ĐH Cornell và GS. Erika Hoff'],
+    meta:'PDF · đọc 10 phút', nhom:['mam-non'], uu:1,
+    link:'https://drive.google.com/file/d/1sKp9oDZRP9ZCn8d_9Yca7Ad4wxJqV5mC/view',
+    linkChu:'Mở cẩm nang', hien:true },
+
+  { id:'LM03', icon:'🌱', loai:'Ebook',
+    ten:'9 lĩnh vực con cần phát triển ở tuổi mầm non',
+    loi:'Chọn trường mầm non mà chỉ hỏi "có học tiếng Anh không" là bỏ sót 8 thứ còn lại.',
+    trong:['Ngôn ngữ, thể chất, nhận thức, cảm xúc, sáng tạo, tự lập, đạo đức, khám phá, âm nhạc',
+           'Mỗi lĩnh vực có câu hỏi để ba mẹ tự soi con mình',
+           'Bảng chấm điểm tổng để biết con đang mạnh yếu chỗ nào'],
+    meta:'PDF 9 trang', nhom:['mam-non'], uu:1,
+    link:'https://drive.google.com/file/d/1QMwzwisZp4_Li8WKCmBf_Q5PLaqcrmos/view',
+    linkChu:'Mở ebook', hien:true },
+
+  { id:'Qua1', icon:'🌟', loai:'Cẩm nang 21 ngày',
+    ten:'21 ngày giúp con dạn dĩ hơn',
+    loi:'Con nhát, tới chỗ đông là bám mẹ — 21 hoạt động nhỏ, mỗi tối 10 phút.',
+    trong:['Tuần 1 an toàn trong nhà · tuần 2 dám nói với người quen · tuần 3 ra thế giới',
+           'Mỗi ngày một việc cụ thể, có sẵn câu để nói',
+           'Bằng khen dũng cảm in ra trao cho con ở ngày thứ 21'],
+    meta:'PDF · dùng dần trong 3 tuần', nhom:['mam-non'], uu:1,
+    link:'https://drive.google.com/file/d/1f9ByOmdUMq925h3Cm3dPjf48FR4O0aZ-/view',
+    linkChu:'Mở cẩm nang', hien:true },
+
+  { id:'Qua2', icon:'🍚', loai:'Thực đơn',
+    ten:'20 ngày thực đơn thật của bếp trường',
+    loi:'Hết cảnh tối nào cũng nghĩ "mai nấu gì cho con" — 4 tuần bếp bán trú đã nấu cho các con.',
+    trong:['20 ngày đủ 4 bữa: ăn sáng, trái cây, ăn trưa, ăn xế',
+           'Món mềm, dễ nhai, cân nhóm chất cho bé 1–5 tuổi',
+           '5 nguyên tắc bàn ăn các cô dùng mỗi ngày với bé biếng ăn'],
+    meta:'PDF · in ra dán bếp được', nhom:['mam-non'], uu:1,
+    /* ĐIỀN: upload PDF thực đơn, dán link vào đây rồi đổi hien thành true */
+    link:'', linkChu:'Mở thực đơn', hien:false },
+
+  { id:'BANGKIEM', icon:'✅', loai:'Công cụ trên web',
+    ten:'Bảng kiểm 5 phút: con đang phát triển đúng mốc chưa?',
+    loi:'Tick vài ô theo tuổi của con, biết ngay con vững chỗ nào và cần ba mẹ giúp chỗ nào.',
+    trong:['Mốc phát triển cho bé 24 tháng, 3 tuổi, 4 tuổi và 5 tuổi',
+           'Trả kết quả ngay trên màn hình, không chờ ai chấm',
+           'Gợi ý việc ba mẹ làm được ở nhà cho từng mốc còn yếu'],
+    meta:'Làm trên web · 5 phút · không cần tải app', nhom:['mam-non','vao-lop-1'], uu:1,
+    link:'https://truongthaison.com/bang-kiem', linkChu:'Làm bảng kiểm', hien:true },
+
+  { id:'LM17', icon:'🎒', loai:'Bảng kiểm',
+    ten:'10 kỹ năng con cần có trước khi vào lớp 1',
+    loi:'Không phải để lo, mà để biết tuần này nên tập cho con cái gì.',
+    trong:['Tự mặc đồ, cầm bút 3 ngón, đếm 1–20, nhận 26 chữ cái, ngồi tập trung 15 phút…',
+           'Mỗi kỹ năng có cách tập ở nhà và bài test để biết con đạt chưa',
+           'Ô đánh dấu: chưa bắt đầu — đang tập — đã đạt'],
+    meta:'PDF 11 trang · in ra dán tường', nhom:['vao-lop-1'], uu:2,
+    link:'https://drive.google.com/file/d/1AvTLkx0qbpaL0gHyunNdtdVZiTFcRqGx/view',
+    linkChu:'Mở bảng kiểm', hien:true },
+
+  { id:'LM13', icon:'📅', loai:'Hướng dẫn',
+    ten:'Chuyển trường cho con vào lớp 1',
+    loi:'Timeline 6 tháng, danh sách hồ sơ, và cách chuẩn bị tâm lý cho con.',
+    trong:['Việc cần làm từng tháng, từ tháng 1 tới tuần đầu nhập học',
+           'Checklist 12 loại giấy tờ nhập học lớp 1',
+           '5 bước chuẩn bị tâm lý — nói gì với con, và tuyệt đối tránh nói gì'],
+    meta:'PDF 13 trang', nhom:['vao-lop-1'], uu:1,
+    link:'https://drive.google.com/file/d/1tzyfRiNEaODB2eyhEqAWxhnT_G5gb6c-/view',
+    linkChu:'Mở hướng dẫn', hien:true },
+
+  { id:'SOTAY', icon:'📘', loai:'Trang web + PDF',
+    ten:'Xin học cho con khi mình là người xa quê',
+    loi:'Chưa có hộ khẩu ở đây: cần giấy gì, làm ở đâu, bị trả lời "trái tuyến" thì nói sao.',
+    trong:['Danh sách 9 loại giấy tờ, tích được từng ô ngay trên điện thoại',
+           '3 bước đăng ký tạm trú cho bé qua VNeID, không phải về quê',
+           'Câu nói khi trường từ chối vì trái tuyến'],
+    meta:'Đọc trên điện thoại · 6 phút · có bản PDF để in', nhom:['vao-lop-1','tieu-hoc'], uu:1,
+    link:'https://truongthaison.com/so-tay', linkChu:'Mở sổ tay',
+    linkPhu:{ url:'https://truongthaison.com/tai-lieu/so-tay-xin-hoc.pdf', chu:'Tải PDF để in' },
+    hien:true },
+
+  { id:'LM11', icon:'🅰️', loai:'Lộ trình',
+    ten:'Lộ trình tiếng Anh lớp 1 đến lớp 5',
+    loi:'Mỗi năm con cần đạt tới đâu — để biết con đang đi đúng hay đang chậm.',
+    trong:['Bảng 5 năm: số tiết, giáo trình, kỹ năng và số từ vựng từng lớp',
+           'Ví dụ thật: bài viết, bài thuyết trình của học sinh từng khối',
+           'Mốc cuối lớp 5 và chứng chỉ Cambridge Starters'],
+    meta:'PDF 10 trang', nhom:['tieu-hoc'], uu:1,
+    link:'https://drive.google.com/file/d/1afRFNB8MbDVInJBekc55qTC3ez30uo6M/view',
+    linkChu:'Mở lộ trình', hien:true },
+
+  { id:'LM15', icon:'📚', loai:'Thử thách 30 ngày',
+    ten:'Thử thách đọc sách 30 ngày cùng con',
+    loi:'Mỗi ngày một kiểu đọc khác nhau — để con thích sách chứ không phải bị bắt đọc.',
+    trong:['30 thử thách: đọc ngoài trời, đọc bằng đèn pin trong chăn, đọc cho gấu bông nghe',
+           'Bảng dán sticker để con tự nhìn thấy mình tiến bộ',
+           'Nhật ký đọc sách ghi lại từng cuốn con đã đọc'],
+    meta:'PDF 7 trang · in ra dùng trong 1 tháng', nhom:['tieu-hoc'], uu:1,
+    link:'https://drive.google.com/file/d/10l9yAS4aju3zGHisJpctw21-4HRi-Rb0/view',
+    linkChu:'Mở thử thách', hien:true },
+
+  { id:'Qua3', icon:'🎲', loai:'Bộ trò chơi',
+    ten:'10 trò chơi tiếng Anh 5 phút mỗi tối',
+    loi:'Ba mẹ không biết tiếng Anh vẫn chơi được — câu mẫu in sẵn, đọc theo là xong.',
+    trong:['10 trò, mỗi trò 5 phút: săn màu sắc, hộp bí mật, đèn giao thông…',
+           'Câu tiếng Anh in sẵn cho từng trò, không cần chuẩn bị gì',
+           'Mẹo: mỗi tối một trò, lặp lại 2–3 tối cho ngấm'],
+    meta:'PDF · dùng cho bé 1–5 tuổi', nhom:['mam-non','tieu-hoc'], uu:1,
+    link:'https://drive.google.com/file/d/17Zw7vEP2XU0jSUXYxrImjLaCY3-y7ySK/view',
+    linkChu:'Mở bộ trò chơi', hien:true },
+
+  { id:'LM47', icon:'💬', loai:'Thẻ in ra',
+    ten:'Bộ thẻ hỏi chuyện song ngữ với con',
+    loi:'Thay câu "hôm nay đi học vui không" bằng câu con thật sự muốn trả lời.',
+    trong:['5 chủ đề: cảm xúc, tương lai, kỷ niệm, sáng tạo, gia đình',
+           'In ra cắt thành thẻ, mỗi bữa tối rút một thẻ',
+           'Ba mẹ trả lời trước bằng tiếng Anh — con thấy ba mẹ cũng đang học thì đỡ ngại'],
+    meta:'PDF · in ra cắt thành thẻ', nhom:['tieu-hoc','len-lop-6'], uu:1,
+    link:'https://drive.google.com/file/d/1_7RWqcdzA1X7stu3TMgJP6jwJAiEq4hF/view',
+    linkChu:'Mở bộ thẻ', hien:true },
+
+  { id:'LM12', icon:'💰', loai:'Bảng so sánh',
+    ten:'Chi phí thật: trường công, song ngữ hay quốc tế',
+    loi:'Trường công 10 triệu, song ngữ 80 triệu — nhưng đó chưa phải con số thật.',
+    trong:['Bảng tính đủ mọi khoản: học thêm tiếng Anh, gia sư, ngoại khoá, xe đưa đón',
+           'Cột trống để ba mẹ tự điền trường đang cân nhắc',
+           'Tổng 5 năm của các lựa chọn đặt cạnh nhau'],
+    meta:'PDF 7 trang · in ra mang đi hỏi trường',
+    nhom:['mam-non','vao-lop-1','tieu-hoc','len-lop-6','thcs','thpt-duhoc'], uu:2,
+    link:'https://drive.google.com/file/d/1GmBTHdvOqhlLu0JZCPBr3v_gwgmJnmFs/view',
+    linkChu:'Mở bảng so sánh', hien:true },
+
+  { id:'BANDO', icon:'🧭', loai:'Công cụ trên web',
+    ten:'Bản đồ phát triển của con — trắc nghiệm 2 phút',
+    loi:'Trả lời vài câu, trang dựng cho con bản đồ riêng theo 4 trục: kiến thức, kỹ năng, tiếng Anh, thể chất.',
+    trong:['Thấy rõ con đang mạnh trục nào, hụt trục nào',
+           'Kết quả riêng cho con, không phải bài đọc chung chung',
+           'Xong là có ngay, ba mẹ chụp màn hình giữ lại được'],
+    meta:'Làm trên web · 2 phút',
+    nhom:['mam-non','vao-lop-1','tieu-hoc','len-lop-6','thcs'], uu:1,
+    link:'https://truongthaison.com/quiz', linkChu:'Làm trắc nghiệm', hien:true },
+
+  /* ---- 8 món dưới đây chữ trên thẻ suy từ tên file, CHƯA đối chiếu nội dung ---- */
+  { id:'LM19', icon:'🚸', loai:'Hướng dẫn', ten:'Chuyển trường vào lớp 6',
+    loi:'Con sắp lên cấp 2 — chọn trường và chuẩn bị hồ sơ bắt đầu từ đâu.',
+    trong:['Các mốc thời gian cần nhớ','Giấy tờ cần chuẩn bị','Cách chọn trường cho con'],
+    meta:'PDF', nhom:['len-lop-6'], uu:2,
+    link:'https://drive.google.com/file/d/1mE21UB_cARAaLpargUpqRfScONjtMSh6/view',
+    linkChu:'Mở hướng dẫn', hien:true },
+
+  { id:'LM24', icon:'⚖️', loai:'Bảng so sánh', ten:'So sánh các trường THCS',
+    loi:'Đang cân nhắc mấy trường cấp 2 — nhìn vào đâu để quyết.',
+    trong:['Tiêu chí so sánh giữa các trường','Bảng chấm điểm mang đi tham quan','Câu hỏi nên đặt cho nhà trường'],
+    meta:'PDF', nhom:['len-lop-6','thcs'], uu:1,
+    link:'https://drive.google.com/file/d/1slvNyZN_5jLGMbg_UK2xJ-GCiBTHI_8-/view',
+    linkChu:'Mở bảng so sánh', hien:true },
+
+  { id:'LM21', icon:'🧠', loai:'Cẩm nang', ten:'Phương pháp học cho con tuổi teen, lớp 6 đến lớp 9',
+    loi:'Con học nhiều mà điểm không lên, nói thì cãi — cách học lại từ đầu.',
+    trong:['Cách học phù hợp lứa tuổi THCS','Việc ba mẹ làm được và không nên làm','Xây thói quen tự học'],
+    meta:'PDF', nhom:['thcs'], uu:1,
+    link:'https://drive.google.com/file/d/1nUc-NxBhPnw84Ys-PjcUiCtYIUv0R31D/view',
+    linkChu:'Mở cẩm nang', hien:true },
+
+  { id:'LM20', icon:'📊', loai:'Lộ trình', ten:'Lộ trình IELTS cho học sinh THCS',
+    loi:'Muốn con có IELTS sớm mà không biết nên bắt đầu từ lúc nào.',
+    trong:['Các mốc theo từng lớp','Mục tiêu điểm số hợp lý theo tuổi','Việc cần chuẩn bị trước khi luyện thi'],
+    meta:'PDF', nhom:['thcs'], uu:1,
+    link:'https://drive.google.com/file/d/1jNwvwih_FeYRuUhV-iZmC3P0wTdPkJ86/view',
+    linkChu:'Mở lộ trình', hien:true },
+
+  { id:'LM26', icon:'🏫', loai:'Cẩm nang', ten:'Cẩm nang chọn trường THPT cho con',
+    loi:'Sắp thi vào 10 — chọn sai trường là ảnh hưởng cả ba năm.',
+    trong:['Các loại hình trường THPT','Tiêu chí chọn theo năng lực của con','Mốc thời gian tuyển sinh'],
+    meta:'PDF', nhom:['thpt-duhoc'], uu:2,
+    link:'https://drive.google.com/file/d/19sdEkc69pZVuE4OddBGfwSeOsnlUV2GY/view',
+    linkChu:'Mở cẩm nang', hien:true },
+
+  { id:'LM27', icon:'✈️', loai:'Lộ trình', ten:'Chuẩn bị du học từ lớp 10 — ba năm cần làm gì',
+    loi:'Tính cho con du học mà không biết phải bắt đầu từ khi nào.',
+    trong:['Mốc thời gian ba năm THPT','Hồ sơ và chứng chỉ cần có','Chuẩn bị tài chính và tâm lý'],
+    meta:'PDF', nhom:['thpt-duhoc'], uu:1,
+    link:'https://drive.google.com/file/d/1iOuMqRiarCqCW6HtIrMTvFxHygAv_CXB/view',
+    linkChu:'Mở lộ trình', hien:true },
+
+  { id:'LM29', icon:'🎓', loai:'Danh sách', ten:'50 trường đại học xét tuyển bằng IELTS',
+    loi:'Có IELTS rồi thì dùng được ở đâu — danh sách trường và mức điểm.',
+    trong:['Danh sách trường đại học','Mức điểm IELTS từng trường yêu cầu','Ngành nào xét bằng IELTS'],
+    meta:'PDF', nhom:['thpt-duhoc'], uu:1,
+    link:'https://drive.google.com/file/d/1svZIlKNJlZ1h8gBezcR6dWITBAKc6cxT/view',
+    linkChu:'Mở danh sách', hien:true },
+
+  { id:'LM33', icon:'🌍', loai:'Bảng so sánh', ten:'Oxford, Cambridge hay IB — chương trình nào hợp con',
+    loi:'Rối giữa các chương trình quốc tế, sợ chọn sai hệ rồi khó quay lại.',
+    trong:['Khác nhau giữa ba chương trình','Hợp với kiểu học sinh nào','Ảnh hưởng tới việc xét tuyển đại học'],
+    meta:'PDF', nhom:['thpt-duhoc'], uu:1,
+    link:'https://drive.google.com/file/d/1gNjAc22I4zyXiqnEEYUaf2otGTZZAkQ0/view',
+    linkChu:'Mở bảng so sánh', hien:true }
+];
+
+/* ==========================================================================
+   3. TIỆN ÍCH
+   ========================================================================== */
+var U   = new URLSearchParams(location.search);
+var $   = function(s){ return document.querySelector(s); };
+var el  = function(t,c){ var n = document.createElement(t); if (c) n.className = c; return n; };
+var KHO = QUA.filter(function(q){ return q.hien !== false && q.link; });
+var CS  = COSO[U.get('cs')] || COSO.vietanh;
+var KHOA = 'va_qua_tang_v1';
+
+var nhomChon = null, quaChinh = null, emailDaCo = '';
+
+function trongNhom(ma){ return KHO.filter(function(q){ return q.nhom.indexOf(ma) !== -1; }); }
+function tenNhom(ma){
+  for (var i=0;i<NHOM.length;i++) if (NHOM[i].ma === ma) return NHOM[i];
+  return { ten:'Bé nhà mình', phu:'', level:'' };
+}
+function docNho(){ try { return JSON.parse(localStorage.getItem(KHOA) || 'null'); } catch(e){ return null; } }
+function ghiNho(o){ try { localStorage.setItem(KHOA, JSON.stringify(o)); } catch(e){} }
+function noop(){}
+
+/* UTM — cùng cách bắt như các squeeze page khác trên site */
+function utm(){
+  var k = ['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter'], o = {};
+  try {
+    k.forEach(function(x){
+      var g = U.get(x);
+      if (g){ try { sessionStorage.setItem('va_'+x, g); } catch(e){} }
+      var v = g || (function(){ try { return sessionStorage.getItem('va_'+x); } catch(e){ return ''; } })() || '';
+      if (v) o[x] = v;
+    });
+  } catch(e){}
+  if (!o.utm_source){ o.utm_source = U.get('nguon') || 'direct'; o.utm_medium = U.get('nguon') ? 'social' : 'none'; }
+  if (U.get('nguon')) o.utm_content = U.get('nguon');
+  o.page_url = location.href;
+  return o;
+}
+function gtm(ev, extra){
+  try {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push(Object.assign({ event: ev }, extra || {}));
+  } catch(e){}
+}
+
+/* ==========================================================================
+   4. ÁP CẤU HÌNH CƠ SỞ
+   ========================================================================== */
+(function apCoSo(){
+  $('#foot').innerHTML = CS.chan + '<br>Hotline ' + CS.hotline;
+  var tel = $('#tel'); tel.href = 'tel:' + CS.tel; tel.textContent = CS.hotline;
+  var z = $('#cta-zalo');
+  if (CS.zalo) z.href = CS.zalo; else z.style.display = 'none';
+})();
+
+/* ==========================================================================
+   5. MÀN 1
+   ========================================================================== */
+(function veNhom(){
+  var box = $('#nhoms');
+  NHOM.forEach(function(n){
+    if (!trongNhom(n.ma).length) return;          // giai đoạn chưa có quà thì ẩn
+    var b = el('button','nhom'); b.type = 'button';
+    var ic = el('span','ic'); ic.textContent = n.icon; ic.setAttribute('aria-hidden','true');
+    var t = el('span','t');
+    var bb = el('b'); bb.textContent = n.ten;
+    var sp = el('span'); sp.textContent = n.phu + ' · ' + trongNhom(n.ma).length + ' món quà';
+    t.appendChild(bb); t.appendChild(sp);
+    var m = el('span','mui'); m.textContent = '→'; m.setAttribute('aria-hidden','true');
+    b.appendChild(ic); b.appendChild(t); b.appendChild(m);
+    b.addEventListener('click', function(){ chonNhom(n.ma); });
+    box.appendChild(b);
+  });
+})();
+
+function chonNhom(ma){
+  nhomChon = ma;
+  var n = tenNhom(ma), ds = trongNhom(ma);
+  $('#f-tieude').textContent = 'Quà cho bé ' + n.ten.toLowerCase() + ' — ' + n.phu.toLowerCase();
+  $('#f-nhan').textContent = quaChinh ? 'Ba mẹ sẽ nhận' : 'Hộp quà giai đoạn này có ' + ds.length + ' món';
+  var ul = $('#f-ds'); ul.innerHTML = '';
+  (quaChinh ? [quaChinh] : ds).forEach(function(q){
+    var li = el('li'); li.textContent = q.ten; ul.appendChild(li);
+  });
+  hienMan('man2');
+  gtm('qua_tang_chon_nhom', { giai_doan: ma });
+  setTimeout(function(){ $('#email').focus({ preventScroll:true }); }, 300);
+}
+
+function hienMan(id){
+  var ms = document.querySelectorAll('.man');
+  for (var i=0;i<ms.length;i++) ms[i].classList.toggle('on', ms[i].id === id);
+  window.scrollTo({ top:0, behavior:'smooth' });
+}
+
+$('#lui').addEventListener('click', function(){ quaChinh = null; hienMan('man1'); });
+
+/* ==========================================================================
+   6. BỐC QUÀ
+   ========================================================================== */
+function bocQua(ma, daCo){
+  var ds = trongNhom(ma);
+  var moi = ds.filter(function(q){ return daCo.indexOf(q.id) === -1; });  // ưu tiên món chưa nhận
+  if (moi.length) ds = moi;
+  if (!ds.length) return null;
+  var tong = ds.reduce(function(s,q){ return s + (q.uu || 1); }, 0);
+  var r = Math.random() * tong;
+  for (var i=0;i<ds.length;i++){ r -= (ds[i].uu || 1); if (r <= 0) return ds[i]; }
+  return ds[ds.length - 1];
+}
+
+/* ==========================================================================
+   7. MÀN 3
+   ========================================================================== */
+function moQua(chinh, ma){
+  var box = $('#the'); box.innerHTML = '';
+  var nhan = el('span','nhan'); nhan.textContent = chinh.loai;
+  var h3 = el('h3'); h3.textContent = chinh.ten;
+  var loi = el('p','loi'); loi.textContent = chinh.loi;
+  var ul = el('ul');
+  chinh.trong.forEach(function(t){ var li = el('li'); li.textContent = t; ul.appendChild(li); });
+  var meta = el('p','meta'); meta.textContent = chinh.meta;
+  box.appendChild(nhan); box.appendChild(h3); box.appendChild(loi);
+  box.appendChild(ul); box.appendChild(meta);
+  box.appendChild(nutMo(chinh, 'nut'));
+  if (chinh.linkPhu) box.appendChild(nutMo({ link:chinh.linkPhu.url, linkChu:chinh.linkPhu.chu }, 'nut phu'));
+
+  var conLai = trongNhom(ma).filter(function(q){ return q.id !== chinh.id; });
+  var ds = $('#ds'); ds.innerHTML = '';
+  conLai.forEach(function(q){
+    var a = el('a'); a.href = q.link; a.target = '_blank'; a.rel = 'noopener';
+    var ic = el('span','ic'); ic.textContent = q.icon; ic.setAttribute('aria-hidden','true');
+    var t = el('span','t');
+    var b = el('b'); b.textContent = q.ten;
+    var s = el('span'); s.textContent = q.meta;
+    t.appendChild(b); t.appendChild(s);
+    var m = el('span','mui'); m.textContent = '→'; m.setAttribute('aria-hidden','true');
+    a.appendChild(ic); a.appendChild(t); a.appendChild(m);
+    ds.appendChild(a);
+  });
+  $('#con-lai').style.display = conLai.length ? 'block' : 'none';
+  $('#mo-phu').textContent = conLai.length ? 'Trường gửi ba mẹ món này trước' : 'Trường gửi ba mẹ món này';
+  hienMan('man3');
+}
+
+function nutMo(q, cls){
+  var a = el('a', cls);
+  a.href = q.link; a.target = '_blank'; a.rel = 'noopener';
+  a.textContent = q.linkChu || 'Mở quà';
+  a.addEventListener('click', function(){ gtm('qua_tang_mo_file', { qua_id: q.id || '' }); });
+  return a;
+}
+
+/* ==========================================================================
+   8. LINK TẮT
+      ?nhom=tieu-hoc  ?qua=LM17  ?cs=thaison  ?nguon=fb-thaison-1208
+   ========================================================================== */
+(function batDau(){
+  var nho = docNho();
+  var idQua = (U.get('qua') || '').trim().toLowerCase();
+  if (idQua){
+    for (var i=0;i<KHO.length;i++) if (KHO[i].id.toLowerCase() === idQua){ quaChinh = KHO[i]; break; }
+  }
+  var maNhom = (U.get('nhom') || '').trim() || (quaChinh ? quaChinh.nhom[0] : '');
+
+  // Ba mẹ đã nhận quà trước đó: mở thẳng, không bắt điền lại
+  if (nho && nho.phone && nho.nhom){
+    var cu = null;
+    for (var j=0;j<KHO.length;j++) if (KHO[j].id === nho.qua){ cu = KHO[j]; break; }
+    var chinh = quaChinh || cu || bocQua(nho.nhom, []);
+    if (chinh){ nhomChon = nho.nhom; moQua(chinh, nho.nhom); return; }
+  }
+
+  for (var k=0;k<NHOM.length;k++) if (NHOM[k].ma === maNhom){ chonNhom(maNhom); return; }
+
+  var thieu = QUA.filter(function(x){ return x.hien !== false && !x.link; });
+  if (thieu.length) console.warn('[qua-tang] Chưa có link, đang bị loại khỏi kho:',
+    thieu.map(function(x){ return x.id; }).join(', '));
+})();
+
+/* ==========================================================================
+   9. FORM HAI BƯỚC — email trước, rồi tên + số điện thoại
+   ========================================================================== */
+(function form(){
+  var btnTiep = $('#tiep'), btnGo = $('#go');
+  var email = $('#email'), ten = $('#ten'), sdt = $('#sdt');
+
+  function okEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(v).trim()); }
+  function chuanHoa(v){ return String(v).replace(/[\s.\-()]/g,'').replace(/^\+?84/,'0'); }
+  function okPhone(v){ return /^0(3|5|7|8|9)\d{8}$/.test(chuanHoa(v)); }
+  function loi(node, id, co){
+    node.classList.toggle('err', co);
+    $('#'+id).classList.toggle('on', co);
+  }
+  function goiApi(body, keepalive){
+    try {
+      return fetch(C.api, {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify(body), keepalive: !!keepalive
+      }).catch(noop);
+    } catch(e){ return Promise.resolve(); }
+  }
+
+  email.addEventListener('input', function(){ if (email.classList.contains('err')) loi(email,'msg-email', !okEmail(email.value)); });
+  sdt.addEventListener('input', function(){ if (sdt.classList.contains('err')) loi(sdt,'msg-sdt', !okPhone(sdt.value)); });
+
+  /* --- Bước 1: email. Gửi lead tạm ngay, phòng khi ba mẹ bỏ dở bước 2 --- */
+  btnTiep.addEventListener('click', function(){
+    if (!okEmail(email.value)){ loi(email,'msg-email', true); email.focus(); return; }
+    loi(email,'msg-email', false);
+    emailDaCo = email.value.trim();
+
+    /* funnel_code RIÊNG theo giai đoạn — đây là thứ hiện ở cột "Diễn giải nguồn
+       MKT" trong Pancake, nên để chung một mã 'qua-tang' là mất luôn thông tin
+       con đang ở tuổi nào, tức là mất tín hiệu phân loại quan trọng nhất. */
+    goiApi(Object.assign({
+      email: emailDaCo,
+      form_id: 'qt-' + nhomChon,
+      funnel_code: C.funnel + '-' + nhomChon,
+      source: C.funnel + '-' + nhomChon,
+      school_level: tenNhom(nhomChon).level,
+      co_so: U.get('cs') || 'vietanh',
+      tags: ['qua-tang', 'giai-doan-' + nhomChon],
+      step: 1,
+      partial: true
+    }, utm()), true);
+
+    gtm('qua_tang_buoc1', { giai_doan: nhomChon });
+    $('#b1').classList.remove('on'); $('#b2').classList.add('on');
+    $('#c1').classList.remove('on'); $('#c2').classList.add('on');
+    $('#n2').classList.add('on'); $('#v').classList.add('on');
+    setTimeout(function(){ ten.focus({ preventScroll:true }); }, 80);
+  });
+
+  /* --- Bước 2: tên + số điện thoại → bốc quà và mở ngay --- */
+  $('#lead').addEventListener('submit', function(e){
+    e.preventDefault();
+
+    var xauTen = !ten.value.trim();
+    var xauSdt = !okPhone(sdt.value);
+    loi(ten,'msg-ten', xauTen);
+    loi(sdt,'msg-sdt', xauSdt);
+    if (xauTen){ ten.focus(); return; }
+    if (xauSdt){ sdt.focus(); return; }
+    if ($('#website').value) return;              // bot điền vào ô bẫy
+
+    btnGo.disabled = true;
+    btnGo.textContent = 'Đang mở quà…';
+
+    var nho = docNho();
+    var daCo = (nho && nho.daCo) || [];
+    var chinh = quaChinh || bocQua(nhomChon, daCo);
+    if (!chinh){ btnGo.disabled = false; btnGo.textContent = 'Mở quà cho ba mẹ 🎁'; return; }
+
+    /* Món quà đi sang Pancake qua `tags` (worker gộp mảng này vào tag khách hàng)
+       và qua `noi_dung` để người trực đọc được ngay. Đừng thêm trường tự đặt tên
+       kiểu qua_id/giai_doan — worker không đọc, dữ liệu rơi mất im lặng. */
+    goiApi(Object.assign({
+      email: emailDaCo,
+      parent_name: ten.value.trim(),
+      phone: chuanHoa(sdt.value),
+      form_id: 'qt-' + nhomChon,
+      funnel_code: C.funnel + '-' + nhomChon,
+      source: C.funnel + '-' + nhomChon,
+      school_level: tenNhom(nhomChon).level,
+      co_so: U.get('cs') || 'vietanh',
+      tags: ['qua-tang', 'giai-doan-' + nhomChon, 'qua-' + chinh.id.toLowerCase()],
+      noi_dung: 'Giai đoạn: ' + tenNhom(nhomChon).ten + ' (' + tenNhom(nhomChon).phu + ')'
+              + ' · Quà đã nhận: ' + chinh.ten,
+      step: 2
+    }, utm()));
+
+    gtm('qua_tang_nhan_qua', { giai_doan: nhomChon, qua_id: chinh.id });
+
+    ghiNho({
+      phone: chuanHoa(sdt.value), email: emailDaCo, ten: ten.value.trim(),
+      nhom: nhomChon, qua: chinh.id,
+      daCo: daCo.concat(daCo.indexOf(chinh.id) === -1 ? [chinh.id] : []),
+      luc: new Date().toISOString()
+    });
+
+    // Mở quà ngay, không chờ mạng — mất một lead còn hơn để ba mẹ điền xong tay trắng
+    moQua(chinh, nhomChon);
+  });
+})();
+</script>
+</body>
+</html>

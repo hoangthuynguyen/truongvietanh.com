@@ -47,7 +47,7 @@ const content = `
   </tbody>
 </table>
 </div>
-<p>Điều kiện duy nhất: học sinh đi học đầy đủ trong 4 tuần lễ đầu. Các khoản không hoàn gồm tiền ăn, phí nội trú, đồng phục và đồ dùng đã sử dụng — tức những gì con đã thực sự tiêu dùng.</p>
+<p>Điều kiện duy nhất: học sinh đi học đầy đủ trong 4 tuần lễ đầu. Các khoản không hoàn gồm tiền ăn, phí nội trú, đồng phục và đồ dùng đã sử dụng — tức những gì con đã thực sự tiêu dùng. Ai muốn xem thủ tục cụ thể đến từng bước có thể đọc bài <a href="/blog/cam-ket-hoan-hoc-phi-4-tuan-hoat-dong-the-nao/">"Cam kết hoàn học phí 4 tuần hoạt động thế nào?"</a>.</p>
 
 <h2 id="vi-sao-lam-nguoc-thong-le">Vì sao chúng tôi chọn làm ngược thông lệ</h2>
 <p>Thẳng thắn mà nói, chính sách "học phí không hoàn lại" có lý do tồn tại của nó: trường phải cam kết ngân sách giáo viên, cơ sở vật chất và chương trình cho cả năm học ngay từ đầu năm. Đó là lập luận hợp lý, không phải ngụy biện.</p>

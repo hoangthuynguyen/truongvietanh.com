@@ -40,6 +40,7 @@ const content = `
   <li>Chuyên viên có thể mời phụ huynh ký xác nhận nội dung đã trao đổi để làm căn cứ thực hiện.</li>
   <li>Nhà trường giải quyết trong 07 ngày làm việc và hỗ trợ đầy đủ thủ tục chuyển trường cho con.</li>
 </ul>
+<p>Quy trình ba bước được giải thích chi tiết trong bài <a href="/blog/cam-ket-hoan-hoc-phi-4-tuan-hoat-dong-the-nao/">"Cam kết hoàn học phí 4 tuần hoạt động thế nào?"</a>.</p>
 
 <h2 id="vi-sao-chung-toi-lam-dieu-nay">Vì sao chúng tôi làm điều này?</h2>
 <p>Chọn trường là một trong những quyết định tốn kém và khó đảo ngược nhất của cha mẹ. Xưa nay, toàn bộ rủi ro của quyết định ấy đặt lên vai gia đình: đóng tiền trước, biết kết quả sau. Chúng tôi muốn đảo ngược điều đó. Nếu Việt Anh tin vào chương trình của mình, thì Việt Anh phải là bên gánh rủi ro, chứ không phải phụ huynh.</p>

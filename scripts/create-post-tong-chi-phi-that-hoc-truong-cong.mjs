@@ -72,7 +72,7 @@ const content = `
 
 <h2 id="neu-chon-sai">Và nếu gia đình chọn sai thì sao?</h2>
 <p>Đây là điểm khác biệt lớn nhất, và cũng là điều chúng tôi muốn anh chị cân nhắc kỹ nhất. Với lộ trình mua ngoài, tiền đã trả cho trung tâm gần như không lấy lại được. Với Việt Anh, <a href="/chinh-sach#cam-ket-4-tuan">Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026</a> quy định: trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, nhà trường hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc.</p>
-<p>Nói cách khác: con số hơn một trăm triệu đồng mỗi năm không phải là ván cược một chiều. Đó là khoản đầu tư có cửa rút trong 28 ngày đầu tiên.</p>
+<p>Nói cách khác: con số hơn một trăm triệu đồng mỗi năm không phải là ván cược một chiều. Đó là khoản đầu tư có cửa rút trong 28 ngày đầu tiên — <a href="/blog/cam-ket-hoan-hoc-phi-4-tuan-hoat-dong-the-nao/">thủ tục rút gọn trong ba bước</a>, không đơn từ, không phải nêu lý do.</p>
 <blockquote>"Tôi không tin trường tư luôn tốt hơn trường công. Tôi chỉ tin rằng phụ huynh nên biết mình đang trả bao nhiêu và nhận lại được gì — bằng con số, không bằng cảm giác. Cộng xong bảng đó rồi, gia đình chọn gì cũng là lựa chọn đúng, vì đó là lựa chọn có hiểu biết."<br />— Nguyễn Mạnh Dương, Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh</blockquote>
 
 <h2 id="truong-cong-hop-ly-voi-ai">Trường công vẫn là lựa chọn hợp lý với ai?</h2>

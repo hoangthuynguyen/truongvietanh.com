@@ -73,7 +73,7 @@ const content = `
 <p>Điều khiến cha mẹ trì hoãn thường không phải là tiền, mà là nỗi sợ quyết định sai và không rút lại được. Chúng tôi đã bỏ nỗi sợ đó khỏi bàn cân.</p>
 <p>Theo <a href="/chinh-sach#cam-ket-4-tuan">Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026</a>, trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, Trường Việt Anh hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc. Điều kiện duy nhất: con đi học đầy đủ trong 4 tuần đó.</p>
 <p>Bốn tuần ấy trùng đúng với Học kỳ Foundation — 28 ngày nền tảng gồm giáo dục cảm xúc – xã hội, xây dựng văn hóa lớp, nhận vai trò lãnh đạo, rèn kỹ năng học tập và một chuyến dã ngoại. Nghĩa là gia đình được kiểm chứng bằng đúng giai đoạn đậm đặc giá trị nhất của cả năm học.</p>
-<p>Nói cách khác: cái giá của việc thử là 28 ngày trong quỹ thời gian của con, không phải một trăm triệu đồng. Còn cái giá của việc đợi thêm một năm là cả một năm trong quỹ ấy.</p>
+<p>Nói cách khác: cái giá của việc thử là 28 ngày trong quỹ thời gian của con, không phải một trăm triệu đồng. Còn cái giá của việc đợi thêm một năm là cả một năm trong quỹ ấy. Thủ tục nếu gia đình quyết định dừng lại <a href="/blog/cam-ket-hoan-hoc-phi-4-tuan-hoat-dong-the-nao/">gọn trong ba bước</a>, không đơn từ và không phải giải thích lý do.</p>
 
 <h2 id="faq">Câu hỏi thường gặp</h2>
 <div class="faq-block">

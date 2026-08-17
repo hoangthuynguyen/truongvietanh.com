@@ -63,7 +63,7 @@ const content = `
 
 <h2 id="neu-chon-sai">Và nếu gia đình chọn sai?</h2>
 <p>Đây là chỗ khác biệt lớn nhất so với mọi phép so sánh học phí thông thường. Theo <a href="/chinh-sach#cam-ket-4-tuan">Quyết định số 0728.1/2026/QĐ-MAJOR ngày 29/7/2026</a>, trong 4 tuần lễ đầu năm học, nếu gia đình thấy con không nhận được giá trị như mong đợi, nhà trường hoàn 100% học phí, phí cơ sở vật chất và phí bản quyền Oxford — không cần nộp đơn, không cần nêu lý do, giải quyết trong 07 ngày làm việc. Điều kiện duy nhất: con đi học đầy đủ trong 4 tuần đó.</p>
-<p>Nghĩa là 125.757.000 đồng không phải một ván cược. Đó là khoản đầu tư có cửa rút trong 28 ngày đầu tiên — 28 ngày trùng đúng với Học kỳ Foundation, giai đoạn đậm đặc giá trị nhất của cả năm học.</p>
+<p>Nghĩa là 125.757.000 đồng không phải một ván cược. Đó là khoản đầu tư có cửa rút trong 28 ngày đầu tiên — 28 ngày trùng đúng với Học kỳ Foundation, giai đoạn đậm đặc giá trị nhất của cả năm học. <a href="/blog/cam-ket-hoan-hoc-phi-4-tuan-hoat-dong-the-nao/">Thủ tục hoàn phí gọn trong ba bước</a>, không đơn từ và không phải nêu lý do.</p>
 
 <h2 id="truong-cong-hop-ly">Trường công vẫn hợp lý với gia đình nào?</h2>
 <p>Nói cho công bằng: nếu ngân sách gia đình eo hẹp, có ông bà hỗ trợ đưa đón, con đã có nền tự học tốt và định hướng là thi vào các trường chuyên công lập rồi đại học trong nước, thì lộ trình trường công cộng vài lớp bổ trợ chọn lọc là lựa chọn hợp lý về tài chính. Nhiều trường công tại TP.HCM có đội ngũ giáo viên rất giỏi, và tập thể lớp gắn bó là thứ không mức học phí nào mua được.</p>

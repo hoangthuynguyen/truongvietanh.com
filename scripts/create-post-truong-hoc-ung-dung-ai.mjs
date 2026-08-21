@@ -68,6 +68,8 @@ const content = `
   </tbody>
 </table>
 </div>
+<figure><img src="https://media.truongvietanh.com/images/dohoa-truong-dan-nhan-vs-truong-that.webp" alt="Đồ họa đối chiếu trường dán nhãn AI và trường học ứng dụng AI thật sự" width="1200" height="800" loading="lazy" /><figcaption>Mang bảng này theo khi đi thăm trường.</figcaption></figure>
+
 <blockquote>"Tôi khuyên phụ huynh đừng chọn trường vì chữ AI trên bảng hiệu, kể cả trường của tôi. Hãy đi thăm trường vào một ngày học bình thường, không phải ngày hội, rồi hỏi một học sinh bất kỳ: 'Con dùng AI ở trường để làm gì?' Câu trả lời của đứa trẻ trung thực hơn mọi tài liệu tuyển sinh — và nếu con kể được một việc cụ thể con vừa làm tuần trước, thì trường đó làm thật."<br />— Nguyễn Mạnh Dương, Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh</blockquote>
 
 <h2 id="tu-cham">Trường Việt Anh tự chấm mình theo 7 tiêu chí này như thế nào?</h2>

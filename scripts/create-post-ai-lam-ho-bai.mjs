@@ -39,6 +39,8 @@ const content = `
 </table>
 </div>
 <p>Cách đọc kết quả: <strong>0–1 dấu hiệu</strong> — con đang ổn, chỉ cần duy trì quy tắc. <strong>2–3 dấu hiệu</strong> — đã hình thành thói quen lệ thuộc, cần can thiệp trong tháng này. <strong>Từ 4 dấu hiệu trở lên</strong> — con gần như đã khoán việc học cho AI; cần kế hoạch 7 ngày ở phần dưới, bắt đầu ngay tuần này.</p>
+<figure><img src="https://media.truongvietanh.com/images/dohoa-7-dau-hieu-ai-lam-ho-bai.webp" alt="Đồ họa 7 dấu hiệu con đang để AI làm hộ bài kèm mức cảnh báo" width="1200" height="800" loading="lazy" /><figcaption>Bảy dấu hiệu kèm mức cảnh báo — đếm xem con mình có bao nhiêu.</figcaption></figure>
+
 <p>Dấu hiệu số 7 — vở nháp trắng — là dấu hiệu chúng tôi coi trọng nhất. Vở nháp là "hộp đen" của quá trình tư duy: một đứa trẻ thực sự học luôn để lại vết gạch xóa, thử sai. Vở nháp sạch bong cộng với bài nộp hoàn hảo gần như luôn có nghĩa là quá trình tư duy đã diễn ra ở chỗ khác — trong máy chủ của AI, không phải trong đầu con.</p>
 <blockquote>"Khi giáo viên của chúng tôi chấm bài, họ được yêu cầu nhìn vở nháp trước khi nhìn đáp án. Ở Trường Việt Anh, học sinh học theo chu trình Plan-Do-Review — con phải trình bày kế hoạch giải trước khi làm, nên việc đi tắt bằng AI lộ ra ngay từ bước Plan. Cha mẹ ở nhà cũng làm được điều tương tự chỉ với một câu hỏi: 'Con định làm bài này theo hướng nào?' — hỏi trước khi con làm, không phải sau."<br />— Nguyễn Mạnh Dương, Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh</blockquote>
 
@@ -58,6 +60,8 @@ const content = `
   <li><strong>Ngày 6 — Đổi câu hỏi buổi tối:</strong> thay "làm bài xong chưa?" bằng "dạy lại bố mẹ bài khó nhất hôm nay". Con giảng được là con hiểu; con ấp úng thì cả nhà biết ngay bài đó cần làm lại — phản hồi tức thì, không cần chờ bài kiểm tra.</li>
   <li><strong>Ngày 7 — Tổng kết và thưởng đúng thứ:</strong> cùng con nhìn lại tuần: bao nhiêu bài tự làm trước? Thưởng cho <strong>quá trình</strong> — số bài có nháp, số lần hỏi AI kiểu gia sư — tuyệt đối không thưởng cho điểm số, vì điểm số là thứ AI có thể làm giả, còn quá trình thì không.</li>
 </ol>
+<figure><img src="https://media.truongvietanh.com/images/dohoa-ke-hoach-7-ngay.webp" alt="Đồ họa kế hoạch 7 ngày đưa con từ AI làm hộ bài sang AI dạy học" width="1200" height="800" loading="lazy" /><figcaption>Bảy ngày, mỗi ngày một việc nhỏ.</figcaption></figure>
+
 <p>Sau 7 ngày, đừng kỳ vọng thói quen AI làm hộ bài biến mất — kỳ vọng đúng là con <strong>chậm lại một nhịp</strong> trước khi mở AI. Nhịp chậm đó chính là tư duy quay trở lại. Duy trì quy tắc đèn giao thông và câu hỏi buổi tối thêm 3–4 tuần, thói quen mới sẽ tự đứng được.</p>
 
 <figure><img src="https://media.truongvietanh.com/images/giao-vien-xem-vo-nhap-truoc-khi-xem-dap-an.webp" alt="Giáo viên lật vở nháp của học sinh trước khi xem đáp án để phát hiện AI làm hộ bài" width="1200" height="675" loading="lazy" /><figcaption>Giáo viên được yêu cầu nhìn vở nháp trước khi nhìn đáp án.</figcaption></figure>

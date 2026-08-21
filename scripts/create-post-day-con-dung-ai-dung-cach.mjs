@@ -55,6 +55,8 @@ const content = `
   </tbody>
 </table>
 </div>
+<figure><img src="https://media.truongvietanh.com/images/dohoa-ai-lam-ho-vs-ai-day-hoc.webp" alt="Đồ họa so sánh AI làm hộ bài và AI dạy con học theo 6 tiêu chí" width="1200" height="800" loading="lazy" /><figcaption>Bản tóm tắt để lưu lại hoặc gửi cho người thân.</figcaption></figure>
+
 <blockquote>"Ở Trường Việt Anh, chúng tôi có một nguyên tắc khi đưa AI vào lớp học: AI không bao giờ được cầm bút thay học sinh ở phần tư duy nền tảng. Học sinh của chúng tôi học AI hàng tuần, làm báo, làm video bằng AI — nhưng luôn theo chu trình Plan-Do-Review: con lập kế hoạch trước, tự làm, rồi mới dùng AI và cùng thầy cô nhìn lại. Sự khác biệt không nằm ở công cụ, mà nằm ở việc có người lớn thiết kế quá trình hay không."<br />— Nguyễn Mạnh Dương, Nhà sáng lập &amp; Chủ tịch Hệ thống Trường Việt Anh</blockquote>
 
 <h2 id="quy-tac-den-giao-thong">Quy tắc đèn giao thông: công cụ dạy con dùng AI đúng cách</h2>
@@ -64,6 +66,8 @@ const content = `
   <li><strong>Đèn vàng — tự làm trước, AI góp ý sau:</strong> bài tập phức tạp, bài văn, dự án. Con phải tự suy nghĩ và làm bản nháp trước, sau đó mới dùng AI để gợi ý hướng khác và kiểm tra lỗi.</li>
   <li><strong>Đèn xanh — dùng AI thoải mái:</strong> tìm kiếm tài liệu, dịch văn bản, nhờ giải thích khái niệm khó theo nhiều cách khác nhau. Đây là lúc AI phát huy đúng vai trò gia sư.</li>
 </ul>
+<figure><img src="https://media.truongvietanh.com/images/dohoa-den-giao-thong-khi-nao-dung-ai.webp" alt="Đồ họa quy tắc đèn giao thông: khi nào con được dùng AI khi học" width="1200" height="800" loading="lazy" /><figcaption>In tấm này dán ở góc học tập của con.</figcaption></figure>
+
 <p>Quy tắc chỉ hiệu quả khi có hai điều kiện đi kèm. Một là <strong>thống nhất trước với con</strong>, không áp đặt giữa chừng — đứa trẻ tham gia viết ra quy tắc sẽ giữ quy tắc bền hơn nhiều so với đứa trẻ chỉ được thông báo. Hai là <strong>có người kiểm tra quá trình</strong>, không chỉ kiểm tra kết quả: hỏi con "con làm thế nào ra đáp án này?" quan trọng hơn hỏi "con được mấy điểm?".</p>
 
 <h2 id="vai-tro-truong-hoc">Vì sao trẻ cần trường học có giám sát sư phạm?</h2>

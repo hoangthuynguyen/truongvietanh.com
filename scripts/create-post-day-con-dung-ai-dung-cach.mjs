@@ -10,6 +10,8 @@ const UPDATE = process.argv.includes('--update');
 if (!DIRECTUS_TOKEN) { console.error('Thiếu DIRECTUS_TOKEN. Chạy với: node --env-file=.env ...'); process.exit(1); }
 
 const content = `
+<figure><img src="https://media.truongvietanh.com/images/day-con-dung-ai-dung-cach-me-ngoi-cung-con-hoc.webp" alt="Người mẹ ngồi cùng con học bài buổi tối, minh họa cách dạy con dùng AI đúng cách" width="1200" height="675" loading="eager" /><figcaption>Dạy con dùng AI đúng cách bắt đầu từ một câu hỏi mỗi tối, không phải từ phần mềm giám sát.</figcaption></figure>
+
 <p>Tuần này, hàng triệu học sinh TP.HCM tựu trường. Và năm học 2026-2027 là năm đầu tiên gần như mọi đứa trẻ từ tiểu học trở lên đều biết đến ChatGPT, Gemini hay một ứng dụng AI nào đó. Câu hỏi lớn nhất của cha mẹ không còn là "có nên cho con dùng AI không", mà là <strong>dạy con dùng AI đúng cách</strong> như thế nào.</p>
 
 <p>Một nghiên cứu tại Trung Quốc theo dõi 26.811 học sinh trong 30 tháng đã đưa ra con số khiến nhiều cha mẹ giật mình: nhóm trẻ dùng AI làm bài tập có <strong>điểm bài tập tăng 18%, nhưng điểm thi giảm 20% sau 6 tháng và giảm tới 24% ở kỳ thi chuyển cấp</strong>. Bài viết này phân tích vì sao có nghịch lý đó, và chia sẻ cách Trường Việt Anh — trường học AI-Powered School tại TP.HCM — đang dạy học sinh dùng AI mỗi tuần mà không để các con ỷ lại.</p>
@@ -32,6 +34,8 @@ const content = `
   <li>Điểm bài tập trên lớp cao dần nhưng điểm kiểm tra tại lớp không cải thiện, thậm chí giảm.</li>
 </ul>
 <p>Nếu con có từ hai dấu hiệu trở lên, con đang ở phía "AI làm hộ" — và cần điều chỉnh sớm, trước khi thành thói quen. Đây cũng là điểm khởi đầu để dạy con dùng AI đúng cách: nhận ra con đang ở phía nào. Bộ dấu hiệu đầy đủ hơn cùng kế hoạch sửa trong 7 ngày nằm ở bài <a href="/blog/ai-lam-ho-bai-dau-hieu-va-cach-sua/">AI làm hộ bài: 7 dấu hiệu con lệ thuộc AI và cách sửa</a>.</p>
+
+<figure><img src="https://media.truongvietanh.com/images/phong-thi-khong-co-ai-hoc-sinh-lam-bai-tren-giay.webp" alt="Học sinh làm bài trong phòng thi không có AI — nơi năng lực thật lộ ra khi không dạy con dùng AI đúng cách" width="1200" height="675" loading="lazy" /><figcaption>Phòng thi là nơi duy nhất không có AI — và là nơi khoảng cách giữa điểm bài tập với năng lực thật hiện ra.</figcaption></figure>
 
 <h2 id="hai-cach-dung">AI làm hộ bài và AI dạy con học: khác nhau ở đâu?</h2>
 <p>Cùng một công cụ, hai cách dùng cho hai kết quả ngược nhau. Bảng so sánh dưới đây giúp cha mẹ nhận diện nhanh con mình đang ở phía nào:</p>
@@ -117,6 +121,7 @@ const post = {
   content,
   published_at: "2026-08-20T09:00:00",
   category: "phu-huynh",
+  featured_image: "https://media.truongvietanh.com/images/day-con-dung-ai-dung-cach-me-ngoi-cung-con-hoc.webp",
 };
 
 async function req(method, endpoint, body) {

@@ -9,6 +9,8 @@ const UPDATE = process.argv.includes('--update');
 if (!DIRECTUS_TOKEN) { console.error('Thiếu DIRECTUS_TOKEN. Chạy với: node --env-file=.env ...'); process.exit(1); }
 
 const content = `
+<figure><img src="https://media.truongvietanh.com/images/truong-hoc-ung-dung-ai-hoc-sinh-huong-dan-phu-huynh.webp" alt="Học sinh hướng dẫn phụ huynh dùng máy tính bảng tại một trường học ứng dụng AI" width="1200" height="900" loading="eager" /><figcaption>Câu trả lời của chính đứa trẻ trung thực hơn mọi tài liệu tuyển sinh.</figcaption></figure>
+
 <p>Mùa tuyển sinh năm học 2026-2027, gần như trường tư thục nào tại TP.HCM cũng có một dòng về AI trên brochure. Có trường ghi "ứng dụng AI trong giảng dạy", có trường gọi mình là trường công nghệ, có trường tổ chức hẳn ngày hội robot. Phụ huynh đứng giữa, và câu hỏi rất thực tế: một <strong>trường học ứng dụng AI</strong> kiểu nào thì thật sự thay đổi việc học của con, kiểu nào chỉ là một dòng chữ đẹp?</p>
 
 <p>Tôi viết bài này với tư cách người đang trực tiếp xây dựng một hệ thống trường theo định hướng AI-Powered School — nghĩa là tôi có thiên vị, và tôi nói rõ điều đó ngay từ đầu. Nhưng chính vì làm việc này hằng ngày, tôi biết đâu là những phần khó, tốn kém và dễ bị bỏ qua nhất. Bảy tiêu chí dưới đây là những gì tôi sẽ hỏi nếu tôi là phụ huynh đi chọn trường cho con mình.</p>
@@ -26,6 +28,8 @@ const content = `
 <h3>Tiêu chí 2 — Giáo viên có được đào tạo trước học sinh không?</h3>
 <p>Đây là nút thắt lớn nhất của giáo dục AI trên toàn thế giới, không riêng Việt Nam. Một ngôi trường mua phần mềm AI chỉ mất vài tuần. Đào tạo được đội ngũ giáo viên tự thiết kế bài giảng có AI mất nhiều năm.</p>
 <p>Hãy hỏi: "Bao nhiêu phần trăm giáo viên của trường đang dùng AI trong soạn giảng, và trường đào tạo họ theo lộ trình nào?" Đây là câu hỏi phân loại rõ nhất giữa một trường học ứng dụng AI thật sự và một trường mới mua phần mềm.</p>
+
+<figure><img src="https://media.truongvietanh.com/images/tap-huan-giao-vien-ung-dung-ai-trong-soan-giang.webp" alt="Giáo viên được tập huấn dùng AI trong soạn giảng tại một trường học ứng dụng AI" width="1200" height="675" loading="lazy" /><figcaption>Mua phần mềm mất vài tuần. Đào tạo được đội ngũ giáo viên mất nhiều năm.</figcaption></figure>
 
 <h3>Tiêu chí 3 — Trường có quy tắc rõ ràng về việc học sinh được dùng AI đến đâu?</h3>
 <p>Một trường học ứng dụng AI nghiêm túc phải trả lời được: phần nào học sinh bắt buộc tự làm, phần nào được dùng AI hỗ trợ. Không có ranh giới này, AI sẽ thành công cụ làm hộ bài — và hậu quả đã được đo bằng số liệu.</p>
@@ -115,6 +119,7 @@ const post = {
   content,
   published_at: "2026-08-20T14:00:00",
   category: "tuyen-sinh",
+  featured_image: "https://media.truongvietanh.com/images/truong-hoc-ung-dung-ai-hoc-sinh-huong-dan-phu-huynh.webp",
 };
 
 async function req(method, endpoint, body) {
@@ -129,7 +134,10 @@ async function req(method, endpoint, body) {
 const existing = await req('GET', `/items/posts?fields=id,slug&filter%5Bslug%5D%5B_eq%5D=${post.slug}`);
 if (existing.data.length) {
   if (!UPDATE) { console.log(`Bài đã tồn tại (id=${existing.data[0].id}). Chạy với --update để cập nhật.`); process.exit(0); }
-  const r = await req('PATCH', `/items/posts/${existing.data[0].id}`, post);
+  // Bài này nằm trong lịch đăng dần (scripts/dang-bai-cum-ai.mjs) — KHÔNG ghi đè
+  // status/published_at khi cập nhật, nếu không bài draft sẽ bị bật published ngoài ý muốn.
+  const { status: _s, published_at: _p, ...capNhat } = post;
+  const r = await req('PATCH', `/items/posts/${existing.data[0].id}`, capNhat);
   console.log(`Đã CẬP NHẬT bài id=${r.data.id} — /blog/${r.data.slug}`);
 } else {
   const r = await req('POST', '/items/posts', post);

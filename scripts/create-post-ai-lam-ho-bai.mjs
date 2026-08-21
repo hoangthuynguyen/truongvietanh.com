@@ -9,6 +9,8 @@ const UPDATE = process.argv.includes('--update');
 if (!DIRECTUS_TOKEN) { console.error('Thiếu DIRECTUS_TOKEN. Chạy với: node --env-file=.env ...'); process.exit(1); }
 
 const content = `
+<figure><img src="https://media.truongvietanh.com/images/ai-lam-ho-bai-hoc-sinh-chup-de-bai.webp" alt="Học sinh chụp đề bài bằng điện thoại để AI làm hộ bài, vở nháp bên cạnh vẫn còn trắng" width="1200" height="900" loading="eager" /><figcaption>Hỏi AI trước cả khi đọc kỹ đề — dấu hiệu số 1, và vở nháp thì vẫn còn trắng.</figcaption></figure>
+
 <p>Có hai đứa trẻ cùng lớp, cùng mở một ứng dụng AI vào 8 giờ tối. Đứa thứ nhất gõ: "Giải giúp em bài toán này." Đứa thứ hai gõ: "Em giải ra 24 nhưng đáp án là 18, em sai ở bước nào?" Sáu tháng sau, hai đứa trẻ đó ở hai vị trí rất khác nhau — dù bài tập về nhà của cả hai đều được điểm tốt.</p>
 
 <p>Ranh giới giữa <strong>AI làm hộ bài</strong> và AI dạy con học mỏng đến mức phần lớn cha mẹ không nhìn thấy, cho đến khi điểm thi trên lớp nói thay. Bài viết này giúp bạn nhận diện 7 dấu hiệu con đang lệ thuộc, hiểu vì sao thói quen này hình thành nhanh, và quan trọng nhất: một kế hoạch 7 ngày để đưa con từ "AI làm hộ" sang "AI dạy học" — không cần cấm đoán, không cần cãi vã.</p>
@@ -58,6 +60,8 @@ const content = `
 </ol>
 <p>Sau 7 ngày, đừng kỳ vọng thói quen AI làm hộ bài biến mất — kỳ vọng đúng là con <strong>chậm lại một nhịp</strong> trước khi mở AI. Nhịp chậm đó chính là tư duy quay trở lại. Duy trì quy tắc đèn giao thông và câu hỏi buổi tối thêm 3–4 tuần, thói quen mới sẽ tự đứng được.</p>
 
+<figure><img src="https://media.truongvietanh.com/images/giao-vien-xem-vo-nhap-truoc-khi-xem-dap-an.webp" alt="Giáo viên lật vở nháp của học sinh trước khi xem đáp án để phát hiện AI làm hộ bài" width="1200" height="675" loading="lazy" /><figcaption>Giáo viên được yêu cầu nhìn vở nháp trước khi nhìn đáp án.</figcaption></figure>
+
 <h2 id="vai-tro-truong">Vai trò của trường học: nơi thói quen được luyện 8 tiếng mỗi ngày</h2>
 <p>Sự thật mà mọi cha mẹ đều biết: 15 phút mỗi tối ở nhà không đấu lại được 8 tiếng mỗi ngày ở trường. Nếu ở trường con vẫn được nộp bài AI làm hộ mà không ai phát hiện, kế hoạch 7 ngày sẽ trôi.</p>
 <p>Đây là lý do câu hỏi "trường của con đối xử với AI thế nào?" trở thành câu hỏi chọn trường quan trọng của năm học 2026-2027 — nhất là khi Bộ Giáo dục và Đào tạo đã chủ trương <a href="https://www.vietnamplus.vn/nam-hoc-2026-2027-khong-day-truoc-lop-1-day-manh-stem-ai-va-tieng-anh-post1129145.vnp" target="_blank" rel="noopener">đẩy mạnh STEM, AI và tiếng Anh trong trường phổ thông</a> từ năm học này. Bộ tiêu chí đầy đủ để kiểm tra một ngôi trường nằm ở bài <a href="/blog/truong-hoc-ung-dung-ai-tieu-chi-danh-gia/">Trường học ứng dụng AI: 7 tiêu chí phụ huynh cần hỏi</a>.</p>
@@ -94,6 +98,7 @@ const post = {
   content,
   published_at: "2026-08-20T11:00:00",
   category: "phu-huynh",
+  featured_image: "https://media.truongvietanh.com/images/ai-lam-ho-bai-hoc-sinh-chup-de-bai.webp",
 };
 
 async function req(method, endpoint, body) {
@@ -108,7 +113,10 @@ async function req(method, endpoint, body) {
 const existing = await req('GET', `/items/posts?fields=id,slug&filter%5Bslug%5D%5B_eq%5D=${post.slug}`);
 if (existing.data.length) {
   if (!UPDATE) { console.log(`Bài đã tồn tại (id=${existing.data[0].id}). Chạy với --update để cập nhật.`); process.exit(0); }
-  const r = await req('PATCH', `/items/posts/${existing.data[0].id}`, post);
+  // Bài này nằm trong lịch đăng dần (scripts/dang-bai-cum-ai.mjs) — KHÔNG ghi đè
+  // status/published_at khi cập nhật, nếu không bài draft sẽ bị bật published ngoài ý muốn.
+  const { status: _s, published_at: _p, ...capNhat } = post;
+  const r = await req('PATCH', `/items/posts/${existing.data[0].id}`, capNhat);
   console.log(`Đã CẬP NHẬT bài id=${r.data.id} — /blog/${r.data.slug}`);
 } else {
   const r = await req('POST', '/items/posts', post);

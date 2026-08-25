@@ -93,6 +93,11 @@ const content = `
   <li><strong>Chọn môi trường có giám sát sư phạm:</strong> nếu con dành 8 tiếng mỗi ngày ở trường, cách trường đó đối xử với AI quan trọng hơn mọi quy tắc ở nhà. Hãy hỏi thẳng trường của con: "Nhà trường dạy học sinh dùng AI như thế nào, và kiểm soát ra sao?"</li>
 </ol>
 
+<div class="blog-table-wrap" style="border-left:5px solid #f9dd0e;background:#f8fafc;padding:1rem 1.25rem;border-radius:8px">
+<p style="margin:0 0 .4rem"><strong>Bản in cho gia đình</strong></p>
+<p style="margin:0">Bảng so sánh “AI làm hộ bài hay AI dạy con học” và poster quy tắc đèn giao thông đều có bản PDF in được — <a href="/tai-lieu-ai">tải miễn phí tại đây</a>, không cần để lại email.</p>
+</div>
+
 <h2 id="ket-luan">Kết: ai đang điều khiển việc học của con bạn?</h2>
 <p>Nghiên cứu 26.811 học sinh không phải lời cảnh báo về AI — nó là lời cảnh báo về việc <strong>để trẻ một mình với AI</strong>. Điểm bài tập tăng 18% là lớp vỏ; điểm thi giảm 20–24% là cái giá của việc không ai dạy con dùng AI đúng cách.</p>
 <p>Thế hệ này sẽ sống và làm việc cùng AI cả đời, nên dạy con dùng AI đúng cách là kỹ năng nền chứ không phải chuyện nhất thời. Câu hỏi của cha mẹ vì thế không phải "cấm hay cho", mà là: con đang học dùng AI ở đâu, với ai hướng dẫn, theo quy trình nào. Đó là câu hỏi đáng mang theo khi bước vào năm học mới — và khi chọn trường cho con.</p>

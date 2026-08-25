@@ -1,0 +1,156 @@
+---
+// Trang tài liệu miễn phí của cụm bài AI — 3 file do anh Dương giao làm lead magnet.
+// KHÁC quy ước squeeze cũ của site (form rồi hứa "gửi qua email trong 24h"): ở đây
+// phụ huynh tải được NGAY, form đặt bên dưới để nhận tư vấn. Lý do: bản thân việc gửi
+// mail chưa có automation nào chạy, hứa mà không có người gửi thì mất uy tín hơn là
+// không gate. Muốn gate thật thì cần automation email hoặc sửa LeadFormTwoStepEmailFirst
+// (component đang hardcode redirect /cam-on, bỏ qua redirectUrl).
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+
+const canonical = 'https://truongvietanh.com/tai-lieu-ai';
+
+const TAI_LIEU = [
+  {
+    file: '/downloads/7-dau-hieu-ai-lam-ho-bai.pdf',
+    ten: '7 dấu hiệu con đang để AI làm hộ bài',
+    mo_ta: 'Bảng tự chấm có ô đánh dấu, thang đọc kết quả 3 mức, và kế hoạch 7 ngày đưa con từ “AI làm hộ” sang “AI dạy học”. In ra, đánh dấu, làm lại sau một tháng để so sánh.',
+    dang: 'PDF A4 · 2 trang',
+    bai: '/blog/ai-lam-ho-bai-dau-hieu-va-cach-sua/',
+  },
+  {
+    file: '/downloads/ai-lam-ho-bai-hay-ai-day-con-hoc.pdf',
+    ten: 'AI làm hộ bài hay AI dạy con học?',
+    mo_ta: 'Bảng so sánh 7 tiêu chí giúp nhận ra con đang ở phía nào, kèm quy tắc đèn giao thông và ba câu hỏi kiểm tra ngay tối nay.',
+    dang: 'PDF A4 · 1 trang',
+    bai: '/blog/day-con-dung-ai-dung-cach/',
+  },
+  {
+    file: '/downloads/poster-khi-nao-dung-ai.pdf',
+    ten: 'Poster “KHI NÀO DÙNG AI?”',
+    mo_ta: 'Ba vùng đỏ – vàng – xanh để học sinh tự quyết định trước khi mở bất kỳ công cụ AI nào. Dành cho trường học và lớp học in treo; gia đình có thể in khổ nhỏ dán góc học tập.',
+    dang: 'PDF khổ vuông 60×60cm',
+    bai: '/blog/day-con-dung-ai-dung-cach/',
+  },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Tài liệu miễn phí: dạy con dùng AI đúng cách',
+    description: 'Ba tài liệu in được dành cho cha mẹ và nhà trường: bảng tự chấm 7 dấu hiệu, bảng so sánh AI làm hộ vs AI dạy học, và poster quy tắc đèn giao thông.',
+    url: canonical,
+    inLanguage: 'vi-VN',
+    publisher: { '@type': 'EducationalOrganization', name: 'Hệ Thống Trường Việt Anh', url: 'https://truongvietanh.com' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Tài liệu dạy con dùng AI', item: canonical },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Tài liệu miễn phí: dạy con dùng AI đúng cách"
+  description="Tải miễn phí bảng tự chấm 7 dấu hiệu con lệ thuộc AI, bảng so sánh AI làm hộ bài vs AI dạy con học, và poster quy tắc đèn giao thông cho lớp học."
+  keywords="tài liệu dạy con dùng AI, bảng tự chấm AI làm hộ bài, poster quy tắc dùng AI, tài liệu miễn phí cho phụ huynh"
+  canonical={canonical}
+  structuredData={structuredData}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase currentPath="/tai-lieu-ai" />
+
+    <section class="tl-hero">
+      <div class="tl-container">
+        <nav class="tl-crumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a> <span aria-hidden="true">›</span> <span>Tài liệu dạy con dùng AI</span>
+        </nav>
+        <h1>Ba tài liệu in được, tải miễn phí</h1>
+        <p class="tl-sub">Không cần để lại email, không cần đăng ký. Bấm là tải. Nếu thấy hữu ích, anh chị chia sẻ lại cho phụ huynh khác trong lớp của con.</p>
+      </div>
+    </section>
+
+    <div class="tl-container tl-body">
+      <div class="tl-grid">
+        {TAI_LIEU.map((t) => (
+          <article class="tl-card">
+            <div class="tl-tag">{t.dang}</div>
+            <h2>{t.ten}</h2>
+            <p>{t.mo_ta}</p>
+            <div class="tl-actions">
+              <a class="tl-btn" href={t.file} download>Tải PDF</a>
+              <a class="tl-link" href={t.bai}>Đọc bài viết →</a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <section class="tl-form-wrap">
+        <h2>Muốn trao đổi trực tiếp về việc con đang dùng AI?</h2>
+        <p class="tl-note">Để lại thông tin, đội tuyển sinh sẽ liên hệ trao đổi về cách trường thiết kế việc học cùng AI — kể cả khi anh chị chưa có ý định chuyển trường cho con.</p>
+        <div data-form-bg="light">
+          <LeadFormTwoStepEmailFirst
+            formId="tai-lieu-ai-form"
+            funnelCode="tai-lieu-ai"
+            schoolLevel="lien-cap"
+            submitText="Nhận tư vấn"
+            title=""
+            description=""
+            socialProof=""
+          />
+        </div>
+      </section>
+
+      <section class="tl-more">
+        <h2>Đọc thêm trong cụm bài về AI</h2>
+        <ul>
+          <li><a href="/blog/day-con-dung-ai-dung-cach/">Dạy con dùng AI đúng cách</a> — nghịch lý điểm bài tập tăng nhưng điểm thi giảm, và 5 việc cha mẹ làm ngay</li>
+          <li><a href="/blog/ai-lam-ho-bai-dau-hieu-va-cach-sua/">AI làm hộ bài: 7 dấu hiệu và cách sửa</a> — kế hoạch 7 ngày, không cấm đoán</li>
+          <li><a href="/blog/truong-hoc-ung-dung-ai-tieu-chi-danh-gia/">Trường học ứng dụng AI: 7 tiêu chí</a> — bộ câu hỏi mang đi hỏi mọi ngôi trường</li>
+          <li><a href="/blog/cho-con-dung-ai-sai-cach-diem-thi-giam-20/">Nghiên cứu 26.811 học sinh</a> — phân tích nguồn gốc và AI tutor theo phương pháp Socratic</li>
+        </ul>
+      </section>
+    </div>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<!-- Bộ thu UTM dùng chung: component form đã tự nạp, để đây cho chắc và để tự kiểm bằng grep. -->
+<script src="/js/va-utm.js" is:inline></script>
+
+<style is:global>
+  .tl-container { max-width: 980px; margin: 0 auto; padding: 0 1.25rem; }
+  .tl-hero { background: linear-gradient(135deg, #26275D 0%, #363876 100%); color: #fff; padding: 2rem 0 2.5rem; }
+  .tl-crumb { font-size: .9rem; color: #cbd5e1; margin-bottom: .75rem; }
+  .tl-crumb a { color: #f9dd0e; text-decoration: none; }
+  .tl-hero h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); font-weight: 800; margin: 0 0 .75rem; color: #fff; line-height: 1.25; }
+  .tl-sub { margin: 0; color: #e0e7ff; line-height: 1.65; max-width: 62ch; }
+
+  .tl-body { padding: 2rem 1.25rem 3rem; display: flex; flex-direction: column; gap: 1.75rem; }
+  .tl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.1rem; }
+  .tl-card { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.3rem; display: flex; flex-direction: column; }
+  .tl-tag { display: inline-block; align-self: flex-start; background: #eef2ff; color: #26275D; font-size: .78rem; font-weight: 700; padding: .25rem .6rem; border-radius: 999px; margin-bottom: .6rem; }
+  .tl-card h2 { font-size: 1.1rem; font-weight: 800; color: #26275D; margin: 0 0 .5rem; line-height: 1.35; }
+  .tl-card p { font-size: .95rem; color: #475569; line-height: 1.6; margin: 0 0 1rem; flex: 1; }
+  .tl-actions { display: flex; align-items: center; gap: .85rem; flex-wrap: wrap; }
+  .tl-btn { background: #26275D; color: #fff; padding: .55rem 1.1rem; border-radius: 8px; font-weight: 700; font-size: .95rem; text-decoration: none; }
+  .tl-btn:hover { background: #363876; color: #fff; }
+  .tl-link { color: #26275D; font-size: .9rem; text-decoration: underline; text-decoration-color: #f9dd0e; text-underline-offset: 3px; }
+
+  .tl-form-wrap { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.5rem; }
+  .tl-form-wrap h2 { font-size: 1.2rem; font-weight: 800; color: #26275D; margin: 0 0 .5rem; }
+  .tl-note { font-size: .95rem; color: #475569; line-height: 1.6; margin: 0 0 1rem; }
+
+  .tl-more { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.3rem 1.5rem; }
+  .tl-more h2 { font-size: 1.1rem; font-weight: 800; color: #26275D; margin: 0 0 .6rem; }
+  .tl-more ul { margin: 0; padding-left: 1.2rem; line-height: 1.85; color: #334155; font-size: .95rem; }
+  .tl-more a { color: #26275D; text-decoration: underline; text-decoration-color: #f9dd0e; text-underline-offset: 3px; }
+</style>

@@ -79,6 +79,11 @@ const content = `
 <p>Về <strong>tiêu chí 5 và 6</strong>, học sinh của trường đã tự làm báo, làm video bằng AI; trong ngày hội Leadership Day có trạm AI Education nơi chính học sinh hướng dẫn lại phụ huynh cách dùng AI. Về <strong>tiêu chí 7</strong>, các báo cáo trong những kỳ họp phụ huynh và báo cáo PDR đều có phần dữ liệu và dự báo được xử lý bằng AI, thay vì chỉ là bảng điểm.</p>
 <p>Điều tôi muốn phụ huynh làm không phải là tin bản tự chấm này, mà là <strong>dùng bảy câu hỏi trên để hỏi mọi ngôi trường trong danh sách của mình</strong> — bao gồm cả chúng tôi.</p>
 
+<div class="blog-table-wrap" style="border-left:5px solid #f9dd0e;background:#f8fafc;padding:1rem 1.25rem;border-radius:8px">
+<p style="margin:0 0 .4rem"><strong>Mang theo khi đi thăm trường</strong></p>
+<p style="margin:0">Bảng đối chiếu và bộ tài liệu về việc dạy con dùng AI có bản PDF in được — <a href="/tai-lieu-ai">tải miễn phí tại đây</a>, không cần để lại email.</p>
+</div>
+
 <h2 id="ket-luan">Kết: hỏi bảy câu, đừng đọc bảy dòng brochure</h2>
 <p>Trong năm học tới, mọi ngôi trường đều sẽ nói mình là trường học ứng dụng AI — và phần lớn sẽ nói thật ở mức nào đó. Việc của phụ huynh không phải là tìm trường có AI, mà là tìm trường dùng AI theo cách làm con <strong>giỏi hơn khi không có AI</strong>.</p>
 <p>Bảy tiêu chí trong bài này là bộ lọc tôi tin dùng được khi đánh giá một trường học ứng dụng AI:</p>

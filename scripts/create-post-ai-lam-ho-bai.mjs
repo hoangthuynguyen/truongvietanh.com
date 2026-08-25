@@ -72,6 +72,11 @@ const content = `
 <p>Tại Trường Việt Anh, câu trả lời nằm trong chính cấu trúc giờ học: học sinh học AI hàng tuần ngay trong môn học, theo chu trình Plan-Do-Review — lập kế hoạch, tự làm, rồi mới nhìn lại cùng thầy cô và công cụ. Hơn 30 giáo viên của trường tự xây dựng được công cụ AI phục vụ giảng dạy, nên họ hiểu rõ AI làm hộ bài được gì và không được gì — và ra đề theo hiểu biết đó. Trợ lý AI học tập của trường đang thử nghiệm cũng được thiết kế theo nguyên tắc gia sư: gợi ý từng bước, không đưa đáp án.</p>
 <blockquote>"Phụ huynh hay hỏi tôi có phần mềm nào phát hiện con dùng AI không. Tôi nói thật: không có phần mềm nào đáng tin cả, và đuổi theo công nghệ giám sát là cuộc đua thua sẵn. Thứ phát hiện chính xác nhất là một câu hỏi của con người: 'Con giải thích cho thầy cách con làm được không?' Ở trường chúng tôi, câu hỏi đó nằm trong quy trình. Ở nhà, nó nên nằm trong bữa tối."<br />— Nguyễn Mạnh Dương</blockquote>
 
+<div class="blog-table-wrap" style="border-left:5px solid #f9dd0e;background:#f8fafc;padding:1rem 1.25rem;border-radius:8px">
+<p style="margin:0 0 .4rem"><strong>Bản in bảng 7 dấu hiệu và kế hoạch 7 ngày</strong></p>
+<p style="margin:0">Bảng tự chấm có ô đánh dấu để in ra, đánh dấu rồi làm lại sau một tháng để so sánh — <a href="/tai-lieu-ai">tải miễn phí tại đây</a>, không cần để lại email.</p>
+</div>
+
 <h2 id="ket-luan">Kết: đừng hỏi "con có dùng AI không" — hãy hỏi "ai đang suy nghĩ"</h2>
 <p>AI làm hộ bài và AI dạy con học nhìn bề ngoài giống hệt nhau: cùng một đứa trẻ, cùng một màn hình, cùng một bài tập được nộp đúng hạn. Khác biệt duy nhất — và là khác biệt quyết định tương lai — nằm ở câu hỏi: trong 45 phút đó, ai đang suy nghĩ?</p>
 <p>Bạn không cần giỏi công nghệ để kéo con ra khỏi thói quen AI làm hộ bài. Bạn cần một bảng quy tắc dán ở góc học tập, một câu hỏi mỗi buổi tối, và một ngôi trường cùng chiến tuyến với bạn 8 tiếng mỗi ngày.</p>

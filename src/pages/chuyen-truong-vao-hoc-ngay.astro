@@ -844,9 +844,16 @@ footer a{color:var(--amber);text-decoration:none}
   if (mq.addEventListener) mq.addEventListener('change', placeForm);
   else if (mq.addListener) mq.addListener(placeForm);
 
-  /* ── Mọi CTA "#dang-ky" cuộn tới form ở vị trí hiện tại rồi focus ô đầu ── */
-  function focusForm(ev){
+  /* ── Mọi CTA "#dang-ky" cuộn tới form ở vị trí hiện tại rồi focus ô đầu ──
+     Nút "Đặt lịch tham quan" điền sẵn ô Nhu cầu: nhãn nút khớp với việc form thực sự làm,
+     và sales đọc được ý định ngay trong trường note thay vì phải đoán. Giữ lead ở lại trang
+     thay vì đá sang /dat-lich-tham-quan — sang đó là mất funnel_code của chiến dịch này. */
+  function focusForm(ev, wantVisit){
     if (ev) ev.preventDefault();
+    if (wantVisit) {
+      var need = document.getElementById('fNeed');
+      if (need && !need.value.trim()) need.value = 'Đặt lịch tham quan trường';
+    }
     card.scrollIntoView({ behavior:'smooth', block: mq.matches ? 'center' : 'start' });
     card.classList.remove('pulse');
     void card.offsetWidth;            // ép trình duyệt chạy lại animation khi bấm liên tiếp
@@ -857,7 +864,8 @@ footer a{color:var(--amber);text-decoration:none}
     }, 420);
   }
   document.querySelectorAll('a[href="#dang-ky"]').forEach(function(a){
-    a.addEventListener('click', focusForm);
+    var visit = /tham quan/i.test(a.textContent || '');
+    a.addEventListener('click', function(ev){ focusForm(ev, visit); });
   });
 
   /* ── Topbar desktop: hiện khi đã cuộn qua hero ── */

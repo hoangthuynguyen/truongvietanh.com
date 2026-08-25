@@ -302,7 +302,10 @@ function normalizeFormData(data) {
     childName: data.childName || data.child_name || '',
     schoolLevel: data.schoolLevel || data.school_level || '',
     grade: data.grade || data.childGrade || '',
-    province: data.province || '',
+    // Khu vực đang sống + nhu cầu ba mẹ tự mô tả (LP chuyển trường). Nhận cả tên khoá
+    // tiếng Việt phòng khi form khác gửi kiểu khác.
+    province: data.province || data.khu_vuc || '',
+    note: data.note || data.ghi_chu || data.nhu_cau || '',
     source: data.source || data.funnelCode || data.funnel_code || data.page_variant || 'unknown',
     page: data.page || data.page_url || '',
     utmSource: data.utm_source || data.utmSource || '',
@@ -588,6 +591,28 @@ async function handleLeadSubmission(request, env) {
         const ghlData = await ghlRes.json();
         const contactId = ghlData?.contact?.id || null;
         results.ghl = { status: ghlRes.status, contactId };
+
+        // GHL không có custom field cho "khu vực"/"nhu cầu" → ghi thành Note gắn vào liên hệ.
+        // try/catch RIÊNG: note hỏng thì lead vẫn nguyên vẹn, không đụng tới kết quả upsert.
+        if (contactId && (data.province || data.note)) {
+          try {
+            const lines = [];
+            if (data.province) lines.push('Khu vực: ' + data.province);
+            if (data.note) lines.push('Nhu cầu: ' + data.note);
+            const noteRes = await fetch(`https://services.leadconnectorhq.com/contacts/${contactId}/notes`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${ghlApiKey}`,
+                'Version': '2021-07-28',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ body: lines.join('\n') }),
+            });
+            results.ghlNote = { status: noteRes.status };
+          } catch (err) {
+            results.ghlNote = { error: err.message };
+          }
+        }
         // Opportunity creation handled later via createQuizOpportunity()
         // for both quiz + sales page trai-he leads (isQuizLead=true for all trai-he)
       } catch (err) {
@@ -651,8 +676,22 @@ async function handleLeadSubmission(request, env) {
           }
         );
 
-        let pancakeRes = await postPancake(record);
+        // Khu vực + nhu cầu là field ba mẹ tự điền. Workspace Pancake CHƯA chắc có sẵn hai
+        // field này — gửi kèm mà không có thì Pancake trả lỗi và LOẠI CẢ LEAD. Nên gửi thử bản
+        // CÓ kèm trước, hỏng thì tự gửi lại bản gốc. Xấu nhất = đúng như trước khi có đoạn này.
+        const extra = {};
+        if (data.province) extra.khu_vuc = data.province;
+        if (data.note) extra.ghi_chu = data.note;
+        const hasExtra = Object.keys(extra).length > 0;
+
+        let pancakeRes = await postPancake(hasExtra ? { ...record, ...extra } : record);
         let pancakeText = await pancakeRes.text();
+        if (hasExtra && !pancakeRes.ok && !/already exists/i.test(pancakeText)) {
+          console.warn('[lead] Pancake từ chối field phụ (khu_vuc/ghi_chu) — gửi lại bản không kèm: ' + pancakeText.substring(0, 200));
+          results.pancakeExtraDropped = true;
+          pancakeRes = await postPancake(record);
+          pancakeText = await pancakeRes.text();
+        }
         // nguoi_chay là DROPDOWN — chỉ nhận username đã có trong workspace. Nếu marketer
         // gắn utm_pke_mkter chưa được thêm vào Pancake (hoặc gõ sai), Pancake trả
         // 422 "Value X not found" và LOẠI CẢ LEAD. → Bỏ nguoi_chay rồi thử lại để lead

@@ -80,7 +80,7 @@ const content = `
   <li><strong>AI tutor có kiểm soát:</strong> trường đang thử nghiệm trợ lý AI học tập cho môn Toán, được thiết kế để đặt câu hỏi dẫn dắt từng bước thay vì đưa đáp án — đúng nguyên tắc "đèn vàng" ở trên.</li>
   <li><strong>Học đi đôi với sản phẩm thật:</strong> học sinh dùng AI để làm báo, làm video, thuyết trình — những sản phẩm AI không thể "làm hộ trọn gói" vì đòi hỏi chính kiến và trải nghiệm của con. Trong ngày hội Leadership Day, chính học sinh đứng trạm dạy lại phụ huynh cách dùng AI.</li>
 </ol>
-<p>Cha mẹ muốn kiểm chứng một ngôi trường có làm thật hay không có thể dùng bộ tiêu chí trong bài <a href="/blog/truong-hoc-ung-dung-ai-tieu-chi-danh-gia/">Trường học ứng dụng AI: 7 tiêu chí phụ huynh cần hỏi</a>.</p>
+<p>Cha mẹ muốn kiểm chứng một ngôi trường có làm thật hay không có thể dùng bộ tiêu chí trong bài Trường học ứng dụng AI: 7 tiêu chí phụ huynh cần hỏi <!-- link do scripts/dang-bai-cum-ai.mjs gắn lại khi bài 3 lên 28/8; KHÔNG tự thêm <a> ở đây, bài còn draft -->.</p>
 <blockquote>"Nhiều phụ huynh hỏi tôi: trường dạy AI thì con có ỷ lại không? Tôi trả lời bằng đúng nghiên cứu này. Đứa trẻ ỷ lại là đứa trẻ dùng AI một mình, không ai hướng dẫn. Còn đứa trẻ được dạy dùng AI trong môi trường có thầy cô giám sát thì ngược lại: con biết lúc nào được dùng, lúc nào phải tự làm — và đó chính là kỹ năng quan trọng nhất của thế hệ này. Cấm AI là chuẩn bị cho con quá khứ. Dạy con dùng AI đúng cách mới là chuẩn bị cho tương lai."<br />— Nguyễn Mạnh Dương</blockquote>
 
 <h2 id="5-viec-cha-me">5 việc cha mẹ nên làm để dạy con dùng AI đúng cách ngay tuần này</h2>

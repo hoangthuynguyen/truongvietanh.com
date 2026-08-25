@@ -9,6 +9,20 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { readItems } from '@directus/sdk';
+import { createCmsClient } from '../lib/directus';
+
+// Bài trong cụm AI đăng dần (xem scripts/dang-bai-cum-ai.mjs) — hỏi Directus lúc build
+// để không tạo link tới bài còn draft. Bài lên là link tự xuất hiện ở lần build sau.
+const client = createCmsClient<{ posts: { slug: string; status: string }[] }>();
+let slugDaDang = new Set<string>();
+if (client) {
+  const rows = await client.request(
+    readItems('posts', { fields: ['slug'], filter: { status: { _eq: 'published' } }, limit: -1 }),
+  );
+  slugDaDang = new Set(rows.map((r) => r.slug));
+}
+const daPublished = (href: string) => slugDaDang.has(href.replace(/^\/blog\/|\/$/g, ''));
 
 const canonical = 'https://truongvietanh.com/tai-lieu-ai';
 
@@ -86,7 +100,9 @@ const structuredData = [
             <p>{t.mo_ta}</p>
             <div class="tl-actions">
               <a class="tl-btn" href={t.file} download>Tải PDF</a>
-              <a class="tl-link" href={t.bai}>Đọc bài viết →</a>
+              {daPublished(t.bai)
+                ? <a class="tl-link" href={t.bai}>Đọc bài viết →</a>
+                : <span class="tl-soon">Bài viết sắp đăng</span>}
             </div>
           </article>
         ))}
@@ -111,10 +127,16 @@ const structuredData = [
       <section class="tl-more">
         <h2>Đọc thêm trong cụm bài về AI</h2>
         <ul>
-          <li><a href="/blog/day-con-dung-ai-dung-cach/">Dạy con dùng AI đúng cách</a> — nghịch lý điểm bài tập tăng nhưng điểm thi giảm, và 5 việc cha mẹ làm ngay</li>
-          <li><a href="/blog/ai-lam-ho-bai-dau-hieu-va-cach-sua/">AI làm hộ bài: 7 dấu hiệu và cách sửa</a> — kế hoạch 7 ngày, không cấm đoán</li>
-          <li><a href="/blog/truong-hoc-ung-dung-ai-tieu-chi-danh-gia/">Trường học ứng dụng AI: 7 tiêu chí</a> — bộ câu hỏi mang đi hỏi mọi ngôi trường</li>
-          <li><a href="/blog/cho-con-dung-ai-sai-cach-diem-thi-giam-20/">Nghiên cứu 26.811 học sinh</a> — phân tích nguồn gốc và AI tutor theo phương pháp Socratic</li>
+          {[
+            { href: "/blog/day-con-dung-ai-dung-cach/", ten: "Dạy con dùng AI đúng cách", mo: "nghịch lý điểm bài tập tăng nhưng điểm thi giảm, và 5 việc cha mẹ làm ngay" },
+            { href: "/blog/ai-lam-ho-bai-dau-hieu-va-cach-sua/", ten: "AI làm hộ bài: 7 dấu hiệu và cách sửa", mo: "kế hoạch 7 ngày, không cấm đoán" },
+            { href: "/blog/truong-hoc-ung-dung-ai-tieu-chi-danh-gia/", ten: "Trường học ứng dụng AI: 7 tiêu chí", mo: "bộ câu hỏi mang đi hỏi mọi ngôi trường" },
+            { href: "/blog/cho-con-dung-ai-sai-cach-diem-thi-giam-20/", ten: "Nghiên cứu 26.811 học sinh", mo: "phân tích nguồn gốc và AI tutor theo phương pháp Socratic" },
+          ].map((b) => (
+            <li>
+              {daPublished(b.href) ? <a href={b.href}>{b.ten}</a> : <span class="tl-soon">{b.ten} (sắp đăng)</span>} — {b.mo}
+            </li>
+          ))}
         </ul>
       </section>
     </div>
@@ -152,5 +174,6 @@ const structuredData = [
   .tl-more { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.3rem 1.5rem; }
   .tl-more h2 { font-size: 1.1rem; font-weight: 800; color: #26275D; margin: 0 0 .6rem; }
   .tl-more ul { margin: 0; padding-left: 1.2rem; line-height: 1.85; color: #334155; font-size: .95rem; }
+  .tl-soon { color: #94a3b8; font-size: .9rem; font-style: italic; }
   .tl-more a { color: #26275D; text-decoration: underline; text-decoration-color: #f9dd0e; text-underline-offset: 3px; }
 </style>

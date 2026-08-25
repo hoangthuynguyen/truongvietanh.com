@@ -1,0 +1,970 @@
+---
+// chuyen-truong-vao-hoc-ngay — LP chuyển trường giữa năm, dùng chung 2 cơ sở PHI (Phan Huy Ích
+// — Gò Vấp) và BT (Bình Tân). Traffic: FB/Google Ads + Zalo.
+// Goal: lead form 5 trường (tên · SĐT · lớp · khu vực · nhu cầu) → /api/lead → GHL + Pancake.
+//
+// HAI BỐ CỤC RIÊNG (đừng gộp lại thành một layout co giãn):
+//   • Desktop ≥1000px — hero 2 cột, FORM NẰM NGAY TRONG HERO (cột phải, không phải cuộn),
+//     thanh CTA dính đỉnh xuất hiện sau khi cuộn qua hero, quy trình 4 bước nằm ngang.
+//   • Mobile <1000px — một cột, form nằm đúng vị trí trong mạch kể chuyện (sau phần quy trình),
+//     thanh CTA dính đáy (Gọi · Zalo · Đăng ký), quy trình 4 bước dạng timeline dọc.
+// Chỉ có MỘT thẻ <form> trong DOM; JS chuyển nó giữa 2 vị trí theo matchMedia. Không JS thì form
+// vẫn nằm ở vị trí mobile và hoạt động bình thường.
+//
+// LƯU Ý FORM (đừng "tối ưu" thành 2 bước): trang này CỐ TÌNH chỉ submit MỘT lần, không bắt
+// partial theo SĐT. Pancake gặp SĐT trùng sẽ trả duplicate:true và KHÔNG cập nhật bản ghi cũ
+// → nếu bắt partial bằng SĐT trước thì lần submit đầy đủ sau đó bị nuốt, mất tên/lớp/khu vực.
+import { schoolFacts } from '../data/school-facts';
+
+const HOTLINE = '0916 961 409';
+const HOTLINE_TEL = 'tel:+84916961409';
+const ZALO = 'https://zalo.me/1678310120468101523';
+
+const CANONICAL = 'https://truongvietanh.com/chuyen-truong-vao-hoc-ngay/';
+const TITLE = 'Chuyển trường an tâm — Vào học ngay trong tuần | Trường Việt Anh';
+const DESC =
+  'Năm học đã bắt đầu nhưng con chưa có lớp phù hợp? Trường Việt Anh hỗ trợ trọn thủ tục chuyển trường, học thử 4 tuần hoàn 100% học phí, học trước hoàn tất học phí sau. Tư vấn 8:00–21:00 mỗi ngày.';
+
+// Chip rút gọn 4 cam kết mạnh nhất — chỉ hiện ở cột trái hero desktop, mobile ẩn đi cho gọn.
+const heroChips = [
+  'Vào học ngay trong tuần',
+  'Học thử 4 tuần — hoàn 100%',
+  'Học trước, trả học phí sau',
+  'Miễn phí xe đưa đón năm đầu',
+];
+
+const pains = [
+  'Con chưa có chỗ học ổn định ngay trong tuần này',
+  'Lo thủ tục chuyển trường phức tạp, mất nhiều thời gian',
+  'Sợ chọn lại chưa đúng môi trường phù hợp với con',
+  'Học phí ở trường cũ còn dang dở',
+  'Khoảng cách đưa đón mỗi ngày là áp lực cho gia đình',
+];
+
+const solutions = [
+  {
+    icon: '⚡',
+    title: 'Vào học ngay trong tuần',
+    body: 'Nhà trường hỗ trợ tiếp nhận hồ sơ, tư vấn lớp phù hợp và sắp xếp để con nhanh chóng bắt nhịp với môi trường học tập mới.',
+  },
+  {
+    icon: '📋',
+    title: 'Hỗ trợ trọn thủ tục chuyển trường',
+    body: 'Ba mẹ được hướng dẫn rõ ràng từng bước, giảm bớt thời gian và áp lực xử lý hồ sơ. Đội ngũ nhà trường đồng hành để quá trình chuyển trường diễn ra thuận lợi.',
+  },
+  {
+    icon: '🛡️',
+    title: 'Học thử 4 tuần — không phù hợp hoàn 100% học phí',
+    body: 'Đây là chính sách thường trực của Trường Việt Anh, giúp gia đình có thời gian trải nghiệm thực tế trước khi đưa ra quyết định lâu dài cho con.',
+  },
+  {
+    icon: '🤝',
+    title: 'Học trước, hoàn tất học phí sau',
+    body: 'Nếu gia đình còn vướng phần học phí tại trường cũ, con vẫn có thể bắt đầu việc học. Trường Việt Anh sẵn sàng chia sẻ áp lực tài chính để việc học của con không bị gián đoạn.',
+  },
+];
+
+// Cam kết thứ 5 tách riêng: dàn ngang cuối phần giải pháp cho cân bố cục 2x2 + 1 banner.
+const support = {
+  icon: '🚌',
+  title: 'Hỗ trợ đưa đón và nội trú',
+  list: [
+    'Miễn phí xe đưa đón năm đầu cho tuyến phù hợp khu vực Quận 10',
+    'Miễn phí nội trú từ Thứ Hai đến Thứ Sáu dành cho học sinh từ lớp 6 trở lên',
+  ],
+};
+
+const reasons = [
+  {
+    title: `${schoolFacts.yearsRunning} năm đồng hành cùng phụ huynh và học sinh`,
+    body: 'Một môi trường học tập ổn định, lấy sự phát triển và cảm xúc của học sinh làm trung tâm.',
+  },
+  {
+    title: 'Lớp học quy mô phù hợp',
+    body: 'Giáo viên có điều kiện quan tâm sát sao hơn đến từng học sinh.',
+  },
+  {
+    title: 'Phát triển toàn diện',
+    body: 'Không chỉ kiến thức, con được rèn nền tảng tiếng Anh, kỹ năng sống, thể chất và sự tự tin.',
+  },
+  {
+    title: 'Đội ngũ tư vấn và giáo viên đồng hành thật',
+    body: 'Khi cần trao đổi về việc học của con, ba mẹ luôn có người để kết nối.',
+  },
+];
+
+const metrics = [
+  { number: `${schoolFacts.yearsRunning}`, label: 'Năm đồng hành cùng học sinh' },
+  { number: schoolFacts.studentsTotal, label: 'Học sinh & gia đình đã tin chọn' },
+  { number: `${schoolFacts.campuses}`, label: 'Cơ sở trong hệ thống' },
+  { number: `${schoolFacts.rating}/5`, label: `Đánh giá từ ${schoolFacts.reviewCount} phụ huynh` },
+];
+
+const steps = [
+  { n: '1', title: 'Đăng ký tư vấn', body: 'Để lại thông tin hoặc chat trực tiếp với tư vấn viên.' },
+  {
+    n: '2',
+    title: 'Tìm hiểu nhu cầu của con',
+    body: 'Nhà trường trao đổi về lớp hiện tại, khu vực, mong muốn học tập và hỗ trợ phù hợp.',
+  },
+  {
+    n: '3',
+    title: 'Tham quan trường',
+    body: 'Ba mẹ và con đến trải nghiệm không gian học tập, gặp đội ngũ tư vấn.',
+  },
+  {
+    n: '4',
+    title: 'Hoàn tất hồ sơ — vào học',
+    body: 'Nhà trường hướng dẫn thủ tục và sắp xếp lớp để con sớm ổn định việc học.',
+  },
+];
+
+// value phải trùng key trong KHOI_QUAN_TAM_MAP của worker để Pancake điền đúng "Khối quan tâm".
+const gradeGroups = [
+  {
+    label: 'Mầm Non',
+    options: [
+      { v: '2-tuoi', t: 'Mầm non · 2 tuổi' },
+      { v: '3-tuoi', t: 'Mầm non · 3 tuổi' },
+      { v: '4-tuoi', t: 'Mầm non · 4 tuổi' },
+      { v: '5-tuoi', t: 'Mầm non · 5 tuổi' },
+    ],
+  },
+  { label: 'Tiểu Học', options: [1, 2, 3, 4, 5].map((n) => ({ v: `lop-${n}`, t: `Lớp ${n}` })) },
+  { label: 'THCS', options: [6, 7, 8, 9].map((n) => ({ v: `lop-${n}`, t: `Lớp ${n}` })) },
+  { label: 'THPT', options: [10, 11, 12].map((n) => ({ v: `lop-${n}`, t: `Lớp ${n}` })) },
+];
+
+const faqs = [
+  {
+    q: 'Chuyển trường giữa năm có ảnh hưởng đến việc học của con không?',
+    a: 'Việc chuyển trường cần được chuẩn bị đúng cách. Nhà trường sẽ trao đổi tình hình học tập hiện tại, sắp xếp lớp phù hợp và hỗ trợ con hòa nhập để giảm tối đa sự xáo trộn.',
+  },
+  {
+    q: 'Con có thể vào học ngay không?',
+    a: 'Sau khi được tư vấn và hoàn tất các bước cần thiết, nhà trường sẽ hỗ trợ sắp xếp để con có thể vào học trong tuần.',
+  },
+  {
+    q: 'Nếu con học không phù hợp thì sao?',
+    a: 'Trường Việt Anh có chính sách học thử 4 tuần. Nếu gia đình thấy không phù hợp, nhà trường hoàn lại 100% học phí theo chính sách đã công bố.',
+  },
+  {
+    q: 'Nhà trường có hỗ trợ xe đưa đón không?',
+    a: 'Có. Nhà trường miễn phí xe đưa đón năm đầu cho tuyến phù hợp khu vực Quận 10. Vui lòng liên hệ tư vấn viên để kiểm tra cụ thể tuyến đưa đón của gia đình.',
+  },
+  {
+    q: 'Tôi cần chuẩn bị giấy tờ gì?',
+    a: 'Tư vấn viên sẽ gửi checklist hồ sơ và hướng dẫn từng bước sau khi tiếp nhận nhu cầu của gia đình.',
+  },
+];
+
+const campuses = [
+  { name: 'Cơ sở Gò Vấp (Phan Huy Ích)', addr: '160/72 Phan Huy Ích, Phường An Hội Tây, TP. Hồ Chí Minh' },
+  { name: 'Cơ sở Bình Tân', addr: 'Số 7 Đường 38A, Phường Tân Tạo, TP. Hồ Chí Minh' },
+];
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    name: 'Trường Việt Anh',
+    url: CANONICAL,
+    description: DESC,
+    telephone: '+84916961409',
+    address: campuses.map((c) => ({
+      '@type': 'PostalAddress',
+      streetAddress: c.addr,
+      addressLocality: 'TP. Hồ Chí Minh',
+      addressCountry: 'VN',
+    })),
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TMPPWX29');</script>
+<!-- End Google Tag Manager -->
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>{TITLE}</title>
+<meta name="description" content={DESC} />
+<meta name="theme-color" content="#26275D" />
+<!-- LP quảng cáo: để noindex tránh cạnh tranh với /chuyen-truong-go-vap và /chuyen-truong-binh-tan -->
+<meta name="robots" content="noindex, follow" />
+<link rel="canonical" href={CANONICAL} />
+<meta property="og:title" content={TITLE} />
+<meta property="og:description" content={DESC} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Trường Việt Anh" />
+<meta property="og:url" content={CANONICAL} />
+<meta property="og:image" content="https://truongvietanh.com/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet" />
+<script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />
+<style>
+/* ══════════════════════════════════════════════════════════════
+   TOKENS + RESET
+   ══════════════════════════════════════════════════════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#26275D; --navy2:#1F2050; --navy3:#171838;
+  --amber:#F9DD0E; --amber2:#F5C518;
+  --green:#16A34A; --red:#DC2626; --zalo:#0068FF;
+  --ink:#1A1C3A; --muted:#5B5F7D; --line:#E5E7F0;
+  --bg:#FFFFFF; --bg2:#F6F7FB; --r:14px;
+  --shadow:0 2px 4px rgba(31,32,80,.04),0 12px 28px rgba(31,32,80,.07);
+  --shadow-lg:0 24px 60px rgba(16,17,40,.28);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  color:var(--ink);background:var(--bg);line-height:1.65;font-size:16px;
+}
+img{max-width:100%;display:block}
+h1,h2,h3{font-family:Montserrat,Inter,sans-serif;line-height:1.2;letter-spacing:-.01em}
+a{color:inherit}
+.wrap{width:100%;max-width:1160px;margin:0 auto;padding:0 20px}
+.wrap.narrow{max-width:760px}
+section{padding:52px 0}
+.alt{background:var(--bg2)}
+.center{text-align:center}
+.eyebrow{
+  display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;padding:7px 14px;border-radius:999px;
+  background:rgba(249,221,14,.18);color:#7A5C00;border:1px solid rgba(249,221,14,.5);
+}
+h2.sec{font-size:25px;font-weight:800;color:var(--navy);margin:13px 0 10px}
+.sec-sub{color:var(--muted);max-width:62ch}
+.center .sec-sub{margin-inline:auto}
+
+/* ── Buttons ── */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:9px;
+  font-family:Montserrat,Inter,sans-serif;font-weight:800;font-size:15.5px;
+  padding:15px 26px;border-radius:999px;border:2px solid transparent;
+  text-decoration:none;cursor:pointer;text-align:center;line-height:1.25;
+  transition:transform .15s,box-shadow .15s,background .15s;
+}
+.btn:hover{transform:translateY(-2px)}
+.btn-primary{background:var(--amber);color:var(--navy2);box-shadow:0 8px 22px rgba(249,221,14,.32)}
+.btn-primary:hover{background:var(--amber2)}
+.btn-zalo{background:var(--zalo);color:#fff;box-shadow:0 8px 22px rgba(0,104,255,.28)}
+.btn-ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.42)}
+.btn-ghost:hover{background:rgba(255,255,255,.1)}
+.btn-navy{background:var(--navy);color:#fff;box-shadow:0 8px 22px rgba(38,39,93,.22)}
+.btn-block{width:100%}
+
+/* ══════════════════════════════════════════════════════════════
+   MOBILE (mặc định) — một cột, mạch kể chuyện, CTA dính đáy
+   ══════════════════════════════════════════════════════════════ */
+body{padding-bottom:92px}
+
+.topbar{display:none}
+
+.hero{
+  background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 58%,var(--navy3) 100%);
+  color:#fff;padding:38px 0 44px;position:relative;overflow:hidden;
+}
+.hero::after{
+  content:'';position:absolute;width:460px;height:460px;right:-180px;top:-200px;
+  background:radial-gradient(circle,rgba(249,221,14,.16),transparent 68%);pointer-events:none;
+}
+.hero .wrap{position:relative;z-index:1}
+.hero .eyebrow,.form-sec .eyebrow{
+  background:rgba(249,221,14,.14);color:var(--amber);border-color:rgba(249,221,14,.42);
+}
+.hero h1{font-size:31px;font-weight:900;margin:15px 0 6px}
+.hero .lede{font-size:18.5px;font-weight:700;color:var(--amber);margin-bottom:13px}
+.hero p.body{color:rgba(255,255,255,.83);margin-bottom:8px}
+.hero .chips{display:none}
+.hero .cta-row{display:flex;flex-direction:column;gap:11px;margin:24px 0 14px}
+.hero .hot{font-size:15px;color:rgba(255,255,255,.9)}
+.hero .hot b{color:#fff;font-size:19px;letter-spacing:.5px}
+.hero .hours{font-size:14px;color:rgba(255,255,255,.62);font-style:italic;margin-top:8px}
+.hero-form-slot{display:none}
+
+/* Pain */
+.pain-list{list-style:none;display:grid;gap:11px;margin:24px 0 22px}
+.pain-list li{
+  display:flex;gap:12px;align-items:flex-start;background:#fff;border:1px solid var(--line);
+  border-left:4px solid var(--red);border-radius:12px;padding:14px 15px;box-shadow:var(--shadow);
+}
+.pain-list .x{color:var(--red);font-weight:800;flex:0 0 auto;line-height:1.5}
+.pain-note{
+  background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:19px 20px;font-size:16.5px;box-shadow:var(--shadow);
+}
+.pain-note b{color:var(--navy)}
+
+/* Solutions */
+.sol-grid{display:grid;gap:15px;margin-top:26px}
+.sol{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow)}
+.sol .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:rgba(249,221,14,.2);margin-bottom:13px}
+.sol h3{font-size:18px;font-weight:800;color:var(--navy);margin-bottom:8px}
+.sol p{color:var(--muted)}
+.support{
+  margin-top:15px;background:var(--navy);color:#fff;border-radius:var(--r);padding:22px 20px;
+  display:grid;gap:14px;
+}
+.support .ico{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:rgba(249,221,14,.18)}
+.support h3{font-size:18px;font-weight:800;color:var(--amber)}
+.support ul{list-style:none;display:grid;gap:9px}
+.support ul li{display:flex;gap:10px;color:rgba(255,255,255,.86)}
+.support ul li::before{content:'✓';color:var(--amber);font-weight:800;flex:0 0 auto}
+
+/* Metrics + reasons */
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:26px 0 28px}
+.metric{background:var(--navy);color:#fff;border-radius:var(--r);padding:18px 12px;text-align:center}
+.metric .n{font-family:Montserrat,sans-serif;font-size:26px;font-weight:900;color:var(--amber)}
+.metric .l{font-size:12.5px;color:rgba(255,255,255,.78);margin-top:4px;line-height:1.4}
+.reasons{display:grid;gap:13px}
+.reason{background:#fff;border:1px solid var(--line);border-radius:12px;padding:19px;box-shadow:var(--shadow)}
+.reason h3{font-size:16.5px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.reason p{color:var(--muted);font-size:15.5px}
+
+/* Steps — mobile: timeline dọc, có đường nối bên trái */
+.steps{display:grid;gap:0;margin:28px 0 26px;position:relative}
+.step{display:grid;grid-template-columns:44px 1fr;gap:14px;padding:0 0 22px;position:relative}
+.step:last-child{padding-bottom:0}
+.step::before{
+  content:'';position:absolute;left:21px;top:40px;bottom:-2px;width:2px;
+  background:linear-gradient(180deg,var(--amber),rgba(249,221,14,.25));
+}
+.step:last-child::before{display:none}
+.step .n{
+  width:44px;height:44px;border-radius:50%;background:var(--navy);color:var(--amber);
+  display:grid;place-items:center;font-family:Montserrat,sans-serif;font-weight:900;font-size:17px;
+  position:relative;z-index:1;box-shadow:0 0 0 5px var(--bg);
+}
+.step .txt{padding-top:5px}
+.step h3{font-size:16.5px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.step p{color:var(--muted);font-size:15px}
+
+/* Form */
+.form-sec{background:linear-gradient(160deg,var(--navy) 0%,var(--navy2) 100%);color:#fff}
+.form-sec h2.sec{color:#fff}
+.form-sec .sec-sub{color:rgba(255,255,255,.8)}
+.form-card{
+  background:#fff;color:var(--ink);border-radius:18px;padding:24px 20px;margin-top:26px;
+  box-shadow:var(--shadow-lg);
+}
+.form-card .fc-head{display:none}
+.fgrid{display:grid;gap:15px}
+label{display:block;font-weight:700;font-size:14.5px;margin-bottom:6px;color:var(--navy)}
+label .req{color:var(--red)}
+.fi{
+  width:100%;padding:13px 15px;font-size:16px;font-family:inherit;color:var(--ink);
+  border:1.5px solid var(--line);border-radius:10px;background:#fff;
+  transition:border-color .15s,box-shadow .15s;
+}
+.fi:focus{outline:none;border-color:var(--navy);box-shadow:0 0 0 3px rgba(38,39,93,.12)}
+.fi.err{border-color:var(--red);background:#FFF6F6}
+select.fi{
+  appearance:none;padding-right:40px;background-repeat:no-repeat;
+  background-position:right 14px center;background-size:14px;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%235B5F7D' stroke-width='2'%3E%3Cpath d='M3 6l5 5 5-5'/%3E%3C/svg%3E");
+}
+textarea.fi{min-height:88px;resize:vertical}
+.fe{display:none;color:var(--red);font-size:13.5px;margin-top:5px;font-weight:600}
+.fe.on{display:block}
+.fnote{font-size:13.5px;color:var(--muted);font-style:italic;margin-top:13px;text-align:center}
+#submitBtn.loading{opacity:.65;pointer-events:none}
+.success{display:none;text-align:center;padding:22px 6px}
+.success.on{display:block}
+.success .tick{font-size:44px;line-height:1}
+.success h3{color:var(--green);font-size:21px;font-weight:800;margin:10px 0 6px}
+.success p{color:var(--muted)}
+/* Khối thay thế khi form đã được chuyển lên hero (chỉ desktop) */
+.form-moved{display:none}
+/* Nháy nhẹ quanh form sau khi CTA cuộn tới, để mắt bắt được form vừa nhảy tới đâu */
+@keyframes cardPulse{0%{box-shadow:var(--shadow-lg)}35%{box-shadow:0 0 0 5px rgba(249,221,14,.55),var(--shadow-lg)}100%{box-shadow:var(--shadow-lg)}}
+.form-card.pulse{animation:cardPulse 1.2s ease}
+
+/* FAQ */
+.faq{display:grid;gap:11px;margin-top:26px}
+.faq details{background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden}
+.faq summary{
+  cursor:pointer;list-style:none;padding:17px 46px 17px 18px;font-weight:700;color:var(--navy);
+  font-size:16px;position:relative;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:'+';position:absolute;right:18px;top:50%;transform:translateY(-50%);
+  font-size:23px;font-weight:400;color:var(--muted);line-height:1;
+}
+.faq details[open] summary::after{content:'−'}
+.faq .ans{padding:0 18px 17px;color:var(--muted)}
+
+/* Closing */
+.closing{background:linear-gradient(160deg,var(--navy2),#141534);color:#fff;text-align:center}
+.closing h2.sec{color:#fff}
+.closing p{color:rgba(255,255,255,.82);max-width:58ch;margin:0 auto 8px}
+.closing h3{font-size:19px;font-weight:800;color:var(--amber);margin:20px 0 18px}
+.closing .cta-row{display:flex;flex-direction:column;gap:11px}
+.closing .hot{margin-top:15px;color:rgba(255,255,255,.9)}
+.closing .hot b{color:#fff;font-size:19px}
+
+/* Footer */
+footer{background:#101128;color:rgba(255,255,255,.68);padding:32px 0;font-size:14.5px}
+footer .brand{font-family:Montserrat,sans-serif;font-weight:900;color:#fff;font-size:17px;letter-spacing:.05em;margin-bottom:14px}
+footer .cs{display:grid;gap:12px;margin-bottom:15px}
+footer .cs b{color:#fff;display:block;font-size:14.5px}
+footer a{color:var(--amber);text-decoration:none}
+
+/* Sticky CTA đáy — chỉ mobile */
+.sticky{
+  position:fixed;left:0;right:0;bottom:0;z-index:60;display:flex;gap:8px;padding:9px 12px;
+  background:rgba(255,255,255,.97);backdrop-filter:blur(8px);border-top:1px solid var(--line);
+  box-shadow:0 -6px 20px rgba(31,32,80,.1);
+}
+.sticky .btn{flex:1;padding:12px 10px;font-size:14.5px;border-radius:12px}
+.sticky .btn.call{flex:0 0 52px;background:var(--navy);color:#fff;font-size:19px;padding:12px 0}
+
+/* Mobile rộng hơn: cho phép 2 cột ở vài khối */
+@media(min-width:620px){
+  .pain-list{grid-template-columns:1fr 1fr}
+  .sol-grid{grid-template-columns:1fr 1fr}
+  .metrics{grid-template-columns:repeat(4,1fr)}
+  .reasons{grid-template-columns:1fr 1fr}
+  .support{grid-template-columns:auto 1fr;align-items:start;column-gap:18px}
+  .support ul{grid-column:2}
+  .hero .cta-row,.closing .cta-row{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  .hero .cta-row{justify-content:flex-start}
+  footer .cs{grid-template-columns:1fr 1fr}
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DESKTOP ≥1000px — hero 2 cột + form trong hero, topbar dính đỉnh,
+   quy trình nằm ngang. Thanh CTA đáy tắt hẳn.
+   ══════════════════════════════════════════════════════════════ */
+@media(min-width:1000px){
+  body{padding-bottom:0}
+  section{padding:80px 0}
+  h2.sec{font-size:34px}
+  .eyebrow{font-size:12px}
+
+  /* Topbar dính đỉnh, hiện sau khi cuộn qua hero */
+  .topbar{
+    display:flex;position:fixed;top:0;left:0;right:0;z-index:70;align-items:center;gap:20px;
+    padding:11px 28px;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);box-shadow:0 4px 18px rgba(31,32,80,.09);
+    transform:translateY(-100%);transition:transform .28s ease;
+  }
+  .topbar.on{transform:translateY(0)}
+  .topbar .tb-brand{font-family:Montserrat,sans-serif;font-weight:900;color:var(--navy);font-size:15px;letter-spacing:.04em}
+  .topbar .tb-claim{color:var(--muted);font-size:14.5px;margin-right:auto}
+  .topbar .tb-hot{font-weight:800;color:var(--navy);font-size:16px;text-decoration:none;white-space:nowrap}
+  .topbar .btn{padding:10px 20px;font-size:14px}
+
+  /* Hero 2 cột */
+  .hero{padding:64px 0 72px}
+  .hero::after{width:640px;height:640px;right:-140px;top:-240px}
+  .hero-grid{display:grid;grid-template-columns:1fr 430px;gap:44px;align-items:start}
+  .hero h1{font-size:42px;margin:18px 0 8px;text-wrap:balance}
+  .hero .lede{font-size:22px;margin-bottom:16px}
+  .hero p.body{max-width:52ch;font-size:16.5px}
+  .hero .chips{display:flex;flex-wrap:wrap;gap:9px;margin:22px 0 4px}
+  .hero .chips span{
+    display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;
+    padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.16);color:rgba(255,255,255,.92);
+  }
+  .hero .chips span::before{content:'✓';color:var(--amber);font-weight:800}
+  .hero .cta-row{margin:22px 0 14px}
+  .hero-form-slot{display:block;position:sticky;top:88px}
+
+  /* Form khi nằm trong hero */
+  .hero-form-slot .form-card{margin-top:0;padding:26px 26px 24px}
+  .hero-form-slot .fc-head{display:block;margin-bottom:18px;text-align:center}
+  .hero-form-slot .fc-head h2{font-size:21px;font-weight:800;color:var(--navy);margin-bottom:6px}
+  .hero-form-slot .fc-head p{font-size:14.5px;color:var(--muted)}
+  .hero-form-slot .fgrid{gap:13px}
+  .hero-form-slot textarea.fi{min-height:70px}
+
+  /* Section form ở dưới đổi vai: khi form đã lên hero thì hiện lời nhắc + nút cuộn lên */
+  body.form-in-hero .form-sec .form-card{display:none}
+  body.form-in-hero .form-moved{
+    display:block;margin-top:30px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+    border-radius:18px;padding:30px;text-align:center;
+  }
+  body.form-in-hero .form-moved p{color:rgba(255,255,255,.8);margin-bottom:18px}
+
+  /* Giải pháp: 2x2 + banner ngang */
+  .sol-grid{gap:20px;margin-top:38px}
+  .sol{padding:28px 26px}
+  .sol h3{font-size:19px}
+  /* ico · tiêu đề · danh sách — chốt bề rộng cột tiêu đề, để auto thì bị danh sách ép vỡ chữ */
+  .support{margin-top:20px;padding:26px 28px;grid-template-columns:46px minmax(190px,240px) 1fr;align-items:center;column-gap:24px}
+  .support ul{grid-column:auto;grid-template-columns:1fr 1fr;gap:8px 26px;display:grid}
+
+  /* Số liệu + lý do */
+  .metrics{gap:18px;margin:38px 0 34px}
+  .metric{padding:24px 16px}
+  .metric .n{font-size:32px}
+  .metric .l{font-size:13px}
+  .reasons{gap:18px}
+  .reason{padding:24px}
+
+  /* Quy trình: 4 cột ngang, đường nối chạy qua các số */
+  .steps{grid-template-columns:repeat(4,1fr);gap:24px;margin:42px 0 36px}
+  .steps::before{
+    content:'';position:absolute;left:12%;right:12%;top:26px;height:2px;
+    background:linear-gradient(90deg,rgba(249,221,14,.25),var(--amber),rgba(249,221,14,.25));
+  }
+  .step{display:block;padding:0;text-align:center}
+  .step::before{display:none}
+  .step .n{margin:0 auto 16px;width:52px;height:52px;font-size:19px;box-shadow:0 0 0 8px var(--bg)}
+  .step .txt{padding-top:0}
+  .step h3{font-size:17px}
+
+  /* FAQ + closing */
+  .faq{gap:12px;margin-top:34px}
+  .faq summary{font-size:17px;padding:19px 50px 19px 22px}
+  .faq .ans{padding:0 22px 19px}
+  .closing h3{font-size:21px}
+  footer{padding:40px 0}
+  .sticky{display:none}
+}
+
+@media(min-width:1280px){
+  .wrap{max-width:1240px}
+  .hero-grid{grid-template-columns:1fr 462px;gap:56px}
+  .hero h1{font-size:48px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .btn:hover{transform:none}
+  .topbar{transition:none}
+}
+</style>
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMPPWX29" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- ═══ TOPBAR (desktop) ═══ -->
+<div class="topbar" id="topbar">
+  <span class="tb-brand">TRƯỜNG VIỆT ANH</span>
+  <span class="tb-claim">Chuyển trường an tâm — vào học ngay trong tuần</span>
+  <a class="tb-hot" href={HOTLINE_TEL} data-cta="topbar-call">{HOTLINE}</a>
+  <a class="btn btn-navy" href="#dang-ky" data-cta="topbar-form">Đăng ký tư vấn</a>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<header class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Vào học ngay trong tuần</span>
+      <h1>Chuyển trường an tâm</h1>
+      <p class="lede">Trường Việt Anh đồng hành cùng gia đình từ hôm nay</p>
+      <p class="body">Năm học đã bắt đầu nhưng con chưa có lớp phù hợp?</p>
+      <p class="body">
+        Đừng để con phải chờ thêm. Trường Việt Anh hỗ trợ gia đình hoàn tất thủ tục chuyển trường,
+        sắp xếp lớp học và ổn định việc học nhanh chóng.
+      </p>
+      <div class="chips">{heroChips.map((c) => <span>{c}</span>)}</div>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#dang-ky" data-cta="hero-form">ĐĂNG KÝ TƯ VẤN NGAY</a>
+        <a class="btn btn-zalo" href={ZALO} target="_blank" rel="noopener" data-cta="hero-zalo">CHAT ZALO VỚI TƯ VẤN VIÊN</a>
+      </div>
+      <p class="hot">Hotline: <b><a href={HOTLINE_TEL} style="text-decoration:none" data-cta="hero-call">{HOTLINE}</a></b></p>
+      <p class="hours">Đội ngũ tư vấn trực từ 8:00 đến 21:00 mỗi ngày.</p>
+    </div>
+
+    <!-- Desktop: JS chuyển #formCard vào đây -->
+    <div class="hero-form-slot" id="heroFormSlot"></div>
+  </div>
+</header>
+
+<!-- ═══ PAIN ═══ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Ba mẹ đang lo điều gì?</span>
+      <h2 class="sec">Chuyển trường giữa năm — nỗi lo không của riêng ai</h2>
+    </div>
+    <ul class="pain-list">
+      {pains.map((p) => <li><span class="x">✕</span><span>{p}</span></li>)}
+    </ul>
+    <p class="pain-note">
+      Trường Việt Anh hiểu rằng, chuyển trường không chỉ là đổi một nơi học.
+      <b> Đó là quyết định cần sự an tâm cho cả con và ba mẹ.</b>
+    </p>
+  </div>
+</section>
+
+<!-- ═══ SOLUTIONS ═══ -->
+<section>
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Giải pháp</span>
+      <h2 class="sec">Giải pháp chuyển trường an tâm tại Trường Việt Anh</h2>
+      <p class="sec-sub">Năm điểm tựa để con vào học sớm, ba mẹ không phải xoay xở một mình.</p>
+    </div>
+    <div class="sol-grid">
+      {solutions.map((s) => (
+        <article class="sol">
+          <div class="ico">{s.icon}</div>
+          <h3>{s.title}</h3>
+          <p>{s.body}</p>
+        </article>
+      ))}
+    </div>
+    <article class="support">
+      <div class="ico">{support.icon}</div>
+      <h3>{support.title}</h3>
+      <ul>{support.list.map((li) => <li>{li}</li>)}</ul>
+    </article>
+  </div>
+</section>
+
+<!-- ═══ WHY ═══ -->
+<section class="alt">
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Vì sao chọn Việt Anh</span>
+      <h2 class="sec">Vì sao nhiều gia đình chọn Trường Việt Anh?</h2>
+    </div>
+    <div class="metrics">
+      {metrics.map((m) => (
+        <div class="metric"><div class="n">{m.number}</div><div class="l">{m.label}</div></div>
+      ))}
+    </div>
+    <div class="reasons">
+      {reasons.map((r) => (
+        <div class="reason"><h3>{r.title}</h3><p>{r.body}</p></div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PROCESS ═══ -->
+<section>
+  <div class="wrap">
+    <div class="center">
+      <span class="eyebrow">Quy trình</span>
+      <h2 class="sec">Quy trình nhập học nhanh gọn</h2>
+      <p class="sec-sub">Bốn bước rõ ràng — ba mẹ biết chính xác điều gì sẽ diễn ra tiếp theo.</p>
+    </div>
+    <div class="steps">
+      {steps.map((s) => (
+        <article class="step">
+          <div class="n">{s.n}</div>
+          <div class="txt">
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+    <div class="center">
+      <a class="btn btn-navy" href="#dang-ky" data-cta="process-form">ĐẶT LỊCH THAM QUAN TRƯỜNG</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FORM ═══ -->
+<section class="form-sec" id="dang-ky">
+  <div class="wrap narrow">
+    <div class="center">
+      <span class="eyebrow">Đăng ký</span>
+      <h2 class="sec">Nhận tư vấn chuyển trường cho con</h2>
+      <p class="sec-sub">
+        Điền thông tin để Trường Việt Anh liên hệ và tư vấn phương án phù hợp nhất cho gia đình.
+      </p>
+    </div>
+
+    <!-- Mobile: form ở đây. Desktop: JS nhấc #formCard lên hero, khối .form-moved thế chỗ. -->
+    <div id="formHome">
+      <div class="form-card" id="formCard">
+        <div class="fc-head">
+          <h2>Nhận tư vấn chuyển trường cho con</h2>
+          <p>Tư vấn viên liên hệ trong giờ hành chính 8:00–21:00.</p>
+        </div>
+
+        <form id="leadForm" novalidate>
+          <div class="fgrid">
+            <div>
+              <label for="fName">Họ và tên phụ huynh <span class="req">*</span></label>
+              <input class="fi" type="text" id="fName" name="parent_name" placeholder="Nguyễn Thị Lan" autocomplete="name" />
+              <div class="fe" id="eName">Vui lòng nhập họ tên của ba/mẹ</div>
+            </div>
+
+            <div>
+              <label for="fPhone">Số điện thoại <span class="req">*</span></label>
+              <input class="fi" type="tel" id="fPhone" name="phone" placeholder="0912 345 678" autocomplete="tel" inputmode="tel" />
+              <div class="fe" id="ePhone">Vui lòng nhập số điện thoại hợp lệ (10 số)</div>
+            </div>
+
+            <div>
+              <label for="fGrade">Con đang học lớp <span class="req">*</span></label>
+              <select class="fi" id="fGrade" name="grade">
+                <option value="">— Chọn lớp —</option>
+                {gradeGroups.map((g) => (
+                  <optgroup label={g.label}>
+                    {g.options.map((o) => <option value={o.v}>{o.t}</option>)}
+                  </optgroup>
+                ))}
+              </select>
+              <div class="fe" id="eGrade">Vui lòng chọn lớp con đang học</div>
+            </div>
+
+            <div>
+              <label for="fArea">Khu vực đang sinh sống</label>
+              <input class="fi" type="text" id="fArea" name="province" placeholder="VD: Quận 10, Gò Vấp, Bình Tân…" autocomplete="address-level2" />
+            </div>
+
+            <div>
+              <label for="fNeed">Nhu cầu cần hỗ trợ</label>
+              <textarea class="fi" id="fNeed" name="note" placeholder="VD: cần vào học trong tuần, cần xe đưa đón, cần tư vấn hồ sơ chuyển trường…"></textarea>
+            </div>
+
+            <div>
+              <button class="btn btn-primary btn-block" type="submit" id="submitBtn">NHẬN TƯ VẤN NGAY</button>
+            </div>
+          </div>
+          <p class="fnote">Thông tin của ba mẹ được bảo mật và chỉ dùng để tư vấn tuyển sinh.</p>
+        </form>
+
+        <div class="success" id="formSuccess">
+          <div class="tick">✅</div>
+          <h3>Đã nhận thông tin của ba mẹ!</h3>
+          <p>Tư vấn viên Trường Việt Anh sẽ liên hệ trong thời gian sớm nhất (8:00–21:00 mỗi ngày).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-moved">
+      <p>Form đăng ký đang mở sẵn ở đầu trang — ba mẹ chỉ cần điền 3 thông tin là xong.</p>
+      <a class="btn btn-primary" href="#dang-ky" data-cta="moved-form">ĐIỀN FORM ĐĂNG KÝ</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ═══ -->
+<section>
+  <div class="wrap narrow">
+    <div class="center">
+      <span class="eyebrow">Giải đáp</span>
+      <h2 class="sec">Câu hỏi thường gặp</h2>
+    </div>
+    <div class="faq">
+      {faqs.map((f) => (
+        <details>
+          <summary>{f.q}</summary>
+          <div class="ans">{f.a}</div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CLOSING ═══ -->
+<section class="closing">
+  <div class="wrap narrow">
+    <h2 class="sec">Đừng để việc học của con bị gián đoạn</h2>
+    <p>
+      Một nơi học ổn định, một lộ trình rõ ràng và sự đồng hành đúng lúc
+      có thể giúp con bắt đầu lại thật tự tin.
+    </p>
+    <h3>Đăng ký để được tư vấn chuyển trường ngay hôm nay</h3>
+    <div class="cta-row">
+      <a class="btn btn-zalo" href={ZALO} target="_blank" rel="noopener" data-cta="closing-zalo">CHAT ZALO NGAY</a>
+      <a class="btn btn-primary" href="#dang-ky" data-cta="closing-form">ĐẶT LỊCH THAM QUAN</a>
+    </div>
+    <p class="hot">Hotline: <b><a href={HOTLINE_TEL} style="text-decoration:none" data-cta="closing-call">{HOTLINE}</a></b></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">TRƯỜNG VIỆT ANH</div>
+    <div class="cs">
+      {campuses.map((c) => (
+        <div><b>{c.name}</b><span>{c.addr}</span></div>
+      ))}
+    </div>
+    <p>Hotline: <a href={HOTLINE_TEL}>{HOTLINE}</a> · Thời gian tư vấn: 8:00–21:00 hằng ngày</p>
+  </div>
+</footer>
+
+<!-- Sticky CTA đáy — chỉ mobile -->
+<div class="sticky">
+  <a class="btn call" href={HOTLINE_TEL} aria-label={'Gọi ' + HOTLINE} data-cta="sticky-call">📞</a>
+  <a class="btn btn-zalo" href={ZALO} target="_blank" rel="noopener" data-cta="sticky-zalo">Chat Zalo</a>
+  <a class="btn btn-primary" href="#dang-ky" data-cta="sticky-form">Đăng ký tư vấn</a>
+</div>
+
+<!-- Bộ thu UTM dùng chung — BẮT BUỘC, phải nạp trước script dưới -->
+<script src="/js/va-utm.js" is:inline></script>
+<script is:inline>
+(function(){
+  var C = {
+    api: '/api/lead',
+    formId: 'lp-chuyen-truong-vao-hoc-ngay',
+    funnel: 'lp-chuyen-truong-vao-hoc-ngay',
+    redirect: '/cam-on/'
+  };
+
+  var form = document.getElementById('leadForm');
+  var okBox = document.getElementById('formSuccess');
+  var btn  = document.getElementById('submitBtn');
+  var card = document.getElementById('formCard');
+  if (!form) return;
+
+  /* ── Bố cục: desktop nhấc form lên hero, mobile trả về đúng chỗ trong mạch nội dung ── */
+  var mq = window.matchMedia('(min-width:1000px)');
+  function placeForm(){
+    var target = document.getElementById(mq.matches ? 'heroFormSlot' : 'formHome');
+    if (target && card.parentNode !== target) target.appendChild(card);
+    document.body.classList.toggle('form-in-hero', mq.matches);
+  }
+  placeForm();
+  if (mq.addEventListener) mq.addEventListener('change', placeForm);
+  else if (mq.addListener) mq.addListener(placeForm);
+
+  /* ── Mọi CTA "#dang-ky" cuộn tới form ở vị trí hiện tại rồi focus ô đầu ── */
+  function focusForm(ev){
+    if (ev) ev.preventDefault();
+    card.scrollIntoView({ behavior:'smooth', block: mq.matches ? 'center' : 'start' });
+    card.classList.remove('pulse');
+    void card.offsetWidth;            // ép trình duyệt chạy lại animation khi bấm liên tiếp
+    card.classList.add('pulse');
+    setTimeout(function(){
+      var f = document.getElementById('fName');
+      if (f && !okBox.classList.contains('on')) f.focus({ preventScroll:true });
+    }, 420);
+  }
+  document.querySelectorAll('a[href="#dang-ky"]').forEach(function(a){
+    a.addEventListener('click', focusForm);
+  });
+
+  /* ── Topbar desktop: hiện khi đã cuộn qua hero ── */
+  var topbar = document.getElementById('topbar');
+  var hero = document.querySelector('.hero');
+  function onScroll(){
+    if (!mq.matches) { topbar.classList.remove('on'); return; }
+    topbar.classList.toggle('on', window.scrollY > hero.offsetHeight - 80);
+  }
+  window.addEventListener('scroll', onScroll, { passive:true });
+  onScroll();
+
+  /* ── Lead ── */
+  function utm(){ try { return window.__vaUTM ? window.__vaUTM() : {}; } catch(e){ return {}; } }
+
+  function gtm(evt, extra){
+    try {
+      (window.dataLayer = window.dataLayer || []).push(
+        Object.assign({ event: evt, form_id: C.formId, funnel_code: C.funnel }, extra || {}, utm())
+      );
+    } catch(e){}
+  }
+
+  function mark(inputId, errId, bad){
+    var i = document.getElementById(inputId), e = document.getElementById(errId);
+    if (i) i.classList.toggle('err', !!bad);
+    if (e) e.classList.toggle('on', !!bad);
+  }
+
+  function okPhone(v){
+    var d = (v || '').replace(/[^\d+]/g, '').replace(/^\+84/, '0');
+    return /^0\d{9}$/.test(d);
+  }
+
+  // grade key ('lop-7', '4-tuoi') → school_level để worker vẫn map được "Khối quan tâm"
+  // nếu về sau danh sách lớp thay đổi.
+  function levelOf(g){
+    if (/tuoi$/.test(g)) return 'mam-non';
+    var n = parseInt((g.match(/\d+/) || [0])[0], 10);
+    if (n >= 1 && n <= 5)   return 'tieu-hoc';
+    if (n >= 6 && n <= 9)   return 'thcs';
+    if (n >= 10 && n <= 12) return 'thpt';
+    return '';
+  }
+
+  form.addEventListener('submit', function(ev){
+    ev.preventDefault();
+
+    var name  = (document.getElementById('fName').value  || '').trim();
+    var phone = (document.getElementById('fPhone').value || '').trim();
+    var grade = document.getElementById('fGrade').value   || '';
+    var area  = (document.getElementById('fArea').value  || '').trim();
+    var need  = (document.getElementById('fNeed').value  || '').trim();
+
+    var bad = false;
+    if (!name)           { mark('fName','eName',true);   bad = true; } else mark('fName','eName',false);
+    if (!okPhone(phone)) { mark('fPhone','ePhone',true); bad = true; } else mark('fPhone','ePhone',false);
+    if (!grade)          { mark('fGrade','eGrade',true); bad = true; } else mark('fGrade','eGrade',false);
+    if (bad) {
+      var first = form.querySelector('.fi.err');
+      if (first) { first.focus(); first.scrollIntoView({ behavior:'smooth', block:'center' }); }
+      return;
+    }
+
+    btn.classList.add('loading');
+    btn.disabled = true;
+
+    var body = Object.assign({
+      parent_name:  name,
+      phone:        phone,
+      grade:        grade,
+      school_level: levelOf(grade),
+      province:     area,
+      note:         need,
+      form_id:      C.formId,
+      funnel_code:  C.funnel
+    }, utm());
+
+    fetch(C.api, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .then(function(r){ return r.json().catch(function(){ return null; }); })
+      .catch(function(){ return null; })
+      .then(function(){
+        gtm('lead_submitted', { school_level: levelOf(grade) });
+        try { localStorage.setItem('va_form_submitted','1'); } catch(e){}
+        form.style.display = 'none';
+        okBox.classList.add('on');
+        okBox.scrollIntoView({ behavior:'smooth', block:'center' });
+        setTimeout(function(){ window.location.href = C.redirect; }, 2200);
+      });
+  });
+
+  // Theo dõi CTA phụ (Zalo / gọi điện) để đối chiếu với lead form trong GTM.
+  document.querySelectorAll('[data-cta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      var k = el.getAttribute('data-cta');
+      if (/zalo/.test(k)) gtm('cta_zalo', { cta: k });
+      else if (/call/.test(k)) gtm('cta_call', { cta: k });
+      else gtm('cta_scroll_form', { cta: k });
+    });
+  });
+
+  gtm('lp_view');
+})();
+</script>
+</body>
+</html>

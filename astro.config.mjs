@@ -53,6 +53,8 @@ export default defineConfig({
   integrations: [
     sitemap({
       filter: (page) => {
+        // Landing page quảng cáo đặt noindex — không đưa vào sitemap
+        if (page.includes('/mam-non-go-vap/hoc-phi')) return false;
         // Bài blog văn mẫu (noindex) không đưa vào sitemap
         const blogSlug = page.match(/\/blog\/([^/]+)\/?$/);
         if (blogSlug && NOINDEX_BLOG.has(blogSlug[1])) return false;

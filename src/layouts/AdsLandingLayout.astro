@@ -1,0 +1,377 @@
+---
+/* =====================================================================
+   AdsLandingLayout — layout riêng cho landing page chạy Google Ads.
+   Khác SqueezePageLayout ở ba điểm quan trọng:
+     1. Form hai bước nằm NGAY TRONG HERO (cột phải trên desktop, ngay dưới
+        tiêu đề trên mobile) — không để chìm dưới đáy trang.
+     2. Thanh CTA dính đáy trên mobile, cuộn tới đâu vẫn gọi/đăng ký được.
+     3. Cho phép noindex từng trang mà không đụng tới các layout khác.
+   Form dùng lại LeadFormTwoStepEmailFirst nên tự có va-utm.js + funnel_code.
+   ===================================================================== */
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { mnFacts } from '../data/mam-non-govap-facts';
+
+type Metric = { number: string; label: string };
+type Props = {
+  title: string;
+  description: string;
+  keywords?: string;
+  canonicalUrl: string;
+  noindex?: boolean;
+  funnelCode: string;
+  formId: string;
+  eyebrow?: string;
+  h1: string;
+  sub: string;
+  heroPoints?: string[];
+  metrics?: Metric[];
+  formTitle: string;
+  formDesc: string;
+  formSocialProof?: string;
+  nextText: string;
+  submitText: string;
+  successMessage: string;
+  ogImage?: string;
+};
+
+const {
+  title, description, keywords = '', canonicalUrl, noindex = false,
+  funnelCode, formId, eyebrow = '', h1, sub, heroPoints = [], metrics = [],
+  formTitle, formDesc, formSocialProof = '', nextText, submitText, successMessage,
+  ogImage = 'https://truongvietanh.com/og-image.png',
+} = Astro.props;
+
+const telHref = 'tel:' + mnFacts.hotlineMamNon.replace(/\s/g, '');
+const schema = [
+  {
+    '@context': 'https://schema.org', '@type': 'Preschool',
+    name: 'Trường Mầm non Việt Anh Gò Vấp', url: canonicalUrl, image: ogImage, description,
+    telephone: '+84' + mnFacts.hotlineMamNon.replace(/\s/g, '').replace(/^0/, ''),
+    address: { '@type': 'PostalAddress', streetAddress: '573 Lê Đức Thọ', addressLocality: 'Quận Gò Vấp', addressRegion: 'TP.HCM', addressCountry: 'VN' },
+    aggregateRating: { '@type': 'AggregateRating', ratingValue: mnFacts.rating, reviewCount: mnFacts.reviewCount.replace('+', '') },
+    parentOrganization: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh', foundingDate: String(mnFacts.foundedYear) },
+  },
+  { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: canonicalUrl, inLanguage: 'vi' },
+];
+---
+<!doctype html>
+<html lang="vi">
+<head>
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TMPPWX29');</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#1A1B44" />
+<title>{title}</title>
+<meta name="description" content={description} />
+{keywords && <meta name="keywords" content={keywords} />}
+<meta name="robots" content={noindex ? 'noindex, follow' : 'index, follow'} />
+<link rel="canonical" href={canonicalUrl} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:site_name" content="Trường Việt Anh" />
+<meta name="twitter:card" content="summary_large_image" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" />
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />
+</head>
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMPPWX29" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<header class="ad-nav">
+  <div class="ad-nav__in">
+    <a href="/" class="ad-nav__brand">
+      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" width="132" height="34" />
+    </a>
+    <div class="ad-nav__right">
+      <span class="ad-nav__addr">{mnFacts.addressShort}</span>
+      <a href={telHref} class="ad-nav__tel">{mnFacts.hotlineMamNon}</a>
+      <a href="#dang-ky" class="ad-nav__cta">Đăng ký tư vấn</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero__in">
+    <div class="hero__lead">
+      {eyebrow && <p class="hero__eyebrow">{eyebrow}</p>}
+      <h1 class="hero__h1">{h1}</h1>
+      <p class="hero__sub">{sub}</p>
+    </div>
+
+    <div class="hero__proof">
+      {heroPoints.length > 0 && (
+        <ul class="hero__points">
+          {heroPoints.map((p) => <li>{p}</li>)}
+        </ul>
+      )}
+      <div class="hero__meta">
+        <span>Từ năm {mnFacts.foundedYear}</span>
+        <span aria-hidden="true">·</span>
+        <span>{mnFacts.rating}/5 từ {mnFacts.reviewCount} đánh giá</span>
+        <span aria-hidden="true">·</span>
+        <span>{mnFacts.classSizeLabel}</span>
+      </div>
+    </div>
+
+    <div class="hero__form" id="dang-ky">
+      <div class="formcard" data-form-bg="light">
+        <p class="formcard__kicker">Tư vấn miễn phí · Không ràng buộc</p>
+        <LeadFormTwoStepEmailFirst
+          formId={formId}
+          funnelCode={funnelCode}
+          schoolLevel="mau-non"
+          title={formTitle}
+          description={formDesc}
+          socialProof={formSocialProof}
+          nextText={nextText}
+          submitText={submitText}
+          successMessage={successMessage}
+        />
+        <p class="formcard__foot">
+          Hoặc gọi thẳng <a href={telHref}>{mnFacts.hotlineMamNon}</a> · <a href={mnFacts.zaloUrl} target="_blank" rel="noopener">nhắn Zalo</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{metrics.length > 0 && (
+  <section class="metrics">
+    <div class="metrics__in">
+      {metrics.map((m) => (
+        <div class="metric">
+          <span class="metric__n">{m.number}</span>
+          <span class="metric__l">{m.label}</span>
+        </div>
+      ))}
+    </div>
+  </section>
+)}
+
+<main class="body">
+  <slot />
+</main>
+
+<section class="closer">
+  <div class="closer__in">
+    <div class="closer__copy">
+      <h2>Đến xem một buổi học thật rồi hãy quyết định</h2>
+      <p>Ba/mẹ nên tới vào giờ bé đang sinh hoạt — nhìn cô tương tác với bé, ghé khu bếp, hỏi thẳng sĩ số lớp. Đó là thứ không tài liệu nào thay được.</p>
+      <ul class="closer__list">
+        <li>{mnFacts.address}</li>
+        <li>Hotline mầm non trực 24/7 — {mnFacts.hotlineMamNon}</li>
+        <li>Phản hồi trong {mnFacts.responseTime} sau khi ba/mẹ để lại thông tin</li>
+      </ul>
+      <a href={mnFacts.mapUrl} class="closer__map" target="_blank" rel="noopener">Xem đường đi trên bản đồ →</a>
+    </div>
+    <div class="closer__form" data-form-bg="light">
+      <div class="formcard formcard--flat">
+        <LeadFormTwoStepEmailFirst
+          formId={formId + '-b'}
+          funnelCode={funnelCode}
+          schoolLevel="mau-non"
+          title={formTitle}
+          description={formDesc}
+          socialProof=""
+          nextText={nextText}
+          submitText={submitText}
+          successMessage={successMessage}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="ad-foot">
+  <div class="ad-foot__in">
+    <p><strong>Trường Mầm non Việt Anh Gò Vấp</strong> — {mnFacts.address}</p>
+    <p>
+      <a href={telHref}>{mnFacts.hotlineMamNon}</a> ·
+      <a href={mnFacts.zaloUrl} target="_blank" rel="noopener">Zalo</a> ·
+      <a href="https://truongvietanh.com">truongvietanh.com</a>
+    </p>
+    <p class="ad-foot__fine">Thuộc Hệ thống Trường Liên cấp Việt Anh — từ năm {mnFacts.foundedYear}. {mnFacts.philosophy}.</p>
+  </div>
+</footer>
+
+<div class="stickybar">
+  <a href={telHref} class="stickybar__call">Gọi {mnFacts.hotlineMamNon}</a>
+  <a href="#dang-ky" class="stickybar__reg">Đăng ký tư vấn</a>
+</div>
+
+<script src="/js/phone-vn.js" defer></script>
+
+<style is:inline>
+/* Reset tối thiểu — layout này KHÔNG nạp global.css (global.css ép font-family !important
+   lên mọi heading và đè mất bộ chữ của trang quảng cáo; bỏ đi trang cũng nhẹ hơn nhiều). */
+html{-webkit-text-size-adjust:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+
+:root{
+  --ink:#141534;
+  --navy:#26275D;
+  --navy-deep:#151637;
+  --gold:#F4C534;
+  --gold-soft:#FBEFC8;
+  --cream:#FBF9F4;
+  --line:#E4E1D8;
+  --muted:#5F6182;
+  --white:#fff;
+  --sans:"Be Vietnam Pro","Segoe UI",system-ui,-apple-system,sans-serif;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);font-size:16.5px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;height:auto}
+a{color:inherit}
+h1,h2,h3{text-wrap:balance}
+
+/* ---------- nav ---------- */
+.ad-nav{position:sticky;top:0;z-index:60;background:rgba(251,249,244,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.ad-nav__in{max-width:1160px;margin:0 auto;padding:.6rem 1.25rem;display:flex;align-items:center;justify-content:space-between;gap:1rem}
+.ad-nav__brand img{display:block;width:132px;height:auto}
+.ad-nav__right{display:flex;align-items:center;gap:1rem;font-size:.9rem}
+.ad-nav__addr{color:var(--muted);display:none}
+.ad-nav__tel{font-weight:700;color:var(--navy);text-decoration:none;letter-spacing:.01em}
+.ad-nav__cta{background:var(--navy);color:#fff;text-decoration:none;font-weight:700;font-size:.86rem;padding:.55rem 1.05rem;border-radius:999px;white-space:nowrap;transition:background .2s}
+.ad-nav__cta:hover{background:var(--navy-deep)}
+@media(min-width:900px){.ad-nav__addr{display:inline}}
+
+/* ---------- hero ---------- */
+.hero{background:
+   radial-gradient(120% 90% at 88% 0%, rgba(244,197,52,.16) 0%, rgba(244,197,52,0) 58%),
+   linear-gradient(168deg,#1B1C43 0%,#26275D 52%,#2E2F6B 100%);
+  color:#F2F1FA;padding:clamp(2rem,5vw,3.6rem) 1.25rem clamp(2.4rem,5vw,4rem)}
+.hero__in{max-width:1160px;margin:0 auto;display:grid;grid-template-columns:1fr;gap:1.4rem;align-items:start}
+/* Mobile: form nằm NGAY sau tiêu đề, gạch đầu dòng đẩy xuống dưới form */
+.hero__lead{order:1}
+.hero__form{order:2}
+.hero__proof{order:3}
+.hero__eyebrow{margin:0 0 .7rem;font-size:.74rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold)}
+.hero__h1{font-family:var(--serif);font-size:clamp(1.62rem,4.6vw,3.1rem);font-weight:700;line-height:1.12;letter-spacing:-.015em;margin:0 0 .9rem;color:#fff}
+.hero__sub{font-size:clamp(.98rem,1.9vw,1.16rem);line-height:1.6;color:#C9C8E4;margin:0;max-width:56ch}
+.hero__points{list-style:none;margin:0 0 1.2rem;padding:0;display:grid;gap:.6rem}
+.hero__points li{position:relative;padding-left:1.85rem;font-size:.99rem;line-height:1.55;color:#E4E3F4}
+.hero__points li::before{content:"";position:absolute;left:0;top:.42em;width:1.05rem;height:1.05rem;border-radius:50%;background:var(--gold);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/78% no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/78% no-repeat}
+.hero__meta{display:flex;flex-wrap:wrap;gap:.45rem .7rem;font-size:.83rem;color:#9C9BC6;border-top:1px solid rgba(255,255,255,.13);padding-top:1rem}
+@media(min-width:980px){
+  .hero__in{grid-template-columns:1.08fr .92fr;gap:.4rem 3rem;grid-template-areas:"lead form" "proof form"}
+  .hero__lead{grid-area:lead}
+  .hero__proof{grid-area:proof}
+  .hero__form{grid-area:form;position:sticky;top:5rem}
+}
+
+/* ---------- form card ---------- */
+.formcard{background:var(--white);border-radius:14px;padding:1.5rem 1.4rem 1.25rem;box-shadow:0 24px 60px -28px rgba(10,11,40,.6),0 2px 6px rgba(10,11,40,.12);border:1px solid rgba(255,255,255,.5)}
+.formcard--flat{box-shadow:0 10px 34px -22px rgba(10,11,40,.45);border:1px solid var(--line)}
+.formcard__kicker{margin:0 0 .9rem;font-size:.72rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:#8A6D14;background:var(--gold-soft);display:inline-block;padding:.32rem .7rem;border-radius:4px}
+.formcard .lead-form{max-width:none}
+.formcard__foot{margin:1rem 0 0;padding-top:.9rem;border-top:1px solid var(--line);font-size:.86rem;color:var(--muted);text-align:center}
+.formcard__foot a{color:var(--navy);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(38,39,93,.3)}
+
+/* ---------- metrics ---------- */
+.metrics{background:var(--white);border-bottom:1px solid var(--line)}
+.metrics__in{max-width:1160px;margin:0 auto;padding:1.5rem 1.25rem;display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+@media(min-width:760px){.metrics__in{grid-template-columns:repeat(4,1fr)}}
+.metric{text-align:center}
+.metric__n{display:block;font-family:var(--serif);font-size:clamp(1.5rem,3.3vw,2.05rem);font-weight:700;color:var(--navy);line-height:1.1}
+.metric__l{display:block;font-size:.82rem;color:var(--muted);margin-top:.25rem;line-height:1.4}
+
+/* ---------- body sections (dùng bởi các trang) ---------- */
+.body{max-width:1160px;margin:0 auto;padding:clamp(2.4rem,5vw,4rem) 1.25rem}
+.body .sec{margin-bottom:clamp(2.4rem,5vw,3.6rem)}
+.body .sec:last-child{margin-bottom:0}
+.body .sec > h2{font-family:var(--serif);font-size:clamp(1.45rem,3.2vw,2.1rem);font-weight:700;letter-spacing:-.012em;line-height:1.2;margin:0 0 .7rem;color:var(--navy)}
+.body .sec > .lede{font-size:1.05rem;line-height:1.7;color:var(--muted);margin:0 0 1.7rem;max-width:62ch}
+.body .cards{display:grid;grid-template-columns:1fr;gap:1rem}
+@media(min-width:720px){.body .cards{grid-template-columns:1fr 1fr}}
+.body .card{background:var(--white);border:1px solid var(--line);border-radius:12px;padding:1.5rem 1.5rem 1.4rem;transition:transform .18s ease,box-shadow .18s ease}
+.body .card:hover{transform:translateY(-2px);box-shadow:0 14px 36px -24px rgba(10,11,40,.5)}
+.body .card h3{font-size:1.1rem;font-weight:700;margin:0 0 .55rem;color:var(--navy);line-height:1.35}
+.body .card p{margin:0;font-size:.98rem;line-height:1.68;color:#4A4C6B}
+.body .card p + p{margin-top:.65rem}
+.body .panel{background:var(--white);border:1px solid var(--line);border-left:4px solid var(--gold);border-radius:10px;padding:1.5rem 1.6rem}
+.body .panel h3{margin:0 0 .8rem;font-size:1.05rem;font-weight:700;color:var(--navy)}
+.body .checklist{list-style:none;margin:0;padding:0;display:grid;gap:.7rem}
+.body .checklist li{position:relative;padding-left:1.75rem;font-size:.98rem;line-height:1.62;color:#4A4C6B}
+.body .checklist li::before{content:"";position:absolute;left:0;top:.5em;width:.95rem;height:.95rem;border-radius:50%;background:var(--navy);
+  -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/78% no-repeat;
+  mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/78% no-repeat}
+.body .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--white)}
+.body table{border-collapse:collapse;width:100%;min-width:520px;font-size:.95rem}
+.body th{text-align:left;padding:.8rem 1rem;background:#F4F2EC;border-bottom:1px solid var(--line);font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.body td{padding:.8rem 1rem;border-bottom:1px solid #F0EEE7;color:#4A4C6B;vertical-align:top}
+.body tr:last-child td{border-bottom:0}
+.body .faq{display:grid;gap:.7rem}
+.body details{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:0}
+.body summary{cursor:pointer;padding:1.05rem 1.4rem;font-weight:700;font-size:1rem;color:var(--navy);list-style:none;display:flex;justify-content:space-between;gap:1rem;align-items:flex-start}
+.body summary::-webkit-details-marker{display:none}
+.body summary::after{content:"+";font-size:1.35rem;line-height:1;color:var(--gold);font-weight:700;flex:none}
+.body details[open] summary::after{content:"−"}
+.body details > p{margin:0;padding:0 1.4rem 1.2rem;font-size:.97rem;line-height:1.72;color:#4A4C6B}
+.body .timeline{list-style:none;margin:0;padding:0;display:grid;gap:.1rem}
+.body .timeline li{display:grid;grid-template-columns:auto 1fr;gap:1rem;padding:.85rem 0;border-bottom:1px solid #EDEBE4}
+.body .timeline li:last-child{border-bottom:0}
+.body .timeline b{font-size:.8rem;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);white-space:nowrap;padding-top:.15em}
+.body .timeline span{font-size:.98rem;line-height:1.6;color:#4A4C6B}
+
+/* ---------- closer ---------- */
+.closer{background:var(--white);border-top:1px solid var(--line)}
+.closer__in{max-width:1160px;margin:0 auto;padding:clamp(2.4rem,5vw,3.6rem) 1.25rem;display:grid;grid-template-columns:1fr;gap:2rem;align-items:center}
+@media(min-width:960px){.closer__in{grid-template-columns:1.05fr .95fr;gap:3.4rem}}
+.closer__copy h2{font-family:var(--serif);font-size:clamp(1.45rem,3.2vw,2rem);font-weight:700;margin:0 0 .7rem;color:var(--navy);line-height:1.2}
+.closer__copy > p{font-size:1.02rem;line-height:1.7;color:var(--muted);margin:0 0 1.2rem;max-width:52ch}
+.closer__list{list-style:none;margin:0 0 1.1rem;padding:0;display:grid;gap:.55rem}
+.closer__list li{position:relative;padding-left:1.1rem;font-size:.95rem;color:#4A4C6B;line-height:1.55}
+.closer__list li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--gold)}
+.closer__map{font-size:.93rem;font-weight:700;color:var(--navy);text-decoration:none;border-bottom:1px solid rgba(38,39,93,.3)}
+
+/* ---------- footer ---------- */
+.ad-foot{background:var(--navy-deep);color:#B9B8D8;padding:2rem 1.25rem 5.5rem}
+.ad-foot__in{max-width:1160px;margin:0 auto;text-align:center;font-size:.9rem}
+.ad-foot__in p{margin:.3rem 0}
+.ad-foot__in a{color:#fff;text-decoration:none;font-weight:600}
+.ad-foot__fine{margin-top:.9rem !important;font-size:.8rem;color:#7C7BA6}
+@media(min-width:760px){.ad-foot{padding-bottom:2rem}}
+
+/* ---------- sticky bar (mobile) ---------- */
+.stickybar{position:fixed;left:0;right:0;bottom:0;z-index:70;display:grid;grid-template-columns:1fr 1fr;gap:.5rem;padding:.55rem .7rem;background:rgba(21,22,55,.97);backdrop-filter:blur(6px);border-top:1px solid rgba(255,255,255,.12)}
+.stickybar a{display:block;text-align:center;padding:.7rem .5rem;border-radius:9px;font-weight:700;font-size:.92rem;text-decoration:none}
+.stickybar__call{background:rgba(255,255,255,.12);color:#fff}
+.stickybar__reg{background:var(--gold);color:#3B2E05}
+@media(min-width:760px){.stickybar{display:none}}
+
+/* ---------- Nén phần đầu trên mobile để CẢ ô nhập LẪN nút gửi nằm trên nếp gấp ---------- */
+@media(max-width:759px){
+  .ad-nav__in{padding:.45rem 1rem}
+  .ad-nav__brand img{width:108px}
+  .ad-nav__cta{display:none}            /* đã có thanh CTA dính đáy màn hình */
+  .hero{padding-top:1.4rem;padding-bottom:1.8rem}
+  .hero__eyebrow{margin-bottom:.45rem;font-size:.68rem}
+  .hero__h1{margin-bottom:.6rem;line-height:1.16}
+  .hero__sub{font-size:.94rem;line-height:1.55}
+  .hero__in{gap:1.1rem}
+  .formcard{padding:1.15rem 1.05rem 1rem}
+  .formcard__kicker{margin-bottom:.6rem;padding:.24rem .6rem;font-size:.66rem}
+  /* Chỉ báo 2 bước: bỏ nhãn chữ, giữ 2 chấm cho gọn */
+  .formcard .form-progress{margin-bottom:.15rem}
+  .formcard .form-progress__label{display:none}
+  .formcard .form-progress__dot{width:24px;height:24px;font-size:.85rem}
+  /* Tiêu đề form nhỏ lại, ẩn dòng mô tả — nội dung đã nằm ở hero ngay trên */
+  .formcard .form-step-title{font-size:1.18rem;line-height:1.3}
+  .formcard [data-step="1"] .form-step-description{display:none}
+  .formcard .form-step-content{gap:.5rem}
+  .formcard__foot{margin-top:.7rem;padding-top:.7rem;font-size:.82rem}
+}
+
+@media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important;scroll-behavior:auto !important}}
+</style>
+</body>
+</html>

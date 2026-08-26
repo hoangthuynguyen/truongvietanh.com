@@ -1,0 +1,59 @@
+---
+/* 10 landing page quảng cáo Google Ads — Mầm non Việt Anh Gò Vấp.
+   URL: /mam-non-go-vap/<slug>/  ·  Nội dung: src/data/ads-landing-mam-non.ts
+   Muốn sửa chữ nghĩa thì sửa file data, đừng sửa file này. */
+import AdsLandingLayout from '../../layouts/AdsLandingLayout.astro';
+import { adsPages, adsBaseUrl } from '../../data/ads-landing-mam-non';
+
+export function getStaticPaths() {
+  return adsPages.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props;
+const canonicalUrl = adsBaseUrl + page.slug;
+---
+
+<AdsLandingLayout
+  title={page.title}
+  description={page.description}
+  keywords={page.keywords}
+  canonicalUrl={canonicalUrl}
+  noindex={page.noindex ?? false}
+  funnelCode={page.funnelCode}
+  formId={`ads-${page.slug}`}
+  eyebrow={page.eyebrow}
+  h1={page.h1}
+  sub={page.sub}
+  heroPoints={page.heroPoints}
+  metrics={page.metrics}
+  formTitle={page.formTitle}
+  formDesc={page.formDesc}
+  formSocialProof={page.formSocialProof}
+  nextText={page.nextText}
+  submitText={page.submitText}
+  successMessage={page.successMessage}
+>
+  <Fragment set:html={page.body} />
+
+  <section class="sec">
+    <h2>Câu hỏi thường gặp</h2>
+    <div class="faq">
+      {page.faq.map((item) => (
+        <details>
+          <summary>{item.q}</summary>
+          <p>{item.a}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</AdsLandingLayout>
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: page.faq.map((item) => ({
+    '@type': 'Question',
+    name: item.q,
+    acceptedAnswer: { '@type': 'Answer', text: item.a },
+  })),
+})} />

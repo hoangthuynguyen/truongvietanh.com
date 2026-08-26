@@ -94,7 +94,7 @@ async function run() {
   const campuses = [
     { name: 'Trường Việt Anh Phú Nhuận', city: 'TP. Hồ Chí Minh', address: '269A Nguyễn Trọng Tuyển, Phường Phú Nhuận', phone: '0916 961 409', lat: 10.7976, lng: 106.6746, levels: ['mam-non', 'tieu-hoc', 'thcs', 'thpt'], sort: 1, status: 'published' },
     { name: 'Trường Việt Anh Bình Tân', city: 'TP. Hồ Chí Minh', address: 'Số 7, Đường 38A, Tân Tạo, Bình Tân', phone: '0916 961 409', levels: ['mam-non', 'tieu-hoc', 'thcs'], sort: 2, status: 'published' },
-    { name: 'Trường Việt Anh Gò Vấp', city: 'TP. Hồ Chí Minh', address: '160/72 Phan Huy Ích, Phường An Hội Đông', phone: '0916 961 409', lat: 10.8321, lng: 106.6442, levels: ['mam-non', 'tieu-hoc', 'thcs', 'thpt'], sort: 3, status: 'published' },
+    { name: 'Trường Việt Anh Gò Vấp', city: 'TP. Hồ Chí Minh', address: '160/72 Phan Huy Ích, Phường An Hội Tây', phone: '0916 961 409', lat: 10.8321, lng: 106.6442, levels: ['mam-non', 'tieu-hoc', 'thcs', 'thpt'], sort: 3, status: 'published' },
     { name: 'Trường Mầm non Việt Anh Gò Vấp', city: 'TP. Hồ Chí Minh', address: '573 Đ. Lê Đức Thọ, Phường An Hội Đông', phone: '0774 588 988', levels: ['mam-non'], sort: 4, status: 'published' },
     { name: 'Trường Mầm non Nhân Lễ', city: 'Long An', address: '22 Đường D2, KDC, Cần Giuộc', levels: ['mam-non'], sort: 5, status: 'published' },
     { name: 'Trường Mầm non Thái Sơn', city: 'Long An', address: 'KDC Thái Sơn, Long Hậu', levels: ['mam-non'], sort: 6, status: 'published' },

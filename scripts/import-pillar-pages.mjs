@@ -57,7 +57,7 @@ async function importPages() {
           { name: 'Trường Việt Anh Phú Nhuận', address: '269A Nguyễn Trọng Tuyển, Phường Phú Nhuận' },
           { name: 'Trường Việt Anh Bình Tân', address: 'Số 7 đường 38A, Tân Tạo, Bình Tân' },
           { name: 'Trường Việt Anh Gò Vấp', address: '160/72 Phan Huy Ích, Phường An Hội Đông' },
-          { name: 'Trường Mầm non Việt Anh Gò Vấp', address: '573 Đ. Lê Đức Thọ, Phường An Hội Tây' },
+          { name: 'Trường Mầm non Việt Anh Gò Vấp', address: '573 Đ. Lê Đức Thọ, Phường An Hội Đông' },
         ]},
         { city: 'Cần Giuộc - Long An', items: [
           { name: 'Trường Mầm non Nhân Lễ', address: '22 Đường D2, KDC, Cần Giuộc' },

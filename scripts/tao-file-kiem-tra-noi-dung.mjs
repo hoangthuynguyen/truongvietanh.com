@@ -93,7 +93,7 @@ const FACTS = [
   ['Phòng thể chất', '164m²', 'Tài liệu gốc mục 7'],
   ['Sân chơi', 'Khu vui chơi, sân cỏ nhân tạo, vườn hoa, hố cát và hồ bơi', 'Tài liệu gốc mục 7'],
   ['Thư viện', 'Ngay trong khuôn viên trường', 'Tài liệu gốc mục 7'],
-  ['Địa chỉ cơ sở', '573 Đường Lê Đức Thọ, Phường An Hội Tây, Quận Gò Vấp, TP.HCM', 'Trang /co-so/mam-non-go-vap/'],
+  ['Địa chỉ cơ sở', '573 Đường Lê Đức Thọ, Phường An Hội Đông, Quận Gò Vấp, TP.HCM', 'Trang /co-so/mam-non-go-vap/'],
   ['Tên phường', 'An Hội Tây — nêu kèm chú thích "phường 16 cũ"', 'Trang /co-so/mam-non-go-vap/'],
   ['Hotline mầm non', '0774 588 988 — ghi là trực 24/7', 'Trang /co-so/mam-non-go-vap/'],
   ['Cơ sở liên cấp', '160/72 Phan Huy Ích, Phường An Hội Tây, Gò Vấp', 'Trang /co-so/ và /lien-he/'],

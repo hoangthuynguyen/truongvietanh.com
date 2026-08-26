@@ -444,7 +444,7 @@ export const adsPages: AdsPage[] = [
   {
     slug: 'khu-vuc',
     adGroup: 'AG 06 — Đường, khu vực + xe đưa đón',
-    keywords: 'mầm non lê đức thọ, mầm non phan huy ích, mầm non phường 16 gò vấp, mầm non an hội tây, trường mầm non có xe đưa đón gò vấp',
+    keywords: 'mầm non lê đức thọ, mầm non phan huy ích, mầm non phường 16 gò vấp, mầm non an hội đông, trường mầm non có xe đưa đón gò vấp',
     funnelCode: 'mn-govap-khuvuc',
     title: 'Mầm Non 573 Lê Đức Thọ Gò Vấp — Đường Đi & Xe Đưa Đón | Việt Anh',
     description: `Trường Mầm non Việt Anh tại 573 Lê Đức Thọ, ${F.wardNote}. Xem đường đi từ Phan Văn Trị, Nguyễn Oanh, Phạm Văn Chiêu và tuyến xe đưa đón quanh Gò Vấp.`,

@@ -20,9 +20,11 @@
 
 export const mnFacts = {
   // ---------- Cơ sở (nguồn: /co-so/mam-non-go-vap/) ----------
-  address: '573 Đường Lê Đức Thọ, Phường An Hội Tây, Quận Gò Vấp, TP.HCM',
+  address: '573 Đường Lê Đức Thọ, Phường An Hội Đông, Quận Gò Vấp, TP.HCM',
   addressShort: '573 Lê Đức Thọ, Gò Vấp',
-  wardNote: 'Phường An Hội Tây — phường 16 cũ',
+  wardNote: 'Phường An Hội Đông',
+  // ⚠️ Ward cũ: trang cơ sở từng ghi "P.16". Chưa xác nhận P.16 cũ có khớp
+  //    An Hội Đông không, nên KHÔNG in "phường 16 cũ" lên trang nữa.
   campusLienCap: '160/72 Phan Huy Ích, Phường An Hội Tây, Gò Vấp',
   mapUrl: 'https://maps.google.com/?q=573+L%C3%AA+%C4%90%E1%BB%A9c+Th%E1%BB%8D,+G%C3%B2+V%E1%BA%A5p,+TP.HCM',
 

@@ -22,6 +22,9 @@ type Post = {
   excerpt?: string | null;
   content?: string | null;
   published_at?: string | null;
+  // TODO: Directus chưa mở quyền đọc field `date_updated` cho posts (public policy).
+  // Mở quyền rồi thêm 'date_updated' vào fields[] ở getStaticPaths là dateModified sẽ thật.
+  date_updated?: string | null;
   category?: string | null;
   featured_image?: string | null;
 };
@@ -142,7 +145,47 @@ function cleanContent(html: string | null | undefined): string {
   return cleaned;
 }
 
-const cleanedContent = cleanContent(post.content);
+
+// Gắn id cho H2/H3 ngay trong HTML tĩnh + rút mục lục.
+// Trước đây mục lục do JS sinh ở client → crawler AI (GPTBot/ClaudeBot/PerplexityBot)
+// không chạy JS nên không thấy anchor, không trích được đúng đoạn. Nay làm ở build.
+function slugifyVi(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .slice(0, 80);
+}
+
+function withHeadingAnchors(html: string): { html: string; headings: { level: number; id: string; text: string }[] } {
+  const headings: { level: number; id: string; text: string }[] = [];
+  const used = new Set<string>();
+  const out = html.replace(
+    /<h([23])([^>]*)>([\s\S]*?)<\/h\1>/gi,
+    (match, lvl: string, attrs: string, inner: string) => {
+      const text = inner.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+      if (!text) return match;
+      const existing = /\sid\s*=\s*["']([^"']+)["']/i.exec(attrs);
+      let id = existing ? existing[1] : slugifyVi(text) || `muc-${headings.length + 1}`;
+      let n = 2;
+      while (used.has(id)) id = `${slugifyVi(text) || 'muc'}-${n++}`;
+      used.add(id);
+      headings.push({ level: Number(lvl), id, text });
+      const cleanAttrs = attrs.replace(/\sid\s*=\s*["'][^"']*["']/i, '');
+      return `<h${lvl} id="${id}"${cleanAttrs}>${inner}</h${lvl}>`;
+    },
+  );
+  return { html: out, headings };
+}
+
+const { html: cleanedContent, headings: tocHeadings } = withHeadingAnchors(cleanContent(post.content));
+const showToc = tocHeadings.filter((h) => h.level === 2).length >= 3;
 const pageTitle = post.title.length > 55 ? post.title : `${post.title} | Trường Việt Anh`;
 const pageDesc = post.excerpt || `${post.title} — Tìm hiểu chi tiết tại blog Trường Việt Anh.`;
 const canonicalUrl = `https://truongvietanh.com/blog/${post.slug}`;
@@ -218,14 +261,22 @@ const structuredData = [
     headline: post.title,
     description: pageDesc,
     datePublished: formatISO(post.published_at),
-    dateModified: formatISO(post.published_at),
+    dateModified: formatISO(post.date_updated || post.published_at),
     url: canonicalUrl,
     inLanguage: 'vi',
     wordCount: cleanedContent ? cleanedContent.replace(/<[^>]*>/g, '').split(/\s+/).length : 0,
     author: {
-      '@type': 'Organization',
-      name: 'Trường Việt Anh',
-      url: 'https://truongvietanh.com',
+      '@type': 'Person',
+      name: 'Nguyễn Mạnh Dương',
+      url: 'https://nguyenmanhduong.com',
+      jobTitle: 'Nhà sáng lập & Chủ tịch Hệ thống Giáo dục K-12 Việt Anh',
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Manchester Metropolitan University' },
+      worksFor: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh', url: 'https://truongvietanh.com' },
+      sameAs: [
+        'https://nguyenmanhduong.com',
+        'https://www.facebook.com/nguyenmanhduong1101/',
+        'https://www.youtube.com/@nguyenmanhduong1101',
+      ],
     },
     publisher: {
       '@type': 'Organization',
@@ -363,7 +414,7 @@ const structuredData = [
                     📅 Đăng: {formatDate(post.published_at)}
                   </time>
                 )}
-                <span class="blog-article__updated">🔄 Cập nhật: {formatDate(post.published_at)}</span>
+                <span class="blog-article__updated">🔄 Cập nhật lần cuối: {formatDate(post.date_updated || post.published_at)}</span>
                 <a href={`/blog/danh-muc/${categorySlug}`} class="blog-article__badge">{categoryInfo.icon} {categoryInfo.label}</a>
                 <span class="blog-article__readtime" id="readTime"></span>
               </div>
@@ -387,10 +438,16 @@ const structuredData = [
             )}
 
             <!-- Auto TOC (mobile inline; desktop sticky in sidebar) -->
-            <nav class="blog-toc blog-toc--inline" id="blogToc" aria-label="Mục lục bài viết" style="display:none">
-              <p class="blog-toc__title">📑 Mục lục</p>
-              <ol class="blog-toc__list" id="blogTocList"></ol>
-            </nav>
+            {showToc && (
+              <nav class="blog-toc blog-toc--inline" id="blogToc" aria-label="Mục lục bài viết">
+                <p class="blog-toc__title">📑 Mục lục</p>
+                <ol class="blog-toc__list" id="blogTocList">
+                  {tocHeadings.map((h) => (
+                    <li class={h.level === 3 ? 'blog-toc__sub' : ''}><a href={`#${h.id}`}>{h.text}</a></li>
+                  ))}
+                </ol>
+              </nav>
+            )}
 
             <div class="blog-article__body" id="blogArticleBody" set:html={cleanedContent} />
 
@@ -420,6 +477,17 @@ const structuredData = [
             </template>
 
         <!-- Author Bio -->
+        <aside class="blog-author">
+          <img class="blog-author__avatar" src="/nguyen-manh-duong.jpg" alt="Nguyễn Mạnh Dương" width="40" height="40" loading="lazy" />
+          <div>
+            <p class="blog-author__name">Nguyễn Mạnh Dương</p>
+            <p class="blog-author__role">
+              Nhà sáng lập &amp; Chủ tịch Hệ thống Giáo dục K-12 Việt Anh (từ 2011), tốt nghiệp Manchester Metropolitan University.
+              <a href="https://nguyenmanhduong.com" rel="noopener">nguyenmanhduong.com</a>
+            </p>
+          </div>
+        </aside>
+
 <!-- Inline CTA Banner -->
         <div class="blog-cta-inline">
           <div class="blog-cta-inline__inner">
@@ -527,10 +595,16 @@ const structuredData = [
           <!-- HubSpot-style sticky sidebar -->
           <aside class="blog-sidebar" aria-label="Sidebar">
             <!-- Sticky TOC desktop -->
-            <nav class="blog-toc-sticky" id="blogTocSticky" style="display:none">
-              <p class="blog-toc__title">📑 Mục lục</p>
-              <ol class="blog-toc__list" id="blogTocStickyList"></ol>
-            </nav>
+            {showToc && (
+              <nav class="blog-toc-sticky" id="blogTocSticky">
+                <p class="blog-toc__title">📑 Mục lục</p>
+                <ol class="blog-toc__list" id="blogTocStickyList">
+                  {tocHeadings.map((h) => (
+                    <li class={h.level === 3 ? 'blog-toc__sub' : ''}><a href={`#${h.id}`}>{h.text}</a></li>
+                  ))}
+                </ol>
+              </nav>
+            )}
 
             <!-- Sticky lead form -->
             <div class="blog-side-cta">
@@ -1248,13 +1322,14 @@ const structuredData = [
     });
   }
 
-  // Auto-generate TOC (mobile inline + desktop sticky)
+  // Mục lục + id của heading nay được sinh ở BUILD (xem withHeadingAnchors) nên có sẵn
+  // trong HTML tĩnh cho crawler AI. JS chỉ còn lo phần bài cũ chưa có id.
   const tocNav = document.getElementById('blogToc');
   const tocList = document.getElementById('blogTocList');
   const tocSticky = document.getElementById('blogTocSticky');
   const tocStickyList = document.getElementById('blogTocStickyList');
   const articleBody = document.querySelector('.blog-article__body');
-  if (articleBody) {
+  if (articleBody && tocList && tocList.children.length === 0) {
     const headings = articleBody.querySelectorAll('h2, h3');
     if (headings.length >= 3) {
       headings.forEach((h, i) => {

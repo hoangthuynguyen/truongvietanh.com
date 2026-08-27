@@ -41,7 +41,13 @@ const getChildren = (parent: string): NavLink[] => navItems.filter(n => n.parent
      <ul class="nav-links left-nav">
        {((leftNav.length > 0 ? leftNav : [
          { label: 'Trang chủ', href: '/' },
-         { label: 'Giới thiệu', href: '/gioi-thieu' },
+         // Giữ đồng bộ với mainNavLeft trong src/lib/site-content.ts (SiteHeader dùng ở trang chủ)
+         { label: 'Giới thiệu', href: '/gioi-thieu', children: [
+           { label: 'Giới thiệu nhà trường', href: '/gioi-thieu' },
+           { label: 'Ban Lãnh Đạo', href: '/ban-lanh-dao' },
+           { label: 'Giáo viên', href: '/giao-vien' },
+           { label: 'Âm nhạc Việt Anh', href: '/am-nhac' },
+         ]},
          { label: 'Tuyển sinh', href: '/tuyen-sinh', children: [
            { label: 'Mầm non', href: '/tuyen-sinh/mam-non' },
            { label: 'Tiểu học', href: '/tuyen-sinh/tieu-hoc' },
@@ -117,7 +123,15 @@ const getChildren = (parent: string): NavLink[] => navItems.filter(n => n.parent
   <div class="mobile-nav-drawer" aria-hidden="true">
     <div class="mobile-nav-inner">
       <a href="/" class="mobile-nav-link">Trang chủ</a>
-      <a href="/gioi-thieu" class="mobile-nav-link">Giới thiệu</a>
+      <div class="mobile-nav-group">
+        <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Giới thiệu">Giới thiệu <span class="toggle-arrow">▾</span></button>
+        <div class="mobile-nav-sub">
+          <a href="/gioi-thieu" class="mobile-nav-sublink">Giới thiệu nhà trường</a>
+          <a href="/ban-lanh-dao" class="mobile-nav-sublink">Ban Lãnh Đạo</a>
+          <a href="/giao-vien" class="mobile-nav-sublink">Giáo viên</a>
+          <a href="/am-nhac" class="mobile-nav-sublink">Âm nhạc Việt Anh</a>
+        </div>
+      </div>
       <div class="mobile-nav-group">
         <button class="mobile-nav-link mobile-nav-toggle" aria-expanded="false" aria-label="Mở menu Tuyển sinh">Tuyển sinh <span class="toggle-arrow">▾</span></button>
         <div class="mobile-nav-sub">

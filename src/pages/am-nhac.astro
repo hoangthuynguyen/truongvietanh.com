@@ -1,0 +1,1187 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import {
+  baiHatList,
+  danhMucList,
+  sapXepBaiHat,
+  demTacGia,
+  thoiLuongRaGiay,
+  giayRaISO,
+  emailBanQuyen,
+  zaloBanQuyen,
+  duocPhep,
+  canXinPhep,
+  mauGhiNguon,
+  yeuCauGuiBai,
+  cacBuocGuiBai,
+} from '../data/am-nhac';
+
+const URL_TRANG = 'https://truongvietanh.com/am-nhac';
+
+const baiHat = sapXepBaiHat(baiHatList);
+const baiDaPhatHanh = baiHat.filter((b) => b.trangThai === 'da-phat-hanh');
+const coBaiHat = baiHat.length > 0;
+const soTacGia = demTacGia(baiHat);
+
+// Email gửi tác phẩm — điền sẵn tiêu đề & khung nội dung cho thầy cô
+const mailtoGuiBai = `mailto:${emailBanQuyen}?subject=${encodeURIComponent(
+  'Gửi tác phẩm âm nhạc — Thư viện Âm nhạc Trường Việt Anh',
+)}&body=${encodeURIComponent(
+  [
+    'Kính gửi Bộ phận Truyền thông Trường Việt Anh,',
+    '',
+    'Tôi xin gửi tác phẩm âm nhạc để đăng lên thư viện âm nhạc của trường.',
+    '',
+    '1. Tên ca khúc: ',
+    '2. Người sáng tác nhạc: ',
+    '3. Người viết lời: ',
+    '4. Người trình bày: ',
+    '5. Chức danh & cơ sở công tác: ',
+    '6. Năm sáng tác: ',
+    '7. Hoàn cảnh sáng tác (2–3 câu): ',
+    '',
+    '8. Lời bài hát:',
+    '',
+    '',
+    '(Đính kèm file nhạc MP3/WAV, hoặc dán link Google Drive tại đây: )',
+    '',
+    'Trân trọng,',
+  ].join('\n'),
+)}`;
+
+const faqItems = [
+  {
+    question: 'Nhạc trên trang Âm nhạc Trường Việt Anh có nghe và tải miễn phí không?',
+    answer:
+      'Có. Học sinh, phụ huynh và cán bộ giáo viên Trường Việt Anh được nghe trực tuyến và tải về miễn phí cho nhu cầu cá nhân, cũng như dùng trong hoạt động dạy học và sinh hoạt của trường. Việc sử dụng cho mục đích thương mại, phối lại hoặc đăng lại dưới danh nghĩa đơn vị khác cần có văn bản chấp thuận của nhà trường.',
+  },
+  {
+    question: 'Ai giữ bản quyền các ca khúc đăng trên trang này?',
+    answer:
+      'Quyền tác giả thuộc về thầy cô đã sáng tác ca khúc. Trường Việt Anh được tác giả cho phép lưu trữ, phát hành và sử dụng tác phẩm trong hoạt động giáo dục, truyền thông của nhà trường. Mọi ca khúc trên trang đều ghi rõ tên người sáng tác, người viết lời và người trình bày.',
+  },
+  {
+    question: 'Thầy cô muốn gửi bài hát mình sáng tác lên thư viện thì làm thế nào?',
+    answer:
+      'Thầy cô gửi file nhạc (MP3 từ 192 kbps hoặc WAV), lời bài hát, thông tin tác giả và vài dòng về hoàn cảnh sáng tác về email info@truongvietanh.com hoặc Zalo của trường. File nặng thì gửi qua link Google Drive. Bộ phận truyền thông rà soát, thống nhất phạm vi sử dụng với tác giả rồi đăng lên trang trong vòng 7 ngày làm việc.',
+  },
+  {
+    question: 'Phụ huynh có được dùng nhạc của trường làm nhạc nền video của con không?',
+    answer:
+      'Được, nếu là video cá nhân hoặc video về hoạt động của con tại Trường Việt Anh và không nhằm mục đích kinh doanh. Phụ huynh vui lòng ghi nguồn "Trường Việt Anh" trong phần mô tả video. Nếu video có gắn quảng cáo hoặc bán hàng, xin liên hệ nhà trường trước khi sử dụng.',
+  },
+  {
+    question: 'Trường có nhận sáng tác của học sinh không?',
+    answer:
+      'Thư viện hiện tập trung giới thiệu sáng tác của thầy cô Trường Việt Anh. Học sinh có tác phẩm muốn giới thiệu, vui lòng gửi qua giáo viên Âm nhạc hoặc giáo viên chủ nhiệm để nhà trường xem xét đưa vào các chương trình văn nghệ và thư viện âm nhạc.',
+  },
+  {
+    question: 'Bao lâu thư viện có ca khúc mới?',
+    answer:
+      'Thư viện được cập nhật mỗi khi có tác phẩm mới của thầy cô hoặc sau các dịp lễ lớn của trường như khai giảng, hội xuân, lễ trưởng thành và lễ tổng kết năm học. Phụ huynh có thể lưu trang truongvietanh.com/am-nhac để nghe lại bất cứ lúc nào.',
+  },
+];
+
+const structuredData: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Âm Nhạc Trường Việt Anh',
+    description:
+      'Thư viện ca khúc bản quyền của Trường Việt Anh — nơi lưu giữ và giới thiệu các sáng tác của thầy cô nhà trường.',
+    url: URL_TRANG,
+    inLanguage: 'vi-VN',
+    isPartOf: { '@type': 'WebSite', name: 'Trường Việt Anh', url: 'https://truongvietanh.com/' },
+    publisher: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh', url: 'https://truongvietanh.com/' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang Chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Âm Nhạc', item: URL_TRANG },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  },
+];
+
+// Playlist chỉ khai báo khi đã có ca khúc phát hành — tránh schema rỗng
+if (baiDaPhatHanh.length > 0) {
+  structuredData.push({
+    '@context': 'https://schema.org',
+    '@type': 'MusicPlaylist',
+    name: 'Thư viện Âm nhạc Trường Việt Anh',
+    url: URL_TRANG,
+    numTracks: baiDaPhatHanh.length,
+    track: baiDaPhatHanh.map((b) => {
+      const giay = thoiLuongRaGiay(b.thoiLuong);
+      return {
+        '@type': 'MusicRecording',
+        name: b.tieuDe,
+        url: `${URL_TRANG}#${b.slug}`,
+        ...(b.theHien ? { byArtist: { '@type': 'MusicGroup', name: b.theHien } } : {}),
+        ...(giay ? { duration: giayRaISO(giay) } : {}),
+        ...(b.audioUrl ? { audio: { '@type': 'AudioObject', contentUrl: b.audioUrl, encodingFormat: 'audio/mpeg' } } : {}),
+        ...(b.namSangTac ? { datePublished: String(b.namSangTac) } : {}),
+        copyrightHolder: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh' },
+        composer: { '@type': 'Person', name: b.sangTac },
+      };
+    }),
+  });
+}
+---
+
+<BaseLayout
+  title="Âm Nhạc Trường Việt Anh — Ca Khúc Bản Quyền & Sáng Tác Của Thầy Cô"
+  description="Thư viện âm nhạc bản quyền của Trường Việt Anh: ca khúc truyền thống, sáng tác của thầy cô, nhạc sự kiện và nhạc thiếu nhi mầm non. Nghe trực tuyến và tải về miễn phí."
+  keywords="âm nhạc trường việt anh, bài hát trường việt anh, ca khúc truyền thống trường học, thầy cô sáng tác, nhạc thiếu nhi mầm non"
+  canonical={URL_TRANG}
+  ogImage="https://media.truongvietanh.com/images/root/truong-viet-anh-banner-chinh.webp"
+  structuredData={structuredData}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <!-- ============ HERO ============ -->
+    <section class="am-hero">
+      <div class="am-hero__staff" aria-hidden="true"></div>
+      <div class="cf-container am-hero__inner">
+        <nav class="breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a> <span>/</span> <span>Âm Nhạc</span>
+        </nav>
+        <span class="am-hero__eyebrow">🎵 Thư viện bản quyền</span>
+        <h1 class="am-hero__title">Âm Nhạc Trường Việt Anh</h1>
+        <p class="am-hero__desc">
+          Nơi lưu giữ những ca khúc mang bản quyền của Trường Việt Anh — và là sân khấu chung cho
+          <strong>mọi sáng tác của thầy cô nhà trường</strong>. Mỗi bài hát ở đây đều được ghi rõ tên
+          người viết, người hát và câu chuyện đứng sau nó.
+        </p>
+
+        {coBaiHat ? (
+          <div class="am-hero__stats">
+            <div class="am-stat"><span class="am-stat__num">{baiHat.length}</span><span class="am-stat__label">Ca khúc</span></div>
+            <div class="am-stat"><span class="am-stat__num">{soTacGia}</span><span class="am-stat__label">Tác giả</span></div>
+            <div class="am-stat"><span class="am-stat__num">{danhMucList.length}</span><span class="am-stat__label">Danh mục</span></div>
+          </div>
+        ) : (
+          <p class="am-hero__note">Thư viện vừa mở — những ca khúc đầu tiên đang được hoàn tất thu âm.</p>
+        )}
+
+        <div class="am-hero__cta">
+          <a class="am-btn am-btn--gold" href="#thu-vien">▶ Nghe thư viện</a>
+          <a class="am-btn am-btn--ghost" href="#gui-tac-pham">Thầy cô gửi tác phẩm</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ VÌ SAO CÓ TRANG NÀY ============ -->
+    <section class="am-why">
+      <div class="cf-container">
+        <div class="am-why__grid">
+          <div class="am-why__card">
+            <span class="am-why__icon">©</span>
+            <strong>Giữ bản quyền đúng chỗ</strong>
+            <p>Mỗi ca khúc có một địa chỉ chính thức trên tên miền của trường, ghi rõ tác giả và điều khoản sử dụng — thay vì trôi nổi trong các nhóm Zalo hay ổ đĩa cá nhân.</p>
+          </div>
+          <div class="am-why__card">
+            <span class="am-why__icon">🎼</span>
+            <strong>Tôn vinh thầy cô sáng tác</strong>
+            <p>Thầy cô Việt Anh không chỉ đứng lớp. Những bài hát viết cho học trò, cho mùa chia tay, cho ngôi trường mình gắn bó xứng đáng được nghe và được nhớ tên người viết.</p>
+          </div>
+          <div class="am-why__card">
+            <span class="am-why__icon">🔊</span>
+            <strong>Một nơi để lan toả</strong>
+            <p>Phụ huynh, học sinh và giáo viên chỉ cần một đường dẫn duy nhất để nghe lại, tải về và chia sẻ — dùng cho tiết học, cho video kỷ niệm hay cho chương trình văn nghệ của lớp.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ THƯ VIỆN ============ -->
+    <section class="am-library" id="thu-vien">
+      <div class="cf-container">
+        <h2 class="am-h2">Thư viện ca khúc</h2>
+        <p class="am-lead">
+          {coBaiHat
+            ? 'Bấm nút phát để nghe ngay trên trang. Trình phát nhỏ ở đáy màn hình cho phép tua, chuyển bài và nghe tiếp trong lúc bạn cuộn xem phần khác.'
+            : 'Mỗi ca khúc khi lên trang sẽ nghe được ngay tại đây, kèm tên tác giả, lời bài hát và đường dẫn riêng để thầy cô chia sẻ cho lớp mình.'}
+        </p>
+
+        {coBaiHat ? (
+          <>
+            <div class="am-toolbar">
+              <div class="am-tabs" role="tablist" aria-label="Lọc theo danh mục">
+                <button class="am-tab is-active" type="button" data-cat="tat-ca" aria-selected="true">
+                  Tất cả <span class="am-tab__count">{baiHat.length}</span>
+                </button>
+                {danhMucList.map((d) => {
+                  const soBai = baiHat.filter((b) => b.danhMuc === d.ma).length;
+                  return soBai > 0 ? (
+                    <button class="am-tab" type="button" data-cat={d.ma} aria-selected="false">
+                      <span aria-hidden="true">{d.icon}</span> {d.ten} <span class="am-tab__count">{soBai}</span>
+                    </button>
+                  ) : null;
+                })}
+              </div>
+              <div class="am-search">
+                <label class="am-sr-only" for="am-search-input">Tìm ca khúc theo tên hoặc tác giả</label>
+                <input
+                  id="am-search-input"
+                  type="search"
+                  placeholder="Tìm theo tên bài hát hoặc tên thầy cô…"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+
+            <p class="am-noresult" hidden>Không tìm thấy ca khúc nào khớp với từ khoá. Thử tìm bằng tên thầy cô xem sao.</p>
+
+            <ol class="am-tracks">
+              {baiHat.map((b, i) => {
+                const dm = danhMucList.find((d) => d.ma === b.danhMuc);
+                const phatHanh = b.trangThai === 'da-phat-hanh' && !!b.audioUrl;
+                const choTai = b.choPhepTaiVe !== false && phatHanh;
+                return (
+                  <li
+                    class="am-track"
+                    id={b.slug}
+                    data-cat={b.danhMuc}
+                    data-slug={b.slug}
+                    data-title={b.tieuDe}
+                    data-author={b.sangTac}
+                    data-audio={phatHanh ? b.audioUrl : ''}
+                    data-search={`${b.tieuDe} ${b.sangTac} ${b.vietLoi || ''} ${b.theHien || ''} ${dm?.ten || ''}`}
+                  >
+                    <div class="am-track__main">
+                      <span class="am-track__index">{String(i + 1).padStart(2, '0')}</span>
+
+                      {phatHanh ? (
+                        <button class="am-track__play" type="button" aria-label={`Phát ca khúc ${b.tieuDe}`}>
+                          <span class="am-track__icon-play" aria-hidden="true">▶</span>
+                          <span class="am-track__icon-pause" aria-hidden="true">❚❚</span>
+                          <span class="am-eq" aria-hidden="true"><i></i><i></i><i></i></span>
+                        </button>
+                      ) : (
+                        <span class="am-track__play am-track__play--soon" aria-hidden="true">🎵</span>
+                      )}
+
+                      <div class="am-track__info">
+                        <h3 class="am-track__title">
+                          {b.tieuDe}
+                          {!phatHanh && <span class="am-badge am-badge--soon">Sắp ra mắt</span>}
+                        </h3>
+                        <p class="am-track__meta">
+                          <span class="am-track__author">Sáng tác: {b.sangTac}</span>
+                          {b.vietLoi && <span> · Lời: {b.vietLoi}</span>}
+                          {b.theHien && <span> · Trình bày: {b.theHien}</span>}
+                          {b.namSangTac && <span> · {b.namSangTac}</span>}
+                        </p>
+                        {b.vaiTro && <p class="am-track__role">{b.vaiTro}</p>}
+                        {b.moTa && <p class="am-track__desc">{b.moTa}</p>}
+                      </div>
+
+                      <div class="am-track__side">
+                        {dm && <span class="am-badge am-badge--cat">{dm.icon} {dm.ten}</span>}
+                        {b.thoiLuong && <span class="am-track__time">{b.thoiLuong}</span>}
+                      </div>
+                    </div>
+
+                    <div class="am-track__actions">
+                      {b.loiBaiHat && (
+                        <button class="am-linkbtn am-lyric-toggle" type="button" aria-expanded="false">
+                          Lời bài hát
+                        </button>
+                      )}
+                      {b.youtubeId && (
+                        <a class="am-linkbtn" href={`https://www.youtube.com/watch?v=${b.youtubeId}`} target="_blank" rel="noopener">
+                          Xem video ▶
+                        </a>
+                      )}
+                      {choTai && (
+                        <a class="am-linkbtn" href={b.audioUrl} download>
+                          Tải về
+                        </a>
+                      )}
+                      <button class="am-linkbtn am-copy-link" type="button" data-link={`${URL_TRANG}#${b.slug}`}>
+                        Sao chép link
+                      </button>
+                    </div>
+
+                    {b.loiBaiHat && (
+                      <div class="am-lyric" hidden>
+                        <pre>{b.loiBaiHat}</pre>
+                        <p class="am-lyric__note">Lời bài hát thuộc quyền tác giả của {b.sangTac}. Vui lòng ghi nguồn khi sử dụng.</p>
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ol>
+          </>
+        ) : (
+          <div class="am-empty">
+            <span class="am-empty__icon" aria-hidden="true">🎧</span>
+            <strong>Thư viện đang được xây dựng</strong>
+            <p>
+              Những ca khúc đầu tiên của Trường Việt Anh sẽ lên sóng ngay khi hoàn tất khâu thu âm và
+              xác nhận bản quyền với tác giả. Nếu thầy cô đã có sáng tác trong tay, đây là lúc gửi về
+              để bài hát của mình có mặt ngay trong đợt đăng đầu tiên.
+            </p>
+            <a class="am-btn am-btn--navy" href="#gui-tac-pham">Gửi tác phẩm của tôi</a>
+          </div>
+        )}
+
+        <!-- Giới thiệu 4 danh mục — luôn hiện, giúp thầy cô biết bài mình thuộc nhóm nào -->
+        <div class="am-cats">
+          <h3 class="am-h3">Thư viện gồm những nhóm nào?</h3>
+          <div class="am-cats__grid">
+            {danhMucList.map((d) => (
+              <div class="am-cat">
+                <span class="am-cat__icon" aria-hidden="true">{d.icon}</span>
+                <strong>{d.ten}</strong>
+                <p>{d.moTa}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ BẢN QUYỀN ============ -->
+    <section class="am-rights" id="ban-quyen">
+      <div class="cf-container">
+        <h2 class="am-h2">Bản quyền &amp; Điều khoản sử dụng</h2>
+        <p class="am-lead">
+          Toàn bộ ca khúc trên trang này thuộc bản quyền của Trường Việt Anh và các tác giả là thầy cô
+          nhà trường. Chúng tôi muốn nhạc được hát càng nhiều càng tốt — chỉ cần đúng người, đúng chỗ.
+        </p>
+
+        <div class="am-rights__grid">
+          <div class="am-rights__card am-rights__card--yes">
+            <h3><span aria-hidden="true">✓</span> Được sử dụng tự do</h3>
+            <ul>
+              {duocPhep.map((d) => <li>{d}</li>)}
+            </ul>
+          </div>
+          <div class="am-rights__card am-rights__card--no">
+            <h3><span aria-hidden="true">!</span> Cần xin phép trước</h3>
+            <ul>
+              {canXinPhep.map((d) => <li>{d}</li>)}
+            </ul>
+          </div>
+        </div>
+
+        <div class="am-credit">
+          <div class="am-credit__text">
+            <strong>Mẫu ghi nguồn</strong>
+            <code id="am-credit-code">{mauGhiNguon}</code>
+          </div>
+          <button class="am-btn am-btn--navy am-btn--sm" type="button" id="am-copy-credit" data-text={mauGhiNguon}>
+            Sao chép
+          </button>
+        </div>
+
+        <p class="am-rights__contact">
+          Cần cấp phép sử dụng ngoài phạm vi trên? Liên hệ
+          <a href={`mailto:${emailBanQuyen}`}>{emailBanQuyen}</a> hoặc
+          <a href={zaloBanQuyen} target="_blank" rel="noopener">Zalo Trường Việt Anh</a>.
+          Nhà trường phản hồi trong 3 ngày làm việc.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ GỬI TÁC PHẨM ============ -->
+    <section class="am-submit" id="gui-tac-pham">
+      <div class="cf-container">
+        <span class="am-submit__eyebrow">Dành cho thầy cô Trường Việt Anh</span>
+        <h2 class="am-h2 am-h2--light">Gửi ca khúc của thầy cô lên thư viện</h2>
+        <p class="am-lead am-lead--light">
+          Không cần bản thu phòng studio, không cần biết phối khí. Một bản ghi bằng điện thoại kèm lời
+          bài hát là đủ để bắt đầu — phần còn lại nhà trường lo.
+        </p>
+
+        <div class="am-steps">
+          {cacBuocGuiBai.map((s) => (
+            <div class="am-step">
+              <span class="am-step__num">{s.buoc}</span>
+              <strong>{s.tieuDe}</strong>
+              <p>{s.moTa}</p>
+            </div>
+          ))}
+        </div>
+
+        <div class="am-submit__grid">
+          <div class="am-submit__req">
+            <h3>Thầy cô chuẩn bị giúp</h3>
+            <ul>
+              {yeuCauGuiBai.map((y) => <li>{y}</li>)}
+            </ul>
+          </div>
+          <div class="am-submit__box">
+            <h3>Gửi về đâu?</h3>
+            <p>Chọn kênh nào thuận tiện nhất — cả hai đều về cùng một bộ phận.</p>
+            <a class="am-btn am-btn--gold am-btn--block" href={mailtoGuiBai}>
+              ✉ Soạn email gửi tác phẩm
+            </a>
+            <a class="am-btn am-btn--ghost am-btn--block" href={zaloBanQuyen} target="_blank" rel="noopener">
+              Nhắn Zalo Trường Việt Anh
+            </a>
+            <p class="am-submit__note">
+              Nút email đã điền sẵn khung thông tin cần khai — thầy cô chỉ việc điền vào chỗ trống và
+              đính kèm file.
+            </p>
+          </div>
+        </div>
+
+        <p class="am-submit__rights">
+          <strong>Về quyền tác giả:</strong> thầy cô vẫn giữ trọn quyền tác giả với tác phẩm của mình.
+          Khi gửi bài, thầy cô cho phép Trường Việt Anh lưu trữ và sử dụng ca khúc trong hoạt động giáo
+          dục và truyền thông của trường, có ghi rõ tên tác giả. Thầy cô có thể yêu cầu gỡ bài khỏi
+          thư viện bất cứ lúc nào.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="am-faq">
+      <div class="cf-container">
+        <h2 class="am-h2">Câu hỏi thường gặp</h2>
+        <div class="am-faq__list">
+          {faqItems.map((faq) => (
+            <details class="am-faq__item">
+              <summary>{faq.question}</summary>
+              <p>{faq.answer}</p>
+            </details>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ LIÊN KẾT NỘI BỘ ============ -->
+    <section class="am-links">
+      <div class="cf-container">
+        <h2 class="am-h2">Khám phá thêm về Trường Việt Anh</h2>
+        <div class="am-links__grid">
+          <a href="/ngoai-khoa" class="am-link-card">
+            <strong>Ngoại khoá &amp; Câu lạc bộ</strong>
+            <span>CLB nhạc cụ, thể thao và các hoạt động phát triển năng khiếu</span>
+          </a>
+          <a href="/hinh-anh" class="am-link-card">
+            <strong>Hình ảnh &amp; Sự kiện</strong>
+            <span>Album ảnh lễ hội, văn nghệ và hoạt động của học sinh</span>
+          </a>
+          <a href="/gioi-thieu" class="am-link-card">
+            <strong>Giới thiệu trường</strong>
+            <span>Sứ mệnh, tầm nhìn và giá trị cốt lõi của Việt Anh</span>
+          </a>
+          <a href="/tuyen-sinh" class="am-link-card">
+            <strong>Tuyển sinh 2026–2027</strong>
+            <span>Chương trình học, học phí và lịch tham quan trường</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TRÌNH PHÁT NHỎ (sticky) ============ -->
+    <div class="am-player" id="am-player" hidden>
+      <div class="am-player__inner">
+        <button class="am-player__btn am-player__btn--prev" type="button" aria-label="Bài trước">⏮</button>
+        <button class="am-player__btn am-player__btn--toggle" type="button" aria-label="Tạm dừng">
+          <span class="am-player__icon-play" aria-hidden="true">▶</span>
+          <span class="am-player__icon-pause" aria-hidden="true">❚❚</span>
+        </button>
+        <button class="am-player__btn am-player__btn--next" type="button" aria-label="Bài kế tiếp">⏭</button>
+
+        <div class="am-player__meta">
+          <strong id="am-player-title">—</strong>
+          <span id="am-player-author"></span>
+        </div>
+
+        <div class="am-player__bar">
+          <span class="am-player__time" id="am-player-cur">0:00</span>
+          <label class="am-sr-only" for="am-player-seek">Tua ca khúc</label>
+          <input id="am-player-seek" type="range" min="0" max="1000" value="0" step="1" />
+          <span class="am-player__time" id="am-player-dur">0:00</span>
+        </div>
+
+        <button class="am-player__btn am-player__btn--close" type="button" aria-label="Đóng trình phát">✕</button>
+      </div>
+      <audio id="am-audio" preload="none"></audio>
+    </div>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .cf-container { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }
+  .am-sr-only {
+    position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+  }
+
+  /* ---------- HERO ---------- */
+  .am-hero {
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1d1e48 0%, #26275D 55%, #33356f 100%);
+    color: #fff;
+    padding: 3.25rem 0 3rem;
+  }
+  .am-hero__staff {
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      to bottom, transparent 0 34px, rgba(249, 221, 14, 0.14) 34px 35px
+    );
+    mask-image: radial-gradient(ellipse at 70% 40%, #000 10%, transparent 72%);
+    -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 10%, transparent 72%);
+    pointer-events: none;
+  }
+  .am-hero__inner { position: relative; text-align: center; }
+  .breadcrumb { font-size: 0.95rem; margin-bottom: 1rem; color: rgba(255,255,255,0.6); }
+  .breadcrumb a { color: rgba(255,255,255,0.78); text-decoration: none; }
+  .breadcrumb a:hover { text-decoration: underline; }
+  .breadcrumb span { margin: 0 0.35rem; }
+  .am-hero__eyebrow {
+    display: inline-block;
+    background: rgba(249, 221, 14, 0.16);
+    border: 1px solid rgba(249, 221, 14, 0.45);
+    color: #f9dd0e;
+    font-size: 0.85rem; font-weight: 700; letter-spacing: 0.02em;
+    padding: 0.35rem 0.9rem; border-radius: 999px;
+    margin-bottom: 0.9rem;
+  }
+  .am-hero__title {
+    font-family: Montserrat, Inter, sans-serif;
+    font-size: clamp(1.9rem, 4.6vw, 3rem);
+    font-weight: 900; line-height: 1.15;
+    color: #fff !important;
+    margin: 0 0 0.75rem;
+  }
+  .am-hero__desc {
+    font-size: 1.05rem; line-height: 1.75;
+    color: rgba(255,255,255,0.82);
+    max-width: 720px; margin: 0 auto;
+  }
+  .am-hero__desc strong { color: #f9dd0e; font-weight: 700; }
+  .am-hero__note {
+    margin: 1.4rem auto 0; max-width: 560px;
+    font-size: 0.95rem; color: rgba(255,255,255,0.66);
+    border-top: 1px solid rgba(255,255,255,0.16);
+    padding-top: 1.1rem;
+  }
+  .am-hero__stats { display: flex; justify-content: center; gap: 2.75rem; flex-wrap: wrap; margin-top: 1.75rem; }
+  .am-stat__num {
+    display: block; font-family: Montserrat, sans-serif;
+    font-size: 2rem; font-weight: 900; color: #f9dd0e; line-height: 1;
+  }
+  .am-stat__label { font-size: 0.88rem; color: rgba(255,255,255,0.7); }
+  .am-hero__cta { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; margin-top: 1.9rem; }
+
+  /* ---------- NÚT ---------- */
+  .am-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+    padding: 0.8rem 1.6rem; border-radius: 999px;
+    font-size: 0.98rem; font-weight: 700; text-decoration: none;
+    border: 2px solid transparent; cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  }
+  .am-btn:hover { transform: translateY(-2px); }
+  .am-btn--gold { background: #f9dd0e; color: #26275D; box-shadow: 0 8px 24px rgba(249,221,14,0.28); }
+  .am-btn--gold:hover { background: #ffe93d; }
+  .am-btn--ghost { background: transparent; color: #fff; border-color: rgba(255,255,255,0.45); }
+  .am-btn--ghost:hover { background: rgba(255,255,255,0.1); }
+  .am-btn--navy { background: #26275D; color: #fff; }
+  .am-btn--navy:hover { background: #1d1e48; }
+  .am-btn--sm { padding: 0.55rem 1.1rem; font-size: 0.9rem; }
+  .am-btn--block { display: flex; width: 100%; margin-top: 0.65rem; }
+
+  /* ---------- TIÊU ĐỀ CHUNG ---------- */
+  .am-h2 {
+    font-family: Montserrat, Inter, sans-serif;
+    font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+    font-weight: 800; color: #26275D; margin: 0 0 0.6rem;
+  }
+  .am-h2--light { color: #fff; }
+  .am-h3 { font-size: 1.15rem; font-weight: 800; color: #26275D; margin: 0 0 1rem; }
+  .am-lead { font-size: 1rem; line-height: 1.75; color: #475569; max-width: 780px; margin: 0 0 1.75rem; }
+  .am-lead--light { color: rgba(255,255,255,0.78); }
+
+  /* ---------- VÌ SAO ---------- */
+  .am-why { padding: 2.75rem 0; background: #fff; }
+  .am-why__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+  .am-why__card {
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .am-why__icon {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 44px; height: 44px; border-radius: 12px;
+    background: #26275D; color: #f9dd0e; font-size: 1.35rem; font-weight: 800;
+    margin-bottom: 0.85rem;
+  }
+  .am-why__card strong { display: block; font-size: 1.05rem; color: #26275D; margin-bottom: 0.4rem; }
+  .am-why__card p { font-size: 0.95rem; line-height: 1.7; color: #475569; margin: 0; }
+
+  /* Header của site dính trên cùng — chừa khoảng để nhảy anchor không bị che tiêu đề */
+  .am-library, .am-rights, .am-submit { scroll-margin-top: 84px; }
+
+  /* ---------- THƯ VIỆN ---------- */
+  .am-library { padding: 2.75rem 0 3rem; background: #f7f9fc; }
+  .am-toolbar {
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 1.25rem;
+  }
+  .am-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+  .am-tab {
+    background: #fff; border: 1px solid #dbe3ee; color: #475569;
+    border-radius: 999px; padding: 0.5rem 1rem;
+    font-size: 0.9rem; font-weight: 600; cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .am-tab:hover { border-color: #26275D; color: #26275D; }
+  .am-tab.is-active { background: #26275D; border-color: #26275D; color: #fff; }
+  .am-tab__count {
+    display: inline-block; margin-left: 0.3rem;
+    font-size: 0.78rem; opacity: 0.72;
+  }
+  .am-search input {
+    width: 280px; max-width: 100%;
+    padding: 0.6rem 1rem; border-radius: 999px;
+    border: 1px solid #dbe3ee; background: #fff;
+    font-size: 0.92rem; color: #18314d;
+  }
+  .am-search input:focus { outline: 2px solid #26275D; outline-offset: 1px; border-color: #26275D; }
+  .am-noresult {
+    background: #fff; border: 1px dashed #cbd5e1; border-radius: 14px;
+    padding: 1.5rem; text-align: center; color: #64748b; font-size: 0.95rem;
+  }
+
+  .am-tracks { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+  .am-track {
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 16px;
+    padding: 1.1rem 1.25rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    scroll-margin-top: 100px;
+  }
+  .am-track:hover { border-color: #c7d2e5; box-shadow: 0 6px 20px rgba(16,40,72,0.06); }
+  .am-track.is-playing { border-color: #26275D; box-shadow: 0 8px 26px rgba(38,39,93,0.14); }
+  .am-track__main { display: flex; align-items: flex-start; gap: 0.9rem; }
+  .am-track__index {
+    font-family: Montserrat, sans-serif; font-size: 0.95rem; font-weight: 800;
+    color: #cbd5e1; padding-top: 0.6rem; min-width: 1.6rem;
+  }
+  .am-track__play {
+    flex-shrink: 0; position: relative;
+    width: 46px; height: 46px; border-radius: 50%;
+    border: none; background: #26275D; color: #fff;
+    font-size: 0.9rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .am-track__play:hover { background: #1d1e48; transform: scale(1.06); }
+  .am-track__play--soon { background: #e2e8f0; color: #94a3b8; cursor: default; }
+  .am-track__icon-pause, .am-track__icon-play { font-size: 0.85rem; }
+  .am-track__icon-pause { display: none; }
+  .am-track.is-playing .am-track__icon-play { display: none; }
+  .am-track.is-playing .am-track__icon-pause { display: inline; }
+  .am-track.is-playing .am-track__play { background: #f9dd0e; color: #26275D; }
+
+  /* Sóng nhạc khi đang phát */
+  .am-eq { display: none; position: absolute; bottom: 7px; right: 7px; gap: 1px; align-items: flex-end; height: 9px; }
+  .am-track.is-playing .am-eq { display: flex; }
+  .am-eq i { display: block; width: 2px; background: #26275D; animation: amEq 0.8s ease-in-out infinite; }
+  .am-eq i:nth-child(2) { animation-delay: 0.18s; }
+  .am-eq i:nth-child(3) { animation-delay: 0.36s; }
+  @keyframes amEq { 0%,100% { height: 3px; } 50% { height: 9px; } }
+  @media (prefers-reduced-motion: reduce) { .am-eq i { animation: none; height: 6px; } }
+
+  .am-track__info { flex: 1; min-width: 0; }
+  .am-track__title {
+    font-size: 1.08rem; font-weight: 800; color: #26275D;
+    margin: 0.25rem 0 0.3rem; display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+  }
+  .am-track__meta { font-size: 0.9rem; color: #475569; margin: 0; line-height: 1.6; }
+  .am-track__author { font-weight: 600; color: #26275D; }
+  .am-track__role { font-size: 0.85rem; color: #64748b; margin: 0.15rem 0 0; }
+  .am-track__desc { font-size: 0.9rem; color: #64748b; line-height: 1.65; margin: 0.45rem 0 0; }
+  .am-track__side { display: flex; flex-direction: column; align-items: flex-end; gap: 0.4rem; flex-shrink: 0; }
+  .am-track__time { font-size: 0.85rem; color: #94a3b8; font-variant-numeric: tabular-nums; }
+  .am-badge {
+    display: inline-block; font-size: 0.75rem; font-weight: 700;
+    padding: 0.25rem 0.6rem; border-radius: 999px; white-space: nowrap;
+  }
+  .am-badge--cat { background: #eef2ff; color: #26275D; }
+  .am-badge--soon { background: #fff7ed; color: #b45309; border: 1px solid #fed7aa; }
+
+  .am-track__actions {
+    display: flex; gap: 0.4rem; flex-wrap: wrap;
+    margin-top: 0.8rem; padding-left: 3.1rem;
+  }
+  .am-linkbtn {
+    background: #f1f5f9; border: 1px solid #e2e8f0; color: #475569;
+    font-size: 0.83rem; font-weight: 600; text-decoration: none;
+    padding: 0.35rem 0.8rem; border-radius: 8px; cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .am-linkbtn:hover { background: #26275D; border-color: #26275D; color: #fff; }
+  .am-lyric {
+    margin-top: 0.9rem; margin-left: 3.1rem;
+    background: #f8fafc; border-left: 3px solid #f9dd0e;
+    border-radius: 0 10px 10px 0; padding: 1rem 1.2rem;
+  }
+  .am-lyric pre {
+    font-family: Inter, sans-serif; font-size: 0.95rem; line-height: 1.85;
+    color: #334155; white-space: pre-wrap; margin: 0;
+  }
+  .am-lyric__note { font-size: 0.8rem; color: #94a3b8; margin: 0.75rem 0 0; font-style: italic; }
+
+  .am-empty {
+    background: #fff; border: 1px dashed #cbd5e1; border-radius: 20px;
+    padding: 2.75rem 1.5rem; text-align: center; max-width: 680px; margin: 0 auto;
+  }
+  .am-empty__icon { font-size: 2.6rem; display: block; margin-bottom: 0.75rem; }
+  .am-empty strong { display: block; font-size: 1.2rem; color: #26275D; margin-bottom: 0.55rem; }
+  .am-empty p { font-size: 0.98rem; line-height: 1.75; color: #475569; margin: 0 auto 1.4rem; max-width: 520px; }
+
+  .am-cats { margin-top: 2.75rem; padding-top: 2.25rem; border-top: 1px solid #e2e8f0; }
+  .am-cats__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .am-cat { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.15rem; }
+  .am-cat__icon { font-size: 1.6rem; display: block; margin-bottom: 0.45rem; }
+  .am-cat strong { display: block; font-size: 0.98rem; color: #26275D; margin-bottom: 0.35rem; }
+  .am-cat p { font-size: 0.88rem; line-height: 1.65; color: #64748b; margin: 0; }
+
+  /* ---------- BẢN QUYỀN ---------- */
+  .am-rights { padding: 3rem 0; background: #fff; }
+  .am-rights__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+  .am-rights__card { border-radius: 16px; padding: 1.5rem; border: 1px solid; }
+  .am-rights__card h3 {
+    font-size: 1.05rem; font-weight: 800; margin: 0 0 0.9rem;
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .am-rights__card h3 span {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; border-radius: 50%; font-size: 0.85rem; color: #fff;
+  }
+  .am-rights__card ul { margin: 0; padding-left: 1.15rem; }
+  .am-rights__card li { font-size: 0.94rem; line-height: 1.7; margin-bottom: 0.6rem; color: #475569; }
+  .am-rights__card li:last-child { margin-bottom: 0; }
+  .am-rights__card--yes { background: #f0fdf4; border-color: #bbf7d0; }
+  .am-rights__card--yes h3 { color: #15803d; }
+  .am-rights__card--yes h3 span { background: #16a34a; }
+  .am-rights__card--no { background: #fff7ed; border-color: #fed7aa; }
+  .am-rights__card--no h3 { color: #c2410c; }
+  .am-rights__card--no h3 span { background: #ea580c; }
+
+  .am-credit {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    margin-top: 1.25rem; padding: 1.15rem 1.35rem;
+    background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px;
+  }
+  .am-credit__text strong { display: block; font-size: 0.85rem; color: #64748b; margin-bottom: 0.35rem; }
+  .am-credit code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 0.9rem; color: #26275D; word-break: break-word;
+  }
+  .am-rights__contact { font-size: 0.95rem; color: #475569; line-height: 1.75; margin: 1.25rem 0 0; }
+  .am-rights__contact a { color: #26275D; font-weight: 700; }
+
+  /* ---------- GỬI TÁC PHẨM ---------- */
+  .am-submit { padding: 3rem 0; background: linear-gradient(135deg, #1d1e48, #26275D); color: #fff; }
+  .am-submit__eyebrow {
+    display: inline-block; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.04em;
+    text-transform: uppercase; color: #f9dd0e; margin-bottom: 0.5rem;
+  }
+  .am-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.75rem; }
+  .am-step { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 1.25rem; }
+  .am-step__num {
+    display: block; font-family: Montserrat, sans-serif;
+    font-size: 1.5rem; font-weight: 900; color: #f9dd0e; line-height: 1; margin-bottom: 0.55rem;
+  }
+  .am-step strong { display: block; font-size: 1rem; color: #fff; margin-bottom: 0.35rem; }
+  .am-step p { font-size: 0.9rem; line-height: 1.68; color: rgba(255,255,255,0.72); margin: 0; }
+
+  .am-submit__grid { display: grid; grid-template-columns: 1.35fr 1fr; gap: 1.1rem; align-items: start; }
+  .am-submit__req, .am-submit__box {
+    background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 16px; padding: 1.5rem;
+  }
+  .am-submit__req h3, .am-submit__box h3 { font-size: 1.05rem; font-weight: 800; color: #f9dd0e; margin: 0 0 0.9rem; }
+  .am-submit__req ul { margin: 0; padding-left: 1.15rem; }
+  .am-submit__req li { font-size: 0.94rem; line-height: 1.72; color: rgba(255,255,255,0.82); margin-bottom: 0.6rem; }
+  .am-submit__req li:last-child { margin-bottom: 0; }
+  .am-submit__box p { font-size: 0.93rem; line-height: 1.7; color: rgba(255,255,255,0.75); margin: 0; }
+  .am-submit__note { font-size: 0.85rem !important; color: rgba(255,255,255,0.6) !important; margin-top: 0.85rem !important; }
+  .am-submit__rights {
+    margin-top: 1.5rem; padding: 1.15rem 1.35rem;
+    background: rgba(249,221,14,0.1); border-left: 3px solid #f9dd0e; border-radius: 0 12px 12px 0;
+    font-size: 0.93rem; line-height: 1.75; color: rgba(255,255,255,0.85);
+  }
+  .am-submit__rights strong { color: #f9dd0e; }
+
+  /* ---------- FAQ ---------- */
+  .am-faq { padding: 3rem 0; background: #f7f9fc; }
+  .am-faq__list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 880px; }
+  .am-faq__item { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem 1.25rem; }
+  .am-faq__item summary {
+    font-size: 1rem; font-weight: 700; color: #26275D; cursor: pointer; line-height: 1.55;
+  }
+  .am-faq__item p { font-size: 0.95rem; line-height: 1.78; color: #475569; margin: 0.75rem 0 0; }
+
+  /* ---------- LIÊN KẾT ---------- */
+  .am-links { padding: 3rem 0; background: #eef2ff; }
+  .am-links__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; }
+  .am-link-card {
+    display: flex; flex-direction: column; gap: 0.3rem;
+    background: #fff; border: 1px solid #dbe3ee; border-radius: 14px;
+    padding: 1.25rem; text-decoration: none;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .am-link-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(16,40,72,0.1); }
+  .am-link-card strong { font-size: 1rem; color: #26275D; }
+  .am-link-card span { font-size: 0.88rem; color: #64748b; line-height: 1.6; }
+
+  /* ---------- TRÌNH PHÁT STICKY ---------- */
+  /* Đáy màn hình đã có sẵn 3 thứ nổi của site: .mobile-sticky-cta (z999),
+     .zalo-float và .back-to-top (z998). Trình phát KHÔNG chồng lên chúng —
+     nó ngồi ngay trên thanh CTA, còn 2 nút nổi bị đẩy lên trên trình phát.
+     Chiều cao thật do JS đo rồi ghi vào --am-cta-h / --am-player-h. */
+  .am-player {
+    position: fixed; left: 0; right: 0; bottom: var(--am-cta-h, 0px); z-index: 995;
+    background: rgba(29, 30, 72, 0.97);
+    backdrop-filter: blur(10px);
+    border-top: 2px solid #f9dd0e;
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.22);
+    color: #fff;
+  }
+  .am-player[hidden] { display: none; }
+  .am-player__inner {
+    max-width: 1200px; margin: 0 auto; padding: 0.7rem 1.5rem;
+    display: flex; align-items: center; gap: 0.75rem;
+  }
+  .am-player__btn {
+    background: transparent; border: none; color: #fff;
+    font-size: 1rem; cursor: pointer; padding: 0.4rem;
+    border-radius: 50%; line-height: 1;
+    transition: color 0.15s ease, background 0.15s ease;
+  }
+  .am-player__btn:hover { color: #f9dd0e; background: rgba(255,255,255,0.1); }
+  .am-player__btn--toggle {
+    width: 40px; height: 40px; background: #f9dd0e; color: #26275D;
+    display: flex; align-items: center; justify-content: center; font-size: 0.85rem;
+    flex-shrink: 0;
+  }
+  .am-player__btn--toggle:hover { background: #ffe93d; color: #26275D; }
+  .am-player__icon-play { display: none; }
+  .am-player.is-paused .am-player__icon-play { display: inline; }
+  .am-player.is-paused .am-player__icon-pause { display: none; }
+  .am-player__meta { min-width: 0; width: 220px; flex-shrink: 0; }
+  .am-player__meta strong {
+    display: block; font-size: 0.92rem; color: #fff;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .am-player__meta span {
+    display: block; font-size: 0.8rem; color: rgba(255,255,255,0.62);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .am-player__bar { flex: 1; display: flex; align-items: center; gap: 0.6rem; min-width: 0; }
+  .am-player__time { font-size: 0.78rem; color: rgba(255,255,255,0.62); font-variant-numeric: tabular-nums; flex-shrink: 0; }
+  .am-player__bar input[type="range"] {
+    flex: 1; height: 4px; -webkit-appearance: none; appearance: none;
+    background: rgba(255,255,255,0.22); border-radius: 4px; cursor: pointer; min-width: 0;
+  }
+  .am-player__bar input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; appearance: none;
+    width: 13px; height: 13px; border-radius: 50%; background: #f9dd0e; border: none;
+  }
+  .am-player__bar input[type="range"]::-moz-range-thumb {
+    width: 13px; height: 13px; border-radius: 50%; background: #f9dd0e; border: none;
+  }
+
+  /* Nút Zalo & back-to-top nằm trong BaseLayout → phải dùng :global() mới chạm tới */
+  :global(body.am-player-open .zalo-float),
+  :global(body.am-player-open .back-to-top) {
+    bottom: calc(var(--am-player-h, 64px) + var(--am-cta-h, 0px) + 0.75rem);
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 980px) {
+    .am-why__grid { grid-template-columns: 1fr; }
+    .am-cats__grid, .am-steps, .am-links__grid { grid-template-columns: repeat(2, 1fr); }
+    .am-rights__grid, .am-submit__grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 640px) {
+    .am-hero { padding: 2.5rem 0; }
+    .am-hero__stats { gap: 1.75rem; }
+    .am-toolbar { flex-direction: column; align-items: stretch; }
+    .am-search input { width: 100%; }
+    .am-track { padding: 1rem; }
+    .am-track__main { flex-wrap: wrap; }
+    .am-track__index { display: none; }
+    .am-track__side { flex-direction: row; align-items: center; width: 100%; padding-left: 3.6rem; }
+    .am-track__actions, .am-lyric { padding-left: 0; margin-left: 0; }
+    .am-cats__grid, .am-steps, .am-links__grid { grid-template-columns: 1fr; }
+    .am-credit { flex-direction: column; align-items: stretch; }
+    /* Mobile: hàng 1 = tên bài + cụm điều khiển (✕ ngoài cùng phải, tránh bấm
+       nhầm sang ⏮), hàng 2 = thanh tua chạy hết chiều ngang. */
+    .am-player__inner {
+      display: grid; align-items: center; gap: 0.35rem 0.25rem;
+      padding: 0.6rem 1rem;
+      grid-template-columns: 1fr auto auto auto auto;
+      grid-template-areas: "meta prev toggle next close" "bar bar bar bar bar";
+    }
+    .am-player__meta { grid-area: meta; width: auto; }
+    .am-player__btn--prev { grid-area: prev; }
+    .am-player__btn--toggle { grid-area: toggle; }
+    .am-player__btn--next { grid-area: next; }
+    .am-player__btn--close { grid-area: close; }
+    .am-player__bar { grid-area: bar; width: 100%; }
+    .am-hero__staff { opacity: 0.5; }
+    .am-btn { padding: 0.7rem 1.25rem; font-size: 0.92rem; }
+  }
+</style>
+
+<script>
+  // ============================================================
+  // Trình phát thư viện âm nhạc — /am-nhac
+  // Toàn bộ DOM đã dựng sẵn trong markup (style của Astro là scoped:
+  // phần tử tạo bằng JS sẽ KHÔNG nhận được style). Ở đây chỉ bật/tắt class.
+  // ============================================================
+  (() => {
+    const player = document.getElementById('am-player') as HTMLElement | null;
+    const audio = document.getElementById('am-audio') as HTMLAudioElement | null;
+    if (!player || !audio) return;
+
+    const tracks = Array.from(document.querySelectorAll('.am-track')) as HTMLElement[];
+    const elTitle = document.getElementById('am-player-title')!;
+    const elAuthor = document.getElementById('am-player-author')!;
+    const elCur = document.getElementById('am-player-cur')!;
+    const elDur = document.getElementById('am-player-dur')!;
+    const seek = document.getElementById('am-player-seek') as HTMLInputElement;
+    const btnToggle = player.querySelector('.am-player__btn--toggle') as HTMLButtonElement;
+    const btnPrev = player.querySelector('.am-player__btn--prev') as HTMLButtonElement;
+    const btnNext = player.querySelector('.am-player__btn--next') as HTMLButtonElement;
+    const btnClose = player.querySelector('.am-player__btn--close') as HTMLButtonElement;
+
+    /** Chỉ những bài có file nhạc mới nằm trong hàng đợi phát. */
+    const playable = tracks.filter((t) => !!t.dataset.audio);
+    let current = -1;
+
+    const fmt = (s: number) => {
+      if (!isFinite(s) || s < 0) s = 0;
+      const m = Math.floor(s / 60);
+      return `${m}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+    };
+
+    /**
+     * Đo chiều cao thanh CTA dính đáy (BaseLayout, chỉ hiện dưới 768px) và chiều
+     * cao trình phát, rồi ghi vào biến CSS: trình phát ngồi TRÊN thanh CTA, còn
+     * 2 nút nổi (Zalo, back-to-top) bị đẩy lên trên trình phát.
+     * Trên desktop thanh CTA là display:none → offsetHeight = 0, mọi thứ về 0.
+     */
+    const ctaBar = document.querySelector('.mobile-sticky-cta') as HTMLElement | null;
+    function capNhatViTri() {
+      const hienCta = !!ctaBar && getComputedStyle(ctaBar).display !== 'none';
+      const cta = hienCta ? ctaBar!.offsetHeight : 0;
+      const ph = player.hidden ? 0 : player.offsetHeight;
+      document.body.style.setProperty('--am-cta-h', cta + 'px');
+      document.body.style.setProperty('--am-player-h', ph + 'px');
+      document.body.classList.toggle('am-player-open', !player.hidden);
+      // Bỏ trống khi đóng để trả lại padding-bottom 4.5rem mà BaseLayout đặt cho mobile
+      document.body.style.paddingBottom = player.hidden ? '' : ph + cta + 'px';
+    }
+    let cho = false;
+    window.addEventListener('resize', () => {
+      if (cho) return;
+      cho = true;
+      requestAnimationFrame(() => { cho = false; capNhatViTri(); });
+    });
+
+    function markPlaying(el: HTMLElement | null) {
+      tracks.forEach((t) => t.classList.remove('is-playing'));
+      if (el) el.classList.add('is-playing');
+    }
+
+    function load(index: number, autoplay = true) {
+      const el = playable[index];
+      if (!el) return;
+      current = index;
+      const src = el.dataset.audio!;
+      if (audio.getAttribute('src') !== src) {
+        audio.setAttribute('src', src);
+        audio.load();
+      }
+      elTitle.textContent = el.dataset.title || '';
+      elAuthor.textContent = el.dataset.author ? `Sáng tác: ${el.dataset.author}` : '';
+      player.hidden = false;
+      capNhatViTri();
+      if (autoplay) {
+        audio.play().catch(() => {
+          // Trình duyệt chặn autoplay hoặc file lỗi — để nút ở trạng thái tạm dừng
+          player.classList.add('is-paused');
+        });
+      } else {
+        // Nạp sẵn nhưng chưa phát (mở trang kèm #slug) — giữ đúng icon ▶
+        player.classList.add('is-paused');
+        markPlaying(null);
+      }
+    }
+
+    // --- Bấm nút phát trên từng bài ---
+    playable.forEach((el, i) => {
+      const btn = el.querySelector('.am-track__play') as HTMLButtonElement | null;
+      if (!btn) return;
+      btn.addEventListener('click', () => {
+        if (current === i && !audio.paused) {
+          audio.pause();
+        } else if (current === i && audio.paused && audio.getAttribute('src')) {
+          audio.play().catch(() => {});
+        } else {
+          load(i);
+        }
+      });
+    });
+
+    // --- Điều khiển trên thanh phát ---
+    btnToggle?.addEventListener('click', () => {
+      if (audio.paused) audio.play().catch(() => {});
+      else audio.pause();
+    });
+    btnPrev?.addEventListener('click', () => {
+      if (playable.length) load((current - 1 + playable.length) % playable.length);
+    });
+    btnNext?.addEventListener('click', () => {
+      if (playable.length) load((current + 1) % playable.length);
+    });
+    btnClose?.addEventListener('click', () => {
+      audio.pause();
+      audio.removeAttribute('src');
+      audio.load();
+      player.hidden = true;
+      capNhatViTri();
+      markPlaying(null);
+      current = -1;
+    });
+
+    // --- Đồng bộ trạng thái audio → giao diện ---
+    audio.addEventListener('play', () => {
+      player.classList.remove('is-paused');
+      btnToggle?.setAttribute('aria-label', 'Tạm dừng');
+      if (playable[current]) markPlaying(playable[current]);
+    });
+    audio.addEventListener('pause', () => {
+      player.classList.add('is-paused');
+      btnToggle?.setAttribute('aria-label', 'Phát tiếp');
+      tracks.forEach((t) => t.classList.remove('is-playing'));
+    });
+    audio.addEventListener('loadedmetadata', () => { elDur.textContent = fmt(audio.duration); });
+    audio.addEventListener('timeupdate', () => {
+      elCur.textContent = fmt(audio.currentTime);
+      if (audio.duration && !seek.matches(':active')) {
+        seek.value = String(Math.round((audio.currentTime / audio.duration) * 1000));
+      }
+    });
+    audio.addEventListener('ended', () => {
+      if (current < playable.length - 1) load(current + 1);
+      else { player.classList.add('is-paused'); markPlaying(null); }
+    });
+    audio.addEventListener('error', () => {
+      elAuthor.textContent = 'Không tải được file nhạc. Vui lòng thử lại sau.';
+      player.classList.add('is-paused');
+      markPlaying(null);
+    });
+    seek?.addEventListener('input', () => {
+      if (audio.duration) audio.currentTime = (Number(seek.value) / 1000) * audio.duration;
+    });
+
+    // --- Mở trang kèm #slug: cuộn tới bài và làm nổi bật ---
+    if (location.hash.length > 1) {
+      const slug = decodeURIComponent(location.hash.slice(1));
+      const target = tracks.find((t) => t.dataset.slug === slug) || null;
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        const i = playable.indexOf(target);
+        if (i >= 0) load(i, false);
+      }
+    }
+
+    // ============================================================
+    // Lọc danh mục + tìm kiếm (bỏ dấu để "viet anh" khớp "Việt Anh")
+    // ============================================================
+    const boDau = (s: string) =>
+      s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd');
+
+    const tabs = Array.from(document.querySelectorAll('.am-tab')) as HTMLElement[];
+    const input = document.getElementById('am-search-input') as HTMLInputElement | null;
+    const noResult = document.querySelector('.am-noresult') as HTMLElement | null;
+    let cat = 'tat-ca';
+
+    function apply() {
+      const q = boDau(input?.value.trim() || '');
+      let hien = 0;
+      tracks.forEach((t) => {
+        const hopCat = cat === 'tat-ca' || t.dataset.cat === cat;
+        const hopQ = !q || boDau(t.dataset.search || '').includes(q);
+        const show = hopCat && hopQ;
+        t.hidden = !show;
+        if (show) hien++;
+      });
+      if (noResult) noResult.hidden = hien > 0;
+    }
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => {
+        tabs.forEach((t) => { t.classList.remove('is-active'); t.setAttribute('aria-selected', 'false'); });
+        tab.classList.add('is-active');
+        tab.setAttribute('aria-selected', 'true');
+        cat = tab.dataset.cat || 'tat-ca';
+        apply();
+      });
+    });
+    input?.addEventListener('input', apply);
+
+    // ============================================================
+    // Mở/đóng lời bài hát
+    // ============================================================
+    document.querySelectorAll('.am-lyric-toggle').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const box = btn.closest('.am-track')?.querySelector('.am-lyric') as HTMLElement | null;
+        if (!box) return;
+        const dangMo = !box.hidden;
+        box.hidden = dangMo;
+        btn.setAttribute('aria-expanded', String(!dangMo));
+        btn.textContent = dangMo ? 'Lời bài hát' : 'Ẩn lời bài hát';
+      });
+    });
+
+    // ============================================================
+    // Sao chép: link từng bài + mẫu ghi nguồn
+    // ============================================================
+    function copy(btn: HTMLElement, text: string, nhanGoc: string) {
+      navigator.clipboard?.writeText(text).then(
+        () => {
+          btn.textContent = '✓ Đã sao chép';
+          setTimeout(() => { btn.textContent = nhanGoc; }, 1800);
+        },
+        () => { btn.textContent = 'Không sao chép được'; setTimeout(() => { btn.textContent = nhanGoc; }, 1800); },
+      );
+    }
+    document.querySelectorAll('.am-copy-link').forEach((btn) => {
+      const el = btn as HTMLElement;
+      el.addEventListener('click', () => copy(el, el.dataset.link || '', 'Sao chép link'));
+    });
+    const creditBtn = document.getElementById('am-copy-credit');
+    creditBtn?.addEventListener('click', () => copy(creditBtn, creditBtn.dataset.text || '', 'Sao chép'));
+  })();
+</script>

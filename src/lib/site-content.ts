@@ -120,6 +120,7 @@ export const mainNavLeft = [
       { label: 'Giới thiệu nhà trường', href: '/gioi-thieu' },
       { label: 'Ban Lãnh Đạo', href: '/ban-lanh-dao' },
       { label: 'Giáo viên', href: '/giao-vien' },
+      { label: 'Âm nhạc Việt Anh', href: '/am-nhac' },
     ]
   },
   { label: 'Đánh giá', href: '/danh-gia-cua-phu-huynh' },

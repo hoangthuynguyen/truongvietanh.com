@@ -9,6 +9,9 @@ const cmsPage = await getPillarPage('gioi-thieu');
 const cmsFaqs = cmsPage?.faq_items || null;
 
 const structuredData = [
+    // Gỡ aggregateRating/review 27-28/08/2026: Google không chấp nhận self-serving review
+    // (tổ chức tự đánh giá mình, thu thập & hiển thị trên chính website của mình) —
+    // để lại có nguy cơ bị manual action. Testimonial hiển thị cho người đọc vẫn giữ nguyên.
   {
     "@context": "https://schema.org",
     "@type": "EducationalOrganization",
@@ -27,7 +30,8 @@ const structuredData = [
       "sameAs": [
         "https://nguyenmanhduong.com",
         "https://www.facebook.com/nguyenmanhduong1101/",
-        "https://www.youtube.com/@nguyenmanhduong1101"
+        "https://www.youtube.com/@nguyenmanhduong1101",
+        "https://www.linkedin.com/in/nguyenmanhduong"
       ]
     },
     "description": "Hệ thống giáo dục liên cấp song ngữ từ Mầm non đến THPT tại TP.HCM, Tây Ninh (Cần Giuộc), An Giang.",
@@ -35,12 +39,6 @@ const structuredData = [
       "@type": "PostalAddress",
       "addressLocality": "Hồ Chí Minh",
       "addressCountry": "VN"
-    },
-    "aggregateRating": {
-      "@type": "AggregateRating",
-      "ratingValue": "4.9",
-      "bestRating": "5",
-      "ratingCount": "300"
     },
     "numberOfEmployees": { "@type": "QuantitativeValue", "value": 500 },
     "areaServed": ["TP. Hồ Chí Minh", "Tây Ninh", "An Giang"],

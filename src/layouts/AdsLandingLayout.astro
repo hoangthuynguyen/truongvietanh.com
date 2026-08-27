@@ -43,12 +43,14 @@ const {
 
 const telHref = 'tel:' + mnFacts.hotlineMamNon.replace(/\s/g, '');
 const schema = [
+    // Gỡ aggregateRating/review 27-28/08/2026: Google không chấp nhận self-serving review
+    // (tổ chức tự đánh giá mình, thu thập & hiển thị trên chính website của mình) —
+    // để lại có nguy cơ bị manual action. Testimonial hiển thị cho người đọc vẫn giữ nguyên.
   {
     '@context': 'https://schema.org', '@type': 'Preschool',
     name: 'Trường Mầm non Việt Anh Gò Vấp', url: canonicalUrl, image: ogImage, description,
     telephone: '+84' + mnFacts.hotlineMamNon.replace(/\s/g, '').replace(/^0/, ''),
     address: { '@type': 'PostalAddress', streetAddress: '573 Lê Đức Thọ', addressLocality: 'Quận Gò Vấp', addressRegion: 'TP.HCM', addressCountry: 'VN' },
-    aggregateRating: { '@type': 'AggregateRating', ratingValue: mnFacts.rating, reviewCount: mnFacts.reviewCount.replace('+', '') },
     parentOrganization: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh', foundingDate: String(mnFacts.foundedYear) },
   },
   { '@context': 'https://schema.org', '@type': 'WebPage', name: title, description, url: canonicalUrl, inLanguage: 'vi' },

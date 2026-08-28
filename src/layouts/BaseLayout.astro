@@ -22,6 +22,9 @@ type Props = {
   noindex?: boolean;
   noPopup?: boolean;
   ogImage?: string;
+  /* Mặc định 'website'. Trang văn bản/bài viết đặt 'article' — đừng đổi mặc định,
+     hầu hết trang trên site là trang giới thiệu/landing. */
+  ogType?: string;
   robots?: string;
   structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 };
@@ -34,6 +37,7 @@ const {
   noindex = canonical?.includes('staging.') || canonical?.includes('workers.dev') || canonical?.includes('hoc.'),
   noPopup = true, /* TẠM THỜI tắt toàn bộ popup trên site — bật lại bằng cách đổi về false */
   ogImage,
+  ogType = 'website',
   robots = noindex ? 'noindex, nofollow' : 'index, follow',
   structuredData,
 } = Astro.props;
@@ -91,7 +95,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     <meta name="robots" content={robots} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content="Trường Việt Anh" />
     {canonical && <meta property="og:url" content={canonical} />}
     {ogImage && <meta property="og:image" content={ogImage} />}

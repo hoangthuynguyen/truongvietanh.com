@@ -238,6 +238,7 @@ const structuredData = [
   keywords="chính sách AI trường học, chính sách sử dụng AI Trường Việt Anh, thang A0-A4, học sinh dùng ChatGPT, Luật Trí tuệ nhân tạo 2025, Quyết định 2422/QĐ-BGDĐT, dữ liệu học sinh và AI"
   canonical={canonical}
   ogImage={ogImage}
+  ogType="article"
   structuredData={structuredData}
 >
   <div class="gi-page">
@@ -369,6 +370,14 @@ const structuredData = [
               </tbody>
             </table>
           </div>
+
+          <p class="csa-sources">
+            <strong>Tra cứu văn bản gốc:</strong> toàn văn các luật, nghị định và quyết định nêu
+            trên tra tại <a href="https://vanban.chinhphu.vn/" target="_blank" rel="noopener">Cổng thông tin văn bản pháp luật Chính phủ</a>
+            và <a href="https://thuvienphapluat.vn/" target="_blank" rel="noopener">Thư viện Pháp luật</a>;
+            văn bản của ngành giáo dục tra tại <a href="https://moet.gov.vn/" target="_blank" rel="noopener">Cổng thông tin Bộ Giáo dục và Đào tạo</a>.
+            Trường Việt Anh khuyến khích phụ huynh đối chiếu trực tiếp với văn bản gốc.
+          </p>
 
           <h3 id="dieu-2-tham-chieu-chuyen-mon">Tham chiếu chuyên môn</h3>
           <ul>
@@ -830,6 +839,17 @@ const structuredData = [
     line-height: 1.5;
   }
   .csa-toc-full a:hover { text-decoration: underline; text-decoration-color: #f9dd0e; }
+
+  /* Bộ thông số AEO mục 7: dẫn link ra nguồn pháp luật gốc là tín hiệu tin cậy,
+     không phải rò rỉ giá trị. Dẫn ở cấp cổng tra cứu để không tạo link chết. */
+  .csa-sources {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 8px;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.97rem;
+    margin-top: 1.25rem;
+  }
 
   .csa-note {
     background: #fef9ef;

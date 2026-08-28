@@ -52,6 +52,14 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
+      // Trang trụ vĩnh viễn (văn bản chính sách) ưu tiên cao hơn trang thường.
+      // @astrojs/sitemap chỉ phát <priority>/<lastmod> khi serialize trả về các khoá đó.
+      serialize: (item) => {
+        if (/\/chinh-sach-ai\/?$/.test(item.url)) {
+          return { ...item, priority: 0.9, changefreq: 'monthly', lastmod: '2026-08-28' };
+        }
+        return item;
+      },
       filter: (page) => {
         // Landing page quảng cáo đặt noindex — không đưa vào sitemap
         if (page.includes('/mam-non-go-vap/hoc-phi')) return false;

@@ -1,0 +1,934 @@
+---
+// Trang trụ VĨNH VIỄN — Chính sách sử dụng AI của Hệ thống Trường Việt Anh.
+// KHÔNG phải bài blog: không có ngày trong URL, không dùng schema BlogPosting.
+// Nguồn nội dung: Google Doc "chinhsachaivietanhv1_1.md" (tab 1 = chính sách,
+// tab 2 = bộ thông số AEO). Mọi thay đổi phải giữ nguyên URL /chinh-sach-ai.
+//
+// Quy tắc viết trên trang này (theo bộ thông số AEO, mục 3):
+//   - Mỗi H2 là một Điều được đánh số, có anchor id tiếng Việt không dấu.
+//   - Ngay dưới mỗi H2 là 1 đoạn 2-4 câu trả lời thẳng, có nhắc "Trường Việt Anh"
+//     để chunk bị tách khỏi trang vẫn giữ được chủ ngữ.
+//   - Bảng phải là <table> thật, bọc trong .gi-table-responsive (cuộn ngang mobile).
+//   - FAQ dùng h3 + p (KHÔNG dùng <details>) để mô hình đọc được ngay, không cần mở.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+
+const canonical = 'https://truongvietanh.com/chinh-sach-ai';
+const ogImage = 'https://media.truongvietanh.com/images/ai/og-chinh-sach-ai.webp';
+
+// Ngày ban hành khớp số hiệu 0828/2026/QĐ-HĐT.
+const NGAY_BAN_HANH = '2026-08-28';
+
+// 12 câu hỏi của Phụ lục C — dùng chung cho phần hiển thị và cho schema FAQPage,
+// không chép tay hai lần để tránh lệch nội dung.
+const faqs = [
+  {
+    id: 'faq-chatgpt-lam-bai-tap',
+    q: 'Con tôi có được dùng ChatGPT để làm bài tập không?',
+    a: 'Được, nếu giáo viên ghi rõ mức A2 trở lên trên đề bài. Ở mức A0 — bài kiểm tra, bài thi và các bài giáo viên muốn học sinh tự làm — con không được dùng AI. Mỗi đề bài của Trường Việt Anh đều ghi rõ mức AI được phép, nên con luôn biết ranh giới ở đâu.',
+  },
+  {
+    id: 'faq-nhap-ten-diem-vao-chatgpt',
+    q: 'Trường có nhập tên và điểm của con tôi vào ChatGPT không?',
+    a: 'Không. Trường Việt Anh nghiêm cấm nhập dữ liệu định danh học sinh — họ tên kèm lớp, điểm số, sức khỏe, hình ảnh, hoàn cảnh gia đình — vào công cụ AI công cộng ngoài danh mục đã duyệt. Dữ liệu học sinh chỉ được xử lý trên các công cụ trong Phụ lục A, qua tài khoản của trường.',
+  },
+  {
+    id: 'faq-ai-cham-diem',
+    q: 'AI có chấm điểm con tôi không?',
+    a: 'Không. Theo Điều 4 và Điều 13 chính sách của Trường Việt Anh, AI không được tự động chấm điểm, đánh giá hạnh kiểm, xếp lớp hay ra quyết định kỷ luật. Giáo viên là người đọc bài, cho điểm và chịu trách nhiệm về điểm số đó.',
+  },
+  {
+    id: 'faq-hoc-phi-chuong-trinh-ai',
+    q: 'Học chương trình AI có phải đóng thêm tiền không?',
+    a: 'Không. Chương trình AI 30 tiết/lớp/năm cho lớp 1–12 nằm trong học phí Trường Việt Anh đã công bố cho năm học 2026–2027. Nhà trường không thu thêm bất kỳ khoản nào cho chương trình này.',
+  },
+  {
+    id: 'faq-giao-vien-dung-ai-viet-nhan-xet',
+    q: 'Giáo viên có dùng AI để viết nhận xét cho con tôi không?',
+    a: 'Có thể có, nhưng giáo viên phải đọc lại toàn bộ, sửa cho đúng với đứa trẻ thật và ghi chú "có hỗ trợ AI" trong báo cáo. Người ký nhận xét chịu trách nhiệm về từng câu chữ, không phải công cụ. Anh chị có quyền hỏi và được trả lời thẳng thắn.',
+  },
+  {
+    id: 'faq-tu-choi-cho-con-dung-ai',
+    q: 'Tôi không muốn con dùng AI thì sao?',
+    a: 'Phụ huynh có quyền đề nghị con không tham gia một hoạt động cụ thể có xử lý dữ liệu bằng AI. Trường Việt Anh bố trí hình thức học thay thế tương đương và không để việc từ chối gây bất lợi cho học sinh. Anh chị cũng có quyền rút lại sự đồng ý đã cho vào bất kỳ lúc nào.',
+  },
+  {
+    id: 'faq-nhan-biet-noi-dung-ai',
+    q: 'Làm sao tôi biết một bài viết hay hình ảnh của trường là do AI tạo?',
+    a: 'Trường Việt Anh gắn nhãn "Hình ảnh minh họa được tạo bằng AI" hoặc "Video có sử dụng công nghệ AI" trên mọi nội dung truyền thông do AI tạo ra hoặc chỉnh sửa đáng kể. Chatbot và trợ lý AI của trường luôn tự giới thiệu là AI ngay câu đầu tiên.',
+  },
+  {
+    id: 'faq-huan-luyen-ai-bang-hinh-anh-hoc-sinh',
+    q: 'Trường có dùng hình ảnh của con tôi để huấn luyện AI không?',
+    a: 'Không. Trường Việt Anh không dùng hình ảnh, video, giọng nói, bài làm hay dữ liệu học tập của học sinh để huấn luyện công cụ AI bên ngoài, và bật tùy chọn tắt việc dùng dữ liệu cho huấn luyện trên toàn bộ tài khoản của trường.',
+  },
+  {
+    id: 'faq-du-lieu-bi-lo',
+    q: 'Nếu dữ liệu của con tôi bị lộ thì sao?',
+    a: 'Trường Việt Anh chặn sự cố ngay, báo Chủ tịch Hội đồng trường trong 24 giờ, thông báo cơ quan chuyên trách bảo vệ dữ liệu cá nhân chậm nhất 72 giờ theo Luật Bảo vệ dữ liệu cá nhân 2025, và thông báo trực tiếp cho phụ huynh của học sinh bị ảnh hưởng.',
+  },
+  {
+    id: 'faq-dung-ai-nhieu-co-luoi-suy-nghi',
+    q: 'Con tôi dùng AI nhiều có bị lười suy nghĩ không?',
+    a: 'Đây chính là lý do nguyên tắc NT5 tồn tại: AI không được đi tắt qua chỗ học sinh cần tự nghĩ, tự viết, tự luyện. Thang A0–A4 buộc mỗi bài tập phải xác định trước phần nào con tự làm. Ở mức A1 trở lên, con luôn phải giải thích được nội dung mình nộp — không giải thích được thì bài không được công nhận.',
+  },
+  {
+    id: 'faq-can-cu-phap-ly',
+    q: 'Trường căn cứ vào luật nào để làm chính sách này?',
+    a: 'Luật Trí tuệ nhân tạo số 134/2025/QH15 (hiệu lực 01/3/2026), Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15 (hiệu lực 01/01/2026), Nghị định 142/2026/NĐ-CP, Quyết định 2422/QĐ-BGDĐT ngày 18/8/2026 về khung nội dung giáo dục AI cho học sinh phổ thông, cùng Khuyến nghị về Đạo đức AI và Khung năng lực AI của UNESCO.',
+  },
+  {
+    id: 'faq-chinh-sach-co-thay-doi',
+    q: 'Chính sách này có thay đổi không?',
+    a: 'Có. Trường Việt Anh rà soát chính sách mỗi học kỳ, mốc gần nhất là 15/01/2027, và sẽ nâng cấp phiên bản 1.1 này thành quy chế đầy đủ trong học kỳ 2 năm học 2026–2027. Ngày cập nhật luôn hiển thị ở đầu trang.',
+  },
+];
+
+// Mục lục — dùng chung cho sidebar (rút gọn) và mục lục đầy đủ trong thân trang.
+const mucLuc = [
+  { id: 'dieu-1-pham-vi', label: 'Điều 1. Mục đích, phạm vi và đối tượng áp dụng' },
+  { id: 'dieu-2-can-cu', label: 'Điều 2. Căn cứ ban hành' },
+  { id: 'dieu-3-giai-thich-tu-ngu', label: 'Điều 3. Giải thích từ ngữ' },
+  { id: 'dieu-4-nguyen-tac', label: 'Điều 4. Năm nguyên tắc nền tảng' },
+  { id: 'dieu-5-giao-vien', label: 'Điều 5. Quy định với giáo viên và nhân viên' },
+  { id: 'dieu-6-hoc-sinh', label: 'Điều 6. Quy định với học sinh' },
+  { id: 'dieu-7-thang-ai', label: 'Điều 7. Thang sử dụng AI A0–A4' },
+  { id: 'dieu-8-khai-bao', label: 'Điều 8. Cách khai báo sử dụng AI' },
+  { id: 'dieu-9-du-lieu', label: 'Điều 9. Dữ liệu học sinh và quyền riêng tư' },
+  { id: 'dieu-10-quyen-phu-huynh', label: 'Điều 10. Quyền của phụ huynh và học sinh' },
+  { id: 'dieu-11-danh-muc-cong-cu', label: 'Điều 11. Danh mục công cụ AI được duyệt' },
+  { id: 'dieu-12-gan-nhan', label: 'Điều 12. Minh bạch và gắn nhãn nội dung AI' },
+  { id: 'dieu-13-tuyen-sinh-danh-gia', label: 'Điều 13. AI trong tuyển sinh, đánh giá và nhân sự' },
+  { id: 'dieu-14-su-co-du-lieu', label: 'Điều 14. Sự cố dữ liệu và quy trình xử lý' },
+  { id: 'dieu-15-vi-pham', label: 'Điều 15. Vi phạm và giải trình' },
+  { id: 'dieu-16-to-chuc-thuc-hien', label: 'Điều 16. Tổ chức thực hiện' },
+  { id: 'phu-luc-a', label: 'Phụ lục A. Danh mục công cụ AI được duyệt' },
+  { id: 'phu-luc-b', label: 'Phụ lục B. Mẫu khai báo sử dụng AI' },
+  { id: 'phu-luc-c', label: 'Phụ lục C. Câu hỏi thường gặp của phụ huynh' },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${canonical}#webpage`,
+        url: canonical,
+        name: 'Chính sách sử dụng Trí tuệ nhân tạo tại Hệ thống Trường Việt Anh',
+        description:
+          'Chính sách sử dụng AI của Trường Việt Anh cho năm học 2026-2027: nguyên tắc con người làm chủ, thang sử dụng AI A0-A4 cho bài tập, giới hạn theo cấp học, bảo vệ dữ liệu học sinh và quyền của phụ huynh.',
+        inLanguage: 'vi-VN',
+        datePublished: NGAY_BAN_HANH,
+        dateModified: NGAY_BAN_HANH,
+        isPartOf: { '@id': 'https://truongvietanh.com/#website' },
+        about: [
+          { '@type': 'Thing', name: 'Trí tuệ nhân tạo trong giáo dục', sameAs: 'https://www.wikidata.org/wiki/Q11660' },
+          { '@id': 'https://truongvietanh.com/#organization' },
+        ],
+        audience: {
+          '@type': 'Audience',
+          audienceType: 'Phụ huynh, giáo viên và học sinh Hệ thống Trường Việt Anh',
+        },
+        author: { '@id': 'https://nguyenmanhduong.com/#person' },
+        publisher: { '@id': 'https://truongvietanh.com/#organization' },
+        citation: [
+          {
+            '@type': 'Legislation',
+            name: 'Luật Trí tuệ nhân tạo số 134/2025/QH15',
+            legislationDate: '2025-12-10',
+            legislationJurisdiction: 'Việt Nam',
+          },
+          {
+            '@type': 'Legislation',
+            name: 'Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15',
+            legislationDate: '2025-06-26',
+            legislationJurisdiction: 'Việt Nam',
+          },
+          {
+            '@type': 'Legislation',
+            name: 'Nghị định 142/2026/NĐ-CP quy định chi tiết thi hành Luật Trí tuệ nhân tạo',
+            legislationJurisdiction: 'Việt Nam',
+          },
+          {
+            '@type': 'Legislation',
+            name: 'Quyết định 2422/QĐ-BGDĐT ngày 18/8/2026 ban hành Khung nội dung giáo dục trí tuệ nhân tạo cho học sinh phổ thông',
+            legislationDate: '2026-08-18',
+            legislationJurisdiction: 'Việt Nam',
+          },
+          {
+            '@type': 'CreativeWork',
+            name: 'Khuyến nghị về Đạo đức Trí tuệ nhân tạo',
+            publisher: { '@type': 'Organization', name: 'UNESCO' },
+            datePublished: '2021',
+          },
+        ],
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['#tom-tat', '#tom-tat-30-giay'],
+        },
+        breadcrumb: { '@id': `${canonical}#breadcrumb` },
+        mainEntity: { '@id': `${canonical}#faq` },
+      },
+      {
+        '@type': 'EducationalOrganization',
+        '@id': 'https://truongvietanh.com/#organization',
+        name: 'Hệ thống Trường Việt Anh',
+        alternateName: ['Trường Việt Anh', 'Trường Liên Cấp Việt Anh', 'Viet Anh School System'],
+        url: 'https://truongvietanh.com',
+        logo: 'https://truongvietanh.com/logo-crest-80.webp',
+        foundingDate: '2011',
+        founder: { '@id': 'https://nguyenmanhduong.com/#person' },
+        areaServed: ['Thành phố Hồ Chí Minh', 'Tây Ninh', 'An Giang'],
+        sameAs: [
+          'https://www.facebook.com/truongvietanhhcm',
+          'https://www.youtube.com/@truongvietanh',
+          'https://www.instagram.com/truongvietanh',
+          'https://zalo.me/0916961409',
+        ],
+        publishingPrinciples: canonical,
+        knowsAbout: [
+          'Giáo dục K-12',
+          'Trí tuệ nhân tạo trong trường học',
+          'Khung năng lực AI của UNESCO',
+          'Chương trình GDPT 2018',
+        ],
+      },
+      {
+        '@type': 'Person',
+        '@id': 'https://nguyenmanhduong.com/#person',
+        name: 'Nguyễn Mạnh Dương',
+        jobTitle: 'Nhà sáng lập & Chủ tịch Hội đồng trường',
+        worksFor: { '@id': 'https://truongvietanh.com/#organization' },
+        alumniOf: { '@type': 'CollegeOrUniversity', name: 'Manchester Metropolitan University' },
+        url: 'https://nguyenmanhduong.com',
+        sameAs: [
+          'https://www.linkedin.com/in/nguyenmanhduong',
+          'https://www.facebook.com/nguyenmanhduong1101/',
+          'https://www.youtube.com/@nguyenmanhduong1101',
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${canonical}#faq`,
+        mainEntity: faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonical}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+          { '@type': 'ListItem', position: 2, name: 'Chính sách', item: 'https://truongvietanh.com/chinh-sach' },
+          { '@type': 'ListItem', position: 3, name: 'Chính sách sử dụng AI' },
+        ],
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Chính sách sử dụng AI — Trường Việt Anh 2026–2027"
+  description="Trường Việt Anh công bố chính sách sử dụng AI cho năm học 2026–2027: AI không chấm điểm học sinh, dùng AI phải khai báo, thang 5 mức A0–A4 cho bài tập, dữ liệu học sinh không đưa ra công cụ ngoài danh mục."
+  keywords="chính sách AI trường học, chính sách sử dụng AI Trường Việt Anh, thang A0-A4, học sinh dùng ChatGPT, Luật Trí tuệ nhân tạo 2025, Quyết định 2422/QĐ-BGDĐT, dữ liệu học sinh và AI"
+  canonical={canonical}
+  ogImage={ogImage}
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase currentPath="/chinh-sach-ai" />
+
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left" style="flex:1">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true"></span>
+            <a href="/chinh-sach">Chính sách</a>
+            <span aria-hidden="true"></span>
+            <span>Chính sách sử dụng AI</span>
+          </nav>
+          <h1 class="gi-h1">Chính sách sử dụng Trí tuệ nhân tạo tại Hệ thống Trường Việt Anh</h1>
+          <p class="gi-subtitle">
+            Số hiệu 0828/2026/QĐ-HĐT · Ban hành 28/8/2026 · Áp dụng năm học 2026–2027
+          </p>
+          <p class="gi-last-updated">Cập nhật lần cuối: 28/08/2026 · Phiên bản 1.1</p>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>Con người quyết định</strong> AI không chấm điểm</div>
+            <div class="gi-badge"><strong>Thang A0–A4</strong> Ghi trên mỗi đề bài</div>
+            <div class="gi-badge"><strong>30 tiết/lớp/năm</strong> Trong học phí công bố</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="gi-container gi-body">
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Nội dung</p>
+        <ol class="gi-toc-list">
+          <li><a href="#tom-tat-30-giay">Tóm tắt 30 giây</a></li>
+          <li><a href="#dieu-4-nguyen-tac">Năm nguyên tắc nền tảng</a></li>
+          <li><a href="#dieu-6-hoc-sinh">Quy định với học sinh</a></li>
+          <li><a href="#dieu-7-thang-ai">Thang AI A0–A4</a></li>
+          <li><a href="#dieu-10-quyen-phu-huynh">Quyền của phụ huynh</a></li>
+          <li><a href="#phu-luc-c">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="/dat-lich-tham-quan" class="gi-toc-cta">Đặt lịch tham quan</a>
+      </nav>
+
+      <article class="gi-main" id="main-content" data-no-collapse>
+        <p class="gi-lead" id="tom-tat">
+          Trường Việt Anh cho phép giáo viên và học sinh dùng AI trong dạy và học, với ba giới hạn
+          không thương lượng: con người ra mọi quyết định về học sinh, dùng AI thì phải khai báo, và
+          dữ liệu định danh học sinh không được đưa vào công cụ AI ngoài danh mục đã duyệt.
+        </p>
+
+        <section id="tom-tat-30-giay" class="gi-section csa-summary">
+          <h2>Tóm tắt 30 giây</h2>
+          <ul class="csa-bullets">
+            <li>AI <strong>không</strong> chấm điểm, không xếp hạnh kiểm, không ra quyết định kỷ luật hay tuyển sinh — con người quyết định và chịu trách nhiệm.</li>
+            <li>Học sinh <strong>không</strong> được dùng AI trong bài kiểm tra và bài thi, trừ khi đề bài cho phép rõ ràng. Mỗi bài tập được giáo viên ghi rõ mức AI được phép theo <strong>thang 5 mức (A0–A4)</strong> tại <a href="#dieu-7-thang-ai">Điều 7</a>.</li>
+            <li>Giáo viên <strong>kiểm tra 100%</strong> nội dung do AI sinh ra trước khi phát cho học sinh hoặc gửi phụ huynh.</li>
+            <li>Chương trình AI <strong>30 tiết/lớp/năm</strong> cho lớp 1–12, <strong>nằm trong học phí công bố, không thu thêm</strong>.</li>
+            <li>Phụ huynh có quyền được biết, quyền từ chối, quyền yêu cầu xóa dữ liệu của con — trả lời trong <strong>5 ngày làm việc</strong> (<a href="#dieu-10-quyen-phu-huynh">Điều 10</a>).</li>
+            <li>Chatbot và trợ lý AI của Trường Việt Anh <strong>luôn tự giới thiệu là AI</strong>; nội dung hình ảnh, video do AI tạo ra đều được gắn nhãn (<a href="#dieu-12-gan-nhan">Điều 12</a>).</li>
+          </ul>
+        </section>
+
+        <nav class="csa-toc-full" aria-label="Mục lục đầy đủ">
+          <p class="csa-toc-title">Mục lục đầy đủ</p>
+          <ol>
+            {mucLuc.map((m) => (
+              <li><a href={`#${m.id}`}>{m.label}</a></li>
+            ))}
+          </ol>
+        </nav>
+
+        <section id="loi-mo-dau" class="gi-section">
+          <h2>Lời mở đầu</h2>
+          <p>Việt Anh chọn con đường trở thành AI-Powered School không phải vì công nghệ, mà vì con người: để mỗi thầy cô dạy tốt hơn, mỗi học sinh học vui hơn và trưởng thành vững vàng hơn — đúng tinh thần "Vui vẻ và Thực dụng". AI là công cụ trong tay người thầy và người học; AI không thay thế người thầy, và không bao giờ được thay thế việc học.</p>
+          <p>Chính sách này đặt ra luật chơi chung để cả trường dùng AI mạnh dạn mà an toàn. Chúng tôi công bố công khai văn bản này vì tin rằng một trường học dám nói rõ mình dùng AI như thế nào là một trường học đáng để phụ huynh gửi con.</p>
+        </section>
+
+        <section id="dieu-1-pham-vi" class="gi-section">
+          <h2>Điều 1. Mục đích, phạm vi và đối tượng áp dụng</h2>
+          <p>Chính sách này áp dụng cho toàn bộ cán bộ, giáo viên, nhân viên và học sinh của Hệ thống Trường Việt Anh, tại mọi cơ sở và với mọi công cụ AI dùng cho công việc của trường. Phạm vi bao gồm cả việc dùng AI tại trường lẫn ở nhà khi phục vụ bài tập, dự án hoặc công việc của Trường Việt Anh.</p>
+          <p><strong>1.1.</strong> Chính sách này quy định nguyên tắc, quyền hạn, giới hạn và trách nhiệm khi sử dụng trí tuệ nhân tạo trong hoạt động dạy học, quản trị và truyền thông của Hệ thống Trường Việt Anh.</p>
+          <p><strong>1.2. Đối tượng áp dụng:</strong> toàn bộ cán bộ, giáo viên, nhân viên và học sinh của Hệ thống Trường Việt Anh và Major Education, tại tất cả các cơ sở: Việt Anh Gò Vấp, Việt Anh Bình Tân, Mầm non Việt Anh Gò Vấp, Mầm non &amp; Tiểu học Thái Sơn, Mầm non Nhân Lễ, Mầm non &amp; Tiểu học Mekong Xanh (MGIS), và Trường liên cấp Nhân Văn khi đi vào hoạt động.</p>
+          <p><strong>1.3. Phạm vi công cụ:</strong> mọi công cụ AI đang dùng trong hệ thống — Google Gemini, NotebookLM, Claude, ChatGPT, AI Tutor, Viet Anh Class, trợ lý AI Leo, chatbot tuyển sinh, các ứng dụng trong Việt Anh Operating System, các skill/app do giáo viên tự tạo — và mọi công cụ AI bên ngoài khi được dùng cho công việc của trường.</p>
+          <p><strong>1.4.</strong> Chính sách này áp dụng cho cả việc dùng AI tại trường và việc dùng AI ở nhà khi phục vụ bài tập, dự án hoặc công việc của trường.</p>
+        </section>
+
+        <section id="dieu-2-can-cu" class="gi-section">
+          <h2>Điều 2. Căn cứ ban hành</h2>
+          <p>Trường Việt Anh xây dựng chính sách này trên bốn văn bản pháp luật Việt Nam đang có hiệu lực và ba khung chuyên môn quốc tế. Mỗi viện dẫn dưới đây ghi đủ số hiệu, ngày hiệu lực và điều khoản liên quan để phụ huynh và đồng nghiệp có thể tự đối chiếu.</p>
+
+          <h3 id="dieu-2-van-ban-phap-luat">Văn bản pháp luật Việt Nam</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Văn bản</th><th scope="col">Hiệu lực</th><th scope="col">Nội dung liên quan</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Luật Trí tuệ nhân tạo số 134/2025/QH15</strong> (Quốc hội thông qua 10/12/2025)</td>
+                  <td>01/3/2026</td>
+                  <td>Điều 4.2 — AI không thay thế thẩm quyền và trách nhiệm của con người; Điều 6.2.b — giáo dục là lĩnh vực phải quản lý rủi ro chặt chẽ hơn; Điều 7 — hành vi bị nghiêm cấm; Điều 9 — phân loại rủi ro; Điều 11 — minh bạch và gắn nhãn</td>
+                </tr>
+                <tr>
+                  <td><strong>Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15</strong> (thông qua 26/6/2025)</td>
+                  <td>01/01/2026</td>
+                  <td>Điều 4 — sáu quyền của chủ thể dữ liệu; Điều 23 — thông báo sự cố trong 72 giờ; Điều 24 — dữ liệu cá nhân của trẻ em</td>
+                </tr>
+                <tr>
+                  <td><strong>Nghị định 142/2026/NĐ-CP</strong> hướng dẫn Luật Trí tuệ nhân tạo</td>
+                  <td>01/5/2026</td>
+                  <td>Điều 18 — thông báo và gắn nhãn nội dung do AI tạo ra</td>
+                </tr>
+                <tr>
+                  <td><strong>Quyết định 2422/QĐ-BGDĐT</strong> ngày 18/8/2026</td>
+                  <td>từ ngày ký</td>
+                  <td>Khung nội dung giáo dục AI cho học sinh phổ thông; tối thiểu 12 tiết/lớp/năm học; 4 mạch nội dung</td>
+                </tr>
+                <tr>
+                  <td><strong>Công văn 5208/BGDĐT-GDPT</strong> ngày 7/8/2026</td>
+                  <td>năm học 2026–2027</td>
+                  <td>Hướng dẫn nhiệm vụ giáo dục phổ thông, phát triển năng lực số và AI, học bạ số</td>
+                </tr>
+                <tr>
+                  <td>Luật Giáo dục 2019; Luật Trẻ em 2016</td>
+                  <td>—</td>
+                  <td>Quyền và lợi ích của người học và trẻ em</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="dieu-2-tham-chieu-chuyen-mon">Tham chiếu chuyên môn</h3>
+          <ul>
+            <li><a href="https://www.unesco.org/en/artificial-intelligence/recommendation-ethics" target="_blank" rel="noopener">Khuyến nghị về Đạo đức Trí tuệ nhân tạo của UNESCO (2021)</a> — nền tảng của Bộ 7 Nguyên tắc Đạo đức AI của Trường Việt Anh.</li>
+            <li>Khung năng lực AI cho học sinh và Khung năng lực AI cho giáo viên của UNESCO (2024).</li>
+            <li>Thông tư 49/2026/TT-BGDĐT ngày 3/7/2026 về sử dụng AI trong đào tạo và nghiên cứu khoa học — áp dụng cho giáo dục đại học, Trường Việt Anh <strong>tham chiếu tinh thần</strong> về minh bạch, khai báo và liêm chính học thuật.</li>
+          </ul>
+
+          <p class="csa-note"><strong>Lưu ý quan trọng:</strong> Nghị định 13/2023/NĐ-CP về bảo vệ dữ liệu cá nhân đã <strong>hết hiệu lực từ 01/01/2026</strong> và được thay thế bởi Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15. Mọi tài liệu nội bộ của Trường Việt Anh còn viện dẫn Nghị định 13/2023 phải được cập nhật.</p>
+        </section>
+
+        <section id="dieu-3-giai-thich-tu-ngu" class="gi-section">
+          <h2>Điều 3. Giải thích từ ngữ</h2>
+          <p>Mười khái niệm dưới đây được Trường Việt Anh định nghĩa thống nhất cho toàn bộ chính sách. Hai khái niệm quan trọng nhất với phụ huynh là "dữ liệu định danh học sinh" (3.3) và "quyết định giáo dục" (3.8), vì đó là hai thứ chính sách này bảo vệ chặt nhất.</p>
+          <p><strong>3.1. Công cụ AI</strong> là phần mềm, ứng dụng hoặc dịch vụ sử dụng trí tuệ nhân tạo tạo sinh hoặc học máy để tạo ra văn bản, hình ảnh, âm thanh, video, mã nguồn hoặc phân tích, dự đoán, xếp loại.</p>
+          <p><strong>3.2. Công cụ AI được duyệt</strong> là công cụ có tên trong <a href="#phu-luc-a">Phụ lục A</a> của chính sách này, do Chủ tịch Hội đồng trường phê duyệt. Danh mục có ghi ngày cập nhật và được công bố nội bộ.</p>
+          <p><strong>3.3. Dữ liệu định danh học sinh</strong> là bất kỳ dữ liệu nào cho phép xác định một học sinh cụ thể: họ tên đầy đủ, họ tên kèm lớp, mã học sinh, hình ảnh, giọng nói, ngày sinh, địa chỉ, số điện thoại của gia đình, điểm số gắn với tên, nhận xét hạnh kiểm, thông tin sức khỏe, tình trạng cảm xúc, hoàn cảnh gia đình.</p>
+          <p><strong>3.4. Dữ liệu đã ẩn danh</strong> là dữ liệu đã loại bỏ hoàn toàn khả năng xác định danh tính học sinh và không thể khôi phục lại. Chỉ dữ liệu đã ẩn danh mới được dùng cho phân tích tổng hợp trên công cụ AI ngoài danh mục.</p>
+          <p><strong>3.5. Nội dung do AI sinh ra</strong> là văn bản, hình ảnh, âm thanh, video hoặc dữ liệu được tạo ra hoặc chỉnh sửa đáng kể bằng công cụ AI.</p>
+          <p><strong>3.6. Khai báo sử dụng AI</strong> là việc ghi rõ đã dùng công cụ AI nào, cho phần việc nào, theo mẫu tại <a href="#phu-luc-b">Phụ lục B</a>.</p>
+          <p><strong>3.7. Human in the loop — con người trong vòng lặp</strong> là nguyên tắc theo đó mọi kết quả do AI tạo ra đều phải qua một con người xem xét, chỉnh sửa và chịu trách nhiệm trước khi có hiệu lực.</p>
+          <p><strong>3.8. Quyết định giáo dục</strong> là quyết định ảnh hưởng đến quyền lợi hoặc lộ trình học tập của học sinh: điểm số, xếp loại học lực, đánh giá hạnh kiểm, xếp lớp, khen thưởng, kỷ luật, chuyển lớp, cho thôi học, kết quả tuyển sinh.</p>
+          <p><strong>3.9. Thang AI (A0–A4)</strong> là thang 5 mức quy định mức độ được phép sử dụng AI cho một bài tập, dự án hoặc bài kiểm tra cụ thể, quy định tại <a href="#dieu-7-thang-ai">Điều 7</a>.</p>
+          <p><strong>3.10. Sự cố dữ liệu</strong> là việc dữ liệu cá nhân bị lộ, bị nhập nhầm vào công cụ không được duyệt, bị truy cập trái phép, bị mất hoặc bị sửa đổi trái phép.</p>
+        </section>
+
+        <section id="dieu-4-nguyen-tac" class="gi-section">
+          <h2>Điều 4. Năm nguyên tắc nền tảng</h2>
+          <p>Trường Việt Anh đặt năm nguyên tắc làm nền cho mọi quy định cụ thể phía sau. Khi một tình huống chưa được chính sách này dự liệu, năm nguyên tắc dưới đây là căn cứ để quyết định.</p>
+          <p><strong>NT1 — Con người làm chủ.</strong> AI hỗ trợ, con người quyết định. Mọi quyết định giáo dục ảnh hưởng đến học sinh — điểm số, hạnh kiểm, xếp lớp, kỷ luật, tuyển sinh — phải do con người đưa ra và chịu trách nhiệm. Nguyên tắc này thống nhất với Điều 4 khoản 2 Luật Trí tuệ nhân tạo 2025: "Trí tuệ nhân tạo phục vụ con người, không thay thế thẩm quyền và trách nhiệm của con người."</p>
+          <p><strong>NT2 — AI nhúng trong việc dạy và học.</strong> Trường Việt Anh không dạy AI như một môn tách rời; AI phục vụ cả 4 lĩnh vực giáo dục của trường — kiến thức, kỹ năng lãnh đạo, phẩm chất, sức khỏe.</p>
+          <p><strong>NT3 — Trung thực và minh bạch.</strong> Dùng AI thì nói rõ đã dùng — với thầy cô, với đồng nghiệp và với phụ huynh. Sản phẩm nộp ra phải thực sự là của mình. Phụ huynh có quyền hỏi AI đang được dùng như thế nào với con mình và được trả lời thẳng thắn. Một lần bất tín, vạn sự bất tín.</p>
+          <p><strong>NT4 — Dữ liệu học sinh là ưu tiên bảo vệ cao nhất.</strong> Trường Việt Anh tuân thủ Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15. Dữ liệu của trẻ em chỉ được xử lý khi có sự đồng ý của cha mẹ hoặc người giám hộ; với trẻ từ đủ 7 tuổi trở lên, việc công bố thông tin về đời sống riêng tư cần sự đồng ý của cả trẻ và người đại diện theo pháp luật.</p>
+          <p><strong>NT5 — AI không làm thay việc học.</strong> AI phải làm việc học sâu hơn, không được đi tắt qua chỗ học sinh cần tự nghĩ, tự viết, tự luyện. Công cụ và cách dùng phải phù hợp với lứa tuổi từng cấp học — đúng yêu cầu tại Điều 6 khoản 2 điểm b Luật Trí tuệ nhân tạo 2025 đối với lĩnh vực giáo dục.</p>
+        </section>
+
+        <section id="dieu-5-giao-vien" class="gi-section">
+          <h2>Điều 5. Quy định với giáo viên và nhân viên</h2>
+          <p>Trường Việt Anh khuyến khích giáo viên dùng AI để soạn bài, tạo học liệu và cá nhân hóa việc dạy, với một điều kiện không đổi: người phát hành nội dung chịu trách nhiệm về nội dung, không phải công cụ. Giáo viên kiểm tra 100% nội dung do AI sinh ra trước khi phát cho học sinh hoặc gửi phụ huynh.</p>
+
+          <figure class="csa-figure">
+            <img
+              src="https://media.truongvietanh.com/images/tap-huan-giao-vien-ung-dung-ai-trong-soan-giang.webp"
+              alt="Buổi tập huấn giáo viên ứng dụng AI trong soạn giảng — một giáo viên trình bày trước màn chiếu, các đồng nghiệp ngồi quanh bàn với máy tính xách tay"
+              width="1200" height="675" loading="lazy" decoding="async"
+            />
+            <figcaption>Trường Việt Anh yêu cầu giáo viên hoàn thành module đào tạo AI cơ bản trước khi được cấp tài khoản công cụ AI của trường (Điều 5.3). <span class="csa-ai-label">Hình ảnh minh họa được tạo bằng AI.</span></figcaption>
+          </figure>
+
+          <h3 id="dieu-5-1-lo-trinh-nang-luc">5.1. Lộ trình năng lực</h3>
+          <p>Trường Việt Anh áp dụng khung năng lực AI cho giáo viên của UNESCO, ba mức, cơ cấu mục tiêu <strong>20% – 70% – 10%</strong>, kèm Buddy System và học viện R&amp;D nội bộ Merdi-AI:</p>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Mức</th><th scope="col">Tỷ trọng mục tiêu</th><th scope="col">Năng lực</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Acquire — Biết dùng</strong></td><td>20%</td><td>Dùng được công cụ AI cơ bản cho công việc hằng ngày: soạn thảo, tra cứu, tóm tắt</td></tr>
+                <tr><td><strong>Deepen — Dùng giỏi</strong></td><td>70%</td><td>Dùng AI để thiết kế bài học, tạo học liệu và cá nhân hóa việc dạy cho từng học sinh</td></tr>
+                <tr><td><strong>Create — Tạo mới</strong></td><td>10%</td><td>Tự tạo skill/app AI riêng cho công việc của trường và huấn luyện lại đồng nghiệp</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3 id="dieu-5-2-duoc-khuyen-khich">5.2. Được khuyến khích</h3>
+          <ul>
+            <li>Dùng AI soạn giáo án, học liệu, slide, quiz, báo cáo — với điều kiện rà soát lại trước khi sử dụng.</li>
+            <li>Dùng AI phân tích tiến bộ học sinh để cá nhân hóa việc dạy và phản hồi PDR (Plan–Do–Review; Mầm non: Plan–Do–Recall).</li>
+            <li>Tự tạo skill/app AI phục vụ công việc và chia sẻ lại cho đồng nghiệp.</li>
+            <li>Dùng AI làm "người phản biện": nhờ AI chỉ ra điểm yếu trong giáo án, trong lập luận, trong đề kiểm tra của chính mình.</li>
+          </ul>
+
+          <h3 id="dieu-5-3-bat-buoc">5.3. Bắt buộc</h3>
+          <ul>
+            <li><strong>Kiểm tra 100% nội dung do AI sinh ra</strong> trước khi phát cho học sinh hoặc gửi phụ huynh. Người phát hành chịu trách nhiệm về nội dung, không phải công cụ.</li>
+            <li><strong>Ghi chú "có hỗ trợ AI"</strong> trong tài liệu, báo cáo chính thức có dùng AI, theo mẫu tại <a href="#phu-luc-b">Phụ lục B</a>.</li>
+            <li><strong>Chỉ dùng tài khoản domain của trường</strong> (@truongvietanh.com) khi làm việc với dữ liệu của trường trên công cụ AI. Không dùng tài khoản cá nhân. Không chia sẻ tài khoản.</li>
+            <li><strong>Ghi rõ mức AI được phép (A0–A4)</strong> trên mỗi đề bài tập, dự án và bài kiểm tra giao cho học sinh.</li>
+            <li><strong>Hoàn thành module đào tạo AI cơ bản</strong> trước khi được cấp tài khoản công cụ AI của trường.</li>
+            <li><strong>Đính chính công khai</strong> nếu phát hiện nội dung đã phát hành có sai sót do AI: sửa nội dung, ghi rõ đã sửa gì, thông báo tới người đã nhận.</li>
+          </ul>
+
+          <h3 id="dieu-5-4-nghiem-cam">5.4. Nghiêm cấm</h3>
+          <ul>
+            <li>Nhập <strong>dữ liệu định danh học sinh</strong> (theo định nghĩa tại <a href="#dieu-3-giai-thich-tu-ngu">Điều 3.3</a>) vào công cụ AI công cộng ngoài danh mục đã được duyệt.</li>
+            <li>Để AI <strong>tự động chấm điểm, đánh giá hạnh kiểm hoặc ra quyết định về học sinh</strong> mà không có con người duyệt.</li>
+            <li>Dùng AI tạo nội dung giả mạo, gây hiểu lầm, hoặc nội dung không phù hợp với môi trường giáo dục.</li>
+            <li><strong>Tạo hình ảnh, giọng nói hoặc video mô phỏng học sinh, giáo viên, nhân viên hoặc phụ huynh bằng AI</strong> dưới mọi hình thức, kể cả cho mục đích minh họa hoặc truyền thông — trừ khi có sự đồng ý bằng văn bản của chính người đó và của phụ huynh nếu là học sinh.</li>
+            <li>Dùng AI để <strong>nhận diện cảm xúc, phân tích nét mặt hoặc giám sát hành vi học sinh</strong> nhằm đánh giá, xếp loại hay kỷ luật.</li>
+            <li>Vô hiệu hóa, né tránh hoặc làm sai lệch cơ chế giám sát của con người đối với hệ thống AI của trường — đây là hành vi bị nghiêm cấm theo Điều 7 khoản 4 Luật Trí tuệ nhân tạo 2025.</li>
+            <li>Cài đặt hoặc đưa vào sử dụng công cụ AI mới có xử lý dữ liệu học sinh mà chưa được phê duyệt bổ sung vào <a href="#phu-luc-a">Phụ lục A</a>.</li>
+          </ul>
+        </section>
+
+        <section id="dieu-6-hoc-sinh" class="gi-section">
+          <h2>Điều 6. Quy định với học sinh</h2>
+          <p>Học sinh Trường Việt Anh được dùng AI theo mức độ tăng dần theo cấp học: mầm non không dùng, tiểu học chỉ dùng trong giờ học có giáo viên bên cạnh, THCS và THPT được cấp tài khoản riêng. Trường Việt Anh dạy 30 tiết AI/lớp/năm học cho toàn hệ lớp 1–12 từ năm học 2026–2027.</p>
+
+          <h3 id="dieu-6-1-khung-nang-luc">6.1. Khung năng lực</h3>
+          <p>Trường Việt Anh áp dụng khung năng lực AI cho học sinh của UNESCO — 4 chiều: tư duy lấy con người làm trung tâm; đạo đức AI; kỹ thuật và ứng dụng AI; thiết kế hệ thống AI — qua ba mức, gắn với từng cấp học. Bốn chiều này tương thích với 4 mạch nội dung trong Khung nội dung giáo dục AI của Bộ Giáo dục và Đào tạo tại Quyết định 2422/QĐ-BGDĐT ngày 18/8/2026.</p>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Mức</th><th scope="col">Trọng tâm cấp học</th><th scope="col">Nội dung</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Understand — Hiểu</strong></td><td>Tiểu học</td><td>Biết AI là gì, làm được gì, sai ở đâu; dùng an toàn khi có thầy cô hướng dẫn trực tiếp</td></tr>
+                <tr><td><strong>Apply — Dùng</strong></td><td>THCS</td><td>Dùng AI để giải quyết nhiệm vụ học tập và dự án, biết kiểm chứng lại kết quả, luôn ghi rõ phần nào có AI hỗ trợ</td></tr>
+                <tr><td><strong>Create — Sáng tạo</strong></td><td>THPT</td><td>Tạo ra sản phẩm, giải pháp mới bằng AI và dạy lại cho người khác — trạm AI Education, 1 Tiết Làm Thầy, hướng dẫn phụ huynh</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>Thời lượng:</strong> Trường Việt Anh dạy <strong>30 tiết AI/lớp/năm học</strong> cho toàn hệ lớp 1–12 từ năm học 2026–2027, cao hơn mức sàn 12 tiết/lớp/năm của Quyết định 2422/QĐ-BGDĐT. Chương trình này <strong>nằm trong học phí đã công bố, nhà trường không thu thêm bất kỳ khoản nào.</strong></p>
+
+          <figure class="csa-figure">
+            <img
+              src="https://media.truongvietanh.com/images/truong-hoc-ung-dung-ai-hoc-sinh-huong-dan-phu-huynh.webp"
+              alt="Một học sinh cầm máy tính bảng hướng dẫn cha mẹ cách dùng ứng dụng học tập trong sân trường"
+              width="1200" height="900" loading="lazy" decoding="async"
+            />
+            <figcaption>Ở mức Create, học sinh THPT Trường Việt Anh dạy lại cho người khác — kể cả hướng dẫn chính phụ huynh của mình (Điều 6.1). <span class="csa-ai-label">Hình ảnh minh họa được tạo bằng AI.</span></figcaption>
+          </figure>
+
+          <h3 id="dieu-6-2-gioi-han-theo-cap-hoc">6.2. Giới hạn sử dụng theo cấp học</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Cấp học</th><th scope="col">Học sinh dùng AI trực tiếp</th>
+                  <th scope="col">Tài khoản</th><th scope="col">Giám sát</th><th scope="col">Khai báo</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Mầm non</strong></td><td>Không. Chỉ giáo viên dùng AI để chuẩn bị hoạt động</td><td>—</td><td>—</td><td>—</td></tr>
+                <tr><td><strong>Tiểu học</strong></td><td>Có, chỉ trong giờ học, trên công cụ trong danh mục</td><td>Tài khoản lớp do giáo viên quản lý</td><td>Giáo viên có mặt trực tiếp trong suốt phiên dùng</td><td>Giáo viên ghi giúp</td></tr>
+                <tr><td><strong>THCS</strong></td><td>Có, trong và ngoài giờ học</td><td>Tài khoản trường cấp cho từng học sinh</td><td>Giáo viên kiểm tra sản phẩm; nhà trường lưu nhật ký sử dụng</td><td>Học sinh tự khai báo theo Phụ lục B</td></tr>
+                <tr><td><strong>THPT</strong></td><td>Có, tự chủ trong khuôn khổ chính sách</td><td>Tài khoản trường cấp cho từng học sinh</td><td>Giáo viên kiểm tra sản phẩm</td><td>Học sinh tự khai báo theo Phụ lục B</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>6.2.1.</strong> Học sinh chưa đủ tuổi theo điều khoản dịch vụ của một công cụ AI thì <strong>không được cấp tài khoản công cụ đó</strong>, kể cả khi công cụ nằm trong danh mục được duyệt. Nhà trường rà soát điều kiện độ tuổi của từng công cụ trước khi cấp tài khoản, và rà soát lại mỗi học kỳ cùng thời điểm rà soát danh mục.</p>
+          <p><strong>6.2.2.</strong> Học sinh không có thiết bị hoặc kết nối internet ở nhà được nhà trường bố trí thời gian và thiết bị tại trường để hoàn thành các nhiệm vụ có dùng AI. <strong>Việc dùng AI không được tạo ra bất bình đẳng giữa các học sinh.</strong></p>
+
+          <h3 id="dieu-6-3-liem-chinh-hoc-thuat">6.3. Liêm chính học thuật</h3>
+          <p><strong>6.3.1.</strong> Bài kiểm tra và bài thi <strong>không được dùng AI</strong>, trừ khi đề bài cho phép rõ ràng bằng cách ghi mức A1–A4 theo <a href="#dieu-7-thang-ai">Điều 7</a>.</p>
+          <p><strong>6.3.2.</strong> Bài tập và dự án có dùng AI <strong>phải khai báo</strong> theo mẫu tại <a href="#phu-luc-b">Phụ lục B</a>.</p>
+          <p><strong>6.3.3.</strong> Nộp sản phẩm do AI làm hộ như bài của mình được xem là <strong>gian lận</strong> và xử lý theo nội quy học sinh.</p>
+          <p><strong>6.3.4.</strong> Trường Việt Anh <strong>không dùng phần mềm phát hiện AI làm căn cứ duy nhất</strong> để kết luận học sinh gian lận, vì các công cụ này có tỷ lệ báo sai đáng kể. Kết luận phải dựa trên trao đổi trực tiếp với học sinh, đối chiếu quá trình làm bài và sản phẩm trung gian.</p>
+        </section>
+
+        <section id="dieu-7-thang-ai" class="gi-section">
+          <h2>Điều 7. Thang sử dụng AI trong bài tập và kiểm tra (A0–A4)</h2>
+          <p>Mỗi đề bài tập, dự án hoặc bài kiểm tra do giáo viên Trường Việt Anh giao đều phải ghi rõ một mức trong thang 5 mức dưới đây. Đề bài không ghi mức thì mặc định là A0 — không được dùng AI. Đây là cách học sinh và phụ huynh luôn biết ranh giới nằm ở đâu trước khi làm bài.</p>
+
+          <figure class="csa-figure">
+            <img
+              src="https://media.truongvietanh.com/images/phong-thi-khong-co-ai-hoc-sinh-lam-bai-tren-giay.webp"
+              alt="Học sinh làm bài kiểm tra trên giấy trong phòng thi, giám thị đi giữa các dãy bàn — minh họa mức A0 không dùng AI"
+              width="1200" height="675" loading="lazy" decoding="async"
+            />
+            <figcaption>Mức A0 — bài kiểm tra định kỳ và bài thi tại Trường Việt Anh làm trên giấy hoặc trên thiết bị đã khóa công cụ AI. <span class="csa-ai-label">Hình ảnh minh họa được tạo bằng AI.</span></figcaption>
+          </figure>
+
+          <p><strong>7.1.</strong> Mỗi đề bài tập, dự án hoặc bài kiểm tra do giáo viên giao <strong>phải ghi rõ một mức</strong> trong thang dưới đây. Đề bài không ghi mức thì mặc định là <strong>A0 — không được dùng AI</strong>.</p>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Mức</th><th scope="col">Tên gọi</th><th scope="col">Học sinh được làm gì</th><th scope="col">Ví dụ</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>A0</strong></td><td><strong>Không dùng AI</strong></td><td>Không dùng AI ở bất kỳ khâu nào. Làm bài trên giấy hoặc trên thiết bị đã khóa công cụ AI</td><td>Bài kiểm tra định kỳ, bài thi, bài viết tay tại lớp</td></tr>
+                <tr><td><strong>A1</strong></td><td><strong>AI để hiểu đề</strong></td><td>Được hỏi AI để hiểu khái niệm, hiểu yêu cầu đề bài. Không được dùng AI cho phần nội dung nộp</td><td>Học sinh hỏi AI "thế nào là nghị luận xã hội" rồi tự viết bài</td></tr>
+                <tr><td><strong>A2</strong></td><td><strong>AI để lên ý tưởng và tìm tư liệu</strong></td><td>Được dùng AI để brainstorm, lập dàn ý, tìm nguồn tham khảo. Toàn bộ chữ nộp ra phải do học sinh viết</td><td>Dự án khoa học: AI gợi ý 10 hướng đề tài, học sinh chọn 1 và tự triển khai</td></tr>
+                <tr><td><strong>A3</strong></td><td><strong>AI là cộng tác viên</strong></td><td>Được dùng AI viết nháp, dịch, sửa lỗi, tạo hình ảnh minh họa — với điều kiện khai báo rõ phần nào của AI và học sinh phải giải thích được mọi câu trong bài</td><td>Bài thuyết trình, bài viết dài, sản phẩm truyền thông của CLB</td></tr>
+                <tr><td><strong>A4</strong></td><td><strong>AI tự do, kiểm chứng bắt buộc</strong></td><td>Dùng AI không giới hạn. Trọng tâm chấm điểm là chất lượng câu lệnh, khả năng kiểm chứng và phần học sinh thêm vào</td><td>Capstone Project THPT, bài tập về chính đề tài AI, trạm AI Education</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><strong>7.2.</strong> Ở mọi mức từ A1 đến A4, học sinh phải <strong>giải thích được nội dung mình nộp</strong>. Giáo viên có quyền hỏi trực tiếp; không giải thích được thì bài không được công nhận.</p>
+          <p><strong>7.3.</strong> Ở mức A3 và A4, học sinh <strong>lưu lại lịch sử trao đổi với AI</strong> và nộp kèm khi giáo viên yêu cầu.</p>
+        </section>
+
+        <section id="dieu-8-khai-bao" class="gi-section">
+          <h2>Điều 8. Cách khai báo sử dụng AI</h2>
+          <p>Tại Trường Việt Anh, khai báo AI được ghi ở cuối sản phẩm và gồm đúng ba thông tin: công cụ nào — dùng cho việc gì — phần nào là của mình. Các thao tác kỹ thuật thuần túy như sửa chính tả hay chuyển định dạng thì không phải khai báo.</p>
+          <p><strong>8.1.</strong> Khai báo được ghi ở <strong>cuối sản phẩm</strong>, gồm ba thông tin: <strong>công cụ nào — dùng cho việc gì — phần nào là của mình</strong>.</p>
+          <p><strong>8.2. Mẫu khai báo cho học sinh:</strong></p>
+          <blockquote class="csa-quote"><em>Khai báo AI (mức A3): Tôi dùng Google Gemini để lập dàn ý và gợi ý ba ví dụ minh họa. Phần phân tích ở mục 2 và toàn bộ kết luận do tôi tự viết. Tôi đã kiểm chứng lại số liệu ở mục 1 tại nguồn gốc.</em></blockquote>
+          <p><strong>8.3. Mẫu khai báo cho giáo viên và nhân viên:</strong></p>
+          <blockquote class="csa-quote"><em>Tài liệu này có hỗ trợ AI: dùng [tên công cụ] để [soạn khung/tóm tắt/dịch/tạo hình minh họa]. Nội dung đã được [họ tên] rà soát và chịu trách nhiệm.</em></blockquote>
+          <p><strong>8.4.</strong> Không cần khai báo với các thao tác kỹ thuật thuần túy không làm thay đổi nội dung: sửa lỗi chính tả, sửa ngữ pháp, nâng chất lượng ảnh, chuyển định dạng — thống nhất với các trường hợp miễn gắn nhãn tại Nghị định 142/2026/NĐ-CP.</p>
+        </section>
+
+        <section id="dieu-9-du-lieu" class="gi-section">
+          <h2>Điều 9. Dữ liệu học sinh và quyền riêng tư</h2>
+          <p>Trường Việt Anh chỉ đưa vào công cụ AI lượng dữ liệu tối thiểu cần thiết, và chỉ trên các công cụ có tên trong <a href="#phu-luc-a">Phụ lục A</a>. Nhà trường không dùng hình ảnh, bài làm hay dữ liệu học tập của học sinh để huấn luyện công cụ AI bên ngoài.</p>
+          <p><strong>9.1. Nguyên tắc tối thiểu hóa.</strong> Chỉ đưa vào công cụ AI lượng dữ liệu tối thiểu cần thiết cho công việc. Khi có thể ẩn danh thì phải ẩn danh.</p>
+          <p><strong>9.2. Danh mục công cụ được duyệt.</strong> Việc xử lý dữ liệu học sinh chỉ được thực hiện trên các công cụ có tên trong Phụ lục A. Dùng công cụ ngoài danh mục cho dữ liệu học sinh phải xin duyệt trước bằng văn bản.</p>
+          <p><strong>9.3. Không dùng dữ liệu học sinh để huấn luyện AI bên ngoài.</strong> Trường Việt Anh không dùng hình ảnh, video, bài làm, giọng nói hoặc dữ liệu học tập của học sinh để huấn luyện công cụ AI bên ngoài trường. Với các công cụ có tùy chọn tắt việc dùng dữ liệu cho huấn luyện, nhà trường <strong>bắt buộc bật tùy chọn tắt</strong> trên toàn bộ tài khoản của trường.</p>
+          <p><strong>9.4. Sự đồng ý.</strong> Việc thu thập dữ liệu mới về học sinh cho mục đích AI phải có sự đồng ý của phụ huynh hoặc người giám hộ, thể hiện bằng hành động rõ ràng — theo Luật Bảo vệ dữ liệu cá nhân 2025, <strong>im lặng hoặc không phản hồi không được coi là đồng ý</strong>. Với học sinh từ đủ 7 tuổi trở lên, việc công bố thông tin về đời sống riêng tư cần sự đồng ý của cả học sinh và phụ huynh (Điều 24 Luật số 91/2025/QH15).</p>
+          <p><strong>9.5. Lưu trữ.</strong> Hồ sơ, báo cáo về học sinh có sử dụng AI được lưu theo quy định lưu trữ hồ sơ chuyên môn của nhà trường, có ghi rõ công cụ đã dùng.</p>
+          <p><strong>9.6. Công bố dữ liệu.</strong> Mọi số liệu về học sinh mà Trường Việt Anh công bố ra bên ngoài đều ở dạng <strong>gộp, ẩn danh, kèm phương pháp đo, kèm cỡ mẫu và năm học</strong>. Không nêu tên hoặc hình ảnh học sinh khi chưa có sự đồng ý của phụ huynh.</p>
+        </section>
+
+        <section id="dieu-10-quyen-phu-huynh" class="gi-section">
+          <h2>Điều 10. Quyền của phụ huynh và học sinh</h2>
+          <p>Theo Điều 4 Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15, phụ huynh — với tư cách người đại diện theo pháp luật của học sinh — có bảy quyền dưới đây đối với Trường Việt Anh. Mọi yêu cầu gửi về đầu mối bảo vệ dữ liệu của trường được trả lời trong tối đa 5 ngày làm việc.</p>
+          <p><strong>10.1. Quyền được biết</strong> — biết nhà trường đang dùng AI như thế nào với con mình, trên công cụ nào, cho mục đích gì.</p>
+          <p><strong>10.2. Quyền đồng ý và rút lại sự đồng ý</strong> — rút lại sự đồng ý đã cho, tại bất kỳ thời điểm nào.</p>
+          <p><strong>10.3. Quyền truy cập và chỉnh sửa</strong> — xem và yêu cầu sửa dữ liệu của con nếu không chính xác.</p>
+          <p><strong>10.4. Quyền yêu cầu xóa hoặc hạn chế xử lý</strong> — yêu cầu nhà trường xóa dữ liệu của con khỏi một công cụ AI, hoặc ngừng một hoạt động xử lý cụ thể.</p>
+          <p><strong>10.5. Quyền khiếu nại và yêu cầu bồi thường thiệt hại.</strong></p>
+          <p><strong>10.6. Quyền yêu cầu cơ quan có thẩm quyền áp dụng biện pháp bảo vệ.</strong></p>
+          <p><strong>10.7. Quyền từ chối riêng.</strong> Phụ huynh có thể đề nghị con không tham gia một hoạt động học tập cụ thể có xử lý dữ liệu bằng AI. Nhà trường bố trí hình thức học thay thế tương đương, <strong>không để việc từ chối gây bất lợi cho học sinh</strong>.</p>
+
+          <div class="csa-contact">
+            <p class="csa-contact-title">10.8. Kênh và thời hạn</p>
+            <p>Mọi yêu cầu liên quan đến dữ liệu của con và việc sử dụng AI gửi về đầu mối Bảo vệ dữ liệu cá nhân của Hệ thống Trường Việt Anh:</p>
+            <ul>
+              <li>Email: <a href="mailto:tu@truongvietanh.com">tu@truongvietanh.com</a></li>
+              <li>Hotline: <a href="tel:0916961409">0916 961 409</a></li>
+            </ul>
+            <p>Trường Việt Anh trả lời trong <strong>tối đa 5 ngày làm việc</strong>; trường hợp phức tạp được gia hạn một lần và phải thông báo lý do. Khiếu nại ngoài phạm vi dữ liệu được xử lý theo <a href="/khieu-nai">Quy trình giải quyết khiếu nại</a>.</p>
+          </div>
+        </section>
+
+        <section id="dieu-11-danh-muc-cong-cu" class="gi-section">
+          <h2>Điều 11. Danh mục công cụ AI được duyệt</h2>
+          <p>Danh mục công cụ AI của Trường Việt Anh do Chủ tịch Hội đồng trường phê duyệt, ghi rõ từng công cụ có được xử lý dữ liệu định danh học sinh hay không, và được rà soát mỗi học kỳ. Bản tóm tắt công khai nằm tại <a href="#phu-luc-a">Phụ lục A</a>.</p>
+          <p><strong>11.1.</strong> Danh mục công cụ AI được duyệt do <strong>Chủ tịch Hội đồng trường phê duyệt</strong>, có ghi số phiên bản và ngày cập nhật, công bố nội bộ và tóm tắt công khai tại Phụ lục A.</p>
+          <p><strong>11.2.</strong> Mỗi công cụ trong danh mục được ghi rõ: tên, mục đích sử dụng, <strong>được xử lý dữ liệu định danh học sinh hay không</strong>, đối tượng được dùng, và điều kiện độ tuổi.</p>
+          <p><strong>11.3.</strong> Đề xuất công cụ mới gửi trực tiếp lên Chủ tịch Hội đồng trường, kèm ba thông tin: công cụ làm gì, xử lý dữ liệu nào, ai là nhà cung cấp và họ lưu dữ liệu ở đâu.</p>
+          <p><strong>11.4.</strong> Danh mục được rà soát <strong>mỗi học kỳ</strong>, cùng thời điểm rà soát chính sách.</p>
+        </section>
+
+        <section id="dieu-12-gan-nhan" class="gi-section">
+          <h2>Điều 12. Minh bạch và gắn nhãn nội dung do AI tạo ra</h2>
+          <p>Mọi chatbot và trợ lý AI của Trường Việt Anh phải tự giới thiệu là AI ngay ở lần trả lời đầu tiên, và mọi hình ảnh, video do AI tạo ra mà nhà trường công bố ra công chúng đều được gắn nhãn. Điều này thực hiện Điều 11 Luật Trí tuệ nhân tạo số 134/2025/QH15 và Điều 18 Nghị định 142/2026/NĐ-CP.</p>
+          <p><strong>12.1. Chatbot và trợ lý AI tự khai báo.</strong> Mọi hệ thống AI tương tác trực tiếp với con người của Trường Việt Anh — trợ lý AI Leo, chatbot tuyển sinh, AI Tutor — <strong>phải tự giới thiệu là AI ngay ở lần trả lời đầu tiên</strong> và phải có đường dẫn để người dùng chuyển sang gặp người thật.</p>
+          <p><strong>12.2. Gắn nhãn nội dung truyền thông.</strong> Hình ảnh, âm thanh, video do AI tạo ra hoặc chỉnh sửa đáng kể mà Trường Việt Anh công bố ra công chúng — trên website, fanpage, YouTube, tài liệu tuyển sinh — đều được <strong>gắn nhãn dễ nhận biết</strong> khi nội dung đó mô phỏng người thật hoặc tái hiện sự kiện thực tế.</p>
+          <p><strong>12.3. Nhãn chuẩn:</strong> <em>"Hình ảnh minh họa được tạo bằng AI"</em> hoặc <em>"Video có sử dụng công nghệ AI"</em>, đặt ngay trên nội dung, trong chú thích hoặc trong phần mô tả.</p>
+          <p><strong>12.4. Không cần gắn nhãn</strong> với các chỉnh sửa kỹ thuật thuần túy: nâng chất lượng ảnh, cắt ghép thông thường, sửa chính tả, dịch thuật không làm sai lệch nội dung, và nội dung dùng nội bộ không công bố ra công chúng.</p>
+          <p><strong>12.5. Cấm tuyệt đối</strong> việc dùng AI tạo hình ảnh hoặc giọng nói mô phỏng học sinh, giáo viên, nhân viên, phụ huynh của Trường Việt Anh cho mục đích truyền thông, kể cả có gắn nhãn — trừ khi có sự đồng ý bằng văn bản của chính người đó và của phụ huynh nếu là học sinh.</p>
+        </section>
+
+        <section id="dieu-13-tuyen-sinh-danh-gia" class="gi-section">
+          <h2>Điều 13. AI trong tuyển sinh, đánh giá và nhân sự</h2>
+          <p>Trường Việt Anh không dùng AI để tự động ra quyết định về tuyển sinh, xếp lớp, học bổng, kỷ luật học sinh hay tuyển dụng. AI chỉ được dùng ở khâu chuẩn bị, và người phụ trách đọc lại toàn bộ trước khi quyết định.</p>
+          <p><strong>13.1.</strong> Trường Việt Anh <strong>không dùng AI để tự động ra quyết định</strong> về: kết quả tuyển sinh, xếp lớp, học bổng, kỷ luật học sinh, tuyển dụng, đánh giá và chấm dứt hợp đồng lao động.</p>
+          <p><strong>13.2.</strong> AI được dùng để <strong>hỗ trợ chuẩn bị</strong>: tổng hợp hồ sơ, gợi ý câu hỏi phỏng vấn, phát hiện điểm cần hỏi thêm. Người phụ trách đọc lại toàn bộ và quyết định.</p>
+          <p><strong>13.3.</strong> Khi một quyết định có sự tham gia của AI ở khâu chuẩn bị, người bị ảnh hưởng <strong>có quyền yêu cầu được giải thích</strong> căn cứ của quyết định và được trả lời bằng ngôn ngữ dễ hiểu.</p>
+          <p><strong>13.4.</strong> Chatbot tuyển sinh của Trường Việt Anh được nhà trường tự phân loại ở <strong>mức rủi ro trung bình</strong> theo Điều 9 khoản 1 điểm b Luật Trí tuệ nhân tạo 2025, và thực hiện đầy đủ nghĩa vụ minh bạch tại <a href="#dieu-12-gan-nhan">Điều 12</a> của chính sách này.</p>
+        </section>
+
+        <section id="dieu-14-su-co-du-lieu" class="gi-section">
+          <h2>Điều 14. Sự cố dữ liệu và quy trình xử lý</h2>
+          <p>Khi phát hiện sự cố dữ liệu, người của Trường Việt Anh làm ba bước bắt buộc: chặn ngay, báo trong 24 giờ, khắc phục và ghi nhận. Báo cáo trung thực một sự cố không bị coi là lỗi nặng; che giấu sự cố thì có.</p>
+          <p><strong>14.1. Ba bước bắt buộc khi phát hiện sự cố:</strong></p>
+          <ol class="csa-steps">
+            <li><strong>Chặn ngay</strong> — ngừng phiên làm việc, xóa nội dung đã nhập nếu công cụ cho phép, đổi mật khẩu nếu liên quan tài khoản.</li>
+            <li><strong>Báo trong 24 giờ</strong> — báo trực tiếp cho Chủ tịch Hội đồng trường. Không tự xử lý im lặng. <strong>Báo cáo trung thực một sự cố không bị coi là lỗi nặng; che giấu sự cố thì có.</strong></li>
+            <li><strong>Khắc phục và ghi nhận</strong> — lập biên bản: dữ liệu nào, bao nhiêu người bị ảnh hưởng, đã làm gì, làm gì để không lặp lại.</li>
+          </ol>
+          <p><strong>14.2. Thông báo cơ quan chức năng.</strong> Với sự cố có khả năng gây thiệt hại đến quyền và lợi ích hợp pháp của học sinh, nhà trường thông báo cơ quan chuyên trách bảo vệ dữ liệu cá nhân <strong>chậm nhất 72 giờ kể từ khi phát hiện</strong>, theo Điều 23 Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15. Người chịu trách nhiệm thông báo: Chủ tịch Hội đồng trường hoặc người được ủy quyền bằng văn bản.</p>
+          <p><strong>14.3. Thông báo phụ huynh.</strong> Phụ huynh của học sinh bị ảnh hưởng được thông báo trực tiếp, nêu rõ chuyện gì đã xảy ra và nhà trường đã làm gì.</p>
+        </section>
+
+        <section id="dieu-15-vi-pham" class="gi-section">
+          <h2>Điều 15. Vi phạm và giải trình</h2>
+          <p>Trường Việt Anh cho người vi phạm lần đầu được giải trình một lần trước hội đồng trước khi áp dụng hình thức xử lý. Với học sinh, hướng xử lý ưu tiên là giáo dục và làm lại, không phải loại bỏ khỏi việc học.</p>
+          <p><strong>15.1.</strong> Người vi phạm lần đầu được giải trình một lần trước hội đồng trước khi áp dụng hình thức xử lý.</p>
+          <p><strong>15.2.</strong> Vi phạm về dữ liệu học sinh hoặc gian lận có chủ đích được xử lý theo nội quy lao động, nội quy học sinh và quy định của pháp luật.</p>
+          <p><strong>15.3.</strong> Với học sinh, hướng xử lý ưu tiên là <strong>giáo dục và làm lại</strong>: giải thích, làm lại sản phẩm với sự giám sát, chứ không phải loại bỏ khỏi việc học. Hình thức kỷ luật chỉ áp dụng khi vi phạm lặp lại hoặc có chủ đích rõ ràng.</p>
+        </section>
+
+        <section id="dieu-16-to-chuc-thuc-hien" class="gi-section">
+          <h2>Điều 16. Tổ chức thực hiện</h2>
+          <p>Chủ tịch Hội đồng trường Trường Việt Anh trực tiếp lãnh đạo việc triển khai AI trong toàn hệ thống. 100% cán bộ, giáo viên, nhân viên ký nhận chính sách trong 4 tuần Foundation, và chính sách được rà soát mỗi học kỳ.</p>
+          <p><strong>16.1.</strong> <strong>Chủ tịch Hội đồng trường</strong> trực tiếp lãnh đạo việc triển khai AI trong toàn hệ thống: phê duyệt danh mục công cụ, quyết định các trường hợp ngoại lệ và chủ trì rà soát chính sách.</p>
+          <p><strong>16.2.</strong> Các đơn vị chuyên môn và kỹ thuật thực thi theo phân công của Chủ tịch; mọi vướng mắc, đề xuất công cụ mới hoặc sự cố dữ liệu báo trực tiếp lên Chủ tịch.</p>
+          <p><strong>16.3.</strong> <strong>100% cán bộ, giáo viên, nhân viên ký nhận chính sách trong 4 tuần Foundation</strong> và hoàn thành module đào tạo AI cơ bản trước khi được cấp tài khoản. Học sinh được phổ biến qua giờ sinh hoạt; phụ huynh được giới thiệu tại họp phụ huynh đầu năm cùng Bản đồ học tập và app Viet Anh Class.</p>
+          <p><strong>16.4. Lộ trình tuân thủ pháp luật.</strong> Các hệ thống AI đã vận hành trước ngày 01/3/2026 trong lĩnh vực giáo dục có <strong>18 tháng</strong> để hoàn tất tuân thủ Luật Trí tuệ nhân tạo 2025, tức <strong>hạn 01/9/2027</strong> (Điều 35 khoản 1 Luật số 134/2025/QH15). Trường Việt Anh đặt mục tiêu hoàn tất trước <strong>30/6/2027</strong>.</p>
+          <p><strong>16.5. Rà soát.</strong> Chính sách được rà soát <strong>mỗi học kỳ</strong>. Mốc rà soát gần nhất: <strong>15/01/2027</strong>. Phiên bản 1.1 này sẽ được nâng cấp thành quy chế đầy đủ trong học kỳ 2 năm học 2026–2027.</p>
+          <p><strong>16.6. Công bố.</strong> Chính sách này được công bố công khai tại truongvietanh.com để phụ huynh, đối tác và cộng đồng giáo dục cùng giám sát.</p>
+
+          <div class="csa-sign">
+            <p><strong>TM. HỘI ĐỒNG TRƯỜNG</strong></p>
+            <p><strong>Nguyễn Mạnh Dương — Chủ tịch</strong></p>
+          </div>
+        </section>
+
+        <section id="phu-luc-a" class="gi-section">
+          <h2>Phụ lục A — Danh mục công cụ AI được duyệt</h2>
+          <p>Đây là bản tóm tắt công khai danh mục công cụ AI được Trường Việt Anh phê duyệt. Cột quan trọng nhất là cột "được xử lý dữ liệu định danh học sinh hay không" — công cụ không có tên trong danh mục này không được dùng với dữ liệu định danh học sinh.</p>
+          <p><em>Phiên bản A-1.0 · Cập nhật 28/8/2026 · Phê duyệt: Chủ tịch Hội đồng trường</em></p>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Công cụ</th><th scope="col">Mục đích</th>
+                  <th scope="col">Được xử lý dữ liệu định danh học sinh</th>
+                  <th scope="col">Đối tượng được dùng</th><th scope="col">Điều kiện độ tuổi</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Google Gemini (tài khoản trường)</td><td>Soạn thảo, phân tích, học liệu</td><td>Có — trong phạm vi hợp đồng Workspace</td><td>GV, NV, HS THCS–THPT</td><td>Theo điều khoản dịch vụ hiện hành, nhà trường rà soát mỗi học kỳ</td></tr>
+                <tr><td>NotebookLM (tài khoản trường)</td><td>Nghiên cứu tài liệu, tóm tắt</td><td>Có</td><td>GV, NV, HS THPT</td><td>Theo điều khoản dịch vụ hiện hành, nhà trường rà soát mỗi học kỳ</td></tr>
+                <tr><td>Claude</td><td>Soạn thảo, phân tích, tạo skill/app</td><td>Không</td><td>GV, NV</td><td>Theo điều khoản dịch vụ hiện hành</td></tr>
+                <tr><td>ChatGPT</td><td>Soạn thảo, tra cứu</td><td>Không</td><td>GV, NV</td><td>Theo điều khoản dịch vụ hiện hành</td></tr>
+                <tr><td>AI Tutor (nội bộ)</td><td>Kèm học sinh học tập</td><td>Có</td><td>HS toàn hệ</td><td>Theo cấp học</td></tr>
+                <tr><td>Viet Anh Class</td><td>Quản lý lớp, báo cáo tiến bộ</td><td>Có</td><td>GV, HS, PH</td><td>Theo cấp học</td></tr>
+                <tr><td>Trợ lý AI Leo</td><td>Trợ lý nội bộ</td><td>Có</td><td>GV, NV</td><td>—</td></tr>
+                <tr><td>Chatbot tuyển sinh</td><td>Tư vấn tuyển sinh</td><td>Không</td><td>Công chúng</td><td>—</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="csa-note">Danh mục đầy đủ và bản cập nhật mới nhất được công bố nội bộ. Công cụ không có tên trong danh mục này <strong>không được dùng với dữ liệu định danh học sinh</strong>.</p>
+        </section>
+
+        <section id="phu-luc-b" class="gi-section">
+          <h2>Phụ lục B — Mẫu khai báo sử dụng AI</h2>
+          <p>Trường Việt Anh dùng ba mẫu khai báo dưới đây cho ba tình huống: học sinh nộp bài, giáo viên phát hành tài liệu, và nội dung truyền thông có hình ảnh do AI tạo.</p>
+          <h3 id="phu-luc-b1">B1. Học sinh (đặt cuối bài nộp)</h3>
+          <blockquote class="csa-quote"><strong>Khai báo AI — mức [A0/A1/A2/A3/A4]</strong><br />Công cụ đã dùng: ………<br />Dùng cho phần việc: ………<br />Phần do tôi tự làm: ………<br />Tôi đã kiểm chứng lại: ………</blockquote>
+          <h3 id="phu-luc-b2">B2. Giáo viên và nhân viên (đặt cuối tài liệu)</h3>
+          <blockquote class="csa-quote"><em>Tài liệu này có hỗ trợ AI: dùng [tên công cụ] để [phần việc]. Nội dung đã được [họ tên, chức danh] rà soát và chịu trách nhiệm. Ngày rà soát: [DD/MM/YYYY].</em></blockquote>
+          <h3 id="phu-luc-b3">B3. Nội dung truyền thông có hình ảnh/video do AI tạo</h3>
+          <blockquote class="csa-quote"><em>Hình ảnh minh họa được tạo bằng AI.</em></blockquote>
+        </section>
+
+        <section id="phu-luc-c" class="gi-section">
+          <h2>Phụ lục C — Câu hỏi thường gặp của phụ huynh</h2>
+          <p>Mười hai câu hỏi phụ huynh Trường Việt Anh hỏi nhiều nhất về việc nhà trường dùng AI, kèm câu trả lời thẳng và điều khoản tương ứng trong chính sách.</p>
+          {faqs.map((f) => (
+            <div class="csa-faq">
+              <h3 id={f.id}>{f.q}</h3>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
+
+        <section id="doc-them" class="gi-section">
+          <h2>Đọc thêm</h2>
+          <ul>
+            <li><a href="/blog/quyet-dinh-2422-giao-duc-ai-tom-tat-cho-phu-huynh/">Quyết định 2422/QĐ-BGDĐT — tóm tắt giáo dục AI cho phụ huynh</a> — khung nội dung giáo dục AI của Bộ, đọc trong 5 phút.</li>
+            <li><a href="/blog/day-con-dung-ai-dung-cach/">Dạy con dùng AI đúng cách</a> — bài trụ về AI trong gia đình, có bộ quy tắc dán ở góc học tập.</li>
+            <li><a href="/blog/truong-hoc-ung-dung-ai-tieu-chi-danh-gia/">Trường học ứng dụng AI: tiêu chí đánh giá</a> — cách phụ huynh phân biệt trường dán nhãn AI và trường làm thật.</li>
+            <li><a href="/tai-lieu-ai">Tài liệu AI cho phụ huynh</a> — poster và bảng so sánh tải về miễn phí.</li>
+            <li><a href="/chinh-sach">Chính sách &amp; Văn bản công khai</a> — các văn bản khác của Hệ thống Trường Việt Anh.</li>
+          </ul>
+
+          <div class="csa-author">
+            <p class="csa-author-title">Về người ký văn bản</p>
+            <p><strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch Hội đồng trường Hệ thống Trường Việt Anh, tốt nghiệp Manchester Metropolitan University. Ông trực tiếp lãnh đạo việc triển khai AI trong toàn hệ thống và là người ký ban hành chính sách này. Website cá nhân: <a href="https://nguyenmanhduong.com" target="_blank" rel="noopener">nguyenmanhduong.com</a>.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Có thể quý vị cần</h2>
+        <div class="gi-related-grid">
+          <a href="/dat-lich-tham-quan" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #26275D 0%, #363876 100%);"></div>
+            <h3>Đặt lịch tham quan trường</h3>
+            <p>Đến xem một buổi học thật — kể cả tiết AI Education — trước khi quyết định.</p>
+          </a>
+          <a href="/tuyen-sinh" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #f9dd0e 0%, #cbb30a 100%);"></div>
+            <h3>Tuyển sinh 2026–2027</h3>
+            <p>Chương trình AI 30 tiết/lớp/năm nằm trong học phí đã công bố, không thu thêm.</p>
+          </a>
+          <a href="/tai-lieu-ai" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Tài liệu AI cho phụ huynh</h3>
+            <p>Poster "Khi nào dùng AI?" và bảng so sánh AI làm hộ vs AI dạy học.</p>
+          </a>
+          <a href="/chinh-sach" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);"></div>
+            <h3>Chính sách &amp; Văn bản</h3>
+            <p>Toàn văn các văn bản chính sách có số hiệu, chữ ký và con dấu.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Bộ thông số AEO mục 10 yêu cầu dòng "Cập nhật lần cuối" phải HIỂN THỊ ở đầu trang.
+     Mặc định .gi-last-updated là trắng 45% — chìm hẳn vào chỗ sáng của ảnh hero. */
+  .gi-page :global(.gi-last-updated) {
+    color: rgba(255, 255, 255, 0.92);
+    font-style: normal;
+    font-weight: 500;
+    background: rgba(15, 16, 40, 0.42);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    padding: 0.3rem 0.85rem;
+    display: inline-block;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  /* Hộp tóm tắt 30 giây — khối AI hay trích thành danh sách nhất, cho nổi bật hẳn */
+  .csa-summary { border-left: 5px solid #f9dd0e; }
+  .csa-bullets { list-style: none; padding: 0; margin: 0; }
+  .csa-bullets li {
+    position: relative;
+    padding: 0.65rem 0 0.65rem 1.9rem;
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #3b4963;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .csa-bullets li:last-child { border-bottom: none; }
+  .csa-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0.35rem;
+    top: 1.2rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f9dd0e;
+  }
+
+  /* Mục lục đầy đủ — đặt sau hộp tóm tắt theo bộ thông số AEO mục 3.3 */
+  .csa-toc-full {
+    background: #fff;
+    border: 1px solid #e8ecf1;
+    border-radius: 16px;
+    padding: 1.5rem 2rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+  }
+  .csa-toc-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin-bottom: 0.85rem;
+  }
+  .csa-toc-full ol {
+    columns: 2;
+    column-gap: 2rem;
+    padding-left: 1.15rem;
+    margin: 0;
+  }
+  .csa-toc-full li { margin-bottom: 0.4rem; break-inside: avoid; }
+  .csa-toc-full a {
+    color: #26275D;
+    font-size: 0.97rem;
+    text-decoration: none;
+    line-height: 1.5;
+  }
+  .csa-toc-full a:hover { text-decoration: underline; text-decoration-color: #f9dd0e; }
+
+  .csa-note {
+    background: #fef9ef;
+    border-left: 4px solid #f9dd0e;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0 0;
+    font-size: 0.98rem;
+  }
+
+  .csa-quote {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #26275D;
+    border-radius: 8px;
+    padding: 1rem 1.35rem;
+    margin: 0.75rem 0 1.5rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #3b4963;
+  }
+
+  .csa-steps { padding-left: 1.3rem; }
+  .csa-steps li { margin-bottom: 0.75rem; line-height: 1.8; color: #3b4963; }
+
+  .csa-contact {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.35rem 1.6rem;
+    margin-top: 1.5rem;
+  }
+  .csa-contact-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: #26275D;
+    margin-bottom: 0.6rem !important;
+  }
+  .csa-contact ul { margin: 0.5rem 0 1rem; padding-left: 1.2rem; }
+  .csa-contact li { line-height: 1.9; color: #3b4963; }
+
+  .csa-sign {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
+  }
+  .csa-sign p { margin-bottom: 0.35rem !important; color: #26275D; }
+
+  .csa-figure { margin: 1.5rem 0 2rem; }
+  .csa-figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    display: block;
+  }
+  .csa-figure figcaption {
+    font-size: 0.92rem;
+    color: #64748b;
+    margin-top: 0.6rem;
+    line-height: 1.6;
+  }
+  /* Nhãn bắt buộc theo Điều 12.3 của chính văn bản này — trang chính sách phải
+     tự tuân thủ điều khoản nó ban hành. Ảnh minh họa trên trang do AI tạo. */
+  .csa-ai-label {
+    display: inline-block;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 0.1rem 0.5rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    white-space: nowrap;
+  }
+
+  .csa-faq { padding-bottom: 0.35rem; }
+  .csa-faq h3 { margin-top: 1.6rem; font-size: 1.2rem; line-height: 1.45; }
+  .csa-faq:first-of-type h3 { margin-top: 0.5rem; }
+
+  .csa-author {
+    margin-top: 2rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.35rem 1.6rem;
+  }
+  .csa-author-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin-bottom: 0.6rem !important;
+  }
+
+  @media (max-width: 780px) {
+    .csa-toc-full { padding: 1.25rem 1.35rem; }
+    .csa-toc-full ol { columns: 1; }
+  }
+</style>

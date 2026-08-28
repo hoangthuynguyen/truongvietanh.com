@@ -303,6 +303,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       /* === gi-section collapsible === */
       document.querySelectorAll('.gi-section').forEach(function(section){
         if(section.id === 'faq') return;
+        /* Trang văn bản (chính sách, quy định) phải đọc được trọn vẹn, không cắt cụt:
+           đặt data-no-collapse trên section hoặc trên thẻ cha bao nó để bỏ qua. */
+        if(section.closest('[data-no-collapse]')) return;
         var h2 = section.querySelector('h2');
         if(!h2) return;
         var siblings = [];

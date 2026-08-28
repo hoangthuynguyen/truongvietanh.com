@@ -16,9 +16,10 @@
 /* === RESET & TOKENS === */
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --gold:#D4A843;
-  --navy:#0d1b2a;
-  --navy2:#1a1a5e;
+  --gold:#F9DD0E;
+  --navy:#26275D;
+  --navy2:#26275D;
+  --navy-deep:#1A1B44;
   --white:#fff;
   --gray:#f5f7fa;
   --text:#1f2937;
@@ -59,7 +60,7 @@ body{
 .btn-call:hover{opacity:.85;}
 .btn-zalo{
   display:inline-flex;align-items:center;gap:5px;
-  background:#0b84ff;color:#fff;
+  background:#0068FF;color:#fff;
   padding:7px 14px;border-radius:6px;
   font-size:13px;font-weight:700;
   text-decoration:none;white-space:nowrap;
@@ -69,7 +70,7 @@ body{
 
 /* === HERO === */
 .hero{
-  background:linear-gradient(135deg,#0a1628 0%,var(--navy2) 55%,#0d1b2a 100%);
+  background:linear-gradient(135deg,var(--navy-deep) 0%,var(--navy) 55%,var(--navy-deep) 100%);
   color:var(--white);
   text-align:center;
   padding:48px 24px 40px;
@@ -138,7 +139,7 @@ body{
 .cta-secondary:hover{background:rgba(255,255,255,.2);}
 .cta-zalo{
   display:inline-flex;align-items:center;gap:7px;
-  background:#0b84ff;color:#fff;
+  background:#0068FF;color:#fff;
   padding:13px 20px;border-radius:8px;
   font-size:14px;font-weight:700;
   text-decoration:none;
@@ -188,7 +189,7 @@ body{
 .card-title{font-size:14px;font-weight:800;color:var(--navy2);line-height:1.3;margin-bottom:2px;}
 .card-sub{font-size:11px;color:var(--sub);font-weight:600;line-height:1.4;}
 .card .arrow{margin-left:auto;color:#d1d5db;font-size:20px;flex-shrink:0;transition:color .2s,transform .2s;}
-.card:hover .arrow{color:var(--gold);transform:translateX(3px);}
+.card:hover .arrow{color:var(--navy);transform:translateX(3px);}
 
 /* Odd last card full-width */
 .card:last-child:nth-child(odd){grid-column:1/-1;max-width:50%;justify-self:center;}
@@ -231,7 +232,7 @@ body{
 }
 .cbtn:hover{transform:translateY(-1px);opacity:.9;}
 .cbtn-gold{background:var(--gold);color:var(--navy);}
-.cbtn-zalo{background:#0b84ff;color:#fff;}
+.cbtn-zalo{background:#0068FF;color:#fff;}
 .cbtn-outline{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35);}
 .cbtn-outline:hover{background:rgba(255,255,255,.1);}
 
@@ -270,7 +271,7 @@ body{
   font-size:11px;font-weight:700;color:var(--navy2);
   text-decoration:none;display:inline-flex;align-items:center;gap:3px;
 }
-.campus-links a:hover{color:var(--gold);}
+.campus-links a:hover{color:var(--navy);}
 
 /* === ABOUT === */
 .about{
@@ -290,7 +291,7 @@ body{
   display:flex;flex-direction:column;align-items:center;gap:2px;
 }
 .astat-num{font-size:22px;font-weight:800;color:var(--navy2);}
-.astat-num span{color:var(--gold);}
+.astat-num span{color:var(--navy);}
 .astat-label{font-size:11px;color:var(--sub);font-weight:700;}
 
 /* === FOOTER === */
@@ -298,7 +299,7 @@ body{
   background:var(--navy);color:#fff;
   padding:28px 24px 20px;text-align:center;
 }
-.footer-logo img{height:34px;margin-bottom:14px;filter:brightness(0) invert(1);}
+.footer-logo img{height:38px;width:auto;margin-bottom:14px;}
 .footer-links{
   display:flex;flex-wrap:wrap;justify-content:center;gap:4px 16px;
   margin-bottom:16px;
@@ -329,7 +330,7 @@ body{
   font-size:14px;font-weight:800;text-decoration:none;
 }
 .mbar-call{background:var(--gold);color:var(--navy);}
-.mbar-zalo{background:#0b84ff;color:#fff;}
+.mbar-zalo{background:#0068FF;color:#fff;}
 
 /* === RESPONSIVE === */
 @media(max-width:900px){
@@ -359,9 +360,9 @@ body{
   <div class="header-inner">
     <div class="header-logo">
       <a href="https://truongvietanh.com">
-        <img src="https://truongvietanh.com/logo-vietanh.png"
+        <img src="/logo-vietanh-gold.png"
              alt="Trường Việt Anh"
-             width="120" height="36"
+             width="107" height="36"
              fetchpriority="high">
       </a>
     </div>
@@ -649,7 +650,7 @@ body{
 <footer class="footer">
   <div class="footer-logo">
     <a href="https://truongvietanh.com">
-      <img src="https://truongvietanh.com/logo-vietanh.png" alt="Trường Việt Anh" width="120" height="36" loading="lazy">
+      <img src="/logo-vietanh-gold.png" alt="Trường Việt Anh" width="113" height="38" loading="lazy">
     </a>
   </div>
   <div class="footer-links">

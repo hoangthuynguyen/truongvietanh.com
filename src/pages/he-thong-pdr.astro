@@ -3,87 +3,158 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
-import { getPillarPage } from '../lib/directus';
+import { schoolFacts } from '../data/school-facts';
 
-const cmsPage = await getPillarPage('he-thong-pdr');
-const cmsFaqs = cmsPage?.faq_items || null;
+// Viết lại toàn bộ 28/08/2026 — PDR = Plan – Do – Review (mầm non: Plan – Do – Recall).
+// Bản cũ dịch sai thành "Play – Discover – Reflect". Nội dung theo bản duyệt của anh Dương.
+// KHÔNG lấy title/description/FAQ từ Directus nữa: bản ghi CMS còn giữ định nghĩa sai,
+// nếu fallback về CMS thì trang live sẽ hiển thị lại nội dung cũ.
+// KHÔNG thêm aggregateRating/review (self-serving review — rủi ro manual action).
+
+const PAGE_TITLE = 'PDR là gì? Plan – Do – Review tại Trường Việt Anh';
+const PAGE_DESC =
+  'PDR tại Việt Anh là Plan – Do – Review: con tự lên kế hoạch, tự làm, tự nhìn lại. Mầm non gọi là Plan – Do – Recall. Xem cách làm ở từng cấp học.';
+const PAGE_URL = 'https://truongvietanh.com/he-thong-pdr/';
+const PAGE_IMAGE = 'https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp';
+
+const faqs = [
+  {
+    q: 'PDR là viết tắt của gì?',
+    a: 'PDR là Plan – Do – Review: Lên kế hoạch – Thực hiện – Nhìn lại. Học sinh tự đặt kế hoạch, tự thực hiện, rồi tự đối chiếu kết quả với kế hoạch ban đầu. Ở bậc mầm non, bước thứ ba là Recall — trẻ kể lại việc mình vừa làm, thay vì tự đánh giá.',
+  },
+  {
+    q: 'Vì sao mầm non dùng Recall còn tiểu học trở lên dùng Review?',
+    a: 'Trẻ ba đến năm tuổi chưa đủ năng lực siêu nhận thức để tự đánh giá theo một chuẩn, nhưng hoàn toàn kể lại được điều vừa trải qua. Recall rèn đúng việc đó: nhớ lại, sắp xếp, diễn đạt. Từ tiểu học, khi con đọc được kế hoạch mình đã viết, bước thứ ba mới thành Review đúng nghĩa.',
+  },
+  {
+    q: 'PDR có phải phương pháp riêng của Trường Việt Anh không?',
+    a: 'Không. Nhịp plan-do-review là cấu trúc lõi của mô hình HighScope (Hoa Kỳ), nơi ba phân đoạn được gọi là planning time - work time - recall time. Việt Anh là trường HighScope inspired: chúng tôi vận dụng nhịp này trong khung GDPT 2018 và mở rộng lên tới lớp 12. Trường không được HighScope cấp phép hay chứng nhận.',
+  },
+  {
+    q: 'PDR có làm con học nhẹ đi và điểm thấp đi không?',
+    a: 'Không, vì PDR không thay thế nội dung môn học — nó là cách con quản lý việc học nội dung đó. Tổng hợp 355 nghiên cứu của Education Endowment Foundation cho thấy nhóm can thiệp siêu nhận thức và tự điều chỉnh mang lại khoảng 8 tháng tiến bộ học tập trong một năm học, với chi phí rất thấp.',
+  },
+  {
+    q: 'Con tôi nhút nhát, có làm được PDR không?',
+    a: 'Làm được. Bước Review chấp nhận nhiều hình thức: viết nhật ký, vẽ, hoặc nói riêng với một bạn trong buổi "đôi bạn cùng tiến" thay vì phát biểu trước lớp. Điều bắt buộc là con tự rút ra kết luận, không bắt buộc con phải nói to trước đám đông.',
+  },
+  {
+    q: 'Làm sao để xem một tiết PDR thật?',
+    a: 'Đặt lịch tham quan qua hotline 0916 961 409 hoặc email hoc@truongvietanh.com. Trường nhận khách cả bảy ngày trong tuần và ưu tiên ngày trong tuần, vì chỉ ngày thường anh chị mới dự được đúng giờ Plan đầu buổi và giờ Review cuối buổi.',
+  },
+];
 
 const structuredData = [
-    // Gỡ aggregateRating/review 27-28/08/2026: Google không chấp nhận self-serving review
-    // (tổ chức tự đánh giá mình, thu thập & hiển thị trên chính website của mình) —
-    // để lại có nguy cơ bị manual action. Testimonial hiển thị cho người đọc vẫn giữ nguyên.
   {
-    "@context": "https://schema.org",
-    "@type": "EducationalOrganization",
-    "name": "Trường Việt Anh",
-    "alternateName": "Trường Liên Cấp Việt Anh",
-    "url": "https://truongvietanh.com",
-    "logo": "https://truongvietanh.com/logo-crest-80.webp",
-    "foundingDate": "2011",
-    "description": "Hệ thống PDR (Play - Discover - Reflect) là phương pháp giáo dục độc quyền tại Trường Việt Anh, giúp học sinh học qua trải nghiệm, khám phá và phản tư.",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Hồ Chí Minh",
-      "addressCountry": "VN"
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${PAGE_URL}#article`,
+    headline: 'PDR là gì? Hệ thống Plan – Do – Review tại Trường Việt Anh',
+    description: PAGE_DESC,
+    inLanguage: 'vi-VN',
+    datePublished: '2026-08-27T09:00:00+07:00',
+    dateModified: '2026-08-28T09:00:00+07:00',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
+    image: [PAGE_IMAGE],
+    author: {
+      '@type': 'Person',
+      '@id': 'https://truongvietanh.com/#nguyen-manh-duong',
+      name: 'Nguyễn Mạnh Dương',
+      jobTitle: 'Nhà sáng lập & Chủ tịch hệ thống giáo dục K-12 Việt Anh',
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Manchester Metropolitan University' },
+      url: 'https://truongvietanh.com/gioi-thieu',
+      sameAs: [
+        'https://nguyenmanhduong.com',
+        'https://www.facebook.com/nguyenmanhduong1101/',
+        'https://www.youtube.com/@nguyenmanhduong1101',
+        'https://www.linkedin.com/in/nguyenmanhduong',
+      ],
     },
-    "numberOfEmployees": { "@type": "QuantitativeValue", "value": 500 },
-    "areaServed": ["TP. Hồ Chí Minh", "Tây Ninh", "An Giang"]
+    publisher: {
+      '@type': 'EducationalOrganization',
+      '@id': 'https://truongvietanh.com/#organization',
+      name: 'Hệ thống giáo dục Việt Anh',
+      logo: { '@type': 'ImageObject', url: 'https://truongvietanh.com/logo-crest-80.webp' },
+    },
+    about: [
+      { '@type': 'Thing', name: 'Plan Do Review' },
+      { '@type': 'Thing', name: 'Phương pháp giáo dục chủ động' },
+      { '@type': 'Thing', name: 'Siêu nhận thức và tự điều chỉnh' },
+    ],
+    citation: [
+      'https://highscope.org/wp-content/uploads/2024/07/perry-preschool-summary-40.pdf',
+      'https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/metacognition-and-self-regulation',
+    ],
+    audience: { '@type': 'Audience', audienceType: 'Phụ huynh học sinh K-12 tại Việt Nam' },
+    keywords:
+      'PDR, Plan Do Review, Plan Do Recall, phương pháp giáo dục Việt Anh, tự học, siêu nhận thức',
   },
   {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "PDR là viết tắt của gì?",
-        "acceptedAnswer": { "@type": "Answer", "text": "PDR là viết tắt của Play (Chơi) - Discover (Khám phá) - Reflect (Phản tư). Đây là phương pháp giáo dục độc quyền được Trường Việt Anh nghiên cứu và áp dụng từ năm 2011." }
-      },
-      {
-        "@type": "Question",
-        "name": "Phương pháp PDR khác gì với phương pháp truyền thống?",
-        "acceptedAnswer": { "@type": "Answer", "text": "PDR đặt học sinh làm trung tâm, học qua trải nghiệm thực tế thay vì nghe giảng thụ động. Học sinh chủ động chơi — khám phá — phản tư, phát triển tư duy phản biện và kỹ năng tự đánh giá." }
-      },
-      {
-        "@type": "Question",
-        "name": "PDR có phù hợp với trẻ mầm non không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Có. PDR được thiết kế linh hoạt cho mọi lứa tuổi. Ở bậc Mầm non, trẻ học chủ yếu qua vui chơi có mục đích (Play), khám phá giác quan và phản tư bằng hình ảnh, câu chuyện." }
-      },
-      {
-        "@type": "Question",
-        "name": "Phụ huynh có thể áp dụng PDR tại nhà không?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Hoàn toàn có thể. Trường Việt Anh cung cấp tài liệu hướng dẫn phụ huynh áp dụng 3 bước PDR tại nhà để hỗ trợ việc học của con." }
-      },
-      {
-        "@type": "Question",
-        "name": "Kết quả thực tế của phương pháp PDR ra sao?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Sau 15 năm áp dụng, 92% học sinh Trường Việt Anh đạt điểm trên trung bình toàn quốc, 85% phụ huynh ghi nhận con tự tin hơn rõ rệt, và 99% học sinh THPT đỗ đại học." }
-      },
-      {
-        "@type": "Question",
-        "name": "Làm sao để tham quan và trải nghiệm PDR tại trường?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Đăng ký trực tuyến tại trang web hoặc gọi 0916 961 409 để đặt lịch tham quan miễn phí. Phụ huynh sẽ được dự giờ tiết học PDR thực tế." }
-      },
-      { "@type": "Question", "name": "PDR khác gì so với phương pháp giáo dục truyền thống?", "acceptedAnswer": { "@type": "Answer", "text": "Truyền thống: thầy giảng — trò nghe — thi cử. PDR: trẻ chơi có mục đích (Play) — khám phá tự tìm câu trả lời (Discover) — phản tư rút bài học (Reflect). Kết quả: tư duy phản biện và tự chủ cao." } },
-      { "@type": "Question", "name": "Phụ huynh có thể áp dụng PDR tại nhà không?", "acceptedAnswer": { "@type": "Answer", "text": "Có. 3 nguyên tắc: cho con tự khám phá, đặt câu hỏi mở thay vì đưa đáp án, cuối ngày hỏi 'con học được gì?'. Trường tổ chức workshop PDR cho phụ huynh mỗi quý." } },
-      { "@type": "Question", "name": "Giáo viên được đào tạo PDR như thế nào?", "acceptedAnswer": { "@type": "Answer", "text": "Tất cả giáo viên trải qua chương trình đào tạo PDR chuyên sâu 3 tháng, sau đó training liên tục hàng tuần, dự giờ đồng nghiệp và đánh giá theo bộ tiêu chí PDR." } }
-    ]
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${PAGE_URL}#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
   },
   {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Trang chủ", "item": "https://truongvietanh.com" },
-      { "@type": "ListItem", "position": 2, "name": "Hệ thống PDR", "item": "https://truongvietanh.com/he-thong-pdr" }
-    ]
-  }
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    '@id': `${PAGE_URL}#howto`,
+    name: '5 bước làm PDR cùng con tại nhà',
+    description: 'Cách cha mẹ chạy nhịp Plan - Do - Review với con mỗi tối, mất khoảng 5 phút.',
+    totalTime: 'P30D',
+    step: [
+      {
+        '@type': 'HowToStep',
+        position: 1,
+        name: 'Hỏi trước khi con bắt đầu',
+        text: 'Hỏi tối nay con định làm gì trước. Một câu, ba mươi giây. Đây là bước Plan và là bước hầu hết gia đình bỏ qua.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 2,
+        name: 'Để con tự làm',
+        text: 'Bước Do là của con. Cha mẹ ngồi cùng phòng được, làm hộ thì không, kể cả khi thấy con làm chậm.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 3,
+        name: 'Cuối ngày hỏi bốn câu đúng thứ tự',
+        text: 'Con định làm gì? Thực tế đã xảy ra gì? Vì sao có khoảng cách? Ngày mai con giữ gì, đổi gì?',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 4,
+        name: 'Với con mẫu giáo, đổi thành lời kể',
+        text: 'Hỏi con kể mẹ nghe hôm nay con chơi gì, và nghe hết, không sửa lưng. Đó là bước Recall.',
+      },
+      {
+        '@type': 'HowToStep',
+        position: 5,
+        name: 'Không biến buổi nhìn lại thành buổi phê bình',
+        text: 'Nếu dùng câu trả lời của con để mắng, con sẽ học được rằng nói thật thì bị phạt, và PDR ở nhà kết thúc từ đó.',
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Hệ thống PDR', item: 'https://truongvietanh.com/he-thong-pdr' },
+    ],
+  },
 ];
 ---
 
 <BaseLayout
-  title={cmsPage?.title || "Hệ Thống PDR — Play Discover Reflect Tại Trường Việt Anh"}
-  description={cmsPage?.description || "Hệ thống PDR (Play – Discover – Reflect): phương pháp giáo dục Trường Việt Anh. Học sinh chơi, khám phá, phản tư từ Mầm non đến THPT."}
+  title={PAGE_TITLE}
+  description={PAGE_DESC}
   canonical="https://truongvietanh.com/he-thong-pdr"
-  ogImage="https://media.truongvietanh.com/images/extra-giao-vien-va-hoc-sinh-2.webp"
+  ogImage={PAGE_IMAGE}
   structuredData={structuredData}
 >
   <div class="gi-page">
@@ -99,26 +170,21 @@ const structuredData = [
             <span>Hệ thống PDR</span>
           </nav>
 
-          <h1 class="gi-h1">Hệ Thống PDR — Chơi, Khám Phá, Phản Tư</h1>
-          <p class="gi-subtitle">Phương pháp giáo dục độc quyền Trường Việt Anh</p>
-          <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
-
-          <div class="gi-hero-rating">
-            <span class="gi-stars" aria-label="4.9 trên 5 sao">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
-            <span class="gi-rating-text">4.9/5 (300+ đánh giá)</span>
-          </div>
+          <h1 class="gi-h1">PDR là gì? Hệ thống Plan – Do – Review tại Trường Việt Anh</h1>
+          <p class="gi-subtitle">Lên kế hoạch — Thực hiện — Nhìn lại. Ba bước học sinh Việt Anh lặp lại từ mầm non đến lớp 12.</p>
+          <p class="gi-last-updated">Cập nhật lần cuối: 28/08/2026</p>
 
           <div class="gi-trust-badges">
-            <div class="gi-badge"><strong>15+</strong> năm áp dụng</div>
-            <div class="gi-badge"><strong>8</strong> cơ sở</div>
-            <div class="gi-badge"><strong>3.000+</strong> học sinh</div>
-            <div class="gi-badge"><strong>92%</strong> trên TB quốc gia</div>
+            <div class="gi-badge"><strong>Từ {schoolFacts.foundedYear}</strong> hệ thống K-12</div>
+            <div class="gi-badge"><strong>{schoolFacts.campuses}</strong> cơ sở</div>
+            <div class="gi-badge"><strong>{schoolFacts.currentEnrollment}</strong> học sinh đang học</div>
+            <div class="gi-badge"><strong>Mầm non &rarr; Lớp 12</strong> cùng ba bước</div>
           </div>
         </div>
 
         <div class="gi-hero-right">
           <div class="gi-form-card">
-            <p class="gi-form-heading">Trải nghiệm phương pháp PDR miễn phí</p>
+            <p class="gi-form-heading">Đặt lịch dự một buổi PDR thật</p>
             <LeadFormTwoStepEmailFirst
               formId="pdr-form"
               funnelCode="pdr-pillar"
@@ -131,295 +197,133 @@ const structuredData = [
 
     <!-- Image after hero -->
     <div class="gi-container" style="margin-top:2rem;margin-bottom:1rem;">
-      <img src="https://media.truongvietanh.com/images/giao-vien-32.webp" alt="Hệ thống PDR tại Trường Việt Anh" loading="lazy" width="1200" height="auto" class="section-img" />
+      <img src="https://media.truongvietanh.com/images/giao-vien-32.webp" alt="Học sinh Trường Việt Anh trong giờ Plan đầu buổi" loading="lazy" width="1200" height="auto" class="section-img" />
     </div>
 
     <!-- ====== TOC SIDEBAR + CONTENT ====== -->
     <div class="gi-container gi-body">
-      <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4/2026</p>
       <!-- Sticky TOC sidebar -->
       <nav class="gi-toc" aria-label="Mục lục">
         <p class="gi-toc-title">Mục lục</p>
         <ol class="gi-toc-list">
-          <li><a href="#pdr-la-gi">PDR là gì?</a></li>
-          <li><a href="#play">Play — Học qua trải nghiệm</a></li>
-          <li><a href="#discover">Discover — Tư duy phản biện</a></li>
-          <li><a href="#reflect">Reflect — Kỹ năng tự đánh giá</a></li>
-          <li><a href="#cap-hoc">PDR theo từng cấp học</a></li>
-          <li><a href="#ket-qua">Kết quả thực tế</a></li>
+          <li><a href="#pdr-la-gi">PDR là viết tắt của gì?</a></li>
+          <li><a href="#vi-sao-recall">Vì sao mầm non gọi là Recall?</a></li>
+          <li><a href="#cap-hoc">Mỗi cấp làm bao lâu một lần?</a></li>
+          <li><a href="#co-so-khoa-hoc">Cơ sở khoa học</a></li>
+          <li><a href="#so-sanh">Khác gì Montessori &amp; Reggio Emilia?</a></li>
+          <li><a href="#vong-that">Một vòng PDR thật</a></li>
+          <li><a href="#tai-nha">Làm PDR ở nhà</a></li>
+          <li><a href="#sai-lam">Sai lầm thường gặp</a></li>
           <li><a href="#faq">Câu hỏi thường gặp</a></li>
         </ol>
-        <a href="#pdr-form-pdr-pillar" class="gi-toc-cta">Đăng ký trải nghiệm</a>
+        <a href="#pdr-form-pdr-pillar" class="gi-toc-cta">Đặt lịch tham quan</a>
       </nav>
 
       <!-- Main content -->
       <article class="gi-main">
 
-        <!-- Section 1: PDR là gì? -->
+        <!-- Direct answer block -->
+        <p class="pdr-answer">
+          PDR là ba bước học sinh Việt Anh lặp lại mỗi ngày: <strong>Plan</strong> (tự lên kế hoạch) —
+          <strong>Do</strong> (tự thực hiện) — <strong>Review</strong> (tự nhìn lại). Ở mầm non, bước thứ ba là
+          <strong>Recall</strong> — trẻ kể lại việc mình vừa làm. Mục đích không phải dạy thêm kiến thức, mà dạy
+          đứa trẻ cách tự điều khiển việc học của chính nó.
+        </p>
+
+        <section class="gi-section">
+          <p>Có một câu hỏi tôi hay nhận được từ phụ huynh, thường vào lúc con đã lên lớp 8, lớp 9: "Sao con tôi học thì vẫn học, mà không tự giác được?"</p>
+          <p>Câu trả lời thường không nằm ở đứa trẻ. Nằm ở chỗ suốt tám, chín năm đi học, chưa ai từng để con <strong>tự quyết định hôm nay mình sẽ làm gì</strong>, rồi <strong>tự nhìn lại xem mình đã làm được đến đâu</strong>. Con luôn được giao việc và được chấm điểm. Hai việc đó không tạo ra tính tự giác — chúng tạo ra sự chờ đợi được giao việc tiếp.</p>
+          <p>PDR là cách chúng tôi trả lại hai quyền đó cho học sinh, mỗi ngày, từ năm ba tuổi.</p>
+          <p>Trang này mô tả đúng cách PDR đang được vận hành tại Việt Anh — kể cả những chỗ chúng tôi làm chưa tốt.</p>
+        </section>
+
+        <!-- Section 1 -->
         <section id="pdr-la-gi" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0018 8 6 6 0 006 8c0 1 .23 2.23 1.5 3.5A4.61 4.61 0 018.91 14"/></svg></span>PDR là gì? Tại sao Trường Việt Anh chọn phương pháp này?</h2>
-          <p>PDR là viết tắt của <strong>Play (Chơi) — Discover (Khám phá) — Reflect (Phản tư)</strong>. Đây là phương pháp giáo dục do đội ngũ chuyên gia Trường Việt Anh nghiên cứu và phát triển từ năm 2011, dựa trên nền tảng lý thuyết học tập trải nghiệm (Experiential Learning) của David Kolb và triết lý "Learning by Doing" của John Dewey. Phương pháp này phù hợp với các nghiên cứu về giáo dục trải nghiệm từ <a href="https://www.gse.harvard.edu" target="_blank" rel="noopener">Harvard Graduate School of Education</a> và khuyến nghị của <a href="https://www.oecd.org/education/" target="_blank" rel="noopener">OECD</a> về giáo dục lấy học sinh làm trung tâm.</p>
-          <p>Khác với giáo dục truyền thống — nơi giáo viên giảng và học sinh ghi chép thụ động — hệ thống PDR đặt <strong>học sinh làm trung tâm</strong>. Mỗi bài học được thiết kế qua 3 giai đoạn rõ ràng: học sinh bắt đầu bằng hoạt động vui chơi có mục đích (Play), tiến đến nghiên cứu và khám phá sâu hơn (Discover), rồi kết thúc bằng việc phản tư và tự đánh giá quá trình học của mình (Reflect).</p>
-          <p>Sau hơn 15 năm áp dụng trên 8 cơ sở với hơn 3.000 học sinh mỗi năm, PDR đã chứng minh hiệu quả rõ ràng trong việc phát triển tư duy phản biện, khả năng tự học và sự tự tin cho học sinh ở mọi cấp học — từ Mầm non đến THPT.</p>
+          <h2>PDR là viết tắt của gì?</h2>
+          <p><strong>PDR là Plan – Do – Review: Lên kế hoạch – Thực hiện – Nhìn lại.</strong> Đúng ba bước, không hơn.</p>
 
           <div class="gi-pdr-cycle">
-            <h3>Chu trình PDR trong mỗi bài học</h3>
             <div class="gi-pdr-steps">
               <div class="gi-pdr-step gi-pdr-play">
                 <span class="gi-pdr-number">1</span>
-                <strong>Play (Chơi)</strong>
-                <p>Hoạt động trải nghiệm, trò chơi, mô phỏng — khơi gợi hứng thú và kích thích tò mò</p>
+                <strong>Plan (Lên kế hoạch)</strong>
+                <p>Trước khi làm, học sinh nói ra hoặc viết ra mình định làm gì, làm thế nào, mong đợi kết quả ra sao. Bước này ngắn, nhưng nếu bỏ thì bước thứ ba mất điểm neo để so sánh.</p>
               </div>
               <div class="gi-pdr-arrow" aria-hidden="true">&#10140;</div>
               <div class="gi-pdr-step gi-pdr-discover">
                 <span class="gi-pdr-number">2</span>
-                <strong>Discover (Khám phá)</strong>
-                <p>Nghiên cứu, thí nghiệm, làm dự án — xây dựng kiến thức qua trải nghiệm thực tế</p>
+                <strong>Do (Thực hiện)</strong>
+                <p>Học sinh làm thật, tự xoay xở với vật liệu, thời gian và bạn cùng nhóm. Giáo viên quan sát và đặt câu hỏi, không làm thay.</p>
               </div>
               <div class="gi-pdr-arrow" aria-hidden="true">&#10140;</div>
               <div class="gi-pdr-step gi-pdr-reflect">
                 <span class="gi-pdr-number">3</span>
-                <strong>Reflect (Phản tư)</strong>
-                <p>Nhìn lại, tự đánh giá, chia sẻ bài học — phát triển nhận thức sâu và tư duy siêu nhận thức</p>
+                <strong>Review (Nhìn lại)</strong>
+                <p>Học sinh đối chiếu việc đã làm với kế hoạch đã đặt, gọi tên chỗ chênh lệch, giải thích vì sao, rồi chọn <strong>một</strong> điều sẽ làm khác đi.</p>
               </div>
             </div>
           </div>
 
-          <div class="gi-evidence-bar">
-            <div class="gi-evidence-item">
-              <strong>2011</strong>
-              <span>Năm bắt đầu PDR</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>3</strong>
-              <span>Giai đoạn học</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>100%</strong>
-              <span>Bài học áp dụng</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>9</strong>
-              <span>Cơ sở triển khai</span>
-            </div>
-          </div>
+          <p>Ở mầm non, bước thứ ba được gọi là <strong>Recall (Kể lại)</strong>. Tôi sẽ giải thích ngay sau đây vì sao.</p>
+
+          <p>Một điều cần nói thẳng: <strong>PDR không phải phát minh của Trường Việt Anh.</strong> Nhịp plan–do–review là cấu trúc lõi trong mô hình giáo dục sớm của <a href="https://highscope.org/" target="_blank" rel="noopener">HighScope Educational Research Foundation</a> (Ypsilanti, Michigan, Hoa Kỳ), nơi ba phân đoạn của một ngày học được gọi đúng là <em>planning time – work time – recall time</em>. Việt Anh là trường <strong>HighScope inspired</strong> — chúng tôi lấy cảm hứng từ nhịp này, đưa vào chương trình quốc gia GDPT 2018 và mở rộng nó lên tiểu học, THCS và THPT. Trường không được HighScope cấp phép, chứng nhận hay nhượng quyền.</p>
         </section>
 
-        <!-- Section 2: Play -->
-        <section id="play" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></span>Play (Chơi) — Học thông qua trải nghiệm vui vẻ</h2>
-          <p>Giai đoạn <strong>Play</strong> là bước khởi đầu của mỗi bài học trong hệ thống PDR. Tại đây, học sinh được tham gia các hoạt động trải nghiệm — trò chơi, mô phỏng tình huống, đóng vai, xây dựng mô hình — nhằm khơi gợi sự tò mò và tạo động lực học tập tự nhiên.</p>
-          <p>Nguyên tắc cốt lõi của Play không phải là "chơi cho vui" mà là <strong>"chơi có mục đích"</strong> (purposeful play). Mỗi hoạt động đều được thiết kế với mục tiêu học tập rõ ràng, nhưng được trình bày dưới dạng trải nghiệm thú vị để học sinh không cảm thấy bị ép buộc.</p>
+        <!-- Section 2 -->
+        <section id="vi-sao-recall" class="gi-section">
+          <h2>Vì sao mầm non gọi là Recall mà không phải Review?</h2>
+          <p><strong>Vì trẻ ba đến năm tuổi chưa đủ năng lực để tự đánh giá mình theo một chuẩn — nhưng đã thừa sức kể lại điều mình vừa làm.</strong></p>
+          <p><em>Review</em> đòi hỏi so sánh: kế hoạch với kết quả, mong đợi với thực tế. Đó là thao tác siêu nhận thức, cần ngôn ngữ và cần khả năng giữ hai hình ảnh trong đầu cùng lúc. Ép một đứa trẻ mẫu giáo tự đánh giá sẽ chỉ nhận được câu trả lời làm vừa lòng cô.</p>
+          <p><em>Recall</em> thì khác. Trẻ <strong>tái hiện lại trải nghiệm</strong>: kể bằng lời, vẽ lại, hoặc đơn giản là dắt cô ra góc xây dựng chỉ vào công trình của mình. Việc đó vẫn rèn đúng cơ bắp — nhớ lại, sắp xếp, diễn đạt — nhưng ở đúng mức tuổi.</p>
+          <p>Đến tiểu học, khi con đã đọc được kế hoạch mình viết sáng nay, bước thứ ba mới thành <strong>Review</strong> đúng nghĩa.</p>
 
-          <img src="https://media.truongvietanh.com/images/vui-ve-03.webp" alt="Học sinh vui chơi trong giờ Play tại Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
-
-          <div class="gi-leader-grid">
-            <div class="gi-leader-card">
-              <h4>Ví dụ hoạt động Play theo cấp học</h4>
-              <ul>
-                <li><strong>Mầm non:</strong> Xây thành phố bằng khối gỗ, đóng vai bác sĩ — tiệm tạp hoá, vẽ tranh tự do theo chủ đề</li>
-                <li><strong>Tiểu học:</strong> Trò chơi toán học bằng thẻ bài, thí nghiệm khoa học đơn giản, sáng tác truyện ngắn minh hoạ</li>
-                <li><strong>THCS:</strong> Mô phỏng phiên toà, thiết kế sản phẩm Startup, tranh biện theo đội</li>
-                <li><strong>THPT:</strong> Hackathon giải quyết vấn đề xã hội, mô phỏng Liên Hợp Quốc (Model UN), dự án kinh doanh thực tế</li>
-              </ul>
-            </div>
-            <div class="gi-leader-card">
-              <h4>Lợi ích khoa học của "học qua chơi"</h4>
-              <ul>
-                <li>Kích hoạt dopamine — tăng khả năng ghi nhớ dài hạn lên 40%</li>
-                <li>Giảm cortisol (hormone căng thẳng) — học sinh thoải mái và sáng tạo hơn</li>
-                <li>Phát triển kỹ năng xã hội qua tương tác nhóm tự nhiên</li>
-                <li>Xây dựng nội lực tự thân (intrinsic motivation) thay vì phụ thuộc điểm số</li>
-                <li>Rèn luyện khả năng ra quyết định trong môi trường an toàn</li>
-              </ul>
-            </div>
-          </div>
-
-          <p>Tại Trường Việt Anh, mỗi tuần giáo viên dành tối thiểu <strong>30% thời lượng</strong> cho các hoạt động Play. Điều này không có nghĩa là học sinh "chơi suốt ngày" — mà mỗi phút chơi đều là cơ hội để phát triển kiến thức, kỹ năng và thái độ theo mục tiêu chương trình.</p>
-
-          <img src="https://media.truongvietanh.com/images/thuyet-trinh-14.webp" alt="Học sinh phát triển qua hệ thống PDR" loading="lazy" width="1200" height="auto" class="section-img" />
+          <img src="https://media.truongvietanh.com/images/vui-ve-03.webp" alt="Trẻ mầm non Việt Anh trong giờ Recall cuối buổi" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
         </section>
 
-        <!-- Section 3: Discover -->
-        <section id="discover" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></span>Discover (Khám phá) — Tư duy phản biện từ thực tế</h2>
-          <p>Giai đoạn <strong>Discover</strong> là lúc học sinh chuyển từ trải nghiệm sang nghiên cứu có chiều sâu. Sau khi đã khơi gợi sự tò mò ở bước Play, học sinh được hướng dẫn đặt câu hỏi, tìm kiếm thông tin, thực hiện thí nghiệm và xây dựng kiến thức của riêng mình.</p>
-          <p>Discover không phải là "giáo viên giảng bài" theo cách truyền thống. Thay vào đó, giáo viên đóng vai trò <strong>người hướng dẫn</strong> (facilitator) — đặt câu hỏi mở, cung cấp tài liệu tham khảo, và tạo điều kiện để học sinh tự tìm ra câu trả lời.</p>
-
-          <div class="gi-comparison-box">
-            <h3>So sánh: Phương pháp truyền thống vs PDR — Discover</h3>
-            <div class="gi-table-responsive">
-              <table class="gi-table">
-                <thead>
-                  <tr>
-                    <th>Tiêu chí</th>
-                    <th>Truyền thống</th>
-                    <th>PDR — Discover</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>Vai trò giáo viên</td>
-                    <td>Giảng bài, truyền đạt kiến thức</td>
-                    <td>Hướng dẫn, đặt câu hỏi, hỗ trợ</td>
-                  </tr>
-                  <tr>
-                    <td>Vai trò học sinh</td>
-                    <td>Lắng nghe, ghi chép, thuộc lòng</td>
-                    <td>Tìm tòi, thí nghiệm, xây dựng kiến thức</td>
-                  </tr>
-                  <tr>
-                    <td>Nguồn kiến thức</td>
-                    <td>Sách giáo khoa duy nhất</td>
-                    <td>Đa nguồn: sách, internet, thực tế, chuyên gia</td>
-                  </tr>
-                  <tr>
-                    <td>Kỹ năng phát triển</td>
-                    <td>Ghi nhớ, tái hiện</td>
-                    <td>Phân tích, tổng hợp, đánh giá</td>
-                  </tr>
-                  <tr>
-                    <td>Đánh giá</td>
-                    <td>Bài kiểm tra, điểm số</td>
-                    <td>Sản phẩm dự án, thuyết trình, portfolio</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="gi-values-grid">
-            <h3>5 hình thức Discover phổ biến tại Trường Việt Anh</h3>
-            <div class="gi-values-items">
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#128300;</span>
-                <strong>Thí nghiệm</strong>
-                <p>Khoa học, hoá học, vật lý thực hành</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#128218;</span>
-                <strong>Nghiên cứu</strong>
-                <p>Tìm tài liệu, phân tích, tổng hợp</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#128187;</span>
-                <strong>Dự án</strong>
-                <p>PBL — Project-Based Learning</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#127891;</span>
-                <strong>Thực địa</strong>
-                <p>Tham quan, phỏng vấn, khảo sát</p>
-              </div>
-              <div class="gi-value-card">
-                <span class="gi-value-icon">&#129309;</span>
-                <strong>Hợp tác</strong>
-                <p>Nhóm liên cấp, mentoring đồng trang lứa</p>
-              </div>
-            </div>
-          </div>
-
-          <p>Kết quả của giai đoạn Discover là học sinh tự xây dựng được kiến thức có ý nghĩa — không phải kiến thức "học vẹt" để thi rồi quên, mà là hiểu biết sâu sắc gắn liền với trải nghiệm thực tế, có thể vận dụng trong đời sống.</p>
-        </section>
-
-        <!-- Section 4: Reflect -->
-        <section id="reflect" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg></span>Reflect (Phản tư) — Kỹ năng tự đánh giá và tư duy siêu nhận thức</h2>
-          <p>Giai đoạn <strong>Reflect</strong> là bước cuối cùng nhưng quan trọng nhất trong chu trình PDR. Đây là lúc học sinh dừng lại, nhìn lại quá trình học, tự đánh giá những gì đã làm tốt, những gì cần cải thiện, và rút ra bài học cho lần sau.</p>
-          <p>Phản tư (metacognition) là kỹ năng mà giáo dục truyền thống Việt Nam gần như bỏ qua hoàn toàn. Trong khi đó, nghiên cứu giáo dục quốc tế chỉ ra rằng <strong>học sinh biết phản tư có kết quả học tập cao hơn 20-25%</strong> so với học sinh chỉ học thụ động, bởi vì phản tư giúp não bộ chuyển kiến thức từ bộ nhớ ngắn hạn sang dài hạn.</p>
-
-          <img src="https://media.truongvietanh.com/images/thuyet-trinh-08.webp" alt="Học sinh thuyết trình trong giờ Reflect tại Trường Việt Anh" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
-
-          <div class="gi-leader-grid">
-            <div class="gi-leader-card">
-              <h4>Công cụ phản tư tại Trường Việt Anh</h4>
-              <ol>
-                <li><strong>Nhật ký học tập (Learning Journal):</strong> Mỗi học sinh ghi lại 3 điều đã học, 1 điều chưa hiểu, và 1 mục tiêu cho ngày mai</li>
-                <li><strong>Phản hồi đồng trang lứa (Peer Feedback):</strong> Học sinh nhận xét và góp ý lẫn nhau theo rubric có hướng dẫn</li>
-                <li><strong>Portfolio học tập:</strong> Tuyển tập sản phẩm tốt nhất qua từng học kỳ — thể hiện quá trình tiến bộ</li>
-                <li><strong>Vòng tròn chia sẻ (Circle Time):</strong> Chia sẻ cảm xúc, bài học trước lớp trong không gian an toàn</li>
-                <li><strong>Tự chấm điểm (Self-Assessment):</strong> Học sinh tự đánh giá theo tiêu chí rõ ràng trước khi nhận phản hồi từ giáo viên</li>
-              </ol>
-            </div>
-            <div class="gi-leader-card">
-              <h4>Reflect phát triển những kỹ năng gì?</h4>
-              <ul>
-                <li><strong>Tư duy siêu nhận thức:</strong> Biết mình biết gì, chưa biết gì, cần làm gì tiếp theo</li>
-                <li><strong>Kỹ năng tự học:</strong> Chủ động lập kế hoạch và điều chỉnh cách học</li>
-                <li><strong>Trí tuệ cảm xúc:</strong> Nhận diện và quản lý cảm xúc trong quá trình học</li>
-                <li><strong>Giao tiếp trung thực:</strong> Dám nói thật về điểm yếu và đón nhận góp ý</li>
-                <li><strong>Tư duy phát triển (Growth Mindset):</strong> Xem sai lầm là cơ hội học hỏi, không phải thất bại</li>
-              </ul>
-            </div>
-          </div>
-
-          <p>Ở Trường Việt Anh, phản tư không chỉ dành cho học sinh. Giáo viên cũng thực hành phản tư sau mỗi tiết dạy, cùng nhau chia sẻ trong các buổi họp chuyên môn hàng tuần để liên tục cải tiến chất lượng giảng dạy.</p>
-        </section>
-
-        <!-- Section 5: PDR theo cấp học -->
+        <!-- Section 3 -->
         <section id="cap-hoc" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>PDR được áp dụng ở cấp học nào? Ví dụ cụ thể</h2>
-          <p>Hệ thống PDR được triển khai <strong>xuyên suốt tất cả cấp học</strong> tại Trường Việt Anh — từ Mầm non (2 tuổi) đến THPT (18 tuổi). Tuy nhiên, cách áp dụng được điều chỉnh linh hoạt theo lứa tuổi và mức độ phát triển nhận thức của học sinh.</p>
+          <h2>PDR ở mỗi cấp học làm bao lâu một lần?</h2>
 
           <div class="gi-table-responsive">
             <table class="gi-table gi-table-programs">
               <thead>
                 <tr>
                   <th>Cấp học</th>
-                  <th>Play (Chơi)</th>
-                  <th>Discover (Khám phá)</th>
-                  <th>Reflect (Phản tư)</th>
+                  <th>Tên đúng của ba bước</th>
+                  <th>Bước thứ ba con làm gì</th>
+                  <th>Nhịp</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td><strong>Mầm non</strong></td>
-                  <td>Trò chơi giác quan, đóng vai, xây dựng khối gỗ</td>
-                  <td>Khám phá thiên nhiên, quan sát côn trùng, thí nghiệm nước-cát</td>
-                  <td>Vẽ lại điều đã học, kể cho bạn nghe, Circle Time cuối ngày</td>
+                  <td>Plan – Do – <strong>Recall</strong></td>
+                  <td>Trẻ <strong>kể lại</strong> vừa chơi gì, với ai, bằng vật liệu nào — bằng lời, bằng tranh, hoặc dẫn cô ra tận nơi</td>
+                  <td><strong>Hằng ngày</strong></td>
                 </tr>
                 <tr>
                   <td><strong>Tiểu học</strong></td>
-                  <td>Trò chơi toán, sáng tạo SteamE, đóng kịch lịch sử</td>
-                  <td>Dự án PBL hàng tháng, thí nghiệm khoa học, nghiên cứu nhóm</td>
-                  <td>Nhật ký học tập, peer feedback, portfolio học kỳ</td>
+                  <td>Plan – Do – <strong>Review</strong></td>
+                  <td>Con <strong>đối chiếu</strong> việc đã làm với kế hoạch buổi sáng, ghi lại, chọn một điều làm khác đi</td>
+                  <td><strong>Hằng ngày</strong></td>
                 </tr>
                 <tr>
                   <td><strong>THCS</strong></td>
-                  <td>Mô phỏng tình huống, debate, thiết kế sản phẩm</td>
-                  <td>Nghiên cứu đa nguồn, phỏng vấn chuyên gia, dự án cộng đồng</td>
-                  <td>Tự chấm điểm theo rubric, thuyết trình phản tư, blog cá nhân</td>
+                  <td>Plan – Do – <strong>Review</strong></td>
+                  <td>Gắn với mục tiêu 4 lĩnh vực phát triển của trường: Kiến thức, Kỹ năng lãnh đạo, Phẩm chất, Sức khoẻ; làm trong buổi <strong>"đôi bạn cùng tiến"</strong>, hai bạn nghe nhau và cùng cam kết</td>
+                  <td><strong>Hằng tuần</strong></td>
                 </tr>
                 <tr>
                   <td><strong>THPT</strong></td>
-                  <td>Hackathon, Model UN, dự án khởi nghiệp, case study</td>
-                  <td>Nghiên cứu khoa học, thực tập doanh nghiệp, dự án liên ngành</td>
-                  <td>Portfolio tốt nghiệp, luận văn phản tư, mentoring đàn em</td>
+                  <td>Plan – Do – <strong>Review</strong></td>
+                  <td>Gắn với mục tiêu 4 lĩnh vực phát triển của trường: Kiến thức, Kỹ năng lãnh đạo, Phẩm chất, Sức khoẻ; làm trong buổi <strong>"đôi bạn cùng tiến"</strong>, hai bạn nghe nhau và cùng cam kết</td>
+                  <td><strong>Hằng tuần</strong></td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <div class="gi-roadmap">
-            <h3>Ví dụ một bài học PDR cụ thể — Môn Khoa học Lớp 4</h3>
-            <div class="gi-roadmap-grid">
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">PLAY</div>
-                <strong>Trò chơi "Phân loại rác"</strong>
-                <p>Học sinh chia nhóm, thi phân loại 50 vật phẩm thành rác hữu cơ, tái chế, nguy hại trong 5 phút. Nhóm nào đúng nhiều nhất thắng.</p>
-              </div>
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">DISCOVER</div>
-                <strong>Nghiên cứu "Hành trình của rác"</strong>
-                <p>Các nhóm tìm hiểu: rác đi đâu sau khi bỏ vào thùng? Xem video, đọc tài liệu, vẽ sơ đồ hành trình rác từ nhà đến bãi chôn lấp.</p>
-              </div>
-              <div class="gi-roadmap-item">
-                <div class="gi-roadmap-badge">REFLECT</div>
-                <strong>Nhật ký: "Em sẽ thay đổi gì?"</strong>
-                <p>Mỗi em viết 3 điều đã học, 1 điều bất ngờ, và 1 hành động cụ thể em sẽ làm tại nhà để giảm rác thải. Chia sẻ trước lớp.</p>
-              </div>
-            </div>
-          </div>
+          <p>Ba điều cần lưu ý về bảng này. Thứ nhất, PDR <strong>luôn là ba bước</strong> — không có bước thứ tư nào tên "Fix" hay "Reflect". Thứ hai, nhịp thưa dần khi con lớn lên là có chủ đích: trẻ nhỏ cần vòng lặp ngắn để thấy hệ quả ngay, học sinh lớn cần khoảng cách đủ dài để có gì đó thực sự đáng nhìn lại. Thứ ba, ở Việt Anh, PDR nằm <strong>trong</strong> giờ học chính khóa, không phải hoạt động thêm giờ.</p>
 
           <div class="gi-level-cards">
             <a href="/mam-non" class="gi-level-link">PDR tại Mầm non &rarr;</a>
@@ -429,167 +333,174 @@ const structuredData = [
           </div>
         </section>
 
-        <!-- Section 6: Kết quả thực tế -->
-        <section id="ket-qua" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></span>Kết quả thực tế từ phương pháp PDR sau 15 năm</h2>
-          <p>Trường Việt Anh không chỉ nói về lý thuyết — mà đo lường và công bố kết quả cụ thể. Dưới đây là những con số và nhận xét thực tế từ phụ huynh, học sinh và giáo viên sau hơn 15 năm áp dụng hệ thống PDR.</p>
+        <!-- Section 4 -->
+        <section id="co-so-khoa-hoc" class="gi-section">
+          <h2>PDR có cơ sở khoa học nào không?</h2>
+          <p><strong>Có, và bằng chứng mạnh nhất không đến từ điểm số mà đến từ những gì xảy ra hàng chục năm sau.</strong></p>
 
-          <div class="gi-evidence-bar">
-            <div class="gi-evidence-item">
-              <strong>92%</strong>
-              <span>Trên TB quốc gia</span>
+          <div class="gi-leader-grid">
+            <div class="gi-leader-card">
+              <h4>Nghiên cứu Perry Preschool (Schweinhart và cộng sự, 2005)</h4>
+              <p>Đây là nghiên cứu theo dõi dài nhất về chương trình mầm non vận hành theo nhịp plan–do–review của HighScope: 123 trẻ có hoàn cảnh khó khăn tại Michigan, chia ngẫu nhiên thành nhóm học chương trình (58 trẻ) và nhóm không học (65 trẻ), theo dõi đến năm 40 tuổi.</p>
+              <ul>
+                <li><strong>65%</strong> nhóm có học tốt nghiệp trung học phổ thông, so với <strong>45%</strong> nhóm không học</li>
+                <li>Thu nhập trung vị năm 40 tuổi: <strong>20.800 USD</strong> so với <strong>15.300 USD</strong></li>
+                <li>Mỗi 1 USD đầu tư mang lại <strong>16,14 USD</strong> giá trị hoàn trả trong cả cuộc đời</li>
+              </ul>
             </div>
-            <div class="gi-evidence-item">
-              <strong>85%</strong>
-              <span>PH nhận thấy con tự tin hơn</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>99%</strong>
-              <span>Đỗ đại học</span>
-            </div>
-            <div class="gi-evidence-item">
-              <strong>78%</strong>
-              <span>HS tự đánh giá yêu thích việc học</span>
+            <div class="gi-leader-card">
+              <h4>Tổng hợp của Education Endowment Foundation (Anh)</h4>
+              <p>EEF xếp nhóm can thiệp "siêu nhận thức và tự điều chỉnh" — đúng thứ mà bước Review rèn — vào loại hiệu quả cao nhất trên mỗi đồng chi phí: <strong>+8 tháng tiến bộ học tập trong một năm học</strong>, dựa trên <strong>355 nghiên cứu</strong>, với chi phí triển khai được đánh giá là rất thấp.</p>
+              <p>EEF cũng cảnh báo đúng điều tôi lo: hiệu quả này <strong>rất khó đạt được nếu giáo viên chưa được huấn luyện tử tế</strong>. Đó là lý do phần đầu tư lớn nhất của chúng tôi cho PDR nằm ở đào tạo giáo viên, không nằm ở giáo cụ.</p>
             </div>
           </div>
 
-          <div class="gi-testimonials">
-            <blockquote class="gi-testimonial">
-              <p>"Con gái tôi từng rất sợ môn Toán. Nhưng sau khi học theo phương pháp PDR, cháu bảo: Con thích Toán vì được chơi trò chơi và tự khám phá. Bây giờ cháu tự giác làm bài mà không cần nhắc."</p>
-              <cite>— Chị Phạm Thị Hoa, phụ huynh lớp 3 cơ sở Tân Phú</cite>
-            </blockquote>
-            <blockquote class="gi-testimonial">
-              <p>"Điều tôi ấn tượng nhất là con biết tự nhìn lại lỗi sai. Thay vì khóc khi bị sai, con ghi vào nhật ký và nói: Con sẽ thử cách khác. Growth mindset thật sự, không phải lý thuyết suông."</p>
-              <cite>— Anh Nguyễn Minh Tuấn, phụ huynh lớp 7 cơ sở Bình Tân</cite>
-            </blockquote>
-            <blockquote class="gi-testimonial">
-              <p>"Từ khi con học ở Việt Anh, mỗi tối về nhà con kể vanh vách những gì đã học — vì con tự khám phá chứ không phải học thuộc. Kiến thức gắn với trải nghiệm nên nhớ rất lâu."</p>
-              <cite>— Chị Trần Thu Hằng, phụ huynh lớp 5 cơ sở Gò Vấp</cite>
-            </blockquote>
-            <blockquote class="gi-testimonial">
-              <p>"Con trai tôi tốt nghiệp Trường Việt Anh và hiện đang học bổng tại Úc. Cháu nói rằng kỹ năng phản tư và tự học được rèn từ PDR giúp cháu thích nghi nhanh hơn bạn bè quốc tế."</p>
-              <cite>— Anh Lê Quốc Bảo, phụ huynh cựu học sinh cơ sở Bình Chánh</cite>
-            </blockquote>
-          </div>
+          <p><strong>Nền tảng lý thuyết.</strong> Nhịp này nối thẳng vào truyền thống <em>learning by doing</em> của <strong>John Dewey</strong> và vòng học tập trải nghiệm của <strong>David Kolb</strong>: trải nghiệm mà không có bước nhìn lại thì chỉ là hoạt động, chưa thành việc học.</p>
+
+          <p>Trường đang đo tiến bộ học sinh trên <strong>4 lĩnh vực</strong> — Kiến thức, Kỹ năng lãnh đạo, Phẩm chất, Sức khỏe — <strong>ba lần mỗi năm học</strong>.</p>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="so-sanh" class="gi-section">
+          <h2>PDR khác gì Montessori, Reggio Emilia và lớp học truyền thống?</h2>
+          <p><strong>Khác ở chỗ ai là người ra quyết định, và ai là người đánh giá.</strong> Bảng dưới đây so theo <strong>mô hình</strong>, không so theo trường cụ thể — và tôi ghi nhận điểm mạnh thật của từng mô hình.</p>
 
           <div class="gi-comparison-box">
-            <h3>So sánh: Kết quả học sinh PDR vs Phương pháp truyền thống</h3>
             <div class="gi-table-responsive">
               <table class="gi-table">
                 <thead>
                   <tr>
                     <th>Tiêu chí</th>
-                    <th>Trường truyền thống</th>
-                    <th>Trường Việt Anh (PDR)</th>
+                    <th>Lớp học truyền thống</th>
+                    <th>Montessori</th>
+                    <th>Reggio Emilia</th>
+                    <th>PDR tại Việt Anh</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td>Khả năng tự học</td>
-                    <td>Phụ thuộc giáo viên, gia sư</td>
-                    <td>Tự lập kế hoạch, tự điều chỉnh</td>
+                    <td>Ai quyết định hôm nay học gì</td>
+                    <td>Giáo viên</td>
+                    <td>Trẻ chọn trong bộ giáo cụ đã thiết kế sẵn</td>
+                    <td>Nảy sinh từ dự án chung của nhóm</td>
+                    <td>Học sinh tự đặt kế hoạch, trong khung mục tiêu môn học</td>
                   </tr>
                   <tr>
-                    <td>Tư duy phản biện</td>
-                    <td>Hạn chế — chấp nhận thông tin một chiều</td>
-                    <td>Đặt câu hỏi, phân tích đa chiều</td>
+                    <td>Ai đánh giá kết quả</td>
+                    <td>Giáo viên chấm điểm</td>
+                    <td>Giáo cụ tự sửa lỗi cho trẻ</td>
+                    <td>Ghi chép và trưng bày quá trình</td>
+                    <td>Học sinh tự đối chiếu trước, giáo viên phản hồi sau</td>
                   </tr>
                   <tr>
-                    <td>Động lực học</td>
-                    <td>Ngoại lực: điểm số, khen thưởng, phạt</td>
-                    <td>Nội lực: hứng thú, tò mò, mục tiêu cá nhân</td>
+                    <td>Điểm mạnh nổi bật</td>
+                    <td>Bao phủ kiến thức nhanh, chuẩn hóa tốt</td>
+                    <td>Kỷ luật tự thân, sự tập trung sâu</td>
+                    <td>Sáng tạo, năng lực biểu đạt đa dạng</td>
+                    <td>Thói quen tự điều chỉnh, chuyển được lên cấp trên</td>
                   </tr>
                   <tr>
-                    <td>Kỹ năng trình bày</td>
-                    <td>Ít cơ hội thuyết trình</td>
-                    <td>Thuyết trình, phản biện hàng tuần</td>
+                    <td>Giới hạn cần thừa nhận</td>
+                    <td>Ít cơ hội tự quyết</td>
+                    <td>Chủ yếu mạnh ở lứa tuổi nhỏ</td>
+                    <td>Khó chuẩn hóa để đo tiến bộ</td>
+                    <td>Phụ thuộc nặng vào chất lượng câu hỏi của giáo viên</td>
                   </tr>
                   <tr>
-                    <td>Ghi nhớ kiến thức</td>
-                    <td>Ngắn hạn — quên sau khi thi</td>
-                    <td>Dài hạn — gắn với trải nghiệm thực</td>
+                    <td>Áp dụng liền mạch tới THPT</td>
+                    <td>Có</td>
+                    <td>Hiếm</td>
+                    <td>Hiếm</td>
+                    <td>Có — cùng ba bước từ mầm non đến lớp 12</td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
+
+          <p><strong>Phù hợp với ai.</strong> Nếu gia đình muốn con được rèn sự tập trung sâu trong những năm đầu đời, Montessori là một lựa chọn tốt và tôi nói điều đó một cách thành thật. Nếu điều anh chị lo là <strong>con lớn lên mà vẫn phải có người nhắc mới học</strong>, thì thứ cần tìm là một nhịp tự quản lý chạy liên tục qua tất cả các cấp — đó là chỗ PDR có lợi thế, vì đúng ba bước ấy theo con từ mẫu giáo đến lớp 12.</p>
         </section>
 
-        <!-- Section 7: FAQ -->
-        <section id="faq" class="gi-section">
-          <h2><span class="si"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></span>Câu hỏi thường gặp về hệ thống PDR</h2>
-          <p>Tổng hợp những thắc mắc phổ biến nhất từ phụ huynh khi tìm hiểu về phương pháp PDR tại Trường Việt Anh.</p>
+        <!-- Section 6 -->
+        <section id="vong-that" class="gi-section">
+          <h2>Một vòng PDR thật ở Việt Anh trông ra sao?</h2>
 
+          <p><strong>Ở mầm non</strong>, đầu giờ chơi, cô đi một vòng hỏi từng bé: "Hôm nay con định chơi ở góc nào?" Một bé chỉ vào góc xây dựng: "Con xây cái cầu." Bé làm suốt hai mươi phút. Đến giờ ngồi vòng tròn cuối buổi, cô hỏi: "Con kể cô nghe con vừa làm gì." Bé dắt cô ra tận nơi, chỉ chỗ cái cầu bị gãy ở giữa và nói: "Chỗ này con để ít khối quá." Đó là một vòng Plan – Do – Recall trọn vẹn. Không ai chấm điểm cái cầu.</p>
+
+          <p><strong>Ở tiểu học</strong>, con viết ba dòng vào nhật ký học tập đầu buổi: hôm nay định làm gì, khó ở đâu, cần ai giúp. Cuối buổi con quay lại đúng ba dòng đó và viết thêm một dòng: điều gì đã khác so với dự định.</p>
+
+          <p><strong>Ở THCS và THPT</strong>, PDR diễn ra hằng tuần trong buổi "đôi bạn cùng tiến": hai học sinh ngồi với nhau, mỗi bạn đặt 6 câu hỏi để bạn mình trình bày kế hoạch tuần trước, kết quả thật, khoảng cách giữa hai thứ đó, rồi cam kết một điều chỉnh cho tuần tới. Bạn kia không khen, không chê — chỉ hỏi. Sau đó đổi vai.</p>
+
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-08.webp" alt="Học sinh Việt Anh trong buổi đôi bạn cùng tiến — bước Review hằng tuần" loading="lazy" width="1200" height="auto" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+
+          <p>Đây cũng là chỗ tôi thấy nhiều trường làm hỏng PDR: biến buổi Review thành buổi cô tổng kết và học sinh ngồi nghe. Khi đó nó không còn là PDR nữa, nó là nhận xét. <strong>Người rút ra kết luận phải là đứa trẻ.</strong></p>
+        </section>
+
+        <!-- Section 7 -->
+        <section id="tai-nha" class="gi-section">
+          <h2>Cha mẹ có làm PDR ở nhà được không?</h2>
+          <p><strong>Được, và đây là phần rẻ nhất nhưng hiệu quả nhất.</strong> Năm bước, làm được từ tối nay:</p>
+          <ol class="pdr-steps-home">
+            <li><strong>Hỏi trước khi con bắt đầu, không hỏi sau khi con xong.</strong> "Tối nay con định làm gì trước?" — một câu, ba mươi giây. Đây là bước Plan, và là bước hầu hết gia đình bỏ qua.</li>
+            <li><strong>Để con làm, kể cả khi thấy con làm chậm.</strong> Bước Do là của con. Cha mẹ ngồi cùng phòng được, làm hộ thì không.</li>
+            <li><strong>Cuối ngày hỏi đúng bốn câu, đúng thứ tự.</strong> Con định làm gì? Thực tế đã xảy ra gì? Vì sao có khoảng cách? Ngày mai con giữ gì, đổi gì?</li>
+            <li><strong>Với con mẫu giáo, đổi câu hỏi thành lời kể.</strong> "Kể mẹ nghe hôm nay con chơi gì" — và nghe hết, không sửa lưng.</li>
+            <li><strong>Tuyệt đối không biến buổi nhìn lại thành buổi phê bình.</strong> Ngay lần đầu anh chị dùng câu trả lời của con để mắng, con sẽ học được rằng nói thật thì bị phạt — và PDR ở nhà kết thúc từ đó.</li>
+          </ol>
+        </section>
+
+        <!-- Section 8 -->
+        <section id="sai-lam" class="gi-section">
+          <h2>Sai lầm thường gặp khi làm PDR là gì?</h2>
+          <p><strong>Sai lầm lớn nhất là làm bước Do và bỏ hai bước còn lại.</strong> Hoạt động trải nghiệm mà không có kế hoạch trước và không có nhìn lại sau thì vui, nhưng không tạo ra năng lực tự học. Ba lỗi hay gặp tiếp theo:</p>
+          <ul>
+            <li><strong>Người lớn nói phần Review thay con.</strong> Con gật đầu, và không rèn được gì.</li>
+            <li><strong>Hỏi quá nhiều câu.</strong> 4-6 câu là đủ. Nhiều hơn, con sẽ thấy như bị hỏi cung.</li>
+            <li><strong>Nhìn lại quá muộn.</strong> Sau một tuần, trẻ tiểu học không còn nhớ đủ chi tiết để so sánh.</li>
+          </ul>
+        </section>
+
+        <!-- Section 9: FAQ -->
+        <section id="faq" class="gi-section">
+          <h2>Câu hỏi thường gặp</h2>
           <div class="gi-faq-list">
-            {cmsFaqs ? (
-              cmsFaqs.map((faq, i) => (
-                <details class="gi-faq-item" open={i === 0}>
-                  <summary>{faq.question}</summary>
-                  <div class="gi-faq-answer">
-                    <p set:html={faq.answer} />
-                  </div>
-                </details>
-              ))
-            ) : (
-              <>
-            
-            <details class="gi-faq-item" open>
-              <summary>PDR là viết tắt của gì?</summary>
-              <div class="gi-faq-answer">
-                <p>PDR là viết tắt của <strong>Play (Chơi) — Discover (Khám phá) — Reflect (Phản tư)</strong>. Đây là phương pháp giáo dục do Trường Việt Anh nghiên cứu và phát triển từ năm 2011, dựa trên lý thuyết học tập trải nghiệm quốc tế.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Phương pháp PDR khác gì so với Montessori hoặc Reggio Emilia?</summary>
-              <div class="gi-faq-answer">
-                <p>PDR có điểm tương đồng với Montessori (tôn trọng tốc độ học của trẻ) và Reggio Emilia (học qua dự án). Tuy nhiên, PDR bổ sung thêm bước <strong>Reflect (Phản tư)</strong> — giúp học sinh phát triển tư duy siêu nhận thức, và được điều chỉnh phù hợp với chương trình giáo dục Việt Nam. PDR cũng áp dụng cho cả THCS và THPT, không chỉ mầm non.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>PDR có đảm bảo con đạt điểm cao trong các kỳ thi quốc gia không?</summary>
-              <div class="gi-faq-answer">
-                <p>Có. 92% học sinh Trường Việt Anh đạt điểm trên trung bình quốc gia, và 99% học sinh THPT đỗ đại học. PDR không bỏ qua kiến thức hàn lâm — mà giúp học sinh hiểu sâu hơn, nhớ lâu hơn, nên kết quả thi cũng tốt hơn.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Con tôi nhút nhát, liệu có phù hợp với PDR không?</summary>
-              <div class="gi-faq-answer">
-                <p>Rất phù hợp. PDR tạo không gian an toàn để mỗi em tham gia theo cách riêng. Giai đoạn Play giúp trẻ nhút nhát mở lòng qua hoạt động vui vẻ, và giai đoạn Reflect cho phép em chia sẻ bằng cách viết thay vì nói trước lớp. 85% phụ huynh ghi nhận con tự tin hơn rõ rệt sau 1 học kỳ.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Phụ huynh có thể áp dụng PDR tại nhà không?</summary>
-              <div class="gi-faq-answer">
-                <p>Hoàn toàn có thể. Trường Việt Anh tổ chức workshop hàng tháng hướng dẫn phụ huynh áp dụng PDR tại nhà. Ví dụ: cho con chơi trò chơi liên quan đến bài học (Play), cùng con tìm hiểu trên internet hoặc sách (Discover), rồi hỏi con "hôm nay con học được gì?" (Reflect).</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Giáo viên Trường Việt Anh được đào tạo PDR như thế nào?</summary>
-              <div class="gi-faq-answer">
-                <p>Tất cả giáo viên đều trải qua chương trình đào tạo PDR chuyên sâu kéo dài 3 tháng trước khi đứng lớp. Sau đó, giáo viên tham gia training liên tục hàng tuần, dự giờ đồng nghiệp, và được đánh giá theo bộ tiêu chí PDR. Giáo viên cũng thực hành phản tư sau mỗi tiết dạy.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Làm sao để tham quan và trải nghiệm PDR tại trường?</summary>
-              <div class="gi-faq-answer">
-                <p>Quý phụ huynh có thể đăng ký tham quan miễn phí tại form trên trang này hoặc gọi số <a href="tel:0916961409"><strong>0916 961 409</strong></a>. Phụ huynh sẽ được dự giờ một tiết học PDR thực tế, gặp gỡ giáo viên, và trao đổi trực tiếp với ban lãnh đạo trường. Không ràng buộc.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>PDR khác gì so với phương pháp giáo dục truyền thống?</summary>
-              <div class="gi-faq-answer">
-                <p><strong>Giáo dục truyền thống:</strong> Thầy giảng — trò nghe — thi cử — đánh giá bằng điểm. <strong>PDR:</strong> Trẻ chơi có mục đích (Play) — khám phá và tự tìm câu trả lời (Discover) — phản tư để rút ra bài học (Reflect). Kết quả: học sinh PDR phát triển tư duy phản biện, kỹ năng giải quyết vấn đề và sự tự chủ — không chỉ biết thuộc bài mà còn biết áp dụng vào thực tế.</p>
-              </div>
-            </details>
-            <details class="gi-faq-item">
-              <summary>Phụ huynh có thể áp dụng PDR tại nhà không?</summary>
-              <div class="gi-faq-answer">
-                <p><strong>Hoàn toàn có thể.</strong> Trường khuyến khích phụ huynh áp dụng 3 nguyên tắc PDR tại nhà: (1) Cho con thời gian tự do khám phá thay vì kiểm soát mọi hoạt động, (2) Đặt câu hỏi mở thay vì đưa đáp án có sẵn, (3) Cuối ngày hỏi con "Hôm nay con học được gì?" để rèn phản tư. Trường cũng tổ chức workshop PDR cho phụ huynh mỗi quý.</p>
-              </div>
-            </details>
-              </>
-            )}
+            {faqs.map((faq, i) => (
+              <details class="gi-faq-item" open={i === 0}>
+                <summary>{faq.q}</summary>
+                <div class="gi-faq-answer">
+                  <p>{faq.a}</p>
+                </div>
+              </details>
+            ))}
           </div>
+        </section>
+
+        <!-- Closing -->
+        <section class="gi-section">
+          <h2>Thứ đắt nhất một đứa trẻ mang theo khi rời trường</h2>
+          <p>Không phải điểm số. Là khả năng tự hỏi: <em>mình định làm gì, mình đã làm được đến đâu, và lần sau mình đổi cái gì.</em></p>
+          <p>Ba câu hỏi đó không dạy được bằng một bài giảng. Chúng chỉ hình thành khi được lặp lại — mỗi ngày ở mẫu giáo và tiểu học, mỗi tuần ở cấp hai và cấp ba — trong một môi trường mà nói thật không bị phạt.</p>
+          <p>Đó là toàn bộ những gì PDR làm. Nghe rất nhỏ. Nhưng cộng dồn mười hai năm, nó là khác biệt giữa một người luôn chờ được giao việc và một người tự biết mình đang đi đâu.</p>
+          <p><strong>Anh chị nên đến xem tận mắt một buổi.</strong> Dự một giờ Plan đầu buổi và một giờ Review cuối buổi, anh chị sẽ biết ngay đây là một hệ thống thật hay không — điều mà không bài viết nào, kể cả bài này, chứng minh thay được. Nếu chưa từng thấy một đứa trẻ tự chỉ ra chỗ mình làm sai mà không sợ hãi, thì rất khó tin rằng con mình cũng làm được.</p>
+          <p><strong>Đặt lịch tham quan: hotline <a href="tel:0916961409">0916 961 409</a> · <a href="mailto:hoc@truongvietanh.com">hoc@truongvietanh.com</a> · 160/72 Phan Huy Ích, Phường An Hội Tây, TP.HCM.</strong></p>
+        </section>
+
+        <!-- Author box -->
+        <aside class="pdr-author">
+          <p><strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt Anh (từ 2011), tốt nghiệp Manchester Metropolitan University. 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.</p>
+          <p class="gi-last-updated">Cập nhật lần cuối: 28/08/2026</p>
+        </aside>
+
+        <!-- References -->
+        <section class="gi-section pdr-refs">
+          <h2>Nguồn tham khảo</h2>
+          <ul>
+            <li>Schweinhart, L. J. và cộng sự (2005). <em>Lifetime Effects: The High/Scope Perry Preschool Study Through Age 40.</em> HighScope Press. <a href="https://highscope.org/wp-content/uploads/2024/07/perry-preschool-summary-40.pdf" target="_blank" rel="noopener">Xem báo cáo</a></li>
+            <li>HighScope Educational Research Foundation. <em>Planning and Recall.</em> <a href="https://highscope.org/shop/planning-and-recall-online-training/" target="_blank" rel="noopener">highscope.org</a></li>
+            <li>Education Endowment Foundation. <em>Teaching and Learning Toolkit — Metacognition and self-regulation.</em> <a href="https://educationendowmentfoundation.org.uk/education-evidence/teaching-learning-toolkit/metacognition-and-self-regulation" target="_blank" rel="noopener">educationendowmentfoundation.org.uk</a></li>
+            <li>Dewey, J. (1938). <em>Experience and Education.</em> Kappa Delta Pi.</li>
+            <li>Kolb, D. A. (1984). <em>Experiential Learning: Experience as the Source of Learning and Development.</em> Prentice Hall.</li>
+          </ul>
         </section>
       </article>
     </div>
@@ -598,17 +509,17 @@ const structuredData = [
     <section class="gi-bottom-cta">
       <div class="gi-container gi-bottom-cta-inner">
         <div class="gi-bottom-cta-text">
-          <h2>Cho con trải nghiệm PDR miễn phí tại Trường Việt Anh</h2>
-          <p>Đăng ký tham quan để dự giờ tiết học PDR thực tế. Đội ngũ tư vấn sẽ liên hệ trong 24 giờ để sắp xếp lịch phù hợp.</p>
+          <h2>Dự một buổi PDR thật tại Trường Việt Anh</h2>
+          <p>Đặt lịch tham quan để dự giờ Plan đầu buổi và giờ Review cuối buổi. Ưu tiên ngày trong tuần — vì chỉ ngày thường anh chị mới xem được đúng hai khung giờ đó.</p>
         </div>
-<div class="gi-next-step">
-            <p class="gi-next-step-title">Bước Tiếp Theo</p>
-            <div class="gi-next-step-links">
-              <a href="/tuyen-sinh" class="ns-tour">Đặt Lịch Tham Quan</a>
-              <a href="tel:0916961409" class="ns-phone">📞 0916 961 409</a>
-              <a href="https://zalo.me/1678310120468101523" class="ns-zalo">💬 Nhắn Zalo</a>
-            </div>
+        <div class="gi-next-step">
+          <p class="gi-next-step-title">Bước Tiếp Theo</p>
+          <div class="gi-next-step-links">
+            <a href="/tuyen-sinh" class="ns-tour">Đặt Lịch Tham Quan</a>
+            <a href="tel:0916961409" class="ns-phone">📞 0916 961 409</a>
+            <a href="https://zalo.me/1678310120468101523" class="ns-zalo">💬 Nhắn Zalo</a>
           </div>
+        </div>
         <div class="gi-bottom-cta-form" data-form-bg="light">
           <LeadFormTwoStepEmailFirst
             formId="pdr-bottom-form"
@@ -624,15 +535,15 @@ const structuredData = [
       <div class="gi-container">
         <h2 class="gi-related-title">Tìm hiểu thêm</h2>
         <div class="gi-related-grid">
-          <a href="/gioi-thieu" class="gi-related-card">
+          <a href="/triet-ly-giao-duc" class="gi-related-card">
             <div class="gi-related-img" style="background: linear-gradient(135deg, #26275D 0%, #363876 100%);"></div>
-            <h3>Giới thiệu Trường Việt Anh</h3>
-            <p>Hệ thống giáo dục liên cấp song ngữ từ Mầm non — THPT tại TP.HCM, Tây Ninh, An Giang. Thành lập 2011.</p>
+            <h3>Triết lý giáo dục Việt Anh</h3>
+            <p>Vì sao trường chọn nhịp Plan – Do – Review và đo tiến bộ học sinh trên 4 lĩnh vực phát triển.</p>
           </a>
-          <a href="/cap-hoc" class="gi-related-card">
+          <a href="/chuong-trinh" class="gi-related-card">
             <div class="gi-related-img" style="background: linear-gradient(135deg, #f9dd0e 0%, #cbb30a 100%);"></div>
             <h3>Chương trình các cấp học</h3>
-            <p>So sánh chi tiết chương trình Mầm non, Tiểu học, THCS, THPT tại Trường Việt Anh — từ học phí đến đầu ra.</p>
+            <p>Chương trình Mầm non, Tiểu học, THCS, THPT — PDR nằm trong giờ chính khóa ở từng cấp.</p>
           </a>
           <a href="/tuyen-sinh" class="gi-related-card">
             <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
@@ -649,9 +560,16 @@ const structuredData = [
 
 <style is:global>/* ===== PDR PILLAR — ADDITIONAL STYLES (reuses gi-* from gioi-thieu) ===== */
 
+/* Direct-answer block below H1 */
+.pdr-answer{
+  font-size: 1.15rem; line-height: 1.65; color: #0f172a;
+  background: #fef9ef; border-left: 4px solid #f9dd0e;
+  border-radius: 10px; padding: 1.25rem 1.4rem; margin: 0 0 2rem;
+}
+
 /* PDR Cycle Diagram */
 .gi-pdr-cycle{ margin: 2rem 0; }.gi-pdr-steps{
-  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  display: flex; align-items: stretch; justify-content: center; gap: 0.5rem;
   margin-top: 1rem; flex-wrap: wrap;
 }.gi-pdr-step{
   flex: 1; min-width: 200px; text-align: center; border-radius: 12px; padding: 1.5rem 1rem;
@@ -660,7 +578,19 @@ const structuredData = [
   display: inline-flex; align-items: center; justify-content: center;
   width: 32px; height: 32px; border-radius: 50%; font-weight: 900; font-size: 1rem;
   margin-bottom: 0.5rem; color: #fff;
-}.gi-pdr-play .gi-pdr-number{ background: #f9dd0e; }.gi-pdr-discover .gi-pdr-number{ background: #26275D; }.gi-pdr-reflect .gi-pdr-number{ background: #16a34a; }.gi-pdr-step strong{ display: block; font-size: 1rem; margin-bottom: 0.4rem; color: #0f172a; }.gi-pdr-step p{ font-size: 1rem; color: #5c6e80; margin: 0; line-height: 1.4; }.gi-pdr-arrow{ font-size: 1.5rem; color: #cbd5e1; flex-shrink: 0; }
+}.gi-pdr-play .gi-pdr-number{ background: #f9dd0e; }.gi-pdr-discover .gi-pdr-number{ background: #26275D; }.gi-pdr-reflect .gi-pdr-number{ background: #16a34a; }.gi-pdr-step strong{ display: block; font-size: 1rem; margin-bottom: 0.4rem; color: #0f172a; }.gi-pdr-step p{ font-size: 0.95rem; color: #5c6e80; margin: 0; line-height: 1.5; }.gi-pdr-arrow{ font-size: 1.5rem; color: #cbd5e1; flex-shrink: 0; align-self: center; }
+
+/* Steps at home */
+.pdr-steps-home{ margin: 1rem 0 0; padding-left: 1.2rem; }.pdr-steps-home li{ margin-bottom: 0.9rem; line-height: 1.65; }
+
+/* Author box */
+.pdr-author{
+  border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem 1.4rem;
+  background: #f8fafc; margin: 2.5rem 0 1.5rem;
+}.pdr-author p{ margin: 0 0 0.4rem; line-height: 1.6; }.pdr-author .gi-last-updated{ margin: 0; }
+
+/* References */
+.pdr-refs ul{ padding-left: 1.2rem; }.pdr-refs li{ margin-bottom: 0.6rem; line-height: 1.6; font-size: 0.95rem; }
 
 @media (max-width: 768px) {.gi-pdr-steps{ flex-direction: column; }.gi-pdr-arrow{ transform: rotate(90deg); }.gi-pdr-step{ min-width: 100%; }
 }

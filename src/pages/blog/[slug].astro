@@ -464,18 +464,30 @@ const structuredData = [
               </aside>
             </template>
 
-            <!-- Inline email-only quick subscribe (auto-injected via JS at #subCta) -->
-            <template id="subCtaTpl">
+            <!-- Inline subscribe 2 bước (auto-injected via JS vào giữa bài tại #subCta)
+                 KHÔNG dùng <template> như midCtaTpl: form 2 bước cần script của
+                 LeadFormTwoStepEmailFirst gắn listener bằng getElementById lúc parse,
+                 mà nội dung trong <template> không nằm trong DOM nên getElementById
+                 không thấy → bấm "Tiếp tục" sẽ không sang bước 2.
+                 Vì vậy để node thật (ẩn) rồi JS DI CHUYỂN nó vào giữa bài — listener giữ nguyên. -->
+            <div id="subCtaHost" hidden>
               <aside class="blog-inline-subscribe" data-form-bg="light">
                 <h3>💌 Nhận bài viết mới qua email</h3>
                 <p>Mỗi tuần 1 bài viết chuyên sâu về giáo dục con — không spam, hủy bất kỳ lúc nào.</p>
-                <form class="blog-inline-subscribe__form" data-form-id="blog-inline-subscribe">
-                  <input type="email" name="email" required placeholder="email@cua-ban.com" autocomplete="email" />
-                  <button type="submit">Đăng ký</button>
-                </form>
+                <LeadFormTwoStepEmailFirst
+                  formId="blog-inline-form"
+                  funnelCode="blog-inline-subscribe"
+                  schoolLevel="lien-cap"
+                  title=""
+                  description=""
+                  socialProof=""
+                  nextText="Đăng ký nhận bài"
+                  submitText="Nhận ebook + bài viết mới"
+                  successMessage="Cảm ơn Ba/Mẹ! Ebook và bài viết mới sẽ được gửi qua email."
+                />
                 <p class="blog-inline-subscribe__hint">Nhận miễn phí ebook "Lộ trình giáo dục con 0–18 tuổi"</p>
               </aside>
-            </template>
+            </div>
 
         <!-- Author Bio -->
         <aside class="blog-author">
@@ -1235,10 +1247,19 @@ const structuredData = [
   .blog-lead-magnet__icon{font-size:2rem;line-height:1;flex-shrink:0}
   .blog-lead-magnet__body h3{margin:0 0 .35rem;color:#26275D;font-size:1.05rem;font-weight:800}
   .blog-lead-magnet__body p{margin:0 0 .65rem;font-size:.9rem;line-height:1.55;color:#374151}
+  /* Selector PHẢI kèm .blog-article__body a — hộp CTA được JS chèn vào TRONG thân bài,
+     nên luật `.blog-article__body a{color:#26275D;text-decoration:underline}` ở trên
+     (specificity 0,1,1) thắng `.blog-lead-magnet__btn` (0,1,0) → chữ trắng bị ép thành
+     navy trên nền navy, nút trông như ô trống chỉ còn vạch vàng.
+     Đi kèm: blog-rebrand.css đã thêm :not(.blog-lead-magnet__btn) vào rule
+     ".blog-main a:not()..." — rule đó dùng !important nên phải loại trừ ở đó, sửa
+     riêng chỗ này KHÔNG đủ. Sửa một trong hai nơi là nút lại tàng hình. */
+  .blog-article__body a.blog-lead-magnet__btn,
   .blog-lead-magnet__btn{
     display:inline-block;background:#26275D;color:#fff;padding:.55rem 1.1rem;
     border-radius:6px;text-decoration:none;font-weight:700;font-size:.9rem;transition:background .2s;
   }
+  .blog-article__body a.blog-lead-magnet__btn:hover,
   .blog-lead-magnet__btn:hover{background:#f9dd0e;color:#26275D}
 
   /* ===== INLINE EMAIL SUBSCRIBE ===== */
@@ -1247,17 +1268,8 @@ const structuredData = [
   }
   .blog-inline-subscribe h3{margin:0 0 .35rem;color:#26275D;font-size:1.05rem;font-weight:800}
   .blog-inline-subscribe > p{margin:0 0 .85rem;font-size:.9rem;color:#374151}
-  .blog-inline-subscribe__form{display:flex;gap:.5rem;flex-wrap:wrap}
-  .blog-inline-subscribe__form input{
-    flex:1;min-width:200px;padding:.6rem .85rem;border:1px solid #cbd5e1;border-radius:6px;
-    font-size:.95rem;background:#fff;
-  }
-  .blog-inline-subscribe__form button{
-    padding:.6rem 1.25rem;background:#f9dd0e;color:#26275D;border:none;border-radius:6px;
-    font-weight:700;cursor:pointer;transition:background .2s;
-  }
-  .blog-inline-subscribe__form button:hover{background:#f9dd0e}
-  .blog-inline-subscribe__form button:disabled{opacity:.6;cursor:not-allowed}
+  /* Form 2 bước dùng chung nằm trong box này: bỏ giới hạn 400px + canh giữa của .lead-form */
+  .blog-inline-subscribe .lead-form{max-width:none;margin:0}
   .blog-inline-subscribe__hint{margin:.5rem 0 0;font-size:.78rem;color:#6b7280;font-style:italic}
 
   /* ===== AUTO-CONTRAST: CMS dark-background callout blocks =====
@@ -1355,9 +1367,19 @@ const structuredData = [
 
   // Inject inline CTAs at strategic positions (HubSpot-style mid-article)
   if (articleBody) {
-    const paragraphs = Array.from(articleBody.querySelectorAll(':scope > p, :scope > h2'));
+    // Bài long-form bọc TOÀN BỘ nội dung trong một <article>/<div> duy nhất — khi đó
+    // thân bài không có <p>/<h2> con trực tiếp nào và CTA không chèn được. Đi sâu qua
+    // các lớp bọc đơn (bỏ qua <style>/<script>) để tìm đúng khối chứa nội dung.
+    let contentRoot = articleBody;
+    for (let i = 0; i < 3; i++) {
+      const kids = Array.from(contentRoot.children).filter((el) => el.tagName !== 'STYLE' && el.tagName !== 'SCRIPT');
+      if (kids.length === 1 && /^(ARTICLE|DIV|MAIN|SECTION)$/.test(kids[0].tagName)) contentRoot = kids[0];
+      else break;
+    }
+    // Thêm ':scope > section' cho bài long-form chia khối bằng <section> thay vì <p> phẳng.
+    const paragraphs = Array.from(contentRoot.querySelectorAll(':scope > p, :scope > h2, :scope > section'));
     const midCtaTpl = document.getElementById('midCtaTpl');
-    const subCtaTpl = document.getElementById('subCtaTpl');
+    const subCtaHost = document.getElementById('subCtaHost');
     // Insert lead-magnet at ~33%, email subscribe at ~66%
     const midIdx = Math.floor(paragraphs.length * 0.33);
     const subIdx = Math.floor(paragraphs.length * 0.66);
@@ -1365,34 +1387,13 @@ const structuredData = [
       const node = midCtaTpl.content.cloneNode(true);
       paragraphs[midIdx].parentNode.insertBefore(node, paragraphs[midIdx]);
     }
-    if (subCtaTpl && paragraphs[subIdx]) {
-      const node = subCtaTpl.content.cloneNode(true);
-      paragraphs[subIdx].parentNode.insertBefore(node, paragraphs[subIdx]);
+    // DI CHUYỂN (không clone) box 2 bước: clone sẽ mất listener của form 2 bước.
+    const subCta = subCtaHost && subCtaHost.firstElementChild;
+    if (subCta && paragraphs[subIdx]) {
+      paragraphs[subIdx].parentNode.insertBefore(subCta, paragraphs[subIdx]);
+      subCtaHost.remove();
     }
   }
-
-  // Inline subscribe form handler
-  document.querySelectorAll('form[data-form-id="blog-inline-subscribe"]').forEach(form => {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = form.querySelector('input[name="email"]').value;
-      const btn = form.querySelector('button');
-      btn.disabled = true; btn.textContent = 'Đang gửi...';
-      try {
-        await fetch('/api/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(Object.assign({ email, funnel_code: 'blog-inline-subscribe', school_level: 'lien-cap', source: 'blog-inline' }, (window.__vaUTM ? window.__vaUTM() : {}))),
-        });
-        btn.textContent = '✓ Đã đăng ký!';
-        form.querySelector('input').value = '';
-        if (window.dataLayer) window.dataLayer.push({ event: 'lead_submit', funnel: 'blog-inline-subscribe' });
-      } catch {
-        btn.textContent = 'Lỗi — thử lại';
-        btn.disabled = false;
-      }
-    });
-  });
 
   // Add lazy loading to all images within blog content
   document.querySelectorAll('.blog-article__body img').forEach((img) => {
@@ -1437,11 +1438,23 @@ const structuredData = [
     });
   })();
 
-  // Fix placeholder phone numbers in CMS content
+  // Fix placeholder phone numbers in CMS content.
+  //
+  // KHÔNG dùng `body.innerHTML = body.innerHTML.replace(...)`: gán lại innerHTML làm
+  // trình duyệt PARSE LẠI toàn bộ nội dung bài → mọi node con bị thay bằng node mới và
+  // MẤT SẠCH event listener. Form 2 bước chèn vào giữa bài (#subCtaHost) nằm trong
+  // .blog-article__body nên bị xoá listener → bấm "Đăng ký nhận bài" không sang bước 2,
+  // nhìn y như form 1 bước. Nay chỉ sửa text node + href, không đụng cấu trúc DOM.
   document.querySelectorAll('.blog-article__body').forEach((body) => {
-    body.innerHTML = body.innerHTML
-      .replace(/0909\.xxx\.xxx/g, '0916 961 409')
-      .replace(/0909\.?xxx\.?xxx/g, '0916 961 409')
-      .replace(/href="tel:0909\d*"/g, 'href="tel:0916961409"');
+    const walker = document.createTreeWalker(body, NodeFilter.SHOW_TEXT);
+    const texts = [];
+    while (walker.nextNode()) texts.push(walker.currentNode);
+    texts.forEach((node) => {
+      if (node.nodeValue.indexOf('0909') === -1) return;
+      node.nodeValue = node.nodeValue.replace(/0909\.?xxx\.?xxx/g, '0916 961 409');
+    });
+    body.querySelectorAll('a[href^="tel:0909"]').forEach((a) => {
+      a.setAttribute('href', 'tel:0916961409');
+    });
   });
 </script>

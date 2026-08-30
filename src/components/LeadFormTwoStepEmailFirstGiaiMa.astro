@@ -652,6 +652,19 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
+    // ENTER Ở BƯỚC 1 KHÔNG ĐƯỢC GỬI FORM — xem giải thích đầy đủ trong
+    // LeadFormTwoStepEmailFirst.astro. Tóm tắt: ô email bước 1 nằm chung <form> với
+    // <button type="submit"> của bước 2, nên Enter (hoặc "Đi"/"Go" trên bàn phím điện
+    // thoại) kích hoạt implicit submission → validateStep() chỉ soi email nên PASS →
+    // nhảy thẳng sang success + POST full_submit với phone rỗng. Form 2 bước hoá 1 bước,
+    // và lead không SĐT thì worker bỏ qua Pancake.
+    if (currentStep === 1) {
+      const nextBtn = form.querySelector('[data-action="next-step"]');
+      if (nextBtn) nextBtn.click();
+      return;
+    }
+    if (currentStep !== 2) return;   // đang ở màn success — bỏ qua
+
     if (!validateStep()) {
       return;
     }

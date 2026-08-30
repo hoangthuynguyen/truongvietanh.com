@@ -687,6 +687,27 @@ const formIdWithFunnel = `${formId}-${funnelCode}`;
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
 
+    // ENTER Ở BƯỚC 1 KHÔNG ĐƯỢC GỬI FORM.
+    //
+    // Ô email ở bước 1 nằm trong <form>, mà bước 2 có <button type="submit"> → gõ email
+    // rồi nhấn Enter (hoặc bấm "Đi"/"Go" trên bàn phím điện thoại) kích hoạt implicit
+    // submission của trình duyệt. Handler này chạy ngay, validateStep() lúc đó chỉ soi ô
+    // email (currentStep === 1) nên PASS, rồi nhảy thẳng showStep('success') + POST
+    // full_submit và chuyển sang /cam-on.
+    //
+    // Hậu quả đã tái hiện trên production 30/08/2026: khách gõ email + Enter thấy
+    // "Đăng ký thành công" mà chưa hề nhập tên/SĐT — form 2 bước hoá ra 1 bước. Lead gửi
+    // lên có phone rỗng nên worker bỏ qua Pancake (staging-worker.js, reason no_phone),
+    // sales không bao giờ thấy lead đó.
+    //
+    // Nay Enter ở bước 1 = bấm nút "Tiếp tục": vẫn validate email và bắn partial_capture.
+    if (currentStep === 1) {
+      const nextBtn = form.querySelector('[data-action="next-step"]');
+      if (nextBtn) nextBtn.click();
+      return;
+    }
+    if (currentStep !== 2) return;   // đang ở màn success — bỏ qua
+
     if (!validateStep()) {
       return;
     }

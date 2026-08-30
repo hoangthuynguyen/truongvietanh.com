@@ -373,6 +373,7 @@ body{padding-bottom:92px}
 .fgrid{display:grid;gap:15px}
 label{display:block;font-weight:700;font-size:14.5px;margin-bottom:6px;color:var(--navy)}
 label .req{color:var(--red)}
+label .opt{color:#6b7280;font-weight:400;font-size:.85em}
 .fi{
   width:100%;padding:13px 15px;font-size:16px;font-family:inherit;color:var(--ink);
   border:1.5px solid var(--line);border-radius:10px;background:#fff;
@@ -717,6 +718,16 @@ footer a{color:var(--amber);text-decoration:none}
               <div class="fe" id="ePhone">Vui lòng nhập số điện thoại hợp lệ (10 số)</div>
             </div>
 
+            {/* Email KHÔNG bắt buộc — cố ý. Đây là trang urgency "vào học ngay", thêm ô
+                bắt buộc là rớt tỉ lệ điền. Nhưng thiếu hẳn email thì contact bên GHL không
+                có địa chỉ nào để đưa vào chuỗi nurture, nên vẫn hỏi và chỉ validate khi
+                ba/mẹ có nhập. Pancake không cần email nên bỏ trống cũng không ảnh hưởng. */}
+            <div>
+              <label for="fEmail">Email <span class="opt">(không bắt buộc)</span></label>
+              <input class="fi" type="email" id="fEmail" name="email" placeholder="email@cua-ban.com" autocomplete="email" inputmode="email" />
+              <div class="fe" id="eEmail">Email chưa đúng định dạng</div>
+            </div>
+
             <div>
               <label for="fGrade">Con đang học lớp <span class="req">*</span></label>
               <select class="fi" id="fGrade" name="grade">
@@ -919,11 +930,15 @@ footer a{color:var(--amber);text-decoration:none}
     var grade = document.getElementById('fGrade').value   || '';
     var area  = (document.getElementById('fArea').value  || '').trim();
     var need  = (document.getElementById('fNeed').value  || '').trim();
+    var email = (document.getElementById('fEmail').value || '').trim();
 
     var bad = false;
     if (!name)           { mark('fName','eName',true);   bad = true; } else mark('fName','eName',false);
     if (!okPhone(phone)) { mark('fPhone','ePhone',true); bad = true; } else mark('fPhone','ePhone',false);
     if (!grade)          { mark('fGrade','eGrade',true); bad = true; } else mark('fGrade','eGrade',false);
+    // Email không bắt buộc: chỉ chặn khi ba/mẹ CÓ nhập mà sai định dạng. Bỏ trống thì thôi.
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { mark('fEmail','eEmail',true); bad = true; }
+    else mark('fEmail','eEmail',false);
     if (bad) {
       var first = form.querySelector('.fi.err');
       if (first) { first.focus(); first.scrollIntoView({ behavior:'smooth', block:'center' }); }
@@ -936,6 +951,7 @@ footer a{color:var(--amber);text-decoration:none}
     var body = Object.assign({
       parent_name:  name,
       phone:        phone,
+      email:        email,
       grade:        grade,
       school_level: levelOf(grade),
       province:     area,

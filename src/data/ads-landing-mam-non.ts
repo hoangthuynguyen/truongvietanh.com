@@ -22,6 +22,12 @@ export type AdsPage = {
   keywords: string;
   noindex?: boolean;
   funnelCode: string;
+  /* Khối quan tâm ghi vào Pancake. Bỏ trống = 'mau-non' → cột "Khối quan tâm" hiện
+     "3 tuổi", đúng cho nhóm quảng cáo mầm non chung. Trang nhắm độ tuổi cụ thể phải
+     khai riêng. Giá trị hợp lệ lấy từ KHOI_QUAN_TAM_MAP trong src/staging-worker.js:
+     2-tuoi · 3-tuoi · 4-tuoi · 5-tuoi · lop-1…lop-12 (giá trị lạ thì worker bỏ trống
+     cột đó chứ không loại lead). */
+  schoolLevel?: string;
   title: string;
   description: string;
   eyebrow: string;
@@ -361,6 +367,8 @@ export const adsPages: AdsPage[] = [
     adGroup: 'AG 05 — 13 tháng–6 tuổi, nhà trẻ, bán trú',
     keywords: 'trường mầm non nhận bé 13 tháng, nhà trẻ gò vấp, giữ trẻ gò vấp, mầm non bán trú, trường cho bé 2 tuổi, lớp nhà trẻ gò vấp',
     funnelCode: 'mn-govap-dotuoi',
+    // Nhóm quảng cáo nhà trẻ (13 tháng–2 tuổi) → khối "2 tuổi", không phải mặc định 3 tuổi.
+    schoolLevel: '2-tuoi',
     title: `Nhà Trẻ & Mầm Non Gò Vấp Nhận Bé Từ ${F.ageFrom} — Bán Trú Cả Ngày`,
     description: `Nhận bé từ ${F.ageRange} tại Gò Vấp. Lớp tổ chức đa độ tuổi và đa trình độ, bán trú cả ngày, bếp nấu tại trường, camera 24/7. Mẹ đi làm yên tâm.`,
     eyebrow: 'Đa độ tuổi · Đa trình độ',
@@ -786,6 +794,8 @@ export const adsPages: AdsPage[] = [
     adGroup: 'AG 10 — Tự lập, tự tin, chuẩn bị vào lớp 1',
     keywords: 'chuẩn bị cho con vào lớp 1, lớp lá gò vấp, tiền tiểu học gò vấp, con nhút nhát vào lớp 1, kỹ năng trước khi vào lớp 1',
     funnelCode: 'mn-govap-lop1',
+    // Lớp lá / tiền tiểu học: bé 5 tuổi sắp vào lớp 1 → khối "5 tuổi", không phải 3 tuổi.
+    schoolLevel: '5-tuoi',
     title: 'Chuẩn Bị Vào Lớp 1 Ở Gò Vấp — Bằng Tự Lập, Không Phải Học Trước',
     description: 'Con vào lớp 1 cần độc lập, có trách nhiệm và tự tin hơn là biết đọc trước. Mầm non Việt Anh Gò Vấp rèn điều đó qua Plan–Do–Review mỗi ngày.',
     eyebrow: 'Sẵn sàng vào lớp 1',

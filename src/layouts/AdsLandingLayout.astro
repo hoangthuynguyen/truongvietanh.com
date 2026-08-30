@@ -32,6 +32,11 @@ type Props = {
   submitText: string;
   successMessage: string;
   ogImage?: string;
+  /* Khối quan tâm gửi sang CRM. Worker map giá trị này thành dropdown "Khối quan tâm"
+     của Pancake (KHOI_QUAN_TAM_MAP trong staging-worker.js). Mặc định 'mau-non' → "3 tuổi",
+     hợp với nhóm quảng cáo mầm non chung. Trang nhắm ĐỘ TUỔI CỤ THỂ phải khai riêng, nếu
+     không mọi lead đều rơi vào "3 tuổi" và sales lọc theo cột này sẽ lệch. */
+  schoolLevel?: string;
 };
 
 const {
@@ -39,6 +44,7 @@ const {
   funnelCode, formId, eyebrow = '', h1, sub, heroPoints = [], metrics = [],
   formTitle, formDesc, formSocialProof = '', nextText, submitText, successMessage,
   ogImage = 'https://truongvietanh.com/og-image.png',
+  schoolLevel = 'mau-non',
 } = Astro.props;
 
 const telHref = 'tel:' + mnFacts.hotlineMamNon.replace(/\s/g, '');
@@ -125,7 +131,7 @@ const schema = [
         <LeadFormTwoStepEmailFirst
           formId={formId}
           funnelCode={funnelCode}
-          schoolLevel="mau-non"
+          schoolLevel={schoolLevel}
           title={formTitle}
           description={formDesc}
           socialProof={formSocialProof}
@@ -175,7 +181,7 @@ const schema = [
         <LeadFormTwoStepEmailFirst
           formId={formId + '-b'}
           funnelCode={funnelCode}
-          schoolLevel="mau-non"
+          schoolLevel={schoolLevel}
           title={formTitle}
           description={formDesc}
           socialProof=""

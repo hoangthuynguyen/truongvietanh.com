@@ -949,7 +949,39 @@ const structuredData = [
     text-underline-offset: 3px;
   }.blog-faq__answer a:hover{
     color: #1F2050;
-  }/* ===== INLINE CTA ===== */
+  }
+
+  /* ===== FAQ TRONG NỘI DUNG BÀI (do CMS viết, JS gập lại lúc chạy) =====
+     Dùng lại giao diện accordion cuối bài. Phải ghi đè vài luật của
+     .blog-article__body vì h3/p trong đó có margin + font-size riêng, khi lọt
+     vào <summary>/<details> sẽ vỡ khoảng cách. */
+  .blog-article__body .blog-faq__item{
+    background:#fff;border:1px solid #e2e8f0;border-radius:8px;overflow:hidden;
+    transition:border-color .2s;margin:0 0 .75rem;
+  }
+  .blog-article__body .blog-faq__item[open]{border-color:#f9dd0e}
+  .blog-article__body .blog-faq__question{
+    padding:1rem 1.25rem;font-weight:700;color:#26275D;cursor:pointer;list-style:none;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;font-size:1rem;
+  }
+  .blog-article__body .blog-faq__question::-webkit-details-marker{display:none}
+  .blog-article__body .blog-faq__question::after{
+    content:'+';font-size:1.3rem;font-weight:400;color:#26275D;flex-shrink:0;margin-left:1rem;
+  }
+  .blog-article__body .blog-faq__item[open] .blog-faq__question::after{content:'−'}
+  /* Giữ nguyên thẻ h3 gốc bên trong <summary>: không mất id neo, không mất
+     cấu trúc heading cho SEO — chỉ bỏ margin/size để nằm gọn trong thanh bấm. */
+  .blog-article__body .blog-faq__question > h3,
+  .blog-article__body .blog-faq__question > h4,
+  .blog-article__body .blog-faq__question > .blog-faq__q-text{
+    margin:0;padding:0;border:0;font-size:1rem;font-weight:700;
+    color:#26275D;line-height:1.45;flex:1;
+  }
+  .blog-article__body .blog-faq__answer{padding:0 1.25rem 1rem;color:#475569}
+  .blog-article__body .blog-faq__answer > *:first-child{margin-top:0}
+  .blog-article__body .blog-faq__answer > *:last-child{margin-bottom:0}
+
+  /* ===== INLINE CTA ===== */
   .blog-cta-inline{
     margin: 3rem 0;
   }.blog-cta-inline__inner{
@@ -1365,19 +1397,99 @@ const structuredData = [
     }
   }
 
+  // ===== Gập mục "Câu hỏi thường gặp" nằm trong nội dung bài =====
+  // Nội dung từ CMS có 4 kiểu FAQ khác nhau (h3 phẳng / bọc .faq-block /
+  // .faq-list đã dùng <details open> / .faq-section dùng .q + .a). Chuẩn hoá
+  // hết về <details class="blog-faq__item"> cho giống accordion cuối bài.
+  // CHẠY TRƯỚC đoạn chèn CTA bên dưới: nếu chạy sau, CTA có thể nằm giữa một
+  // cặp hỏi–đáp rồi bị nuốt vào phần trả lời.
+  if (articleBody) {
+    const FAQ_RE = /câu hỏi thường gặp|(^|\s)faq(\s|:|$)|hỏi\s*[-–&]?\s*đáp/i;
+    const isCta = (el) => el.classList && (el.classList.contains('blog-lead-magnet') || el.classList.contains('blog-inline-subscribe'));
+
+    const makeDetails = (questionNode, answerNodes) => {
+      const det = document.createElement('details');
+      det.className = 'blog-faq__item';
+      const sum = document.createElement('summary');
+      sum.className = 'blog-faq__question';
+      const ans = document.createElement('div');
+      ans.className = 'blog-faq__answer';
+      answerNodes.forEach((n) => ans.appendChild(n));
+      sum.appendChild(questionNode);
+      det.appendChild(sum);
+      det.appendChild(ans);
+      return det;
+    };
+
+    Array.from(articleBody.querySelectorAll('h2, h3')).filter((h) => FAQ_RE.test(h.textContent)).forEach((head) => {
+      const lvl = +head.tagName[1];
+      const blocks = [];
+      let n = head.nextElementSibling;
+      while (n && !(/^H[1-6]$/.test(n.tagName) && +n.tagName[1] <= lvl)) { blocks.push(n); n = n.nextElementSibling; }
+      if (!blocks.length) return;
+
+      // Các cặp hỏi–đáp có thể nằm trong 1 <div> bọc (.faq-block/.faq-list/
+      // .faq-section) — và div đó KHÔNG phải sibling duy nhất (còn .cta-block,
+      // .related... đứng sau), nên phải dò theo nội dung chứ không đếm số lượng.
+      const isFaqHost = (el) => {
+        if (!el || el.tagName !== 'DIV') return false;
+        return Array.from(el.children).some((k) =>
+          k.tagName === 'DETAILS'
+          || /^H[3-6]$/.test(k.tagName)
+          || (k.querySelector && k.querySelector(':scope > .q') && k.querySelector(':scope > .a')));
+      };
+      const host = blocks.find(isFaqHost) || null;
+      const scope = host ? Array.from(host.children) : blocks;
+      const parent = host || head.parentNode;
+
+      // Kiểu đã là <details>: chỉ cần bỏ 'open' để mặc định gập lại
+      const opened = scope.filter((el) => el.tagName === 'DETAILS');
+      if (opened.length) { opened.forEach((el) => el.removeAttribute('open')); return; }
+
+      // Kiểu .faq-item > .q + .a
+      const qaItems = scope.filter((el) => el.querySelector && el.querySelector(':scope > .q') && el.querySelector(':scope > .a'));
+      if (qaItems.length) {
+        qaItems.forEach((el) => {
+          const q = el.querySelector(':scope > .q');
+          const a = el.querySelector(':scope > .a');
+          q.classList.add('blog-faq__q-text');
+          el.replaceWith(makeDetails(q, [a]));
+        });
+        return;
+      }
+
+      // Kiểu heading câu hỏi + các khối trả lời đứng sau
+      scope.filter((el) => /^H[3-6]$/.test(el.tagName)).forEach((qh) => {
+        const answer = [];
+        let m = qh.nextElementSibling;
+        while (m && !/^H[1-6]$/.test(m.tagName) && !isCta(m)) { const next = m.nextElementSibling; answer.push(m); m = next; }
+        if (!answer.length) return;
+        // Chốt vị trí trước khi makeDetails() nhấc qh ra khỏi DOM
+        const mark = document.createComment('faq');
+        parent.insertBefore(mark, qh);
+        parent.replaceChild(makeDetails(qh, answer), mark);
+      });
+    });
+  }
+
   // Inject inline CTAs at strategic positions (HubSpot-style mid-article)
   if (articleBody) {
-    // Bài long-form bọc TOÀN BỘ nội dung trong một <article>/<div> duy nhất — khi đó
-    // thân bài không có <p>/<h2> con trực tiếp nào và CTA không chèn được. Đi sâu qua
-    // các lớp bọc đơn (bỏ qua <style>/<script>) để tìm đúng khối chứa nội dung.
+    // Bài long-form bọc nội dung trong <article>/.content/.tldr... — khi đó thân bài
+    // không có <p>/<h2> con TRỰC TIẾP nào nên CTA không chèn được. Không thể chỉ đi
+    // xuống qua "lớp bọc đơn": có bài bọc bằng 2 div (.tldr + .content). Nên khi thân
+    // bài quá ít neo thì tìm hậu duệ có nhiều đoạn con trực tiếp nhất.
+    // ':scope > section' để bắt cả bài chia khối bằng <section> thay vì <p> phẳng.
+    const ANCHOR_SEL = ':scope > p, :scope > h2, :scope > section';
     let contentRoot = articleBody;
-    for (let i = 0; i < 3; i++) {
-      const kids = Array.from(contentRoot.children).filter((el) => el.tagName !== 'STYLE' && el.tagName !== 'SCRIPT');
-      if (kids.length === 1 && /^(ARTICLE|DIV|MAIN|SECTION)$/.test(kids[0].tagName)) contentRoot = kids[0];
-      else break;
+    let paragraphs = Array.from(contentRoot.querySelectorAll(ANCHOR_SEL));
+    if (paragraphs.length < 3) {
+      let bestN = paragraphs.length;
+      articleBody.querySelectorAll('article, main, div, section').forEach((el) => {
+        const n = el.querySelectorAll(ANCHOR_SEL).length;
+        if (n > bestN) { bestN = n; contentRoot = el; }
+      });
+      paragraphs = Array.from(contentRoot.querySelectorAll(ANCHOR_SEL));
     }
-    // Thêm ':scope > section' cho bài long-form chia khối bằng <section> thay vì <p> phẳng.
-    const paragraphs = Array.from(contentRoot.querySelectorAll(':scope > p, :scope > h2, :scope > section'));
     const midCtaTpl = document.getElementById('midCtaTpl');
     const subCtaHost = document.getElementById('subCtaHost');
     // Insert lead-magnet at ~33%, email subscribe at ~66%

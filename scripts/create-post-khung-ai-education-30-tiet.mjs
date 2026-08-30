@@ -1,7 +1,9 @@
 /**
  * BÀI 3.1 cụm AEO v2.1 — "Việt Anh công bố khung AI Education: 30 tiết/năm, 12 năm".
  * Nguồn: Google Doc 1K-iOkIbDm5BMMzWjEDtq0pTdBhrVgkcY2j-zchpxvpA (phiếu chấm 97/100).
- * Lịch: T3 01/09/2026. Tạo dạng DRAFT, chờ duyệt rồi mới bật published.
+ * Đăng 28/08/2026 (Directus id 1413). Ban đầu hẹn 01/09 nhưng đăng sớm theo yêu cầu:
+ * build KHÔNG lọc published_at và sắp xếp theo -published_at, nên để ngày tương lai thì bài
+ * lên sóng ngay mà mang ngày chưa tới và bị ghim đầu trang blog.
  *
  * Đã sửa so với bản thảo:
  *   - 4 link about:blank -> URL thật (bài 1356, 1357, 1408, /dat-lich-tham-quan)
@@ -102,7 +104,7 @@ const content = `
 <p>Khung chương trình này là 12 lời hứa như vậy, mỗi năm một lời. Và chúng tôi mời anh chị đến kiểm tra.</p>
 <p>Hãy <a href="/dat-lich-tham-quan">đặt lịch tham quan một buổi học AI tại cơ sở gần anh chị nhất</a> — xem lớp 1 lập trình bằng thẻ giấy, xem lớp 10 chạy xe tự hành, rồi hãy quyết định.</p>
 
-<p><em>Tác giả: <strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt Anh (từ 2011), tốt nghiệp Manchester Metropolitan University. 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi. Cập nhật lần cuối: 01/09/2026. Nguồn tham khảo: Quyết định 2422/QĐ-BGDĐT ngày 18/08/2026 (thuvienphapluat.vn); UNESCO AI Competency Framework for Students (2024); Code.org — học liệu Computer Science Fundamentals, AI Lab, App Lab; Khung AI Education Trường Việt Anh v2.0 (tài liệu nội bộ, 08/2026).</em></p>
+<p><em>Tác giả: <strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt Anh (từ 2011), tốt nghiệp Manchester Metropolitan University. 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi. Cập nhật lần cuối: 28/08/2026. Nguồn tham khảo: Quyết định 2422/QĐ-BGDĐT ngày 18/08/2026 (thuvienphapluat.vn); UNESCO AI Competency Framework for Students (2024); Code.org — học liệu Computer Science Fundamentals, AI Lab, App Lab; Khung AI Education Trường Việt Anh v2.0 (tài liệu nội bộ, 08/2026).</em></p>
 `.trim();
 
 const post = {
@@ -111,7 +113,7 @@ const post = {
   status: STATUS,
   excerpt: "Việt Anh công bố khung AI Education: 30 tiết/lớp/năm liên tục 12 năm, học liệu Code.org, mỗi năm một sản phẩm thật — gấp 2,5 lần mức tối thiểu của Bộ GDĐT.",
   content,
-  published_at: "2026-09-01T09:00:00",
+  published_at: "2026-08-28T14:00:00",
   category: "tin-tuc",
   featured_image: HERO,
 };

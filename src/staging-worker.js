@@ -509,6 +509,34 @@ async function handleLeadSubmission(request, env) {
           tags.push('squeeze-thpt');
         }
 
+        // Lead từ app trắc nghiệm "Bản đồ phát triển của con" (/quiz).
+        //   quiz-blog        → CTA quà tặng giữa bài blog
+        //   quiz-vietanh-*   → vào /quiz trực tiếp, không có ?src
+        //   *-pillar         → 4 trang pillar cấp học (mam-non/tieu-hoc/thcs/thpt)
+        // Quiz chỉ thu SỐ ZALO, không thu email → nhóm này không bao giờ nhận email
+        // từ worker; báo cáo gửi qua Zalo do n8n lo. Tag ở đây là để GHL trigger đúng
+        // chuỗi nuôi dưỡng thay vì rơi vào workflow mặc định (Checklist Chọn Trường).
+        // Ebook "Lộ trình giáo dục con 0–18 tuổi" — form giữa bài blog.
+        // Tag này LÀ trigger của workflow GHL gửi ebook (Contact tag → Tag added).
+        // Tên phải khớp CHÍNH XÁC với filter đã đặt trong workflow; sai một ký tự
+        // hoặc một dấu gạch là lead vào GHL nhưng chuỗi email không bao giờ chạy.
+        // Lưu ý: khối này chỉ chạy khi step !== 'partial_capture', nên phụ huynh
+        // mới nhập email ở bước 1 rồi bỏ dở sẽ KHÔNG được gắn tag và không nhận ebook.
+        if (data.source === 'blog-inline-subscribe') {
+          tags.push('lo-trinh-giao-duc-con-0-18');
+        }
+
+        //   ebook-0-18      → link trong ebook "Lộ trình giáo dục con 0–18 tuổi" (PDF)
+        {
+          const qs = data.source || data.funnelCode || '';
+          if (qs === 'quiz-blog' || qs === 'ebook-0-18'
+              || qs.startsWith('quiz-vietanh') || qs.endsWith('-pillar')) {
+            tags.push('quiz-ban-do-phat-trien');
+            if (qs === 'quiz-blog') tags.push('quiz-tu-blog');
+            if (qs === 'ebook-0-18') tags.push('quiz-tu-ebook');
+          }
+        }
+
         // Chuỗi nuôi dưỡng chung 435 ngày — kết nối TẤT CẢ squeeze page vào 1 workflow
         const SQUEEZE_SOURCES = [
           'squeeze-checklist-mam-non', 'squeeze-giai-doan-vang', 'squeeze-ebook-9-linh-vuc',
@@ -877,6 +905,18 @@ const WORKFLOW_MAP = {
   'squeeze-oxford-cambridge-ib': '3f9c5202-9e8e-49b0-a532-049b84e80197',
   // LM47 · Conversation Cards Song Ngữ
   'squeeze-conversation-cards':  '9ba3a5a1-f36f-49c3-a575-bff07cc1bff4',
+  // ── QUIZ "Bản đồ phát triển của con" (/quiz) ───────────────────────────────
+  // Workflow GHL "quiz-ban-do-phat-trien". Không có mấy dòng này thì mọi lead quiz
+  // rơi vào default 'c5f1ccf1-…' (WF1 Checklist Chọn Trường) — sai chuỗi nuôi dưỡng.
+  // Workflow đó cũng trigger bằng tag 'quiz-ban-do-phat-trien' (gắn ở phần tags phía
+  // trên); GHL mặc định không cho re-entry nên hai đường vào không làm chạy hai lần.
+  'quiz-blog':            'dd61d37c-7aa3-46d6-8f71-ea62ae944b85',   // CTA giữa bài blog
+  'ebook-0-18':           'dd61d37c-7aa3-46d6-8f71-ea62ae944b85',   // link trong ebook 0–18 (PDF)
+  'quiz-vietanh':         'dd61d37c-7aa3-46d6-8f71-ea62ae944b85',   // vào /quiz trực tiếp (prefix match phủ -mau-non/-tieu-hoc/…)
+  'mam-non-pillar':       'dd61d37c-7aa3-46d6-8f71-ea62ae944b85',
+  'tieu-hoc-pillar':      'dd61d37c-7aa3-46d6-8f71-ea62ae944b85',
+  'thcs-pillar':          'dd61d37c-7aa3-46d6-8f71-ea62ae944b85',
+  'thpt-pillar':          'dd61d37c-7aa3-46d6-8f71-ea62ae944b85',
   // NURTURE: Chuỗi Email Nuôi Dưỡng 435 Ngày — trigger bằng tag "nurture-435-ngay"
   'nurture-435-ngay':       '9eae9375-8c2b-4890-9a08-3d2e1896c546',
   // Nurture Series: 30 Tình Huống Dạy Con (Batch 1 — triggers chain to 13 batches)

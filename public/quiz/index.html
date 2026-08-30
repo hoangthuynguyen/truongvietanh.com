@@ -99,9 +99,13 @@
   .pt{display:flex;gap:10px;font-size:14.2px;color:var(--ink2);line-height:1.5}
   .pt .c{color:var(--good);font-weight:900}
   .note{font-size:11.5px;color:var(--muted);text-align:center;margin-top:18px;line-height:1.5}
-  .demo-tag{position:fixed;left:10px;bottom:10px;background:#0f2540;color:#fff;font-size:11px;padding:6px 10px;border-radius:8px;opacity:.85;font-weight:600;z-index:9}
   .hide{display:none !important}
 </style>
+<!-- Bộ thu UTM dùng chung (CLAUDE.md): phải nạp TRƯỚC script gọi window.__vaUTM().
+     Trang này vẫn giữ bản inline làm dự phòng ở cuối file; file dùng chung nạp được
+     thì nó thắng — quan trọng vì bản inline dính 2 lỗi đã tái hiện trên production:
+     lần chạm mới không ghi đè trọn bộ, và utm_pke_mkter chèn nhầm người chạy. -->
+<script src="/js/va-utm.js"></script>
 <!-- quiz-canonical --></head>
 <body>
 <div class="app">
@@ -117,7 +121,6 @@
   </div>
   <div id="screen"></div>
 </div>
-<div class="demo-tag">BẢN MẪU DEMO • Marketing Việt Anh</div>
 <script>
 /* ============================================================
    DỮ LIỆU PHỄU K-12 — Trường Việt Anh (game-hoá)
@@ -616,7 +619,7 @@ function renderWelcome(){
    <div class="card">
      <p class="eyebrow">Trắc nghiệm 2 phút • Miễn phí</p>
      <h1>Con của anh/chị đang phát triển tới đâu?</h1>
-     <p class=”lead”>Cùng dựng <b>”Bản đồ phát triển”</b> riêng cho con theo đúng 4 lĩnh vực phát triển — <b>Kiến thức · Kỹ năng · Tiếng Anh · Thể chất</b> — thêm <b>Hướng nghiệp</b> ở cấp 2–3. Hãy chọn cấp học của con để bắt đầu.</p>
+     <p class="lead">Cùng dựng <b>“Bản đồ phát triển”</b> riêng cho con theo đúng 4 lĩnh vực phát triển — <b>Kiến thức · Kỹ năng · Tiếng Anh · Thể chất</b> — thêm <b>Hướng nghiệp</b> ở cấp 2–3. Hãy chọn cấp học của con để bắt đầu.</p>
      <div class="grid" id="levels"></div>
      <p class="note">Mỗi cấp có bộ câu hỏi riêng, phân rã theo giai đoạn phát triển của con.</p>
    </div>`;
@@ -741,7 +744,7 @@ function renderLeadGate(){
      <input class="field" id="pname" placeholder="Tên anh/chị (để xưng hô)" />
      <input class="field" id="cname" placeholder="${cw==='bé'?'Tên ở nhà của bé':'Tên / biệt danh của con'} (để gọi)" />
      <input class="field" id="zalo" placeholder="Số Zalo nhận báo cáo (vd: 09xx xxx xxx)" inputmode="numeric" type="tel" pattern="0[35789][0-9]{8}" oninput="this.value=this.value.replace(/[^0-9]/g,'')" />
-     <label class="consent"><input type="checkbox" id="cs" /> Tôi đồng ý Trường Việt Anh liên hệ tư vấn và xử lý dữ liệu của tôi &amp; của con theo <b>Nghị định 13/2023/NĐ-CP</b> về bảo vệ dữ liệu cá nhân (bao gồm dữ liệu trẻ em).</label>
+     <label class="consent"><input type="checkbox" id="cs" /> Tôi đồng ý Trường Việt Anh liên hệ tư vấn và xử lý dữ liệu của tôi &amp; của con theo <b>Luật Bảo vệ dữ liệu cá nhân số 91/2025/QH15</b> (bao gồm dữ liệu trẻ em).</label>
      <button class="btn gold" id="unlock" disabled>Xem Bản đồ của ${cw} + 3 việc làm ngay</button>
      <span class="backlink" id="bk">← Quay lại</span>
      <p class="note">Bản đồ mang tính tham khảo để cùng đồng hành, không thay thế chẩn đoán giáo dục/tâm lý chuyên môn.</p>

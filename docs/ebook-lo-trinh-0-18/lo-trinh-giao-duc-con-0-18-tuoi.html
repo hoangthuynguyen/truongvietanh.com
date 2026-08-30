@@ -1,0 +1,1821 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lộ trình giáo dục con 0–18 tuổi — Trường Việt Anh</title>
+<meta name="author" content="Nguyễn Mạnh Dương — Hệ thống Giáo dục K-12 Việt Anh">
+<meta name="description" content="Bản đồ 7 chặng đường phát triển của con từ 0 đến 18 tuổi, nhìn theo 6 trục, kèm nghi thức kết nối gia đình, kịch bản đối thoại và việc làm ngay mỗi tuần.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,400;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+:root{
+  --navy:#26275D; --navy2:#3a3c7a; --gold:#F9DD0E; --gold-dk:#c9b200;
+  --ink:#16171f; --mute:#6b6f7e; --line:#c8ccd8; --soft:#f2f3f8; --soft2:#eef1fa;
+  --green:#0c7a4d; --green-bg:#e8f7ef; --amber:#9a6b00; --amber-bg:#fff6e0;
+  --red:#a32b2b; --red-bg:#fdeeee;
+}
+html,body{margin:0;padding:0}
+body{
+  font-family:"Be Vietnam Pro","Segoe UI",Arial,sans-serif;
+  color:var(--ink);
+  -webkit-print-color-adjust:exact; print-color-adjust:exact;
+}
+@page{ size:A4 portrait; margin:0 }
+.page{
+  width:210mm; height:296.9mm; padding:16mm 16mm 11mm;
+  background:#fff; position:relative; overflow:hidden;
+  page-break-after:always; break-after:page;
+  margin:0 auto;
+}
+.page:last-child{page-break-after:auto;break-after:auto}
+/* Bóng đổ và nền xám chỉ để xem trên màn hình. Để chúng ở @media print thì Chromium
+   raster hoá TỪNG TRANG thành ảnh — chữ mất vector, không bôi đen chọn được, file
+   phồng gấp đôi. Đã tái hiện: 98 ảnh khổ trang trong bản xuất thử. */
+@media screen{
+  body{background:#5f6270}
+  .page{margin:0 auto 8mm; box-shadow:0 3px 18px rgba(0,0,0,.42)}
+}
+
+.run{position:absolute;top:7mm;left:16mm;right:16mm;display:flex;justify-content:space-between;
+     align-items:center;font-size:7pt;letter-spacing:.08em;text-transform:uppercase;color:var(--mute)}
+.run b{color:var(--navy);font-weight:700}
+.foot{position:absolute;bottom:7mm;left:16mm;right:16mm;display:flex;align-items:center;
+      justify-content:space-between;font-size:7pt;letter-spacing:.06em;color:#a3a8b8}
+
+h1,h2,h3,h4,p,ul,ol{margin:0}
+.eyebrow{font-size:8pt;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold-dk)}
+.h1{font-size:26pt;font-weight:800;color:var(--navy);line-height:1.12;letter-spacing:-.02em}
+.h2{font-size:16.5pt;font-weight:800;color:var(--navy);line-height:1.18;letter-spacing:-.01em}
+.h3{font-size:11.5pt;font-weight:800;color:var(--navy);line-height:1.25}
+.h4{font-size:9.5pt;font-weight:800;color:var(--navy);text-transform:uppercase;letter-spacing:.06em}
+.rule{height:1.4mm;background:var(--gold);width:26mm;border-radius:1mm;margin:3mm 0 5mm}
+.rule.sm{width:16mm;height:1.1mm;margin:2mm 0 3.2mm}
+.card .rule.sm,.ritual .rule.sm,.mirror .rule.sm,.do .rule.sm,.risk .rule.sm,
+.fill .rule.sm,.fill2 .rule.sm,.va-box .rule.sm,.script .rule.sm{margin:1.4mm 0 2.4mm}
+p{font-size:9.8pt;line-height:1.6}
+p+p{margin-top:2.4mm}
+.lead{font-size:11pt;line-height:1.55;color:#2f3340}
+.small{font-size:8.5pt;line-height:1.5;color:var(--mute)}
+.tiny{font-size:7.4pt;line-height:1.45;color:var(--mute)}
+b,strong{font-weight:700}
+.navy{color:var(--navy)}
+
+.card{border:.35mm solid var(--line);border-radius:2.4mm;padding:4mm 4.5mm}
+.fill{background:var(--soft);border-radius:2.4mm;padding:4mm 4.5mm}
+.fill2{background:var(--soft2);border-radius:2.4mm;padding:4.5mm 5mm}
+.va-box{background:var(--soft2);border-left:1.4mm solid var(--navy);border-radius:0 2.4mm 2.4mm 0;padding:4mm 4.5mm}
+.risk{background:var(--amber-bg);border-left:1.4mm solid var(--gold-dk);border-radius:0 2.4mm 2.4mm 0;padding:4mm 4.5mm}
+.do{background:var(--green-bg);border-left:1.4mm solid var(--green);border-radius:0 2.4mm 2.4mm 0;padding:4mm 4.5mm}
+.ritual{background:#f4f1fb;border-left:1.4mm solid #5b4a9c;border-radius:0 2.4mm 2.4mm 0;padding:4mm 4.5mm}
+.ritual .h4{color:#4a3b85}
+.mirror{border:.35mm dashed var(--navy2);border-radius:2.4mm;padding:4mm 4.5mm;background:#fbfbfe}
+
+/* kịch bản đối thoại */
+.script{border:.35mm solid var(--line);border-radius:2.4mm;padding:4mm 4.5mm}
+.script .sit{font-size:8.8pt;font-style:italic;color:var(--navy2);margin-bottom:2.6mm}
+.line{border-radius:2mm;padding:3mm 3.5mm;font-size:9.2pt;line-height:1.5}
+.line+.line{margin-top:2.4mm}
+.line .tag{display:block;font-size:7.4pt;font-weight:800;letter-spacing:.1em;
+  text-transform:uppercase;margin-bottom:1.2mm}
+.line--no{background:var(--red-bg)}
+.line--no .tag{color:var(--red)}
+.line--yes{background:var(--green-bg)}
+.line--yes .tag{color:var(--green)}
+
+.quote{border-left:1.4mm solid var(--gold);padding:1mm 0 1mm 5mm;font-style:italic;color:#3a3f4d;font-size:9.4pt;line-height:1.55}
+.quote cite{display:block;font-style:normal;font-size:7.8pt;color:var(--mute);margin-top:1.8mm}
+
+ul.ticks{list-style:none;padding:0}
+ul.ticks li{position:relative;padding-left:6mm;font-size:9.1pt;line-height:1.46}
+ul.ticks li+li{margin-top:1.9mm}
+ul.ticks li::before{content:"";position:absolute;left:0;top:1.5mm;width:3mm;height:3mm;
+  border-radius:.8mm;background:var(--gold)}
+ul.dots{padding-left:4.5mm}
+ul.dots li{font-size:9.1pt;line-height:1.46}
+ul.dots li+li{margin-top:1.7mm}
+ol.steps{padding-left:5mm}
+ol.steps li{font-size:9.4pt;line-height:1.52}
+ol.steps li+li{margin-top:2.4mm}
+
+ul.check{list-style:none;padding:0;column-count:2;column-gap:7mm}
+ul.check li{position:relative;padding-left:6.5mm;font-size:8.7pt;line-height:1.42;
+  break-inside:avoid;margin-bottom:2.4mm}
+ul.check li::before{content:"";position:absolute;left:0;top:.7mm;width:3.6mm;height:3.6mm;
+  border:.4mm solid var(--navy);border-radius:.8mm;background:#fff}
+
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;vertical-align:top;padding:2.6mm 3.2mm;font-size:8.8pt;line-height:1.45}
+thead th{background:var(--navy);color:#fff;font-size:8pt;font-weight:700;
+  text-transform:uppercase;letter-spacing:.06em}
+tbody tr+tr td{border-top:.3mm solid var(--line)}
+td.ax{width:32mm;font-weight:700;color:var(--navy);font-size:8.8pt}
+.tbl-wrap{border:.35mm solid var(--line);border-radius:2.4mm;overflow:hidden}
+
+/* mục lục */
+.toc{list-style:none;padding:0;counter-reset:toc}
+.toc li{display:flex;align-items:baseline;gap:3mm;font-size:10pt;line-height:1.5;
+  padding:2.4mm 0;border-bottom:.25mm dotted var(--line)}
+.toc li .n{font-weight:800;color:var(--gold-dk);min-width:8mm}
+.toc li .t{flex:1}
+.toc li .t small{display:block;font-size:8pt;color:var(--mute);line-height:1.4;margin-top:.6mm}
+.toc li .p{font-weight:700;color:var(--navy);font-size:9pt}
+
+/* timeline */
+.tl{display:grid;grid-template-columns:26mm 1fr;gap:0}
+.tl-age{font-size:8.8pt;font-weight:800;color:var(--navy);padding:2.8mm 3mm 2.8mm 0;
+  border-right:.5mm solid var(--gold)}
+.tl-body{padding:2.8mm 0 2.8mm 5mm}
+.tl-body .t{font-size:9.2pt;font-weight:700;color:var(--ink)}
+.tl-body .s{font-size:8.2pt;color:var(--mute);line-height:1.42;margin-top:.7mm}
+.tl-row+.tl-row .tl-age,.tl-row+.tl-row .tl-body{border-top:.3mm solid var(--line)}
+
+/* bìa */
+.cover{background:linear-gradient(155deg,#26275D 0%,#1b1c45 62%,#141534 100%);color:#fff;
+  padding:20mm 18mm 16mm;display:flex;flex-direction:column}
+.cover .h1{color:#fff;font-size:33pt;line-height:1.06}
+.cover .eyebrow{color:var(--gold)}
+.cover .rule{background:var(--gold);width:34mm}
+.cover-logo{width:78mm;height:auto;display:block;margin:0 0 13mm}
+.cover-sub{font-size:12pt;line-height:1.5;color:#d6d9ec;margin-top:6mm;max-width:134mm}
+.cover-axes{display:flex;flex-wrap:wrap;gap:2.2mm;margin-top:9mm}
+.pill{border:.35mm solid rgba(255,255,255,.45);border-radius:20mm;padding:1.8mm 4.5mm;
+  font-size:8.2pt;font-weight:600;color:#fff}
+.pill.solid{background:var(--gold);border-color:var(--gold);color:var(--navy);font-weight:800}
+.cover-foot{margin-top:auto;border-top:.35mm solid rgba(255,255,255,.28);padding-top:6mm;
+  display:flex;justify-content:space-between;align-items:flex-end;gap:8mm}
+.cover-foot .who{font-size:9.2pt;line-height:1.5;color:#e7e9f5}
+.cover-foot .who b{color:#fff}
+.cover-foot .site{font-size:8.4pt;color:var(--gold);font-weight:700;text-align:right;white-space:nowrap}
+
+/* trang cuối */
+.end{background:linear-gradient(155deg,#26275D 0%,#1b1c45 100%);color:#fff;padding:20mm 18mm}
+.end .h2{color:#fff;font-size:21pt}
+.end p{color:#d6d9ec}
+.end .rule{background:var(--gold)}
+.cta-card{background:rgba(255,255,255,.07);border:.35mm solid rgba(255,255,255,.3);
+  border-radius:3mm;padding:5.5mm;margin-top:6mm}
+.cta-card .h4{color:var(--gold)}
+.cta-btn{display:inline-block;background:var(--gold);color:var(--navy);font-weight:800;
+  font-size:10.5pt;padding:3.2mm 7mm;border-radius:2mm;margin-top:3.5mm}
+.contact{display:flex;gap:9mm;margin-top:8mm;font-size:9pt;color:#e7e9f5;line-height:1.55}
+.contact b{display:block;color:var(--gold);font-size:7.6pt;text-transform:uppercase;
+  letter-spacing:.1em;margin-bottom:1.2mm}
+
+a{color:inherit;text-decoration:none}
+.tree-img{display:block;width:132mm;margin:0 auto;height:auto}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:5mm}
+.mt2{margin-top:2.6mm}.mt3{margin-top:4.2mm}.mt4{margin-top:5.6mm}.mt5{margin-top:7.5mm}
+.src{font-size:7.4pt;color:var(--mute);line-height:1.45;margin-top:2.5mm}
+.src b{color:#4a4f60}
+</style>
+</head>
+<body>
+
+<!-- ═════ 1 · BÌA ═════ -->
+<div class="page cover">
+  <img class="cover-logo" src="logo-vang.png" alt="Trường Việt Anh">
+  <p class="eyebrow">Cẩm nang dành cho Ba/Mẹ · Ấn bản 2026</p>
+  <div class="rule"></div>
+  <h1 class="h1">Lộ trình<br>giáo dục con<br>0–18 tuổi</h1>
+  <p class="cover-sub">Bản đồ 7 chặng đường phát triển của con, nhìn theo 6 trục — kèm nghi thức
+    kết nối gia đình, kịch bản đối thoại và việc làm ngay mỗi tuần.</p>
+  <div class="cover-axes">
+    <span class="pill">Kiến thức</span>
+    <span class="pill">Kỹ năng</span>
+    <span class="pill">Tiếng Anh</span>
+    <span class="pill">Thể chất</span>
+    <span class="pill">Hướng nghiệp &amp; Trưởng thành</span>
+    <span class="pill solid">Bản lĩnh &amp; Hệ giá trị</span>
+  </div>
+  <div class="cover-foot">
+    <div class="who">
+      <b>Nguyễn Mạnh Dương</b><br>
+      Nhà sáng lập &amp; Chủ tịch Hệ thống Giáo dục K-12 Việt Anh<br>
+      <span style="color:#b9bdd6">15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi</span>
+    </div>
+    <div class="site"><a href="https://truongvietanh.com">truongvietanh.com</a><br>Ấn bản 2026</div>
+  </div>
+</div>
+
+<!-- ═════ 2 · MỤC LỤC ═════ -->
+<div class="page">
+  <div class="run"><span><b>Lộ trình giáo dục con 0–18 tuổi</b></span><span>Mục lục</span></div>
+  <p class="eyebrow">Mục lục</p>
+  <h2 class="h2">Trong cuốn này có gì</h2>
+  <div class="rule"></div>
+
+  <ul class="toc">
+    <li><span class="n">1</span><span class="t">Thư ngỏ — Không có đứa trẻ nào đi lạc chỉ trong một ngày</span><span class="p">tr. 3</span></li>
+    <li><span class="n">2</span><span class="t">Cây Đại Thụ — cách nhìn một đứa trẻ qua 6 trục<small>Rễ, thân, cành lá, trái ngọt, và nguồn nước là gia đình</small></span><span class="p">tr. 4</span></li>
+    <li><span class="n">3</span><span class="t">Cách dùng cuốn này — 30 phút lần đầu, 10 phút mỗi tuần</span><span class="p">tr. 6</span></li>
+    <li><span class="n">4</span><span class="t">Bản đồ toàn cảnh 7 chặng &amp; cửa sổ phát triển</span><span class="p">tr. 7</span></li>
+    <li><span class="n">5</span><span class="t">Chi tiết 7 chặng đồng hành<small>Mỗi chặng 3 trang: hiểu chặng → kết nối với con → hành động</small></span><span class="p">tr. 8</span></li>
+    <li><span class="n">6</span><span class="t">Phụ lục 1 — Vượt bão chuyển cấp<small>Lớp 5 lên lớp 6 · Lớp 9 lên lớp 10</small></span><span class="p">tr. 29</span></li>
+    <li><span class="n">7</span><span class="t">Phụ lục 2 — Plan-Do-Review ứng dụng tại gia đình</span><span class="p">tr. 31</span></li>
+    <li><span class="n">8</span><span class="t">Tổng hợp — 24 việc hành động chia theo 6 trục</span><span class="p">tr. 32</span></li>
+    <li><span class="n">9</span><span class="t">Nguồn tài liệu tham khảo</span><span class="p">tr. 33</span></li>
+  </ul>
+
+  <div class="fill2 mt5">
+    <p class="h4">Ba/Mẹ đang vội thì đọc ba trang này</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Trang 4</b> — cây đại thụ, để hiểu vì sao trục yếu nhất
+      mới là trục quyết định. <b>Trang 7</b> — bản đồ 7 chặng, chụp lại để trong máy. Và
+      <b>ba trang của đúng chặng tuổi con</b>. Ba mươi phút. Phần còn lại để dành, mở khi cần.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>2</span></div>
+</div>
+
+<!-- ═════ 3 · THƯ NGỎ ═════ -->
+<div class="page">
+  <div class="run"><span><b>Lộ trình giáo dục con 0–18 tuổi</b></span><span>Thư ngỏ</span></div>
+  <p class="eyebrow">Thư ngỏ</p>
+  <h2 class="h2">Không có đứa trẻ nào đi lạc chỉ trong một ngày</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Trong mười lăm năm làm giáo dục, câu hỏi tôi nghe nhiều nhất từ Ba/Mẹ không phải là
+    “con tôi có giỏi không”. Nó là: <em>“Giờ này tôi nên làm gì cho con?”</em></p>
+
+  <p class="mt3">Câu hỏi ấy khó trả lời vì mỗi độ tuổi cần một câu trả lời khác nhau. Thứ giúp một bé
+    ba tuổi lớn lên tốt lại gần như vô dụng với một bạn lớp 9. Và ngược lại — nhiều điều Ba/Mẹ
+    dồn sức làm ở cấp ba thì đáng lẽ phải bắt đầu từ mười năm trước, lúc còn dễ và còn rẻ.</p>
+
+  <p>Phần lớn những khoảng trống tôi gặp ở học sinh không đến từ một biến cố. Chúng tích lại rất
+    chậm, qua nhiều năm, từ những chỗ không ai để ý: một cửa sổ ngôn ngữ khép lại lặng lẽ, một thói
+    quen tự lập chưa kịp hình thành, một năm tiểu học trôi qua mà con chỉ học thuộc chứ chưa hiểu.
+    Đến khi thấy được thì việc sửa đã tốn gấp nhiều lần.</p>
+
+  <p>Cuốn cẩm nang này ra đời để Ba/Mẹ nhìn thấy chúng sớm hơn. Nó chia chặng đường 0–18 thành
+    <b>bảy chặng</b>, mỗi chặng nói rõ ba điều: <b>giai đoạn này quyết định cái gì</b>,
+    <b>Ba/Mẹ nên quan sát dấu hiệu nào</b>, và <b>làm được gì ngay tuần này</b> — bằng những việc
+    không tốn tiền, không cần chuyên gia, làm được ở bàn ăn nhà mình.</p>
+
+  <p>Nhưng tôi muốn nói thêm một điều mà càng làm nghề lâu tôi càng tin: <b>giáo dục con thực chất
+    là hành trình tự giáo dục chính mình của cha mẹ</b>. Trẻ không học từ những gì ta nói; chúng học
+    từ cách ta sống. Vì vậy mỗi chặng trong cuốn này đều có một mục nhỏ dành riêng cho Ba/Mẹ —
+    không phải việc để làm cho con, mà là việc để tự rèn lấy mình.</p>
+
+  <p>Tôi cố ý không viết nó thành một cuốn giới thiệu trường. Những con số trong đây đều dẫn nguồn,
+    và Ba/Mẹ dùng được dù con đang học ở đâu. Phần Trường Việt Anh làm gì, tôi gói riêng trong một
+    ô nhỏ ở cuối mỗi chặng — để Ba/Mẹ tự đối chiếu, chứ không phải để thuyết phục.</p>
+
+  <p class="mt3">Mong cuốn sách nhỏ này giúp Ba/Mẹ bớt một chút lo, và biết chắc hơn một chút rằng
+    mình đang làm đúng việc, đúng lúc.</p>
+
+  <div class="mt4" style="border-top:.35mm solid var(--line);padding-top:5mm">
+    <p style="font-size:11pt;font-weight:800;color:var(--navy);margin:0">Nguyễn Mạnh Dương</p>
+    <p class="small" style="margin-top:1.4mm">Nhà sáng lập &amp; Chủ tịch Hệ thống Giáo dục K-12 Việt Anh<br>
+      Tốt nghiệp Manchester Metropolitan University</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>3</span></div>
+</div>
+
+<!-- ═════ 4 · CÂY ĐẠI THỤ (hình) ═════ -->
+<div class="page">
+  <div class="run"><span>Triết lý cốt lõi</span><span><b>Cây Đại Thụ</b></span></div>
+  <p class="eyebrow">Phần một</p>
+  <h2 class="h2">Một đứa trẻ lớn lên như một cái cây</h2>
+  <div class="rule"></div>
+  <p class="small" style="margin-bottom:4mm">Không phải một chuỗi nhiệm vụ phải hoàn thành, mà là
+    một cơ thể sống có gốc, có thân, có tán — và có người tưới.</p>
+
+  <img class="tree-img" src="cay-dai-thu.jpg" alt="Mô hình Cây Đại Thụ — 6 trục phát triển của trẻ">
+
+  <div class="foot"><span>Trường Việt Anh</span><span>4</span></div>
+</div>
+
+<!-- ═════ 5 · CÂY ĐẠI THỤ (giải thích) ═════ -->
+<div class="page">
+  <div class="run"><span>Triết lý cốt lõi</span><span><b>Cây Đại Thụ</b></span></div>
+  <p class="eyebrow">Đọc cái cây</p>
+  <h2 class="h2">Sáu trục, và trục nào đang giữ con lại</h2>
+  <div class="rule"></div>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:34mm">Bộ phận</th><th>Trục này thật ra là gì</th></tr></thead>
+      <tbody>
+        <tr><td class="ax">Rễ sâu bền<br><span class="tiny">Thể chất</span></td>
+          <td>Dinh dưỡng, vận động, giấc ngủ, thị lực — và ở tuổi teen là cả sức khoẻ tinh thần.
+            Rễ yếu thì cây không đủ sức nuôi tán. Đây là trục bị hy sinh đầu tiên mỗi khi việc học
+            căng lên, và trả giá muộn nhất.</td></tr>
+        <tr><td class="ax">Thân cây vững chãi<br><span class="tiny">Bản lĩnh &amp; Hệ giá trị</span></td>
+          <td>Bệ đỡ nội tâm, dựng trên năm giá trị: <b>Tôn trọng · Trách nhiệm · Tài giỏi ·
+            Chính trực · Yêu thương</b>. Thân cứng thì cành có vươn xa đến đâu cũng không gãy trước
+            cám dỗ và áp lực.</td></tr>
+        <tr><td class="ax">Cành lá vươn cao<br><span class="tiny">Kiến thức · Tiếng Anh · Kỹ năng</span></td>
+          <td><b>Kiến thức</b> — con xử lý thông tin ở tầng nào: nhớ lại, hay hiểu, hay phân tích
+            và tự đánh giá được. <b>Tiếng Anh</b> — trục duy nhất có hạn dùng sinh học, khả năng
+            đạt phát âm gần bản ngữ khép dần sau tuổi 17–18. <b>Kỹ năng</b> — tự lập, điều tiết
+            cảm xúc, hợp tác, dám thể hiện, kiên trì khi việc khó.</td></tr>
+        <tr><td class="ax">Trái ngọt<br><span class="tiny">Hướng nghiệp &amp; Trưởng thành</span></td>
+          <td>Hiểu mình mạnh ở đâu, thích gì, rồi chọn hướng có căn cứ. Trục này chỉ có ý nghĩa khi
+            con đủ lớn để tự quan sát mình — nhưng lại phải quyết định <b>ngay từ lớp 10</b>.</td></tr>
+        <tr><td class="ax">Nắng và nước<br><span class="tiny">Gia đình</span></td>
+          <td>Không phải một trục của con, mà là môi trường quanh con: sự hiện diện trọn vẹn, tình
+            yêu thương không điều kiện, và những nghi thức kết nối lặp lại mỗi ngày.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fill2 mt4">
+    <p class="h4">Nguyên lý quan trọng nhất trong cuốn này</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Các trục kéo nhau. Một đứa trẻ ngủ không đủ và ít vận
+      động thì trục Kiến thức tụt theo — nghiên cứu trên học sinh cho thấy nhóm vận động đều đặn có
+      điểm Toán cao hơn khoảng 6%. Một đứa trẻ chưa biết điều tiết cảm xúc thì học bao nhiêu cũng
+      khó giữ. Ngược lại, đứa trẻ vững ở trục Kỹ năng và Bản lĩnh thường tự kéo trục Kiến thức lên
+      mà Ba/Mẹ không phải kèm từng tối.</p>
+    <p class="small mt2" style="color:#2f3340">Nghĩa là: <b>trục yếu nhất mới là trục quyết định</b>,
+      không phải trục mạnh nhất. Cả cuốn sách này được thiết kế quanh đúng một câu hỏi — trục nào
+      của con đang thấp nhất — và Ba/Mẹ chỉ cần dồn sức vào đúng trục đó.</p>
+  </div>
+
+  <p class="src mt3"><b>Nguồn:</b> Freeman et al., <em>PNAS</em> 2014 · Krathwohl 2001 ·
+    Hartshorne et al., <em>Cognition</em> 2018 · <em>Frontiers in Public Health</em> 2025.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>5</span></div>
+</div>
+
+<!-- ═════ 6 · CÁCH DÙNG ═════ -->
+<div class="page">
+  <div class="run"><span><b>Lộ trình giáo dục con 0–18 tuổi</b></span><span>Cách dùng</span></div>
+  <p class="eyebrow">Cách dùng cuốn này</p>
+  <h2 class="h2">Ba mươi phút, một lần, rồi mỗi tuần mười phút</h2>
+  <div class="rule"></div>
+
+  <ol class="steps">
+    <li><b>Mở thẳng chặng của con.</b> Ba/Mẹ không cần đọc từ đầu — tìm đúng độ tuổi con đang ở và
+      bắt đầu từ đó. Nhà có hai bé thì đọc hai chặng.</li>
+    <li><b>Đọc chặng ngay trước và ngay sau.</b> Chặng trước cho biết còn gì chưa kịp làm và liệu
+      có vá được không. Chặng sau cho biết con sắp bước vào điều gì — phần lớn cú sốc chuyển cấp
+      đến từ việc không ai báo trước.</li>
+    <li><b>Làm phần “Tự kiểm nhanh”.</b> Tám ô vuông, đánh dấu thật thà. Ô nào trống là một khoảng
+      trống — không phải một lời phê bình.</li>
+    <li><b>Chọn đúng <em>một</em> việc.</b> Mỗi chặng có phần “Việc làm ngay tuần này”. Đừng làm cả
+      danh sách. Chọn một việc thuộc trục yếu nhất và giữ nó trong bốn tuần. Một thói quen bền hơn
+      mười ý định tốt.</li>
+    <li><b>Giữ một nghi thức kết nối.</b> Mỗi chặng có một nghi thức 15 phút mỗi ngày. Đây là phần
+      Ba/Mẹ hay bỏ qua vì thấy “không phải học hành gì”, nhưng nó chính là nguồn nước của cả
+      cái cây.</li>
+    <li><b>Bốn tuần sau mở lại.</b> Đánh dấu lại tám ô. Thứ Ba/Mẹ đang xây là một đường đi, không
+      phải một lần dọn dẹp.</li>
+  </ol>
+
+  <div class="fill mt4">
+    <p class="h4">Ba điều cuốn này không phải</p>
+    <div class="rule sm"></div>
+    <ul class="dots">
+      <li><b>Không phải công cụ chẩn đoán.</b> Nếu Ba/Mẹ thực sự lo về phát triển của con — chậm
+        nói, khó tập trung kéo dài, khủng hoảng cảm xúc — hãy gặp chuyên gia y tế hoặc tâm lý.</li>
+      <li><b>Không phải bảng xếp hạng.</b> Không có “chuẩn” để so con mình với con hàng xóm. Trẻ
+        phát triển theo nhịp riêng; điều đáng nhìn là con hôm nay so với con hôm qua.</li>
+      <li><b>Không phải danh sách để làm hết.</b> Một việc được giữ đủ lâu có giá trị hơn cả trang
+        gạch đầu dòng bỏ dở sau ba ngày.</li>
+    </ul>
+  </div>
+
+  <div class="do mt4">
+    <p class="h4" style="color:var(--green)">Một lời nhắc về sự tử tế với chính mình</p>
+    <p class="small mt2" style="color:#2f3340">Sẽ có chặng Ba/Mẹ đọc và thấy mình đã bỏ lỡ. Gần như
+      ai cũng vậy — kể cả những người làm nghề giáo dục. Cửa sổ phát triển đóng lại chậm chứ không
+      sập, và rất nhiều thứ vẫn vá được ở chặng sau, chỉ là cần kiên nhẫn hơn. Điều tệ nhất Ba/Mẹ
+      có thể làm sau khi đọc cuốn này là tự trách. Điều tốt nhất là chọn một việc, bắt đầu tối nay.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>6</span></div>
+</div>
+
+<!-- ═════ 7 · BẢN ĐỒ 7 CHẶNG ═════ -->
+<div class="page">
+  <div class="run"><span><b>Lộ trình giáo dục con 0–18 tuổi</b></span><span>Bản đồ tổng</span></div>
+  <p class="eyebrow">Phần hai</p>
+  <h2 class="h2">Bảy chặng, mỗi chặng một cửa sổ</h2>
+  <div class="rule"></div>
+  <p class="small" style="margin-bottom:5mm">Mỗi chặng có một thứ mở ra rộng nhất rồi khép lại dần.
+    Đây là trang Ba/Mẹ nên chụp lại để trong máy.</p>
+
+  <div class="tl">
+    <div class="tl-row" style="display:contents">
+      <div class="tl-age">0–3 tuổi<div class="tiny" style="font-weight:600;margin-top:.5mm">Nhà trẻ</div></div>
+      <div class="tl-body"><div class="t">Cửa sổ ngôn ngữ &amp; gắn bó an toàn</div>
+        <div class="s">Não tạo hơn một triệu kết nối thần kinh mỗi giây. Việc quan trọng nhất là
+          người lớn nói chuyện với con — nhiều, mỗi ngày, mặt đối mặt.</div></div>
+    </div>
+    <div class="tl-row" style="display:contents">
+      <div class="tl-age">3–4 tuổi<div class="tiny" style="font-weight:600;margin-top:.5mm">Mẫu giáo</div></div>
+      <div class="tl-body"><div class="t">Đỉnh tò mò &amp; kỹ năng xã hội sơ khởi</div>
+        <div class="s">Con hỏi “tại sao” không ngớt và bắt đầu học chơi với người khác. Động cơ học
+          hình thành ở đây — hoặc tắt dần.</div></div>
+    </div>
+    <div class="tl-row" style="display:contents">
+      <div class="tl-age">5 tuổi<div class="tiny" style="font-weight:600;margin-top:.5mm">Lớp Lá</div></div>
+      <div class="tl-body"><div class="t">Chìa khoá sẵn sàng vào lớp 1</div>
+        <div class="s">Không phải biết đọc trước, mà là ngồi tập trung được, tự phục vụ được và
+          dám phát biểu.</div></div>
+    </div>
+    <div class="tl-row" style="display:contents">
+      <div class="tl-age">Lớp 1–2<div class="tiny" style="font-weight:600;margin-top:.5mm">6–8 tuổi</div></div>
+      <div class="tl-body"><div class="t">Xây nền &amp; giữ lửa ham học</div>
+        <div class="s">Hổng nền ở đây kéo theo cả cấp tiểu học. Quan trọng ngang bằng: con có còn
+          thích đi học không.</div></div>
+    </div>
+    <div class="tl-row" style="display:contents">
+      <div class="tl-age">Lớp 3–5<div class="tiny" style="font-weight:600;margin-top:.5mm">8–11 tuổi</div></div>
+      <div class="tl-body"><div class="t">Chuyển từ học thuộc sang hiểu</div>
+        <div class="s">Cửa sổ để dạy con tự học. Ai qua chặng này mà vẫn học vẹt sẽ đuối ngay khi
+          lên lớp 6.</div></div>
+    </div>
+    <div class="tl-row" style="display:contents">
+      <div class="tl-age">Lớp 6–9<div class="tiny" style="font-weight:600;margin-top:.5mm">THCS</div></div>
+      <div class="tl-body"><div class="t">Tự lập, tư duy phân tích &amp; nền hướng nghiệp</div>
+        <div class="s">Trục Hướng nghiệp mở ra. Lớp 9 là mốc: nền tiếng Anh và định hướng cần có
+          <b>trước</b> khi vào lớp 10.</div></div>
+    </div>
+    <div class="tl-row" style="display:contents">
+      <div class="tl-age">Lớp 10–12<div class="tiny" style="font-weight:600;margin-top:.5mm">THPT</div></div>
+      <div class="tl-body"><div class="t">Kiến tạo hướng đi &amp; xây hồ sơ vào đời</div>
+        <div class="s">Chọn tổ hợp môn ngay từ lớp 10. Điểm số mở cánh cửa, nhưng kỹ năng và
+          bản lĩnh mới giữ con đứng vững phía sau nó.</div></div>
+    </div>
+  </div>
+
+  <div class="risk mt4">
+    <p class="h4" style="color:var(--amber)">Một quy luật xuyên suốt bảy chặng</p>
+    <p class="small mt2" style="color:#2f3340">Càng về sau, mọi thứ càng đắt hơn. Một thói quen đọc
+      sách gây dựng lúc con hai tuổi tốn mười lăm phút mỗi tối. Cũng thói quen ấy xây lại ở tuổi
+      mười lăm cần thay đổi cả nếp sống của con lẫn của nhà. Điều này đúng với gần như mọi trục —
+      rõ nhất ở tiếng Anh và ở tính tự lập.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>7</span></div>
+</div>
+
+<!-- ═════════ CHẶNG 1 · DƯỚI 3 TUỔI ═════════ -->
+<div class="page">
+  <div class="run"><span>Chặng 1 · <b>Dưới 3 tuổi</b></span><span>Hiểu chặng</span></div>
+  <p class="eyebrow">Chặng 1 — Nhà trẻ</p>
+  <h2 class="h2">Dưới 3 tuổi: những gì xảy ra trong im lặng</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Đây là chặng ít giấy tờ nhất và quan trọng nhất. Không điểm số, không bài kiểm
+    tra — nhưng phần lớn nền móng được đặt ở đây.</p>
+
+  <p class="mt3">Trong ba năm đầu, não của bé tạo <b>hơn một triệu kết nối thần kinh mỗi giây</b>,
+    và đạt khoảng 90% kích thước não người lớn trước năm tuổi. Thứ quyết định những kết nối nào
+    được giữ lại rất đơn giản: <b>bé được tương tác với người thật bao nhiêu</b>. Không ứng dụng
+    nào, không đồ chơi thông minh nào thay được ánh mắt và giọng nói của Ba/Mẹ.</p>
+
+  <div class="quote mt3">
+    “Bé nhà mình đi trẻ tuần đầu khóc dữ lắm, các cô kiên nhẫn ôm ấp từng buổi. Giờ sáng nào con
+    cũng đòi đi học.”
+    <cite>— Mẹ bé Su, lớp nhà trẻ · trích từ video chia sẻ của phụ huynh</cite>
+  </div>
+
+  <div class="tbl-wrap mt3">
+    <table>
+      <thead><tr><th style="width:34mm">Trục</th><th>Ba/Mẹ nên quan sát điều gì</th></tr></thead>
+      <tbody>
+        <tr><td class="ax">Kiến thức</td><td>Bé nói được bao nhiêu từ, đã ghép 2–3 từ chưa? Mỗi ngày
+          bé được trò chuyện và đọc sách cùng người lớn bao lâu, so với thời gian trước màn hình?</td></tr>
+        <tr><td class="ax">Kỹ năng</td><td>Khi xa Ba/Mẹ, bé thích nghi được hay bám chặt rất lâu?
+          Bé đã tự xúc ăn, tự cầm ly uống nước chưa?</td></tr>
+        <tr><td class="ax">Tiếng Anh</td><td>Bé đã được nghe tiếng Anh chưa, có phải giọng bản ngữ
+          không? Ở tuổi này mục tiêu là <em>quen tai</em>, không phải học từ vựng.</td></tr>
+        <tr><td class="ax">Thể chất</td><td>Bữa ăn có bình yên không hay là một cuộc chiến? Nhịp
+          ăn – ngủ – vận động ngoài trời có đều mỗi ngày không?</td></tr>
+        <tr><td class="ax">Hướng nghiệp</td><td style="color:var(--mute)">Chưa mở ở chặng này.</td></tr>
+        <tr><td class="ax">Bản lĩnh &amp; Hệ giá trị</td><td>Khi bé khóc hay sợ, bé có nhận được phản
+          hồi ấm áp không? Đây là nơi giá trị đầu tiên — <b>Yêu thương</b> — được gieo, qua sự gắn bó
+          an toàn.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="risk mt3">
+    <p class="h4" style="color:var(--amber)">Nếu chặng này bị bỏ lỡ</p>
+    <div class="rule sm"></div>
+    <ul class="dots" style="color:#2f3340">
+      <li><b>Cửa sổ vàng ngôn ngữ trôi qua một lần</b> và không lấy lại được — thiếu kích hoạt khiến
+        con mất lợi thế phát âm tự nhiên.</li>
+      <li><b>Màn hình sớm thay cho giao tiếp người thật</b> làm chậm ngôn ngữ và suy giảm khả năng
+        chú ý có chủ đích — thứ con cần nhất khi vào lớp 1.</li>
+      <li><b>Thiếu gắn bó an toàn</b> khiến trẻ dễ rơi vào lo âu chia ly kéo dài, nhút nhát khi ra
+        môi trường tập thể.</li>
+    </ul>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>8</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 1 · <b>Dưới 3 tuổi</b></span><span>Kết nối với con</span></div>
+  <p class="eyebrow">Kết nối</p>
+  <h2 class="h2">Nguồn nước cho chặng này</h2>
+  <div class="rule"></div>
+
+  <div class="ritual">
+    <p class="h4">Nghi thức 15 phút mỗi ngày — “Tắm trong ngôn ngữ &amp; ôm ấp trọn vẹn”</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Mỗi tối trước khi ngủ, tắt hoàn toàn thiết bị điện tử.
+      Ba/Mẹ ôm con vào lòng, vuốt ve nhẹ nhàng, đọc một cuốn truyện tranh ngắn, rồi thủ thỉ kể về
+      một ngày của mình bằng giọng ấm áp. Bé chưa hiểu hết chữ, nhưng bé thu nhận toàn bộ nhịp điệu,
+      ngữ điệu và cảm giác an toàn.</p>
+  </div>
+
+  <div class="script mt4">
+    <p class="h4">Kịch bản đối thoại mẫu</p>
+    <div class="rule sm"></div>
+    <p class="sit">Khi con khóc ăn vạ đòi điện thoại</p>
+    <div class="line line--no"><span class="tag">Tránh nói</span>
+      “Nín ngay! Cấm khóc, không có điện thoại gì hết, hư quá!”</div>
+    <div class="line line--yes"><span class="tag">Nên nói</span>
+      <em>(ôm nhẹ con)</em> “Mẹ thấy con đang rất thèm xem điện thoại và đang bực mình đúng không?
+      Mẹ biết con buồn. Nhưng đến giờ cất điện thoại rồi. Mình cùng chơi xếp hình gỗ này nhé,
+      xem ai xếp cao hơn nào!”</div>
+  </div>
+
+  <div class="mirror mt4">
+    <p class="h4">Tấm gương soi cho Ba/Mẹ</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Rèn điều tiết cảm xúc của chính mình.</b> Trẻ ở tuổi
+      này học cách điều hoà hệ thần kinh thông qua hệ thần kinh của người lớn bên cạnh. Nghĩa là
+      trước khi dạy con bình tĩnh, Ba/Mẹ phải bình tĩnh được trước đã — không quát tháo, không
+      bạo lực ngôn từ trước mặt con. Một ngôi nhà yên là bài học đầu tiên và sâu nhất mà bé nhận
+      được ở chặng này.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>9</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 1 · <b>Dưới 3 tuổi</b></span><span>Hành động</span></div>
+  <p class="eyebrow">Hành động</p>
+  <h2 class="h2">Chọn một việc, giữ bốn tuần</h2>
+  <div class="rule"></div>
+
+  <div class="do">
+    <p class="h4" style="color:var(--green)">Việc làm ngay tuần này</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Đọc sách hoặc kể chuyện tương tác cùng bé 15 phút mỗi ngày</b> trước khi ngủ, hỏi những
+        câu cực đơn giản như “Bạn gấu đâu rồi con nhỉ?” để kích thích não bộ.</li>
+      <li><b>Cắt thời gian màn hình dưới mọi hình thức,</b> thay bằng chơi xếp hình, đếm đồ vật hoặc
+        phân loại tất theo màu cùng con.</li>
+      <li><b>Giao cho con một việc tự phục vụ siêu nhỏ:</b> tự cất dép lên kệ khi đi học về, tự dọn
+        đồ chơi vào giỏ — và khen thật cụ thể vào nỗ lực, không khen chung chung.</li>
+      <li><b>Khi bé giận, gọi tên cảm xúc giúp con</b> — “con đang buồn vì…” — thay vì mắng.</li>
+      <li><b>Cho bé nghe bài hát hoặc đồng dao tiếng Anh mỗi ngày,</b> ưu tiên giọng bản ngữ.
+        Không ép dịch.</li>
+      <li><b>Bỏ nước ngọt có gas và snack,</b> giữ giờ ăn – giờ ngủ cố định, và cho bé vận động
+        ngoài trời ít nhất 60 phút mỗi ngày.</li>
+    </ul>
+  </div>
+
+  <div class="fill mt3">
+    <p class="h4">Tự kiểm nhanh</p>
+    <div class="rule sm"></div>
+    <ul class="check">
+      <li>Bé nói được nhiều từ đơn và bắt đầu ghép cụm 2–3 từ.</li>
+      <li>Mỗi ngày bé có ít nhất 15 phút đọc sách hoặc trò chuyện cùng Ba/Mẹ.</li>
+      <li>Bé thích nghi tốt sau tuần đầu đi nhà trẻ, không bám chặt kéo dài.</li>
+      <li>Bé tự xúc ăn và tự cầm ly uống nước khá tốt.</li>
+      <li>Bé được nghe tiếng Anh giọng bản ngữ gần như mỗi ngày.</li>
+      <li>Bé ăn ngoan, đa dạng món, bữa ăn không phải cuộc chiến.</li>
+      <li>Bé vận động thô ngoài trời ít nhất 60 phút mỗi ngày.</li>
+      <li>Giờ ăn, giờ ngủ trưa và tối của bé rất đều.</li>
+    </ul>
+  </div>
+
+  <div class="va-box mt3">
+    <p class="h4">Ở Trường Việt Anh, chặng này được làm thế nào</p>
+    <p class="small mt2" style="color:#2f3340">Lớp nhà trẻ giữ sĩ số nhỏ để mỗi bé được tương tác với
+      người thật thay vì màn hình; theo dõi 9 lĩnh vực phát triển bằng bộ công cụ COR Advantage.
+      Nhịp ngày cố định kết hợp <em>Plan-Do-Review</em> giúp bé hình thành tự lập sớm. Có giai đoạn
+      làm quen và <em>Morning Meeting</em> để bé chuyển tiếp đi trẻ an toàn. Tiếng Anh khoảng 6 tiết
+      mỗi tuần với giáo viên nước ngoài. Dinh dưỡng nghiêm ngặt, vận động hằng ngày, ngủ trưa tại
+      trường.</p>
+  </div>
+
+  <p class="src mt2"><b>Nguồn:</b> Harvard Center on the Developing Child · COR Advantage ·
+    Hartshorne et al., <em>Cognition</em> 2018 · WHO Guidelines 2020.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>10</span></div>
+</div>
+
+<!-- ═════════ CHẶNG 2 · 3–4 TUỔI ═════════ -->
+<div class="page">
+  <div class="run"><span>Chặng 2 · <b>3–4 tuổi</b></span><span>Hiểu chặng</span></div>
+  <p class="eyebrow">Chặng 2 — Mẫu giáo</p>
+  <h2 class="h2">3–4 tuổi: tuổi của một vạn câu “tại sao”</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Đây là đỉnh tò mò của cả tuổi thơ. Tò mò hành xử đúng như một ngọn lửa: được nuôi
+    thì cháy tiếp thành niềm ham học suốt đời, bị dập nhiều lần thì tắt.</p>
+
+  <p class="mt3">Ở tuổi này Ba/Mẹ dễ bị cuốn vào câu hỏi “con đã biết chữ chưa”. Nhưng hai thứ dự báo
+    việc học của con tốt hơn nhiều là: <b>con còn muốn hỏi không</b>, và <b>con ngồi được với một
+    việc bao lâu</b>. Lớp 1 sẽ đòi con ngồi tập trung khoảng 35 phút mỗi tiết — khả năng chú ý có
+    chủ đích được xây chính ở đây, qua việc con tự chọn một hoạt động, làm cho xong, rồi nhìn lại.</p>
+
+  <div class="quote mt3">
+    “Con dạn hẳn, về nhà hát được cả bài tiếng Anh. Chuyện biếng ăn cũng đỡ vì con ăn cùng các bạn.”
+    <cite>— Mẹ bé Bắp, lớp mẫu giáo · trích từ video chia sẻ của phụ huynh</cite>
+  </div>
+
+  <div class="tbl-wrap mt3">
+    <table>
+      <thead><tr><th style="width:34mm">Trục</th><th>Ba/Mẹ nên quan sát điều gì</th></tr></thead>
+      <tbody>
+        <tr><td class="ax">Kiến thức</td><td>Bé có hỏi “tại sao” liên tục không? Bé ngồi yên hoàn
+          thành một hoạt động tự chọn được khoảng 10–15 phút chưa?</td></tr>
+        <tr><td class="ax">Kỹ năng</td><td>Bé chơi với bạn thế nào — biết chia sẻ và chờ tới lượt
+          chưa? Khi nổi giận, bé tự bình tĩnh lại được không?</td></tr>
+        <tr><td class="ax">Tiếng Anh</td><td>Bé có thích thú bắt chước nói theo các từ ngắn, các bài
+          hát tiếng Anh vui nhộn không?</td></tr>
+        <tr><td class="ax">Thể chất</td><td>Bé đã quen ăn đồ ngọt, snack chưa? Bé có được vận động
+          tự do để phát triển thăng bằng và độ dẻo dai không?</td></tr>
+        <tr><td class="ax">Hướng nghiệp</td><td style="color:var(--mute)">Chưa mở ở chặng này.</td></tr>
+        <tr><td class="ax">Bản lĩnh &amp; Hệ giá trị</td><td>Con học tôn trọng giới hạn của mình và
+          của người khác qua việc biết lắng nghe và nhường bạn — giá trị <b>Tôn trọng</b> bắt đầu
+          từ đây.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="risk mt3">
+    <p class="h4" style="color:var(--amber)">Nếu chặng này bị bỏ lỡ</p>
+    <div class="rule sm"></div>
+    <ul class="dots" style="color:#2f3340">
+      <li><b>Những câu “tại sao” bị gạt đi bằng sự bực dọc thì ngọn lửa tò mò sẽ tắt.</b> Con trở
+        thành đứa trẻ thụ động, ngại suy nghĩ — và không bài tập nào bù lại được.</li>
+      <li><b>Không rèn tập trung từ hoạt động tự chọn ở tuổi này,</b> con sẽ chật vật khi vào lớp 1
+        phải ngồi yên khoảng 35 phút mỗi tiết.</li>
+      <li><b>Thói quen ăn nhiều đường hình thành ở giai đoạn này cực khó bỏ,</b> làm tăng nguy cơ
+        thừa cân — tỷ lệ ở trẻ nội thành TP.HCM đã vượt 50%.</li>
+    </ul>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>11</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 2 · <b>3–4 tuổi</b></span><span>Kết nối với con</span></div>
+  <p class="eyebrow">Kết nối</p>
+  <h2 class="h2">Nguồn nước cho chặng này</h2>
+  <div class="rule"></div>
+
+  <div class="ritual">
+    <p class="h4">Nghi thức 15 phút mỗi ngày — “Story time &amp; trò chơi Nếu như…”</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Mỗi tối cùng con lật một cuốn truyện. Đọc xong, dành 15
+      phút chơi trò “Nếu như…”: <em>“Nếu con là bạn thỏ trong truyện, con sẽ làm gì khi gặp sói?”</em>
+      Hãy để con bay bổng tự do, không phán xét đúng sai. Đây là bài tập tưởng tượng và ngôn ngữ
+      mạnh nhất ở tuổi này, và nó không tốn một đồng nào.</p>
+  </div>
+
+  <div class="script mt4">
+    <p class="h4">Kịch bản đối thoại mẫu</p>
+    <div class="rule sm"></div>
+    <p class="sit">Khi con hỏi “Tại sao bầu trời màu xanh?” mà Ba/Mẹ không biết trả lời</p>
+    <div class="line line--no"><span class="tag">Tránh nói</span>
+      “Hỏi gì hỏi lắm thế, lo mà chơi đi con!”</div>
+    <div class="line line--yes"><span class="tag">Nên nói</span>
+      “Ôi, câu hỏi của con hay quá! Mẹ cũng chưa biết giải thích thế nào cho đúng nhất. Theo con
+      đoán thì vì sao bầu trời lại màu xanh nhỉ? Tối nay bố đi làm về, cả nhà mình cùng tra cuốn
+      sách khoa học để tìm câu trả lời chính xác nhé!”</div>
+  </div>
+
+  <div class="mirror mt4">
+    <p class="h4">Tấm gương soi cho Ba/Mẹ</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Cất điện thoại xuống trước.</b> Muốn con bớt đòi màn
+      hình và tập trung chơi, Ba/Mẹ phải là tấm gương. Khi bước về nhà, hãy cất điện thoại vào một
+      góc và hiện diện trọn vẹn bằng ánh mắt cùng cuộc trò chuyện thật. Trẻ ở tuổi này không nghe
+      lời ta nói; chúng sao chép việc ta làm.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>12</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 2 · <b>3–4 tuổi</b></span><span>Hành động</span></div>
+  <p class="eyebrow">Hành động</p>
+  <h2 class="h2">Chọn một việc, giữ bốn tuần</h2>
+  <div class="rule"></div>
+
+  <div class="do">
+    <p class="h4" style="color:var(--green)">Việc làm ngay tuần này</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Áp dụng quy tắc “hỏi ngược lại”.</b> Khi con hỏi “tại sao”, hãy hỏi lại “Con nghĩ vì
+        sao thế nhỉ?” — con được tập suy luận, và Ba/Mẹ mua thêm được ba phút.</li>
+      <li><b>Cho con tự chọn một hoạt động mỗi tối và làm cho xong,</b> rồi cùng nhìn lại “hôm nay
+        con làm được gì”.</li>
+      <li><b>Tạo cơ hội chơi tự do cùng nhóm bạn đồng lứa 2–3 lần mỗi tuần</b> để con tự học cách
+        điều đình, chia sẻ và giải quyết xung đột nhỏ.</li>
+      <li><b>Khi con bùng nổ cảm xúc, tuyệt đối không quát.</b> Ngồi thấp ngang tầm mắt con, ôm con
+        và gọi tên cảm xúc: “Mẹ biết con đang rất tức giận vì chưa được chơi tiếp đúng không?”</li>
+      <li><b>Cho con nghe tiếng Anh mỗi ngày qua bài hát và trò chơi,</b> khen mỗi lần con bật ra
+        một từ — đừng sửa phát âm ở giai đoạn này.</li>
+      <li><b>Giữ giờ ăn – ngủ cố định, bỏ nước ngọt có gas và snack,</b> và đảm bảo bé vận động
+        ít nhất 60 phút mỗi ngày.</li>
+    </ul>
+  </div>
+
+  <div class="fill mt3">
+    <p class="h4">Tự kiểm nhanh</p>
+    <div class="rule sm"></div>
+    <ul class="check">
+      <li>Bé tò mò, thường xuyên hỏi “tại sao”.</li>
+      <li>Bé kiên trì tự hoàn thành hoạt động mình đã chọn.</li>
+      <li>Bé hoà đồng, biết chia sẻ đồ chơi và chờ tới lượt.</li>
+      <li>Khi nổi giận, bé bình tĩnh lại được và nói ra được cảm xúc.</li>
+      <li>Bé thích âm điệu tiếng Anh, tự tin bắt chước theo.</li>
+      <li>Bé ăn đa dạng, ít bánh kẹo và nước ngọt có gas.</li>
+      <li>Bé có ít nhất 60 phút chơi vận động ngoài trời mỗi ngày.</li>
+      <li>Bé ngủ trưa đều và sinh hoạt đúng giờ giấc.</li>
+    </ul>
+  </div>
+
+  <div class="va-box mt3">
+    <p class="h4">Ở Trường Việt Anh, chặng này được làm thế nào</p>
+    <p class="small mt2" style="color:#2f3340">Học qua dự án khám phá để giữ lửa tò mò, theo dõi
+      9 lĩnh vực phát triển bằng COR Advantage. <em>Plan-Do-Review</em> hằng ngày rèn chú ý có
+      chủ đích. <em>Morning Meeting</em>, hoạt động nhóm và 5 giá trị cốt lõi dạy kỹ năng xã hội –
+      cảm xúc; cô làm mẫu cách xử lý xung đột. Giáo viên nước ngoài đồng hành 6 tiết mỗi tuần qua
+      <em>Story time</em> và trò chơi ngôn ngữ. Bữa ăn tập thể có cô đồng hành — chuyện biếng ăn
+      thường cải thiện rõ trong môi trường này.</p>
+  </div>
+
+  <p class="src mt2"><b>Nguồn:</b> COR Advantage · Viện Dinh dưỡng Quốc gia 2019–2020 ·
+    WHO Guidelines 2020.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>13</span></div>
+</div>
+
+<!-- ═════════ CHẶNG 3 · 5 TUỔI ═════════ -->
+<div class="page">
+  <div class="run"><span>Chặng 3 · <b>5 tuổi — Lớp Lá</b></span><span>Hiểu chặng</span></div>
+  <p class="eyebrow">Chặng 3 — Lớp Lá</p>
+  <h2 class="h2">5 tuổi: “sẵn sàng vào lớp 1” thật ra nghĩa là gì</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Đây là chặng Ba/Mẹ lo nhiều nhất và dễ lo nhầm chỗ nhất. Câu hỏi phổ biến là
+    “con đã biết đọc chưa”. Câu hỏi đúng hơn là: <b>con đã ngồi được chưa, tự lo được chưa,
+    dám nói chưa.</b></p>
+
+  <p class="mt3">Chữ và số con sẽ được dạy bài bản ở lớp 1. Còn nề nếp, tự lập và lòng tự tin thì
+    không trường lớp nào dạy lại kịp nếu bỏ lỡ ở nhà. Thiếu khả năng tập trung là một trong những
+    lý do hàng đầu khiến trẻ lớp 1 “không theo kịp” — dù con hoàn toàn không kém thông minh.</p>
+
+  <div class="quote mt3">
+    “Con vào lớp 1 nhẹ tênh — đã quen nề nếp, nhận mặt chữ và tự tin phát biểu trước lớp.”
+    <cite>— Mẹ bé Nim, lớp Lá · trích từ video chia sẻ của phụ huynh</cite>
+  </div>
+
+  <div class="fill2 mt3">
+    <p class="h4">Năm dấu hiệu con đã sẵn sàng vào lớp 1</p>
+    <div class="rule sm"></div>
+    <ol class="steps" style="color:#2f3340">
+      <li><b>Ngồi được.</b> Con làm một việc liên tục 20–30 phút mà không cần nhắc liên tục.</li>
+      <li><b>Tự lo được.</b> Con tự thay đồ, tự vệ sinh, tự cất dọn đồ của mình.</li>
+      <li><b>Dám nói.</b> Con dám giơ tay, dám kể chuyện trước lớp, dám hỏi khi không hiểu.</li>
+      <li><b>Quen mặt chữ và số</b> theo kiểu nhận biết và thích thú, không phải bị ép luyện viết
+        hàng giờ.</li>
+      <li><b>Thể lực và giờ giấc.</b> Con ngủ đủ, dậy đúng giờ, đủ sức cho một ngày học dài hơn hẳn
+        mầm non.</li>
+    </ol>
+  </div>
+
+  <div class="risk mt3">
+    <p class="h4" style="color:var(--amber)">Nếu chặng này bị bỏ lỡ</p>
+    <div class="rule sm"></div>
+    <ul class="dots" style="color:#2f3340">
+      <li><b>Vào lớp 1 mà chưa tự lập sinh hoạt,</b> con choáng ngợp và tự ti khi không còn cô ở
+        sát bên chăm từng chút như mầm non.</li>
+      <li><b>Ép con nhồi chữ quá sớm</b> đổi được vài tháng đi trước, nhưng có thể đánh mất cả một
+        thái độ với việc học.</li>
+      <li><b>Vào lớp 1 mới bắt đầu tiếng Anh</b> tạo gánh nặng kép, vì cùng lúc con đang phải học
+        đọc và viết tiếng Việt.</li>
+    </ul>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>14</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 3 · <b>5 tuổi — Lớp Lá</b></span><span>Kết nối với con</span></div>
+  <p class="eyebrow">Kết nối</p>
+  <h2 class="h2">Nguồn nước cho chặng này</h2>
+  <div class="rule"></div>
+
+  <div class="ritual">
+    <p class="h4">Nghi thức 15 phút mỗi ngày — “Show and Tell tại nhà”</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Mỗi tối trước bữa ăn, dành 15 phút cho “Sân khấu gia
+      đình”. Mỗi thành viên — kể cả Ba/Mẹ — chọn một món đồ bất kỳ trong nhà và đứng lên nói về nó
+      trong một phút: nó là gì, vì sao mình thích nó. Nghi thức nhỏ này xây cho con sự tự tin đứng
+      trước người khác, thứ sẽ theo con suốt cả cấp tiểu học.</p>
+  </div>
+
+  <div class="script mt4">
+    <p class="h4">Kịch bản đối thoại mẫu</p>
+    <div class="rule sm"></div>
+    <p class="sit">Khi con làm chậm, mặc áo ngược hoặc soạn cặp lộn xộn</p>
+    <div class="line line--no"><span class="tag">Tránh nói</span>
+      “Sao chậm chạp thế, xích ra để mẹ làm hộ cho nhanh, thế này thì đi học lớp 1 sao nổi!”</div>
+    <div class="line line--yes"><span class="tag">Nên nói</span>
+      “Con đang tự mặc quần áo đấy à? Tuyệt vời! Chiếc áo này hơi ngược một chút ở cổ, con thử tự
+      xoay lại xem nhé. Mẹ tin con tự làm được!”</div>
+  </div>
+
+  <div class="mirror mt4">
+    <p class="h4">Tấm gương soi cho Ba/Mẹ</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Ngăn nắp và tôn trọng giờ giấc của chính mình.</b>
+      Ba/Mẹ để đồ đúng chỗ, đi ngủ đúng giờ, thì con tự học theo sự kỷ luật đó mà không cần ai
+      cằn nhằn. Ở tuổi chuẩn bị vào lớp 1, nề nếp của nhà chính là nề nếp con sẽ mang tới lớp.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>15</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 3 · <b>5 tuổi — Lớp Lá</b></span><span>Hành động</span></div>
+  <p class="eyebrow">Hành động</p>
+  <h2 class="h2">Chọn một việc, giữ bốn tuần</h2>
+  <div class="rule"></div>
+
+  <div class="do">
+    <p class="h4" style="color:var(--green)">Việc làm ngay tuần này</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Tập “giờ ngồi tĩnh lặng”.</b> Mỗi tối một khung giờ cố định 20 phút không màn hình,
+        con tự chọn đọc truyện hoặc vẽ và làm liên tục cho tới hết giờ. Tăng dần lên 30 phút.</li>
+      <li><b>Giao trọn một việc cho con tự chịu trách nhiệm</b> — tự chuẩn bị giày dép, mũ nón
+        trước khi ra khỏi nhà. Tuyệt đối không làm hộ, dù con làm chậm hay làm sai.</li>
+      <li><b>Mỗi ngày cho con kể một chuyện trước cả nhà.</b> Ba mươi giây cũng được — đây là bài
+        tập tự tin rẻ nhất và hiệu quả nhất.</li>
+      <li><b>Lồng chữ và số vào đời sống thay vì luyện viết:</b> đếm quả táo khi đi siêu thị, tìm
+        chữ cái quen trên biển hiệu dọc đường.</li>
+      <li><b>Giữ nền tiếng Anh đang có,</b> nghe mỗi ngày, không ép dịch. Chưa bắt đầu thì bắt đầu
+        bây giờ vẫn kịp — cửa sổ phát âm vẫn đang mở.</li>
+      <li><b>Chỉnh giờ ngủ về đúng nhịp của lớp 1 ngay từ hè,</b> đừng đợi khai giảng.</li>
+    </ul>
+  </div>
+
+  <div class="fill mt3">
+    <p class="h4">Tự kiểm nhanh</p>
+    <div class="rule sm"></div>
+    <ul class="check">
+      <li>Con ngồi tập trung 20–30 phút với một nhiệm vụ.</li>
+      <li>Con nhận biết mặt chữ, số một cách vui vẻ.</li>
+      <li>Con tự mặc đồ, tự vệ sinh, tự xếp dọn đồ dùng.</li>
+      <li>Con dám kết bạn, dám phát biểu, dám hỏi khi không hiểu.</li>
+      <li>Con đã có nền nghe – nói tiếng Anh cơ bản.</li>
+      <li>Con ngủ đủ 9–11 tiếng mỗi đêm và dậy đúng giờ.</li>
+      <li>Con vận động hoặc chơi thể thao đều đặn hằng ngày.</li>
+      <li>Con háo hức chứ không sợ chuyện “sắp vào lớp 1”.</li>
+    </ul>
+  </div>
+
+  <div class="va-box mt3">
+    <p class="h4">Ở Trường Việt Anh, chặng này được làm thế nào</p>
+    <p class="small mt2" style="color:#2f3340">Lớp Lá chuẩn bị năng lực sẵn sàng vào lớp 1 bằng các
+      hoạt động trải nghiệm, không ép viết chữ kiểu nhồi — mục tiêu là con thích học chứ không sợ
+      học. <em>Plan-Do-Review</em> và học qua dự án rèn chú ý có chủ đích. <em>Morning Meeting</em>
+      và <em>Show &amp; Tell</em> hằng ngày nuôi sự tự tin. Thể lực được bồi đắp qua các tiết vận
+      động đa dạng như bơi lội và aerobic.</p>
+  </div>
+
+  <p class="src mt2"><b>Nguồn:</b> Chương trình GDPT 2018 · <em>Frontiers in Public Health</em> 2025 ·
+    WHO Guidelines 2020.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>16</span></div>
+</div>
+
+<!-- ═════════ CHẶNG 4 · LỚP 1–2 ═════════ -->
+<div class="page">
+  <div class="run"><span>Chặng 4 · <b>Lớp 1–2</b></span><span>Hiểu chặng</span></div>
+  <p class="eyebrow">Chặng 4 — Đầu tiểu học</p>
+  <h2 class="h2">Lớp 1–2: xây nền, và giữ cho con còn thích đi học</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Chặng này có hai việc phải làm cùng lúc, và Ba/Mẹ thường chỉ nhìn thấy một.</p>
+
+  <p class="mt3">Việc ai cũng thấy: <b>nền đọc – viết – toán</b>. Hổng ở lớp 1–2 giống vết nứt ở
+    móng nhà — chương trình các năm sau cứ tiếp tục chồng lên cái móng nứt đó, khiến lỗ hổng phình
+    to theo kiểu lãi kép.</p>
+
+  <p>Việc ít ai nhắc: <b>con có còn thích đi học không</b>. Mất hứng thú ở đầu cấp là gốc của chán
+    học kéo dài nhiều năm, và nó đến rất âm thầm — thường là khi việc học biến thành chuỗi nhiệm vụ
+    phải xong để khỏi bị mắng. Có một bằng chứng đáng nhớ: khi việc học được tổ chức theo hướng
+    chủ động — con làm, thảo luận, giải thích lại — thay vì chỉ ngồi nghe, điểm thi tăng khoảng 6%
+    và nguy cơ trượt môn giảm khoảng 1,5 lần.</p>
+
+  <div class="quote mt3">
+    “Con vào lớp 1 mà nề nếp sẵn, đọc viết theo kịp ngay, lại mê đi học. Cô sĩ số ít nên kèm rất sát.”
+    <cite>— Mẹ bé Bo, lớp 1 · trích từ video chia sẻ của phụ huynh</cite>
+  </div>
+
+  <div class="tbl-wrap mt3">
+    <table>
+      <thead><tr><th style="width:34mm">Trục</th><th>Ba/Mẹ nên quan sát điều gì</th></tr></thead>
+      <tbody>
+        <tr><td class="ax">Kiến thức</td><td>Con theo kịp đọc trôi chảy, viết đúng dòng, tính toán
+          cơ bản chưa? Con hiểu bài và giải thích lại được, hay chỉ học vẹt để đối phó?</td></tr>
+        <tr><td class="ax">Kỹ năng</td><td>Con tự giác ngồi vào bàn học hay mỗi tối đều là một cuộc
+          thương lượng? Con hoà nhập với bạn bè ở lớp ra sao?</td></tr>
+        <tr><td class="ax">Tiếng Anh</td><td>Mỗi tuần con được tiếp xúc môi trường tiếng Anh giao
+          tiếp bao nhiêu? Chương trình phổ thông hiện hành là 4 tiết mỗi tuần.</td></tr>
+        <tr><td class="ax">Thể chất</td><td>Chiều cao, cân nặng có trong chuẩn không? Con có bị lạm
+          dụng màn hình giải trí sau giờ học không?</td></tr>
+        <tr><td class="ax">Hướng nghiệp</td><td style="color:var(--mute)">Chưa mở ở chặng này.</td></tr>
+        <tr><td class="ax">Bản lĩnh &amp; Hệ giá trị</td><td>Con có biết nhận lỗi khi làm sai không?
+          Giá trị <b>Chính trực</b> bắt đầu từ việc con dám nói thật về điểm kém.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>17</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 4 · <b>Lớp 1–2</b></span><span>Kết nối với con</span></div>
+  <p class="eyebrow">Kết nối</p>
+  <h2 class="h2">Nguồn nước cho chặng này</h2>
+  <div class="rule"></div>
+
+  <div class="ritual">
+    <p class="h4">Nghi thức 15 phút mỗi ngày — “Chiếc hộp Cảm xúc”</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Đặt một chiếc hộp nhỏ ở phòng khách. Mỗi tối, cả nhà viết
+      hoặc vẽ lên một mảnh giấy cảm xúc vui nhất — hoặc buồn nhất — của mình hôm nay rồi bỏ vào hộp.
+      Sau bữa tối, dành 15 phút mở ra chia sẻ và lắng nghe nhau. Nguyên tắc duy nhất: không phán
+      xét, không răn dạy, không sửa lưng.</p>
+  </div>
+
+  <div class="script mt4">
+    <p class="h4">Kịch bản đối thoại mẫu</p>
+    <div class="rule sm"></div>
+    <p class="sit">Khi con làm sai bài toán hoặc bị điểm kém</p>
+    <div class="line line--no"><span class="tag">Tránh nói</span>
+      “Học hành thế này à? Có mỗi bài toán dễ thế này cũng làm sai, lười học vừa thôi!”</div>
+    <div class="line line--yes"><span class="tag">Nên nói</span>
+      “Mẹ thấy bài kiểm tra này con làm chưa tốt ở phần phép cộng. Con nhìn lại xem tại sao mình lại
+      ra kết quả này nhỉ? Con thử tự sửa lại xem — sai không sao cả, quan trọng là mình hiểu ra
+      cách làm đúng!”</div>
+  </div>
+
+  <div class="mirror mt4">
+    <p class="h4">Tấm gương soi cho Ba/Mẹ</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Làm gương học tập suốt đời.</b> Thiết lập một khung
+      giờ “cả nhà cùng học”. Khi con ngồi học bài, Ba/Mẹ không xem tivi hay lướt điện thoại bên
+      cạnh — hãy đọc một cuốn sách hoặc tự học một thứ mới. Để con thấy học là việc tự nhiên của
+      người trưởng thành, chứ không phải hình phạt dành riêng cho trẻ con.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>18</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 4 · <b>Lớp 1–2</b></span><span>Hành động</span></div>
+  <p class="eyebrow">Hành động</p>
+  <h2 class="h2">Chọn một việc, giữ bốn tuần</h2>
+  <div class="rule"></div>
+
+  <div class="do">
+    <p class="h4" style="color:var(--green)">Việc làm ngay tuần này</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Cho con chơi trò “dạy học”.</b> Nhờ con giảng lại bài toán hoặc đọc lại bài thơ hôm nay
+        cho Ba/Mẹ nghe. Dạy lại là cách hiểu sâu nhất, và là cách phát hiện chỗ con chưa hiểu.</li>
+      <li><b>Cùng con lập một thời gian biểu tự học đơn giản,</b> cố định khung giờ ngồi vào bàn
+        mỗi tối. Cố định giờ quan trọng hơn kéo dài giờ.</li>
+      <li><b>Đặt câu hỏi mở “còn cách nào khác không con nhỉ?”</b> để đẩy con lên tầng phân tích
+        thay vì học thuộc.</li>
+      <li><b>Giao trọn một việc nhà cho con tự chịu trách nhiệm,</b> và đừng làm hộ khi con làm
+        chậm.</li>
+      <li><b>Cho con tiếp xúc tiếng Anh thật mỗi ngày</b> — phim, bài hát, nói chuyện — ngoài giờ
+        ngữ pháp ở trường.</li>
+      <li><b>Bỏ nước ngọt có gas và đồ ăn nhanh, giữ 60 phút vận động mỗi ngày,</b> và đặt một quy
+        tắc màn hình mà cả nhà cùng theo.</li>
+    </ul>
+  </div>
+
+  <div class="fill mt3">
+    <p class="h4">Tự kiểm nhanh</p>
+    <div class="rule sm"></div>
+    <ul class="check">
+      <li>Con theo kịp yêu cầu đọc – viết – toán ở lớp.</li>
+      <li>Con háo hức đi học và hay tò mò hỏi về bài mới.</li>
+      <li>Con tự giác ngồi vào bàn học mà không cần hối thúc.</li>
+      <li>Con chơi hoà đồng và gọi tên được cảm xúc của mình.</li>
+      <li>Con tiếp xúc tiếng Anh giao tiếp mỗi ngày.</li>
+      <li>Chiều cao, cân nặng của con trong chuẩn.</li>
+      <li>Con vận động ra mồ hôi ít nhất 60 phút mỗi ngày.</li>
+      <li>Thời gian màn hình giải trí có giới hạn rõ ràng.</li>
+    </ul>
+  </div>
+
+  <div class="va-box mt3">
+    <p class="h4">Ở Trường Việt Anh, chặng này được làm thế nào</p>
+    <p class="small mt2" style="color:#2f3340">Lớp tối đa 24 em và dạy phân tầng năng lực để cô kèm
+      đúng mức của từng con; Tutor sau giờ vá lỗ hổng ngay tại trường, giảm áp lực học thêm cho cả
+      nhà. Học qua dự án và <em>Likeability</em> — con được chọn cách thể hiện — để giữ động cơ học.
+      Năm giá trị cốt lõi được lượng hoá thành 25 hành động chấm mỗi tuần, cùng Học kỳ Foundation
+      28 ngày. Tiếng Anh nhiều buổi với giáo viên nước ngoài; thể thao hằng ngày.</p>
+  </div>
+
+  <p class="src mt2"><b>Nguồn:</b> Freeman et al., <em>PNAS</em> 2014 · Chương trình GDPT 2018 ·
+    WHO Guidelines 2020.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>19</span></div>
+</div>
+
+<!-- ═════════ CHẶNG 5 · LỚP 3–5 ═════════ -->
+<div class="page">
+  <div class="run"><span>Chặng 5 · <b>Lớp 3–5</b></span><span>Hiểu chặng</span></div>
+  <p class="eyebrow">Chặng 5 — Cuối tiểu học</p>
+  <h2 class="h2">Lớp 3–5: cửa sổ để dạy con tự học</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Nếu chỉ được chọn một việc để làm đúng ở cuối tiểu học, hãy chọn việc này:
+    <b>chuyển con từ học thuộc sang học hiểu, và từ được kèm sang tự học.</b></p>
+
+  <p class="mt3">Ở lớp 1–2, học thuộc vẫn đủ để đạt điểm cao. Từ lớp 6 trở đi thì không — số môn
+    tăng vọt và đề bắt đầu đòi phân tích. Một đứa trẻ quen học vẹt sẽ đuối rất nhanh ở học kỳ đầu
+    THCS, và điều đau nhất là chuyện đó thường bị quy cho “con lười”, trong khi vấn đề thật là con
+    chưa từng được dạy cách học khác.</p>
+
+  <p>Đây cũng là chặng quyết định chuyện học thêm. Con không tự xoay được bài khó thì gia đình sẽ
+    trượt dần vào lịch học thêm dày đặc — tốn kém, ăn mất thời gian vận động và ngủ, và nghịch lý
+    là càng làm con phụ thuộc hơn.</p>
+
+  <div class="quote mt3">
+    “Con lớp 4 giờ tự giác học, nói tiếng Anh tự tin với thầy nước ngoài. Mình không phải kèm
+    từng tối nữa.”
+    <cite>— Mẹ bé Na, lớp 4 · trích từ video chia sẻ của phụ huynh</cite>
+  </div>
+
+  <div class="tbl-wrap mt3">
+    <table>
+      <thead><tr><th style="width:34mm">Trục</th><th>Ba/Mẹ nên quan sát điều gì</th></tr></thead>
+      <tbody>
+        <tr><td class="ax">Kiến thức</td><td>Con học hiểu bản chất hay học thuộc để trả bài? Con tự
+          xoay được bài khó, hay phải phụ thuộc học thêm dày đặc?</td></tr>
+        <tr><td class="ax">Kỹ năng</td><td>Con tự quản thời gian tới đâu? Con có dám nhận vai trò
+          trưởng nhóm, dám tổ chức, dám thể hiện không?</td></tr>
+        <tr><td class="ax">Tiếng Anh</td><td>Con đã viết và thuyết trình được chưa, hay vẫn dừng ở
+          làm bài ngữ pháp trên giấy? Gia đình đã có lộ trình rõ ràng cho cấp hai chưa?</td></tr>
+        <tr><td class="ax">Thể chất</td><td>Thị lực và cân nặng có được bảo vệ trước áp lực bài vở
+          không? Con có giữ đều ít nhất một môn thể thao?</td></tr>
+        <tr><td class="ax">Hướng nghiệp<br><span class="tiny">gieo mầm sớm</span></td>
+          <td>Con đã biết đến các nhóm nghề cơ bản chưa? Con có được khuyến khích bộc lộ thiên hướng
+            tự nhiên qua sở thích và trải nghiệm không?</td></tr>
+        <tr><td class="ax">Bản lĩnh &amp; Hệ giá trị</td><td>Con có kiên trì làm bài khó đến cùng
+          không? Giá trị <b>Tài giỏi</b> ở đây nghĩa là chịu khó vượt khó, không phải là điểm số.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>20</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 5 · <b>Lớp 3–5</b></span><span>Kết nối với con</span></div>
+  <p class="eyebrow">Kết nối</p>
+  <h2 class="h2">Nguồn nước cho chặng này</h2>
+  <div class="rule"></div>
+
+  <div class="ritual">
+    <p class="h4">Nghi thức 15 phút mỗi ngày — “Bản tin bàn ăn”</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Thay vì hỏi điểm số, mỗi bữa tối hãy hỏi con một câu khác:
+      <em>“Hôm nay có điều gì lạ hoặc thú vị nhất mà con quan sát được ở trường hay ngoài đường?”</em>
+      Ba/Mẹ kể chuyện của mình trước để mở đường. Câu hỏi Ba/Mẹ chọn sẽ định hình thứ con để tâm —
+      hỏi điểm thì con nhớ điểm, hỏi quan sát thì con bắt đầu quan sát.</p>
+  </div>
+
+  <div class="script mt4">
+    <p class="h4">Kịch bản đối thoại mẫu</p>
+    <div class="rule sm"></div>
+    <p class="sit">Khi con gặp bài tập khó và mếu máo đòi Ba/Mẹ giải hộ</p>
+    <div class="line line--no"><span class="tag">Tránh nói</span>
+      “Dễ thế này mà không biết làm à? Đây, chép kết quả vào đi cho nhanh để đi ngủ!”</div>
+    <div class="line line--yes"><span class="tag">Nên nói</span>
+      “Mẹ thấy bài toán này thực sự thử thách đấy. Con đã thử vẽ sơ đồ hay cách tính nào rồi? Con
+      loay hoay với nó 15 phút rồi đúng không — tuyệt vời, đó là lúc não con đang tập thể dục đấy!
+      Giờ con thử giải thích lại đề cho mẹ nghe xem mình có tìm ra manh mối mới nào không nhé.”</div>
+  </div>
+
+  <div class="mirror mt4">
+    <p class="h4">Tấm gương soi cho Ba/Mẹ</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Tự học một thứ mới ngay trước mặt con.</b> Học một
+      ngoại ngữ, học lập trình cơ bản, đọc sách chuyên môn — và quan trọng hơn: kể cho con nghe
+      chỗ nào Ba/Mẹ thấy khó, đã bỏ cuộc mấy lần, rồi làm sao mà vượt qua. Con học thái độ kiên
+      trì từ đúng những câu chuyện đó, chứ không từ lời khuyên.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>21</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 5 · <b>Lớp 3–5</b></span><span>Hành động</span></div>
+  <p class="eyebrow">Hành động</p>
+  <h2 class="h2">Chọn một việc, giữ bốn tuần</h2>
+  <div class="rule"></div>
+
+  <div class="do">
+    <p class="h4" style="color:var(--green)">Việc làm ngay tuần này</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Khi con gặp bài khó, để con tự loay hoay ít nhất 15 phút</b> trước khi đưa ra gợi ý.
+        Tuyệt đối không giải hộ. Mười lăm phút đó là khoản đầu tư tốt nhất ở chặng này.</li>
+      <li><b>Mỗi tuần bắt con giảng lại một bài cho Ba/Mẹ nghe.</b> Chỗ nào con giảng ấp úng chính
+        là chỗ con chưa hiểu.</li>
+      <li><b>Thiết lập quy tắc an toàn mạng cùng con:</b> không chia sẻ thông tin cá nhân, không
+        trò chuyện với người lạ trên mạng, và thống nhất thời lượng dùng Internet.</li>
+      <li><b>Khuyến khích con tham gia một câu lạc bộ hoặc dự án tập thể</b> để rèn hợp tác và
+        dám nhận trách nhiệm.</li>
+      <li><b>Đặt mục tiêu tiếng Anh có mốc thời gian rõ ràng,</b> và cho con dùng tiếng Anh vào việc
+        thật — thuyết trình, viết, nói chuyện — chứ không chỉ làm bài.</li>
+      <li><b>Chốt một môn thể thao con theo được ít nhất ba buổi mỗi tuần,</b> và giữ nó qua cả
+        mùa thi.</li>
+    </ul>
+  </div>
+
+  <div class="fill mt3">
+    <p class="h4">Tự kiểm nhanh</p>
+    <div class="rule sm"></div>
+    <ul class="check">
+      <li>Con giải thích được bản chất, không chỉ đọc thuộc kết quả.</li>
+      <li>Con tự làm được phần lớn bài khó mà không cần học thêm dày đặc.</li>
+      <li>Con tự lập kế hoạch và quản lý được thời gian của mình.</li>
+      <li>Con dám nhận vai trò trưởng nhóm hoặc tổ chức hoạt động.</li>
+      <li>Con dùng tiếng Anh như một công cụ thật, không chỉ làm bài.</li>
+      <li>Con biết các quy tắc an toàn cơ bản khi lên mạng.</li>
+      <li>Thị lực tốt, cân nặng trong chuẩn.</li>
+      <li>Con duy trì một môn thể thao tối thiểu 3 buổi mỗi tuần.</li>
+    </ul>
+  </div>
+
+  <div class="va-box mt3">
+    <p class="h4">Ở Trường Việt Anh, chặng này được làm thế nào</p>
+    <p class="small mt2" style="color:#2f3340">Sàn tối thiểu của mỗi bài học đặt ở bậc Phân tích
+      trong thang Bloom, kết hợp khung tư duy phản biện 5 bước. Tutor sau giờ và dạy phân tầng năng
+      lực ngay tại trường. Học sinh tự lên kế hoạch và đứng ra tổ chức các sự kiện học đường lớn
+      nhỏ. Lộ trình tiếng Anh đo bằng PDR. Trường yêu cầu cam kết tối thiểu một môn thể thao, tần
+      suất từ ba buổi mỗi tuần.</p>
+  </div>
+
+  <p class="src mt2"><b>Nguồn:</b> Freeman et al., <em>PNAS</em> 2014 · Krathwohl 2001 ·
+    WHO Guidelines 2020.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>22</span></div>
+</div>
+
+<!-- ═════════ CHẶNG 6 · THCS ═════════ -->
+<div class="page">
+  <div class="run"><span>Chặng 6 · <b>THCS, lớp 6–9</b></span><span>Hiểu chặng</span></div>
+  <p class="eyebrow">Chặng 6 — THCS</p>
+  <h2 class="h2">Lớp 6–9: chặng quyết định, và thường bị đánh giá thấp</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Nhiều gia đình dồn sức cho lớp 12. Nhưng phần lớn những gì quyết định lớp 12 đã
+    được định đoạt xong ở đây.</p>
+
+  <p class="mt3">Ba việc lớn cùng diễn ra. <b>Thứ nhất</b>, số môn tăng vọt và đề bắt đầu đòi phân
+    tích — nếu con vẫn học thuộc đối phó, khoảng cách sẽ nới rộng từng học kỳ. <b>Thứ hai</b>,
+    con dậy thì: sức khoẻ tinh thần bước vào giai đoạn nhạy cảm nhất, và một đứa trẻ tuổi này cần
+    được lắng nghe nhiều hơn là được dạy.</p>
+
+  <p><b>Thứ ba</b> — điều nhiều Ba/Mẹ không kịp chuẩn bị: trục Hướng nghiệp mở ra ngay tại đây,
+    chứ không phải ở cấp ba. Theo chương trình phổ thông hiện hành, <b>ngay từ lớp 10 con đã phải
+    chọn tổ hợp môn</b>. Nếu đến cuối lớp 9 con vẫn mơ hồ về thế mạnh của mình, lựa chọn đó sẽ dựa
+    trên cảm tính hoặc theo bạn — và sửa lại có thể mất một đến hai năm.</p>
+
+  <div class="quote mt3">
+    “Con mình lớp 8 trước hay cãi và ham game; giờ con chững chạc, tự giác học và đã bắt đầu
+    luyện IELTS. Mình nhẹ cả người.”
+    <cite>— Mẹ bạn Minh, lớp 8 · trích từ video chia sẻ của phụ huynh</cite>
+  </div>
+
+  <div class="tbl-wrap mt3">
+    <table>
+      <thead><tr><th style="width:34mm">Trục</th><th>Ba/Mẹ nên quan sát điều gì</th></tr></thead>
+      <tbody>
+        <tr><td class="ax">Kiến thức</td><td>Con học bằng tư duy phân tích hay vẫn học thuộc đối
+          phó? Con tự quản được việc học khi số môn tăng vọt không?</td></tr>
+        <tr><td class="ax">Kỹ năng</td><td>Con tự đặt mục tiêu và quản lý thời gian ra sao? Con có
+          tham gia dự án, câu lạc bộ để tích luỹ kỹ năng thật không?</td></tr>
+        <tr><td class="ax">Tiếng Anh</td><td>Nền tiếng Anh của con đã đủ vững để bước vào giai đoạn
+          tăng tốc ở cấp ba chưa? Gia đình đã có lộ trình cụ thể tới mốc lớp 9 chưa?</td></tr>
+        <tr><td class="ax">Thể chất</td><td>Sức khoẻ tinh thần của con thế nào — con có ai để tâm sự
+          hay hoàn toàn khép kín? Con còn vận động tối thiểu 3 buổi mỗi tuần không?</td></tr>
+        <tr><td class="ax">Hướng nghiệp</td><td>Con đã nhận ra thế mạnh và sở thích cốt lõi chưa?
+          Gia đình đã cùng con tìm hiểu nghiêm túc về tổ hợp môn cấp ba chưa?</td></tr>
+        <tr><td class="ax">Bản lĩnh &amp; Hệ giá trị</td><td>Con có giữ được sự chính trực trước áp
+          lực từ bạn bè đồng trang lứa không? Đây là tuổi <b>Chính trực</b> và <b>Tôn trọng</b>
+          bản thân bị thử thách nhiều nhất.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>23</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 6 · <b>THCS, lớp 6–9</b></span><span>Kết nối với con</span></div>
+  <p class="eyebrow">Kết nối</p>
+  <h2 class="h2">Nguồn nước cho chặng này</h2>
+  <div class="rule"></div>
+
+  <div class="ritual">
+    <p class="h4">Nghi thức mỗi tuần — “15 phút lắng nghe không phán xét”</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Chọn một khung giờ cố định trong tuần — chiều Chủ nhật đi
+      cà phê, hay tối thứ Sáu. Ba/Mẹ đóng đúng một vai: người lắng nghe trọn vẹn. Chỉ nghe con kể về
+      bạn bè, trường lớp, thần tượng. Không phán xét, không dạy đời, không chỉnh sửa suy nghĩ của
+      con. Ở tuổi này, được lắng nghe mà không bị sửa là thứ hiếm nhất — và Ba/Mẹ là người duy nhất
+      có thể cho con điều đó.</p>
+  </div>
+
+  <div class="script mt4">
+    <p class="h4">Kịch bản đối thoại mẫu</p>
+    <div class="rule sm"></div>
+    <p class="sit">Khi con đóng sầm cửa phòng vì áp lực điểm số hoặc mâu thuẫn với bạn</p>
+    <div class="line line--no"><span class="tag">Tránh nói</span>
+      “Làm gì mà thái độ hỗn láo thế hả? Mở cửa ra ngay! Học hành không lo, lo ba cái chuyện
+      vớ vẩn!”</div>
+    <div class="line line--yes"><span class="tag">Nên nói</span>
+      <em>(gõ cửa nhẹ)</em> “Mẹ thấy hôm nay con có vẻ đang rất bực mình và mệt đúng không? Mẹ sẽ
+      để con có không gian riêng một lát nhé. Khi nào con thấy thoải mái hơn, mẹ con mình cùng đi
+      uống ly nước và nói chuyện — mẹ luôn sẵn sàng nghe con.”</div>
+  </div>
+
+  <div class="mirror mt4">
+    <p class="h4">Tấm gương soi cho Ba/Mẹ</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Tôn trọng ranh giới riêng tư của con.</b> Đây là lúc
+      Ba/Mẹ phải tự kiểm soát cơn tò mò của mình: không tự ý xem điện thoại, không đọc trộm nhật ký,
+      không lục đồ cá nhân của con. Sự tôn trọng ta cho đi ở tuổi này là thứ duy nhất khiến con còn
+      muốn quay lại kể chuyện với ta ở tuổi mười tám.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>24</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 6 · <b>THCS, lớp 6–9</b></span><span>Hành động</span></div>
+  <p class="eyebrow">Hành động</p>
+  <h2 class="h2">Chọn một việc, giữ bốn tuần</h2>
+  <div class="rule"></div>
+
+  <div class="do">
+    <p class="h4" style="color:var(--green)">Việc làm ngay tuần này</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Mỗi tuần một câu hỏi mở về chính con:</b> “Việc gì con làm mà quên cả thời gian?”
+        Đây là cách rẻ nhất và sớm nhất để bắt đầu trục Hướng nghiệp.</li>
+      <li><b>Cho con gặp người đang làm nghề con tò mò.</b> Một buổi trò chuyện ba mươi phút có
+        sức nặng hơn mọi bài trắc nghiệm nghề nghiệp.</li>
+      <li><b>Tìm hiểu sớm các tổ hợp môn và nhóm ngành cùng con,</b> để lựa chọn ở lớp 10 dựa trên
+        hiểu biết chứ không phải cảm tính.</li>
+      <li><b>Dạy con dùng AI như một trợ lý, không phải máy chép bài.</b> Hướng dẫn con đặt câu hỏi
+        để AI giải thích khái niệm khó, và luôn kiểm chứng lại thông tin — đó chính là bài tập tư
+        duy phản biện.</li>
+      <li><b>Khuyến khích con nhận một vai trò thật</b> trong câu lạc bộ, dự án hay hoạt động cộng
+        đồng. Hồ sơ dày lên bằng trải nghiệm, không bằng chứng chỉ.</li>
+      <li><b>Giữ một khung giờ mỗi tuần chỉ để nghe con nói,</b> không góp ý, không sửa lưng — và
+        bảo vệ giấc ngủ cùng ba buổi thể thao mỗi tuần kể cả mùa thi.</li>
+    </ul>
+  </div>
+
+  <div class="fill mt3">
+    <p class="h4">Tự kiểm nhanh</p>
+    <div class="rule sm"></div>
+    <ul class="check">
+      <li>Con giải thích được bản chất logic của vấn đề, không học vẹt.</li>
+      <li>Con tự quản được khối lượng bài vở mà không quá tải học thêm.</li>
+      <li>Con tự lên thời gian biểu và mục tiêu học tập của mình.</li>
+      <li>Con dùng AI để hiểu bài, không phải để chép bài giải sẵn.</li>
+      <li>Con có ít nhất một vai trò, dự án hoặc câu lạc bộ thật.</li>
+      <li>Tiếng Anh của con đi đúng lộ trình gia đình đã đặt cho cấp ba.</li>
+      <li>Con có người tin cậy để tâm sự khi bế tắc.</li>
+      <li>Con vẫn chơi thể thao đều ít nhất 3 buổi mỗi tuần.</li>
+    </ul>
+  </div>
+
+  <div class="va-box mt3">
+    <p class="h4">Ở Trường Việt Anh, chặng này được làm thế nào</p>
+    <p class="small mt2" style="color:#2f3340">Khung Critical Thinking 5 bước với sàn Bloom ở bậc
+      Phân tích. Lớp tối đa 24 em, phân tầng năng lực, Tutor sau giờ. <em>The Leader in Me</em>,
+      7 thói quen và GRIT rèn tự lãnh đạo; học sinh ứng cử vai trò lãnh đạo cấp lớp và cấp trường,
+      tự tổ chức sự kiện. Tiếng Anh 9–10 tiết mỗi tuần có giáo viên nước ngoài, với lộ trình IELTS
+      đặt mục tiêu học sinh đủ năng lực từ lớp 9 đạt 6.0+ trước tốt nghiệp. Học kỳ Foundation
+      28 ngày giúp con hiểu mình trước khi chọn hướng.</p>
+  </div>
+
+  <p class="src mt2"><b>Nguồn:</b> Chương trình GDPT 2018 · WEF <em>Future of Jobs Report</em> 2025 ·
+    EF EPI 2024 · Talentnet–Mercer 2025 · WHO Guidelines 2020.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>25</span></div>
+</div>
+
+<!-- ═════════ CHẶNG 7 · THPT ═════════ -->
+<div class="page">
+  <div class="run"><span>Chặng 7 · <b>THPT, lớp 10–12</b></span><span>Hiểu chặng</span></div>
+  <p class="eyebrow">Chặng 7 — THPT</p>
+  <h2 class="h2">Lớp 10–12: điểm số mở cửa, thứ khác giữ con đứng vững</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Chặng cuối là chặng ít thời gian nhất và nhiều áp lực nhất. Vì vậy nó cũng là
+    chặng dễ hy sinh sai thứ nhất.</p>
+
+  <p class="mt3">Việc đầu tiên đến ngay khi con bước vào lớp 10: <b>chọn tổ hợp môn</b>. Theo chương
+    trình phổ thông hiện hành, lựa chọn này diễn ra ở đầu cấp — chọn sai có thể khiến con mất một
+    đến hai năm điều chỉnh, hoặc vào nhầm ngành rồi mới nhận ra.</p>
+
+  <p>Việc thứ hai là <b>hồ sơ vào đời</b> — thứ không nằm trong học bạ. Theo báo cáo của Diễn đàn
+    Kinh tế Thế giới, khoảng <b>39% kỹ năng cốt lõi sẽ đổi mới đến năm 2030</b>, và <b>70% doanh
+    nghiệp xếp tư duy phân tích ở vị trí số một</b>. Khi xét tuyển kết hợp ngày càng phổ biến, một
+    hồ sơ chỉ có điểm sẽ ngày càng yếu thế.</p>
+
+  <p>Và tiếng Anh có một hạn chót sinh học ở đây: khả năng đạt trình độ gần như bản ngữ giảm dần
+    sau khoảng <b>17–18 tuổi</b>. Việt Nam hiện xếp 63/116 về năng lực tiếng Anh, thuộc nhóm thấp —
+    trong khi người thành thạo được trả cao hơn <b>30–50%</b>, và doanh nghiệp FDI trả cao hơn
+    doanh nghiệp nội địa khoảng <b>26–33%</b>.</p>
+
+  <div class="quote mt3">
+    “Con vào lớp 10 còn mơ hồ chuyện chọn tổ hợp. Sau Học kỳ Foundation, con tự nói được muốn theo
+    hướng nào và vì sao.”
+    <cite>— Chị H., phụ huynh lớp 10 · trích từ video chia sẻ của phụ huynh</cite>
+  </div>
+
+  <div class="tbl-wrap mt3">
+    <table>
+      <thead><tr><th style="width:34mm">Trục</th><th>Ba/Mẹ nên quan sát điều gì</th></tr></thead>
+      <tbody>
+        <tr><td class="ax">Kiến thức</td><td>Gặp đề lạ, con lần ra hướng giải hay khựng lại chờ bài
+          mẫu? Sĩ số lớp con có quá đông để thầy cô theo sát không?</td></tr>
+        <tr><td class="ax">Kỹ năng</td><td>Ngoài điểm số, con tích luỹ được năng lực tự học và giải
+          quyết vấn đề nào? Con có nói ra được ba phẩm chất mình tự hào nhất không?</td></tr>
+        <tr><td class="ax">Tiếng Anh</td><td>Con dùng tiếng Anh để thuyết trình và đọc tài liệu, hay
+          vẫn dừng ở luyện đề trên giấy?</td></tr>
+        <tr><td class="ax">Thể chất</td><td>Con ngủ mấy tiếng mỗi đêm trong mùa thi? Còn giữ được
+          vận động để giải toả căng thẳng không?</td></tr>
+        <tr><td class="ax">Hướng nghiệp</td><td>Quyết định chọn tổ hợp và ngành học dựa trên hiểu
+          biết về bản thân, hay theo trào lưu và theo bạn?</td></tr>
+        <tr><td class="ax">Bản lĩnh &amp; Hệ giá trị</td><td>Con có ý thức sống có mục đích và đóng
+          góp không? Đây là nơi giá trị <b>Yêu thương</b> mở rộng ra ngoài gia đình, thành trách
+          nhiệm với cộng đồng.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>26</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 7 · <b>THPT, lớp 10–12</b></span><span>Kết nối với con</span></div>
+  <p class="eyebrow">Kết nối</p>
+  <h2 class="h2">Nguồn nước cho chặng này</h2>
+  <div class="rule"></div>
+
+  <div class="ritual">
+    <p class="h4">Nghi thức mỗi tuần — “Buổi hẹn 1-1”</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Mỗi tuần một lần, ba hoặc mẹ dành riêng một buổi cà phê
+      hoặc bữa tối chỉ có hai người với con. Để con làm chủ cuộc trò chuyện. Hỏi con về dự định,
+      về những áp lực con đang gánh — và nói thẳng rằng mình tin con vượt qua được. Ở tuổi này con
+      sắp rời nhà; những buổi hẹn ấy là thứ con mang theo.</p>
+  </div>
+
+  <div class="script mt4">
+    <p class="h4">Kịch bản đối thoại mẫu</p>
+    <div class="rule sm"></div>
+    <p class="sit">Khi con bế tắc vì điểm thi thử không như kỳ vọng</p>
+    <div class="line line--no"><span class="tag">Tránh nói</span>
+      “Học thế này thì đỗ đạt làm sao được hả con? Đã bảo lo mà học đi không nghe, giờ lo lắng thì
+      giải quyết được gì!”</div>
+    <div class="line line--yes"><span class="tag">Nên nói</span>
+      “Mẹ thấy điểm này chưa đạt kỳ vọng của con đúng không? Con buồn là chuyện bình thường. Nhưng
+      đây chỉ là bài thi thử, để mình tìm ra lỗ hổng cần vá trước kỳ thi thật. Mẹ tin vào sự bền bỉ
+      của con. Đêm nay con ngủ một giấc thật ngon, mai mẹ con mình cùng xem lại lỗi sai nhé.”</div>
+  </div>
+
+  <div class="mirror mt4">
+    <p class="h4">Tấm gương soi cho Ba/Mẹ</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340"><b>Kể cho con nghe về thất bại của chính mình.</b> Hãy nói
+      thật về một lần Ba/Mẹ trượt, mất việc, làm sai — và đã đi qua nó thế nào. Đứa trẻ mười bảy
+      tuổi đang sợ thất bại hơn bất cứ điều gì. Thứ gỡ nỗi sợ đó không phải lời động viên, mà là
+      bằng chứng rằng người con tin cậy nhất cũng từng ngã và vẫn đứng dậy được.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>27</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Chặng 7 · <b>THPT, lớp 10–12</b></span><span>Hành động</span></div>
+  <p class="eyebrow">Hành động</p>
+  <h2 class="h2">Chọn một việc, giữ bốn tuần</h2>
+  <div class="rule"></div>
+
+  <div class="do">
+    <p class="h4" style="color:var(--green)">Việc làm ngay tuần này</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Ngồi xuống cùng con viết ra ba lựa chọn ngành,</b> mỗi lựa chọn kèm một lý do và một
+        điều con chưa biết. Điều chưa biết đó là việc cần tìm hiểu tuần này.</li>
+      <li><b>Cho con gặp một người đang làm nghề con cân nhắc,</b> hoặc tham gia một hoạt động
+        định hướng thật.</li>
+      <li><b>Rà lỗ hổng theo từng môn ngay bây giờ,</b> đừng đợi gần thi. Vá sớm rẻ hơn nhiều lần
+        so với luyện cấp tốc.</li>
+      <li><b>Cho con dùng tiếng Anh vào việc thật</b> — thuyết trình, viết, đọc tài liệu — thay vì
+        chỉ luyện đề. Đặt mốc thi có ngày cụ thể.</li>
+      <li><b>Khuyến khích con xây một hồ sơ số lành mạnh:</b> viết bài chia sẻ kiến thức, quay video
+        thuyết trình, làm một dự án cá nhân — thứ nhà tuyển sinh và nhà tuyển dụng tra được.</li>
+      <li><b>Đặt một giới hạn giờ ngủ cả nhà cùng tôn trọng,</b> kể cả mùa thi, và giữ ba buổi vận
+        động mỗi tuần.</li>
+    </ul>
+  </div>
+
+  <div class="fill mt3">
+    <p class="h4">Tự kiểm nhanh</p>
+    <div class="rule sm"></div>
+    <ul class="check">
+      <li>Gặp đề lạ, con tự suy luận tìm ra hướng giải.</li>
+      <li>Sĩ số lớp con đủ nhỏ để thầy cô theo sát từng em.</li>
+      <li>Con biết tự tìm tài liệu để vá lỗ hổng sau giờ học.</li>
+      <li>Ngoài điểm số, con có dự án hoặc vai trò lãnh đạo thật.</li>
+      <li>Dấu chân số của con lành mạnh, chuyên nghiệp.</li>
+      <li>Con giao tiếp tiếng Anh trôi chảy và đọc được tài liệu.</li>
+      <li>Con ngủ 7–8 tiếng và vận động đều, kể cả mùa thi.</li>
+      <li>Con chọn tổ hợp môn và nói được vì sao chọn.</li>
+    </ul>
+  </div>
+
+  <div class="va-box mt3">
+    <p class="h4">Ở Trường Việt Anh, chặng này được làm thế nào</p>
+    <p class="small mt2" style="color:#2f3340">Lớp tối đa 24 em, sàn Bloom ở bậc Phân tích, Tutor sau
+      giờ (18:00–20:00) kèm bài ngay tại trường. Học sinh tự tổ chức lễ hội và dự án, ứng cử vai trò
+      lãnh đạo, được chấm 25 hành động giá trị mỗi tuần — dựa trên năm giá trị cốt lõi: Tôn trọng
+      &amp; Tự trọng · Trách nhiệm · Tài giỏi · Chính trực · Yêu thương. Tiếng Anh 11 tiết mỗi tuần,
+      trong đó 6 tiết với giáo viên nước ngoài, kèm luyện IELTS 1-1. Học kỳ Foundation 28 ngày và
+      tổ định hướng hỗ trợ con chọn tổ hợp môn và lộ trình đại học.</p>
+  </div>
+
+  <p class="src mt2"><b>Nguồn:</b> WEF <em>Future of Jobs Report</em> 2025 · Freeman et al.,
+    <em>PNAS</em> 2014 · Hartshorne et al., <em>Cognition</em> 2018 · EF EPI 2024 ·
+    Talentnet–Mercer 2025 · Sở GD-ĐT TP.HCM 2025 · Chương trình GDPT 2018.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>28</span></div>
+</div>
+
+<!-- ═════ PHỤ LỤC 1 ═════ -->
+<div class="page">
+  <div class="run"><span>Phụ lục 1</span><span><b>Vượt bão chuyển cấp</b></span></div>
+  <p class="eyebrow">Phụ lục 1</p>
+  <h2 class="h2">Vượt bão chuyển cấp: lớp 5 lên lớp 6</h2>
+  <div class="rule"></div>
+
+  <p class="lead">Chuyển cấp là hai thời điểm trẻ dễ khủng hoảng nhất, vì môi trường học và cơ thể
+    con thay đổi cùng lúc. Phần lớn cú sốc đến từ việc không ai báo trước.</p>
+
+  <div class="risk mt3">
+    <p class="h4" style="color:var(--amber)">Cơn bão học thuật</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Số môn tăng từ khoảng 5 môn tích hợp lên hơn 10 môn độc
+      lập. Thay vì học chủ yếu với một cô chủ nhiệm suốt ngày, con phải làm quen với mỗi môn một
+      thầy cô — khác phương pháp dạy, khác cách chấm điểm, khác tính cách.</p>
+  </div>
+
+  <div class="risk mt3">
+    <p class="h4" style="color:var(--amber)">Cơn bão tâm lý</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Con bước vào giai đoạn biến động nội tiết, nhạy cảm với
+      nhận xét của bạn bè, có nhu cầu khẳng định cái tôi và bắt đầu giữ khoảng cách riêng tư với
+      Ba/Mẹ. Sự xa cách này là dấu hiệu phát triển bình thường, không phải dấu hiệu con hư.</p>
+  </div>
+
+  <div class="do mt3">
+    <p class="h4" style="color:var(--green)">Chuẩn bị từ mùa hè trước đó</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Tập làm quen thời khoá biểu phức tạp.</b> Cùng con chơi trò sắp xếp một thời khoá biểu
+        giả định tại nhà; hướng dẫn con dùng sổ tay hoặc lịch trên điện thoại để nhớ lịch từng môn.</li>
+      <li><b>Nói trước về tuổi dậy thì</b> một cách tự nhiên và khoa học, trước khi con nghe từ
+        nguồn khác.</li>
+      <li><b>Thiết lập quy tắc “bình an trước cơn bão”.</b> Nói rõ với con một câu và giữ đúng nó:
+        <em>“Dù cơ thể con thay đổi thế nào hay ở trường có chuyện gì, ba mẹ vẫn là người bạn an
+        toàn nhất của con.”</em></li>
+      <li><b>Chuyển dần việc kèm bài sang việc hỏi bài.</b> Từ hè lớp 5, Ba/Mẹ nên bắt đầu rút khỏi
+        vai trò người giải hộ, để con quen tự xoay trước khi vào môi trường ít được kèm hơn.</li>
+    </ul>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>29</span></div>
+</div>
+
+<div class="page">
+  <div class="run"><span>Phụ lục 1</span><span><b>Vượt bão chuyển cấp</b></span></div>
+  <p class="eyebrow">Phụ lục 1 · tiếp</p>
+  <h2 class="h2">Vượt bão chuyển cấp: lớp 9 lên lớp 10</h2>
+  <div class="rule"></div>
+
+  <div class="risk">
+    <p class="h4" style="color:var(--amber)">Áp lực kép: thi tuyển sinh và chọn tổ hợp môn</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Kỳ thi tuyển sinh lớp 10 vốn đã căng. Nhưng ngay khi đỗ,
+      con phải quyết định chọn tổ hợp môn theo Chương trình GDPT 2018 — một quyết định ảnh hưởng
+      trực tiếp tới định hướng ngành nghề. Hai áp lực dồn vào cùng một mùa hè, và gia đình thường
+      chỉ chuẩn bị cho cái thứ nhất.</p>
+  </div>
+
+  <div class="risk mt3">
+    <p class="h4" style="color:var(--amber)">Khủng hoảng bản sắc</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Con muốn được thừa nhận như một người trưởng thành, trong
+      khi vẫn đang băn khoăn về năng lực của chính mình, và rất dễ stress trước kỳ vọng điểm số
+      từ gia đình.</p>
+  </div>
+
+  <div class="do mt3">
+    <p class="h4" style="color:var(--green)">Chuẩn bị từ mùa hè trước đó</p>
+    <div class="rule sm"></div>
+    <ul class="ticks">
+      <li><b>Nghiên cứu tổ hợp môn sớm và có phương pháp.</b> Đừng chọn theo trào lưu hay chọn
+        giống bạn thân. Ngồi xuống cùng con phân tích: thế mạnh thật của con là gì, ngành con
+        hướng tới đòi tổ hợp nào. Liên hệ sớm với trường cấp ba để được tư vấn.</li>
+      <li><b>Dựng một “học kỳ Foundation tại gia đình”.</b> Dành bốn tuần hè cho con làm việc thật:
+        đi tình nguyện, học một kỹ năng độc lập, kiến tập ở chỗ làm của người quen. Vốn sống thật
+        là thứ định hướng nghề tốt hơn mọi bài trắc nghiệm.</li>
+      <li><b>Tách chuyện điểm số ra khỏi chuyện giá trị của con.</b> Ở mùa này, câu Ba/Mẹ nói về
+        điểm thi sẽ được con nghe như lời phán xét về chính mình — dù ta không có ý đó.</li>
+      <li><b>Giữ nguyên nghi thức kết nối hằng tuần</b> xuyên suốt mùa thi. Đây đúng là lúc dễ bỏ
+        nhất và cần nhất.</li>
+    </ul>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>30</span></div>
+</div>
+
+<!-- ═════ PHỤ LỤC 2 · PDR ═════ -->
+<div class="page">
+  <div class="run"><span>Phụ lục 2</span><span><b>Plan-Do-Review tại nhà</b></span></div>
+  <p class="eyebrow">Phụ lục 2</p>
+  <h2 class="h2">Plan-Do-Review: một vòng lặp mười phút</h2>
+  <div class="rule"></div>
+
+  <p class="small" style="margin-bottom:4mm">Đây là phương pháp Trường Việt Anh dùng từ mầm non đến
+    trung học để rèn chú ý có chủ đích và tính tự chịu trách nhiệm. Ba/Mẹ hoàn toàn làm được ở nhà,
+    không cần dụng cụ gì ngoài một cuốn sổ nhỏ.</p>
+
+  <svg viewBox="0 0 660 150" style="width:100%;height:auto;display:block;margin:0 auto 5mm">
+    <defs>
+      <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+        <path d="M0 0 L10 5 L0 10 z" fill="#26275D"/>
+      </marker>
+    </defs>
+    <g font-family="Be Vietnam Pro, Arial, sans-serif">
+      <rect x="4" y="18" width="184" height="114" rx="10" fill="#eef1fa" stroke="#26275D" stroke-width="1.6"/>
+      <circle cx="34" cy="46" r="13" fill="#F9DD0E"/>
+      <text x="34" y="51" font-size="14" font-weight="800" fill="#26275D" text-anchor="middle">1</text>
+      <text x="56" y="51" font-size="15" font-weight="800" fill="#26275D">PLAN</text>
+      <text x="20" y="78" font-size="11.5" fill="#16171f">Đầu giờ tối — 5 phút</text>
+      <text x="20" y="98" font-size="11.5" fill="#4a4f60">Con tự chọn 1–2 việc</text>
+      <text x="20" y="116" font-size="11.5" fill="#4a4f60">và tự ghi vào sổ</text>
+
+      <line x1="192" y1="75" x2="228" y2="75" stroke="#26275D" stroke-width="2" marker-end="url(#ar)"/>
+
+      <rect x="238" y="18" width="184" height="114" rx="10" fill="#e8f7ef" stroke="#0c7a4d" stroke-width="1.6"/>
+      <circle cx="268" cy="46" r="13" fill="#F9DD0E"/>
+      <text x="268" y="51" font-size="14" font-weight="800" fill="#26275D" text-anchor="middle">2</text>
+      <text x="290" y="51" font-size="15" font-weight="800" fill="#0c7a4d">DO</text>
+      <text x="254" y="78" font-size="11.5" fill="#16171f">Con tự làm, không màn hình</text>
+      <text x="254" y="98" font-size="11.5" fill="#4a4f60">Ba/Mẹ tuyệt đối không</text>
+      <text x="254" y="116" font-size="11.5" fill="#4a4f60">làm hộ, chỉ gợi mở</text>
+
+      <line x1="426" y1="75" x2="462" y2="75" stroke="#26275D" stroke-width="2" marker-end="url(#ar)"/>
+
+      <rect x="472" y="18" width="184" height="114" rx="10" fill="#fff6e0" stroke="#c9b200" stroke-width="1.6"/>
+      <circle cx="502" cy="46" r="13" fill="#F9DD0E"/>
+      <text x="502" y="51" font-size="14" font-weight="800" fill="#26275D" text-anchor="middle">3</text>
+      <text x="524" y="51" font-size="15" font-weight="800" fill="#9a6b00">REVIEW</text>
+      <text x="488" y="78" font-size="11.5" fill="#16171f">Trước giờ ngủ — 10 phút</text>
+      <text x="488" y="98" font-size="11.5" fill="#4a4f60">Con tự đánh giá, tự rút</text>
+      <text x="488" y="116" font-size="11.5" fill="#4a4f60">bài học. Không trách mắng</text>
+
+      <path d="M564 138 C564 150 96 150 96 138" fill="none" stroke="#a3a8b8" stroke-width="1.4"
+            stroke-dasharray="4 3" marker-end="url(#ar)"/>
+    </g>
+  </svg>
+
+  <div class="fill2">
+    <p class="h4">Bước 1 · Plan — lập kế hoạch</p>
+    <p class="small mt2" style="color:#2f3340">Chuẩn bị một cuốn sổ nhỏ hoặc bảng trắng dán tường.
+      Con tự chọn đúng <b>một đến hai việc</b> muốn làm tốt nhất hôm nay — “tự giải xong ba bài
+      toán”, “tự dọn bàn học gọn”. Con tự ghi hoặc tự vẽ việc đó lên. Điểm mấu chốt: <b>con chọn,
+      không phải Ba/Mẹ giao</b>.</p>
+  </div>
+
+  <div class="fill2 mt3">
+    <p class="h4">Bước 2 · Do — thực hiện</p>
+    <p class="small mt2" style="color:#2f3340">Con tự làm việc đã cam kết, tập trung, không thiết bị
+      điện tử bên cạnh. <b>Nguyên tắc vàng của Ba/Mẹ:</b> không làm hộ, không thúc liên tục bên tai.
+      Chấp nhận con làm chậm hoặc chưa hoàn hảo. Con bế tắc thì chỉ gợi mở bằng câu hỏi.</p>
+  </div>
+
+  <div class="fill2 mt3">
+    <p class="h4">Bước 3 · Review — nhìn lại</p>
+    <p class="small mt2" style="color:#2f3340">Trước giờ ngủ, ngồi cùng con bên cuốn sổ. Để con tự
+      nhận định: việc hôm nay xong chưa, con thấy thế nào, gặp khó ở đâu, rút ra gì. <b>Tuyệt đối
+      không dùng giờ Review để trách mắng</b> khi con chưa làm xong — hãy cùng con tìm nguyên nhân
+      và điều chỉnh cho ngày mai. Một lời khen cụ thể vào nỗ lực quý hơn mọi phần thưởng.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>31</span></div>
+</div>
+
+<!-- ═════ 24 VIỆC ═════ -->
+<div class="page">
+  <div class="run"><span><b>Lộ trình giáo dục con 0–18 tuổi</b></span><span>Tổng hợp</span></div>
+  <p class="eyebrow">Tổng hợp</p>
+  <h2 class="h2">Hai mươi bốn việc, xếp theo trục</h2>
+  <div class="rule"></div>
+  <p class="small" style="margin-bottom:4mm">Trang này để mở nhanh khi Ba/Mẹ đã biết trục nào của
+    con đang yếu nhất.</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th style="width:24mm">Trục</th>
+        <th style="width:47%">Mầm non · 0–5 tuổi</th>
+        <th>Phổ thông · 6–18 tuổi</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="ax">Kiến thức</td>
+          <td>Đọc sách tương tác 15 phút mỗi ngày, hỏi những câu khơi gợi “tại sao”. · Tránh màn
+            hình sớm; chơi xếp hình, đếm đồ vật quanh nhà.</td>
+          <td>Hỏi “vì sao con nghĩ thế” và “còn cách nào khác không”. · Cho con đóng vai thầy cô,
+            giảng lại bài cho cả nhà nghe.</td></tr>
+        <tr><td class="ax">Kỹ năng</td>
+          <td>Giao một việc tự phục vụ mỗi ngày và khen đúng nỗ lực. · Gọi tên cảm xúc giúp con khi
+            con nổi giận, thay vì quát.</td>
+          <td>Giao trọn một việc nhà cho con tự quản. · Khuyến khích con vào câu lạc bộ hoặc dự án
+            tập thể để rèn hợp tác.</td></tr>
+        <tr><td class="ax">Tiếng Anh</td>
+          <td>Nghe bài hát, đồng dao giọng bản ngữ mỗi ngày cho quen tai. · Không ép dịch; khen mỗi
+            lần con bật ra một từ.</td>
+          <td>Đưa tiếng Anh vào việc thật: xem phim không thuyết minh, viết, thuyết trình. · Đặt
+            mốc mục tiêu rõ ràng và theo dõi định kỳ.</td></tr>
+        <tr><td class="ax">Thể chất</td>
+          <td>Bỏ nước ngọt có gas, snack, bánh kẹo ngọt. · Giữ cố định giờ ăn, giờ ngủ trưa và
+            ngủ tối.</td>
+          <td>Bảo vệ giấc ngủ 7–9 tiếng kể cả mùa thi. · Duy trì một môn thể thao tối thiểu ba buổi
+            mỗi tuần.</td></tr>
+        <tr><td class="ax">Hướng nghiệp<br><span class="tiny">từ cuối tiểu học</span></td>
+          <td style="color:var(--mute)">Chưa mở — dồn sức cho bốn trục trên.</td>
+          <td>Trò chuyện hướng nghiệp sớm qua chính công việc hằng ngày của Ba/Mẹ. · Mỗi tuần một
+            câu hỏi: “việc gì con làm mà quên cả thời gian?”</td></tr>
+        <tr><td class="ax">Bản lĩnh &amp; Hệ giá trị</td>
+          <td>Ba/Mẹ làm gương trong điều tiết cảm xúc, không quát mắng. · Phản hồi ấm áp mỗi khi con
+            sợ hãi — gieo giá trị Yêu thương.</td>
+          <td>Thảo luận cởi mở về các tình huống đạo đức đời thường. · Dạy con an toàn số và giữ
+            dấu chân kỹ thuật số lành mạnh.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="fill2 mt4">
+    <p class="h4">Nếu chỉ làm được một việc duy nhất</p>
+    <div class="rule sm"></div>
+    <p class="small" style="color:#2f3340">Hãy chọn việc thuộc <b>trục thấp nhất</b> của con, không
+      phải việc dễ nhất hay việc Ba/Mẹ quen làm nhất. Trục thấp nhất là trục đang kéo cả những trục
+      còn lại xuống — và cũng là nơi cùng một nỗ lực tạo ra thay đổi lớn nhất.</p>
+  </div>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>32</span></div>
+</div>
+
+<!-- ═════ NGUỒN ═════ -->
+<div class="page">
+  <div class="run"><span><b>Lộ trình giáo dục con 0–18 tuổi</b></span><span>Nguồn tham khảo</span></div>
+  <p class="eyebrow">Nguồn tham khảo</p>
+  <h2 class="h2">Những con số trong cuốn này đến từ đâu</h2>
+  <div class="rule"></div>
+  <p class="small" style="margin-bottom:4mm">Cuốn cẩm nang này không đưa ra con số nào mà không nói
+    rõ nguồn. Ba/Mẹ hoàn toàn có thể tra lại từng mục dưới đây.</p>
+
+  <div class="card">
+    <p class="h4">Phát triển trẻ em &amp; khoa học thần kinh</p>
+    <div class="rule sm"></div>
+    <ul class="dots">
+      <li><b>Harvard Center on the Developing Child</b> — tốc độ hình thành kết nối thần kinh trong
+        những năm đầu và tỷ lệ phát triển não bộ trước năm tuổi.</li>
+      <li><b>COR Advantage</b> — bộ công cụ theo dõi 9 lĩnh vực phát triển của trẻ mầm non.</li>
+    </ul>
+  </div>
+
+  <div class="card mt3">
+    <p class="h4">Ngôn ngữ &amp; tiếng Anh</p>
+    <div class="rule sm"></div>
+    <ul class="dots">
+      <li><b>Hartshorne, Tenenbaum &amp; Pinker</b>, <em>Cognition</em> 2018 — giai đoạn tới hạn
+        trong học ngôn ngữ thứ hai.</li>
+      <li><b>EF English Proficiency Index 2024</b> — vị trí 63/116 của Việt Nam.</li>
+      <li><b>Talentnet – Mercer 2025</b> — chênh lệch thu nhập theo năng lực tiếng Anh và giữa
+        doanh nghiệp FDI với doanh nghiệp nội địa.</li>
+    </ul>
+  </div>
+
+  <div class="card mt3">
+    <p class="h4">Phương pháp dạy học</p>
+    <div class="rule sm"></div>
+    <ul class="dots">
+      <li><b>Freeman et al.</b>, <em>PNAS</em> 2014 — học chủ động làm tăng điểm thi và giảm nguy cơ
+        trượt môn.</li>
+      <li><b>Krathwohl</b>, <em>A Revision of Bloom’s Taxonomy</em> 2001.</li>
+    </ul>
+  </div>
+
+  <div class="card mt3">
+    <p class="h4">Sức khoẻ &amp; thể chất</p>
+    <div class="rule sm"></div>
+    <ul class="dots">
+      <li><b>WHO Guidelines on Physical Activity and Sedentary Behaviour</b> 2020.</li>
+      <li><b>Viện Dinh dưỡng Quốc gia</b> 2019–2020 — tỷ lệ thừa cân, béo phì ở trẻ nội thành
+        TP.HCM.</li>
+      <li><b>Frontiers in Public Health</b> 2025 — liên hệ giữa vận động đều đặn và kết quả học tập.</li>
+    </ul>
+  </div>
+
+  <div class="card mt3">
+    <p class="h4">Giáo dục &amp; thị trường lao động</p>
+    <div class="rule sm"></div>
+    <ul class="dots">
+      <li><b>Chương trình Giáo dục phổ thông 2018</b> — chọn tổ hợp môn từ lớp 10 và thời lượng
+        tiếng Anh ở phổ thông.</li>
+      <li><b>Sở Giáo dục và Đào tạo TP.HCM</b> 2025 — số liệu sĩ số lớp học.</li>
+      <li><b>World Economic Forum</b>, <em>Future of Jobs Report</em> 2025.</li>
+    </ul>
+  </div>
+
+  <p class="small mt3"><b class="navy">Lời chứng của phụ huynh:</b> bảy câu trích ở đầu mỗi chặng
+    đều là lời phụ huynh thật, ghi lại từ video chia sẻ quay tại trường — xem đầy đủ ở trang sau.</p>
+
+  <p class="tiny mt2">Cẩm nang mang tính tham khảo để Ba/Mẹ cùng đồng hành với con, không thay thế
+    chẩn đoán hay tư vấn chuyên môn về giáo dục, y tế và tâm lý.</p>
+
+  <div class="foot"><span>Trường Việt Anh</span><span>33</span></div>
+</div>
+
+<!-- ═════ TRANG CUỐI ═════ -->
+<div class="page end">
+  <p class="eyebrow">Bước tiếp theo</p>
+  <h2 class="h2">Con của anh/chị đang mạnh ở trục nào?</h2>
+  <div class="rule"></div>
+
+  <p>Cuốn cẩm nang này cho Ba/Mẹ bản đồ chung của cả chặng 0–18. Nhưng con của anh/chị thì không
+    “chung” — bé mạnh ở trục này và cần đồng hành ở trục khác, và điều đó thay đổi theo từng năm.</p>
+
+  <div class="cta-card">
+    <p class="h4">Trắc nghiệm “Bản đồ phát triển của con”</p>
+    <p class="small mt2" style="color:#d6d9ec">Chọn đúng độ tuổi, trả lời vài câu, nhận ngay biểu đồ
+      các trục học tập của con kèm điểm sáng, vùng nên đồng hành và ba việc làm ngay trong tuần.
+      Bốn trục ở mầm non và tiểu học, năm trục từ cấp hai. Miễn phí, khoảng 2 phút, báo cáo gửi
+      kèm qua Zalo để anh/chị lưu lại.</p>
+    <a class="cta-btn" href="https://truongvietanh.com/quiz?src=ebook-0-18">truongvietanh.com/quiz</a>
+  </div>
+
+  <div class="cta-card" style="margin-top:4.5mm">
+    <p class="h4">Nghe chính phụ huynh nói</p>
+    <p class="small mt2" style="color:#d6d9ec">Bảy câu trích ở đầu mỗi chặng đều là lời phụ huynh
+      thật, ghi lại từ video chia sẻ quay tại trường. Sách in không nhúng được video, nên Ba/Mẹ
+      muốn nghe trực tiếp — kể cả những chia sẻ không trích ở đây — mời xem hơn 30 video cùng các
+      lá thư phụ huynh gửi Ban Giám hiệu tại
+      <a href="https://truongvietanh.com/danh-gia-cua-phu-huynh/" style="color:var(--gold);font-weight:700">truongvietanh.com/danh-gia-cua-phu-huynh</a></p>
+  </div>
+
+  <div class="contact">
+    <div><b>Hotline</b><a href="tel:+84916961409">0916 961 409</a></div>
+    <div><b>Website</b><a href="https://truongvietanh.com">truongvietanh.com</a></div>
+    <div><b>Hệ thống</b>8 cơ sở tại TP.HCM, Tây Ninh và An Giang</div>
+  </div>
+
+  <p class="tiny mt4" style="color:#9aa0bd">© 2026 Hệ thống Giáo dục K-12 Việt Anh. Cẩm nang được
+    biên soạn kính tặng Ba/Mẹ, hoan nghênh chia sẻ nguyên vẹn cho những gia đình khác.</p>
+</div>
+
+</body>
+</html>

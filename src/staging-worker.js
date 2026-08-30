@@ -523,7 +523,7 @@ async function handleLeadSubmission(request, env) {
         // Lưu ý: khối này chỉ chạy khi step !== 'partial_capture', nên phụ huynh
         // mới nhập email ở bước 1 rồi bỏ dở sẽ KHÔNG được gắn tag và không nhận ebook.
         if (data.source === 'blog-inline-subscribe') {
-          tags.push('lo-trinh-giao-duc-con-0-18');
+          tags.push('lo-trinh-giao-duc-con-tu-0-18');
         }
 
         //   ebook-0-18      → link trong ebook "Lộ trình giáo dục con 0–18 tuổi" (PDF)

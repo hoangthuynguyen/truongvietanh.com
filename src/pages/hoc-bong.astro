@@ -416,7 +416,7 @@ const structuredData = [
             </table>
           </div>
 
-          <h3>Ví dụ với học phí niêm yết {vnd(HOC_PHI_VI_DU)}đ/năm</h3>
+          <h3>Ví dụ với học phí lớp 10 niêm yết {vnd(HOC_PHI_VI_DU)}đ/năm</h3>
           <div class="gi-table-responsive">
             <table class="gi-table">
               <thead>
@@ -1174,8 +1174,8 @@ const structuredData = [
             khác</strong> — thứ mà không giáo trình nào dạy được.
           </p>
           <p>
-            Vùng tuyển sinh nội trú của Việt Anh trải từ <strong>Đà Nẵng đến Cà Mau</strong>. TALENTS trao
-            <strong> đúng 1 suất cho mỗi tỉnh</strong>, tổng cộng 16 suất.
+            Vùng tuyển sinh nội trú của Việt Anh trải từ <strong>Đà Nẵng đến Cà Mau</strong>, khoảng 16
+            tỉnh thành. TALENTS trao <strong>đúng 1 suất cho mỗi tỉnh</strong>.
           </p>
 
           <div class="gi-table-responsive">
@@ -1652,6 +1652,25 @@ const structuredData = [
     color: rgba(255, 255, 255, 0.9);
   }
 
+  /* ⚠️ CHỐNG CHÌM CHỮ TRONG SECTION NAVY — đừng gỡ.
+     Ba quy tắc dưới đây có specificity cao hơn class con nên nếu không chặn lại
+     sẽ nuốt mất chữ (đã xảy ra thật 31/8/2026, nút CTA cuối trang thành ô vàng trơn):
+       1. .hb-section-navy :global(a)  → bôi vàng cả chữ trên nút CTA nền vàng
+       2. .hb-section-navy :global(p)  → bôi trắng chữ trên chip nền sáng
+       3. .gi-table tbody tr:nth-child(even) của global.css → trả nền sáng cho hàng chẵn,
+          trong khi chữ đã bị đổi thành trắng
+     Sau khi sửa CSS ở section navy, chạy lại bộ đo tương phản trước khi đăng. */
+  .hb-section-navy .hb-cta,
+  .hb-section-navy .hb-cta:hover { color: #26275D !important; }
+
+  .hb-section-navy .hb-meta-line {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.24);
+    color: rgba(255, 255, 255, 0.92) !important;
+  }
+
+  .hb-section-navy :global(.gi-table tbody tr:nth-child(even)) { background: transparent; }
+
   /* Section LOVE — tông trầm, doc yêu cầu không dùng vàng rực */
   .hb-section-love :global(h3) { color: rgba(255, 255, 255, 0.92) !important; }
   .hb-section-navy .hb-promise {
@@ -1706,7 +1725,7 @@ const structuredData = [
   }
   .hb-map-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); }
   .hb-map-name { font-size: 1.15rem; font-weight: 900; color: #26275D; letter-spacing: 0.02em; }
-  .hb-map-field { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; }
+  .hb-map-field { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #64748b; }
   .hb-map-desc { font-size: 0.95rem; color: #475569; line-height: 1.5; }
   .hb-map-grit { border-top-color: #f9dd0e; }
   .hb-map-champions { border-top-color: #e07a2f; }

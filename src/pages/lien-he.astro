@@ -4,6 +4,7 @@ import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { getPillarPage } from '../lib/directus';
+import { openingHoursSpecification } from '../data/school-facts';
 
 const cmsPage = await getPillarPage('lien-he');
 const cmsFaqs = cmsPage?.faq_items || null;
@@ -54,7 +55,7 @@ const structuredData = [
       {
         "@type": "Question",
         "name": "Ngoài giờ làm việc, liên hệ Trường Việt Anh bằng cách nào?",
-        "acceptedAnswer": { "@type": "Answer", "text": "Ngoài giờ làm việc (sau 17:00 ngày thường, Chủ Nhật), phụ huynh có thể nhắn tin qua Zalo OA hoặc điền form trên website. Đội ngũ tư vấn sẽ phản hồi vào sáng ngày làm việc tiếp theo." }
+        "acceptedAnswer": { "@type": "Answer", "text": "Trường đón khách Thứ 2 – Thứ 7, 07:00 – 19:00. Ngoài khung giờ đó và vào Chủ Nhật, phụ huynh có thể nhắn tin qua Zalo OA hoặc điền form trên website; đội ngũ tư vấn sẽ phản hồi vào đầu ngày làm việc tiếp theo. Riêng tham quan trường vào Chủ Nhật vẫn sắp xếp được nếu phụ huynh hẹn trước qua Hotline hoặc Zalo OA." }
       },
       {
         "@type": "Question",
@@ -93,12 +94,7 @@ const structuredData = [
       "latitude": 10.8431,
       "longitude": 106.6422
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "07:30",
-      "closes": "17:00"
-    },
+    "openingHoursSpecification": openingHoursSpecification,
     "priceRange": "$$"
   }
 ];
@@ -335,25 +331,20 @@ const structuredData = [
               </thead>
               <tbody>
                 <tr>
-                  <td><strong>Thứ 2 - Thứ 6</strong></td>
-                  <td>7:00 - 17:00</td>
-                  <td>Toàn bộ kênh liên hệ hoạt động. Zalo phản hồi 15-30 phút.</td>
-                </tr>
-                <tr>
-                  <td><strong>Thứ 7</strong></td>
-                  <td>7:30 - 11:30</td>
-                  <td>Chỉ hỗ trợ qua Hotline và Zalo. Có thể đặt lịch tham quan sáng thứ 7.</td>
+                  <td><strong>Thứ 2 - Thứ 7</strong></td>
+                  <td>7:00 - 19:00</td>
+                  <td>Toàn bộ kênh liên hệ hoạt động. Zalo phản hồi 15-30 phút. Nhận tham quan trường trong khung giờ này.</td>
                 </tr>
                 <tr>
                   <td><strong>Chủ Nhật</strong></td>
-                  <td>Nghỉ</td>
-                  <td>Nhắn Zalo hoặc điền form — sẽ phản hồi sáng thứ 2.</td>
+                  <td>Ngoài giờ làm việc</td>
+                  <td><strong>Vẫn tham quan được nếu hẹn trước</strong> qua Hotline hoặc Zalo OA. Không hẹn trước thì nhắn Zalo / điền form, trường phản hồi sáng thứ 2.</td>
                 </tr>
               </tbody>
             </table>
           </div>
 
-          <p>Phụ huynh muốn <strong>tham quan trường</strong> nên đặt lịch trước qua Zalo hoặc Hotline. Buổi tham quan diễn ra trong giờ học (8:00-16:00 ngày thường) để phụ huynh quan sát trực tiếp môi trường học tập và hoạt động của học sinh. Mỗi buổi tham quan kéo dài khoảng 45-60 phút, hoàn toàn miễn phí và không ràng buộc.</p>
+          <p>Phụ huynh muốn <strong>tham quan trường</strong> nên đặt lịch trước qua Zalo hoặc Hotline. Trường đón khách <strong>Thứ 2 – Thứ 7, 07:00 – 19:00</strong>; Chủ Nhật ngoài giờ làm việc nhưng vẫn sắp xếp được nếu hẹn trước. Nên chọn khung giờ học (8:00-16:00 ngày thường) để quan sát trực tiếp môi trường học tập và hoạt động của học sinh. Mỗi buổi tham quan kéo dài khoảng 45-60 phút, hoàn toàn miễn phí và không ràng buộc.</p>
 
           <p>Đối với phụ huynh ở xa không tiện đến trường, Trường Việt Anh hỗ trợ <strong>tư vấn online</strong> qua Zalo Video Call hoặc Google Meet. Đội ngũ tư vấn sẽ giới thiệu chi tiết chương trình, chia sẻ hình ảnh và video cơ sở, đồng thời giải đáp mọi thắc mắc trực tiếp.</p>
         </section>
@@ -399,7 +390,7 @@ const structuredData = [
             <details class="gi-faq-item">
               <summary>Ngoài giờ làm việc, liên hệ bằng cách nào?</summary>
               <div class="gi-faq-answer">
-                <p>Ngoài giờ làm việc (sau 17:00 ngày thường, buổi chiều thứ 7, và Chủ Nhật), phụ huynh có thể <strong>nhắn tin qua Zalo OA</strong> hoặc <strong>điền form trên website</strong>. Đội ngũ tư vấn sẽ phản hồi vào sáng ngày làm việc tiếp theo. Đối với trường hợp khẩn cấp liên quan đến học sinh đang học tại trường, phụ huynh liên hệ trực tiếp giáo viên chủ nhiệm qua số điện thoại đã cung cấp.</p>
+                <p>Trường đón khách <strong>Thứ 2 – Thứ 7, 07:00 – 19:00</strong>. Ngoài khung giờ đó và vào <strong>Chủ Nhật</strong>, phụ huynh có thể <strong>nhắn tin qua Zalo OA</strong> hoặc <strong>điền form trên website</strong>; đội ngũ tư vấn sẽ phản hồi vào đầu ngày làm việc tiếp theo. Riêng <strong>tham quan trường vào Chủ Nhật vẫn sắp xếp được nếu hẹn trước</strong> qua Hotline hoặc Zalo OA. Đối với trường hợp khẩn cấp liên quan đến học sinh đang học tại trường, phụ huynh liên hệ trực tiếp giáo viên chủ nhiệm qua số điện thoại đã cung cấp.</p>
               </div>
             </details>
             <details class="gi-faq-item">

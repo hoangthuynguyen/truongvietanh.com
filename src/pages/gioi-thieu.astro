@@ -4,6 +4,7 @@ import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { getPillarPage } from '../lib/directus';
+import { openingHoursSpecification } from '../data/school-facts';
 
 const cmsPage = await getPillarPage('gioi-thieu');
 const cmsFaqs = cmsPage?.faq_items || null;
@@ -118,12 +119,7 @@ const structuredData = [
       "latitude": 10.8431,
       "longitude": 106.6422
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "07:30",
-      "closes": "17:00"
-    },
+    "openingHoursSpecification": openingHoursSpecification,
     "priceRange": "$$"
   }
 ];

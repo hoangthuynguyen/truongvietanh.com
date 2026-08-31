@@ -4,6 +4,7 @@ import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { getPillarPage } from '../lib/directus';
+import { openingHoursSpecification } from '../data/school-facts';
 
 const cmsPage = await getPillarPage('co-so');
 const cmsFaqs = cmsPage?.faq_items || null;
@@ -51,7 +52,7 @@ const structuredData = [
     "address": { "@type": "PostalAddress", "streetAddress": "160/72 Phan Huy Ích", "addressLocality": "Gò Vấp", "addressRegion": "TP. Hồ Chí Minh", "addressCountry": "VN" },
     "geo": { "@type": "GeoCoordinates", "latitude": "10.8321", "longitude": "106.6442" },
     "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "07:00", "closes": "17:00" }
+      openingHoursSpecification
     ],
     "priceRange": "5.000.000 - 15.000.000 VND/tháng"
   },
@@ -62,7 +63,7 @@ const structuredData = [
     "telephone": "+84916961409",
     "address": { "@type": "PostalAddress", "streetAddress": "Số 7, Đường 38A, Tân Tạo", "addressLocality": "Bình Tân", "addressRegion": "TP. Hồ Chí Minh", "addressCountry": "VN" },
     "openingHoursSpecification": [
-      { "@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"], "opens": "07:00", "closes": "17:00" }
+      openingHoursSpecification
     ],
     "priceRange": "5.000.000 - 15.000.000 VND/tháng"
   },
@@ -127,12 +128,7 @@ const structuredData = [
       "latitude": 10.8431,
       "longitude": 106.6422
     },
-    "openingHoursSpecification": {
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-      "opens": "07:30",
-      "closes": "17:00"
-    },
+    "openingHoursSpecification": openingHoursSpecification,
     "priceRange": "$$"
   }
 ];
@@ -257,7 +253,7 @@ const structuredData = [
                   <p><strong>Địa chỉ:</strong> <a href="https://maps.google.com/?q=160/72+Phan+Huy+Ích,+Gò+Vấp,+TP.HCM" target="_blank" rel="noopener">160/72 Phan Huy Ích, P.12, Q. Gò Vấp, TP.HCM</a></p>
                   <p><strong>Hotline:</strong> <a href="tel:0916961409">0916 961 409</a></p>
                   <p><strong>Cấp học:</strong> Tiểu học, THCS, THPT</p>
-                  <p><strong>Giờ làm việc:</strong> T2-T6: 7:00-17:00 | T7: 7:30-11:30</p>
+                  <p><strong>Giờ làm việc:</strong> T2-T7: 7:00-19:00 | CN: ngoài giờ, tham quan được nếu hẹn trước</p>
                 </div>
                 <div class="cs-campus-desc">
                   <p>Cơ sở Gò Vấp (Phan Huy Ích) là cơ sở liên cấp lớn nhất trong hệ thống, phù hợp cho gia đình có nhiều con ở các cấp học khác nhau. Khuôn viên rộng rãi với sân bóng, sân đa năng, khu vui chơi phân theo lứa tuổi.</p>
@@ -278,7 +274,7 @@ const structuredData = [
                   <p><strong>Địa chỉ:</strong> <a href="https://maps.google.com/?q=573+Lê+Đức+Thọ,+Gò+Vấp,+TP.HCM" target="_blank" rel="noopener">573 Lê Đức Thọ, P.16, Q. Gò Vấp, TP.HCM</a></p>
                   <p><strong>Hotline:</strong> <a href="tel:0774588988">0774 588 988</a></p>
                   <p><strong>Cấp học:</strong> Mầm non (13 tháng - 6 tuổi)</p>
-                  <p><strong>Giờ làm việc:</strong> T2-T6: 7:00-17:00 | T7: 7:30-11:30</p>
+                  <p><strong>Giờ làm việc:</strong> T2-T7: 7:00-19:00 | CN: ngoài giờ, tham quan được nếu hẹn trước</p>
                 </div>
                 <div class="cs-campus-desc">
                   <p>Cơ sở chuyên mầm non tại đường Lê Đức Thọ được thiết kế riêng cho trẻ 13 tháng đến 6 tuổi. Toàn bộ không gian — từ phòng học, sân chơi đến khu vực ăn uống — đều tối ưu cho trẻ nhỏ: góc tròn an toàn, nội thất vừa tầm với, màu sắc tươi sáng kích thích sáng tạo.</p>
@@ -299,7 +295,7 @@ const structuredData = [
                   <p><strong>Địa chỉ:</strong> <a href="https://maps.google.com/?q=Số+7+đường+38A,+Bình+Tân,+TP.HCM" target="_blank" rel="noopener">Số 7, Đường 38A, Q. Bình Tân, TP.HCM</a></p>
                   <p><strong>Hotline:</strong> <a href="tel:0916961409">0916 961 409</a></p>
                   <p><strong>Cấp học:</strong> Tiểu học, THCS, THPT</p>
-                  <p><strong>Giờ làm việc:</strong> T2-T6: 7:00-17:00 | T7: 7:30-11:30</p>
+                  <p><strong>Giờ làm việc:</strong> T2-T7: 7:00-19:00 | CN: ngoài giờ, tham quan được nếu hẹn trước</p>
                 </div>
                 <div class="cs-campus-desc">
                   <p>Cơ sở Bình Tân phục vụ phụ huynh khu vực phía Tây TP.HCM — Bình Tân, Bình Chánh, Tân Phú. Khuôn viên rộng rãi, nhiều không gian xanh cho trẻ vận động ngoài trời. Đây là cơ sở mới được nâng cấp với trang thiết bị hiện đại, phòng học máy lạnh, sân chơi đa năng.</p>

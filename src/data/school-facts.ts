@@ -26,6 +26,30 @@ export const schoolFacts = {
   reviewCount: '300+', // số lượt đánh giá
 } as const;
 
+// =====================================================================
+// GIỜ ĐÓN KHÁCH & THAM QUAN TRƯỜNG — anh Dương chốt 31/08/2026
+// Thứ 2 – Thứ 7: 07:00–19:00. Chủ Nhật: ngoài giờ, nhưng tham quan được nếu hẹn trước.
+// Dùng openingHours cho MỌI schema LocalBusiness/EducationalOrganization.
+// Chủ Nhật CỐ TÌNH không nằm trong openingHours: chỉ phục vụ khi có hẹn,
+// không phải giờ mở cửa thường trực — khai báo sai sẽ sai thông tin trên Google.
+// =====================================================================
+export const openingHours = {
+  days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  opens: '07:00',
+  closes: '19:00',
+  // Câu mô tả chuẩn, dùng lại nguyên văn ở phần nội dung hiển thị cho phụ huynh.
+  display: 'Thứ 2 – Thứ 7: 07:00 – 19:00',
+  displayFull: 'Thứ 2 – Thứ 7: 07:00 – 19:00. Chủ Nhật: ngoài giờ làm việc, vẫn nhận tham quan nếu hẹn trước.',
+  sundayNote: 'Chủ Nhật ngoài giờ làm việc — phụ huynh hẹn trước qua Hotline hoặc Zalo OA vẫn tham quan được.',
+} as const;
+
+export const openingHoursSpecification = {
+  '@type': 'OpeningHoursSpecification',
+  dayOfWeek: [...openingHours.days],
+  opens: openingHours.opens,
+  closes: openingHours.closes,
+};
+
 // Mã xác minh Google Search Console.
 // TODO: thay bằng mã thật từ Search Console (đang để placeholder).
 export const GOOGLE_SITE_VERIFICATION =

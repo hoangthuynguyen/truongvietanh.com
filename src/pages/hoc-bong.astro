@@ -297,6 +297,23 @@ const structuredData = [
           áp dụng từ năm học 2026–2027.
         </p>
 
+        {/* Mục lục cho mobile. Sidebar .gi-toc bị ẩn dưới 1024px, mà trang này dài
+            gần 20 màn hình trên điện thoại — không có cái này thì phụ huynh phải
+            cuộn mù. Mở sẵn để không tốn thêm một cú chạm. */}
+        <details class="hb-toc-mobile" open>
+          <summary>Nhảy nhanh tới mục cần xem</summary>
+          <ol>
+            <li><a href="#bang-tong">Bảng tổng 9 chính sách</a></li>
+            <li><a href="#dong-phi-theo-nam">Đóng theo năm / học kỳ</a></li>
+            <li><a href="#anh-chi-em-ruot">Anh chị em ruột</a></li>
+            <li><a href="#early-bird">Early Bird</a></li>
+            <li><a href="#luat-cong-don">Luật cộng dồn</a></li>
+            <li><a href="#nam-hoc-bong">Năm học bổng</a></li>
+            <li><a href="#lich-trinh">Lịch trình 2026–2027</a></li>
+            <li><a href="#faq">Câu hỏi thường gặp</a></li>
+          </ol>
+        </details>
+
         <!-- ══════════ 1. BẢNG TỔNG ══════════ -->
         <section id="bang-tong" class="gi-section">
           <h2>Toàn bộ chính sách hỗ trợ tài chính của Trường Việt Anh, gói trong một bảng</h2>
@@ -1453,6 +1470,49 @@ const structuredData = [
 
     <FooterBase />
   </div>
+
+  <script is:inline>
+    /* Chèn dòng "vuốt ngang để xem tiếp" NGAY DƯỚI những bảng thật sự rộng hơn khung.
+       Làm bằng JS vì CSS không biết bảng nào tràn; bóng mờ hai mép thì đã có sẵn bằng
+       CSS nên kể cả JS chặn vẫn còn tín hiệu. Chạy lại khi xoay máy / đổi cỡ. */
+    (function () {
+      var main = document.querySelector('.gi-main');
+      if (!main) return;
+      var khungs = [].slice.call(main.querySelectorAll('.gi-table-responsive'));
+
+      function danhDau(khung) {
+        /* .gi-section dùng content-visibility:auto — section chưa vào màn hình thì báo
+           kích thước 0, đo lúc tải trang sẽ bỏ sót toàn bộ bảng dưới fold. Vì vậy chỉ đo
+           khi bảng thật sự được dựng (IntersectionObserver gọi tới). */
+        if (!khung.clientWidth) return;
+        var tran = khung.scrollWidth > khung.clientWidth + 4;
+        var nhac = khung.nextElementSibling;
+        if (!nhac || !nhac.classList.contains('hb-cuon-ngang')) {
+          if (!tran) return;
+          nhac = document.createElement('p');
+          nhac.className = 'hb-cuon-ngang';
+          nhac.textContent = '↔ Vuốt ngang trên bảng để xem hết các cột';
+          khung.parentNode.insertBefore(nhac, khung.nextSibling);
+        }
+        nhac.classList.toggle('hien', tran);
+      }
+
+      if ('IntersectionObserver' in window) {
+        var io = new IntersectionObserver(function (muc) {
+          muc.forEach(function (m) { if (m.isIntersecting) danhDau(m.target); });
+        }, { rootMargin: '300px 0px' });
+        khungs.forEach(function (k) { io.observe(k); });
+      } else {
+        khungs.forEach(danhDau);
+      }
+
+      var hen;
+      addEventListener('resize', function () {
+        clearTimeout(hen);
+        hen = setTimeout(function () { khungs.forEach(danhDau); }, 200);
+      });
+    })();
+  </script>
 </BaseLayout>
 
 <style>
@@ -1820,8 +1880,158 @@ const structuredData = [
   /* ══════════ VỀ TÁC GIẢ ══════════ */
   .hb-author { background: #f8fafc !important; }
 
+  /* ══════════ MỤC LỤC CHO MOBILE ══════════ */
+  /* Chỉ hiện khi sidebar .gi-toc bị ẩn (global.css ẩn nó dưới 1024px). */
+  .hb-toc-mobile { display: none; }
+  @media (max-width: 1024px) {
+    .hb-toc-mobile {
+      display: block;
+      background: #fff;
+      border: 1px solid #e8ecf1;
+      border-left: 4px solid #f9dd0e;
+      border-radius: 12px;
+      padding: 0.9rem 1.15rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 12px rgba(0, 0, 0, 0.03);
+    }
+    .hb-toc-mobile summary {
+      font-size: 1rem;
+      font-weight: 800;
+      color: #26275D;
+      cursor: pointer;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      min-height: 44px;
+    }
+    .hb-toc-mobile summary::-webkit-details-marker { display: none; }
+    .hb-toc-mobile summary::after {
+      content: '';
+      width: 9px; height: 9px;
+      border-right: 2px solid #26275D;
+      border-bottom: 2px solid #26275D;
+      transform: rotate(45deg);
+      transition: transform 0.2s;
+      flex-shrink: 0;
+    }
+    .hb-toc-mobile[open] summary::after { transform: rotate(-135deg); }
+    .hb-toc-mobile ol {
+      margin: 0.35rem 0 0;
+      padding-left: 1.35rem;
+      columns: 2;
+      column-gap: 1.1rem;
+    }
+    .hb-toc-mobile li { margin-bottom: 0.15rem; break-inside: avoid; }
+    .hb-toc-mobile a {
+      display: flex;
+      align-items: center;
+      min-height: 44px;       /* ngưỡng vùng chạm trên điện thoại */
+      padding: 0.35rem 0;
+      font-size: 1rem;
+      line-height: 1.35;
+      color: #26275D;
+      text-decoration: none;
+    }
+    .hb-toc-mobile a:active { text-decoration: underline; }
+  }
+  @media (max-width: 480px) {
+    .hb-toc-mobile ol { columns: 1; }
+  }
+
+  /* ══════════ BÁO CHO BIẾT BẢNG CUỘN NGANG ĐƯỢC ══════════ */
+  /* 6/13 bảng rộng hơn màn hình điện thoại. Có overflow-x rồi nhưng không có dấu
+     hiệu nào, người đọc tưởng bảng bị cắt. Hai lớp gradient neo theo nội dung
+     (background-attachment: local) nên bóng mờ tự tắt khi đã cuộn hết — không cần JS. */
+  .hb-page :global(.gi-table-responsive) {
+    background:
+      linear-gradient(to right, #fff 30%, rgba(255, 255, 255, 0)) left center,
+      linear-gradient(to left, #fff 30%, rgba(255, 255, 255, 0)) right center,
+      radial-gradient(farthest-side at 0 50%, rgba(38, 39, 93, 0.18), transparent) left center,
+      radial-gradient(farthest-side at 100% 50%, rgba(38, 39, 93, 0.18), transparent) right center;
+    background-repeat: no-repeat;
+    background-size: 44px 100%, 44px 100%, 15px 100%, 15px 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
+  .hb-section-navy :global(.gi-table-responsive) {
+    background:
+      linear-gradient(to right, #26275D 30%, rgba(38, 39, 93, 0)) left center,
+      linear-gradient(to left, #26275D 30%, rgba(38, 39, 93, 0)) right center,
+      radial-gradient(farthest-side at 0 50%, rgba(0, 0, 0, 0.4), transparent) left center,
+      radial-gradient(farthest-side at 100% 50%, rgba(0, 0, 0, 0.4), transparent) right center;
+    background-repeat: no-repeat;
+    background-size: 44px 100%, 44px 100%, 15px 100%, 15px 100%;
+    background-attachment: local, local, scroll, scroll;
+  }
+  /* Dòng chữ nhắc, chỉ gắn cho bảng thật sự tràn (script ở cuối trang gắn class). */
+  .hb-cuon-ngang {
+    display: none;
+    font-size: 0.95rem;
+    color: #64748b;
+    margin: -0.9rem 0 1.5rem;
+    font-style: italic;
+  }
+  .hb-section-navy .hb-cuon-ngang { color: rgba(255, 255, 255, 0.72); }
+  @media (max-width: 900px) {
+    .hb-cuon-ngang.hien { display: block; }
+  }
+
+  /* ══════════ ĐỘ DÀI DÒNG CHỮ TRÊN MÀN HÌNH RỘNG ══════════ */
+  /* Cột chữ 1068px cho ra ~123 ký tự/dòng, quá dài để mắt bắt được đầu dòng sau
+     (chuẩn đọc tốt 45–90). Chỉ giới hạn đoạn văn và danh sách — bảng vẫn full width. */
+  @media (min-width: 1100px) {
+    .gi-main :global(.gi-section > p),
+    .gi-main :global(.gi-section > ul),
+    .gi-main :global(.gi-section > ol),
+    .gi-main :global(.hb-faq-item p),
+    .gi-main :global(.gi-lead) {
+      max-width: 68ch;
+    }
+  }
+
+  /* ══════════ SÀN CỠ CHỮ 16px ══════════ */
+  /* Doc chốt: "Body tối thiểu 16px — không ngoại lệ, kể cả chú thích dưới nút và fine
+     print ở footer", và "Bảng: body 16px, header bảng 16px bold — bảng là nơi dễ bị đặt
+     font nhỏ nhất, cần kiểm lại sau khi dựng". Mặc định global.css cho ra 14.7–15.5px
+     nên phải nâng, và nâng cho CẢ desktop lẫn mobile chứ không riêng mobile. */
+  .hb-page :global(.gi-table),
+  .hb-page :global(.gi-table th),
+  .hb-page :global(.gi-table td) { font-size: 1rem; }
+  .hb-fineprint { font-size: 1rem !important; }
+  .hb-meta-line { font-size: 1rem !important; }
+  .hb-map-field { font-size: 1rem; }
+  .hb-cta-hint { font-size: 1rem; }
+  .hb-quote-kicker { font-size: 1rem !important; }
+  .hb-figure figcaption { font-size: 1rem; }
+  .hb-rubric { font-size: 1rem !important; }
+  .hb-col-quota { font-size: 1rem !important; }
+  .hb-cuon-ngang { font-size: 1rem; }
+  .hb-sources li { font-size: 1rem; }
+  .hb-research p { font-size: 1rem; }
+  .hb-tier-desc { font-size: 1rem !important; }
+  .hb-col-card p { font-size: 1rem !important; }
+  .hb-map-desc { font-size: 1rem; }
+  .hb-chips span { font-size: 1rem; }
+  .hb-final-links { font-size: 1rem !important; }
+  .hb-quote cite { font-size: 1rem; }
+
   /* ══════════ MOBILE ══════════ */
   @media (max-width: 768px) {
+    /* Khung bảng trên điện thoại chỉ còn ~300px. Bảng NHIỀU CỘT bị bóp xuống 45px/cột,
+       "Mọi học sinh" vỡ thành ba dòng một từ — với chúng thì cho sàn chiều rộng rồi để
+       cuộn ngang. Còn bảng 2–3 cột toàn câu văn thì để chữ tự xuống dòng vẫn dễ đọc hơn
+       là bắt người ta vuốt ngang, nên KHÔNG áp sàn cho chúng. */
+    .hb-page :global(.hb-table-tong th),
+    .hb-page :global(.hb-table-tong td),
+    .hb-page :global(.hb-table-eb th),
+    .hb-page :global(.hb-table-eb td) { min-width: 124px; }
+    .hb-page :global(.hb-table-tong th:first-child),
+    .hb-page :global(.hb-table-tong td:first-child),
+    .hb-page :global(.hb-table-eb th:first-child),
+    .hb-page :global(.hb-table-eb td:first-child) { min-width: 62px; }
+    /* Cỡ chữ đã được đặt sàn 16px ở khối chung phía trên — đừng khai lại ở đây,
+       lần trước dòng .hb-meta-line 0.98rem đã kéo ngược xuống 15.68px. */
     .hb-hero-sub { font-size: 1.08rem; }
     .hb-cta { display: block; text-align: center; font-size: 1rem; padding: 0.9rem 1.1rem; }
     .hb-two-col { grid-template-columns: 1fr; }

@@ -1,26 +1,1815 @@
 ---
-import DarkLPLayout from '../layouts/DarkLPLayout.astro';
+// Trang trụ VĨNH VIỄN — Học bổng & ưu đãi học phí Trường Việt Anh 2026–2027.
+// Nguồn nội dung: Google Doc "hocbongtruongvietanhlandingpage.md" của anh Dương
+// (fileId 1-eGidkbBrh4U9y_TGhWXgLndulS6n8p_H0to9YurxdU, cập nhật 31/8/2026).
+//
+// TRANG NÀY KHÔNG CÓ FORM LEAD — theo doc, CTA duy nhất là Zalo OA. Vì vậy KHÔNG
+// cần bộ thu UTM của CLAUDE.md (quy tắc đó chỉ áp cho trang POST /api/lead).
+// Nếu sau này gắn form vào đây thì PHẢI nạp /js/va-utm.js và đặt funnel_code riêng.
+//
+// Quy tắc viết (giống /chinh-sach-ai):
+//   - Mỗi H2 có anchor id tiếng Việt không dấu.
+//   - Bảng là <table> thật, bọc .gi-table-responsive để cuộn ngang trên mobile.
+//   - FAQ dùng h3 + p (KHÔNG dùng <details>) để mô hình đọc được ngay.
+//
+// MỌI CON SỐ TIỀN ĐỀU TÍNH TỪ HẰNG SỐ `HOC_PHI_VI_DU` BÊN DƯỚI — đổi 1 số là cả
+// 4 bảng Early Bird tự tính lại. Đừng hard-code lại tiền trong phần thân trang.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import { schoolFacts } from '../data/school-facts';
+
+const canonical = 'https://truongvietanh.com/hoc-bong';
+
+// Zalo OA Trường Việt Anh — cùng ID mà BaseLayout/FooterBase đang dùng.
+const ZALO_OA = 'https://zalo.me/1678310120468101523';
+const HOTLINE = '0916 961 409';
+
+// Ảnh CHỤP THẬT của trường (không phải ảnh AI). Nguồn: album Lễ Tổng kết 2025–2026
+// và Ngày hội Lãnh đạo Lion Camp 2026 trên photos.truongvietanh.com, đã đẩy lên R2.
+const IMG_CHAMPIONS = 'https://media.truongvietanh.com/images/hoc-bong/champions-le-tong-ket.webp';
+const IMG_LEADERS = 'https://media.truongvietanh.com/images/hoc-bong/leaders-ngay-hoi-lanh-dao.webp';
+// Infographic bản đồ 5 học bổng — ĐỒ HOẠ tạo bằng AI, có nhân vật học sinh dạng ảnh chụp,
+// nên figcaption phải gắn nhãn AI theo Điều 11.4 Luật TTNT 134/2025/QH15.
+const IMG_BAN_DO = 'https://media.truongvietanh.com/images/hoc-bong/ban-do-5-hoc-bong.webp';
+
+// ── SỐ HỌC ─────────────────────────────────────────────────────────────────
+// Mốc học phí dùng cho toàn bộ ví dụ trên trang. Doc gốc lấy 124.900.000đ.
+// LƯU Ý: /bang-gia đang niêm yết lớp 10 = 137.257.000đ. Nếu chốt dùng giá niêm
+// yết thật thì chỉ cần sửa đúng dòng dưới đây, mọi bảng tự tính lại.
+const HOC_PHI_VI_DU = 124_900_000;
+const TRAN_TANG = 0.10;                              // trần tăng học phí mỗi năm
+const GIAM_TRON_NAM = 0.06;
+const GIAM_TRON_KY = 0.02;
+const EB_GIAM = [0.06, 0.16, 0.26, 0.36, 0.46];      // mức giảm Early Bird năm 1→5
+
+const vnd = (n: number) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+// Bảng 1 — đóng trọn năm / trọn học kỳ
+const traTronNam = Math.round(HOC_PHI_VI_DU * (1 - GIAM_TRON_NAM));
+const traTronKy = Math.round(HOC_PHI_VI_DU * (1 - GIAM_TRON_KY));
+
+// Bảng 2 — Early Bird 5 năm so với đóng từng năm (đã trừ 6%)
+const ebRows = EB_GIAM.map((giam, i) => {
+  const niemYet = Math.round(HOC_PHI_VI_DU * Math.pow(1 + TRAN_TANG, i));
+  const tungNam = Math.round(niemYet * (1 - GIAM_TRON_NAM));
+  const earlyBird = Math.round(HOC_PHI_VI_DU * (1 - giam));
+  return { nam: i + 1, niemYet, tungNam, earlyBird, chenh: tungNam - earlyBird };
+});
+const tongNiemYet = ebRows.reduce((s, r) => s + r.niemYet, 0);
+const tongTungNam = ebRows.reduce((s, r) => s + r.tungNam, 0);
+const tongEarlyBird = ebRows.reduce((s, r) => s + r.earlyBird, 0);
+const tongChenh = tongTungNam - tongEarlyBird;
+const tyLeTungNam = Math.round((tongTungNam / tongNiemYet) * 100);
+const tyLeEarlyBird = Math.round((tongEarlyBird / tongNiemYet) * 100);
+
+// Bảng 3 — so với gửi tiết kiệm.
+// Tiền năm 1 KHÔNG bị khoá (phương án nào cũng phải đóng ngay trong năm nay),
+// nên chỉ tính lãi mất trên phần tiền của năm 2→5, mỗi phần khoá (n−1) năm.
+const laiMat = (r: number) =>
+  Math.round(ebRows.slice(1).reduce((s, row, i) => s + row.earlyBird * (Math.pow(1 + r, i + 1) - 1), 0));
+const bankRows = [0.045, 0.05, 0.055, 0.06].map((r) => {
+  const mat = laiMat(r);
+  return { r, mat, loiRong: tongChenh - mat };
+});
+
+// Bảng 4 — rút giữa chừng: phần đã học giữ nguyên mức ưu đãi Early Bird của năm đó
+const refundRows = [1, 2, 3, 4].map((n) => {
+  const giuLai = ebRows.slice(0, n).reduce((s, r) => s + r.earlyBird, 0);
+  return { nam: n, giuLai, hoanLai: tongEarlyBird - giuLai };
+});
+
+// CTA cuối — gia đình 2 con cùng học, đóng trọn năm, chưa tính học bổng của các con
+const tietKiemHaiCon =
+  Math.round(HOC_PHI_VI_DU * GIAM_TRON_NAM) +
+  Math.round(HOC_PHI_VI_DU * 0.5) +
+  Math.round(HOC_PHI_VI_DU * 0.5 * GIAM_TRON_NAM);
+
+// ── 9 CHÍNH SÁCH ───────────────────────────────────────────────────────────
+const chinhSach = [
+  { stt: 1, ten: 'Đóng phí theo năm', ai: 'Mọi học sinh', muc: '<strong>6%</strong> học phí', quyet: 'Cha mẹ', loai: 'uu-dai' },
+  { stt: 2, ten: 'Đóng phí theo học kỳ', ai: 'Mọi học sinh', muc: '<strong>2%</strong> học phí', quyet: 'Cha mẹ', loai: 'uu-dai' },
+  { stt: 3, ten: 'Anh chị em ruột', ai: 'Gia đình có từ 2 con học trong hệ thống', muc: 'Con thứ hai <strong>50%</strong> · con thứ ba <strong>25%</strong>', quyet: 'Cha mẹ', loai: 'uu-dai' },
+  { stt: 4, ten: 'Early Bird (đóng trước nhiều năm)', ai: 'Gia đình xác định gắn bó dài hạn', muc: '<strong>6% → 16% → 26% → 36% → 46%</strong> theo từng năm, kèm <strong>khoá giá học phí năm đầu</strong>', quyet: 'Cha mẹ', loai: 'uu-dai' },
+  { stt: 5, ten: 'GRIT', ai: 'Mọi học sinh đang học', muc: 'Mỗi ngày rèn giũa tối thiểu 1 giờ = <strong>10.000đ</strong>. Giữ đủ 6/7 ngày thì tuần đó tính tròn <strong>100.000đ</strong>, cộng dồn theo chuỗi tuần', quyet: 'Con', loai: 'hoc-bong' },
+  { stt: 6, ten: 'CHAMPIONS', ai: 'Học sinh đạt giải thi đấu', muc: '4 mức theo độ khó kỳ thi, từ <strong>2 – 20 triệu</strong>', quyet: 'Con', loai: 'hoc-bong' },
+  { stt: 7, ten: 'LEADERS', ai: 'Học sinh cho đi &amp; dẫn dắt', muc: '2 bảng, <strong>10 suất × 10 triệu</strong> mỗi bảng', quyet: 'Con', loai: 'hoc-bong' },
+  { stt: 8, ten: 'TALENTS', ai: 'Học sinh ngoài trường, từ lớp 6, khu vực Đà Nẵng → Cà Mau', muc: '4 hạng, <strong>25 – 100 triệu</strong>, mỗi tỉnh đúng 1 suất', quyet: 'Con', loai: 'hoc-bong' },
+  { stt: 9, ten: 'LOVE', ai: 'Gia đình gặp biến cố', muc: 'Miễn <strong>50 – 100%</strong> học phí', quyet: 'Không ai xin — trường tự kích hoạt', loai: 'love' },
+];
+
+// ── FAQ ────────────────────────────────────────────────────────────────────
+// Dùng chung cho phần hiển thị và schema FAQPage — không chép tay hai lần.
+const faqs = [
+  {
+    id: 'faq-hoc-sinh-moi',
+    q: 'Con tôi chưa học Việt Anh, tôi được ưu đãi gì ngay?',
+    a: 'Ba ưu đãi học phí — đóng theo năm (6%), đóng theo học kỳ (2%), anh chị em ruột (50% cho con thứ hai) — áp dụng ngay khi ghi danh vào Trường Việt Anh, không cần chờ. Riêng TALENTS là học bổng tuyển sinh dành cho học sinh ngoài trường từ lớp 6, khu vực Đà Nẵng đến Cà Mau. Bốn học bổng còn lại con bắt đầu giành được từ khi vào học.',
+  },
+  {
+    id: 'faq-hoc-sinh-cu-co-thiet',
+    q: 'Con tôi đang học Việt Anh có bị thiệt so với học sinh mới không?',
+    a: 'Không. Luật nền của Trường Việt Anh là: học bổng cho học sinh ngoài luôn mở cửa cho học sinh trong, chỉ tách chỉ tiêu. Bốn trong năm học bổng — GRIT, CHAMPIONS, LEADERS, LOVE — dành cho học sinh đang học.',
+  },
+  {
+    id: 'faq-cong-don',
+    q: 'Các ưu đãi có cộng dồn với nhau không?',
+    a: 'Có, gần như toàn bộ. Ưu đãi đóng phí theo thời gian (theo năm, theo học kỳ, Early Bird) cộng dồn với tất cả. Bốn học bổng con giành được — GRIT, CHAMPIONS, LEADERS, TALENTS — cộng dồn với nhau, con giành được bao nhiêu thì nhận bấy nhiêu, không có mức trần. Trường hợp duy nhất không cộng dồn: ưu đãi anh chị em ruột so với nhóm học bổng — Trường Việt Anh tự động áp mức tốt hơn cho con. Quỹ LOVE nằm ngoài mọi luật cộng dồn.',
+  },
+  {
+    id: 'faq-ba-con-cung-hoc',
+    q: 'Gia đình tôi có 3 con, cả 3 cùng học. Tính thế nào?',
+    a: 'Con thứ nhất đóng học phí niêm yết, con thứ hai giảm 50%, con thứ ba giảm 25%. Nếu anh chị đóng trọn năm, cả ba con được cộng thêm 6% lên trên mức của mình. Với con thứ hai và thứ ba, nếu tổng học bổng các con tự giành được lớn hơn mức 50% / 25% thì Trường Việt Anh áp mức học bổng thay vì mức anh chị em ruột — luôn chọn phương án có lợi hơn cho con.',
+  },
+  {
+    id: 'faq-tinh-tren-gi',
+    q: 'Các khoản ưu đãi tính trên những gì?',
+    a: 'Chỉ tính trên học phí. Phí dịch vụ, tiền ăn, xe đưa đón, nội trú, đồng phục và các khoản thu hộ — chi hộ không nằm trong phạm vi ưu đãi, và thu theo giá của từng năm học. Điều này đúng với cả chín chính sách của Trường Việt Anh, không có ngoại lệ.',
+  },
+  {
+    id: 'faq-grit-tien-mat',
+    q: 'Học bổng GRIT có nhận bằng tiền mặt không?',
+    a: 'Không. GRIT được trừ vào học phí năm học kế tiếp. Riêng học sinh lớp 12 — vì không còn năm sau — nhận bằng tiền mặt tại Lễ Tri ân và Trưởng thành. Học sinh chuyển trường giữa chừng không quy đổi quỹ tích luỹ thành tiền.',
+  },
+  {
+    id: 'faq-grit-dut-chuoi',
+    q: 'Nếu con tôi ốm và đứt chuỗi GRIT thì sao?',
+    a: 'Luật GRIT cho phép hụt 1 ngày trong tuần — tuần đạt tính là 6 trên 7 ngày. Nếu nghỉ dài dẫn đến đứt chuỗi, con phải xây lại đủ 4 tuần liên tục mới mở lại cổng, và các tuần trong lúc xây lại không được tính. Tuy nhiên toàn bộ phần đã nhận trước đó không bị thu hồi.',
+  },
+  {
+    id: 'faq-talents-boc-tham',
+    q: 'Học bổng TALENTS bốc thăm thì có công bằng không?',
+    a: 'Phần chọn người hoàn toàn dựa trên năng lực: hồ sơ, thư đề cử từ trường cũ và phỏng vấn cả gia đình. Chỉ có mức học bổng là do bốc thăm. Cả 16 em đều chắc chắn nhận học bổng của Trường Việt Anh — không em nào ra về tay trắng.',
+  },
+  {
+    id: 'faq-early-bird-chuyen-truong',
+    q: 'Đóng Early Bird 5 năm rồi con chuyển trường thì sao?',
+    a: 'Anh chị được lấy lại toàn bộ phần tiền chưa dùng, chỉ cần báo trước 30 ngày. Không cần lý do, không mất phí phạt. Phần thời gian con đã học vẫn giữ nguyên mức ưu đãi Early Bird của những năm đó — Trường Việt Anh không tính lùi về giá gốc và không truy thu phần đã giảm.',
+  },
+  {
+    id: 'faq-early-bird-du-5-nam',
+    q: 'Early Bird có bắt buộc đóng đủ 5 năm không?',
+    a: 'Không. 5 năm là mức tối đa. Anh chị chọn số năm phù hợp với gia đình mình — càng nhiều năm thì mức giảm của những năm sau càng sâu.',
+  },
+  {
+    id: 'faq-quy-love-thu-tuc',
+    q: 'Gia đình tôi gặp biến cố, phải làm thủ tục gì để xin quỹ LOVE?',
+    a: 'Anh chị không cần làm hồ sơ xin. Chỉ cần báo với giáo viên chủ nhiệm của con. Trường Việt Anh kích hoạt hỗ trợ trong vòng 7 ngày, không chờ cửa sổ xét quý. Trường cam kết không truyền thông bất kỳ trường hợp nào.',
+  },
+  {
+    id: 'faq-khong-phu-hop',
+    q: 'Nếu tôi thấy trường không phù hợp sau khi con đã học?',
+    a: 'Học 4 tuần đầu, nếu không hài lòng, Trường Việt Anh hoàn 100% học phí, không hỏi lý do. Quy định học phí đóng rồi không hoàn lại chỉ áp dụng sau 4 tuần đó.',
+  },
+];
+
+const description =
+  'Toàn bộ ưu đãi học phí và 5 học bổng của Trường Việt Anh 2026–2027: đóng phí theo năm 6%, anh chị em ruột 50%, Early Bird khoá giá 5 năm, GRIT, CHAMPIONS, LEADERS, TALENTS, LOVE. Đủ số, đủ điều kiện, đủ hạn chót.';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    '@id': 'https://truongvietanh.com/#organization',
+    name: 'Trường Việt Anh',
+    url: 'https://truongvietanh.com',
+    foundingDate: String(schoolFacts.foundedYear),
+    numberOfEmployees: undefined,
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Admissions',
+      telephone: '+84916961409',
+      areaServed: 'VN',
+      availableLanguage: ['vi'],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    name: 'Học bổng & ưu đãi học phí Trường Việt Anh 2026–2027',
+    description,
+    url: canonical,
+    inLanguage: 'vi',
+    primaryImageOfPage: { '@type': 'ImageObject', url: IMG_BAN_DO, width: 1600, height: 900 },
+    image: [IMG_BAN_DO, IMG_CHAMPIONS, IMG_LEADERS],
+    isPartOf: { '@id': 'https://truongvietanh.com/#organization' },
+    mainEntity: { '@id': `${canonical}#faq` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Tuyển sinh', item: 'https://truongvietanh.com/tuyen-sinh' },
+      { '@type': 'ListItem', position: 3, name: 'Học bổng & ưu đãi học phí', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
 ---
-<DarkLPLayout
-  title="Học Bổng Trường Việt Anh 2026 — Đến 50% Học Phí | Trường Việt Anh"
-  description="Học bổng đầu vào · Học bổng học sinh xuất sắc · Học bổng tài năng · Học bổng anh chị em — 4 loại học bổng tổng giá trị 5 tỷ/năm."
-  canonicalUrl="https://truongvietanh.com/hoc-bong"
-  fomoText="🔥 Học bổng 10–50% theo học lực · 3,000+ học sinh đang theo học"
-  headline="Học Bổng Trường Việt Anh 2026"
-  headlineEm="Học bổng đến 50% — Xét theo học lực & hoàn cảnh"
-  subheadline="Đăng ký test đầu vào miễn phí để xét học bổng Early Bird. Có 4 loại học bổng cho mọi đối tượng."
-  bullets={[
-    "🥇 Học bổng đầu vào 10–50% — <strong>xét test + học bạ</strong>",
-    "👫 Học bổng anh chị em ruột — <strong>giảm thêm 10–15% cho bé thứ 2</strong>",
-    "🎓 Học bổng học sinh xuất sắc — <strong>xét lại mỗi học kỳ</strong>",
-    "💝 Học bổng hoàn cảnh — <strong>xét theo từng trường hợp, không phân biệt</strong>",
-  ]}
-  testimonial="Con đạt học bổng 30% ngay từ đầu vào. Thủ tục nhanh, không phải chờ đợi lâu."
-  testimonialAuthor="— Chị Lan Anh, Q.Tân Bình · Phụ huynh THCS"
-  cardUrgency="⏰ Xét học bổng miễn phí · Kết quả trong 24h"
-  cardTitle="Đăng ký xét học bổng miễn phí"
-  ctaStep2="🎓 ĐĂNG KÝ XÉT HỌC BỔNG →"
-  source="hoc-bong"
-  funnelCode="hoc-bong"
-  schoolLevel="tieu-hoc"
-/>
+
+<BaseLayout
+  title="Học Bổng & Ưu Đãi Học Phí Trường Việt Anh 2026–2027 | 9 Chính Sách"
+  description={description}
+  keywords="học bổng trường Việt Anh, ưu đãi học phí trường tư, giảm học phí anh chị em ruột, học bổng trường tư TPHCM, Early Bird học phí, học bổng GRIT, học bổng TALENTS"
+  canonical={canonical}
+  ogImage={IMG_BAN_DO}
+  ogType="article"
+  structuredData={structuredData}
+>
+  <div class="gi-page hb-page">
+    <HeaderBase currentPath="/hoc-bong" />
+
+    <!-- ══════════ HERO ══════════ -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left" style="flex:1">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true"></span>
+            <a href="/tuyen-sinh">Tuyển sinh</a>
+            <span aria-hidden="true"></span>
+            <span>Học bổng &amp; ưu đãi học phí</span>
+          </nav>
+          <h1 class="gi-h1">Ở Việt Anh có hai loại ưu đãi khác nhau. Bạn nên biết cả hai.</h1>
+          <p class="hb-hero-sub">
+            Loại thứ nhất là <strong>ưu đãi học phí</strong> — bạn quyết định, ký là có ngay.
+            Loại thứ hai là <strong>học bổng</strong> — con phải tự giành, không ai tặng.
+          </p>
+          <p class="hb-hero-body">
+            Trang này nói thẳng cả hai: giảm bao nhiêu, điều kiện gì, hạn chót ngày nào.
+            Không có dòng nào ghi &ldquo;liên hệ để biết thêm&rdquo;.
+          </p>
+          <p class="hb-hero-note">
+            Toàn bộ ưu đãi và học bổng trong trang này tính trên <strong>học phí</strong>.
+            Không áp dụng cho phí dịch vụ và các khoản thu hộ — chi hộ.
+          </p>
+
+          <div class="hb-hero-actions">
+            <a href={ZALO_OA} target="_blank" rel="noopener" class="hb-cta" data-cta-position="hero">
+              Nhắn Zalo hỏi mức của con tôi
+            </a>
+            <p class="hb-cta-hint">
+              Bấm <strong>Quan tâm</strong> trang Zalo OA để nhắn được — mất 3 giây.
+            </p>
+          </div>
+
+          <a href="#bang-tong" class="hb-hero-link">Xem nhanh bảng tổng 9 chính sách ↓</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="gi-container gi-body">
+      <!-- ══════════ MỤC LỤC ══════════ -->
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Nội dung</p>
+        <ol class="gi-toc-list">
+          <li><a href="#bang-tong">Bảng tổng 9 chính sách</a></li>
+          <li><a href="#dong-phi-theo-nam">Đóng theo năm / học kỳ</a></li>
+          <li><a href="#anh-chi-em-ruot">Anh chị em ruột</a></li>
+          <li><a href="#early-bird">Early Bird</a></li>
+          <li><a href="#luat-cong-don">Luật cộng dồn</a></li>
+          <li><a href="#nam-hoc-bong">Năm học bổng</a></li>
+          <li><a href="#lich-trinh">Lịch trình 2026–2027</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href={ZALO_OA} target="_blank" rel="noopener" class="gi-toc-cta" data-cta-position="toc">
+          Nhắn Zalo tuyển sinh
+        </a>
+      </nav>
+
+      <article class="gi-main" id="main-content" data-no-collapse>
+        <p class="gi-lead">
+          Trường Việt Anh tách bạch hai thứ mà phần lớn trường tư gộp chung: <strong>ưu đãi học phí</strong>
+          là quyết định của cha mẹ (đóng theo năm 6%, theo học kỳ 2%, anh chị em ruột 50%, Early Bird tới 46%
+          kèm khoá giá), còn <strong>học bổng</strong> là thứ học sinh phải tự giành (GRIT, CHAMPIONS,
+          LEADERS, TALENTS) — cộng thêm quỹ LOVE dành cho gia đình gặp biến cố. Tổng cộng 9 chính sách,
+          áp dụng từ năm học 2026–2027.
+        </p>
+
+        <!-- ══════════ 1. BẢNG TỔNG ══════════ -->
+        <section id="bang-tong" class="gi-section">
+          <h2>Toàn bộ chính sách hỗ trợ tài chính của Trường Việt Anh, gói trong một bảng</h2>
+          <p>
+            Bạn không cần đọc hết trang này. Nếu chỉ có 15 giây, hãy đọc bảng dưới đây rồi nhắn Zalo cho tôi.
+          </p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table hb-table-tong">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Tên</th>
+                  <th scope="col">Ai được</th>
+                  <th scope="col">Giảm bao nhiêu</th>
+                  <th scope="col">Ai quyết định</th>
+                </tr>
+              </thead>
+              <tbody>
+                {chinhSach.map((c) => (
+                  <tr class={`hb-row-${c.loai}`}>
+                    <td><strong>{c.stt}</strong></td>
+                    <td><strong set:html={c.ten} /></td>
+                    <td set:html={c.ai} />
+                    <td set:html={c.muc} />
+                    <td set:html={c.quyet} />
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Đọc bảng này, có ba điều đáng chú ý</h3>
+          <p>
+            <strong>Bốn dòng đầu là ưu đãi học phí.</strong> Bạn ký hợp đồng, chọn cách đóng, là có.
+            Nó phụ thuộc vào quyết định của người lớn.
+          </p>
+          <p>
+            <strong>Năm dòng sau là học bổng.</strong> Không có dòng nào bạn mua được, xin được, hay nhờ được.
+            Con bạn phải tự giành.
+          </p>
+          <p>
+            <strong>Dòng cuối cùng — LOVE — là dòng duy nhất trường tự tìm đến gia đình</strong>, chứ không
+            chờ gia đình tìm đến trường.
+          </p>
+
+          <p class="hb-note">
+            <strong>Và một lưu ý áp dụng cho cả chín dòng:</strong> mọi con số trong bảng này tính trên
+            <strong> học phí</strong>. Phí dịch vụ, tiền ăn, xe đưa đón, đồng phục và các khoản thu hộ — chi hộ
+            không nằm trong phạm vi ưu đãi. Tôi ghi rõ ngay từ đầu để không ai phải phát hiện điều này lúc
+            nhận hoá đơn. Học phí niêm yết từng khối lớp xem tại <a href="/bang-gia">bảng giá</a>.
+          </p>
+
+          <p class="hb-cta-inline">
+            <a href={ZALO_OA} target="_blank" rel="noopener" class="hb-cta" data-cta-position="bang-tong">
+              Nhắn Zalo: &ldquo;Con tôi lớp ___, tôi muốn biết mức cụ thể&rdquo;
+            </a>
+          </p>
+        </section>
+
+        <!-- ══════════ 2. VÌ SAO TÁCH LÀM HAI ══════════ -->
+        <section id="vi-sao-tach-hai" class="gi-section">
+          <h2>Tôi tách hai loại ưu đãi này ra, vì chúng khác hẳn nhau về bản chất</h2>
+          <p>
+            Suốt {schoolFacts.yearsRunning} năm làm trường, tôi thấy phần lớn trường tư gọi mọi thứ giảm giá
+            là &ldquo;học bổng&rdquo;. Đóng sớm: học bổng. Có anh chị đang học: học bổng. Ghi danh trong
+            tháng này: học bổng.
+          </p>
+          <p>
+            Cách gọi ấy tiện cho phòng tuyển sinh. Nhưng nó dạy đứa trẻ một điều sai: rằng học bổng là thứ
+            <strong> cha mẹ mua được</strong>.
+          </p>
+          <p>
+            Đứa trẻ nghe cha mẹ nói &ldquo;con được học bổng 50%&rdquo; trong khi nó biết rõ mình chẳng làm gì
+            ngoài việc có một người anh cũng học ở đây. Lần sau nghe hai chữ &ldquo;học bổng&rdquo;, nó sẽ
+            không thấy có gì đáng để cố gắng.
+          </p>
+          <p>Nên ở Việt Anh, từ năm học 2026–2027:</p>
+          <p>
+            <strong>Ưu đãi học phí là chuyện của cha mẹ.</strong> Nó là bài toán dòng tiền của gia đình.
+            Nó xứng đáng được tính kỹ, và tôi sẽ đưa bạn đủ số để tính.
+          </p>
+          <p>
+            <strong>Học bổng là chuyện của con.</strong> Nó gắn với một hành vi cụ thể mà đứa trẻ phải làm,
+            lặp lại, và chứng minh được.
+          </p>
+          <p>Hai chuyện khác nhau. Hai cái tên khác nhau.</p>
+
+          <blockquote class="hb-quote">
+            <p>&ldquo;Không ai được tặng học bổng — mọi học bổng đều phải tự mình đạt được.&rdquo;</p>
+            <cite>— Nguyên tắc nền của chính sách học bổng Việt Anh 2026–2027</cite>
+          </blockquote>
+        </section>
+
+        <!-- ══════════ DẢI PHÂN CÁCH KHỐI 1 ══════════ -->
+        <div class="hb-divider">
+          <p class="hb-divider-kicker">Khối 1</p>
+          <p class="hb-divider-title">Ưu đãi học phí</p>
+          <p class="hb-divider-sub">Phần này bạn quyết định</p>
+        </div>
+
+        <!-- ══════════ 3. ĐÓNG THEO NĂM / HỌC KỲ ══════════ -->
+        <section id="dong-phi-theo-nam" class="gi-section">
+          <h2>1 &amp; 2. Đóng phí theo năm giảm 6%, theo học kỳ giảm 2%</h2>
+          <p>Đây là ưu đãi đơn giản nhất và cũng là ưu đãi nhiều gia đình bỏ qua nhất.</p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Cách đóng</th><th scope="col">Mức giảm</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Đóng trọn <strong>năm học</strong></td><td><strong>6%</strong> học phí</td></tr>
+                <tr><td>Đóng trọn <strong>học kỳ</strong></td><td><strong>2%</strong> học phí</td></tr>
+                <tr><td>Đóng theo tháng / quý</td><td>Không giảm</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Ví dụ với học phí niêm yết {vnd(HOC_PHI_VI_DU)}đ/năm</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Cách đóng</th>
+                  <th scope="col">Số tiền thực đóng</th>
+                  <th scope="col">Tiết kiệm</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Trọn năm (−6%)</td>
+                  <td><strong>{vnd(traTronNam)}đ</strong></td>
+                  <td class="hb-win"><strong>{vnd(HOC_PHI_VI_DU - traTronNam)}đ</strong></td>
+                </tr>
+                <tr>
+                  <td>Trọn học kỳ (−2%)</td>
+                  <td><strong>{vnd(traTronKy)}đ</strong></td>
+                  <td class="hb-win"><strong>{vnd(HOC_PHI_VI_DU - traTronKy)}đ</strong></td>
+                </tr>
+                <tr><td>Theo tháng</td><td>{vnd(HOC_PHI_VI_DU)}đ</td><td>0đ</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Bảy triệu tư. Bằng đúng tiền một khoá hè ngắn, hoặc một chiếc xe đạp tốt cho con.</p>
+
+          <p>
+            <strong>Vì sao trường giảm?</strong> Tôi nói thẳng: vì dòng tiền. Một trường học nhận tiền trọn
+            năm thì lên kế hoạch tuyển giáo viên, mua thiết bị và trả lương ổn định hơn hẳn một trường thu
+            nhỏ giọt theo tháng. Phần lợi ấy tôi chia lại cho gia đình chịu đóng trước. Không có gì bí ẩn
+            ở đây cả.
+          </p>
+          <p>
+            <strong>Ưu đãi này cộng dồn được với mọi ưu đãi và học bổng khác</strong> — chi tiết ở
+            <a href="#luat-cong-don"> mục Luật cộng dồn</a> phía dưới.
+          </p>
+          <p class="hb-fineprint">
+            Mức giảm tính trên học phí, không tính phí dịch vụ và các khoản thu hộ — chi hộ.
+          </p>
+        </section>
+
+        <!-- ══════════ 4. ANH CHỊ EM RUỘT ══════════ -->
+        <section id="anh-chi-em-ruot" class="gi-section">
+          <h2>3. Anh chị em ruột: con thứ hai giảm 50%, con thứ ba giảm 25%</h2>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Vị trí trong gia đình</th><th scope="col">Mức giảm học phí</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Con thứ nhất</td><td>Học phí niêm yết</td></tr>
+                <tr><td><strong>Con thứ hai</strong></td><td class="hb-win"><strong>Giảm 50%</strong></td></tr>
+                <tr><td><strong>Con thứ ba</strong></td><td class="hb-win"><strong>Giảm 25%</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            <strong>Điều kiện:</strong> hai hoặc ba con là <strong>anh chị em ruột</strong>, và
+            <strong> cùng đang học trong hệ thống Trường Việt Anh</strong> tại cùng một thời điểm — không bắt
+            buộc cùng cơ sở, không bắt buộc cùng cấp học. Gia đình xuất trình giấy khai sinh của các con để
+            đối chiếu.
+          </p>
+          <p>
+            <strong>Đây là ưu đãi lớn nhất trong toàn bộ chính sách của trường.</strong> Giảm một nửa học phí
+            cho đứa thứ hai là con số mà tôi biết nhiều đồng nghiệp trong ngành cho là quá tay.
+          </p>
+          <p>Tôi giữ nó, vì một lý do không liên quan gì đến marketing.</p>
+          <p>
+            Khi hai đứa trẻ trong cùng một nhà học chung một hệ thống, chúng nói cùng một ngôn ngữ về việc
+            học. Đứa em thấy đứa anh ghi sổ tay GRIT mỗi tối thì không cần ai giảng giải về tính bền bỉ.
+            Nhà trường dạy một đứa; đứa còn lại dạy đứa kia. Đó là hiệu quả giáo dục mà không giáo án nào mua
+            được — nên trường trả tiền cho nó.
+          </p>
+          <p>
+            Hơn nữa, tôi cũng có ba đứa con, tôi hiểu trách nhiệm nặng nề của người có nhiều con, nên Trường
+            Việt Anh muốn san sẻ, để tất cả con bạn đều được hưởng nền giáo dục tốt.
+          </p>
+
+          <p class="hb-note">
+            <strong>Lưu ý quan trọng về cộng dồn:</strong> ưu đãi anh chị em ruột <strong>chỉ cộng dồn</strong>
+            với nhóm học bổng con giành được, không cộng dồn với các ưu đãi khác. Nếu con bạn đồng thời đủ
+            điều kiện cả hai, trường <strong>tự động so sánh và áp mức tốt nhất cho con</strong> — bạn không
+            phải tính, không phải chọn, và không bao giờ bị thiệt vì không biết hỏi. Riêng ưu đãi
+            <strong> đóng phí theo năm / học kỳ / Early Bird vẫn được cộng thêm</strong> lên trên mức đã chọn.
+          </p>
+          <p class="hb-fineprint">
+            Mức giảm tính trên học phí, không tính phí dịch vụ và các khoản thu hộ — chi hộ.
+          </p>
+        </section>
+
+        <!-- ══════════ 5. EARLY BIRD ══════════ -->
+        <section id="early-bird" class="gi-section">
+          <h2>4. Early Bird — đóng trước nhiều năm, khoá giá học phí năm đầu</h2>
+          <p>
+            Đây là chính sách có giá trị lớn nhất của trường. Tôi sẽ giải thích bằng số, không bằng tính từ.
+          </p>
+
+          <h3>Nó hoạt động thế nào</h3>
+          <p>
+            Bạn đóng trước học phí cho nhiều năm, tối đa 5 năm. Đổi lại bạn nhận <strong>hai</strong> thứ —
+            và phần lớn phụ huynh chỉ nhìn thấy thứ nhất.
+          </p>
+          <p><strong>Thứ nhất: mức giảm tăng dần theo từng năm đóng trước.</strong></p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Đóng trước đến năm thứ</th><th scope="col">Mức giảm áp cho năm đó</th></tr>
+              </thead>
+              <tbody>
+                {EB_GIAM.map((g, i) => (
+                  <tr>
+                    <td>Năm {i + 1}</td>
+                    <td>
+                      <strong>{Math.round(g * 100)}%</strong>
+                      {i === 0 && <em class="hb-inline-note"> (bằng mức đóng trọn năm thông thường)</em>}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            <strong>
+              Thứ hai — và đây mới là phần lớn giá trị: toàn bộ 5 năm được tính trên học phí niêm yết của
+              năm thứ nhất.
+            </strong>
+          </p>
+          <p>
+            Học phí Trường Việt Anh có quy định tăng <strong>tối đa 10% mỗi năm</strong>. Nghe thì nhỏ.
+            Nhưng 10% cộng dồn qua 4 năm thì học phí năm thứ 5 đã cao hơn năm đầu <strong>46%</strong>.
+          </p>
+          <p>Hai thứ ấy cộng lại tạo ra khoảng cách mà tôi nghĩ bạn nên nhìn thành bảng.</p>
+
+          <h3>Bảng so sánh trường hợp tối đa: Early Bird 5 năm với đóng từng năm</h3>
+          <p class="hb-fineprint">
+            Ví dụ với học phí năm đầu {vnd(HOC_PHI_VI_DU)}đ, giả định trường tăng đúng mức trần 10% mỗi năm.
+            Cột &ldquo;Đóng từng năm&rdquo; đã bao gồm ưu đãi đóng trọn năm 6% — tức là so sánh với phương án
+            tốt thứ nhì, không phải so với giá gốc.
+          </p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table hb-table-eb">
+              <thead>
+                <tr>
+                  <th scope="col">Năm học</th>
+                  <th scope="col">Giá niêm yết dự kiến</th>
+                  <th scope="col">Đóng từng năm (đã −6%)</th>
+                  <th scope="col">Early Bird 5 năm</th>
+                  <th scope="col">Chênh lệch</th>
+                </tr>
+              </thead>
+              <tbody>
+                {ebRows.map((r) => (
+                  <tr>
+                    <td>Năm {r.nam}</td>
+                    <td>{vnd(r.niemYet)}đ</td>
+                    <td>{vnd(r.tungNam)}đ</td>
+                    <td><strong>{vnd(r.earlyBird)}đ</strong></td>
+                    <td class="hb-win"><strong>{r.chenh === 0 ? '0đ' : `${vnd(r.chenh)}đ`}</strong></td>
+                  </tr>
+                ))}
+                <tr class="hb-row-total">
+                  <td><strong>Tổng 5 năm</strong></td>
+                  <td><strong>{vnd(tongNiemYet)}đ</strong></td>
+                  <td><strong>{vnd(tongTungNam)}đ</strong></td>
+                  <td><strong>{vnd(tongEarlyBird)}đ</strong></td>
+                  <td class="hb-win"><strong>{vnd(tongChenh)}đ</strong></td>
+                </tr>
+                <tr class="hb-row-pct">
+                  <td>So với giá niêm yết</td>
+                  <td>100%</td>
+                  <td>{tyLeTungNam}%</td>
+                  <td><strong>{tyLeEarlyBird}%</strong></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Hãy chú ý cột cuối. Năm thứ nhất chênh lệch bằng <strong>không</strong> — Early Bird không hơn gì
+            phương án thường. Toàn bộ giá trị nằm ở bốn năm sau, và nó lớn dần. Đó là lý do chính sách này
+            chỉ có ý nghĩa với gia đình thật sự xác định gắn bó, chứ không phải với gia đình đang thử.
+          </p>
+
+          <h3>So với gửi ngân hàng thì sao?</h3>
+          <p>
+            Nhiều phụ huynh so khoản này với việc gửi tiết kiệm rồi đóng học phí dần. So sánh ấy đúng hướng,
+            nên tôi làm nốt phép tính.
+          </p>
+          <p>
+            Có một chi tiết phải tính cho đúng: <strong>tiền học phí năm thứ nhất không sinh lãi trong phép
+            so sánh này</strong>, vì dù chọn phương án nào bạn cũng phải đóng khoản đó ngay trong năm nay.
+            Chỉ có phần tiền của bốn năm sau mới là tiền bị khoá — và mỗi phần bị khoá một số năm khác nhau.
+          </p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Lãi suất tiền gửi</th>
+                  <th scope="col">Tiền lãi bạn mất</th>
+                  <th scope="col">Lợi ròng khi chọn Early Bird</th>
+                </tr>
+              </thead>
+              <tbody>
+                {bankRows.map((b) => (
+                  <tr>
+                    <td>{(b.r * 100).toFixed(1).replace('.', ',')}%/năm</td>
+                    <td>{vnd(b.mat)}đ</td>
+                    <td class="hb-win"><strong>{vnd(b.loiRong)}đ</strong></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            <strong>Điểm hoà vốn nằm ở lãi suất khoảng 25%/năm.</strong> Nghĩa là để việc giữ tiền trong ngân
+            hàng có lợi hơn Early Bird, bạn phải tìm được nơi trả lãi 25% một năm, trong năm năm liền, không
+            rủi ro.
+          </p>
+          <p>Tôi không biết nơi nào như vậy. Nếu bạn biết, tôi thật lòng muốn nghe.</p>
+
+          <h3>Nếu giữa chừng bạn đổi ý</h3>
+          <p>
+            Đây là phần tôi muốn bạn đọc kỹ nhất, vì nó là lý do tôi dám bán chính sách này.
+          </p>
+          <p>
+            <strong>Bạn được lấy lại tiền đã đóng trước, chỉ cần báo trước 30 ngày.</strong> Không phải xin,
+            không cần lý do, không mất phí phạt.
+          </p>
+          <p>
+            Và điều quan trọng hơn: <strong>phần thời gian con đã học vẫn được giữ nguyên mức ưu đãi Early
+            Bird của những năm đó.</strong> Bạn không bị tính lùi về giá gốc, không bị &ldquo;truy thu&rdquo;
+            phần đã giảm.
+          </p>
+          <p class="hb-fineprint">
+            Ví dụ với gia đình đã đóng trọn gói 5 năm là {vnd(tongEarlyBird)}đ:
+          </p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Rút sau khi học xong</th>
+                  <th scope="col">Học phí giữ lại (theo mức ưu đãi đã hưởng)</th>
+                  <th scope="col">Trường hoàn lại bạn</th>
+                </tr>
+              </thead>
+              <tbody>
+                {refundRows.map((r) => (
+                  <tr>
+                    <td>Năm {r.nam}</td>
+                    <td>{vnd(r.giuLai)}đ</td>
+                    <td class="hb-win"><strong>{vnd(r.hoanLai)}đ</strong></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Con chuyển trường, gia đình chuyển nơi ở, con đi du học sớm — chuyện xảy ra thật, và bạn không bị
+            phạt vì nó.
+          </p>
+          <p>
+            Tôi thiết kế điều khoản này vì một lý do thực dụng: một chính sách khoá tiền 5 năm mà không có
+            cửa ra sẽ chỉ hấp dẫn cho tới lúc gia đình gặp chuyện, rồi biến thành một cuộc tranh cãi. Tôi
+            không cần loại hợp đồng đó trong trường mình.
+          </p>
+
+          <h3>Ba điều còn lại bạn nên biết trước khi ký</h3>
+          <ul class="hb-list">
+            <li>
+              <strong>Chỉ tính trên học phí.</strong> Early Bird không áp dụng cho phí dịch vụ, tiền ăn,
+              xe đưa đón, nội trú và các khoản thu hộ — chi hộ. Những khoản này thu theo năm học và theo giá
+              của năm đó.
+            </li>
+            <li>
+              <strong>Trần 10% là mức tối đa, không phải cam kết tăng.</strong> Nếu trường tăng ít hơn, phần
+              lợi của bạn nhỏ hơn bảng trên. Bảng trên là kịch bản tối đa.
+            </li>
+            <li>
+              <strong>Hãy còn một quỹ dự phòng riêng.</strong> Dù rút được sau 30 ngày, đây vẫn là một khoản
+              tiền lớn nằm ngoài tài khoản của bạn. Gia đình chưa có quỹ dự phòng thì nên chọn gói ngắn hơn
+              trước.
+            </li>
+          </ul>
+
+          <p class="hb-note">
+            <strong>Early Bird phù hợp với bạn nếu:</strong> gia đình đã có quỹ dự phòng, đã đi thăm trường,
+            con đã học ở đây ít nhất một học kỳ, và bạn xác định con sẽ học hết cấp tại Việt Anh.
+          </p>
+
+          <p class="hb-cta-inline">
+            <a href={ZALO_OA} target="_blank" rel="noopener" class="hb-cta" data-cta-position="early-bird">
+              Nhắn Zalo: &ldquo;Tôi muốn xem bảng tính Early Bird cho lớp của con&rdquo;
+            </a>
+          </p>
+        </section>
+
+        <!-- ══════════ 6. LUẬT CỘNG DỒN ══════════ -->
+        <section id="luat-cong-don" class="gi-section hb-section-navy">
+          <h2>Luật cộng dồn: ba tầng, không có ngoại lệ</h2>
+
+          <div class="hb-tiers">
+            <div class="hb-tier">
+              <p class="hb-tier-label">Tầng 1</p>
+              <p class="hb-tier-title">Ưu đãi đóng phí theo thời gian</p>
+              <p class="hb-tier-desc">Theo năm 6%, theo học kỳ 2%, Early Bird.</p>
+              <p class="hb-tier-rule">→ <strong>Cộng dồn với tất cả.</strong> Không có trường hợp nào bị loại trừ.</p>
+            </div>
+            <div class="hb-tier">
+              <p class="hb-tier-label">Tầng 2</p>
+              <p class="hb-tier-title">Học bổng con giành được</p>
+              <p class="hb-tier-desc">GRIT, CHAMPIONS, LEADERS, TALENTS.</p>
+              <p class="hb-tier-rule">
+                → <strong>Cộng dồn với nhau, và cộng dồn với tầng 1.</strong> Con vừa giữ chuỗi GRIT, vừa đạt
+                giải CHAMPIONS, vừa được đề cử LEADERS thì nhận cả ba. Không ai bắt con chọn một.
+              </p>
+            </div>
+            <div class="hb-tier">
+              <p class="hb-tier-label">Tầng 3</p>
+              <p class="hb-tier-title">Ưu đãi theo hoàn cảnh gia đình</p>
+              <p class="hb-tier-desc">Anh chị em ruột.</p>
+              <p class="hb-tier-rule">
+                → <strong>Không cộng dồn với tầng 2.</strong> Trường so sánh mức anh chị em ruột với tổng học
+                bổng con giành được, rồi <strong>tự động áp mức tốt hơn cho con</strong>. Sau đó vẫn cộng thêm
+                tầng 1 lên trên.
+              </p>
+            </div>
+          </div>
+
+          <h3>Vì sao tầng 2 được cộng dồn hết</h3>
+          <p>
+            Vì bốn học bổng ấy đo bốn thứ khác nhau, và một đứa trẻ làm được cả bốn thì xứng đáng nhận cả bốn.
+          </p>
+          <p>
+            Nếu tôi bắt con chọn một, tôi đang dạy nó rằng cố gắng thêm ở lĩnh vực thứ hai là vô ích. Đó là
+            bài học tôi không muốn đứa trẻ nào ở trường mình học được.
+          </p>
+          <p>Chi phí của quyết định này thuộc về nhà trường, không thuộc về đứa trẻ. Tôi chấp nhận nó.</p>
+
+          <h3>Ví dụ cho dễ hình dung</h3>
+          <p>
+            <strong>Trường hợp 1 — con thứ nhất trong gia đình, lớp 9.</strong> Năm nay giữ chuỗi GRIT trọn
+            năm, đạt giải cấp tỉnh có vòng loại (CHAMPIONS mức 2), được đề cử bảng CHO ĐI của LEADERS. Gia
+            đình đóng trọn năm. → Nhận <strong>cả ba học bổng cộng lại</strong>, rồi <strong>cộng thêm 6%</strong>
+            đóng trọn năm.
+          </p>
+          <p>
+            <strong>Trường hợp 2 — con thứ hai trong gia đình, lớp 9, cùng thành tích như trên.</strong>
+            → Trường so sánh <strong>ưu đãi anh chị em ruột 50%</strong> với <strong>tổng ba học bổng con
+            giành được</strong>, lấy mức nào lớn hơn. → Sau đó <strong>cộng thêm 6%</strong> đóng trọn năm.
+          </p>
+          <p>
+            Nghĩa là con bạn không bao giờ phải chọn, và không bao giờ bị thiệt vì không biết hỏi. Phòng tài
+            chính đối chiếu toàn bộ chính sách con đủ điều kiện rồi áp phương án tốt nhất.
+          </p>
+
+          <h3>Ba lưu ý cuối</h3>
+          <ul class="hb-list">
+            <li>
+              <strong>LOVE nằm ngoài mọi luật cộng dồn.</strong> Một gia đình đang gặp biến cố không bị đem ra
+              so sánh với bất cứ thứ gì. Quỹ LOVE kích hoạt độc lập.
+            </li>
+            <li>
+              <strong>Mọi con số tính trên học phí.</strong> Không áp dụng cho phí dịch vụ, tiền ăn, xe đưa
+              đón, nội trú, đồng phục và các khoản thu hộ — chi hộ. Điều này đúng với cả chín chính sách,
+              không có ngoại lệ.
+            </li>
+            <li>
+              <strong>Không có mức trần tổng.</strong> Nếu con bạn giành đủ cả bốn học bổng, con nhận đủ cả bốn.
+            </li>
+          </ul>
+        </section>
+
+        <!-- ══════════ DẢI PHÂN CÁCH KHỐI 2 ══════════ -->
+        <div class="hb-divider">
+          <p class="hb-divider-kicker">Khối 2</p>
+          <p class="hb-divider-title">Năm học bổng</p>
+          <p class="hb-divider-sub">Phần này học sinh phải tự đạt được</p>
+        </div>
+
+        <!-- ══════════ 7. VÌ SAO VIẾT LẠI ══════════ -->
+        <section id="nam-hoc-bong" class="gi-section">
+          <h2>Việt Anh không phải trường dành cho học sinh có thành tích cao nhất</h2>
+          <p>Tôi thừa nhận điều đó thẳng thắn, ngay trên trang tuyển sinh của chính mình.</p>
+          <p>
+            Trường dành cho <strong>học sinh khát khao nhất</strong> — những em chưa chắc đứng đầu lớp hôm
+            nay, nhưng chịu ngồi vào bàn học mỗi tối, chịu chạy hết vòng sân, chịu làm lại bài dự án lần thứ
+            ba để sửa từng chi tiết.
+          </p>
+          <p>
+            Chính sách học bổng cũ của chúng tôi — như phần lớn trường tư tại Việt Nam — chủ yếu xét theo
+            <strong> kết quả đầu vào</strong>. Cách làm ấy có một điểm yếu lớn: nó thưởng cho
+            <strong> quá khứ</strong> của đứa trẻ, thứ mà phần nhiều do gia đình và trường cũ tạo ra. Nó không
+            tác động gì đến <strong>tương lai</strong> của em ở đây.
+          </p>
+          <p>
+            Năm học 2026–2027, Việt Anh định hướng học sinh phát triển đồng đều <strong>4 lĩnh vực</strong>:
+            kiến thức, kỹ năng lãnh đạo, phẩm chất và sức khoẻ. Năm học bổng mới bám sát đúng bốn lĩnh vực ấy
+            — mỗi học bổng kéo một lĩnh vực đi lên.
+          </p>
+          <p>
+            Nói cách khác: học bổng ở Việt Anh là <strong>công cụ giáo dục có gắn tiền</strong>.
+          </p>
+
+          <h3>Bản đồ 5 học bổng Việt Anh 2026–2027</h3>
+
+          <figure class="hb-figure hb-figure-map">
+            <img
+              src={IMG_BAN_DO}
+              alt="Bản đồ 5 học bổng Trường Việt Anh 2026–2027 gồm GRIT, CHAMPIONS, LEADERS, TALENTS và LOVE toả ra từ hình một học sinh ở giữa"
+              width="1600"
+              height="900"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              Năm học bổng, bốn lĩnh vực, một đứa trẻ ở giữa.
+              <em>Hình ảnh minh hoạ được tạo bằng AI.</em>
+            </figcaption>
+          </figure>
+
+          {/* Bản chữ của cùng nội dung, ĐỪNG BỎ: dòng phụ trong ảnh không đọc được ở
+              bề ngang 360px trên điện thoại, và thẻ chữ mới là thứ bấm được + Google đọc được. */}
+          <div class="hb-map" role="list" aria-label="Bản đồ 5 học bổng Trường Việt Anh 2026-2027">
+            <a class="hb-map-card hb-map-grit" href="#grit" role="listitem">
+              <span class="hb-map-name">GRIT</span>
+              <span class="hb-map-field">Phẩm chất + Sức khoẻ</span>
+              <span class="hb-map-desc">Chuỗi rèn giũa mỗi ngày</span>
+            </a>
+            <a class="hb-map-card hb-map-champions" href="#champions" role="listitem">
+              <span class="hb-map-name">CHAMPIONS</span>
+              <span class="hb-map-field">Kiến thức + Sức khoẻ</span>
+              <span class="hb-map-desc">Dám thi và dám thắng</span>
+            </a>
+            <a class="hb-map-card hb-map-leaders" href="#leaders" role="listitem">
+              <span class="hb-map-name">LEADERS</span>
+              <span class="hb-map-field">Kỹ năng lãnh đạo</span>
+              <span class="hb-map-desc">Cho đi &amp; dẫn dắt</span>
+            </a>
+            <a class="hb-map-card hb-map-talents" href="#talents" role="listitem">
+              <span class="hb-map-name">TALENTS</span>
+              <span class="hb-map-field">Tuyển sinh từ lớp 6</span>
+              <span class="hb-map-desc">Mỗi tỉnh đúng một em</span>
+            </a>
+            <a class="hb-map-card hb-map-love" href="#love" role="listitem">
+              <span class="hb-map-name">LOVE</span>
+              <span class="hb-map-field">Quỹ đồng hành</span>
+              <span class="hb-map-desc">Khi gia đình gặp biến cố</span>
+            </a>
+          </div>
+
+          <h3>Bốn luật nền chi phối cả năm học bổng</h3>
+          <ol class="hb-list hb-list-num">
+            <li>
+              <strong>Học bổng cho học sinh ngoài luôn mở cửa cho học sinh trong</strong>, chỉ tách chỉ tiêu.
+              Không có cánh cửa nào chỉ mở cho người lạ.
+            </li>
+            <li>
+              <strong>Truyền thông bằng danh hiệu và chuỗi tuần, không bằng số tiền.</strong> Tôi muốn học
+              sinh nói <em>&ldquo;con đang giữ chuỗi 9 tuần&rdquo;</em>, không phải
+              <em> &ldquo;con được bao nhiêu tiền&rdquo;</em>.
+            </li>
+            <li>
+              <strong>Mọi chương trình có hạn chót, không hồi tố.</strong> Nộp muộn là mất lượt, kể cả khi hồ
+              sơ rất tốt.
+            </li>
+            <li>
+              <strong>Không ngoại lệ theo quan hệ.</strong> Gia đình có ảnh hưởng, có đóng góp cho trường được
+              ghi nhận qua chương trình Đại sứ thuộc ngân sách Marketing — và trường
+              <strong> không gọi đó là học bổng</strong>.
+            </li>
+          </ol>
+          <p>Luật thứ tư khiến một số người khó chịu. Tôi giữ nó.</p>
+
+          <blockquote class="hb-quote">
+            <p>
+              &ldquo;Mỗi lần công bố học bổng, sẽ có học sinh cũ so bì và đòi được nhận. Đó không phải sự tham
+              lam của trẻ con — đó là lỗi thiết kế của người lớn. Nên bản chính sách này có một luật cứng: mọi
+              học bổng dành cho học sinh ngoài đều mở cửa cho học sinh trong, chỉ tách chỉ tiêu.&rdquo;
+            </p>
+            <cite>— Nguyễn Mạnh Dương, Chủ tịch Hội đồng Trường Việt Anh</cite>
+          </blockquote>
+        </section>
+
+        <!-- ══════════ 8. GRIT ══════════ -->
+        <section id="grit" class="gi-section">
+          <h2>5. GRIT — học bổng cho người bền bỉ, không phải người giỏi nhất</h2>
+          <p class="hb-meta-line">
+            Lĩnh vực: Phẩm chất + Sức khoẻ · Mọi học sinh đang học · Trừ vào học phí năm sau
+          </p>
+          <p>
+            Một môi trường học tập tốt không bắt đầu từ vài em xuất sắc. Nó bắt đầu từ việc
+            <strong> phần lớn học sinh có thói quen tự rèn mỗi ngày</strong>. GRIT trả công cho sự bền bỉ —
+            thứ tạo ra nhân cách, không phải thứ tạo ra điểm số.
+          </p>
+
+          <h3>Năm hoạt động được tính chung, gọi là &ldquo;rèn giũa bản thân&rdquo;</h3>
+          <p class="hb-chips">
+            <span>Tự học</span><span>Đọc sách (không tính truyện)</span><span>Làm dự án</span>
+            <span>Sáng tạo</span><span>Luyện thể thao</span>
+          </p>
+
+          <h3>Cách tính chuỗi</h3>
+          <ul class="hb-list">
+            <li>
+              <strong>1 ngày đạt</strong> = tối thiểu <strong>60 phút</strong> rèn giũa có minh chứng. Làm 3
+              tiếng vẫn chỉ tính 1 ngày — quy tắc này chống &ldquo;cày bù&rdquo; và ép sự đều đặn.
+            </li>
+            <li>
+              <strong>1 tuần đạt</strong> = <strong>6/7 ngày</strong>. Hụt 1 ngày vẫn được. Hụt 2 ngày là mất
+              tuần.
+            </li>
+            <li>
+              <strong>Tiền chốt theo tuần, không chốt theo ngày.</strong> Nhịp nền là
+              <strong> 10.000đ cho mỗi ngày</strong> rèn giũa; giữ đủ 6/7 ngày thì tuần đó tính tròn
+              <strong> 100.000đ</strong>. Hụt 2 ngày thì tuần đó bằng 0 — không có nửa tuần.
+            </li>
+            <li>
+              <strong>Luật đa dạng:</strong> trong 6 ngày đạt, tối thiểu <strong>3 ngày phải là hoạt động trí
+              tuệ</strong>; thể thao tính tối đa 3 ngày/tuần. Học sinh đội tuyển thể thao đăng ký ngoại lệ từ
+              đầu năm.
+            </li>
+          </ul>
+
+          <h3>Cổng 4 tuần — điểm cốt lõi của thiết kế</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Tình huống</th><th scope="col">Kết quả</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Chưa đủ 4 tuần liên tục</td><td><strong>Chưa nhận gì</strong></td></tr>
+                <tr><td>Đạt đủ 4 tuần liên tục</td><td>Nhận trọn <strong>400.000đ</strong> của 4 tuần đó</td></tr>
+                <tr><td>Từ tuần thứ 5 trở đi, mỗi tuần đạt</td><td><strong>+100.000đ</strong> ngay tuần đó</td></tr>
+                <tr>
+                  <td>Đứt chuỗi</td>
+                  <td>Phải xây lại đủ 4 tuần mới mở cổng; <strong>các tuần trong lúc xây lại không được tính</strong></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p>
+            Dòng cuối cùng làm cái cổng có sức nặng. Nhưng <strong>tiền đã nhận thì không bao giờ bị thu
+            lại</strong>.
+          </p>
+          <p>
+            Học sinh giữ chuỗi trọn học kỳ (18 tuần) và trọn năm được <strong>vinh danh trước toàn
+            trường</strong>, kèm một phần thưởng riêng mà trường không công bố trước.
+          </p>
+
+          <h3>Ghi nhận bằng giấy, không cần app</h3>
+          <p>
+            Học sinh giữ <strong>sổ tay GRIT bằng giấy</strong>, ký từng ngày, chụp nộp vào Chủ nhật. Giáo
+            viên chủ nhiệm tick một bảng duy nhất mỗi tuần cho cả lớp, và <strong>đối chiếu ngẫu nhiên 3
+            em/tuần</strong>. App Viet Anh Class chỉ dùng để phụ huynh xem sao kê.
+          </p>
+          <p>
+            Tôi cố tình chọn giấy. Một cuốn sổ có chữ ký của chính mình tạo ra cảm giác sở hữu mà cái app
+            không tạo được.
+          </p>
+
+          <h3>Luật liêm chính: &ldquo;một lần bất tín, vạn sự bất tin&rdquo;</h3>
+          <ul class="hb-list">
+            <li><strong>Gian lận = mất toàn bộ quỹ GRIT đã tích luỹ trong năm.</strong></li>
+            <li>Định nghĩa gian lận hẹp và bằng văn bản: khai ngày không làm; giả chữ ký; nhờ người làm hộ.</li>
+            <li>
+              Làm sơ sài, chất lượng kém <strong>không phải gian lận</strong> — chỉ là &ldquo;tuần không
+              đạt&rdquo;. Nhưng lặp lại sau khi đã được nhắc nhở thì là gian lận.
+            </li>
+            <li>
+              Học sinh được <strong>giải trình một lần trước hội đồng</strong> trước khi mất quỹ. Không phải
+              để giảm án, mà để em hiểu vì sao mình mất.
+            </li>
+          </ul>
+
+          <h3>Lớp 12 và học sinh chuyển trường</h3>
+          <ul class="hb-list">
+            <li><strong>Lớp 12</strong> nhận GRIT <strong>bằng tiền mặt</strong>, trao tại Lễ Tri ân &amp; Trưởng thành.</li>
+            <li>
+              <strong>Học sinh chuyển trường giữa chừng</strong> không quy đổi quỹ tích luỹ thành tiền, vì
+              bản chất GRIT là ưu đãi học phí.
+            </li>
+          </ul>
+
+          <aside class="hb-research">
+            <p class="hb-research-title">Vì sao là 6/7 ngày, không phải 7/7</p>
+            <p>
+              Nghiên cứu của Phillippa Lally (University College London, <em>European Journal of Social
+              Psychology</em>, 2010) theo dõi người thật xây thói quen mới trong đời sống hằng ngày. Hai kết
+              luận thay đổi cách chúng tôi thiết kế GRIT:
+            </p>
+            <p>
+              <strong>Thứ nhất</strong>, trung bình cần khoảng <strong>66 ngày</strong> để một hành vi trở
+              thành thói quen tự động — xa hơn nhiều con số &ldquo;21 ngày&rdquo; mà mạng xã hội hay nhắc.
+              66 ngày tương đương 10 tuần, đúng bằng độ dài chuỗi chúng tôi kỳ vọng học sinh đạt tới trước khi
+              hết học kỳ I.
+            </p>
+            <p>
+              <strong>Thứ hai</strong>, và quan trọng hơn: <strong>bỏ lỡ một ngày không ảnh hưởng đáng
+              kể</strong> đến quá trình hình thành thói quen — nhưng người thực hiện <em>rất không đều
+              đặn</em> thì không bao giờ tạo được thói quen.
+            </p>
+            <p>
+              Đó chính xác là luật 6/7 ngày. Chúng tôi tha thứ cho một ngày lỡ. Chúng tôi không tha thứ cho sự
+              tuỳ hứng.
+            </p>
+          </aside>
+        </section>
+
+        <!-- ══════════ 9. CHAMPIONS ══════════ -->
+        <section id="champions" class="gi-section">
+          <h2>6. CHAMPIONS — học bổng cho người dám thi và dám thắng</h2>
+          <p class="hb-meta-line">Lĩnh vực: Kiến thức + Sức khoẻ · Học sinh đạt giải</p>
+          <p>
+            Học sinh cần <strong>tấm gương cụ thể, ở ngay lớp bên cạnh</strong>, để tin rằng đi thi và thắng
+            là chuyện có thật với người như mình. Một huy chương trên báo không tạo được niềm tin đó. Một
+            người bạn cùng khối thì có.
+          </p>
+
+          <h3>Phân mức theo độ khó thực tế, không theo tên gọi cấp</h3>
+          <p>
+            Trước mỗi năm học, trường <strong>ban hành danh mục kỳ thi được công nhận</strong>. Một kỳ thi vào
+            được danh mục phải đạt <strong>cả ba</strong> tiêu chí:
+          </p>
+          <ol class="hb-list hb-list-num">
+            <li>Đơn vị tổ chức là cơ quan nhà nước hoặc hiệp hội chuyên môn uy tín;</li>
+            <li><strong>Có vòng loại thật</strong>;</li>
+            <li>Tỷ lệ trao giải dưới 30% thí sinh.</li>
+          </ol>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Mức</th><th scope="col">Điều kiện</th><th scope="col">Học bổng</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>1</td><td>Cấp phường/quận, hoặc kỳ thi mở không vòng loại</td><td><strong>2.000.000đ</strong></td></tr>
+                <tr><td>2</td><td>Cấp tỉnh/thành phố <strong>có vòng loại</strong></td><td><strong>5.000.000đ</strong></td></tr>
+                <tr><td>3</td><td>Cấp quốc gia do Bộ GD-ĐT tổ chức hoặc bảo trợ; HSG QG; HKPĐ toàn quốc</td><td><strong>10.000.000đ</strong></td></tr>
+                <tr><td>4</td><td>Đội tuyển quốc gia, hoặc quốc tế được Bộ công nhận</td><td><strong>20.000.000đ</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Kỳ thi ngoài danh mục được hội đồng xét <strong>từng trường hợp, không tự động quy đổi</strong>.
+            Tôi nói thẳng lý do: nhiều kỳ thi mang danh &ldquo;quốc tế&rdquo; nhưng thực chất dễ hơn một giải
+            cấp quận.
+          </p>
+          <p>
+            <strong>Điều kiện kèm theo:</strong> học lực từ Đạt trở lên, không có án kỷ luật thi đấu. Hồ sơ
+            nhận quanh năm, xét theo 4 cửa sổ quý — riêng giải quốc gia xét ngay. Vinh danh thể thao tại
+            <strong> Olympic Day</strong>, vinh danh học thuật tại lễ tổng kết.
+          </p>
+
+          <figure class="hb-figure">
+            <img
+              src={IMG_CHAMPIONS}
+              alt="Sáu học sinh Trường Việt Anh cầm giấy khen đứng trên sân khấu Lễ Tổng kết năm học 2025–2026"
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              Vinh danh học thuật tại Lễ Tổng kết năm học 2025–2026. Từ 2026–2027, những phần thưởng như thế
+              này được gọi đúng tên là <strong>học bổng CHAMPIONS</strong> — và gắn với mức tiền công bố sẵn
+              trong bảng phía trên.
+            </figcaption>
+          </figure>
+        </section>
+
+        <!-- ══════════ 10. LEADERS ══════════ -->
+        <section id="leaders" class="gi-section">
+          <h2>7. LEADERS — học bổng cho người cho đi và người dẫn dắt</h2>
+          <p class="hb-meta-line">Lĩnh vực: Kỹ năng lãnh đạo · Hai bảng, một hội đồng</p>
+          <p>
+            Một ngôi trường tử tế là nơi <strong>việc giúp người khác được nhìn thấy và được trả công xứng
+            đáng như việc học giỏi</strong>.
+          </p>
+          <p>LEADERS có hai bảng riêng biệt, vì hai loại phẩm chất này không nên bị đem ra so với nhau.</p>
+
+          <div class="hb-two-col">
+            <div class="hb-col-card">
+              <p class="hb-col-title">Bảng CHO ĐI</p>
+              <p class="hb-col-quota">10 suất × 10 triệu</p>
+              <p>
+                <strong>Chỉ nhận đề cử, không tự ứng tuyển.</strong> Đề cử từ bạn cùng lớp, thầy cô, phụ
+                huynh, nhân viên trường. Dành cho sự tử tế âm thầm: kèm bạn học, giúp việc chung, chăm sóc
+                người thân.
+              </p>
+              <p class="hb-rubric">Rubric: tác động thật 40% + bền bỉ 30% + lan toả 30%.</p>
+            </div>
+            <div class="hb-col-card">
+              <p class="hb-col-title">Bảng DẪN DẮT</p>
+              <p class="hb-col-quota">10 suất × 10 triệu</p>
+              <p>
+                Được tự đăng ký. Dành cho việc dẫn dắt có tổ chức: dự án cộng đồng, dự án gia đình, khởi
+                xướng phong trào.
+              </p>
+              <p class="hb-rubric">
+                Rubric: tác động thật 30% + vai trò dẫn dắt 30% + quá trình PDR 20% + trình bày tại showcase 20%.
+              </p>
+            </div>
+          </div>
+
+          <p>
+            Đăng ký và đề cử mở quanh năm, xét theo 4 cửa sổ quý. Toàn bộ dự án được trình bày công khai tại
+            <strong> Leadership Day</strong>.
+          </p>
+
+          <figure class="hb-figure">
+            <img
+              src={IMG_LEADERS}
+              alt="Học sinh và thầy cô Trường Việt Anh cầm bảng “Leadership Day”, “Lãnh đạo” và “5 Giá trị 7 Thói quen” tại Ngày hội Lãnh đạo 2026"
+              width="1200"
+              height="675"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              Ngày hội Lãnh đạo (Leadership Day) 2026 — nơi các dự án của bảng <strong>DẪN DẮT</strong> được
+              trình bày công khai trước toàn trường, và cũng là nơi những em thuộc bảng <strong>CHO ĐI</strong>
+              được gọi tên.
+            </figcaption>
+          </figure>
+
+          <blockquote class="hb-quote">
+            <p class="hb-quote-kicker">Vì sao bảng CHO ĐI cấm tự ứng tuyển</p>
+            <p>
+              &ldquo;Nếu cho tự ứng tuyển, chúng ta sẽ chọn ra những em giỏi kể chuyện về lòng tốt của mình.
+              Đứa trẻ thật sự tử tế thường là đứa không nghĩ mình đang làm gì đặc biệt. Muốn tìm em ấy, phải
+              hỏi người xung quanh — không phải hỏi em.&rdquo;
+            </p>
+            <cite>— Nguyễn Mạnh Dương</cite>
+          </blockquote>
+        </section>
+
+        <!-- ══════════ 11. TALENTS ══════════ -->
+        <section id="talents" class="gi-section">
+          <h2>8. TALENTS — học bổng tuyển sinh: mỗi tỉnh đúng một em</h2>
+          <p class="hb-meta-line">Từ lớp 6 · 16 suất · Khu vực Đà Nẵng → Cà Mau</p>
+          <p>
+            Một lớp học tốt lên khi có bạn <strong>đến từ hoàn cảnh khác, vùng đất khác, mang theo động lực
+            khác</strong> — thứ mà không giáo trình nào dạy được.
+          </p>
+          <p>
+            Vùng tuyển sinh nội trú của Việt Anh trải từ <strong>Đà Nẵng đến Cà Mau</strong>. TALENTS trao
+            <strong> đúng 1 suất cho mỗi tỉnh</strong>, tổng cộng 16 suất.
+          </p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Hạng</th><th scope="col">Số suất</th><th scope="col">Mức</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Đặc biệt</td><td>1</td><td><strong>100.000.000đ</strong></td></tr>
+                <tr><td>Vàng</td><td>2</td><td><strong>60.000.000đ</strong></td></tr>
+                <tr><td>Bạc</td><td>3</td><td><strong>40.000.000đ</strong></td></tr>
+                <tr><td>Đồng</td><td>10</td><td><strong>25.000.000đ</strong> <em class="hb-inline-note">(đúng bằng miễn ký túc xá)</em></td></tr>
+                <tr class="hb-row-total"><td><strong>Tổng</strong></td><td><strong>16</strong></td><td><strong>590.000.000đ</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Chọn người bằng năng lực, chọn mức bằng lá thăm</h3>
+          <p>
+            Học bổng chia thành 4 hạng — Đặc biệt, Vàng, Bạc, Đồng. Nhưng <strong>mức học bổng không do hội
+            đồng quyết định, mà do lá thăm</strong>.
+          </p>
+          <ol class="hb-list hb-list-num">
+            <li><strong>Nộp hồ sơ</strong> kèm thư đề cử từ thầy cô hoặc trường cũ tại tỉnh.</li>
+            <li>
+              <strong>Phỏng vấn online cả gia đình</strong> — đánh giá học lực, ý chí tự lập, và sự sẵn sàng
+              của cha mẹ. Mỗi tỉnh chọn ra em xuất sắc nhất. <em>Đây là phần &ldquo;phải thắng&rdquo;.</em>
+            </li>
+            <li><strong>16 em đều chắc chắn có học bổng</strong> — chỉ chưa biết mức.</li>
+            <li><strong>Livestream bốc thăm mức</strong>, 16 gia đình cùng theo dõi trực tiếp.</li>
+            <li><strong>Lễ trao tại quê em</strong>, ở chính trường cũ, có mời báo địa phương.</li>
+          </ol>
+          <p>
+            Thiết kế này giải một bài toán khó: không em nào ra về tay trắng nên <strong>không tạo tổn
+            thương</strong>, nhưng vẫn đủ kịch tính để cả 16 tỉnh cùng dõi theo.
+          </p>
+
+          <h3>Hai điều tôi muốn bạn cân nhắc thật</h3>
+          <p>
+            <strong>TALENTS đi kèm nội trú.</strong> Phần lớn giá trị suất học bổng nằm ở ký túc xá — nghĩa là
+            con phải xa cha mẹ từ lớp 6. Đó là một cái giá thật, cần cân nhắc thật, và tôi không muốn gia đình
+            nào phát hiện ra điều này sau khi đã nhận suất.
+          </p>
+          <p>
+            <strong>Học bổng gia hạn có điều kiện</strong> theo từng năm, không phải trao một lần rồi thôi.
+          </p>
+          <p>
+            Và tôi cam kết một điều: <strong>trường quảng bá tài năng của em, không quảng bá hoàn cảnh của
+            em.</strong>
+          </p>
+        </section>
+
+        <!-- ══════════ 12. LOVE ══════════ -->
+        <section id="love" class="gi-section hb-section-navy hb-section-love">
+          <h2>9. LOVE — quỹ đồng hành khi gia đình gặp biến cố</h2>
+          <p class="hb-meta-line">Quỹ mở · Kích hoạt trong 7 ngày · Không cần làm đơn</p>
+          <p>
+            Không đứa trẻ nào học được sự tử tế nếu <strong>nó đang sợ ngày mai phải nghỉ học</strong>.
+          </p>
+          <p>
+            LOVE <strong>không xét theo hoàn cảnh kinh tế</strong>. Nó xét theo <strong>biến cố</strong> —
+            thứ rõ ràng, xác minh được, và không bắt gia đình phải đi &ldquo;chứng minh nghèo&rdquo;.
+          </p>
+
+          <h3>Danh mục biến cố kích hoạt quỹ</h3>
+          <p class="hb-chips hb-chips-dark">
+            <span>Cha hoặc mẹ qua đời</span>
+            <span>Trụ cột mắc bệnh hiểm nghèo hoặc mất khả năng lao động</span>
+            <span>Tai nạn nghiêm trọng</span>
+            <span>Ly hôn dẫn đến gián đoạn tài chính</span>
+            <span>Phá sản</span>
+            <span>Cha hoặc mẹ vướng vòng lao lý</span>
+            <span>Gia đình phải chuyển nơi ở đột ngột</span>
+          </p>
+
+          <h3>Ba mức hỗ trợ</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Tình huống</th><th scope="col">Hỗ trợ</th></tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Mất cha/mẹ, hoặc trụ cột mất khả năng lao động</td>
+                  <td><strong>Miễn 100% học phí đến hết cấp học đang theo</strong></td>
+                </tr>
+                <tr><td>Biến cố nghiêm trọng khác</td><td>Miễn 50% học phí 1 năm, xét gia hạn</td></tr>
+                <tr>
+                  <td>Khó khăn tài chính tạm thời</td>
+                  <td>Giãn / hoãn học phí — trường không tính đây là học bổng</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Ba nguyên tắc vận hành</h3>
+          <ol class="hb-list hb-list-num">
+            <li><strong>Không có số suất cố định.</strong> Có bao nhiêu ca thật thì hỗ trợ bấy nhiêu.</li>
+            <li>
+              <strong>Kích hoạt trong 7 ngày</strong> kể từ khi giáo viên chủ nhiệm báo — không chờ cửa sổ quý.
+            </li>
+            <li>
+              <strong>Tuyệt đối không truyền thông từng trường hợp.</strong> Không hình ảnh, không tên, không
+              câu chuyện.
+            </li>
+          </ol>
+
+          <p>Quỹ này cho phép tôi đưa ra một lời hứa mà ít trường tư dám nói thành lời:</p>
+          <p class="hb-promise">
+            &ldquo;Không đứa trẻ nào của Việt Anh phải nghỉ học vì biến cố của gia đình.&rdquo;
+          </p>
+          <p>Lời hứa đó có sức nặng lớn hơn mọi bài quảng cáo — chính vì trường không quảng cáo nó.</p>
+        </section>
+
+        <!-- ══════════ 13. AI CHẤM ══════════ -->
+        <section id="ai-cham" class="gi-section">
+          <h2>AI có chấm học bổng không?</h2>
+          <p class="hb-meta-line">Video là cửa vào, dữ liệu là cửa ra</p>
+          <p>
+            <strong>Không.</strong> Trí tuệ nhân tạo không ra quyết định về học bổng tại Trường Việt Anh.
+            Hội đồng chấm gồm thầy cô và học sinh hoa tiêu; AI chỉ hỗ trợ khâu đối chiếu dữ liệu — đếm chuỗi
+            tuần, kiểm tra điều kiện — và người vẫn là bên quyết định cuối cùng, đúng theo
+            <a href="/chinh-sach-ai"> Chính sách sử dụng AI</a> của trường.
+          </p>
+          <p>
+            Nhiều trường để học sinh làm video tự giới thiệu rồi chấm bằng video. Tôi đã cân nhắc và
+            <strong> cố tình không làm vậy</strong>.
+          </p>
+          <p>
+            <strong>Nguyên tắc:</strong> chỉ học sinh <strong>đã qua cổng dữ liệu</strong> — đủ chuỗi tuần, đủ
+            điều kiện — mới được nộp video Before–After tự trình bày lý do mình xứng đáng. Hội đồng dùng video
+            để chọn <strong>giữa những em đã đủ chuẩn</strong>.
+          </p>
+          <p>
+            Lý do rất thẳng: nếu video là tiêu chí duy nhất, <strong>em nói giỏi sẽ thắng em làm giỏi</strong>.
+            Đó là bài học sai cho cả trường.
+          </p>
+          <p><strong>Hội đồng chấm có học sinh hoa tiêu tham gia</strong>, vận hành theo ba luật:</p>
+          <ul class="hb-list">
+            <li>Học sinh chấm <strong>40%</strong>, thầy cô chấm <strong>60%</strong>.</li>
+            <li>Hoa tiêu <strong>không chấm lớp mình</strong>.</li>
+            <li>
+              Giáo viên có quyền <strong>phủ quyết về tính xác thực</strong>, nhưng
+              <strong> không phủ quyết về gu thẩm mỹ</strong>.
+            </li>
+          </ul>
+        </section>
+
+        <!-- ══════════ 14. LỊCH TRÌNH ══════════ -->
+        <section id="lich-trinh" class="gi-section">
+          <h2>Lịch học bổng năm học 2026–2027</h2>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr><th scope="col">Thời gian</th><th scope="col">Hoạt động</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Tháng 8</strong></td><td>Công bố &ldquo;Bản đồ học bổng&rdquo; tại họp PHHS; ban hành danh mục kỳ thi được công nhận</td></tr>
+                <tr><td><strong>Tháng 9</strong></td><td>Phát sổ tay GRIT; bắt đầu đếm chuỗi sau 4 tuần Foundation</td></tr>
+                <tr><td><strong>T10 / T1 / T4 / T6</strong></td><td>Bốn cửa sổ xét CHAMPIONS và LEADERS</td></tr>
+                <tr><td><strong>Tháng 12</strong></td><td>Sơ kết LEADERS</td></tr>
+                <tr><td><strong>Tháng 1</strong></td><td>Vinh danh học sinh giữ chuỗi GRIT trọn học kỳ I</td></tr>
+                <tr><td><strong>Tháng 2–3</strong></td><td>Chọn 16 em TALENTS · livestream bốc thăm · trao tại quê</td></tr>
+                <tr><td><strong>Tháng 4</strong></td><td>Olympic Day — vinh danh CHAMPIONS thể thao</td></tr>
+                <tr><td><strong>Tháng 5</strong></td><td>Leadership Day + lễ tổng kết</td></tr>
+                <tr><td><strong>Tháng 6</strong></td><td>Lễ Tri ân &amp; Trưởng thành — trao GRIT tiền mặt cho lớp 12</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p class="hb-note">
+            <strong>Cam kết về ngân sách:</strong> các hạng mục cố định khi chạm 80% ngân sách sẽ báo Ban Giám
+            hiệu trước khi nhận thêm hồ sơ. GRIT và LOVE không áp trần nhưng báo cáo giải ngân hằng tháng.
+          </p>
+          <p>
+            Tôi tuyệt đối không để hết quỹ giữa chừng. Lý do rất giản dị: <strong>trẻ con tha thứ cho một phần
+            thưởng nhỏ, nhưng không tha thứ cho một lời hứa sai.</strong>
+          </p>
+        </section>
+
+        <!-- ══════════ 15. FAQ ══════════ -->
+        <section id="faq" class="gi-section">
+          <h2>Câu hỏi thường gặp</h2>
+          {faqs.map((f) => (
+            <div class="hb-faq-item" id={f.id}>
+              <h3>{f.q}</h3>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
+
+        <!-- ══════════ 16. CTA CUỐI ══════════ -->
+        <section id="cta-cuoi" class="gi-section hb-section-navy hb-final">
+          <h2>Con bạn đi đường nào?</h2>
+          <p>Nếu bạn đọc đến đây, bạn đã thấy điều tôi thật sự muốn nói:</p>
+          <p class="hb-final-lead">
+            Ưu đãi học phí là món quà tôi gửi tới bạn. Học bổng là lời mời tôi gửi tới con bạn.
+          </p>
+          <p>
+            Lời mời ấy nghe như thế này: <em>Con không cần giỏi nhất. Con cần bền bỉ nhất. Và nếu con làm
+            được, trường sẽ đứng về phía con — bằng tiền, bằng danh hiệu, và bằng cả trường vỗ tay.</em>
+          </p>
+          <p>Còn phần của bạn thì đơn giản hơn nhiều: chỉ cần biết đúng con số trước khi ký.</p>
+          <p>
+            Một gia đình có hai con cùng học, đóng trọn năm, chưa tính bất kỳ học bổng nào của các con, đã
+            tiết kiệm khoảng <strong>{Math.floor(tietKiemHaiCon / 1_000_000)} triệu đồng</strong> mỗi năm so
+            với đóng theo tháng. Một gia đình chọn Early Bird trọn 5 năm tiết kiệm khoảng
+            <strong> {Math.floor(tongChenh / 1_000_000)} triệu đồng</strong> so với đóng từng năm.
+          </p>
+          <p>Số tiền ấy đang nằm sẵn ở đó. Nó chỉ đi vào tài khoản của bạn nếu bạn hỏi.</p>
+          <p>
+            Nếu bạn không hỏi, bạn vẫn đóng đủ — và không ai gọi điện nhắc bạn rằng lẽ ra bạn được giảm.
+          </p>
+
+          <div class="hb-final-actions">
+            <a href={ZALO_OA} target="_blank" rel="noopener" class="hb-cta hb-cta-lg" data-cta-position="cuoi-trang">
+              Nhắn Zalo cho phòng tuyển sinh
+            </a>
+            <p class="hb-cta-hint hb-cta-hint-dark">
+              Bấm <strong>Quan tâm</strong> trang Zalo OA Trường Việt Anh để nhắn được — mất 3 giây.
+              Nhắn đúng một câu: <em>&ldquo;Con tôi lớp ___, tôi muốn xem bảng tính ưu đãi.&rdquo;</em>
+              Bạn nhận bảng tính riêng cho lớp của con trong ngày làm việc.
+            </p>
+            <p class="hb-final-phone">
+              Hoặc gọi trực tiếp: <a href={`tel:${HOTLINE.replace(/\s/g, '')}`}>{HOTLINE}</a>
+            </p>
+          </div>
+
+          <p class="hb-final-links">
+            Muốn hiểu ngôi trường trước khi hiểu học bổng? →
+            <a href="/tuyen-sinh/tham-quan-truong">Đăng ký tham quan trường</a> ·
+            <a href="/danh-gia-cua-phu-huynh">Đọc đánh giá của phụ huynh hiện hữu</a> ·
+            <a href="/bang-gia">Xem bảng học phí từng khối lớp</a>
+          </p>
+        </section>
+
+        <!-- ══════════ VỀ TÁC GIẢ ══════════ -->
+        <section id="ve-tac-gia" class="gi-section hb-author">
+          <h2>Về tác giả</h2>
+          <p>
+            <strong>Nguyễn Mạnh Dương</strong> là Chủ tịch Hội đồng Trường của Hệ thống Trường Việt Anh — hệ
+            thống K-12 với {schoolFacts.campuses} cơ sở tại TP.HCM, Tây Ninh và An Giang, thành lập năm
+            {' '}{schoolFacts.foundedYear}. Ông trực tiếp phụ trách nghiên cứu và phát triển hệ thống học thuật
+            của trường theo các khung HighScope, Responsive Classroom, Leader in Me và PDR. Toàn bộ chính sách
+            học bổng trong trang này do ông chủ trì thiết kế và được Hội đồng Trường phê duyệt tháng 8/2026.
+          </p>
+
+          <h3>Nguồn tham khảo</h3>
+          <ol class="hb-list hb-list-num hb-sources">
+            <li>
+              Lally, P., van Jaarsveld, C. H. M., Potts, H. W. W., &amp; Wardle, J. (2010).
+              <em> How are habits formed: Modelling habit formation in the real world</em>.
+              <strong> European Journal of Social Psychology</strong>. —
+              <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/ejsp.674" target="_blank" rel="noopener nofollow">Wiley Online Library</a>
+            </li>
+            <li>
+              University College London (2009). <em>How long does it take to form a habit?</em> —
+              <a href="https://www.ucl.ac.uk/news/2009/aug/how-long-does-it-take-form-habit" target="_blank" rel="noopener nofollow">UCL News</a>
+            </li>
+            <li>
+              Duckworth, A. và cộng sự — Nghiên cứu grit trên 11.258 học viên West Point qua 9 khoá học. —
+              <a href="https://penntoday.upenn.edu/news/Penn-Angela-Duckworth-looks-beyond-grit-predict-success" target="_blank" rel="noopener nofollow">Penn Today, University of Pennsylvania</a>
+            </li>
+          </ol>
+
+          <p class="hb-fineprint">
+            Chính sách có hiệu lực từ năm học 2026–2027. Các mức ưu đãi và học bổng áp dụng theo quy định hiện
+            hành của Hội đồng Trường và có thể được điều chỉnh trong các năm học tiếp theo. Các ví dụ bằng số
+            trên trang này dùng mốc học phí {vnd(HOC_PHI_VI_DU)}đ/năm để minh hoạ cách tính; học phí niêm yết
+            thực tế của từng khối lớp và từng cơ sở xem tại <a href="/bang-gia">bảng giá</a>.
+          </p>
+        </section>
+      </article>
+    </div>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  /* ══════════ HERO ══════════ */
+  .hb-page :global(.gi-h1) { text-wrap: balance; }
+  .hb-hero-sub {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #fff;
+    font-weight: 600;
+    margin: 1rem 0 0.85rem;
+    max-width: 62ch;
+  }
+  .hb-hero-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 0.85rem;
+    max-width: 62ch;
+  }
+  .hb-hero-note {
+    font-size: 0.97rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.72);
+    font-style: italic;
+    border-left: 3px solid rgba(249, 221, 14, 0.55);
+    padding-left: 0.85rem;
+    margin-bottom: 1.6rem;
+    max-width: 62ch;
+  }
+  .hb-hero-actions { margin-bottom: 1.1rem; }
+  .hb-hero-link {
+    display: inline-block;
+    color: #fff;
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: rgba(249, 221, 14, 0.7);
+    text-underline-offset: 4px;
+    font-size: 1rem;
+  }
+  .hb-hero-link:hover { color: #f9dd0e; }
+
+  /* ══════════ CTA VÀNG (chữ navy — quy tắc bắt buộc của Brand Guideline v2.0) ══════════ */
+  .hb-cta {
+    display: inline-block;
+    background: #f9dd0e;
+    color: #26275D !important;
+    font-weight: 800;
+    font-size: 1.05rem;
+    line-height: 1.4;
+    padding: 0.95rem 1.6rem;
+    border-radius: 10px;
+    text-decoration: none !important;
+    box-shadow: 0 4px 14px rgba(249, 221, 14, 0.32);
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .hb-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(249, 221, 14, 0.45);
+    color: #26275D !important;
+  }
+  .hb-cta-lg { font-size: 1.15rem; padding: 1.15rem 2rem; }
+  .hb-cta-hint {
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 0.6rem 0 0;
+    line-height: 1.6;
+    max-width: 52ch;
+  }
+  .hb-cta-inline { margin: 1.75rem 0 0; }
+  .hb-cta-inline .hb-cta { max-width: 100%; }
+
+  /* ══════════ BẢNG TỔNG ══════════ */
+  .hb-page :global(.hb-table-tong td) { vertical-align: top; font-size: 0.97rem; }
+  .hb-page :global(.hb-row-uu-dai td:first-child) { border-left: 4px solid #94a3b8; }
+  .hb-page :global(.hb-row-hoc-bong td:first-child) { border-left: 4px solid #f9dd0e; }
+  .hb-page :global(.hb-row-love td:first-child) { border-left: 4px solid #26275D; }
+  .hb-page :global(.hb-row-total td) { background: #f1f5f9; border-top: 2px solid #26275D; }
+  .hb-page :global(.hb-row-pct td) { background: #f8fafc; font-size: 0.92rem; color: #64748b; }
+  .hb-page :global(.hb-win) { color: #15803d; }
+  .hb-page :global(.hb-table-eb td) { white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+  /* ══════════ HỘP GHI CHÚ / TRÍCH DẪN ══════════ */
+  .hb-note {
+    background: #fef9ef;
+    border-left: 4px solid #f9dd0e;
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin: 1.5rem 0 0;
+    font-size: 0.98rem;
+  }
+  .hb-fineprint {
+    font-size: 0.92rem !important;
+    color: #64748b !important;
+    line-height: 1.65 !important;
+    font-style: italic;
+  }
+  .hb-inline-note { color: #64748b; font-size: 0.9em; font-style: italic; }
+  .hb-meta-line {
+    display: inline-block;
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-size: 0.9rem !important;
+    font-weight: 600;
+    color: #475569 !important;
+    margin-bottom: 1.1rem !important;
+  }
+  .hb-quote {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #26275D;
+    border-radius: 8px;
+    padding: 1.15rem 1.4rem;
+    margin: 1.5rem 0 0;
+  }
+  .hb-quote p { font-size: 1.05rem; line-height: 1.8; color: #26275D; margin-bottom: 0.6rem; }
+  .hb-quote-kicker {
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #64748b !important;
+  }
+  .hb-quote cite { font-size: 0.93rem; color: #64748b; font-style: normal; font-weight: 600; }
+
+  /* ══════════ DANH SÁCH ══════════ */
+  .hb-list { margin: 0.75rem 0 1.25rem; padding-left: 1.3rem; }
+  .hb-list li { margin-bottom: 0.7rem; line-height: 1.8; color: #3b4963; font-size: 1.02rem; }
+  .hb-list-num { list-style: decimal; }
+  .hb-sources li { font-size: 0.95rem; }
+
+  .hb-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem !important; }
+  .hb-chips span {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    border-radius: 999px;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.95rem;
+    color: #334155;
+    font-weight: 500;
+  }
+
+  /* ══════════ DẢI PHÂN CÁCH KHỐI ══════════ */
+  .hb-divider {
+    background: linear-gradient(135deg, #26275D, #1a1b45);
+    border-radius: 16px;
+    padding: 2.25rem 2rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .hb-divider-kicker {
+    color: #f9dd0e;
+    font-size: 0.9rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    margin: 0 0 0.4rem;
+  }
+  .hb-divider-title {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 900;
+    line-height: 1.2;
+    margin: 0 0 0.4rem;
+  }
+  .hb-divider-sub {
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 1.05rem;
+    font-style: italic;
+    margin: 0;
+  }
+
+  /* ══════════ SECTION NỀN NAVY ══════════ */
+  .hb-section-navy { background: #26275D !important; border-color: #26275D !important; }
+  .hb-section-navy :global(h2) { color: #fff !important; border-bottom-color: #f9dd0e !important; }
+  .hb-section-navy :global(h3) { color: #f9dd0e !important; }
+  .hb-section-navy :global(p),
+  .hb-section-navy :global(li) { color: rgba(255, 255, 255, 0.88) !important; }
+  .hb-section-navy :global(strong) { color: #fff; }
+  .hb-section-navy :global(a) { color: #f9dd0e !important; text-decoration-color: rgba(249, 221, 14, 0.6) !important; }
+  .hb-section-navy :global(.gi-table-responsive) { border-color: rgba(255, 255, 255, 0.16); }
+  .hb-section-navy :global(.gi-table th) { background: #16173a; }
+  .hb-section-navy :global(.gi-table td) {
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom-color: rgba(255, 255, 255, 0.12);
+  }
+  .hb-section-navy :global(.hb-note) {
+    background: rgba(249, 221, 14, 0.1);
+    border-left-color: #f9dd0e;
+  }
+  .hb-chips-dark span {
+    background: rgba(255, 255, 255, 0.09);
+    border-color: rgba(255, 255, 255, 0.18);
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  /* Section LOVE — tông trầm, doc yêu cầu không dùng vàng rực */
+  .hb-section-love :global(h3) { color: rgba(255, 255, 255, 0.92) !important; }
+  .hb-section-navy .hb-promise {
+    font-size: 1.35rem !important;
+    font-weight: 800;
+    line-height: 1.6 !important;
+    color: #fff !important;
+    border-left: 4px solid rgba(255, 255, 255, 0.4);
+    padding-left: 1.1rem;
+    margin: 1.5rem 0 !important;
+  }
+
+  /* ══════════ LUẬT CỘNG DỒN — 3 TẦNG ══════════ */
+  .hb-tiers { display: grid; gap: 1rem; margin: 1.5rem 0 2rem; }
+  .hb-tier {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-left: 4px solid #f9dd0e;
+    border-radius: 12px;
+    padding: 1.25rem 1.4rem;
+  }
+  .hb-section-navy .hb-tier-label {
+    color: #f9dd0e !important;
+    font-size: 0.82rem !important;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 0.3rem !important;
+  }
+  .hb-section-navy .hb-tier-title { font-size: 1.2rem !important; font-weight: 800; color: #fff !important; margin-bottom: 0.25rem !important; }
+  .hb-section-navy .hb-tier-desc { font-size: 0.95rem !important; color: rgba(255, 255, 255, 0.6) !important; margin-bottom: 0.6rem !important; }
+  .hb-section-navy .hb-tier-rule { margin-bottom: 0 !important; }
+
+  /* ══════════ BẢN ĐỒ 5 HỌC BỔNG ══════════ */
+  .hb-map {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0.85rem;
+    margin: 1.25rem 0 2rem;
+  }
+  .hb-map-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-top: 4px solid #26275D;
+    border-radius: 12px;
+    padding: 1.15rem 1rem;
+    text-decoration: none !important;
+    transition: transform 0.18s, box-shadow 0.18s;
+  }
+  .hb-map-card:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); }
+  .hb-map-name { font-size: 1.15rem; font-weight: 900; color: #26275D; letter-spacing: 0.02em; }
+  .hb-map-field { font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #94a3b8; }
+  .hb-map-desc { font-size: 0.95rem; color: #475569; line-height: 1.5; }
+  .hb-map-grit { border-top-color: #f9dd0e; }
+  .hb-map-champions { border-top-color: #e07a2f; }
+  .hb-map-leaders { border-top-color: #2f8fe0; }
+  .hb-map-talents { border-top-color: #2fa86a; }
+  .hb-map-love { border-top-color: #b3436b; }
+
+  /* ══════════ LEADERS — 2 BẢNG ══════════ */
+  .hb-two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0 1.5rem; }
+  .hb-col-card {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-top: 4px solid #f9dd0e;
+    border-radius: 12px;
+    padding: 1.25rem 1.35rem;
+  }
+  .hb-col-card p { font-size: 0.98rem !important; margin-bottom: 0.6rem !important; }
+  .hb-col-title { font-size: 1.15rem !important; font-weight: 900; color: #26275D !important; margin-bottom: 0.2rem !important; }
+  .hb-col-quota { font-size: 0.95rem !important; font-weight: 700; color: #15803d !important; margin-bottom: 0.75rem !important; }
+  .hb-rubric { font-size: 0.9rem !important; color: #64748b !important; font-style: italic; margin-bottom: 0 !important; }
+
+  /* ══════════ HỘP NGHIÊN CỨU ══════════ */
+  .hb-research {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-left: 4px solid #26275D;
+    border-radius: 10px;
+    padding: 1.35rem 1.5rem;
+    margin-top: 1.75rem;
+  }
+  .hb-research p { font-size: 0.98rem; line-height: 1.8; color: #3b4963; margin-bottom: 0.85rem; }
+  .hb-research p:last-child { margin-bottom: 0; }
+  .hb-research-title {
+    font-size: 1.05rem !important;
+    font-weight: 800;
+    color: #26275D !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* ══════════ ẢNH THẬT ══════════ */
+  /* Ảnh chụp thật của trường, KHÔNG phải ảnh AI — không cần gắn nhãn theo Điều 11.4 Luật AI. */
+  .hb-figure { margin: 1.75rem 0 0; }
+  .hb-figure img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    background: #f1f5f9;
+  }
+  .hb-figure figcaption {
+    font-size: 0.93rem;
+    line-height: 1.7;
+    color: #64748b;
+    padding: 0.7rem 0.15rem 0;
+    border-left: 3px solid #f9dd0e;
+    padding-left: 0.85rem;
+    margin-top: 0.75rem;
+  }
+
+  /* Ảnh đồ hoạ có chữ: KHÔNG được cover-crop, phải hiện trọn khung kẻo mất chữ ở mép. */
+  .hb-figure-map img { object-fit: contain; aspect-ratio: 16 / 9; background: #eef2f7; }
+
+  /* ══════════ FAQ ══════════ */
+  .hb-faq-item { padding: 1.1rem 0; border-bottom: 1px solid #f1f5f9; }
+  .hb-faq-item:last-child { border-bottom: none; padding-bottom: 0; }
+  .hb-page :global(.hb-faq-item h3) { font-size: 1.15rem !important; margin: 0 0 0.5rem !important; }
+  .hb-faq-item p { margin-bottom: 0 !important; }
+
+  /* ══════════ CTA CUỐI ══════════ */
+  .hb-section-navy .hb-final-lead {
+    font-size: 1.3rem !important;
+    font-weight: 800;
+    color: #f9dd0e !important;
+    line-height: 1.6 !important;
+    margin: 1.25rem 0 !important;
+  }
+  .hb-final-actions {
+    text-align: center;
+    padding: 1.75rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 14px;
+    margin: 1.75rem 0 1.25rem;
+  }
+  .hb-cta-hint-dark { margin-left: auto; margin-right: auto; }
+  .hb-section-navy .hb-final-phone { margin: 1rem 0 0 !important; font-size: 1.05rem !important; font-weight: 700; }
+  .hb-section-navy .hb-final-links { font-size: 0.98rem !important; }
+
+  /* ══════════ VỀ TÁC GIẢ ══════════ */
+  .hb-author { background: #f8fafc !important; }
+
+  /* ══════════ MOBILE ══════════ */
+  @media (max-width: 768px) {
+    .hb-hero-sub { font-size: 1.08rem; }
+    .hb-cta { display: block; text-align: center; font-size: 1rem; padding: 0.9rem 1.1rem; }
+    .hb-two-col { grid-template-columns: 1fr; }
+    .hb-divider { padding: 1.75rem 1.25rem; }
+    .hb-divider-title { font-size: 1.6rem; }
+    .hb-promise { font-size: 1.15rem !important; }
+    .hb-final-lead { font-size: 1.15rem !important; }
+    .hb-page :global(.hb-table-eb) { font-size: 0.88rem; }
+  }
+</style>

@@ -1,0 +1,527 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import { schoolFacts } from '../data/school-facts';
+
+// Trang trụ NỘI TRÚ — tạo 31/08/2026. Nội dung theo bản duyệt của anh Dương.
+// Câu hỏi chính: "Có nên cho con học trường nội trú ở TP.HCM không?"
+// KHÔNG thêm aggregateRating/review (self-serving review — rủi ro manual action).
+// CÒN NỢ: mô tả cơ cấu quản sinh, tỷ lệ quản sinh/học sinh, quy trình trực đêm
+// và các mốc giờ sinh hoạt cụ thể — chờ quản sinh VAGV/VABT xác nhận rồi bổ sung.
+
+const PAGE_TITLE = 'Trường nội trú TP.HCM: con sống và học thế nào ở Việt Anh?';
+const PAGE_DESC =
+  'Việt Anh nhận nội trú từ lớp 6 tại Gò Vấp và Bình Tân: kèm homework mỗi tối, nề nếp sống khỏe, tiền ở 2,5 triệu/tháng. Đây là cách con sống, học và lớn lên.';
+const PAGE_URL = 'https://truongvietanh.com/noi-tru/';
+const PAGE_IMAGE = 'https://media.truongvietanh.com/images/thuyet-trinh-08.webp';
+
+const faqs = [
+  {
+    q: 'Con tôi đi học nội trú có thực sự trở nên tự lập không?',
+    a: 'Chỉ khi môi trường được thiết kế để con tự làm, tự quyết, tự chịu trách nhiệm — thay vì bị quản chặt và làm thay. Tại Việt Anh, học sinh nội trú tự quản việc học bằng nhịp PDR hằng tuần, có giáo viên kèm homework để đỡ đúng lúc chứ không làm thay. Tự lập không phải là ở xa nhà; tự lập là rời tay bố mẹ mà vẫn đứng vững bằng đôi chân mình.',
+  },
+  {
+    q: 'Con nhớ nhà quá thì sao?',
+    a: 'Nhớ nhà là phản ứng tự nhiên và thường mạnh nhất trong những tuần đầu — nghiên cứu về hình thành thói quen (Lally, University College London, 2009) cho thấy một nếp sống mới cần khoảng hai tháng để ổn định. Trường đón nhận nỗi nhớ nhà thay vì bắt con "nín đi": có đội Hoa Tiêu đón bạn mới, quản sinh được huấn luyện quan sát, gia đình được thông tin trong tuần và con về nhà cuối tuần.',
+  },
+  {
+    q: 'Nội trú Việt Anh có an toàn 24/7 không?',
+    a: 'Khu nội trú nằm trong khuôn viên trường, mỗi khung giờ có người phụ trách được phân công, học sinh sinh hoạt theo thời khóa biểu có giám sát từ giờ học đến giờ ngủ. Khi tham quan, anh chị sẽ được xem trực tiếp khu ở và hỏi thẳng quy trình trực từng khung giờ.',
+  },
+  {
+    q: 'Nội trú có giúp con học tốt hơn không?',
+    a: 'Khảo sát School Life in Focus do TABS và CAIS công bố năm 2024 trên hơn 11.000 học sinh và cựu học sinh Bắc Mỹ cho thấy học sinh nội trú có khả năng dành từ 10 giờ mỗi tuần trở lên cho việc học ngoài giờ lên lớp cao hơn gần 80% so với học sinh không nội trú. Tại Việt Anh, mỗi tối con học trong giờ tự học có giáo viên kèm homework — người gỡ chỗ vướng ngay trong tuần, không đợi đến bài kiểm tra.',
+  },
+  {
+    q: 'Điện thoại của con được quản thế nào ở nội trú?',
+    a: 'Trong giờ tự học và giờ ngủ, thiết bị cá nhân được quản lý tập trung; internet cho việc học được dùng có giám sát. Quan trọng hơn, học sinh được học chương trình trí tuệ số DQ và chương trình AI của trường để hiểu vì sao cần giữ khoảng cách với màn hình — mục tiêu là con tự chủ, không phải chỉ bị cấm.',
+  },
+  {
+    q: 'Chi phí nội trú có xứng đáng không?',
+    a: 'Tiền ở 2.500.000 đồng một tháng đã gồm giờ tự học có giáo viên kèm homework hằng ngày; ăn tối khoảng 50.000 đồng một bữa. Thước đo xứng đáng không nằm ở con số, mà ở sự thay đổi của con sau từng học kỳ: vững hơn, tự lo hơn, sống có nếp hơn. Trường mời anh chị và con trải nghiệm thực tế trước khi quyết định.',
+  },
+  {
+    q: 'Trường nội trú khác gì bán trú và ký túc xá?',
+    a: 'Nội trú là học sinh ăn, ở, học và sinh hoạt ngay trong khuôn viên trường, có đội ngũ quản sinh và giáo viên phụ trách ngoài giờ học, về nhà cuối tuần. Bán trú là con chỉ ở trường ban ngày. Ký túc xá đại học thì sinh viên tự quản là chính. Ở nội trú phổ thông, người lớn vẫn hiện diện trong từng khung giờ — đó là điểm phân biệt quan trọng nhất.',
+  },
+  {
+    q: 'Việt Anh nhận nội trú từ lớp mấy và ở cơ sở nào?',
+    a: 'Trường Việt Anh nhận học sinh nội trú từ lớp 6, tại hai cơ sở Gò Vấp và Bình Tân, TP.HCM. Học sinh đầu cấp (lớp 6 và lớp 10) có Học kỳ Foundation bốn tuần đầu để xây nếp sống, phương pháp học và định hướng cá nhân trước khi vào học nặng môn.',
+  },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${PAGE_URL}#article`,
+    headline: 'Trường nội trú tại TP.HCM: con anh chị sẽ sống và học như thế nào ở Việt Anh?',
+    description: PAGE_DESC,
+    inLanguage: 'vi-VN',
+    datePublished: '2026-08-31T09:00:00+07:00',
+    dateModified: '2026-08-31T09:00:00+07:00',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': PAGE_URL },
+    image: [PAGE_IMAGE],
+    author: {
+      '@type': 'Person',
+      '@id': 'https://truongvietanh.com/#nguyen-manh-duong',
+      name: 'Nguyễn Mạnh Dương',
+      jobTitle: 'Nhà sáng lập & Chủ tịch hệ thống giáo dục K-12 Việt Anh',
+      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Manchester Metropolitan University' },
+      url: 'https://truongvietanh.com/gioi-thieu',
+      sameAs: [
+        'https://nguyenmanhduong.com',
+        'https://www.facebook.com/nguyenmanhduong1101/',
+        'https://www.youtube.com/@nguyenmanhduong1101',
+        'https://www.linkedin.com/in/nguyenmanhduong',
+      ],
+    },
+    publisher: {
+      '@type': 'EducationalOrganization',
+      '@id': 'https://truongvietanh.com/#organization',
+      name: 'Hệ thống giáo dục Việt Anh',
+      logo: { '@type': 'ImageObject', url: 'https://truongvietanh.com/logo-crest-80.webp' },
+    },
+    about: [
+      { '@type': 'Thing', name: 'Trường nội trú' },
+      { '@type': 'Thing', name: 'Nội trú THCS THPT TP.HCM' },
+      { '@type': 'Thing', name: 'Tính tự lập của học sinh' },
+    ],
+    citation: [
+      'https://onlinelibrary.wiley.com/doi/10.1002/ejsp.674',
+      'https://boardingschools.com/school-life-in-focus/',
+      'https://www.sleephealthjournal.org/article/S2352-7218(15)00015-7/fulltext',
+    ],
+    audience: { '@type': 'Audience', audienceType: 'Phụ huynh học sinh THCS – THPT tại Việt Nam' },
+    keywords:
+      'trường nội trú, trường nội trú TP.HCM, nội trú lớp 6, nội trú THCS, nội trú THPT, chi phí nội trú, Trường Việt Anh',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${PAGE_URL}#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${PAGE_URL}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Tuyển sinh', item: 'https://truongvietanh.com/tuyen-sinh' },
+      { '@type': 'ListItem', position: 3, name: 'Nội trú', item: PAGE_URL },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={PAGE_TITLE}
+  description={PAGE_DESC}
+  canonical="https://truongvietanh.com/noi-tru"
+  ogImage={PAGE_IMAGE}
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase />
+
+    <!-- ====== HERO WITH FORM ====== -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">/</span>
+            <a href="/tuyen-sinh">Tuyển sinh</a>
+            <span aria-hidden="true">/</span>
+            <span>Nội trú</span>
+          </nav>
+
+          <h1 class="gi-h1">Trường nội trú tại TP.HCM: con anh chị sẽ sống và học như thế nào ở Việt Anh?</h1>
+          <p class="gi-subtitle">Nhận nội trú từ lớp 6 tại Gò Vấp và Bình Tân. Mỗi tối có giáo viên kèm homework, mỗi tuần con tự nhìn lại việc học bằng nhịp PDR.</p>
+          <p class="gi-last-updated">Cập nhật lần cuối: 31/08/2026</p>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>Từ lớp 6</strong> nhận nội trú</div>
+            <div class="gi-badge"><strong>2 cơ sở</strong> Gò Vấp &amp; Bình Tân</div>
+            <div class="gi-badge"><strong>2,5 triệu/tháng</strong> tiền ở</div>
+            <div class="gi-badge"><strong>Từ {schoolFacts.foundedYear}</strong> hệ thống K-12</div>
+          </div>
+        </div>
+
+        <div class="gi-hero-right">
+          <div class="gi-form-card">
+            <p class="gi-form-heading">Đặt lịch trải nghiệm nội trú</p>
+            <LeadFormTwoStepEmailFirst
+              formId="noitru-form"
+              funnelCode="noi-tru-pillar"
+              schoolLevel="thcs"
+              submitText="Đặt lịch trải nghiệm nội trú"
+              title=""
+              description=""
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== TOC SIDEBAR + CONTENT ====== -->
+    <div class="gi-container gi-body">
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Mục lục</p>
+        <ol class="gi-toc-list">
+          <li><a href="#noi-tru-la-gi">Nội trú là gì, khác gì bán trú?</a></li>
+          <li><a href="#lop-6">Lớp 6 có quá nhỏ không?</a></li>
+          <li><a href="#mot-ngay">Một ngày nội trú diễn ra thế nào?</a></li>
+          <li><a href="#hoc-tot-hon">Nội trú có giúp con học tốt hơn?</a></li>
+          <li><a href="#an-toan">An toàn và tâm lý của con</a></li>
+          <li><a href="#dien-thoai">Điện thoại &amp; internet quản thế nào?</a></li>
+          <li><a href="#chi-phi">Chi phí nội trú bao nhiêu?</a></li>
+          <li><a href="#ket-noi">Bố mẹ giữ kết nối với con ra sao?</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="#noitru-form-noi-tru-pillar" class="gi-toc-cta">Đặt lịch trải nghiệm nội trú</a>
+      </nav>
+
+      <article class="gi-main">
+
+        <!-- Direct answer block -->
+        <p class="nt-answer">
+          Trường Việt Anh nhận học sinh nội trú <strong>từ lớp 6</strong> tại hai cơ sở <strong>Gò Vấp</strong> và
+          <strong>Bình Tân</strong>, TP.HCM. Con sống theo nề nếp <strong>5 nguyên tắc sống khỏe</strong>, mỗi tối có
+          <strong>giáo viên kèm homework</strong>, mỗi tuần tự nhìn lại việc học bằng <strong>nhịp PDR</strong>.
+          Tiền ở <strong>2.500.000 đồng/tháng</strong>, ăn tối khoảng <strong>50.000 đồng/bữa</strong>.
+        </p>
+
+        <section class="gi-section">
+          <p>Tôi gặp nhiều anh chị đến hỏi về nội trú với hai cảm xúc trái ngược trong cùng một câu nói: <em>"Tôi muốn con tự lập, nhưng tôi sợ xa con."</em></p>
+          <p>Không có gì phải xấu hổ về nỗi sợ đó. Nó là dấu hiệu của một người cha, người mẹ đang cân nhắc nghiêm túc.</p>
+          <p>Trang này tôi viết để anh chị không phải quyết định bằng cảm tính — mà bằng việc nhìn rõ con sẽ <strong>sống</strong> thế nào, <strong>học</strong> thế nào, được <strong>bảo vệ</strong> thế nào, và <strong>tốn bao nhiêu tiền</strong>. Đọc xong, anh chị hãy đến ở cùng con một buổi. Nội trú không phải thứ để tin qua lời quảng cáo.</p>
+        </section>
+
+        <!-- Section 1 -->
+        <section id="noi-tru-la-gi" class="gi-section">
+          <h2>Trường nội trú là gì? Khác gì bán trú và ký túc xá?</h2>
+          <p><strong>Trường nội trú là trường mà học sinh ăn, ở, học và sinh hoạt ngay trong khuôn viên trường, có đội ngũ quản sinh và giáo viên phụ trách ngoài giờ học.</strong></p>
+          <p>Nó khác <strong>bán trú</strong> — con chỉ ở trường ban ngày — và khác <strong>ký túc xá đại học</strong>, nơi sinh viên tự quản là chính. Ở nội trú phổ thông, người lớn vẫn hiện diện trong từng khung giờ; đó là điểm phân biệt quan trọng nhất.</p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th>Tiêu chí</th>
+                  <th>Nội trú</th>
+                  <th>Bán trú</th>
+                  <th>Ở nhà, đưa đón</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Thời gian ở trường</strong></td>
+                  <td>24/7 trong tuần, về nhà cuối tuần</td>
+                  <td>Sáng đến chiều</td>
+                  <td>Chỉ giờ học</td>
+                </tr>
+                <tr>
+                  <td><strong>Ai kèm việc học buổi tối</strong></td>
+                  <td>Giáo viên kèm homework hằng ngày</td>
+                  <td>Gia đình</td>
+                  <td>Gia đình / gia sư</td>
+                </tr>
+                <tr>
+                  <td><strong>Rèn nếp sống (ngủ, ăn, thể thao)</strong></td>
+                  <td>Trường thiết kế và giữ nhịp</td>
+                  <td>Một nửa trường, một nửa nhà</td>
+                  <td>Tùy gia đình</td>
+                </tr>
+                <tr>
+                  <td><strong>Phù hợp với</strong></td>
+                  <td>Gia đình muốn con rèn tự lập, nhà xa, bố mẹ bận công tác</td>
+                  <td>Gia đình có người đón và kèm buổi tối</td>
+                  <td>Gia đình có thời gian đồng hành sát mỗi ngày</td>
+                </tr>
+                <tr>
+                  <td><strong>Điều phải cân nhắc</strong></td>
+                  <td>Con xa vòng tay gia đình, cần môi trường đủ ấm</td>
+                  <td>Tối về ai kèm con học</td>
+                  <td>Thời gian di chuyển, bố mẹ đủ sức kèm không</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Tôi ghi nhận trung thực: <strong>nội trú không phải lựa chọn tốt nhất cho mọi đứa trẻ.</strong> Nếu gia đình anh chị có thời gian đồng hành mỗi tối và con đang ổn, ở nhà là một lựa chọn tốt. Nội trú phát huy giá trị nhất khi gia đình muốn con rèn tự lập có hệ thống, hoặc hoàn cảnh khiến buổi tối của con đang bị bỏ trống.</p>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="lop-6" class="gi-section">
+          <h2>Con lớp 6 có quá nhỏ để ở nội trú không?</h2>
+          <p><strong>Lớp 6 không quá nhỏ — nếu môi trường được thiết kế cho đúng lứa tuổi đó, và quá trình chuyển đổi được làm từ từ.</strong></p>
+          <p>Nghiên cứu của Phillippa Lally và cộng sự (University College London, <em>European Journal of Social Psychology</em>, 2009, n=96) cho thấy một thói quen mới cần trung bình <strong>66 ngày</strong> lặp lại để thành nếp, dao động 18–254 ngày tùy người. Vì vậy đừng kỳ vọng con "quen ngay trong tuần đầu" — và cũng đừng hoảng khi tuần đầu con gọi điện đòi về.</p>
+          <p>Tại Việt Anh, học sinh đầu cấp (lớp 6, lớp 10) có <strong>Học kỳ Foundation</strong> bốn tuần đầu: xây nếp sống, phương pháp học và định hướng cá nhân trước khi vào học nặng môn. Đội <strong>Hoa Tiêu Junior</strong> — học sinh trong hội đồng lãnh đạo học sinh — được phân công đón và kèm bạn mới, để đứa trẻ mới xa nhà có một người bạn <em>biết đường</em> trước khi có một người bạn <em>thân</em>.</p>
+          <p>Nhớ nhà là phản ứng tự nhiên, không phải yếu đuối. <strong>Điều đáng lo không phải là con nhớ nhà — mà là con phải nhớ nhà trong lặng im.</strong> Việc của trường là để con không phải im lặng.</p>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="mot-ngay" class="gi-section">
+          <h2>Một ngày của học sinh nội trú Việt Anh diễn ra thế nào?</h2>
+          <p>Ban ngày, con học như mọi học sinh Việt Anh: chương trình GDPT 2018, tiếng Anh tăng cường với giáo viên bản ngữ, Morning Meeting đầu ngày. <strong>Khác biệt của nội trú nằm ở buổi tối</strong> — khoảng thời gian mà ở nhiều nơi bị bỏ trống, còn ở đây được thiết kế:</p>
+
+          <ul class="nt-day-list">
+            <li><strong>Ăn tối tại trường</strong> — bữa ăn theo <strong>5 nguyên tắc sống khỏe</strong> của trường: ăn tốt, uống tốt, nghỉ ngơi tốt, thể thao, niềm vui mỗi ngày. Trong trường không có snack, nước ngọt và trà sữa.</li>
+            <li><strong>Giờ tự học có giáo viên kèm homework hằng ngày</strong> — con làm bài với người có thể gỡ ngay chỗ vướng, thay vì ngồi một mình với chỗ không hiểu.</li>
+            <li><strong>Nhịp <a href="/he-thong-pdr">PDR</a> hằng tuần</strong> (Plan – Do – Review: Lên kế hoạch – Thực hiện – Nhìn lại) — con tự đối chiếu việc đã làm với kế hoạch đã đặt, gọi tên chỗ chênh, chọn một điều làm khác đi. Trường không chỉ dạy nội dung; trường dạy con cách tự điều khiển việc học của chính mình.</li>
+            <li><strong>Thể thao và sinh hoạt</strong> — mỗi học sinh Việt Anh chơi ít nhất một môn thể thao thường xuyên, suốt năm.</li>
+            <li><strong>Ngủ đúng giờ</strong> — National Sleep Foundation (Hirshkowitz và cộng sự, 2015) khuyến nghị tuổi 14–17 cần <strong>8–10 giờ ngủ mỗi đêm</strong>; nội trú là nơi hiếm hoi giữ được kỷ luật giấc ngủ mà không phải cãi nhau với con mỗi tối.</li>
+          </ul>
+
+          <img src="https://media.truongvietanh.com/images/thuyet-trinh-08.webp" alt="Học sinh Trường Việt Anh trong giờ học buổi tối có giáo viên đồng hành" loading="lazy" width="1200" height="675" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+        </section>
+
+        <!-- Section 4 -->
+        <section id="hoc-tot-hon" class="gi-section">
+          <h2>Nội trú có giúp con học tốt hơn không?</h2>
+          <p><strong>Có thể — nhưng không phải vì con ngồi vào bàn nhiều giờ hơn, mà vì buổi tối của con có cấu trúc và có người đỡ đúng lúc.</strong></p>
+          <p>Khảo sát <em>School Life in Focus</em> do Hiệp hội các trường nội trú Bắc Mỹ (TABS) và CAIS công bố năm 2024, trên hơn <strong>11.000 học sinh và cựu học sinh</strong> của hơn 100 trường, cho thấy học sinh nội trú có khả năng dành từ <strong>10 giờ mỗi tuần trở lên</strong> cho việc học ngoài giờ lên lớp <strong>cao hơn gần 80%</strong> so với học sinh không nội trú, và khả năng được học kèm 1:1 với giáo viên <strong>cao hơn 50%</strong>.</p>
+          <p>Tại Việt Anh, cơ chế đó nằm ở hai chỗ: <strong>giờ kèm homework hằng ngày</strong> — giáo viên nhìn thấy con chững lại ngay trong tuần, không đợi đến bài kiểm tra — và <strong>nhịp PDR hằng tuần</strong> để chính con nhìn thấy mình.</p>
+
+          <blockquote class="nt-quote">
+            <p>"Grit là đam mê và sự bền bỉ dành cho những mục tiêu rất dài hạn."</p>
+            <cite><strong>Angela Duckworth</strong> — Giáo sư tâm lý học, Đại học Pennsylvania (TED, 2013)</cite>
+          </blockquote>
+
+          <p>Trường Việt Anh chọn <em>grit</em> — sự bền bỉ — làm chìa khóa của thành công, và bền bỉ không rèn được bằng vài buổi truyền cảm hứng; nó rèn bằng nhịp sống lặp lại mỗi ngày.</p>
+          <p>Tôi nói thẳng điều ngược lại để anh chị cân nhắc đủ hai chiều: <strong>nếu một đứa trẻ đang học tốt và có gia đình kèm sát, nội trú chưa chắc làm điểm số tăng thêm.</strong> Giá trị lớn nhất của nội trú không nằm ở điểm — nó nằm ở việc con học được cách tự lo cho việc học và đời sống của mình. Học tốt không phải là học lâu. Học tốt là học vào.</p>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="an-toan" class="gi-section">
+          <h2>Trường giữ an toàn và chăm sóc tâm lý của con thế nào?</h2>
+          <p><strong>An toàn nội trú không nằm ở cổng khóa, mà nằm ở việc mỗi khung giờ đều có người chịu trách nhiệm được nêu tên.</strong></p>
+          <p>Khi tham quan, anh chị hãy hỏi thẳng câu đó — ở bất kỳ trường nào, kể cả Việt Anh: <em>"Từ 21 giờ đến 6 giờ sáng, ai chịu trách nhiệm cho con tôi?"</em> Một trường nội trú nghiêm túc sẽ trả lời được ngay, không vòng vo. Ở Việt Anh, anh chị sẽ được xem trực tiếp khu ở và nghe quản sinh trình bày quy trình trực từng khung giờ.</p>
+
+          <h3>Về bắt nạt</h3>
+          <p>Bắt nạt ở môi trường sống chung không chỉ là đánh hay chửi — có khi là trêu dai, cô lập, ép im lặng. Việt Anh xử lý bằng <strong>phòng ngừa</strong> thay vì chờ sự việc bùng lên:</p>
+          <ul>
+            <li>5 giá trị cốt lõi của trường bắt đầu bằng <strong>Tôn trọng</strong> và <strong>Tự trọng</strong>;</li>
+            <li>trường có <strong>Kế hoạch Chống Bạo lực Học đường</strong>, trong đó có CLB Brazilian Jiu-Jitsu ưu tiên nữ sinh;</li>
+            <li>hệ thống <strong>Hoa Tiêu</strong> để mỗi học sinh mới có người quan sát và lên tiếng thay khi con chưa dám nói.</li>
+          </ul>
+
+          <h3>Về tâm lý</h3>
+          <p>Lòng trẻ khi đã rạn hiếm khi vỡ ra bằng tiếng động lớn — nó vỡ âm thầm. Vì vậy người lớn ở nội trú phải đủ gần để nhìn thấy thay đổi trong <strong>giọng nói, nếp ăn, cách giao tiếp</strong> của con trước khi con nói ra. Đó là tiêu chuẩn chúng tôi huấn luyện cho quản nhiệm và giáo viên chủ nhiệm.</p>
+          <p>Nếu con có dấu hiệu cần hỗ trợ chuyên sâu, trường trao đổi với gia đình để con gặp chuyên gia — <strong>trường học không thay thế chuyên gia tâm lý, và không nên giả vờ làm được điều đó.</strong></p>
+        </section>
+
+        <!-- Section 6 -->
+        <section id="dien-thoai" class="gi-section">
+          <h2>Điện thoại và internet được quản như thế nào?</h2>
+          <p><strong>Nguyên tắc của Việt Anh: quản thiết bị là bước một, dạy con tự chủ trước màn hình mới là đích đến.</strong> Cấm mà không dạy thì con chỉ chờ hết giờ cấm.</p>
+          <p>Trong giờ tự học và giờ ngủ, thiết bị cá nhân được quản lý tập trung; internet phục vụ việc học được dùng có giám sát.</p>
+          <p>Song song, học sinh học chương trình <strong>DQ (thông minh kỹ thuật số)</strong> và chương trình <strong>AI Education 30 tiết/năm</strong> của trường — trong đó có nội dung dùng công nghệ có trách nhiệm.</p>
+          <p>Điều đáng sợ không phải là chiếc điện thoại trong tay con. Điều đáng sợ là <strong>nó dần cầm luôn cả con</strong> — và cách chống lại điều đó là dạy con nhìn thấy cơ chế ấy, chứ không chỉ tịch thu cái máy.</p>
+        </section>
+
+        <!-- Section 7 -->
+        <section id="chi-phi" class="gi-section">
+          <h2>Chi phí nội trú Việt Anh là bao nhiêu?</h2>
+          <p><strong>Chi phí nội trú thấp hơn hình dung của phần lớn phụ huynh: tiền ở 2.500.000 đồng/tháng, đã bao gồm giờ kèm homework hằng ngày.</strong></p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th>Khoản</th>
+                  <th>Mức phí</th>
+                  <th>Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Tiền ở nội trú</strong></td>
+                  <td><strong>2.500.000đ/tháng</strong><br /><span class="nt-note">≈ 25 triệu/năm học 10 tháng</span></td>
+                  <td>Đã gồm giờ tự học có giáo viên kèm homework hằng ngày</td>
+                </tr>
+                <tr>
+                  <td><strong>Ăn tối tại trường</strong></td>
+                  <td>~50.000đ/bữa</td>
+                  <td>Bữa ăn theo 5 nguyên tắc sống khỏe</td>
+                </tr>
+                <tr>
+                  <td><strong>Học phí văn hóa</strong></td>
+                  <td>Theo khối lớp — xem <a href="/hoc-phi">bảng học phí</a></td>
+                  <td>Như học sinh bán trú, không phụ thu riêng cho nội trú ngoài các khoản trên</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Để anh chị đặt phép so sánh cho đúng: <strong>2,5 triệu/tháng tiền ở kèm người hướng dẫn học mỗi tối</strong> — hãy so với chi phí một gia sư kèm riêng mỗi tối tại nhà, cộng thời gian đưa đón, rồi tự trả lời câu hỏi "đắt hay rẻ".</p>
+          <p>Câu hỏi đúng khi cân nhắc chi phí nội trú không phải "bao nhiêu tiền một tháng", mà là <strong>"sau từng học kỳ, con có vững hơn, tự lo hơn, sống ra dáng hơn không"</strong>. Nội trú chỉ xứng đáng khi mỗi ngày xa nhà của con đều có giá trị.</p>
+        </section>
+
+        <!-- Section 8 -->
+        <section id="ket-noi" class="gi-section">
+          <h2>Xa nhà rồi, bố mẹ còn gần con không?</h2>
+          <p><strong>Nội trú tốt không tách con khỏi gia đình — nó giúp con mang gia đình theo mình một cách lành mạnh hơn.</strong></p>
+          <p>Con ở trường trong tuần và về nhà cuối tuần; trong tuần, gia đình nhận thông tin về việc học và sinh hoạt của con qua kênh liên lạc của trường. Mỗi kỳ, con tự trình bày việc học của mình với bố mẹ trong <strong>Student-led Conference</strong> — buổi họp phụ huynh mà người báo cáo là chính đứa trẻ.</p>
+          <p>Một chỉ dấu tôi mời anh chị dùng để đánh giá bất kỳ trường nội trú nào sau vài tháng: <strong>gọi điện cho con và nghe.</strong> Con kể chuyện, hay con trả lời cho xong? Liên lạc được chưa chắc là còn kết nối. Trường tốt phải làm cho những cuộc gọi ấy <em>dài ra</em>, không ngắn đi.</p>
+
+          <img src="https://media.truongvietanh.com/images/the-thao-04.webp" alt="Học sinh Trường Việt Anh trong hoạt động thể thao thường xuyên" loading="lazy" width="1200" height="675" style="border-radius:12px;width:100%;height:auto;margin:1.5rem 0" />
+        </section>
+
+        <!-- Section 9: FAQ -->
+        <section id="faq" class="gi-section">
+          <h2>Câu hỏi thường gặp</h2>
+          <div class="gi-faq-list">
+            {faqs.map((faq, i) => (
+              <details class="gi-faq-item" open={i === 0}>
+                <summary>{faq.q}</summary>
+                <div class="gi-faq-answer">
+                  <p>{faq.a}</p>
+                </div>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <!-- Closing -->
+        <section class="gi-section">
+          <h2>Tự lập không phải là ở xa nhà</h2>
+          <p>Tôi từng viết cho đội ngũ của mình một câu và giữ nó đến giờ: <strong>nếu đi nội trú mà không tự lập hơn, con chỉ đổi chỗ ngủ.</strong> Chúng tôi không muốn nhận một đứa trẻ chỉ để đổi chỗ ngủ của nó.</p>
+          <p>Một môi trường được thiết kế đúng không nuôi trẻ bằng mệnh lệnh. Nó cho trẻ một <strong>nhịp sống đủ rõ</strong> để bám vào, những <strong>người lớn đủ gần</strong> để đỡ đúng lúc, và <strong>khoảng trống đủ an toàn</strong> để trẻ tập tự quyết — sai, sửa, rồi vững lên. Trưởng thành không phải là cứng lại. Trưởng thành là vững lên.</p>
+          <p>Anh chị không cần tin trang này. <strong>Hãy đến ở cùng con một buổi tại khu nội trú Việt Anh</strong> — xem giờ kèm homework, ăn thử bữa tối, hỏi thẳng quản sinh câu khó nhất anh chị có. Điều anh chị được là quyết định bằng mắt thấy thay vì lời kể; điều có thể mất nếu cứ để lửng là thêm một năm buổi tối của con trôi qua không ai thiết kế.</p>
+          <p><strong>Đặt lịch trải nghiệm nội trú: hotline <a href="tel:0916961409">0916 961 409</a> · <a href="mailto:hoc@truongvietanh.com">hoc@truongvietanh.com</a></strong> — trường đón anh chị cả 7 ngày trong tuần, 07:00–19:00.</p>
+        </section>
+
+        <!-- Author box -->
+        <aside class="nt-author">
+          <p><strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt Anh (từ 2011). 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.</p>
+          <p class="gi-last-updated">Cập nhật lần cuối: 31/08/2026</p>
+        </aside>
+
+        <!-- References -->
+        <section class="gi-section nt-refs">
+          <h2>Nguồn tham khảo</h2>
+          <ul>
+            <li>Lally, P. và cộng sự (2009). <em>How are habits formed: Modelling habit formation in the real world.</em> European Journal of Social Psychology, University College London. <a href="https://onlinelibrary.wiley.com/doi/10.1002/ejsp.674" target="_blank" rel="noopener">Xem nghiên cứu</a></li>
+            <li>TABS &amp; CAIS (2024). Khảo sát <em>School Life in Focus</em> — hơn 11.000 học sinh và cựu học sinh, hơn 100 trường Bắc Mỹ. <a href="https://boardingschools.com/school-life-in-focus/" target="_blank" rel="noopener">boardingschools.com</a></li>
+            <li>Hirshkowitz, M. và cộng sự (2015). <em>National Sleep Foundation's sleep time duration recommendations.</em> Sleep Health. <a href="https://www.sleephealthjournal.org/article/S2352-7218(15)00015-7/fulltext" target="_blank" rel="noopener">Xem khuyến nghị</a></li>
+            <li>Duckworth, A. (2013). <em>Grit: The power of passion and perseverance.</em> TED. <a href="https://www.ted.com/talks/angela_lee_duckworth_grit_the_power_of_passion_and_perseverance" target="_blank" rel="noopener">ted.com</a></li>
+          </ul>
+        </section>
+      </article>
+    </div>
+
+    <!-- ====== BOTTOM CTA ====== -->
+    <section class="gi-bottom-cta">
+      <div class="gi-container gi-bottom-cta-inner">
+        <div class="gi-bottom-cta-text">
+          <h2>Đặt lịch trải nghiệm nội trú tại Trường Việt Anh</h2>
+          <p>Đến xem giờ kèm homework, ăn thử bữa tối cùng con và hỏi thẳng quản sinh. Trường đón anh chị cả 7 ngày trong tuần, 07:00–19:00.</p>
+        </div>
+        <div class="gi-next-step">
+          <p class="gi-next-step-title">Bước Tiếp Theo</p>
+          <div class="gi-next-step-links">
+            <a href="#noitru-bottom-form-noi-tru-bottom" class="ns-tour">Đặt Lịch Trải Nghiệm</a>
+            <a href="tel:0916961409" class="ns-phone">📞 0916 961 409</a>
+            <a href="https://zalo.me/1678310120468101523" class="ns-zalo">💬 Nhắn Zalo</a>
+          </div>
+        </div>
+        <div class="gi-bottom-cta-form" data-form-bg="light">
+          <LeadFormTwoStepEmailFirst
+            formId="noitru-bottom-form"
+            funnelCode="noi-tru-bottom"
+            schoolLevel="thcs"
+            submitText="Đặt lịch trải nghiệm nội trú"
+          />
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== RELATED CONTENT ====== -->
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Tìm hiểu thêm</h2>
+        <div class="gi-related-grid">
+          <a href="/trung-hoc-co-so" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #26275D 0%, #363876 100%);"></div>
+            <h3>Chương trình THCS Việt Anh</h3>
+            <p>Chương trình lớp 6 đến lớp 9 — nơi phần lớn học sinh nội trú bắt đầu hành trình xa nhà.</p>
+          </a>
+          <a href="/he-thong-pdr" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #f9dd0e 0%, #cbb30a 100%);"></div>
+            <h3>Hệ thống PDR</h3>
+            <p>Plan – Do – Review: nhịp tự quản việc học mà học sinh nội trú chạy mỗi tuần.</p>
+          </a>
+          <a href="/hoc-phi" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Học phí &amp; chi phí trọn gói</h3>
+            <p>Học phí từng khối lớp, phí dịch vụ, tiền ăn và tiền ở nội trú — xem trước khi đăng ký.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style is:global>/* ===== NỘI TRÚ PILLAR — reuses gi-* from global.css ===== */
+.nt-answer{
+  font-size: 1.15rem; line-height: 1.65; color: #0f172a;
+  background: #fef9ef; border-left: 4px solid #f9dd0e;
+  border-radius: 10px; padding: 1.25rem 1.4rem; margin: 0 0 2rem;
+}
+.nt-day-list{ margin: 1rem 0 0; padding-left: 1.2rem; }
+.nt-day-list li{ margin-bottom: 0.9rem; line-height: 1.65; }
+.nt-quote{
+  margin: 2rem 0; padding: 1.4rem 1.6rem; border-left: 4px solid #26275D;
+  background: #eef4fb; border-radius: 0 12px 12px 0;
+}
+.nt-quote p{ font-style: italic; color: #3b4963; line-height: 1.7; margin: 0 0 0.75rem; }
+.nt-quote cite{ font-style: normal; font-size: 0.95rem; color: #475569; display: block; }
+.nt-note{ font-size: 0.9rem; color: #5c6e80; }
+.nt-author{
+  border: 1px solid #e2e8f0; border-radius: 12px; padding: 1.25rem 1.4rem;
+  background: #f8fafc; margin: 2.5rem 0 1.5rem;
+}
+.nt-author p{ margin: 0 0 0.4rem; line-height: 1.6; }
+.nt-author .gi-last-updated{ margin: 0; }
+.nt-refs ul{ padding-left: 1.2rem; }
+.nt-refs li{ margin-bottom: 0.6rem; line-height: 1.6; font-size: 0.95rem; }
+</style>
+
+<script>
+// @ts-nocheck
+
+  document.querySelectorAll('.gi-toc-list a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (href && href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', href);
+        }
+      }
+    });
+  });
+
+  document.querySelectorAll('.gi-faq-item').forEach(item => {
+    item.addEventListener('toggle', () => {
+      if (item.open) {
+        document.querySelectorAll('.gi-faq-item').forEach(other => {
+          if (other !== item) other.removeAttribute('open');
+        });
+      }
+    });
+  });
+</script>

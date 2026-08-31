@@ -132,6 +132,7 @@ export const mainNavLeft = [
       { label: 'Tiểu học', href: '/tuyen-sinh/tieu-hoc' },
       { label: 'THCS', href: '/tuyen-sinh/thcs' },
       { label: 'THPT', href: '/tuyen-sinh/thpt' },
+      { label: 'Nội trú', href: '/noi-tru' },
       { label: 'Trại hè', href: '/tuyen-sinh/trai-he' },
       { label: 'Tiếng Anh Evolution', href: '/tuyen-sinh/tieng-anh-evo' },
       { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },

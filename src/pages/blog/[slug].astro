@@ -267,10 +267,10 @@ const structuredData = [
     wordCount: cleanedContent ? cleanedContent.replace(/<[^>]*>/g, '').split(/\s+/).length : 0,
     author: {
       '@type': 'Person',
+      '@id': 'https://nguyenmanhduong.com/#person',
       name: 'Nguyễn Mạnh Dương',
       url: 'https://nguyenmanhduong.com',
       jobTitle: 'Nhà sáng lập & Chủ tịch Hệ thống Giáo dục K-12 Việt Anh',
-      alumniOf: { '@type': 'CollegeOrUniversity', name: 'Manchester Metropolitan University' },
       worksFor: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh', url: 'https://truongvietanh.com' },
       sameAs: [
         'https://nguyenmanhduong.com',
@@ -280,7 +280,8 @@ const structuredData = [
       ],
     },
     publisher: {
-      '@type': 'Organization',
+      '@type': 'EducationalOrganization',
+      '@id': 'https://truongvietanh.com/#organization',
       name: 'Trường Việt Anh',
       url: 'https://truongvietanh.com',
       logo: {
@@ -495,7 +496,7 @@ const structuredData = [
           <div>
             <p class="blog-author__name">Nguyễn Mạnh Dương</p>
             <p class="blog-author__role">
-              Nhà sáng lập &amp; Chủ tịch Hệ thống Giáo dục K-12 Việt Anh (từ 2011), tốt nghiệp Manchester Metropolitan University.
+              Nhà sáng lập &amp; Chủ tịch Hệ thống Giáo dục K-12 Việt Anh (từ 2011). 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.
               <a href="https://nguyenmanhduong.com" rel="noopener">nguyenmanhduong.com</a>
             </p>
           </div>

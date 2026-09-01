@@ -10,7 +10,14 @@ export const schoolFacts = {
   yearsRunning: 15, // thành lập 2011 → 15 năm K-12
 
   // Quy mô
-  campuses: 8, // TP.HCM (3) · Tây Ninh–Cần Giuộc (3) · An Giang–Rạch Giá (2)
+  // CƠ SỞ = địa điểm vật lý đang hoạt động. TRƯỜNG = pháp nhân/đơn vị trên giấy phép.
+  // 8 trường nhưng chỉ 6 cơ sở, vì hai cặp trường dùng chung một khuôn viên:
+  //   · Mầm Non + Tiểu Học Thái Sơn (Tây Ninh) — cùng một khuôn viên
+  //   · Mầm Non + Tiểu Học Mekong Xanh (An Giang) — cùng một khuôn viên
+  // Phân bố cơ sở: TP.HCM (3) · Tây Ninh (2) · An Giang (1). Anh Dương chốt 01/09/2026.
+  // ĐỐI NGOẠI LUÔN DÙNG SỐ CƠ SỞ = 6. Chỉ nói "8 trường" khi có giải thích kèm theo.
+  campuses: 6,
+  schools: 8,
   studentsTotal: '3.000+', // tổng học sinh/gia đình đã đồng hành (mọi khẳng định TỔNG)
   currentEnrollment: '1.000+', // học sinh đang học mỗi năm (metric khác với tổng)
 

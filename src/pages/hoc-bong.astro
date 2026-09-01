@@ -273,7 +273,7 @@ const structuredData = [
         </div>
 
           <div class="gi-hero-right">
-            <div class="hb-hero-form">
+            <div class="hb-hero-form" data-form-bg="light">
               <LeadFormTwoStepEmailFirst
                 formId="hb"
                 funnelCode="pillar-hoc-bong-2026"
@@ -1572,26 +1572,27 @@ const structuredData = [
   .hb-hero-actions { margin-bottom: 1.1rem; }
 
   /* ══════════ THẺ FORM TRONG HERO ══════════ */
-  /* .gi-hero đặt color:#fff cho cả khối, nên form đặt trên nền trắng sẽ thừa kế
-     thành chữ trắng trên nền trắng — phải ép lại màu ở đây. Dùng :global() vì
-     markup do component LeadFormTwoStepEmailFirst sinh ra, không thuộc file này. */
-  .hb-page :global(.gi-hero-right) { width: 380px; max-width: 380px; }
+  /* Component LeadFormTwoStepEmailFirst vốn dựng cho nền TỐI: nhãn bước, tiêu đề và
+     mô tả đều để màu trắng. Đặt lên thẻ trắng là chữ trắng trên nền trắng.
+     Component đã có sẵn hook cho thẻ sáng — bật bằng data-form-bg="light" trên thẻ
+     bọc, nó lo đủ 6 chỗ: nhãn bước (cả 3 trạng thái), social proof, tiêu đề, mô tả.
+
+     ĐỪNG ép màu bằng :global(*){color:inherit} như bản đầu. Cách đó chỉ có specificity
+     0,1,0 nên thua rule .form-progress__step--active .form-progress__label (0,2,0) →
+     nhãn bước 1 "Điền email" vẫn trắng trên nền trắng. Đã mắc đúng lỗi này 01/09/2026. */
+  .hb-page :global(.gi-hero-right) { width: 440px; max-width: 440px; }
   .hb-hero-form {
     background: #fff;
     border-radius: 14px;
-    padding: 1.4rem 1.3rem;
+    padding: 1.7rem 1.6rem;
     box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
     color: #1a1a2e;
   }
-  .hb-hero-form :global(*) { color: inherit; }
-  .hb-hero-form :global(h2),
-  .hb-hero-form :global(h3),
-  .hb-hero-form :global(strong) { color: #26275d; }
   .hb-hero-form :global(.form-input) { color: #1a1a2e; background: #f8f8fc; }
   .hb-hero-form :global(.form-input::placeholder) { color: #7a7a99; }
   @media (max-width: 768px) {
     .hb-page :global(.gi-hero-right) { width: 100%; max-width: none; }
-    .hb-hero-form { padding: 1.15rem 1rem; }
+    .hb-hero-form { padding: 1.2rem 1.05rem; }
   }
 
   .hb-hero-link {

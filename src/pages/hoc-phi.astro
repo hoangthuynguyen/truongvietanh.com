@@ -98,12 +98,19 @@ const tong12NamDuKien =
 const GIAM_TRON_NAM = 0.06;
 const viDuGiam6 = Math.round(viDu[1].hocPhi * GIAM_TRON_NAM);
 
+// ── QUY RA THÁNG ────────────────────────────────────────────────────────────
+// Phụ huynh hay so với trường thu theo tháng, nên phải nói rõ chia theo cách nào.
+// Chia 12 làm con số nhỏ đi vì năm học thực tế chỉ khoảng 10 tháng — nêu cả hai
+// để không bị hiểu là học phí thấp hơn thực tế.
+const THANG_NAM_HOC = 10;
+const thang = (n: number, chia: number) => trieu(n / chia);
+
 // ── FAQ — dùng chung cho phần hiển thị và schema, không chép tay hai lần ─────
 const faqs = [
   {
     id: 'faq-mot-thang',
     q: 'Học phí Trường Việt Anh một tháng khoảng bao nhiêu?',
-    a: `Học phí công bố theo năm, từ ${trieu(hpMin)} đến ${trieu(hpMax)} triệu đồng tùy khối lớp 1–12 (năm học 2026–2027). Nếu chia 12 tháng để dễ hình dung, tương đương khoảng ${trieu(hpMin / 12)}–${trieu(hpMax / 12)} triệu đồng/tháng, chưa gồm tiền ăn. Trường nhận đóng theo 1, 2 hoặc 4–12 đợt, không tính thêm phí trả góp.`,
+    a: `Học phí công bố theo năm, từ ${trieu(hpMin)} đến ${trieu(hpMax)} triệu đồng tùy khối lớp 1–12 tại cơ sở Gò Vấp và Bình Tân (năm học 2026–2027) — đây là phần học phí, chưa gồm tiền ăn và phí dịch vụ. Chia đều 12 tháng thì tương đương ${thang(hpMin, 12)}–${thang(hpMax, 12)} triệu đồng/tháng; tính trọn gói cả tiền ăn, cơ sở vật chất, tài liệu, dã ngoại, bảo hiểm và đồng phục thì khoảng ${thang(tongMin, 12)}–${thang(tongMax, 12)} triệu đồng/tháng. Lưu ý năm học chỉ kéo dài khoảng ${THANG_NAM_HOC} tháng, nên chia theo tháng đi học thật thì cao hơn: ${thang(hpMin, THANG_NAM_HOC)}–${thang(hpMax, THANG_NAM_HOC)} triệu tiền học phí, hoặc ${thang(tongMin, THANG_NAM_HOC)}–${thang(tongMax, THANG_NAM_HOC)} triệu trọn gói. Trường nhận đóng theo 1, 2 hoặc 4–12 đợt, không tính thêm phí trả góp.`,
   },
   {
     id: 'faq-oic',
@@ -505,6 +512,16 @@ const structuredData = [
             3.120.000–4.200.000đ trung học), tutor sau giờ học (5.000.000đ/học kỳ), luyện tiếng Anh 1-1
             (350.000–450.000đ/tiết), chứng chỉ ICDL 2.600.000đ, chứng chỉ IELTS 4.664.000đ, xe đưa rước
             theo tuyến — chỉ phát sinh khi anh chị đăng ký.
+          </p>
+          <p class="hp-note">
+            <strong>Nếu anh chị quen tính theo tháng:</strong> chia đều 12 tháng, học phí là
+            {' '}{thang(hpMin, 12)}–{thang(hpMax, 12)} triệu/tháng, trọn gói cả ăn và phí dịch vụ là
+            {' '}{thang(tongMin, 12)}–{thang(tongMax, 12)} triệu/tháng. Nhưng năm học chỉ khoảng
+            {' '}{THANG_NAM_HOC} tháng, nên chia theo tháng đi học thật thì cao hơn:
+            {' '}{thang(hpMin, THANG_NAM_HOC)}–{thang(hpMax, THANG_NAM_HOC)} triệu tiền học phí,
+            {' '}{thang(tongMin, THANG_NAM_HOC)}–{thang(tongMax, THANG_NAM_HOC)} triệu trọn gói. Tôi
+            ghi cả hai cách chia vì con số chia 12 nhìn nhẹ hơn thực tế, và anh chị đáng được biết
+            điều đó trước khi so với trường thu theo tháng.
           </p>
           <p class="hp-note">
             Hai lưu ý về thủ tục: phí nộp <strong>trước ngày nhập học 7 ngày</strong>, và thanh toán bằng

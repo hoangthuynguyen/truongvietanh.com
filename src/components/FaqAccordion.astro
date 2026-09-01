@@ -1,0 +1,73 @@
+---
+// FAQ gập lại — dùng chung cho mọi trang trụ. Chốt 01/09/2026.
+//
+// ⚠️ RÀNG BUỘC AEO — đọc trước khi sửa:
+// Câu trả lời PHẢI nằm sẵn trong HTML do server dựng, chỉ ẩn bằng CSS của <details>.
+// TUYỆT ĐỐI không nạp/không render câu trả lời bằng JS. Làm vậy là nội dung biến mất
+// khỏi HTML thô, bot không đọc được — đó đúng là lý do quy ước cũ cấm <details>.
+// Script bên dưới CHỈ bật thuộc tính `open`, không sinh ra chữ nào.
+//
+// Kiểu dáng nằm ở src/styles/global.css (nhóm .gi-faq-*), không để trong file này
+// để mọi trang dùng chung một bộ. Xem CLAUDE.md mục "FAQ".
+//
+// Trang dùng component này vẫn phải tự sinh schema FAQPage từ CÙNG mảng `faqs`
+// để chữ trong schema luôn trùng chữ hiển thị.
+
+interface Faq {
+  id?: string;
+  q: string;
+  a: string;
+}
+
+interface Props {
+  faqs: Faq[];
+  hint?: string;
+}
+
+const { faqs, hint = 'Bấm vào câu hỏi để xem câu trả lời.' } = Astro.props;
+---
+
+{hint && <p class="gi-faq-hint">{hint}</p>}
+
+{faqs.map((f) => (
+  <details class="gi-faq-item" id={f.id}>
+    <summary class="gi-faq-q"><h3>{f.q}</h3></summary>
+    {/* Cố ý KHÔNG dùng set:html — cả 3 trang trụ đều để câu trả lời là chữ thuần,
+        nhờ vậy chữ hiển thị luôn trùng đúng chữ đưa vào schema FAQPage. */}
+    <div class="gi-faq-a"><p>{f.a}</p></div>
+  </details>
+))}
+
+<script is:inline>
+  // Mở sẵn câu FAQ khi người đọc vào bằng link neo (#faq-...), ví dụ từ kết quả
+  // tìm kiếm hay từ mục lục. Không có đoạn này thì họ rơi đúng vào một câu đang đóng.
+  // Chỉ bật `open` cho phần tử đã có sẵn — không sinh nội dung.
+  (function () {
+    if (window.__giFaqAnchor) return;
+    window.__giFaqAnchor = true;
+
+    function moTheoNeo() {
+      var hash = location.hash;
+      if (!hash || hash.length < 2) return;
+      var el;
+      try {
+        el = document.getElementById(decodeURIComponent(hash.slice(1)));
+      } catch (e) {
+        return;
+      }
+      if (!el) return;
+      var d = el.tagName === 'DETAILS' ? el : el.closest && el.closest('details');
+      if (d && !d.open) {
+        d.open = true;
+        d.scrollIntoView({ block: 'start' });
+      }
+    }
+
+    window.addEventListener('hashchange', moTheoNeo);
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', moTheoNeo);
+    } else {
+      moTheoNeo();
+    }
+  })();
+</script>

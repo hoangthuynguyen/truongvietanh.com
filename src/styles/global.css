@@ -1126,6 +1126,33 @@ h4{
   flex: 1; padding: 1.5rem 1rem;
   border-right: 1px solid rgba(255,255,255,0.08);
 }.gi-evidence-item:last-child{ border-right: none; }.gi-evidence-item strong{ display: block; font-size: 2rem; font-weight: 900; color: #f9dd0e; }.gi-evidence-item span{ font-size: 1rem; color: rgba(255,255,255,0.78); }/* Comparison table */
+/* ═══ FAQ GẬP LẠI — dùng chung cho mọi trang trụ (chốt 01/09/2026) ═══
+   Bấm câu hỏi mới hiện câu trả lời. Dựng bằng <details>/<summary> thuần HTML.
+   BẮT BUỘC: câu trả lời phải nằm sẵn trong HTML do server dựng, chỉ ẩn bằng CSS.
+   TUYỆT ĐỐI không render câu trả lời bằng JS — làm vậy là mất nội dung với bot,
+   và đó chính là lý do quy ước cũ cấm <details>. Xem CLAUDE.md mục "FAQ". */
+.gi-faq-hint{ font-size: 0.93rem; color: #6b6b8f; margin: 0 0 0.9rem; font-style: italic; }
+.gi-faq-item{
+  border: 1px solid #e0e0ee; border-radius: 10px; margin-bottom: 0.6rem; background: #fff;
+}
+.gi-faq-item[open]{ border-color: #c4c4e0; box-shadow: 0 2px 12px rgba(38,39,93,0.07); }
+.gi-faq-q{ list-style: none; cursor: pointer; display: flex; align-items: flex-start; gap: 0.9rem; padding: 0.95rem 1.1rem; border-radius: 10px; transition: background 0.15s ease; }
+.gi-faq-q::-webkit-details-marker{ display: none; }
+.gi-faq-q:hover{ background: #f6f6fc; }
+.gi-faq-q:focus-visible{ outline: 3px solid #f9dd0e; outline-offset: -3px; }
+.gi-faq-item h3{ margin: 0 !important; font-size: 1.04rem !important; line-height: 1.55; flex: 1 1 auto; color: #26275D; }
+/* dấu + / − vẽ bằng gradient, không cần icon ngoài */
+.gi-faq-q::after{
+  content: ''; flex: 0 0 auto; width: 20px; height: 20px; margin-top: 0.25rem;
+  background: linear-gradient(#26275D,#26275D) center/100% 2px no-repeat, linear-gradient(#26275D,#26275D) center/2px 100% no-repeat;
+  transition: transform 0.2s ease;
+}
+.gi-faq-item[open] .gi-faq-q::after{ background: linear-gradient(#26275D,#26275D) center/100% 2px no-repeat; transform: rotate(180deg); }
+.gi-faq-a{ padding: 0 1.1rem 1.05rem; animation: giFaqIn 0.18s ease; }
+.gi-faq-a p{ margin: 0 !important; line-height: 1.78; }
+@keyframes giFaqIn{ from{ opacity: 0; transform: translateY(-4px); } to{ opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce){ .gi-faq-a{ animation: none; } .gi-faq-q, .gi-faq-q::after{ transition: none; } }
+
 .gi-comparison-box{ margin: 2rem 0; }.gi-table-responsive{ overflow-x: auto; margin: 1.5rem 0; border-radius: 10px; border: 1px solid #e2e8f0; }.gi-table{
   width: 100%; border-collapse: collapse; font-size: 1rem;
 }.gi-table th{

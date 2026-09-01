@@ -25,6 +25,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
 import { openingHours } from '../data/school-facts';
 
 const canonical = 'https://truongvietanh.com/hoc-phi';
@@ -751,13 +752,7 @@ const structuredData = [
         <!-- ══════════ 8. FAQ ══════════ -->
         <section id="faq" class="gi-section">
           <h2>Câu hỏi thường gặp</h2>
-          <p class="hp-faq-hint">Bấm vào câu hỏi để xem câu trả lời.</p>
-          {faqs.map((f) => (
-            <details class="hp-faq-item" id={f.id}>
-              <summary class="hp-faq-q"><h3>{f.q}</h3></summary>
-              <div class="hp-faq-a"><p>{f.a}</p></div>
-            </details>
-          ))}
+          <FaqAccordion faqs={faqs} />
         </section>
 
         <!-- ══════════ 9. KẾT ══════════ -->
@@ -1004,79 +999,6 @@ const structuredData = [
     font-size: 0.99rem;
     line-height: 1.7;
     color: #4a3800;
-  }
-
-  /* ══════════ FAQ — gập lại, bấm mới mở ══════════ */
-  .hp-faq-hint {
-    font-size: 0.93rem;
-    color: #6b6b8f;
-    margin: 0 0 0.9rem;
-    font-style: italic;
-  }
-  .hp-faq-item {
-    border: 1px solid #e0e0ee;
-    border-radius: 10px;
-    margin-bottom: 0.6rem;
-    background: #fff;
-  }
-  .hp-faq-item[open] {
-    border-color: #c4c4e0;
-    box-shadow: 0 2px 12px rgba(38, 39, 93, 0.07);
-  }
-  /* Bỏ tam giác mặc định của trình duyệt để tự vẽ dấu cộng/trừ */
-  .hp-faq-q { list-style: none; }
-  .hp-faq-q::-webkit-details-marker { display: none; }
-
-  .hp-faq-q {
-    cursor: pointer;
-    display: flex;
-    align-items: flex-start;
-    gap: 0.9rem;
-    padding: 0.95rem 1.1rem;
-    border-radius: 10px;
-    transition: background 0.15s ease;
-  }
-  .hp-faq-q:hover { background: #f6f6fc; }
-  .hp-faq-q:focus-visible {
-    outline: 3px solid #f9dd0e;
-    outline-offset: -3px;
-  }
-  .hp-faq-q h3 {
-    margin: 0;
-    font-size: 1.04rem;
-    line-height: 1.55;
-    flex: 1 1 auto;
-    color: #26275d;
-  }
-  /* Dấu + / − vẽ bằng CSS, không cần icon ngoài */
-  .hp-faq-q::after {
-    content: '';
-    flex: 0 0 auto;
-    width: 20px;
-    height: 20px;
-    margin-top: 0.25rem;
-    background:
-      linear-gradient(#26275d, #26275d) center/100% 2px no-repeat,
-      linear-gradient(#26275d, #26275d) center/2px 100% no-repeat;
-    transition: transform 0.2s ease, opacity 0.2s ease;
-  }
-  .hp-faq-item[open] .hp-faq-q::after {
-    /* mất vạch dọc → thành dấu trừ */
-    background: linear-gradient(#26275d, #26275d) center/100% 2px no-repeat;
-    transform: rotate(180deg);
-  }
-  .hp-faq-a {
-    padding: 0 1.1rem 1.05rem;
-    animation: hpFaqIn 0.18s ease;
-  }
-  .hp-faq-a p { margin: 0; line-height: 1.78; }
-  @keyframes hpFaqIn {
-    from { opacity: 0; transform: translateY(-4px); }
-    to { opacity: 1; transform: none; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hp-faq-a { animation: none; }
-    .hp-faq-q, .hp-faq-q::after { transition: none; }
   }
 
   /* ══════════ NGUỒN ══════════ */

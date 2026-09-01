@@ -50,3 +50,36 @@ bằng `grep -c utm_pke_mkter <file>` ≥1). Nếu = 0 là quên gắn UTM.
 
 > Lưu ý: "link UTM" (`?utm_source=...`) là URL đích khai báo khi set-up quảng cáo trên
 > Facebook/Google, KHÔNG nằm trong code trang. Code trang chỉ ĐỌC UTM từ URL người dùng vào.
+
+## FAQ trên trang: gập lại, dùng component dùng chung
+
+Chốt 01/09/2026. **Mọi khối FAQ dùng `src/components/FaqAccordion.astro`** — mặc định đóng,
+bấm câu hỏi mới hiện câu trả lời. Trước đây quy ước ngược lại ("FAQ dùng h3 + p, KHÔNG dùng
+`<details>`") nhưng nó chỉ nằm rải rác trong chú thích code, không có nguồn, và đã bỏ.
+
+```astro
+import FaqAccordion from '../components/FaqAccordion.astro';
+...
+<FaqAccordion faqs={faqs} />
+```
+
+Kiểu dáng nằm ở nhóm `.gi-faq-*` trong `src/styles/global.css`. Đừng chép CSS FAQ vào từng
+trang nữa — sửa một chỗ là cả site đổi theo.
+
+**Ràng buộc BẮT BUỘC — đây là lý do quy ước cũ tồn tại, đừng phá:**
+
+1. Câu trả lời phải **nằm sẵn trong HTML do server dựng**, chỉ ẩn bằng CSS của `<details>`.
+   **TUYỆT ĐỐI không nạp/không render câu trả lời bằng JS.** Làm vậy là nội dung biến mất
+   khỏi HTML thô → bot và mô hình không đọc được → mất trắng phần AEO.
+2. Trang phải tự sinh schema `FAQPage` từ **cùng một mảng `faqs`** mà component nhận, để chữ
+   trong schema luôn trùng chữ hiển thị. Đây mới là thứ Google và các mô hình trích dẫn.
+3. Mỗi câu nên có `id` (dạng `faq-...`) để link sâu được. Component đã tự mở đúng câu khi
+   người đọc vào bằng link neo — script đó chỉ bật `open`, không sinh nội dung.
+
+**Tự kiểm sau khi sửa FAQ:** số `<details class="gi-faq-item">` trong HTML trả về phải **bằng**
+số câu trong schema `FAQPage`, và mỗi câu trả lời phải tìm thấy được trong HTML (nhớ giải mã
+HTML entity trước khi so — câu có dấu ngoặc kép sẽ thành `&quot;`).
+
+Ba trang trụ đang dùng: `/hoc-phi`, `/hoc-bong`, `/chinh-sach-ai`. Các trang khác còn FAQ mở
+sẵn kiểu cũ (`/tuyen-sinh`, `/gioi-thieu`, `/chuong-trinh`, trang chủ, `blog/[slug]`) — đổi dần
+khi có dịp đụng vào.

@@ -10,13 +10,15 @@
 // Quy tắc viết (giống /chinh-sach-ai):
 //   - Mỗi H2 có anchor id tiếng Việt không dấu.
 //   - Bảng là <table> thật, bọc .gi-table-responsive để cuộn ngang trên mobile.
-//   - FAQ dùng h3 + p (KHÔNG dùng <details>) để mô hình đọc được ngay.
+//   - FAQ dùng component FaqAccordion (gập lại). Quy ước cũ "không dùng <details>"
+//     đã bỏ ngày 01/09/2026 — xem CLAUDE.md mục "FAQ" để biết lý do và ràng buộc.
 //
 // MỌI CON SỐ TIỀN ĐỀU TÍNH TỪ HẰNG SỐ `HOC_PHI_VI_DU` BÊN DƯỚI — đổi 1 số là cả
 // 4 bảng Early Bird tự tính lại. Đừng hard-code lại tiền trong phần thân trang.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
 import { schoolFacts } from '../data/school-facts';
 
 const canonical = 'https://truongvietanh.com/hoc-bong';
@@ -1376,12 +1378,7 @@ const structuredData = [
         <!-- ══════════ 15. FAQ ══════════ -->
         <section id="faq" class="gi-section">
           <h2>Câu hỏi thường gặp</h2>
-          {faqs.map((f) => (
-            <div class="hb-faq-item" id={f.id}>
-              <h3>{f.q}</h3>
-              <p>{f.a}</p>
-            </div>
-          ))}
+          <FaqAccordion faqs={faqs} />
         </section>
 
         <!-- ══════════ 16. CTA CUỐI ══════════ -->
@@ -1852,10 +1849,6 @@ const structuredData = [
   .hb-figure-map img { object-fit: contain; aspect-ratio: 16 / 9; background: #eef2f7; }
 
   /* ══════════ FAQ ══════════ */
-  .hb-faq-item { padding: 1.1rem 0; border-bottom: 1px solid #f1f5f9; }
-  .hb-faq-item:last-child { border-bottom: none; padding-bottom: 0; }
-  .hb-page :global(.hb-faq-item h3) { font-size: 1.15rem !important; margin: 0 0 0.5rem !important; }
-  .hb-faq-item p { margin-bottom: 0 !important; }
 
   /* ══════════ CTA CUỐI ══════════ */
   .hb-section-navy .hb-final-lead {
@@ -1984,7 +1977,7 @@ const structuredData = [
     .gi-main :global(.gi-section > p),
     .gi-main :global(.gi-section > ul),
     .gi-main :global(.gi-section > ol),
-    .gi-main :global(.hb-faq-item p),
+    .gi-main :global(.gi-faq-a p),
     .gi-main :global(.gi-lead) {
       max-width: 68ch;
     }

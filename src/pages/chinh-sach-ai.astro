@@ -9,10 +9,12 @@
 //   - Ngay dưới mỗi H2 là 1 đoạn 2-4 câu trả lời thẳng, có nhắc "Trường Việt Anh"
 //     để chunk bị tách khỏi trang vẫn giữ được chủ ngữ.
 //   - Bảng phải là <table> thật, bọc trong .gi-table-responsive (cuộn ngang mobile).
-//   - FAQ dùng h3 + p (KHÔNG dùng <details>) để mô hình đọc được ngay, không cần mở.
+//   - FAQ dùng component FaqAccordion (gập lại). Quy ước cũ "không dùng <details>"
+//     đã bỏ ngày 01/09/2026 — xem CLAUDE.md mục "FAQ" để biết lý do và ràng buộc.
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
 
 const canonical = 'https://truongvietanh.com/chinh-sach-ai';
 const ogImage = 'https://media.truongvietanh.com/images/ai/og-chinh-sach-ai.webp';
@@ -711,12 +713,7 @@ const structuredData = [
         <section id="phu-luc-c" class="gi-section">
           <h2>Phụ lục C — Câu hỏi thường gặp của phụ huynh</h2>
           <p>Mười hai câu hỏi phụ huynh Trường Việt Anh hỏi nhiều nhất về việc nhà trường dùng AI, kèm câu trả lời thẳng và điều khoản tương ứng trong chính sách.</p>
-          {faqs.map((f) => (
-            <div class="csa-faq">
-              <h3 id={f.id}>{f.q}</h3>
-              <p>{f.a}</p>
-            </div>
-          ))}
+          <FaqAccordion faqs={faqs} />
         </section>
 
         <section id="doc-them" class="gi-section">
@@ -927,10 +924,6 @@ const structuredData = [
     color: #475569;
     white-space: nowrap;
   }
-
-  .csa-faq { padding-bottom: 0.35rem; }
-  .csa-faq h3 { margin-top: 1.6rem; font-size: 1.2rem; line-height: 1.45; }
-  .csa-faq:first-of-type h3 { margin-top: 0.5rem; }
 
   .csa-author {
     margin-top: 2rem;

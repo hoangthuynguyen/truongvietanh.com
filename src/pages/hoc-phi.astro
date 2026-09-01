@@ -5,9 +5,11 @@
 //
 // ⚠️ TRANG NÀY THAY THẾ SQUEEZE PAGE CŨ (funnel `squeeze-hoc-phi`, lead magnet
 // /downloads/bang-gia-uu-dai-2026.pdf). Bản cũ nằm trong git history nếu cần khôi phục.
-// Trang mới KHÔNG CÓ FORM LEAD — CTA là link sang /hoc-bong và /dat-lich-tham-quan.
-// Vì không POST /api/lead nên KHÔNG cần bộ thu UTM của CLAUDE.md. Nếu sau này gắn form
-// vào đây thì PHẢI nạp /js/va-utm.js và đặt funnel_code riêng.
+// Trang có FORM LEAD (thêm 01/09/2026) — component LeadFormTwoStepEmailFirst, funnel_code
+// riêng "pillar-hoc-phi-2026". Component TỰ nạp /js/va-utm.js và tự gắn UTM vào cả lệnh
+// partial-capture lẫn submit chính, nên quy tắc UTM của CLAUDE.md đã thoả.
+// LƯU Ý khi tự kiểm: grep "va-utm.js" trong FILE NÀY ra 0 vì script nằm trong component —
+// phải kiểm trên HTML đã dựng, không kiểm trên mã nguồn trang.
 //
 // Quy tắc viết (giống /hoc-bong và /chinh-sach-ai):
 //   - Mỗi H2 có anchor id tiếng Việt không dấu.
@@ -26,6 +28,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { openingHours } from '../data/school-facts';
 
 const canonical = 'https://truongvietanh.com/hoc-phi';
@@ -800,6 +803,31 @@ const structuredData = [
               Giờ đón khách: {openingHours.display}. {openingHours.sundayNote}
             </p>
           </aside>
+        </section>
+
+        <!-- ══════════ FORM LEAD ══════════ -->
+        {/* schoolLevel để TRỐNG có chủ đích: trang này phủ lớp 1–12, không có giá trị nào
+            đúng cho mọi người đọc. Bảng dropdown "Khối quan tâm" của Pancake không có mục
+            "tất cả", nên điền bừa là ghi sai dữ liệu vào CRM — thà để trống cho sales hỏi.
+            socialProof để trống vì chưa có số liệu kiểm chứng được về lượt đăng ký. */}
+        <section id="dang-ky-tu-van" class="gi-section hp-form-section">
+          <h2>Muốn biết con anh chị đóng bao nhiêu?</h2>
+          <p>
+            Bảng phía trên là giá niêm yết chung cho mọi gia đình. Con số thật của nhà anh chị
+            còn phụ thuộc khối con vào, cách đóng, và những ưu đãi gia đình mình đủ điều kiện —
+            có nhà chênh nhau vài chục triệu một năm.
+          </p>
+          <LeadFormTwoStepEmailFirst
+            formId="hp"
+            funnelCode="pillar-hoc-phi-2026"
+            schoolLevel=""
+            title="Nhận bảng tính riêng cho khối của con"
+            description="Trường tính cụ thể: học phí khối con sắp vào, các khoản đi kèm, và mức ưu đãi gia đình mình được hưởng."
+            socialProof=""
+            nextText="Nhận bảng tính riêng"
+            submitText="Gửi thông tin"
+            successMessage="Đã nhận thông tin của anh chị. Trường sẽ gửi bảng tính riêng trong 24 giờ làm việc."
+          />
         </section>
 
         <!-- ══════════ TÁC GIẢ & NGUỒN ══════════ -->

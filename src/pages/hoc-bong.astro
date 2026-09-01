@@ -3,9 +3,11 @@
 // Nguồn nội dung: Google Doc "hocbongtruongvietanhlandingpage.md" của anh Dương
 // (fileId 1-eGidkbBrh4U9y_TGhWXgLndulS6n8p_H0to9YurxdU, cập nhật 31/8/2026).
 //
-// TRANG NÀY KHÔNG CÓ FORM LEAD — theo doc, CTA duy nhất là Zalo OA. Vì vậy KHÔNG
-// cần bộ thu UTM của CLAUDE.md (quy tắc đó chỉ áp cho trang POST /api/lead).
-// Nếu sau này gắn form vào đây thì PHẢI nạp /js/va-utm.js và đặt funnel_code riêng.
+// TRANG NÀY CÓ FORM LEAD (thêm 01/09/2026) — dùng component LeadFormTwoStepEmailFirst,
+// funnel_code riêng "pillar-hoc-bong-2026". Component TỰ nạp /js/va-utm.js và tự gắn UTM
+// vào cả lệnh partial-capture lẫn submit chính, nên quy tắc UTM của CLAUDE.md đã thoả.
+// LƯU Ý khi tự kiểm: grep "va-utm.js" trong FILE NÀY sẽ ra 0 vì script nằm trong component
+// — phải kiểm trên HTML đã dựng, không kiểm trên mã nguồn trang.
 //
 // Quy tắc viết (giống /chinh-sach-ai):
 //   - Mỗi H2 có anchor id tiếng Việt không dấu.
@@ -19,6 +21,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import FaqAccordion from '../components/FaqAccordion.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { schoolFacts } from '../data/school-facts';
 
 const canonical = 'https://truongvietanh.com/hoc-bong';
@@ -1433,6 +1436,28 @@ const structuredData = [
             <a href="/danh-gia-cua-phu-huynh">Đọc đánh giá của phụ huynh hiện hữu</a> ·
             <a href="/hoc-phi">Xem bảng học phí từng khối lớp</a>
           </p>
+        </section>
+
+        <!-- ══════════ FORM LEAD ══════════ -->
+        {/* schoolLevel để TRỐNG có chủ đích — xem ghi chú cùng nội dung ở /hoc-phi. */}
+        <section id="dang-ky-tu-van" class="gi-section hb-form-section">
+          <h2>Con anh chị được giảm bao nhiêu?</h2>
+          <p>
+            Chín chính sách ở trên cộng dồn theo nhiều cách khác nhau, và mỗi gia đình đủ điều
+            kiện một tổ hợp khác nhau. Anh chị không phải tự tính — để lại thông tin, phòng tài
+            chính đối chiếu toàn bộ rồi báo lại mức cụ thể cho con.
+          </p>
+          <LeadFormTwoStepEmailFirst
+            formId="hb"
+            funnelCode="pillar-hoc-bong-2026"
+            schoolLevel=""
+            title="Nhận mức ưu đãi tính riêng cho con"
+            description="Trường đối chiếu cả chín chính sách với hoàn cảnh gia đình anh chị rồi báo lại con số cụ thể."
+            socialProof=""
+            nextText="Xem mức của con tôi"
+            submitText="Gửi thông tin"
+            successMessage="Đã nhận thông tin của anh chị. Phòng tài chính sẽ báo lại mức cụ thể trong 24 giờ làm việc."
+          />
         </section>
 
         <!-- ══════════ VỀ TÁC GIẢ ══════════ -->

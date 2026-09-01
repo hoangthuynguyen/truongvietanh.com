@@ -1,594 +1,1005 @@
-﻿---
-// squeeze/hoc-phi — CRO v2 (clone của /checklist-mam-non/)
-// Audience : phụ huynh đang khảo giá Trường Việt Anh, K1–K12
-// Goal     : max lead (email → name + phone) để gửi PDF Bảng giá ưu đãi 2026
-// Lead magnet: /downloads/bang-gia-uu-dai-2026.pdf — 16 trang
-//   gồm 6 chương trình HOT + 5 combo + học phí Lớp 1–12 chi tiết theo cơ sở
-// Psychology: curiosity gap · loss aversion · FOMO · price anchoring (giá gốc gạch ngang → giá ưu đãi)
 ---
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Bảng Giá Ưu Đãi 2026 — 6 Chương Trình HOT + 5 Combo + Học Phí Lớp 1–12 | Trường Việt Anh</title>
-<meta name="description" content="Bảng giá ưu đãi 2026 Trường Việt Anh: 6 chương trình HOT (Lion Camp, Siêu Ăn Giỏi, Bơi Sinh Tồn, TATE, Tiếng Anh Thực Dụng, Tư Duy Toán Học) + 5 combo học tập (Nền Tảng, Học Tăng Tốc, Bán Trú Toàn Diện, VIP) + bảng học phí Lớp 1–12 theo từng cơ sở (Gò Vấp, Bình Tân, OIC, MGIS). Nhận PDF miễn phí." />
-<meta name="robots" content="noindex, nofollow" />
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,800;0,900;1,900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+// Trang trụ CÔNG KHAI — Học phí & tổng chi phí năm học Trường Việt Anh 2026–2027.
+// Nguồn nội dung: docs/hoc-phi-truong-viet-anh.md (bản 2, 31/08/2026) — đã áp toàn bộ
+// quyết định của anh Dương trên file đối chiếu doi-chieu-hoc-bong-vs-hoc-phi.docx.
+//
+// ⚠️ TRANG NÀY THAY THẾ SQUEEZE PAGE CŨ (funnel `squeeze-hoc-phi`, lead magnet
+// /downloads/bang-gia-uu-dai-2026.pdf). Bản cũ nằm trong git history nếu cần khôi phục.
+// Trang mới KHÔNG CÓ FORM LEAD — CTA là link sang /hoc-bong và /dat-lich-tham-quan.
+// Vì không POST /api/lead nên KHÔNG cần bộ thu UTM của CLAUDE.md. Nếu sau này gắn form
+// vào đây thì PHẢI nạp /js/va-utm.js và đặt funnel_code riêng.
+//
+// Quy tắc viết (giống /hoc-bong và /chinh-sach-ai):
+//   - Mỗi H2 có anchor id tiếng Việt không dấu.
+//   - Bảng là <table> thật, bọc .gi-table-responsive để cuộn ngang trên mobile.
+//   - FAQ dùng h3 + p (KHÔNG dùng <details>) để mô hình đọc được ngay.
+//   - <article> gắn data-no-collapse — trang văn bản dài, không cho JS gập nội dung.
+//
+// MỌI CON SỐ TIỀN TÍNH TỪ HẰNG SỐ BÊN DƯỚI — đổi 1 số là các bảng tổng tự tính lại.
+// Đừng hard-code lại tiền trong phần thân trang.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import { openingHours } from '../data/school-facts';
+
+const canonical = 'https://truongvietanh.com/hoc-phi';
+
+const vnd = (n: number) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const trieu = (n: number) => (n / 1_000_000).toFixed(1).replace('.', ',');
+
+// ── HỌC PHÍ NĂM 2026–2027, cơ sở Gò Vấp & Bình Tân ──────────────────────────
+// Nguồn: Chính sách Sản phẩm & Dịch vụ 2026–2027 (CV Major251008), đối chiếu /bang-gia.
+const HOC_PHI = [
+  { lop: 'Lớp 1', tien: 109_857_000 },
+  { lop: 'Lớp 2', tien: 112_957_000 },
+  { lop: 'Lớp 3', tien: 116_457_000 },
+  { lop: 'Lớp 4', tien: 119_757_000 },
+  { lop: 'Lớp 5', tien: 122_557_000 },
+  { lop: 'Lớp 6', tien: 125_757_000 },
+  { lop: 'Lớp 7', tien: 128_757_000 },
+  { lop: 'Lớp 8', tien: 132_757_000 },
+  { lop: 'Lớp 9', tien: 136_257_000 },
+  { lop: 'Lớp 10', tien: 137_257_000 },
+  { lop: 'Lớp 11', tien: 142_557_000 },
+  { lop: 'Lớp 12', tien: 164_757_000 },
+];
+const hpMin = Math.min(...HOC_PHI.map((h) => h.tien));
+const hpMax = Math.max(...HOC_PHI.map((h) => h.tien));
+const hpTong12Nam = HOC_PHI.reduce((s, h) => s + h.tien, 0);
+
+// Chia đôi bảng học phí thành 2 cột cho gọn
+const hpTrai = HOC_PHI.slice(0, 6);
+const hpPhai = HOC_PHI.slice(6);
+
+// ── CÁC KHOẢN NGOÀI HỌC PHÍ ─────────────────────────────────────────────────
+const OIC_PHU_THU = 20_000_000;
+const NOI_TRU_THANG = 2_500_000;
+
+const CSVC_TIEU_HOC = 5_000_000;
+const CSVC_TRUNG_HOC = 6_000_000;
+const TAI_LIEU = 2_000_000;
+const DA_NGOAI = 4_000_000;
+const BHYT = 572_000;
+const DONG_PHUC = 1_600_000;
+const KIT_MIN = 800_000;
+const KIT_MAX = 2_800_000;
+
+const AN_TIEU_HOC = 19_836_000;
+const AN_TRUNG_HOC = 27_144_000;
+const AN_TRUNG_HOC_TOI = 36_540_000;
+const AN_LOP_12 = 30_264_000;
+const AN_NOI_TRU_12 = 40_740_000;
+const CHENH_AN_TOI = AN_TRUNG_HOC_TOI - AN_TRUNG_HOC;
+
+// ── BA VÍ DỤ TỔNG CHI PHÍ NĂM ĐẦU ───────────────────────────────────────────
+const viDu = [
+  { ten: 'Lớp 1', hocPhi: 109_857_000, csvc: CSVC_TIEU_HOC, an: AN_TIEU_HOC },
+  { ten: 'Lớp 6', hocPhi: 125_757_000, csvc: CSVC_TRUNG_HOC, an: AN_TRUNG_HOC },
+  { ten: 'Lớp 12', hocPhi: 164_757_000, csvc: CSVC_TRUNG_HOC, an: AN_LOP_12 },
+].map((v) => {
+  const ngoaiHocPhi = v.csvc + TAI_LIEU + DA_NGOAI + v.an + DONG_PHUC + KIT_MIN + BHYT;
+  return { ...v, ngoaiHocPhi, tong: v.hocPhi + ngoaiHocPhi };
+});
+const tongMin = Math.min(...viDu.map((v) => v.tong));
+const tongMax = Math.max(...viDu.map((v) => v.tong));
+const ngoaiMin = Math.min(...viDu.map((v) => v.ngoaiHocPhi));
+// Trần trên: khối 6–11 đăng ký thêm bữa tối. Lớp 12 có gói ăn riêng nên không cộng bữa tối.
+const ngoaiMax = Math.max(...viDu.map((v) => v.ngoaiHocPhi), viDu[1].ngoaiHocPhi + CHENH_AN_TOI);
+const lop6CoAnToi = viDu[1].tong + CHENH_AN_TOI;
+
+// Tổng 12 năm gồm ăn + dịch vụ (5 năm tiểu học, 6 năm khối 6–11, 1 năm lớp 12)
+const anCa12Nam = 5 * AN_TIEU_HOC + 6 * AN_TRUNG_HOC + AN_LOP_12;
+const tong12NamDuKien =
+  hpTong12Nam + anCa12Nam +
+  (CSVC_TIEU_HOC + CSVC_TRUNG_HOC * 2) +   // 3 cấp học
+  TAI_LIEU * 12 + DA_NGOAI * 12 + BHYT * 12 + DONG_PHUC * 4;
+
+// Ưu đãi đóng trọn năm — ví dụ trên lớp 6
+const GIAM_TRON_NAM = 0.06;
+const viDuGiam6 = Math.round(viDu[1].hocPhi * GIAM_TRON_NAM);
+
+// ── FAQ — dùng chung cho phần hiển thị và schema, không chép tay hai lần ─────
+const faqs = [
+  {
+    id: 'faq-mot-thang',
+    q: 'Học phí Trường Việt Anh một tháng khoảng bao nhiêu?',
+    a: `Học phí công bố theo năm, từ ${trieu(hpMin)} đến ${trieu(hpMax)} triệu đồng tùy khối lớp 1–12 (năm học 2026–2027). Nếu chia 12 tháng để dễ hình dung, tương đương khoảng ${trieu(hpMin / 12)}–${trieu(hpMax / 12)} triệu đồng/tháng, chưa gồm tiền ăn. Trường nhận đóng theo 1, 2 hoặc 4–12 đợt, không tính thêm phí trả góp.`,
+  },
+  {
+    id: 'faq-oic',
+    q: 'Lớp OIC khác lớp thường thế nào, đóng thêm bao nhiêu?',
+    a: `Lớp OIC học theo Oxford International Curriculum với học liệu bản quyền của Oxford, đóng thêm ${vnd(OIC_PHU_THU)}đ/năm phí bản quyền ngoài học phí chuẩn. Hệ OIC hiện mở từ lớp 1 đến lớp 8; lớp 9 trở lên chỉ có lớp thường. Cả hai đều học chương trình GDPT 2018 và tiếng Anh tăng cường với giáo viên bản ngữ.`,
+  },
+  {
+    id: 'faq-cong-don',
+    q: 'Các ưu đãi và học bổng có cộng dồn được với nhau không?',
+    a: 'Có. Ưu đãi đóng phí theo thời gian — theo năm 6%, theo học kỳ 2%, Early Bird — cộng thêm lên trên mọi mức khác. Bốn học bổng con giành được cộng dồn với nhau và cộng dồn với ưu đãi anh chị em ruột. Ưu đãi anh chị em ruột không giới hạn số suất và không có hạn chót. Riêng quỹ LOVE nằm ngoài mọi luật cộng dồn.',
+  },
+  {
+    id: 'faq-noi-tru',
+    q: 'Nội trú nhận ở cơ sở nào và chi phí bao nhiêu?',
+    a: `Nội trú nhận tại cơ sở Gò Vấp và Bình Tân, phí ${vnd(NOI_TRU_THANG)}đ/tháng, chưa gồm tiền ăn. Học sinh nội trú đăng ký gói ăn riêng theo bảng phí ăn công bố — gói nội trú toàn phần lớp 12 là ${vnd(AN_NOI_TRU_12)}đ/năm. Bộ kit nội trú tính riêng, từ ${vnd(KIT_MIN)} đến ${vnd(KIT_MAX)}đ tùy nhu cầu.`,
+  },
+  {
+    id: 'faq-ai',
+    q: 'Chương trình AI 30 tiết có thu thêm tiền không?',
+    a: 'Không. Chương trình AI 30 tiết/lớp/năm áp dụng toàn hệ lớp 1–12 từ năm học 2026–2027 đã nằm trong học phí công bố. Mức này cao hơn mức sàn 12 tiết/năm mà Bộ GD&ĐT quy định tại Quyết định 2422/QĐ-BGDĐT, và trường không mở lớp AI thu phí riêng.',
+  },
+  {
+    id: 'faq-giua-nam',
+    q: 'Giữa năm trường có thu thêm khoản nào không?',
+    a: 'Không có khoản thu bắt buộc nào phát sinh trong năm học — đây là cam kết in trong chính sách phí. Các khoản chỉ phát sinh khi anh chị chủ động đăng ký dịch vụ tùy chọn: nội trú, tutor sau giờ, luyện tiếng Anh 1-1, xe đưa rước. Học phí năm sau có trần tăng tối đa 10%, là mức trần chứ không phải cam kết tăng, và luôn công bố trước.',
+  },
+  {
+    id: 'faq-hoan-phi',
+    q: 'Đóng học phí rồi, nếu con chuyển trường có được hoàn lại không?',
+    a: 'Tiền ăn và phí dịch vụ tính theo thực tế sử dụng, phần chưa dùng được hoàn lại. Với gia đình đã đóng Early Bird nhiều năm, anh chị lấy lại toàn bộ phần tiền chưa dùng, chỉ cần báo trước 30 ngày, không cần lý do và không mất phí phạt. Phần thời gian con đã học giữ nguyên mức ưu đãi Early Bird, trường không truy thu phần đã giảm.',
+  },
+];
+
+const description = `Học phí Trường Việt Anh 2026–2027: ${trieu(hpMin)}–${trieu(hpMax)} triệu đồng/năm tùy khối lớp 1–12. Tổng chi phí thực tế ${Math.round(tongMin / 1e6)}–${Math.round(tongMax / 1e6)} triệu/năm, cam kết không phát sinh giữa năm.`;
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Tuyển sinh', item: 'https://truongvietanh.com/tuyen-sinh' },
+      { '@type': 'ListItem', position: 3, name: 'Học phí', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    '@id': `${canonical}#article`,
+    headline: 'Học phí Trường Việt Anh 2026–2027 và tổng chi phí năm học',
+    description,
+    inLanguage: 'vi-VN',
+    datePublished: '2026-08-31T09:00:00+07:00',
+    dateModified: '2026-08-31T09:00:00+07:00',
+    mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+    author: {
+      '@type': 'Person',
+      '@id': 'https://truongvietanh.com/#nguyen-manh-duong',
+      name: 'Nguyễn Mạnh Dương',
+      jobTitle: 'Nhà sáng lập & Chủ tịch hệ thống giáo dục K-12 Việt Anh',
+      url: 'https://truongvietanh.com/ve-chung-toi',
+    },
+    publisher: {
+      '@type': 'EducationalOrganization',
+      '@id': 'https://truongvietanh.com/#organization',
+      name: 'Hệ thống giáo dục Việt Anh',
+      logo: { '@type': 'ImageObject', url: 'https://truongvietanh.com/images/logo.png' },
+    },
+    about: [
+      { '@type': 'Thing', name: 'Học phí trường song ngữ TP.HCM' },
+      { '@type': 'Thing', name: 'Chi phí năm học K-12' },
+    ],
+    audience: { '@type': 'Audience', audienceType: 'Phụ huynh học sinh K-12 tại Việt Nam' },
+    keywords:
+      'học phí Trường Việt Anh, học phí trường song ngữ TP.HCM, tổng chi phí năm học, học phí 2026-2027, trường tư thục TP.HCM',
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+];
+---
+
+<BaseLayout
+  title="Học Phí Trường Việt Anh 2026–2027 | Tổng Chi Phí Năm Học Đầy Đủ"
+  description={description}
+  keywords="học phí Trường Việt Anh, học phí trường song ngữ TPHCM, bảng học phí lớp 1-12, tổng chi phí năm học, học phí 2026-2027, trường tư thục TPHCM"
+  canonical={canonical}
+  ogType="article"
+  structuredData={structuredData}
+>
+  <div class="gi-page hp-page">
+    <HeaderBase currentPath="/hoc-phi" />
+
+    <!-- ══════════ HERO ══════════ -->
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left" style="flex:1">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">›</span>
+            <a href="/tuyen-sinh">Tuyển sinh</a>
+            <span aria-hidden="true">›</span>
+            <span>Học phí</span>
+          </nav>
+          <h1 class="gi-h1">Toàn bộ chi phí một năm học ở Việt Anh, không có dấu hoa thị.</h1>
+          <p class="hp-hero-sub">
+            Học phí <strong>{trieu(hpMin)}–{trieu(hpMax)} triệu đồng/năm</strong> tùy khối, lớp 1–12.
+            Cộng ăn uống, tài liệu, dã ngoại và cơ sở vật chất, tổng năm đầu khoảng
+            <strong> {Math.round(tongMin / 1e6)}–{Math.round(tongMax / 1e6)} triệu đồng</strong>.
+          </p>
+          <p class="hp-hero-body">
+            Trang này liệt kê mọi khoản anh chị sẽ chi trong 12 tháng: khoản nào bắt buộc, khoản nào
+            tùy chọn, khoản nào hoàn lại được. Không có dòng nào ghi &ldquo;liên hệ để biết thêm&rdquo;.
+          </p>
+
+          {/* Link "xuống bảng" đặt TRƯỚC nút CTA — nếu để cuối hero nó rơi đúng góc trái
+              dưới màn hình, chỗ widget Chat Zalo OA (fixed, z999) đè lên. */}
+          <a href="#bang-hoc-phi" class="hp-hero-link">Xuống thẳng bảng học phí từng khối ↓</a>
+
+          <div class="hp-hero-actions">
+            <a href="/hoc-bong" class="hp-cta" data-cta-position="hero">
+              Xem 9 chính sách học bổng &amp; ưu đãi →
+            </a>
+            <p class="hp-cta-hint">
+              Con số bên dưới là <strong>giá niêm yết</strong>. Hầu hết gia đình đóng thấp hơn — xem
+              mình được giảm bao nhiêu trước khi lên kế hoạch tài chính cho con.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="gi-container gi-body">
+      <!-- ══════════ MỤC LỤC ══════════ -->
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Nội dung</p>
+        <ol class="gi-toc-list">
+          <li><a href="#bang-hoc-phi">Học phí từng khối</a></li>
+          <li><a href="#khoan-ngoai-hoc-phi">Các khoản ngoài học phí</a></li>
+          <li><a href="#tong-chi-phi">Tổng chi phí năm đầu</a></li>
+          <li><a href="#da-bao-gom">Học phí đã bao gồm gì</a></li>
+          <li><a href="#so-sanh">So với trường công &amp; quốc tế</a></li>
+          <li><a href="#uu-dai-hoc-bong">Ưu đãi &amp; học bổng</a></li>
+          <li><a href="#phat-sinh-hoan-phi">Phát sinh &amp; hoàn phí</a></li>
+          <li><a href="#faq">Câu hỏi thường gặp</a></li>
+        </ol>
+        <a href="/hoc-bong" class="gi-toc-cta" data-cta-position="toc">
+          Xem học bổng &amp; ưu đãi
+        </a>
+      </nav>
+
+      <article class="gi-main" id="main-content" data-no-collapse>
+        <p class="gi-lead">
+          Năm học 2026–2027, học phí Trường Việt Anh tại TP.HCM (cơ sở Gò Vấp và Bình Tân) từ
+          {' '}{trieu(hpMin)} đến {trieu(hpMax)} triệu đồng/năm tùy khối, lớp 1–12. Tính cả ăn uống,
+          tài liệu, dã ngoại và cơ sở vật chất, tổng chi phí năm đầu khoảng {Math.round(tongMin / 1e6)}
+          {' '}đến {Math.round(tongMax / 1e6)} triệu đồng tùy cấp học. Trường cam kết không phát sinh
+          khoản thu bắt buộc nào giữa năm.
+        </p>
+
+        <p>
+          Tôi muốn anh chị đọc được con số đầy đủ trước khi đọc bất kỳ lời giới thiệu nào. Mười lăm năm
+          làm giáo dục, tôi gặp quá nhiều phụ huynh từng &ldquo;vỡ trận&rdquo; tài chính vì một bảng học
+          phí đẹp — rồi các khoản phụ lộ dần ra sau khi đã ghi danh. Vì vậy trang này liệt kê mọi khoản
+          tiền anh chị sẽ chi trong một năm ở Việt Anh: khoản nào bắt buộc, khoản nào tùy chọn, khoản nào
+          hoàn lại được. Không có khoản nào giấu dưới dấu hoa thị.
+        </p>
+
+        <!-- ══════════ 1. BẢNG HỌC PHÍ ══════════ -->
+        <section id="bang-hoc-phi" class="gi-section">
+          <h2>Học phí Trường Việt Anh 2026–2027 từng khối là bao nhiêu?</h2>
+          <p>
+            Học phí năm học 2026–2027 tại hai cơ sở liên cấp TP.HCM — Việt Anh Gò Vấp và Việt Anh Bình
+            Tân — như sau, đơn vị đồng/năm:
+          </p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table hp-table-hp">
+              <thead>
+                <tr>
+                  <th scope="col">Khối</th>
+                  <th scope="col">Học phí/năm</th>
+                  <th scope="col">Khối</th>
+                  <th scope="col">Học phí/năm</th>
+                </tr>
+              </thead>
+              <tbody>
+                {hpTrai.map((h, i) => (
+                  <tr>
+                    <td>{h.lop}</td>
+                    <td class="hp-num"><strong>{vnd(h.tien)}</strong></td>
+                    <td>{hpPhai[i].lop}</td>
+                    <td class="hp-num"><strong>{vnd(hpPhai[i].tien)}</strong></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <p>Ba điểm cần đọc kèm bảng:</p>
+          <ol class="hp-list hp-list-num">
+            <li>
+              <strong>Lớp OIC (Oxford International Curriculum) đóng thêm {vnd(OIC_PHU_THU)}đ/năm</strong>
+              {' '}phí bản quyền chương trình Oxford. Hệ OIC hiện mở từ <strong>lớp 1 đến lớp 8</strong>;
+              lớp 9 trở lên chỉ có lớp thường.
+            </li>
+            <li>
+              <strong>Nội trú</strong> tại cơ sở Gò Vấp và Bình Tân: <strong>{vnd(NOI_TRU_THANG)}đ/tháng</strong>,
+              chưa gồm tiền ăn. Học sinh nội trú đăng ký gói ăn riêng theo bảng phí ăn bên dưới.
+            </li>
+            <li>
+              <strong>Mầm non Việt Anh (Gò Vấp)</strong> tính theo tháng, đã gồm ăn và phí: gói Bilingual
+              7.996.000đ/tháng, Premium 10.178.000đ/tháng, International (giáo viên bản ngữ toàn thời
+              gian) 11.978.000đ/tháng.
+            </li>
+          </ol>
+
+          <p>
+            Các cơ sở ngoài TP.HCM của hệ thống — Thái Sơn, Nhân Lễ (Tây Ninh) và Mekong Xanh MGIS
+            (An Giang) — có biểu phí riêng, thấp hơn đáng kể: chi phí chỉ bằng khoảng một nửa chương
+            trình tương đương tại TP.HCM. Anh chị ở các tỉnh này vui lòng liên hệ trực tiếp cơ sở để
+            nhận bảng phí.
+          </p>
+        </section>
+
+        <!-- ══════════ 2. KHOẢN NGOÀI HỌC PHÍ ══════════ -->
+        <section id="khoan-ngoai-hoc-phi" class="gi-section">
+          <h2>Ngoài học phí, một năm học tốn thêm những khoản nào?</h2>
+          <p>
+            Ngoài học phí, một năm học có thêm bốn nhóm chi phí: cơ sở vật chất, tài liệu, hoạt động, và
+            ăn uống — tổng cộng khoảng <strong>{Math.round(ngoaiMin / 1e6)} đến {Math.round(ngoaiMax / 1e6)} triệu
+            đồng</strong> ở năm đầu, tùy cấp học và gói ăn đăng ký.
+          </p>
+
+          <h3>Phí đầu năm, đóng một lần</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Khoản</th>
+                  <th scope="col">Tiểu học</th>
+                  <th scope="col">Trung học</th>
+                  <th scope="col">Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Cơ sở vật chất</td>
+                  <td class="hp-num">{vnd(CSVC_TIEU_HOC)}đ</td>
+                  <td class="hp-num">{vnd(CSVC_TRUNG_HOC)}đ</td>
+                  <td>Đóng <strong>một lần cho cả cấp học</strong>, không lặp lại hằng năm</td>
+                </tr>
+                <tr>
+                  <td>Đồng phục trọn bộ</td>
+                  <td class="hp-num">{vnd(DONG_PHUC)}đ</td>
+                  <td class="hp-num">{vnd(DONG_PHUC)}đ</td>
+                  <td>1 bộ đi học + 3 bộ thể dục, dùng nhiều năm</td>
+                </tr>
+                <tr>
+                  <td>Balo &amp; bộ kit</td>
+                  <td class="hp-num">{vnd(KIT_MIN)}đ</td>
+                  <td class="hp-num">{vnd(KIT_MIN)} – {vnd(KIT_MAX)}đ</td>
+                  <td>Tùy bán trú hay nội trú</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Phí theo năm</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Khoản</th>
+                  <th scope="col">Tiểu học</th>
+                  <th scope="col">Trung học</th>
+                  <th scope="col">Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Tài liệu học tập</td>
+                  <td class="hp-num">{vnd(TAI_LIEU)}đ</td>
+                  <td class="hp-num">{vnd(TAI_LIEU)}đ</td>
+                  <td>/năm</td>
+                </tr>
+                <tr>
+                  <td>Dã ngoại, sự kiện, lễ hội</td>
+                  <td class="hp-num">{vnd(DA_NGOAI)}đ</td>
+                  <td class="hp-num">{vnd(DA_NGOAI)}đ</td>
+                  <td>Tạm ứng, quyết toán theo thực tế</td>
+                </tr>
+                <tr>
+                  <td>Bảo hiểm y tế</td>
+                  <td class="hp-num">{vnd(BHYT)}đ</td>
+                  <td class="hp-num">{vnd(BHYT)}đ</td>
+                  <td>Tạm thu theo quy định</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>Phí ăn — niêm yết theo gói cả năm</h3>
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Đối tượng</th>
+                  <th scope="col">Gói</th>
+                  <th scope="col">Phí cả năm</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Tiểu học</td><td>Bán trú</td><td class="hp-num"><strong>{vnd(AN_TIEU_HOC)}đ</strong></td></tr>
+                <tr><td>Trung học (khối 6–11)</td><td>Bán trú, không ăn tối</td><td class="hp-num"><strong>{vnd(AN_TRUNG_HOC)}đ</strong></td></tr>
+                <tr><td>Trung học (khối 6–11)</td><td>Bán trú, có ăn tối</td><td class="hp-num"><strong>{vnd(AN_TRUNG_HOC_TOI)}đ</strong></td></tr>
+                <tr><td>Lớp 12</td><td>Bán trú</td><td class="hp-num"><strong>{vnd(AN_LOP_12)}đ</strong></td></tr>
+                <tr><td>Lớp 12</td><td>Nội trú toàn phần</td><td class="hp-num"><strong>{vnd(AN_NOI_TRU_12)}đ</strong></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Gói ăn đã bao gồm bữa trưa, bữa xế và phần vitamin break — năm loại trái cây mỗi ngày cho
+            từng học sinh, thiết kế theo khuyến nghị 400g rau củ quả/ngày của Tổ chức Y tế Thế giới
+            (WHO). Con nghỉ học ngày nào không tính tiền ăn ngày đó, phần chưa dùng được hoàn lại.
+          </p>
+        </section>
+
+        <!-- ══════════ 3. TỔNG CHI PHÍ ══════════ -->
+        <section id="tong-chi-phi" class="gi-section">
+          <h2>Tổng chi phí một năm học thực tế là bao nhiêu?</h2>
+          <p>Ghép lại thành ba ví dụ cụ thể cho năm đầu tiên nhập học:</p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table hp-table-tong">
+              <thead>
+                <tr>
+                  <th scope="col">Khoản</th>
+                  {viDu.map((v) => <th scope="col">{v.ten}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Học phí</td>
+                  {viDu.map((v) => <td class="hp-num">{vnd(v.hocPhi)}đ</td>)}
+                </tr>
+                <tr>
+                  <td>Cơ sở vật chất (một lần/cấp)</td>
+                  {viDu.map((v) => <td class="hp-num">{vnd(v.csvc)}đ</td>)}
+                </tr>
+                <tr>
+                  <td>Tài liệu</td>
+                  {viDu.map(() => <td class="hp-num">{vnd(TAI_LIEU)}đ</td>)}
+                </tr>
+                <tr>
+                  <td>Dã ngoại, sự kiện</td>
+                  {viDu.map(() => <td class="hp-num">{vnd(DA_NGOAI)}đ</td>)}
+                </tr>
+                <tr>
+                  <td>Ăn uống (gói cả năm, bán trú)</td>
+                  {viDu.map((v) => <td class="hp-num">{vnd(v.an)}đ</td>)}
+                </tr>
+                <tr>
+                  <td>Đồng phục trọn bộ</td>
+                  {viDu.map(() => <td class="hp-num">{vnd(DONG_PHUC)}đ</td>)}
+                </tr>
+                <tr>
+                  <td>Balo &amp; bộ kit</td>
+                  {viDu.map(() => <td class="hp-num">{vnd(KIT_MIN)}đ</td>)}
+                </tr>
+                <tr>
+                  <td>Bảo hiểm y tế</td>
+                  {viDu.map(() => <td class="hp-num">{vnd(BHYT)}đ</td>)}
+                </tr>
+                <tr class="hp-row-total">
+                  <td><strong>Tổng năm đầu</strong></td>
+                  {viDu.map((v) => <td class="hp-num"><strong>~{trieu(v.tong)} triệu</strong></td>)}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Nếu con học trung học và đăng ký thêm bữa tối, cộng thêm {vnd(CHENH_AN_TOI)}đ — lớp 6 thành
+            khoảng {trieu(lop6CoAnToi)} triệu.
+          </p>
+          <p>
+            Từ năm thứ hai của cùng cấp học, khoản cơ sở vật chất không lặp lại, và đồng phục thường
+            dùng được nhiều năm. Các dịch vụ tùy chọn — <a href="/noi-tru">nội trú</a>
+            {' '}({vnd(NOI_TRU_THANG)}đ/tháng), khoá Foundation đầu năm (2.480.000đ tiểu học,
+            3.120.000–4.200.000đ trung học), tutor sau giờ học (5.000.000đ/học kỳ), luyện tiếng Anh 1-1
+            (350.000–450.000đ/tiết), chứng chỉ ICDL 2.600.000đ, chứng chỉ IELTS 4.664.000đ, xe đưa rước
+            theo tuyến — chỉ phát sinh khi anh chị đăng ký.
+          </p>
+          <p class="hp-note">
+            Hai lưu ý về thủ tục: phí nộp <strong>trước ngày nhập học 7 ngày</strong>, và thanh toán bằng
+            thẻ chịu thêm <strong>1,7% phí giao dịch</strong> của đơn vị thanh toán.
+          </p>
+        </section>
+
+        <!-- ══════════ 4. ĐÃ BAO GỒM GÌ ══════════ -->
+        <section id="da-bao-gom" class="gi-section">
+          <h2>Học phí này đã bao gồm những gì?</h2>
+          <p>
+            Học phí đã bao gồm toàn bộ chương trình chính khóa: chương trình quốc gia GDPT 2018, tiếng
+            Anh tăng cường khoảng 40% thời lượng với giáo viên bản ngữ, chương trình kỹ năng, thể thao
+            hằng ngày, và chương trình AI 30 tiết/lớp/năm — không thu thêm bất kỳ khoản nào cho các nội
+            dung này.
+          </p>
+          <p>
+            Tôi muốn dừng lại ở điểm cuối. Từ năm học 2026–2027, Bộ GD&amp;ĐT yêu cầu dạy AI trong trường
+            phổ thông với mức sàn 12 tiết/năm (Quyết định 2422/QĐ-BGDĐT, 2025). Việt Anh dạy 30
+            tiết/lớp/năm cho toàn hệ lớp 1–12 — gấp 2,5 lần mức sàn — và chúng tôi quyết định đưa toàn bộ
+            vào học phí công bố, không mở &ldquo;câu lạc bộ AI&rdquo; thu tiền riêng. Lý do đơn giản: nếu
+            tin một nội dung là thiết yếu cho mọi học sinh, thì không thể để nó thành đặc quyền của những
+            em đóng thêm tiền. Chi tiết ở <a href="/chinh-sach-ai">Chính sách AI</a> của trường.
+          </p>
+          <p>
+            Tương tự với thể thao và sức khỏe: phần vitamin break trong gói ăn ở trên là năm loại trái cây
+            mỗi ngày cho từng học sinh. Anh chị thấy từng khoản nhỏ đến mức đó trong bảng phí, vì minh
+            bạch với chúng tôi nghĩa là phụ huynh biết mình trả tiền cho cái gì.
+          </p>
+        </section>
+
+        <!-- ══════════ 5. SO SÁNH ══════════ -->
+        <section id="so-sanh" class="gi-section">
+          <h2>Học phí Việt Anh so với trường công và trường quốc tế thế nào?</h2>
+          <p>
+            Việt Anh nằm ở phân khúc giữa của thị trường TP.HCM: cao hơn hẳn trường công (đã miễn học
+            phí), và bằng khoảng một nửa đến một phần sáu mức trường quốc tế, tùy trường đem so. So sánh
+            theo mô hình, không theo trường cụ thể:
+          </p>
+
+          <div class="gi-table-responsive">
+            <table class="gi-table">
+              <thead>
+                <tr>
+                  <th scope="col">Tiêu chí</th>
+                  <th scope="col">Công lập</th>
+                  <th scope="col">Song ngữ (Việt Anh)</th>
+                  <th scope="col">Quốc tế</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Học phí/năm</td>
+                  <td>Miễn từ năm học 2025–2026 (Nghị quyết Quốc hội, 6/2025)</td>
+                  <td class="hp-win"><strong>{trieu(hpMin)}–{trieu(hpMax)} triệu đồng</strong></td>
+                  <td>227,8–999,3 triệu đồng (Tuổi Trẻ, 8/2026)</td>
+                </tr>
+                <tr>
+                  <td>Chương trình</td>
+                  <td>GDPT 2018</td>
+                  <td>GDPT 2018 + tiếng Anh ~40% thời lượng, giáo viên bản ngữ</td>
+                  <td>Chương trình nước ngoài (IB, Anh, Mỹ…)</td>
+                </tr>
+                <tr>
+                  <td>Bằng cấp</td>
+                  <td>Bằng Việt Nam</td>
+                  <td>Bằng Việt Nam + mục tiêu đầu ra IELTS 6.0+</td>
+                  <td>Bằng/chứng chỉ quốc tế</td>
+                </tr>
+                <tr>
+                  <td>Chi phí ngoài trường</td>
+                  <td>Thường phát sinh: học thêm, trung tâm tiếng Anh, bán trú</td>
+                  <td>Đã gộp trong chương trình chính khóa</td>
+                  <td>Phí ghi danh, đặt cọc, ăn, xe tính riêng</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Nói thẳng: nếu ngân sách gia đình chưa sẵn sàng cho mức trên 100 triệu/năm, trường công là
+            lựa chọn hợp lý — nhiều học sinh trường công vẫn phát triển tốt, nhất là khi gia đình chủ
+            động bù phần tiếng Anh và kỹ năng bên ngoài. Ngược lại, nếu anh chị đặt mục tiêu con học đại
+            học hoàn toàn bằng tiếng Anh hoặc du học sớm và ngân sách cho phép trên 300 triệu/năm, trường
+            quốc tế đáng cân nhắc. Việt Anh phù hợp với gia đình muốn con giữ chương trình quốc gia, tiếng
+            Anh đạt mục tiêu đầu ra IELTS 6.0+ và kỹ năng — với chi phí thấp hơn trường quốc tế nhiều lần.
+          </p>
+          <p>
+            Một phép tính tôi hay mời phụ huynh làm khi tham quan trường: cộng chi phí thực tế của phương
+            án &ldquo;trường công + học thêm + trung tâm tiếng Anh + đưa đón ba nơi mỗi tuần&rdquo; — cả
+            tiền lẫn số giờ cả nhà ngồi trên xe. Nhiều anh chị bất ngờ vì khoảng cách giữa hai phương án
+            nhỏ hơn con số trên bảng phí rất nhiều. Tôi không nói phương án nào đúng cho mọi nhà; tôi chỉ
+            mời anh chị tính đủ cả hai vế.
+          </p>
+        </section>
+
+        <!-- ══════════ 6. ƯU ĐÃI & HỌC BỔNG ══════════ -->
+        <section id="uu-dai-hoc-bong" class="gi-section">
+          <h2>Có ưu đãi, học bổng nào và đóng thế nào để tiết kiệm nhất?</h2>
+          <p>
+            Trường Việt Anh có chín chính sách hỗ trợ tài chính, chia hai nhóm rõ rệt: bốn ưu đãi học phí
+            do <strong>cha mẹ quyết định</strong>, và năm học bổng do <strong>chính con giành được</strong>.
+          </p>
+
+          <h3>Bốn ưu đãi cha mẹ quyết</h3>
+          <ol class="hp-list hp-list-num">
+            <li>
+              <strong>Đóng trọn năm học: giảm 6% học phí.</strong> Áp dụng khi đóng trước ngày
+              15/9/2026 — với lớp 6 tương đương khoảng {trieu(viDuGiam6)} triệu đồng.
+            </li>
+            <li>
+              <strong>Đóng hai đợt: giảm 2%.</strong> Đợt một trước 15/9/2026, đợt hai trước 14/12/2026.
+              Nếu chia nhỏ hơn — 4 đến 12 đợt — anh chị giữ nguyên biểu phí, trường không tính lãi trả góp.
+            </li>
+            <li>
+              <strong>Anh chị em ruột: con thứ hai giảm 50%, con thứ ba giảm 25%.</strong> Điều kiện là
+              các con cùng đang học trong hệ thống Việt Anh tại cùng một thời điểm, không bắt buộc cùng
+              cơ sở, không bắt buộc cùng cấp học. <strong>Không giới hạn số suất và không có hạn chót
+              đăng ký.</strong>
+            </li>
+            <li>
+              <strong>Early Bird — đóng trước nhiều năm.</strong> Mức giảm tăng dần theo số năm đóng
+              trước: 6% → 16% → 26% → 36% → 46%, kèm <strong>khoá giá học phí năm đầu</strong> cho toàn
+              bộ số năm đã đóng. Dành cho gia đình đã xác định gắn bó dài hạn.
+            </li>
+          </ol>
+
+          <h3>Năm học bổng con giành được</h3>
+          <ol class="hp-list hp-list-num" start="5">
+            <li>
+              <strong>GRIT</strong> — mỗi ngày con rèn giũa tối thiểu một giờ được ghi nhận 10.000đ. Giữ
+              đủ 6/7 ngày thì tuần đó tính tròn 100.000đ, và cộng dồn theo chuỗi tuần. Dành cho mọi học
+              sinh đang học.
+            </li>
+            <li>
+              <strong>CHAMPIONS</strong> — cho học sinh đạt giải thi đấu, bốn mức theo độ khó kỳ thi, từ
+              2 đến 20 triệu đồng.
+            </li>
+            <li>
+              <strong>LEADERS</strong> — cho học sinh cho đi và dẫn dắt, hai bảng, mỗi bảng 10 suất trị
+              giá 10 triệu đồng.
+            </li>
+            <li>
+              <strong>TALENTS</strong> — học bổng tuyển sinh dành cho học sinh <strong>ngoài trường</strong>,
+              từ lớp 6, khu vực Đà Nẵng đến Cà Mau. Bốn hạng, từ 25 đến 100 triệu đồng, mỗi tỉnh đúng
+              một suất.
+            </li>
+            <li>
+              <strong>LOVE</strong> — dành cho gia đình gặp biến cố, miễn 50 đến 100% học phí. Không ai
+              phải làm đơn xin: trường tự kích hoạt khi biết chuyện.
+            </li>
+          </ol>
+
+          <p>
+            <strong>Về cộng dồn.</strong> Ưu đãi đóng phí theo thời gian — theo năm, theo học kỳ, Early
+            Bird — cộng thêm lên trên mọi mức khác. Bốn học bổng con giành được cộng dồn với nhau, con
+            giành được bao nhiêu nhận bấy nhiêu. Ưu đãi anh chị em ruột cộng dồn với nhóm học bổng con
+            giành được. Quỹ LOVE nằm ngoài mọi luật cộng dồn.
+          </p>
+          <p>
+            Ngoài chín chính sách trên, trường còn <strong>ưu đãi giới thiệu 3.000.000đ cho mỗi bên</strong>
+            {' '}khi một gia đình được phụ huynh hiện hữu giới thiệu trước khi liên hệ trường.
+          </p>
+          <p class="hp-note">
+            Một lưu ý áp dụng cho tất cả: mọi mức giảm chỉ tính <strong>trên học phí</strong>, không áp
+            cho phí dịch vụ, tiền ăn, xe đưa đón, nội trú và các khoản thu hộ — chi hộ. Những khoản này
+            thu theo giá của năm học đó.
+          </p>
+
+          <!-- ══════ CTA CHÍNH SANG /hoc-bong ══════ -->
+          <aside class="hp-cta-box">
+            <p class="hp-cta-box-eyebrow">Bước tiếp theo</p>
+            <p class="hp-cta-box-title">
+              Con anh chị được giảm bao nhiêu? Xem đủ điều kiện, hạn chót và cách cộng dồn.
+            </p>
+            <p class="hp-cta-box-body">
+              Bảng trên là <strong>giá niêm yết</strong>. Trang học bổng trình bày đầy đủ chín chính
+              sách — mức giảm từng loại, ai đủ điều kiện, cái nào cộng dồn với cái nào, kèm bảng tính
+              Early Bird năm năm. Đọc xong anh chị dựng được kế hoạch tài chính cho cả hành trình học
+              của con, không phải cho một năm.
+            </p>
+            <a href="/hoc-bong" class="hp-cta hp-cta-lg" data-cta-position="inline-uu-dai">
+              Xem 9 chính sách học bổng &amp; ưu đãi →
+            </a>
+          </aside>
+        </section>
+
+        <!-- ══════════ 7. PHÁT SINH & HOÀN PHÍ ══════════ -->
+        <section id="phat-sinh-hoan-phi" class="gi-section">
+          <h2>Giữa năm có phát sinh chi phí không? Học phí có tăng hằng năm không?</h2>
+          <p>
+            Trường cam kết không phát sinh khoản thu bắt buộc nào trong năm học — mọi khoản anh chị phải
+            đóng đều nằm trong bảng phí công bố trước khi ghi danh. Về học phí năm sau, trường có quy
+            định <strong>trần tăng tối đa 10% mỗi năm</strong>. Đây là mức trần, không phải cam kết tăng:
+            năm nào tăng ít hơn thì anh chị đóng ít hơn, và mức mới luôn công bố trước khi anh chị quyết
+            định năm kế tiếp.
+          </p>
+          <p>
+            Về hoàn phí, quy định chia theo hai nhóm. Tiền ăn và các phí dịch vụ tính theo thực tế sử
+            dụng — con nghỉ ngày nào không tính tiền ăn ngày đó, phần chưa dùng được hoàn lại. Với gia
+            đình đã đóng Early Bird nhiều năm, nếu con chuyển trường giữa chừng, anh chị <strong>lấy lại
+            toàn bộ phần tiền chưa dùng, chỉ cần báo trước 30 ngày</strong> — không cần lý do, không mất
+            phí phạt. Phần thời gian con đã học vẫn giữ nguyên mức ưu đãi Early Bird của những năm đó;
+            trường không tính lùi về giá gốc và không truy thu phần đã giảm.
+          </p>
+          <p>
+            Nếu nhìn cả hành trình: học 12 năm liên tục theo mặt bằng giá 2026–2027, tổng học phí lớp 1
+            đến lớp 12 khoảng <strong>{(hpTong12Nam / 1e9).toFixed(2).replace('.', ',')} tỷ đồng</strong>;
+            cộng ăn uống và các khoản dịch vụ, khoảng
+            {' '}<strong>{(tong12NamDuKien / 1e9).toFixed(2).replace('.', ',')} tỷ đồng</strong> — chưa
+            tính điều chỉnh hằng năm, và chưa trừ bất kỳ ưu đãi hay học bổng nào. Tôi ghi con số này ra vì
+            anh chị xứng đáng thấy nó trước khi ký, không phải sau. Giáo dục là khoản đầu tư lớn thứ hai
+            của một gia đình sau căn nhà — và là khoản duy nhất không mua lại được khi con đã lớn. James
+            Heckman, giáo sư Đại học Chicago, Nobel Kinh tế 2000, tính toán rằng đầu tư giáo dục chất
+            lượng cao càng sớm thì tỷ suất sinh lời càng lớn, có thể tới khoảng 13%/năm qua kết quả học
+            tập, sức khỏe và thu nhập. Con số ấy không phải lời hứa của bất kỳ ngôi trường nào — nó là lời
+            nhắc rằng thứ anh chị đang mua không phải dịch vụ trông trẻ 12 năm, mà là mặt bằng năng lực
+            con mang theo 50 năm sau đó.
+          </p>
+        </section>
+
+        <!-- ══════════ 8. FAQ ══════════ -->
+        <section id="faq" class="gi-section">
+          <h2>Câu hỏi thường gặp</h2>
+          {faqs.map((f) => (
+            <div class="hp-faq-item" id={f.id}>
+              <h3>{f.q}</h3>
+              <p>{f.a}</p>
+            </div>
+          ))}
+        </section>
+
+        <!-- ══════════ 9. KẾT ══════════ -->
+        <section id="minh-bach" class="gi-section">
+          <h2>Minh bạch là khoản học phí đầu tiên</h2>
+          <p>
+            Nhiều năm trước, tôi nhận ra một nghịch lý: phụ huynh sẵn sàng chi hơn trăm triệu mỗi năm cho
+            con, nhưng thứ làm họ mất ngủ không phải con số lớn — mà là những con số nhỏ xuất hiện sau.
+            Khoản quỹ này, phí kia, lớp &ldquo;tăng cường&rdquo; nọ. Mỗi khoản vài trăm nghìn, nhưng cộng
+            lại thành cảm giác bị dắt đi trong sương mù.
+          </p>
+          <p>
+            Vì vậy ở Việt Anh, bảng phí được thiết kế để anh chị đọc một lần, biết đủ 12 tháng. Từng khoản
+            bảo hiểm {vnd(BHYT)}đ cũng nằm trên giấy. Chúng tôi có thể không phải mức giá thấp nhất thị
+            trường — nhưng chúng tôi muốn là bảng giá dễ hiểu nhất.
+          </p>
+          <p><strong>Tiền học có thể kiếm lại. Niềm tin đặt sai chỗ, và năm học của con — thì không.</strong></p>
+
+          <aside class="hp-cta-box hp-cta-box-end">
+            <p class="hp-cta-box-title">Trước khi quyết định, làm đủ hai việc này</p>
+            <div class="hp-cta-grid">
+              <div class="hp-cta-col">
+                <p class="hp-cta-col-num">1</p>
+                <p class="hp-cta-col-text">
+                  Xem mình được giảm bao nhiêu. Chín chính sách, đủ điều kiện và hạn chót — để anh chị
+                  lên kế hoạch tài chính cho cả hành trình học của con.
+                </p>
+                <a href="/hoc-bong" class="hp-cta" data-cta-position="ket-bai">
+                  Xem học bổng &amp; ưu đãi →
+                </a>
+              </div>
+              <div class="hp-cta-col">
+                <p class="hp-cta-col-num">2</p>
+                <p class="hp-cta-col-text">
+                  Đến kiểm chứng tận mắt: bữa trưa, tiết tiếng Anh với giáo viên bản ngữ và lớp học AI
+                  đã nằm sẵn trong học phí. Anh chị nhận bảng phí chi tiết theo khối của đúng năm con
+                  nhập học.
+                </p>
+                <a href="/dat-lich-tham-quan" class="hp-cta hp-cta-ghost" data-cta-position="ket-bai">
+                  Đặt lịch tham quan trường
+                </a>
+              </div>
+            </div>
+            <p class="hp-cta-box-note">
+              Giờ đón khách: {openingHours.display}. {openingHours.sundayNote}
+            </p>
+          </aside>
+        </section>
+
+        <!-- ══════════ TÁC GIẢ & NGUỒN ══════════ -->
+        <section id="ve-tac-gia" class="gi-section hp-author">
+          <h2>Về tác giả</h2>
+          <p>
+            <strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt
+            Anh (từ 2011). 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.
+            <em> Cập nhật lần cuối: 31/08/2026.</em>
+          </p>
+
+          <h3>Nguồn tham khảo</h3>
+          <ol class="hp-list hp-list-num hp-sources">
+            <li>Chính sách Sản phẩm &amp; Dịch vụ năm học 2026–2027, Hệ thống giáo dục Việt Anh (hiệu lực 10/10/2025).</li>
+            <li>
+              Chính sách học bổng &amp; ưu đãi học phí 2026–2027, Hệ thống giáo dục Việt Anh —
+              <a href="/hoc-bong">truongvietanh.com/hoc-bong</a>
+            </li>
+            <li>
+              Tuổi Trẻ (26/8/2026), <em>Học phí trường quốc tế TP.HCM năm 2026–2027: Có trường gần 1 tỉ đồng/năm</em> —
+              <a href="https://tuoitre.vn/hoc-phi-truong-quoc-te-tphcm-nam-2026-2027-co-truong-gan-1-ti-dong-nam-100260825141956242.htm" target="_blank" rel="noopener nofollow">tuoitre.vn</a>
+            </li>
+            <li>
+              Nghị quyết của Quốc hội về miễn học phí học sinh công lập toàn quốc từ năm học 2025–2026 (thông qua 6/2025) —
+              <a href="https://vnexpress.net/hoc-sinh-cong-lap-toan-quoc-duoc-mien-hoc-phi-tu-nam-hoc-2025-2026-4906573.html" target="_blank" rel="noopener nofollow">VnExpress</a>
+            </li>
+            <li>Quyết định 2422/QĐ-BGDĐT (2025), Bộ GD&amp;ĐT — quy định dạy AI trong trường phổ thông, mức sàn 12 tiết/năm.</li>
+            <li>
+              WHO — khuyến nghị 400g rau củ quả/ngày —
+              <a href="https://www.who.int/news-room/fact-sheets/detail/healthy-diet" target="_blank" rel="noopener nofollow">Healthy diet fact sheet</a>
+            </li>
+            <li>
+              James Heckman, Đại học Chicago — The Heckman Equation —
+              <a href="https://heckmanequation.org" target="_blank" rel="noopener nofollow">heckmanequation.org</a>
+            </li>
+          </ol>
+        </section>
+      </article>
+    </div>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --navy:   #26275D;
-  --navy2:  #1F2050;
-  --border: rgba(255,255,255,.08);
-  --text:   #eef2ff;
-  --muted:  rgba(238,242,255,.58);
-  --red:    #dc2626;
-  --orange: #F9DD0E;
-  --amber:  #F9DD0E;
-  --green:  #22c55e;
-  --blue:   #3A3C80;
-  --r:      10px;
-}
-html{height:100%}
-body{
-  min-height:100%;
-  font-family:'Inter',sans-serif;
-  background:var(--navy);
-  background-image:
-    radial-gradient(ellipse 90% 60% at 72% 105%,rgba(31,32,80,.55) 0%,transparent 55%),
-    radial-gradient(ellipse 55% 40% at  4%  -4%,rgba(24,25,58,.6)  0%,transparent 50%);
-  color:var(--text);
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-}
+  /* ══════════ HERO ══════════ */
+  .hp-page :global(.gi-h1) { text-wrap: balance; }
+  .hp-hero-sub {
+    font-size: 1.2rem;
+    line-height: 1.7;
+    color: #fff;
+    font-weight: 600;
+    margin: 1rem 0 0.85rem;
+    max-width: 62ch;
+  }
+  .hp-hero-body {
+    font-size: 1.05rem;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.85);
+    margin-bottom: 1.1rem;
+    max-width: 62ch;
+  }
+  .hp-hero-actions { margin: 1.1rem 0 2.6rem; }
+  .hp-cta-hint {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.78);
+    margin-top: 0.75rem;
+    max-width: 58ch;
+  }
+  .hp-hero-link {
+    display: inline-block;
+    margin-top: 0.3rem;
+    font-size: 0.97rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .hp-hero-link:hover { color: #f9dd0e; }
 
-.ubar{flex-shrink:0;background:var(--red);padding:4px 16px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:600;letter-spacing:.1px;animation:slideDown .35s ease both}
-.ubar-dot{width:7px;height:7px;border-radius:50%;background:#fca5a5;animation:blink 1.4s ease infinite}
-.ubar em{font-style:normal;background:rgba(0,0,0,.25);border-radius:20px;padding:1px 9px;font-weight:800;font-variant-numeric:tabular-nums}
+  /* ══════════ NÚT CTA ══════════ */
+  .hp-cta {
+    display: inline-block;
+    background: #f9dd0e;
+    color: #26275d;
+    font-weight: 800;
+    font-size: 1.02rem;
+    line-height: 1.35;
+    padding: 0.9rem 1.6rem;
+    border-radius: 8px;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(249, 221, 14, 0.28);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .hp-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(249, 221, 14, 0.4);
+    color: #26275d;
+  }
+  .hp-cta-lg { font-size: 1.08rem; padding: 1rem 1.8rem; }
+  .hp-cta-ghost {
+    background: transparent;
+    color: #26275d;
+    border: 2px solid #26275d;
+    box-shadow: none;
+  }
+  .hp-cta-ghost:hover { background: #26275d; color: #f9dd0e; box-shadow: none; }
 
-.lbar{flex-shrink:0;background:#fff;padding:2px 40px;display:flex;align-items:center;justify-content:center}
-.lbar img{height:44px;display:block}
-.lbar-txt{font-family:'Montserrat',sans-serif;font-weight:900;font-size:16px;color:var(--navy);display:none}
+  /* ══════════ HỘP CTA TRONG BÀI ══════════ */
+  .hp-cta-box {
+    margin: 2.2rem 0;
+    padding: 1.6rem 1.7rem;
+    background: linear-gradient(135deg, #f4f4fb 0%, #ececf8 100%);
+    border-left: 6px solid #f9dd0e;
+    border-radius: 0 12px 12px 0;
+  }
+  .hp-cta-box-eyebrow {
+    font-size: 0.78rem;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #6b6b8f;
+    margin: 0 0 0.5rem;
+  }
+  .hp-cta-box-title {
+    font-size: 1.22rem;
+    font-weight: 800;
+    line-height: 1.4;
+    color: #26275d;
+    margin: 0 0 0.7rem;
+    text-wrap: balance;
+  }
+  .hp-cta-box-body {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: #333355;
+    margin: 0 0 1.2rem;
+  }
+  .hp-cta-box-note {
+    font-size: 0.92rem;
+    line-height: 1.6;
+    color: #55557a;
+    margin: 1.2rem 0 0;
+    font-style: italic;
+  }
+  .hp-cta-box-end { background: linear-gradient(135deg, #eef0fb 0%, #e2e5f6 100%); }
+  .hp-cta-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.4rem;
+  }
+  .hp-cta-col {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.6rem;
+  }
+  .hp-cta-col-num {
+    width: 32px;
+    height: 32px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #26275d;
+    color: #f9dd0e;
+    border-radius: 50%;
+    font-weight: 900;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+  .hp-cta-col-text {
+    font-size: 0.99rem;
+    line-height: 1.7;
+    color: #333355;
+    margin: 0;
+    flex: 1 1 auto;
+  }
 
-.hero{flex:1;min-height:0;display:grid;grid-template-columns:1fr 360px;align-items:center;max-width:1060px;width:100%;margin:0 auto;padding:8px 40px 10px;gap:40px;animation:riseUp .6s ease both .07s}
+  /* ══════════ BẢNG ══════════ */
+  .hp-num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .hp-table-hp td:nth-child(1),
+  .hp-table-hp td:nth-child(3) { font-weight: 600; }
+  .hp-row-total td { background: #fffbe6; border-top: 2px solid #f9dd0e; }
+  .hp-win { background: rgba(249, 221, 14, 0.14); }
 
-.left{display:flex;flex-direction:column;gap:clamp(5px,0.9vh,10px)}
+  /* ══════════ DANH SÁCH & GHI CHÚ ══════════ */
+  .hp-list { margin: 1rem 0 1.4rem; padding-left: 1.4rem; }
+  .hp-list li { margin-bottom: 0.75rem; line-height: 1.75; }
+  .hp-list-num { list-style: decimal; }
+  .hp-note {
+    background: #fffbe6;
+    border: 1px solid #e6c000;
+    border-radius: 8px;
+    padding: 0.9rem 1.1rem;
+    font-size: 0.99rem;
+    line-height: 1.7;
+    color: #4a3800;
+  }
 
-.eyebrow{display:inline-flex;align-items:center;gap:7px;background:rgba(220,38,38,.14);border:1px solid rgba(220,38,38,.38);border-radius:30px;padding:3px 14px 3px 5px;width:fit-content;font-size:11.5px;font-weight:700;color:#fca5a5}
-.eyebrow b{background:var(--red);color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:900;border-radius:20px;padding:2px 9px;text-transform:uppercase;letter-spacing:.3px}
+  /* ══════════ FAQ ══════════ */
+  .hp-faq-item { margin-bottom: 1.5rem; }
+  .hp-faq-item h3 { margin-bottom: 0.45rem; }
+  .hp-faq-item p { margin: 0; line-height: 1.78; }
 
-.h1{font-family:'Montserrat',sans-serif;font-size:clamp(1rem,1.45vw,1.3rem);font-weight:900;line-height:1.18;letter-spacing:-.3px}
-.h1 .stat{color:var(--orange);font-style:italic}
-.h1 u{text-decoration:none;border-bottom:2.5px solid rgba(249,221,14,.5)}
+  /* ══════════ NGUỒN ══════════ */
+  .hp-sources { font-size: 0.95rem; }
+  .hp-sources li { margin-bottom: 0.6rem; line-height: 1.65; }
 
-.sub{font-size:13.5px;color:var(--muted);line-height:1.65;padding-left:11px;border-left:3px solid var(--orange)}
-.sub strong{color:var(--text);font-weight:600}
-
-.blist{list-style:none;display:flex;flex-direction:column;gap:6px}
-.blist li{display:flex;align-items:flex-start;gap:9px;font-size:13.5px;color:rgba(238,242,255,.83);line-height:1.45}
-.ck{flex-shrink:0;width:19px;height:19px;border-radius:50%;background:var(--green);display:inline-flex;align-items:center;justify-content:center;margin-top:2px}
-.ck svg{width:10px;height:10px}
-.blist b{color:var(--text);font-weight:600}
-
-.proof{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:12.5px;color:var(--muted)}
-.stars{color:var(--amber);letter-spacing:-1px;font-size:13px}
-.proof strong{color:var(--amber);font-weight:700}
-.proof-sep{width:1px;height:13px;background:var(--border)}
-
-.directive{font-size:13px;color:rgba(238,242,255,.65);display:flex;align-items:center;gap:6px;font-weight:500}
-
-.cta-block{display:flex;flex-direction:column;gap:8px}
-
-.seats-inline{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:#fca5a5}
-.seats-dot{width:8px;height:8px;border-radius:50%;background:#ef4444;animation:blink 1s ease infinite;flex-shrink:0}
-.seats-num{background:var(--red);color:#fff;font-family:'Montserrat',sans-serif;font-size:13px;font-weight:900;border-radius:20px;padding:1px 9px;font-variant-numeric:tabular-nums}
-
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;background:var(--orange);background-image:linear-gradient(135deg,#FAE34A 0%,#F9DD0E 45%,#CBB30A 100%);color:#26275D;font-family:'Montserrat',sans-serif;font-size:clamp(.88rem,1.05vw,1rem);font-weight:900;letter-spacing:.8px;text-transform:uppercase;border:none;border-radius:var(--r);padding:17px 30px;cursor:pointer;max-width:480px;position:relative;overflow:hidden;box-shadow:0 6px 32px rgba(249,221,14,.6),0 2px 8px rgba(0,0,0,.45);transition:transform .18s ease,box-shadow .18s ease;animation:btnPulse 2.8s ease-in-out infinite}
-.btn::after{content:'';position:absolute;top:0;left:-90%;width:55%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent);transition:left .5s ease}
-.btn:hover{transform:translateY(-3px) scale(1.025);box-shadow:0 12px 40px rgba(249,221,14,.75),0 2px 8px rgba(0,0,0,.4);animation:none}
-.btn:hover::after{left:145%}
-.btn:active{transform:scale(.98)}
-.btn.shake{animation:shake .55s ease}
-
-.micro{font-size:11px;color:rgba(238,242,255,.35);display:flex;align-items:center;gap:5px}
-
-.right{display:flex;flex-direction:column;align-items:center;gap:12px}
-
-.mscene{position:relative;padding:18px 10px 14px;width:100%;max-width:290px}
-.m-glow-bg{position:absolute;inset:-10%;background:radial-gradient(ellipse 80% 60% at 50% 65%,rgba(249,221,14,.3) 0%,rgba(249,221,14,.12) 40%,transparent 70%);z-index:0;pointer-events:none;animation:glowPulse 3.5s ease-in-out infinite}
-.m-shadow-el{position:absolute;bottom:4%;left:14%;right:10%;height:35%;background:rgba(0,0,0,.6);filter:blur(26px);border-radius:50%;z-index:1}
-.m-ghost-2,.m-ghost-1{position:absolute;inset:0;border-radius:10px;z-index:2}
-.m-ghost-2{background:linear-gradient(135deg,#363876,#18193A);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(9deg) translate(18px,18px);opacity:.5;box-shadow:0 8px 28px rgba(0,0,0,.4)}
-.m-ghost-1{background:linear-gradient(135deg,#2A2B64,#18193A);transform:perspective(700px) rotateY(-5deg) rotateX(4deg) rotate(4.5deg) translate(9px,9px);opacity:.38}
-.m-card{position:relative;z-index:3;border-radius:10px;overflow:visible;transform:perspective(700px) rotateY(-5deg) rotateX(4deg);transform-origin:center bottom;filter:drop-shadow(-6px 14px 28px rgba(0,0,0,.6));animation:floatMock 3.8s ease-in-out infinite;transition:transform .35s ease,filter .35s ease;cursor:pointer}
-.m-card:hover{transform:perspective(700px) rotateY(-1deg) rotateX(1deg) scale(1.04);filter:drop-shadow(-4px 18px 36px rgba(249,221,14,.4));animation:none}
-.m-shine{position:absolute;inset:0;border-radius:10px;background:linear-gradient(135deg,rgba(255,255,255,.2) 0%,rgba(255,255,255,.06) 35%,transparent 60%);pointer-events:none;z-index:4}
-.mimg{display:block;width:100%;border-radius:10px;position:relative;z-index:3}
-.m-badge-yr{position:absolute;top:-9px;left:-9px;z-index:5;background:linear-gradient(135deg,#26275D,#3A3C80);color:#fff;font-family:'Montserrat',sans-serif;font-size:10px;font-weight:900;padding:4px 10px;border-radius:20px;box-shadow:0 3px 10px rgba(58,60,128,.55);letter-spacing:.3px}
-.m-badge-disc{position:absolute;top:-9px;right:-9px;z-index:5;background:linear-gradient(135deg,#dc2626,#991b1b);color:#fff;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:900;padding:5px 11px;border-radius:20px;box-shadow:0 3px 10px rgba(220,38,38,.5);letter-spacing:.3px;transform:rotate(8deg)}
-.m-arrow{margin-top:8px;display:flex;align-items:center;justify-content:center;gap:5px;font-size:11.5px;font-weight:600;color:rgba(238,242,255,.5);animation:arrowPulse 2s ease-in-out infinite}
-.m-arrow svg{flex-shrink:0}
-
-.tcard{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:12px 14px;max-width:265px;width:100%}
-.tc-stars{color:var(--amber);font-size:12px;letter-spacing:-1px;margin-bottom:5px}
-.tc-q{font-size:12px;color:rgba(238,242,255,.7);line-height:1.55;font-style:italic;margin-bottom:8px}
-.tc-auth{display:flex;align-items:center;gap:8px}
-.tc-av{width:26px;height:26px;border-radius:50%;flex-shrink:0;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
-.tc-name{font-size:11.5px;font-weight:700;color:rgba(238,242,255,.8)}
-.tc-meta{font-size:10.5px;color:rgba(238,242,255,.42)}
-
-.sticky{display:none}
-
-.ov{display:none;position:fixed;inset:0;z-index:999;background:rgba(4,10,24,.84);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
-.ov.open{display:flex;animation:fadeIn .2s ease}
-.popup{background:#fff;color:#111827;border-radius:18px;width:100%;max-width:396px;padding:26px 24px 22px;position:relative;box-shadow:0 32px 100px rgba(0,0,0,.5);animation:springUp .3s cubic-bezier(.34,1.56,.64,1)}
-.pcl{position:absolute;top:12px;right:13px;background:#f3f4f6;border:none;border-radius:50%;width:28px;height:28px;font-size:15px;color:#6b7280;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s,color .15s}
-.pcl:hover{background:#e5e7eb;color:#111}
-
-.pprog{margin-bottom:18px}
-.pprog-meta{display:flex;justify-content:space-between;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:#64748b;margin-bottom:6px}
-.pprog-track{height:4px;background:#e5e7eb;border-radius:99px;overflow:hidden}
-.pprog-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,#CBB30A,#F9DD0E,#FAE34A);transition:width .45s ease}
-
-.ps{display:none}.ps.on{display:block}
-.p-ico{font-size:26px;margin-bottom:7px;line-height:1}
-.p-title{font-family:'Montserrat',sans-serif;font-size:1.05rem;font-weight:800;color:#0c1b34;line-height:1.3;margin-bottom:3px}
-.p-sub{font-size:12.5px;color:#6b7280;margin-bottom:14px;line-height:1.55}
-
-.fg{margin-bottom:10px}
-.fl{display:block;font-size:10.5px;font-weight:700;color:#374151;text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px}
-.fi{width:100%;padding:12px 13px;border:1.5px solid #e5e7eb;border-radius:8px;font-size:15px;font-family:'Inter',sans-serif;color:#111;outline:none;background:#f9fafb;transition:border-color .2s,box-shadow .2s}
-.fi:focus{border-color:var(--orange);box-shadow:0 0 0 3px rgba(249,221,14,.12);background:#fff}
-.fi.err{border-color:#ef4444;box-shadow:0 0 0 3px rgba(239,68,68,.1)}
-.fe{font-size:11.5px;color:#ef4444;margin-top:3px;display:none}
-.fe.on{display:block}
-
-.vstack{background:#fffbeb;border:1.5px solid #fde68a;border-radius:10px;padding:11px 13px;margin-bottom:12px}
-.vs-hd{font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.5px;color:#92400e;margin-bottom:8px;display:flex;align-items:center;gap:5px}
-.vs-row{display:flex;align-items:center;gap:7px;font-size:12.5px;color:#78350f;margin-bottom:5px;line-height:1.35}
-.vs-row:last-of-type{margin-bottom:0}
-.vs-price{margin-left:auto;flex-shrink:0;font-size:11px;color:#b45309;font-weight:700;text-decoration:line-through;opacity:.65;white-space:nowrap}
-.vs-free{color:#16a34a;font-weight:800;text-decoration:none !important;opacity:1 !important;font-size:11.5px}
-.vs-total{margin-top:7px;padding-top:7px;border-top:1px dashed #fde68a;display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:#92400e}
-.vs-total-val{background:#16a34a;color:#fff;border-radius:5px;padding:2px 9px;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.3px}
-
-.s2-urg{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:#dc2626;margin-bottom:10px}
-.s2-urg-dot{width:7px;height:7px;border-radius:50%;background:#dc2626;animation:blink 1s ease infinite;flex-shrink:0}
-
-.pbtn{width:100%;background:linear-gradient(135deg,#FAE34A,#F9DD0E,#CBB30A);color:#26275D;font-family:'Montserrat',sans-serif;font-size:.93rem;font-weight:900;letter-spacing:.7px;text-transform:uppercase;border:none;border-radius:9px;padding:14px;cursor:pointer;box-shadow:0 4px 20px rgba(249,221,14,.5);transition:transform .18s,box-shadow .18s;margin-top:7px;min-height:50px;display:flex;align-items:center;justify-content:center}
-.pbtn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(249,221,14,.65)}
-.pbtn:disabled{opacity:.7;cursor:wait}
-.pbtn .t{display:block}
-.pbtn .s{display:none;width:18px;height:18px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .55s linear infinite}
-.pbtn.loading .t{display:none}
-.pbtn.loading .s{display:block}
-
-.p-back{background:none;border:none;font-size:12px;color:#64748b;cursor:pointer;padding:5px 0;margin-top:4px;display:flex;align-items:center;gap:4px;transition:color .15s}
-.p-back:hover{color:#374151}
-.psec{font-size:11px;color:#64748b;text-align:center;margin-top:8px;display:flex;align-items:center;justify-content:center;gap:4px}
-
-.psuc{display:none;text-align:center;padding:10px 0}
-.psuc.on{display:block}
-.suc-ico{font-size:52px;margin-bottom:12px}
-.suc-h{font-family:'Montserrat',sans-serif;font-size:1.2rem;font-weight:900;color:#16a34a;margin-bottom:8px}
-.suc-p{font-size:13.5px;color:#6b7280;line-height:1.65}
-
-@keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes riseUp   {from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn   {from{opacity:0}to{opacity:1}}
-@keyframes springUp {from{opacity:0;transform:translateY(30px) scale(.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes btnPulse {0%,100%{box-shadow:0 6px 32px rgba(249,221,14,.6),0 2px 8px rgba(0,0,0,.45)}50%{box-shadow:0 8px 42px rgba(249,221,14,.85),0 2px 8px rgba(0,0,0,.4)}}
-@keyframes shake{0%,100%{transform:translateX(0)}15%,45%,75%{transform:translateX(-5px) rotate(-.4deg)}30%,60%,90%{transform:translateX(5px) rotate(.4deg)}}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@keyframes floatMock{0%,100%{transform:perspective(700px) rotateY(-5deg) rotateX(4deg) translateY(0)}50%{transform:perspective(700px) rotateY(-5deg) rotateX(4deg) translateY(-10px)}}
-@keyframes glowPulse{0%,100%{opacity:.7;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
-@keyframes arrowPulse{0%,100%{transform:translateX(0);opacity:.5}50%{transform:translateX(-5px);opacity:.85}}
-
-@media(max-width:860px){
-  html,body{overflow-y:auto;overflow-x:hidden;height:auto}
-  body{padding-bottom:72px}
-  .hero{grid-template-columns:1fr;padding:12px 18px 20px;gap:0}
-  .left{order:1;gap:clamp(8px,2vw,12px)}
-  .right{order:2;padding-top:14px;gap:10px}
-  .mscene{max-width:220px;padding:14px 8px 10px}
-  .tcard{max-width:100%}
-  .btn{display:none !important}
-  .sticky{display:block;position:fixed;bottom:0;left:0;right:0;z-index:800;padding:10px 16px 14px;background:rgba(6,16,31,.97);backdrop-filter:blur(10px);border-top:1px solid var(--border)}
-  .sticky .btn{display:inline-flex !important;max-width:100%;width:100%;padding:16px 20px;font-size:.92rem;animation:btnPulse 2.8s ease-in-out infinite}
-  .lbar{padding:4px 20px}
-  .lbar img{height:38px}
-  .h1{font-size:1.2rem}
-}
-@media(max-width:400px){.h1{font-size:1.08rem}.mwrap{max-width:165px}}
+  @media (max-width: 640px) {
+    .hp-hero-sub { font-size: 1.08rem; }
+    /* Widget Chat Zalo OA (fixed, góc trái dưới, z999) có thể đè lên nút CTA ở khung mobile.
+       Đây là xung đột chung của toàn site (trang /hoc-bong cũng vậy) — không sửa dứt điểm
+       được bằng CSS của riêng trang này, chỉ chừa thêm khoảng thở dưới nút. */
+    .hp-hero-actions { margin-bottom: 2.5rem; }
+    .hp-cta, .hp-cta-lg { display: block; text-align: center; font-size: 0.99rem; padding: 0.9rem 1.1rem; }
+    .hp-cta-box { padding: 1.2rem 1.1rem; }
+    .hp-cta-box-title { font-size: 1.1rem; }
+  }
 </style>
-</head>
-<body>
-
-<!-- ① URGENCY BAR -->
-<div class="ubar" role="alert">
-  <span class="ubar-dot" aria-hidden="true"></span>
-  Hôm nay chỉ còn <em id="uSeats">9</em> suất nhận bảng giá ưu đãi 2026 + tư vấn miễn phí
-  <span class="ubar-dot" aria-hidden="true"></span>
-</div>
-
-<!-- ② LOGO -->
-<div class="lbar">
-  <a href="https://truongvietanh.com" tabindex="-1">
-    <img src="/logo-th-thcs-thpt.png" alt="Trường Việt Anh"
-         onerror="this.style.display='none';document.querySelector('.lbar-txt').style.display='block'"/>
-    <span class="lbar-txt">Trường Việt Anh</span>
-  </a>
-</div>
-
-<!-- ③ HERO -->
-<section class="hero" aria-label="Offer chính">
-
-  <div class="left">
-
-    <div class="eyebrow">
-      <b>Ưu đãi 2026</b>
-      Dành cho phụ huynh đang tìm hiểu học phí Trường Việt Anh
-    </div>
-
-    <h1 class="h1">
-      Bảng giá ưu đãi 2026 — <span class="stat">6 HOT + 5 combo</span> + học phí <u>Lớp 1–12</u>
-    </h1>
-
-    <p class="sub">
-      <strong>PDF 16 trang</strong> — 6 chương trình HOT (Lion Camp, Siêu Ăn Giỏi, Bơi Sinh Tồn, TATE, Tiếng Anh Thực Dụng, Tư Duy Toán),
-      5 combo học tập (Nền Tảng → VIP), học phí Lớp 1–12 theo từng cơ sở (Gò Vấp, Bình Tân, OIC, MGIS),
-      phí dịch vụ &amp; phí ăn — <strong>minh bạch, không phụ phí ẩn</strong>
-    </p>
-
-    <ul class="blist" aria-label="Nội dung bạn nhận được">
-      <li>
-        <span class="ck" aria-hidden="true"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span><b>6 chương trình HOT 2026</b> — Lion Camp <s>28.998K</s> còn <b>19.998K</b>, Siêu Ăn Giỏi <s>10.000K</s> còn <b>4.868K</b>, Bơi Sinh Tồn <b>499K</b>, TATE <s>1.699K</s> còn <b>1.133K/tháng</b>, Tiếng Anh Thực Dụng <s>12.000K</s> còn <b>2.988K</b>, Tư Duy Toán <s>4.000K</s> còn <b>1.298K</b></span>
-      </li>
-      <li>
-        <span class="ck" aria-hidden="true"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span><b>5 combo học tập 2026</b> — Nền Tảng <s>10.800K</s> còn <b>8.800K</b>, Học Tăng Tốc <b>14.150K</b>, Bán Trú Toàn Diện <s>21.950K</s> còn <b>15.950K</b>, VIP <s>24.400K</s> còn <b>19.600K</b></span>
-      </li>
-      <li>
-        <span class="ck" aria-hidden="true"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span><b>Học phí năm Lớp 1 → Lớp 12</b> — chi tiết từng khối, tách rõ Gò Vấp, Bình Tân, hệ OIC Oxford (Lớp 1–8), MGIS High Quality &amp; Bilingual (Lớp 1–5)</span>
-      </li>
-      <li>
-        <span class="ck" aria-hidden="true"><svg viewBox="0 0 10 8" fill="none"><path d="M1 4l3 3 5-6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span><b>Phí dịch vụ + phí ăn + ký túc xá</b> — đồng phục, sách, CSVC, ICDL/IELTS · bán trú/<a href="/noi-tru" style="color:inherit;text-decoration:underline">nội trú</a> từng cấp · ký túc xá Gò Vấp 2.500.000đ/tháng — tổng chi phí trọn gói trước khi đăng ký</span>
-      </li>
-    </ul>
-
-    <div class="proof">
-      <span class="stars" aria-label="5 sao">★★★★★</span>
-      <strong>15 năm K12</strong> từ 2011
-      <span class="proof-sep" aria-hidden="true"></span>
-      <strong>2.300+ phụ huynh</strong> đã nhận bảng giá năm nay
-    </div>
-
-    <p class="directive">
-      <span aria-hidden="true">👇</span>
-      Nhấn vào nút vàng bên dưới để nhận PDF bảng giá ngay — chỉ mất 10 giây
-    </p>
-
-    <div class="cta-block">
-      <div class="seats-inline" aria-live="polite">
-        <span class="seats-dot" aria-hidden="true"></span>
-        Hôm nay chỉ còn <span class="seats-num" id="cSeats">9</span> suất ưu đãi 2026
-      </div>
-
-      <button class="btn" id="ctaBtn" aria-haspopup="dialog">
-        <span aria-hidden="true">📊</span>
-        NHẬN BẢNG GIÁ ƯU ĐÃI 2026 — MIỄN PHÍ
-      </button>
-
-      <span class="micro">🔒 Không spam · Miễn phí hoàn toàn · Hủy bất cứ lúc nào</span>
-    </div>
-
-  </div>
-
-  <div class="right" aria-hidden="true">
-
-    <div class="mscene">
-      <div class="m-glow-bg"></div>
-      <div class="m-shadow-el"></div>
-      <div class="m-ghost-2"></div>
-      <div class="m-ghost-1"></div>
-      <div class="m-card">
-        <div class="m-shine"></div>
-        <span class="m-badge-disc">MIỄN PHÍ</span>
-        <img src="/mockup-bang-gia-2026-cover.jpg"
-             alt="Bảng Giá Ưu Đãi 2026 — Trường Việt Anh"
-             class="mimg"
-             onerror="this.style.opacity='.15'" loading="eager" />
-      </div>
-      <div class="m-arrow">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-          <path d="M11 7H3M3 7L6.5 3.5M3 7L6.5 10.5" stroke="#F9DD0E" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-        Nhấn nút vàng để tải PDF miễn phí
-      </div>
-    </div>
-
-    <div class="tcard">
-      <div class="tc-stars" aria-label="5 sao">★★★★★</div>
-      <blockquote class="tc-q">
-        "Bảng giá rõ từng khối, từng cơ sở, kèm phí ăn và dịch vụ. Tôi tính được tổng chi phí 1 năm chỉ trong 10 phút."
-      </blockquote>
-      <div class="tc-auth">
-        <div class="tc-av">MT</div>
-        <div>
-          <div class="tc-name">Anh Minh Tuấn</div>
-          <div class="tc-meta">Phụ huynh Lớp 8 · Q. Bình Tân</div>
-        </div>
-      </div>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- ④ STICKY CTA — mobile -->
-<div class="sticky" aria-hidden="true">
-  <button class="btn" id="ctaMob" tabindex="-1">
-    <span>📊</span> NHẬN BẢNG GIÁ ƯU ĐÃI 2026
-  </button>
-</div>
-
-<!-- ⑤ POPUP -->
-<div class="ov" id="overlay" role="dialog" aria-modal="true" aria-labelledby="ptitle1">
-
-  <div class="popup" id="popup">
-    <button class="pcl" id="pClose" aria-label="Đóng">✕</button>
-
-    <div class="pprog" aria-hidden="true">
-      <div class="pprog-meta">
-        <span id="pLabel">Bước 1 / 2</span>
-        <span id="pPct">50%</span>
-      </div>
-      <div class="pprog-track">
-        <div class="pprog-fill" id="pFill" style="width:50%"></div>
-      </div>
-    </div>
-
-    <div class="ps on" id="s1">
-      <div class="p-ico">📧</div>
-      <h2 class="p-title" id="ptitle1">Nhập email — nhận bảng giá trong 60 giây</h2>
-      <p class="p-sub">Chỉ cần email. Không cần điền gì thêm ở bước này.</p>
-
-      <div class="fg">
-        <label class="fl" for="fEmail">Địa chỉ Email của bạn</label>
-        <input class="fi" type="email" id="fEmail" name="email"
-               placeholder="ten@gmail.com" autocomplete="email" inputmode="email" />
-        <div class="fe" id="eEmail">Vui lòng nhập email hợp lệ</div>
-      </div>
-
-      <button class="pbtn" id="btnNext">
-        <span class="t">GỬI BẢNG GIÁ VÀO EMAIL TÔI →</span>
-        <span class="s" aria-hidden="true"></span>
-      </button>
-      <p class="psec">🔒 Email an toàn · Không spam · Không chia sẻ bên thứ ba</p>
-    </div>
-
-    <div class="ps" id="s2">
-      <div class="p-ico">🎁</div>
-      <h2 class="p-title">Bước cuối — nhận bảng giá + 3 quà tặng miễn phí</h2>
-
-      <div class="s2-urg">
-        <span class="s2-urg-dot" aria-hidden="true"></span>
-        Hôm nay chỉ còn <span id="s2Seats">9</span> suất · Điền trong 10 giây
-      </div>
-
-      <div class="vstack" role="note" aria-label="Bạn nhận miễn phí">
-        <div class="vs-hd">🎁 Bạn sẽ nhận miễn phí hôm nay:</div>
-
-        <div class="vs-row">
-          <span>📊 PDF Bảng giá ưu đãi 2026 (16 trang — 6 HOT + 5 combo + học phí Lớp 1–12)</span>
-          <span class="vs-price">199.000đ</span>
-        </div>
-        <div class="vs-row">
-          <span>🎯 Tư vấn lộ trình &amp; chính sách học bổng 1:1</span>
-          <span class="vs-price">500.000đ</span>
-        </div>
-        <div class="vs-row">
-          <span>🎟️ Voucher tham quan trường + học thử 1 buổi</span>
-          <span class="vs-price">350.000đ</span>
-        </div>
-
-        <div class="vs-total">
-          <span>Tổng trị giá: <s>1.049.000đ</s></span>
-          <span class="vs-total-val">MIỄN PHÍ HOÀN TOÀN</span>
-        </div>
-      </div>
-
-      <div class="fg">
-        <label class="fl" for="fName">Họ và tên ba/mẹ</label>
-        <input class="fi" type="text" id="fName" name="parent_name"
-               placeholder="Nguyễn Thị Lan" autocomplete="name" />
-        <div class="fe" id="eName">Vui lòng nhập họ tên của bạn</div>
-      </div>
-      <div class="fg">
-        <label class="fl" for="fPhone">Số điện thoại / Zalo</label>
-        <input class="fi" type="tel" id="fPhone" name="phone"
-               placeholder="0912 345 678" autocomplete="tel" inputmode="tel" />
-        <div class="fe" id="ePhone">Vui lòng nhập số điện thoại hợp lệ</div>
-      </div>
-
-      <button class="pbtn" id="btnSubmit">
-        <span class="t">NHẬN BẢNG GIÁ NGAY — TRONG 30 GIÂY →</span>
-        <span class="s" aria-hidden="true"></span>
-      </button>
-      <button class="p-back" id="btnBack" type="button">← Quay lại bước trước</button>
-      <p class="psec">🔒 Bảo mật 100% · Thông tin chỉ dùng để gửi bảng giá và hỗ trợ tư vấn</p>
-    </div>
-
-    <div class="psuc" id="sSuc">
-      <div class="suc-ico">🎉</div>
-      <div class="suc-h">Đăng ký thành công!</div>
-      <p class="suc-p">
-        Bảng giá ưu đãi 2026 đang được gửi vào email của bạn.<br>
-        Nhớ kiểm tra <strong>Spam / Promotions</strong> nếu chưa thấy.
-      </p>
-    </div>
-
-  </div>
-</div>
-
-<!-- ⑥ SCRIPT -->
-<script src="/js/va-utm.js" is:inline></script>
-<script>
-// @ts-nocheck
-
-(function(){
-'use strict';
-
-var C={
-  formId:'sq-hp',
-  funnel:'squeeze-hoc-phi',
-  level:'k12',
-  api:'/api/lead',
-  redirect:'/cam-on/',
-};
-
-var ov        = document.getElementById('overlay');
-var pClose    = document.getElementById('pClose');
-var s1        = document.getElementById('s1');
-var s2        = document.getElementById('s2');
-var sSuc      = document.getElementById('sSuc');
-var pFill     = document.getElementById('pFill');
-var pLabel    = document.getElementById('pLabel');
-var pPct      = document.getElementById('pPct');
-var btnNext   = document.getElementById('btnNext');
-var btnSubmit = document.getElementById('btnSubmit');
-var btnBack   = document.getElementById('btnBack');
-var ctaBtn    = document.getElementById('ctaBtn');
-var ctaMob    = document.getElementById('ctaMob');
-var uSeats    = document.getElementById('uSeats');
-var cSeats    = document.getElementById('cSeats');
-var s2Seats   = document.getElementById('s2Seats');
-var email     = '';
-
-function open(){
-  ov.classList.add('open');
-  document.body.style.overflow='hidden';
-  gtm('popup_open');
-  setTimeout(function(){var el=document.getElementById('fEmail');if(el)el.focus();},320);
-}
-function close(){
-  ov.classList.remove('open');
-  document.body.style.overflow='';
-}
-if(ctaBtn) ctaBtn.addEventListener('click',open);
-if(ctaMob) ctaMob.addEventListener('click',open);
-pClose.addEventListener('click',close);
-ov.addEventListener('click',function(e){if(e.target===ov)close();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')close();});
-
-function setProgress(n){
-  if(n===1){pFill.style.width='50%';pLabel.textContent='Bước 1 / 2';pPct.textContent='50%';}
-  else     {pFill.style.width='100%';pLabel.textContent='Bước 2 / 2';pPct.textContent='100%';}
-}
-
-function okEmail(v){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)}
-function okPhone(v){v=String(v).replace(/[\s\-\.\(\)]/g,'').replace(/^\+?84/,'0');return /^0[35789][0-9]{8}$/.test(v)}
-function fieldErr(inpId,errId,show){
-  var i=document.getElementById(inpId),e=document.getElementById(errId);
-  if(i)i.classList.toggle('err',show);
-  if(e)e.classList.toggle('on',show);
-}
-
-btnNext.addEventListener('click',function(){
-  var v=(document.getElementById('fEmail')||{}).value||'';
-  if(!okEmail(v.trim())){fieldErr('fEmail','eEmail',true);document.getElementById('fEmail').focus();return;}
-  fieldErr('fEmail','eEmail',false);
-  email=v.trim();
-  try{
-    localStorage.setItem('va_partial_email',email);
-    fetch(C.api,{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify(Object.assign({email:email,form_id:C.formId,funnel_code:C.funnel,school_level:C.level,partial:true},(window.__vaUTM||(window.__vaUTM=function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))())),
-      keepalive:true}).catch(noop);
-  }catch(e){}
-  gtm('lead_step1');
-  s1.classList.remove('on');
-  s2.classList.add('on');
-  setProgress(2);
-  setTimeout(function(){var n=document.getElementById('fName');if(n)n.focus();},80);
-});
-
-btnBack.addEventListener('click',function(){
-  s2.classList.remove('on');s1.classList.add('on');setProgress(1);
-});
-
-btnSubmit.addEventListener('click',function(){
-  var name =(document.getElementById('fName') ||{}).value||'';
-  var phone=(document.getElementById('fPhone')||{}).value||'';
-  var ok=true;
-  if(!name.trim())     {fieldErr('fName', 'eName', true); ok=false;} else fieldErr('fName', 'eName', false);
-  if(!okPhone(phone.trim())){fieldErr('fPhone','ePhone',true);ok=false;} else fieldErr('fPhone','ePhone',false);
-  if(!ok)return;
-
-  btnSubmit.classList.add('loading');
-  btnSubmit.disabled=true;
-
-  fetch(C.api,{
-    method:'POST',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify(Object.assign({
-      email:email,parent_name:name.trim(),phone:phone.trim(),
-      form_id:C.formId,funnel_code:C.funnel,school_level:C.level,
-      tags:['hoc-phi','nhan-bang-gia-2026','squeeze-hoc-phi']
-    },(window.__vaUTM||(window.__vaUTM=function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))())),
-  })
-  .then(function(r){return r.json().catch(noop);})
-  .catch(noop)
-  .finally(function(){
-    gtm('lead_submitted');
-    try{localStorage.setItem('va_form_submitted','1');}catch(e){}
-    btnSubmit.classList.remove('loading');btnSubmit.disabled=false;
-    s2.classList.remove('on');sSuc.classList.add('on');
-    setTimeout(function(){window.location.href=C.redirect;},2400);
-  });
-});
-
-document.getElementById('fEmail').addEventListener('keydown',function(e){if(e.key==='Enter')btnNext.click();});
-document.getElementById('fPhone').addEventListener('keydown',function(e){if(e.key==='Enter')btnSubmit.click();});
-
-setTimeout(function(){
-  [ctaBtn,ctaMob].forEach(function(b){
-    if(!b)return;
-    b.classList.add('shake');
-    setTimeout(function(){b.classList.remove('shake');},560);
-  });
-},3000);
-
-var seats=7+Math.floor(Math.random()*6);
-function setSeats(n){
-  if(uSeats) uSeats.textContent=n;
-  if(cSeats) cSeats.textContent=n;
-  if(s2Seats)s2Seats.textContent=n;
-}
-setSeats(seats);
-var st=setInterval(function(){
-  if(seats<=1){clearInterval(st);return;}
-  seats--;
-  setSeats(seats);
-},(180+Math.random()*300)*1000);
-
-function gtm(evt){
-  try{(window.dataLayer=window.dataLayer||[]).push(Object.assign({event:evt,form_id:C.formId,funnel_code:C.funnel,school_level:C.level},(window.__vaUTM||(window.__vaUTM=function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))()));}
-  catch(e){}
-}
-function noop(){}
-
-})();
-</script>
-
-    <script src="/js/phone-vn.js" defer></script>
-  </body>
-</html>

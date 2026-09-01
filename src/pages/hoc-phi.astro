@@ -256,6 +256,23 @@ const structuredData = [
             </p>
           </div>
         </div>
+
+          <div class="gi-hero-right">
+            <div class="hp-hero-form">
+              <LeadFormTwoStepEmailFirst
+                formId="hp"
+                funnelCode="pillar-hoc-phi-2026"
+                schoolLevel=""
+                title="Để lại thông tin, nhân viên tư vấn trực tiếp"
+                description="Nhân viên tuyển sinh sẽ liên hệ lại, tư vấn học phí đúng khối của con và mức ưu đãi gia đình mình được hưởng."
+                socialProof=""
+                nextText="Nhận tư vấn"
+                submitText="Gửi thông tin"
+                successMessage="Đã nhận thông tin của anh chị. Nhân viên tư vấn sẽ liên hệ trong 24 giờ làm việc."
+              />
+            </div>
+          </div>
+
       </div>
     </section>
 
@@ -805,31 +822,6 @@ const structuredData = [
           </aside>
         </section>
 
-        <!-- ══════════ FORM LEAD ══════════ -->
-        {/* schoolLevel để TRỐNG có chủ đích: trang này phủ lớp 1–12, không có giá trị nào
-            đúng cho mọi người đọc. Bảng dropdown "Khối quan tâm" của Pancake không có mục
-            "tất cả", nên điền bừa là ghi sai dữ liệu vào CRM — thà để trống cho sales hỏi.
-            socialProof để trống vì chưa có số liệu kiểm chứng được về lượt đăng ký. */}
-        <section id="dang-ky-tu-van" class="gi-section hp-form-section">
-          <h2>Muốn biết con anh chị đóng bao nhiêu?</h2>
-          <p>
-            Bảng phía trên là giá niêm yết chung cho mọi gia đình. Con số thật của nhà anh chị
-            còn phụ thuộc khối con vào, cách đóng, và những ưu đãi gia đình mình đủ điều kiện —
-            có nhà chênh nhau vài chục triệu một năm.
-          </p>
-          <LeadFormTwoStepEmailFirst
-            formId="hp"
-            funnelCode="pillar-hoc-phi-2026"
-            schoolLevel=""
-            title="Nhận bảng tính riêng cho khối của con"
-            description="Trường tính cụ thể: học phí khối con sắp vào, các khoản đi kèm, và mức ưu đãi gia đình mình được hưởng."
-            socialProof=""
-            nextText="Nhận bảng tính riêng"
-            submitText="Gửi thông tin"
-            successMessage="Đã nhận thông tin của anh chị. Trường sẽ gửi bảng tính riêng trong 24 giờ làm việc."
-          />
-        </section>
-
         <!-- ══════════ TÁC GIẢ & NGUỒN ══════════ -->
         <section id="ve-tac-gia" class="gi-section hp-author">
           <h2>Về tác giả</h2>
@@ -891,6 +883,30 @@ const structuredData = [
     max-width: 62ch;
   }
   .hp-hero-actions { margin: 1.1rem 0 2.6rem; }
+
+  /* ══════════ THẺ FORM TRONG HERO ══════════ */
+  /* .gi-hero đặt color:#fff cho cả khối, nên form đặt trên nền trắng sẽ thừa kế
+     thành chữ trắng trên nền trắng — phải ép lại màu ở đây. Dùng :global() vì
+     markup do component LeadFormTwoStepEmailFirst sinh ra, không thuộc file này. */
+  .hp-page :global(.gi-hero-right) { width: 380px; max-width: 380px; }
+  .hp-hero-form {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.4rem 1.3rem;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+    color: #1a1a2e;
+  }
+  .hp-hero-form :global(*) { color: inherit; }
+  .hp-hero-form :global(h2),
+  .hp-hero-form :global(h3),
+  .hp-hero-form :global(strong) { color: #26275d; }
+  .hp-hero-form :global(.form-input) { color: #1a1a2e; background: #f8f8fc; }
+  .hp-hero-form :global(.form-input::placeholder) { color: #7a7a99; }
+  @media (max-width: 768px) {
+    .hp-page :global(.gi-hero-right) { width: 100%; max-width: none; }
+    .hp-hero-form { padding: 1.15rem 1rem; }
+  }
+
   .hp-cta-hint {
     font-size: 0.95rem;
     line-height: 1.6;

@@ -271,6 +271,23 @@ const structuredData = [
 
           <a href="#bang-tong" class="hb-hero-link">Xem nhanh bảng tổng 9 chính sách ↓</a>
         </div>
+
+          <div class="gi-hero-right">
+            <div class="hb-hero-form">
+              <LeadFormTwoStepEmailFirst
+                formId="hb"
+                funnelCode="pillar-hoc-bong-2026"
+                schoolLevel=""
+                title="Để lại thông tin, nhân viên tư vấn trực tiếp"
+                description="Nhân viên tuyển sinh sẽ liên hệ lại, đối chiếu chín chính sách rồi báo mức ưu đãi cụ thể cho con."
+                socialProof=""
+                nextText="Nhận tư vấn"
+                submitText="Gửi thông tin"
+                successMessage="Đã nhận thông tin của anh chị. Nhân viên tư vấn sẽ liên hệ trong 24 giờ làm việc."
+              />
+            </div>
+          </div>
+
       </div>
     </section>
 
@@ -1438,28 +1455,6 @@ const structuredData = [
           </p>
         </section>
 
-        <!-- ══════════ FORM LEAD ══════════ -->
-        {/* schoolLevel để TRỐNG có chủ đích — xem ghi chú cùng nội dung ở /hoc-phi. */}
-        <section id="dang-ky-tu-van" class="gi-section hb-form-section">
-          <h2>Con anh chị được giảm bao nhiêu?</h2>
-          <p>
-            Chín chính sách ở trên cộng dồn theo nhiều cách khác nhau, và mỗi gia đình đủ điều
-            kiện một tổ hợp khác nhau. Anh chị không phải tự tính — để lại thông tin, phòng tài
-            chính đối chiếu toàn bộ rồi báo lại mức cụ thể cho con.
-          </p>
-          <LeadFormTwoStepEmailFirst
-            formId="hb"
-            funnelCode="pillar-hoc-bong-2026"
-            schoolLevel=""
-            title="Nhận mức ưu đãi tính riêng cho con"
-            description="Trường đối chiếu cả chín chính sách với hoàn cảnh gia đình anh chị rồi báo lại con số cụ thể."
-            socialProof=""
-            nextText="Xem mức của con tôi"
-            submitText="Gửi thông tin"
-            successMessage="Đã nhận thông tin của anh chị. Phòng tài chính sẽ báo lại mức cụ thể trong 24 giờ làm việc."
-          />
-        </section>
-
         <!-- ══════════ VỀ TÁC GIẢ ══════════ -->
         <section id="ve-tac-gia" class="gi-section hb-author">
           <h2>Về tác giả</h2>
@@ -1575,6 +1570,30 @@ const structuredData = [
     max-width: 62ch;
   }
   .hb-hero-actions { margin-bottom: 1.1rem; }
+
+  /* ══════════ THẺ FORM TRONG HERO ══════════ */
+  /* .gi-hero đặt color:#fff cho cả khối, nên form đặt trên nền trắng sẽ thừa kế
+     thành chữ trắng trên nền trắng — phải ép lại màu ở đây. Dùng :global() vì
+     markup do component LeadFormTwoStepEmailFirst sinh ra, không thuộc file này. */
+  .hb-page :global(.gi-hero-right) { width: 380px; max-width: 380px; }
+  .hb-hero-form {
+    background: #fff;
+    border-radius: 14px;
+    padding: 1.4rem 1.3rem;
+    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+    color: #1a1a2e;
+  }
+  .hb-hero-form :global(*) { color: inherit; }
+  .hb-hero-form :global(h2),
+  .hb-hero-form :global(h3),
+  .hb-hero-form :global(strong) { color: #26275d; }
+  .hb-hero-form :global(.form-input) { color: #1a1a2e; background: #f8f8fc; }
+  .hb-hero-form :global(.form-input::placeholder) { color: #7a7a99; }
+  @media (max-width: 768px) {
+    .hb-page :global(.gi-hero-right) { width: 100%; max-width: none; }
+    .hb-hero-form { padding: 1.15rem 1rem; }
+  }
+
   .hb-hero-link {
     display: inline-block;
     color: #fff;

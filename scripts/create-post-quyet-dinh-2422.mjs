@@ -109,7 +109,7 @@ const post = {
   status: STATUS,
   excerpt: "Từ năm học 2026–2027, mọi học sinh lớp 1–12 học tối thiểu 12 tiết AI/năm theo Quyết định 2422: không bài thi, không đầu điểm riêng, không thu thêm phí.",
   content,
-  published_at: "2026-08-28T09:00:00",
+  published_at: "2026-09-01T09:00:00",
   category: "phu-huynh",
 };
 

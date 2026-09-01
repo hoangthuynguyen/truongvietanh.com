@@ -112,7 +112,6 @@ export const defaultSiteUrl = 'https://truongvietanh.com';
 export const adminUrl = 'https://admin.truongvietanh.com/admin';
 
 export const mainNavLeft = [
-  { label: 'Trang chủ', href: '/' },
   {
     label: 'Giới thiệu',
     href: '/gioi-thieu',
@@ -125,7 +124,28 @@ export const mainNavLeft = [
       { label: 'Âm nhạc Việt Anh', href: '/am-nhac' },
     ]
   },
+  // Trang thành tích thể thao / kỹ năng / ngoại khóa chưa tồn tại —
+  // khi nào có trang thì thêm lại children ở đây.
+  { label: 'Thành tích', href: '/thanh-tich-hoc-tap' },
   { label: 'Đánh giá', href: '/danh-gia-cua-phu-huynh' },
+  {
+    label: 'Chương trình',
+    href: '/cap-hoc',
+    children: [
+      { label: 'Mầm non', href: '/mam-non' },
+      { label: 'Tiểu học', href: '/tieu-hoc' },
+      { label: 'THCS', href: '/thcs' },
+      { label: 'THPT', href: '/thpt' },
+      { label: 'Trại hè', href: '/trai-he-2026' },
+      { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
+      { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
+      { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang' },
+      { label: 'Du học', href: '/du-hoc' },
+    ]
+  },
+];
+
+export const mainNavRight = [
   {
     label: 'Tuyển sinh',
     href: '/tuyen-sinh',
@@ -142,27 +162,6 @@ export const mainNavLeft = [
       { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang' },
     ]
   },
-];
-
-export const mainNavRight = [
-  {
-    label: 'Chương trình',
-    href: '/cap-hoc',
-    children: [
-      { label: 'Mầm non', href: '/mam-non' },
-      { label: 'Tiểu học', href: '/tieu-hoc' },
-      { label: 'THCS', href: '/thcs' },
-      { label: 'THPT', href: '/thpt' },
-      { label: 'Trại hè', href: '/trai-he-2026' },
-      { label: 'Tiếng Anh Trẻ Em', href: '/tuyen-sinh/tieng-anh-tre-em' },
-      { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
-      { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang' },
-      { label: 'Du học', href: '/du-hoc' },
-    ]
-  },
-  // Các trang thành tích thể thao / kỹ năng / ngoại khóa / giáo viên chưa tồn tại —
-  // khi nào có trang thì thêm lại children ở đây.
-  { label: 'Thành tích', href: '/thanh-tich-hoc-tap' },
   { label: 'Blog', href: '/blog' },
   { label: 'Hình ảnh', href: '/hinh-anh' },
   { label: 'Liên hệ', href: '/lien-he' },

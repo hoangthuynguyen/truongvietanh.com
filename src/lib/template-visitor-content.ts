@@ -614,7 +614,7 @@ reg('class-homepage', {
   heroBadge: 'Trường Việt Anh',
   heroTitle: 'Kiến tạo những công dân toàn cầu hạnh phúc — Hệ thống giáo dục liên cấp song ngữ',
   heroCopy: 'Trường Việt Anh là hệ thống giáo dục liên cấp từ mầm non đến THPT tại TP.HCM. Triết lý "Học thật, Sống chất, Không áp lực ảo" với tiếng Anh mỗi ngày và hệ thống phát triển cá nhân PDR.',
-  asideEyebrow: '4 cấp học', asideTitle: 'Đồng hành cùng con từ 2 đến 18 tuổi',
+  asideEyebrow: '4 cấp học', asideTitle: 'Đồng hành cùng con từ 1 đến 18 tuổi',
   asidePoints: ['Mầm non song ngữ (2-6 tuổi)', 'Tiểu học (6-11 tuổi)', 'THCS (11-15 tuổi)', 'THPT (15-18 tuổi)'],
   ctaPrimaryText: 'Đăng ký tư vấn', ctaPrimaryHref: '/tuyen-sinh',
   ctaSecondaryText: 'Chọn cấp học', ctaSecondaryHref: '/mam-non',

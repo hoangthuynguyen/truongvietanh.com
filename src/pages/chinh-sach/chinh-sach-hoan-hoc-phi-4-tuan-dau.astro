@@ -1,0 +1,495 @@
+---
+// Trang ĐIỀU KHOẢN VĨNH VIỄN — Chính sách hoàn 100% học phí 4 tuần đầu.
+// KHÔNG phải bài blog: không có ngày trong URL, không dùng schema BlogPosting.
+// URL chốt: /chinh-sach/chinh-sach-hoan-hoc-phi-4-tuan-dau — mọi thay đổi phải giữ nguyên.
+//
+// QUAN HỆ VỚI QUYẾT ĐỊNH 0728.1/2026/QĐ-MAJOR (đăng toàn văn tại /chinh-sach):
+// Trang này là bản điều khoản chi tiết áp dụng từ năm học 2026–2027, do anh Dương
+// chốt ngày 01/09/2026. Có 4 điểm khác bản 0728.1 đang treo trên /chinh-sach:
+//   (1) phạm vi hoàn — bản này chỉ hoàn học phí, 0728.1 hoàn cả CSVC + Oxford;
+//   (2) điều kiện — bản này 90% chuyên cần (18/20 ngày), 0728.1 chỉ "đi học đầy đủ";
+//   (3) mốc 4 tuần — bản này tính từ ngày đi học đầu tiên THỰC TẾ của từng học sinh,
+//       0728.1 tính theo 4 tuần lễ đầu NĂM HỌC (Học kỳ Foundation);
+//   (4) thủ tục — bản này qua rút hồ sơ, 0728.1 ghi "không phải nộp đơn".
+// => Cần ban hành một Quyết định sửa đổi CÓ SỐ HIỆU MỚI để thay thế 0728.1 về mặt
+//    văn bản. Trước khi có văn bản đó, toàn văn 0728.1 trên /chinh-sach GIỮ NGUYÊN
+//    (đó là bản đã ký, đóng dấu — không được sửa chữ trong bản scan/toàn văn).
+//
+// Quy tắc viết trên trang này (bộ thông số AEO, giống /chinh-sach-ai):
+//   - Mỗi H2 là một câu hỏi fan-out, có anchor id tiếng Việt không dấu.
+//   - Ngay dưới mỗi H2 là 1 đoạn 2–4 câu trả lời thẳng, có nhắc "Trường Việt Anh"
+//     để chunk bị tách khỏi trang vẫn giữ được chủ ngữ.
+//   - Bảng phải là <table> thật, bọc trong .gi-table-responsive.
+//   - FAQ dùng component FaqAccordion, schema FAQPage sinh từ CÙNG mảng `faqs`.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeaderBase from '../../components/HeaderBase.astro';
+import FooterBase from '../../components/FooterBase.astro';
+import FaqAccordion from '../../components/FaqAccordion.astro';
+
+const canonical = 'https://truongvietanh.com/chinh-sach/chinh-sach-hoan-hoc-phi-4-tuan-dau';
+
+const NGAY_CONG_BO = '2026-09-01T09:00:00+07:00';
+
+// 6 câu hỏi thường gặp — dùng chung cho phần hiển thị và cho schema FAQPage,
+// không chép tay hai lần để tránh lệch nội dung (ràng buộc AEO, xem CLAUDE.md).
+const faqs = [
+  {
+    id: 'faq-17-tren-20-ngay',
+    q: 'Nếu con chỉ đi học 17/20 ngày trong 4 tuần đầu thì có được hoàn học phí không?',
+    a: 'Không đủ điều kiện áp dụng tự động, vì chính sách của Trường Việt Anh yêu cầu tối thiểu 18/20 ngày học (90% thời lượng) và đi học đúng giờ trong 4 tuần học đầu tiên của học sinh. Với các trường hợp nghỉ học vì lý do đặc biệt (ốm dài ngày…), phụ huynh nên trao đổi trực tiếp với Phòng Tuyển sinh để nhà trường xem xét từng trường hợp cụ thể.',
+  },
+  {
+    id: 'faq-bhyt-tien-an-dong-phuc',
+    q: 'Bảo hiểm y tế, tiền ăn, đồng phục có được hoàn lại không?',
+    a: 'Không. Chính sách của Trường Việt Anh chỉ hoàn 100% học phí đã đóng. Bảo hiểm y tế, chi phí dã ngoại, tiền ăn, tiền đồng phục và các dịch vụ khác đã sử dụng không nằm trong phạm vi hoàn tiền, vì đây là các khoản cho dịch vụ hoặc quyền lợi đã phát sinh hoặc đã sử dụng trên thực tế.',
+  },
+  {
+    id: 'faq-moc-7-ngay-lam-viec',
+    q: 'Thời gian 7 ngày làm việc được tính từ mốc nào?',
+    a: 'Từ ngày học sinh chính thức hoàn tất thủ tục rút hồ sơ khỏi Trường Việt Anh, không phải từ ngày phụ huynh gửi thông báo ban đầu. Phụ huynh nên hoàn tất thủ tục rút hồ sơ sớm với Phòng Tuyển sinh để rút ngắn thời gian chờ nhận lại học phí.',
+  },
+  {
+    id: 'faq-co-bat-buoc-phong-van',
+    q: 'Có bắt buộc tham gia phỏng vấn với nhà trường mới được hoàn học phí không?',
+    a: 'Không. Trường Việt Anh có thể mời phụ huynh và học sinh tham gia một buổi trao đổi ngắn để hiểu lý do, giúp cải thiện chất lượng, nhưng việc tham gia hay trả lời bất kỳ câu hỏi nào trong buổi trao đổi này hoàn toàn không phải là điều kiện để được hoàn học phí.',
+  },
+  {
+    id: 'faq-sau-4-tuan',
+    q: 'Sau 4 tuần đầu tiên, nếu phụ huynh mới thấy không phù hợp thì có được áp dụng chính sách này không?',
+    a: 'Không. Chính sách của Trường Việt Anh chỉ áp dụng trong đúng 4 tuần học đầu tiên của học sinh, tính từ ngày đi học đầu tiên thực tế. Sau mốc này, việc rút hồ sơ sẽ theo quy định chung của nhà trường về thôi học/chuyển trường.',
+  },
+  {
+    id: 'faq-ap-dung-cho-ai',
+    q: 'Chính sách này áp dụng cho học sinh nào, ở cơ sở nào?',
+    a: 'Áp dụng cho học sinh mới — nhập học lần đầu tại một cơ sở thuộc hệ thống Trường Việt Anh — tại tất cả các cơ sở trong hệ thống, từ năm học 2026–2027. Học sinh cũ chuyển cơ sở hoặc chuyển khối trong cùng hệ thống Việt Anh không được tính là "học sinh mới" và không thuộc phạm vi chính sách này.',
+  },
+];
+
+const mucLuc = [
+  { id: 'chinh-sach-la-gi', label: 'Chính sách hoàn học phí 4 tuần là gì?' },
+  { id: 'ai-duoc-ap-dung', label: 'Ai được áp dụng chính sách này?' },
+  { id: 'so-tien-duoc-hoan', label: 'Số tiền được hoàn là bao nhiêu?' },
+  { id: 'dieu-kien', label: 'Điều kiện để được hoàn học phí' },
+  { id: 'vi-sao-4-tuan', label: 'Vì sao mốc thời gian là 4 tuần?' },
+  { id: 'quy-trinh', label: 'Quy trình rút hồ sơ và xin hoàn học phí' },
+  { id: 'phong-van', label: 'Có bắt buộc phỏng vấn không?' },
+  { id: 'sau-4-tuan', label: 'Sau 4 tuần còn áp dụng không?' },
+  { id: 'cau-hoi-thuong-gap', label: 'Câu hỏi thường gặp' },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'WebPage',
+        '@id': `${canonical}#page`,
+        url: canonical,
+        name: 'Chính Sách Hoàn 100% Học Phí 4 Tuần Đầu | Việt Anh',
+        description:
+          'Trường Việt Anh hoàn 100% học phí đã đóng cho học sinh mới nếu chưa hài lòng trong 4 tuần đầu, kèm điều kiện chuyên cần 90% và thời gian xử lý 7 ngày làm việc.',
+        inLanguage: 'vi-VN',
+        datePublished: NGAY_CONG_BO,
+        dateModified: NGAY_CONG_BO,
+        isPartOf: { '@id': 'https://truongvietanh.com/#website' },
+        author: { '@id': 'https://nguyenmanhduong.com/#person' },
+        publisher: { '@id': 'https://truongvietanh.com/#organization' },
+        about: [
+          { '@type': 'Thing', name: 'Chính sách hoàn học phí' },
+          { '@id': 'https://truongvietanh.com/#organization' },
+        ],
+        audience: {
+          '@type': 'Audience',
+          audienceType: 'Phụ huynh học sinh K-12 tại Việt Nam',
+        },
+        keywords: 'hoàn học phí, chính sách hoàn tiền, học sinh mới, Trường Việt Anh',
+        speakable: {
+          '@type': 'SpeakableSpecification',
+          cssSelector: ['#tra-loi-nhanh'],
+        },
+        breadcrumb: { '@id': `${canonical}#breadcrumb` },
+        mainEntity: { '@id': `${canonical}#faq` },
+      },
+      {
+        '@type': 'EducationalOrganization',
+        '@id': 'https://truongvietanh.com/#organization',
+        name: 'Hệ thống giáo dục Việt Anh',
+        alternateName: ['Trường Việt Anh', 'Hệ Thống Trường Việt Anh', 'Viet Anh School System'],
+        url: 'https://truongvietanh.com',
+        logo: 'https://truongvietanh.com/logo-crest-80.webp',
+        foundingDate: '2011',
+        founder: { '@id': 'https://nguyenmanhduong.com/#person' },
+        telephone: '+84916961409',
+        email: 'tu@truongvietanh.com',
+      },
+      {
+        '@type': 'Person',
+        '@id': 'https://nguyenmanhduong.com/#person',
+        name: 'Nguyễn Mạnh Dương',
+        jobTitle: 'Nhà sáng lập & Chủ tịch hệ thống giáo dục K-12 Việt Anh',
+        worksFor: { '@id': 'https://truongvietanh.com/#organization' },
+        url: 'https://nguyenmanhduong.com',
+        sameAs: [
+          'https://www.linkedin.com/in/nguyenmanhduong',
+          'https://www.facebook.com/nguyenmanhduong1101/',
+          'https://www.youtube.com/@nguyenmanhduong1101',
+          'https://tubinhthuongtronenphithuong.com',
+        ],
+      },
+      {
+        '@type': 'FAQPage',
+        '@id': `${canonical}#faq`,
+        mainEntity: faqs.map((f) => ({
+          '@type': 'Question',
+          name: f.q,
+          acceptedAnswer: { '@type': 'Answer', text: f.a },
+        })),
+      },
+      {
+        '@type': 'HowTo',
+        '@id': `${canonical}#howto`,
+        name: 'Quy trình rút hồ sơ và xin hoàn học phí tại Trường Việt Anh',
+        description: '5 bước phụ huynh cần thực hiện để yêu cầu hoàn học phí trong 4 tuần đầu.',
+        totalTime: 'P7D',
+        step: [
+          {
+            '@type': 'HowToStep',
+            position: 1,
+            name: 'Thông báo ý định rút hồ sơ',
+            text: 'Liên hệ Phòng Tuyển sinh/CSKH qua hotline hoặc email trong vòng 4 tuần học đầu tiên của con.',
+            url: `${canonical}#quy-trinh`,
+          },
+          {
+            '@type': 'HowToStep',
+            position: 2,
+            name: 'Đối chiếu chuyên cần',
+            text: 'Nhà trường xác nhận học sinh đã tham gia tối thiểu 18/20 ngày học và đi học đúng giờ.',
+            url: `${canonical}#quy-trinh`,
+          },
+          {
+            '@type': 'HowToStep',
+            position: 3,
+            name: 'Hoàn tất thủ tục rút hồ sơ',
+            text: 'Phụ huynh hoàn tất thủ tục rút hồ sơ, đối chiếu các khoản đã sử dụng (BHYT, dã ngoại, tiền ăn, đồng phục, dịch vụ khác).',
+            url: `${canonical}#quy-trinh`,
+          },
+          {
+            '@type': 'HowToStep',
+            position: 4,
+            name: 'Phỏng vấn (không bắt buộc)',
+            text: 'Nhà trường có thể mời trao đổi ngắn để hiểu lý do; không phải điều kiện bắt buộc.',
+            url: `${canonical}#phong-van`,
+          },
+          {
+            '@type': 'HowToStep',
+            position: 5,
+            name: 'Nhận hoàn tiền trong 7 ngày làm việc',
+            text: 'Nhà trường hoàn 100% học phí đã đóng vào tài khoản phụ huynh trong vòng 7 ngày làm việc kể từ ngày rút hồ sơ.',
+            url: `${canonical}#quy-trinh`,
+          },
+        ],
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${canonical}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+          { '@type': 'ListItem', position: 2, name: 'Chính sách', item: 'https://truongvietanh.com/chinh-sach' },
+          { '@type': 'ListItem', position: 3, name: 'Chính sách hoàn học phí 4 tuần đầu' },
+        ],
+      },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Chính Sách Hoàn 100% Học Phí 4 Tuần Đầu | Việt Anh"
+  description="Trường Việt Anh hoàn 100% học phí đã đóng cho học sinh mới nếu chưa hài lòng trong 4 tuần đầu, kèm điều kiện chuyên cần 90% và thời gian xử lý 7 ngày làm việc."
+  keywords="hoàn học phí trường việt anh, chính sách hoàn tiền học phí, hoàn 100% học phí 4 tuần, trường có trả lại học phí không, rút hồ sơ hoàn học phí"
+  canonical={canonical}
+  ogType="article"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase currentPath="/chinh-sach" />
+
+    <section class="gi-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left" style="flex:1">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true">›</span>
+            <a href="/chinh-sach">Chính sách</a>
+            <span aria-hidden="true">›</span>
+            <span>Hoàn học phí 4 tuần đầu</span>
+          </nav>
+          <h1 class="gi-h1">Chính sách hoàn 100% học phí trong 4 tuần đầu</h1>
+          <p class="gi-subtitle">
+            Áp dụng cho học sinh mới · Toàn hệ thống Trường Việt Anh · Từ năm học 2026–2027
+          </p>
+          <p class="gi-last-updated">Cập nhật lần cuối: 01/09/2026</p>
+
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>Hoàn 100%</strong> Học phí đã đóng</div>
+            <div class="gi-badge"><strong>4 tuần đầu</strong> Của chính con anh chị</div>
+            <div class="gi-badge"><strong>7 ngày làm việc</strong> Kể từ khi rút hồ sơ</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="gi-container gi-body">
+      <nav class="gi-toc" aria-label="Mục lục">
+        <p class="gi-toc-title">Nội dung</p>
+        <ol class="gi-toc-list">
+          {mucLuc.map((m) => (
+            <li><a href={`#${m.id}`}>{m.label}</a></li>
+          ))}
+        </ol>
+        <a href="/dat-lich-tham-quan" class="gi-toc-cta">Đặt lịch tham quan</a>
+      </nav>
+
+      <article class="gi-main" id="main-content" data-no-collapse>
+        <p class="gi-lead" id="tra-loi-nhanh">
+          Trường Việt Anh hoàn 100% học phí đã đóng (không tính bảo hiểm y tế, dã ngoại, tiền ăn,
+          đồng phục, dịch vụ khác đã sử dụng) cho mọi học sinh mới, nếu sau 4 tuần học đầu tiên
+          phụ huynh hoặc học sinh cảm thấy giá trị nhận được chưa như kỳ vọng. Điều kiện: học sinh
+          đi học đúng giờ và tham gia tối thiểu 90% chương trình (18/20 ngày học). Nhà trường xử lý
+          hoàn tiền trong 7 ngày làm việc kể từ khi học sinh rút hồ sơ.
+        </p>
+
+        <p>Chọn trường cho con là một quyết định lớn, và tôi hiểu nỗi lo lớn nhất của phụ huynh không phải là học phí — mà là "nếu chọn sai thì sao?". Không ai muốn con phải chuyển trường giữa năm học, càng không ai muốn cảm giác "đâm lao phải theo lao" chỉ vì đã đóng tiền. Chính sách này được viết ra để giải quyết đúng nỗi lo đó: chúng tôi để phụ huynh thử trước, tin sau — và nếu 4 tuần đầu không mang lại giá trị như kỳ vọng, chúng tôi hoàn lại toàn bộ học phí, không cần tranh cãi.</p>
+
+        <p class="chp-vanban-note">
+          Đây là bản điều khoản chi tiết đang áp dụng. Toàn văn văn bản gốc có số hiệu, chữ ký và
+          con dấu được đăng công khai tại trang <a href="/chinh-sach">Chính sách &amp; Văn bản công khai</a>.
+        </p>
+
+        <section id="chinh-sach-la-gi" class="gi-section">
+          <h2>Chính sách hoàn học phí 4 tuần của Việt Anh là gì?</h2>
+          <p>Đây là cam kết của Trường Việt Anh: nếu học sinh mới học tại Việt Anh trong 4 tuần đầu tiên mà phụ huynh hoặc chính học sinh cảm thấy giá trị nhận được không thoả mãn kỳ vọng ban đầu, gia đình có quyền rút hồ sơ và được hoàn lại học phí đã đóng, mà không cần chứng minh lý do hay trải qua bất kỳ thủ tục khiếu nại phức tạp nào.</p>
+          <p>Đây là cách nhà trường tự đặt mình vào rủi ro tài chính thay vì để phụ huynh gánh rủi ro đó một mình khi quyết định chọn trường.</p>
+        </section>
+
+        <section id="ai-duoc-ap-dung" class="gi-section">
+          <h2>Ai được áp dụng chính sách này?</h2>
+          <p>Chính sách của Trường Việt Anh áp dụng cho mọi <strong>học sinh mới</strong> — học sinh nhập học lần đầu tại một cơ sở thuộc hệ thống Trường Việt Anh — tại tất cả các cơ sở trong hệ thống, từ năm học 2026–2027, kể từ ngày được công bố trên website.</p>
+          <p>Các cơ sở áp dụng:</p>
+          <ul>
+            <li>Tiểu học – THCS – THPT Việt Anh Gò Vấp</li>
+            <li>Tiểu học – THCS – THPT Việt Anh Bình Tân</li>
+            <li>Mầm non Việt Anh Gò Vấp</li>
+            <li>Cụm Long Hậu: Mầm non &amp; Tiểu học Thái Sơn, Mầm non Nhân Lễ</li>
+            <li>Mầm non &amp; Tiểu học Mekong Xanh (MGIS)</li>
+          </ul>
+          <p>Chính sách chỉ áp dụng cho học sinh nhập học lần đầu tại hệ thống. Trường hợp học sinh cũ chuyển cơ sở hoặc chuyển khối trong cùng hệ thống Việt Anh <strong>không</strong> được tính là "học sinh mới" và không thuộc phạm vi chính sách này.</p>
+        </section>
+
+        <section id="so-tien-duoc-hoan" class="gi-section">
+          <h2>Số tiền được hoàn là bao nhiêu?</h2>
+          <p>Trường Việt Anh hoàn 100% học phí đã đóng cho 4 tuần học đầu tiên đó. Các khoản dưới đây không nằm trong phạm vi hoàn tiền, vì đây là chi phí cho dịch vụ, quyền lợi đã phát sinh hoặc đã sử dụng thực tế.</p>
+          <div class="gi-table-responsive">
+            <table>
+              <thead>
+                <tr>
+                  <th scope="col">Khoản mục</th>
+                  <th scope="col">Có được hoàn không?</th>
+                  <th scope="col">Vì sao</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Học phí đã đóng cho 4 tuần học đầu tiên</td>
+                  <td><strong>Có — hoàn 100%</strong></td>
+                  <td>Đây là khoản cam kết của chính sách</td>
+                </tr>
+                <tr>
+                  <td>Bảo hiểm y tế (BHYT)</td>
+                  <td>Không</td>
+                  <td>Quyền lợi bảo hiểm đã phát sinh theo quy định của cơ quan bảo hiểm</td>
+                </tr>
+                <tr>
+                  <td>Chi phí dã ngoại đã sử dụng hoặc đã đặt chỗ</td>
+                  <td>Không</td>
+                  <td>Dịch vụ/hoạt động đã diễn ra hoặc đã đặt chỗ</td>
+                </tr>
+                <tr>
+                  <td>Tiền ăn</td>
+                  <td>Không</td>
+                  <td>Chi phí cho bữa ăn đã sử dụng thực tế</td>
+                </tr>
+                <tr>
+                  <td>Đồng phục</td>
+                  <td>Không</td>
+                  <td>Hiện vật đã giao và sử dụng</td>
+                </tr>
+                <tr>
+                  <td>Các dịch vụ khác đã sử dụng (xe đưa rước, câu lạc bộ, bán trú…)</td>
+                  <td>Không</td>
+                  <td>Tính theo số buổi/thời lượng đã sử dụng thực tế</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section id="dieu-kien" class="gi-section">
+          <h2>Điều kiện để được hoàn học phí là gì?</h2>
+          <p>Câu trả lời ngắn: học sinh phải đi học đúng giờ và tham gia đủ chương trình học ít nhất 90% thời lượng của 4 tuần học đầu tiên, tương đương <strong>18 trên 20 ngày học</strong>. Đây là 4 tuần học đầu tiên tính riêng cho từng học sinh — bắt đầu từ ngày đi học đầu tiên thực tế của con, không phải theo lịch chung của cả trường.</p>
+          <p>Điều kiện áp dụng gồm hai phần:</p>
+          <ol>
+            <li><strong>Đi học đúng giờ</strong> — không tính các buổi đến trễ quá mức quy định của nhà trường là một buổi vắng.</li>
+            <li><strong>Tham gia tối thiểu 90% thời lượng</strong> — tương đương 18/20 ngày học trong 4 tuần học đầu tiên của học sinh. Nếu số ngày đi học thấp hơn mức này (ví dụ nghỉ ốm, nghỉ phép dài ngày), hồ sơ không đủ điều kiện áp dụng chính sách hoàn học phí theo diện tự động — phụ huynh có thể trao đổi trực tiếp với Phòng Tuyển sinh về trường hợp cụ thể của con.</li>
+          </ol>
+        </section>
+
+        <section id="vi-sao-4-tuan" class="gi-section">
+          <h2>Vì sao mốc thời gian là 4 tuần?</h2>
+          <p>Bốn tuần — 20 ngày học — là khoảng thời gian đủ để một học sinh mới của Trường Việt Anh trải qua trọn vẹn ít nhất một vòng làm quen với nề nếp lớp học: nhịp <a href="/he-thong-pdr">Plan – Do – Review</a> (ở mầm non là Plan – Do – Recall) mỗi ngày, buổi Morning Meeting, và với học sinh mới, một bạn <strong>Hoa Tiêu Junior</strong> — học sinh khoá trên — đi cùng trong những ngày đầu để giúp con quen trường, quen lớp, quen bạn.</p>
+          <p>Bốn tuần đủ để phụ huynh và học sinh cảm nhận được "học ở đây, sống ở đây có ổn với con không" — dù thói quen thật sự bền vững, theo nghiên cứu của Phillippa Lally và cộng sự (University College London, <em>European Journal of Social Psychology</em>, 2009), cần trung bình khoảng 66 ngày mới hình thành.</p>
+          <p>Bốn tuần không đủ để tạo thói quen, nhưng đủ để nhận ra một môi trường có phù hợp với con hay không — và đó chính là điều chính sách này muốn phụ huynh có thời gian kiểm chứng, không phải chỉ đọc trên website rồi tự tin đóng tiền cả năm.</p>
+        </section>
+
+        <section id="quy-trinh" class="gi-section">
+          <h2>Quy trình rút hồ sơ và xin hoàn học phí như thế nào?</h2>
+          <p>Trường Việt Anh xử lý yêu cầu hoàn học phí theo 5 bước dưới đây, tổng thời gian tối đa 7 ngày làm việc kể từ ngày học sinh chính thức rút hồ sơ.</p>
+          <ol class="chp-steps">
+            <li><strong>Thông báo ý định rút hồ sơ.</strong> Trong vòng 4 tuần học đầu tiên của con (tính từ ngày đi học đầu tiên thực tế), nếu phụ huynh thấy giá trị nhận được chưa như kỳ vọng, liên hệ Phòng Tuyển sinh/CSKH qua hotline <a href="tel:0916961409">0916 961 409</a> hoặc email <a href="mailto:tu@truongvietanh.com">tu@truongvietanh.com</a> để thông báo ý định rút hồ sơ.</li>
+            <li><strong>Đối chiếu chuyên cần.</strong> Nhà trường đối chiếu dữ liệu chuyên cần của học sinh trong 4 tuần đầu (đi học đúng giờ, đạt tối thiểu 18/20 ngày học).</li>
+            <li><strong>Hoàn tất thủ tục rút hồ sơ.</strong> Phụ huynh hoàn tất thủ tục rút hồ sơ theo quy định của trường, đồng thời đối chiếu các khoản đã sử dụng (BHYT, dã ngoại, tiền ăn, đồng phục, dịch vụ khác) để xác định số tiền được hoàn.</li>
+            <li><strong>Buổi trao đổi ngắn (không bắt buộc).</strong> Nhà trường có thể mời phụ huynh và học sinh tham gia một buổi trao đổi ngắn để hiểu lý do và cải thiện chất lượng — buổi trao đổi này không bắt buộc và không phải điều kiện để được hoàn học phí (xem <a href="#phong-van">mục tiếp theo</a>).</li>
+            <li><strong>Nhận hoàn tiền trong 7 ngày làm việc.</strong> Trong vòng 7 ngày làm việc kể từ ngày học sinh chính thức rút hồ sơ khỏi trường, nhà trường hoàn 100% học phí đã đóng (trừ các khoản không thuộc phạm vi hoàn tiền) vào tài khoản phụ huynh.</li>
+          </ol>
+        </section>
+
+        <section id="phong-van" class="gi-section">
+          <h2>Có bắt buộc phỏng vấn mới được hoàn học phí không?</h2>
+          <p><strong>Không.</strong> Học sinh và phụ huynh có thể được Trường Việt Anh mời tham gia một buổi phỏng vấn hoặc trao đổi ngắn sau khi rút hồ sơ, nhằm giúp nhà trường hiểu rõ hơn lý do và cải thiện chất lượng dạy và học.</p>
+          <p>Nhưng việc tham gia buổi trao đổi này, hoặc trả lời bất kỳ câu hỏi nào trong đó, không phải là điều kiện bắt buộc để được hoàn học phí theo thỏa thuận này. Phụ huynh hoàn toàn có quyền từ chối tham gia mà không ảnh hưởng đến quyền lợi hoàn tiền, miễn đã đáp ứng điều kiện chuyên cần nêu ở trên.</p>
+        </section>
+
+        <section id="sau-4-tuan" class="gi-section">
+          <h2>Sau 4 tuần đầu tiên, chính sách còn áp dụng không?</h2>
+          <p><strong>Không.</strong> Sau 4 tuần kể từ ngày đầu tiên nhập học, chính sách hoàn học phí này của Trường Việt Anh không còn khả dụng với học sinh đó.</p>
+          <p>Nếu phụ huynh quyết định rút hồ sơ sau mốc 4 tuần, việc xử lý học phí sẽ theo quy định chung của nhà trường về thôi học/chuyển trường, không thuộc phạm vi chính sách hoàn học phí 4 tuần đầu này.</p>
+        </section>
+
+        <section id="cau-hoi-thuong-gap" class="gi-section">
+          <h2>Câu hỏi thường gặp</h2>
+          <p>Sáu câu hỏi phụ huynh hỏi nhiều nhất về chính sách hoàn học phí 4 tuần đầu của Trường Việt Anh.</p>
+          <FaqAccordion faqs={faqs} />
+        </section>
+
+        <section id="cam-ket" class="gi-section">
+          <h2>Chúng tôi tin vào điều mình làm — nên sẵn sàng để phụ huynh kiểm chứng</h2>
+          <p>Tôi không viết chính sách này để làm marketing. Tôi viết nó vì tôi tin một trường tốt không cần phụ huynh phải "đặt cược" cả năm học phí để biết trường có phù hợp với con hay không. Nếu 4 tuần đầu tiên mà một môi trường giáo dục không cho phụ huynh cảm nhận được sự khác biệt, thì việc giữ tiền của gia đình đó lại không phải là kinh doanh — đó là rủi ro chúng tôi không muốn đẩy sang phía phụ huynh.</p>
+          <p>Nếu con đến trường đúng giờ, học đủ 4 tuần đầu, mà gia đình vẫn thấy chưa đúng như kỳ vọng — chúng tôi hoàn lại toàn bộ học phí, không hỏi nhiều, không giữ chân bằng thủ tục.</p>
+          <p>Nếu anh chị đang cân nhắc chọn trường cho con và muốn tận mắt thấy một buổi học, một tiết PDR, một Morning Meeting trước khi quyết định — thay vì chỉ đọc thông tin trên website — anh chị sẽ hiểu rõ hơn rất nhiều so với chỉ đọc điều khoản. Nếu bỏ qua bước này, anh chị sẽ phải quyết định chỉ dựa trên thông tin trực tuyến, trong khi điều quan trọng nhất — con có thoải mái trong môi trường đó không — chỉ nhìn thấy được khi bước chân vào lớp học.</p>
+          <p class="chp-cta">
+            <a href="/dat-lich-tham-quan" class="chp-cta-btn">Đặt lịch tham quan Trường Việt Anh</a>
+          </p>
+          <p class="chp-cta-note">Trường đón anh chị Thứ 2 – Thứ 7, 07:00 – 19:00. Chủ Nhật ngoài giờ làm việc nhưng hẹn trước vẫn tham quan được.</p>
+        </section>
+
+        <section id="nguon-tham-khao" class="gi-section">
+          <h2>Nguồn tham khảo</h2>
+          <ul>
+            <li>Lally, P. và cộng sự (2009), "How are habits formed: Modelling habit formation in the real world", <em>European Journal of Social Psychology</em>, University College London — dùng để giải thích khoảng thời gian hình thành thói quen (trung bình 66 ngày), làm rõ vì sao 4 tuần đủ để nhận biết sự phù hợp nhưng chưa đủ để hình thành thói quen.</li>
+            <li>Các số liệu, điều kiện, mốc thời gian còn lại (100% học phí, 90% / 18–20 ngày, 7 ngày làm việc) là chính sách nội bộ do Trường Việt Anh ban hành, không phải số liệu nghiên cứu bên ngoài.</li>
+          </ul>
+
+          <h3>Đọc thêm</h3>
+          <ul>
+            <li><a href="/chinh-sach">Chính sách &amp; Văn bản công khai</a> — toàn văn các văn bản có số hiệu, chữ ký và con dấu.</li>
+            <li><a href="/hoc-phi">Bảng học phí năm học 2026–2027</a> — kèm cam kết không phát sinh chi phí bắt buộc trong năm.</li>
+            <li><a href="/he-thong-pdr">Hệ thống Plan – Do – Review</a> — nhịp học mỗi ngày mà phụ huynh kiểm chứng được trong 4 tuần đầu.</li>
+            <li><a href="/khieu-nai">Quy trình Giải quyết Khiếu nại</a> — 5 bước, có mẫu đơn trực tuyến.</li>
+          </ul>
+
+          <div class="chp-author">
+            <p class="chp-author-title">Về người viết</p>
+            <p><strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt Anh (từ 2011). 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi. Website cá nhân: <a href="https://nguyenmanhduong.com" target="_blank" rel="noopener">nguyenmanhduong.com</a>.</p>
+            <p class="chp-author-date">Cập nhật lần cuối: 01/09/2026.</p>
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <section class="gi-related">
+      <div class="gi-container">
+        <h2 class="gi-related-title">Có thể quý vị cần</h2>
+        <div class="gi-related-grid">
+          <a href="/dat-lich-tham-quan" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #26275D 0%, #363876 100%);"></div>
+            <h3>Đặt lịch tham quan trường</h3>
+            <p>Đến xem một buổi học thật, một tiết PDR, một Morning Meeting trước khi quyết định.</p>
+          </a>
+          <a href="/hoc-phi" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #f9dd0e 0%, #cbb30a 100%);"></div>
+            <h3>Học phí 2026–2027</h3>
+            <p>Bảng phí từng cấp, các khoản ưu đãi và cam kết không phát sinh chi phí bắt buộc.</p>
+          </a>
+          <a href="/chinh-sach" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #1e3a5f 0%, #2c5282 100%);"></div>
+            <h3>Chính sách &amp; Văn bản</h3>
+            <p>Toàn văn các văn bản chính sách có số hiệu, chữ ký và con dấu.</p>
+          </a>
+          <a href="/khieu-nai" class="gi-related-card">
+            <div class="gi-related-img" style="background: linear-gradient(135deg, #0f172a 0%, #334155 100%);"></div>
+            <h3>Gửi khiếu nại</h3>
+            <p>Quy trình 5 bước, SLA 30 ngày. Yêu cầu về dữ liệu cá nhân phản hồi trong 72h.</p>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  /* Khối riêng của trang này. Kiểu dáng chung (.gi-*) nằm ở src/styles/global.css. */
+  .chp-vanban-note {
+    background: #f8fafc;
+    border-left: 3px solid #26275D;
+    border-radius: 0 10px 10px 0;
+    padding: 0.9rem 1.2rem;
+    font-size: 0.96rem;
+    color: #3b4963;
+    margin: 1.5rem 0 2rem;
+  }
+
+  .chp-steps li { margin-bottom: 0.9rem; line-height: 1.8; }
+
+  .chp-cta { margin: 1.8rem 0 0.6rem !important; }
+  .chp-cta-btn {
+    display: inline-block;
+    background: #26275D;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    padding: 0.9rem 1.8rem;
+    border-radius: 10px;
+    transition: background 0.2s ease;
+  }
+  .chp-cta-btn:hover { background: #363876; color: #fff; }
+  .chp-cta-note { font-size: 0.92rem; color: #64748b; }
+
+  .chp-author {
+    margin-top: 2rem;
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 1.35rem 1.6rem;
+  }
+  .chp-author-title {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin-bottom: 0.6rem !important;
+  }
+  .chp-author-date { font-size: 0.9rem; color: #64748b; margin-bottom: 0 !important; }
+</style>

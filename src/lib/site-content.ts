@@ -341,7 +341,7 @@ const priorityPages: PageSpec[] = [
           },
           {
             eyebrow: 'Mầm non chuyên sâu',
-            title: 'Mầm non Gò Vấp Lê Đức Thọ',
+            title: 'Mầm non Việt Anh Gò Vấp Lê Đức Thọ',
             body: 'Điểm bắt đầu mạnh cho nhóm phụ huynh đang tìm môi trường mầm non gần nhà, cần cảm giác an tâm và nhịp sinh hoạt phù hợp.',
             href: '/co-so/mam-non-go-vap-le-duc-tho',
             cta: 'Xem cơ sở Lê Đức Thọ',
@@ -510,15 +510,15 @@ const priorityPages: PageSpec[] = [
   },
   {
     slug: 'co-so/mam-non-go-vap-le-duc-tho',
-    title: 'Mầm Non Gò Vấp Lê Đức Thọ | Trường Việt Anh',
+    title: 'Mầm non Việt Anh Gò Vấp Lê Đức Thọ | Trường Việt Anh',
     description:
-      'Trang campus profile cho cơ sở Mầm non Gò Vấp Lê Đức Thọ của Trường Việt Anh, tập trung vào local trust, học thử và tham quan trường.',
+      'Trang campus profile cho cơ sở Mầm non Việt Anh Gò Vấp Lê Đức Thọ của Trường Việt Anh, tập trung vào local trust, học thử và tham quan trường.',
     templateClass: 'Master Campus Profile',
     pageType: 'Campus profile',
     theme: 'brand',
     hero: {
       eyebrow: 'Campus profile',
-      title: 'Cơ sở Mầm non Gò Vấp Lê Đức Thọ nên giúp phụ huynh nhìn thấy cảm giác an tâm, nhịp sinh hoạt và khả năng thích nghi của con.',
+      title: 'Cơ sở Mầm non Việt Anh Gò Vấp Lê Đức Thọ nên giúp phụ huynh nhìn thấy cảm giác an tâm, nhịp sinh hoạt và khả năng thích nghi của con.',
       body:
         'Với nhóm phụ huynh mầm non, campus page cần rất thực tế: con học ở đâu, nhịp sinh hoạt thế nào, không gian ra sao và làm sao để bắt đầu từ một bước nhẹ nhàng như tham quan hoặc học thử.',
       primaryCta: { label: 'Đăng ký học thử', href: '/hoc-thu' },

@@ -1,21 +1,20 @@
 ---
-import { schoolFacts } from '../../data/school-facts';
 ---
 <section class="wp-hero wp-hero--split">
   <div class="wp-hero__overlay"></div>
   <div class="wp-container wp-hero__inner">
     <div class="wp-hero__left">
-      <p class="wp-hero__eyebrow">🏅 Hệ thống trường liên cấp K-12 (2–18 tuổi) · Thành lập năm 2011 tại TP.HCM</p>
+      <p class="wp-hero__eyebrow">🏅 Hệ thống trường liên cấp K-12 (1–18 tuổi) · Thành lập năm 2011 tại TP.HCM</p>
       <h1 class="wp-hero__title">Nơi Con Học Vui,<br class="hero-br"/>Lớn Lên Tự Tin,<br class="hero-br"/>Ra Đời Vững Vàng</h1>
       <p class="wp-hero__subtitle">Trường Việt Anh — AI-Powered School</p>
       <p class="hero-differentiator">
-        Dạy con <strong>làm chủ AI, không lệ thuộc AI</strong> — học vui mỗi ngày,
-        phát triển đủ 4 lĩnh vực, ra đời với quyền chọn của chính mình.
+        Dạy con <strong>làm chủ AI, không lệ thuộc AI</strong><br/>
+        Học vui mỗi ngày, phát triển toàn diện, ra đời với quyền chọn của chính mình.
       </p>
       <ul class="wp-hero__proof">
         <li><span class="proof-check">✓</span> <span>Bảo hành đầu ra <strong>IELTS 6.0+</strong> ghi trong hợp đồng — chưa đạt, trường kèm miễn phí đến khi đạt</span></li>
-        <li><span class="proof-check">✓</span> <span><strong>30 tiết AI/năm</strong> cho mọi lớp 1–12, nằm trong học phí — gấp 2,5 lần mức Bộ GD-ĐT yêu cầu (<a href="/chinh-sach-ai">xem chính sách AI</a>)</span></li>
-        <li><span class="proof-check">✓</span> <span>Tiến bộ theo dõi <strong>hằng tuần bằng PDR</strong>, đo chính thức 3 lần/năm trên 4 lĩnh vực: Kiến thức · Kỹ năng lãnh đạo · Phẩm chất · Sức khỏe</span></li>
+        <li><span class="proof-check">✓</span> <span><strong>30 tiết AI/năm</strong>, có sản phẩm cụ thể — gấp 2,5 lần mức Bộ GD-ĐT yêu cầu (<a href="/chinh-sach-ai">xem chính sách AI</a>)</span></li>
+        <li><span class="proof-check">✓</span> <span>Tiến bộ theo dõi <strong>hằng tuần</strong>, đo chính thức 3 lần/năm cả 4 lĩnh vực: Kiến thức · Kỹ năng lãnh đạo · Phẩm chất · Sức khỏe</span></li>
       </ul>
       <p class="hero-guarantee">
         <span class="hero-guarantee__icon" aria-hidden="true">🛡️</span>
@@ -29,16 +28,6 @@ import { schoolFacts } from '../../data/school-facts';
           Đặt lịch tham quan miễn phí →
         </a>
         <a class="wp-hero__btn wp-hero__btn--outline" href="/hoc-phi">Xem học phí</a>
-        <a class="wp-hero__btn wp-hero__btn--zalo" href="https://zalo.me/1678310120468101523" target="_blank" rel="noreferrer">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
-          Chat Zalo
-        </a>
-      </div>
-      <div class="wp-hero__badges">
-        <span class="wp-hero__badge">⭐ {schoolFacts.rating}/5 — {schoolFacts.reviewCount} đánh giá</span>
-        <span class="wp-hero__badge">🎓 IELTS {schoolFacts.ielts}</span>
-        <span class="wp-hero__badge">🏆 {schoolFacts.yearsRunning}+ năm kinh nghiệm</span>
-        <span class="wp-hero__badge">✅ {schoolFacts.collegeRate} đỗ ĐH</span>
       </div>
     </div>
   </div>
@@ -109,38 +98,6 @@ import { schoolFacts } from '../../data/school-facts';
   .wp-hero__btn--primary:hover { background: #fae34a; }
   .wp-hero__btn--outline { background: transparent; color: #ffffff; border: 1px solid rgba(255, 255, 255, 0.35); }
   .wp-hero__btn--outline:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.55); }
-  .wp-hero__btn--zalo {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    padding: 0.85rem 1.4rem;
-    border-radius: 4px;
-    font-weight: 700;
-    font-size: 1rem;
-    text-decoration: none;
-    background: #0068ff;
-    color: #fff;
-    transition: transform 0.15s, background 0.2s;
-  }
-  .wp-hero__btn--zalo:hover { background: #0058e0; transform: translateY(-1px); }
-  .wp-hero__badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
-  .wp-hero__badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.45rem 0.85rem;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    color: rgba(255, 255, 255, 0.85);
-    font-size: 1rem;
-    font-weight: 600;
-  }
   .wp-hero__proof {
     list-style: none;
     padding: 0;

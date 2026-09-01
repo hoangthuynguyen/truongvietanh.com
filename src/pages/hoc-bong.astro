@@ -116,12 +116,12 @@ const faqs = [
   {
     id: 'faq-cong-don',
     q: 'Các ưu đãi có cộng dồn với nhau không?',
-    a: 'Có, gần như toàn bộ. Ưu đãi đóng phí theo thời gian (theo năm, theo học kỳ, Early Bird) cộng dồn với tất cả. Bốn học bổng con giành được — GRIT, CHAMPIONS, LEADERS, TALENTS — cộng dồn với nhau, con giành được bao nhiêu thì nhận bấy nhiêu, không có mức trần. Trường hợp duy nhất không cộng dồn: ưu đãi anh chị em ruột so với nhóm học bổng — Trường Việt Anh tự động áp mức tốt hơn cho con. Quỹ LOVE nằm ngoài mọi luật cộng dồn.',
+    a: 'Có, toàn bộ. Ưu đãi đóng phí theo thời gian (theo năm, theo học kỳ, Early Bird) cộng dồn với tất cả. Bốn học bổng con giành được — GRIT, CHAMPIONS, LEADERS, TALENTS — cộng dồn với nhau, con giành được bao nhiêu thì nhận bấy nhiêu, không có mức trần. Ưu đãi anh chị em ruột cộng dồn với nhóm học bổng: con thứ hai vừa được giảm 50% vì có anh chị, vừa nhận đủ phần học bổng nó tự giành được — không phải chọn một trong hai. Quỹ LOVE nằm ngoài mọi luật cộng dồn.',
   },
   {
     id: 'faq-ba-con-cung-hoc',
     q: 'Gia đình tôi có 3 con, cả 3 cùng học. Tính thế nào?',
-    a: 'Con thứ nhất đóng học phí niêm yết, con thứ hai giảm 50%, con thứ ba giảm 25%. Nếu anh chị đóng trọn năm, cả ba con được cộng thêm 6% lên trên mức của mình. Với con thứ hai và thứ ba, nếu tổng học bổng các con tự giành được lớn hơn mức 50% / 25% thì Trường Việt Anh áp mức học bổng thay vì mức anh chị em ruột — luôn chọn phương án có lợi hơn cho con.',
+    a: 'Con thứ nhất đóng học phí niêm yết, con thứ hai giảm 50%, con thứ ba giảm 25%. Nếu anh chị đóng trọn năm, cả ba con được cộng thêm 6% lên trên mức của mình. Học bổng các con tự giành được cộng thêm lên trên mức 50% / 25% đó, không phải chọn một trong hai — công sức của đứa thứ hai và thứ ba vẫn được tính đủ.',
   },
   {
     id: 'faq-tinh-tren-gi',
@@ -369,6 +369,11 @@ const structuredData = [
             nhận hoá đơn. Học phí niêm yết từng khối lớp xem tại <a href="/hoc-phi">bảng giá</a>.
           </p>
 
+          <p>
+            <strong>Ngoài chín chính sách trên còn một khoản nữa:</strong> gia đình được phụ huynh hiện hữu
+            giới thiệu, trước khi liên hệ trường, thì <strong>cả hai bên cùng nhận 3.000.000đ</strong>.
+          </p>
+
           <p class="hb-cta-inline">
             <a href={ZALO_OA} target="_blank" rel="noopener" class="hb-cta" data-cta-position="bang-tong">
               Nhắn Zalo: &ldquo;Con tôi lớp ___, tôi muốn biết mức cụ thể&rdquo;
@@ -473,6 +478,12 @@ const structuredData = [
             <strong>Ưu đãi này cộng dồn được với mọi ưu đãi và học bổng khác</strong> — chi tiết ở
             <a href="#luat-cong-don"> mục Luật cộng dồn</a> phía dưới.
           </p>
+          <p class="hb-note">
+            <strong>Hạn đóng để được ưu đãi, năm học 2026–2027:</strong> đóng trọn năm thì hạn
+            <strong> 15/9/2026</strong>. Đóng hai đợt thì đợt một trước <strong>15/9/2026</strong>, đợt hai
+            trước <strong>14/12/2026</strong>. Gia đình cần chia nhỏ hơn — 4 đến 12 đợt — thì không được
+            giảm, nhưng <strong>giữ nguyên biểu phí niêm yết, trường không tính lãi trả góp</strong>.
+          </p>
           <p class="hb-fineprint">
             Mức giảm tính trên học phí, không tính phí dịch vụ và các khoản thu hộ — chi hộ.
           </p>
@@ -518,11 +529,10 @@ const structuredData = [
           </p>
 
           <p class="hb-note">
-            <strong>Lưu ý quan trọng về cộng dồn:</strong> ưu đãi anh chị em ruột <strong>chỉ cộng dồn</strong>
-            với nhóm học bổng con giành được, không cộng dồn với các ưu đãi khác. Nếu con bạn đồng thời đủ
-            điều kiện cả hai, trường <strong>tự động so sánh và áp mức tốt nhất cho con</strong> — bạn không
-            phải tính, không phải chọn, và không bao giờ bị thiệt vì không biết hỏi. Riêng ưu đãi
-            <strong> đóng phí theo năm / học kỳ / Early Bird vẫn được cộng thêm</strong> lên trên mức đã chọn.
+            <strong>Lưu ý quan trọng về cộng dồn:</strong> ưu đãi anh chị em ruột <strong>cộng dồn</strong>
+            với nhóm học bổng con giành được. Con thứ hai vừa được giảm 50% vì có anh chị, vừa nhận đủ
+            phần học bổng nó tự giành — không phải chọn một trong hai, không cái nào nuốt mất cái nào.
+            Và ưu đãi <strong>đóng phí theo năm / học kỳ / Early Bird vẫn được cộng thêm</strong> lên trên.
           </p>
           <p class="hb-fineprint">
             Mức giảm tính trên học phí, không tính phí dịch vụ và các khoản thu hộ — chi hộ.
@@ -768,9 +778,8 @@ const structuredData = [
               <p class="hb-tier-title">Ưu đãi theo hoàn cảnh gia đình</p>
               <p class="hb-tier-desc">Anh chị em ruột.</p>
               <p class="hb-tier-rule">
-                → <strong>Không cộng dồn với tầng 2.</strong> Trường so sánh mức anh chị em ruột với tổng học
-                bổng con giành được, rồi <strong>tự động áp mức tốt hơn cho con</strong>. Sau đó vẫn cộng thêm
-                tầng 1 lên trên.
+                → <strong>Cộng dồn với tầng 2, rồi cộng thêm tầng 1.</strong> Con thứ hai được giảm 50% vì
+                có anh chị, rồi cộng tiếp toàn bộ học bổng nó tự giành được. Không bậc nào bị loại trừ.
               </p>
             </div>
           </div>
@@ -794,12 +803,12 @@ const structuredData = [
           </p>
           <p>
             <strong>Trường hợp 2 — con thứ hai trong gia đình, lớp 9, cùng thành tích như trên.</strong>
-            → Trường so sánh <strong>ưu đãi anh chị em ruột 50%</strong> với <strong>tổng ba học bổng con
-            giành được</strong>, lấy mức nào lớn hơn. → Sau đó <strong>cộng thêm 6%</strong> đóng trọn năm.
+            → Nhận <strong>ưu đãi anh chị em ruột 50%</strong> cộng
+            <strong>toàn bộ ba học bổng con giành được</strong>. → Rồi <strong>cộng thêm 6%</strong> đóng trọn năm.
           </p>
           <p>
             Nghĩa là con bạn không bao giờ phải chọn, và không bao giờ bị thiệt vì không biết hỏi. Phòng tài
-            chính đối chiếu toàn bộ chính sách con đủ điều kiện rồi áp phương án tốt nhất.
+            chính đối chiếu toàn bộ chính sách con đủ điều kiện rồi cộng đủ vào cho con.
           </p>
 
           <h3>Ba lưu ý cuối</h3>

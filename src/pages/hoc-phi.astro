@@ -224,6 +224,7 @@ const structuredData = [
     <section class="gi-hero">
       <div class="gi-container gi-hero-inner">
         <div class="gi-hero-left" style="flex:1">
+          <div class="hp-hero-topline">
           <nav class="gi-breadcrumb" aria-label="Breadcrumb">
             <a href="/">Trang chủ</a>
             <span aria-hidden="true">›</span>
@@ -237,6 +238,9 @@ const structuredData = [
             Cộng ăn uống, tài liệu, dã ngoại và cơ sở vật chất, tổng năm đầu khoảng
             <strong> {Math.round(tongMin / 1e6)}–{Math.round(tongMax / 1e6)} triệu đồng</strong>.
           </p>
+          </div>
+
+          <div class="hp-hero-rest">
           <p class="hp-hero-body">
             Trang này liệt kê mọi khoản anh chị sẽ chi trong 12 tháng: khoản nào bắt buộc, khoản nào
             tùy chọn, khoản nào hoàn lại được. Không có dòng nào ghi &ldquo;liên hệ để biết thêm&rdquo;.
@@ -254,6 +258,7 @@ const structuredData = [
               Con số bên dưới là <strong>giá niêm yết</strong>. Hầu hết gia đình đóng thấp hơn — xem
               mình được giảm bao nhiêu trước khi lên kế hoạch tài chính cho con.
             </p>
+          </div>
           </div>
         </div>
 
@@ -907,6 +912,23 @@ const structuredData = [
     .hp-page :global(.gi-hero-right) { width: 100%; max-width: none; }
     .hp-hero-form { padding: 1.2rem 1.05rem; }
   }
+
+  /* ══════════ MOBILE: ĐƯA FORM LÊN SỚM ══════════ */
+  /* Mobile xếp hero thành cột nên form rơi xuống tận ~936px — quá một màn hình 812px,
+     người đọc phải cuộn hết chữ mới thấy ô nhập. Cho .gi-hero-left tan ra bằng
+     display:contents để ba khối thành flex item trực tiếp của .gi-hero-inner, rồi xếp
+     lại: tiêu đề + số liệu → FORM → phần còn lại. Desktop không đổi (vẫn hai cột).
+     Phải bọc sẵn 2 khối .hp-hero-topline / .hp-hero-rest thì mới làm được, chứ
+     display:contents trên một khối duy nhất sẽ khiến gap 2rem chen vào giữa từng đoạn. */
+  @media (max-width: 768px) {
+    .hp-page :global(.gi-hero-left) { display: contents; }
+    .hp-hero-topline { order: 1; }
+    .hp-page :global(.gi-hero-right) { order: 2; }
+    .hp-hero-rest { order: 3; }
+  }
+
+  /* Vùng chạm: link chỉ cao 26px, dưới mức 44px khuyến nghị cho ngón tay. */
+  .hp-hero-link { padding: 0.6rem 0; }
 
   .hp-cta-hint {
     font-size: 0.95rem;

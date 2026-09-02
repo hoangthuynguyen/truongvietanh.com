@@ -1,0 +1,325 @@
+---
+// Landing page: Lớp cho trẻ 4–6 tuổi tại cơ sở Bình Tân.
+//
+// ⚠️ LÝ DO TRANG NÀY TỒN TẠI — đọc trước khi sửa:
+// Cơ sở Bình Tân KHÔNG có hệ Mầm non (chỉ Tiểu học – THCS – THPT). Trước 02/09/2026
+// site có 4 landing page rao "tuyển sinh Mầm non tại Bình Tân" — sai sự thật, đã xoá.
+// Trang này thay thế bằng thứ CÓ THẬT: 3 lớp dành cho trẻ 4–6 tuổi tại Bình Tân.
+// TUYỆT ĐỐI không thêm lại chữ "mầm non Bình Tân" vào trang này.
+//
+// Mọi số liệu dưới đây lấy từ trang chương trình gốc (/tuyen-sinh/tieng-anh-tre-em,
+// /tuyen-sinh/toan-tu-duy-sam, /tuyen-sinh/tien-tieu-hoc). Không tự chế số mới.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+
+// Địa chỉ chuẩn toàn site (20 trang + trang cơ sở dùng bản này).
+// KHÔNG dùng "951/7 Tỉnh lộ 10" — chỉ còn sót trong JSON-LD trang chủ, đang chờ xác minh.
+const CAMPUS = 'Số 7 Đường 38A, Phường Tân Tạo, Quận Bình Tân, TP.HCM';
+
+const faqs = [
+  {
+    id: 'faq-binh-tan-co-mam-non-khong',
+    q: 'Cơ sở Bình Tân có nhận trẻ mầm non không?',
+    a: 'Không. Cơ sở Bình Tân đào tạo Tiểu học, THCS và THPT — không có hệ mầm non. Ba lớp trên trang này là lớp kỹ năng và ngoại khoá dành cho trẻ 4–6 tuổi, học theo buổi, không phải lớp bán trú mầm non. Nếu bạn cần trường mầm non trọn ngày, đó là Mầm non Việt Anh Gò Vấp tại 573 Lê Đức Thọ, Phường An Hội Đông.',
+  },
+  {
+    id: 'faq-con-chua-di-hoc-co-theo-duoc-khong',
+    q: 'Con chưa từng học lớp nào ngoài giờ, có theo được không?',
+    a: 'Được. Cả ba lớp đều nhận trẻ bắt đầu từ đầu. Riêng Tiếng Anh Trẻ Em có bài xếp lớp bằng trò chơi, không phải thi cử, để con không bị chán vì quá dễ hay quá tải vì quá khó.',
+  },
+  {
+    id: 'faq-hoc-thu',
+    q: 'Có được học thử trước khi quyết định không?',
+    a: 'Có. Tiếng Anh Trẻ Em có một buổi học thử miễn phí với giáo viên bản ngữ, không cam kết gì sau đó. Con thích thì học tiếp, không thích thì thôi.',
+  },
+  {
+    id: 'faq-bao-lau-thay-doi',
+    q: 'Bao lâu thì thấy con thay đổi?',
+    a: 'Với Toán SAM, thay đổi trong cách con tiếp cận một bài toán thường thấy rõ trong 2–4 tuần đầu. Với lớp kỹ năng chuẩn bị vào lớp 1, thói quen và hành vi thay đổi rõ trong vài tuần đầu tiên. Đây là thay đổi cách học, không phải điểm số.',
+  },
+  {
+    id: 'faq-giao-vien-ban-ngu',
+    q: 'Giáo viên tiếng Anh là người bản ngữ hay người Việt?',
+    a: 'Giáo viên bản ngữ (Mỹ, Anh, Úc, Philippines) đã được kiểm tra chứng chỉ TEFL/TESOL và kỹ năng dạy trẻ em, có giáo viên Việt hỗ trợ bên cạnh khi trẻ còn nhỏ.',
+  },
+  {
+    id: 'faq-hoc-phi',
+    q: 'Học phí ba lớp này bao nhiêu?',
+    a: 'Học phí tính theo từng lớp và từng lịch học, không gộp chung. Bạn để lại số điện thoại, đội tuyển sinh gửi bảng phí đúng lớp con cần thay vì bắt bạn đọc một bảng giá không liên quan.',
+  },
+];
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Tuyển sinh', item: 'https://truongvietanh.com/tuyen-sinh' },
+      { '@type': 'ListItem', position: 3, name: 'Lớp cho trẻ 4–6 tuổi tại Bình Tân', item: 'https://truongvietanh.com/lop-4-6-tuoi-binh-tan' },
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title="Lớp Cho Trẻ 4–6 Tuổi Tại Cơ Sở Bình Tân | Trường Việt Anh"
+  description="Ba lớp dành cho trẻ 4–6 tuổi tại cơ sở Bình Tân: Tiếng Anh Trẻ Em với giáo viên bản ngữ, Toán SAM tư duy Singapore, và Kỹ năng Tiểu học chuẩn bị vào lớp 1. Bình Tân không có hệ mầm non — đây là lớp học theo buổi."
+  canonical="https://truongvietanh.com/lop-4-6-tuoi-binh-tan"
+  ogImage="https://media.truongvietanh.com/images/thuyet-trinh-09.webp"
+  structuredData={structuredData}
+>
+  <div class="pp-page">
+    <HeaderBase />
+
+    <!-- HERO -->
+    <section class="pp-hero">
+      <div class="pp-hero-inner">
+        <p class="pp-eyebrow">Cơ sở Bình Tân · {CAMPUS}</p>
+        <h1 class="pp-h1">
+          Lớp cho trẻ 4–6 tuổi tại cơ sở Bình Tân
+          <span class="pp-h1-accent">Ba lớp học theo buổi: Tiếng Anh Trẻ Em · Toán SAM · Kỹ năng Tiểu học</span>
+        </h1>
+        <p class="pp-subtitle">
+          Con chưa đến tuổi vào lớp 1, nhưng đây là quãng não bộ con học nhanh nhất.
+          Ba lớp này không dạy trước chương trình lớp 1 — chúng xây thứ khiến con
+          học được khi vào lớp 1: nghe hiểu tiếng Anh, hiểu bản chất con số, và ngồi
+          xuống tự làm xong một việc.
+        </p>
+        <div class="pp-cta-row">
+          <a class="pp-btn pp-btn-gold" href="#dang-ky">Đăng ký tư vấn lớp phù hợp →</a>
+          <a class="pp-btn pp-btn-outline" href="#ba-lop">Xem 3 lớp trước đã</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- NÓI THẲNG -->
+    <section class="pp-honest">
+      <div class="pp-honest-inner">
+        <p class="pp-honest-tag">Nói thẳng trước khi bạn đọc tiếp</p>
+        <h2>Cơ sở Bình Tân không có lớp mầm non.</h2>
+        <p>
+          Bình Tân đào tạo Tiểu học, THCS và THPT. Chúng tôi không nhận trẻ mầm non bán trú
+          trọn ngày ở đây, và tôi không muốn bạn chạy xe tới nơi rồi mới biết điều đó.
+        </p>
+        <p>
+          Cái Bình Tân có cho lứa 4–6 tuổi là <strong>ba lớp học theo buổi</strong>. Con học xong
+          thì về — không phải gửi con cả ngày. Nếu thứ bạn cần là một trường mầm non trọn ngày,
+          hệ mầm non của Việt Anh nằm ở <a href="/co-so/mam-non-go-vap">Mầm non Việt Anh Gò Vấp</a>,
+          573 Lê Đức Thọ, Phường An Hội Đông.
+        </p>
+      </div>
+    </section>
+
+    <!-- BA LỚP -->
+    <section class="pp-features" id="ba-lop">
+      <div class="pp-features-inner">
+        <h2>Ba lớp cho lứa 4–6 tuổi tại Bình Tân</h2>
+        <div class="pp-feat-grid">
+          <article class="pp-feat-card">
+            <span class="pp-icon">🇬🇧</span>
+            <strong>Tiếng Anh Trẻ Em</strong>
+            <p class="pp-feat-age">Từ 4 tuổi · nhóm 4–5 tuổi riêng</p>
+            <p>
+              Nhóm 4–5 tuổi học bằng bài hát, trò chơi và TPR — không ép ngữ pháp. Giáo viên
+              bản ngữ có chứng chỉ TEFL/TESOL, giáo viên Việt ngồi cạnh hỗ trợ khi con còn nhỏ.
+              Xếp lớp bằng trò chơi, không phải bài thi.
+            </p>
+            <p class="pp-feat-note">Có 1 buổi học thử miễn phí, không cam kết.</p>
+            <a class="pp-feat-link" href="/tuyen-sinh/tieng-anh-tre-em">Chi tiết chương trình →</a>
+          </article>
+
+          <article class="pp-feat-card">
+            <span class="pp-icon">🧮</span>
+            <strong>Toán SAM</strong>
+            <p class="pp-feat-age">Toán tư duy Singapore</p>
+            <p>
+              Không luyện đề, không học thuộc mẹo. Con được dạy hiểu vì sao phép tính ra kết quả
+              đó, nên gặp bài lạ không đứng hình. Một bài hiểu sâu hơn mười bài làm theo mẫu.
+            </p>
+            <p class="pp-feat-note">Cách con tiếp cận bài toán thường đổi rõ trong 2–4 tuần đầu.</p>
+            <a class="pp-feat-link" href="/tuyen-sinh/toan-tu-duy-sam">Chi tiết chương trình →</a>
+          </article>
+
+          <article class="pp-feat-card">
+            <span class="pp-icon">🎒</span>
+            <strong>Kỹ năng Tiểu học</strong>
+            <p class="pp-feat-age">Chuẩn bị vào lớp 1</p>
+            <p>
+              Không dạy trước chữ và số. Lớp này rèn thứ quyết định con có học nổi lớp 1 hay không:
+              tập trung đủ lâu, tự cất đồ, tự làm xong việc của mình mà không cần ai đứng bên.
+            </p>
+            <p class="pp-feat-note">Thói quen và hành vi đổi rõ trong vài tuần đầu.</p>
+            <a class="pp-feat-link" href="/tuyen-sinh/tien-tieu-hoc">Chi tiết chương trình →</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- VÌ SAO BA LỚP NÀY ĐI CÙNG NHAU -->
+    <section class="pp-richtext">
+      <div class="pp-richtext-inner">
+        <h2>Vì sao là ba lớp này, không phải học thêm chữ</h2>
+        <p>
+          Phần lớn phụ huynh cho con 5 tuổi đi học chữ trước, vì sợ vào lớp 1 con thua bạn.
+          Rồi tháng thứ ba của lớp 1, con thuộc hết bài nên thấy chán, và mất luôn thói quen
+          chú ý nghe cô giảng. Cái mất đó đắt hơn cái được.
+        </p>
+        <p>
+          Ba lớp trên xây ba năng lực khác nhau và không lấn nhau:
+        </p>
+        <ul class="pp-bullet">
+          <li><strong>Tai nghe ngoại ngữ</strong> — 4–6 tuổi là quãng con bắt chước âm chuẩn dễ nhất, càng bắt đầu sớm càng lợi thế phát âm tự nhiên.</li>
+          <li><strong>Đầu hiểu con số</strong> — hiểu bản chất thì áp dụng được ở mọi dạng toán về sau, thuộc mẹo thì chỉ dùng được đúng dạng đã luyện.</li>
+          <li><strong>Khả năng tự ngồi xuống làm</strong> — thứ không ai dạy trong sách nhưng quyết định toàn bộ 12 năm còn lại.</li>
+        </ul>
+        <p class="pp-callout">
+          Bạn không cần cho con học cả ba. Hãy để đội tuyển sinh nghe con bạn đang mạnh gì,
+          yếu gì rồi nói thẳng con nên bắt đầu bằng lớp nào — kể cả khi câu trả lời là "chưa cần lớp nào cả".
+        </p>
+      </div>
+    </section>
+
+    <!-- CAM KẾT -->
+    <section class="pp-guarantee">
+      <div class="pp-guarantee-inner">
+        <span class="pp-shield" aria-hidden="true">🛡️</span>
+        <h2>Cam kết hoàn 100% học phí</h2>
+        <p>
+          Sau 4 tuần học, nếu học sinh hoặc phụ huynh không cảm nhận được giá trị,
+          trường hoàn lại <strong>100% học phí</strong> — không một câu hỏi.
+        </p>
+        <a class="pp-btn pp-btn-gold" href="/chinh-sach/chinh-sach-hoan-hoc-phi-4-tuan-dau/">
+          Xem chi tiết chính sách tại đây →
+        </a>
+      </div>
+    </section>
+
+    <!-- FORM -->
+    <section class="pp-form" id="dang-ky">
+      <div class="pp-form-inner">
+        <h2>Con bạn nên bắt đầu từ lớp nào?</h2>
+        <p class="pp-form-sub">
+          Để lại thông tin, đội tuyển sinh cơ sở Bình Tân gọi lại tư vấn đúng lớp cho độ tuổi
+          và tình trạng hiện tại của con, kèm lịch học và học phí của riêng lớp đó.
+        </p>
+        <LeadFormTwoStepEmailFirst
+          formId="lop-4-6-tuoi-binh-tan-form"
+          funnelCode="lop-4-6-tuoi-binh-tan"
+          schoolLevel="tieu-hoc"
+          title=""
+          description=""
+          socialProof=""
+          submitText="Nhận tư vấn lớp phù hợp"
+        />
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="pp-faq">
+      <div class="pp-faq-inner">
+        <h2>Câu hỏi phụ huynh hỏi nhiều nhất</h2>
+        <FaqAccordion faqs={faqs} />
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    .pp-page {
+      font-family: 'Be Vietnam Pro', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #1a1a2e;
+      line-height: 1.6;
+    }
+
+    /* HERO */
+    .pp-hero { background: linear-gradient(135deg, #26275D 0%, #1c1d47 100%); color: #fff; padding: 4.5rem 1.5rem; text-align: center; }
+    .pp-hero-inner { max-width: 840px; margin: 0 auto; }
+    .pp-eyebrow { font-size: 1rem; font-weight: 600; color: rgba(255,255,255,.78); margin: 0 0 1rem; }
+    .pp-h1 { font-size: 2.3rem; font-weight: 800; line-height: 1.3; margin: 0 0 1.25rem; color: #f9dd0e; }
+    .pp-h1-accent { color: #fff; display: block; margin-top: .85rem; font-size: 1.05rem; font-weight: 600; line-height: 1.6; }
+    .pp-subtitle { font-size: 1.05rem; color: rgba(255,255,255,.9); margin: 0 auto 2.25rem; max-width: 700px; line-height: 1.8; }
+    .pp-cta-row { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .pp-btn { display: inline-block; padding: .9rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 1rem; transition: opacity .2s, transform .15s; }
+    .pp-btn:hover { opacity: .92; transform: translateY(-1px); }
+    .pp-btn-gold { background: #f9dd0e; color: #26275D; }
+    .pp-btn-outline { background: transparent; color: #fff; border: 2px solid rgba(255,255,255,.6); }
+
+    /* NÓI THẲNG */
+    .pp-honest { background: #fff7ed; padding: 3.5rem 1.5rem; border-top: 4px solid #f9dd0e; }
+    .pp-honest-inner { max-width: 820px; margin: 0 auto; }
+    .pp-honest-tag { font-size: 1rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #b45309; margin: 0 0 .75rem; }
+    .pp-honest h2 { font-size: 1.7rem; font-weight: 800; color: #26275D; margin: 0 0 1rem; line-height: 1.35; }
+    .pp-honest p { font-size: 1.05rem; color: #3f3f46; line-height: 1.85; margin: 0 0 1rem; }
+    .pp-honest a { color: #26275D; font-weight: 700; }
+
+    /* BA LỚP */
+    .pp-features { background: #26275D; color: #fff; padding: 4.5rem 1.5rem; }
+    .pp-features-inner { max-width: 1080px; margin: 0 auto; }
+    .pp-features h2 { font-size: 1.75rem; font-weight: 800; text-align: center; margin: 0 0 2.5rem; line-height: 1.4; color: #f9dd0e; }
+    .pp-feat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .pp-feat-card { background: rgba(255,255,255,.07); border-radius: 14px; padding: 1.85rem 1.6rem; border: 1px solid rgba(255,255,255,.13); display: flex; flex-direction: column; }
+    .pp-feat-card .pp-icon { font-size: 2rem; display: block; margin-bottom: .75rem; }
+    .pp-feat-card strong { display: block; font-size: 1.2rem; margin-bottom: .3rem; color: #fff; }
+    .pp-feat-age { font-size: 1rem; color: #f9dd0e; font-weight: 600; margin: 0 0 .9rem; }
+    .pp-feat-card p { font-size: 1rem; color: rgba(255,255,255,.85); line-height: 1.7; margin: 0 0 .75rem; }
+    .pp-feat-note { font-size: 1rem; color: rgba(255,255,255,.7); font-style: italic; }
+    .pp-feat-link { margin-top: auto; color: #f9dd0e; font-weight: 700; font-size: 1rem; text-decoration: none; border-bottom: 1px solid rgba(249,221,14,.5); align-self: flex-start; }
+    .pp-feat-link:hover { border-bottom-color: #f9dd0e; }
+
+    /* RICH TEXT */
+    .pp-richtext { background: #fff; padding: 4.5rem 1.5rem; }
+    .pp-richtext-inner { max-width: 820px; margin: 0 auto; }
+    .pp-richtext h2 { font-size: 1.7rem; font-weight: 800; color: #26275D; margin: 0 0 1.5rem; line-height: 1.4; text-align: center; }
+    .pp-richtext p { font-size: 1.05rem; color: #334155; line-height: 1.85; margin: 0 0 1rem; }
+    .pp-bullet { list-style: none; padding: 0; margin: 1.25rem 0 1.5rem; }
+    .pp-bullet li { padding: .5rem 0 .5rem 1.85rem; position: relative; color: #334155; font-size: 1.05rem; line-height: 1.75; }
+    .pp-bullet li::before { content: '→'; position: absolute; left: 0; color: #26275D; font-weight: 700; }
+    .pp-bullet strong { color: #26275D; }
+    .pp-callout { color: #26275D; font-weight: 600; font-size: 1.05rem; padding: 1rem 1.2rem; border-left: 4px solid #f9dd0e; margin: 1.5rem 0 0; background: #fffbeb; border-radius: 0 8px 8px 0; line-height: 1.8; }
+
+    /* CAM KẾT */
+    .pp-guarantee { background: #f0f4f8; padding: 4rem 1.5rem; }
+    .pp-guarantee-inner { max-width: 660px; margin: 0 auto; text-align: center; background: linear-gradient(135deg, #26275D 0%, #18193A 100%); color: #fff; border-radius: 22px; padding: 2.75rem 2rem; }
+    .pp-shield { display: block; font-size: 2.3rem; line-height: 1; margin-bottom: .8rem; }
+    .pp-guarantee h2 { font-size: 1.7rem; font-weight: 800; color: #f9dd0e; margin: 0 0 .9rem; line-height: 1.35; }
+    .pp-guarantee p { font-size: 1.05rem; color: rgba(255,255,255,.88); line-height: 1.75; margin: 0 auto 1.6rem; max-width: 520px; }
+    .pp-guarantee strong { color: #fff; }
+
+    /* FORM */
+    .pp-form { background: #fff; padding: 4.5rem 1.5rem; }
+    .pp-form-inner { max-width: 640px; margin: 0 auto; }
+    .pp-form h2 { font-size: 1.75rem; font-weight: 800; color: #26275D; text-align: center; margin: 0 0 .9rem; line-height: 1.35; }
+    .pp-form-sub { font-size: 1.05rem; color: #475569; text-align: center; line-height: 1.8; margin: 0 0 2rem; }
+
+    /* FAQ */
+    .pp-faq { background: #f0f4f8; padding: 4.5rem 1.5rem; }
+    .pp-faq-inner { max-width: 820px; margin: 0 auto; }
+    .pp-faq h2 { font-size: 1.75rem; font-weight: 800; color: #26275D; text-align: center; margin: 0 0 1.5rem; line-height: 1.35; }
+
+    @media (max-width: 900px) {
+      .pp-feat-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .pp-hero { padding: 3.25rem 1.15rem; }
+      .pp-h1 { font-size: 1.8rem; }
+      .pp-cta-row { flex-direction: column; }
+      .pp-btn { width: 100%; text-align: center; }
+      .pp-honest h2, .pp-features h2, .pp-richtext h2, .pp-guarantee h2, .pp-form h2, .pp-faq h2 { font-size: 1.5rem; }
+    }
+  </style>
+</BaseLayout>

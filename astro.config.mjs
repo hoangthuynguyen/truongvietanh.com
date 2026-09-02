@@ -39,6 +39,15 @@ export default defineConfig({
     '/tuyen-sinh/giai-ma-tiem-nang':         '/giai-ma-tiem-nang/',
     '/thanh-tich':                           '/thanh-tich-hoc-tap',
 
+    // Cơ sở Bình Tân KHÔNG có Mầm Non (chỉ Tiểu học – THCS – THPT). 4 landing page
+    // cũ rao "tuyển sinh Mầm Non tại Bình Tân" là sai sự thật, đã xoá 02/09/2026.
+    // Giữ 301 để quảng cáo/link cũ không rơi vào 404.
+    // Trẻ độ tuổi mầm non tại Bình Tân học: Tiền Tiểu học, Toán SAM, Tiếng Anh Trẻ Em.
+    '/mam-non-binh-tan':                     '/tuyen-sinh-binh-tan',
+    '/tuyen-sinh-mam-non-binh-tan':          '/tuyen-sinh-binh-tan',
+    '/tuyen-sinh-mam-non-tieu-hoc-binh-tan': '/tuyen-sinh-tieu-hoc-binh-tan',
+    '/mam-non-binh-tan-cam-on':              '/cam-on',
+
     // Link chết trong nội dung CMS (bài blog, trang tin-tuc) — redirect về
     // trang tương đương cho tới khi sửa được nội dung trong Directus.
     '/checklist-thcs':                       '/chon-truong-thcs',

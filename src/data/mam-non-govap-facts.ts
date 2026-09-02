@@ -38,6 +38,10 @@ export const mnFacts = {
   // Trang cơ sở ghi "10 - 24 học sinh/lớp (tùy độ tuổi)". Tài liệu gốc không nêu sĩ số.
   classSize: '10–24',
   classSizeLabel: '10–24 bé/lớp tùy độ tuổi',
+  // Anh Dương xác nhận 02/09/2026 — chỉ đúng cho Mầm non Việt Anh Gò Vấp
+  // (573 Lê Đức Thọ), KHÔNG dùng cho cơ sở khác.
+  khuonVien: '2.000m²',
+  tiLeGvHs: '1:8',
 
   // ---------- Độ tuổi & cách xếp lớp ----------
   ageFrom: '13 tháng',

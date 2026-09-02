@@ -11,9 +11,9 @@ const ROOT = path.resolve(process.cwd(), 'src/pages');
 
 const LOC = {
   govap: { name: 'Gò Vấp', addr: '160/72 Phan Huy Ích, P. An Hội Tây, Gò Vấp, TP.HCM' },
-  binhtan: { name: 'Bình Tân', addr: '951/7 Tỉnh lộ 10, Bình Tân, TP.HCM' },
-  'binh-tan': { name: 'Bình Tân', addr: '951/7 Tỉnh lộ 10, Bình Tân, TP.HCM' },
-  bt: { name: 'Bình Tân', addr: '951/7 Tỉnh lộ 10, Bình Tân, TP.HCM' },
+  binhtan: { name: 'Bình Tân', addr: 'Số 7 Đường 38A, Phường Tân Tạo, TP.HCM' },
+  'binh-tan': { name: 'Bình Tân', addr: 'Số 7 Đường 38A, Phường Tân Tạo, TP.HCM' },
+  bt: { name: 'Bình Tân', addr: 'Số 7 Đường 38A, Phường Tân Tạo, TP.HCM' },
   cg: { name: 'Cần Giuộc', addr: 'Cơ sở Cần Giuộc, Long An' },
   rg: { name: 'Rạch Giá', addr: 'Cơ sở Rạch Giá, Kiên Giang' },
 };

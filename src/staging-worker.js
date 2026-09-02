@@ -86,6 +86,81 @@ export default {
       }
     }
 
+    // 02/09/2026 — 52 URL 404 (traffic cao) ve dich blog/co-so dang song, sau khi da
+    // kiem tra ton tai + chat luong noi dung tung dich. Dat trong Worker (khong dung
+    // public/_redirects) vi file _redirects vuot gioi han "100 dynamic rules" cua
+    // Cloudflare khi them nhieu source cung tro ve 1 dich (nguyen nhan chua ro, xem
+    // log deploy 02/09). 4 dich con "tam" (chua khop 100% chu de nhung it nhat on-topic
+    // va co that): song-ngu-la-gi, mam-non-tan-binh (thay Tan Phu), triet-ly-giao-duc,
+    // /so-sanh (thay bai FPT vs Viet Anh). 25 URL /thuc-don-tuan-* va 62 URL cong thuc
+    // Toan/tu vung KHONG nam trong dot nay — can xu ly rieng (410, khong phai redirect).
+    const LEGACY_404_REDIRECTS_2026_09_02 = {
+      '/hoc-phi-truong-tu-thuc-tphcm': '/blog/blog-hoc-phi-truong-tu-thuc-tphcm-2026',
+      '/top-truong-dan-lap': '/blog/top-truong-thpt-tu-thuc-tphcm',
+      '/top-20-truong-thpt-tot-nhat-tphcm-ban-da-biet-chua': '/blog/top-truong-thpt-tu-thuc-tphcm',
+      '/truong-quoc-te-tphcm': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
+      '/top-truong-quoc-te-tai-tphcm': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
+      '/top-truong-thpt-quoc-te-tphcm': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
+      '/truong-quoc-te-quan-2': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
+      '/nen-cho-con-hoc-truong-quoc-te-hay-cong-lap': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
+      '/muc-hoc-phi-truong-quoc-te': '/blog/hoc-phi-khung-cua-truong-quoc-te-ai-quan-ly',
+      '/muc-hoc-phi-truong-mam-non-quoc-te': '/blog/hoc-phi-khung-cua-truong-quoc-te-ai-quan-ly',
+      '/cach-chon-truong-thpt': '/chon-truong-thpt',
+      '/truong-tieu-hoc-tu-thuc-quan-12': '/blog/tieu-hoc-quan-12',
+      '/truong-tieu-hoc-quoc-te-quan-12': '/blog/tieu-hoc-quan-12',
+      '/truong-tieu-hoc-tu-thuc-go-vap': '/blog/tieu-hoc-go-vap',
+      '/truong-tieu-hoc-quoc-te-quan-go-vap': '/blog/tieu-hoc-go-vap',
+      '/danh-sach-cac-truong-dan-lap-go-vap-noi-bat-trong-nam-nay': '/blog/tieu-hoc-go-vap',
+      '/truong-tieu-hoc-tu-thuc-quan-tan-binh': '/blog/tieu-hoc-tan-binh',
+      '/truong-tieu-hoc-tu-thuc-quan-tan-phu': '/blog/tieu-hoc-tan-phu',
+      '/truong-tieu-hoc-quoc-te-quan-tan-phu': '/blog/tieu-hoc-tan-phu',
+      '/truong-tieu-hoc-quoc-te-quan-binh-tan': '/co-so/lien-cap-binh-tan',
+      '/truong-tieu-hoc-tu-thuc-o-quan-binh-tan': '/co-so/lien-cap-binh-tan',
+      '/truong-tieu-hoc-tu-thuc-quan-binh-thanh': '/blog/tieu-hoc-binh-thanh',
+      '/truong-mam-non-tu-thuc-tot-o-quan-12': '/blog/mam-non-quan-12',
+      '/truong-mam-non-song-ngu-quan-12': '/blog/mam-non-quan-12',
+      '/truong-mam-non-quoc-te-quan-12': '/blog/mam-non-quan-12',
+      '/truong-mam-non-tu-thuc-quan-binh-thanh': '/blog/mam-non-binh-thanh',
+      '/truong-mam-non-tu-thuc-quan-tan-phu': '/blog/mam-non-tan-binh',
+      '/truong-mam-non-quoc-te-quan-tan-phu': '/blog/mam-non-tan-binh',
+      // Binh Tan KHONG co Mam non (xem src/pages/lop-4-6-tuoi-binh-tan.astro) — ve
+      // dung trang "lop 4-6 tuoi", KHONG ve /co-so/lien-cap-binh-tan.
+      '/truong-mam-non-tu-thuc-quan-binh-tan': '/lop-4-6-tuoi-binh-tan',
+      '/truong-mam-non-quoc-te-quan-binh-tan': '/lop-4-6-tuoi-binh-tan',
+      '/truong-mam-non-tu-thuc': '/blog/truong-mam-non-tu-thuc-tphcm',
+      '/truong-mam-non-tu-thuc-quan-8': '/blog/truong-mam-non-tu-thuc-tphcm',
+      '/truong-mam-non-tu-thuc-quan-1': '/blog/truong-mam-non-tu-thuc-tphcm',
+      '/truong-mam-non-tu-thuc-quan-4': '/blog/truong-mam-non-tu-thuc-tphcm',
+      '/truong-mam-non-tu-thuc-tot-o-quan-6': '/blog/truong-mam-non-tu-thuc-tphcm',
+      '/hoc-phi-truong-mam-non-tu-thuc': '/blog/hoc-phi-truong-mam-non-tu-thuc-tphcm',
+      '/hoc-phi-viet-anh-nam-hoc-2026-2027': '/hoc-phi',
+      // Tam: chua co bai "truong song ngu TPHCM" that, dung bai "song ngu la gi" gan nhat.
+      '/hoc-phi-cac-truong-song-ngu': '/blog/blog-truong-mam-non-song-ngu-la-gi',
+      '/truong-song-ngu-tphcm': '/blog/blog-truong-mam-non-song-ngu-la-gi',
+      '/top-truong-song-ngu': '/blog/blog-truong-mam-non-song-ngu-la-gi',
+      '/cach-on-thi-vao-10-hieu-qua': '/blog/bi-quyet-on-thi-lop-10-hieu-qua',
+      '/cach-dat-diem-cao-mon-anh-thi-vao-10': '/blog/bi-quyet-on-thi-lop-10-hieu-qua',
+      '/chuyen-truong-tu-thuc-sang-cong-lap': '/blog/blog-lien-cap-vs-chuyen-truong',
+      '/thoi-gian-nao-la-tot-nhat-de-chuyen-truong-trong-nam-hoc-tu-van': '/blog/blog-lien-cap-vs-chuyen-truong',
+      '/nen-cho-con-hoc-truong-mam-non-cong-hay-tu': '/blog/blog-cach-chon-truong-mam-non-cho-con',
+      '/cach-day-be-viet-chu': '/blog/chuan-bi-cho-be-vao-lop-1',
+      '/day-be-hoc-so': '/blog/chuan-bi-cho-be-vao-lop-1',
+      '/cach-day-be-hoc-chu-cai': '/blog/chuan-bi-cho-be-vao-lop-1',
+      '/cach-day-be-4-tuoi-hoc-chu-cai': '/blog/chuan-bi-cho-be-vao-lop-1',
+      '/cach-day-con-hoc-lop-1-o-nha': '/blog/chuan-bi-cho-be-vao-lop-1',
+      // Tam: chua co trang rieng "16 ky nang the ky 21", dung trang triet ly giao duc.
+      '/16-ky-nang-quan-trong-trong-the-ky-21-hoc-sinh-can-co-de-thanh-cong': '/triet-ly-giao-duc',
+      // Tam: bai goc "so sanh FPT vs Viet Anh" chua duoc viet lai, dung trang /so-sanh chung.
+      '/blog/so-sanh-truong-fpt-va-truong-viet-anh': '/so-sanh',
+    };
+    {
+      const normalizedPath = url.pathname.replace(/\/$/, '') || '/';
+      const legacyTarget = LEGACY_404_REDIRECTS_2026_09_02[normalizedPath];
+      if (legacyTarget) {
+        return Response.redirect('https://truongvietanh.com' + legacyTarget, 301);
+      }
+    }
+
     // Handle CORS preflight
     if (request.method === 'OPTIONS' && (url.pathname === '/api/lead' || url.pathname === '/api/khieu-nai')) {
       return new Response(null, { status: 204, headers: CORS_HEADERS });

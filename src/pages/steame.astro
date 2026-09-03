@@ -1,0 +1,991 @@
+---
+// Trang trụ chương trình STEAM-E — /steame
+// Nguồn nội dung: bản dựng "Bản dựng trang STEAM-E" (steame/index.html + steame.md),
+// điểm AEO 5 cổng 100/100. Giữ nguyên câu chữ đã duyệt.
+//
+// Khác bản gốc ở 3 chỗ, đều là ràng buộc bắt buộc của site (xem CLAUDE.md):
+//   1. Form KHÔNG bắn thẳng vào Pancake nữa mà POST /api/lead của worker — nhờ vậy
+//      lead vào cả GHL lẫn Pancake, có nhãn kênh MKT, và không còn rủi ro "endpoint
+//      rỗng → mất trắng lead" mà README bản gốc cảnh báo.
+//   2. UTM lấy từ bộ thu dùng chung /js/va-utm.js, funnel_code riêng: steame-hoc-thu.
+//   3. FAQ dùng component FaqAccordion (gập lại), schema FAQPage sinh từ CÙNG mảng faqs.
+//
+// ⚠️ HAI VIỆC PHẢI DUYỆT TRƯỚC KHI CHẠY QUẢNG CÁO VÀO TRANG (README mục 1.2, 1.3):
+//   - Mục "Một buổi STEAM-E diễn ra như thế nào?": nhịp 90 phút dựng từ mô hình 5E
+//     trong tài liệu chương trình, ÁP vào một dự án có thật — đội đứng lớp chưa xác nhận.
+//   - Nhãn nhóm tuổi cho 7 chủ đề: chưa ai chốt chủ đề nào 5–7, chủ đề nào 8–10.
+import BaseLayout from '../layouts/BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
+import { schoolFacts } from '../data/school-facts';
+
+const canonical = 'https://truongvietanh.com/steame';
+const NGAY_CAP_NHAT = '2026-09-03';
+
+// TODO: thay bằng ảnh chia sẻ riêng 1200×630 của STEAM-E khi thiết kế xong.
+// Tạm dùng ảnh học sinh thuyết trình đã có sẵn trên CDN (8 trang khác đang dùng) —
+// đúng tinh thần "cuối khóa con thuyết trình dự án", còn hơn để trống og:image
+// vì link chia sẻ lên Facebook/Zalo sẽ không có ảnh nào.
+const ogImage = 'https://media.truongvietanh.com/images/thuyet-trinh-09.webp';
+
+// 6 câu FAQ — dùng CHUNG cho phần hiển thị và schema FAQPage, không chép tay hai lần.
+const faqs = [
+  {
+    id: 'faq-chua-biet-lap-trinh',
+    q: 'Con chưa biết lập trình hay làm thí nghiệm có học được không?',
+    a: 'Hoàn toàn được. Chương trình không yêu cầu kiến thức đầu vào. Giáo viên hướng dẫn theo từng lứa tuổi, và nhà trường chuẩn bị sẵn toàn bộ dụng cụ thí nghiệm, vật liệu, bộ kit cùng phần mềm phù hợp. Gia đình không cần mua thêm robot hay thiết bị nào ở nhà.',
+  },
+  {
+    id: 'faq-mot-cap-do-bao-lau',
+    q: 'Một cấp độ học trong bao lâu?',
+    a: 'Mỗi cấp độ gồm 30 giờ, chia thành 20 buổi, mỗi buổi 90 phút, học vào cuối tuần. Mỗi buổi có mục tiêu riêng và một mốc tiến độ của dự án, nên con luôn biết hôm nay mình cần hoàn thành phần nào chứ không học dàn trải.',
+  },
+  {
+    id: 'faq-san-pham-con-lam-ra',
+    q: 'Con sẽ làm ra sản phẩm gì?',
+    a: 'Mỗi cấp độ con hoàn thành 1–3 dự án. Sản phẩm có thể là mô hình, báo cáo dữ liệu, video, poster hoặc pitch deck, tùy chủ đề con chọn. Cuối khóa con thuyết trình dự án của mình và trưng bày trong buổi triển lãm có phụ huynh tham dự.',
+  },
+  {
+    id: 'faq-do-tuoi-phu-hop',
+    q: 'Độ tuổi nào phù hợp với STEAM-E?',
+    a: 'Chương trình dành cho trẻ 5–10 tuổi. Đề tài, dụng cụ và mức độ hướng dẫn được điều chỉnh theo hai nhóm tuổi để phù hợp khả năng của con. Nếu chưa chắc con nên vào chủ đề nào, anh chị có thể đăng ký một buổi tư vấn để đội ngũ xếp đúng cấp độ.',
+  },
+  {
+    id: 'faq-giup-gi-cho-mon-tren-lop',
+    q: 'STEAM-E giúp ích thế nào cho môn học trên lớp?',
+    a: 'Con dùng ngay kiến thức Toán, Lý, Hóa, Sinh và Nghệ thuật đang học để giải quyết một vấn đề có thật. Khi kiến thức được dùng vào việc cụ thể, con hiểu bản chất sâu hơn và nhớ lâu hơn, nhờ đó tiến bộ tự nhiên ở các môn chính khóa thay vì phải luyện thêm đề.',
+  },
+  {
+    id: 'faq-hoc-o-dau',
+    q: 'STEAM-E học ở đâu?',
+    a: 'Chương trình dạy trực tiếp tại các cơ sở Trường Việt Anh ở TP. Hồ Chí Minh và Rạch Giá, học vào cuối tuần, ca sáng hoặc ca chiều tùy từng cơ sở. Không có lớp online, vì con cần thao tác thật với vật liệu và dụng cụ thật.',
+  },
+];
+
+const description =
+  'STEAM-E của Trường Việt Anh: học qua dự án cho trẻ 5–10 tuổi tại TP.HCM và Rạch Giá. 30 giờ mỗi cấp độ, con tự làm 1–3 dự án giải quyết vấn đề đời sống thật.';
+
+const structuredData = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'EducationalOrganization',
+    '@id': 'https://truongvietanh.com/#organization',
+    name: 'Trường Việt Anh',
+    url: 'https://truongvietanh.com',
+    foundingDate: String(schoolFacts.foundedYear),
+    contactPoint: {
+      '@type': 'ContactPoint',
+      contactType: 'Admissions',
+      telephone: '+84916961409',
+      areaServed: 'VN',
+      availableLanguage: ['vi'],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: 'STEAM-E là gì? Chương trình dự án thực tế cho trẻ 5–10 tuổi',
+    description,
+    inLanguage: 'vi-VN',
+    dateModified: NGAY_CAP_NHAT,
+    primaryImageOfPage: { '@type': 'ImageObject', url: ogImage },
+    isPartOf: { '@id': 'https://truongvietanh.com/#organization' },
+    mainEntity: { '@id': `${canonical}#course` },
+    audience: {
+      '@type': 'Audience',
+      audienceType: 'Phụ huynh có con 5–10 tuổi tại TP. Hồ Chí Minh và Rạch Giá',
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    '@id': `${canonical}#course`,
+    name: 'STEAM-E — Chương trình học qua dự án cho trẻ 5–10 tuổi',
+    description:
+      'Chương trình học qua dự án của Trường Việt Anh cho trẻ 5–10 tuổi tại TP. Hồ Chí Minh và Rạch Giá, kết hợp Khoa học, Công nghệ, Kỹ thuật, Nghệ thuật, Toán và Khởi nghiệp. Mỗi cấp độ 30 giờ, 20 buổi cuối tuần, mỗi buổi 90 phút.',
+    inLanguage: 'vi-VN',
+    url: canonical,
+    educationalLevel: 'Mầm non lớn – Tiểu học',
+    teaches: [
+      'Tư duy giải quyết vấn đề',
+      'Học liên môn STEAM',
+      'Tư duy khởi nghiệp',
+      'Thuyết trình và làm việc nhóm',
+    ],
+    typicalAgeRange: '5-10',
+    provider: { '@id': 'https://truongvietanh.com/#organization' },
+    author: { '@id': 'https://truongvietanh.com/#nguyen-manh-duong' },
+    dateModified: NGAY_CAP_NHAT,
+    hasCourseInstance: [
+      {
+        '@type': 'CourseInstance',
+        courseMode: 'Onsite',
+        courseWorkload: 'PT30H',
+        location: {
+          '@type': 'Place',
+          name: 'Trường Việt Anh — TP. Hồ Chí Minh',
+          address: { '@type': 'PostalAddress', addressLocality: 'TP. Hồ Chí Minh', addressCountry: 'VN' },
+        },
+      },
+      {
+        '@type': 'CourseInstance',
+        courseMode: 'Onsite',
+        courseWorkload: 'PT30H',
+        location: {
+          '@type': 'Place',
+          name: 'Trường Việt Anh — Rạch Giá',
+          address: { '@type': 'PostalAddress', addressLocality: 'Rạch Giá', addressCountry: 'VN' },
+        },
+      },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${canonical}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+      { '@type': 'ListItem', position: 2, name: 'Chương trình', item: 'https://truongvietanh.com/chuong-trinh' },
+      { '@type': 'ListItem', position: 3, name: 'STEAM-E', item: canonical },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    '@id': `${canonical}#faq`,
+    mainEntity: faqs.map((f) => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': 'https://truongvietanh.com/#nguyen-manh-duong',
+    name: 'Nguyễn Mạnh Dương',
+    jobTitle: 'Nhà sáng lập & Chủ tịch hệ thống giáo dục K-12 Việt Anh',
+    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Manchester Metropolitan University' },
+    url: 'https://truongvietanh.com/ban-lanh-dao',
+    sameAs: ['https://nguyenmanhduong.com'],
+  },
+];
+---
+
+<BaseLayout
+  title="STEAM-E là gì? Lớp dự án thực tế cho trẻ 5–10 tuổi | Trường Việt Anh"
+  description={description}
+  keywords="STEAM-E là gì, lớp STEAM cho trẻ 5-10 tuổi, học qua dự án, STEAM TP.HCM, STEAM Rạch Giá, Trường Việt Anh, mô hình 5E, tư duy khởi nghiệp cho trẻ"
+  canonical={canonical}
+  ogImage={ogImage}
+  ogType="article"
+  structuredData={structuredData}
+>
+  <div class="se-page">
+    <HeaderBase currentPath="/steame" />
+
+    <article id="main-content" data-no-collapse>
+
+      <!-- ===== HERO ===== -->
+      <div class="se-shell se-hero">
+        <nav class="se-crumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a> <span aria-hidden="true">›</span>
+          <a href="/chuong-trinh">Chương trình</a> <span aria-hidden="true">›</span>
+          <span>STEAM-E</span>
+        </nav>
+        <p class="se-eyebrow">Chương trình cuối tuần · 5–10 tuổi</p>
+        <h1>STEAM-E là gì? Chương trình dự án thực tế cho trẻ 5–10 tuổi</h1>
+
+        <div class="se-answer">
+          <p>STEAM-E là chương trình học qua dự án của Trường Việt Anh cho trẻ 5–10 tuổi, kết hợp Khoa học, Công nghệ, Kỹ thuật, Nghệ thuật, Toán và Khởi nghiệp. Mỗi cấp độ 30 giờ, chia 20 buổi cuối tuần, mỗi buổi 90 phút. Con tự hoàn thành 1–3 dự án giải quyết một vấn đề đời sống có thật.</p>
+        </div>
+
+        <div class="se-herocta">
+          <a class="se-cta" href="#dangky">Đăng ký buổi học thử STEAM-E</a>
+          <span class="se-sub">Học trực tiếp tại TP. Hồ Chí Minh và Rạch Giá</span>
+        </div>
+      </div>
+
+      <div class="se-shell se-strip">
+        <p class="se-lbl">Những thứ con thật sự làm ra</p>
+        <ul class="se-tags">
+          <li class="se-tag">Máy lọc nước tự nhiên</li><li class="se-tag">Nhà chống lũ</li>
+          <li class="se-tag">Báo cháy rừng mini</li><li class="se-tag">Bếp năng lượng mặt trời</li>
+          <li class="se-tag">Loa tự chế</li><li class="se-tag">Vườn rau trên sao Hỏa</li>
+          <li class="se-tag">Chuỗi thức ăn 3D</li><li class="se-tag">Nhà thông minh</li>
+          <li class="se-tag">Hệ thống tưới cây tự động</li><li class="se-tag">Nhạc cụ tái chế</li>
+          <li class="se-tag">Xe chuyển hàng</li><li class="se-tag">Đèn khẩn cấp bằng chai nước</li>
+        </ul>
+      </div>
+
+      <!-- ===== MỞ BÀI ===== -->
+      <section class="se-sec">
+        <div class="se-shell se-narrow se-voice">
+          <p>Mỗi mùa tuyển sinh tôi đều gặp câu này: <em>“Cuối tuần cho con học thêm Toán hay Anh còn kịp, chứ làm dự án thì để sau.”</em></p>
+          <p>Tôi hiểu vì sao phụ huynh nghĩ vậy. Nhưng tôi cho rằng nó ngược. Toán thì năm nào học thêm cũng được. Còn cái cảm giác tự mình nghĩ ra một cách làm, làm hỏng, rồi sửa được — nếu đến mười lăm tuổi con chưa từng có, thì rất khó tạo lại.</p>
+          <p>STEAM-E là chín mươi phút mỗi cuối tuần dành cho đúng việc đó. Con không học thêm một môn nữa. Con lấy chính những gì đang học trên lớp để làm ra một thứ có ích.</p>
+        </div>
+      </section>
+
+      <!-- ===== CHỮ E ===== -->
+      <section class="se-sec se-alt">
+        <div class="se-shell">
+          <h2>STEAM-E là gì và chữ “E” nghĩa là gì?</h2>
+          <div class="se-narrow">
+            <p>STEAM-E là STEAM cộng thêm chữ <b>E — Entrepreneurship (Khởi nghiệp)</b>. Điểm khác biệt nằm ở chữ E này: con không dừng ở chỗ <i>làm ra được một thứ</i>, mà phải trả lời thêm <i>thứ đó giải quyết vấn đề cho ai, và có tốt hơn cách đang làm hiện nay không</i>.</p>
+          </div>
+          <div class="se-letters">
+            <div class="se-letter"><div class="se-ch">S</div><div class="se-nm">Science — Khoa học</div><div class="se-ds">Quan sát, đặt giả thuyết, làm thí nghiệm kiểm chứng</div></div>
+            <div class="se-letter"><div class="se-ch">T</div><div class="se-nm">Technology — Công nghệ</div><div class="se-ds">Dùng công cụ, phần mềm phù hợp lứa tuổi để hiện thực hóa ý tưởng</div></div>
+            <div class="se-letter"><div class="se-ch">E</div><div class="se-nm">Engineering — Kỹ thuật</div><div class="se-ds">Thiết kế, dựng mô hình, thử, hỏng, sửa, thử lại</div></div>
+            <div class="se-letter"><div class="se-ch">A</div><div class="se-nm">Arts — Nghệ thuật</div><div class="se-ds">Trình bày, tạo hình, kể câu chuyện của sản phẩm</div></div>
+            <div class="se-letter"><div class="se-ch">M</div><div class="se-nm">Mathematics — Toán</div><div class="se-ds">Đo đạc, tính toán, đọc và diễn giải số liệu</div></div>
+            <div class="se-letter"><div class="se-ch">E</div><div class="se-nm">Entrepreneurship — Khởi nghiệp</div><div class="se-ds">Xác định vấn đề, người dùng, chứng minh giải pháp khả thi hơn hiện tại</div></div>
+          </div>
+          <div class="se-narrow se-mt22">
+            <p>So với STEM, STEAM bổ sung Nghệ thuật. So với STEAM, STEAM-E bổ sung tư duy khởi nghiệp — đây là chỗ nhiều lớp kỹ thuật cho trẻ còn bỏ trống.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== VÌ SAO ===== -->
+      <section class="se-sec">
+        <div class="se-shell">
+          <h2>Vì sao con học thuộc bài giỏi mà gặp việc thật vẫn lúng túng?</h2>
+          <div class="se-narrow">
+            <p>Vì phần lớn chương trình phổ thông dừng ở ba bậc tư duy thấp. Thang phân loại Bloom (bản hiệu chỉnh của Krathwohl, 2001) chia tư duy thành sáu bậc: Nhớ → Hiểu → Vận dụng → <b>Phân tích → Đánh giá → Sáng tạo</b>. Học để thi thường chỉ cần ba bậc đầu. Ba bậc sau chỉ hình thành khi đứa trẻ được giao một bài toán chưa có đáp án sẵn.</p>
+          </div>
+          <div class="se-stats">
+            <div class="se-stat"><div class="se-n">70%</div><div class="se-t">doanh nghiệp xếp tư duy phân tích là kỹ năng cốt lõi số một</div><div class="se-s">WEF, Future of Jobs Report 2025</div></div>
+            <div class="se-stat"><div class="se-n">39%</div><div class="se-t">kỹ năng cốt lõi sẽ thay đổi hoặc lỗi thời trước năm 2030</div><div class="se-s">WEF, Future of Jobs Report 2025</div></div>
+            <div class="se-stat"><div class="se-n">+6%</div><div class="se-t">điểm bài thi ở lớp học chủ động, qua 225 nghiên cứu khối STEM</div><div class="se-s">Freeman và cộng sự, PNAS 2014</div></div>
+          </div>
+          <div class="se-narrow se-mt26">
+            <p>Nói cách khác: gần bốn trong mười kỹ năng con đang được luyện hôm nay sẽ hết giá trị đúng vào lúc con vào đời.</p>
+            <p>Cách chữa thì đã có bằng chứng. <b>Scott Freeman, giảng viên chính ngành Sinh học tại Đại học Washington</b>, cùng cộng sự phân tích 225 nghiên cứu về giảng dạy khối STEM và thấy: lớp học chủ động giúp điểm bài thi tăng khoảng 6%, trong khi lớp thuyết giảng truyền thống có nguy cơ trượt môn cao gấp khoảng 1,5 lần.</p>
+            <p class="se-pull">Học chủ động không phải là học nhẹ đi. Là học ở tầng cao hơn.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== MỘT BUỔI HỌC =====
+           ⚠️ TRƯỚC KHI ĐĂNG: đội ngũ đứng lớp phải đọc lại mục này và chỉnh cho khớp
+           nhịp lớp thật. Nội dung hiện tại dựng từ mô hình 5E trong tài liệu chương
+           trình, áp vào một dự án có thật trong danh mục — chưa ai xác nhận lớp thật
+           chạy đúng như vậy. Đây là mục tạo niềm tin mạnh nhất của trang, nên phải đúng. -->
+      <section class="se-sec se-alt">
+        <div class="se-shell">
+          <h2>Một buổi STEAM-E diễn ra như thế nào?</h2>
+          <div class="se-narrow">
+            <p>Chín mươi phút, và gần như không có phút nào giáo viên đứng giảng. Buổi học chạy theo <b>mô hình 5E</b> — khung dạy học khám phá của BSCS (Bybee và cộng sự, 2006).</p>
+            <p>Lấy một dự án có thật trong danh mục: <b>hệ thống báo cháy rừng mini</b> đo độ ẩm của lá cây để cảnh báo sớm, thuộc chủ đề <i>Disaster on Screen</i>.</p>
+          </div>
+
+          <div class="se-barwrap" aria-hidden="true">
+            <div class="se-barlbls"><span class="se-e1">Gắn kết</span><span class="se-e2">Khám phá</span><span class="se-e3">Giải thích</span><span class="se-e4">Mở rộng</span><span class="se-e5">Đánh giá</span></div>
+            <div class="se-bar"><i class="se-e1"></i><i class="se-e2"></i><i class="se-e3"></i><i class="se-e4"></i><i class="se-e5"></i></div>
+            <div class="se-barmin"><span class="se-e1">10 phút</span><span class="se-e2">30 phút</span><span class="se-e3">20 phút</span><span class="se-e4">20 phút</span><span class="se-e5">10 phút</span></div>
+          </div>
+
+          <div class="se-steps">
+            <div class="se-step"><div class="se-hd"><span class="se-stnm">Gắn kết</span><span class="se-mn">~10 phút</span></div><p>Cô không mở bài bằng “hôm nay ta học về độ ẩm”. Cô đưa ra một tình huống: rừng cháy, và người ta biết quá muộn. Con nói xem nếu là mình thì muốn biết trước bao lâu.</p></div>
+            <div class="se-step"><div class="se-hd"><span class="se-stnm">Khám phá</span><span class="se-mn">~30 phút</span></div><p>Con sờ lá tươi, lá khô, tự tìm ra thứ phân biệt được hai loại. Nhóm nào nghĩ ra cách đo thì bắt đầu dựng mạch.</p></div>
+            <div class="se-step"><div class="se-hd"><span class="se-stnm">Giải thích</span><span class="se-mn">~20 phút</span></div><p>Con phải nói được vì sao chọn ngưỡng độ ẩm đó chứ không phải ngưỡng khác. Toán bước vào ở đây — không phải bài tập, mà là một con số con phải bảo vệ.</p></div>
+            <div class="se-step"><div class="se-hd"><span class="se-stnm">Mở rộng</span><span class="se-mn">~20 phút</span></div><p>Nhóm khác hỏi ngược: nếu trời vừa mưa thì sao, nếu lá ướt vì sương thì sao? Con sửa thiết kế theo phản biện.</p></div>
+            <div class="se-step"><div class="se-hd"><span class="se-stnm">Đánh giá</span><span class="se-mn">~10 phút</span></div><p>Con ghi lại: hôm nay làm được gì, chỗ nào chưa chạy, buổi sau sửa gì.</p></div>
+          </div>
+
+          <div class="se-narrow se-mt30">
+            <p class="se-pull">Chỗ hỏng là phần được tính, không phải phần bị giấu đi.</p>
+            <p>Một cái mạch không kêu là một dữ kiện, không phải một thất bại. Trẻ con học rất nhanh việc giấu lỗi để được khen — chương trình này cố tình làm ngược lại.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== CHỦ ĐỀ =====
+           ⚠️ TRƯỚC KHI ĐĂNG: xác nhận chủ đề nào thuộc nhóm 5–7 tuổi, chủ đề nào
+           thuộc nhóm 8–10 tuổi. Trên trang cũ nhãn tuổi và mô tả bị lệch nhau; bảng
+           dưới đã sắp lại theo nghĩa của tên chủ đề nhưng chưa có ai xác nhận. -->
+      <section class="se-sec">
+        <div class="se-shell">
+          <h2>Con 5–10 tuổi học những chủ đề gì?</h2>
+          <div class="se-narrow">
+            <p>Chương trình có <b>7 chủ đề</b>, mỗi chủ đề là một cấp độ 30 giờ. Con học chủ đề nào là do độ tuổi và nền tảng hiện có, không cần học theo thứ tự.</p>
+          </div>
+          <div class="se-themes">
+            <div class="se-theme"><h3>Habitat Harmony</h3><p class="se-thsub">Tự nhiên, hệ sinh thái, các sinh vật</p><ul class="se-tags"><li class="se-tag">Vườn ươm mini</li><li class="se-tag">Máy lọc nước tự nhiên</li><li class="se-tag">Chuỗi thức ăn 3D</li><li class="se-tag">Nhiệt kế lỏng</li><li class="se-tag">Vòng tuần hoàn nước</li><li class="se-tag">Bếp năng lượng mặt trời</li><li class="se-tag">Đèn khẩn cấp bằng chai nước</li></ul></div>
+            <div class="se-theme"><h3>Rocket to Reality</h3><p class="se-thsub">Vũ trụ, sự sống ngoài Trái Đất</p><ul class="se-tags"><li class="se-tag">Mô hình hệ mặt trời</li><li class="se-tag">Nhà kính trên sao Hỏa</li><li class="se-tag">Vườn rau vũ trụ</li><li class="se-tag">Tên lửa</li><li class="se-tag">Tàu vũ trụ tái chế</li><li class="se-tag">Bản đồ chòm sao</li></ul></div>
+            <div class="se-theme"><h3>Disaster on Screen</h3><p class="se-thsub">Làm phim khoa học, phòng chống thiên tai</p><ul class="se-tags"><li class="se-tag">Chống xói mòn đất</li><li class="se-tag">Nhà chống bão</li><li class="se-tag">Nhà chống lũ</li><li class="se-tag">Báo cháy rừng mini</li><li class="se-tag">Máy chiếu mini</li><li class="se-tag">Dẫn bản tin thời tiết</li></ul></div>
+            <div class="se-theme"><h3>Ha Giang to Ca Mau</h3><p class="se-thsub">Đời sống, truyền thống và lịch sử Việt Nam</p><ul class="se-tags"><li class="se-tag">Kỹ thuật ngụy trang</li><li class="se-tag">Hệ thống tưới cây tự động</li><li class="se-tag">Tết ngọt ngào</li><li class="se-tag">Siêu đầu bếp</li></ul></div>
+            <div class="se-theme"><h3>EcoArt Revival</h3><p class="se-thsub">Nghệ thuật, tái chế, môi trường</p><ul class="se-tags"><li class="se-tag">Vườn cây biết hát</li><li class="se-tag">Thời trang tương lai</li><li class="se-tag">Nhạc cụ tái chế</li><li class="se-tag">Recycle shop</li><li class="se-tag">Loa tự chế</li><li class="se-tag">Cosmos on canvas</li></ul></div>
+            <div class="se-theme"><h3>SteamE at Home</h3><p class="se-thsub">Đời sống sản xuất và tiện ích</p><ul class="se-tags"><li class="se-tag">Nhà thông minh</li><li class="se-tag">Cảm biến sáng đèn</li><li class="se-tag">Chống trộm</li><li class="se-tag">Đồng hồ</li><li class="se-tag">Móc khóa phát sáng</li></ul></div>
+            <div class="se-theme"><h3>NextGen Pioneers</h3><p class="se-thsub">Các ngành khoa học và nghề nghiệp</p><ul class="se-tags"><li class="se-tag">Xây cầu</li><li class="se-tag">Thiết kế hệ dù</li><li class="se-tag">Công ty sản xuất đồ chơi</li><li class="se-tag">Xe chuyển hàng</li><li class="se-tag">Ngày hội việc làm</li></ul></div>
+          </div>
+          <div class="se-narrow">
+            <h3 class="se-h3">Hai nguyên tắc chạy xuyên suốt mọi chủ đề</h3>
+            <p><b>1. Gắn thẳng vào bài học trên lớp.</b> Mỗi đề tài đều móc vào Toán, Lý, Hóa, Sinh hoặc Văn/Nghệ thuật con đang học, nên con không phải học thêm kiến thức mới rồi bỏ đó.</p>
+            <p><b>2. Giải pháp phải khả thi và tốt hơn cách hiện tại.</b> Ý tưởng hay mà không dựng ra được thì chưa tính là xong. Đây là chỗ chữ E phát huy tác dụng.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== SAU 30 GIỜ ===== -->
+      <section class="se-sec se-alt">
+        <div class="se-shell">
+          <h2>Sau 30 giờ, con nhận được gì?</h2>
+          <div class="se-outs">
+            <div class="se-out"><div class="se-onum">1</div><div><h3>Tư duy giải quyết vấn đề</h3><p>Con biết quan sát, phân tích, thử nghiệm và không ngừng cải tiến để tìm ra giải pháp tốt hơn.</p></div></div>
+            <div class="se-out"><div class="se-onum">2</div><div><h3>Hiểu sâu và ứng dụng liên môn</h3><p>Con vận dụng Khoa học, Công nghệ, Kỹ thuật, Nghệ thuật, Toán và Khởi nghiệp vào một tình huống thực tế, thay vì học rời từng môn.</p></div></div>
+            <div class="se-out"><div class="se-onum">3</div><div><h3>Một portfolio cá nhân</h3><p>Mỗi cấp độ con hoàn thành 1–3 dự án, kèm slide hoặc pitch deck, mô hình, báo cáo dữ liệu, video hoặc poster; con thuyết trình trong triển lãm cuối khóa.</p></div></div>
+            <div class="se-out"><div class="se-onum">4</div><div><h3>Tiến bộ tự nhiên ở môn chính khóa</h3><p>Vì kiến thức được dùng thật nên con nắm chắc bản chất, từ đó học các môn trên lớp nhẹ hơn.</p></div></div>
+          </div>
+          <div class="se-narrow se-mt28">
+            <p class="se-note">Chúng tôi nói <i>mục tiêu</i>, không nói <i>cam kết</i>. Tốc độ mỗi đứa trẻ mỗi khác, và người đồng hành ở nhà cũng góp một nửa.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== ĐẦU VÀO ===== -->
+      <section class="se-sec">
+        <div class="se-shell se-narrow">
+          <h2>Con chưa biết lập trình hay làm thí nghiệm có theo được không?</h2>
+          <p>Được. Chương trình <b>không yêu cầu đầu vào</b>. Giáo viên hướng dẫn theo đúng lứa tuổi, và toàn bộ công cụ, vật liệu do nhà trường cung cấp.</p>
+          <p>Anh chị cũng <b>không cần mua robot hay bộ kit ở nhà</b>. Đây là điểm chúng tôi cố tình thiết kế khác: giá trị của buổi học nằm ở câu hỏi con phải trả lời, không nằm ở món thiết bị con được cầm. Một chai nhựa và một cái đèn LED, nếu đi kèm đúng câu hỏi, dạy được nhiều hơn một con robot lắp theo hướng dẫn.</p>
+        </div>
+      </section>
+
+      <!-- ===== SO SÁNH ===== -->
+      <section class="se-sec se-alt">
+        <div class="se-shell">
+          <h2>Lớp STEAM-E tại trường khác lớp STEAM ở trung tâm thế nào?</h2>
+          <div class="se-narrow">
+            <p>Ba mô hình phổ biến, mỗi mô hình hợp với một kiểu gia đình khác nhau. Bảng dưới so sánh theo <b>mô hình</b>, không nhắm vào đơn vị cụ thể nào.</p>
+          </div>
+          <p class="se-swipe" aria-hidden="true">Vuốt ngang để xem hết bảng →</p>
+          <div class="se-tw">
+            <table>
+              <thead><tr><th>Tiêu chí</th><th>STEAM-E tại Trường Việt Anh</th><th>Trung tâm STEAM/robotics</th><th>Bộ kit tự học ở nhà</th></tr></thead>
+              <tbody>
+                <tr><td>Trọng tâm</td><td>Dự án giải một vấn đề đời sống, gắn với bài học trên lớp</td><td>Thường xoay quanh một nền tảng phần cứng (robot, mạch, lego)</td><td>Lắp ráp theo hướng dẫn có sẵn</td></tr>
+                <tr><td>Thiết bị</td><td>Trường lo toàn bộ</td><td>Thường gồm trong khóa học; một số nơi yêu cầu mua kit riêng</td><td>Gia đình tự mua</td></tr>
+                <tr><td>Đầu ra</td><td>1–3 dự án + thuyết trình + triển lãm cuối khóa</td><td>Sản phẩm theo từng bài, tùy trung tâm</td><td>Sản phẩm lắp xong là hết</td></tr>
+                <tr><td>Điểm mạnh riêng</td><td>Kết nối trực tiếp với chương trình con đang học</td><td>Rất tốt nếu con đã mê kỹ thuật và muốn đi sâu một hướng</td><td>Rẻ, linh hoạt giờ giấc, cha mẹ đồng hành sát</td></tr>
+                <tr><td>Hạn chế cần biết</td><td>Cố định lịch cuối tuần, phải đến cơ sở</td><td>Kiến thức có thể tách rời bài học trên lớp</td><td>Dễ bỏ dở khi cha mẹ bận</td></tr>
+                <tr><td>Phù hợp khi</td><td>Con chưa biết bắt đầu từ đâu; gia đình muốn con biết dùng kiến thức đang học</td><td>Con đã có hứng thú rõ rệt với robot, lập trình</td><td>Cha mẹ có thời gian kèm và muốn thử trước</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="se-narrow se-mt26">
+            <p>Nói thẳng: nếu con anh chị đã say mê lập trình và muốn đi sâu vào một kỹ thuật cụ thể, một trung tâm chuyên sâu có thể hợp hơn. STEAM-E mạnh ở chỗ khác — dạy con cách <i>tìm ra vấn đề đáng giải</i>, thứ mà mọi kỹ thuật sau này đều cần.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== HỌC TỐT HƠN ===== -->
+      <section class="se-sec">
+        <div class="se-shell se-narrow">
+          <h2>STEAM-E có giúp con học tốt hơn các môn trên lớp không?</h2>
+          <p>Có, nhưng theo đường vòng chứ không phải đường thẳng. Con không được luyện thêm đề. Con được dùng kiến thức đang học vào một việc có kết quả nhìn thấy được — và chính điều đó làm kiến thức bám lại.</p>
+          <p>Đây đúng là cơ chế mà nghiên cứu của Freeman và cộng sự (<i>PNAS</i>, 2014) đo được: khi học sinh phải làm chứ không chỉ nghe, kết quả bài thi đi lên. Nếu anh chị muốn một dấu hiệu để theo dõi, hãy nhìn vào chỗ này sau ba tháng: con có bắt đầu tự đặt câu hỏi “cái này để làm gì” khi học bài không. Đó là dấu hiệu sớm nhất, và đáng tin hơn điểm số một bài kiểm tra.</p>
+          <p>Về chuyện quá tải: một buổi 90 phút cuối tuần không lấy mất thời gian học của con. Nó lấy chỗ của thời gian con ngồi trước màn hình — và trả lại bằng một thứ con cầm được trên tay.</p>
+        </div>
+      </section>
+
+      <!-- ===== ĐỊA ĐIỂM ===== -->
+      <section class="se-sec se-alt">
+        <div class="se-shell">
+          <h2>STEAM-E học ở đâu và lịch thế nào?</h2>
+          <div class="se-narrow">
+            <p>STEAM-E dạy trực tiếp tại cơ sở Trường Việt Anh ở <b>TP. Hồ Chí Minh</b> và <b>Rạch Giá</b>, không có lớp online — vì con phải thao tác thật với vật liệu thật.</p>
+          </div>
+          <div class="se-places">
+            <!-- TODO: bổ sung địa chỉ đầy đủ từng cơ sở khi có (xem /co-so) -->
+            <div class="se-place"><h3>TP. Hồ Chí Minh</h3><p>Cơ sở Trường Việt Anh · ca cuối tuần, sáng hoặc chiều</p></div>
+            <div class="se-place"><h3>Rạch Giá</h3><p>Cơ sở Trường Việt Anh · ca cuối tuần, sáng hoặc chiều</p></div>
+          </div>
+          <dl class="se-facts">
+            <div class="se-fact"><dt>Hình thức</dt><dd>Học trực tiếp — trải nghiệm và thao tác thật</dd></div>
+            <div class="se-fact"><dt>Thời lượng</dt><dd>90 phút mỗi buổi × 20 buổi = 30 giờ mỗi cấp độ</dd></div>
+            <div class="se-fact"><dt>Lịch học</dt><dd>Các ca cuối tuần, sáng hoặc chiều, linh hoạt theo từng cơ sở</dd></div>
+            <div class="se-fact"><dt>Dụng cụ</dt><dd>Nhà trường chuẩn bị toàn bộ: dụng cụ thí nghiệm, vật liệu, bộ kit, phần mềm theo lứa tuổi</dd></div>
+            <div class="se-fact"><dt>Phụ huynh</dt><dd>Nhận báo cáo tiến bộ định kỳ và dự triển lãm dự án cuối khóa cùng con</dd></div>
+          </dl>
+          <p class="se-narrow se-mt26"><a href="/co-so">Xem địa chỉ chi tiết từng cơ sở Trường Việt Anh →</a></p>
+        </div>
+      </section>
+
+      <!-- ===== DỰ ÁN HỌC SINH =====
+           Khi có video: thay khối .se-slot bằng video + đoạn mô tả 60-100 từ + transcript
+           đầy đủ nằm sẵn trong HTML, và thêm schema VideoObject vào structuredData. -->
+      <section class="se-sec">
+        <div class="se-shell">
+          <h2>Dự án học sinh Việt Anh đã làm</h2>
+          <div class="se-slot">
+            <b>Chỗ dành cho bộ video dự án học sinh</b>
+            <span>Mỗi video sẽ kèm một đoạn mô tả 60–100 từ và transcript đầy đủ ngay bên dưới.</span>
+          </div>
+          <div class="se-narrow se-mt34">
+            <!-- TODO: xin phép phụ huynh trước khi đăng kèm tên, hoặc thay bằng lời phụ huynh mới -->
+            <p class="se-pull">“Con có thể áp dụng những kiến thức đã học vào đời sống, học mà không áp lực nặng nề.”</p>
+            <p class="se-quotesrc">— Phụ huynh Kim Loan</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== FAQ ===== -->
+      <section class="se-sec se-alt" id="faq-steame">
+        <div class="se-shell se-narrow">
+          <h2>Câu hỏi thường gặp</h2>
+          <FaqAccordion faqs={faqs} />
+        </div>
+      </section>
+
+      <!-- ===== KẾT + FORM ===== -->
+      <section class="se-sec" id="dangky">
+        <div class="se-shell se-narrow">
+          <h2>Điều tôi mong anh chị mang về</h2>
+          <div class="se-voice">
+            <p>Tôi không nghĩ mọi đứa trẻ cần trở thành kỹ sư. Nhưng tôi tin mọi đứa trẻ đều cần một lần được trải qua trọn vẹn cái vòng: nhìn thấy một vấn đề, tự nghĩ ra cách, làm hỏng, sửa lại, rồi đứng trước người khác nói <em>đây là thứ con làm ra và đây là lý do</em>.</p>
+            <p>Một đứa trẻ bình thường, trong một môi trường được thiết kế đúng, có thể trở nên phi thường. Chín mươi phút mỗi cuối tuần không đổi được cả một con người. Nhưng nó đủ để con biết cảm giác tự mình làm ra một thứ có ích — và một khi đã biết cảm giác đó, con sẽ đi tìm lại.</p>
+          </div>
+
+          <div class="se-closecta">
+            <p><b>Anh chị đăng ký cho con một buổi học thử.</b> Sau buổi đó, anh chị sẽ biết con có sáng lên hay không — thứ mà không bản mô tả chương trình nào trả lời thay được. Nếu để thêm một năm nữa, con vẫn học được, nhưng những năm tiểu học thì không quay lại.</p>
+          </div>
+
+          <div class="se-formwrap" data-form-bg="light">
+            <div id="se-step1">
+              <h3 class="se-fh">Đăng ký buổi học thử STEAM-E</h3>
+              <p class="se-fsub">Hai bước, khoảng 30 giây. Đội ngũ sẽ gọi lại trong giờ hành chính.</p>
+              <div class="se-prog"><span class="se-ptxt">Bước 1/2</span><i class="se-pill on"></i><i class="se-pill"></i></div>
+              <div class="se-fgrid">
+                <div class="se-field">
+                  <label for="se-phone">Số điện thoại</label>
+                  <input id="se-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="09xx xxx xxx" />
+                  <span class="se-hint">Dùng để đội ngũ gọi lại xếp lịch học thử</span>
+                </div>
+                <div class="se-field">
+                  <label for="se-age">Con mấy tuổi?</label>
+                  <select id="se-age" name="child_age">
+                    <option value="">— Chọn tuổi —</option>
+                    <option>5 tuổi</option><option>6 tuổi</option><option>7 tuổi</option>
+                    <option>8 tuổi</option><option>9 tuổi</option><option>10 tuổi</option>
+                  </select>
+                  <span class="se-hint">Để xếp con vào đúng nhóm chủ đề</span>
+                </div>
+              </div>
+              <p class="se-err" id="se-err1" role="alert"></p>
+              <div class="se-fbtns"><button class="se-cta" type="button" id="se-next1">Tiếp tục →</button></div>
+            </div>
+
+            <div id="se-step2" hidden>
+              <h3 class="se-fh">Còn một bước nữa thôi</h3>
+              <p class="se-fsub">Cho đội ngũ biết cơ sở và buổi nào thuận tiện với gia đình.</p>
+              <div class="se-prog"><span class="se-ptxt">Bước 2/2</span><i class="se-pill on"></i><i class="se-pill on"></i></div>
+              <div class="se-fgrid">
+                <div class="se-field"><label for="se-pname">Tên phụ huynh</label><input id="se-pname" name="parent_name" type="text" autocomplete="name" placeholder="Nguyễn Thị An" /></div>
+                <div class="se-field"><label for="se-campus">Cơ sở thuận tiện</label><select id="se-campus" name="campus"><option value="">— Chọn cơ sở —</option><option>TP. Hồ Chí Minh</option><option>Rạch Giá</option></select></div>
+                <div class="se-field"><label for="se-slot">Buổi thuận tiện</label><select id="se-slot" name="preferred_slot"><option value="">— Chọn buổi —</option><option>Thứ 7 — sáng</option><option>Thứ 7 — chiều</option><option>Chủ nhật — sáng</option><option>Chủ nhật — chiều</option><option>Chưa chắc, nhờ tư vấn</option></select></div>
+                <div class="se-field"><label for="se-cname">Tên con <span class="se-opt">(không bắt buộc)</span></label><input id="se-cname" name="child_name" type="text" placeholder="Bé Na" /></div>
+              </div>
+              <p class="se-err" id="se-err2" role="alert"></p>
+              <div class="se-fbtns">
+                <button class="se-cta" type="button" id="se-submit2">Đăng ký học thử</button>
+                <button class="se-ghost" type="button" id="se-back2">← Quay lại</button>
+              </div>
+              <p class="se-consent">Thông tin chỉ dùng để liên hệ tư vấn tuyển sinh, không chia sẻ cho bên thứ ba.</p>
+            </div>
+
+            <div id="se-done" hidden>
+              <div class="se-thanks">
+                <div class="se-tick">✓</div>
+                <h3 class="se-fh">Đã nhận thông tin của anh chị</h3>
+                <p class="se-fsub se-mb0">Đội ngũ tuyển sinh sẽ gọi lại trong giờ hành chính để xếp lịch buổi học thử.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="se-author">
+            <div class="se-av">ND</div>
+            <div>
+              <p><b>Nguyễn Mạnh Dương</b> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt Anh (từ {schoolFacts.foundedYear}), tốt nghiệp Manchester Metropolitan University. {schoolFacts.yearsRunning} năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.</p>
+              <p class="se-updated">Cập nhật lần cuối: <time datetime={NGAY_CAP_NHAT}>03/09/2026</time></p>
+            </div>
+          </div>
+
+          <div class="se-srcs">
+            <b>Nguồn tham khảo</b>
+            <ul>
+              <li>World Economic Forum, <i>Future of Jobs Report 2025</i></li>
+              <li>Freeman, S. và cộng sự (2014), “Active learning increases student performance in science, engineering, and mathematics”, <i>PNAS</i> 111(23)</li>
+              <li>Krathwohl, D. R. (2001), <i>A Revision of Bloom’s Taxonomy</i></li>
+              <li>Bybee, R. W. và cộng sự (2006), <i>The BSCS 5E Instructional Model: Origins and Effectiveness</i></li>
+            </ul>
+          </div>
+
+          <div class="se-related">
+            <b>Đọc thêm</b>
+            <ul>
+              <li><a href="/chuong-trinh">Chương trình học Trường Việt Anh</a> — toàn cảnh chương trình từ mầm non đến THPT.</li>
+              <li><a href="/cap-hoc">Các cấp học</a> — con đang ở cấp nào thì học gì.</li>
+              <li><a href="/co-so">Hệ thống cơ sở</a> — địa chỉ và thông tin từng cơ sở.</li>
+              <li><a href="/dat-lich-tham-quan">Đặt lịch tham quan trường</a> — xem tận nơi trước khi quyết định.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+    </article>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<!-- Bộ thu UTM dùng chung — BẮT BUỘC với mọi trang có form lead (CLAUDE.md).
+     BaseLayout đã nạp sẵn ở <head>; giữ thêm dòng này để trang tự đứng được
+     nếu layout đổi, và để lệnh tự kiểm `grep -c "va-utm.js"` chạy đúng. -->
+<script src="/js/va-utm.js" is:inline></script>
+<script is:inline>
+(function () {
+  'use strict';
+
+  var C = {
+    api: '/api/lead',
+    formId: 'steame-2step',
+    funnel: 'steame-hoc-thu',   // funnel_code RIÊNG của trang này → cột "Diễn giải nguồn MKT"
+  };
+
+  // Tuổi con → khối quan tâm trong Pancake (worker map qua KHOI_QUAN_TAM_MAP).
+  var AGE_MAP = {
+    '5 tuổi':  { level: 'mam-non',  grade: '5-tuoi' },
+    '6 tuổi':  { level: 'tieu-hoc', grade: 'lop-1' },
+    '7 tuổi':  { level: 'tieu-hoc', grade: 'lop-2' },
+    '8 tuổi':  { level: 'tieu-hoc', grade: 'lop-3' },
+    '9 tuổi':  { level: 'tieu-hoc', grade: 'lop-4' },
+    '10 tuổi': { level: 'tieu-hoc', grade: 'lop-5' }
+  };
+
+  // Regex số điện thoại lấy nguyên từ form Pancake hiện tại của trường,
+  // để trang này lọc số giống hệt các form cũ.
+  var PHONE_RE = /^(\+84|84|0)(3([2-9])|5(2|5|6|8|9)|7(0|[6-9])|8([1-9])|9([0-4]|[6-9]))([0-9]{7})$/;
+
+  // Lead một phần ở bước 1 KHÔNG bắn ngay, mà chờ 45 giây — hoặc bắn ngay khi
+  // phụ huynh rời trang, tuỳ cái nào đến trước. Lý do:
+  // Pancake TRÙNG SỐ ĐIỆN THOẠI thì từ chối (422 "already exists") và KHÔNG cập
+  // nhật bản ghi cũ. Bắn ngay ở bước 1 → Pancake giữ bản ghi trống tên, rồi bản
+  // đầy đủ (tên phụ huynh, cơ sở, buổi học) bị nuốt vì trùng số. Chờ 45 giây thì
+  // ai điền xong (form tự nói "khoảng 30 giây") chỉ tạo ĐÚNG MỘT bản ghi đầy đủ,
+  // còn ai bỏ dở vẫn để lại số cho đội tuyển sinh gọi — đúng mục đích tách 2 bước.
+  var PARTIAL_DELAY_MS = 45000;
+  var UTM = (window.__vaUTM ? window.__vaUTM() : {});
+  var lead = {};
+  var partial = { payload: null, sent: false, timer: null, bound: false };
+
+  function $(id) { return document.getElementById(id); }
+  function clean(v) { return (v || '').trim(); }
+  function noop() {}
+
+  function post(payload) {
+    try {
+      return fetch(C.api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(Object.assign(payload, UTM)),
+        keepalive: true
+      }).catch(noop);
+    } catch (e) { return Promise.resolve(); }
+  }
+
+  // Gửi bản một phần đúng một lần. Khi trang đang đóng thì fetch hay bị huỷ giữa
+  // chừng → dùng sendBeacon (cùng origin nên không vướng CORS).
+  function flushPartial(closing) {
+    if (!partial.payload || partial.sent) return;
+    partial.sent = true;
+    if (partial.timer) { clearTimeout(partial.timer); partial.timer = null; }
+    var body = JSON.stringify(Object.assign({}, partial.payload, UTM));
+    if (closing && navigator.sendBeacon) {
+      try {
+        navigator.sendBeacon(C.api, new Blob([body], { type: 'application/json' }));
+        return;
+      } catch (e) {}
+    }
+    try {
+      fetch(C.api, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: body,
+        keepalive: true
+      }).catch(noop);
+    } catch (e) {}
+  }
+
+  function armPartial(payload) {
+    partial.payload = payload;
+    partial.timer = setTimeout(function () { flushPartial(false); }, PARTIAL_DELAY_MS);
+    if (partial.bound) return;
+    partial.bound = true;
+    window.addEventListener('pagehide', function () { flushPartial(true); });
+    document.addEventListener('visibilitychange', function () {
+      // Chỉ bắn khi trang bị ẩn hẳn ở cuối vòng đời (đóng tab / chuyển ứng dụng rồi
+      // không quay lại). Trình duyệt sẽ gọi tiếp pagehide, nên đây là lưới an toàn.
+      if (document.visibilityState === 'hidden' && document.readyState === 'complete') {
+        // Chưa bắn vội: đợi thêm 8 giây, quay lại tab trong khoảng đó thì huỷ.
+        if (partial.hideTimer) clearTimeout(partial.hideTimer);
+        partial.hideTimer = setTimeout(function () { flushPartial(true); }, 8000);
+      } else if (document.visibilityState === 'visible' && partial.hideTimer) {
+        clearTimeout(partial.hideTimer);
+        partial.hideTimer = null;
+      }
+    });
+  }
+
+  function gtm(evt, extra) {
+    try {
+      (window.dataLayer = window.dataLayer || []).push(
+        Object.assign({ event: evt, form_id: C.formId, funnel_code: C.funnel }, extra || {}, UTM)
+      );
+    } catch (e) {}
+  }
+
+  $('se-next1').addEventListener('click', function () {
+    var phone = clean($('se-phone').value).replace(/[\s.\-()]/g, '');
+    var age = clean($('se-age').value);
+    var err = $('se-err1');
+    if (!phone) { err.textContent = 'Anh chị nhập giúp số điện thoại.'; $('se-phone').focus(); return; }
+    if (!PHONE_RE.test(phone)) { err.textContent = 'Số điện thoại chưa đúng định dạng. Ví dụ: 0901234567'; $('se-phone').focus(); return; }
+    if (!age) { err.textContent = 'Anh chị chọn giúp độ tuổi của con.'; $('se-age').focus(); return; }
+    err.textContent = '';
+    lead.phone = phone;
+    lead.age = age;
+
+    // Nạp sẵn lead một phần — đây là lý do form tách hai bước: có số điện thoại là
+    // đã có lead, kể cả khi phụ huynh bỏ dở bước 2. Xem chú thích PARTIAL_DELAY_MS
+    // ở trên để biết vì sao nó chờ chứ không bắn ngay.
+    var m = AGE_MAP[age] || {};
+    armPartial({
+      phone: phone,
+      school_level: m.level || '',
+      grade: m.grade || '',
+      note: 'STEAM-E · Con ' + age + ' · bỏ dở ở bước 2',
+      form_id: C.formId,
+      funnel_code: C.funnel,
+      partial: true
+    });
+    gtm('lead_step1');
+
+    $('se-step1').hidden = true;
+    $('se-step2').hidden = false;
+    $('se-pname').focus();
+  });
+
+  $('se-back2').addEventListener('click', function () {
+    $('se-step2').hidden = true;
+    $('se-step1').hidden = false;
+    $('se-phone').focus();
+  });
+
+  $('se-submit2').addEventListener('click', function () {
+    var name = clean($('se-pname').value);
+    var campus = clean($('se-campus').value);
+    var slot = clean($('se-slot').value);
+    var err = $('se-err2');
+    if (!name) { err.textContent = 'Anh chị cho biết tên để đội ngũ tiện xưng hô.'; $('se-pname').focus(); return; }
+    if (!campus) { err.textContent = 'Anh chị chọn giúp cơ sở thuận tiện.'; $('se-campus').focus(); return; }
+    if (!slot) { err.textContent = 'Anh chị chọn giúp buổi thuận tiện.'; $('se-slot').focus(); return; }
+    err.textContent = '';
+
+    // Huỷ bản một phần TRƯỚC khi gửi bản đầy đủ: nếu để nó bắn thì Pancake nhận
+    // bản trống tên trước, rồi từ chối bản đầy đủ vì trùng số điện thoại.
+    if (partial.timer) { clearTimeout(partial.timer); partial.timer = null; }
+    if (partial.hideTimer) { clearTimeout(partial.hideTimer); partial.hideTimer = null; }
+    partial.sent = true;
+
+    var m = AGE_MAP[lead.age] || {};
+    var btn = $('se-submit2');
+    btn.disabled = true;
+    btn.textContent = 'Đang gửi…';
+
+    post({
+      parent_name: name,
+      phone: lead.phone,
+      child_name: clean($('se-cname').value),
+      school_level: m.level || '',
+      grade: m.grade || '',
+      province: campus,
+      note: 'STEAM-E học thử · Con ' + (lead.age || 'chưa rõ tuổi') + ' · Cơ sở: ' + campus + ' · Buổi: ' + slot,
+      form_id: C.formId,
+      funnel_code: C.funnel
+    }).then(function () {
+      gtm('lead_submitted', { campus: campus });
+      $('se-step2').hidden = true;
+      $('se-done').hidden = false;
+      $('se-done').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    });
+  });
+
+  $('se-phone').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); $('se-next1').click(); }
+  });
+})();
+</script>
+
+<style>
+  /* ===================================================================
+     STEAM-E — kiểu dáng riêng của trang, giữ nguyên thiết kế bản gốc
+     (nền sáng, Navy #26275D + Vàng #F9DD0E, nút vàng luôn chữ Navy).
+     Mọi class đặt tiền tố .se- để không đụng bộ .gi-* dùng chung.
+     Chữ dùng Inter theo font hệ thống của site, không nạp thêm font.
+     =================================================================== */
+  .se-page {
+    --se-ground: #f1f2f7;
+    --se-surface: #ffffff;
+    --se-surface-2: #e8eaf3;
+    --se-ink: #1a1b33;
+    --se-ink-2: #4e5170;
+    --se-ink-3: #83879f;
+    --se-navy: #26275d;
+    --se-red: #c8102e;
+    --se-gold: #f9dd0e;
+    --se-gold-soft: #fef7c2;
+    --se-gold-line: #e3c400;
+    --se-line: #dbdde9;
+    --se-line-2: #c2c5d8;
+    --se-seg1: #c7c8e6;
+    --se-seg2: #9497d2;
+    --se-seg3: #6b6ebb;
+    --se-seg4: #454885;
+    --se-seg5: #26275d;
+    background: var(--se-ground);
+    color: var(--se-ink);
+  }
+  .se-page article { font-size: 17px; line-height: 1.68; }
+  .se-page p { margin: 0 0 17px; }
+  .se-page a { color: var(--se-red); }
+  .se-shell { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
+  .se-narrow { max-width: 680px; }
+  .se-mt22 { margin-top: 22px; }
+  .se-mt26 { margin-top: 26px; }
+  .se-mt28 { margin-top: 28px; }
+  .se-mt30 { margin-top: 30px; }
+  .se-mt34 { margin-top: 34px; }
+  .se-mb0 { margin-bottom: 0; }
+
+  /* --- nút ---
+     Bọc trong .se-page để thắng luật `.se-page a{color:red}` bên trên: nút vàng
+     LUÔN phải chữ Navy theo nhận diện thương hiệu, kể cả khi nút là thẻ <a>. */
+  .se-page .se-cta {
+    display: inline-block; background: var(--se-gold); color: var(--se-navy);
+    font-weight: 800; font-size: 1rem; letter-spacing: -0.01em; text-decoration: none;
+    padding: 15px 28px; border-radius: 8px; border: 1px solid var(--se-gold-line);
+    transition: transform 0.12s ease; font-family: inherit; cursor: pointer;
+  }
+  .se-page .se-cta:hover { transform: translateY(-1px); color: var(--se-navy); }
+  .se-page .se-cta:disabled { opacity: 0.6; cursor: default; transform: none; }
+
+  /* --- hero --- */
+  .se-hero { padding: 44px 22px 8px; }
+  .se-crumb { font-size: 0.88rem; color: var(--se-ink-3); margin-bottom: 20px; }
+  .se-crumb a { color: var(--se-ink-2); text-decoration: none; }
+  .se-crumb a:hover { text-decoration: underline; }
+  .se-crumb span[aria-hidden] { margin: 0 6px; color: var(--se-line-2); }
+  .se-eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--se-red); margin: 0 0 18px; }
+  .se-page h1 {
+    font-size: clamp(2rem, 5.4vw, 3.2rem); font-weight: 800; letter-spacing: -0.035em;
+    line-height: 1.08; margin: 0 0 26px; text-wrap: balance; max-width: 19ch; color: var(--se-ink);
+  }
+  .se-answer {
+    background: var(--se-surface); border: 1px solid var(--se-line);
+    border-left: 5px solid var(--se-gold); border-radius: 0 10px 10px 0;
+    padding: 22px 26px; max-width: 62ch; margin: 0 0 26px;
+  }
+  .se-answer p { margin: 0; font-size: 1.05rem; font-weight: 500; }
+  .se-herocta { display: flex; flex-wrap: wrap; gap: 14px 20px; align-items: center; margin-bottom: 40px; }
+  .se-herocta .se-sub { font-size: 0.88rem; color: var(--se-ink-3); }
+
+  /* --- dải thẻ --- */
+  .se-strip { border-top: 1px solid var(--se-line); border-bottom: 1px solid var(--se-line); padding: 22px 22px 24px; }
+  .se-lbl { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--se-ink-3); margin: 0 0 12px; }
+  .se-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .se-tag { font-size: 0.85rem; background: var(--se-surface); border: 1px solid var(--se-line-2); color: var(--se-ink-2); padding: 5px 12px; border-radius: 99px; }
+
+  /* --- mục --- */
+  .se-sec { padding: 52px 0; }
+  .se-sec.se-alt { background: var(--se-surface-2); }
+  .se-page h2 {
+    font-size: clamp(1.5rem, 3.2vw, 2rem); font-weight: 800; letter-spacing: -0.028em;
+    color: var(--se-red); margin: 0 0 20px; text-wrap: balance; max-width: 24ch; line-height: 1.18;
+  }
+  .se-h3 { font-size: 1.08rem; font-weight: 700; color: var(--se-navy); margin: 32px 0 10px; }
+
+  /* --- giọng người sáng lập --- */
+  .se-voice p { font-size: 1.06rem; line-height: 1.75; }
+  .se-voice em { font-style: italic; color: var(--se-ink-2); }
+  .se-pull {
+    font-size: 1.24rem; line-height: 1.5; border-left: 4px solid var(--se-gold);
+    padding: 6px 0 6px 22px; margin: 30px 0; color: var(--se-ink); font-weight: 600; max-width: 34ch;
+  }
+  .se-quotesrc { color: var(--se-ink-3); font-size: 0.9rem; margin-top: -14px; }
+  .se-note { color: var(--se-ink-2); font-size: 0.95rem; }
+
+  /* --- 6 chữ cái --- */
+  .se-letters { border-top: 1px solid var(--se-line); margin-top: 8px; }
+  .se-letter { display: grid; grid-template-columns: 56px 220px minmax(0, 1fr); gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--se-line); }
+  .se-ch { font-size: 1.9rem; font-weight: 800; color: var(--se-navy); line-height: 1; letter-spacing: -0.03em; }
+  .se-nm { font-weight: 700; font-size: 0.95rem; }
+  .se-ds { color: var(--se-ink-2); font-size: 0.95rem; }
+
+  /* --- số liệu --- */
+  .se-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; margin: 28px 0 8px; }
+  .se-stat { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 10px; padding: 20px 22px; }
+  .se-n { font-size: 2.1rem; font-weight: 800; color: var(--se-navy); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
+  .se-t { font-size: 0.92rem; color: var(--se-ink-2); margin-bottom: 8px; }
+  .se-s { font-size: 0.76rem; color: var(--se-ink-3); }
+
+  /* --- 5E --- */
+  .se-barwrap { margin: 30px 0 34px; }
+  .se-barlbls, .se-bar, .se-barmin { display: flex; width: 100%; }
+  .se-barlbls > *, .se-bar > *, .se-barmin > * { min-width: 0; }
+  .se-barlbls span { font-size: 0.82rem; font-weight: 700; padding-right: 8px; color: var(--se-ink); }
+  .se-bar { height: 22px; border-radius: 5px; overflow: hidden; margin: 7px 0; }
+  .se-bar i { display: block; height: 100%; }
+  .se-barmin span { font-size: 0.76rem; color: var(--se-ink-3); padding-right: 8px; font-variant-numeric: tabular-nums; }
+  .se-e1 { flex: 11.1; } .se-e2 { flex: 33.3; } .se-e3 { flex: 22.2; } .se-e4 { flex: 22.2; } .se-e5 { flex: 11.1; }
+  .se-bar .se-e1 { background: var(--se-seg1); } .se-bar .se-e2 { background: var(--se-seg2); }
+  .se-bar .se-e3 { background: var(--se-seg3); } .se-bar .se-e4 { background: var(--se-seg4); }
+  .se-bar .se-e5 { background: var(--se-seg5); }
+  .se-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
+  .se-step { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 10px; padding: 20px; border-top: 4px solid var(--se-seg3); }
+  .se-step:nth-child(1) { border-top-color: var(--se-seg1); }
+  .se-step:nth-child(2) { border-top-color: var(--se-seg2); }
+  .se-step:nth-child(3) { border-top-color: var(--se-seg3); }
+  .se-step:nth-child(4) { border-top-color: var(--se-seg4); }
+  .se-step:nth-child(5) { border-top-color: var(--se-seg5); }
+  .se-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
+  .se-stnm { font-weight: 800; font-size: 1rem; }
+  .se-mn { font-size: 0.78rem; color: var(--se-ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .se-step p { font-size: 0.93rem; color: var(--se-ink-2); margin: 0; }
+
+  /* --- chủ đề --- */
+  .se-themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
+  .se-theme { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 10px; padding: 20px 22px; }
+  .se-theme h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.015em; color: var(--se-ink); }
+  .se-thsub { font-size: 0.86rem; color: var(--se-red); font-weight: 500; margin: 0 0 14px; }
+  .se-theme .se-tags { gap: 6px; }
+  .se-theme .se-tag { font-size: 0.78rem; padding: 4px 10px; background: var(--se-surface-2); border-color: var(--se-line); }
+
+  /* --- kết quả --- */
+  .se-outs { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-top: 8px; }
+  .se-out { display: grid; grid-template-columns: 38px minmax(0, 1fr); gap: 14px; align-items: start; }
+  .se-onum { width: 34px; height: 34px; border-radius: 50%; background: var(--se-navy); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 0.92rem; }
+  .se-out h3 { margin: 5px 0; font-size: 1rem; font-weight: 700; color: var(--se-ink); }
+  .se-out p { font-size: 0.93rem; color: var(--se-ink-2); margin: 0; }
+
+  /* --- bảng --- */
+  .se-swipe { display: none; font-size: 0.8rem; color: var(--se-ink-3); margin: 0 0 8px; }
+  .se-tw { overflow-x: auto; border: 1px solid var(--se-line); border-radius: 10px; background: var(--se-surface); }
+  .se-tw table { border-collapse: collapse; width: 100%; font-size: 0.9rem; min-width: 640px; }
+  .se-tw th { background: var(--se-navy); color: #fff; text-align: left; font-weight: 700; padding: 12px 14px; font-size: 0.82rem; }
+  .se-tw td { padding: 12px 14px; border-top: 1px solid var(--se-line); vertical-align: top; color: var(--se-ink-2); }
+  .se-tw td:first-child { color: var(--se-ink); font-weight: 600; }
+  .se-tw tbody tr:nth-child(even) td { background: var(--se-surface-2); }
+
+  /* --- cơ sở --- */
+  .se-places { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 26px; }
+  .se-place { background: var(--se-surface); border: 1px solid var(--se-line); border-left: 4px solid var(--se-navy); border-radius: 0 10px 10px 0; padding: 20px 22px; }
+  .se-place h3 { margin: 0 0 4px; font-size: 1.1rem; font-weight: 800; color: var(--se-ink); }
+  .se-place p { margin: 0; font-size: 0.9rem; color: var(--se-ink-2); }
+  .se-facts { border-top: 1px solid var(--se-line); margin: 0; }
+  .se-fact { display: grid; grid-template-columns: 170px minmax(0, 1fr); gap: 18px; padding: 13px 0; border-bottom: 1px solid var(--se-line); font-size: 0.95rem; }
+  .se-fact dt { font-weight: 700; color: var(--se-ink); }
+  .se-fact dd { margin: 0; color: var(--se-ink-2); }
+
+  /* --- chỗ chờ video --- */
+  .se-slot { border: 2px dashed var(--se-line-2); border-radius: 12px; padding: 40px 24px; text-align: center; color: var(--se-ink-3); background: var(--se-surface); }
+  .se-slot b { display: block; color: var(--se-ink-2); font-size: 1rem; margin-bottom: 6px; }
+  .se-slot span { font-size: 0.88rem; }
+
+  /* --- kết --- */
+  .se-closecta { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 12px; padding: 30px 32px; margin-top: 30px; }
+  .se-closecta p { max-width: 52ch; margin: 0; }
+
+  /* --- form --- */
+  .se-formwrap { background: var(--se-surface); border: 1px solid var(--se-line); border-top: 5px solid var(--se-navy); border-radius: 12px; padding: 30px 30px 32px; margin-top: 30px; }
+  .se-fh { margin: 0 0 6px; font-size: 1.28rem; font-weight: 800; color: var(--se-ink); letter-spacing: -0.02em; }
+  .se-fsub { color: var(--se-ink-2); font-size: 0.95rem; margin: 0 0 22px; }
+  .se-prog { display: flex; align-items: center; gap: 10px; margin-bottom: 24px; }
+  .se-pill { height: 5px; border-radius: 99px; background: var(--se-line-2); flex: 1; transition: background 0.2s ease; }
+  .se-pill.on { background: var(--se-gold); }
+  .se-ptxt { font-size: 0.76rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--se-ink-3); flex: none; }
+  .se-fgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+  .se-field { display: flex; flex-direction: column; gap: 6px; }
+  .se-field label { font-size: 0.85rem; font-weight: 700; color: var(--se-ink); }
+  .se-field input, .se-field select {
+    font-family: inherit; font-size: 1rem; color: var(--se-ink); background: var(--se-ground);
+    border: 1px solid var(--se-line-2); border-radius: 8px; padding: 12px 13px; width: 100%;
+  }
+  .se-field input:focus, .se-field select:focus { outline: none; border-color: var(--se-navy); box-shadow: 0 0 0 3px var(--se-gold-soft); }
+  .se-hint { font-size: 0.78rem; color: var(--se-ink-3); }
+  .se-opt { font-weight: 400; color: var(--se-ink-3); }
+  .se-err { color: var(--se-red); font-size: 0.82rem; font-weight: 500; margin: 10px 0 0; }
+  .se-err:empty { margin: 0; }
+  .se-fbtns { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 22px; }
+  .se-ghost { font-family: inherit; font-size: 0.92rem; font-weight: 700; background: transparent; cursor: pointer; border: 1px solid var(--se-line-2); color: var(--se-ink-2); padding: 13px 20px; border-radius: 8px; }
+  .se-ghost:hover { border-color: var(--se-navy); color: var(--se-ink); }
+  .se-consent { font-size: 0.8rem; color: var(--se-ink-3); margin: 14px 0 0; }
+  .se-thanks { text-align: center; padding: 16px 0 8px; }
+  .se-tick { width: 52px; height: 52px; border-radius: 50%; background: var(--se-gold); color: var(--se-navy); display: grid; place-items: center; margin: 0 auto 16px; font-size: 1.5rem; font-weight: 800; }
+
+  /* --- tác giả, nguồn, đọc thêm --- */
+  .se-author { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 18px; align-items: start; border-top: 1px solid var(--se-line); padding-top: 26px; margin-top: 40px; }
+  .se-av { width: 52px; height: 52px; border-radius: 50%; background: var(--se-navy); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; }
+  .se-author p { font-size: 0.93rem; color: var(--se-ink-2); margin: 0 0 6px; }
+  .se-author b { color: var(--se-ink); }
+  .se-updated { color: var(--se-ink-3); font-size: 0.85rem; }
+  .se-srcs, .se-related { margin-top: 30px; font-size: 0.86rem; color: var(--se-ink-3); }
+  .se-srcs ul, .se-related ul { margin: 8px 0 0; padding-left: 20px; }
+  .se-srcs li, .se-related li { margin-bottom: 5px; }
+  .se-related { color: var(--se-ink-2); }
+
+  /* --- FAQ dùng chung: nới khoảng cách trong khung hẹp của trang --- */
+  .se-page :global(.gi-faq-item) { margin-bottom: 0.6rem; }
+
+  /* ---------- responsive ---------- */
+  @media (max-width: 900px) {
+    .se-letter { grid-template-columns: 56px 180px minmax(0, 1fr); }
+  }
+  @media (max-width: 760px) {
+    /* Thanh 90 phút tự ẩn trên máy nhỏ — 5 thẻ nhịp học bên dưới vẫn đọc được đủ ý. */
+    .se-barwrap { display: none; }
+    /* Bảng so sánh rộng 640px, phải cuộn ngang trong khung — nói rõ để không ai tưởng bị cắt. */
+    .se-swipe { display: block; }
+  }
+  @media (max-width: 720px) {
+    .se-letter { grid-template-columns: 44px minmax(0, 1fr); gap: 6px 16px; }
+    .se-ds { grid-column: 2; }
+  }
+  @media (max-width: 600px) {
+    /* Màn hình đầu trên điện thoại: site có 3 widget cố định ở đáy (bong bóng Zalo
+       ~673px, nút lên đầu trang ~692px, thanh CTA dính đáy ~743px trên máy 812px).
+       Hero phải gọn lại để nút "Đăng ký buổi học thử" nằm TRỌN phía trên chúng,
+       không bị che. Đo lại bằng .tmp-render/measure.mjs nếu sửa khối này. */
+    .se-hero { padding-top: 16px; }
+    .se-crumb { margin-bottom: 8px; }
+    .se-eyebrow { margin-bottom: 12px; }
+    .se-page h1 { font-size: 1.75rem; margin-bottom: 16px; }
+    .se-answer p { line-height: 1.55; }
+    .se-answer { margin-bottom: 14px; padding: 16px 18px; }
+    .se-sec { padding: 40px 0; }
+    .se-fact { grid-template-columns: 1fr; gap: 2px; }
+    .se-closecta { padding: 24px 20px; }
+    .se-formwrap { padding: 24px 20px 26px; }
+    .se-herocta { gap: 12px; }
+    .se-herocta .se-cta { width: 100%; text-align: center; }
+    .se-answer { padding: 18px 20px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .se-cta, .se-pill { transition: none; }
+  }
+</style>

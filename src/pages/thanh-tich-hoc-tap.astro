@@ -609,8 +609,10 @@ const structuredData = [
   .vd-medal-blue { background: linear-gradient(90deg, #2563eb, #1d4ed8); color: #fff; }
   .vd-medal-honor { background: linear-gradient(90deg, #c2410c, #9a3412); color: #fff; }
   .vd-medal-art { background: linear-gradient(90deg, #be185d, #9d174d); color: #fff; }
-  .vd-name { margin: 0.25rem 0 0.25rem; font-size: 1rem; color: #111827; }
-  .vd-meta { margin: 0; font-size: 0.85rem; color: #6b7280; }
+  /* Thẻ hẹp: cân dòng để không rớt một chữ lẻ xuống dòng cuối
+     ("… IOE Tiếng / Anh"). Trình duyệt cũ bỏ qua, xuống dòng như thường. */
+  .vd-name { margin: 0.25rem 0 0.25rem; font-size: 1rem; color: #111827; text-wrap: balance; }
+  .vd-meta { margin: 0; font-size: 0.85rem; color: #6b7280; text-wrap: balance; }
 
   /* Chú thích cách đọc mã lớp K2526/... */
   .vd-legend {

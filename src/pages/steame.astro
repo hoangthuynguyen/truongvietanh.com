@@ -50,7 +50,7 @@ const faqs = [
   {
     id: 'faq-do-tuoi-phu-hop',
     q: 'Độ tuổi nào phù hợp với STEAM-E?',
-    a: 'Chương trình dành cho trẻ 5–10 tuổi. Đề tài, dụng cụ và mức độ hướng dẫn được điều chỉnh theo hai nhóm tuổi để phù hợp khả năng của con. Nếu chưa chắc con nên vào chủ đề nào, anh chị có thể đăng ký một buổi tư vấn để đội ngũ xếp đúng cấp độ.',
+    a: 'Chương trình dành cho trẻ 5–10 tuổi, chia hai nhóm. Nhóm 5–7 tuổi học bốn chủ đề Habitat Harmony, Rocket to Reality, Disaster on Screen và NextGen Pioneers. Nhóm 8–10 tuổi học ba chủ đề Ha Giang to Ca Mau, EcoArt Revival và SteamE at Home. Đề tài, dụng cụ và mức độ hướng dẫn được điều chỉnh theo từng nhóm. Nếu chưa chắc con nên vào chủ đề nào, anh chị có thể đăng ký một buổi tư vấn để đội ngũ xếp đúng cấp độ.',
   },
   {
     id: 'faq-giup-gi-cho-mon-tren-lop',
@@ -126,7 +126,6 @@ const structuredData = [
     typicalAgeRange: '5-10',
     image: [IMG('lop-hoc-che-tao'), IMG('mo-hinh-khu-pho'), IMG('ca-lop-khoe-san-pham')],
     provider: { '@id': 'https://truongvietanh.com/#organization' },
-    author: { '@id': 'https://truongvietanh.com/#nguyen-manh-duong' },
     dateModified: NGAY_CAP_NHAT,
     hasCourseInstance: [
       {
@@ -171,16 +170,6 @@ const structuredData = [
       acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
   },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    '@id': 'https://truongvietanh.com/#nguyen-manh-duong',
-    name: 'Nguyễn Mạnh Dương',
-    jobTitle: 'Nhà sáng lập & Chủ tịch hệ thống giáo dục K-12 Việt Anh',
-    alumniOf: { '@type': 'CollegeOrUniversity', name: 'Manchester Metropolitan University' },
-    url: 'https://truongvietanh.com/ban-lanh-dao',
-    sameAs: ['https://nguyenmanhduong.com'],
-  },
 ];
 ---
 
@@ -223,19 +212,61 @@ const structuredData = [
         <ul class="se-tags">
           <li class="se-tag">Máy lọc nước tự nhiên</li><li class="se-tag">Nhà chống lũ</li>
           <li class="se-tag">Báo cháy rừng mini</li><li class="se-tag">Bếp năng lượng mặt trời</li>
-          <li class="se-tag">Loa tự chế</li><li class="se-tag">Vườn rau trên sao Hỏa</li>
+          <li class="se-tag">Loa tự chế</li><li class="se-tag">Vườn rau vũ trụ</li>
           <li class="se-tag">Chuỗi thức ăn 3D</li><li class="se-tag">Nhà thông minh</li>
           <li class="se-tag">Hệ thống tưới cây tự động</li><li class="se-tag">Nhạc cụ tái chế</li>
           <li class="se-tag">Xe chuyển hàng</li><li class="se-tag">Đèn khẩn cấp bằng chai nước</li>
         </ul>
       </div>
 
-      <!-- ===== MỞ BÀI ===== -->
+      <!-- ===== MỞ BÀI — câu chữ lấy từ trang steame.truongvietanh.com ===== -->
       <section class="se-sec">
-        <div class="se-shell se-narrow se-voice">
-          <p>Mỗi mùa tuyển sinh tôi đều gặp câu này: <em>“Cuối tuần cho con học thêm Toán hay Anh còn kịp, chứ làm dự án thì để sau.”</em></p>
-          <p>Tôi hiểu vì sao phụ huynh nghĩ vậy. Nhưng tôi cho rằng nó ngược. Toán thì năm nào học thêm cũng được. Còn cái cảm giác tự mình nghĩ ra một cách làm, làm hỏng, rồi sửa được — nếu đến mười lăm tuổi con chưa từng có, thì rất khó tạo lại.</p>
-          <p>STEAM-E là chín mươi phút mỗi cuối tuần dành cho đúng việc đó. Con không học thêm một môn nữa. Con lấy chính những gì đang học trên lớp để làm ra một thứ có ích.</p>
+        <div class="se-shell se-narrow">
+          <p><b>Không cần robot, không thiết bị đắt đỏ</b> — chỉ 90 phút mỗi tuần, trẻ phát triển kỹ năng giải quyết vấn đề theo cách riêng.</p>
+          <p>Ngày nay, nhiều học sinh đi học như một “cái máy”: học để đối phó, lúng túng khi gặp tình huống thực tế, và coi việc học chỉ để làm hài lòng cha mẹ.</p>
+          <p>Với {schoolFacts.yearsRunning} năm kinh nghiệm giáo dục chất lượng cao, Trường Việt Anh mang đến chương trình STEAM-E, giúp trẻ:</p>
+          <ol class="se-goals">
+            <li>Hiểu ý nghĩa thật sự của việc học</li>
+            <li>Hình thành thói quen học tập chủ động</li>
+            <li>Biết vận dụng kiến thức vào đời sống</li>
+          </ol>
+        </div>
+      </section>
+
+      <!-- ===== VÌ SAO KHÁC BIỆT — 3 điểm đúng như trang cũ ===== -->
+      <section class="se-sec se-alt">
+        <div class="se-shell">
+          <h2>Vì sao STEAM-E khác biệt?</h2>
+          <div class="se-outs">
+            <div class="se-out"><div class="se-onum">1</div><div><h3>Ứng dụng ngay kiến thức phổ thông</h3><p>Mỗi đề tài đều gắn trực tiếp với bài học trên lớp (Toán, Lý, Hóa, Sinh, Văn/Nghệ thuật…).</p></div></div>
+            <div class="se-out"><div class="se-onum">2</div><div><h3>Giải quyết vấn đề xã hội thật</h3><p>Không giới hạn lĩnh vực; học sinh tự chọn chủ đề gần gũi (môi trường, giao thông, sức khỏe, trường học…).</p></div></div>
+            <div class="se-out"><div class="se-onum">3</div><div><h3>Giải pháp phải khả thi &amp; tốt hơn hiện tại</h3><p>Tập trung vào tối ưu và hiện thực hóa, không chỉ “ý tưởng cho vui”.</p></div></div>
+          </div>
+          <div class="se-narrow se-mt28">
+            <p>Không yêu cầu đầu vào và công cụ — nhà trường chuẩn bị đầy đủ dụng cụ thí nghiệm, vật liệu, bộ kit và phần mềm học tập phù hợp lứa tuổi.</p>
+          </div>
+          <div class="se-figs">
+            <figure class="se-fig">
+              <img
+                src="/images/steame/lop-hoc-che-tao.webp"
+                srcset="/images/steame/lop-hoc-che-tao-800.webp 800w, /images/steame/lop-hoc-che-tao.webp 1400w"
+                sizes="(max-width: 760px) 100vw, 50vw"
+                width="1400" height="933" loading="lazy" decoding="async"
+                alt="Học sinh tiểu học Trường Việt Anh ngồi quanh bàn lớn trong phòng chế tạo, mỗi nhóm một khay vật liệu và bảng màu"
+              />
+              <figcaption>Một bàn làm việc trong tiết STEAM-E: mỗi nhóm tự chia việc, giáo viên đi giữa các bàn.</figcaption>
+            </figure>
+            <figure class="se-fig">
+              <img
+                src="/images/steame/phong-ten-lua-giay.webp"
+                srcset="/images/steame/phong-ten-lua-giay-800.webp 800w, /images/steame/phong-ten-lua-giay.webp 1400w"
+                sizes="(max-width: 760px) 100vw, 50vw"
+                width="1400" height="933" loading="lazy" decoding="async"
+                alt="Một học sinh cười lớn khi cầm ống giấy tự cuộn vừa phóng lên, bạn ngồi cạnh nhìn theo"
+              />
+              <figcaption>Con thử trước, giải thích sau — chỗ chưa chạy ở lần đầu là dữ kiện cho lần sửa thứ hai.</figcaption>
+            </figure>
+          </div>
         </div>
       </section>
 
@@ -260,101 +291,27 @@ const structuredData = [
         </div>
       </section>
 
-      <!-- ===== VÌ SAO ===== -->
-      <section class="se-sec">
-        <div class="se-shell">
-          <h2>Vì sao con học thuộc bài giỏi mà gặp việc thật vẫn lúng túng?</h2>
-          <div class="se-narrow">
-            <p>Vì phần lớn chương trình phổ thông dừng ở ba bậc tư duy thấp. Thang phân loại Bloom (bản hiệu chỉnh của Krathwohl, 2001) chia tư duy thành sáu bậc: Nhớ → Hiểu → Vận dụng → <b>Phân tích → Đánh giá → Sáng tạo</b>. Học để thi thường chỉ cần ba bậc đầu. Ba bậc sau chỉ hình thành khi đứa trẻ được giao một bài toán chưa có đáp án sẵn.</p>
-          </div>
-          <div class="se-stats">
-            <div class="se-stat"><div class="se-n">70%</div><div class="se-t">doanh nghiệp xếp tư duy phân tích là kỹ năng cốt lõi số một</div><div class="se-s">WEF, Future of Jobs Report 2025</div></div>
-            <div class="se-stat"><div class="se-n">39%</div><div class="se-t">kỹ năng cốt lõi sẽ thay đổi hoặc lỗi thời trước năm 2030</div><div class="se-s">WEF, Future of Jobs Report 2025</div></div>
-            <div class="se-stat"><div class="se-n">+6%</div><div class="se-t">điểm bài thi ở lớp học chủ động, qua 225 nghiên cứu khối STEM</div><div class="se-s">Freeman và cộng sự, PNAS 2014</div></div>
-          </div>
-          <div class="se-narrow se-mt26">
-            <p>Nói cách khác: gần bốn trong mười kỹ năng con đang được luyện hôm nay sẽ hết giá trị đúng vào lúc con vào đời.</p>
-            <p>Cách chữa thì đã có bằng chứng. <b>Scott Freeman, giảng viên chính ngành Sinh học tại Đại học Washington</b>, cùng cộng sự phân tích 225 nghiên cứu về giảng dạy khối STEM và thấy: lớp học chủ động giúp điểm bài thi tăng khoảng 6%, trong khi lớp thuyết giảng truyền thống có nguy cơ trượt môn cao gấp khoảng 1,5 lần.</p>
-            <p class="se-pull">Học chủ động không phải là học nhẹ đi. Là học ở tầng cao hơn.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== MỘT BUỔI HỌC =====
-           ⚠️ TRƯỚC KHI ĐĂNG: đội ngũ đứng lớp phải đọc lại mục này và chỉnh cho khớp
-           nhịp lớp thật. Nội dung hiện tại dựng từ mô hình 5E trong tài liệu chương
-           trình, áp vào một dự án có thật trong danh mục — chưa ai xác nhận lớp thật
-           chạy đúng như vậy. Đây là mục tạo niềm tin mạnh nhất của trang, nên phải đúng. -->
-      <section class="se-sec se-alt">
-        <div class="se-shell">
-          <h2>Một buổi STEAM-E diễn ra như thế nào?</h2>
-          <div class="se-narrow">
-            <p>Chín mươi phút, và gần như không có phút nào giáo viên đứng giảng. Buổi học chạy theo <b>mô hình 5E</b> — khung dạy học khám phá của BSCS (Bybee và cộng sự, 2006).</p>
-            <p>Lấy một dự án có thật trong danh mục: <b>hệ thống báo cháy rừng mini</b> đo độ ẩm của lá cây để cảnh báo sớm, thuộc chủ đề <i>Disaster on Screen</i>.</p>
-          </div>
-
-          <div class="se-barwrap" aria-hidden="true">
-            <div class="se-barlbls"><span class="se-e1">Gắn kết</span><span class="se-e2">Khám phá</span><span class="se-e3">Giải thích</span><span class="se-e4">Mở rộng</span><span class="se-e5">Đánh giá</span></div>
-            <div class="se-bar"><i class="se-e1"></i><i class="se-e2"></i><i class="se-e3"></i><i class="se-e4"></i><i class="se-e5"></i></div>
-            <div class="se-barmin"><span class="se-e1">10 phút</span><span class="se-e2">30 phút</span><span class="se-e3">20 phút</span><span class="se-e4">20 phút</span><span class="se-e5">10 phút</span></div>
-          </div>
-
-          <div class="se-steps">
-            <div class="se-step"><div class="se-hd"><span class="se-stnm">Gắn kết</span><span class="se-mn">~10 phút</span></div><p>Cô không mở bài bằng “hôm nay ta học về độ ẩm”. Cô đưa ra một tình huống: rừng cháy, và người ta biết quá muộn. Con nói xem nếu là mình thì muốn biết trước bao lâu.</p></div>
-            <div class="se-step"><div class="se-hd"><span class="se-stnm">Khám phá</span><span class="se-mn">~30 phút</span></div><p>Con sờ lá tươi, lá khô, tự tìm ra thứ phân biệt được hai loại. Nhóm nào nghĩ ra cách đo thì bắt đầu dựng mạch.</p></div>
-            <div class="se-step"><div class="se-hd"><span class="se-stnm">Giải thích</span><span class="se-mn">~20 phút</span></div><p>Con phải nói được vì sao chọn ngưỡng độ ẩm đó chứ không phải ngưỡng khác. Toán bước vào ở đây — không phải bài tập, mà là một con số con phải bảo vệ.</p></div>
-            <div class="se-step"><div class="se-hd"><span class="se-stnm">Mở rộng</span><span class="se-mn">~20 phút</span></div><p>Nhóm khác hỏi ngược: nếu trời vừa mưa thì sao, nếu lá ướt vì sương thì sao? Con sửa thiết kế theo phản biện.</p></div>
-            <div class="se-step"><div class="se-hd"><span class="se-stnm">Đánh giá</span><span class="se-mn">~10 phút</span></div><p>Con ghi lại: hôm nay làm được gì, chỗ nào chưa chạy, buổi sau sửa gì.</p></div>
-          </div>
-
-          <div class="se-figs">
-            <figure class="se-fig">
-              <img
-                src="/images/steame/lop-hoc-che-tao.webp"
-                srcset="/images/steame/lop-hoc-che-tao-800.webp 800w, /images/steame/lop-hoc-che-tao.webp 1400w"
-                sizes="(max-width: 760px) 100vw, 50vw"
-                width="1400" height="933" loading="lazy" decoding="async"
-                alt="Học sinh tiểu học Trường Việt Anh ngồi quanh bàn lớn trong phòng chế tạo, mỗi nhóm một khay vật liệu và bảng màu"
-              />
-              <figcaption>Một bàn làm việc trong tiết STEAM-E: mỗi nhóm tự chia việc, giáo viên đi giữa các bàn chứ không đứng giảng.</figcaption>
-            </figure>
-            <figure class="se-fig">
-              <img
-                src="/images/steame/phong-ten-lua-giay.webp"
-                srcset="/images/steame/phong-ten-lua-giay-800.webp 800w, /images/steame/phong-ten-lua-giay.webp 1400w"
-                sizes="(max-width: 760px) 100vw, 50vw"
-                width="1400" height="933" loading="lazy" decoding="async"
-                alt="Một học sinh cười lớn khi cầm ống giấy tự cuộn vừa phóng lên, bạn ngồi cạnh nhìn theo"
-              />
-              <figcaption>Bước “Khám phá”: con thử trước, giải thích sau. Cái hỏng ở lần phóng đầu chính là dữ kiện cho lần sửa thứ hai.</figcaption>
-            </figure>
-          </div>
-
-          <div class="se-narrow se-mt30">
-            <p class="se-pull">Chỗ hỏng là phần được tính, không phải phần bị giấu đi.</p>
-            <p>Một cái mạch không kêu là một dữ kiện, không phải một thất bại. Trẻ con học rất nhanh việc giấu lỗi để được khen — chương trình này cố tình làm ngược lại.</p>
-          </div>
-        </div>
-      </section>
-
       <!-- ===== CHỦ ĐỀ =====
-           ⚠️ TRƯỚC KHI ĐĂNG: xác nhận chủ đề nào thuộc nhóm 5–7 tuổi, chủ đề nào
-           thuộc nhóm 8–10 tuổi. Trên trang cũ nhãn tuổi và mô tả bị lệch nhau; bảng
-           dưới đã sắp lại theo nghĩa của tên chủ đề nhưng chưa có ai xác nhận. -->
+           Nhãn tuổi lấy NGUYÊN VĂN từ trang cũ steame.truongvietanh.com (đọc lại
+           03/09/2026): nhãn nằm ngay trên thanh tiêu đề từng chủ đề, không lệch như
+           README bản dựng lo ngại — người viết README đọc nhầm vì phần mô tả nằm
+           trong accordion đang đóng nên thứ tự khi trích chữ bị so le.
+           5–7 tuổi: Habitat Harmony · Rocket to Reality · Disaster on Screen · NextGen Pioneers
+           8–10 tuổi: Ha Giang to Ca Mau · EcoArt Revival · SteamE at Home -->
       <section class="se-sec">
         <div class="se-shell">
           <h2>Con 5–10 tuổi học những chủ đề gì?</h2>
           <div class="se-narrow">
-            <p>Chương trình có <b>7 chủ đề</b>, mỗi chủ đề là một cấp độ 30 giờ. Con học chủ đề nào là do độ tuổi và nền tảng hiện có, không cần học theo thứ tự.</p>
+            <p>Chương trình có <b>7 chủ đề</b>, mỗi chủ đề là một cấp độ 30 giờ, chia theo hai nhóm tuổi: <b>4 chủ đề cho nhóm 5–7 tuổi</b> và <b>3 chủ đề cho nhóm 8–10 tuổi</b>. Trong mỗi nhóm, con học chủ đề nào là do nền tảng hiện có, không cần học theo thứ tự.</p>
           </div>
           <div class="se-themes">
-            <div class="se-theme"><h3>Habitat Harmony</h3><p class="se-thsub">Tự nhiên, hệ sinh thái, các sinh vật</p><ul class="se-tags"><li class="se-tag">Vườn ươm mini</li><li class="se-tag">Máy lọc nước tự nhiên</li><li class="se-tag">Chuỗi thức ăn 3D</li><li class="se-tag">Nhiệt kế lỏng</li><li class="se-tag">Vòng tuần hoàn nước</li><li class="se-tag">Bếp năng lượng mặt trời</li><li class="se-tag">Đèn khẩn cấp bằng chai nước</li></ul></div>
-            <div class="se-theme"><h3>Rocket to Reality</h3><p class="se-thsub">Vũ trụ, sự sống ngoài Trái Đất</p><ul class="se-tags"><li class="se-tag">Mô hình hệ mặt trời</li><li class="se-tag">Nhà kính trên sao Hỏa</li><li class="se-tag">Vườn rau vũ trụ</li><li class="se-tag">Tên lửa</li><li class="se-tag">Tàu vũ trụ tái chế</li><li class="se-tag">Bản đồ chòm sao</li></ul></div>
-            <div class="se-theme"><h3>Disaster on Screen</h3><p class="se-thsub">Làm phim khoa học, phòng chống thiên tai</p><ul class="se-tags"><li class="se-tag">Chống xói mòn đất</li><li class="se-tag">Nhà chống bão</li><li class="se-tag">Nhà chống lũ</li><li class="se-tag">Báo cháy rừng mini</li><li class="se-tag">Máy chiếu mini</li><li class="se-tag">Dẫn bản tin thời tiết</li></ul></div>
-            <div class="se-theme"><h3>Ha Giang to Ca Mau</h3><p class="se-thsub">Đời sống, truyền thống và lịch sử Việt Nam</p><ul class="se-tags"><li class="se-tag">Kỹ thuật ngụy trang</li><li class="se-tag">Hệ thống tưới cây tự động</li><li class="se-tag">Tết ngọt ngào</li><li class="se-tag">Siêu đầu bếp</li></ul></div>
-            <div class="se-theme"><h3>EcoArt Revival</h3><p class="se-thsub">Nghệ thuật, tái chế, môi trường</p><ul class="se-tags"><li class="se-tag">Vườn cây biết hát</li><li class="se-tag">Thời trang tương lai</li><li class="se-tag">Nhạc cụ tái chế</li><li class="se-tag">Recycle shop</li><li class="se-tag">Loa tự chế</li><li class="se-tag">Cosmos on canvas</li></ul></div>
-            <div class="se-theme"><h3>SteamE at Home</h3><p class="se-thsub">Đời sống sản xuất và tiện ích</p><ul class="se-tags"><li class="se-tag">Nhà thông minh</li><li class="se-tag">Cảm biến sáng đèn</li><li class="se-tag">Chống trộm</li><li class="se-tag">Đồng hồ</li><li class="se-tag">Móc khóa phát sáng</li></ul></div>
-            <div class="se-theme"><h3>NextGen Pioneers</h3><p class="se-thsub">Các ngành khoa học và nghề nghiệp</p><ul class="se-tags"><li class="se-tag">Xây cầu</li><li class="se-tag">Thiết kế hệ dù</li><li class="se-tag">Công ty sản xuất đồ chơi</li><li class="se-tag">Xe chuyển hàng</li><li class="se-tag">Ngày hội việc làm</li></ul></div>
+            <div class="se-theme"><div class="se-thhd"><h3>Habitat Harmony</h3><span class="se-age">5–7 tuổi</span></div><p class="se-thsub">Tự nhiên, hệ sinh thái, các sinh vật</p><ul class="se-tags"><li class="se-tag">Vườn ươm mini</li><li class="se-tag">Máy lọc nước tự nhiên</li><li class="se-tag">Chuỗi thức ăn 3D</li><li class="se-tag">Nhiệt kế lỏng</li><li class="se-tag">Vòng tuần hoàn nước</li><li class="se-tag">Bếp năng lượng mặt trời</li><li class="se-tag">Đèn khẩn cấp bằng chai nước</li></ul></div>
+            <div class="se-theme"><div class="se-thhd"><h3>Rocket to Reality</h3><span class="se-age">5–7 tuổi</span></div><p class="se-thsub">Vũ trụ, sự sống ngoài Trái Đất</p><ul class="se-tags"><li class="se-tag">Mô hình hệ mặt trời</li><li class="se-tag">Nhà kính trên sao Hỏa</li><li class="se-tag">Vườn rau vũ trụ</li><li class="se-tag">Tên lửa</li><li class="se-tag">Tàu vũ trụ tái chế</li><li class="se-tag">Bản đồ chòm sao</li></ul></div>
+            <div class="se-theme"><div class="se-thhd"><h3>Disaster on Screen</h3><span class="se-age">5–7 tuổi</span></div><p class="se-thsub">Làm phim khoa học, phòng chống thiên tai</p><ul class="se-tags"><li class="se-tag">Chống xói mòn đất</li><li class="se-tag">Nhà chống bão</li><li class="se-tag">Nhà chống lũ</li><li class="se-tag">Báo cháy rừng mini</li><li class="se-tag">Máy chiếu mini</li><li class="se-tag">Dẫn bản tin thời tiết</li></ul></div>
+            <div class="se-theme"><div class="se-thhd"><h3>Ha Giang to Ca Mau</h3><span class="se-age">8–10 tuổi</span></div><p class="se-thsub">Đời sống, truyền thống và lịch sử Việt Nam</p><ul class="se-tags"><li class="se-tag">Kỹ thuật ngụy trang</li><li class="se-tag">Hệ thống tưới cây tự động</li><li class="se-tag">Tết ngọt ngào</li><li class="se-tag">Siêu đầu bếp</li></ul></div>
+            <div class="se-theme"><div class="se-thhd"><h3>EcoArt Revival</h3><span class="se-age">8–10 tuổi</span></div><p class="se-thsub">Nghệ thuật, tái chế, môi trường</p><ul class="se-tags"><li class="se-tag">Vườn cây biết hát</li><li class="se-tag">Thời trang tương lai</li><li class="se-tag">Nhạc cụ tái chế</li><li class="se-tag">Recycle shop</li><li class="se-tag">Loa tự chế</li><li class="se-tag">Cosmos on canvas</li></ul></div>
+            <div class="se-theme"><div class="se-thhd"><h3>SteamE at Home</h3><span class="se-age">8–10 tuổi</span></div><p class="se-thsub">Đời sống sản xuất và tiện ích</p><ul class="se-tags"><li class="se-tag">Nhà thông minh</li><li class="se-tag">Cảm biến sáng đèn</li><li class="se-tag">Chống trộm</li><li class="se-tag">Đồng hồ</li><li class="se-tag">Móc khóa phát sáng</li></ul></div>
+            <div class="se-theme"><div class="se-thhd"><h3>NextGen Pioneers</h3><span class="se-age">5–7 tuổi</span></div><p class="se-thsub">Các ngành khoa học và nghề nghiệp</p><ul class="se-tags"><li class="se-tag">Xây cầu</li><li class="se-tag">Thiết kế hệ dù</li><li class="se-tag">Công ty sản xuất đồ chơi</li><li class="se-tag">Xe chuyển hàng</li><li class="se-tag">Ngày hội việc làm</li></ul></div>
           </div>
           <div class="se-narrow">
             <h3 class="se-h3">Hai nguyên tắc chạy xuyên suốt mọi chủ đề</h3>
@@ -386,43 +343,6 @@ const structuredData = [
           <h2>Con chưa biết lập trình hay làm thí nghiệm có theo được không?</h2>
           <p>Được. Chương trình <b>không yêu cầu đầu vào</b>. Giáo viên hướng dẫn theo đúng lứa tuổi, và toàn bộ công cụ, vật liệu do nhà trường cung cấp.</p>
           <p>Anh chị cũng <b>không cần mua robot hay bộ kit ở nhà</b>. Đây là điểm chúng tôi cố tình thiết kế khác: giá trị của buổi học nằm ở câu hỏi con phải trả lời, không nằm ở món thiết bị con được cầm. Một chai nhựa và một cái đèn LED, nếu đi kèm đúng câu hỏi, dạy được nhiều hơn một con robot lắp theo hướng dẫn.</p>
-        </div>
-      </section>
-
-      <!-- ===== SO SÁNH ===== -->
-      <section class="se-sec se-alt">
-        <div class="se-shell">
-          <h2>Lớp STEAM-E tại trường khác lớp STEAM ở trung tâm thế nào?</h2>
-          <div class="se-narrow">
-            <p>Ba mô hình phổ biến, mỗi mô hình hợp với một kiểu gia đình khác nhau. Bảng dưới so sánh theo <b>mô hình</b>, không nhắm vào đơn vị cụ thể nào.</p>
-          </div>
-          <p class="se-swipe" aria-hidden="true">Vuốt ngang để xem hết bảng →</p>
-          <div class="se-tw">
-            <table>
-              <thead><tr><th>Tiêu chí</th><th>STEAM-E tại Trường Việt Anh</th><th>Trung tâm STEAM/robotics</th><th>Bộ kit tự học ở nhà</th></tr></thead>
-              <tbody>
-                <tr><td>Trọng tâm</td><td>Dự án giải một vấn đề đời sống, gắn với bài học trên lớp</td><td>Thường xoay quanh một nền tảng phần cứng (robot, mạch, lego)</td><td>Lắp ráp theo hướng dẫn có sẵn</td></tr>
-                <tr><td>Thiết bị</td><td>Trường lo toàn bộ</td><td>Thường gồm trong khóa học; một số nơi yêu cầu mua kit riêng</td><td>Gia đình tự mua</td></tr>
-                <tr><td>Đầu ra</td><td>1–3 dự án + thuyết trình + triển lãm cuối khóa</td><td>Sản phẩm theo từng bài, tùy trung tâm</td><td>Sản phẩm lắp xong là hết</td></tr>
-                <tr><td>Điểm mạnh riêng</td><td>Kết nối trực tiếp với chương trình con đang học</td><td>Rất tốt nếu con đã mê kỹ thuật và muốn đi sâu một hướng</td><td>Rẻ, linh hoạt giờ giấc, cha mẹ đồng hành sát</td></tr>
-                <tr><td>Hạn chế cần biết</td><td>Cố định lịch cuối tuần, phải đến cơ sở</td><td>Kiến thức có thể tách rời bài học trên lớp</td><td>Dễ bỏ dở khi cha mẹ bận</td></tr>
-                <tr><td>Phù hợp khi</td><td>Con chưa biết bắt đầu từ đâu; gia đình muốn con biết dùng kiến thức đang học</td><td>Con đã có hứng thú rõ rệt với robot, lập trình</td><td>Cha mẹ có thời gian kèm và muốn thử trước</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="se-narrow se-mt26">
-            <p>Nói thẳng: nếu con anh chị đã say mê lập trình và muốn đi sâu vào một kỹ thuật cụ thể, một trung tâm chuyên sâu có thể hợp hơn. STEAM-E mạnh ở chỗ khác — dạy con cách <i>tìm ra vấn đề đáng giải</i>, thứ mà mọi kỹ thuật sau này đều cần.</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- ===== HỌC TỐT HƠN ===== -->
-      <section class="se-sec">
-        <div class="se-shell se-narrow">
-          <h2>STEAM-E có giúp con học tốt hơn các môn trên lớp không?</h2>
-          <p>Có, nhưng theo đường vòng chứ không phải đường thẳng. Con không được luyện thêm đề. Con được dùng kiến thức đang học vào một việc có kết quả nhìn thấy được — và chính điều đó làm kiến thức bám lại.</p>
-          <p>Đây đúng là cơ chế mà nghiên cứu của Freeman và cộng sự (<i>PNAS</i>, 2014) đo được: khi học sinh phải làm chứ không chỉ nghe, kết quả bài thi đi lên. Nếu anh chị muốn một dấu hiệu để theo dõi, hãy nhìn vào chỗ này sau ba tháng: con có bắt đầu tự đặt câu hỏi “cái này để làm gì” khi học bài không. Đó là dấu hiệu sớm nhất, và đáng tin hơn điểm số một bài kiểm tra.</p>
-          <p>Về chuyện quá tải: một buổi 90 phút cuối tuần không lấy mất thời gian học của con. Nó lấy chỗ của thời gian con ngồi trước màn hình — và trả lại bằng một thứ con cầm được trên tay.</p>
         </div>
       </section>
 
@@ -534,14 +454,10 @@ const structuredData = [
       <!-- ===== KẾT + FORM ===== -->
       <section class="se-sec" id="dangky">
         <div class="se-shell se-narrow">
-          <h2>Điều tôi mong anh chị mang về</h2>
-          <div class="se-voice">
-            <p>Tôi không nghĩ mọi đứa trẻ cần trở thành kỹ sư. Nhưng tôi tin mọi đứa trẻ đều cần một lần được trải qua trọn vẹn cái vòng: nhìn thấy một vấn đề, tự nghĩ ra cách, làm hỏng, sửa lại, rồi đứng trước người khác nói <em>đây là thứ con làm ra và đây là lý do</em>.</p>
-            <p>Một đứa trẻ bình thường, trong một môi trường được thiết kế đúng, có thể trở nên phi thường. Chín mươi phút mỗi cuối tuần không đổi được cả một con người. Nhưng nó đủ để con biết cảm giác tự mình làm ra một thứ có ích — và một khi đã biết cảm giác đó, con sẽ đi tìm lại.</p>
-          </div>
+          <h2>90 phút cuối tuần — một cách học hoàn toàn mới cho con</h2>
 
           <div class="se-closecta">
-            <p><b>Anh chị đăng ký cho con một buổi học thử.</b> Sau buổi đó, anh chị sẽ biết con có sáng lên hay không — thứ mà không bản mô tả chương trình nào trả lời thay được. Nếu để thêm một năm nữa, con vẫn học được, nhưng những năm tiểu học thì không quay lại.</p>
+            <p><b>Mỗi giờ học không chỉ là kiến thức — mà là dự án thực tế con tự tay tạo ra.</b> Hãy để con bắt đầu hành trình STEAM-E ngay bây giờ.</p>
           </div>
 
           <div class="se-formwrap" data-form-bg="light">
@@ -596,23 +512,9 @@ const structuredData = [
             </div>
           </div>
 
-          <div class="se-author">
-            <div class="se-av">ND</div>
-            <div>
-              <p><b>Nguyễn Mạnh Dương</b> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt Anh (từ {schoolFacts.foundedYear}), tốt nghiệp Manchester Metropolitan University. {schoolFacts.yearsRunning} năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.</p>
-              <p class="se-updated">Cập nhật lần cuối: <time datetime={NGAY_CAP_NHAT}>03/09/2026</time></p>
-            </div>
-          </div>
-
-          <div class="se-srcs">
-            <b>Nguồn tham khảo</b>
-            <ul>
-              <li>World Economic Forum, <i>Future of Jobs Report 2025</i></li>
-              <li>Freeman, S. và cộng sự (2014), “Active learning increases student performance in science, engineering, and mathematics”, <i>PNAS</i> 111(23)</li>
-              <li>Krathwohl, D. R. (2001), <i>A Revision of Bloom’s Taxonomy</i></li>
-              <li>Bybee, R. W. và cộng sự (2006), <i>The BSCS 5E Instructional Model: Origins and Effectiveness</i></li>
-            </ul>
-          </div>
+          {/* Khối "Nguồn tham khảo" (WEF, Freeman/PNAS, Krathwohl, Bybee) đã gỡ cùng
+              lúc với các mục dẫn nghiên cứu — không còn chỗ nào trên trang trích chúng. */}
+          <p class="se-updated se-mt26">Cập nhật lần cuối: <time datetime={NGAY_CAP_NHAT}>03/09/2026</time></p>
 
           <div class="se-related">
             <b>Đọc thêm</b>
@@ -918,15 +820,19 @@ const structuredData = [
   }
   .se-h3 { font-size: 1.08rem; font-weight: 700; color: var(--se-navy); margin: 32px 0 10px; }
 
-  /* --- giọng người sáng lập --- */
-  .se-voice p { font-size: 1.06rem; line-height: 1.75; }
-  .se-voice em { font-style: italic; color: var(--se-ink-2); }
+
+
+  /* --- trích dẫn nổi & chú thích nhỏ --- */
   .se-pull {
     font-size: 1.24rem; line-height: 1.5; border-left: 4px solid var(--se-gold);
     padding: 6px 0 6px 22px; margin: 30px 0; color: var(--se-ink); font-weight: 600; max-width: 34ch;
   }
   .se-quotesrc { color: var(--se-ink-3); font-size: 0.9rem; margin-top: -14px; }
   .se-note { color: var(--se-ink-2); font-size: 0.95rem; }
+
+  /* --- 3 điều chương trình giúp trẻ (mở bài) --- */
+  .se-goals { margin: 0 0 17px; padding-left: 22px; }
+  .se-goals li { margin-bottom: 6px; font-weight: 600; color: var(--se-navy); }
 
   /* --- 6 chữ cái --- */
   .se-letters { border-top: 1px solid var(--se-line); margin-top: 8px; }
@@ -935,43 +841,23 @@ const structuredData = [
   .se-nm { font-weight: 700; font-size: 0.95rem; }
   .se-ds { color: var(--se-ink-2); font-size: 0.95rem; }
 
-  /* --- số liệu --- */
-  .se-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 18px; margin: 28px 0 8px; }
-  .se-stat { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 10px; padding: 20px 22px; }
-  .se-n { font-size: 2.1rem; font-weight: 800; color: var(--se-navy); letter-spacing: -0.03em; line-height: 1; margin-bottom: 8px; font-variant-numeric: tabular-nums; }
-  .se-t { font-size: 0.92rem; color: var(--se-ink-2); margin-bottom: 8px; }
-  .se-s { font-size: 0.76rem; color: var(--se-ink-3); }
 
-  /* --- 5E --- */
-  .se-barwrap { margin: 30px 0 34px; }
-  .se-barlbls, .se-bar, .se-barmin { display: flex; width: 100%; }
-  .se-barlbls > *, .se-bar > *, .se-barmin > * { min-width: 0; }
-  .se-barlbls span { font-size: 0.82rem; font-weight: 700; padding-right: 8px; color: var(--se-ink); }
-  .se-bar { height: 22px; border-radius: 5px; overflow: hidden; margin: 7px 0; }
-  .se-bar i { display: block; height: 100%; }
-  .se-barmin span { font-size: 0.76rem; color: var(--se-ink-3); padding-right: 8px; font-variant-numeric: tabular-nums; }
-  .se-e1 { flex: 11.1; } .se-e2 { flex: 33.3; } .se-e3 { flex: 22.2; } .se-e4 { flex: 22.2; } .se-e5 { flex: 11.1; }
-  .se-bar .se-e1 { background: var(--se-seg1); } .se-bar .se-e2 { background: var(--se-seg2); }
-  .se-bar .se-e3 { background: var(--se-seg3); } .se-bar .se-e4 { background: var(--se-seg4); }
-  .se-bar .se-e5 { background: var(--se-seg5); }
-  .se-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 16px; }
-  .se-step { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 10px; padding: 20px; border-top: 4px solid var(--se-seg3); }
-  .se-step:nth-child(1) { border-top-color: var(--se-seg1); }
-  .se-step:nth-child(2) { border-top-color: var(--se-seg2); }
-  .se-step:nth-child(3) { border-top-color: var(--se-seg3); }
-  .se-step:nth-child(4) { border-top-color: var(--se-seg4); }
-  .se-step:nth-child(5) { border-top-color: var(--se-seg5); }
-  .se-hd { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin-bottom: 8px; }
-  .se-stnm { font-weight: 800; font-size: 1rem; }
-  .se-mn { font-size: 0.78rem; color: var(--se-ink-3); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  .se-step p { font-size: 0.93rem; color: var(--se-ink-2); margin: 0; }
+
+
 
   /* --- chủ đề --- */
   .se-themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
   .se-theme { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 10px; padding: 20px 22px; }
   /* Tên chủ đề mang màu nhận diện, dòng mô tả lùi về xám dịu — để hai dòng không
      cùng sắc độ mà dính vào nhau. */
-  .se-theme h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.015em; color: var(--se-navy); }
+  .se-thhd { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; margin: 0 0 4px; }
+  .se-theme h3 { margin: 0; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.015em; color: var(--se-navy); }
+  /* Nhãn nhóm tuổi — thứ phụ huynh dò đầu tiên khi lướt 7 thẻ chủ đề. */
+  .se-age {
+    flex: none; font-size: 0.74rem; font-weight: 700; white-space: nowrap;
+    color: var(--se-navy); background: var(--se-gold-soft);
+    border: 1px solid var(--se-gold-line); border-radius: 99px; padding: 2px 9px;
+  }
   .se-thsub { font-size: 0.86rem; color: var(--se-ink-2); font-weight: 500; margin: 0 0 14px; }
   .se-theme .se-tags { gap: 6px; }
   .se-theme .se-tag { font-size: 0.78rem; padding: 4px 10px; background: var(--se-surface-2); border-color: var(--se-line); }
@@ -983,14 +869,7 @@ const structuredData = [
   .se-out h3 { margin: 5px 0; font-size: 1rem; font-weight: 700; color: var(--se-ink); }
   .se-out p { font-size: 0.93rem; color: var(--se-ink-2); margin: 0; }
 
-  /* --- bảng --- */
-  .se-swipe { display: none; font-size: 0.8rem; color: var(--se-ink-3); margin: 0 0 8px; }
-  .se-tw { overflow-x: auto; border: 1px solid var(--se-line); border-radius: 10px; background: var(--se-surface); }
-  .se-tw table { border-collapse: collapse; width: 100%; font-size: 0.9rem; min-width: 640px; }
-  .se-tw th { background: var(--se-navy); color: #fff; text-align: left; font-weight: 700; padding: 12px 14px; font-size: 0.82rem; }
-  .se-tw td { padding: 12px 14px; border-top: 1px solid var(--se-line); vertical-align: top; color: var(--se-ink-2); }
-  .se-tw td:first-child { color: var(--se-ink); font-weight: 600; }
-  .se-tw tbody tr:nth-child(even) td { background: var(--se-surface-2); }
+
 
   /* --- cơ sở --- */
   .se-places { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 26px; }
@@ -1049,14 +928,7 @@ const structuredData = [
   .se-tick { width: 52px; height: 52px; border-radius: 50%; background: var(--se-gold); color: var(--se-navy); display: grid; place-items: center; margin: 0 auto 16px; font-size: 1.5rem; font-weight: 800; }
 
   /* --- tác giả, nguồn, đọc thêm --- */
-  .se-author { display: grid; grid-template-columns: 56px minmax(0, 1fr); gap: 18px; align-items: start; border-top: 1px solid var(--se-line); padding-top: 26px; margin-top: 40px; }
-  .se-av { width: 52px; height: 52px; border-radius: 50%; background: var(--se-navy); color: #fff; display: grid; place-items: center; font-weight: 800; font-size: 1.05rem; letter-spacing: -0.02em; }
-  .se-author p { font-size: 0.93rem; color: var(--se-ink-2); margin: 0 0 6px; }
-  .se-author b { color: var(--se-ink); }
   .se-updated { color: var(--se-ink-3); font-size: 0.85rem; }
-  .se-srcs, .se-related { margin-top: 30px; font-size: 0.86rem; color: var(--se-ink-3); }
-  .se-srcs ul, .se-related ul { margin: 8px 0 0; padding-left: 20px; }
-  .se-srcs li, .se-related li { margin-bottom: 5px; }
   .se-related { color: var(--se-ink-2); }
 
   /* --- FAQ dùng chung: nới khoảng cách trong khung hẹp của trang --- */
@@ -1069,8 +941,6 @@ const structuredData = [
   @media (max-width: 760px) {
     /* Thanh 90 phút tự ẩn trên máy nhỏ — 5 thẻ nhịp học bên dưới vẫn đọc được đủ ý. */
     .se-barwrap { display: none; }
-    /* Bảng so sánh rộng 640px, phải cuộn ngang trong khung — nói rõ để không ai tưởng bị cắt. */
-    .se-swipe { display: block; }
   }
   @media (max-width: 720px) {
     .se-letter { grid-template-columns: 44px minmax(0, 1fr); gap: 6px 16px; }

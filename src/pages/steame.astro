@@ -835,6 +835,8 @@ const structuredData = [
     --se-ink-2: #4e5170;
     --se-ink-3: #83879f;
     --se-navy: #26275d;
+    /* Đỏ CHỈ còn dùng cho báo lỗi trong form — nó là màu chức năng, đổi sang Navy
+       thì người điền không nhận ra là lỗi. Mọi chỗ trang trí/tiêu đề đã về Navy + Vàng. */
     --se-red: #c8102e;
     --se-gold: #f9dd0e;
     --se-gold-soft: #fef7c2;
@@ -851,7 +853,11 @@ const structuredData = [
   }
   .se-page article { font-size: 17px; line-height: 1.68; }
   .se-page p { margin: 0 0 17px; }
-  .se-page a { color: var(--se-red); }
+  /* Link theo đúng quy ước các trang trụ khác (.gi-section a trong global.css):
+     chữ Navy, gạch chân màu vàng nhận diện. Bản dựng gốc để link màu đỏ #C8102E —
+     màu đó không nằm trong nhận diện Trường Việt Anh nên đã bỏ khỏi trang. */
+  .se-page a { color: var(--se-navy); font-weight: 600; text-decoration: underline; text-decoration-color: var(--se-gold); text-underline-offset: 3px; }
+  .se-page a:hover { color: #1f2050; }
   .se-shell { max-width: 1080px; margin: 0 auto; padding: 0 22px; }
   .se-narrow { max-width: 680px; }
   .se-mt22 { margin-top: 22px; }
@@ -879,7 +885,7 @@ const structuredData = [
   .se-crumb a { color: var(--se-ink-2); text-decoration: none; }
   .se-crumb a:hover { text-decoration: underline; }
   .se-crumb span[aria-hidden] { margin: 0 6px; color: var(--se-line-2); }
-  .se-eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--se-red); margin: 0 0 18px; }
+  .se-eyebrow { font-size: 0.74rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--se-navy); margin: 0 0 18px; }
   .se-page h1 {
     font-size: clamp(2rem, 5.4vw, 3.2rem); font-weight: 800; letter-spacing: -0.035em;
     line-height: 1.08; margin: 0 0 26px; text-wrap: balance; max-width: 19ch; color: var(--se-ink);
@@ -902,9 +908,13 @@ const structuredData = [
   /* --- mục --- */
   .se-sec { padding: 52px 0; }
   .se-sec.se-alt { background: var(--se-surface-2); }
+  /* Tiêu đề mục: chữ Navy + gạch vàng bên dưới — đúng bộ nhận diện và khớp với
+     .gi-section h2 của các trang trụ khác. inline-block để vạch vàng dừng đúng
+     bề ngang chữ, không kéo dài hết cột. */
   .se-page h2 {
     font-size: clamp(1.5rem, 3.2vw, 2rem); font-weight: 800; letter-spacing: -0.028em;
-    color: var(--se-red); margin: 0 0 20px; text-wrap: balance; max-width: 24ch; line-height: 1.18;
+    color: var(--se-navy); margin: 0 0 20px; text-wrap: balance; max-width: 24ch; line-height: 1.18;
+    display: inline-block; padding-bottom: 0.5rem; border-bottom: 3px solid var(--se-gold);
   }
   .se-h3 { font-size: 1.08rem; font-weight: 700; color: var(--se-navy); margin: 32px 0 10px; }
 
@@ -959,8 +969,10 @@ const structuredData = [
   /* --- chủ đề --- */
   .se-themes { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
   .se-theme { background: var(--se-surface); border: 1px solid var(--se-line); border-radius: 10px; padding: 20px 22px; }
-  .se-theme h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.015em; color: var(--se-ink); }
-  .se-thsub { font-size: 0.86rem; color: var(--se-red); font-weight: 500; margin: 0 0 14px; }
+  /* Tên chủ đề mang màu nhận diện, dòng mô tả lùi về xám dịu — để hai dòng không
+     cùng sắc độ mà dính vào nhau. */
+  .se-theme h3 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 800; letter-spacing: -0.015em; color: var(--se-navy); }
+  .se-thsub { font-size: 0.86rem; color: var(--se-ink-2); font-weight: 500; margin: 0 0 14px; }
   .se-theme .se-tags { gap: 6px; }
   .se-theme .se-tag { font-size: 0.78rem; padding: 4px 10px; background: var(--se-surface-2); border-color: var(--se-line); }
 

@@ -62,7 +62,9 @@ const hpPhai = HOC_PHI.slice(6);
 
 // ── CÁC KHOẢN NGOÀI HỌC PHÍ ─────────────────────────────────────────────────
 const OIC_PHU_THU = 20_000_000;
-const NOI_TRU_THANG = 2_500_000;
+// Nội trú thu khác nhau theo cơ sở — Bình Tân cao hơn Gò Vấp.
+const NOI_TRU_GO_VAP = 2_500_000;
+const NOI_TRU_BINH_TAN = 3_200_000;
 
 const CSVC_TIEU_HOC = 5_000_000;
 const CSVC_TRUNG_HOC = 6_000_000;
@@ -134,7 +136,7 @@ const faqs = [
   {
     id: 'faq-noi-tru',
     q: 'Nội trú nhận ở cơ sở nào và chi phí bao nhiêu?',
-    a: `Nội trú nhận tại cơ sở Gò Vấp và Bình Tân, phí ${vnd(NOI_TRU_THANG)}đ/tháng, chưa gồm tiền ăn. Học sinh nội trú đăng ký gói ăn riêng theo bảng phí ăn công bố — gói nội trú toàn phần lớp 12 là ${vnd(AN_NOI_TRU_12)}đ/năm. Bộ kit nội trú tính riêng, từ ${vnd(KIT_MIN)} đến ${vnd(KIT_MAX)}đ tùy nhu cầu.`,
+    a: `Nội trú nhận tại cơ sở Gò Vấp và Bình Tân. Phí ở là ${vnd(NOI_TRU_GO_VAP)}đ/tháng tại Gò Vấp và ${vnd(NOI_TRU_BINH_TAN)}đ/tháng tại Bình Tân, chưa gồm tiền ăn. Học sinh nội trú đăng ký gói ăn riêng theo bảng phí ăn công bố — gói nội trú toàn phần lớp 12 là ${vnd(AN_NOI_TRU_12)}đ/năm. Bộ kit nội trú tính riêng, từ ${vnd(KIT_MIN)} đến ${vnd(KIT_MAX)}đ tùy nhu cầu.`,
   },
   {
     id: 'faq-ai',
@@ -356,8 +358,9 @@ const structuredData = [
               lớp 9 trở lên chỉ có lớp thường.
             </li>
             <li>
-              <strong>Nội trú</strong> tại cơ sở Gò Vấp và Bình Tân: <strong>{vnd(NOI_TRU_THANG)}đ/tháng</strong>,
-              chưa gồm tiền ăn. Học sinh nội trú đăng ký gói ăn riêng theo bảng phí ăn bên dưới.
+              <strong>Nội trú</strong> thu khác nhau theo cơ sở: <strong>Gò Vấp {vnd(NOI_TRU_GO_VAP)}đ/tháng</strong>,
+              {' '}<strong>Bình Tân {vnd(NOI_TRU_BINH_TAN)}đ/tháng</strong>, chưa gồm tiền ăn. Học sinh nội trú
+              đăng ký gói ăn riêng theo bảng phí ăn bên dưới.
             </li>
             <li>
               <strong>Mầm non Việt Anh (Gò Vấp)</strong> tính theo tháng, đã gồm ăn và phí: gói Bilingual
@@ -539,7 +542,8 @@ const structuredData = [
           <p>
             Từ năm thứ hai của cùng cấp học, khoản cơ sở vật chất không lặp lại, và đồng phục thường
             dùng được nhiều năm. Các dịch vụ tùy chọn — <a href="/noi-tru">nội trú</a>
-            {' '}({vnd(NOI_TRU_THANG)}đ/tháng), khoá Foundation đầu năm (2.480.000đ tiểu học,
+            {' '}({vnd(NOI_TRU_GO_VAP)}đ/tháng ở Gò Vấp, {vnd(NOI_TRU_BINH_TAN)}đ/tháng ở Bình Tân),
+            {' '}khoá Foundation đầu năm (2.480.000đ tiểu học,
             3.120.000–4.200.000đ trung học), tutor sau giờ học (5.000.000đ/học kỳ), luyện tiếng Anh 1-1
             (350.000–450.000đ/tiết), chứng chỉ ICDL 2.600.000đ, chứng chỉ IELTS 4.664.000đ, xe đưa rước
             theo tuyến — chỉ phát sinh khi anh chị đăng ký.

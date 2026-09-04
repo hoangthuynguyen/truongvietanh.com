@@ -26,6 +26,7 @@ const ANCHOR_ID = 'cac-bai-blog-ve-ai';
 const CUM = [
   [1344, 'Trường Việt Anh — AI Powered School đầu tiên của Việt Nam'],
   [1411, 'Quyết định 2422: con bạn học 12 tiết AI mỗi năm'],
+  [1415, 'So sánh 3 khung giáo dục AI: Bộ GDĐT, UNESCO và Việt Anh'],
   [1413, 'Khung AI Education Việt Anh: 30 tiết/năm, mỗi năm một sản phẩm'],
   [1356, 'Trường Việt Anh dùng AI như thế nào? 5 trụ cột và Human-in-the-Loop'],
   [1408, 'Dạy con dùng AI đúng cách: bài học từ nghiên cứu 26.000 học sinh'],

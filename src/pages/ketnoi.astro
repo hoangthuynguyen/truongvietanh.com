@@ -145,10 +145,16 @@ const description =
       .kn-topbar {
         background: #fff;
         border-bottom: 3px solid var(--yellow);
-        padding: 10px 16px;
+        padding: 8px 16px;
         text-align: center;
       }
-      .kn-topbar img { height: 44px; width: auto; margin: 0 auto; }
+      .kn-topbar a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px; /* vùng chạm tối thiểu — ảnh logo chỉ cao 40px */
+      }
+      .kn-topbar img { height: 40px; width: auto; margin: 0 auto; }
 
       main { padding: 0 0 8px; }
       .kn-pad { padding: 0 16px; }
@@ -157,7 +163,7 @@ const description =
       .kn-head {
         background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
         color: #fff;
-        padding: 22px 16px 20px;
+        padding: 18px 16px 18px;
         text-align: center;
       }
       .kn-head h1 {
@@ -170,7 +176,7 @@ const description =
       }
       .kn-class {
         display: inline-block;
-        margin: 12px 0 0;
+        margin: 10px 0 0;
         padding: 7px 20px;
         background: var(--yellow);
         color: var(--navy);
@@ -182,7 +188,7 @@ const description =
         min-height: 40px;
       }
       .kn-sub {
-        margin: 14px auto 0;
+        margin: 11px auto 0;
         max-width: 34rem;
         font-size: 0.95rem;
         color: #d8ddf2;
@@ -199,6 +205,8 @@ const description =
       /* ---------- Khối báo lỗi mã lớp ---------- */
       .kn-bad-box {
         margin: 16px;
+        max-width: 620px;
+        margin-inline: auto;
         padding: 18px 16px;
         background: #fff;
         border: 1px solid #f3c8c8;
@@ -249,8 +257,8 @@ const description =
       }
 
       /* ---------- 3 bước ---------- */
-      .kn-steps { padding: 18px 16px 4px; }
-      .kn-step + .kn-step { margin-top: 20px; }
+      .kn-steps { padding: 16px 16px 4px; }
+      .kn-step + .kn-step { margin-top: 16px; }
       .kn-cta {
         display: flex;
         align-items: center;
@@ -293,25 +301,46 @@ const description =
         place-items: center;
       }
       .kn-icon svg { width: 21px; height: 21px; display: block; }
+      /* Nhãn 2 tầng: "FACEBOOK" lớn + "Trường Việt Anh" nhỏ. Vẫn đúng nguyên
+         chữ brief yêu cầu, nhưng xuống dòng CÓ CHỦ Ý — để một dòng thì trên máy
+         360px chữ tự tràn thành 2 dòng lệch, nhìn như lỗi. */
       .kn-label {
         flex: 1 1 auto;
-        font-weight: 800;
-        font-size: 0.98rem;
-        line-height: 1.25;
-        text-transform: uppercase;
-        letter-spacing: 0.2px;
+        min-width: 0;
+        line-height: 1.2;
       }
+      .kn-label b {
+        display: block;
+        font-weight: 900;
+        font-size: 1.02rem;
+        text-transform: uppercase;
+        letter-spacing: 0.4px;
+      }
+      .kn-label span {
+        display: block;
+        font-weight: 600;
+        font-size: 0.82rem;
+        opacity: 0.82;
+        margin-top: 1px;
+      }
+      /* Khi chưa bấm thì thu về 0 chiều rộng, không chiếm chỗ của nhãn. */
       .kn-tick {
         flex: 0 0 auto;
-        font-size: 0.72rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 3px;
+        max-width: 0;
+        overflow: hidden;
+        font-size: 0.7rem;
         font-weight: 800;
+        white-space: nowrap;
         opacity: 0;
-        transition: opacity 0.2s ease;
+        transition: opacity 0.2s ease, max-width 0.2s ease;
       }
-      .kn-cta[data-done='1'] .kn-tick { opacity: 1; }
+      .kn-cta[data-done='1'] .kn-tick { opacity: 0.95; max-width: 5rem; }
       .kn-note {
-        margin: 8px 4px 0;
-        font-size: 0.9rem;
+        margin: 6px 4px 0;
+        font-size: 0.875rem;
         color: var(--muted);
       }
       .kn-note strong { color: var(--navy); }
@@ -324,8 +353,8 @@ const description =
 
       /* ---------- Hoàn tất ---------- */
       .kn-done {
-        margin: 26px 16px 20px;
-        padding: 20px 18px;
+        margin: 20px 16px 18px;
+        padding: 18px 16px;
         background: #fff;
         border: 1px solid var(--line);
         border-top: 4px solid var(--yellow);
@@ -342,8 +371,8 @@ const description =
       .kn-done li {
         position: relative;
         padding: 0 0 0 28px;
-        margin-bottom: 9px;
-        font-size: 0.95rem;
+        margin-bottom: 7px;
+        font-size: 0.93rem;
       }
       .kn-done li::before {
         content: '✓';
@@ -411,16 +440,103 @@ const description =
         font-size: 0.95rem;
       }
 
-      /* ---------- Từ 560px trở lên ---------- */
+      /* Bàn phím phải thấy được mình đang ở đâu. */
+      a:focus-visible,
+      select:focus-visible {
+        outline: 3px solid #0b63d6;
+        outline-offset: 3px;
+        border-radius: 8px;
+      }
+      .kn-topbar a:focus-visible { outline-offset: 1px; }
+
+      /* ---------- Từ 560px: khung thành thẻ nổi ---------- */
       @media (min-width: 560px) {
-        body { padding: 0 0 0; }
-        .kn-shell { box-shadow: 0 10px 40px rgba(38, 39, 93, 0.1); background: #fff; }
-        .kn-head h1 { font-size: 1.75rem; }
+        .kn-shell {
+          box-shadow: 0 10px 40px rgba(38, 39, 93, 0.1);
+          background: #fff;
+        }
+        .kn-head h1 { font-size: 1.7rem; }
         .kn-photo { aspect-ratio: 16 / 9; }
-        .kn-label { font-size: 1.05rem; }
+      }
+
+      /* ---------- Từ 760px: hero chia 2 cột ----------
+         Dưới 760px ảnh nằm dưới tiêu đề (dọc). Từ 760px trở lên ảnh sang TRÁI,
+         chữ sang PHẢI — cắt được ~150px chiều cao và lấp chỗ trống hai bên. */
+      @media (min-width: 760px) {
+        .kn-shell { max-width: 900px; }
+        .kn-hero {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+        }
+        .kn-head {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          text-align: left;
+          padding: 30px 30px 30px 26px;
+          background: none;
+        }
+        .kn-sub { margin-left: 0; }
+        .kn-photo {
+          order: -1; /* ảnh sang cột trái, chữ ở cột phải */
+          height: 100%;
+          min-height: 290px;
+          aspect-ratio: auto;
+        }
+        .kn-bad-box { margin: 22px auto; }
+      }
+
+      /* ---------- Từ 1000px: 3 bước xếp ngang ----------
+         Đây mới là chỗ ăn tiền: trước đây từ 768px trở lên trang KHÔNG đổi gì,
+         nút Zalo nằm ở y=831 nên trên laptop 768px cao vẫn phải cuộn mới thấy.
+         Xếp 3 bước thành 3 cột thì cả 3 nằm gọn trong màn hình đầu. */
+      @media (min-width: 1000px) {
+        .kn-shell { max-width: 1060px; }
+        .kn-photo { min-height: 330px; }
+        .kn-head { padding: 36px 40px 36px 32px; }
+        .kn-topbar { padding: 12px 16px; }
+        .kn-topbar img { height: 52px; }
+        .kn-head h1 { font-size: 1.95rem; }
+        .kn-steps {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 18px;
+          align-items: stretch;
+          padding: 26px 26px 6px;
+        }
+        .kn-step + .kn-step { margin-top: 0; }
+        .kn-step {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          background: #f7f9fc;
+          border: 1px solid var(--line);
+          border-radius: 16px;
+          padding: 16px 16px 18px;
+        }
+        /* Cột hẹp hơn ở chế độ 3 cột — hạ cỡ nhãn để "KẾT NỐI ZALO OA" vẫn
+           nằm 1 dòng, 3 thẻ mới bằng chiều cao nhau. */
+        .kn-label b { font-size: 0.95rem; letter-spacing: 0.2px; }
+        .kn-cta { min-height: 76px; }
+        .kn-done { margin: 22px 26px 24px; }
+        .kn-done ul {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0 24px;
+        }
+        .kn-note, .kn-group { margin-left: 2px; margin-right: 2px; }
+      }
+
+      /* Chuột mới có hover — đừng để trạng thái hover dính trên màn cảm ứng. */
+      @media (hover: hover) {
+        .kn-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(38, 39, 93, 0.28); }
+        .kn-cta--zalo:hover { box-shadow: 0 8px 24px rgba(249, 221, 14, 0.62); }
+        .kn-help a:hover, footer a:hover { text-decoration: underline; }
       }
       @media (prefers-reduced-motion: reduce) {
         .kn-cta, .kn-tick { transition: none; }
+        .kn-cta:hover { transform: none; }
       }
     </style>
   </head>
@@ -440,6 +556,7 @@ const description =
       </header>
 
       <main>
+        <div class="kn-hero">
         <section class="kn-head">
           <h1>Kết nối cùng Trường của con</h1>
           <p class="kn-class kn-ok">Lớp <span id="kn-ten-lop">…</span></p>
@@ -457,6 +574,7 @@ const description =
           height="450"
           fetchpriority="high"
         />
+        </div>
 
         <!-- Mã lớp không hợp lệ / thiếu ?lop= -->
         <div class="kn-bad kn-bad-box">
@@ -497,8 +615,8 @@ const description =
                   ></path></svg
                 >
               </span>
-              <span class="kn-label">Facebook Trường Việt Anh</span>
-              <span class="kn-tick" aria-hidden="true">✓</span>
+              <span class="kn-label"><b>Facebook</b><span>Trường Việt Anh</span></span>
+              <span class="kn-tick" aria-hidden="true">✓ Đã mở</span>
             </a>
             <p class="kn-note">Theo dõi các hoạt động và thông tin mới nhất của trường.</p>
           </div>
@@ -520,8 +638,8 @@ const description =
                   ></path></svg
                 >
               </span>
-              <span class="kn-label">YouTube Trường Việt Anh</span>
-              <span class="kn-tick" aria-hidden="true">✓</span>
+              <span class="kn-label"><b>YouTube</b><span>Trường Việt Anh</span></span>
+              <span class="kn-tick" aria-hidden="true">✓ Đã mở</span>
             </a>
             <p class="kn-note">
               Xem hoạt động, chương trình và những khoảnh khắc học tập tại trường.
@@ -545,8 +663,8 @@ const description =
                   ></path></svg
                 >
               </span>
-              <span class="kn-label">Kết nối Zalo OA Trường Việt Anh</span>
-              <span class="kn-tick" aria-hidden="true">✓</span>
+              <span class="kn-label"><b>Kết nối Zalo OA</b><span>Trường Việt Anh</span></span>
+              <span class="kn-tick" aria-hidden="true">✓ Đã mở</span>
             </a>
             <p class="kn-group" id="kn-nhom"></p>
             <p class="kn-note">

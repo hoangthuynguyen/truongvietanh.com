@@ -151,6 +151,43 @@ Muốn quay lại dùng GTM: chép 2 khối GTM trong `src/layouts/BaseLayout.as
 
 ---
 
+## Bố cục theo khổ màn hình
+
+Ba mốc, chọn theo chỗ bố cục thật sự gãy chứ không theo cỡ thiết bị:
+
+| Từ | Đổi gì |
+|---|---|
+| < 560px | 1 cột, ảnh nằm dưới tiêu đề, 3 bước xếp dọc |
+| ≥ 560px | Khung thành thẻ nổi trên nền sáng, ảnh 16:9 |
+| ≥ 760px | **Hero chia 2 cột** — ảnh sang trái, tiêu đề + mã lớp sang phải |
+| ≥ 1000px | **3 bước xếp ngang thành 3 thẻ**, khung rộng 1060px, danh sách hoàn tất 2 cột |
+
+Đo được sau khi sửa (05/09/2026):
+
+| | Trước | Sau |
+|---|---|---|
+| Chiều cao trang ở 1440px | 1523px (1,7 màn hình) | **1110px (1,2 màn hình)** |
+| Nút Zalo ở 1024×768 | y=831 — **phải cuộn** | **y=436 — trong màn hình đầu** |
+| Chiều cao trang ở 375px | 1563px | **1507px** |
+| Nhãn nút trên máy 360px | tràn thành 2 dòng | **1 dòng** |
+
+Từ 768px trở lên trang **không hề đổi bố cục** trước đây — cột 560px thả giữa, ở màn 1920px
+hai bên trống 680px mỗi bên, và nút Zalo nằm dưới màn hình đầu ngay cả trên laptop.
+
+Vài chi tiết cố ý, đừng gỡ:
+
+- **Nhãn nút 2 tầng** (`FACEBOOK` lớn + `Trường Việt Anh` nhỏ): vẫn đúng nguyên chữ brief yêu
+  cầu, nhưng xuống dòng có chủ ý. Để một dòng thì trên máy 360px chữ tự tràn, nhìn như lỗi.
+- **`align-items: stretch`** cho lưới 3 bước: thẻ Zalo có thêm dòng "Nhóm:" nên cao hơn, không
+  ép bằng nhau thì 3 thẻ so le.
+- **`@media (hover: hover)`** bọc mọi hiệu ứng hover — màn cảm ứng giữ trạng thái hover sau khi
+  chạm, nút sẽ kẹt ở trạng thái nổi lên.
+- **`.kn-bad-box` dùng `margin: 22px auto`** chứ không phải `22px 26px` — dạng rút gọn ghi đè
+  `margin-inline: auto` làm khối báo lỗi lệch hẳn sang trái trên desktop.
+- **Vòng focus** cho bàn phím: `:focus-visible` viền xanh 3px.
+
+---
+
 ## Nghiệm thu 1OIC (mục 9 của brief)
 
 | Bước | Trạng thái |
@@ -176,8 +213,11 @@ Chạy trên bản render thật, ngày 05/09/2026:
 - Tracking: bắt gói tin thật, xác nhận cả 3 sự kiện `facebook_click` / `youtube_click` /
   `zalo_click` **đã bay tới GA4** kèm `ep.lop`. (GA4 gộp sự kiện vào body POST chứ không
   để ở query string — nhìn query mà kết luận "không có gì gửi đi" là nhầm.)
-- Bố cục ở 375 / 390 / 768 / 1440px: không tràn ngang, không nút nào cao dưới 44px,
-  nút số 1 nằm trong màn hình đầu ngay cả trên iPhone 13 (390×664).
+- Bố cục đo ở **8 khổ** (360 / 375 / 390 / 768 / 1024 / 1280 / 1440 / 1920px): không tràn
+  ngang, **không vùng chạm nào dưới 44px**, nhãn nút 1 dòng ở mọi khổ, và từ 1000px trở lên
+  cả 3 nút nằm trong màn hình đầu.
+- Tốc độ không đội lên sau khi sửa giao diện: FCP 340ms, 15 request, 99 KB (trước 93 KB)
+  trên Pixel 7 mạng ~1,6 Mbps, CPU chậm 4×.
 
 ## Tự kiểm sau mỗi lần sửa
 

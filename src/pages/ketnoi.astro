@@ -144,6 +144,8 @@ const description =
          phần <noscript> lo phần còn lại. */
       html:not([data-kn]) .kn-ok,
       html:not([data-kn]) .kn-bad,
+      /* Tắt JS thì ô chọn lớp bấm không ăn — ẩn luôn, để <noscript> lo. */
+      html:not([data-kn]) .kn-class-wrap,
       html[data-kn='ok'] .kn-bad,
       html[data-kn='bad'] .kn-ok { display: none !important; }
 

@@ -72,6 +72,8 @@ export default defineConfig({
       filter: (page) => {
         // Landing page quảng cáo đặt noindex — không đưa vào sitemap
         if (page.includes('/mam-non-go-vap/hoc-phi')) return false;
+        // /ketnoi là trang tiện ích quét QR (đích của 35 QR lớp), noindex — không vào sitemap
+        if (/\/ketnoi\/?$/.test(page)) return false;
         // Bài blog văn mẫu (noindex) không đưa vào sitemap
         const blogSlug = page.match(/\/blog\/([^/]+)\/?$/);
         if (blogSlug && NOINDEX_BLOG.has(blogSlug[1])) return false;

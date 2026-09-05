@@ -1,0 +1,672 @@
+---
+// =====================================================================
+// /ketnoi?lop=<MA_LOP> — Trang kết nối phụ huynh theo lớp
+// MỘT trang dùng chung cho 35 lớp. Mã lớp đọc từ query `?lop=`, phân giải
+// phía client (site build tĩnh nên query không tới được server).
+//
+// Toàn bộ link & mapping lớp nằm ở src/data/ketnoi-lop.ts — sửa ở đó.
+// Trang này KHÔNG có form lead (không POST /api/lead) nên không gắn UTM.
+// Trang tiện ích quét QR → noindex, và đã loại khỏi sitemap trong astro.config.mjs.
+// =====================================================================
+import {
+  FACEBOOK_URL,
+  YOUTUBE_URL,
+  ZALO_OA_URL,
+  HOTLINE,
+  HOTLINE_TEL,
+  NHOM_ZALO,
+  LOP,
+  DANH_SACH_LOP,
+} from '../data/ketnoi-lop';
+
+// Dữ liệu bơm xuống client: mỗi lớp → { ten nhóm, link zalo }.
+// Gộp sẵn ở build-time để script client chỉ tra bảng, không phải join.
+const KN = {
+  fb: FACEBOOK_URL,
+  yt: YOUTUBE_URL,
+  oa: ZALO_OA_URL,
+  lop: Object.fromEntries(
+    DANH_SACH_LOP.map((ma) => {
+      const nhom = NHOM_ZALO[LOP[ma]];
+      return [ma, { nhom: nhom.ten, zalo: nhom.zalo || ZALO_OA_URL, coRieng: Boolean(nhom.zalo) }];
+    }),
+  ),
+};
+
+const canonical = 'https://truongvietanh.com/ketnoi';
+const title = 'Kết nối cùng Trường của con — Trường Việt Anh';
+const description =
+  'Ba mẹ hoàn tất 3 bước để kết nối với các kênh chính thức của Trường Việt Anh: Facebook, YouTube và Zalo OA theo đúng lớp của con.';
+---
+
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="noindex, follow" />
+    <meta name="theme-color" content="#26275D" />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon-32x32.png" sizes="32x32" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <!-- JPG chứ không phải WebP: Zalo (và một số client cũ) không dựng được
+         preview từ WebP, dán link vào nhóm lớp sẽ ra thẻ trắng. 1200×630 là cỡ
+         chuẩn của Facebook/Zalo. -->
+    <meta property="og:image" content="https://truongvietanh.com/ketnoi-og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://truongvietanh.com/ketnoi-og.jpg" />
+    <link rel="preload" as="image" href="/ketnoi-hero.webp" />
+    <link rel="dns-prefetch" href="https://zalo.me" />
+
+    <!-- ĐO LƯỢT BẤM: gắn THẲNG GA4, CỐ Ý không nạp GTM.
+         Trang standalone không thừa hưởng tag từ BaseLayout, nên nếu không có khối
+         này thì dataLayer.push ở cuối trang chỉ ghi vào mảng rỗng — không ai đọc.
+         Vì sao không dùng GTM như các trang khác (đã đo 05/09/2026):
+           · 2 container của site kéo theo Facebook Pixel + TikTok Pixel + Zalo Ads
+             + 3 tag remarketing Google Ads → ~35 request, load event 6,4s trên 4G yếu.
+             Brief yêu cầu "load nhanh", và đây là trang cho phụ huynh ĐANG HỌC —
+             không có lý do gì đẩy họ vào tệp remarketing quảng cáo.
+           · Gắn thẳng GA4 thì 3 sự kiện lên báo cáo NGAY, không phải cấu hình gì
+             trong GTM (tên sự kiện mới, GTM cũng chưa có tag nào bắt).
+         Muốn quay lại dùng GTM: chép 2 khối GTM trong src/layouts/BaseLayout.astro
+         sang đây; hàm track() ở cuối trang vẫn đẩy dataLayer nên chạy được cả hai. -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-Q2V9JWSXCK"
+    ></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        window.dataLayer.push(arguments);
+      }
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-Q2V9JWSXCK');
+    </script>
+
+    <!-- Phân giải ?lop= NGAY trong <head>: đặt data-kn trên <html> trước khi
+         trình duyệt vẽ, nên không nháy nhánh sai. Việc ghi chữ vào DOM để cuối body. -->
+    <script is:inline define:vars={{ KN }}>
+      (function () {
+        window.__KN = KN;
+        var raw = '';
+        try {
+          raw = new URLSearchParams(window.location.search).get('lop') || '';
+        } catch (e) {
+          var m = window.location.search.match(/[?&]lop=([^&]*)/);
+          raw = m ? decodeURIComponent(m[1].replace(/\+/g, ' ')) : '';
+        }
+        if (!raw && window.location.hash) raw = window.location.hash.slice(1);
+        var ma = String(raw).trim().toUpperCase().replace(/[\s._-]/g, '');
+        window.__KN_MA = KN.lop[ma] ? ma : '';
+        document.documentElement.setAttribute('data-kn', window.__KN_MA ? 'ok' : 'bad');
+      })();
+    </script>
+
+    <style>
+      :root {
+        --navy: #26275d;
+        --navy-2: #1b1c45;
+        --yellow: #f9dd0e;
+        --bg: #f0f4f8;
+        --ink: #1a1c33;
+        --muted: #55597a;
+        --line: #dde4ee;
+      }
+      * { box-sizing: border-box; }
+      html { -webkit-text-size-adjust: 100%; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        font-size: 16px;
+        line-height: 1.55;
+        -webkit-font-smoothing: antialiased;
+      }
+      img { max-width: 100%; display: block; }
+      a { color: inherit; }
+
+      /* Hiện/ẩn theo kết quả phân giải mã lớp. Chưa có data-kn (JS tắt) → ẩn cả hai,
+         phần <noscript> lo phần còn lại. */
+      html:not([data-kn]) .kn-ok,
+      html:not([data-kn]) .kn-bad,
+      html[data-kn='ok'] .kn-bad,
+      html[data-kn='bad'] .kn-ok { display: none !important; }
+
+      /* ---------- Khung ---------- */
+      .kn-shell { max-width: 560px; margin: 0 auto; }
+      .kn-topbar {
+        background: #fff;
+        border-bottom: 3px solid var(--yellow);
+        padding: 10px 16px;
+        text-align: center;
+      }
+      .kn-topbar img { height: 44px; width: auto; margin: 0 auto; }
+
+      main { padding: 0 0 8px; }
+      .kn-pad { padding: 0 16px; }
+
+      /* ---------- Hero ---------- */
+      .kn-head {
+        background: linear-gradient(160deg, var(--navy) 0%, var(--navy-2) 100%);
+        color: #fff;
+        padding: 22px 16px 20px;
+        text-align: center;
+      }
+      .kn-head h1 {
+        margin: 0;
+        font-size: 1.5rem;
+        line-height: 1.22;
+        font-weight: 800;
+        letter-spacing: 0.2px;
+        text-transform: uppercase;
+      }
+      .kn-class {
+        display: inline-block;
+        margin: 12px 0 0;
+        padding: 7px 20px;
+        background: var(--yellow);
+        color: var(--navy);
+        border-radius: 999px;
+        font-weight: 900;
+        font-size: 1.25rem;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        min-height: 40px;
+      }
+      .kn-sub {
+        margin: 14px auto 0;
+        max-width: 34rem;
+        font-size: 0.95rem;
+        color: #d8ddf2;
+      }
+      .kn-photo {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 20 / 9;
+        object-fit: cover;
+        object-position: center 28%;
+        background: var(--navy);
+      }
+
+      /* ---------- Khối báo lỗi mã lớp ---------- */
+      .kn-bad-box {
+        margin: 16px;
+        padding: 18px 16px;
+        background: #fff;
+        border: 1px solid #f3c8c8;
+        border-left: 5px solid #d64545;
+        border-radius: 12px;
+      }
+      .kn-bad-box h2 { margin: 0 0 6px; font-size: 1.05rem; color: #b23131; }
+      .kn-bad-box p { margin: 0 0 14px; font-size: 0.95rem; color: var(--muted); }
+      .kn-picker { display: block; }
+      .kn-picker span {
+        display: block;
+        font-weight: 700;
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+        color: var(--navy);
+      }
+      .kn-picker select {
+        width: 100%;
+        min-height: 52px;
+        padding: 0 12px;
+        font-size: 1rem;
+        font-family: inherit;
+        color: var(--ink);
+        background: #fff;
+        border: 2px solid var(--navy);
+        border-radius: 10px;
+      }
+      .kn-help {
+        display: flex;
+        gap: 8px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+      }
+      .kn-help a {
+        flex: 1 1 auto;
+        min-height: 48px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 0 14px;
+        border-radius: 10px;
+        background: var(--navy);
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.95rem;
+        text-decoration: none;
+      }
+
+      /* ---------- 3 bước ---------- */
+      .kn-steps { padding: 18px 16px 4px; }
+      .kn-step + .kn-step { margin-top: 20px; }
+      .kn-cta {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-height: 68px;
+        padding: 12px 16px;
+        border-radius: 14px;
+        text-decoration: none;
+        background: var(--navy);
+        color: #fff;
+        box-shadow: 0 4px 14px rgba(38, 39, 93, 0.22);
+        transition: transform 0.12s ease, box-shadow 0.12s ease;
+      }
+      .kn-cta:active { transform: translateY(1px); box-shadow: 0 2px 8px rgba(38, 39, 93, 0.22); }
+      .kn-cta--zalo {
+        background: var(--yellow);
+        color: var(--navy);
+        box-shadow: 0 4px 16px rgba(249, 221, 14, 0.5);
+      }
+      .kn-num {
+        flex: 0 0 auto;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-weight: 900;
+        font-size: 0.95rem;
+        background: rgba(255, 255, 255, 0.16);
+        color: #fff;
+      }
+      .kn-cta--zalo .kn-num { background: var(--navy); color: var(--yellow); }
+      .kn-icon {
+        flex: 0 0 auto;
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background: #fff;
+        display: grid;
+        place-items: center;
+      }
+      .kn-icon svg { width: 21px; height: 21px; display: block; }
+      .kn-label {
+        flex: 1 1 auto;
+        font-weight: 800;
+        font-size: 0.98rem;
+        line-height: 1.25;
+        text-transform: uppercase;
+        letter-spacing: 0.2px;
+      }
+      .kn-tick {
+        flex: 0 0 auto;
+        font-size: 0.72rem;
+        font-weight: 800;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+      }
+      .kn-cta[data-done='1'] .kn-tick { opacity: 1; }
+      .kn-note {
+        margin: 8px 4px 0;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .kn-note strong { color: var(--navy); }
+      .kn-group {
+        margin: 8px 4px 0;
+        font-size: 0.88rem;
+        font-weight: 700;
+        color: var(--navy);
+      }
+
+      /* ---------- Hoàn tất ---------- */
+      .kn-done {
+        margin: 26px 16px 20px;
+        padding: 20px 18px;
+        background: #fff;
+        border: 1px solid var(--line);
+        border-top: 4px solid var(--yellow);
+        border-radius: 14px;
+      }
+      .kn-done h2 {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+        text-transform: uppercase;
+        color: var(--navy);
+        letter-spacing: 0.4px;
+      }
+      .kn-done ul { margin: 0; padding: 0; list-style: none; }
+      .kn-done li {
+        position: relative;
+        padding: 0 0 0 28px;
+        margin-bottom: 9px;
+        font-size: 0.95rem;
+      }
+      .kn-done li::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        top: -1px;
+        font-weight: 900;
+        color: #1a9d5c;
+      }
+      .kn-thanks {
+        margin: 14px 0 0;
+        padding-top: 13px;
+        border-top: 1px dashed var(--line);
+        font-weight: 700;
+        color: var(--navy);
+        text-align: center;
+      }
+
+      /* ---------- Footer ---------- */
+      footer {
+        background: var(--navy);
+        color: #cdd3ea;
+        text-align: center;
+        padding: 24px 16px 30px;
+      }
+      footer .kn-brand {
+        font-weight: 900;
+        color: #fff;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin: 0 0 4px;
+      }
+      footer p { margin: 0; font-size: 0.9rem; }
+      footer a { color: var(--yellow); text-decoration: none; }
+      footer p a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 4px;
+      }
+      .kn-flinks {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 6px 18px;
+        margin: 14px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .kn-flinks a {
+        display: inline-flex;
+        align-items: center;
+        min-height: 44px;
+        padding: 0 4px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .kn-noscript {
+        margin: 16px;
+        padding: 16px;
+        background: #fff;
+        border-radius: 12px;
+        border: 1px solid var(--line);
+        font-size: 0.95rem;
+      }
+
+      /* ---------- Từ 560px trở lên ---------- */
+      @media (min-width: 560px) {
+        body { padding: 0 0 0; }
+        .kn-shell { box-shadow: 0 10px 40px rgba(38, 39, 93, 0.1); background: #fff; }
+        .kn-head h1 { font-size: 1.75rem; }
+        .kn-photo { aspect-ratio: 16 / 9; }
+        .kn-label { font-size: 1.05rem; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .kn-cta, .kn-tick { transition: none; }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="kn-shell">
+      <header class="kn-topbar">
+        <a href="https://truongvietanh.com" aria-label="Trường Việt Anh">
+          <img
+            src="/logo-vietanh.webp"
+            alt="Trường TH - THCS - THPT Việt Anh"
+            width="432"
+            height="216"
+            fetchpriority="high"
+          />
+        </a>
+      </header>
+
+      <main>
+        <section class="kn-head">
+          <h1>Kết nối cùng Trường của con</h1>
+          <p class="kn-class kn-ok">Lớp <span id="kn-ten-lop">…</span></p>
+          <p class="kn-sub kn-ok">
+            Ba mẹ hoàn tất 3 bước dưới đây để kết nối với các kênh chính thức của Trường Việt Anh.
+            Chỉ mất khoảng 90 giây.
+          </p>
+        </section>
+
+        <img
+          class="kn-photo"
+          src="/ketnoi-hero.webp"
+          alt="Khuôn viên Trường Việt Anh"
+          width="800"
+          height="450"
+          fetchpriority="high"
+        />
+
+        <!-- Mã lớp không hợp lệ / thiếu ?lop= -->
+        <div class="kn-bad kn-bad-box">
+          <h2>Không tìm thấy thông tin lớp</h2>
+          <p>
+            Không tìm thấy thông tin lớp. Vui lòng liên hệ Trường Việt Anh để được hỗ trợ — hoặc ba
+            mẹ chọn đúng lớp của con ngay bên dưới.
+          </p>
+          <label class="kn-picker">
+            <span>Chọn lớp của con</span>
+            <select id="kn-chon-lop">
+              <option value="">— Chọn lớp —</option>
+              {DANH_SACH_LOP.map((ma) => <option value={ma}>Lớp {ma}</option>)}
+            </select>
+          </label>
+          <div class="kn-help">
+            <a href={`tel:${HOTLINE_TEL}`}>Gọi {HOTLINE}</a>
+            <a href={ZALO_OA_URL} target="_blank" rel="noopener">Nhắn Zalo OA</a>
+          </div>
+        </div>
+
+        <!-- 3 bước — chỉ hiện khi đã biết đúng lớp -->
+        <section class="kn-steps kn-ok">
+          <div class="kn-step">
+            <a
+              class="kn-cta"
+              id="kn-fb"
+              href={FACEBOOK_URL}
+              target="_blank"
+              rel="noopener"
+              data-ev="facebook_click"
+            >
+              <span class="kn-num">1</span>
+              <span class="kn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#1877F2"
+                  ><path
+                    d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.68.24 2.68.24v2.96h-1.51c-1.49 0-1.96.93-1.96 1.89v2.26h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07Z"
+                  ></path></svg
+                >
+              </span>
+              <span class="kn-label">Facebook Trường Việt Anh</span>
+              <span class="kn-tick" aria-hidden="true">✓</span>
+            </a>
+            <p class="kn-note">Theo dõi các hoạt động và thông tin mới nhất của trường.</p>
+          </div>
+
+          <div class="kn-step">
+            <a
+              class="kn-cta"
+              id="kn-yt"
+              href={YOUTUBE_URL}
+              target="_blank"
+              rel="noopener"
+              data-ev="youtube_click"
+            >
+              <span class="kn-num">2</span>
+              <span class="kn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#FF0000"
+                  ><path
+                    d="M23.5 6.19a3.02 3.02 0 0 0-2.12-2.14C19.5 3.55 12 3.55 12 3.55s-7.5 0-9.38.5A3.02 3.02 0 0 0 .5 6.19C0 8.08 0 12 0 12s0 3.92.5 5.81a3.02 3.02 0 0 0 2.12 2.14c1.88.5 9.38.5 9.38.5s7.5 0 9.38-.5a3.02 3.02 0 0 0 2.12-2.14C24 15.92 24 12 24 12s0-3.92-.5-5.81ZM9.6 15.57V8.43L15.82 12 9.6 15.57Z"
+                  ></path></svg
+                >
+              </span>
+              <span class="kn-label">YouTube Trường Việt Anh</span>
+              <span class="kn-tick" aria-hidden="true">✓</span>
+            </a>
+            <p class="kn-note">
+              Xem hoạt động, chương trình và những khoảnh khắc học tập tại trường.
+            </p>
+          </div>
+
+          <div class="kn-step">
+            <a
+              class="kn-cta kn-cta--zalo"
+              id="kn-zalo"
+              href={ZALO_OA_URL}
+              target="_blank"
+              rel="noopener"
+              data-ev="zalo_click"
+            >
+              <span class="kn-num">3</span>
+              <span class="kn-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="#0068FF"
+                  ><path
+                    d="M12 2C6.1 2 1.3 6 1.3 10.9c0 2.8 1.5 5.3 3.9 6.9-.1.8-.5 2.1-1.4 3.4-.2.3.1.7.5.6 2-.5 3.4-1.4 4.2-2 1.1.3 2.3.5 3.5.5 5.9 0 10.7-4 10.7-8.9S17.9 2 12 2Z"
+                  ></path></svg
+                >
+              </span>
+              <span class="kn-label">Kết nối Zalo OA Trường Việt Anh</span>
+              <span class="kn-tick" aria-hidden="true">✓</span>
+            </a>
+            <p class="kn-group" id="kn-nhom"></p>
+            <p class="kn-note">
+              Nếu chưa Quan tâm OA, ba mẹ vui lòng bấm <strong>Quan tâm</strong> → chọn đúng lớp của
+              con → nhập <strong>HỌ VÀ TÊN CON</strong> để nhà trường ghi nhận.
+            </p>
+          </div>
+        </section>
+
+        <noscript>
+          <div class="kn-noscript">
+            <p>
+              Trình duyệt đang tắt JavaScript nên chưa nhận được mã lớp. Ba mẹ vẫn kết nối được qua
+              các kênh chung:
+            </p>
+            <p>
+              <a href={FACEBOOK_URL}>Facebook Trường Việt Anh</a> ·
+              <a href={YOUTUBE_URL}>YouTube Trường Việt Anh</a> ·
+              <a href={ZALO_OA_URL}>Zalo OA Trường Việt Anh</a>
+            </p>
+            <p>Cần hỗ trợ, ba mẹ gọi <a href={`tel:${HOTLINE_TEL}`}>{HOTLINE}</a>.</p>
+          </div>
+        </noscript>
+
+        <section class="kn-done kn-ok">
+          <h2>Hoàn tất kết nối</h2>
+          <ul>
+            <li>Theo dõi Facebook Trường Việt Anh</li>
+            <li>Đăng ký YouTube Trường Việt Anh</li>
+            <li>Quan tâm Zalo OA và chọn đúng lớp của con</li>
+            <li>Nhập HỌ VÀ TÊN CON để nhà trường đối chiếu</li>
+          </ul>
+          <p class="kn-thanks">Cảm ơn ba mẹ đã đồng hành cùng Trường Việt Anh 💛</p>
+        </section>
+      </main>
+
+      <footer>
+        <p class="kn-brand">Trường Việt Anh</p>
+        <p><a href="https://truongvietanh.com">truongvietanh.com</a></p>
+        <p>Hotline: <a href={`tel:${HOTLINE_TEL}`}>{HOTLINE}</a></p>
+        <ul class="kn-flinks">
+          <li><a href={FACEBOOK_URL} target="_blank" rel="noopener">Facebook</a></li>
+          <li><a href={YOUTUBE_URL} target="_blank" rel="noopener">YouTube</a></li>
+          <li><a href={ZALO_OA_URL} target="_blank" rel="noopener">Zalo OA</a></li>
+        </ul>
+      </footer>
+    </div>
+
+    <script is:inline>
+      (function () {
+        var KN = window.__KN;
+        var ma = window.__KN_MA;
+
+        function track(ev) {
+          var payload = {
+            event: ev,
+            lop: ma || '(khong-hop-le)',
+            nhom: ma && KN.lop[ma] ? KN.lop[ma].nhom : '',
+          };
+          window.dataLayer = window.dataLayer || [];
+          window.dataLayer.push(payload);
+          if (typeof window.gtag === 'function') {
+            window.gtag('event', ev, { lop: payload.lop, nhom: payload.nhom });
+          }
+        }
+
+        // Áp mã lớp lên giao diện. Gọi lại được khi ba mẹ tự chọn lớp ở ô dropdown.
+        function apDung(newMa) {
+          ma = newMa;
+          window.__KN_MA = newMa;
+          var info = KN.lop[newMa];
+          document.getElementById('kn-ten-lop').textContent = newMa;
+          document.getElementById('kn-zalo').href = info.zalo;
+          document.getElementById('kn-nhom').textContent = 'Nhóm: ' + info.nhom;
+          document.title = 'Lớp ' + newMa + ' — Kết nối cùng Trường Việt Anh';
+          document.documentElement.setAttribute('data-kn', 'ok');
+          khoiPhucDaBam();
+        }
+
+        // Đánh dấu bước đã bấm, giữ trong phiên để ba mẹ biết còn thiếu bước nào.
+        function khoaLuu() { return 'kn_done_' + (ma || '_'); }
+        function daBam() {
+          try { return JSON.parse(sessionStorage.getItem(khoaLuu()) || '{}'); } catch (e) { return {}; }
+        }
+        function khoiPhucDaBam() {
+          var d = daBam();
+          ['kn-fb', 'kn-yt', 'kn-zalo'].forEach(function (id) {
+            var el = document.getElementById(id);
+            if (el && d[el.getAttribute('data-ev')]) el.setAttribute('data-done', '1');
+          });
+        }
+
+        ['kn-fb', 'kn-yt', 'kn-zalo'].forEach(function (id) {
+          var el = document.getElementById(id);
+          if (!el) return;
+          el.addEventListener('click', function () {
+            var ev = el.getAttribute('data-ev');
+            track(ev);
+            el.setAttribute('data-done', '1');
+            var d = daBam();
+            d[ev] = 1;
+            try { sessionStorage.setItem(khoaLuu(), JSON.stringify(d)); } catch (e) {}
+          });
+        });
+
+        var chon = document.getElementById('kn-chon-lop');
+        if (chon) {
+          chon.addEventListener('change', function () {
+            var v = chon.value;
+            if (!v || !KN.lop[v]) return;
+            apDung(v);
+            try {
+              history.replaceState(null, '', '/ketnoi?lop=' + encodeURIComponent(v));
+            } catch (e) {}
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        }
+
+        if (ma) apDung(ma);
+      })();
+    </script>
+  </body>
+</html>

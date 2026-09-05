@@ -151,6 +151,20 @@ Muốn quay lại dùng GTM: chép 2 khối GTM trong `src/layouts/BaseLayout.as
 
 ---
 
+## Ô chọn lớp ngay trên trang
+
+Ô "LỚP …" ở hero **là một `<select>` thật** chứa đủ 35 lớp, gom theo `<optgroup>` của 8 nhóm.
+Ba mẹ quét QR thì nó tự nhảy về đúng lớp; quét nhầm hoặc được gửi lại link thì tự chọn lại được.
+
+- Đổi lớp → đổi ngay link Zalo, tên nhóm, tiêu đề tab, và **URL** (`history.replaceState`),
+  nên F5 hay gửi lại link vẫn đúng lớp.
+- Dùng `<select>` gốc chứ không dựng dropdown riêng: trên iPhone/Android nó bung bánh xe chọn
+  quen thuộc, trình đọc màn hình đọc được, bàn phím dùng được ngay.
+- `appearance: none` xoá mũi tên gốc nên phải vẽ lại bằng SVG nội tuyến trong `background-image`.
+- Bề rộng ô do **nhãn `<optgroup>` dài nhất** quyết định, không phải do "Lớp 1OIC" — muốn hẹp
+  lại thì phải rút gọn tên nhóm, chỉnh `width` không ăn thua.
+- Mã lớp sai → ô về mục trống "— Chọn lớp của con —", 3 bước **ẩn hẳn** cho tới khi chọn xong.
+
 ## Bố cục theo khổ màn hình
 
 Ba mốc, chọn theo chỗ bố cục thật sự gãy chứ không theo cỡ thiết bị:
@@ -176,6 +190,8 @@ hai bên trống 680px mỗi bên, và nút Zalo nằm dưới màn hình đầu
 
 Vài chi tiết cố ý, đừng gỡ:
 
+- **Số thứ tự đổi thành dấu tích khi đã bấm**, thay vì thêm huy hiệu "✓ Đã mở" riêng. Bản
+  trước có huy hiệu riêng, nó chen ép làm nhãn "KẾT NỐI ZALO OA" tràn 2 dòng trên cột hẹp.
 - **Nhãn nút 2 tầng** (`FACEBOOK` lớn + `Trường Việt Anh` nhỏ): vẫn đúng nguyên chữ brief yêu
   cầu, nhưng xuống dòng có chủ ý. Để một dòng thì trên máy 360px chữ tự tràn, nhìn như lỗi.
 - **`align-items: stretch`** cho lưới 3 bước: thẻ Zalo có thêm dòng "Nhóm:" nên cao hơn, không

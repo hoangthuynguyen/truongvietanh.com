@@ -33,6 +33,13 @@ const KN = {
   ),
 };
 
+// Gom lớp theo nhóm để ô chọn lớp dùng <optgroup> — dò trong danh sách phẳng
+// 35 dòng trên điện thoại rất cực.
+const LOP_THEO_NHOM = (Object.keys(NHOM_ZALO) as Array<keyof typeof NHOM_ZALO>).map((id) => ({
+  ten: NHOM_ZALO[id].ten,
+  lop: DANH_SACH_LOP.filter((ma) => LOP[ma] === id),
+}));
+
 const canonical = 'https://truongvietanh.com/ketnoi';
 const title = 'Kết nối cùng Trường của con — Trường Việt Anh';
 const description =
@@ -174,18 +181,50 @@ const description =
         letter-spacing: 0.2px;
         text-transform: uppercase;
       }
+      .sr-only {
+        position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+        overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+      }
+      .kn-class-wrap { margin: 12px 0 0; }
+      /* Ô chọn lớp = viên thuốc vàng. Dùng <select> gốc chứ không dựng dropdown
+         riêng: trên iPhone/Android nó bung bánh xe chọn quen thuộc, đọc được bằng
+         trình đọc màn hình, và bàn phím dùng được ngay. */
       .kn-class {
         display: inline-block;
-        margin: 10px 0 0;
-        padding: 7px 20px;
-        background: var(--yellow);
+        max-width: 100%;
+        padding: 10px 42px 10px 22px;
+        background-color: var(--yellow);
         color: var(--navy);
+        border: 2px solid var(--yellow);
         border-radius: 999px;
+        font-family: inherit;
         font-weight: 900;
-        font-size: 1.25rem;
-        letter-spacing: 1px;
+        font-size: 1.2rem;
+        letter-spacing: 0.6px;
         text-transform: uppercase;
-        min-height: 40px;
+        min-height: 48px;
+        cursor: pointer;
+        -webkit-appearance: none;
+        appearance: none;
+        /* appearance:none xoá mũi tên gốc — vẽ lại bằng SVG nội tuyến */
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' stroke='%2326275D' stroke-width='2.4' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 18px center;
+      }
+      .kn-class:hover { border-color: #e3c800; }
+      /* Chưa chọn lớp thì nhạt hơn, để không giống một lớp đã chọn */
+      html[data-kn='bad'] .kn-class {
+        background-color: #fff;
+        color: var(--navy);
+        border-color: var(--yellow);
+        font-size: 1.02rem;
+        letter-spacing: 0.2px;
+      }
+      .kn-class-hint {
+        display: block;
+        margin-top: 7px;
+        font-size: 0.8rem;
+        color: #b9c0dd;
       }
       .kn-sub {
         margin: 11px auto 0;
@@ -215,25 +254,6 @@ const description =
       }
       .kn-bad-box h2 { margin: 0 0 6px; font-size: 1.05rem; color: #b23131; }
       .kn-bad-box p { margin: 0 0 14px; font-size: 0.95rem; color: var(--muted); }
-      .kn-picker { display: block; }
-      .kn-picker span {
-        display: block;
-        font-weight: 700;
-        font-size: 0.9rem;
-        margin-bottom: 6px;
-        color: var(--navy);
-      }
-      .kn-picker select {
-        width: 100%;
-        min-height: 52px;
-        padding: 0 12px;
-        font-size: 1rem;
-        font-family: inherit;
-        color: var(--ink);
-        background: #fff;
-        border: 2px solid var(--navy);
-        border-radius: 10px;
-      }
       .kn-help {
         display: flex;
         gap: 8px;
@@ -323,21 +343,17 @@ const description =
         opacity: 0.82;
         margin-top: 1px;
       }
-      /* Khi chưa bấm thì thu về 0 chiều rộng, không chiếm chỗ của nhãn. */
-      .kn-tick {
-        flex: 0 0 auto;
-        display: inline-flex;
-        align-items: center;
-        gap: 3px;
-        max-width: 0;
-        overflow: hidden;
-        font-size: 0.7rem;
-        font-weight: 800;
-        white-space: nowrap;
-        opacity: 0;
-        transition: opacity 0.2s ease, max-width 0.2s ease;
+      /* Bấm xong thì SỐ THỨ TỰ đổi thành dấu tích — không thêm phần tử nào vào
+         hàng ngang. Bản cũ có huy hiệu "✓ Đã mở" riêng, nó chen ép làm nhãn
+         "KẾT NỐI ZALO OA" tràn 2 dòng trên cột hẹp, 3 thẻ so le nhau. */
+      .kn-tick { display: none; }
+      .kn-cta[data-done='1'] .kn-num { font-size: 0; background: #1a9d5c; color: #fff; }
+      .kn-cta[data-done='1'] .kn-num::after {
+        content: '✓';
+        font-size: 1rem;
+        line-height: 1;
       }
-      .kn-cta[data-done='1'] .kn-tick { opacity: 0.95; max-width: 5rem; }
+      .kn-cta--zalo[data-done='1'] .kn-num { background: #14804a; color: #fff; }
       .kn-note {
         margin: 6px 4px 0;
         font-size: 0.875rem;
@@ -559,7 +575,21 @@ const description =
         <div class="kn-hero">
         <section class="kn-head">
           <h1>Kết nối cùng Trường của con</h1>
-          <p class="kn-class kn-ok">Lớp <span id="kn-ten-lop">…</span></p>
+          <div class="kn-class-wrap">
+            <label class="sr-only" for="kn-chon-lop">Chọn lớp của con</label>
+            <select class="kn-class" id="kn-chon-lop">
+              <option value="">— Chọn lớp của con —</option>
+              {LOP_THEO_NHOM.map((g) => (
+                <optgroup label={g.ten}>
+                  {g.lop.map((ma) => <option value={ma}>Lớp {ma}</option>)}
+                </optgroup>
+              ))}
+            </select>
+            <span class="kn-class-hint kn-ok">Không đúng lớp của con? Bấm để chọn lại.</span>
+          </div>
+          <!-- Mã lớp dạng máy đọc được: không hiện cho ba mẹ (ô chọn ở trên đã
+               hiện rồi), giữ làm mốc ổn định cho script tự kiểm bám vào. -->
+          <span id="kn-ten-lop" hidden></span>
           <p class="kn-sub kn-ok">
             Ba mẹ hoàn tất 3 bước dưới đây để kết nối với các kênh chính thức của Trường Việt Anh.
             Chỉ mất khoảng 90 giây.
@@ -580,16 +610,9 @@ const description =
         <div class="kn-bad kn-bad-box">
           <h2>Không tìm thấy thông tin lớp</h2>
           <p>
-            Không tìm thấy thông tin lớp. Vui lòng liên hệ Trường Việt Anh để được hỗ trợ — hoặc ba
-            mẹ chọn đúng lớp của con ngay bên dưới.
+            Không tìm thấy thông tin lớp. Ba mẹ chọn đúng lớp của con ở ô <strong>“Chọn lớp của
+            con”</strong> phía trên, hoặc liên hệ Trường Việt Anh để được hỗ trợ.
           </p>
-          <label class="kn-picker">
-            <span>Chọn lớp của con</span>
-            <select id="kn-chon-lop">
-              <option value="">— Chọn lớp —</option>
-              {DANH_SACH_LOP.map((ma) => <option value={ma}>Lớp {ma}</option>)}
-            </select>
-          </label>
           <div class="kn-help">
             <a href={`tel:${HOTLINE_TEL}`}>Gọi {HOTLINE}</a>
             <a href={ZALO_OA_URL} target="_blank" rel="noopener">Nhắn Zalo OA</a>
@@ -737,6 +760,9 @@ const description =
           window.__KN_MA = newMa;
           var info = KN.lop[newMa];
           document.getElementById('kn-ten-lop').textContent = newMa;
+          // Vào bằng QR thì select vẫn đang ở mục trống — đẩy ngược giá trị vào
+          var chonEl = document.getElementById('kn-chon-lop');
+          if (chonEl && chonEl.value !== newMa) chonEl.value = newMa;
           document.getElementById('kn-zalo').href = info.zalo;
           document.getElementById('kn-nhom').textContent = 'Nhóm: ' + info.nhom;
           document.title = 'Lớp ' + newMa + ' — Kết nối cùng Trường Việt Anh';
@@ -777,9 +803,15 @@ const description =
             if (!v || !KN.lop[v]) return;
             apDung(v);
             try {
-              history.replaceState(null, '', '/ketnoi?lop=' + encodeURIComponent(v));
+              // Giữ mã lớp trên URL để ba mẹ F5 hoặc gửi lại link vẫn đúng lớp
+              history.replaceState(null, '', '/ketnoi/?lop=' + encodeURIComponent(v));
             } catch (e) {}
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // Ô chọn nằm ngay trên hero rồi, không cần cuộn lên đầu nữa. Chỉ kéo
+            // 3 bước vào tầm mắt cho ba mẹ thấy việc tiếp theo.
+            var buoc = document.querySelector('.kn-steps');
+            if (buoc && buoc.scrollIntoView) {
+              try { buoc.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); } catch (e) { buoc.scrollIntoView(); }
+            }
           });
         }
 

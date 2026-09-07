@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
+import FaqAccordion from '../components/FaqAccordion.astro';
 import {
   baiHatList,
   danhMucList,
@@ -24,6 +25,8 @@ const baiHat = sapXepBaiHat(baiHatList);
 const baiDaPhatHanh = baiHat.filter((b) => b.trangThai === 'da-phat-hanh');
 const coBaiHat = baiHat.length > 0;
 const soTacGia = demTacGia(baiHat);
+// Số ca khúc có dùng AI — tính động để câu chữ ở mục Bản quyền không bao giờ lệch dữ liệu
+const soBaiAI = baiHat.filter((b) => b.aiHoTro).length;
 
 // Email gửi tác phẩm — điền sẵn tiêu đề & khung nội dung cho thầy cô
 const mailtoGuiBai = `mailto:${emailBanQuyen}?subject=${encodeURIComponent(
@@ -53,33 +56,39 @@ const mailtoGuiBai = `mailto:${emailBanQuyen}?subject=${encodeURIComponent(
 
 const faqItems = [
   {
-    question: 'Nhạc trên trang Âm nhạc Trường Việt Anh có nghe và tải miễn phí không?',
-    answer:
+    id: 'faq-nghe-tai-mien-phi',
+    q: 'Nhạc trên trang Âm nhạc Trường Việt Anh có nghe và tải miễn phí không?',
+    a:
       'Có. Học sinh, phụ huynh và cán bộ giáo viên Trường Việt Anh được nghe trực tuyến và tải về miễn phí cho nhu cầu cá nhân, cũng như dùng trong hoạt động dạy học và sinh hoạt của trường. Việc sử dụng cho mục đích thương mại, phối lại hoặc đăng lại dưới danh nghĩa đơn vị khác cần có văn bản chấp thuận của nhà trường.',
   },
   {
-    question: 'Ai giữ bản quyền các ca khúc đăng trên trang này?',
-    answer:
+    id: 'faq-ai-giu-ban-quyen',
+    q: 'Ai giữ bản quyền các ca khúc đăng trên trang này?',
+    a:
       'Quyền tác giả thuộc về thầy cô đã sáng tác ca khúc. Trường Việt Anh được tác giả cho phép lưu trữ, phát hành và sử dụng tác phẩm trong hoạt động giáo dục, truyền thông của nhà trường. Mọi ca khúc trên trang đều ghi rõ tên người sáng tác, người viết lời và người trình bày.',
   },
   {
-    question: 'Thầy cô muốn gửi bài hát mình sáng tác lên thư viện thì làm thế nào?',
-    answer:
+    id: 'faq-thay-co-gui-bai',
+    q: 'Thầy cô muốn gửi bài hát mình sáng tác lên thư viện thì làm thế nào?',
+    a:
       'Thầy cô gửi file nhạc (MP3 từ 192 kbps hoặc WAV), lời bài hát, thông tin tác giả và vài dòng về hoàn cảnh sáng tác về email info@truongvietanh.com hoặc Zalo của trường. File nặng thì gửi qua link Google Drive. Bộ phận truyền thông rà soát, thống nhất phạm vi sử dụng với tác giả rồi đăng lên trang trong vòng 7 ngày làm việc.',
   },
   {
-    question: 'Phụ huynh có được dùng nhạc của trường làm nhạc nền video của con không?',
-    answer:
+    id: 'faq-phu-huynh-dung-lam-nhac-nen',
+    q: 'Phụ huynh có được dùng nhạc của trường làm nhạc nền video của con không?',
+    a:
       'Được, nếu là video cá nhân hoặc video về hoạt động của con tại Trường Việt Anh và không nhằm mục đích kinh doanh. Phụ huynh vui lòng ghi nguồn "Trường Việt Anh" trong phần mô tả video. Nếu video có gắn quảng cáo hoặc bán hàng, xin liên hệ nhà trường trước khi sử dụng.',
   },
   {
-    question: 'Trường có nhận sáng tác của học sinh không?',
-    answer:
+    id: 'faq-sang-tac-hoc-sinh',
+    q: 'Trường có nhận sáng tác của học sinh không?',
+    a:
       'Thư viện hiện tập trung giới thiệu sáng tác của thầy cô Trường Việt Anh. Học sinh có tác phẩm muốn giới thiệu, vui lòng gửi qua giáo viên Âm nhạc hoặc giáo viên chủ nhiệm để nhà trường xem xét đưa vào các chương trình văn nghệ và thư viện âm nhạc.',
   },
   {
-    question: 'Bao lâu thư viện có ca khúc mới?',
-    answer:
+    id: 'faq-bao-lau-co-bai-moi',
+    q: 'Bao lâu thư viện có ca khúc mới?',
+    a:
       'Thư viện được cập nhật mỗi khi có tác phẩm mới của thầy cô hoặc sau các dịp lễ lớn của trường như khai giảng, hội xuân, lễ trưởng thành và lễ tổng kết năm học. Phụ huynh có thể lưu trang truongvietanh.com/am-nhac để nghe lại bất cứ lúc nào.',
   },
 ];
@@ -109,8 +118,8 @@ const structuredData: Record<string, unknown>[] = [
     '@type': 'FAQPage',
     mainEntity: faqItems.map((f) => ({
       '@type': 'Question',
-      name: f.question,
-      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
     })),
   },
 ];
@@ -288,6 +297,12 @@ if (baiDaPhatHanh.length > 0) {
                         </p>
                         {b.vaiTro && <p class="am-track__role">{b.vaiTro}</p>}
                         {b.moTa && <p class="am-track__desc">{b.moTa}</p>}
+                        {b.aiHoTro && (
+                          <p class="am-track__ai">
+                            <span class="am-badge am-badge--ai">✦ Có dùng AI</span>
+                            <span>{b.aiGhiChu || 'Ca khúc có dùng công cụ AI trong khâu phối khí và dựng bản thu.'}</span>
+                          </p>
+                        )}
                       </div>
 
                       <div class="am-track__side">
@@ -391,6 +406,19 @@ if (baiDaPhatHanh.length > 0) {
           </button>
         </div>
 
+        {soBaiAI > 0 && (
+          <div class="am-ainote">
+            <span class="am-badge am-badge--ai">✦ Có dùng AI</span>
+            <p>
+              <strong>Minh bạch về AI.</strong> Trong thư viện hiện có <strong>{soBaiAI} ca khúc</strong> mà
+              phần phối khí và bản thu được dựng bằng công cụ AI — lời bài hát vẫn do thầy cô và
+              bộ phận truyền thông Trường Việt Anh viết. Những bài này được gắn nhãn ngay trên thẻ
+              bài hát, đúng tinh thần <a href="/chinh-sach-ai">Chính sách AI</a> của nhà trường:
+              dùng AI thì nói rõ là có dùng.
+            </p>
+          </div>
+        )}
+
         <p class="am-rights__contact">
           Cần cấp phép sử dụng ngoài phạm vi trên? Liên hệ
           <a href={`mailto:${emailBanQuyen}`}>{emailBanQuyen}</a> hoặc
@@ -457,12 +485,7 @@ if (baiDaPhatHanh.length > 0) {
       <div class="cf-container">
         <h2 class="am-h2">Câu hỏi thường gặp</h2>
         <div class="am-faq__list">
-          {faqItems.map((faq) => (
-            <details class="am-faq__item">
-              <summary>{faq.question}</summary>
-              <p>{faq.answer}</p>
-            </details>
-          ))}
+          <FaqAccordion faqs={faqItems} />
         </div>
       </div>
     </section>
@@ -723,6 +746,22 @@ if (baiDaPhatHanh.length > 0) {
   }
   .am-badge--cat { background: #eef2ff; color: #26275D; }
   .am-badge--soon { background: #fff7ed; color: #b45309; border: 1px solid #fed7aa; }
+  .am-badge--ai { background: #f5f3ff; color: #5b21b6; border: 1px solid #ddd6fe; flex: none; }
+
+  .am-ainote {
+    display: flex; gap: 0.85rem; align-items: flex-start;
+    background: #faf5ff; border: 1px solid #e9d5ff; border-radius: 14px;
+    padding: 1rem 1.15rem; margin: 1.25rem 0 0;
+  }
+  .am-ainote p { margin: 0; font-size: 0.92rem; color: #4b5563; line-height: 1.7; }
+  .am-ainote a { color: #5b21b6; font-weight: 600; }
+  @media (max-width: 560px) { .am-ainote { flex-direction: column; gap: 0.6rem; } }
+
+  /* Nhãn minh bạch AI — Điều 11.4 Luật AI, đồng bộ cam kết ở /chinh-sach-ai */
+  .am-track__ai {
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    font-size: 0.84rem; color: #6b7280; line-height: 1.6; margin: 0.5rem 0 0;
+  }
 
   .am-track__actions {
     display: flex; gap: 0.4rem; flex-wrap: wrap;
@@ -832,12 +871,8 @@ if (baiDaPhatHanh.length > 0) {
 
   /* ---------- FAQ ---------- */
   .am-faq { padding: 3rem 0; background: #f7f9fc; }
-  .am-faq__list { display: flex; flex-direction: column; gap: 0.6rem; max-width: 880px; }
-  .am-faq__item { background: #fff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 1rem 1.25rem; }
-  .am-faq__item summary {
-    font-size: 1rem; font-weight: 700; color: #26275D; cursor: pointer; line-height: 1.55;
-  }
-  .am-faq__item p { font-size: 0.95rem; line-height: 1.78; color: #475569; margin: 0.75rem 0 0; }
+  /* Kiểu dáng FAQ nay nằm ở nhóm .gi-faq-* trong global.css (component FaqAccordion) */
+  .am-faq__list { max-width: 880px; }
 
   /* ---------- LIÊN KẾT ---------- */
   .am-links { padding: 3rem 0; background: #eef2ff; }

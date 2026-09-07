@@ -62,6 +62,15 @@ export type BaiHat = {
   loiBaiHat?: string;
   /** Cho phép phụ huynh/giáo viên tải file về (mặc định: có). */
   choPhepTaiVe?: boolean;
+  /**
+   * Ca khúc có dùng AI trong khâu phối khí / dựng bản thu.
+   * Bật cờ này thì trang tự hiện nhãn minh bạch trên thẻ bài hát — theo tinh thần
+   * Điều 11.4 Luật AI về gắn nhãn nội dung do AI tạo, và đúng cam kết ở /chinh-sach-ai.
+   * CHỈ bật khi biết chắc; không rõ thì để trống.
+   */
+  aiHoTro?: boolean;
+  /** Nói rõ phần nào do AI, phần nào do người. Hiện ngay dưới nhãn AI. */
+  aiGhiChu?: string;
   trangThai: TrangThaiBaiHat;
   /** Ngày đăng lên website, dạng YYYY-MM-DD. Dùng để sắp xếp mới → cũ. */
   ngayDang?: string;
@@ -130,7 +139,258 @@ export const danhMucList: {
 // =====================================================================
 
 export const baiHatList: BaiHat[] = [
-  // ⬇️ Thêm ca khúc vào đây. Xem khối mẫu ở trên.
+  {
+    slug: 'we-are-leaders',
+    tieuDe: 'We Are Leaders — Trường ca Việt Anh',
+    sangTac: 'Nhạc sĩ Hoài An',
+    theHien: 'Tốp ca Trường Việt Anh',
+    danhMuc: 'truyen-thong',
+    moTa:
+      'Trường ca chính thức của Trường Việt Anh, viết ở nhịp D=138. Lời ca gói trọn 5 giá trị cốt lõi nhà trường theo đuổi — tôn trọng và tự trọng, trách nhiệm, tài giỏi, chính trực, yêu thương — cùng tinh thần “định thân”: mỗi người tự xác định nguyên tắc sống của mình và tuyên bố với thiên hạ.',
+    audioUrl: 'https://media.truongvietanh.com/audio/we-are-leaders-top-ca.mp3',
+    thoiLuong: '3:24',
+    loiBaiHat: `Trên con đường dài chông gai
+Với nhiều thử thách ngày mai
+Vững tin ta bước, “chân cứng đá mềm”
+Cùng nhau đi đến thành công
+
+Biết tôn trọng và tự trọng từ tâm
+Sống trách nhiệm, tài giỏi trong cộng đồng
+Mãi luôn can đảm, chính trực tuyệt vời
+Sống yêu thương, chan chứa cuộc đời
+
+Trust yourself, test your limits
+Have the grit to succeed
+We are players, we are leaders
+We are winners, winners…
+
+Sẽ luôn trong ta niềm tin
+Định thân cho ngày mai, và cố gắng
+Chẳng có khó khăn nào kìm giữ được mình
+Chỉ là thử thách mà thôi, hãy vững tin…
+
+Sẽ luôn trong ta “Việt Anh”
+Mái nhà thân thương trong tim
+Kiến thức tương lai, cảm hứng cuộc đời
+Sống hạnh phúc, có ích bạn ơi… cùng tôi`,
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'we-are-leaders-melody',
+    tieuDe: 'We Are Leaders (bản melody — hát theo)',
+    sangTac: 'Nhạc sĩ Hoài An',
+    danhMuc: 'truyen-thong',
+    moTa:
+      'Bản melody không lời của trường ca, dành cho cả trường tập hát theo trong lễ chào cờ, khai giảng và các buổi sinh hoạt tập thể.',
+    audioUrl: 'https://media.truongvietanh.com/audio/we-are-leaders-melody.mp3',
+    thoiLuong: '3:23',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'viet-anh-ai-powered-school',
+    tieuDe: 'Việt Anh — AI Powered School',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'truyen-thong',
+    moTa:
+      'Anthem về 5 trụ cột AI của Việt Anh — AI Mastery, AI Mindset, AI Ethics, AI Application và Human in the Loop. Nhịp tăng dần từ 96 lên 128 BPM, giọng máy xen giọng người, chốt lại bằng thông điệp trung tâm: con người mới là người quyết định cuối cùng.',
+    audioUrl: 'https://media.truongvietanh.com/audio/viet-anh-ai-powered-school.mp3',
+    thoiLuong: '2:58',
+    aiHoTro: true,
+    aiGhiChu: 'Lời do Trường Việt Anh viết; phần phối khí và bản thu dựng bằng công cụ AI.',
+    loiBaiHat: `[Intro — giọng máy]
+“Hello Việt Anh… Leo online!”
+Kỷ nguyên A-I đang gọi — are you ready? (Ready!)
+
+[Verse 1]
+Bình minh đang gọi tên ta, thế giới đổi thay từng giờ
+Sóng A-I cuộn dâng cao — ta không đứng yên trên bờ
+Lãnh đạo bản thân mỗi ngày, thầy trò bảo nhau rèn luyện
+Thử thách nào cũng vượt qua — Việt Anh never backs down!
+
+[Pre-Chorus — giọng máy gọi, người đáp]
+(Mastery!) — Làm chủ AI trong tay
+(Mindset!) — Tư duy sắc bén dựng xây
+(Ethics!) — Vững vàng giữa thật và sai
+(Application!) — Học sâu hơn, đi xa hơn mỗi ngày
+Và trên tất cả… HUMAN IN THE LOOP — con người lãnh đạo!
+
+[Chorus]
+Ride the wave! Cưỡi lên con sóng!
+Lead the way! Ta là người dẫn lối!
+A-I trong tay, trái tim rực cháy
+Việt Anh vươn xa — vươn xa hơn nữa!
+(Oh-oh-oh… oh-oh-oh… AI Powered School!)
+
+[Verse 2]
+Đừng lo chi bạn ơi, nhìn quanh đây đồng đội
+Cùng nắm tay tiến bước, không một ai đơn côi
+Leo ơi! (“I'm here!”) — cùng ta học bài, giải đề
+Người chỉ huy, máy đồng hành — that's how we lead, you'll see!
+
+[Bridge — hỏi và đáp]
+“Ai quyết định cuối cùng?” — CON NGƯỜI!
+“Ai dẫn đầu kỷ nguyên?” — CHÚNG TA!
+“Are you afraid?” — NO WAY!
+“Then rise up, Việt Anh — LEAD THE WAY!”
+
+[Outro]
+“Leo luôn bên bạn — together we rise!”
+Việt Anh — AI Powered School!`,
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'loi-cam-ket',
+    tieuDe: 'Lời Cam Kết',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    moTa:
+      'Bài hát đinh của Lễ khai giảng: mỗi cấp lần lượt hô lên lời hứa của mình — Tiểu học giữ phẩm chất, THCS rèn kỹ năng, THPT học kiến thức, nội trú giữ sức khoẻ — rồi thầy cô, Student Office và các cô chú canteen cùng cam kết. Bài không gắn năm nên dùng lại được cho mọi mùa khai giảng.',
+    audioUrl: 'https://media.truongvietanh.com/audio/loi-cam-ket.mp3',
+    thoiLuong: '1:57',
+    aiHoTro: true,
+    aiGhiChu: 'Lời do Trường Việt Anh viết; phần phối khí và bản thu dựng bằng công cụ AI.',
+    loiBaiHat: `[Intro — toàn trường hỏi đáp]
+Ai hứa? (Mình hứa!) Ai làm? (Mình làm!)
+Việt Anh ơi — lời cam kết hôm nay!
+
+[Verse 1 — học sinh từng cấp]
+(Tiểu học:) Tụi em Tiểu học — hứa chăm làm việc tốt
+Cảm ơn, xin lỗi, nhường nhau — dễ thương… hết phần thiên hạ! (Phẩm chất!)
+
+(THCS:) Tụi em cấp Hai — hứa giơ tay thật lớn
+Dám hỏi, dám làm, dám sai — sai rồi làm lại, ngầu hơn! (Kỹ năng!)
+
+(THPT:) Tụi anh cấp Ba — hứa học sâu hiểu kỹ
+Mỗi ngày hỏi khó thầy cô — mà vẫn thương thầy cô nhất! (Kiến thức!)
+
+(Đội nội trú:) Đội quân nội trú — hứa ngủ ngoan dậy sớm
+Chăn gấp vuông như hộp quà — tự lập là… chuyện nhỏ! (Sức khoẻ!)
+
+[Chorus — hoà ca toàn trường]
+Hôm nay ta hứa! (ta hứa!) — Nói là làm! (là làm!)
+Ngàn trái tim chung một lời hôm nay
+Hôm nay ta hứa! (ta hứa!) — Nói là làm! (là làm!)
+Việt Anh ơi — cam kết là giữ lời!
+
+[Verse 2 — người lớn]
+(Thầy cô:) Thầy cô xin hứa — làm gương đi trước
+Em bước một bước — có thầy cô kề bên một bước!
+
+(Hiệu trưởng:) Thầy hứa cả trường một điều trọn vẹn:
+Kiến thức — Kỹ năng — Phẩm chất — Sức khoẻ!
+Đủ cả bốn — không thiếu điều nào!
+
+(Student Office:) Student Office đây — cần gì cứ gọi!
+Bất cứ điều gì, bất cứ khi nào — chưa kịp gọi… đã thấy có mặt!
+
+(Cô chú canteen:) Canteen xin hứa — cơm nóng canh ngọt
+Ăn vì sức khoẻ mà ngon quên lối về — rau cũng… hết sạch luôn!
+
+[Outro]
+Ai hứa? (Mình hứa!) Ai giữ? (Mình giữ!)
+Việt Anh — cam kết — GIỮ LỜI!`,
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'leadership-day-song',
+    tieuDe: 'Leadership Day Song',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    moTa: 'Ca khúc chủ đề cho Ngày hội Lãnh đạo (Leadership Day) của Trường Việt Anh.',
+    audioUrl: 'https://media.truongvietanh.com/audio/leadership-day-song.mp3',
+    thoiLuong: '3:25',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'lion-camp',
+    tieuDe: 'Lion Camp',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    moTa: 'Ca khúc chủ đề của trại hè Lion Camp — chương trình trải nghiệm ngoài lớp học của học sinh Việt Anh.',
+    audioUrl: 'https://media.truongvietanh.com/audio/lion-camp.mp3',
+    thoiLuong: '1:52',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'tam-chia-tay-lop-12',
+    tieuDe: 'Tạm Chia Tay — Lớp 12',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    moTa: 'Ca khúc dành cho lễ trưởng thành và buổi chia tay của học sinh khối 12 Trường Việt Anh.',
+    audioUrl: 'https://media.truongvietanh.com/audio/tam-chia-tay-lop-12.mp3',
+    thoiLuong: '3:30',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'moi-ngay',
+    tieuDe: 'Mỗi Ngày',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    audioUrl: 'https://media.truongvietanh.com/audio/moi-ngay.mp3',
+    thoiLuong: '1:57',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'eternal-legacy',
+    tieuDe: 'Eternal Legacy',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    audioUrl: 'https://media.truongvietanh.com/audio/eternal-legacy.mp3',
+    thoiLuong: '2:28',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'the-final-stand',
+    tieuDe: 'The Final Stand',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    audioUrl: 'https://media.truongvietanh.com/audio/the-final-stand.mp3',
+    thoiLuong: '2:59',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'mua-tren-phim',
+    tieuDe: 'Mưa Trên Phím',
+    sangTac: 'Trường Việt Anh',
+    // TODO(Văn): xếp tạm vào 'su-kien'. Nếu đây là sáng tác của một thầy/cô cụ thể,
+    // đổi `sangTac` thành tên thầy/cô rồi chuyển `danhMuc` sang 'thay-co'.
+    danhMuc: 'su-kien',
+    audioUrl: 'https://media.truongvietanh.com/audio/mua-tren-phim.mp3',
+    thoiLuong: '3:19',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'morning-rice-table',
+    tieuDe: 'Morning Rice Table',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'mam-non',
+    audioUrl: 'https://media.truongvietanh.com/audio/morning-rice-table.mp3',
+    thoiLuong: '0:54',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
+  {
+    slug: 'victory-stinger',
+    tieuDe: 'Victory Stinger',
+    sangTac: 'Trường Việt Anh',
+    danhMuc: 'su-kien',
+    moTa: 'Đoạn nhạc hiệu ngắn, dùng cho khoảnh khắc công bố kết quả và trao giải trong hội thao, hội thi của trường.',
+    audioUrl: 'https://media.truongvietanh.com/audio/victory-stinger.mp3',
+    thoiLuong: '0:44',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-07',
+  },
 ];
 
 // ---------------------------------------------------------------------

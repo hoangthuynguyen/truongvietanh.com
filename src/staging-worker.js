@@ -178,6 +178,9 @@ export default {
       // S12 — Tro choi dan gian va van dong cho tre mam non
       '/tro-choi-dan-gian-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi/',
       '/tro-choi-van-dong-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi/',
+      // S7 — Day hoc tich hop va CLIL (live 09/09/2026)
+      '/phuong-phap-day-hoc-tich-hop': '/blog/day-hoc-tich-hop-va-clil-la-gi/',
+      '/clil-la-gi': '/blog/day-hoc-tich-hop-va-clil-la-gi/',
     };
 
     {

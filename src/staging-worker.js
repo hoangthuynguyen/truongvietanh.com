@@ -170,14 +170,14 @@ export default {
     // chan doan nham thanh loi token hoac loi mang.
     const REDIRECTS_2026_09_09 = {
       // S8 — Day hoc theo nhom va du an (PBL)
-      '/phuong-phap-day-hoc-theo-nhom': '/blog/day-hoc-theo-nhom-va-du-an-pbl',
-      '/day-hoc-du-an-la-gi': '/blog/day-hoc-theo-nhom-va-du-an-pbl',
+      '/phuong-phap-day-hoc-theo-nhom': '/blog/day-hoc-theo-nhom-va-du-an-pbl/',
+      '/day-hoc-du-an-la-gi': '/blog/day-hoc-theo-nhom-va-du-an-pbl/',
       // S11 — Tam ly tre 6-10 tuoi
-      '/dac-diem-tam-ly-cua-hoc-sinh-tieu-hoc': '/blog/tam-ly-tre-6-10-tuoi',
-      '/tinh-cach-cua-tre': '/blog/tam-ly-tre-6-10-tuoi',
+      '/dac-diem-tam-ly-cua-hoc-sinh-tieu-hoc': '/blog/tam-ly-tre-6-10-tuoi/',
+      '/tinh-cach-cua-tre': '/blog/tam-ly-tre-6-10-tuoi/',
       // S12 — Tro choi dan gian va van dong cho tre mam non
-      '/tro-choi-dan-gian-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi',
-      '/tro-choi-van-dong-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi',
+      '/tro-choi-dan-gian-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi/',
+      '/tro-choi-van-dong-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi/',
     };
 
     {

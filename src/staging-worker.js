@@ -148,14 +148,42 @@ export default {
       '/cach-day-be-hoc-chu-cai': '/blog/chuan-bi-cho-be-vao-lop-1',
       '/cach-day-be-4-tuoi-hoc-chu-cai': '/blog/chuan-bi-cho-be-vao-lop-1',
       '/cach-day-con-hoc-lop-1-o-nha': '/blog/chuan-bi-cho-be-vao-lop-1',
-      // Tam: chua co trang rieng "16 ky nang the ky 21", dung trang triet ly giao duc.
-      '/16-ky-nang-quan-trong-trong-the-ky-21-hoc-sinh-can-co-de-thanh-cong': '/triet-ly-giao-duc',
+      // 08/09/2026: bai rieng "16 ky nang the ky 21" da live, khong con dung tam
+      // trang triet ly giao duc nua.
+      '/16-ky-nang-quan-trong-trong-the-ky-21-hoc-sinh-can-co-de-thanh-cong': '/blog/16-ky-nang-the-ky-21-la-gi',
       // Tam: bai goc "so sanh FPT vs Viet Anh" chua duoc viet lai, dung trang /so-sanh chung.
       '/blog/so-sanh-truong-fpt-va-truong-viet-anh': '/so-sanh',
     };
+
+    // 08/09/2026 — MOI REDIRECT MOI TU GIO DAT O DAY, KHONG THEM VAO public/_redirects.
+    // Log deploy run #599 da chi ro nguyen nhan ma ghi chu 02/09 con de ngo:
+    //
+    //   Invalid _redirects configuration:
+    //   Line 732: Maximum number of dynamic _redirects rules limit of 100
+    //   exceeded [code: 100324]
+    //
+    // Cloudflare tinh luat co source KHONG ket thuc bang "/" la luat "dong" (phai
+    // khop ca /x lan /x/), va gioi han loai nay o 100. File _redirects hien co ~106
+    // luat dang do tren tong 654 — tuc DA SAT TRAN. Do da: 654 luat thi Cloudflare
+    // chap nhan, 660 thi tu choi. Them bat ky luat nao vao file do la deploy hong,
+    // va no hong o buoc dang ky version SAU KHI da upload xong het file, nen rat de
+    // chan doan nham thanh loi token hoac loi mang.
+    const REDIRECTS_2026_09_09 = {
+      // S8 — Day hoc theo nhom va du an (PBL)
+      '/phuong-phap-day-hoc-theo-nhom': '/blog/day-hoc-theo-nhom-va-du-an-pbl',
+      '/day-hoc-du-an-la-gi': '/blog/day-hoc-theo-nhom-va-du-an-pbl',
+      // S11 — Tam ly tre 6-10 tuoi
+      '/dac-diem-tam-ly-cua-hoc-sinh-tieu-hoc': '/blog/tam-ly-tre-6-10-tuoi',
+      '/tinh-cach-cua-tre': '/blog/tam-ly-tre-6-10-tuoi',
+      // S12 — Tro choi dan gian va van dong cho tre mam non
+      '/tro-choi-dan-gian-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi',
+      '/tro-choi-van-dong-cho-tre-mam-non': '/blog/tro-choi-cho-tre-mam-non-theo-do-tuoi',
+    };
+
     {
       const normalizedPath = url.pathname.replace(/\/$/, '') || '/';
-      const legacyTarget = LEGACY_404_REDIRECTS_2026_09_02[normalizedPath];
+      const legacyTarget =
+        LEGACY_404_REDIRECTS_2026_09_02[normalizedPath] || REDIRECTS_2026_09_09[normalizedPath];
       if (legacyTarget) {
         return Response.redirect('https://truongvietanh.com' + legacyTarget, 301);
       }

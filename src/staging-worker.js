@@ -615,6 +615,15 @@ async function handleLeadSubmission(request, env) {
           tags.push('squeeze-thpt');
         }
 
+        // Lead magnet "7 câu hỏi khiến con kể chuyện trường lớp" (/7-cau-hoi-ke-chuyen-truong-lop).
+        // Tag này LÀ trigger của workflow GHL gửi PDF cho ba mẹ — phải khớp CHÍNH XÁC
+        // với filter đặt trong GHL, sai một dấu gạch là lead vào CRM nhưng email không
+        // bao giờ chạy. Đối tượng trải từ tiểu học tới THCS nên KHÔNG gắn tag cấp học;
+        // cấp học (nếu ba mẹ có chọn lớp ở bước 2) đã vào tags qua data.schoolLevel.
+        if (data.source === 'squeeze-7-cau-hoi-ke-chuyen') {
+          tags.push('7-cau-hoi-ke-chuyen-truong-lop');
+        }
+
         // Lead từ app trắc nghiệm "Bản đồ phát triển của con" (/quiz).
         //   quiz-blog        → CTA quà tặng giữa bài blog
         //   quiz-vietanh-*   → vào /quiz trực tiếp, không có ?src

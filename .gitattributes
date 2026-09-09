@@ -1,1 +1,6 @@
 public/_redirects text eol=lf
+
+# PDF là nhị phân — không đụng vào ký tự xuống dòng.
+# core.autocrlf=true + PDF do ReportLab sinh (8000 byte đầu toàn ASCII, không có NUL)
+# khiến git đoán nhầm là text và chèn CR khi checkout trên Windows → hỏng file.
+*.pdf binary

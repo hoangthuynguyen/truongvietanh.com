@@ -22,8 +22,13 @@ type Post = {
   excerpt?: string | null;
   content?: string | null;
   published_at?: string | null;
-  // TODO: Directus chưa mở quyền đọc field `date_updated` cho posts (public policy).
-  // Mở quyền rồi thêm 'date_updated' vào fields[] ở getStaticPaths là dateModified sẽ thật.
+  // TODO: Directus chưa mở quyền đọc field `date_updated` cho posts.
+  // Kiểm 10/09/2026: KHÔNG chỉ public policy — token trong .env (chính token mà
+  // GitHub Actions dùng khi build) cũng bị 403 trên field này. Nên mở mỗi public
+  // policy là chưa đủ, phải mở quyền read cho role của token trong Directus admin,
+  // rồi thêm 'date_updated' vào fields[] ở getStaticPaths.
+  // Hệ quả khi chưa mở: MỌI bài đều hiện "Cập nhật lần cuối" đúng bằng ngày đăng,
+  // và dateModified trong JSON-LD cũng sai — bài vừa viết lại vẫn báo là chưa sửa.
   date_updated?: string | null;
   category?: string | null;
   featured_image?: string | null;

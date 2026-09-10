@@ -75,6 +75,25 @@ try {
   console.log('(Bỏ qua bước giải mã kiểm chứng — thiếu jimp/jsqr. Cài: npm i --no-save jimp jsqr)');
 }
 
+// --- QR CHUNG của trường ----------------------------------------------
+// Một mã duy nhất trỏ về /ketnoi/ (không kèm ?lop=). Ai quét cũng vào được rồi
+// tự chọn lớp trong ô 35 lớp. Dùng cho bảng tin chung, standee sảnh, thư mời —
+// chỗ không biết trước người quét là phụ huynh lớp nào.
+const URL_CHUNG = 'https://truongvietanh.com/ketnoi/';
+await QRCode.toFile(path.join(OUT, 'CHUNG.png'), URL_CHUNG, { ...chung, type: 'png', width: 1200 });
+fs.writeFileSync(path.join(OUT, 'CHUNG.svg'), await QRCode.toString(URL_CHUNG, { ...chung, type: 'svg' }));
+try {
+  const { Jimp } = await import('jimp');
+  const jsQR = (await import('jsqr')).default;
+  const img = await Jimp.read(path.join(OUT, 'CHUNG.png'));
+  const res = jsQR(new Uint8ClampedArray(img.bitmap.data), img.bitmap.width, img.bitmap.height);
+  console.log(
+    res && res.data === URL_CHUNG
+      ? `QR CHUNG: giải mã lại khớp → ${URL_CHUNG}`
+      : `  ✗ QR CHUNG giải mã ra: ${res ? res.data : 'KHÔNG ĐỌC ĐƯỢC'}`,
+  );
+} catch {}
+
 // --- Bản in gộp -------------------------------------------------------
 // In 35 file PNG rời rất cực. Trang này xếp 6 mã / tờ A4, cắt theo đường đứt là
 // dán được ngay lên cửa lớp. SVG nhúng thẳng vào HTML nên mở là in, không cần

@@ -116,6 +116,7 @@ Nằm ở `docs/ketnoi/qr/`:
 | `<MA_LOP>.png` | 1200×1200, dán cửa lớp, gửi Zalo cho GVCN |
 | `<MA_LOP>.svg` | vector, in khổ lớn (standee, bảng tin) không vỡ |
 | `in-35-qr.html` / `in-35-qr.pdf` | **bản in gộp 6 mã/tờ A4**, cắt theo đường đứt |
+| `CHUNG.png` / `CHUNG.svg` | **QR chung của trường** → `/ketnoi/`, ai quét cũng tự chọn lớp |
 
 Sinh lại: `node scripts/sinh-qr-ketnoi.mjs` (cần `npm i --no-save qrcode jimp jsqr`).
 
@@ -150,6 +151,23 @@ Muốn quay lại dùng GTM: chép 2 khối GTM trong `src/layouts/BaseLayout.as
 `ketnoi.astro`. Hàm `track()` vẫn đẩy `dataLayer` nên chạy được cả hai đường.
 
 ---
+
+## QR chung của trường
+
+Ngoài 35 mã theo lớp còn **một mã chung** trỏ về `https://truongvietanh.com/ketnoi/`
+(không kèm `?lop=`). Ai quét cũng vào được rồi tự chọn lớp trong ô 35 lớp — dùng cho bảng tin
+chung, standee sảnh, thư mời, chỗ không biết trước người quét là phụ huynh lớp nào.
+
+Trang có **3 trạng thái**, đừng gộp lại còn 2:
+
+| URL | `data-kn` | Hiện gì |
+|---|---|---|
+| `/ketnoi/?lop=1OIC` | `ok` | 3 bước kết nối, ô chọn lớp đã điền sẵn |
+| `/ketnoi/` (không có `?lop=`) | `chon` | **Mời chọn lớp** — nền trắng viền vàng, KHÔNG phải báo lỗi |
+| `/ketnoi/?lop=XYZ` (mã sai) | `bad` | Báo lỗi đỏ "Không tìm thấy thông tin lớp" |
+
+Bản đầu gộp `chon` chung với `bad`, nên **QR chung chào phụ huynh bằng thông báo lỗi đỏ**.
+Ba mẹ quét bảng tin trường mà thấy chữ đỏ "Không tìm thấy thông tin lớp" là hỏng hết cảm giác.
 
 ## Ô chọn lớp ngay trên trang
 

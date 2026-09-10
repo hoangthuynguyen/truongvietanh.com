@@ -98,11 +98,14 @@ export default {
       '/hoc-phi-truong-tu-thuc-tphcm': '/blog/blog-hoc-phi-truong-tu-thuc-tphcm-2026',
       '/top-truong-dan-lap': '/blog/top-truong-thpt-tu-thuc-tphcm',
       '/top-20-truong-thpt-tot-nhat-tphcm-ban-da-biet-chua': '/blog/top-truong-thpt-tu-thuc-tphcm',
-      '/truong-quoc-te-tphcm': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
-      '/top-truong-quoc-te-tai-tphcm': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
-      '/top-truong-thpt-quoc-te-tphcm': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
-      '/truong-quoc-te-quan-2': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
-      '/nen-cho-con-hoc-truong-quoc-te-hay-cong-lap': '/blog/so-sanh-viet-anh-vs-truong-quoc-te',
+      '/truong-quoc-te-tphcm': '/blog/top-truong-quoc-te-tphcm-2026-2027/',
+      '/top-truong-quoc-te-tai-tphcm': '/blog/top-truong-quoc-te-tphcm-2026-2027/',
+      '/top-truong-thpt-quoc-te-tphcm': '/blog/top-truong-quoc-te-tphcm-2026-2027/',
+      '/truong-quoc-te-quan-2': '/blog/top-truong-quoc-te-tphcm-2026-2027/',
+      // Tam: dich dung nhat la bai tru cot /blog/chon-truong-cho-con-tphcm/ (so sanh
+      // ca 3 loai hinh gom cong lap) nhung bai do dang draft, hen dang 25/09/2026.
+      // Doi ngay do thi chuyen luat nay sang bai tru cot.
+      '/nen-cho-con-hoc-truong-quoc-te-hay-cong-lap': '/blog/top-truong-quoc-te-tphcm-2026-2027/',
       '/muc-hoc-phi-truong-quoc-te': '/blog/hoc-phi-khung-cua-truong-quoc-te-ai-quan-ly',
       '/muc-hoc-phi-truong-mam-non-quoc-te': '/blog/hoc-phi-khung-cua-truong-quoc-te-ai-quan-ly',
       '/cach-chon-truong-thpt': '/chon-truong-thpt',

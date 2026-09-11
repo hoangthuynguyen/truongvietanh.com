@@ -276,25 +276,37 @@ if (baiDaPhatHanh.length > 0) {
                       <span class="am-track__index">{String(i + 1).padStart(2, '0')}</span>
 
                       {phatHanh ? (
-                        <button class="am-track__play" type="button" aria-label={`Phát ca khúc ${b.tieuDe}`}>
+                        <button
+                          class={`am-track__play${b.anhBia ? ' am-track__play--anh' : ''}`}
+                          type="button"
+                          aria-label={`Phát ca khúc ${b.tieuDe}`}
+                        >
+                          {b.anhBia && (
+                            <img
+                              class="am-track__cover"
+                              src={b.anhBia}
+                              alt=""
+                              width="64"
+                              height="64"
+                              loading="lazy"
+                              decoding="async"
+                            />
+                          )}
                           <span class="am-track__icon-play" aria-hidden="true">▶</span>
                           <span class="am-track__icon-pause" aria-hidden="true">❚❚</span>
                           <span class="am-eq" aria-hidden="true"><i></i><i></i><i></i></span>
                         </button>
                       ) : (
-                        <span class="am-track__play am-track__play--soon" aria-hidden="true">🎵</span>
-                      )}
-
-                      {b.anhBia && (
-                        <img
-                          class="am-track__cover"
-                          src={b.anhBia}
-                          alt={`Ảnh bìa ca khúc ${b.tieuDe}`}
-                          width="64"
-                          height="64"
-                          loading="lazy"
-                          decoding="async"
-                        />
+                        <span
+                          class={`am-track__play am-track__play--soon${b.anhBia ? ' am-track__play--anh' : ''}`}
+                          aria-hidden="true"
+                        >
+                          {b.anhBia ? (
+                            <img class="am-track__cover" src={b.anhBia} alt="" width="64" height="64" loading="lazy" decoding="async" />
+                          ) : (
+                            '🎵'
+                          )}
+                        </span>
                       )}
 
                       <div class="am-track__info">
@@ -742,11 +754,28 @@ if (baiDaPhatHanh.length > 0) {
   @keyframes amEq { 0%,100% { height: 3px; } 50% { height: 9px; } }
   @media (prefers-reduced-motion: reduce) { .am-eq i { animation: none; height: 6px; } }
 
-  .am-track__cover {
-    flex-shrink: 0; width: 64px; height: 64px;
-    border-radius: 12px; object-fit: cover;
-    border: 1px solid #e2e8f0;
+  /* Nút phát có ảnh bìa: ảnh phủ kín nút, icon ▶/❚❚ nổi trên lớp phủ tối */
+  .am-track__play--anh { width: 64px; height: 64px; border-radius: 14px; overflow: hidden; }
+  .am-track__play--anh .am-track__cover {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    object-fit: cover; border-radius: inherit;
   }
+  .am-track__play--anh::before {
+    content: ''; position: absolute; inset: 0; z-index: 1;
+    background: rgba(29, 30, 72, 0.35);
+    transition: background 0.15s ease;
+  }
+  .am-track__play--anh:hover::before { background: rgba(29, 30, 72, 0.52); }
+  .am-track__play--anh .am-track__icon-play,
+  .am-track__play--anh .am-track__icon-pause {
+    position: relative; z-index: 2;
+    text-shadow: 0 1px 6px rgba(0, 0, 0, 0.55);
+    font-size: 1.05rem;
+  }
+  .am-track__play--anh .am-eq { z-index: 2; }
+  .am-track__play--anh .am-eq i { background: #f9dd0e; }
+  /* Đang phát: nền vàng của nút thường bị ảnh che → giữ icon trắng cho rõ */
+  .am-track.is-playing .am-track__play--anh { color: #fff; }
 
   .am-track__info { flex: 1; min-width: 0; }
   .am-track__title {
@@ -983,7 +1012,7 @@ if (baiDaPhatHanh.length > 0) {
     .am-track { padding: 1rem; }
     .am-track__main { flex-wrap: wrap; }
     .am-track__index { display: none; }
-    .am-track__cover { width: 46px; height: 46px; border-radius: 10px; }
+    .am-track__play--anh { width: 52px; height: 52px; border-radius: 12px; }
     .am-track__side { flex-direction: row; align-items: center; width: 100%; padding-left: 3.6rem; }
     .am-track__actions, .am-lyric { padding-left: 0; margin-left: 0; }
     .am-cats__grid, .am-steps, .am-links__grid { grid-template-columns: 1fr; }

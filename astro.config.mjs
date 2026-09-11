@@ -72,8 +72,9 @@ export default defineConfig({
       filter: (page) => {
         // Landing page quảng cáo đặt noindex — không đưa vào sitemap
         if (page.includes('/mam-non-go-vap/hoc-phi')) return false;
-        // /ketnoi là trang tiện ích quét QR (đích của 35 QR lớp), noindex — không vào sitemap
-        if (/\/ketnoi\/?$/.test(page)) return false;
+        // /ketnoi (đích của 35 QR lớp) và /ketnoi-mam-non (3 QR kênh mầm non) là trang
+        // tiện ích quét QR, noindex — không vào sitemap
+        if (/\/ketnoi(-mam-non)?\/?$/.test(page)) return false;
         // Squeeze page tặng tài liệu đều đặt noindex — đưa vào sitemap chỉ tổ dính
         // cảnh báo "Submitted URL marked noindex" trong Search Console.
         if (/\/(7-cau-hoi-ke-chuyen-truong-lop|chi-phi-that-12-nam|12-cau-hoi-hop-phu-huynh)\/?$/.test(page)) return false;

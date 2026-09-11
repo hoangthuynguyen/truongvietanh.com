@@ -1,0 +1,1176 @@
+---
+// squeeze/12-cau-hoi-hop-phu-huynh
+// Lead magnet : PDF 4 trang A4 "12 câu nên hỏi trong buổi họp phụ huynh"
+//               (bảng in mang theo buổi họp — soạn cho phụ huynh MỌI trường,
+//               không riêng phụ huynh Trường Việt Anh; tài liệu tự nói rõ điều này).
+// Audience    : ba mẹ có con đi học mọi cấp, sắp đi họp phụ huynh; traffic FB/GG + Zalo OA.
+// Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
+// UX          : nội dung TRƯỚC, form nằm trong modal chỉ mở khi bấm CTA — không
+//               popup tự bung, không exit-intent (cùng khung với /7-cau-hoi-ke-chuyen-truong-lop
+//               và /chi-phi-that-12-nam).
+// Gate        : hiện 3 câu đủ (mỗi nhóm một câu), 9 câu còn lại chỉ lộ chủ đề — phần
+//               che là khung xám, KHÔNG dùng chữ giả (người mở DevTools sẽ đọc nhầm).
+// noindex     : trang gate nội dung, giống mọi squeeze khác của site. Muốn ăn organic thì
+//               viết bản blog riêng không gate, đừng gỡ noindex ở đây.
+// UTM         : nạp /js/va-utm.js, merge window.__vaUTM() vào CẢ partial_capture,
+//               submit chính LẪN dataLayer.push — xem CLAUDE.md.
+
+const FUNNEL = 'squeeze-12-cau-hoi-hop-phu-huynh';
+const PDF_URL = '/downloads/12-cau-nen-hoi-trong-buoi-hop-phu-huynh.pdf';
+const CAM_ON = '/12-cau-hoi-hop-phu-huynh/cam-on';
+
+const pageTitle = '12 Câu Nên Hỏi Trong Buổi Họp Phụ Huynh — Bảng In Miễn Phí | Trường Việt Anh';
+const pageDescription =
+  'Buổi họp 60 phút chia cho 45 gia đình, mỗi đứa trẻ được khoảng 80 giây. Nhận miễn phí bảng in 4 trang: 12 câu nên hỏi cô, chỗ ghi câu trả lời, và cách đọc một câu trả lời né tránh. Dùng được ở mọi trường.';
+const canonicalUrl = 'https://truongvietanh.com/12-cau-hoi-hop-phu-huynh';
+
+// Ba nhóm câu — đúng ba nhóm A/B/C trong tài liệu, câu dẫn lấy nguyên ý từ PDF
+const nhom = [
+  {
+    ma: 'A',
+    icon: '🏫',
+    title: 'Về lớp học',
+    soCau: 4,
+    body: 'Bốn câu cho biết bối cảnh mà con mình sống trong đó mỗi ngày: sĩ số, một tiết học diễn ra thế nào, chuyện gì xảy ra khi một em chưa theo kịp hay làm sai.',
+  },
+  {
+    ma: 'B',
+    icon: '🧒',
+    title: 'Về con tôi',
+    soCau: 5,
+    body: 'Phần quan trọng nhất, và cũng là phần buổi họp chung thường không có chỗ để nói: con ngồi đâu, chơi với ai, được gọi tên mấy lần, cần được giúp việc gì.',
+  },
+  {
+    ma: 'C',
+    icon: '📞',
+    title: 'Về kênh liên lạc',
+    soCau: 3,
+    body: 'Ba câu quyết định cả phần còn lại của năm học: ngoài bảng điểm ba mẹ biết về con qua đâu, ai báo khi có chuyện bất thường, và liên hệ cô lúc nào là phù hợp.',
+  },
+];
+
+// 3 câu mở — mỗi nhóm một câu, hiển thị đầy đủ kèm lý do (chữ lấy nguyên từ PDF)
+const openQuestions = [
+  {
+    n: 1,
+    nhom: 'Nhóm A · Về lớp học',
+    q: 'Lớp có bao nhiêu học sinh, và cô phụ trách mấy lớp?',
+    why: 'Đây là con số quyết định mọi thứ còn lại. Cô chủ nhiệm lớp con có thể có tới 45 em, đồng thời dạy bộ môn ở 4–5 lớp khác — mỗi tuần gặp gần 200 học sinh.',
+  },
+  {
+    n: 5,
+    nhom: 'Nhóm B · Về con tôi',
+    q: 'Cô kể giúp tôi một khoảnh khắc cụ thể về con tôi trong tháng vừa rồi được không?',
+    why: 'Câu hỏi mạnh nhất trong cả bảng. Nó không hỏi đánh giá, nó hỏi quan sát — và chỉ trả lời được nếu đã thật sự để ý đến con mình.',
+  },
+  {
+    n: 11,
+    nhom: 'Nhóm C · Về kênh liên lạc',
+    q: 'Nếu con tôi có thay đổi bất thường, ai là người báo cho tôi, và trong bao lâu?',
+    why: 'Câu này hỏi ai chịu trách nhiệm. Khi không có ai được giao việc theo sát một em cụ thể, sẽ không ai phát hiện sớm điều gì.',
+  },
+];
+
+// 9 câu còn lại: lộ CHỦ ĐỀ thật, giấu nội dung câu hỏi. Phần bị che là khung xám.
+const lockedQuestions = [
+  { n: 2,  topic: 'Cách một tiết học diễn ra',      hint: 'Một tỉ lệ cho biết con đang nghe hay đang làm.' },
+  { n: 3,  topic: 'Khi một em chưa theo kịp',       hint: 'Hỏi về hệ thống, không hỏi về thiện chí.' },
+  { n: 4,  topic: 'Khi một em làm sai',             hint: 'Nói lên nhiều hơn mọi lời giới thiệu về triết lý giáo dục.' },
+  { n: 6,  topic: 'Chỗ ngồi của con',               hint: 'Ngồi cố định bàn cuối cả năm là một thông tin.' },
+  { n: 7,  topic: 'Số lần con được gọi tên',        hint: 'Điều đáng chú ý là cô có ước lượng được hay không.' },
+  { n: 8,  topic: 'Bạn bè của con trong lớp',       hint: 'Ảnh hưởng đến việc học nhiều hơn ta tưởng, và không có ô nào trong học bạ.' },
+  { n: 9,  topic: 'Một việc con cần được giúp',     hint: '“Cần cố gắng hơn” không dùng được — câu này buộc phải cụ thể tới chương nào, kỹ năng nào.' },
+  { n: 10, topic: 'Kênh biết tin ngoài bảng điểm',  hint: 'Nếu chỉ có bảng điểm, cả năm mình biết về con qua một con số đến chậm vài tháng.' },
+  { n: 12, topic: 'Cách và giờ liên hệ với cô',     hint: 'Hỏi rõ từ đầu năm để về sau không ngại.' },
+];
+
+// Bốn trang trong file
+const trongPdf = [
+  '<strong>Trang 1</strong> — bốn câu về lớp học, ô <em>“Ba câu tôi sẽ hỏi hôm nay”</em> để khoanh trước khi ra khỏi nhà, và 3 việc cần làm trước buổi họp.',
+  '<strong>Trang 2–3</strong> — năm câu về con và ba câu về kênh liên lạc. Mỗi câu có dòng <em>“Cô trả lời:”</em> để ghi tại chỗ, kèm ô ghi chú thêm.',
+  '<strong>Trang 4</strong> — bảng <em>“Cách đọc một câu trả lời né tránh”</em>, một câu nên nói trước khi ra về, 2 việc trong buổi họp và 1 việc sau buổi họp.',
+  '<strong>Mỗi câu kèm 1–2 dòng vì sao nên hỏi</strong> — để ba mẹ biết mình đang tìm thông tin gì, không hỏi cho có.',
+];
+---
+
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{pageTitle}</title>
+<meta name="description" content={pageDescription} />
+<meta name="robots" content="noindex, nofollow" />
+<link rel="canonical" href={canonicalUrl} />
+
+<meta property="og:type" content="website" />
+<meta property="og:locale" content="vi_VN" />
+<meta property="og:title" content="12 câu nên hỏi trong buổi họp phụ huynh — bảng in miễn phí" />
+<meta property="og:description" content={pageDescription} />
+<meta property="og:url" content={canonicalUrl} />
+<meta property="og:image" content="https://truongvietanh.com/12-cau-hoi-hop-phu-huynh-og.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Inter:wght@400;500;600;700&display=swap&subset=vietnamese" rel="stylesheet" />
+
+<style is:inline>
+/* ═══════════════ 0 · TOKENS + RESET ═══════════════ */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#26275D;
+  --navy-dk:#1B1C45;
+  --navy-2:#3A3C80;
+  --gold:#F9DD0E;
+  --gold-dk:#E3C806;
+  --ink:#1E2140;
+  --muted:#5C6180;
+  --line:#E3E8F2;
+  --bg:#FFFFFF;
+  --soft:#F5F8FD;
+  --blue:#E9F1FB;
+  --cream:#FFF8DE;
+  --green:#16A34A;
+  --r:16px;
+  --shadow:0 6px 28px rgba(38,39,93,.09);
+  --shadow-lg:0 18px 48px rgba(38,39,93,.16);
+}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  color:var(--ink);background:var(--bg);
+  font-size:16px;line-height:1.65;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+h1,h2,h3,.mont{font-family:'Montserrat',sans-serif;line-height:1.24;color:var(--navy)}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit}
+.wrap{width:100%;max-width:1120px;margin:0 auto;padding:0 20px}
+.narrow{max-width:800px;margin-left:auto;margin-right:auto}
+
+/* ═══════════════ 1 · TOP BAR ═══════════════ */
+.topbar{
+  position:sticky;top:0;z-index:60;
+  background:rgba(255,255,255,.92);
+  backdrop-filter:saturate(180%) blur(10px);
+  border-bottom:1px solid var(--line);
+}
+.topbar__in{display:flex;align-items:center;justify-content:space-between;gap:16px;height:60px}
+.topbar__logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.topbar__logo img{height:30px;width:auto}
+.topbar__tag{
+  font-size:12px;font-weight:600;color:var(--muted);
+  padding-left:12px;margin-left:2px;border-left:1px solid var(--line);
+  white-space:nowrap;
+}
+.topbar__cta{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--navy);color:#fff;text-decoration:none;
+  font-family:'Montserrat',sans-serif;font-weight:700;font-size:14px;
+  padding:10px 18px;border-radius:99px;border:0;cursor:pointer;
+  min-height:44px;   /* vùng chạm ≥44px trên tablet (mobile ẩn nút này, đã có thanh CTA đáy) */
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.topbar__cta:hover{background:var(--navy-dk);transform:translateY(-1px);box-shadow:0 6px 18px rgba(38,39,93,.24)}
+
+/* ═══════════════ 2 · HERO ═══════════════ */
+.hero{
+  position:relative;overflow:hidden;
+  background:
+    radial-gradient(ellipse 70% 60% at 88% 0%,rgba(249,221,14,.16) 0%,transparent 60%),
+    radial-gradient(ellipse 80% 70% at 0% 100%,rgba(58,60,128,.10) 0%,transparent 58%),
+    var(--soft);
+  padding:52px 0 60px;
+}
+.hero__grid{display:grid;grid-template-columns:minmax(0,1.16fr) minmax(0,.84fr);gap:46px;align-items:center}
+.badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--cream);border:1px solid rgba(249,221,14,.7);
+  color:#7A5C00;font-weight:700;font-size:13px;letter-spacing:.2px;
+  padding:7px 15px;border-radius:99px;margin-bottom:18px;
+}
+.hero h1{font-size:clamp(29px,4.6vw,48px);font-weight:900;letter-spacing:-.5px;margin-bottom:16px;text-wrap:balance}
+/* Vệt gạch vàng: gradient nền thay vì ::after z-index:-1 (pseudo âm chui xuống dưới nền section) */
+.hero h1 .hl{
+  white-space:nowrap;
+  background:linear-gradient(transparent 62%,rgba(249,221,14,.62) 62%,rgba(249,221,14,.62) 94%,transparent 94%);
+  padding:0 2px;
+}
+.hero__sub{font-size:clamp(16px,2vw,18.5px);color:var(--muted);max-width:560px;margin-bottom:24px}
+.hero__sub strong{color:var(--navy);font-weight:600}
+.hero__pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#fff;border:1px solid var(--line);border-radius:99px;
+  padding:7px 14px;font-size:13.5px;font-weight:600;color:var(--navy);
+  box-shadow:0 2px 8px rgba(38,39,93,.05);
+}
+.pill svg{flex:none;color:var(--green)}
+.hero__micro{margin-top:14px;font-size:13.5px;color:var(--muted);display:flex;flex-wrap:wrap;gap:6px 16px}
+.hero__micro span{display:inline-flex;align-items:center;gap:6px}
+
+/* CTA buttons */
+.btn{
+  position:relative;
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  font-family:'Montserrat',sans-serif;font-weight:800;font-size:16.5px;
+  padding:16px 30px;border-radius:14px;border:0;cursor:pointer;
+  text-decoration:none;text-align:center;line-height:1.3;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s ease;
+}
+.btn--gold{background:var(--gold);color:var(--navy-dk);box-shadow:0 8px 24px rgba(249,221,14,.42)}
+.btn--gold:hover{background:#FFE838;transform:translateY(-2px);box-shadow:0 12px 30px rgba(249,221,14,.5)}
+.btn--gold:active{transform:translateY(0)}
+.btn--navy{background:var(--navy);color:#fff;box-shadow:0 8px 24px rgba(38,39,93,.28)}
+.btn--navy:hover{background:var(--navy-dk);transform:translateY(-2px)}
+.btn--block{width:100%}
+.btn__arrow{transition:transform .18s ease}
+.btn:hover .btn__arrow{transform:translateX(3px)}
+
+/* Ảnh tài liệu */
+.mockup{position:relative;perspective:1400px}
+.mockup__frame{
+  position:relative;border-radius:14px;overflow:hidden;
+  box-shadow:var(--shadow-lg);border:1px solid rgba(38,39,93,.10);
+  transform:rotate(-1.6deg);transition:transform .5s cubic-bezier(.2,.8,.2,1);
+  background:#fff;
+}
+.mockup:hover .mockup__frame{transform:rotate(0deg) translateY(-4px)}
+.mockup__ribbon{
+  position:absolute;top:14px;right:-8px;z-index:3;
+  background:var(--gold);color:var(--navy-dk);
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:12.5px;letter-spacing:.6px;
+  padding:8px 16px;border-radius:6px;
+  box-shadow:0 6px 18px rgba(38,39,93,.22);transform:rotate(2deg);
+}
+.mockup__cap{
+  margin-top:14px;text-align:center;font-size:13px;color:var(--muted);
+  display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
+}
+
+/* ═══════════════ 3 · SECTIONS ═══════════════ */
+section{scroll-margin-top:70px}
+.sec{padding:64px 0}
+.sec--soft{background:var(--soft)}
+.sec__eyebrow{
+  display:block;text-align:center;font-size:13px;font-weight:700;letter-spacing:1.4px;
+  text-transform:uppercase;color:var(--navy-2);margin-bottom:10px;
+}
+.sec__title{text-align:center;font-size:clamp(24px,3.4vw,34px);font-weight:800;margin-bottom:14px}
+.sec__lead{text-align:center;color:var(--muted);max-width:660px;margin:0 auto 38px;font-size:16.5px}
+
+/* Khối "vì sao" */
+.insight{
+  background:var(--blue);border:1px solid #D3E3F7;border-radius:20px;
+  padding:34px 34px 32px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:24px;align-items:start;
+}
+.insight__bulb{
+  flex:none;width:58px;height:58px;border-radius:50%;
+  background:#fff;border:2px solid var(--gold);
+  display:grid;place-items:center;font-size:27px;
+  box-shadow:0 4px 16px rgba(249,221,14,.28);
+}
+.insight h2{font-size:clamp(20px,2.6vw,26px);font-weight:800;margin-bottom:12px}
+.insight p{font-size:16.5px;color:#2C3355;line-height:1.75}
+.insight p strong{color:var(--navy);font-weight:700}
+.insight .pull{
+  display:block;margin-top:16px;padding-left:16px;border-left:3px solid var(--gold);
+  font-weight:600;color:var(--navy);
+}
+
+/* Ba nhóm câu */
+.diffs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.diff{
+  position:relative;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:26px 24px;box-shadow:var(--shadow);
+  transition:transform .2s ease,box-shadow .2s ease;
+}
+.diff:hover{transform:translateY(-3px);box-shadow:0 12px 34px rgba(38,39,93,.13)}
+.diff__top{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:14px}
+.diff__icon{font-size:26px;line-height:1}
+.diff__ma{
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:12px;letter-spacing:.8px;
+  background:var(--navy);color:#fff;padding:5px 10px;border-radius:6px;
+}
+.diff h3{font-size:17.5px;font-weight:800;margin-bottom:4px}
+.diff__so{font-size:13px;font-weight:700;color:#B99B00;margin-bottom:10px;display:block}
+.diff p{font-size:15px;color:var(--muted)}
+
+/* ═══════════════ 4 · CÂU HỎI ═══════════════ */
+.rule{
+  display:flex;align-items:flex-start;gap:13px;
+  max-width:700px;margin:0 auto 34px;
+  background:var(--cream);border:1px solid rgba(249,221,14,.6);
+  border-radius:14px;padding:16px 20px;font-size:15.5px;color:#5E4A00;
+}
+.rule strong{color:var(--navy)}
+.qlist{display:flex;flex-direction:column;gap:14px;max-width:840px;margin:0 auto}
+.q{
+  position:relative;display:grid;grid-template-columns:auto minmax(0,1fr);gap:18px;align-items:start;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:22px 24px;box-shadow:var(--shadow);
+}
+.q:nth-child(odd){background:linear-gradient(180deg,#FFFDF3 0%,#fff 100%)}
+.q__n{
+  flex:none;width:42px;height:42px;border-radius:50%;
+  display:grid;place-items:center;
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:19px;
+}
+.q:nth-child(odd) .q__n{background:var(--gold);color:var(--navy-dk)}
+.q:nth-child(even) .q__n{background:var(--navy);color:#fff}
+.q__body{border-left:3px solid var(--line);padding-left:18px}
+.q__nhom{display:block;font-size:12px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--navy-2);margin-bottom:6px}
+.q h3{font-size:18.5px;font-weight:800;margin-bottom:7px;line-height:1.4}
+.q p{font-size:15.2px;color:var(--muted)}
+
+/* Câu khoá */
+.locked-head{
+  display:flex;align-items:center;gap:12px;justify-content:center;
+  max-width:840px;margin:30px auto 16px;color:var(--navy);
+  font-family:'Montserrat',sans-serif;font-weight:800;font-size:15.5px;text-align:center;
+}
+.locked-head::before,.locked-head::after{content:'';height:1px;background:var(--line);flex:1}
+.locked{
+  position:relative;max-width:840px;margin:0 auto;
+  border:1.5px dashed #C9D4E8;border-radius:20px;padding:20px;background:var(--soft);
+}
+.locked__grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.lq{
+  display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:start;
+  background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px 16px;
+}
+.lq__n{
+  flex:none;width:34px;height:34px;border-radius:50%;
+  background:#E7EBF5;color:#9AA3BD;display:grid;place-items:center;
+  font-family:'Montserrat',sans-serif;font-weight:900;font-size:15px;
+}
+.lq__topic{font-family:'Montserrat',sans-serif;font-weight:800;font-size:14px;color:var(--navy);margin-bottom:8px;display:flex;align-items:flex-start;gap:6px;line-height:1.35}
+.lq__topic .lockicon{color:#9AA3BD;flex:none;margin-top:2px}
+/* Khung xám thay cho câu hỏi bị giấu — không dùng chữ giả */
+.lq__skel{display:flex;flex-direction:column;gap:6px}
+.lq__skel i{
+  display:block;height:9px;border-radius:99px;
+  background:linear-gradient(90deg,#E9EDF6 0%,#F3F6FC 50%,#E9EDF6 100%);
+  background-size:200% 100%;animation:shimmer 2.4s ease-in-out infinite;
+}
+.lq__skel i:nth-child(1){width:100%}
+.lq__skel i:nth-child(2){width:66%}
+@keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
+.lq__hint{font-size:13px;color:#8A90AB;margin-top:9px;font-style:italic;line-height:1.5}
+.locked__cta{margin-top:20px;text-align:center}
+.locked__cta p{font-size:15.5px;color:var(--navy);font-weight:600;margin-bottom:14px}
+
+/* ═══════════════ 5 · KHÔNG CHỈ 12 CÂU ═══════════════ */
+.teasers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.teaser{
+  display:flex;flex-direction:column;
+  background:#fff;border:1px solid var(--line);border-radius:var(--r);
+  padding:24px 22px;box-shadow:var(--shadow);
+}
+.teaser__icon{font-size:26px;line-height:1;margin-bottom:12px}
+.teaser h3{font-size:16.5px;font-weight:800;margin-bottom:12px;line-height:1.4}
+.teaser__ex{
+  background:var(--soft);border-left:3px solid var(--gold);border-radius:0 10px 10px 0;
+  padding:12px 14px;font-size:14.5px;color:#2C3355;line-height:1.6;flex:1;
+}
+.teaser__ex q{font-style:italic;color:var(--navy);font-weight:600;quotes:'“' '”'}
+.teaser__ex .arr{display:block;margin-top:6px;color:var(--muted);font-size:14px}
+.teaser__more{margin-top:12px;font-size:13px;color:#8A90AB;display:flex;align-items:center;gap:6px}
+.teaser__more svg{flex:none;color:#9AA3BD}
+.teaser__skel{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.teaser__skel i{
+  display:block;height:10px;border-radius:99px;
+  background:linear-gradient(90deg,#E4E9F3 0%,#F1F4FA 50%,#E4E9F3 100%);
+  background-size:200% 100%;animation:shimmer 2.4s ease-in-out infinite;
+}
+.teaser__skel i:nth-child(1){width:92%}
+.teaser__skel i:nth-child(2){width:74%}
+
+/* ═══════════════ 6 · TRONG PDF CÓ GÌ ═══════════════ */
+.get{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:48px;align-items:center}
+.get__list{list-style:none;display:flex;flex-direction:column;gap:14px}
+.get__list li{display:flex;align-items:flex-start;gap:13px;font-size:16.5px;line-height:1.6}
+.get__list li strong{color:var(--navy)}
+.get__list li em{font-style:italic;color:var(--navy)}
+.check{
+  flex:none;width:26px;height:26px;border-radius:50%;background:rgba(22,163,74,.12);
+  display:grid;place-items:center;color:var(--green);margin-top:2px;
+}
+.get__note{
+  margin-top:24px;padding:14px 18px;background:var(--soft);
+  border-left:3px solid var(--navy);border-radius:0 10px 10px 0;
+  font-size:14.5px;color:var(--muted);
+}
+.get__note strong{color:var(--navy)}
+
+/* ═══════════════ 7 · TRUST + CTA CUỐI ═══════════════ */
+.trust{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.trust__i{
+  display:inline-flex;align-items:center;gap:9px;
+  background:#fff;border:1px solid var(--line);border-radius:99px;
+  padding:11px 20px;font-size:14.5px;font-weight:600;color:var(--navy);
+}
+.final{
+  background:
+    radial-gradient(ellipse 60% 80% at 85% 10%,rgba(249,221,14,.14) 0%,transparent 58%),
+    var(--navy);
+  color:#fff;padding:66px 0;text-align:center;
+}
+.final h2{color:#fff;font-size:clamp(24px,3.6vw,36px);font-weight:900;margin-bottom:14px}
+.final p{color:rgba(255,255,255,.78);font-size:17px;max-width:600px;margin:0 auto 28px}
+.final__quote{
+  margin-top:32px;color:rgba(255,255,255,.62);font-size:15px;font-style:italic;
+}
+
+/* ═══════════════ 8 · FOOTER ═══════════════ */
+.foot{background:var(--navy-dk);color:rgba(255,255,255,.62);padding:28px 0 34px;font-size:13.5px}
+.foot__in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+.foot a{color:rgba(255,255,255,.82);text-decoration:none}
+.foot a:hover{text-decoration:underline}
+.foot img{height:26px;opacity:.9}
+
+/* ═══════════════ 9 · THANH CTA MOBILE ═══════════════ */
+.mbar{
+  display:none;position:fixed;left:0;right:0;bottom:0;z-index:70;
+  background:rgba(255,255,255,.96);backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+  box-shadow:0 -6px 24px rgba(38,39,93,.10);
+  /* Ẩn tới khi nút CTA ở hero trôi khỏi màn hình */
+  transform:translateY(115%);transition:transform .3s cubic-bezier(.2,.8,.2,1);
+}
+.mbar.show{transform:none}
+.mbar .btn{padding:14px 20px;font-size:16px}
+
+/* ═══════════════ 10 · MODAL FORM ═══════════════ */
+.ov{
+  position:fixed;inset:0;z-index:200;
+  background:rgba(20,21,50,.68);backdrop-filter:blur(5px);
+  display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;visibility:hidden;transition:opacity .24s ease,visibility .24s ease;
+  overflow-y:auto;
+}
+/* Style tác giả thắng UA stylesheet, nên phải tự tắt lại khi có [hidden] */
+.ov[hidden]{display:none}
+.ov.open{opacity:1;visibility:visible}
+.modal{
+  position:relative;width:100%;max-width:460px;
+  background:#fff;border-radius:22px;
+  box-shadow:0 30px 80px rgba(10,12,40,.45);
+  transform:translateY(16px) scale(.98);transition:transform .28s cubic-bezier(.2,.8,.2,1);
+  margin:auto;
+}
+.ov.open .modal{transform:translateY(0) scale(1)}
+.modal__x{
+  position:absolute;top:12px;right:12px;z-index:2;
+  width:36px;height:36px;border-radius:50%;border:0;cursor:pointer;
+  background:#F1F4FA;color:var(--muted);display:grid;place-items:center;
+  transition:background .18s ease,color .18s ease;
+}
+.modal__x:hover{background:#E4E9F4;color:var(--navy)}
+.modal__head{
+  padding:26px 28px 18px;border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#FFFDF3 0%,#fff 100%);border-radius:22px 22px 0 0;
+}
+.modal__head h2{font-size:20px;font-weight:800;margin-bottom:6px;padding-right:34px}
+.modal__head p{font-size:14.5px;color:var(--muted)}
+.modal__body{padding:22px 28px 26px}
+
+.prog{display:flex;align-items:center;gap:10px;margin-bottom:20px}
+.prog__track{flex:1;height:6px;background:#EDF1F8;border-radius:99px;overflow:hidden}
+.prog__fill{height:100%;width:50%;background:linear-gradient(90deg,var(--gold),var(--gold-dk));border-radius:99px;transition:width .35s cubic-bezier(.2,.8,.2,1)}
+.prog__txt{font-size:12.5px;font-weight:700;color:var(--muted);white-space:nowrap}
+
+.step{display:none;flex-direction:column;gap:14px}
+.step.on{display:flex;animation:stepIn .3s ease}
+@keyframes stepIn{from{opacity:0;transform:translateX(8px)}to{opacity:1;transform:none}}
+
+.fld{display:flex;flex-direction:column;gap:6px}
+.fld > label{font-size:13.5px;font-weight:600;color:var(--navy)}
+.fld input,.fld select{
+  font-family:'Inter',sans-serif;font-size:16px;color:var(--ink);
+  padding:14px 15px;border:1.5px solid #DDE4F0;border-radius:12px;
+  background:#FBFCFE;transition:border-color .18s ease,box-shadow .18s ease,background .18s ease;
+  width:100%;
+}
+.fld select{cursor:pointer;appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%235C6180' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 13px center;padding-right:42px;
+}
+.fld input:focus,.fld select:focus{
+  outline:none;border-color:var(--navy);background:#fff;
+  box-shadow:0 0 0 4px rgba(38,39,93,.10);
+}
+.fld input.err,.fld select.err{border-color:#DC2626;background:#FEF2F2}
+.err-msg{display:none;font-size:13px;color:#DC2626;font-weight:500}
+.err-msg.on{display:block}
+.opt{font-weight:400;color:var(--muted);font-size:12.5px}
+
+.form-note{
+  display:flex;align-items:flex-start;gap:8px;
+  font-size:12.8px;color:var(--muted);line-height:1.55;margin-top:2px;
+}
+.form-note svg{flex:none;margin-top:2px;color:var(--green)}
+.back{
+  background:none;border:0;cursor:pointer;color:var(--muted);
+  font-family:'Inter',sans-serif;font-size:14px;font-weight:600;padding:8px 0;text-align:left;
+}
+.back:hover{color:var(--navy)}
+.btn.loading{pointer-events:none;opacity:.75}
+.btn.loading .btn__label{visibility:hidden}
+.btn.loading::after{
+  content:'';position:absolute;top:50%;left:50%;margin:-10px 0 0 -10px;
+  width:20px;height:20px;border-radius:50%;
+  border:2.5px solid rgba(27,28,69,.25);border-top-color:var(--navy-dk);
+  animation:spin .7s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.succ{text-align:center;padding:6px 0}
+.succ__ic{
+  width:68px;height:68px;border-radius:50%;margin:0 auto 16px;
+  background:rgba(22,163,74,.12);color:var(--green);display:grid;place-items:center;
+}
+.succ h3{font-size:20px;font-weight:800;margin-bottom:8px}
+.succ p{font-size:15px;color:var(--muted);margin-bottom:18px}
+
+/* ═══════════════ 11 · RESPONSIVE ═══════════════ */
+@media (max-width:960px){
+  /* Màn hẹp: CHỮ trước, ẢNH sau — tiêu đề phải nằm trên nếp gấp */
+  .hero__grid{grid-template-columns:1fr;gap:30px}
+  .mockup{max-width:340px;margin:0 auto}
+  .mockup__frame{transform:rotate(0)}
+  .hero__sub{max-width:none}
+  .diffs{grid-template-columns:1fr;gap:14px}
+  .locked__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .teasers{grid-template-columns:1fr;gap:14px}
+  .get{grid-template-columns:1fr;gap:28px}
+  .get > .mockup{order:2;max-width:300px}
+  .get .sec__title{margin-bottom:18px}
+}
+@media (max-width:720px){
+  .topbar__tag{display:none}
+  .topbar__cta{display:none}
+  .hero{padding:30px 0 40px}
+  .mockup{max-width:288px}
+  .mockup__cap{font-size:12.5px}
+  .mockup__ribbon{display:none}   /* badge phía trên đã nói "miễn phí" rồi */
+  .sec{padding:48px 0}
+  .insight{grid-template-columns:1fr;gap:16px;padding:26px 22px}
+  .insight__bulb{width:50px;height:50px;font-size:23px}
+  .locked{padding:14px}
+  .locked__grid{grid-template-columns:1fr;gap:10px}
+  .lq{padding:14px}
+  .lq__skel i:nth-child(2){display:none}   /* 9 thẻ khoá: mỗi thẻ 1 vạch cho đỡ dài */
+  .q{gap:14px;padding:20px}
+  .q__body{border-left:0;padding-left:0}
+  .mbar{display:block}
+  body{padding-bottom:78px}
+  .final{padding:52px 0}
+  .foot__in{flex-direction:column;text-align:center}
+}
+@media (max-width:420px){
+  .wrap{padding:0 16px}
+  .modal__head{padding:22px 20px 16px}
+  .modal__body{padding:20px}
+  .btn{font-size:15.5px;padding:15px 22px}
+  .q{padding:18px 16px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.01ms !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+}
+</style>
+
+<!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-KPL2NSR9');</script>
+<!-- Bộ thu UTM dùng chung — phải nạp TRƯỚC script form bên dưới -->
+<script src="/js/va-utm.js" is:inline></script>
+</head>
+
+<body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+<!-- ═══ TOP BAR ═══ -->
+<header class="topbar">
+  <div class="wrap topbar__in">
+    <a class="topbar__logo" href="https://truongvietanh.com" target="_blank" rel="noopener">
+      <img src="/logo-vietanh.webp" alt="Trường Việt Anh" width="61" height="30" />
+      <span class="topbar__tag">Bảng in mang theo buổi họp</span>
+    </a>
+    <button type="button" class="topbar__cta" data-open-form>
+      Nhận bảng in
+    </button>
+  </div>
+</header>
+
+<main>
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div>
+        <span class="badge">🎁 Bảng in miễn phí · dùng được ở mọi trường</span>
+        <h1>Buổi họp 60 phút, 45 gia đình.<br />Con mình được <span class="hl">80 giây</span>.</h1>
+        <p class="hero__sub">
+          Tám mươi giây đó chỉ dùng được nếu ba mẹ <strong>biết trước sẽ hỏi gì</strong>.
+          Bảng in 4 trang: 12 câu nên hỏi cô, chỗ ghi câu trả lời, và cách đọc một câu trả lời né tránh.
+        </p>
+
+        <div class="hero__pills">
+          <span class="pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> 12 câu, chia 3 nhóm</span>
+          <span class="pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> Chỗ ghi câu trả lời của cô</span>
+          <span class="pill"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> In ra, gấp đôi, bỏ túi</span>
+        </div>
+
+        <button type="button" class="btn btn--gold" data-open-form>
+          <span class="btn__label">Nhận bảng in miễn phí</span>
+          <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+
+        <div class="hero__micro">
+          <span>📄 4 trang A4</span>
+          <span>⏱️ Điền 20 giây</span>
+          <span>🔒 Không spam</span>
+        </div>
+      </div>
+
+      <div class="mockup">
+        <span class="mockup__ribbon">MIỄN PHÍ</span>
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-12-cau-hoi-hop-phu-huynh.webp" type="image/webp" />
+            <img
+              src="/mockup-12-cau-hoi-hop-phu-huynh.jpg"
+              width="900" height="1273"
+              alt="Trang 1 bảng in 12 câu nên hỏi trong buổi họp phụ huynh — nhóm A về lớp học, có dòng ghi câu trả lời của cô"
+              fetchpriority="high" decoding="async"
+            />
+          </picture>
+        </div>
+        <p class="mockup__cap">Trang 1 của bản PDF — nhóm A và ô “Ba câu tôi sẽ hỏi hôm nay”</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ VÌ SAO ═══ -->
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="insight">
+        <div class="insight__bulb">💡</div>
+        <div>
+          <h2>Vì sao buổi họp phụ huynh hiếm khi nói về con mình</h2>
+          <p>
+            Không phải vì cô thiếu quan tâm. <strong>Một buổi họp 60 phút chia cho 45 gia đình thì mỗi đứa trẻ
+            được khoảng 80 giây.</strong> Vì vậy buổi họp buộc phải nói những gì áp dụng cho cả lớp: các khoản thu,
+            nội quy, lịch thi. Đó là phép chia.
+            <span class="pull">Tám mươi giây ít ỏi đó là của mình — và nó chỉ dùng được nếu mình biết trước sẽ hỏi gì.</span>
+            Không cần hỏi hết 12 câu. Hỏi được ba câu đúng đã hơn ngồi im cả buổi.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BA NHÓM CÂU ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap">
+      <span class="sec__eyebrow">12 câu, chia 3 nhóm</span>
+      <h2 class="sec__title">Hỏi về lớp, hỏi về con, hỏi về kênh liên lạc</h2>
+      <p class="sec__lead">Mỗi nhóm trả lời một việc khác nhau. Nhóm B là phần buổi họp chung gần như không bao giờ chạm tới.</p>
+      <div class="diffs">
+        {nhom.map((d) => (
+          <article class="diff">
+            <div class="diff__top">
+              <span class="diff__icon">{d.icon}</span>
+              <span class="diff__ma">NHÓM {d.ma}</span>
+            </div>
+            <h3>{d.title}</h3>
+            <span class="diff__so">{d.soCau} câu</span>
+            <p>{d.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CÂU HỎI: 3 MỞ + 9 KHOÁ ═══ -->
+  <section class="sec" id="cau-hoi">
+    <div class="wrap">
+      <span class="sec__eyebrow">Xem trước</span>
+      <h2 class="sec__title">Ba câu trong bảng, và lý do vì sao nên hỏi</h2>
+      <p class="sec__lead">Mỗi nhóm một câu. Chín câu còn lại nằm trong bản PDF, cùng chỗ để ghi câu trả lời của cô.</p>
+
+      <div class="rule">
+        <span style="font-size:19px;line-height:1">✍️</span>
+        <span>
+          <strong>Ba câu là đủ.</strong> Trang 1 có ô “Ba câu tôi sẽ hỏi hôm nay” — khoanh trước khi ra khỏi nhà.
+          Viết ra giấy, đừng để trong đầu: trong phòng đông người, chỉ người cầm giấy mới hỏi được.
+        </span>
+      </div>
+
+      <div class="qlist">
+        {openQuestions.map((q) => (
+          <article class="q">
+            <span class="q__n">{q.n}</span>
+            <div class="q__body">
+              <span class="q__nhom">{q.nhom}</span>
+              <h3>{q.q}</h3>
+              <p>{q.why}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="locked-head">Còn 9 câu nữa trong bản PDF</p>
+
+      <div class="locked">
+        <div class="locked__grid">
+          {lockedQuestions.map((q) => (
+            <article class="lq">
+              <span class="lq__n">{q.n}</span>
+              <div>
+                <div class="lq__topic">
+                  <svg class="lockicon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  {q.topic}
+                </div>
+                <div class="lq__skel" aria-hidden="true"><i></i><i></i></div>
+                <p class="lq__hint">{q.hint}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="locked__cta">
+          <p>Điền email để nhận đủ 12 câu — mỗi câu kèm lý do vì sao nên hỏi và chỗ ghi câu trả lời.</p>
+          <button type="button" class="btn btn--gold" data-open-form>
+            <span class="btn__label">Mở khoá 9 câu còn lại</span>
+            <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ KHÔNG CHỈ 12 CÂU ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap">
+      <span class="sec__eyebrow">Không chỉ 12 câu hỏi</span>
+      <h2 class="sec__title">Trước, trong và sau buổi họp — có gì để làm</h2>
+      <p class="sec__lead">Ba phần nhỏ ở trang 1 và trang 4 của bản PDF. Mỗi phần xem trước một ý.</p>
+
+      <div class="teasers">
+        <article class="teaser">
+          <span class="teaser__icon">🕰️</span>
+          <h3>Trước – trong – sau buổi họp: 6 việc</h3>
+          <div class="teaser__ex">
+            Hỏi con trước: <q>Nếu hôm nay cô nói về con, con nghĩ cô sẽ nói gì?</q>
+            <span class="arr">Câu trả lời của con thường rất sát, và nó cho biết nên hỏi cô chuyện gì.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Còn 5 việc trong bản PDF
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🔎</span>
+          <h3>Cách đọc một câu trả lời né tránh</h3>
+          <div class="teaser__ex">
+            Cô trả lời bằng tính từ: <q>ngoan</q>, <q>được</q>, <q>ổn</q>, <q>cần cố gắng</q>.
+            <span class="arr">Tính từ là nhận xét, không phải quan sát. Hỏi lại: “Cô cho tôi một ví dụ cụ thể được không?”</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Còn 2 dấu hiệu trong bản PDF
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">💬</span>
+          <h3>Một câu nên nói trước khi ra về</h3>
+          <div class="teaser__ex">
+            Một câu ngắn, nói lúc chào cô, mở sẵn một kênh liên lạc cho cả năm — và khiến con mình thành
+            một cái tên cụ thể trong đầu giáo viên, thay vì một em trong bốn mươi lăm em.
+            <div class="teaser__skel" aria-hidden="true"><i></i><i></i></div>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Nguyên văn nằm ở trang 4
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG PDF CÓ GÌ ═══ -->
+  <section class="sec">
+    <div class="wrap get">
+      <div class="mockup">
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-12-cau-hoi-hop-phu-huynh.webp" type="image/webp" />
+            <img src="/mockup-12-cau-hoi-hop-phu-huynh.jpg" width="900" height="1273" loading="lazy" decoding="async"
+                 alt="Xem trước bản PDF 12 câu nên hỏi trong buổi họp phụ huynh" />
+          </picture>
+        </div>
+      </div>
+      <div>
+        <span class="sec__eyebrow" style="text-align:left">Ba mẹ nhận được gì</span>
+        <h2 class="sec__title" style="text-align:left">Bốn trang A4, in ra là mang đi họp được</h2>
+        <ul class="get__list">
+          {trongPdf.map((t) => (
+            <li>
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span set:html={t}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="get__note">
+          Tài liệu này <strong>soạn cho phụ huynh mọi trường</strong>, không riêng phụ huynh Trường Việt Anh.
+          Ba mẹ dùng cho buổi họp ở trường con mình, và chia sẻ tự do.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CAM KẾT ═══ -->
+  <section class="sec sec--soft" style="padding-top:52px;padding-bottom:52px">
+    <div class="wrap">
+      <div class="trust">
+        <span class="trust__i">🎁 Miễn phí hoàn toàn</span>
+        <span class="trust__i">🏫 Dùng được ở mọi trường</span>
+        <span class="trust__i">🔒 Thông tin được bảo mật</span>
+        <span class="trust__i">✉️ Hủy nhận email bất cứ lúc nào</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CTA CUỐI ═══ -->
+  <section class="final">
+    <div class="wrap">
+      <h2>Ba câu đúng, hơn ngồi im cả buổi</h2>
+      <p>Buổi họp tới, ba mẹ bước vào phòng với một tờ giấy gấp đôi trong túi. Tám mươi giây của con mình sẽ không trôi qua vô ích.</p>
+      <button type="button" class="btn btn--gold" data-open-form>
+        <span class="btn__label">Nhận bảng in miễn phí</span>
+        <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      <p class="final__quote">“Không cần hỏi hết — hỏi được ba câu đúng đã hơn ngồi im cả buổi.”</p>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot__in">
+    <img src="/logo-vietanh-gold.png" alt="Trường Việt Anh" width="77" height="26" loading="lazy" />
+    <span>Tám mươi giây của con mình, đừng để trôi qua.</span>
+    <span>© 2026 Trường Việt Anh · <a href="tel:+84916961409">0916 961 409</a></span>
+  </div>
+</footer>
+
+<!-- ═══ THANH CTA MOBILE ═══ -->
+<div class="mbar">
+  <button type="button" class="btn btn--gold btn--block" data-open-form>
+    <span class="btn__label">Nhận bảng in miễn phí</span>
+  </button>
+</div>
+
+<!-- ═══ MODAL FORM 2 BƯỚC ═══ -->
+<div class="ov" id="ov" role="dialog" aria-modal="true" aria-labelledby="mTitle" hidden>
+  <div class="modal">
+    <button type="button" class="modal__x" id="mClose" aria-label="Đóng">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+
+    <div class="modal__head">
+      <h2 id="mTitle">Nhận bảng in 12 câu hỏi</h2>
+      <p>Bản PDF 4 trang gửi vào email ba mẹ — tải được ngay sau khi điền.</p>
+    </div>
+
+    <div class="modal__body">
+      <div class="prog" id="prog">
+        <div class="prog__track"><div class="prog__fill" id="pFill"></div></div>
+        <span class="prog__txt" id="pTxt">Bước 1 / 2</span>
+      </div>
+
+      <!-- BƯỚC 1 — chỉ email -->
+      <div class="step on" id="s1">
+        <div class="fld">
+          <label for="fEmail">Email của ba mẹ</label>
+          <input type="email" id="fEmail" name="email" placeholder="vidu@gmail.com"
+                 autocomplete="email" inputmode="email" required />
+          <span class="err-msg" id="eEmail" role="alert">Ba mẹ kiểm tra lại email giúp em nhé.</span>
+        </div>
+        <button type="button" class="btn btn--navy btn--block" id="btnNext">
+          <span class="btn__label">Tiếp tục</span>
+          <svg class="btn__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </button>
+        <p class="form-note">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Chỉ dùng để gửi tài liệu và nội dung hữu ích cho ba mẹ. Không chia sẻ cho bên thứ ba.
+        </p>
+      </div>
+
+      <!-- BƯỚC 2 — tên + SĐT (+ lớp, không bắt buộc) -->
+      <div class="step" id="s2">
+        <div class="fld">
+          <label for="fName">Ba mẹ tên gì ạ?</label>
+          <input type="text" id="fName" name="parent_name" placeholder="Nguyễn Thị Lan" autocomplete="name" required />
+          <span class="err-msg" id="eName" role="alert">Ba mẹ điền giúp em tên nhé.</span>
+        </div>
+        <div class="fld">
+          <label for="fPhone">Số điện thoại</label>
+          <input type="tel" id="fPhone" name="phone" placeholder="0912 345 678" autocomplete="tel" inputmode="numeric" required />
+          <span class="err-msg" id="ePhone" role="alert">Số điện thoại chưa đúng, ba mẹ xem lại giúp em.</span>
+        </div>
+        <div class="fld">
+          <label for="fGrade">Con đang học lớp <span class="opt">(không bắt buộc)</span></label>
+          <select id="fGrade" name="school_level">
+            <option value="">— Chọn lớp của con —</option>
+            <option value="mam-non">Mầm non</option>
+            <option value="lop-1">Lớp 1</option>
+            <option value="lop-2">Lớp 2</option>
+            <option value="lop-3">Lớp 3</option>
+            <option value="lop-4">Lớp 4</option>
+            <option value="lop-5">Lớp 5</option>
+            <option value="lop-6">Lớp 6</option>
+            <option value="lop-7">Lớp 7</option>
+            <option value="lop-8">Lớp 8</option>
+            <option value="lop-9">Lớp 9</option>
+            <option value="lop-10">Lớp 10</option>
+            <option value="lop-11">Lớp 11</option>
+            <option value="lop-12">Lớp 12</option>
+          </select>
+        </div>
+        <button type="button" class="btn btn--gold btn--block" id="btnSubmit">
+          <span class="btn__label">Gửi bảng in cho tôi</span>
+        </button>
+        <button type="button" class="back" id="btnBack">← Quay lại</button>
+      </div>
+
+      <!-- THÀNH CÔNG -->
+      <div class="step" id="sSuc">
+        <div class="succ">
+          <div class="succ__ic">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+          </div>
+          <h3>Xong rồi ạ!</h3>
+          <p>Bảng in đang được gửi vào email của ba mẹ. Em chuyển ba mẹ sang trang tải file ngay đây…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline define:vars={{ FUNNEL, PDF_URL, CAM_ON }}>
+(function () {
+  'use strict';
+
+  var API = '/api/lead';
+  var FORM_ID = '12-cau-hoi-hop-phu-huynh-form';
+
+  var ov = document.getElementById('ov');
+  var s1 = document.getElementById('s1');
+  var s2 = document.getElementById('s2');
+  var sSuc = document.getElementById('sSuc');
+  var prog = document.getElementById('prog');
+  var pFill = document.getElementById('pFill');
+  var pTxt = document.getElementById('pTxt');
+  var btnNext = document.getElementById('btnNext');
+  var btnBack = document.getElementById('btnBack');
+  var btnSubmit = document.getElementById('btnSubmit');
+  var email = '';
+  var lastFocus = null;
+
+  function noop() {}
+
+  // Bộ thu UTM dùng chung (/js/va-utm.js). Gọi lại mỗi lần gửi để luôn lấy bản mới nhất.
+  function utm() { return window.__vaUTM ? window.__vaUTM() : {}; }
+
+  function gtm(evt, extra) {
+    try {
+      var p = { event: evt, form_id: FORM_ID, funnel_code: FUNNEL };
+      if (extra) for (var k in extra) p[k] = extra[k];
+      var u = utm();
+      for (var j in u) p[j] = u[j];
+      (window.dataLayer = window.dataLayer || []).push(p);
+    } catch (e) {}
+  }
+
+  /* ---------- Mở / đóng modal ---------- */
+  function openForm() {
+    lastFocus = document.activeElement;
+    ov.hidden = false;
+    // ép trình duyệt vẽ frame đầu để transition chạy
+    void ov.offsetWidth;
+    ov.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    gtm('popup_open');
+    setTimeout(function () {
+      var f = s1.classList.contains('on') ? document.getElementById('fEmail')
+                                          : document.getElementById('fName');
+      if (f) f.focus();
+    }, 300);
+  }
+
+  function closeForm() {
+    ov.classList.remove('open');
+    document.body.style.overflow = '';
+    setTimeout(function () { ov.hidden = true; }, 240);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll('[data-open-form]'), function (b) {
+    b.addEventListener('click', openForm);
+  });
+  document.getElementById('mClose').addEventListener('click', closeForm);
+  ov.addEventListener('click', function (e) { if (e.target === ov) closeForm(); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && ov.classList.contains('open')) closeForm();
+  });
+
+  /* ---------- Điều hướng bước ---------- */
+  function show(step) {
+    [s1, s2, sSuc].forEach(function (el) { el.classList.remove('on'); });
+    step.classList.add('on');
+  }
+  function setProgress(n) {
+    if (n === 1) { pFill.style.width = '50%'; pTxt.textContent = 'Bước 1 / 2'; }
+    else { pFill.style.width = '100%'; pTxt.textContent = 'Bước 2 / 2'; }
+  }
+
+  /* ---------- Kiểm tra dữ liệu ---------- */
+  function okEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v); }
+  function okPhone(v) {
+    v = String(v).replace(/[\s\-.()]/g, '').replace(/^\+?84/, '0');
+    return /^0[35789][0-9]{8}$/.test(v);
+  }
+  function mark(inputId, errId, bad) {
+    var i = document.getElementById(inputId), e = document.getElementById(errId);
+    if (i) i.classList.toggle('err', bad);
+    if (e) e.classList.toggle('on', bad);
+  }
+  ['fEmail', 'fName', 'fPhone'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (el) el.addEventListener('input', function () {
+      mark(id, 'e' + id.slice(1), false);
+    });
+  });
+
+  /* ---------- BƯỚC 1 → gửi partial_capture ---------- */
+  btnNext.addEventListener('click', function () {
+    var v = (document.getElementById('fEmail').value || '').trim();
+    if (!okEmail(v)) { mark('fEmail', 'eEmail', true); document.getElementById('fEmail').focus(); return; }
+    mark('fEmail', 'eEmail', false);
+    email = v;
+
+    // Bắt email sớm: worker nhận diện bằng đúng khoá step='partial_capture'
+    try {
+      var body1 = {
+        step: 'partial_capture',
+        email: email,
+        form_id: FORM_ID,
+        funnel_code: FUNNEL,
+        source: FUNNEL
+      };
+      Object.assign(body1, utm());
+      fetch(API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body1),
+        keepalive: true
+      }).catch(noop);
+    } catch (e) {}
+
+    gtm('lead_step1');
+    show(s2);
+    setProgress(2);
+    setTimeout(function () { document.getElementById('fName').focus(); }, 90);
+  });
+
+  btnBack.addEventListener('click', function () { show(s1); setProgress(1); });
+
+  /* ---------- BƯỚC 2 → gửi lead đầy đủ ---------- */
+  btnSubmit.addEventListener('click', function () {
+    var name = (document.getElementById('fName').value || '').trim();
+    var phone = (document.getElementById('fPhone').value || '').trim();
+    var grade = document.getElementById('fGrade').value || '';
+    var ok = true;
+
+    if (!name) { mark('fName', 'eName', true); ok = false; } else mark('fName', 'eName', false);
+    if (!okPhone(phone)) { mark('fPhone', 'ePhone', true); ok = false; } else mark('fPhone', 'ePhone', false);
+    if (!ok) return;
+
+    btnSubmit.classList.add('loading');
+
+    var body = {
+      email: email,
+      parent_name: name,
+      phone: phone,
+      form_id: FORM_ID,
+      funnel_code: FUNNEL,
+      source: FUNNEL
+    };
+    if (grade) body.school_level = grade;
+    Object.assign(body, utm());
+
+    fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    })
+      .catch(noop)
+      .finally(function () {
+        gtm('generate_lead', grade ? { school_level: grade } : null);
+        btnSubmit.classList.remove('loading');
+        prog.style.display = 'none';
+        show(sSuc);
+        setTimeout(function () {
+          window.location.href = CAM_ON + '?name=' + encodeURIComponent(name);
+        }, 1600);
+      });
+  });
+
+  /* ---------- Enter để đi tiếp ---------- */
+  document.getElementById('fEmail').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); btnNext.click(); }
+  });
+  ['fName', 'fPhone'].forEach(function (id) {
+    document.getElementById(id).addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { e.preventDefault(); btnSubmit.click(); }
+    });
+  });
+
+  /* ---------- Thanh CTA mobile: chỉ hiện khi nút hero đã trôi khỏi màn ---------- */
+  var mbar = document.querySelector('.mbar');
+  var heroBtn = document.querySelector('.hero .btn--gold');
+  if (mbar && heroBtn && 'IntersectionObserver' in window) {
+    new IntersectionObserver(function (entries) {
+      mbar.classList.toggle('show', !entries[0].isIntersecting);
+    }, { threshold: 0 }).observe(heroBtn);
+  } else if (mbar) {
+    mbar.classList.add('show');   // trình duyệt cũ: cứ hiện, còn hơn không có CTA
+  }
+
+  /* ---------- Nạp sẵn file PDF khi khách kéo tới giữa trang ---------- */
+  var warmed = false;
+  window.addEventListener('scroll', function () {
+    if (warmed || window.scrollY < 600) return;
+    warmed = true;
+    var l = document.createElement('link');
+    l.rel = 'prefetch'; l.href = PDF_URL; l.as = 'document';
+    document.head.appendChild(l);
+  }, { passive: true });
+})();
+</script>
+
+<script src="/js/phone-vn.js" defer></script>
+</body>
+</html>

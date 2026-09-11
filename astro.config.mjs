@@ -74,6 +74,9 @@ export default defineConfig({
         if (page.includes('/mam-non-go-vap/hoc-phi')) return false;
         // /ketnoi là trang tiện ích quét QR (đích của 35 QR lớp), noindex — không vào sitemap
         if (/\/ketnoi\/?$/.test(page)) return false;
+        // Squeeze page tặng tài liệu đều đặt noindex — đưa vào sitemap chỉ tổ dính
+        // cảnh báo "Submitted URL marked noindex" trong Search Console.
+        if (/\/(7-cau-hoi-ke-chuyen-truong-lop|chi-phi-that-12-nam|12-cau-hoi-hop-phu-huynh)\/?$/.test(page)) return false;
         // Bài blog văn mẫu (noindex) không đưa vào sitemap
         const blogSlug = page.match(/\/blog\/([^/]+)\/?$/);
         if (blogSlug && NOINDEX_BLOG.has(blogSlug[1])) return false;

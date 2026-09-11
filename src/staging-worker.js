@@ -672,6 +672,23 @@ async function handleLeadSubmission(request, env) {
           tags.push('7-cau-hoi-ke-chuyen-truong-lop');
         }
 
+        // Lead magnet "Bảng tính chi phí 12 năm" (/chi-phi-that-12-nam).
+        // Cũng là trigger của workflow GHL gửi PDF — phải khớp CHÍNH XÁC với filter
+        // bên GHL. Đối tượng là ba mẹ đang so sánh trường nên trải khắp các cấp,
+        // KHÔNG gắn tag cấp học; lớp cụ thể (nếu ba mẹ chọn ở bước 2) đã vào tags
+        // qua data.schoolLevel.
+        if (data.source === 'squeeze-chi-phi-that-12-nam') {
+          tags.push('bang-tinh-chi-phi-12-nam');
+        }
+
+        // Lead magnet "12 câu nên hỏi trong buổi họp phụ huynh" (/12-cau-hoi-hop-phu-huynh).
+        // Tag = trigger của workflow GHL gửi PDF — phải khớp CHÍNH XÁC filter bên GHL.
+        // Bảng in soạn cho phụ huynh mọi trường, mọi cấp → KHÔNG gắn tag cấp học; lớp
+        // cụ thể (nếu ba mẹ chọn ở bước 2) đã vào tags qua data.schoolLevel.
+        if (data.source === 'squeeze-12-cau-hoi-hop-phu-huynh') {
+          tags.push('12-cau-hoi-hop-phu-huynh');
+        }
+
         // Lead từ app trắc nghiệm "Bản đồ phát triển của con" (/quiz).
         //   quiz-blog        → CTA quà tặng giữa bài blog
         //   quiz-vietanh-*   → vào /quiz trực tiếp, không có ?src

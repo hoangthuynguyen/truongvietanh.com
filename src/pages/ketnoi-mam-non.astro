@@ -1,15 +1,14 @@
 ---
 // =====================================================================
 // /ketnoi-mam-non/ — Trang kết nối phụ huynh MẦM NON
-// Một trang tĩnh: 3 kênh chính thức, mỗi kênh một MÃ QR + một NÚT bấm.
+// Một trang tĩnh: 3 kênh chính thức, mỗi kênh một NÚT bấm.
 // Không có ?lop= như /ketnoi — mầm non không chia nhóm Zalo theo lớp.
 //
-// Vì sao vừa QR vừa nút (đừng bỏ bớt một trong hai):
-//   · Chiếu lên màn hình ở buổi họp phụ huynh / in dán bảng tin → ba mẹ QUÉT mã.
-//   · Ba mẹ mở link trên điện thoại (quét mã CHUNG, nhận qua Zalo) → điện thoại
-//     không tự quét được mã đang hiện trên chính màn hình của nó → cần NÚT.
+// Trang KHÔNG hiện mã QR (Văn bỏ 11/09/2026: ba mẹ mở trang trên điện thoại thì
+// mã trên màn hình không quét được, chỉ rối). Mã QR để in dán bảng tin / chiếu
+// màn hình nằm ở docs/ketnoi-mam-non/qr/ (3 kênh + mã CHUNG trỏ về chính trang này).
 //
-// Link nằm ở src/data/ketnoi-mam-non.ts — sửa ở đó rồi sinh lại QR bằng
+// Link nằm ở src/data/ketnoi-mam-non.ts — sửa ở đó rồi sinh lại QR in bằng
 // scripts/sinh-qr-ketnoi-mam-non.mjs. Trang này KHÔNG có form lead (không POST
 // /api/lead) nên không gắn UTM. Trang tiện ích → noindex, đã loại khỏi sitemap
 // trong astro.config.mjs.
@@ -21,7 +20,6 @@ import {
   DIA_CHI,
   EMAIL,
   URL_TRANG,
-  duongDanQR,
 } from '../data/ketnoi-mam-non';
 
 // Icon nền tảng — cùng path với /ketnoi để hai trang nhìn giống nhau.
@@ -42,7 +40,7 @@ const KNMN = { trang: 'ketnoi-mam-non', kenh: KENH.map((k) => ({ id: k.id, ev: k
 const canonical = URL_TRANG;
 const title = 'Kết nối cùng Mầm non Việt Anh — Facebook & YouTube chính thức';
 const description =
-  'Ba mẹ quét mã QR hoặc bấm nút để theo dõi 3 kênh chính thức: Facebook Mầm non Việt Anh, Facebook Trường Việt Anh và YouTube Trường Việt Anh.';
+  'Ba mẹ bấm 3 nút để theo dõi 3 kênh chính thức: Facebook Mầm non Việt Anh, Facebook Trường Việt Anh và YouTube Trường Việt Anh.';
 ---
 
 <!doctype html>
@@ -234,22 +232,7 @@ const description =
       .kn-cta[data-done='1'] .kn-num { font-size: 0; background: #1a9d5c; color: #fff; }
       .kn-cta[data-done='1'] .kn-num::after { content: '✓'; font-size: 1rem; line-height: 1; }
 
-      /* Mã QR: ảnh SVG có sẵn viền trắng (quiet zone 4 ô) nên không cần đệm thêm
-         quanh ảnh. Mobile xếp ngang (mã trái, chữ phải) để tiết kiệm chiều cao. */
-      .kn-qr {
-        margin: 10px 0 0;
-        padding: 10px 12px 10px 8px;
-        background: #fff;
-        border: 1px solid var(--line);
-        border-radius: 14px;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .kn-qr img { width: 132px; height: 132px; flex: 0 0 auto; }
-      .kn-qr figcaption { font-size: 0.86rem; color: var(--muted); line-height: 1.45; }
-      .kn-qr figcaption strong { color: var(--navy); }
-      .kn-note { margin: 8px 4px 0; font-size: 0.875rem; color: var(--muted); }
+      .kn-note { margin: 6px 4px 0; font-size: 0.875rem; color: var(--muted); }
       .kn-note strong { color: var(--navy); }
 
       /* ---------- Hoàn tất ---------- */
@@ -331,7 +314,6 @@ const description =
       @media (min-width: 560px) {
         .kn-shell { box-shadow: 0 10px 40px rgba(38, 39, 93, 0.1); background: #fff; }
         .kn-head h1 { font-size: 1.6rem; }
-        .kn-qr img { width: 150px; height: 150px; }
       }
 
       /* ---------- Từ 760px: hero chia 2 cột (ảnh trái / chữ phải) ---------- */
@@ -353,7 +335,6 @@ const description =
         }
         .kn-wordmark { width: min(300px, 100%); margin-left: 0; }
         .kn-sub { margin-left: 0; }
-        .kn-qr img { width: 170px; height: 170px; } /* ô rộng cả khung → mã to hơn cho khỏi trống */
         .kn-photo {
           order: -1; /* ảnh sang cột trái */
           height: 100%;
@@ -362,7 +343,7 @@ const description =
         }
       }
 
-      /* ---------- Từ 1000px: 3 kênh xếp ngang, mã QR to để chiếu màn hình ---------- */
+      /* ---------- Từ 1000px: 3 kênh xếp ngang, cả 3 nút nằm trong màn hình đầu ---------- */
       @media (min-width: 1000px) {
         .kn-shell { max-width: 1060px; }
         .kn-photo { min-height: 340px; }
@@ -389,9 +370,6 @@ const description =
         }
         .kn-label b { font-size: 0.95rem; letter-spacing: 0.2px; }
         .kn-cta { min-height: 76px; }
-        /* Cột hẹp → mã QR xếp dọc, to hơn: đây là thứ ba mẹ quét từ màn chiếu. */
-        .kn-qr { flex-direction: column; text-align: center; padding: 14px 14px 12px; margin-top: 14px; }
-        .kn-qr img { width: 196px; height: 196px; }
         .kn-done { margin: 22px 26px 24px; }
         .kn-done ul { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0 24px; }
         .kn-note { margin-left: 2px; margin-right: 2px; }
@@ -405,27 +383,6 @@ const description =
       @media (prefers-reduced-motion: reduce) {
         .kn-cta { transition: none; }
         .kn-cta:hover { transform: none; }
-      }
-
-      /* ---------- In giấy: chỉ giữ tiêu đề + 3 mã QR, bỏ nút và trang trí ----------
-         Ctrl+P là ra tờ dán bảng tin. Bản in đầy đủ hơn (kèm mã CHUNG) nằm ở
-         docs/ketnoi-mam-non/qr/in-qr.html. */
-      @media print {
-        @page { margin: 12mm; }
-        body { background: #fff; }
-        .kn-shell { max-width: none; box-shadow: none; }
-        .kn-topbar, .kn-photo, .kn-wordmark, .kn-done, footer, .kn-note, .kn-arrow,
-        .kn-qr figcaption /* "bấm nút phía trên" vô nghĩa trên giấy */ { display: none !important; }
-        .kn-hero { display: block; background: none; }
-        .kn-head { background: none; color: var(--navy); padding: 0 0 6mm; text-align: center; }
-        .kn-sub { color: var(--muted); }
-        .kn-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6mm; padding: 0; }
-        .kn-step { break-inside: avoid; }
-        .kn-step + .kn-step { margin: 0; }
-        .kn-cta { box-shadow: none; background: #fff; color: var(--navy); border: 1px solid var(--line); min-height: 0; }
-        .kn-num { background: var(--navy); color: #fff; }
-        .kn-qr { flex-direction: column; border: 0; padding: 0; text-align: center; }
-        .kn-qr img { width: 52mm; height: 52mm; }
       }
     </style>
   </head>
@@ -457,9 +414,8 @@ const description =
             />
             <h1>Kết nối cùng Trường của con</h1>
             <p class="kn-sub">
-              Ba mẹ <strong>quét mã QR</strong> bằng camera điện thoại — hoặc <strong>bấm nút</strong>
-              nếu đang xem trên điện thoại — để theo dõi 3 kênh chính thức của Mầm non Việt Anh.
-              Chỉ mất khoảng 60 giây.
+              Ba mẹ bấm <strong>3 nút dưới đây</strong> để theo dõi 3 kênh chính thức của Mầm non
+              Việt Anh. Chỉ mất khoảng 60 giây.
             </p>
           </section>
 
@@ -485,20 +441,6 @@ const description =
                 <span class="kn-label"><b>{k.ten}</b><span>{k.phu}</span></span>
                 <span class="kn-arrow" aria-hidden="true">›</span>
               </a>
-              <figure class="kn-qr">
-                <img
-                  src={duongDanQR(k.id)}
-                  alt={`Mã QR mở ${k.ten} ${k.phu}`}
-                  width="160"
-                  height="160"
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  decoding="async"
-                />
-                <figcaption>
-                  <strong>Quét mã</strong> bằng camera điện thoại. Đang xem trên điện thoại?
-                  <strong>Bấm nút phía trên.</strong>
-                </figcaption>
-              </figure>
               <p class="kn-note"><strong>{k.hanhDong}.</strong> {k.moTa}</p>
             </div>
           ))}

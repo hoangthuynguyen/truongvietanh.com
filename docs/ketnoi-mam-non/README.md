@@ -1,8 +1,11 @@
 # Trang Kết nối phụ huynh Mầm non — `/ketnoi-mam-non/`
 
-Một trang tĩnh, **3 mã QR** trỏ tới 3 kênh chính thức, mỗi kênh kèm **1 nút bấm**.
-Anh em của `/ketnoi` (trang theo lớp của TH–THCS–THPT) nhưng không có `?lop=` — mầm non
-không chia nhóm Zalo theo lớp.
+Một trang tĩnh, **3 nút bấm** tới 3 kênh chính thức. Anh em của `/ketnoi` (trang theo lớp
+của TH–THCS–THPT) nhưng không có `?lop=` — mầm non không chia nhóm Zalo theo lớp.
+
+Trang **không hiện mã QR** (bản đầu có 3 mã trên trang, Văn bỏ 11/09/2026 vì ba mẹ mở
+trang trên điện thoại thì mã trên màn hình không quét được, chỉ rối). Mã QR để in nằm ở
+`docs/ketnoi-mam-non/qr/`.
 
 ```
 https://truongvietanh.com/ketnoi-mam-non/
@@ -23,13 +26,12 @@ Dựng 11/09/2026.
 Ngoài ra có **mã CHUNG** trỏ về chính trang này (`CHUNG.png|svg`) — dán bảng tin, thư mời,
 chiếu màn hình ở buổi họp phụ huynh: ai quét cũng vào trang rồi tự chọn kênh.
 
-## Vì sao vừa QR vừa nút
+## Cách dùng
 
-- **Chiếu lên màn hình / in giấy** → ba mẹ giơ điện thoại lên **quét**.
-- **Ba mẹ mở link trên điện thoại** (quét mã CHUNG, nhận link qua Zalo) → điện thoại không
-  tự quét được mã đang hiện trên chính màn hình của nó → phải có **nút bấm**.
-
-Đừng bỏ bớt một trong hai.
+- **Chiếu màn hình / dán bảng tin / thư mời**: in `CHUNG-co-nhan.png` (hoặc `in-qr.html`).
+  Ba mẹ quét → vào trang → bấm 3 nút.
+- **Gửi link qua Zalo nhóm lớp**: dán thẳng `https://truongvietanh.com/ketnoi-mam-non/`,
+  Zalo tự dựng thẻ preview từ `ketnoi-mam-non-og.jpg`.
 
 ## File nào làm gì
 
@@ -37,17 +39,16 @@ chiếu màn hình ở buổi họp phụ huynh: ai quét cũng vào trang rồi
 |---|---|
 | `src/data/ketnoi-mam-non.ts` | **Nơi duy nhất khai báo link.** Hotline/địa chỉ lấy từ `mam-non-govap-facts.ts`. |
 | `src/pages/ketnoi-mam-non.astro` | Giao diện + đo lượt bấm (GA4 gắn thẳng, không GTM — cùng lý do với `/ketnoi`). |
-| `scripts/sinh-qr-ketnoi-mam-non.mjs` | Sinh 4 mã QR (SVG cho web + PNG để in), tự giải mã kiểm ngược. |
-| `public/ketnoi-mam-non/qr-*.svg` | 3 mã QR trang web nhúng bằng `<img>`. |
+| `scripts/sinh-qr-ketnoi-mam-non.mjs` | Sinh 4 mã QR để in (PNG + SVG), tự giải mã kiểm ngược. |
 | `public/ketnoi-mam-non/logo-mam-non.webp` | Logo chữ mầm non (chữ vàng, chỉ đặt trên nền navy). |
 | `public/ketnoi-mam-non-hero.webp` | Ảnh hero 960×540 (album "Hình ảnh đẹp mỗi ngày" trên photos.truongvietanh.com). |
 | `public/ketnoi-mam-non-og.jpg` | Ảnh preview 1200×630 khi dán link vào Zalo/Facebook (phải là JPG). |
-| `docs/ketnoi-mam-non/qr/` | 4 PNG 1200px + SVG + `in-qr.html` (4 mã / tờ A4, mở là in). |
+| `docs/ketnoi-mam-non/qr/` | 4 PNG 1200px + SVG + `CHUNG-co-nhan.png` (mã chung có nhãn) + `in-qr.html` (4 mã / tờ A4). |
 
 ## Đổi link thì làm gì
 
 1. Sửa `url` trong `src/data/ketnoi-mam-non.ts`.
-2. Sinh lại mã QR — **bắt buộc**, nếu không nút bấm trỏ đường mới còn mã QR vẫn trỏ đường cũ:
+2. Sinh lại mã QR in — **bắt buộc**, nếu không nút bấm trỏ đường mới còn mã QR đã in/dán vẫn trỏ đường cũ:
 
 ```bash
 npm i --no-save qrcode jimp jsqr
@@ -63,10 +64,10 @@ Chỉ muốn kiểm mà không ghi: `node scripts/sinh-qr-ketnoi-mam-non.mjs --k
 
 GA4 `G-Q2V9JWSXCK`, gắn thẳng (không GTM). Sự kiện khi bấm nút:
 `facebook_mamnon_click`, `facebook_truong_click`, `youtube_click` — kèm tham số
-`trang=ketnoi-mam-non`, `kenh=<id>`. Quét mã QR trực tiếp thì đi thẳng sang Facebook/YouTube,
-**không** qua trang nên không đo được — muốn đếm lượt quét phải dùng link rút gọn có thống kê.
+`trang=ketnoi-mam-non`, `kenh=<id>`. Mã QR in của từng kênh trỏ thẳng sang Facebook/YouTube,
+**không** qua trang nên không đo được — muốn đếm lượt quét thì dùng mã CHUNG (đi qua trang).
 
 ## In dán bảng tin
 
-Mở `docs/ketnoi-mam-non/qr/in-qr.html` bằng trình duyệt → Ctrl+P. Hoặc Ctrl+P ngay trên trang
-web: CSS in đã giấu nút/ảnh/chân trang, chỉ còn tiêu đề + 3 mã QR xếp ngang.
+Mở `docs/ketnoi-mam-non/qr/in-qr.html` bằng trình duyệt → Ctrl+P (4 mã / tờ A4), hoặc in thẳng
+`CHUNG-co-nhan.png` nếu chỉ cần một mã dẫn về trang.

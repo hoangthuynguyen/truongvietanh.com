@@ -9,11 +9,10 @@
 // Nguồn link: src/data/ketnoi-mam-non.ts — import THẲNG (Node ≥ 22.6 tự bỏ
 // type annotation), không chép URL vào đây để khỏi lệch hai nơi.
 //
-// Ra 2 nơi:
-//   · public/ketnoi-mam-non/qr-<id>.svg  — trang web nhúng bằng <img>; SVG nên
-//     phóng to bao nhiêu cũng nét, ~1 KB mỗi mã, không cần thêm request PNG.
-//   · docs/ketnoi-mam-non/qr/<id>.png    — 1200×1200 để in giấy / dán bảng tin,
-//     kèm CHUNG.png|svg (trỏ về chính trang) và in-qr.html (4 mã / tờ A4).
+// Ra docs/ketnoi-mam-non/qr/: <id>.png 1200×1200 + <id>.svg để in giấy / dán bảng
+// tin / chiếu màn hình, kèm CHUNG.png|svg (trỏ về chính trang) và in-qr.html
+// (4 mã / tờ A4). Trang web KHÔNG hiện mã QR (Văn bỏ 11/09/2026) nên không ghi gì
+// vào public/ nữa.
 //
 // Mức sửa lỗi Q (25%): quét được khi in mờ, dán lệch hoặc che một góc.
 // Không nhúng logo giữa mã — logo che ô dữ liệu, in ra rồi mới biết quét
@@ -24,7 +23,6 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const PUB = path.join(ROOT, 'public/ketnoi-mam-non');
 const DOC = path.join(ROOT, 'docs/ketnoi-mam-non/qr');
 const CHI_KIEM = process.argv.includes('--kiem');
 
@@ -45,12 +43,9 @@ const MA = [
 const chung = { errorCorrectionLevel: 'Q', margin: 4, color: { dark: '#000000', light: '#FFFFFF' } };
 
 if (!CHI_KIEM) {
-  fs.mkdirSync(PUB, { recursive: true });
   fs.mkdirSync(DOC, { recursive: true });
   for (const m of MA) {
     const svg = await QRCode.toString(m.url, { ...chung, type: 'svg' });
-    // Mã CHUNG chỉ để in (trang không tự hiện QR trỏ về chính nó)
-    if (m.id !== 'CHUNG') fs.writeFileSync(path.join(PUB, `qr-${m.id}.svg`), svg);
     fs.writeFileSync(path.join(DOC, `${m.id}.svg`), svg);
     await QRCode.toFile(path.join(DOC, `${m.id}.png`), m.url, { ...chung, type: 'png', width: 1200 });
   }
@@ -75,15 +70,6 @@ try {
     const ok = res && res.data === m.url;
     if (!ok) sai++;
     console.log(`  ${ok ? '✓' : '✗'} ${m.id.padEnd(11)} ${res ? res.data : 'KHÔNG ĐỌC ĐƯỢC'}`);
-  }
-  // SVG trong public/ phải cùng nội dung với SVG trong docs/ (cùng một lần sinh)
-  for (const m of MA.filter((x) => x.id !== 'CHUNG')) {
-    const a = path.join(PUB, `qr-${m.id}.svg`);
-    const b = path.join(DOC, `${m.id}.svg`);
-    if (!fs.existsSync(a) || fs.readFileSync(a, 'utf8') !== fs.readFileSync(b, 'utf8')) {
-      sai++;
-      console.error(`  ✗ public/ketnoi-mam-non/qr-${m.id}.svg lệch với docs/ — sinh lại`);
-    }
   }
   console.log(sai ? `\n${sai} mã LỆCH — sinh lại bằng: node scripts/sinh-qr-ketnoi-mam-non.mjs` : `\nĐã kiểm ngược ${MA.length}/${MA.length} mã: khớp file data.`);
 } catch (e) {
@@ -128,6 +114,6 @@ ${the}
 </body></html>`,
     'utf8',
   );
-  console.log(`Đã ghi ${MA.length} mã QR: public/ketnoi-mam-non/ (SVG) + docs/ketnoi-mam-non/qr/ (PNG, SVG, in-qr.html)`);
+  console.log(`Đã ghi ${MA.length} mã QR vào docs/ketnoi-mam-non/qr/ (PNG, SVG, in-qr.html)`);
 }
 if (sai) process.exit(1);

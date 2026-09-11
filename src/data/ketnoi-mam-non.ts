@@ -1,11 +1,12 @@
 // =====================================================================
 // TRANG KẾT NỐI PHỤ HUYNH MẦM NON — /ketnoi-mam-non/
-// Một trang, 3 mã QR, 3 kênh chính thức. Không có ?lop= như /ketnoi vì
-// mầm non không chia nhóm Zalo theo lớp.
+// Một trang, 3 nút bấm tới 3 kênh chính thức. Không có ?lop= như /ketnoi vì
+// mầm non không chia nhóm Zalo theo lớp. Trang KHÔNG hiện mã QR (Văn bỏ 11/09/2026);
+// mã QR để in nằm ở docs/ketnoi-mam-non/qr/.
 //
 // ĐÂY LÀ NƠI DUY NHẤT KHAI BÁO LINK. Sửa ở đây, trang tự đổi theo.
-// ⚠️ Đổi URL xong PHẢI sinh lại mã QR, nếu không nút bấm trỏ một đằng còn
-//    mã QR in ra vẫn trỏ đường cũ:   node scripts/sinh-qr-ketnoi-mam-non.mjs
+// ⚠️ Đổi URL xong PHẢI sinh lại mã QR in, nếu không nút bấm trỏ một đằng còn
+//    mã QR đã in/dán vẫn trỏ đường cũ:   node scripts/sinh-qr-ketnoi-mam-non.mjs
 //    Chỉ kiểm (không ghi):            node scripts/sinh-qr-ketnoi-mam-non.mjs --kiem
 // =====================================================================
 // Có đuôi .ts để script Node (scripts/sinh-qr-ketnoi-mam-non.mjs) import thẳng được;
@@ -21,7 +22,7 @@ export type KenhKetNoi = {
   ten: string;
   /** Dòng nhỏ dưới tên, vd "Mầm non Việt Anh" */
   phu: string;
-  /** URL THẬT của kênh — cũng là nội dung mã QR */
+  /** URL THẬT của kênh — cũng là nội dung mã QR in */
   url: string;
   /** Việc ba mẹ cần làm sau khi mở link */
   hanhDong: string;
@@ -80,8 +81,3 @@ export const EMAIL = 'mamnon@truongvietanh.com';
 
 /** URL công khai của trang — nội dung của mã QR CHUNG (dán bảng tin, thư mời). */
 export const URL_TRANG = 'https://truongvietanh.com/ketnoi-mam-non/';
-
-/** Đường dẫn file QR (SVG) trong public/ — do scripts/sinh-qr-ketnoi-mam-non.mjs sinh ra. */
-export function duongDanQR(id: KenhKetNoi['id']): string {
-  return `/ketnoi-mam-non/qr-${id}.svg`;
-}

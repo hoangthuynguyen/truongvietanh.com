@@ -72,7 +72,7 @@ export default defineConfig({
       filter: (page) => {
         // Landing page quảng cáo đặt noindex — không đưa vào sitemap
         if (page.includes('/mam-non-go-vap/hoc-phi')) return false;
-        // /ketnoi (đích của 35 QR lớp) và /ketnoi-mam-non (3 QR kênh mầm non) là trang
+        // /ketnoi (đích của 35 QR lớp) và /ketnoi-mam-non (3 kênh mầm non) là trang
         // tiện ích quét QR, noindex — không vào sitemap
         if (/\/ketnoi(-mam-non)?\/?$/.test(page)) return false;
         // Squeeze page tặng tài liệu đều đặt noindex — đưa vào sitemap chỉ tổ dính

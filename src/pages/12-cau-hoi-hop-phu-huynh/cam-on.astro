@@ -1,7 +1,7 @@
 ---
 // Trang cảm ơn của squeeze /12-cau-hoi-hop-phu-huynh.
 // Kích cỡ file lấy từ file thật lúc build (statSync), đừng gõ tay.
-// Tự bấm nút tải sau 1,2s (chỉ 1 lần/phiên) rồi vẫn để nút to cho ba mẹ bấm lại.
+// KHÔNG tự tải file — Văn yêu cầu 11/09/2026: ba mẹ phải bấm nút "Tải bản PDF ngay" mới tải.
 import { statSync } from 'node:fs';
 
 const FUNNEL = 'squeeze-12-cau-hoi-hop-phu-huynh';
@@ -269,17 +269,6 @@ h1 .nm{color:#B99B00}
     var last = decodeURIComponent(n).trim().split(/\s+/).pop();
     if (last) document.getElementById('nm').textContent = ' ' + last;
   }
-
-  // Tự tải 1 lần mỗi phiên — ba mẹ quay lại trang không bị tải chồng file.
-  var b = document.getElementById('dlBtn');
-  try {
-    if (b && !sessionStorage.getItem('va12ch_dl')) {
-      setTimeout(function () {
-        try { sessionStorage.setItem('va12ch_dl', '1'); } catch (e) {}
-        b.click();
-      }, 1200);
-    }
-  } catch (e) {}
 })();
 </script>
 </body>

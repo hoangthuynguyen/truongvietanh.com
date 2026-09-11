@@ -17,8 +17,11 @@
 //    ⚠️ LUÔN dùng tên miền media.truongvietanh.com cho audio.
 //    KHÔNG dùng dạng /media/audio/... (proxy trong staging-worker.js chưa hỗ trợ
 //    HTTP Range) — iPhone/Safari sẽ KHÔNG phát được và thanh tua sẽ chết.
-//    Cách khác cũng an toàn: bỏ file vào public/am-nhac/ rồi trỏ /am-nhac/ten-bai.mp3
-//    (Workers Assets hỗ trợ Range sẵn) — hợp với file nhỏ, ít bài.
+//    Cách khác: bỏ file vào public/am-nhac/ rồi trỏ /am-nhac/ten-bai.mp3 — Workers
+//    Assets KHÔNG tự trả 206 (đã kiểm 11/09/2026), nhưng staging-worker.js đã tự cắt
+//    Range cho *.mp3 (hàm handleAssetAudioRange) nên iPhone vẫn phát/tua được.
+//    Hợp với file nhỏ, ít bài, hoặc khi token R2 không ghi được (11/09/2026: token
+//    trong .env thuộc account cá nhân, bucket ở account trường → 403).
 //
 // 2. Ảnh bìa (không bắt buộc): upload tương tự vào `images/am-nhac/`,
 //    dùng .webp 800x800, dưới 120 KB.
@@ -323,8 +326,8 @@ Việt Anh — cam kết — GIỮ LỜI!`,
     // TODO(Văn): xếp tạm vào 'su-kien' — chưa rõ hoàn cảnh sáng tác; nếu có tài liệu gốc
     // thì bổ sung moTa/loiBaiHat và chỉnh lại danh mục.
     danhMuc: 'su-kien',
-    // File nằm ở public/am-nhac/ (Workers Assets hỗ trợ Range) vì token Cloudflare trong .env
-    // không còn ghi được vào bucket R2 của account trường — xem chú thích đầu file.
+    // File nằm ở public/am-nhac/ (worker tự cắt Range cho *.mp3) vì token Cloudflare
+    // trong .env không còn ghi được vào bucket R2 của account trường — xem chú thích đầu file.
     audioUrl: 'https://truongvietanh.com/am-nhac/buddy.mp3',
     anhBia: 'https://truongvietanh.com/am-nhac/buddy.webp',
     thoiLuong: '4:01',

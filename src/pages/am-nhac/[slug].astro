@@ -1,0 +1,257 @@
+---
+// =====================================================================
+// TRANG RIÊNG TỪNG CA KHÚC — /am-nhac/<slug>/
+// Sinh tĩnh từ cùng mảng `baiHatList` với trang thư viện. Mục đích:
+// 1. Link chia sẻ chỉ hiện MỘT bài + ảnh bìa (nút "Sao chép link" nay trỏ về đây).
+// 2. Dán link vào Zalo/Facebook hiện thẻ xem trước có ảnh riêng của bài (og:image
+//    lấy từ `anhOg` — bắt buộc JPG, Zalo không đọc WebP). Link kiểu #slug KHÔNG
+//    làm được việc này vì hash không bao giờ được gửi lên server/crawler.
+// Link cũ /am-nhac#<slug> được trang thư viện tự chuyển hướng về đây.
+// =====================================================================
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HeaderBase from '../../components/HeaderBase.astro';
+import FooterBase from '../../components/FooterBase.astro';
+import {
+  baiHatList,
+  danhMucList,
+  thoiLuongRaGiay,
+  giayRaISO,
+  type BaiHat,
+} from '../../data/am-nhac';
+
+export function getStaticPaths() {
+  return baiHatList.map((bai) => ({ params: { slug: bai.slug }, props: { bai } }));
+}
+
+const b: BaiHat =
+  (Astro.props as { bai?: BaiHat }).bai ??
+  baiHatList.find((x) => x.slug === Astro.params.slug)!;
+
+const URL_THU_VIEN = 'https://truongvietanh.com/am-nhac';
+const URL_TRANG = `${URL_THU_VIEN}/${b.slug}/`;
+const dm = danhMucList.find((d) => d.ma === b.danhMuc);
+const phatHanh = b.trangThai === 'da-phat-hanh' && !!b.audioUrl;
+const choTai = b.choPhepTaiVe !== false && phatHanh;
+const giay = thoiLuongRaGiay(b.thoiLuong);
+
+const moTaTrang =
+  b.moTa ||
+  `Nghe và tải ca khúc "${b.tieuDe}" — sáng tác thuộc thư viện âm nhạc bản quyền của Trường Việt Anh.`;
+
+const structuredData: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Trang Chủ', item: 'https://truongvietanh.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Âm Nhạc', item: URL_THU_VIEN },
+      { '@type': 'ListItem', position: 3, name: b.tieuDe, item: URL_TRANG },
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'MusicRecording',
+    name: b.tieuDe,
+    url: URL_TRANG,
+    ...(b.theHien ? { byArtist: { '@type': 'MusicGroup', name: b.theHien } } : {}),
+    ...(giay ? { duration: giayRaISO(giay) } : {}),
+    ...(b.audioUrl
+      ? { audio: { '@type': 'AudioObject', contentUrl: b.audioUrl, encodingFormat: 'audio/mpeg' } }
+      : {}),
+    ...(b.anhBia ? { image: b.anhBia } : {}),
+    ...(b.namSangTac ? { datePublished: String(b.namSangTac) } : {}),
+    copyrightHolder: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh' },
+    composer: { '@type': 'Person', name: b.sangTac },
+  },
+];
+---
+
+<BaseLayout
+  title={`${b.tieuDe} — Âm Nhạc Trường Việt Anh`}
+  description={moTaTrang}
+  keywords={`${b.tieuDe}, âm nhạc trường việt anh, bài hát trường việt anh`}
+  canonical={URL_TRANG}
+  ogImage={b.anhOg || 'https://media.truongvietanh.com/images/root/truong-viet-anh-banner-chinh.webp'}
+  structuredData={structuredData}
+>
+  <div class="cf-layout page-wrapper">
+    <HeaderBase />
+
+    <section class="ab-hero">
+      <div class="cf-container">
+        <nav class="ab-breadcrumb" aria-label="Breadcrumb">
+          <a href="/">Trang chủ</a> <span>/</span>
+          <a href="/am-nhac/">Âm Nhạc</a> <span>/</span>
+          <span>{b.tieuDe}</span>
+        </nav>
+      </div>
+    </section>
+
+    <section class="ab-main">
+      <div class="cf-container">
+        <article class="ab-card">
+          {b.anhBia && (
+            <img
+              class="ab-cover"
+              src={b.anhBia}
+              alt={`Ảnh bìa ca khúc ${b.tieuDe}`}
+              width="800"
+              height="800"
+              loading="eager"
+              decoding="async"
+            />
+          )}
+          <div class="ab-info">
+            {dm && <span class="ab-badge">{dm.icon} {dm.ten}</span>}
+            <h1 class="ab-title">{b.tieuDe}</h1>
+            <p class="ab-meta">
+              <span class="ab-author">Sáng tác: {b.sangTac}</span>
+              {b.vietLoi && <span> · Lời: {b.vietLoi}</span>}
+              {b.theHien && <span> · Trình bày: {b.theHien}</span>}
+              {b.namSangTac && <span> · {b.namSangTac}</span>}
+              {b.thoiLuong && <span> · {b.thoiLuong}</span>}
+            </p>
+            {b.vaiTro && <p class="ab-role">{b.vaiTro}</p>}
+            {b.moTa && <p class="ab-desc">{b.moTa}</p>}
+            {b.aiHoTro && (
+              <p class="ab-ai">
+                <span class="ab-badge ab-badge--ai">✦ Có dùng AI</span>
+                <span>{b.aiGhiChu || 'Ca khúc có dùng công cụ AI trong khâu phối khí và dựng bản thu.'}</span>
+              </p>
+            )}
+
+            {phatHanh ? (
+              <audio class="ab-audio" controls preload="metadata" src={b.audioUrl}></audio>
+            ) : (
+              <p class="ab-soon">🎵 Ca khúc sắp ra mắt — quay lại sau nhé.</p>
+            )}
+
+            <div class="ab-actions">
+              {choTai && (
+                <a class="ab-btn ab-btn--navy" href={b.audioUrl} download>Tải về</a>
+              )}
+              <button class="ab-btn ab-btn--ghost" type="button" id="ab-copy" data-link={URL_TRANG}>
+                Sao chép link
+              </button>
+              <a class="ab-btn ab-btn--gold" href="/am-nhac/">Nghe toàn bộ thư viện ▶</a>
+            </div>
+          </div>
+        </article>
+
+        {b.loiBaiHat && (
+          <div class="ab-lyric">
+            <h2>Lời bài hát</h2>
+            <pre>{b.loiBaiHat}</pre>
+            <p class="ab-lyric__note">
+              Lời bài hát thuộc quyền tác giả của {b.sangTac}. Vui lòng ghi nguồn khi sử dụng.
+            </p>
+          </div>
+        )}
+
+        <p class="ab-back">
+          Ca khúc nằm trong <a href="/am-nhac/">Thư viện Âm nhạc Trường Việt Anh</a> — nơi lưu giữ
+          các sáng tác bản quyền của nhà trường và thầy cô, nghe trực tuyến và tải về miễn phí.
+        </p>
+      </div>
+    </section>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style>
+  .cf-container { max-width: 880px; margin: 0 auto; padding: 0 1.5rem; }
+
+  .ab-hero {
+    background: linear-gradient(135deg, #1d1e48 0%, #26275D 100%);
+    padding: 1.1rem 0;
+  }
+  .ab-breadcrumb { font-size: 0.92rem; color: rgba(255,255,255,0.6); }
+  .ab-breadcrumb a { color: rgba(255,255,255,0.8); text-decoration: none; }
+  .ab-breadcrumb a:hover { text-decoration: underline; }
+  .ab-breadcrumb span { margin: 0 0.3rem; }
+
+  .ab-main { padding: 2.25rem 0 3rem; background: #f7f9fc; }
+  .ab-card {
+    display: flex; gap: 1.75rem; align-items: flex-start;
+    background: #fff; border: 1px solid #e2e8f0; border-radius: 20px;
+    padding: 1.75rem;
+  }
+  .ab-cover {
+    flex-shrink: 0; width: 260px; height: 260px;
+    border-radius: 16px; object-fit: cover;
+    box-shadow: 0 10px 30px rgba(16,40,72,0.14);
+  }
+  .ab-info { flex: 1; min-width: 0; }
+  .ab-badge {
+    display: inline-block; font-size: 0.78rem; font-weight: 700;
+    padding: 0.28rem 0.7rem; border-radius: 999px;
+    background: #eef2ff; color: #26275D; margin-bottom: 0.6rem;
+  }
+  .ab-badge--ai { background: #f5f3ff; color: #5b21b6; border: 1px solid #ddd6fe; margin-bottom: 0; }
+  .ab-title {
+    font-family: Montserrat, Inter, sans-serif;
+    font-size: clamp(1.5rem, 3.4vw, 2.1rem); font-weight: 900;
+    color: #26275D; margin: 0 0 0.5rem; line-height: 1.2;
+  }
+  .ab-meta { font-size: 0.95rem; color: #475569; margin: 0 0 0.3rem; line-height: 1.7; }
+  .ab-author { font-weight: 700; color: #26275D; }
+  .ab-role { font-size: 0.88rem; color: #64748b; margin: 0; }
+  .ab-desc { font-size: 0.95rem; color: #475569; line-height: 1.75; margin: 0.7rem 0 0; }
+  .ab-ai {
+    display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+    font-size: 0.85rem; color: #6b7280; line-height: 1.6; margin: 0.7rem 0 0;
+  }
+  .ab-audio { width: 100%; margin-top: 1.1rem; }
+  .ab-soon {
+    background: #fff7ed; border: 1px solid #fed7aa; color: #b45309;
+    border-radius: 12px; padding: 0.8rem 1rem; font-size: 0.95rem;
+    margin: 1.1rem 0 0;
+  }
+  .ab-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1rem; }
+  .ab-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.35rem;
+    padding: 0.65rem 1.3rem; border-radius: 999px;
+    font-size: 0.93rem; font-weight: 700; text-decoration: none;
+    border: 2px solid transparent; cursor: pointer;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .ab-btn:hover { transform: translateY(-2px); }
+  .ab-btn--navy { background: #26275D; color: #fff; }
+  .ab-btn--navy:hover { background: #1d1e48; }
+  .ab-btn--gold { background: #f9dd0e; color: #26275D; }
+  .ab-btn--gold:hover { background: #ffe93d; }
+  .ab-btn--ghost { background: #fff; color: #475569; border-color: #dbe3ee; }
+  .ab-btn--ghost:hover { border-color: #26275D; color: #26275D; }
+
+  .ab-lyric {
+    background: #fff; border: 1px solid #e2e8f0; border-left: 4px solid #f9dd0e;
+    border-radius: 16px; padding: 1.5rem 1.75rem; margin-top: 1.25rem;
+  }
+  .ab-lyric h2 { font-size: 1.15rem; font-weight: 800; color: #26275D; margin: 0 0 0.8rem; }
+  .ab-lyric pre {
+    font-family: Inter, sans-serif; font-size: 0.97rem; line-height: 1.9;
+    color: #334155; white-space: pre-wrap; margin: 0;
+  }
+  .ab-lyric__note { font-size: 0.82rem; color: #94a3b8; margin: 0.9rem 0 0; font-style: italic; }
+
+  .ab-back { font-size: 0.93rem; color: #64748b; line-height: 1.75; margin: 1.5rem 0 0; }
+  .ab-back a { color: #26275D; font-weight: 700; }
+
+  @media (max-width: 700px) {
+    .ab-card { flex-direction: column; padding: 1.25rem; }
+    .ab-cover { width: 100%; height: auto; aspect-ratio: 1; }
+    .ab-actions .ab-btn { flex: 1 1 auto; }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('ab-copy');
+  btn?.addEventListener('click', () => {
+    const text = (btn as HTMLElement).dataset.link || '';
+    navigator.clipboard?.writeText(text).then(
+      () => { btn.textContent = '✓ Đã sao chép'; setTimeout(() => { btn.textContent = 'Sao chép link'; }, 1800); },
+      () => { btn.textContent = 'Không sao chép được'; setTimeout(() => { btn.textContent = 'Sao chép link'; }, 1800); },
+    );
+  });
+</script>

@@ -137,7 +137,7 @@ if (baiDaPhatHanh.length > 0) {
       return {
         '@type': 'MusicRecording',
         name: b.tieuDe,
-        url: `${URL_TRANG}#${b.slug}`,
+        url: `${URL_TRANG}/${b.slug}/`,
         ...(b.theHien ? { byArtist: { '@type': 'MusicGroup', name: b.theHien } } : {}),
         ...(giay ? { duration: giayRaISO(giay) } : {}),
         ...(b.audioUrl ? { audio: { '@type': 'AudioObject', contentUrl: b.audioUrl, encodingFormat: 'audio/mpeg' } } : {}),
@@ -352,7 +352,7 @@ if (baiDaPhatHanh.length > 0) {
                           Tải về
                         </a>
                       )}
-                      <button class="am-linkbtn am-copy-link" type="button" data-link={`${URL_TRANG}#${b.slug}`}>
+                      <button class="am-linkbtn am-copy-link" type="button" data-link={`${URL_TRANG}/${b.slug}/`}>
                         Sao chép link
                       </button>
                     </div>
@@ -1189,15 +1189,14 @@ if (baiDaPhatHanh.length > 0) {
       if (audio.duration) audio.currentTime = (Number(seek.value) / 1000) * audio.duration;
     });
 
-    // --- Mở trang kèm #slug: cuộn tới bài và làm nổi bật ---
+    // --- Link cũ /am-nhac#<slug>: chuyển về trang riêng của bài — chỉ hiện 1 bài
+    // + ảnh bìa, và khi chia sẻ có og:image riêng (hash không lên được server nên
+    // KHÔNG thể làm og:image theo bài ngay trên trang này). Hash không phải slug
+    // bài hát (#thu-vien, #ban-quyen…) giữ nguyên hành vi neo mặc định.
     if (location.hash.length > 1) {
       const slug = decodeURIComponent(location.hash.slice(1));
       const target = tracks.find((t) => t.dataset.slug === slug) || null;
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        const i = playable.indexOf(target);
-        if (i >= 0) load(i, false);
-      }
+      if (target) location.replace(`/am-nhac/${slug}/`);
     }
 
     // ============================================================

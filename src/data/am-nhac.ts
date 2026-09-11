@@ -59,6 +59,12 @@ export type BaiHat = {
   youtubeId?: string;
   /** Ảnh bìa vuông. Thiếu thì trang dùng ảnh mặc định theo danh mục. */
   anhBia?: string;
+  /**
+   * Ảnh cho thẻ xem trước khi chia sẻ link (og:image) của trang /am-nhac/<slug>/.
+   * PHẢI là JPG khổ ngang ~1200x630 — Zalo KHÔNG dựng preview từ WebP (thẻ trắng).
+   * Thiếu thì trang bài dùng banner mặc định của site.
+   */
+  anhOg?: string;
   /** Thời lượng dạng 'm:ss' — hiện ngay khi tải trang, trước khi audio nạp xong. */
   thoiLuong?: string;
   /** Lời bài hát. Xuống dòng bằng \n, cách khổ bằng \n\n. */
@@ -330,6 +336,7 @@ Việt Anh — cam kết — GIỮ LỜI!`,
     // trong .env không còn ghi được vào bucket R2 của account trường — xem chú thích đầu file.
     audioUrl: 'https://truongvietanh.com/am-nhac/buddy.mp3',
     anhBia: 'https://truongvietanh.com/am-nhac/buddy.webp',
+    anhOg: 'https://truongvietanh.com/am-nhac/buddy-og.jpg',
     thoiLuong: '4:01',
     trangThai: 'da-phat-hanh',
     ngayDang: '2026-09-11',

@@ -141,6 +141,7 @@ if (baiDaPhatHanh.length > 0) {
         ...(b.theHien ? { byArtist: { '@type': 'MusicGroup', name: b.theHien } } : {}),
         ...(giay ? { duration: giayRaISO(giay) } : {}),
         ...(b.audioUrl ? { audio: { '@type': 'AudioObject', contentUrl: b.audioUrl, encodingFormat: 'audio/mpeg' } } : {}),
+        ...(b.anhBia ? { image: b.anhBia } : {}),
         ...(b.namSangTac ? { datePublished: String(b.namSangTac) } : {}),
         copyrightHolder: { '@type': 'EducationalOrganization', name: 'Trường Việt Anh' },
         composer: { '@type': 'Person', name: b.sangTac },
@@ -282,6 +283,18 @@ if (baiDaPhatHanh.length > 0) {
                         </button>
                       ) : (
                         <span class="am-track__play am-track__play--soon" aria-hidden="true">🎵</span>
+                      )}
+
+                      {b.anhBia && (
+                        <img
+                          class="am-track__cover"
+                          src={b.anhBia}
+                          alt={`Ảnh bìa ca khúc ${b.tieuDe}`}
+                          width="64"
+                          height="64"
+                          loading="lazy"
+                          decoding="async"
+                        />
                       )}
 
                       <div class="am-track__info">
@@ -729,6 +742,12 @@ if (baiDaPhatHanh.length > 0) {
   @keyframes amEq { 0%,100% { height: 3px; } 50% { height: 9px; } }
   @media (prefers-reduced-motion: reduce) { .am-eq i { animation: none; height: 6px; } }
 
+  .am-track__cover {
+    flex-shrink: 0; width: 64px; height: 64px;
+    border-radius: 12px; object-fit: cover;
+    border: 1px solid #e2e8f0;
+  }
+
   .am-track__info { flex: 1; min-width: 0; }
   .am-track__title {
     font-size: 1.08rem; font-weight: 800; color: #26275D;
@@ -964,6 +983,7 @@ if (baiDaPhatHanh.length > 0) {
     .am-track { padding: 1rem; }
     .am-track__main { flex-wrap: wrap; }
     .am-track__index { display: none; }
+    .am-track__cover { width: 46px; height: 46px; border-radius: 10px; }
     .am-track__side { flex-direction: row; align-items: center; width: 100%; padding-left: 3.6rem; }
     .am-track__actions, .am-lyric { padding-left: 0; margin-left: 0; }
     .am-cats__grid, .am-steps, .am-links__grid { grid-template-columns: 1fr; }

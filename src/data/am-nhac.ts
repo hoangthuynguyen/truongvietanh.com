@@ -317,6 +317,21 @@ Việt Anh — cam kết — GIỮ LỜI!`,
     ngayDang: '2026-09-07',
   },
   {
+    slug: 'buddy',
+    tieuDe: 'Buddy',
+    sangTac: 'Trường Việt Anh',
+    // TODO(Văn): xếp tạm vào 'su-kien' — chưa rõ hoàn cảnh sáng tác; nếu có tài liệu gốc
+    // thì bổ sung moTa/loiBaiHat và chỉnh lại danh mục.
+    danhMuc: 'su-kien',
+    // File nằm ở public/am-nhac/ (Workers Assets hỗ trợ Range) vì token Cloudflare trong .env
+    // không còn ghi được vào bucket R2 của account trường — xem chú thích đầu file.
+    audioUrl: 'https://truongvietanh.com/am-nhac/buddy.mp3',
+    anhBia: 'https://truongvietanh.com/am-nhac/buddy.webp',
+    thoiLuong: '4:01',
+    trangThai: 'da-phat-hanh',
+    ngayDang: '2026-09-11',
+  },
+  {
     slug: 'moi-ngay',
     tieuDe: '1% Mỗi Ngày',
     sangTac: 'Trường Việt Anh',

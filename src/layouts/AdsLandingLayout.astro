@@ -312,7 +312,9 @@ h1,h2,h3{text-wrap:balance}
 .body .checklist li::before{content:"";position:absolute;left:0;top:.5em;width:.95rem;height:.95rem;border-radius:50%;background:var(--navy);
   -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/78% no-repeat;
   mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M20 6L9 17l-5-5' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/78% no-repeat}
-.body .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--white)}
+.body .tablewrap{overflow-x:auto;overscroll-behavior-x:contain;border:1px solid var(--line);border-radius:10px;background:var(--white)}
+/* Điện thoại: cột hẹp hơn ~150px thì chữ vỡ vụn và dòng cuối trơ một từ — cho cuộn ngang */
+@media(max-width:767px){.body .tablewrap th,.body .tablewrap td{min-width:9.5rem}}
 .body table{border-collapse:collapse;width:100%;min-width:520px;font-size:.95rem}
 .body th{text-align:left;padding:.8rem 1rem;background:#F4F2EC;border-bottom:1px solid var(--line);font-size:.78rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:700}
 .body td{padding:.8rem 1rem;border-bottom:1px solid #F0EEE7;color:#4A4C6B;vertical-align:top}

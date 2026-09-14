@@ -1,0 +1,35 @@
+/* ===================== CHỐNG MỒ CÔI CHỮ =====================
+   Mồ côi chữ = dòng cuối của một khối văn bản chỉ còn trơ lại đúng một từ.
+
+   File này được TIÊM VÀO MỌI TRANG qua integration trong astro.config.mjs, nên
+   trang mới tạo sau này cũng tự có, không cần nhớ thêm gì. Đừng chép nội dung
+   file này vào từng trang.
+
+   `text-wrap` là thuộc tính KẾ THỪA — đặt ở body là phủ cả trang:
+   - pretty  : trình duyệt kéo bớt chữ xuống để dòng cuối không còn một từ.
+               Hợp với chữ chạy (đoạn văn, danh sách, ô bảng).
+   - balance : chia đều các dòng. Hợp với tiêu đề và nhãn ngắn 2–3 dòng,
+               nhưng trình duyệt chỉ áp cho khối ít dòng; khối dài sẽ bị bỏ qua.
+
+   Trình duyệt chưa hỗ trợ thì bỏ qua, bố cục không đổi — thay đổi này không rủi ro.
+
+   Đo trên chính site này ngày 13/09/2026 (498 trang × 3 khổ màn hình):
+   9.459 chỗ mồ côi → 1.093 (−88%), riêng lỗi nặng 4.824 → 489 (−90%).
+   Đã thử và loại: balance cho tất cả — làm khối từ 5 dòng trở lên hỏng gấp 2,5 lần
+   (47 → 116 trên 40 bài blog), vì khối dài vượt ngưỡng balance nên rơi về ngắt thường. */
+
+body{
+  text-wrap: pretty;
+}
+
+h1, h2, h3, h4, h5, h6,
+div, span, a, button, summary, label, th, caption, figcaption,
+[class*="label"], [class*="badge"], [class*="chip"], [class*="btn"], [class*="tag"], [class*="pill"]{
+  text-wrap: balance;
+}
+
+/* PHẢI đứng cuối: text-wrap kế thừa, nên chữ chạy nằm trong div đã balance
+   phải đòi lại pretty. */
+p, li, dd, dt, td, blockquote{
+  text-wrap: pretty;
+}

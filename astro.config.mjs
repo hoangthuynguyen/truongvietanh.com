@@ -60,6 +60,17 @@ export default defineConfig({
     ),
   },
   integrations: [
+    // Nạp CSS chống mồ côi chữ vào MỌI trang, kể cả ~130 trang tự dựng <html> riêng
+    // không qua layout nào. Nhờ vậy trang tạo sau này cũng tự có, không phải nhớ.
+    // Xem src/styles/chong-mo-coi-chu.css.
+    {
+      name: 'chong-mo-coi-chu',
+      hooks: {
+        'astro:config:setup': ({ injectScript }) => {
+          injectScript('page-ssr', "import '/src/styles/chong-mo-coi-chu.css';");
+        },
+      },
+    },
     sitemap({
       // Trang trụ vĩnh viễn (văn bản chính sách) ưu tiên cao hơn trang thường.
       // @astrojs/sitemap chỉ phát <priority>/<lastmod> khi serialize trả về các khoá đó.

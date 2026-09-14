@@ -327,7 +327,11 @@ const structuredData = [
         name: 'Trường Việt Anh dạy chương trình gì?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Trường Việt Anh áp dụng chương trình song ngữ tích hợp: 100% chương trình Bộ GD&ĐT Việt Nam kết hợp chương trình Oxford International cho các môn Toán, Khoa học, ICT và Computing.',
+          // Giữa "và" và "Computing." bên dưới là ký tự U+00A0 (dấu cách KHÔNG ngắt),
+          // không phải dấu cách thường — đừng gõ đè lên. Nó buộc hai từ đi cùng nhau, không
+          // thì "Computing." rớt lẻ xuống dòng cuối trên điện thoại. Chuỗi này phải trùng y
+          // hệt câu trả lời hiển thị bên dưới (bên đó viết &nbsp;).
+          text: 'Trường Việt Anh áp dụng chương trình song ngữ tích hợp: 100% chương trình Bộ GD&ĐT Việt Nam kết hợp chương trình Oxford International cho các môn Toán, Khoa học, ICT và Computing.',
         },
       },
       {
@@ -502,7 +506,7 @@ const structuredData = [
             <p class="blog-author__name">Nguyễn Mạnh Dương</p>
             <p class="blog-author__role">
               Nhà sáng lập &amp; Chủ tịch Hệ thống Giáo dục K-12 Việt Anh (từ 2011). 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.
-              <a href="https://nguyenmanhduong.com" rel="noopener">nguyenmanhduong.com</a>
+              <a class="blog-author__link" href="https://nguyenmanhduong.com" rel="noopener">nguyenmanhduong.com</a>
             </p>
           </div>
         </aside>
@@ -525,7 +529,7 @@ const structuredData = [
           <div class="blog-faq__list">
             <details class="blog-faq__item" open>
               <summary class="blog-faq__question">Trường Việt Anh dạy chương trình gì?</summary>
-              <p class="blog-faq__answer">Trường Việt Anh áp dụng chương trình song ngữ tích hợp: 100% chương trình <a href="https://moet.gov.vn" target="_blank" rel="noopener">Bộ GD&ĐT Việt Nam</a> kết hợp chương trình Oxford International cho các môn Toán, Khoa học, ICT và Computing.</p>
+              <p class="blog-faq__answer">Trường Việt Anh áp dụng chương trình song ngữ tích hợp: 100% chương trình <a href="https://moet.gov.vn" target="_blank" rel="noopener">Bộ GD&ĐT Việt Nam</a> kết hợp chương trình Oxford International cho các môn Toán, Khoa học, ICT và&nbsp;Computing.</p>
             </details>
             <details class="blog-faq__item">
               <summary class="blog-faq__question">Học sinh tốt nghiệp đạt IELTS bao nhiêu?</summary>
@@ -845,6 +849,11 @@ const structuredData = [
     margin: 1.5rem 0;
     border-radius: 8px;
     border: 1px solid #e2e8f0;
+  }/* Điện thoại: cuộn ngang thay vì bóp cột — cột hẹp quá thì dòng cuối trơ một từ */
+  .blog-table-wrap{ overscroll-behavior-x: contain; }
+  @media (max-width: 767px){
+    .blog-table-wrap th,
+    .blog-table-wrap td{ min-width: 9.5rem; }
   }.blog-article__body table{
     width: 100%;
     border-collapse: collapse;
@@ -1232,6 +1241,9 @@ const structuredData = [
   .blog-author__avatar{width:40px;height:40px;border-radius:50%;background:#fff;object-fit:contain;border:1px solid #e5e7eb}
   .blog-author__name{margin:0;font-weight:700;color:#26275D;font-size:.95rem}
   .blog-author__role{margin:0;font-size:.82rem;color:#64748b}
+  /* Link nguồn là một khối không ngắt được, luôn rớt lẻ xuống dòng cuối trên điện thoại.
+     Cho nó hẳn một dòng riêng — vừa hết mồ côi chữ, vừa dễ bấm hơn. */
+  .blog-author__link{display:block;margin-top:.3rem;font-weight:600;color:#26275D}
 
   .blog-article__updated{color:#6b7280;font-size:.85rem}
 

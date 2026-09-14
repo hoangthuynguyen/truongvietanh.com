@@ -115,7 +115,9 @@ h4{
   text-wrap: balance;
 }p{
   margin: 0;
-}.site-shell{
+}/* Quy tắc chống mồ côi chữ (text-wrap) nay nằm ở src/styles/chong-mo-coi-chu.css,
+   được tiêm vào MỌI trang qua astro.config.mjs — đừng khai lại ở đây. */
+.site-shell{
   min-height: 100vh;
 }.anchor-section{
   scroll-margin-top: 7rem;
@@ -1160,7 +1162,19 @@ h4{
   font-size: 1rem; letter-spacing: 0.01em;
 }.gi-table td{
   padding: 0.8rem 1rem; border-bottom: 1px solid #e8ecf1; color: #3b4963;
-}.gi-table tbody tr:nth-child(even){ background: #f8fafc; }.gi-table tbody tr:hover{ background: #fef9ef; }.gi-table td:first-child{ font-weight: 600; color: #26275D; }/* Roadmap */
+}.gi-table tbody tr:nth-child(even){ background: #f8fafc; }.gi-table tbody tr:hover{ background: #fef9ef; }.gi-table td:first-child{ font-weight: 600; color: #26275D; }/* Bảng nhiều cột trên điện thoại: cho CUỘN NGANG thay vì bóp cột còn 68px.
+   Cột hẹp hơn ~150px thì chữ tiếng Việt vỡ vụn thành 10 dòng, dòng cuối trơ một từ.
+   Chỉ áp cho bảng đã nằm trong khung cuộn nên trang không bị tràn ngang.
+   Đo 13/09/2026 trên 13 trang nhiều bảng nhất: để nguyên = 265 ô mồ côi, 6.5rem = 179,
+   8rem = 78, 9.5rem = 26, 11rem = 12 — và không mức nào làm trang tràn ngang.
+   Chọn 9.5rem: gỡ 85% mà chưa phải cuộn quá dài. */
+.gi-table-responsive{ overscroll-behavior-x: contain; }
+@media (max-width: 767px){
+  .gi-table-responsive th,
+  .gi-table-responsive td{ min-width: 9.5rem; }
+  .gi-table-responsive .gi-table-programs th:first-child,
+  .gi-table-responsive .gi-table-programs td:first-child{ min-width: 0; }
+}/* Roadmap */
 .gi-roadmap{ margin: 2rem 0; }.gi-roadmap-grid{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 1rem; }
 @media(max-width:1100px){.gi-roadmap-grid{ grid-template-columns: repeat(3, 1fr); } }.gi-roadmap-item{
   background: #fff; border-radius: 12px; padding: 1.25rem; border: 1px solid #e2e8f0;

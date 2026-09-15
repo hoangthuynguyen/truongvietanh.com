@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schoolFacts } from '../data/school-facts';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 
@@ -184,12 +185,10 @@ function initials(name: string): string {
           <span>Giáo viên</span>
         </nav>
         <h1 class="gv-h1">Đội ngũ giáo viên & tư vấn</h1>
-        <p class="gv-sub">Hơn <strong>500 giáo viên</strong> giàu kinh nghiệm, trong đó có giáo viên bản ngữ người Anh, Mỹ, Úc và thạc sĩ chuyên ngành — đồng hành cùng con suốt hành trình học tập.</p>
+        <p class="gv-sub">Đội ngũ giáo viên giàu kinh nghiệm, trong đó có giáo viên bản ngữ và thạc sĩ chuyên ngành — đồng hành cùng con suốt hành trình học tập.</p>
         <div class="gv-stats">
-          <div class="gv-stat"><strong>500+</strong><span>Giáo viên</span></div>
-          <div class="gv-stat"><strong>30%</strong><span>GV bản ngữ</span></div>
-          <div class="gv-stat"><strong>15+</strong><span>Năm kinh nghiệm</span></div>
-          <div class="gv-stat"><strong>9</strong><span>Cơ sở</span></div>
+          <div class="gv-stat"><strong>{schoolFacts.yearsRunning}</strong><span>Năm kinh nghiệm</span></div>
+          <div class="gv-stat"><strong>{schoolFacts.campuses}</strong><span>Cơ sở</span></div>
         </div>
       </div>
     </section>

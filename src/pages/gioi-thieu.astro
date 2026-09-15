@@ -4,7 +4,7 @@ import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { getPillarPage } from '../lib/directus';
-import { openingHoursSpecification } from '../data/school-facts';
+import { openingHoursSpecification, schoolFacts } from '../data/school-facts';
 
 const cmsPage = await getPillarPage('gioi-thieu');
 const cmsFaqs = cmsPage?.faq_items || null;
@@ -157,7 +157,7 @@ const structuredData = [
 
           <div class="gi-trust-badges">
             <div class="gi-badge"><strong>15+</strong> năm</div>
-            <div class="gi-badge"><strong>8</strong> cơ sở</div>
+            <div class="gi-badge"><strong>{schoolFacts.campuses}</strong> cơ sở</div>
             <div class="gi-badge"><strong>IELTS</strong> 6.0–8.0</div>
             <div class="gi-badge"><strong>99%</strong> vào đại học</div>
           </div>
@@ -247,7 +247,7 @@ const structuredData = [
               <span>Năm thành lập</span>
             </div>
             <div class="gi-evidence-item">
-              <strong>7</strong>
+              <strong>{schoolFacts.campuses}</strong>
               <span>Cơ sở</span>
             </div>
             <div class="gi-evidence-item">

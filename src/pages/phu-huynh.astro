@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schoolFacts } from '../data/school-facts';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
@@ -110,7 +111,7 @@ const structuredData = [
 
           <div class="gi-trust-badges">
             <div class="gi-badge"><strong>15+</strong> năm</div>
-            <div class="gi-badge"><strong>8</strong> cơ sở</div>
+            <div class="gi-badge"><strong>{schoolFacts.campuses}</strong> cơ sở</div>
             <div class="gi-badge"><strong>3.000+</strong> gia đình</div>
             <div class="gi-badge"><strong>24h</strong> phản hồi</div>
           </div>
@@ -202,7 +203,7 @@ const structuredData = [
               <span>Gia đình tin tưởng</span>
             </div>
             <div class="gi-evidence-item">
-              <strong>9</strong>
+              <strong>{schoolFacts.campuses}</strong>
               <span>Cơ sở</span>
             </div>
             <div class="gi-evidence-item">

@@ -4,7 +4,7 @@ import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 import LeadFormTwoStepEmailFirst from '../components/LeadFormTwoStepEmailFirst.astro';
 import { getPillarPage } from '../lib/directus';
-import { openingHoursSpecification } from '../data/school-facts';
+import { openingHoursSpecification, schoolFacts } from '../data/school-facts';
 
 const cmsPage = await getPillarPage('co-so');
 const cmsFaqs = cmsPage?.faq_items || null;
@@ -135,7 +135,7 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title={cmsPage?.title || "8 Cơ Sở Trường Việt Anh – TP.HCM, Tây Ninh, An Giang"}
+  title={cmsPage?.title || `${schoolFacts.campuses} Cơ Sở Trường Việt Anh – TP.HCM, Tây Ninh, An Giang`}
   description={cmsPage?.description || "Hệ thống 6 cơ sở Trường Việt Anh trên toàn quốc. Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng. Tham quan miễn phí."}
   keywords="6 cơ sở trường việt anh, cơ sở gò vấp bình tân, trường việt anh long an kiên giang, địa chỉ trường vsc"
   canonical="https://truongvietanh.com/co-so"
@@ -155,7 +155,7 @@ const structuredData = [
             <span>Cơ sở</span>
           </nav>
 
-          <h1 class="gi-h1">Hệ Thống 8 Cơ Sở Trường Việt Anh Trên Toàn Quốc</h1>
+          <h1 class="gi-h1">Hệ Thống {schoolFacts.campuses} Cơ Sở Trường Việt Anh Trên Toàn Quốc</h1>
           <p class="gi-subtitle">Từ Mầm non đến THPT — Mỗi cơ sở đều theo cùng triết lý và cam kết chất lượng</p>
           <p class="gi-last-updated">Cập nhật lần cuối: Tháng 4, 2026</p>
 
@@ -165,10 +165,9 @@ const structuredData = [
           </div>
 
           <div class="gi-trust-badges">
-            <div class="gi-badge"><strong>8</strong> Cơ sở</div>
+            <div class="gi-badge"><strong>{schoolFacts.campuses}</strong> Cơ sở</div>
             <div class="gi-badge"><strong>3</strong> Tỉnh thành</div>
             <div class="gi-badge"><strong>MN-THPT</strong> Liên cấp</div>
-            <div class="gi-badge"><strong>500+</strong> Giáo viên</div>
           </div>
         </div>
 
@@ -218,7 +217,7 @@ const structuredData = [
 
           <div class="gi-evidence-bar">
             <div class="gi-evidence-item">
-              <strong>8</strong>
+              <strong>{schoolFacts.campuses}</strong>
               <span>Cơ sở trên toàn quốc</span>
             </div>
             <div class="gi-evidence-item">

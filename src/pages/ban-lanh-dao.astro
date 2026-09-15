@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schoolFacts } from '../data/school-facts';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 
@@ -124,9 +125,8 @@ const bghMembers = [
           Ban Lãnh Đạo & đội ngũ giáo viên của trường Việt Anh có bằng cấp chính quy, chuyên môn giỏi và nhiều năm kinh nghiệm trong việc giảng dạy và quản lý học sinh.
         </p>
         <div class="bl-hero__stats">
-          <div class="bl-stat"><strong>15+</strong><span>Năm kinh nghiệm</span></div>
-          <div class="bl-stat"><strong>200+</strong><span>Giáo viên & nhân viên</span></div>
-          <div class="bl-stat"><strong>9</strong><span>Cơ sở trên cả nước</span></div>
+          <div class="bl-stat"><strong>{schoolFacts.yearsRunning}</strong><span>Năm kinh nghiệm</span></div>
+          <div class="bl-stat"><strong>{schoolFacts.campuses}</strong><span>Cơ sở trên cả nước</span></div>
         </div>
       </div>
     </section>

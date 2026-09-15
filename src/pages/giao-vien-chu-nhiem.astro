@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { schoolFacts } from '../data/school-facts';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 
@@ -222,10 +223,9 @@ const roleColors: Record<string, { bg: string; color: string; label: string }> =
       <h1 class="gvcn-hero__title">Ban Lãnh Đạo & Đội Ngũ Giáo Viên<br>Của Trường Việt Anh</h1>
       <p class="gvcn-hero__sub">Ban Lãnh Đạo & đội ngũ giáo viên của trường Việt Anh có bằng cấp chính quy, chuyên môn giỏi và nhiều năm kinh nghiệm trong việc giảng dạy và quản lý học sinh.</p>
       <div class="gvcn-stats">
-        <div class="gvcn-stat"><span class="gvcn-stat__num">15+</span><span class="gvcn-stat__lbl">Năm kinh nghiệm</span></div>
-        <div class="gvcn-stat"><span class="gvcn-stat__num">500+</span><span class="gvcn-stat__lbl">Giáo viên</span></div>
-        <div class="gvcn-stat"><span class="gvcn-stat__num">9</span><span class="gvcn-stat__lbl">Cơ sở</span></div>
-        <div class="gvcn-stat"><span class="gvcn-stat__num">3,000+</span><span class="gvcn-stat__lbl">Học sinh</span></div>
+        <div class="gvcn-stat"><span class="gvcn-stat__num">{schoolFacts.yearsRunning}</span><span class="gvcn-stat__lbl">Năm kinh nghiệm</span></div>
+        <div class="gvcn-stat"><span class="gvcn-stat__num">{schoolFacts.campuses}</span><span class="gvcn-stat__lbl">Cơ sở</span></div>
+        <div class="gvcn-stat"><span class="gvcn-stat__num">{schoolFacts.studentsTotal}</span><span class="gvcn-stat__lbl">Học sinh</span></div>
       </div>
     </div>
   </section>

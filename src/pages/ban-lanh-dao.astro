@@ -155,10 +155,12 @@ const bghMembers = [
                 <div class="bl-card__title-badge">{m.title}</div>
                 <h3 class="bl-card__name">{m.name}</h3>
                 <p class="bl-card__org">{m.org}</p>
-                <p class={`bl-card__desc${m.quote ? ' bl-card__desc--quote' : ''}`}>{m.description}</p>
-                {m.mission && (
-                  <p class="bl-card__desc bl-card__desc--quote">“{m.mission}”</p>
-                )}
+                <div class="bl-card__text">
+                  <p class={`bl-card__desc${m.quote ? ' bl-card__desc--quote' : ''}`}>{m.description}</p>
+                  {m.mission && (
+                    <p class="bl-card__desc bl-card__desc--quote">“{m.mission}”</p>
+                  )}
+                </div>
               </div>
             </article>
           ))}
@@ -231,6 +233,32 @@ const bghMembers = [
 })();
 </script>
 
+<script is:inline>
+  (function () {
+    var khoi = document.querySelectorAll('.bl-card__text');
+    khoi.forEach(function (el) {
+      // Cat truoc roi do: neu khong tran thi tra lai nguyen trang, khong gan nut
+      el.classList.add('is-clamped');
+      // Chi cat khi tiet kiem duoc tren ~1,5 dong; it hon thi hien du, khoi gan nut vo nghia
+      if (el.scrollHeight - el.clientHeight < 40) {
+        el.classList.remove('is-clamped');
+        return;
+      }
+      var nut = document.createElement('button');
+      nut.type = 'button';
+      nut.className = 'bl-card__more';
+      nut.textContent = 'Xem thêm';
+      nut.setAttribute('aria-expanded', 'false');
+      nut.addEventListener('click', function () {
+        var dangCat = el.classList.toggle('is-clamped');
+        nut.textContent = dangCat ? 'Xem thêm' : 'Thu gọn';
+        nut.setAttribute('aria-expanded', dangCat ? 'false' : 'true');
+      });
+      el.parentNode.appendChild(nut);
+    });
+  })();
+</script>
+
 <style is:inline>/* ===== RESET / BASE ===== */
   .bl-page{ --navy: #26275D; --navy-dk: #18193a; --navy-lt: #363876; --gold: #f9dd0e; --gold-lt: rgba(249, 221, 14,.12); --text: #1a1a2e; --sub: #5a5a7a; --border: #E5E7EB; --bg: #F8F9FC; --white: #fff; --radius: 16px; }.bl-container{ max-width: 1140px; margin: 0 auto; padding: 0 1.5rem; }/* ===== HERO ===== */
   .bl-hero{
@@ -291,7 +319,23 @@ const bghMembers = [
     background: var(--gold-lt); color: var(--navy); border: 1px solid rgba(249, 221, 14,.3);
     font-size: 1.5rem; font-weight: 700; padding: .3rem .85rem; border-radius: 50px;
     letter-spacing: .5px; text-transform: uppercase;
-  }.bl-card--chairman .bl-card__title-badge{ background: linear-gradient(135deg, var(--gold), #F5DC85); color: var(--navy-dk); border-color: transparent; }.bl-card__name{ font-family: 'Montserrat', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--navy); margin: 0; line-height: 1.3; }.bl-card__org{ font-size: 1rem; color: var(--sub); font-weight: 500; line-height: 1.4; margin: 0; }.bl-card__desc{ font-size: 1rem; color: #555; line-height: 1.65; margin: 0; margin-top: .25rem; flex: 1; }.bl-card__desc--quote{ font-style: italic; color: var(--navy); }/* ===== COMING SOON ===== */
+  }.bl-card--chairman .bl-card__title-badge{ background: linear-gradient(135deg, var(--gold), #F5DC85); color: var(--navy-dk); border-color: transparent; }.bl-card__name{ font-family: 'Montserrat', sans-serif; font-size: 1.05rem; font-weight: 800; color: var(--navy); margin: 0; line-height: 1.3; }.bl-card__org{ font-size: 1rem; color: var(--sub); font-weight: 500; line-height: 1.4; margin: 0; }/* RUT GON CHU DAI — the ngan khoi ho mang trang lon.
+     Chu van nam DU trong HTML, chi bi CSS che; khong co JS thi hien day du. */
+  .bl-card__text{ position: relative; display: flex; flex-direction: column; gap: .4rem; flex: 1; }
+  .bl-card__text.is-clamped{ max-height: 6.8em; overflow: hidden; }
+  .bl-card__text.is-clamped::after{
+    content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2.8em;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), #fff 88%); pointer-events: none;
+  }
+  .bl-card__more{
+    align-self: center; margin-top: .6rem; padding: .32rem .9rem;
+    font-family: inherit; font-size: .85rem; font-weight: 700; color: var(--navy);
+    background: var(--gold-lt); border: 1px solid rgba(38,39,93,.16); border-radius: 999px;
+    cursor: pointer; transition: background .2s, border-color .2s;
+  }
+  .bl-card__more:hover{ background: var(--gold); border-color: var(--gold); }
+  .bl-card__more:focus-visible{ outline: 2px solid var(--navy); outline-offset: 2px; }
+.bl-card__desc{ font-size: 1rem; color: #555; line-height: 1.65; margin: 0; margin-top: .25rem; flex: 1; }.bl-card__desc--quote{ font-style: italic; color: var(--navy); }/* ===== COMING SOON ===== */
   .bl-coming-soon{
     text-align: center; padding: 4rem 2rem;
     background: var(--bg); border-radius: var(--radius);

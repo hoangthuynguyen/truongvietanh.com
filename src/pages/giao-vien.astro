@@ -327,22 +327,58 @@ function initials(name: string): string {
   (function () {
     const tabs = document.querySelectorAll('.gv-tab');
     const panels = document.querySelectorAll('.gv-panel');
-    tabs.forEach(function(tab) {
-      tab.addEventListener('click', function() {
+
+    function ids() {
+      return Array.prototype.map.call(tabs, function (t) { return t.getAttribute('data-tab'); });
+    }
+
+    // Bat mot tab theo id (vd "tu-van"). tuCuon = true khi mo bang link co hash.
+    function activate(target, tuCuon) {
+      let found = null;
+      tabs.forEach(function (t) {
+        const on = t.getAttribute('data-tab') === target;
+        if (on) found = t;
+        t.classList.toggle('is-active', on);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      if (!found) return false;
+      panels.forEach(function (p) {
+        const match = p.id === 'panel-' + target;
+        p.classList.toggle('is-active', match);
+        if (match) p.removeAttribute('hidden');
+        else p.setAttribute('hidden', '');
+      });
+      if (tuCuon) {
+        const wrap = document.querySelector('.gv-tabs-section') || found;
+        wrap.scrollIntoView({ block: 'start' });
+        // Thanh tab truot ngang tren dien thoai: keo tab dang chon vao tam nhin,
+        // block:'nearest' de khong pha vi tri cuon doc vua dat o tren
+        found.scrollIntoView({ block: 'nearest', inline: 'center' });
+      } else {
+        found.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
+      return true;
+    }
+
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
         const target = tab.getAttribute('data-tab');
-        tabs.forEach(function(t) {
-          t.classList.toggle('is-active', t === tab);
-          t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
-        });
-        panels.forEach(function(p) {
-          const match = p.id === 'panel-' + target;
-          p.classList.toggle('is-active', match);
-          if (match) p.removeAttribute('hidden');
-          else p.setAttribute('hidden', '');
-        });
-        tab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        activate(target, false);
+        // Ghi vao URL de copy link duoc; replaceState nen nut Back khong bi ket trong cac tab
+        if (window.history && window.history.replaceState) {
+          window.history.replaceState(null, '', '#' + target);
+        }
       });
     });
+
+    // Mo dung tab khi vao bang /giao-vien#tu-van
+    function tuHash(tuCuon) {
+      const h = (window.location.hash || '').replace('#', '');
+      if (h && ids().indexOf(h) !== -1) return activate(h, tuCuon);
+      return false;
+    }
+    tuHash(true);
+    window.addEventListener('hashchange', function () { tuHash(true); });
   })();
 </script>
 

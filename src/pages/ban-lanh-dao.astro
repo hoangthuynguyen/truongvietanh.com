@@ -236,26 +236,45 @@ const bghMembers = [
 <script is:inline>
   (function () {
     var khoi = document.querySelectorAll('.bl-card__text');
-    khoi.forEach(function (el) {
-      // Cat truoc roi do: neu khong tran thi tra lai nguyen trang, khong gan nut
+    if (!khoi.length) return;
+
+    function danhGia(el) {
+      // Nguoi dung da tu bam mo thi de yen, dung tu cat lai
+      if (el.dataset.daMo === '1') return;
+      var nut = el.parentNode.querySelector('.bl-card__more');
       el.classList.add('is-clamped');
       // Chi cat khi tiet kiem duoc tren ~1,5 dong; it hon thi hien du, khoi gan nut vo nghia
       if (el.scrollHeight - el.clientHeight < 40) {
         el.classList.remove('is-clamped');
+        if (nut) nut.parentNode.removeChild(nut);
         return;
       }
-      var nut = document.createElement('button');
-      nut.type = 'button';
-      nut.className = 'bl-card__more';
+      if (!nut) {
+        nut = document.createElement('button');
+        nut.type = 'button';
+        nut.className = 'bl-card__more';
+        nut.addEventListener('click', function () {
+          var dangCat = el.classList.toggle('is-clamped');
+          el.dataset.daMo = dangCat ? '0' : '1';
+          nut.textContent = dangCat ? 'Xem thêm' : 'Thu gọn';
+          nut.setAttribute('aria-expanded', dangCat ? 'false' : 'true');
+        });
+        el.parentNode.appendChild(nut);
+      }
       nut.textContent = 'Xem thêm';
       nut.setAttribute('aria-expanded', 'false');
-      nut.addEventListener('click', function () {
-        var dangCat = el.classList.toggle('is-clamped');
-        nut.textContent = dangCat ? 'Xem thêm' : 'Thu gọn';
-        nut.setAttribute('aria-expanded', dangCat ? 'false' : 'true');
-      });
-      el.parentNode.appendChild(nut);
-    });
+    }
+
+    function chay() { khoi.forEach(danhGia); }
+
+    // PHAI do SAU khi font web tai xong: do bang font du phong se ra sai so dong,
+    // dan toi tuong la khong tran va khong gan nut.
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(chay);
+    chay();
+    window.addEventListener('load', chay);
+    // Doi be ngang thi so dong doi theo -> do lai
+    var hen;
+    window.addEventListener('resize', function () { clearTimeout(hen); hen = setTimeout(chay, 200); });
   })();
 </script>
 

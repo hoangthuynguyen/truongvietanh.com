@@ -1,0 +1,264 @@
+---
+// squeeze/du-mot-tiet-hoc
+// Lead magnet : PDF 3 trang "Dự một tiết học bình thường" (LM19) — lời mời dự giờ ngày thường
+//               + phiếu quan sát mang theo, dùng được ở bất kỳ trường nào.
+// Audience    : ba mẹ đang cân nhắc trường, và cả ba mẹ chỉ muốn biết một tiết học ở nơi khác ra sao.
+// Goal        : lead đặt lịch dự giờ (email ở bước 1 → tên + SĐT ở bước 2)
+// Giao file   : GHL gửi phiếu quan sát qua email marketing theo tag bên dưới; trường xác nhận lịch sau.
+//
+// KHÁC /dat-lich-tham-quan: trang kia là tham quan trường có chuẩn bị. Trang này bán đúng
+// một điểm ngược lại — ngày thường, không dàn dựng, không báo trước cho lớp, và sau buổi dự
+// không ai gọi mời nhập học. Đừng gộp hai trang, và đừng mượn copy của nhau.
+import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+
+// Ba cam kết
+const camKet = [
+  {
+    ma: '01',
+    icon: '🎬',
+    title: 'Không dàn dựng',
+    soCau: 'Không có tiết dạy mẫu',
+    body: 'Không có bài chuẩn bị riêng cho hôm anh chị đến. Anh chị dự đúng tiết đang có trong thời khoá biểu.',
+  },
+  {
+    ma: '02',
+    icon: '🤫',
+    title: 'Không báo trước cho lớp',
+    soCau: 'Chỉ giáo viên biết',
+    body: 'Giáo viên biết trước để sắp chỗ ngồi, học sinh thì không. Một lớp biết có khách sẽ không còn là lớp bình thường nữa.',
+  },
+  {
+    ma: '03',
+    icon: '🗓️',
+    title: 'Anh chị chọn ngày',
+    soCau: 'Không phải trường chọn',
+    body: 'Anh chị nói ngày nào trong tuần đi được, trường xếp theo ngày đó nếu còn chỗ.',
+  },
+];
+
+// Bốn bước đăng ký — mở hết
+const buoc = [
+  {
+    n: 1,
+    nhom: 'Bước 1',
+    q: 'Để lại thông tin ở trang này',
+    why: 'Ghi cấp học của con và hai ngày trong tuần anh chị đi được. Phiếu quan sát được gửi vào email ngay sau đó.',
+  },
+  {
+    n: 2,
+    nhom: 'Bước 2',
+    q: 'Trường xác nhận trong 24 giờ',
+    why: 'Báo lại giờ cụ thể, tên tiết học, tên giáo viên chủ nhiệm và chỗ gửi xe.',
+  },
+  {
+    n: 3,
+    nhom: 'Bước 3',
+    q: 'Đến trước 10 phút',
+    why: 'Không cần chuẩn bị gì. Mang theo tờ phiếu quan sát đã in và một cây bút.',
+  },
+  {
+    n: 4,
+    nhom: 'Bước 4',
+    q: 'Gặp giáo viên chủ nhiệm sau tiết',
+    why: '15 phút, hỏi bất cứ điều gì. Không có ai của phòng tuyển sinh ngồi cùng.',
+  },
+];
+
+const trongPdf = [
+  '<strong>Trang 1</strong> — ba cam kết của trường và bốn bước đăng ký, kèm dòng nói rõ: sau buổi dự giờ sẽ không có ai gọi điện mời nhập học.',
+  '<strong>Trang 2 — phần đếm</strong>: chọn sẵn ba em ở ba vị trí ngay khi vào lớp rồi đếm suốt tiết. Đây là con số nói nhiều nhất về một lớp học.',
+  '<strong>Trang 3 — phần ghi</strong>: năm điều nên để ý, ghi vài chữ là đủ. Ghi cái nhìn thấy, chưa cần kết luận.',
+  '<strong>Bốn câu hỏi giáo viên chủ nhiệm sau tiết</strong> — hỏi về sĩ số, quy trình khi một em chưa theo kịp, ai theo dõi riêng một em qua nhiều năm, và gia đình biết về con qua kênh nào.',
+];
+---
+
+<LeadMagnetLayout
+  funnel="booking-du-gio-ngay-thuong"
+  formId="du-mot-tiet-hoc-form"
+  tag="lm19"
+  pageTitle="Dự Một Tiết Học Bình Thường — Không Dàn Dựng, Không Báo Trước | Trường Việt Anh"
+  pageDescription="Buổi tham quan tuyển sinh ở trường nào cũng được chuẩn bị kỹ — nên nó cho thấy trường muốn được nhìn thế nào, chứ không cho thấy trường vận hành thế nào. Đăng ký dự một tiết đang diễn ra vào ngày thường, kèm phiếu quan sát 3 trang dùng được ở mọi trường."
+  canonical="https://truongvietanh.com/du-mot-tiet-hoc"
+  ogTitle="Dự một tiết học bình thường — không dàn dựng, không báo trước cho lớp"
+  ogImage="https://truongvietanh.com/du-mot-tiet-hoc-og.jpg"
+  topbarTag="Dự giờ ngày thường"
+  topbarCta="Đăng ký dự giờ"
+  badge="🎓 Lời mời dự giờ · một ngày thứ Tư bình thường"
+  h1={'Buổi tham quan cho thấy trường <span class="hl">muốn được nhìn</span> thế nào.'}
+  heroSub={'Còn thứ quyết định trải nghiệm của con lại nằm ở ngày thường: cách một tiết học trôi qua, cách giáo viên phản ứng khi có em trả lời sai, <strong>số lần một đứa trẻ ngồi bàn cuối được gọi tên</strong>. Những thứ đó chỉ nhìn thấy được khi không ai chuẩn bị gì.'}
+  pills={['Tiết đang có trong thời khoá biểu', 'Lớp không được báo trước', 'Kèm phiếu quan sát để mang theo']}
+  ctaLabel="Đăng ký dự một tiết học"
+  micro={['🗓️ Anh chị chọn ngày', '⏱️ Xác nhận trong 24 giờ', '🚫 Không gọi mời nhập học']}
+  ribbon="DỰ GIỜ"
+  mockup="mockup-du-mot-tiet-hoc"
+  mockupAlt="Trang 1 tài liệu dự một tiết học bình thường — ba cam kết và bốn bước đăng ký"
+  mockupCap="Trang 1 của tài liệu — ba cam kết và bốn bước"
+  finalTitle="Một ngày thứ Tư bình thường"
+  finalSub="Anh chị không cần đang tìm trường mới để nhận lời mời này. Nhiều gia đình đến chỉ để biết một tiết học ở nơi khác diễn ra thế nào, rồi về so với lớp của con mình."
+  finalQuote="“Đó là lý do hoàn toàn chính đáng, và chúng tôi không hỏi thêm gì.”"
+  footNote="Ngày thường mới là ngày thật."
+  modalTitle="Đăng ký dự một tiết học"
+  modalSub="Phiếu quan sát gửi vào email ngay; trường xác nhận lịch trong 24 giờ."
+  submitLabel="Đăng ký dự giờ"
+  trust={[
+    '🎬 Không có tiết dạy mẫu',
+    '🤫 Lớp không được báo trước',
+    '🚫 Không ai gọi mời nhập học sau đó',
+    '📄 Phiếu quan sát dùng được ở mọi trường',
+  ]}
+>
+
+  <!-- ═══ VÌ SAO ═══ -->
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="insight">
+        <div class="insight__bulb">💡</div>
+        <div>
+          <h2>Vì sao chúng tôi mời anh chị đến vào ngày thường</h2>
+          <p>
+            <strong>Buổi tham quan tuyển sinh ở trường nào cũng được chuẩn bị kỹ</strong> — nên nó cho thấy
+            trường muốn được nhìn thế nào, chứ không cho thấy trường vận hành thế nào.
+            <span class="pull">Mà thứ quyết định trải nghiệm của con lại nằm đúng ở ngày thường.</span>
+            Trường Việt Anh vẫn có buổi tham quan có hướng dẫn như mọi trường, ở trang
+            <a href="/dat-lich-tham-quan" style="color:var(--navy);font-weight:600">đặt lịch tham quan</a>.
+            Trang này là lời mời khác hẳn: một tiết đang diễn ra, không ai chuẩn bị gì cho nó.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BA CAM KẾT ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap">
+      <span class="sec__eyebrow">Ba điều chúng tôi cam kết</span>
+      <h2 class="sec__title">Không dàn dựng, không báo trước, anh chị chọn ngày</h2>
+      <p class="sec__lead">Ba cam kết này nằm nguyên văn ở trang 1 của tài liệu gửi kèm.</p>
+      <div class="diffs">
+        {camKet.map((c) => (
+          <article class="diff">
+            <div class="diff__top">
+              <span class="diff__icon">{c.icon}</span>
+              <span class="diff__ma">{c.ma}</span>
+            </div>
+            <h3>{c.title}</h3>
+            <span class="diff__so">{c.soCau}</span>
+            <p>{c.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BỐN BƯỚC ═══ -->
+  <section class="sec" id="dang-ky">
+    <div class="wrap">
+      <span class="sec__eyebrow">Đăng ký trong bốn bước</span>
+      <h2 class="sec__title">Từ lúc để lại thông tin tới lúc ngồi trong lớp</h2>
+      <p class="sec__lead">Không cần chuẩn bị gì ngoài một cây bút và tờ phiếu quan sát đã in.</p>
+
+      <div class="rule">
+        <span style="font-size:19px;line-height:1">🙋</span>
+        <span>
+          <strong>Không cần đang tìm trường mới.</strong> Nhiều gia đình đến chỉ để biết một tiết học ở nơi khác
+          diễn ra thế nào, rồi về so với lớp của con mình. Đó là lý do chính đáng, và chúng tôi không hỏi thêm gì.
+        </span>
+      </div>
+
+      <div class="qlist">
+        {buoc.map((b) => (
+          <article class="q">
+            <span class="q__n">{b.n}</span>
+            <div class="q__body">
+              <span class="q__nhom">{b.nhom}</span>
+              <h3>{b.q}</h3>
+              <p>{b.why}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PHIẾU QUAN SÁT ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap">
+      <span class="sec__eyebrow">Phiếu quan sát gửi kèm</span>
+      <h2 class="sec__title">Anh chị dùng phiếu này ở bất kỳ trường nào</h2>
+      <p class="sec__lead">Không riêng Việt Anh. In ra, mang đi dự giờ ở đâu cũng được, và chia sẻ tự do.</p>
+
+      <div class="teasers">
+        <article class="teaser">
+          <span class="teaser__icon">🔢</span>
+          <h3>Phần đếm — con số nói nhiều nhất</h3>
+          <div class="teaser__ex">
+            Chọn sẵn ba em ở ba vị trí ngay khi vào lớp: <q>bàn đầu</q>, <q>giữa lớp</q>, <q>bàn cuối</q> — rồi đếm số lần mỗi em được gọi tên suốt tiết.
+            <span class="arr">Cộng thêm ba dòng đếm nữa, trong đó có tỉ lệ phút cô giảng chung so với phút học sinh tự làm.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Bảng đếm đầy đủ nằm ở trang 2
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">👀</span>
+          <h3>Phần ghi — năm điều nên để ý</h3>
+          <div class="teaser__ex">
+            Câu đầu tiên: <q>Khi một em trả lời sai, chuyện gì xảy ra tiếp theo?</q>
+            <span class="arr">Ghi cái nhìn thấy, chưa cần kết luận. Vài chữ là đủ.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Còn 4 điều trong bản PDF
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🗣️</span>
+          <h3>Bốn câu hỏi giáo viên sau tiết</h3>
+          <div class="teaser__ex">
+            Hỏi về sĩ số và số lớp cô phụ trách, quy trình khi một em chưa theo kịp, ai theo dõi riêng một em qua nhiều năm và ghi lại ở đâu.
+            <div class="teaser__skel" aria-hidden="true"><i></i><i></i></div>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Nguyên văn nằm ở trang 3
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG TÀI LIỆU CÓ GÌ ═══ -->
+  <section class="sec">
+    <div class="wrap get">
+      <div class="mockup">
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-du-mot-tiet-hoc.webp" type="image/webp" />
+            <img src="/mockup-du-mot-tiet-hoc.jpg" width="900" height="1274" loading="lazy" decoding="async"
+                 alt="Xem trước tài liệu dự một tiết học bình thường kèm phiếu quan sát" />
+          </picture>
+        </div>
+      </div>
+      <div>
+        <span class="sec__eyebrow" style="text-align:left">Anh chị nhận được gì</span>
+        <h2 class="sec__title" style="text-align:left">Một lịch dự giờ, và ba trang để mang theo</h2>
+        <ul class="get__list">
+          {trongPdf.map((t) => (
+            <li>
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span set:html={t}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="get__note">
+          <strong>Sau buổi dự giờ sẽ không có ai gọi điện mời nhập học.</strong>
+          Phiếu quan sát soạn để dùng được ở mọi trường — anh chị mang đi đâu cũng được, và chia sẻ tự do.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</LeadMagnetLayout>

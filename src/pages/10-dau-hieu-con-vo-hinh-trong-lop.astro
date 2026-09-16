@@ -1,0 +1,238 @@
+---
+// squeeze/10-dau-hieu-con-vo-hinh-trong-lop
+// Lead magnet : PDF 2 trang "10 dấu hiệu con đang vô hình trong lớp" (LM04)
+//               — bảng tự kiểm, soạn cho phụ huynh MỌI trường.
+// Audience    : ba mẹ có con tiểu học – THCS, con thuộc nhóm "ngoan, không ai nhắc tới".
+// Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
+// Giao file   : GHL gửi PDF qua email marketing theo tag bên dưới — trang KHÔNG cho tải trực tiếp.
+// Gate        : mở 3 dấu hiệu, 7 dấu hiệu còn lại chỉ lộ chủ đề (khung xám, không dùng chữ giả).
+import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+
+const openSigns = [
+  {
+    n: 1,
+    nhom: 'Dấu hiệu 1',
+    q: 'Con không kể được tên ba người bạn trong lớp.',
+    why: 'Hỏi tự nhiên trong bữa ăn, đừng hỏi như kiểm tra. Kể được một hai tên rồi tắc cũng tính là có dấu hiệu.',
+  },
+  {
+    n: 9,
+    nhom: 'Dấu hiệu 9 · nặng nhất bảng',
+    q: 'Con nói “bạn nào cũng giỏi hơn con” hoặc “cái đó không dành cho con”.',
+    why: 'Đây là dấu hiệu nặng nhất trong bảng. Đứa trẻ tự loại mình khỏi cuộc chơi trước khi ai kịp loại nó.',
+  },
+  {
+    n: 10,
+    nhom: 'Dấu hiệu 10',
+    q: 'Hỏi hôm nay ở trường có gì, con đều đặn trả lời “bình thường”, “không biết”.',
+    why: 'Một hai lần thì bình thường. Đều đặn nhiều tuần thì thường là vì thật sự không có gì đáng kể lại.',
+  },
+];
+
+const lockedSigns = [
+  { n: 2, topic: 'Tin nhắn riêng của cô',       hint: 'Không tính tin nhắn chung cả lớp. Mốc thời gian là một tháng.' },
+  { n: 3, topic: 'Số lần con phát biểu',        hint: 'Có một câu hỏi ngắn để hỏi con, và một cách đọc câu trả lời.' },
+  { n: 4, topic: 'Chỗ ngồi suốt cả năm',        hint: 'Chỗ ngồi quyết định số lần được nhìn thấy.' },
+  { n: 5, topic: 'Việc con được giao trong lớp', hint: 'Không có vai trò nào là không có lý do để thuộc về.' },
+  { n: 6, topic: 'Nhận xét năm nào cũng giống', hint: 'Bốn chữ quen thuộc — không sai, nhưng không nói được điều gì để làm.' },
+  { n: 7, topic: 'Người lớn con tin ở trường',  hint: 'Một người lớn ở trường mà con tin tưởng là tài sản lớn.' },
+  { n: 8, topic: 'Hôm con nghỉ học',            hint: 'Không phải trường không quan tâm — lý do nằm ở chỗ khác.' },
+];
+
+const trongPdf = [
+  '<strong>Trang 1</strong> — đủ 10 dấu hiệu, mỗi dấu hiệu kèm 1–2 dòng hướng dẫn cách quan sát cho đúng, và ô để tích.',
+  '<strong>Trang 2</strong> — bảng <em>đọc kết quả</em> theo số ô đã tích: 0–2, 3–5, 6–8, 9–10 ô, mỗi mức một việc nên làm tiếp.',
+  '<strong>Bốn câu nên hỏi giáo viên chủ nhiệm</strong> — hỏi nhẹ nhàng, một lần một câu, kèm lý do vì sao câu đó hiệu quả.',
+  '<strong>Dùng lại được</strong> — làm lại bảng sau mỗi kỳ để so hai lần với nhau, không chỉ đọc một lần rồi thôi.',
+];
+---
+
+<LeadMagnetLayout
+  funnel="squeeze-10-dau-hieu-vo-hinh"
+  formId="10-dau-hieu-con-vo-hinh-form"
+  tag="lm04"
+  pageTitle="10 Dấu Hiệu Con Đang Vô Hình Trong Lớp — Bảng Tự Kiểm Miễn Phí | Trường Việt Anh"
+  pageDescription="Em ngoan, không gây chuyện, học tạm được — và gần như không có lý do gì để được nhắc tên. Nhận miễn phí bảng tự kiểm 2 trang: 10 dấu hiệu quan sát được ngay ở nhà, cách đọc kết quả và 4 câu nên hỏi giáo viên chủ nhiệm."
+  canonical="https://truongvietanh.com/10-dau-hieu-con-vo-hinh-trong-lop"
+  ogTitle="10 dấu hiệu con đang vô hình trong lớp — bảng tự kiểm miễn phí"
+  ogImage="https://truongvietanh.com/10-dau-hieu-con-vo-hinh-og.jpg"
+  topbarTag="Bảng tự kiểm cho ba mẹ"
+  topbarCta="Nhận bảng tự kiểm"
+  badge="🎁 Bảng tự kiểm miễn phí · dùng được ở mọi trường"
+  h1={'Con không hư, không yếu.<br />Con chỉ <span class="hl">không được nhắc tên</span>.'}
+  heroSub={'Trong một lớp đông, em được nhắc tên nhiều nhất thường là em quậy nhất hoặc giỏi nhất. <strong>Em ở giữa thì không có lý do gì để được nhắc</strong> — và ba mẹ dễ nhầm sự im lặng đó là mọi chuyện đều ổn.'}
+  pills={['10 dấu hiệu, quan sát ở nhà', 'Không cần hỏi trường', 'Có bảng đọc kết quả']}
+  ctaLabel="Nhận bảng tự kiểm miễn phí"
+  micro={['📄 2 trang A4', '⏱️ Điền 20 giây', '🔒 Không spam']}
+  mockup="mockup-10-dau-hieu-con-vo-hinh"
+  mockupAlt="Trang 1 bảng tự kiểm 10 dấu hiệu con đang vô hình trong lớp, mỗi dấu hiệu có ô để tích"
+  mockupCap="Trang 1 của tài liệu — 10 dấu hiệu và ô để tích"
+  finalTitle="Điểm số là thứ cuối cùng thay đổi"
+  finalSub="Đừng chờ tới lúc bảng điểm báo động. Mười dấu hiệu này nhìn thấy được ngay ở nhà, từ tối nay."
+  finalQuote="“Đó là phép chia, không phải thái độ. Nhưng phép chia đó có hệ quả thật với con mình.”"
+  footNote="Con ở giữa lớp cũng cần được gọi tên."
+  modalTitle="Nhận bảng tự kiểm 10 dấu hiệu"
+  modalSub="Bản PDF 2 trang gửi vào email ba mẹ trong ít phút."
+  submitLabel="Gửi bảng tự kiểm cho tôi"
+>
+
+  <!-- ═══ VÌ SAO ═══ -->
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="insight">
+        <div class="insight__bulb">💡</div>
+        <div>
+          <h2>“Vô hình” ở đây nghĩa là gì</h2>
+          <p>
+            Trong một lớp đông, em được nhắc tên nhiều nhất thường là em quậy nhất hoặc giỏi nhất.
+            Em ở giữa — ngoan, không gây chuyện, học tạm được — không có lý do gì để được nhắc.
+            <strong>Đây không phải lỗi của giáo viên: một cô chủ nhiệm cấp hai dạy 4–5 lớp, hơn 180 học sinh.</strong>
+            <span class="pull">Đó là phép chia, không phải thái độ. Nhưng phép chia đó có hệ quả thật với con mình, nên nó đáng để mình biết.</span>
+            Cha mẹ thường nhầm sự im lặng đó là mọi chuyện đều ổn.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DẤU HIỆU: 3 MỞ + 7 KHOÁ ═══ -->
+  <section class="sec sec--soft" id="dau-hieu">
+    <div class="wrap">
+      <span class="sec__eyebrow">Xem trước</span>
+      <h2 class="sec__title">Ba dấu hiệu trong bảng, và cách quan sát cho đúng</h2>
+      <p class="sec__lead">Bảy dấu hiệu còn lại nằm trong bản PDF, cùng bảng đọc kết quả theo số ô đã tích.</p>
+
+      <div class="rule">
+        <span style="font-size:19px;line-height:1">✍️</span>
+        <span>
+          <strong>Cách dùng.</strong> Tích ô nếu điều đó đúng với con mình trong khoảng một tháng gần đây.
+          Không chắc thì để trống — để trống cũng là một câu trả lời, và nó giữ cho kết quả thật.
+        </span>
+      </div>
+
+      <div class="qlist">
+        {openSigns.map((s) => (
+          <article class="q">
+            <span class="q__n">{s.n}</span>
+            <div class="q__body">
+              <span class="q__nhom">{s.nhom}</span>
+              <h3>{s.q}</h3>
+              <p>{s.why}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="locked-head">Còn 7 dấu hiệu nữa trong bản PDF</p>
+
+      <div class="locked">
+        <div class="locked__grid">
+          {lockedSigns.map((s) => (
+            <article class="lq">
+              <span class="lq__n">{s.n}</span>
+              <div>
+                <div class="lq__topic">
+                  <svg class="lockicon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  {s.topic}
+                </div>
+                <div class="lq__skel" aria-hidden="true"><i></i><i></i></div>
+                <p class="lq__hint">{s.hint}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="locked__cta">
+          <p>Điền email để nhận đủ 10 dấu hiệu, bảng đọc kết quả và 4 câu nên hỏi giáo viên chủ nhiệm.</p>
+          <button type="button" class="btn btn--gold" data-open-form>
+            <span class="btn__label">Mở khoá 7 dấu hiệu còn lại</span>
+            <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TÍCH XONG RỒI SAO ═══ -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="sec__eyebrow">Tích xong rồi làm gì</span>
+      <h2 class="sec__title">Một bảng tự kiểm chỉ có ích nếu nó nói được việc tiếp theo</h2>
+      <p class="sec__lead">Trang 2 của tài liệu trả lời đúng câu đó. Ba phần dưới đây xem trước một ý mỗi phần.</p>
+
+      <div class="teasers">
+        <article class="teaser">
+          <span class="teaser__icon">🔢</span>
+          <h3>Bảng đọc kết quả theo số ô đã tích</h3>
+          <div class="teaser__ex">
+            Bốn mức: <q>0–2 ô</q>, <q>3–5 ô</q>, <q>6–8 ô</q>, <q>9–10 ô</q>.
+            <span class="arr">Mỗi mức nói rõ nên hiểu thế nào và việc nên làm tiếp — kèm mốc thời gian để rà lại.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Nội dung từng mức nằm ở trang 2
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🗣️</span>
+          <h3>Bốn câu nên hỏi giáo viên chủ nhiệm</h3>
+          <div class="teaser__ex">
+            Câu mạnh nhất: <q>Cô kể giúp em một khoảnh khắc cụ thể về con em trong tháng vừa rồi được không ạ?</q>
+            <span class="arr">Nó hỏi quan sát chứ không hỏi đánh giá — và chỉ trả lời được nếu con mình thật sự đã được để ý.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Còn 3 câu trong bản PDF
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🪑</span>
+          <h3>Hai đề nghị nhỏ, dễ được chấp nhận</h3>
+          <div class="teaser__ex">
+            Hai việc rất nhỏ ba mẹ có thể đề nghị với cô, mất vài giây để nói, nhưng đổi được vị trí
+            của một đứa trẻ trong lớp nhanh hơn mọi lời động viên ở nhà.
+            <div class="teaser__skel" aria-hidden="true"><i></i><i></i></div>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Nguyên văn nằm ở trang 2
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG TÀI LIỆU CÓ GÌ ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap get">
+      <div class="mockup">
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-10-dau-hieu-con-vo-hinh.webp" type="image/webp" />
+            <img src="/mockup-10-dau-hieu-con-vo-hinh.jpg" width="900" height="1274" loading="lazy" decoding="async"
+                 alt="Xem trước bản PDF 10 dấu hiệu con đang vô hình trong lớp" />
+          </picture>
+        </div>
+      </div>
+      <div>
+        <span class="sec__eyebrow" style="text-align:left">Ba mẹ nhận được gì</span>
+        <h2 class="sec__title" style="text-align:left">Hai trang A4, in ra là tích được ngay</h2>
+        <ul class="get__list">
+          {trongPdf.map((t) => (
+            <li>
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span set:html={t}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="get__note">
+          Tài liệu này <strong>soạn cho phụ huynh mọi trường</strong>, không riêng phụ huynh Trường Việt Anh.
+          Ba mẹ dùng cho lớp của con mình, và chia sẻ tự do.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</LeadMagnetLayout>

@@ -1,0 +1,299 @@
+---
+// squeeze/con-hop-huong-nao
+// Lead magnet : PDF 8 trang "Con giỏi cái gì, và con hợp với hướng nào?" (LM18)
+//               — bộ câu hỏi làm cùng con trong một buổi tối, dành cho học sinh lớp 11–12.
+// Audience    : ba mẹ có con lớp 11–12 (và chính học sinh), đang bí chuyện chọn ngành.
+// Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
+// Giao file   : GHL gửi PDF qua email marketing theo tag bên dưới — trang KHÔNG cho tải trực tiếp.
+// Gate        : mở 3 câu mạnh nhất (mỗi phần một câu), khoá 8 câu còn lại + bảng nhóm ngành.
+// Lưu ý       : tài liệu KHÔNG hứa chốt ngành. Kết quả là ba việc con sẽ thử trong ba tháng —
+//               giữ đúng lời hứa đó trên trang, đừng nâng lên thành "định hướng nghề nghiệp".
+import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+
+// Bốn phần của bộ câu hỏi
+const phan = [
+  {
+    ma: 'A',
+    icon: '⏳',
+    title: 'Điều con làm mà quên thời gian',
+    soCau: 4,
+    body: 'Nơi một người quên mất thời gian thường là nơi năng lực của họ nằm ở đó. Bốn câu, không tính lướt mạng và xem video.',
+  },
+  {
+    ma: 'B',
+    icon: '🙋',
+    title: 'Điều người khác hay tìm đến con',
+    soCau: 4,
+    body: 'Năng lực của một người thường được người xung quanh nhìn ra trước khi chính người đó nhìn ra. Bốn câu về việc bạn bè hay nhờ.',
+  },
+  {
+    ma: 'C',
+    icon: '😤',
+    title: 'Điều làm con thấy khó chịu',
+    soCau: 3,
+    body: 'Thứ khiến ta bực mình khi thấy làm sai thường là thứ ta coi trọng. Đây là chỉ báo về giá trị nghề nghiệp.',
+  },
+  {
+    ma: 'D',
+    icon: '⚖️',
+    title: 'Cái giá con chịu được',
+    soCau: 6,
+    body: 'Sáu dòng chọn A hay B: làm một mình hay làm với nhiều người, nhịp ổn định hay thay đổi, học tiếp 6–8 năm hay đi làm sớm.',
+  },
+];
+
+const openCau = [
+  {
+    n: 2,
+    nhom: 'Phần A · câu mạnh nhất phần này',
+    q: 'Có việc gì con làm mà không ai bắt, không ai trả công, không ai biết?',
+    why: 'Việc làm khi không có phần thưởng là việc thật sự thuộc về mình. Câu này thường cho ra câu trả lời thật hơn mọi bài trắc nghiệm tính cách.',
+  },
+  {
+    n: 7,
+    nhom: 'Phần B',
+    q: 'Có lời khen nào con nghe nhiều lần từ nhiều người khác nhau không?',
+    why: 'Lời khen lặp lại từ những người không quen nhau là một chỉ báo đáng tin hơn nhiều so với lời khen của người thân.',
+  },
+  {
+    n: 9,
+    nhom: 'Phần C',
+    q: 'Con thấy khó chịu nhất khi nhìn thấy điều gì?',
+    why: 'Ví dụ: thấy ai đó bị đối xử bất công, thấy một thứ làm ẩu, thấy người ta lãng phí, thấy một thông tin sai không ai đính chính. Chỗ khó chịu chỉ ra thứ con coi trọng.',
+  },
+];
+
+const lockedCau = [
+  { n: 1,  topic: 'Lần gần nhất con quên mất giờ',  hint: 'Không tính lướt mạng và xem video — tính những việc con chủ động làm.' },
+  { n: 3,  topic: 'Môn học trôi nhanh nhất',        hint: 'Có một phép phân biệt quan trọng phải làm trước khi kết luận.' },
+  { n: 4,  topic: 'Một tuần không ai hỏi gì',       hint: 'Câu giả định, nhưng câu trả lời thì rất thật.' },
+  { n: 5,  topic: 'Việc bạn bè hay nhờ con',        hint: 'Bất cứ việc gì lặp lại nhiều lần đều đáng ghi ra.' },
+  { n: 6,  topic: 'Phần con nhận trong nhóm',       hint: 'Con chọn hay các bạn giao — hai câu trả lời khác nhau hoàn toàn.' },
+  { n: 8,  topic: 'Ba người bạn thân sẽ nói gì',    hint: 'Có một việc con nên làm thật sau buổi này, không chỉ đoán.' },
+  { n: 10, topic: '“Nếu là mình thì mình làm khác”', hint: 'Chỗ con muốn làm khác là chỗ con đã có ý kiến riêng.' },
+  { n: 11, topic: 'Điều con muốn thay đổi được',    hint: 'Không cần to tát — tài liệu nêu ví dụ rất đời thường.' },
+];
+
+const trongPdf = [
+  '<strong>11 câu hỏi chia 4 phần</strong> — mỗi câu có khoảng trống để con viết, và một dòng gợi ý cách hiểu câu hỏi cho đúng.',
+  '<strong>Phần D — cái giá con chịu được</strong>: 6 dòng khoanh A/B. Biết mình chịu được cái giá nào giúp loại bớt rất nhanh.',
+  '<strong>Bảng đối chiếu 8 nhóm ngành</strong> — tín hiệu thường thấy ở người hợp nhóm đó, kèm tên ngành cụ thể đang tuyển ở Việt Nam.',
+  '<strong>Trang kết: ba việc con sẽ thử trong ba tháng tới</strong> — có cột thời hạn và ô ghi tên người trong nhà sẽ nhắc con.',
+];
+---
+
+<LeadMagnetLayout
+  funnel="squeeze-huong-nghiep-11-12"
+  formId="con-hop-huong-nao-form"
+  tag="lm18"
+  pageTitle="Con Giỏi Cái Gì, Con Hợp Hướng Nào — Bộ Câu Hỏi Cho Lớp 11–12 | Trường Việt Anh"
+  pageDescription="Hỏi thẳng “con thích ngành gì” thì phần lớn học sinh lớp 11 không trả lời được — và câu hỏi đó chỉ làm con thấy mình có lỗi. Nhận miễn phí bộ câu hỏi 8 trang: 11 câu đi đường vòng, bảng đối chiếu 8 nhóm ngành, và ba việc con sẽ thử."
+  canonical="https://truongvietanh.com/con-hop-huong-nao"
+  ogTitle="Con giỏi cái gì, và con hợp với hướng nào? — bộ câu hỏi cho lớp 11–12"
+  ogImage="https://truongvietanh.com/con-hop-huong-nao-og.jpg"
+  topbarTag="Bộ câu hỏi cho lớp 11–12"
+  topbarCta="Nhận bộ câu hỏi"
+  badge="🎁 Bộ câu hỏi miễn phí · học sinh lớp 11–12"
+  h1={'Đừng hỏi con <span class="hl">“thích ngành gì”</span>.<br />Hỏi 11 câu này.'}
+  heroSub={'Phần lớn học sinh lớp 11 chưa trả lời được câu hỏi kia, và nó chỉ làm con thấy mình có lỗi. <strong>Bộ câu hỏi này đi đường vòng</strong>: hỏi về việc con đã làm, những lúc con quên thời gian, những thứ con thấy khó chịu — rồi mới đối chiếu ra nhóm ngành.'}
+  pills={['11 câu, làm trong một buổi tối', 'Bảng 8 nhóm ngành', 'Không chấm điểm, không kết luận vội']}
+  ctaLabel="Nhận bộ câu hỏi miễn phí"
+  micro={['📄 8 trang A4', '⏱️ Điền 20 giây', '🔒 Không spam']}
+  mockup="mockup-con-hop-huong-nao"
+  mockupAlt="Trang 1 bộ câu hỏi hướng nghiệp cho học sinh lớp 11 và 12 — phần hướng dẫn cách dùng"
+  mockupCap="Trang 1 của tài liệu — cách dùng bộ câu hỏi"
+  finalTitle="Kết quả không phải một cái tên ngành"
+  finalSub="Kết quả của tập này là ba việc con sẽ thử trong ba tháng tới — có thời hạn, có người nhắc. Thử làm cho câu trả lời mà ngồi nghĩ không cho được."
+  finalQuote="“Làm cái này không phải để chốt ngành. Là để bố mẹ hiểu con hơn.”"
+  footNote="Đi đường vòng thì tới được chỗ thật."
+  modalTitle="Nhận bộ câu hỏi 8 trang"
+  modalSub="Bản PDF gửi vào email ba mẹ trong ít phút — in ra làm cùng con."
+  submitLabel="Gửi bộ câu hỏi cho tôi"
+  grades={[
+    { value: 'lop-10', label: 'Lớp 10' },
+    { value: 'lop-11', label: 'Lớp 11' },
+    { value: 'lop-12', label: 'Lớp 12' },
+  ]}
+>
+
+  <!-- ═══ VÌ SAO ═══ -->
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="insight">
+        <div class="insight__bulb">💡</div>
+        <div>
+          <h2>Vì sao không hỏi thẳng “con thích ngành gì”</h2>
+          <p>
+            Vì <strong>phần lớn học sinh lớp 11 chưa trả lời được</strong>, và câu hỏi đó chỉ làm con thấy mình
+            có lỗi. Bốn phần trong tài liệu đi đường vòng: hỏi về những việc con đã làm, những lúc con quên
+            thời gian, những thứ con thấy khó chịu.
+            <span class="pull">Từ đó mới đối chiếu ra nhóm ngành — chứ không bắt đầu bằng danh sách ngành rồi bắt con chọn.</span>
+            Và không kết luận trong một buổi: kết quả của tập này là ba việc con sẽ thử, không phải một cái tên ngành.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BỐN PHẦN ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap">
+      <span class="sec__eyebrow">11 câu, chia 4 phần</span>
+      <h2 class="sec__title">Hỏi về việc đã làm, không hỏi về ước mơ</h2>
+      <p class="sec__lead">Mỗi phần tìm một loại tín hiệu khác nhau. Phần D không phải câu hỏi mà là sáu dòng chọn A hay B.</p>
+      <div class="diffs diffs--4">
+        {phan.map((p) => (
+          <article class="diff">
+            <div class="diff__top">
+              <span class="diff__icon">{p.icon}</span>
+              <span class="diff__ma">PHẦN {p.ma}</span>
+            </div>
+            <h3>{p.title}</h3>
+            <span class="diff__so">{p.soCau} câu</span>
+            <p>{p.body}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CÂU HỎI: 3 MỞ + 8 KHOÁ ═══ -->
+  <section class="sec" id="cau-hoi">
+    <div class="wrap">
+      <span class="sec__eyebrow">Xem trước</span>
+      <h2 class="sec__title">Ba câu mạnh nhất trong bộ, và vì sao chúng hiệu quả</h2>
+      <p class="sec__lead">Tám câu còn lại nằm trong bản PDF, cùng bảng đối chiếu 8 nhóm ngành.</p>
+
+      <div class="rule">
+        <span style="font-size:19px;line-height:1">🤝</span>
+        <span>
+          <strong>Làm cùng con, đừng giao cho con tự làm.</strong> Và không nhận xét câu trả lời trong lúc con
+          đang viết — kể cả khen. Khen cũng là một dạng hướng lái.
+        </span>
+      </div>
+
+      <div class="qlist">
+        {openCau.map((c) => (
+          <article class="q">
+            <span class="q__n">{c.n}</span>
+            <div class="q__body">
+              <span class="q__nhom">{c.nhom}</span>
+              <h3>{c.q}</h3>
+              <p>{c.why}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="locked-head">Còn 8 câu nữa trong bản PDF</p>
+
+      <div class="locked">
+        <div class="locked__grid">
+          {lockedCau.map((c) => (
+            <article class="lq">
+              <span class="lq__n">{c.n}</span>
+              <div>
+                <div class="lq__topic">
+                  <svg class="lockicon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  {c.topic}
+                </div>
+                <div class="lq__skel" aria-hidden="true"><i></i><i></i></div>
+                <p class="lq__hint">{c.hint}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="locked__cta">
+          <p>Điền email để nhận đủ 11 câu, phần D, bảng 8 nhóm ngành và trang “ba việc con sẽ thử”.</p>
+          <button type="button" class="btn btn--gold" data-open-form>
+            <span class="btn__label">Mở khoá 8 câu còn lại</span>
+            <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ĐỐI CHIẾU NGÀNH ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap">
+      <span class="sec__eyebrow">Sau khi con viết xong</span>
+      <h2 class="sec__title">Từ câu trả lời của con ra nhóm ngành — rồi ra việc để thử</h2>
+      <p class="sec__lead">Ba trang cuối của tài liệu. Mỗi phần xem trước một ý.</p>
+
+      <div class="teasers">
+        <article class="teaser">
+          <span class="teaser__icon">🧭</span>
+          <h3>Bảng đối chiếu 8 nhóm ngành</h3>
+          <div class="teaser__ex">
+            Mỗi nhóm có cột <q>tín hiệu thường thấy ở người hợp nhóm này</q> và cột tên ngành cụ thể.
+            <span class="arr">Con rơi vào hai hoặc ba nhóm cùng lúc là chuyện bình thường — và thường là dấu hiệu tốt.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Bảng đầy đủ nằm ở trang 6
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">⚖️</span>
+          <h3>Phần D — cái giá con chịu được</h3>
+          <div class="teaser__ex">
+            Sáu dòng khoanh A hay B: cách làm việc, nhịp công việc, nơi làm việc, thời điểm thấy kết quả, kiểu áp lực, và học tiếp bao lâu.
+            <span class="arr">Không nghề nào chỉ có phần hay. Biết mình chịu được cái giá nào giúp loại bớt rất nhanh.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Sáu dòng nằm ở trang 5
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🎯</span>
+          <h3>Ba việc con sẽ thử trong ba tháng</h3>
+          <div class="teaser__ex">
+            Đây mới là kết quả thật của tập này — không phải một cái tên ngành, mà ba việc cụ thể có thời hạn.
+            <span class="arr">Kèm một ô mà nhiều gia đình bỏ qua, và bỏ qua nó thì ba việc kia gần như chắc chắn không xảy ra.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Trang cuối của tài liệu
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG TÀI LIỆU CÓ GÌ ═══ -->
+  <section class="sec">
+    <div class="wrap get">
+      <div class="mockup">
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-con-hop-huong-nao.webp" type="image/webp" />
+            <img src="/mockup-con-hop-huong-nao.jpg" width="900" height="1274" loading="lazy" decoding="async"
+                 alt="Xem trước bộ câu hỏi hướng nghiệp 8 trang cho học sinh lớp 11–12" />
+          </picture>
+        </div>
+      </div>
+      <div>
+        <span class="sec__eyebrow" style="text-align:left">Gia đình nhận được gì</span>
+        <h2 class="sec__title" style="text-align:left">Tám trang A4, một buổi tối 60–90 phút</h2>
+        <ul class="get__list">
+          {trongPdf.map((t) => (
+            <li>
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span set:html={t}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="get__note">
+          Tài liệu này <strong>soạn cho học sinh mọi trường</strong>, không riêng học sinh Trường Việt Anh.
+          Không cần xong hết trong một lần — phần nào con tắc thì để trống, quay lại sau.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</LeadMagnetLayout>

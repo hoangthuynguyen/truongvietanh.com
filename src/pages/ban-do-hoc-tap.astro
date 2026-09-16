@@ -1,0 +1,242 @@
+---
+// squeeze/ban-do-hoc-tap
+// Lead magnet : PDF 5 trang "Bản đồ học tập" (LM13) — biểu mẫu chẩn đoán + kế hoạch bù lấp 8 tuần.
+// Audience    : ba mẹ có con đang hổng kiến thức, đã học thêm mà chưa chuyển.
+// Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
+// Giao file   : GHL gửi PDF qua email marketing theo tag bên dưới — trang KHÔNG cho tải trực tiếp.
+//
+// ⚠️ CHỜ CHỐT: khác 5 magnet kia, đây là BIỂU MẪU TRẮNG có ô ký tên
+// ("Người lập bản đồ" / "Đại diện gia đình") — tức sản phẩm dịch vụ của trường, không phải
+// tài liệu ba mẹ tải về tự dùng. Bản đang dựng đi hướng squeeze (gửi mẫu trắng qua email),
+// và nêu thêm một dòng rằng trường lập giúp được. Nếu sau này chốt đổi thành form đăng ký
+// "trường chẩn đoán và lập bản đồ cho con" thì đổi CTA + modalTitle, phần nội dung giữ nguyên.
+import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+
+// Ba nhóm nguyên nhân — mở hết, đây là phần dạy được nhiều nhất trong tài liệu
+const nguyenNhan = [
+  {
+    n: 'N1',
+    nhom: 'Nhóm nguyên nhân 1',
+    q: 'Thiếu kiến thức nền',
+    why: 'Dấu hiệu: làm được bài mẫu, đổi số một cái là tắc; làm đúng khi có công thức trước mặt, sai khi phải tự nhớ. Hướng xử lý: phải quay lại đúng chương gốc — luyện thêm ở chương hiện tại sẽ không có tác dụng vì phần đang thiếu nằm ở dưới.',
+  },
+  {
+    n: 'N2',
+    nhom: 'Nhóm nguyên nhân 2',
+    q: 'Đọc sai đề, hiểu sai yêu cầu',
+    why: 'Dấu hiệu: xem lại bài thì con tự sửa được ngay mà không cần giảng. Hướng xử lý: không cần học thêm kiến thức — cần một quy trình đọc đề cố định và luyện đúng quy trình đó trong 3–4 tuần.',
+  },
+  {
+    n: 'N3',
+    nhom: 'Nhóm nguyên nhân 3',
+    q: 'Không quản lý được thời gian',
+    why: 'Dấu hiệu: phần đầu bài làm sạch, phần cuối bỏ trắng hoặc làm ẩu. Hướng xử lý: luyện phân bổ thời gian và tập bỏ câu — đây là kỹ năng làm bài, tách riêng khỏi kiến thức.',
+  },
+];
+
+// Năm phần của bản đồ — khoá, chỉ lộ tên phần
+const lockedPhan = [
+  { n: 1, topic: 'Ảnh chụp hiện trạng',      hint: 'Từng môn: phần đã vững, phần đang hổng, mức ưu tiên. Có một ô bắt buộc điền mà nhiều người bỏ qua.' },
+  { n: 2, topic: 'Chẩn đoán nguyên nhân',    hint: 'Phần dài nhất của bản đồ — dài hơn cả phần bài tập, và đó là chủ ý.' },
+  { n: 3, topic: 'Kế hoạch bù lấp 8 tuần',   hint: 'Mỗi tuần một mục tiêu, một nội dung luyện, và một dấu hiệu để biết đã đạt hay chưa.' },
+  { n: 4, topic: 'Việc của gia đình',        hint: 'Ba việc, tổng cộng dưới 15 phút mỗi tuần. Kèm danh sách việc gia đình KHÔNG cần làm.' },
+  { n: 5, topic: 'Hai mốc rà lại',           hint: 'Sau tuần 4 và sau tuần 8. Không có mốc rà lại thì bản đồ chỉ là một tờ giấy đẹp.' },
+];
+
+const trongPdf = [
+  '<strong>Trang 1–2</strong> — phần đầu bản đồ và bảng <em>ảnh chụp hiện trạng</em> theo từng môn: phần đã vững, phần đang hổng (ghi tên chương cụ thể), mức ưu tiên.',
+  '<strong>Trang 3</strong> — bảng ba nhóm nguyên nhân N1/N2/N3, mỗi nhóm có cột dấu hiệu nhận ra và cột hướng xử lý tương ứng, kèm ô ghi kết luận chẩn đoán.',
+  '<strong>Trang 4</strong> — kế hoạch 8 tuần: tám dòng, mỗi dòng có cột <em>dấu hiệu đã đạt</em> — không có cột đó thì kế hoạch không kiểm chứng được.',
+  '<strong>Trang 5</strong> — việc của gia đình (dưới 15 phút mỗi tuần), danh sách việc KHÔNG cần làm, và hai mốc rà lại sau tuần 4 và tuần 8.',
+];
+---
+
+<LeadMagnetLayout
+  funnel="squeeze-ban-do-hoc-tap"
+  formId="ban-do-hoc-tap-form"
+  tag="lm13"
+  pageTitle="Bản Đồ Học Tập — Con Hổng Chương Nào, Tám Tuần Tới Làm Gì | Trường Việt Anh"
+  pageDescription="Học bạ trả lời “con đạt hay chưa đạt”. Bản đồ học tập trả lời ba câu khác: con gãy ở chương nào, gãy vì lý do gì, và tám tuần tới làm gì để vá. Nhận miễn phí bản mẫu 5 trang: chẩn đoán 3 nhóm nguyên nhân và kế hoạch bù lấp 8 tuần."
+  canonical="https://truongvietanh.com/ban-do-hoc-tap"
+  ogTitle="Bản đồ học tập — con gãy ở chương nào, tám tuần tới làm gì"
+  ogImage="https://truongvietanh.com/ban-do-hoc-tap-og.jpg"
+  topbarTag="Bản mẫu 5 trang"
+  topbarCta="Nhận bản đồ mẫu"
+  badge="🎁 Bản mẫu miễn phí · dùng được ở mọi trường"
+  h1={'Học bạ nói con <span class="hl">đạt hay chưa</span>.<br />Bản đồ nói con gãy ở đâu.'}
+  heroSub={'Học bạ là kết luận về quá khứ. Bản đồ này trả lời ba câu khác: <strong>con gãy ở chương nào, gãy vì lý do gì, và tám tuần tới làm gì để vá</strong> — một kế hoạch cho phía trước, không phải một lời nhận xét.'}
+  pills={['Chẩn đoán theo 3 nhóm nguyên nhân', 'Kế hoạch 8 tuần có mốc đo', 'Việc của gia đình dưới 15 phút/tuần']}
+  ctaLabel="Nhận bản đồ mẫu miễn phí"
+  micro={['📄 5 trang A4', '⏱️ Điền 20 giây', '🔒 Không spam']}
+  mockup="mockup-ban-do-hoc-tap"
+  mockupAlt="Trang 1 bản đồ học tập — phần thông tin học sinh và năm phần của bản đồ"
+  mockupCap="Trang 1 của tài liệu — năm phần của bản đồ"
+  finalTitle="Chẩn đoán trước, luyện sau"
+  finalSub="Học thêm không có chẩn đoán chỉ là tăng thời lượng — và con sẽ dùng thêm giờ đó để ôn lại phần đã biết, vì phần đó dễ chịu hơn."
+  finalQuote="“Vì vậy phần dài nhất của bản đồ này là phần chẩn đoán, không phải phần bài tập.”"
+  footNote="Biết gãy ở đâu thì mới vá được."
+  modalTitle="Nhận bản đồ học tập mẫu"
+  modalSub="Bản PDF 5 trang gửi vào email ba mẹ trong ít phút."
+  submitLabel="Gửi bản đồ mẫu cho tôi"
+>
+
+  <!-- ═══ VÌ SAO ═══ -->
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="insight">
+        <div class="insight__bulb">💡</div>
+        <div>
+          <h2>Bản đồ này khác học bạ ở chỗ nào</h2>
+          <p>
+            Học bạ trả lời câu hỏi <strong>“con đạt hay chưa đạt”</strong>. Bản đồ này trả lời ba câu khác:
+            con gãy ở chương nào, gãy vì lý do gì, và tám tuần tới làm gì để vá.
+            <span class="pull">Học bạ là kết luận về quá khứ; bản đồ là một kế hoạch cho phía trước.</span>
+            Một nguyên tắc được giữ suốt tài liệu: chẩn đoán trước, luyện sau. Học thêm mà không chẩn đoán
+            chỉ là tăng thời lượng — và con sẽ dùng thêm giờ đó để ôn lại phần đã biết, vì phần đó dễ chịu hơn.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BA NHÓM NGUYÊN NHÂN — MỞ HẾT ═══ -->
+  <section class="sec sec--soft" id="nguyen-nhan">
+    <div class="wrap">
+      <span class="sec__eyebrow">Mở sẵn, đọc được ngay</span>
+      <h2 class="sec__title">Cùng một điểm số, ba nguyên nhân khác nhau</h2>
+      <p class="sec__lead">Và ba nguyên nhân đó cần ba cách xử lý khác nhau. Đây là phần cốt lõi của bản đồ — ba mẹ đọc đủ cả ba ngay tại đây.</p>
+
+      <div class="rule">
+        <span style="font-size:19px;line-height:1">🔍</span>
+        <span>
+          <strong>Ghi tên chương, đừng ghi cảm nhận.</strong> Cột “phần đang hổng” phải ghi tên chương hoặc tên
+          kỹ năng cụ thể. Nếu chỉ ghi được “yếu môn này” thì chẩn đoán chưa xong.
+        </span>
+      </div>
+
+      <div class="qlist">
+        {nguyenNhan.map((n) => (
+          <article class="q">
+            <span class="q__n" style="font-size:15px">{n.n}</span>
+            <div class="q__body">
+              <span class="q__nhom">{n.nhom}</span>
+              <h3>{n.q}</h3>
+              <p>{n.why}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="locked-head">Bản đồ đầy đủ gồm năm phần</p>
+
+      <div class="locked">
+        <div class="locked__grid">
+          {lockedPhan.map((p) => (
+            <article class="lq">
+              <span class="lq__n">{p.n}</span>
+              <div>
+                <div class="lq__topic">
+                  <svg class="lockicon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Phần {p.n} — {p.topic}
+                </div>
+                <div class="lq__skel" aria-hidden="true"><i></i><i></i></div>
+                <p class="lq__hint">{p.hint}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="locked__cta">
+          <p>Điền email để nhận bản mẫu 5 trang — in ra là điền được cho con mình.</p>
+          <button type="button" class="btn btn--gold" data-open-form>
+            <span class="btn__label">Nhận bản đồ mẫu 5 trang</span>
+            <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BA PHẦN ĐÁNG CHÚ Ý ═══ -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="sec__eyebrow">Ba phần dễ bị làm sai nhất</span>
+      <h2 class="sec__title">Kế hoạch, việc của gia đình, và mốc rà lại</h2>
+      <p class="sec__lead">Ba phần quyết định bản đồ có chạy được hay không. Mỗi phần xem trước một ý.</p>
+
+      <div class="teasers">
+        <article class="teaser">
+          <span class="teaser__icon">📆</span>
+          <h3>Kế hoạch 8 tuần có cột kiểm chứng</h3>
+          <div class="teaser__ex">
+            Mỗi tuần một mục tiêu, một nội dung luyện, và một cột <q>dấu hiệu đã đạt</q>.
+            <span class="arr">Không có cột cuối thì kế hoạch không kiểm chứng được — và tám tuần sau không ai biết nó có tác dụng hay không.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Bảng 8 tuần nằm ở trang 4
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🏠</span>
+          <h3>Việc của gia đình: dưới 15 phút mỗi tuần</h3>
+          <div class="teaser__ex">
+            Ba việc nhỏ, và một danh sách việc <q>KHÔNG cần làm</q> — không ngồi kèm từng buổi, không kiểm tra bài mỗi tối, không tăng thêm ca học.
+            <span class="arr">Nếu gia đình làm thay phần luyện, con sẽ học được rằng việc học là việc của người lớn.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Ba việc cụ thể nằm ở trang 5
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🔁</span>
+          <h3>Hai mốc rà lại</h3>
+          <div class="teaser__ex">
+            Sau tuần 4 và sau tuần 8. Mốc tuần 4 có một chỉ dẫn đi ngược lại phản xạ thường gặp của cả nhà lẫn trung tâm.
+            <div class="teaser__skel" aria-hidden="true"><i></i><i></i></div>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Nguyên văn nằm ở trang 5
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG TÀI LIỆU CÓ GÌ ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap get">
+      <div class="mockup">
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-ban-do-hoc-tap.webp" type="image/webp" />
+            <img src="/mockup-ban-do-hoc-tap.jpg" width="900" height="1274" loading="lazy" decoding="async"
+                 alt="Xem trước bản đồ học tập 5 trang" />
+          </picture>
+        </div>
+      </div>
+      <div>
+        <span class="sec__eyebrow" style="text-align:left">Ba mẹ nhận được gì</span>
+        <h2 class="sec__title" style="text-align:left">Năm trang A4, in ra là điền được</h2>
+        <ul class="get__list">
+          {trongPdf.map((t) => (
+            <li>
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span set:html={t}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="get__note">
+          Đây là <strong>bản mẫu để trống</strong>, ba mẹ và giáo viên của con tự điền. Nếu gia đình muốn Trường Việt Anh
+          chẩn đoán và lập bản đồ cho con, ba mẹ nhắn lại sau khi nhận file — bản đồ của từng học sinh là tài liệu riêng,
+          trường không chia sẻ nội dung với bất kỳ bên nào ngoài gia đình và giáo viên phụ trách.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</LeadMagnetLayout>

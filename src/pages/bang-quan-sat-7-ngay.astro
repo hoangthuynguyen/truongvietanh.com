@@ -1,0 +1,237 @@
+---
+// squeeze/bang-quan-sat-7-ngay
+// Lead magnet : PDF 3 trang "Bảng quan sát 7 ngày" (LM15) — nhật ký in ra, mỗi tối ghi 3 chữ cái.
+// Audience    : ba mẹ muốn biết con đang học kiểu gì mà chưa cần nhìn điểm.
+// Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
+// Giao file   : GHL gửi PDF qua email marketing theo tag bên dưới — trang KHÔNG cho tải trực tiếp.
+// Gate        : mở đủ 3 ô quan sát (đây là phần dùng được ngay), khoá 4 kiểu đọc kết quả.
+// Liên quan   : chính tài liệu này dẫn sang Bản đồ học tập (/ban-do-hoc-tap) cho kiểu 3 và kiểu 4.
+import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+
+// Ba ô quan sát — mở hết, vì đây là phần ba mẹ dùng được ngay tối nay
+const oQuanSat = [
+  {
+    n: 1,
+    nhom: 'Ô 1 · Khởi động',
+    q: 'Con bắt đầu ngồi vào học thế nào?',
+    why: 'A. Tự ngồi vào, không ai nhắc · B. Cần nhắc một lần · C. Cần nhắc nhiều lần · D. Phải to tiếng mới chịu.',
+  },
+  {
+    n: 2,
+    nhom: 'Ô 2 · Khi gặp chỗ khó',
+    q: 'Khi gặp chỗ khó, con làm gì?',
+    why: 'A. Thử tiếp bằng cách khác · B. Hỏi người lớn hoặc bạn · C. Bỏ qua câu đó, làm câu khác · D. Dừng hẳn, bỏ dở.',
+  },
+  {
+    n: 3,
+    nhom: 'Ô 3 · Sau khi xong',
+    q: 'Học xong, con nói gì?',
+    why: 'A. Kể lại được hôm nay học gì · B. Hỏi thêm một câu về bài · C. Không nói gì · D. Than mệt, than chán.',
+  },
+];
+
+// Bốn kiểu đọc kết quả — khoá, chỉ lộ tên kiểu
+const lockedKieu = [
+  { n: 1, topic: 'Con tự chạy được',              hint: 'Việc cần làm không phải là kèm thêm — và kèm thêm lúc này còn làm hỏng thứ vừa xây được.' },
+  { n: 2, topic: 'Con chạy khi có người bên cạnh', hint: 'Không phải thiếu năng lực. Thiếu một kỹ năng khác, mà kỹ năng đó phải tập chứ không tự có.' },
+  { n: 3, topic: 'Con né chỗ khó',                 hint: 'Tăng giờ học không giải quyết được, vì con sẽ dùng thêm giờ để ôn lại phần đã biết.' },
+  { n: 4, topic: 'Con đã tắt động lực',            hint: 'Lúc này vấn đề chưa phải là kiến thức. Ép thêm sẽ làm hỏng nhanh hơn.' },
+];
+
+const trongPdf = [
+  '<strong>Trang 1</strong> — ba ô quan sát kèm bốn lựa chọn A/B/C/D mỗi ô, và <em>ba điều cần giữ</em> trong suốt tuần quan sát.',
+  '<strong>Trang 2</strong> — nhật ký 7 ngày để in: mỗi tối ghi ba chữ cái, thêm một dòng ghi chú nếu tuần đó nhà có gì bất thường.',
+  '<strong>Trang 3</strong> — bảng đếm A/B/C/D và <em>bốn kiểu thường gặp</em>, mỗi kiểu kèm việc nên làm tiếp.',
+  '<strong>Không chấm điểm con</strong> — bảng này chỉ ghi lại. Tài liệu nói rõ: không có chữ cái nào là xấu, D chỉ là một thông tin giống như A.',
+];
+---
+
+<LeadMagnetLayout
+  funnel="squeeze-bang-quan-sat-7-ngay"
+  formId="bang-quan-sat-7-ngay-form"
+  tag="lm15"
+  pageTitle="Bảng Quan Sát 7 Ngày — Con Đang Học Kiểu Gì | Trường Việt Anh"
+  pageDescription="Điểm số là chỉ số chậm — nó đổi sau cùng. Nhận miễn phí bảng quan sát 3 trang: mỗi tối ghi ba chữ cái trong bảy ngày, rồi đọc ra con thuộc kiểu nào trong bốn kiểu học thường gặp. Không chấm điểm con."
+  canonical="https://truongvietanh.com/bang-quan-sat-7-ngay"
+  ogTitle="Bảng quan sát 7 ngày — con đang học kiểu gì, không cần nhìn điểm"
+  ogImage="https://truongvietanh.com/bang-quan-sat-7-ngay-og.jpg"
+  topbarTag="Nhật ký quan sát 7 ngày"
+  topbarCta="Nhận bảng quan sát"
+  badge="🎁 Bảng quan sát miễn phí · không chấm điểm con"
+  h1={'Mỗi tối <span class="hl">ba chữ cái</span>.<br />Bảy ngày là đủ để thấy.'}
+  heroSub={'Điểm số là chỉ số chậm — nó phản ánh chuyện của vài tháng trước và thường là thứ <strong>cuối cùng</strong> thay đổi. Cách con ngồi vào bàn, cách con phản ứng khi gặp chỗ khó, cách con nói về buổi học thì đổi trước đó rất lâu.'}
+  pills={['3 ô quan sát mỗi tối', 'Ghi chưa tới 1 phút', 'Có bảng đọc kết quả']}
+  ctaLabel="Nhận bảng quan sát miễn phí"
+  micro={['📄 3 trang A4', '⏱️ Điền 20 giây', '🔒 Không spam']}
+  mockup="mockup-bang-quan-sat-7-ngay"
+  mockupAlt="Trang 1 bảng quan sát 7 ngày — ba ô quan sát và bốn lựa chọn A, B, C, D cho mỗi ô"
+  mockupCap="Trang 1 của tài liệu — ba ô quan sát mỗi tối"
+  finalTitle="Bảy ngày, rồi mình biết phải làm gì tiếp"
+  finalSub="Không phải để đánh giá con. Để biết con đang ở đâu — và để việc mình làm tiếp theo là đúng việc."
+  finalQuote="“Không có chữ cái nào là xấu. D chỉ là một thông tin, giống như A.”"
+  footNote="Quan sát trước, kết luận sau."
+  modalTitle="Nhận bảng quan sát 7 ngày"
+  modalSub="Bản PDF 3 trang gửi vào email ba mẹ trong ít phút."
+  submitLabel="Gửi bảng quan sát cho tôi"
+>
+
+  <!-- ═══ VÌ SAO ═══ -->
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="insight">
+        <div class="insight__bulb">💡</div>
+        <div>
+          <h2>Vì sao là quan sát, chứ không phải kiểm tra</h2>
+          <p>
+            <strong>Điểm số là chỉ số chậm:</strong> nó phản ánh những gì đã xảy ra vài tháng trước
+            và thường là thứ cuối cùng thay đổi. Cách con bắt đầu ngồi vào bàn, cách con phản ứng khi
+            gặp chỗ khó, cách con nói về buổi học — ba thứ đó thay đổi trước điểm số rất lâu.
+            <span class="pull">Bảng này ghi lại đúng ba thứ ấy trong bảy ngày. Không chấm điểm, chỉ ghi lại.</span>
+            Và không nói với con là mình đang ghi — một tuần bị theo dõi không còn là một tuần bình thường nữa.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ BA Ô QUAN SÁT — MỞ HẾT ═══ -->
+  <section class="sec sec--soft" id="ba-o">
+    <div class="wrap">
+      <span class="sec__eyebrow">Mở sẵn, dùng được tối nay</span>
+      <h2 class="sec__title">Ba ô quan sát, mỗi tối ghi ba chữ cái</h2>
+      <p class="sec__lead">Ba mẹ xem đủ cả ba ô ngay tại đây. Phần nằm trong bản PDF là nhật ký để in và cách đọc kết quả sau bảy ngày.</p>
+
+      <div class="rule">
+        <span style="font-size:19px;line-height:1">🤫</span>
+        <span>
+          <strong>Ba điều cần giữ.</strong> Không đổi thói quen của nhà trong tuần quan sát, không nói với con
+          là mình đang theo dõi, và không coi chữ cái nào là xấu. Đổi thói quen giữa chừng thì mình đang đo
+          thói quen mới chứ không đo con.
+        </span>
+      </div>
+
+      <div class="qlist">
+        {oQuanSat.map((o) => (
+          <article class="q">
+            <span class="q__n">{o.n}</span>
+            <div class="q__body">
+              <span class="q__nhom">{o.nhom}</span>
+              <h3>{o.q}</h3>
+              <p>{o.why}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="locked-head">Ghi xong bảy ngày rồi đọc thế nào?</p>
+
+      <div class="locked">
+        <div class="locked__grid locked__grid--2">
+          {lockedKieu.map((k) => (
+            <article class="lq">
+              <span class="lq__n">{k.n}</span>
+              <div>
+                <div class="lq__topic">
+                  <svg class="lockicon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  Kiểu {k.n} — {k.topic}
+                </div>
+                <div class="lq__skel" aria-hidden="true"><i></i><i></i></div>
+                <p class="lq__hint">{k.hint}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="locked__cta">
+          <p>Bốn kiểu này đọc ra từ số ngày A/B/C/D của từng ô. Mỗi kiểu kèm một việc nên làm tiếp — và một việc <em>đừng</em> làm.</p>
+          <button type="button" class="btn btn--gold" data-open-form>
+            <span class="btn__label">Nhận bảng đầy đủ + cách đọc</span>
+            <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG BẢN PDF ═══ -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="sec__eyebrow">Phần nằm trong bản PDF</span>
+      <h2 class="sec__title">Nhật ký để in, bảng đếm, và một giới hạn được nói thẳng</h2>
+      <p class="sec__lead">Ba phần ở trang 2 và trang 3. Mỗi phần xem trước một ý.</p>
+
+      <div class="teasers">
+        <article class="teaser">
+          <span class="teaser__icon">🗓️</span>
+          <h3>Nhật ký 7 ngày để in ra</h3>
+          <div class="teaser__ex">
+            Bảy dòng, từ thứ 2 tới chủ nhật, mỗi dòng ba ô cho ba chữ cái.
+            <span class="arr">Kèm một dòng riêng: tuần này nhà mình có gì bất thường không — ốm, đi xa, có khách, thi cử. Ghi lại để khi đọc kết quả không quy nhầm cho con.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Bản in nằm ở trang 2
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">📊</span>
+          <h3>Bảng đếm và bốn kiểu thường gặp</h3>
+          <div class="teaser__ex">
+            Đếm mỗi ô có bao nhiêu ngày A, B, C, D rồi đối chiếu.
+            <span class="arr">Con nằm giữa hai kiểu cũng là chuyện bình thường — thường là con đang chuyển từ kiểu này sang kiểu kia. Tài liệu nói rõ cách đọc trường hợp đó.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Bốn kiểu nằm ở trang 3
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">⚠️</span>
+          <h3>Một điều bảng này không làm được</h3>
+          <div class="teaser__ex">
+            Nó cho biết con đang học <q>kiểu</q> gì, nhưng không cho biết con hổng chương nào, môn nào.
+            <span class="arr">Đó là câu hỏi khác và cần một công cụ khác — tài liệu nói thẳng chỗ này thay vì hứa quá.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            Trang 3 chỉ tiếp sang bước sau
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG TÀI LIỆU CÓ GÌ ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap get">
+      <div class="mockup">
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-bang-quan-sat-7-ngay.webp" type="image/webp" />
+            <img src="/mockup-bang-quan-sat-7-ngay.jpg" width="900" height="1274" loading="lazy" decoding="async"
+                 alt="Xem trước bản PDF bảng quan sát 7 ngày" />
+          </picture>
+        </div>
+      </div>
+      <div>
+        <span class="sec__eyebrow" style="text-align:left">Ba mẹ nhận được gì</span>
+        <h2 class="sec__title" style="text-align:left">Ba trang A4, in trang giữa ra là ghi được</h2>
+        <ul class="get__list">
+          {trongPdf.map((t) => (
+            <li>
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span set:html={t}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="get__note">
+          Tài liệu này <strong>soạn cho phụ huynh mọi trường</strong>, không riêng phụ huynh Trường Việt Anh.
+          Ba mẹ dùng cho con mình và chia sẻ tự do.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</LeadMagnetLayout>

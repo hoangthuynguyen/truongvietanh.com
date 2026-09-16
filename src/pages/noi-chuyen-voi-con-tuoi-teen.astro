@@ -1,0 +1,236 @@
+---
+// squeeze/noi-chuyen-voi-con-tuoi-teen
+// Lead magnet : PDF 2 trang "Nói chuyện với con tuổi teen" (LM17) — 5 câu mở đầu + 5 câu làm con đóng cửa.
+// Audience    : ba mẹ có con 13–17, con đã ngưng kể chuyện.
+// Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
+// Giao file   : GHL gửi PDF qua email marketing theo tag bên dưới — trang KHÔNG cho tải trực tiếp.
+// Gate        : mở 2 câu mở đầu + 2 câu đóng cửa, khoá phần còn lại và phần "giữ im lặng đúng lúc".
+import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+
+const openCau = [
+  {
+    n: 1,
+    nhom: 'Câu mở đầu 1',
+    q: 'Dạo này ở lớp có chuyện gì đang hot không con?',
+    why: 'Hỏi về thế giới của con, không hỏi về con. Ở tuổi này, mọi câu hỏi chĩa thẳng vào bản thân đều bị nghe thành một cuộc kiểm tra. Hỏi vòng ra ngoài thì con kể — và trong lúc kể chuyện người khác, con để lộ chỗ đứng của mình.',
+  },
+  {
+    n: 3,
+    nhom: 'Câu mở đầu 3',
+    q: 'Hồi bằng tuổi con, bố/mẹ từng…',
+    why: 'Kể trước, không hỏi trước. Con không mở lời với người chưa mở lời với mình. Kể một chuyện mình từng làm sai hoặc từng sợ thì hiệu quả hơn nhiều so với kể một chuyện mình từng giỏi.',
+  },
+];
+
+const lockedCau = [
+  { n: 2, topic: 'Câu đảo vai người được hỏi',   hint: 'Người được hỏi ý kiến là người được coi trọng — thứ một đứa trẻ 13–17 thiếu nhất.' },
+  { n: 4, topic: 'Câu nói cạnh nhau, không đối diện', hint: 'Lý do nhiều cuộc trò chuyện tốt nhất xảy ra trên đường về.' },
+  { n: 5, topic: 'Câu cho phép con không trả lời', hint: 'Nghe ngược đời, nhưng chính nó gỡ được áp lực — và con thường quay lại chủ đề đó vài ngày sau.' },
+];
+
+const trongPdf = [
+  '<strong>Trang 1</strong> — đủ 5 câu mở đầu, mỗi câu kèm 2–3 dòng giải thích vì sao câu đó mở được cửa, và cách dùng cho đúng.',
+  '<strong>Trang 2</strong> — bảng <em>5 câu làm con đóng cửa</em>: bên trái là câu mình hay nói, bên phải là điều con nghe thành.',
+  '<strong>Bốn cách giữ im lặng đúng lúc</strong> — phần khó nhất và cũng hiệu quả nhất, gồm cả quy tắc đếm đến bảy và hai câu trả lời ngắn giữ được lượt nói ở phía con.',
+  '<strong>Một quy tắc khi con kể chuyện làm mình giật mình</strong> — việc quan trọng nhất nằm trong ba mươi giây đầu, và nó không phải là lời khuyên.',
+];
+---
+
+<LeadMagnetLayout
+  funnel="squeeze-noi-chuyen-con-teen"
+  formId="noi-chuyen-con-teen-form"
+  tag="lm17"
+  pageTitle="Nói Chuyện Với Con Tuổi Teen — 5 Câu Mở Đầu Không Làm Con Đóng Cửa | Trường Việt Anh"
+  pageDescription="Con không giấu chuyện. Con chỉ hiểu rằng nói chuyện đồng nghĩa với bị nhắc. Nhận miễn phí tài liệu 2 trang: 5 câu mở đầu không dẫn về chuyện học, 5 câu làm con đóng cửa ngay, và cách giữ im lặng đúng lúc."
+  canonical="https://truongvietanh.com/noi-chuyen-voi-con-tuoi-teen"
+  ogTitle="5 câu mở đầu không làm con tuổi teen đóng cửa"
+  ogImage="https://truongvietanh.com/noi-chuyen-voi-con-tuoi-teen-og.jpg"
+  topbarTag="Cha mẹ có con 13–17 tuổi"
+  topbarCta="Nhận tài liệu"
+  badge="🎁 Tài liệu miễn phí · con 13–17 tuổi"
+  h1={'Con không giấu chuyện.<br />Con chỉ thấy nói chuyện là <span class="hl">bị nhắc</span>.'}
+  heroSub={'Đến một lúc, gần như mọi cuộc trò chuyện giữa cha mẹ và con đều có mục đích: nhắc học, hỏi điểm, dặn dò, góp ý. <strong>Năm câu trong tài liệu này có một điểm chung — không câu nào dẫn về chuyện học.</strong>'}
+  pills={['5 câu mở đầu', '5 câu nên tránh', 'Cách giữ im lặng đúng lúc']}
+  ctaLabel="Nhận tài liệu miễn phí"
+  micro={['📄 2 trang A4', '⏱️ Điền 20 giây', '🔒 Không spam']}
+  mockup="mockup-noi-chuyen-voi-con-tuoi-teen"
+  mockupAlt="Trang 1 tài liệu nói chuyện với con tuổi teen — năm câu mở đầu kèm lý do"
+  mockupCap="Trang 1 của tài liệu — năm câu mở đầu"
+  finalTitle="Tối nay thử một câu thôi"
+  finalSub="Mỗi lần một câu. Nếu con không đáp, đừng hỏi lại câu thứ hai trong cùng buổi tối — đó cũng là một chỉ dẫn trong tài liệu."
+  finalQuote="“Con im không phải vì con đồng ý, mà vì con thấy không còn chỗ để nói.”"
+  footNote="Nghe hết đã, đừng khuyên ngay."
+  modalTitle="Nhận tài liệu nói chuyện với con tuổi teen"
+  modalSub="Bản PDF 2 trang gửi vào email ba mẹ trong ít phút."
+  submitLabel="Gửi tài liệu cho tôi"
+  grades={[
+    { value: 'lop-6', label: 'Lớp 6' },
+    { value: 'lop-7', label: 'Lớp 7' },
+    { value: 'lop-8', label: 'Lớp 8' },
+    { value: 'lop-9', label: 'Lớp 9' },
+    { value: 'lop-10', label: 'Lớp 10' },
+    { value: 'lop-11', label: 'Lớp 11' },
+    { value: 'lop-12', label: 'Lớp 12' },
+  ]}
+>
+
+  <!-- ═══ VÌ SAO ═══ -->
+  <section class="sec">
+    <div class="wrap narrow">
+      <div class="insight">
+        <div class="insight__bulb">💡</div>
+        <div>
+          <h2>Vì sao con không nói chuyện nữa</h2>
+          <p>
+            Thường không phải vì con giấu chuyện gì. Mà vì đến một lúc, gần như mọi cuộc trò chuyện giữa
+            cha mẹ và con đều có mục đích: nhắc học, hỏi điểm, dặn dò, góp ý.
+            <strong>Đứa trẻ hiểu rất nhanh rằng nói chuyện đồng nghĩa với bị nhắc</strong> — nên nó chỉ mở lời
+            khi nó cũng có mục đích, thường là khi cần tiền.
+            <span class="pull">Nếu tám trong mười câu mình nói với con là về bài vở, con sẽ hiểu rằng nó được yêu vì nó học.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CÂU MỞ ĐẦU ═══ -->
+  <section class="sec sec--soft" id="cau-mo-dau">
+    <div class="wrap">
+      <span class="sec__eyebrow">Xem trước</span>
+      <h2 class="sec__title">Hai câu mở đầu, và vì sao chúng không làm con đóng cửa</h2>
+      <p class="sec__lead">Ba câu còn lại nằm trong bản PDF, cùng phần khó nhất: cách giữ im lặng đúng lúc.</p>
+
+      <div class="rule">
+        <span style="font-size:19px;line-height:1">🕯️</span>
+        <span>
+          <strong>Mỗi lần một câu.</strong> Nếu con không đáp, đừng hỏi lại câu thứ hai trong cùng buổi tối.
+          Hỏi dồn là cách nhanh nhất để biến một câu hỏi thành một cuộc kiểm tra.
+        </span>
+      </div>
+
+      <div class="qlist">
+        {openCau.map((c) => (
+          <article class="q">
+            <span class="q__n">{c.n}</span>
+            <div class="q__body">
+              <span class="q__nhom">{c.nhom}</span>
+              <h3>{c.q}</h3>
+              <p>{c.why}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <p class="locked-head">Còn 3 câu mở đầu nữa trong bản PDF</p>
+
+      <div class="locked">
+        <div class="locked__grid">
+          {lockedCau.map((c) => (
+            <article class="lq">
+              <span class="lq__n">{c.n}</span>
+              <div>
+                <div class="lq__topic">
+                  <svg class="lockicon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  {c.topic}
+                </div>
+                <div class="lq__skel" aria-hidden="true"><i></i><i></i></div>
+                <p class="lq__hint">{c.hint}</p>
+              </div>
+            </article>
+          ))}
+        </div>
+
+        <div class="locked__cta">
+          <p>Điền email để nhận đủ 5 câu mở đầu, 5 câu làm con đóng cửa, và bốn cách giữ im lặng đúng lúc.</p>
+          <button type="button" class="btn btn--gold" data-open-form>
+            <span class="btn__label">Mở khoá 3 câu còn lại</span>
+            <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ CÂU LÀM CON ĐÓNG CỬA ═══ -->
+  <section class="sec">
+    <div class="wrap">
+      <span class="sec__eyebrow">Mặt còn lại của tài liệu</span>
+      <h2 class="sec__title">Năm câu làm con đóng cửa ngay</h2>
+      <p class="sec__lead">Không câu nào trong số này là câu của người không thương con. Chúng chỉ có một vấn đề: chúng kết thúc cuộc trò chuyện.</p>
+
+      <div class="teasers">
+        <article class="teaser">
+          <span class="teaser__icon">📉</span>
+          <h3>“Hôm nay học hành thế nào?”</h3>
+          <div class="teaser__ex">
+            Con nghe thành: <q>Bố mẹ chỉ quan tâm điểm của mình.</q>
+            <span class="arr">Nếu tám trong mười câu mình nói với con là về bài vở, con sẽ hiểu rằng nó được yêu vì nó học.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Còn 4 câu trong bản PDF
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">⚖️</span>
+          <h3>“Sao con không được như bạn A?”</h3>
+          <div class="teaser__ex">
+            So sánh không tạo động lực, nó tạo kết luận.
+            <span class="arr">Đứa trẻ nghe câu này vài chục lần sẽ tự xếp mình vào nhóm kém — và từ đó nó thôi cố.</span>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Bảng đầy đủ nằm ở trang 2
+          </p>
+        </article>
+
+        <article class="teaser">
+          <span class="teaser__icon">🤐</span>
+          <h3>Cách giữ im lặng đúng lúc</h3>
+          <div class="teaser__ex">
+            Phần khó nhất và cũng hiệu quả nhất. Có một quy tắc đếm, hai câu trả lời ngắn giữ lượt nói ở phía con,
+            và một việc phải làm trong ba mươi giây đầu khi nghe điều mình không muốn nghe.
+            <div class="teaser__skel" aria-hidden="true"><i></i><i></i></div>
+          </div>
+          <p class="teaser__more">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            Bốn phần, nằm cuối trang 2
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ TRONG TÀI LIỆU CÓ GÌ ═══ -->
+  <section class="sec sec--soft">
+    <div class="wrap get">
+      <div class="mockup">
+        <div class="mockup__frame">
+          <picture>
+            <source srcset="/mockup-noi-chuyen-voi-con-tuoi-teen.webp" type="image/webp" />
+            <img src="/mockup-noi-chuyen-voi-con-tuoi-teen.jpg" width="900" height="1274" loading="lazy" decoding="async"
+                 alt="Xem trước bản PDF nói chuyện với con tuổi teen" />
+          </picture>
+        </div>
+      </div>
+      <div>
+        <span class="sec__eyebrow" style="text-align:left">Ba mẹ nhận được gì</span>
+        <h2 class="sec__title" style="text-align:left">Hai trang A4, đọc hết trong năm phút</h2>
+        <ul class="get__list">
+          {trongPdf.map((t) => (
+            <li>
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span>
+              <span set:html={t}></span>
+            </li>
+          ))}
+        </ul>
+        <p class="get__note">
+          Tài liệu này <strong>soạn cho phụ huynh mọi trường</strong>, không riêng phụ huynh Trường Việt Anh.
+          Ba mẹ dùng cho con mình và chia sẻ tự do.
+        </p>
+      </div>
+    </div>
+  </section>
+
+</LeadMagnetLayout>

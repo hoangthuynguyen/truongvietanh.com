@@ -1,6 +1,6 @@
 ---
 // squeeze/7-cau-hoi-ke-chuyen-truong-lop
-// Lead magnet : PDF 1 trang "7 câu hỏi khiến con kể chuyện trường lớp"
+// Lead magnet : PDF 3 trang "7 câu hỏi khiến con kể chuyện trường lớp"
 // Audience    : ba mẹ có con 5–15 tuổi (tiểu học → THCS), traffic FB/GG + fanpage
 // Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
 // UX          : nội dung TRƯỚC, form nằm trong modal chỉ mở khi bấm CTA — không
@@ -14,7 +14,7 @@ const CAM_ON = '/7-cau-hoi-ke-chuyen-truong-lop/cam-on';
 
 const pageTitle = '7 Câu Hỏi Khiến Con Kể Chuyện Trường Lớp — Tài Liệu Miễn Phí | Trường Việt Anh';
 const pageDescription =
-  'Thay cho câu "Hôm nay ở trường thế nào?" mà trẻ nào cũng trả lời "bình thường". Nhận miễn phí bản PDF 1 trang: 7 câu hỏi giúp con mở lời, kèm lý do vì sao mỗi câu hiệu quả.';
+  'Thay cho câu "Hôm nay ở trường thế nào?" mà trẻ nào cũng trả lời "bình thường". Nhận miễn phí bản PDF 3 trang: 7 câu hỏi giúp con mở lời, kèm lý do vì sao mỗi câu hiệu quả.';
 const canonicalUrl = 'https://truongvietanh.com/7-cau-hoi-ke-chuyen-truong-lop';
 
 // Ba điểm khác biệt — lấy đúng ý trong tài liệu gốc
@@ -68,8 +68,9 @@ const lockedQuestions = [
 ];
 
 const inPdf = [
-  'Đủ <strong>7 câu hỏi</strong>, mỗi câu kèm lý do vì sao nó khiến con mở lời',
-  'Bản <strong>PDF 1 trang</strong> — in ra dán tủ lạnh, khỏi mở điện thoại lúc ăn cơm',
+  '<strong>Trang 1</strong> — đủ 7 câu hỏi, mỗi câu kèm lý do vì sao nó khiến con mở lời',
+  '<strong>Trang 2</strong> — nên hỏi lúc nào, đừng hỏi lúc nào, và làm gì khi con vẫn không kể',
+  '<strong>Trang 3</strong> — bảng theo dõi 7 ngày để in ra, mỗi tối ghi vài chữ là đủ',
   'Cách dùng trong tuần đầu: <strong>mỗi ngày một câu</strong>, không hỏi dồn',
   'Tải được ngay sau khi điền — <strong>không phải chờ email</strong>',
 ];
@@ -583,7 +584,7 @@ section{scroll-margin-top:70px}
         </button>
 
         <div class="hero__micro">
-          <span>📄 1 trang A4</span>
+          <span>📄 3 trang A4</span>
           <span>⏱️ Điền 20 giây</span>
           <span>🔒 Không spam</span>
         </div>
@@ -596,7 +597,7 @@ section{scroll-margin-top:70px}
             <source srcset="/mockup-7-cau-hoi-ke-chuyen.webp" type="image/webp" />
             <img
               src="/mockup-7-cau-hoi-ke-chuyen.jpg"
-              width="900" height="1272"
+              width="900" height="1274"
               alt="Trang tài liệu 7 câu hỏi khiến con kể chuyện trường lớp của Trường Việt Anh"
               fetchpriority="high" decoding="async"
             />
@@ -707,14 +708,14 @@ section{scroll-margin-top:70px}
         <div class="mockup__frame">
           <picture>
             <source srcset="/mockup-7-cau-hoi-ke-chuyen.webp" type="image/webp" />
-            <img src="/mockup-7-cau-hoi-ke-chuyen.jpg" width="900" height="1272" loading="lazy" decoding="async"
+            <img src="/mockup-7-cau-hoi-ke-chuyen.jpg" width="900" height="1274" loading="lazy" decoding="async"
                  alt="Xem trước bản PDF 7 câu hỏi khiến con kể chuyện trường lớp" />
           </picture>
         </div>
       </div>
       <div>
         <span class="sec__eyebrow" style="text-align:left">Ba mẹ nhận được gì</span>
-        <h2 class="sec__title" style="text-align:left">Một trang giấy, dùng được cả năm học</h2>
+        <h2 class="sec__title" style="text-align:left">Ba trang giấy, dùng được cả năm học</h2>
         <ul class="get__list">
           {inPdf.map((t) => (
             <li>

@@ -475,6 +475,13 @@ function normalizeFormData(data) {
     quizLevel: data.quizLevel || data.quiz_level || '',
     funnelCode: data.funnelCode || data.funnel_code || data.source || '',
     quizAnswers: Array.isArray(data.quizAnswers || data.quiz_answers) ? (data.quizAnswers || data.quiz_answers) : [],
+    // Tag form gửi thẳng lên (vd landing lead magnet gửi ['lm04']). PHẢI chép ở đây:
+    // handler chỉ đọc `data` sau khi qua hàm này, nên trước đây khối gộp
+    // `if (Array.isArray(data.tags))` ở dưới là code chết — tag từ form im lặng
+    // biến mất, lead vào CRM nhưng workflow lọc theo tag không bao giờ chạy.
+    tags: Array.isArray(data.tags)
+      ? data.tags.filter((t) => typeof t === 'string' && t.trim()).map((t) => t.trim())
+      : [],
   };
 }
 
@@ -798,7 +805,9 @@ async function handleLeadSubmission(request, env) {
 
         const ghlData = await ghlRes.json();
         const contactId = ghlData?.contact?.id || null;
-        results.ghl = { status: ghlRes.status, contactId };
+        // Trả cả danh sách tag về cho người gọi: curl /api/lead rồi đọc results.ghl.tags
+        // là kiểm được tag có tới GHL hay không mà không phải mở CRM.
+        results.ghl = { status: ghlRes.status, contactId, tags };
 
         // GHL không có custom field cho "khu vực"/"nhu cầu" → ghi thành Note gắn vào liên hệ.
         // try/catch RIÊNG: note hỏng thì lead vẫn nguyên vẹn, không đụng tới kết quả upsert.

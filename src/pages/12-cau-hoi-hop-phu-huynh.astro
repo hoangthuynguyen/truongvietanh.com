@@ -16,7 +16,6 @@
 //               submit chính LẪN dataLayer.push — xem CLAUDE.md.
 
 const FUNNEL = 'squeeze-12-cau-hoi-hop-phu-huynh';
-const PDF_URL = '/downloads/12-cau-nen-hoi-trong-buoi-hop-phu-huynh.pdf';
 const CAM_ON = '/12-cau-hoi-hop-phu-huynh/cam-on';
 
 const pageTitle = '12 Câu Nên Hỏi Trong Buổi Họp Phụ Huynh — Bảng In Miễn Phí | Trường Việt Anh';
@@ -891,7 +890,7 @@ section{scroll-margin-top:70px}
 
     <div class="modal__head">
       <h2 id="mTitle">Nhận bảng in 12 câu hỏi</h2>
-      <p>Bản PDF 4 trang gửi vào email ba mẹ — tải được ngay sau khi điền.</p>
+      <p>Bản PDF 4 trang gửi vào email ba mẹ trong ít phút.</p>
     </div>
 
     <div class="modal__body">
@@ -962,14 +961,14 @@ section{scroll-margin-top:70px}
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           </div>
           <h3>Xong rồi ạ!</h3>
-          <p>Bảng in đang được gửi vào email của ba mẹ. Em chuyển ba mẹ sang trang tải file ngay đây…</p>
+          <p>Bảng in đang được gửi vào email của ba mẹ. Em chuyển ba mẹ sang trang hướng dẫn ngay đây…</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script is:inline define:vars={{ FUNNEL, PDF_URL, CAM_ON }}>
+<script is:inline define:vars={{ FUNNEL, CAM_ON }}>
 (function () {
   'use strict';
 
@@ -1161,15 +1160,6 @@ section{scroll-margin-top:70px}
     mbar.classList.add('show');   // trình duyệt cũ: cứ hiện, còn hơn không có CTA
   }
 
-  /* ---------- Nạp sẵn file PDF khi khách kéo tới giữa trang ---------- */
-  var warmed = false;
-  window.addEventListener('scroll', function () {
-    if (warmed || window.scrollY < 600) return;
-    warmed = true;
-    var l = document.createElement('link');
-    l.rel = 'prefetch'; l.href = PDF_URL; l.as = 'document';
-    document.head.appendChild(l);
-  }, { passive: true });
 })();
 </script>
 

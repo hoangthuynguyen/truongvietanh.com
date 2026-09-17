@@ -1,12 +1,13 @@
 ---
 // Trang cảm ơn của squeeze /12-cau-hoi-hop-phu-huynh.
-// Kích cỡ file lấy từ file thật lúc build (statSync), đừng gõ tay.
-// KHÔNG tự tải file — Văn yêu cầu 11/09/2026: ba mẹ phải bấm nút "Tải bản PDF ngay" mới tải.
+// Tài liệu CHỈ gửi qua email marketing bên GHL (tag "lm02 - 12 câu nên hỏi trong buổi họp
+// phụ huynh"). Trang này KHÔNG phát file: 11/09/2026 Văn bỏ auto-download, 16/09/2026 bỏ
+// nốt nút tải. File vẫn nằm ở /downloads/ để email GHL trỏ tới.
+// Kích cỡ file vẫn lấy từ file thật lúc build (statSync) để ghi đúng ở phần mô tả, đừng gõ tay.
 import { statSync } from 'node:fs';
 
 const FUNNEL = 'squeeze-12-cau-hoi-hop-phu-huynh';
 const PDF_FILE = '12-cau-nen-hoi-trong-buoi-hop-phu-huynh.pdf';
-const PDF_URL = '/downloads/' + PDF_FILE;
 
 let pdfKb = 0;
 try {
@@ -17,14 +18,14 @@ try {
 const pdfMeta = 'PDF · 4 trang A4' + (pdfKb ? ` · ${pdfKb} KB` : '') + ' · in ra, gấp đôi, bỏ túi';
 
 const title = 'Đã xong — Nhận bảng in 12 câu nên hỏi | Trường Việt Anh';
-const description = 'Cảm ơn ba mẹ. Bản PDF "12 câu nên hỏi trong buổi họp phụ huynh" đã sẵn sàng để tải, và đang được gửi vào email của ba mẹ.';
+const description = 'Cảm ơn ba mẹ. Bản PDF "12 câu nên hỏi trong buổi họp phụ huynh" đang được gửi vào email của ba mẹ.';
 const canonicalUrl = 'https://truongvietanh.com/12-cau-hoi-hop-phu-huynh/cam-on';
 
 // Zalo OA của trường — cùng OA mà bản PDF in mã QR ở trang 4
 const ZALO_OA = 'https://zalo.me/1678310120468101523';
 const zaloDeepLink =
   ZALO_OA + '?text=' +
-  encodeURIComponent('Chào thầy/cô, em vừa tải "12 câu nên hỏi trong buổi họp phụ huynh" và muốn hỏi thêm ạ.');
+  encodeURIComponent('Chào thầy/cô, em vừa đăng ký nhận "12 câu nên hỏi trong buổi họp phụ huynh" và muốn hỏi thêm ạ.');
 ---
 
 <!doctype html>
@@ -183,7 +184,7 @@ h1 .nm{color:#B99B00}
 <div class="steps">
   <div class="st st--done"><span class="st__d">✓</span><span>Đăng ký</span></div>
   <div class="st__l"></div>
-  <div class="st st--act"><span class="st__d">2</span><span>Tải bảng in</span></div>
+  <div class="st st--act"><span class="st__d">2</span><span>Mở email</span></div>
   <div class="st__l st__l--pend"></div>
   <div class="st st--pend"><span class="st__d">3</span><span>Đi họp</span></div>
 </div>
@@ -195,7 +196,7 @@ h1 .nm{color:#B99B00}
     </div>
     <h1>Cảm ơn ba mẹ<span class="nm" id="nm"></span>! Bảng in đã sẵn sàng.</h1>
     <p class="lead">
-      Bản PDF đang được gửi vào email của ba mẹ. Nếu không muốn chờ, bấm nút bên dưới để tải ngay.
+      Bản PDF đang được gửi vào email của ba mẹ. Ba mẹ mở hộp thư trong ít phút nữa là thấy.
     </p>
 
     <div class="dl">
@@ -212,11 +213,10 @@ h1 .nm{color:#B99B00}
       </div>
     </div>
 
+    <!-- KHÔNG có nút tải ở đây. Tài liệu chỉ gửi qua email marketing bên GHL — Văn chốt
+         16/09/2026. Trang web phát file song song thì lead không có lý do mở mail, chuỗi
+         nuôi dưỡng mất luôn người đọc ngay ở email đầu tiên. -->
     <div class="stack">
-      <a href={PDF_URL} class="btn btn--gold" id="dlBtn" download={PDF_FILE}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
-        Tải bản PDF ngay
-      </a>
       <div class="stack stack--row">
         <a href={zaloDeepLink} target="_blank" rel="noopener" class="btn btn--ghost">💬 Nhắn Zalo cho trường</a>
         <a href="tel:+84916961409" class="btn btn--ghost">📞 0916 961 409</a>

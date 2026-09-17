@@ -9,7 +9,6 @@
 //               submit chính LẪN dataLayer.push — xem CLAUDE.md.
 
 const FUNNEL = 'squeeze-7-cau-hoi-ke-chuyen';
-const PDF_URL = '/downloads/7-cau-hoi-khien-con-ke-chuyen-truong-lop.pdf';
 const CAM_ON = '/7-cau-hoi-ke-chuyen-truong-lop/cam-on';
 
 const pageTitle = '7 Câu Hỏi Khiến Con Kể Chuyện Trường Lớp — Tài Liệu Miễn Phí | Trường Việt Anh';
@@ -72,7 +71,7 @@ const inPdf = [
   '<strong>Trang 2</strong> — nên hỏi lúc nào, đừng hỏi lúc nào, và làm gì khi con vẫn không kể',
   '<strong>Trang 3</strong> — bảng theo dõi 7 ngày để in ra, mỗi tối ghi vài chữ là đủ',
   'Cách dùng trong tuần đầu: <strong>mỗi ngày một câu</strong>, không hỏi dồn',
-  'Tải được ngay sau khi điền — <strong>không phải chờ email</strong>',
+  'Gửi vào email ba mẹ ngay sau khi điền — <strong>miễn phí, không spam</strong>',
 ];
 ---
 
@@ -782,7 +781,7 @@ section{scroll-margin-top:70px}
 
     <div class="modal__head">
       <h2 id="mTitle">Nhận trọn bộ 7 câu hỏi</h2>
-      <p>Bản PDF gửi vào email ba mẹ — tải được ngay sau khi điền.</p>
+      <p>Bản PDF 3 trang gửi vào email ba mẹ trong ít phút.</p>
     </div>
 
     <div class="modal__body">
@@ -853,14 +852,14 @@ section{scroll-margin-top:70px}
             <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           </div>
           <h3>Xong rồi ạ!</h3>
-          <p>Tài liệu đang được gửi vào email của ba mẹ. Em chuyển ba mẹ sang trang tải file ngay đây…</p>
+          <p>Tài liệu đang được gửi vào email của ba mẹ. Em chuyển ba mẹ sang trang hướng dẫn ngay đây…</p>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<script is:inline define:vars={{ FUNNEL, PDF_URL, CAM_ON }}>
+<script is:inline define:vars={{ FUNNEL, CAM_ON }}>
 (function () {
   'use strict';
 
@@ -1052,15 +1051,6 @@ section{scroll-margin-top:70px}
     mbar.classList.add('show');   // trình duyệt cũ: cứ hiện, còn hơn không có CTA
   }
 
-  /* ---------- Nạp sẵn file PDF khi khách kéo tới giữa trang ---------- */
-  var warmed = false;
-  window.addEventListener('scroll', function () {
-    if (warmed || window.scrollY < 600) return;
-    warmed = true;
-    var l = document.createElement('link');
-    l.rel = 'prefetch'; l.href = PDF_URL; l.as = 'document';
-    document.head.appendChild(l);
-  }, { passive: true });
 })();
 </script>
 

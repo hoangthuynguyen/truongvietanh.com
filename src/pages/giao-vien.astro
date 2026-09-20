@@ -1,94 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { schoolFacts } from '../data/school-facts';
+import { giaoVienChuNhiem, giaoVienBoMon, hienThi } from '../data/doi-ngu-giao-vien';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 
 const tabs = [
   { id: 'chu-nhiem', label: 'Giáo viên Chủ Nhiệm', icon: '👩‍🏫' },
   { id: 'bo-mon', label: 'Giáo viên Bộ Môn', icon: '📚' },
-  { id: 'ban-ngu', label: 'Giáo viên Bản Ngữ', icon: '🌍' },
   { id: 'tu-van', label: 'Đội Ngũ Tư Vấn', icon: '💬' },
-];
-
-const teachersCN = [
-  { name: 'Chu Ngọc Thanh Vân', role: 'GVCN Tiếng Anh · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Nguyễn Thị Thảo Nguyên', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Nguyễn Thị Thúy Hải', role: 'GVCN · Quản nhiệm', photo: '' },
-  { name: 'Nguyễn Văn Thám', role: 'GVCN · Quản nhiệm', photo: '' },
-  { name: 'Trần Thị Lệ Thu', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Lê Quang Minh Khánh', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Võ Kim Ngân', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Trần Thiện Kim Phượng', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Trần Thị Khánh Phương', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Trần Thị Hồng Hân', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Phạm Thị Xuân Ngọc', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Nguyễn Thị Thùy Linh', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Nguyễn Thị Như Hảo', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Nguyễn Thị Minh Mai', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Nguyễn Thị Kiều Trang', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Lê Văn Chất', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Hoàng Kim Phương Tú', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Đinh Thị Triệu Vy', role: 'GVCN · Cơ sở Gò Vấp', photo: '' },
-  { name: 'Trần Tuấn Cảnh', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Trần Tố Ngọc', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Nguyễn Thị Kim Tiền', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Nguyễn Thị Ái Hoa', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Nguyễn Tam Thanh', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Lê Minh Phương', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Đỗ Cao Đan Thụy', role: 'GVCN · Trường Việt Anh', photo: '' },
-  { name: 'Lê Đại Hải', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Nguyễn Thị Ý', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Trần Nguyễn Thiên Phúc', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Võ Hoàng Lâm', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Võ Quang Tân', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Võ Vân Thi', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Nguyễn Thanh Tòng', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Nguyễn Minh Trân', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Nguyễn Hoàng Vũ', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Ngô Thị Hà', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Lý Uyển Quỳnh', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Lưu Thị Thanh Trúc', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Lê Thị Hằng', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Lâm Thoại Tường', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Huỳnh Thị Thu Loan', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Đỗ Ngọc Hoài Thu', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Đinh Thị Ngọc Châu', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Đặng Thành Phát', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Chí Nhiệt Minh Nhi', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-  { name: 'Cao Văn Hiếu', role: 'GVCN · Cơ sở Bình Tân', photo: '' },
-];
-
-const teachersBM = [
-  { name: 'Võ Trần Quỳnh Như', role: 'Giáo viên Tiếng Anh', photo: '' },
-  { name: 'Từ Hòa Tài', role: 'Giáo viên Toán', photo: '' },
-  { name: 'Trần Thị Thơ', role: 'Giáo viên Toán', photo: '' },
-  { name: 'Phan Hiếu Thiên', role: 'Giáo viên Toán', photo: '' },
-  { name: 'Nguyễn Văn Vui', role: 'Giáo viên Toán', photo: '' },
-  { name: 'Nguyễn Thị Mỹ Hạnh', role: 'Giáo viên Ngữ Văn', photo: '' },
-  { name: 'Nguyễn Thị Diệu Chinh', role: 'Giáo viên Ngữ Văn', photo: '' },
-  { name: 'Nguyễn Vũ Uyên Chi', role: 'Giáo viên Tiếng Anh', photo: '' },
-  { name: 'Phạm Thị Mỹ Hạnh', role: 'Giáo viên Tiếng Anh', photo: '' },
-  { name: 'Trương Anh Tuấn', role: 'Giáo viên Tiếng Anh', photo: '' },
-  { name: 'Nguyễn Thị Ngọc Tuyên', role: 'Giáo viên Vật Lý', photo: '' },
-  { name: 'Lê Thị Hoài My', role: 'Giáo viên Vật Lý', photo: '' },
-  { name: 'Lê Thanh Hoài', role: 'Giáo viên Vật Lý', photo: '' },
-  { name: 'Nguyễn Thị Hội', role: 'Giáo viên Hóa Học', photo: '' },
-  { name: 'Nguyễn Thị Diệu', role: 'Giáo viên Sinh Học', photo: '' },
-  { name: 'Nguyễn Thị Thùy', role: 'Giáo viên Địa Lý', photo: '' },
-  { name: 'Nguyễn Thị Hồng Ngọc', role: 'Giáo viên GDCD', photo: '' },
-  { name: 'Hoàng Ngọc Việt', role: 'Giáo viên Tin Học', photo: '' },
-  { name: 'Hán Văn Duy', role: 'Giáo viên Tin Học', photo: '' },
-  { name: 'Phạm Hữu Hiệu', role: 'Giáo viên Công Nghệ', photo: '' },
-  { name: 'Đặng Minh Tấn', role: 'Giáo viên Giáo dục Thể chất', photo: '' },
-  { name: 'Nguyễn Thị Hà', role: 'Giáo viên Mỹ Thuật', photo: '' },
-];
-
-const teachersBN = [
-  { name: 'Tegan Turnbull', role: 'Giáo viên bản ngữ · Tiếng Anh', photo: '' },
-  { name: 'Jasmine Jade Scriven', role: 'Giáo viên bản ngữ · Tiếng Anh', photo: '' },
-  { name: 'Megan Carew', role: 'Giáo viên bản ngữ · Tiếng Anh', photo: '' },
-  { name: 'La-Rochelle Amanda Bouwer', role: 'Giáo viên bản ngữ · Tiếng Anh', photo: '' },
 ];
 
 const tuVan = [
@@ -220,9 +140,9 @@ function initials(name: string): string {
 
         <!-- Panel 1: Chủ nhiệm -->
         <div class="gv-panel is-active" id="panel-chu-nhiem" role="tabpanel" aria-labelledby="tab-chu-nhiem">
-          <p class="gv-panel__intro">Giáo viên chủ nhiệm trực tiếp đồng hành cùng lớp — chịu trách nhiệm về kỷ luật, liên lạc phụ huynh và kế hoạch học tập từng học sinh. Tỷ lệ <strong>1 GVCN / 15–18 học sinh</strong>.</p>
+          <p class="gv-panel__intro">Giáo viên chủ nhiệm trực tiếp đồng hành cùng lớp — chịu trách nhiệm về kỷ luật, liên lạc phụ huynh và kế hoạch học tập từng học sinh. <strong>Bấm vào thẻ để đọc tuyên ngôn sứ mệnh</strong> của thầy cô.</p>
           <div class="gv-grid">
-            {teachersCN.map(t => (
+            {hienThi(giaoVienChuNhiem).map(t => (
               <article class="gv-card">
                 <div class="gv-card__photo">
                   {t.photo
@@ -232,8 +152,17 @@ function initials(name: string): string {
                 </div>
                 <div class="gv-card__body">
                   <h3 class="gv-card__name">{t.name}</h3>
-                  <p class="gv-card__role">{t.role}</p>
+                  <p class="gv-card__role">{t.role}{t.coSo ? ` · ${t.coSo}` : ''}</p>
                 </div>
+                {t.mission && (
+                  <>
+                    <button type="button" class="gv-card__nut" aria-haspopup="dialog">
+                      <span class="gv-sr">Xem tuyên ngôn sứ mệnh của {t.name}</span>
+                    </button>
+                    {/* Chữ nằm sẵn trong HTML để bot đọc được; chỉ bị CSS che, popup lấy lại từ đây */}
+                    <p class="gv-card__mission">{t.mission}</p>
+                  </>
+                )}
               </article>
             ))}
           </div>
@@ -241,9 +170,9 @@ function initials(name: string): string {
 
         <!-- Panel 2: Bộ môn -->
         <div class="gv-panel" id="panel-bo-mon" role="tabpanel" aria-labelledby="tab-bo-mon" hidden>
-          <p class="gv-panel__intro">Giáo viên bộ môn chuyên sâu từng môn học — Toán, Văn, Tiếng Anh, Lý, Hoá, Sinh, Sử, Địa, Tin học, Âm nhạc, Thể dục, Mỹ thuật, STEAM.</p>
+          <p class="gv-panel__intro">Giáo viên bộ môn và các vị trí chuyên môn khác — tổ trưởng chuyên môn, quản nhiệm, giáo vụ, tâm lý học đường. <strong>Bấm vào thẻ để đọc tuyên ngôn sứ mệnh</strong> của thầy cô.</p>
           <div class="gv-grid">
-            {teachersBM.map(t => (
+            {hienThi(giaoVienBoMon).map(t => (
               <article class="gv-card">
                 <div class="gv-card__photo">
                   {t.photo
@@ -253,35 +182,23 @@ function initials(name: string): string {
                 </div>
                 <div class="gv-card__body">
                   <h3 class="gv-card__name">{t.name}</h3>
-                  <p class="gv-card__role">{t.role}</p>
+                  <p class="gv-card__role">{t.role}{t.coSo ? ` · ${t.coSo}` : ''}</p>
                 </div>
+                {t.mission && (
+                  <>
+                    <button type="button" class="gv-card__nut" aria-haspopup="dialog">
+                      <span class="gv-sr">Xem tuyên ngôn sứ mệnh của {t.name}</span>
+                    </button>
+                    {/* Chữ nằm sẵn trong HTML để bot đọc được; chỉ bị CSS che, popup lấy lại từ đây */}
+                    <p class="gv-card__mission">{t.mission}</p>
+                  </>
+                )}
               </article>
             ))}
           </div>
         </div>
 
-        <!-- Panel 3: Bản ngữ -->
-        <div class="gv-panel" id="panel-ban-ngu" role="tabpanel" aria-labelledby="tab-ban-ngu" hidden>
-          <p class="gv-panel__intro">Đội ngũ giáo viên bản ngữ người Anh, Mỹ, Úc, Canada đang giảng dạy trực tiếp tại các cơ sở Trường Việt Anh. <strong>100% có chứng chỉ CELTA / TEFL</strong> quốc tế.</p>
-          <div class="gv-grid">
-            {teachersBN.map(t => (
-              <article class="gv-card">
-                <div class="gv-card__photo">
-                  {t.photo
-                    ? <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="72" height="72" />
-                    : <span class="gv-card__initials gv-card__initials--intl">{t.name.split(' ').slice(0,2).map((p:string)=>p[0]).join('')}</span>
-                  }
-                </div>
-                <div class="gv-card__body">
-                  <h3 class="gv-card__name">{t.name}</h3>
-                  <p class="gv-card__role">{t.role}</p>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
 
-        <!-- Panel 4: Tư vấn -->
         <div class="gv-panel" id="panel-tu-van" role="tabpanel" aria-labelledby="tab-tu-van" hidden>
           <p class="gv-panel__intro">Đội ngũ tư vấn tuyển sinh và giáo viên tư vấn học tập — hỗ trợ phụ huynh tìm hiểu về chương trình, lộ trình học và đăng ký nhập học tại tất cả cơ sở.</p>
           <div class="gv-grid gv-grid--tv">
@@ -321,6 +238,19 @@ function initials(name: string): string {
         </div>
       </div>
     </section>
+
+    <!-- Popup tuyên ngôn sứ mệnh — nội dung lấy từ chính thẻ giáo viên,
+         không sinh chữ mới, nên bot vẫn đọc được bản trong HTML -->
+    <div class="gv-pop" id="gvPop" role="dialog" aria-modal="true" aria-labelledby="gvPopTen" hidden>
+      <div class="gv-pop__nen" data-dong></div>
+      <div class="gv-pop__hop" role="document">
+        <button type="button" class="gv-pop__dong" data-dong aria-label="Đóng">&times;</button>
+        <div class="gv-pop__anh" id="gvPopAnh" aria-hidden="true"></div>
+        <h3 class="gv-pop__ten" id="gvPopTen"></h3>
+        <p class="gv-pop__role" id="gvPopRole"></p>
+        <p class="gv-pop__tn" id="gvPopTN"></p>
+      </div>
+    </div>
 
     <FooterBase />
   </div>
@@ -382,6 +312,49 @@ function initials(name: string): string {
     }
     tuHash(true);
     window.addEventListener('hashchange', function () { tuHash(true); });
+
+    // ---- Popup tuyên ngôn sứ mệnh của giáo viên ----
+    var pop = document.getElementById('gvPop');
+    if (pop) {
+      var popAnh = document.getElementById('gvPopAnh');
+      var popTen = document.getElementById('gvPopTen');
+      var popRole = document.getElementById('gvPopRole');
+      var popTN = document.getElementById('gvPopTN');
+      var nutMo = null;
+
+      function moPop(the, nut) {
+        nutMo = nut;
+        var anh = the.querySelector('.gv-card__photo img');
+        var tat = the.querySelector('.gv-card__initials');
+        popAnh.innerHTML = '';
+        if (anh) {
+          var i = document.createElement('img');
+          i.src = anh.getAttribute('src');
+          i.alt = '';
+          popAnh.appendChild(i);
+        } else if (tat) { popAnh.textContent = tat.textContent; }
+        popTen.textContent = (the.querySelector('.gv-card__name') || {}).textContent || '';
+        popRole.textContent = (the.querySelector('.gv-card__role') || {}).textContent || '';
+        popTN.textContent = (the.querySelector('.gv-card__mission') || {}).textContent || '';
+        pop.removeAttribute('hidden');
+        document.body.style.overflow = 'hidden';
+        pop.querySelector('.gv-pop__dong').focus();
+      }
+
+      function dongPop() {
+        pop.setAttribute('hidden', '');
+        document.body.style.overflow = '';
+        if (nutMo) { nutMo.focus(); nutMo = null; }
+      }
+
+      document.querySelectorAll('.gv-card__nut').forEach(function (nut) {
+        nut.addEventListener('click', function () { moPop(nut.closest('.gv-card'), nut); });
+      });
+      pop.querySelectorAll('[data-dong]').forEach(function (x) { x.addEventListener('click', dongPop); });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !pop.hasAttribute('hidden')) dongPop();
+      });
+    }
 
     // Rut gon tuyen ngon dai o the Tu van
     var khoi = document.querySelectorAll('.gv-tvcard__text');
@@ -531,6 +504,47 @@ function initials(name: string): string {
   }
   .gv-tvcard__more:hover { background: #f9dd0e; border-color: #f9dd0e; }
   .gv-tvcard__more:focus-visible { outline: 2px solid #26275D; outline-offset: 2px; }
+  /* THẺ BẤM ĐƯỢC + POPUP TUYÊN NGÔN */
+  .gv-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+  /* Chữ tuyên ngôn nằm sẵn trong HTML cho bot; chỉ ẩn bằng CSS */
+  .gv-card__mission { display: none; }
+  .gv-card { position: relative; }
+  .gv-card__nut {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    background: none; border: 0; padding: 0; margin: 0; cursor: pointer; border-radius: 14px;
+  }
+  .gv-card__nut:focus-visible { outline: 2px solid #26275D; outline-offset: 2px; }
+  .gv-card:has(.gv-card__nut):hover { border-color: #f9dd0e; box-shadow: 0 8px 24px rgba(38,39,93,.09); transform: translateY(-2px); }
+  /* Dấu hiệu thẻ bấm được */
+  .gv-card:has(.gv-card__nut)::after {
+    content: '›'; position: absolute; right: .85rem; top: 50%; transform: translateY(-50%);
+    font-size: 1.35rem; line-height: 1; color: #94a3b8; transition: color .2s, transform .2s;
+  }
+  .gv-card:has(.gv-card__nut):hover::after { color: #26275D; transform: translateY(-50%) translateX(3px); }
+
+  .gv-pop { position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center; padding: 1.25rem; }
+  .gv-pop[hidden] { display: none; }
+  .gv-pop__nen { position: absolute; inset: 0; background: rgba(15,23,42,.55); backdrop-filter: blur(2px); }
+  .gv-pop__hop {
+    position: relative; background: #fff; border-radius: 18px; max-width: 460px; width: 100%;
+    max-height: 86vh; overflow-y: auto; padding: 1.75rem 1.5rem 1.5rem; text-align: center;
+    box-shadow: 0 24px 60px rgba(15,23,42,.28);
+  }
+  .gv-pop__dong {
+    position: absolute; top: .5rem; right: .65rem; width: 36px; height: 36px;
+    font-size: 1.6rem; line-height: 1; color: #64748b; background: none; border: 0; cursor: pointer; border-radius: 50%;
+  }
+  .gv-pop__dong:hover { background: #f1f5f9; color: #26275D; }
+  .gv-pop__dong:focus-visible { outline: 2px solid #26275D; outline-offset: 2px; }
+  .gv-pop__anh { width: 128px; height: 128px; margin: 0 auto .9rem; border-radius: 50%; overflow: hidden;
+    background: linear-gradient(135deg, #26275D, #0d2f55); color: #fff;
+    display: flex; align-items: center; justify-content: center; font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 1.75rem; letter-spacing: .05em; }
+  .gv-pop__anh img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .gv-pop__ten { font-family: 'Montserrat', sans-serif; font-size: 1.15rem; font-weight: 800; color: #26275D; margin: 0 0 .25rem; }
+  .gv-pop__role { font-size: .86rem; color: #64748b; margin: 0 0 1rem; }
+  .gv-pop__tn { font-size: .95rem; font-style: italic; color: #334155; line-height: 1.75; margin: 0; text-align: left; }
+  .gv-pop__tn::before { content: open-quote; } .gv-pop__tn::after { content: close-quote; }
+  @media (max-width: 480px) { .gv-pop__hop { padding: 1.5rem 1.1rem 1.25rem; } .gv-pop__anh { width: 104px; height: 104px; } }
   /* CTA */
   .gv-cta { background: linear-gradient(135deg, #26275D 0%, #26275D 100%); color: #fff; padding: 2.5rem 0; }
   .gv-cta__inner { text-align: center; max-width: 720px; margin: 0 auto; }

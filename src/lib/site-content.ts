@@ -142,6 +142,7 @@ export const mainNavLeft = [
       { label: 'Toán Tư Duy', href: '/toan-tu-duy' },
       { label: 'Giải Mã Tiềm Năng', href: '/tuyen-sinh/giai-ma-tiem-nang' },
       { label: 'Du học', href: '/du-hoc' },
+      { label: 'Kỷ luật tích cực', href: '/chuong-trinh/ky-luat-tich-cuc' },
     ]
   },
 ];

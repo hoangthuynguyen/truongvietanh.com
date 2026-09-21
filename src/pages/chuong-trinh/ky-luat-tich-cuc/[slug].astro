@@ -1,0 +1,22 @@
+---
+// Bài 02 → 08 của bộ Kỷ luật tích cực. Thân bài đọc từ src/data/ky-luat-tich-cuc/<slug>.html.
+import KyLuatTichCucLayout from '../../../layouts/KyLuatTichCucLayout.astro';
+import { baiKLTC } from '../../../data/ky-luat-tich-cuc';
+
+export function getStaticPaths() {
+  return baiKLTC.filter((b) => b.slug !== 'index').map((b) => ({ params: { slug: b.slug } }));
+}
+
+const { slug } = Astro.params;
+const bai = baiKLTC.find((b) => b.slug === slug)!;
+
+const thanBai = import.meta.glob('../../../data/ky-luat-tich-cuc/*.html', {
+  query: '?raw',
+  import: 'default',
+  eager: true,
+}) as Record<string, string>;
+const html = thanBai[`../../../data/ky-luat-tich-cuc/${slug}.html`];
+if (!html) throw new Error(`Thiếu thân bài src/data/ky-luat-tich-cuc/${slug}.html`);
+---
+
+<KyLuatTichCucLayout bai={bai} html={html} />

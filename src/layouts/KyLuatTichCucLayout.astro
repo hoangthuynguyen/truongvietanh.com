@@ -1,0 +1,263 @@
+---
+// Layout dùng chung cho 8 bài "Kỷ luật tích cực Việt Anh" tại /chuong-trinh/ky-luat-tich-cuc/.
+// Trang văn bản dài (như /chinh-sach-ai): hero + mục lục 8 bài bên trái + thân bài.
+// Thân bài là HTML thuần (src/data/ky-luat-tich-cuc/<slug>.html) đưa vào qua prop `html`,
+// nên nội dung nằm sẵn trong HTML server dựng — bot và mô hình đọc được, không nạp bằng JS.
+import BaseLayout from './BaseLayout.astro';
+import HeaderBase from '../components/HeaderBase.astro';
+import FooterBase from '../components/FooterBase.astro';
+import {
+  baiKLTC,
+  docxUrl,
+  KLTC_BASE,
+  KLTC_NGAY_BAN_HANH,
+  KLTC_NGAY_BAN_HANH_VN,
+  KLTC_QUYET_DINH,
+  type BaiKLTC,
+} from '../data/ky-luat-tich-cuc';
+
+type Props = {
+  bai: BaiKLTC;
+  html: string;
+  /** Đoạn dẫn ngắn hiện trong hero (chỉ Bài 01 có). */
+  lead?: string;
+};
+
+const { bai, html, lead } = Astro.props;
+
+const idx = baiKLTC.findIndex((b) => b.slug === bai.slug);
+const truoc = idx > 0 ? baiKLTC[idx - 1] : null;
+const sau = idx < baiKLTC.length - 1 ? baiKLTC[idx + 1] : null;
+
+const canonical = `https://truongvietanh.com${bai.path}`;
+// JPG chứ không WebP: Zalo không dựng được preview từ WebP. Vẽ bằng Pillow, 1200×630.
+const ogImage = 'https://truongvietanh.com/og-ky-luat-tich-cuc.jpg';
+const tieuDeDayDu = `Bài ${bai.so} — ${bai.tieuDe}`;
+const title = `${bai.tieuDe} — Kỷ luật tích cực Việt Anh (Bài ${bai.so})`;
+
+// Bọc mọi <table> vào khung cuộn ngang để bảng 7 cột không phá layout trên điện thoại.
+const body = html
+  .replace(/<table>/g, '<div class="kltc-table"><table>')
+  .replace(/<\/table>/g, '</table></div>');
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Article',
+      '@id': `${canonical}#article`,
+      headline: tieuDeDayDu,
+      name: tieuDeDayDu,
+      description: bai.moTa,
+      inLanguage: 'vi-VN',
+      url: canonical,
+      datePublished: KLTC_NGAY_BAN_HANH,
+      dateModified: KLTC_NGAY_BAN_HANH,
+      isPartOf: { '@id': `https://truongvietanh.com${KLTC_BASE}#bo-tai-lieu` },
+      author: { '@id': 'https://truongvietanh.com/#organization' },
+      publisher: { '@id': 'https://truongvietanh.com/#organization' },
+      about: ['Kỷ luật tích cực', 'Thông tư 19/2025/TT-BGDĐT', 'Hành vi học sinh', 'Trường Việt Anh'],
+      breadcrumb: { '@id': `${canonical}#breadcrumb` },
+    },
+    {
+      '@type': 'Collection',
+      '@id': `https://truongvietanh.com${KLTC_BASE}#bo-tai-lieu`,
+      name: 'Bộ tài liệu Kỷ luật tích cực Việt Anh',
+      description: `8 tài liệu ban hành kèm ${KLTC_QUYET_DINH} ngày ${KLTC_NGAY_BAN_HANH_VN} của Chủ tịch Công ty CP Major Education.`,
+      url: `https://truongvietanh.com${KLTC_BASE}`,
+      hasPart: baiKLTC.map((b) => ({
+        '@type': 'Article',
+        name: `Bài ${b.so} — ${b.tieuDe}`,
+        url: `https://truongvietanh.com${b.path}`,
+      })),
+    },
+    {
+      '@type': 'EducationalOrganization',
+      '@id': 'https://truongvietanh.com/#organization',
+      name: 'Hệ thống Trường Việt Anh',
+      alternateName: ['Trường Việt Anh', 'Trường Liên Cấp Việt Anh', 'Viet Anh School System'],
+      url: 'https://truongvietanh.com',
+      logo: 'https://truongvietanh.com/logo-crest-80.webp',
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Trang chủ', item: 'https://truongvietanh.com' },
+        { '@type': 'ListItem', position: 2, name: 'Chương trình', item: 'https://truongvietanh.com/chuong-trinh' },
+        ...(bai.slug === 'index'
+          ? [{ '@type': 'ListItem', position: 3, name: 'Kỷ luật tích cực' }]
+          : [
+              { '@type': 'ListItem', position: 3, name: 'Kỷ luật tích cực', item: `https://truongvietanh.com${KLTC_BASE}` },
+              { '@type': 'ListItem', position: 4, name: `Bài ${bai.so}` },
+            ]),
+      ],
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={bai.moTa}
+  keywords="kỷ luật tích cực, Trường Việt Anh, Thông tư 19/2025, hành vi học sinh, không hình phạt thể chất, quy trình 6 bước, lằn ranh đỏ"
+  canonical={canonical}
+  ogImage={ogImage}
+  ogImageWidth={1200}
+  ogImageHeight={630}
+  ogType="article"
+  structuredData={structuredData}
+>
+  <div class="gi-page">
+    <HeaderBase currentPath={KLTC_BASE} />
+
+    <section class="gi-hero kltc-hero">
+      <div class="gi-container gi-hero-inner">
+        <div class="gi-hero-left" style="flex:1">
+          <nav class="gi-breadcrumb" aria-label="Breadcrumb">
+            <a href="/">Trang chủ</a>
+            <span aria-hidden="true"></span>
+            <a href="/chuong-trinh">Chương trình</a>
+            <span aria-hidden="true"></span>
+            {bai.slug === 'index'
+              ? <span>Kỷ luật tích cực</span>
+              : <><a href={KLTC_BASE}>Kỷ luật tích cực</a><span aria-hidden="true"></span><span>Bài {bai.so}</span></>}
+          </nav>
+          <p class="kltc-kicker">Kỷ luật tích cực Việt Anh · Bài {bai.so}/08</p>
+          <h1 class="gi-h1">{bai.tieuDe}</h1>
+          <p class="gi-subtitle">
+            Tài liệu {bai.so} · Bản 1.0 · Ban hành kèm {KLTC_QUYET_DINH} ngày {KLTC_NGAY_BAN_HANH_VN}
+          </p>
+          {lead && <p class="kltc-lead">{lead}</p>}
+          <div class="gi-trust-badges">
+            <div class="gi-badge"><strong>Từ 9/9/2026</strong> Bỏ hình phạt thể chất</div>
+            <div class="gi-badge"><strong>6 bước</strong> Dạy trước, sửa sau</div>
+            <div class="gi-badge"><strong>Thông tư 19/2025</strong> Đúng 4 biện pháp</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="gi-container gi-body">
+      <nav class="gi-toc kltc-toc" aria-label="Bộ tài liệu 8 bài">
+        <p class="gi-toc-title">8 bài</p>
+        <ol class="gi-toc-list">
+          {baiKLTC.map((b) => (
+            <li>
+              {b.slug === bai.slug
+                ? <a href={b.path} aria-current="page" class="is-current">{b.tieuDeNgan}</a>
+                : <a href={b.path}>{b.tieuDeNgan}</a>}
+            </li>
+          ))}
+        </ol>
+        <a href={docxUrl(bai)} class="gi-toc-cta" download>Tải bản Word</a>
+      </nav>
+
+      <article class="gi-main kltc-main" id="main-content" data-no-collapse>
+        <div class="kltc" set:html={body} />
+
+        <div class="kltc-dl">
+          <a class="kltc-dl-btn" href={docxUrl(bai)} download>
+            Tải bản Word (.docx) của Tài liệu {bai.so}
+          </a>
+          <span class="kltc-dl-note">Bản tiếng Việt là bản chính thức. Bộ đủ 8 tài liệu tại <a href={KLTC_BASE}>Bài 01</a>.</span>
+        </div>
+
+        <nav class="kltc-nav" aria-label="Bài trước và bài sau">
+          {truoc
+            ? <a href={truoc.path} class="kltc-nav-prev"><small>← Bài {truoc.so}</small>{truoc.tieuDeNgan}</a>
+            : <span></span>}
+          {sau
+            ? <a href={sau.path} class="kltc-nav-next"><small>Bài {sau.so} →</small>{sau.tieuDeNgan}</a>
+            : <a href={KLTC_BASE} class="kltc-nav-next"><small>Về đầu bộ →</small>Bài 01 — Quy định gốc</a>}
+        </nav>
+      </article>
+    </div>
+
+    <FooterBase />
+  </div>
+</BaseLayout>
+
+<style is:global>
+  /* Hero */
+  .kltc-kicker {
+    color: #f9dd0e; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    font-size: 0.85rem; margin: 0 0 0.5rem;
+  }
+  .kltc-lead {
+    font-size: 1.05rem; line-height: 1.65; color: rgba(255,255,255,0.92);
+    background: rgba(255,255,255,0.08); border-left: 4px solid #f9dd0e;
+    padding: 0.8rem 1rem; border-radius: 6px; margin: 0 0 1.5rem; max-width: 60ch;
+  }
+
+  /* Mục lục trái */
+  .kltc-toc .gi-toc-list li a.is-current { color: #26275D; font-weight: 700; }
+
+  /* Thân bài — chuyển từ khối <style> của ban soạn thảo, đổi màu theo bộ nhận diện site */
+  .kltc-main { max-width: 900px; }
+  .kltc { line-height: 1.7; color: #1f2937; font-size: 1.02rem; }
+  .kltc > p:first-child { font-size: 1.1rem; font-weight: 600; color: #26275D; }
+  .kltc h2 {
+    font-size: 1.45rem; font-weight: 800; color: #26275D; margin: 2em 0 0.7em;
+    padding-bottom: 0.35em; border-bottom: 3px solid #f9dd0e; line-height: 1.3;
+  }
+  .kltc h3 { font-size: 1.15rem; font-weight: 700; color: #26275D; margin: 1.5em 0 0.5em; }
+  .kltc p { margin: 0 0 0.9em; }
+  .kltc ul, .kltc ol { margin: 0 0 1em; padding-left: 1.5em; }
+  .kltc li { margin: 0.3em 0; }
+  .kltc .meta { font-size: 0.92rem; color: #64748b; margin-bottom: 1.2em; }
+  .kltc .box {
+    background: #FFF7E6; border-left: 4px solid #cbb30a; padding: 0.85em 1.1em;
+    border-radius: 6px; margin: 1.2em 0;
+  }
+  .kltc .en { margin-top: 3em; padding-top: 1.5em; border-top: 3px double #cbb30a; }
+  .kltc a { color: #26275D; text-decoration: underline; }
+
+  /* Bảng: cuộn ngang trên màn hẹp, không ép chữ xuống dòng từng ký tự */
+  .kltc-table { overflow-x: auto; margin: 1.2em 0; -webkit-overflow-scrolling: touch; }
+  .kltc table { border-collapse: collapse; width: 100%; font-size: 0.93rem; min-width: 560px; }
+  .kltc th, .kltc td {
+    border: 1px solid #d1d5db; padding: 0.55em 0.75em; vertical-align: top; text-align: left;
+    line-height: 1.5;
+  }
+  .kltc th { background: #26275D; color: #fff; font-weight: 700; }
+  .kltc tr:nth-child(even) td { background: #F9FAFB; }
+  .kltc td b, .kltc td strong { color: #26275D; }
+
+  /* Tải Word + nav trước/sau */
+  .kltc-dl {
+    margin: 2.5rem 0 0; padding: 1.25rem 1.4rem; background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 12px; display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem;
+  }
+  .kltc-dl-btn {
+    display: inline-block; padding: 0.65em 1.2em; background: #26275D; color: #fff !important;
+    border-radius: 8px; font-weight: 700; text-decoration: none !important;
+  }
+  .kltc-dl-note { font-size: 0.92rem; color: #64748b; }
+  .kltc-dl-note a { color: #26275D; }
+
+  .kltc-nav {
+    display: flex; justify-content: space-between; gap: 1rem; margin: 1.5rem 0 0;
+    padding-top: 1.25rem; border-top: 1px solid #e5e7eb;
+  }
+  .kltc-nav a {
+    display: flex; flex-direction: column; gap: 0.15rem; text-decoration: none; color: #26275D;
+    font-weight: 700; max-width: 48%; line-height: 1.35;
+  }
+  .kltc-nav a small { font-size: 0.8rem; font-weight: 700; color: #a3890a; text-transform: uppercase; letter-spacing: 0.06em; }
+  .kltc-nav-next { text-align: right; align-items: flex-end; margin-left: auto; }
+
+  @media (hover: hover) {
+    .kltc-dl-btn:hover { background: #18193a; }
+    .kltc-nav a:hover { text-decoration: underline; }
+  }
+
+  @media (max-width: 780px) {
+    .kltc-lead { font-size: 1rem; }
+    .kltc h2 { font-size: 1.3rem; }
+    .kltc table { font-size: 0.88rem; }
+    .kltc-nav { flex-direction: column; }
+    .kltc-nav a { max-width: 100%; }
+    .kltc-nav-next { text-align: left; align-items: flex-start; margin-left: 0; }
+  }
+</style>

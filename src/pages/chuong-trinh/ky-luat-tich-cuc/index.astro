@@ -1,0 +1,13 @@
+---
+// Bài 01 — Quy định hỗ trợ học sinh phát triển hành vi tích cực (văn bản gốc).
+// Trang đích của menu "Chương trình → Kỷ luật tích cực". 7 bài còn lại ở [slug].astro.
+import KyLuatTichCucLayout from '../../../layouts/KyLuatTichCucLayout.astro';
+import { baiKLTC } from '../../../data/ky-luat-tich-cuc';
+import html from '../../../data/ky-luat-tich-cuc/index.html?raw';
+
+const bai = baiKLTC[0];
+const lead =
+  'Từ ngày 9/9/2026, Trường Việt Anh bỏ hoàn toàn hình phạt thể chất và mọi hình thức làm nhục học sinh ở mọi cơ sở, mọi cấp. Nhà trường áp dụng Kỷ luật tích cực: dạy hành vi mong đợi trước, khắc phục khi sai, đồng hành khi lặp lại. Trang này là văn bản gốc (Bài 01); bảy bài còn lại là các tài liệu đi kèm.';
+---
+
+<KyLuatTichCucLayout bai={bai} html={html} lead={lead} />

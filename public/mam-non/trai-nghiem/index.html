@@ -144,37 +144,41 @@
   <div class="wrap">
     <div class="form-card">
       <h2>Đặt buổi học thử cho con</h2>
-      <p>Buổi học thử hoàn toàn miễn phí. Chỉ cần 3 thông tin — cơ sở bạn chọn sẽ gọi lại trong 24 giờ để chốt giờ.</p>
+      <p>Buổi học thử hoàn toàn miễn phí. Điền trong 1 phút — cơ sở bạn chọn sẽ gọi lại trong 24 giờ để chốt giờ.</p>
       <form id="tn-form" action="#" method="post" novalidate>
         <label for="co_so">Cơ sở muốn đến <span class="req">*</span></label>
         <select id="co_so" name="co_so" required>
           <option value="">— Chọn cơ sở —</option>
           <optgroup label="TP.HCM">
-            <option value="mn-viet-anh-go-vap" data-loc="go-vap" data-province="TP.HCM" data-programs="mn,tth">Mầm non Việt Anh Gò Vấp — 573 Lê Đức Thọ, P. An Hội Đông</option>
-            <option value="vagv" data-loc="go-vap" data-province="TP.HCM" data-programs="tth">Liên cấp Việt Anh Gò Vấp (Tiền Tiểu học) — 160/72 Phan Huy Ích, P. An Hội Tây</option>
-            <option value="vabt" data-loc="binh-tan" data-province="TP.HCM" data-programs="tth">Liên cấp Việt Anh Bình Tân (Tiền Tiểu học) — Số 7 Đường 38A, P. Tân Tạo</option>
+            <option value="mn-viet-anh-go-vap" data-loc="go-vap" data-province="TP.HCM" data-programs="mn,tth" data-hotline="0774588988">Mầm non Việt Anh Gò Vấp — 573 Lê Đức Thọ, P. An Hội Đông</option>
+            <option value="vagv" data-loc="go-vap" data-province="TP.HCM" data-programs="tth" data-hotline="0916961409">Liên cấp Việt Anh Gò Vấp (Tiền Tiểu học) — 160/72 Phan Huy Ích, P. An Hội Tây</option>
+            <option value="vabt" data-loc="binh-tan" data-province="TP.HCM" data-programs="tth" data-hotline="0916961409">Liên cấp Việt Anh Bình Tân (Tiền Tiểu học, từ 3 tuổi) — Số 7 Đường 38A, P. Tân Tạo</option>
           </optgroup>
           <optgroup label="Cần Giuộc – Tây Ninh">
-            <option value="nhan-le" data-loc="can-giuoc" data-province="Tây Ninh" data-programs="mn,tth">Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu</option>
-            <option value="thai-son" data-loc="thai-son" data-province="Tây Ninh" data-programs="mn,tth">Mầm non Thái Sơn — Khu dân cư T&amp;T</option>
+            <option value="nhan-le" data-loc="can-giuoc" data-province="Tây Ninh" data-programs="mn,tth" data-hotline="0902095956">Mầm non Nhân Lễ — 22 Đường D2, KDC Long Hậu</option>
+            <option value="thai-son" data-loc="thai-son" data-province="Tây Ninh" data-programs="mn,tth" data-hotline="0902095956">Mầm non Thái Sơn — Đường 11, KDC Thái Sơn, Cần Giuộc</option>
           </optgroup>
           <optgroup label="Rạch Giá – An Giang">
-            <option value="mgis" data-loc="rach-gia" data-province="An Giang" data-programs="mn,tth">Mầm non Quốc tế Mekong Xanh (MGIS) — Lô E7, Đường số 13, KĐT Tây Bắc</option>
+            <option value="mgis" data-loc="rach-gia" data-province="An Giang" data-programs="mn,tth" data-hotline="0346455455">Mầm non Quốc tế Mekong Xanh (MGIS) — Lô E7, Đường số 13, KĐT Tây Bắc</option>
           </optgroup>
         </select>
 
         <label>Con học thử chương trình nào? <span class="req">*</span></label>
         <div class="radios" id="programs">
-          <label class="on"><input type="radio" name="chuong_trinh" value="Mầm non" checked><span>Mầm non<small>2 – 5 tuổi</small></span></label>
-          <label><input type="radio" name="chuong_trinh" value="Tiền Tiểu học"><span>Tiền Tiểu học<small>5 – 6 tuổi, chuẩn bị vào lớp 1</small></span></label>
+          <label class="on"><input type="radio" name="chuong_trinh" value="Mầm non" checked><span>Mầm non<small>12 tháng – 6 tuổi</small></span></label>
+          <label><input type="radio" name="chuong_trinh" value="Tiền Tiểu học"><span>Tiền Tiểu học<small>4 – 6 tuổi, chuẩn bị vào lớp 1</small></span></label>
         </div>
-        <p class="hint" id="program-hint" hidden>Cơ sở này chỉ có lớp Tiền Tiểu học — đã chọn giúp bạn.</p>
+        <p class="hint" id="program-hint" hidden></p>
 
         <label for="ten_be">Tên bé <span class="req">*</span></label>
         <input type="text" id="ten_be" name="ten_be" required placeholder="Ví dụ: Bé Minh An" autocomplete="off">
 
         <label for="phone">Số điện thoại / Zalo của bạn <span class="req">*</span></label>
         <input type="tel" id="phone" name="phone" required placeholder="0912 345 678">
+
+        <label for="email">Email <span style="font-weight:400;color:var(--grey);">(không bắt buộc)</span></label>
+        <input type="email" id="email" name="email" placeholder="ban@email.com" autocomplete="email">
+        <p class="hint">Để trường gửi thông tin buổi học và bản báo cáo qua email.</p>
 
         <label for="ngay_muon_den">Ngày muốn đến <span class="req">*</span></label>
         <input type="date" id="ngay_muon_den" name="ngay_muon_den" required>
@@ -186,7 +190,7 @@
     </div>
     <div class="trust">
       <span>Xếp lịch trong 24 giờ</span>
-      <span>Cần hỗ trợ ngay: <a href="tel:0916961409">0916 961 409</a></span>
+      <span>Cần hỗ trợ ngay: <a href="tel:0916961409" id="trust-hotline">0916 961 409</a></span>
       <span>Zalo: <a href="https://zalo.me/1678310120468101523" rel="noopener">Trường Việt Anh</a></span>
     </div>
   </div>
@@ -238,9 +242,17 @@
       if (inp.value === 'Mầm non') { inp.disabled = onlyTTH; lab.classList.toggle('off', onlyTTH); if (onlyTTH && inp.checked) { inp.checked = false; } }
     });
     if (onlyTTH) { radios.querySelector('input[value="Tiền Tiểu học"]').checked = true; }
+    hint.textContent = sel.value === 'vabt'
+      ? 'Ở Bình Tân, lớp Tiền Tiểu học nhận bé từ 3 tuổi, học tiếng Anh toàn thời gian, sinh hoạt như một lớp mầm non.'
+      : 'Cơ sở này chỉ có lớp Tiền Tiểu học — đã chọn giúp bạn.';
     hint.hidden = !onlyTTH;
+    var hl = hotline();
+    var th = document.getElementById('trust-hotline');
+    th.href = 'tel:' + hl; th.textContent = fmtPhone(hl);
     paintRadios();
   }
+  function hotline(){ var o = sel.options[sel.selectedIndex]; return (o && o.getAttribute('data-hotline')) || '0916961409'; }
+  function fmtPhone(p){ return p.replace(/^(\d{4})(\d{3})(\d{3})$/, '$1 $2 $3'); }
   function paintRadios(){
     radios.querySelectorAll('input').forEach(function(inp){ inp.parentElement.classList.toggle('on', inp.checked); });
   }
@@ -265,6 +277,9 @@
     if (!d || d < dateEl.min || d > dateEl.max) { alert('Bạn chọn ngày muốn đến (từ ngày mai, trong vòng 60 ngày) nhé.'); dateEl.focus(); return; }
     var dow = new Date(d + 'T00:00:00').getDay();
     if (dow === 0) { alert('Chủ nhật trường không có lớp — bạn chọn ngày Thứ 2 đến Thứ 7 nhé.'); dateEl.focus(); return; }
+    var email = (form.email.value || '').trim();
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) { alert('Email chưa đúng — bạn kiểm tra lại, hoặc để trống cũng được.'); form.email.focus(); return; }
+    var hl = hotline();
 
     var campusLabel = opt.text.split(' — ')[0];
     var loc = opt.getAttribute('data-loc') || '';
@@ -279,6 +294,8 @@
       fullName: tenBe,
       childName: tenBe,
       phone: pv,
+      email: email,
+      campus_hotline: hl,
       school_level: 'mam-non',
       grade: program === 'Tiền Tiểu học' ? '5-tuoi' : '',
       source: source,
@@ -317,14 +334,14 @@
         + '<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin:0 auto 20px;display:block"><circle cx="32" cy="32" r="32" fill="#26275D"/><path d="M18 33l10 10 18-20" stroke="#f9dd0e" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         + '<h2 style="color:var(--navy);margin-bottom:12px;">Đã nhận đăng ký cho ' + escapeHtml(tenBe) + '!</h2>'
         + '<p>' + escapeHtml(campusLabel) + ' sẽ gọi bạn trong <strong>24 giờ</strong> để chốt giờ cho ngày <strong>' + ngayVN + '</strong>. Nếu cần trao đổi ngay:</p>'
-        + '<a href="tel:0916961409" style="display:inline-block;margin-top:16px;background:#26275D;color:#f9dd0e;font-weight:800;padding:14px 28px;border-radius:10px;text-decoration:none;font-size:18px;">Gọi 0916 961 409</a>'
+        + '<a href="tel:' + hl + '" style="display:inline-block;margin-top:16px;background:#26275D;color:#f9dd0e;font-weight:800;padding:14px 28px;border-radius:10px;text-decoration:none;font-size:18px;">Gọi ' + fmtPhone(hl) + '</a>'
         + '</div>';
       card.scrollIntoView({ behavior: 'smooth', block: 'center' });
     })
     .catch(function(){
       btn.textContent = 'Đặt buổi học thử cho con →';
       btn.disabled = false;
-      alert('Có lỗi khi gửi. Bạn thử lại, hoặc gọi trực tiếp 0916 961 409 để đặt lịch nhé.');
+      alert('Có lỗi khi gửi. Bạn thử lại, hoặc gọi trực tiếp ' + fmtPhone(hotline()) + ' để đặt lịch nhé.');
     });
   });
 
@@ -357,13 +374,14 @@ Chú thích: COR Advantage (HighScope) — 8 mức 0–7, 34 yếu tố + 2 yế
 
 [3 BƯỚC] Đăng ký & chọn ngày → Con học một buổi như học sinh thật (cô quan sát, không kiểm tra) → Nhận báo cáo + 15 phút với cô.
 
-[FORM] Cơ sở* (6 lựa chọn) · Chương trình* (Mầm non 2–5 / Tiền Tiểu học 5–6; VAGV & VABT chỉ Tiền Tiểu học) · Tên bé* · SĐT/Zalo* · Ngày muốn đến* (T2–T7, ngày mai → +60 ngày)
+[FORM] Cơ sở* (6 lựa chọn, hotline riêng từng cơ sở) · Chương trình* (Mầm non 12 tháng–6 tuổi / Tiền Tiểu học 4–6; VAGV & VABT chỉ Tiền Tiểu học, VABT nhận từ 3 tuổi) · Tên bé* · SĐT/Zalo* · Email (tuỳ chọn) · Ngày muốn đến* (T2–T7, ngày mai → +60 ngày)
+Định tuyến theo Drive 02_KB_Dinh_Tuyen_Co_So (1VzjjeW-9UIAtbhe25fpGFHgWFTfuV9BD).
 
 [KÝ] Nguyễn Mạnh Dương — Nhà sáng lập & Chủ tịch, Hệ thống Trường Việt Anh.
 
 NOTES KỸ THUẬT:
 - Màu: Navy #26275D | Vàng #f9dd0e (brand-configs). Font Be Vietnam Pro, body 17px, heading ≥25px.
-- Form POST cùng nguồn → /api/lead (Worker) → GoHighLevel + Pancake CRM v2 (workspace 1728, bảng lead). UTM lấy qua /js/va-utm.js (window.__vaUTM), lưu sessionStorage, có fallback inline.
+- Form POST cùng nguồn → /api/lead (Worker) → Pancake CRM v2 (workspace 1728, bảng lead) + Zalo alert. KHÔNG đi GHL (27/09/2026); email → GetResponse. UTM lấy qua /js/va-utm.js (window.__vaUTM), lưu sessionStorage, có fallback inline.
 - source = mam-non-trai-nghiem-<go-vap|binh-tan|can-giuoc|thai-son|rach-gia> → Pancake dien_giai_nguon_mkt, GHL opportunity "Mầm Non <cơ sở>".
 - Cơ sở + chương trình + ngày muốn đến gửi trong `note` (+ `province`) — Worker ghi vào mo_ta_khach_hang (Pancake), GHL note, Zalo alert.
 - Conversion: dataLayer `dang_ky_trai_nghiem_mam_non_thanh_cong` + gtag AW-1003624219/--pTCKeajXIQm67I3gM (conversion action 239291687).

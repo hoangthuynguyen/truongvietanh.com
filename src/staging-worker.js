@@ -581,10 +581,15 @@ async function handleLeadSubmission(request, env) {
     }
 
     const results = { ghl: null, pancake: null };
+    // Trang học thử Mầm non + /school-tour KHÔNG đi GHL (anh Dương chốt 27/09/2026):
+    // lead → Pancake + Zalo alert; luồng email chuyển sang GetResponse.
+    const skipGhl = isGetResponseFunnel(data.source);
 
     if (data.step !== 'partial_capture') {
       // === GoHighLevel: Upsert Contact ===
-      try {
+      if (skipGhl) {
+        results.ghl = { skipped: true, reason: 'getresponse_funnel' };
+      } else try {
         const tags = ['website-lead'];
         if (data.schoolLevel) tags.push(data.schoolLevel);
         if (data.grade) tags.push(data.grade);
@@ -993,7 +998,7 @@ async function handleLeadSubmission(request, env) {
       }
       // All other landing pages (mam-non/tieu-hoc/thcs/thpt/ngay-mo-cua/dat-lich/brand/future-ready)
       // → send generic confirmation email "we'll call you in 24h"
-      else if (data.email && (data.source || '').match(/^(mam-non|tieu-hoc|thcs|thpt|ngay-mo-cua|dat-lich-tham-quan|brand-story|future-ready-challenge)/)) {
+      else if (!skipGhl && data.email && (data.source || '').match(/^(mam-non|tieu-hoc|thcs|thpt|ngay-mo-cua|dat-lich-tham-quan|brand-story|future-ready-challenge)/)) {
         promises.push(sendLandingConfirmEmail(data, env, contactId, ghlApiKey).catch((e) => { console.error('landing confirm email fail', e); }));
       }
       // Create opportunity for ALL trai-he leads (quiz or sales page)
@@ -1016,6 +1021,10 @@ async function handleLeadSubmission(request, env) {
   } catch (err) {
     return jsonResponse({ success: false, error: 'Invalid request body' }, 400);
   }
+}
+
+function isGetResponseFunnel(source) {
+  return /^(mam-non-trai-nghiem|school-tour)(-|$)/.test(String(source || ''));
 }
 
 // === WORKFLOW FUNCTIONS ===

@@ -65,6 +65,12 @@ export default {
       return Response.redirect('https://truongvietanh.com/blog/', 301);
     }
 
+    // App Bản đồ Khôn Lớn trỏ CTA mầm non vào /mam-non/hoc-trai-nghiem → trang thật. PHẢI giữ query
+    // (?src=bdkl&id=&lop=&ngay=) — worker dùng nó để gắn tag GetResponse; bảng redirect chung bên dưới làm rơi query.
+    if (url.pathname === '/mam-non/hoc-trai-nghiem' || url.pathname === '/mam-non/hoc-trai-nghiem/') {
+      return Response.redirect('https://truongvietanh.com/mam-non/trai-nghiem/' + url.search, 301);
+    }
+
     // Gộp trang nội trú trùng: /tuyen-sinh/lop-10-noi-tru → URL ngắn /lop-10-noi-tru/ (301)
     if (url.pathname === '/tuyen-sinh/lop-10-noi-tru' || url.pathname === '/tuyen-sinh/lop-10-noi-tru/') {
       return Response.redirect('https://truongvietanh.com/lop-10-noi-tru/', 301);
@@ -1001,6 +1007,11 @@ async function handleLeadSubmission(request, env) {
       else if (!skipGhl && data.email && (data.source || '').match(/^(mam-non|tieu-hoc|thcs|thpt|ngay-mo-cua|dat-lich-tham-quan|brand-story|future-ready-challenge)/)) {
         promises.push(sendLandingConfirmEmail(data, env, contactId, ghlApiKey).catch((e) => { console.error('landing confirm email fail', e); }));
       }
+      if (skipGhl && data.email) {
+        promises.push(addToGetResponse(rawData, data, env)
+          .then((r) => { results.getresponse = r; })
+          .catch((e) => { results.getresponse = { error: e.message }; }));
+      }
       // Create opportunity for ALL trai-he leads (quiz or sales page)
       if (isQuizLead(data) && contactId) {
         promises.push(createQuizOpportunity(contactId, data, ghlApiKey).catch(() => {}));
@@ -1025,6 +1036,105 @@ async function handleLeadSubmission(request, env) {
 
 function isGetResponseFunnel(source) {
   return /^(mam-non-trai-nghiem|school-tour)(-|$)/.test(String(source || ''));
+}
+
+// GetResponse (tài khoản BKpyQ) — list/field/tag tạo 27/09/2026. CỐ Ý KHÔNG gắn tag cấp học có sẵn
+// (Mam_Non, Tieu_Hoc, THCS...) vì các automation "Email 0 – Phân loại độ tuổi" đang bắt những tag đó.
+const GR_LISTS = { mamNon: 'P5Bde', schoolTour: 'P5Bsi' };
+const GR_FIELDS = {
+  ten_hoc_sinh: 'njZtaT', co_so: 'njZt82', hotline_co_so: 'njZtWM', ngay_hen: 'njZtKY',
+  khung_gio: 'njZtoC', hinh_thuc: 'njZtr8', lop: 'njZtQe', nhom_dinh_tuyen: 'njZtMi',
+  phone: 'pEgrLS', origin: 'n4JzwY', chien_dich: 'nBG89B', ref: 'pEgriW',
+};
+const GR_TAGS = { hocThuMamNon: '6ONDe', schoolTour: '6ONei', hocThuK12: '6ONxs', noiTru: '6ONNg', banDoKhonLon: '6ONAU' };
+
+// Lead đến từ app Bản đồ Khôn Lớn (link CTA ?src=bdkl&id=&lop=&ngay=) → tag "tuoi_<tuổi>_<năm khai báo>".
+// lop là nhãn lớp/tuổi của app: "3 tuổi (lớp Mầm)", "5 tuổi", "Gần 6 tuổi, sắp vào lớp 1", "Lớp 7".
+// "Lớp N" quy về N+5 tuổi (tuổi chuẩn nhập học lớp 1 = 6). ngay = ngày lập báo cáo dd/mm/yyyy.
+function bdklAgeTagName(raw) {
+  const lop = String(raw.bdkl_lop || '');
+  const yearMatch = /(\d{4})\s*$/.exec(String(raw.bdkl_ngay || '').trim());
+  const year = yearMatch ? yearMatch[1]
+    : new Date().toLocaleDateString('en-CA', { timeZone: 'Asia/Ho_Chi_Minh' }).slice(0, 4);
+  let age = null;
+  let m;
+  if ((m = /lớp\s*(\d{1,2})\b/iu.exec(lop)) && !/tuổi/iu.test(lop)) age = Number(m[1]) + 5;
+  else if ((m = /gần\s*(\d{1,2})\s*tuổi/iu.exec(lop))) age = Number(m[1]) - 1;
+  else if ((m = /(\d{1,2})\s*tuổi/iu.exec(lop))) age = Number(m[1]);
+  else if ((m = /^lop-(\d{1,2})$/.exec(String(raw.grade || '')))) age = Number(m[1]) + 5;
+  return age === null ? null : `tuoi_${age}_${year}`;
+}
+
+const grTagCache = new Map();
+async function ensureGrTag(gr, name) {
+  if (grTagCache.has(name)) return grTagCache.get(name);
+  const found = await (await gr('GET', `/tags?query[name]=${encodeURIComponent(name)}&perPage=100`)).json().catch(() => []);
+  let id = Array.isArray(found) ? (found.find((t) => t.name === name) || {}).tagId : null;
+  if (!id) {
+    const created = await (await gr('POST', '/tags', { name })).json().catch(() => ({}));
+    id = created.tagId || null;
+  }
+  if (id) grTagCache.set(name, id);
+  return id;
+}
+
+async function addToGetResponse(raw, data, env) {
+  const key = env.GETRESPONSE_API_KEY;
+  if (!key) return { skipped: true, reason: 'no_key' };
+  const isMn = String(data.source).startsWith('mam-non-trai-nghiem');
+  const hocThu = raw.visit_type === 'hoc-thu';
+  const d = String(raw.preferred_date || '');
+  const values = {
+    ten_hoc_sinh: data.childName || data.fullName,
+    co_so: raw.campus_label,
+    hotline_co_so: raw.campus_hotline,
+    ngay_hen: /^\d{4}-\d{2}-\d{2}$/.test(d) ? d.split('-').reverse().join('/') : d,
+    khung_gio: raw.preferred_slot,
+    hinh_thuc: isMn ? 'Học thử 1 buổi' : hocThu ? `Tham quan + học thử ${raw.trial_days} ngày` : 'Tham quan trường',
+    lop: isMn ? raw.program : String(raw.grade || '').replace(/^lop-(\d+)$/, 'Lớp $1'),
+    nhom_dinh_tuyen: isMn ? 'MN' : raw.routing_group,
+    phone: data.phone ? '+84' + data.phone.slice(1) : '',
+    origin: data.source,
+    chien_dich: data.utmCampaign,
+    ref: data.page,
+  };
+  const customFieldValues = Object.entries(values)
+    .filter(([, v]) => v !== undefined && v !== null && String(v).trim() !== '')
+    .map(([k, v]) => ({ customFieldId: GR_FIELDS[k], value: [String(v).slice(0, 255)] }));
+  const tags = isMn ? [GR_TAGS.hocThuMamNon]
+    : [GR_TAGS.schoolTour, ...(hocThu ? [GR_TAGS.hocThuK12] : []), ...(raw.boarding ? [GR_TAGS.noiTru] : [])];
+  const listId = isMn ? GR_LISTS.mamNon : GR_LISTS.schoolTour;
+
+  const gr = (method, path, body) => fetch('https://api.getresponse.com/v3' + path, {
+    method,
+    headers: { 'X-Auth-Token': 'api-key ' + key, 'Content-Type': 'application/json' },
+    body: body ? JSON.stringify(body) : undefined,
+  });
+
+  if (raw.src === 'bdkl') {
+    tags.push(GR_TAGS.banDoKhonLon);
+    const ageTag = bdklAgeTagName(raw);
+    const ageTagId = ageTag ? await ensureGrTag(gr, ageTag).catch(() => null) : null;
+    if (ageTagId) tags.push(ageTagId);
+  }
+
+  const res = await gr('POST', '/contacts', {
+    email: data.email, campaign: { campaignId: listId }, dayOfCycle: 0,
+    customFieldValues, tags: tags.map((tagId) => ({ tagId })),
+  });
+  if (res.status === 202) return { status: 202, list: listId };
+  if (res.status !== 409) return { status: res.status, error: (await res.text()).slice(0, 300) };
+
+  // Đã có trong list (đặt lịch lần 2) → cập nhật lịch mới + thêm tag, không tạo trùng.
+  const q = `/contacts?query[email]=${encodeURIComponent(data.email)}&query[campaignId]=${listId}&fields=contactId`;
+  const found = await (await gr('GET', q)).json().catch(() => []);
+  const id = Array.isArray(found) && found[0] && found[0].contactId;
+  if (!id) return { status: 409, error: 'exists_but_not_found' };
+  const [u1, u2] = await Promise.all([
+    gr('POST', `/contacts/${id}/custom-fields`, { customFieldValues }),
+    gr('POST', `/contacts/${id}/tags`, { tags: tags.map((tagId) => ({ tagId })) }),
+  ]);
+  return { status: 200, updated: true, contactId: id, fields: u1.status, tags: u2.status };
 }
 
 // === WORKFLOW FUNCTIONS ===

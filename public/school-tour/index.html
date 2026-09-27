@@ -268,6 +268,24 @@
   var dateEl = document.getElementById('ngay');
   var slotEl = document.getElementById('khung_gio');
   var slotHint = document.getElementById('slot-hint');
+  /* Lead từ app Bản đồ Khôn Lớn: ?src=bdkl&id=&lop=&ngay= — giữ qua sessionStorage phòng khi trang tải lại */
+  var bdkl = (function(){
+    try {
+      var q = new URLSearchParams(location.search);
+      if (q.get('src') === 'bdkl') {
+        var o = { id: q.get('id') || '', lop: q.get('lop') || '', ngay: q.get('ngay') || '' };
+        sessionStorage.setItem('va_bdkl', JSON.stringify(o));
+        return o;
+      }
+      return JSON.parse(sessionStorage.getItem('va_bdkl') || 'null');
+    } catch (e) { return null; }
+  })();
+  function bdklFields(){
+    return bdkl ? { src: 'bdkl', bdkl_id: bdkl.id, bdkl_lop: bdkl.lop, bdkl_ngay: bdkl.ngay } : {};
+  }
+  function bdklNote(){
+    return bdkl ? ' · Nguồn: Bản đồ Khôn Lớn' + (bdkl.id ? ' (mã ' + bdkl.id + (bdkl.lop ? ', ' + bdkl.lop : '') + ')' : '') : '';
+  }
 
   function iso(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
   var t = new Date(); t.setDate(t.getDate()+1); dateEl.min = iso(t);
@@ -382,10 +400,10 @@
       preferred_date: d,
       preferred_slot: slot,
       province: opt.getAttribute('data-province') || '',
-      note: modeLabel + ' · ' + grp + ' · Lớp ' + g + (noiTru ? ' · Quan tâm NỘI TRÚ' : '') + ' · Cơ sở: ' + campusLabel + ' · Ngày: ' + ngayVN + ' (' + DOW[dow] + ') · Giờ: ' + slot + (priority ? ' (khung ưu tiên)' : late ? ' (lớp đã tan — báo trước PH)' : ''),
+      note: modeLabel + ' · ' + grp + ' · Lớp ' + g + (noiTru ? ' · Quan tâm NỘI TRÚ' : '') + ' · Cơ sở: ' + campusLabel + ' · Ngày: ' + ngayVN + ' (' + DOW[dow] + ') · Giờ: ' + slot + (priority ? ' (khung ưu tiên)' : late ? ' (lớp đã tan — báo trước PH)' : '') + bdklNote(),
       page_url: location.href,
       submitted_at: new Date().toISOString()
-    }, (window.__vaUTM || (window.__vaUTM = function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var gg=p.get(x);if(gg){try{sessionStorage.setItem('va_'+x,gg)}catch(e){}}var v=gg||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))());
+    }, bdklFields(), (window.__vaUTM || (window.__vaUTM = function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var gg=p.get(x);if(gg){try{sessionStorage.setItem('va_'+x,gg)}catch(e){}}var v=gg||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))());
 
     fetch('/api/lead', {
       method: 'POST',
@@ -424,6 +442,9 @@
   });
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  /* Lớp con đã khai trong app → chọn sẵn */
+  var appGrade = bdkl && /^\s*lớp\s*(\d{1,2})\s*$/i.exec(bdkl.lop);
+  if (appGrade && lopEl.querySelector('option[value="' + appGrade[1] + '"]')) lopEl.value = appGrade[1];
   syncCampuses();
   syncMode();
 })();

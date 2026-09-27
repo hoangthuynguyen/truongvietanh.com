@@ -225,6 +225,24 @@
   var radios = document.getElementById('programs');
   var hint = document.getElementById('program-hint');
   var dateEl = document.getElementById('ngay_muon_den');
+  /* Lead từ app Bản đồ Khôn Lớn: ?src=bdkl&id=&lop=&ngay= — giữ qua sessionStorage phòng khi trang tải lại */
+  var bdkl = (function(){
+    try {
+      var q = new URLSearchParams(location.search);
+      if (q.get('src') === 'bdkl') {
+        var o = { id: q.get('id') || '', lop: q.get('lop') || '', ngay: q.get('ngay') || '' };
+        sessionStorage.setItem('va_bdkl', JSON.stringify(o));
+        return o;
+      }
+      return JSON.parse(sessionStorage.getItem('va_bdkl') || 'null');
+    } catch (e) { return null; }
+  })();
+  function bdklFields(){
+    return bdkl ? { src: 'bdkl', bdkl_id: bdkl.id, bdkl_lop: bdkl.lop, bdkl_ngay: bdkl.ngay } : {};
+  }
+  function bdklNote(){
+    return bdkl ? ' · Nguồn: Bản đồ Khôn Lớn' + (bdkl.id ? ' (mã ' + bdkl.id + (bdkl.lop ? ', ' + bdkl.lop : '') + ')' : '') : '';
+  }
 
   /* Ngày muốn đến: từ ngày mai, tối đa 60 ngày */
   function iso(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
@@ -305,10 +323,10 @@
       program: program,
       preferred_date: d,
       province: province,
-      note: 'Học thử · Cơ sở: ' + campusLabel + ' · Chương trình: ' + program + ' · Ngày muốn đến: ' + ngayVN + ' (' + ['CN','T2','T3','T4','T5','T6','T7'][dow] + ')',
+      note: 'Học thử · Cơ sở: ' + campusLabel + ' · Chương trình: ' + program + ' · Ngày muốn đến: ' + ngayVN + ' (' + ['CN','T2','T3','T4','T5','T6','T7'][dow] + ')' + bdklNote(),
       page_url: location.href,
       submitted_at: new Date().toISOString()
-    }, (window.__vaUTM || (window.__vaUTM = function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))());
+    }, bdklFields(), (window.__vaUTM || (window.__vaUTM = function(){var k=['utm_source','utm_medium','utm_campaign','utm_content','utm_term','utm_pke_mkter','pke_mkter'],o={};try{var p=new URLSearchParams(location.search);k.forEach(function(x){var g=p.get(x);if(g){try{sessionStorage.setItem('va_'+x,g)}catch(e){}}var v=g||(function(){try{return sessionStorage.getItem('va_'+x)}catch(e){return ''}})()||'';if(v)o[x]=v})}catch(e){}if(!o.utm_source){o.utm_source='direct';o.utm_medium='none'}o.page_url=location.href;return o}))());
 
     fetch('/api/lead', {
       method: 'POST',
@@ -347,6 +365,11 @@
 
   function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
   syncPrograms();
+  /* Bé 5 tuổi / gần 6 tuổi từ app → chọn sẵn Tiền Tiểu học */
+  if (bdkl && /5\s*tuổi|gần\s*6/i.test(bdkl.lop)) {
+    radios.querySelector('input[value="Tiền Tiểu học"]').checked = true;
+    paintRadios();
+  }
 })();
 </script>
 <script src="/js/phone-vn.js" defer></script>

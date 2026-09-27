@@ -17,6 +17,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const STANDALONE_DIRS = [
   'quiz',
   'quiz-vietanh',
+  'mam-non/trai-nghiem',
 ];
 
 if (!existsSync(resolve(ROOT, 'dist'))) {

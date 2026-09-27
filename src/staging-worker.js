@@ -872,6 +872,16 @@ async function handleLeadSubmission(request, env) {
         // trả 422 và lead bị loại. Funnel/campaign đã được lưu riêng ở utm_campaign.
         record.nguon_khach_hang_omi = 'website';
 
+        // Khu vực + nhu cầu/ghi chú (cơ sở, ngày muốn đến...) → mo_ta_khach_hang (TEXT tự do,
+        // đã xác minh lưu được 27/09/2026). Pancake v2 LẶNG LẼ BỎ key không tồn tại
+        // (khu_vuc/ghi_chu gửi kèm bên dưới không lưu) nên đây là chỗ duy nhất sales đọc được.
+        {
+          const lines = [];
+          if (data.note) lines.push(data.note);
+          if (data.province) lines.push('Khu vực: ' + data.province);
+          if (lines.length) record.mo_ta_khach_hang = lines.join('\n');
+        }
+
         // "Diễn giải nguồn MKT" (dien_giai_nguon_mkt) là TEXT tự do → ghi funnel/landing
         // page + nhãn kênh trong ngoặc để sales đọc nhanh, vd:
         //   "lop10-noitru (Google Ads)" · "squeeze-hoc-phi (Facebook Ads)" · "tieu-hoc-pillar (Organic)"
@@ -1422,7 +1432,7 @@ async function sendZaloNotification(data, env) {
   if (!zaloToken || !zaloUserId) return;
 
   const schoolLabel = {
-    'mau-non': 'Mầm non', 'tieu-hoc': 'Tiểu học',
+    'mau-non': 'Mầm non', 'mam-non': 'Mầm non', 'tieu-hoc': 'Tiểu học',
     'thcs': 'THCS', 'thpt': 'THPT',
   }[data.schoolLevel] || data.schoolLevel || 'Chưa chọn';
 
@@ -1436,6 +1446,7 @@ async function sendZaloNotification(data, env) {
   ];
 
   if (data.province) lines.push(`📍 Tỉnh/Thành: ${data.province}`);
+  if (data.note) lines.push(`📝 ${data.note}`);
 
   // Add quiz info if available
   if (isQuizLead(data)) {

@@ -18,6 +18,7 @@ const STANDALONE_DIRS = [
   'quiz',
   'quiz-vietanh',
   'mam-non/trai-nghiem',
+  'school-tour',
 ];
 
 if (!existsSync(resolve(ROOT, 'dist'))) {

@@ -3,6 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+/* Mã kết quả Bản đồ Khôn Lớn (?id=) là khoá mở báo cáo của gia đình — app BDKL không bao giờ gửi nó cho bên thứ ba.
+   Cất vào window.__bdklId rồi XOÁ khỏi URL TRƯỚC khi GTM chạy, để page_location gửi Google/Meta không chứa mã.
+   Chỉ nhận đúng định dạng BDKL: 8 ký tự base32, bỏ 0/O/1/I. */
+(function(){try{var u=new URL(location.href);if(!u.searchParams.has('id'))return;var v=(u.searchParams.get('id')||'').trim().toUpperCase();window.__bdklId=/^[A-HJ-NP-Z2-9]{8}$/.test(v)?v:'';u.searchParams.delete('id');history.replaceState(history.state,'',u.pathname+u.search+u.hash);}catch(e){}})();
+</script>
 <title>Tham quan trường &amp; học thử 1–5 ngày — Trường Việt Anh (Tiểu học, THCS, THPT)</title>
 <meta name="description" content="Đặt lịch tham quan Trường Việt Anh hoặc cho con học thử miễn phí 1–5 ngày — Tiểu học, THCS, THPT tại Gò Vấp, Bình Tân, Thái Sơn (Cần Giuộc), Mekong Xanh (Rạch Giá). Đón khách 07:00–19:00 mỗi ngày.">
 <link rel="canonical" href="https://truongvietanh.com/school-tour/">
@@ -273,7 +279,7 @@
     try {
       var q = new URLSearchParams(location.search);
       if (q.get('src') === 'bdkl') {
-        var o = { id: q.get('id') || '', lop: q.get('lop') || '', ngay: q.get('ngay') || '' };
+        var o = { id: typeof window.__bdklId === 'string' ? window.__bdklId : '', lop: q.get('lop') || '', ngay: q.get('ngay') || '' };  // id: script đầu <head> đã đọc + gỡ khỏi URL
         sessionStorage.setItem('va_bdkl', JSON.stringify(o));
         return o;
       }

@@ -152,11 +152,11 @@ export default {
       '/chuyen-truong-tu-thuc-sang-cong-lap': '/blog/blog-lien-cap-vs-chuyen-truong',
       '/thoi-gian-nao-la-tot-nhat-de-chuyen-truong-trong-nam-hoc-tu-van': '/blog/blog-lien-cap-vs-chuyen-truong',
       '/nen-cho-con-hoc-truong-mam-non-cong-hay-tu': '/blog/blog-cach-chon-truong-mam-non-cho-con',
-      '/cach-day-be-viet-chu': '/blog/chuan-bi-cho-be-vao-lop-1',
-      '/day-be-hoc-so': '/blog/chuan-bi-cho-be-vao-lop-1',
-      '/cach-day-be-hoc-chu-cai': '/blog/chuan-bi-cho-be-vao-lop-1',
-      '/cach-day-be-4-tuoi-hoc-chu-cai': '/blog/chuan-bi-cho-be-vao-lop-1',
-      '/cach-day-con-hoc-lop-1-o-nha': '/blog/chuan-bi-cho-be-vao-lop-1',
+      '/cach-day-be-viet-chu': '/blog/day-be-hoc-chu-so-truoc-lop-1/',
+      '/day-be-hoc-so': '/blog/day-be-hoc-chu-so-truoc-lop-1/',
+      '/cach-day-be-hoc-chu-cai': '/blog/day-be-hoc-chu-so-truoc-lop-1/',
+      '/cach-day-be-4-tuoi-hoc-chu-cai': '/blog/day-be-hoc-chu-so-truoc-lop-1/',
+      '/cach-day-con-hoc-lop-1-o-nha': '/blog/day-be-hoc-chu-so-truoc-lop-1/',
       // 08/09/2026: bai rieng "16 ky nang the ky 21" da live, khong con dung tam
       // trang triet ly giao duc nua.
       '/16-ky-nang-quan-trong-trong-the-ky-21-hoc-sinh-can-co-de-thanh-cong': '/blog/16-ky-nang-the-ky-21-la-gi',
@@ -190,6 +190,15 @@ export default {
       // S7 — Day hoc tich hop va CLIL (live 09/09/2026)
       '/phuong-phap-day-hoc-tich-hop': '/blog/day-hoc-tich-hop-va-clil-la-gi/',
       '/clil-la-gi': '/blog/day-hoc-tich-hop-va-clil-la-gi/',
+      // 17/09/2026 — ChatGPT dang dan nguoi doc vao URL nay va no tra 404.
+      // Bai #97 co dung slug do nhung la draft va chi 155 tu, nen build khong
+      // sinh trang. KHONG publish #97 de "cuu" URL: ba bai live ve THPT tu thuc
+      // da dai 3.012 / 2.998 / 3.608 tu, them mot bai 155 tu cung chu de chi lam
+      // bon bai gianh nhau mot tu khoa.
+      // Chon dich /top-truong-thpt-tu-thuc-tphcm chu KHONG phai
+      // /truong-thpt-tu-thuc-tphcm (slug khop hon): tieu de #97 la "Top 5 Truong
+      // THPT Tu Thuc TPHCM" nen y dinh tim kiem la DANH SACH XEP HANG.
+      '/blog/blog-truong-thpt-tu-thuc-tphcm': '/blog/top-truong-thpt-tu-thuc-tphcm/',
     };
 
     {

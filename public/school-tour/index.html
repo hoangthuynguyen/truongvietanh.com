@@ -279,7 +279,9 @@
     try {
       var q = new URLSearchParams(location.search);
       if (q.get('src') === 'bdkl') {
-        var o = { id: typeof window.__bdklId === 'string' ? window.__bdklId : '', lop: q.get('lop') || '', ngay: q.get('ngay') || '' };  // id: script đầu <head> đã đọc + gỡ khỏi URL
+        var prev = null; try { prev = JSON.parse(sessionStorage.getItem('va_bdkl') || 'null'); } catch (e2) {}
+        // id: script đầu <head> đã đọc + gỡ khỏi URL (__bdklId chỉ có khi URL mang id); tải lại trang → giữ id đã lưu
+        var o = { id: typeof window.__bdklId === 'string' ? window.__bdklId : ((prev && prev.id) || ''), lop: q.get('lop') || '', ngay: q.get('ngay') || '' };
         sessionStorage.setItem('va_bdkl', JSON.stringify(o));
         return o;
       }

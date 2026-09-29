@@ -8,6 +8,8 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/dang-ky-som/c
 <!doctype html>
 <html lang="vi">
 <head>
+  <script is:inline>/* Tên/email/SĐT phụ huynh (?name= ?email= ?phone=) là dữ liệu cá nhân: cất vào window.__vaQS (+ sessionStorage để tải lại trang vẫn chào đúng tên) rồi XOÁ khỏi URL TRƯỚC khi GTM chạy, để page_location gửi Google/Meta/TikTok/Zalo không chứa dữ liệu cá nhân. */
+(function(){try{var u=new URL(location.href),q=u.searchParams,k='va_qs:'+u.pathname,s=u.search,c=0;['name','email','phone'].forEach(function(x){if(q.has(x)){q.delete(x);c=1}});if(c){try{sessionStorage.setItem(k,s)}catch(e){}history.replaceState(history.state,'',u.pathname+u.search+u.hash)}else{try{s=sessionStorage.getItem(k)||s}catch(e){}}window.__vaQS=s}catch(e){}})();</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>{pageTitle}</title>
@@ -179,6 +181,7 @@ const canonicalUrl = 'https://truongvietanh.com/tuyen-sinh/mam-non/dang-ky-som/c
     });
   </script>
 <!-- Google Tag Manager -->
+<script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-TMPPWX29');</script>
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
 j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
@@ -187,6 +190,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 </head>
 <body>
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TMPPWX29" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- Google Tag Manager (noscript) -->
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-KPL2NSR9"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
@@ -240,7 +244,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <script is:inline>
     // Personalize with name from URL
-    const params = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.__vaQS != null ? window.__vaQS : window.location.search);
     const name = params.get('name');
     if (name) {
       document.getElementById('msg').innerHTML =

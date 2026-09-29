@@ -13,6 +13,7 @@ const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc/c
   canonicalUrl={pageCanonical}
   schoolLevel="mau-non"
   funnelCode="cong-vien-giao-duc-thankyou"
+  stripUrlPii={['name']}
 >
   <section slot="hero">
     <span class="cvgd-ty-badge">🎉 Đăng ký thành công</span>
@@ -84,7 +85,7 @@ const pageCanonical = 'https://truongvietanh.com/tuyen-sinh/cong-vien-giao-duc/c
 <script is:inline>
   (function () {
     try {
-      const qs = new URLSearchParams(window.location.search);
+      const qs = new URLSearchParams(window.__vaQS || ''); // tên đã được gỡ khỏi URL trước GTM
       const name = (qs.get('name') || '').trim();
       if (name) {
         const el = document.getElementById('cvgd-ty-heading');

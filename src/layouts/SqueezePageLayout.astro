@@ -2,11 +2,13 @@
 import '../styles/global.css';
 import FooterBase from '../components/FooterBase.astro';
 import { getSiteSettings } from '../lib/directus';
+import { stripUrlPiiScript } from '../lib/strip-url-pii';
 const settings = await getSiteSettings();
 const hotline = settings?.hotline || '0916 961 409';
 
-type Props = { title?: string; description?: string; keywords?: string; schoolLevel?: 'mau-non' | 'tieu-hoc' | 'thcs' | 'thpt'; funnelCode?: string; ogImage?: string; canonicalUrl?: string; hideUrgency?: boolean; noindex?: boolean; };
-const { title = 'Trường Việt Anh', description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.', keywords = 'trường, tiếng Anh, song ngữ, Việt Anh', schoolLevel = 'tieu-hoc', funnelCode = 'squeeze-landing', ogImage = 'https://truongvietanh.com/og-image.png', canonicalUrl = 'https://truongvietanh.com', hideUrgency = false, noindex = false, } = Astro.props;
+type Props = { title?: string; description?: string; keywords?: string; schoolLevel?: 'mau-non' | 'tieu-hoc' | 'thcs' | 'thpt'; funnelCode?: string; ogImage?: string; canonicalUrl?: string; hideUrgency?: boolean; noindex?: boolean; /* gỡ tên/email/SĐT khỏi URL trước GTM; mảng = khoá cần giữ trong window.__vaQS */ stripUrlPii?: string[]; };
+const { title = 'Trường Việt Anh', description = 'Website Trường Việt Anh với cấu trúc tối ưu cho SEO, AI Overviews và tốc độ tải.', keywords = 'trường, tiếng Anh, song ngữ, Việt Anh', schoolLevel = 'tieu-hoc', funnelCode = 'squeeze-landing', ogImage = 'https://truongvietanh.com/og-image.png', canonicalUrl = 'https://truongvietanh.com', hideUrgency = false, noindex = false, stripUrlPii } = Astro.props;
+const stripUrlPiiJs = stripUrlPii ? stripUrlPiiScript(stripUrlPii) : null;
 const phoneIntl = `+84${hotline.replace(/\s/g,'').replace(/^0/,'')}`;
 const levelNames: Record<string, string> = { 'mam-non': 'Mầm Non', 'tieu-hoc': 'Tiểu Học', 'thcs': 'THCS', 'thpt': 'THPT' };
 const schemaData = [
@@ -19,6 +21,8 @@ const structuredData = JSON.stringify(Array.isArray(schemaData) ? schemaData : [
 <!doctype html>
 <html lang="vi">
 <head>
+<meta charset="UTF-8" />
+{stripUrlPiiJs && <script is:inline set:html={stripUrlPiiJs} />}
 <!-- Google Tag Manager -->
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -26,7 +30,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TMPPWX29');</script>
 <!-- End Google Tag Manager -->
-<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta name="theme-color" content="#26275D" />
 <meta name="description" content={description} />

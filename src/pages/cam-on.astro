@@ -9,6 +9,7 @@ import SiteFooter from '../components/SiteFooter.astro';
   description="Chúng tôi đã nhận được thông tin của bạn. Đội ngũ tư vấn sẽ liên hệ trong 24 giờ."
   noindex={true}
   noPopup={true}
+  stripUrlPii={true}
 >
   <div class="site-shell">
     <SiteHeader currentPath="/cam-on" />
@@ -28,12 +29,17 @@ import SiteFooter from '../components/SiteFooter.astro';
         </div>
 
         <script is:inline>
-          const params = new URLSearchParams(window.location.search);
-          const name = params.get('name');
-          if (name) {
-            document.getElementById('thankyou-text').textContent =
-              'Cảm ơn ' + decodeURIComponent(name) + ' đã quan tâm đến Trường Việt Anh';
-          }
+          /* Tên đọc từ window.__vaQS (script đầu <head> đã gỡ name/email/SĐT khỏi URL trước khi GTM chạy,
+             và cất tên vào sessionStorage để tải lại trang vẫn chào đúng tên) — KHÔNG đọc location.search. */
+          (function () {
+            try {
+              var name = (new URLSearchParams(window.__vaQS || '').get('name') || '').trim();
+              if (name) {
+                document.getElementById('thankyou-text').textContent =
+                  'Cảm ơn ' + name + ' đã quan tâm đến Trường Việt Anh';
+              }
+            } catch (e) {}
+          })();
         </script>
 
         <!-- Main 2-column grid -->

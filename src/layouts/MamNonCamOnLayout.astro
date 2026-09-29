@@ -1,4 +1,5 @@
 ---
+import { stripUrlPiiScript } from '../lib/strip-url-pii';
 /**
  * MamNonCamOnLayout — Thank-you page after Mầm non hook landing form submit
  * Brand: #26275D #26275D + Yellow #f9dd0e (matches MamNonHookLayout)
@@ -33,6 +34,8 @@ const ZALO_DEEP = 'https://zalo.me/1678310120468101523?text=' + encodeURICompone
 <!doctype html>
 <html lang="vi">
 <head>
+<meta charset="UTF-8" />
+<script is:inline set:html={stripUrlPiiScript(['name'])} />
 <!-- Google Tag Manager -->
 <script is:inline>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -40,7 +43,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TMPPWX29');</script>
 <!-- End Google Tag Manager -->
-<meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>{title}</title>
 <meta name="description" content={description} />
@@ -230,9 +232,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
 <script is:inline>
 (function(){
-  var p = new URLSearchParams(window.location.search);
-  var n = p.get('name');
-  if (n) document.getElementById('parentName').textContent = ' ' + n.trim().split(/\s+/).pop();
+  try {
+    var p = new URLSearchParams(window.__vaQS || '');
+    var n = (p.get('name') || '').trim();
+    if (n) document.getElementById('parentName').textContent = ' ' + n.split(/\s+/).pop();
+  } catch (e) {}
 })();
 </script>
     <script src="/js/phone-vn.js" defer></script>

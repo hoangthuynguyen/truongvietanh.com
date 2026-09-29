@@ -67,6 +67,7 @@ function addTraiHe(text: string | undefined | null): string {
   canonicalUrl={canonicalUrl}
   schoolLevel={page.school_level}
   funnelCode={page.funnel_code}
+  stripUrlPii={['ten_be', 'child']}
 >
   <!-- ===== HERO — compact, CTA above fold ===== -->
   <section slot="hero">
@@ -398,7 +399,9 @@ function addTraiHe(text: string | undefined | null): string {
     // === 7. Warm traffic dynamic headline (from UTM) ===
     var params = new URLSearchParams(window.location.search);
     var src = params.get('utm_source') || params.get('source') || '';
-    var childName = params.get('ten_be') || params.get('child') || '';
+    // Tên bé đã được gỡ khỏi URL trước khi GTM chạy (SqueezePageLayout stripUrlPii) → đọc từ window.__vaQS
+    var piiQs = new URLSearchParams(window.__vaQS || '');
+    var childName = piiQs.get('ten_be') || piiQs.get('child') || '';
     var hlEl = document.getElementById('heroHeadline');
     var subEl = document.getElementById('heroSub');
     if (hlEl && src) {

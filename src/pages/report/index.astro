@@ -1,4 +1,5 @@
 ---
+import { stripUrlPiiScript } from '../../lib/strip-url-pii';
 /**
  * BÁO CÁO ĐÁNH GIÁ KỸ NĂNG HÈ 2026
  * Wide layout, CTA above-the-fold, benefits on hero.
@@ -9,6 +10,7 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
+  <script is:inline set:html={stripUrlPiiScript(['name'])} />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Báo Cáo Đánh Giá Kỹ Năng Hè 2026 | Lion Camp — Trường Việt Anh</title>
   <meta name="robots" content="noindex, nofollow" />
@@ -105,7 +107,8 @@
 <script is:inline>
 (function(){
   var p = new URLSearchParams(window.location.search);
-  var name = p.get('name') || '';
+  // Tên đã được gỡ khỏi URL trước khi GTM chạy → đọc từ window.__vaQS (còn lại: điểm/cấp/cơ sở vẫn trên URL)
+  var name = new URLSearchParams(window.__vaQS || '').get('name') || '';
   var score = parseInt(p.get('score'),10) || 0;
   var school = p.get('school') || 'tieu-hoc';
   var loc = p.get('loc') || '';

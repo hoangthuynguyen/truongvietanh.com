@@ -132,7 +132,7 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Võ Kim Ngân',
     role: 'Giáo viên chủ nhiệm',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/vo-kim-ngan.jpg',
     mission: 'Xây dựng một môi trường học tập an toàn, hạnh phúc và sáng tạo, nơi mỗi học sinh đều được tôn trọng sự khác biệt, nuôi dưỡng niềm say mê học hỏi và phát triển toàn diện cả về trí tuệ lẫn nhân cách.',
   },
   {
@@ -167,7 +167,7 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Phạm Thị Kim Ngân',
     role: 'GVCN tiếng Anh tiểu học',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/pham-thi-kim-ngan.jpg',
     mission: 'Cam kết cung cấp môi trường giáo dục chuẩn mực, an toàn và hiệu quả. Giúp học sinh tiểu học làm chủ các kỹ năng Tiếng Anh cơ bản và xây dựng sự tự tin bền vững.',
   },
   {

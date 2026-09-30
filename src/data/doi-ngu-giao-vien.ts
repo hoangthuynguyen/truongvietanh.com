@@ -381,7 +381,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Trần Thị Khánh Phương',
     role: 'Giáo Vụ',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/tran-thi-khanh-phuong.jpg',
     mission: 'Sống yêu thương và trách nhiệm',
   },
   {

@@ -141,12 +141,12 @@ function initials(name: string): string {
         <!-- Panel 1: Chủ nhiệm -->
         <div class="gv-panel is-active" id="panel-chu-nhiem" role="tabpanel" aria-labelledby="tab-chu-nhiem">
           <p class="gv-panel__intro">Giáo viên chủ nhiệm trực tiếp đồng hành cùng lớp — chịu trách nhiệm về kỷ luật, liên lạc phụ huynh và kế hoạch học tập từng học sinh. <strong>Bấm vào thẻ để đọc tuyên ngôn sứ mệnh</strong> của thầy cô.</p>
-          <div class="gv-grid">
+          <div class="gv-grid gv-grid--tv">
             {hienThi(giaoVienChuNhiem).map(t => (
-              <article class="gv-card">
+              <article class="gv-card gv-card--to">
                 <div class="gv-card__photo">
                   {t.photo
-                    ? <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="72" height="72" />
+                    ? <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="600" height="800" />
                     : <span class="gv-card__initials">{initials(t.name)}</span>
                   }
                 </div>
@@ -171,12 +171,12 @@ function initials(name: string): string {
         <!-- Panel 2: Bộ môn -->
         <div class="gv-panel" id="panel-bo-mon" role="tabpanel" aria-labelledby="tab-bo-mon" hidden>
           <p class="gv-panel__intro">Giáo viên bộ môn và các vị trí chuyên môn khác — tổ trưởng chuyên môn, quản nhiệm, giáo vụ, tâm lý học đường. <strong>Bấm vào thẻ để đọc tuyên ngôn sứ mệnh</strong> của thầy cô.</p>
-          <div class="gv-grid">
+          <div class="gv-grid gv-grid--tv">
             {hienThi(giaoVienBoMon).map(t => (
-              <article class="gv-card">
+              <article class="gv-card gv-card--to">
                 <div class="gv-card__photo">
                   {t.photo
-                    ? <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="72" height="72" />
+                    ? <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="600" height="800" />
                     : <span class="gv-card__initials">{initials(t.name)}</span>
                   }
                 </div>
@@ -504,6 +504,28 @@ function initials(name: string): string {
   }
   .gv-tvcard__more:hover { background: #f9dd0e; border-color: #f9dd0e; }
   .gv-tvcard__more:focus-visible { outline: 2px solid #26275D; outline-offset: 2px; }
+  /* THẺ GIÁO VIÊN BẢN TO — cùng dáng với thẻ Đội Ngũ Tư Vấn */
+  .gv-card--to {
+    flex-direction: column; align-items: stretch; gap: 0;
+    padding: 0; overflow: hidden; text-align: center;
+  }
+  .gv-card--to .gv-card__photo {
+    width: 100%; height: auto; aspect-ratio: 3 / 4; border-radius: 0; flex-shrink: 1;
+  }
+  .gv-card--to .gv-card__photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  .gv-card--to .gv-card__initials { font-size: 2.4rem; letter-spacing: .08em; }
+  .gv-card--to .gv-card__body { padding: 1rem .9rem 1.15rem; }
+  .gv-card--to .gv-card__name { font-size: .98rem; margin-bottom: .25rem; }
+  .gv-card--to .gv-card__role { font-size: .8rem; }
+  /* Gợi ý bấm được — thay mũi tên ở mép phải của thẻ nhỏ */
+  .gv-card.gv-card--to:has(.gv-card__nut)::after { content: none; }
+  .gv-card--to .gv-card__body::after {
+    content: 'Xem tuyên ngôn ›'; display: block; margin-top: .7rem;
+    font-size: .78rem; font-weight: 700; color: #26275D;
+    transition: color .2s, transform .2s;
+  }
+  .gv-card--to:hover .gv-card__body::after { color: #0d2f55; transform: translateX(3px); }
+
   /* THẺ BẤM ĐƯỢC + POPUP TUYÊN NGÔN */
   .gv-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
   /* Chữ tuyên ngôn nằm sẵn trong HTML cho bot; chỉ ẩn bằng CSS */

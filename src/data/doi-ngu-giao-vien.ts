@@ -550,6 +550,24 @@ export const giaoVienBanNgu: GiaoVien[] = [
     mission: '',
   },
   {
+    name: 'Jack William Davis',
+    role: 'Giáo viên bản ngữ · Tiếng Anh',
+    photo: '/jack-william-davis.jpg',
+    mission: '',
+  },
+  {
+    name: 'Kevin Benson',
+    role: 'Giáo viên bản ngữ · Tiếng Anh',
+    photo: '/kevin-benson.jpg',
+    mission: '',
+  },
+  {
+    name: 'Nathaniel A Jordaan',
+    role: 'Giáo viên bản ngữ · Tiếng Anh',
+    photo: '/nathaniel-a-jordaan.jpg',
+    mission: '',
+  },
+  {
     name: 'Tegan Turnbull',
     role: 'Giáo viên bản ngữ · Tiếng Anh',
     photo: '/tegan-turnbull.jpg',

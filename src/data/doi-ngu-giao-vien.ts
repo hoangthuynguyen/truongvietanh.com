@@ -48,7 +48,7 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Trần Thiện Kim Phượng',
     role: 'GVCN, GV môn Hóa/KHTN',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/tran-thien-kim-phuong.jpg',
     mission: 'Sống có ý nghĩa trong từng khoảnh khắc. Chạm đến trái tim người khác bằng sự chân thành. Để lại dấu ấn tốt đẹp trong từng việc nhỏ mình làm.',
   },
   {
@@ -69,14 +69,14 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Nguyễn Thị Diệu',
     role: 'GVCN, GV bộ môn',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/nguyen-thi-dieu.jpg',
     mission: 'Tôi là một người giáo viên tận tâm, không ngừng học hỏi và đổi mới để khơi dậy ở học sinh niềm yêu thích khám phá khoa học.',
   },
   {
     name: 'Hoàng Kim Phương Tú',
     role: 'GVCN, GV bộ môn',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/hoang-kim-phuong-tu.jpg',
     mission: 'Là một viên gương mẫu, giỏi chuyên môn có trách nhiệm, yêu thương và tôn trọng. Bên cạnh đó là một người con hiếu thảo và có ích cho cộng đồng hướng đến sứ mệnh và yêu thương.',
   },
   {
@@ -146,7 +146,7 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Trần Thị Hồng Hân',
     role: 'GVCN',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/tran-thi-hong-han.jpg',
     mission: 'Với tôi mỗi tiết học là một bước trưởng thành, mỗi học sinh là một tương lai đáng được truyền cảm hứng. Để thực hiện tốt công việc tôi sẽ luôn yêu thương và tôn trọng học sinh, chuẩn bị bài chu đáo và sáng tạo, không ngừng học hỏi và đổi mới, luôn lắng nghe và sẻ chia.',
   },
   {
@@ -206,7 +206,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Đặng Thành Phát',
     role: 'GV bộ môn',
     coSo: 'Cả hai CS',
-    photo: '',
+    photo: '/dang-thanh-phat.jpg',
     mission: 'Tôi là một giáo viên Tiếng Anh – người truyền cảm hứng học tập, khơi dậy tiềm năng và đồng hành cùng học sinh trên hành trình trưởng thành. Tôi lựa chọn chủ động tạo ra giá trị, không ngừng học hỏi và đổi mới để mỗi bài học không chỉ giúp học sinh giỏi Tiếng Anh hơn mà còn tự tin hơn, chủ động hơn và sẵn sàng hội nhập với thế giới. Tôi luôn bắt đầu với câu hỏi: “Tôi muốn học sinh trở thành người như thế nào sau khi rời khỏi lớp học của mình?” Vì vậy, tôi đặt sự phát triển lâu dài của học sinh làm trọng tâm, ưu tiên những điều thực sự có ý nghĩa thay vì chỉ tập trung vào điểm số. Tôi xây dựng lớp học dựa trên sự tôn trọng, lắng nghe và đồng hành, nơi mỗi học sinh được nhìn nhận với những điểm mạnh riêng, được phép mắc lỗi, được khuyến khích thử thách bản thân và tin rằng “Tôi có thể làm được.” Tôi tin vào tinh thần cùng thắng: giáo viên thành công khi học sinh tiến bộ, học sinh thành công khi các em phát huy được tiềm năng của mình. Tôi chủ động hợp tác với đồng nghiệp, phụ huynh và cộng đồng để tạo nên một môi trường giáo dục tích cực và nhân văn. Tôi cam kết mài sắc chiếc cưa của chính mình – không ngừng phát triển chuyên môn, năng lực công nghệ, tư duy sáng tạo và phẩm chất nghề nghiệp để trở thành phiên bản tốt hơn của một người thầy mỗi ngày. Sứ mệnh của tôi là: Dạy bằng tri thức, dẫn dắt bằng sự tử tế, truyền cảm hứng bằng hành động và giúp mỗi học sinh tin rằng các em có thể trở thành phiên bản tốt nhất của chính mình. Tôi không chỉ dạy Tiếng Anh. Tôi giúp học sinh tìm thấy tiếng nói của chính mình và tự tin bước ra thế giới.',
   },
   {
@@ -220,7 +220,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Nguyễn Đăng Khoa',
     role: 'GV Giáo dục thể chất',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/nguyen-dang-khoa.jpg',
     mission: 'Sống tích cực, kết nối yêu thương, mang nhiều niềm vui đến với mọi người.',
   },
   {
@@ -241,21 +241,21 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Nguyễn Thu Thảo',
     role: 'Tổ trưởng chuyên môn',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/nguyen-thu-thao.jpg',
     mission: 'Yêu thương và trách nhiệm',
   },
   {
     name: 'Lê Văn Chất',
     role: 'GV bộ môn',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/le-van-chat.jpg',
     mission: 'Sứ mệnh của tôi là biến tri thức công nghệ thành khoản đầu tư giá trị nhất cho thế hệ trẻ, dẫn dắt học sinh khám phá những biên giới mới của kỷ nguyên số và xây dựng lý tưởng sống có trách nhiệm với cộng đồng',
   },
   {
     name: 'Trần Thi Thơ',
     role: 'Giáo viên bộ môn',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/tran-thi-tho.jpg',
     mission: 'Tuyên ngôn sứ mệnh của tôi là " Đại diện cho những gương mặt và khải ái ngây ngất lòng người, tôi sẽ mang đến hạnh phúc và yêu thương cho mọi người chính bằng sự thân thiện và dễ thương của tôi.',
   },
   {
@@ -325,7 +325,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Phạm Thúy Ngân',
     role: 'GV bộ môn',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/pham-thuy-ngan.jpg',
     mission: 'Sứ mệnh của tôi là trở thành một người giáo viên không chỉ truyền đạt kiến thức mà còn truyền cảm hứng học tập và sự tự tin cho học sinh. Tôi mong muốn tạo ra một môi trường học tập tích cực, nơi mỗi học sinh được lắng nghe, tôn trọng và có cơ hội khám phá tiềm năng của bản thân. Thông qua giáo dục, tôi hy vọng có thể đồng hành cùng các em trên hành trình phát triển, giúp các em không chỉ tiến bộ về kiến thức mà còn trở thành những người học chủ động, tự tin và không ngừng hoàn thiện bản thân.',
   },
   {
@@ -346,21 +346,21 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Ngô Hoài Trọng',
     role: 'GV bộ môn',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/ngo-hoai-trong.jpg',
     mission: 'Sứ mệnh của tôi là: Sống tử tế, chân thành và lan tỏa năng lượng tích cực đến mọi người xung quanh. Tôi tin rằng khi ta gieo điều tốt, cuộc sống sẽ nở hoa bằng niềm vui và yêu thương.',
   },
   {
     name: 'Phạm Ngọc Anh',
     role: 'Nhân viên học thuật (AC)',
     coSo: 'Cả hai CS',
-    photo: '',
+    photo: '/pham-ngoc-anh.jpg',
     mission: 'Tuyên ngôn sứ mệnh: Sống hết mình và trân trọng mọi thứ xung quanh. Tận hưởng những niềm vui đơn giản. Để làm được điều đó tôi sẽ cố gắng là: + Một người nhân viên có trách nhiệm, hết mình trong công việc + Một người bạn đáng để tin tưởng và giao phó + Một người đồng nghiệp thân thiện và hỗ trợ mọi người. + Một người con luôn chia sẻ, giúp đỡ và yêu thương bố mẹ',
   },
   {
     name: 'Lâm Thoại Tường',
     role: 'GV bộ môn',
     coSo: 'Cả hai CS',
-    photo: '',
+    photo: '/lam-thoai-tuong.jpg',
     mission: 'Sự tiến bộ của học sinh là mục tiêu.',
   },
   {
@@ -374,7 +374,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Hà Chí Thanh',
     role: 'GV bộ môn',
     coSo: 'Cả hai CS',
-    photo: '',
+    photo: '/ha-chi-thanh.jpg',
     mission: 'Truyền cảm hứng học tập, khơi mở sự tự tin và giúp mỗi học sinh tiến gần hơn đến phiên bản tốt nhất của chính mình.',
   },
   {
@@ -486,7 +486,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Nguyễn Ngọc Hân',
     role: 'GV nhiều môn Tiểu học',
     coSo: 'Bình Tân',
-    photo: '',
+    photo: '/nguyen-ngoc-han.jpg',
     mission: 'Tôi chọn trở thành người đồng hành, truyền cảm hứng và tạo môi trường để mỗi học sinh được tự tin học tập, phát triển và tỏa sáng theo cách riêng của mình.',
   },
   {
@@ -514,7 +514,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Lê Thanh Hoài',
     role: 'Tổ Trưởng Chuyên Môn',
     coSo: 'Cả hai CS',
-    photo: '',
+    photo: '/le-thanh-hoai.jpg',
     mission: 'Cho đi là nhận lại - Niềm vui của bạn là niềm vui của tôi.',
   },
   {

@@ -1,13 +1,14 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { schoolFacts } from '../data/school-facts';
-import { giaoVienChuNhiem, giaoVienBoMon, hienThi } from '../data/doi-ngu-giao-vien';
+import { giaoVienChuNhiem, giaoVienBoMon, giaoVienBanNgu, hienThi } from '../data/doi-ngu-giao-vien';
 import HeaderBase from '../components/HeaderBase.astro';
 import FooterBase from '../components/FooterBase.astro';
 
 const tabs = [
   { id: 'chu-nhiem', label: 'Giáo viên Chủ Nhiệm', icon: '👩‍🏫' },
   { id: 'bo-mon', label: 'Giáo viên Bộ Môn', icon: '📚' },
+  { id: 'ban-ngu', label: 'Giáo viên Bản Ngữ', icon: '🌍' },
   { id: 'tu-van', label: 'Đội Ngũ Tư Vấn', icon: '💬' },
 ];
 
@@ -198,6 +199,24 @@ function initials(name: string): string {
           </div>
         </div>
 
+
+        <!-- Panel 3: Bản ngữ -->
+        <div class="gv-panel" id="panel-ban-ngu" role="tabpanel" aria-labelledby="tab-ban-ngu" hidden>
+          <p class="gv-panel__intro">Giáo viên bản ngữ đang giảng dạy trực tiếp tại các cơ sở Trường Việt Anh.</p>
+          <div class="gv-grid gv-grid--tv">
+            {giaoVienBanNgu.filter(t => t.photo).map(t => (
+              <article class="gv-card gv-card--to gv-card--bn">
+                <div class="gv-card__photo">
+                  <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="600" height="800" />
+                </div>
+                <div class="gv-card__body">
+                  <h3 class="gv-card__name">{t.name}</h3>
+                  <p class="gv-card__role">{t.role}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
 
         <div class="gv-panel" id="panel-tu-van" role="tabpanel" aria-labelledby="tab-tu-van" hidden>
           <p class="gv-panel__intro">Đội ngũ tư vấn tuyển sinh và giáo viên tư vấn học tập — hỗ trợ phụ huynh tìm hiểu về chương trình, lộ trình học và đăng ký nhập học tại tất cả cơ sở.</p>
@@ -525,6 +544,11 @@ function initials(name: string): string {
     transition: color .2s, transform .2s;
   }
   .gv-card--to:hover .gv-card__body::after { color: #0d2f55; transform: translateX(3px); }
+
+  /* Thẻ giáo viên bản ngữ: không có tuyên ngôn nên không bấm được
+     -> bỏ dòng gợi ý và bỏ hiệu ứng nhấc thẻ khi rê chuột */
+  .gv-card--bn .gv-card__body::after { content: none; }
+  .gv-card--bn:hover { transform: none; }
 
   /* THẺ BẤM ĐƯỢC + POPUP TUYÊN NGÔN */
   .gv-sr { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }

@@ -1,7 +1,12 @@
 // =====================================================================
-// ĐỘI NGŨ GIÁO VIÊN — nguồn: file "CẬP NHẬT WEBSITE.xlsx" (cập nhật 20/09/2026)
-// Sinh bằng script từ bảng tính, đừng sửa tay từng dòng ở đây — sửa trên
+// ĐỘI NGŨ GIÁO VIÊN — nguồn: "VIỆT ANH _ HỒ SƠ ĐỘI NGŨ GIÁO VIÊN 2026–2027
+// (Câu trả lời).xlsx" — bảng trả lời Google Form, cập nhật 30/09/2026.
+//
+// Sinh bằng script từ bảng tính. Đừng sửa tay từng dòng ở đây — sửa trên
 // bảng tính rồi sinh lại, nếu không lần cập nhật sau sẽ ghi đè mất.
+//
+// CHỈ lấy tên, vị trí, cơ sở, tuyên ngôn. Bảng gốc còn có CCCD, mã số thuế,
+// BHXH, số điện thoại, địa chỉ — TUYỆT ĐỐI không đưa vào repo (GitHub công khai).
 //
 // KHÔNG có 3 lãnh đạo (cô Trần Thị Ngọc Tuyền, cô Nguyễn Thị Ái Hoa,
 // cô Nguyễn Thị Lan) vì họ đã có thẻ riêng ở /ban-lanh-dao.
@@ -12,13 +17,14 @@ export interface GiaoVien {
   role: string;
   coSo?: string;
   photo: string;
+  /** Rỗng với giáo viên bản ngữ — họ không điền biểu mẫu tiếng Việt */
   mission: string;
 }
 
 /**
- * Chi hien nguoi da co DU ca anh lan tuyen ngon — Van chot 20/09/2026.
- * Ai chua co anh thi tam an; khi nao bo sung anh vao public/ va dien duong
- * dan o day la ho TU HIEN, khong phai sua trang.
+ * Chỉ hiện người đã có ĐỦ cả ảnh lẫn tuyên ngôn — Văn chốt 20/09/2026.
+ * Ai chưa có ảnh thì tạm ẩn; khi nào bổ sung ảnh vào public/ và điền đường
+ * dẫn ở đây là họ TỰ HIỆN, không phải sửa trang.
  */
 export const hienThi = (ds: GiaoVien[]): GiaoVien[] => ds.filter(g => g.photo && g.mission);
 
@@ -133,7 +139,7 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Nguyễn Thị Phương Quỳnh',
     role: 'GVCN',
     coSo: 'Gò Vấp',
-    photo: '',
+    photo: '/nguyen-thi-phuong-quynh.jpg',
     mission: 'Tôi cam kết trở thành một giáo viên tận tâm, sáng tạo và không ngừng học hỏi. Tôi mong muốn kiến tạo những giờ học Tiếng Anh sinh động, tích cực, nơi mỗi học sinh đều được lắng nghe, tôn trọng và khuyến khích phát huy tiềm năng riêng. Sứ mệnh của tôi là truyền cảm hứng học tập, giúp các em tự tin sử dụng tiếng Anh và từng ngày trở thành phiên bản tốt nhất của chính mình.',
   },
   {
@@ -147,14 +153,14 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Lê Mai Tường Vy',
     role: 'GVCN, Giáo viên Tiếng Anh',
     coSo: 'Gò Vấp',
-    photo: '',
+    photo: '/le-mai-tuong-vy.jpg',
     mission: 'Tôi sẽ yêu thương, giáo dục và chăm sóc học sinh với thái độ tích cực, vui tươi. Làm bạn đồng hành cùng các con trong quá trình phát triển và hoàn thiện bản thân.',
   },
   {
     name: 'Nguyễn Diệu Hoài Trinh',
     role: 'GVCN',
     coSo: 'Gò Vấp',
-    photo: '',
+    photo: '/nguyen-dieu-hoai-trinh.jpg',
     mission: 'LÀ NGƯỜI TRUYỀN CẢM HỨNG NGÔN NGỮ, GIÚP CÁC EM KHÔNG CHỈ GIỎI TIẾNG ANH MÀ CÒN TRỞ THÀNH NHỮNG CÔNG DÂN TOÀN CẦU CÓ NHÂN CÁCH TỐT. VỚI CON GÁI: LÀ BẾN ĐỖ BÌNH YÊN, LÀ NGƯỜI BẠN LỚN CÙNG CON KHÁM PHÁ THẾ GIỚI TRONG NHỮNG NĂM THÁNG ĐẦU ĐỜI.',
   },
   {
@@ -175,14 +181,14 @@ export const giaoVienChuNhiem: GiaoVien[] = [
     name: 'Trần Vũ Hiền Linh',
     role: 'GVCN Tiểu học',
     coSo: 'Gò Vấp',
-    photo: '',
+    photo: '/tran-vu-hien-linh.jpg',
     mission: 'Đồng hành cùng học sinh trên hành trình học tập và trưởng thành, giúp các em phát triển toàn diện về tri thức, kỹ năng và nhân cách. Tạo nên một môi trường học tập tích cực, nơi mỗi em được lắng nghe, tôn trọng và có cơ hội trở thành phiên bản tốt nhất của chính mình.',
   },
   {
     name: 'Đào Thị Đăng Thao',
     role: 'Giáo viên CHỦ NHIỆM',
     coSo: 'Gò Vấp',
-    photo: '',
+    photo: '/dao-thi-dang-thao.jpg',
     mission: 'Sứ mệnh của tôi là trở thành một người có trách nhiệm, yêu thương và luôn hết mình để xây dựng một lớp học trọn vẹn.',
   },
   {
@@ -199,6 +205,7 @@ export const giaoVienBoMon: GiaoVien[] = [
   {
     name: 'Đặng Thành Phát',
     role: 'GV bộ môn',
+    coSo: 'Cả hai CS',
     photo: '',
     mission: 'Tôi là một giáo viên Tiếng Anh – người truyền cảm hứng học tập, khơi dậy tiềm năng và đồng hành cùng học sinh trên hành trình trưởng thành. Tôi lựa chọn chủ động tạo ra giá trị, không ngừng học hỏi và đổi mới để mỗi bài học không chỉ giúp học sinh giỏi Tiếng Anh hơn mà còn tự tin hơn, chủ động hơn và sẵn sàng hội nhập với thế giới. Tôi luôn bắt đầu với câu hỏi: “Tôi muốn học sinh trở thành người như thế nào sau khi rời khỏi lớp học của mình?” Vì vậy, tôi đặt sự phát triển lâu dài của học sinh làm trọng tâm, ưu tiên những điều thực sự có ý nghĩa thay vì chỉ tập trung vào điểm số. Tôi xây dựng lớp học dựa trên sự tôn trọng, lắng nghe và đồng hành, nơi mỗi học sinh được nhìn nhận với những điểm mạnh riêng, được phép mắc lỗi, được khuyến khích thử thách bản thân và tin rằng “Tôi có thể làm được.” Tôi tin vào tinh thần cùng thắng: giáo viên thành công khi học sinh tiến bộ, học sinh thành công khi các em phát huy được tiềm năng của mình. Tôi chủ động hợp tác với đồng nghiệp, phụ huynh và cộng đồng để tạo nên một môi trường giáo dục tích cực và nhân văn. Tôi cam kết mài sắc chiếc cưa của chính mình – không ngừng phát triển chuyên môn, năng lực công nghệ, tư duy sáng tạo và phẩm chất nghề nghiệp để trở thành phiên bản tốt hơn của một người thầy mỗi ngày. Sứ mệnh của tôi là: Dạy bằng tri thức, dẫn dắt bằng sự tử tế, truyền cảm hứng bằng hành động và giúp mỗi học sinh tin rằng các em có thể trở thành phiên bản tốt nhất của chính mình. Tôi không chỉ dạy Tiếng Anh. Tôi giúp học sinh tìm thấy tiếng nói của chính mình và tự tin bước ra thế giới.',
   },
@@ -325,7 +332,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Trần Thái Tứ',
     role: 'GV bộ môn',
     coSo: 'Gò Vấp',
-    photo: '',
+    photo: '/tran-thai-tu.jpg',
     mission: 'Xem các bạn nhỏ như một thế hệ tiếp nối của bản thân, thế hệ sau cần hoàn hảo hơn thế hệ trước, tôi ở đây để thực hiện điều ấy và dẫn dắt những thế hệ của mình',
   },
   {
@@ -451,7 +458,7 @@ export const giaoVienBoMon: GiaoVien[] = [
     name: 'Phan Thùy Linh',
     role: 'Giáo viên tiểu học',
     coSo: 'Gò Vấp',
-    photo: '',
+    photo: '/phan-thuy-linh.jpg',
     mission: 'Trở thành một người giáo viên có trách nhiệm, yêu thương và kiên nhẫn. Luôn đặt hạnh phúc của học sinh lên hàng đầu, để xây dựng một lớp học trọn vẹn – nơi mỗi học sinh được lắng nghe, được tôn trọng và được là chính mình.',
   },
   {
@@ -516,5 +523,36 @@ export const giaoVienBoMon: GiaoVien[] = [
     coSo: 'Gò Vấp',
     photo: '',
     mission: 'Sứ mệnh của tôi là cống hiến toàn bộ năng lực và nhiệt huyết để mang lại những giá trị thực chất nhất cho học sinh, xóa bỏ mọi tư duy lối mòn trong giảng dạy học đường. Xuất phát từ tinh thần của một người hành động, tôi cam kết thiết lập những tiêu chuẩn mới: biến mỗi giờ học thành bệ phóng toàn diện, nơi học sinh được rèn luyện tinh thần và thể chất như những nhà vô địch. Tôi lựa chọn hành động thay vì lý thuyết suông, đặt lợi ích và sự phát triển của học sinh làm trọng tâm duy nhất, đồng thời không ngừng tự nâng cấp, hoàn thiện bản thân để sẵn sàng đáp ứng xuất sắc mọi nhiệm vụ được giao và chuẩn bị cho những bước tiến xa hơn trong sự nghiệp.',
+  },
+  {
+    name: 'Nguyễn Trung Hiếu',
+    role: 'GV bộ môn',
+    coSo: 'Gò Vấp',
+    photo: '/nguyen-trung-hieu.jpg',
+    mission: 'Tôi mong muốn tạo ra những giờ học Giáo dục thể chất vui vẻ, tích cực, năng động và truyền cảm hứng, nơi mỗi học sinh đều cảm thấy tự tin và yêu thích vận động',
+  },
+];
+
+/**
+ * GIÁO VIÊN BẢN NGỮ — KHÔNG sinh từ bảng tính.
+ *
+ * Bảng "HỒ SƠ ĐỘI NGŨ GIÁO VIÊN" là biểu mẫu tiếng Việt nên thầy cô bản ngữ
+ * không có trong đó, cũng không có tuyên ngôn sứ mệnh. Vì vậy danh sách này
+ * gõ tay, và thẻ của họ KHÔNG bấm mở tuyên ngôn được như thẻ giáo viên Việt.
+ *
+ * Thêm người mới: bỏ ảnh vào public/ rồi thêm một dòng ở đây.
+ */
+export const giaoVienBanNgu: GiaoVien[] = [
+  {
+    name: 'Angus Mills',
+    role: 'Giáo viên bản ngữ · Tiếng Anh',
+    photo: '/angus-mills.jpg',
+    mission: '',
+  },
+  {
+    name: 'Tegan Turnbull',
+    role: 'Giáo viên bản ngữ · Tiếng Anh',
+    photo: '/tegan-turnbull.jpg',
+    mission: '',
   },
 ];

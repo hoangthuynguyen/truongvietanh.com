@@ -24,16 +24,19 @@ export interface GiaoVien {
   role: string;
   coSo?: string;
   photo: string;
-  /** Rỗng với giáo viên bản ngữ — họ không điền biểu mẫu tiếng Việt */
+  /** Rỗng với giáo viên bản ngữ và người chưa điền biểu mẫu hồ sơ */
   mission: string;
 }
 
 /**
- * Chỉ hiện người đã có ĐỦ cả ảnh lẫn tuyên ngôn — Văn chốt 20/09/2026.
- * Ai chưa có ảnh thì tạm ẩn; khi nào bổ sung ảnh vào public/ và điền đường
- * dẫn ở đây là họ TỰ HIỆN, không phải sửa trang.
+ * Hiện người đã có ẢNH. Ai chưa có ảnh thì tạm ẩn; khi nào bổ sung ảnh vào
+ * public/ và điền đường dẫn ở đây là họ TỰ HIỆN, không phải sửa trang.
+ *
+ * Trước 01/10/2026 còn bắt buộc phải có cả tuyên ngôn (Văn chốt 20/09). Nay Văn
+ * đưa cô Ngô Thị Thanh Tâm lên chỉ với ảnh + chức danh, nên bỏ điều kiện đó:
+ * người chưa có tuyên ngôn vẫn hiện, thẻ của họ chỉ không bấm mở được.
  */
-export const hienThi = (ds: GiaoVien[]): GiaoVien[] => ds.filter(g => g.photo && g.mission);
+export const hienThi = (ds: GiaoVien[]): GiaoVien[] => ds.filter(g => g.photo);
 
 /** Giáo viên có làm công tác chủ nhiệm */
 export const giaoVienChuNhiem: GiaoVien[] = [
@@ -537,6 +540,14 @@ export const giaoVienBoMon: GiaoVien[] = [
     coSo: 'Gò Vấp',
     photo: '/nguyen-trung-hieu.jpg',
     mission: 'Tôi mong muốn tạo ra những giờ học Giáo dục thể chất vui vẻ, tích cực, năng động và truyền cảm hứng, nơi mỗi học sinh đều cảm thấy tự tin và yêu thích vận động',
+  },
+  // ---- THÊM TAY (không có trong bảng hồ sơ) — sinh lại file từ bảng tính thì nhớ giữ ----
+  // Văn gửi ảnh + chức danh 01/10/2026. Chưa có cơ sở và tuyên ngôn sứ mệnh.
+  {
+    name: 'Ngô Thị Thanh Tâm',
+    role: 'Giáo viên Tiếng Anh',
+    photo: '/ngo-thi-thanh-tam.jpg',
+    mission: '',
   },
 ];
 

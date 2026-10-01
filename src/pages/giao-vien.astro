@@ -144,7 +144,7 @@ function initials(name: string): string {
           <p class="gv-panel__intro">Giáo viên chủ nhiệm trực tiếp đồng hành cùng lớp — chịu trách nhiệm về kỷ luật, liên lạc phụ huynh và kế hoạch học tập từng học sinh. <strong>Bấm vào thẻ để đọc tuyên ngôn sứ mệnh</strong> của thầy cô.</p>
           <div class="gv-grid gv-grid--tv">
             {hienThi(giaoVienChuNhiem).map(t => (
-              <article class="gv-card gv-card--to">
+              <article class={`gv-card gv-card--to ${t.mission ? '' : 'gv-card--bn'}`}>
                 <div class="gv-card__photo">
                   {t.photo
                     ? <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="600" height="800" />
@@ -174,7 +174,7 @@ function initials(name: string): string {
           <p class="gv-panel__intro">Giáo viên bộ môn và các vị trí chuyên môn khác — tổ trưởng chuyên môn, quản nhiệm, giáo vụ, tâm lý học đường. <strong>Bấm vào thẻ để đọc tuyên ngôn sứ mệnh</strong> của thầy cô.</p>
           <div class="gv-grid gv-grid--tv">
             {hienThi(giaoVienBoMon).map(t => (
-              <article class="gv-card gv-card--to">
+              <article class={`gv-card gv-card--to ${t.mission ? '' : 'gv-card--bn'}`}>
                 <div class="gv-card__photo">
                   {t.photo
                     ? <img src={t.photo} alt={`Ảnh ${t.name}`} loading="lazy" width="600" height="800" />

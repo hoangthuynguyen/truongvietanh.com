@@ -83,3 +83,24 @@ HTML entity trước khi so — câu có dấu ngoặc kép sẽ thành `&quot;`
 Ba trang trụ đang dùng: `/hoc-phi`, `/hoc-bong`, `/chinh-sach-ai`. Các trang khác còn FAQ mở
 sẵn kiểu cũ (`/tuyen-sinh`, `/gioi-thieu`, `/chuong-trinh`, trang chủ, `blog/[slug]`) — đổi dần
 khi có dịp đụng vào.
+
+## Đa ngôn ngữ (bản 1 — máy dịch trên trình duyệt)
+
+Dựng 01/10/2026. 8 ngôn ngữ: Việt (gốc), Anh, Hàn, Nhật, Trung, Pháp, Đức, Phần Lan.
+**Nội dung gốc vẫn chỉ viết bằng tiếng Việt** — 7 ngôn ngữ kia do Google Translate dịch ngay
+trên trình duyệt người xem. Toàn bộ nằm ở một file: `public/js/va-lang.js`.
+
+- **Nút chọn ngôn ngữ**: đặt `<div data-va-lang></div>` + `<script src="/js/va-lang.js" is:inline defer></script>`.
+  Đã có sẵn trong `HeaderBase.astro` và `SiteHeader.astro`. Landing page không có header thì
+  không có nút, nhưng vẫn tự dịch theo lựa chọn của khách (integration `va-lang` trong
+  `astro.config.mjs` nạp script khi có cookie `googtrans`).
+- **Link mở thẳng một ngôn ngữ**: `?lang=en|ko|ja|zh|fr|de|fi|vi`.
+- **Tên riêng** (tên trường, cơ sở, đường): thêm vào mảng `GIU_NGUYEN` trong `va-lang.js`, nếu
+  không máy dịch sẽ phá — "Gò Vấp" từng bị dịch sang tiếng Hàn thành "người dùng thuốc lá điện
+  tử". **Tên người**: gắn `class="notranslate" translate="no"` ngay trên thẻ chứa tên.
+- **Form lead**: mọi `<option>` phải có `value` (script đã tự chốt cho option thiếu), và **đừng
+  lấy giá trị gửi `/api/lead` từ chữ hiển thị** (`textContent`) — chữ đó sẽ thành tiếng nước
+  ngoài, dropdown Pancake không nhận và loại cả lead.
+- **Giới hạn**: bot tìm kiếm và mô hình AI KHÔNG thấy bản dịch (không có URL `/en/`, không
+  `hreflang`). Đây chỉ là lớp phục vụ người xem; muốn có SEO/AEO tiếng nước ngoài phải dựng
+  trang dịch thật — chưa làm.

@@ -71,6 +71,20 @@ export default defineConfig({
         },
       },
     },
+    // Đa ngôn ngữ (bản 1): khách đã chọn ngôn ngữ khác tiếng Việt ở header thì MỌI trang
+    // — kể cả landing page tự dựng <html>, không có header — cũng tự dịch theo.
+    // Người xem tiếng Việt không có cookie nên không tải thêm gì. Xem public/js/va-lang.js.
+    {
+      name: 'va-lang',
+      hooks: {
+        'astro:config:setup': ({ injectScript }) => {
+          injectScript(
+            'head-inline',
+            "if(/(?:^|; )googtrans=/.test(document.cookie)||/[?&]lang=/.test(location.search)){var s=document.createElement('script');s.src='/js/va-lang.js';s.defer=true;document.head.appendChild(s)}",
+          );
+        },
+      },
+    },
     sitemap({
       // Trang trụ vĩnh viễn (văn bản chính sách) ưu tiên cao hơn trang thường.
       // @astrojs/sitemap chỉ phát <priority>/<lastmod> khi serialize trả về các khoá đó.

@@ -437,8 +437,21 @@ h4{
   }
 }
 
+/* Nút chọn ngôn ngữ (public/js/va-lang.js). Giữ chỗ sẵn để thanh không bị xô lệch
+   khi script dựng nút vào. */
+.wp-top-bar [data-va-lang]{
+  display: inline-flex;
+  min-width: 72px;
+  min-height: 30px;
+}
+
+/* Mobile: thanh trên cùng ẩn hotline + tìm kiếm (đã có ở thanh dính đáy), chỉ còn
+   nút chọn ngôn ngữ nằm sát phải. */
 @media (max-width: 640px) {.wp-top-bar__right{
-    display: none;
+    width: 100%;
+    justify-content: flex-end;
+  }.wp-top-bar__right > :not([data-va-lang]){
+    display: none !important;
   }
 }/* ===================== LEGACY COMPAT ===================== */
 .site-header{

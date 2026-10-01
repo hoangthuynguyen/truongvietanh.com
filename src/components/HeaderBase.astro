@@ -20,11 +20,13 @@ const logoUrl = "/logo-vietanh.webp";
          Zalo OA
       </a>
     </div>
-    <div class="top-right d-none-mo">
-      <button aria-label="Tìm kiếm trên website" class="search-btn">
+    <div class="top-right">
+      <button aria-label="Tìm kiếm trên website" class="search-btn d-none-mo">
          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
       </button>
-      <a href="https://m.me/truongvietanhhcm" target="_blank" rel="noopener" class="btn-yellow">Facebook Chat ↗</a>
+      <a href="https://m.me/truongvietanhhcm" target="_blank" rel="noopener" class="btn-yellow d-none-mo">Facebook Chat ↗</a>
+      <!-- Nút chọn ngôn ngữ — hiện cả trên mobile. Xem public/js/va-lang.js -->
+      <div data-va-lang></div>
     </div>
   </div>
 </div>
@@ -135,6 +137,8 @@ const logoUrl = "/logo-vietanh.webp";
   </div>
 </div>
 
+<script src="/js/va-lang.js" is:inline defer></script>
+
 <script>
   // Search data - all main pages
   const searchPages = [
@@ -241,7 +245,8 @@ const logoUrl = "/logo-vietanh.webp";
 
 <style>/* UTILS for header */
   .cf-container{ max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; }.text-center{ text-align: center; }.text-nowrap{ white-space: nowrap; }/* TOP BAR */
-  .top-bar{ background: var(--cf-blue, #26275D); color: #e2e8f0; font-size: 1rem; padding: 0.4rem 0; font-weight: 400; font-family: 'Inter', sans-serif;}.top-bar-inner{ display: flex; justify-content: space-between; align-items: center; }.top-left{ display: flex; align-items: center; gap: 1.25rem; }.top-left .icon-text{ display: inline-flex; align-items: center; gap: 0.4rem; }.top-right{ display: flex; align-items: center; gap: 1rem; }.search-btn{ background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; }.btn-yellow{ background: var(--pri-yellow, #fde047); color: #000; font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius:3px; font-size: 1rem; border: none; cursor:pointer;}.btn-yellow:hover{ background: #fef08a; }/* MAIN NAV */
+  .top-bar{ background: var(--cf-blue, #26275D); color: #e2e8f0; font-size: 1rem; padding: 0.4rem 0; font-weight: 400; font-family: 'Inter', sans-serif;}.top-bar-inner{ display: flex; justify-content: space-between; align-items: center; }.top-left{ display: flex; align-items: center; gap: 1.25rem; }.top-left .icon-text{ display: inline-flex; align-items: center; gap: 0.4rem; }.top-right{ display: flex; align-items: center; gap: 1rem; }.search-btn{ background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; }.btn-yellow{ background: var(--pri-yellow, #fde047); color: #000; font-weight: 600; text-decoration: none; padding: 0.4rem 1rem; border-radius:3px; font-size: 1rem; border: none; cursor:pointer;}.btn-yellow:hover{ background: #fef08a; }/* Nút chọn ngôn ngữ: giữ chỗ sẵn để thanh không xô lệch khi va-lang.js dựng nút */
+  .top-right [data-va-lang]{ display: inline-flex; min-width: 72px; min-height: 30px; }/* MAIN NAV */
   .main-header{ background: #ffffff; border-bottom: 1px solid #e2e8f0; position: sticky; top: 0; z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.03); font-family: 'Inter', sans-serif; padding-top: 6px !important; padding-bottom: 6px !important; height: auto !important; overflow: visible; }.nav-grid{ max-width: 1200px; margin: 0 auto; padding: 0 1rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; min-height: 50px; gap: 1rem; overflow: visible; }.nav-links{ list-style: none; padding: 0; margin: 0; display: flex; gap: 1.25rem; align-items: center; }.right-nav{ justify-content: flex-start; }.left-nav{ justify-content: flex-end; }.nav-links li{ position: relative; }.nav-links a{ text-decoration: none; color: var(--pri-blue, #232252); font-weight: 600; font-size: 1rem; white-space: nowrap; transition: color 0.2s; display: flex; align-items: center; padding: 0.5rem 0; }.nav-links a:hover{ color: var(--cf-blue, #26275D); }/* DROPDOWN */
   /* LOGO ENLARGED */
   .header-logo{ display: flex; justify-content: center; align-items: center; width: 100%; height: 50px; min-width: 200px; overflow: visible; position: relative; }.official-logo{ height: 80px; width: auto; object-fit: contain; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 5; }/* SEARCH MODAL */
@@ -381,6 +386,8 @@ const logoUrl = "/logo-vietanh.webp";
   @media (max-width: 1024px) {.nav-grid{ grid-template-columns: auto 1fr auto; justify-content: space-between; }.left-nav, .right-nav{ display: none; }.mobile-menu-btn{ display: flex; }.mobile-nav-drawer{ display: block; }.header-logo{ justify-content: flex-start; height: 44px; min-width: 120px; }.official-logo{ height: 64px; left: 0; transform: translate(0, -50%); }
   }
 
-  @media (max-width: 768px) {.d-none-mo{ display: none; }
+  /* .top-left .icon-text (2 class) thắng .d-none-mo (1 class) nên trước đây "Zalo OA" KHÔNG hề
+     ẩn trên mobile. Giờ thanh có thêm nút ngôn ngữ, không ẩn thật thì tràn ngang màn hình. */
+  @media (max-width: 768px) {.d-none-mo, .top-left .d-none-mo{ display: none; }.top-bar-inner{ gap: .5rem; flex-wrap: wrap; }
   }
 </style>

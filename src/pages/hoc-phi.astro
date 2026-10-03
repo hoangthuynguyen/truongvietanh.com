@@ -236,9 +236,9 @@ const structuredData = [
           </nav>
           <h1 class="gi-h1">Học phí Việt Anh 2026–2027: đủ mọi khoản của một năm học</h1>
           <p class="hp-hero-sub">
-            Học phí <strong>{trieu(hpMin)}–{trieu(hpMax)} triệu đồng/năm</strong> tùy khối, lớp 1–12.
+            Học phí {trieu(hpMin)}–{trieu(hpMax)} triệu đồng/năm tùy khối, lớp 1–12.
             Cộng ăn uống, tài liệu, dã ngoại và cơ sở vật chất, tổng năm đầu khoảng
-            <strong> {Math.round(tongMin / 1e6)}–{Math.round(tongMax / 1e6)} triệu đồng</strong>.
+             {Math.round(tongMin / 1e6)}–{Math.round(tongMax / 1e6)} triệu đồng.
           </p>
           </div>
 
@@ -257,7 +257,7 @@ const structuredData = [
               Xem 9 chính sách học bổng &amp; ưu đãi →
             </a>
             <p class="hp-cta-hint">
-              Con số bên dưới là <strong>giá niêm yết</strong>. Hầu hết gia đình đóng thấp hơn — xem
+              Con số bên dưới là giá niêm yết. Hầu hết gia đình đóng thấp hơn — xem
               mình được giảm bao nhiêu trước khi lên kế hoạch tài chính cho con.
             </p>
           </div>
@@ -341,9 +341,9 @@ const structuredData = [
                 {hpTrai.map((h, i) => (
                   <tr>
                     <td>{h.lop}</td>
-                    <td class="hp-num"><strong>{vnd(h.tien)}</strong></td>
+                    <td class="hp-num">{vnd(h.tien)}</td>
                     <td>{hpPhai[i].lop}</td>
-                    <td class="hp-num"><strong>{vnd(hpPhai[i].tien)}</strong></td>
+                    <td class="hp-num">{vnd(hpPhai[i].tien)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -354,16 +354,16 @@ const structuredData = [
           <ol class="hp-list hp-list-num">
             <li>
               Lớp OIC (Oxford International Curriculum) đóng thêm {vnd(OIC_PHU_THU)}đ/năm
-              {' '}phí bản quyền chương trình Oxford. Hệ OIC hiện mở từ <strong>lớp 1 đến lớp 8</strong>;
+              {' '}phí bản quyền chương trình Oxford. Hệ OIC hiện mở từ lớp 1 đến lớp 8;
               lớp 9 trở lên chỉ có lớp thường.
             </li>
             <li>
-              <strong>Nội trú</strong> thu khác nhau theo cơ sở: <strong>Gò Vấp {vnd(NOI_TRU_GO_VAP)}đ/tháng</strong>,
-              {' '}<strong>Bình Tân {vnd(NOI_TRU_BINH_TAN)}đ/tháng</strong>, chưa gồm tiền ăn. Học sinh nội trú
+              Nội trú thu khác nhau theo cơ sở: Gò Vấp {vnd(NOI_TRU_GO_VAP)}đ/tháng,
+              {' '}Bình Tân {vnd(NOI_TRU_BINH_TAN)}đ/tháng, chưa gồm tiền ăn. Học sinh nội trú
               đăng ký gói ăn riêng theo bảng phí ăn bên dưới.
             </li>
             <li>
-              <strong>Mầm non Việt Anh (Gò Vấp)</strong> tính theo tháng, đã gồm ăn và phí: gói Bilingual
+              Mầm non Việt Anh (Gò Vấp) tính theo tháng, đã gồm ăn và phí: gói Bilingual
               7.996.000đ/tháng, Premium 10.178.000đ/tháng, International (giáo viên bản ngữ toàn thời
               gian)&nbsp;11.978.000đ/tháng.
             </li>
@@ -382,8 +382,8 @@ const structuredData = [
           <h2>Ngoài học phí, một năm học tốn thêm những khoản nào?</h2>
           <p>
             Ngoài học phí, một năm học có thêm bốn nhóm chi phí: cơ sở vật chất, tài liệu, hoạt động, và
-            ăn uống — tổng cộng khoảng <strong>{Math.round(ngoaiMin / 1e6)} đến {Math.round(ngoaiMax / 1e6)} triệu
-            đồng</strong> ở năm đầu, tùy cấp học và gói ăn đăng ký.
+            ăn uống — tổng cộng khoảng {Math.round(ngoaiMin / 1e6)} đến {Math.round(ngoaiMax / 1e6)} triệu
+            đồng ở năm đầu, tùy cấp học và gói ăn đăng ký.
           </p>
 
           <h3>Phí đầu năm, đóng một lần</h3>
@@ -402,7 +402,7 @@ const structuredData = [
                   <td>Cơ sở vật chất</td>
                   <td class="hp-num">{vnd(CSVC_TIEU_HOC)}đ</td>
                   <td class="hp-num">{vnd(CSVC_TRUNG_HOC)}đ</td>
-                  <td>Đóng <strong>một lần cho cả cấp học</strong>, không lặp lại hằng năm</td>
+                  <td>Đóng một lần cho cả cấp học, không lặp lại hằng năm</td>
                 </tr>
                 <tr>
                   <td>Đồng phục trọn bộ</td>
@@ -465,11 +465,11 @@ const structuredData = [
                 </tr>
               </thead>
               <tbody>
-                <tr><td>Tiểu học</td><td>Bán trú</td><td class="hp-num"><strong>{vnd(AN_TIEU_HOC)}đ</strong></td></tr>
-                <tr><td>Trung học (khối 6–11)</td><td>Bán trú, không ăn tối</td><td class="hp-num"><strong>{vnd(AN_TRUNG_HOC)}đ</strong></td></tr>
-                <tr><td>Trung học (khối 6–11)</td><td>Bán trú, có ăn tối</td><td class="hp-num"><strong>{vnd(AN_TRUNG_HOC_TOI)}đ</strong></td></tr>
-                <tr><td>Lớp 12</td><td>Bán trú</td><td class="hp-num"><strong>{vnd(AN_LOP_12)}đ</strong></td></tr>
-                <tr><td>Lớp 12</td><td>Nội trú toàn phần</td><td class="hp-num"><strong>{vnd(AN_NOI_TRU_12)}đ</strong></td></tr>
+                <tr><td>Tiểu học</td><td>Bán trú</td><td class="hp-num">{vnd(AN_TIEU_HOC)}đ</td></tr>
+                <tr><td>Trung học (khối 6–11)</td><td>Bán trú, không ăn tối</td><td class="hp-num">{vnd(AN_TRUNG_HOC)}đ</td></tr>
+                <tr><td>Trung học (khối 6–11)</td><td>Bán trú, có ăn tối</td><td class="hp-num">{vnd(AN_TRUNG_HOC_TOI)}đ</td></tr>
+                <tr><td>Lớp 12</td><td>Bán trú</td><td class="hp-num">{vnd(AN_LOP_12)}đ</td></tr>
+                <tr><td>Lớp 12</td><td>Nội trú toàn phần</td><td class="hp-num">{vnd(AN_NOI_TRU_12)}đ</td></tr>
               </tbody>
             </table>
           </div>
@@ -528,8 +528,8 @@ const structuredData = [
                   {viDu.map(() => <td class="hp-num">{vnd(BHYT)}đ</td>)}
                 </tr>
                 <tr class="hp-row-total">
-                  <td><strong>Tổng năm đầu</strong></td>
-                  {viDu.map((v) => <td class="hp-num"><strong>~{trieu(v.tong)} triệu</strong></td>)}
+                  <td>Tổng năm đầu</td>
+                  {viDu.map((v) => <td class="hp-num">~{trieu(v.tong)} triệu</td>)}
                 </tr>
               </tbody>
             </table>
@@ -549,7 +549,7 @@ const structuredData = [
             theo tuyến — chỉ phát sinh khi anh chị đăng ký.
           </p>
           <p class="hp-note">
-            <strong>Nếu anh chị quen tính theo tháng:</strong> chia đều 12 tháng, học phí là
+            Nếu anh chị quen tính theo tháng: chia đều 12 tháng, học phí là
             {' '}{thang(hpMin, 12)}–{thang(hpMax, 12)} triệu/tháng, trọn gói cả ăn và phí dịch vụ là
             {' '}{thang(tongMin, 12)}–{thang(tongMax, 12)} triệu/tháng. Nhưng năm học chỉ khoảng
             {' '}{THANG_NAM_HOC} tháng, nên chia theo tháng đi học thật thì cao hơn:
@@ -559,8 +559,8 @@ const structuredData = [
             điều đó trước khi so với trường thu theo tháng.
           </p>
           <p class="hp-note">
-            Hai lưu ý về thủ tục: phí nộp <strong>trước ngày nhập học 7 ngày</strong>, và thanh toán bằng
-            thẻ chịu thêm <strong>1,7% phí giao dịch</strong> của đơn vị thanh toán.
+            Hai lưu ý về thủ tục: phí nộp trước ngày nhập học 7 ngày, và thanh toán bằng
+            thẻ chịu thêm 1,7% phí giao dịch của đơn vị thanh toán.
           </p>
         </section>
 
@@ -611,7 +611,7 @@ const structuredData = [
                 <tr>
                   <td>Học phí/năm</td>
                   <td>Miễn từ năm học 2025–2026 (Nghị quyết Quốc hội, 6/2025)</td>
-                  <td class="hp-win"><strong>{trieu(hpMin)}–{trieu(hpMax)} triệu đồng</strong></td>
+                  <td class="hp-win">{trieu(hpMin)}–{trieu(hpMax)} triệu đồng</td>
                   <td>227,8–999,3 triệu đồng (Tuổi Trẻ, 8/2026)</td>
                 </tr>
                 <tr>
@@ -658,28 +658,28 @@ const structuredData = [
           <h2>Có ưu đãi, học bổng nào và đóng thế nào để tiết kiệm nhất?</h2>
           <p>
             Trường Việt Anh có chín chính sách hỗ trợ tài chính, chia hai nhóm rõ rệt: bốn ưu đãi học phí
-            do <strong>cha mẹ quyết định</strong>, và năm học bổng do <strong>chính con giành được</strong>.
+            do cha mẹ quyết định, và năm học bổng do chính con giành được.
           </p>
 
           <h3>Bốn ưu đãi cha mẹ quyết</h3>
           <ol class="hp-list hp-list-num">
             <li>
-              <strong>Đóng trọn năm học:</strong> giảm 6% học phí. Áp dụng khi đóng trước ngày
+              Đóng trọn năm học: giảm 6% học phí. Áp dụng khi đóng trước ngày
               15/9/2026 — với lớp 6 tương đương khoảng {trieu(viDuGiam6)} triệu đồng.
             </li>
             <li>
-              <strong>Đóng hai đợt:</strong> giảm 2%. Đợt một trước 15/9/2026, đợt hai trước 14/12/2026.
+              Đóng hai đợt: giảm 2%. Đợt một trước 15/9/2026, đợt hai trước 14/12/2026.
               Nếu chia nhỏ hơn — 4 đến 12 đợt — anh chị giữ nguyên biểu phí, trường không tính lãi trả góp.
             </li>
             <li>
-              <strong>Anh chị em ruột:</strong> con thứ hai giảm 50%, con thứ ba giảm 25%. Điều kiện là
+              Anh chị em ruột: con thứ hai giảm 50%, con thứ ba giảm 25%. Điều kiện là
               các con cùng đang học trong hệ thống Việt Anh tại cùng một thời điểm, không bắt buộc cùng
               cơ sở, không bắt buộc cùng cấp học. Không giới hạn số suất và không có hạn chót
               đăng ký.
             </li>
             <li>
-              <strong>Early Bird</strong> — đóng trước nhiều năm. Mức giảm tăng dần theo số năm đóng
-              trước: 6% → 16% → 26% → 36% → 46%, kèm <strong>khoá giá học phí năm đầu</strong> cho toàn
+              Early Bird — đóng trước nhiều năm. Mức giảm tăng dần theo số năm đóng
+              trước: 6% → 16% → 26% → 36% → 46%, kèm khoá giá học phí năm đầu cho toàn
               bộ số năm đã đóng. Dành cho gia đình đã xác định gắn bó dài hạn.
             </li>
           </ol>
@@ -687,25 +687,25 @@ const structuredData = [
           <h3>Năm học bổng con giành được</h3>
           <ol class="hp-list hp-list-num" start="5">
             <li>
-              <strong>GRIT</strong> — mỗi ngày con rèn giũa tối thiểu một giờ được ghi nhận 10.000đ. Giữ
+              GRIT — mỗi ngày con rèn giũa tối thiểu một giờ được ghi nhận 10.000đ. Giữ
               đủ 6/7 ngày thì tuần đó tính tròn 100.000đ, và cộng dồn theo chuỗi tuần. Dành cho mọi học
               sinh đang học.
             </li>
             <li>
-              <strong>CHAMPIONS</strong> — cho học sinh đạt giải thi đấu, bốn mức theo độ khó kỳ thi, từ
+              CHAMPIONS — cho học sinh đạt giải thi đấu, bốn mức theo độ khó kỳ thi, từ
               2 đến 20 triệu đồng.
             </li>
             <li>
-              <strong>LEADERS</strong> — cho học sinh cho đi và dẫn dắt, hai bảng, mỗi bảng 10 suất trị
+              LEADERS — cho học sinh cho đi và dẫn dắt, hai bảng, mỗi bảng 10 suất trị
               giá 10 triệu đồng.
             </li>
             <li>
-              <strong>TALENTS</strong> — học bổng tuyển sinh dành cho học sinh <strong>ngoài trường</strong>,
+              TALENTS — học bổng tuyển sinh dành cho học sinh ngoài trường,
               từ lớp 6, khu vực Đà Nẵng đến Cà Mau. Bốn hạng, từ 25 đến 100 triệu đồng, mỗi tỉnh đúng
               một suất.
             </li>
             <li>
-              <strong>LOVE</strong> — dành cho gia đình gặp biến cố, miễn 50 đến 100% học phí. Không ai
+              LOVE — dành cho gia đình gặp biến cố, miễn 50 đến 100% học phí. Không ai
               phải làm đơn xin: trường tự kích hoạt khi biết chuyện.
             </li>
           </ol>
@@ -717,11 +717,11 @@ const structuredData = [
             giành được. Quỹ LOVE nằm ngoài mọi luật cộng dồn.
           </p>
           <p>
-            Ngoài chín chính sách trên, trường còn <strong>ưu đãi giới thiệu 3.000.000đ cho mỗi bên</strong>
+            Ngoài chín chính sách trên, trường còn ưu đãi giới thiệu 3.000.000đ cho mỗi bên
             {' '}khi một gia đình được phụ huynh hiện hữu giới thiệu trước khi liên hệ trường.
           </p>
           <p class="hp-note">
-            Một lưu ý áp dụng cho tất cả: mọi mức giảm chỉ tính <strong>trên học phí</strong>, không áp
+            Một lưu ý áp dụng cho tất cả: mọi mức giảm chỉ tính trên học phí, không áp
             cho phí dịch vụ, tiền ăn, xe đưa đón, nội trú và các khoản thu hộ — chi hộ. Những khoản này
             thu theo giá của năm học đó.
           </p>
@@ -733,7 +733,7 @@ const structuredData = [
               Con anh chị được giảm bao nhiêu? Xem đủ điều kiện, hạn chót và cách cộng dồn.
             </p>
             <p class="hp-cta-box-body">
-              Bảng trên là <strong>giá niêm yết</strong>. Trang học bổng trình bày đầy đủ chín chính
+              Bảng trên là giá niêm yết. Trang học bổng trình bày đầy đủ chín chính
               sách — mức giảm từng loại, ai đủ điều kiện, cái nào cộng dồn với cái nào, kèm bảng tính
               Early Bird năm năm. Đọc xong anh chị dựng được kế hoạch tài chính cho cả hành trình học
               của con, không phải cho một năm.
@@ -750,7 +750,7 @@ const structuredData = [
           <p>
             Trường cam kết không phát sinh khoản thu bắt buộc nào trong năm học — mọi khoản anh chị phải
             đóng đều nằm trong bảng phí công bố trước khi ghi danh. Về học phí năm sau, trường có quy
-            định <strong>trần tăng tối đa 10% mỗi năm</strong>. Đây là mức trần, không phải cam kết tăng:
+            định trần tăng tối đa 10% mỗi năm. Đây là mức trần, không phải cam kết tăng:
             năm nào tăng ít hơn thì anh chị đóng ít hơn, và mức mới luôn công bố trước khi anh chị quyết
             định năm kế tiếp.
           </p>
@@ -764,9 +764,9 @@ const structuredData = [
           </p>
           <p>
             Nếu nhìn cả hành trình: học 12 năm liên tục theo mặt bằng giá 2026–2027, tổng học phí lớp 1
-            đến lớp 12 khoảng <strong>{(hpTong12Nam / 1e9).toFixed(2).replace('.', ',')} tỷ đồng</strong>;
+            đến lớp 12 khoảng {(hpTong12Nam / 1e9).toFixed(2).replace('.', ',')} tỷ đồng;
             cộng ăn uống và các khoản dịch vụ, khoảng
-            {' '}<strong>{(tong12NamDuKien / 1e9).toFixed(2).replace('.', ',')} tỷ đồng</strong> — chưa
+            {' '}{(tong12NamDuKien / 1e9).toFixed(2).replace('.', ',')} tỷ đồng — chưa
             tính điều chỉnh hằng năm, và chưa trừ bất kỳ ưu đãi hay học bổng nào. Tôi ghi con số này ra vì
             anh chị xứng đáng thấy nó trước khi ký, không phải sau. Giáo dục là khoản đầu tư lớn thứ hai
             của một gia đình sau căn nhà — và là khoản duy nhất không mua lại được khi con đã lớn. James
@@ -835,7 +835,7 @@ const structuredData = [
         <section id="ve-tac-gia" class="gi-section hp-author">
           <h2>Về tác giả</h2>
           <p>
-            <strong>Nguyễn Mạnh Dương</strong> — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt
+            Nguyễn Mạnh Dương — Nhà sáng lập &amp; Chủ tịch hệ thống giáo dục K-12 Việt
             Anh (từ 2011). 15 năm thiết kế môi trường học tập chủ động cho trẻ 0–18 tuổi.
             <em> Cập nhật lần cuối: 31/08/2026.</em>
           </p>
@@ -880,7 +880,7 @@ const structuredData = [
     font-size: 1.2rem;
     line-height: 1.7;
     color: #fff;
-    font-weight: 600;
+    font-weight: 400;
     margin: 1rem 0 0.85rem;
     max-width: 62ch;
   }
@@ -945,7 +945,7 @@ const structuredData = [
     display: inline-block;
     margin-top: 0.3rem;
     font-size: 0.97rem;
-    font-weight: 600;
+    font-weight: 400;
     color: rgba(255, 255, 255, 0.9);
     text-decoration: underline;
     text-underline-offset: 3px;
@@ -1054,7 +1054,7 @@ const structuredData = [
   /* ══════════ BẢNG ══════════ */
   .hp-num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
   .hp-table-hp td:nth-child(1),
-  .hp-table-hp td:nth-child(3) { font-weight: 600; }
+  .hp-table-hp td:nth-child(3) { font-weight: 400; }
   .hp-row-total td { background: #fffbe6; border-top: 2px solid #f9dd0e; }
   .hp-win { background: rgba(249, 221, 14, 0.14); }
 
@@ -1086,4 +1086,14 @@ const structuredData = [
     .hp-cta-box { padding: 1.2rem 1.1rem; }
     .hp-cta-box-title { font-size: 1.1rem; }
   }
+  /* ══════════ CHỈ TIÊU ĐỀ IN ĐẬM ══════════
+     Nội dung, ô bảng, link, câu trả lời FAQ đều chữ thường (400). Đậm chỉ còn ở h1–h3,
+     tiêu đề cột bảng (th), nút CTA. */
+  .hp-page :global(.gi-section p),
+  .hp-page :global(.gi-section li),
+  .hp-page :global(.gi-section td),
+  .hp-page :global(.gi-section a:not(.hp-cta)),
+  .hp-page :global(.gi-faq-a),
+  .hp-page :global(.gi-faq-a p),
+  .hp-page :global(.gi-table td:first-child) { font-weight: 400; }
 </style>

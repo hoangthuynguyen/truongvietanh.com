@@ -26,38 +26,39 @@ const canonical = `${SITE}/tamlyhocduong`;
 const HOTLINE = '0916 961 409';
 const ZALO_OA = 'https://zalo.me/1678310120468101523';
 
-// Kênh của Phòng Tâm lý — lấy nguyên từ trang Liên hệ của Phòng Tâm lý.
-const EMAIL_TL = 'ngoc.nguyenthi@truongvietanh.com';
+// Kênh của Phòng Tâm lý. KHÔNG public email/SĐT của chuyên viên (chị Ngọc chốt 06/10/2026):
+// học sinh nhắn qua fanpage, phụ huynh trao đổi qua GVCN.
 // Biểu mẫu chia sẻ ẩn danh ("confessionnnn") — trang Canva chỉ để mã QR, đây là đích thật của mã đó.
 const FORM_AN_DANH = 'https://docs.google.com/forms/d/e/1FAIpQLSc4oNa-V2Pd0528YdCCWC9pY8m0PsSBh7slblhWupQdq7bk7A/viewform';
-const LICH_HEN_GV = 'https://calendar.app.google/eyeizf6i3z9B1Rat5';
-const FB_TL = 'https://www.facebook.com/profile.php?id=61593946536269';
+const FB_TL = 'https://www.facebook.com/people/Ph%C3%B2ng-T%C3%A2m-l%C3%BD-h%E1%BB%8Dc-%C4%91%C6%B0%E1%BB%9Dng-Tr%C6%B0%E1%BB%9Dng-Vi%E1%BB%87t-Anh/61594714208787/';
 const IG_TL = 'https://www.instagram.com/va.innerthoughts/';
-const THREADS_TL = 'https://www.threads.com/@va.innerthoughts';
 
 const IMG_DIR = '/images/tam-ly-hoc-duong';
 const IMG_OG = `${SITE}${IMG_DIR}/og-tam-ly-hoc-duong.jpg`;
-const IMG_CLB_BAN = `${IMG_DIR}/clb-tam-ly-ba-ban-chuyen-mon.webp`;
-const IMG_CLB_CVTL = `${IMG_DIR}/chuyen-vien-tam-ly-sinh-hoat-clb.webp`;
-const IMG_GIO_TAY = `${IMG_DIR}/hoc-sinh-gio-tay-clb-tam-ly.webp`;
+const IMG_CLB_WORKSHOP = `${IMG_DIR}/clb-tam-ly-workshop-me-and-we.webp`;
+const IMG_CLB_NHOM = `${IMG_DIR}/clb-tam-ly-anh-nhom.webp`;
+const IMG_SINH_HOAT = `${IMG_DIR}/phong-tam-ly-sinh-hoat-vong-tron.webp`;
 
 const description =
-  'Phòng Tâm lý học đường Trường Việt Anh — P.407 cơ sở An Hội Tây và A.504B cơ sở Bình Tân: tham vấn cá nhân, tham vấn nhóm, check-in cảm xúc, hòm thư ẩn danh cho học sinh.';
+  'Phòng Tâm lý học đường Trường Việt Anh — P.407 cơ sở An Hội Tây và A.504B cơ sở Bình Tân: tham vấn cá nhân, tham vấn nhóm, check-in cảm xúc, nhắn tin qua fanpage và chia sẻ ẩn danh cho học sinh.';
 
 // ── HAI PHÒNG TÂM LÝ ───────────────────────────────────────────────────────
+// Lời giới thiệu CHUNG cho cả hai phòng — chỉ khác số phòng/cơ sở (chị Ngọc chốt 06/10/2026).
+const LOI_PHONG =
+  'Ở phòng có trò chơi để giải trí, có kẹo bánh để nhâm nhi, có nhạc và cây xanh, có những hoạt động để thư giãn và có một căn phòng bí mật để bạn chia sẻ những điều khó nói đang giữ trong lòng.';
 const phongTamLy = [
   {
     ma: 'P.407',
     coSo: 'Cơ sở An Hội Tây (Gò Vấp)',
     diaChi: '160/72 Phan Huy Ích, Phường An Hội Tây, TP.HCM',
-    loi: 'Ở đây, mọi cảm xúc đều được lắng nghe. Bạn có thể ghé thăm mình lúc vui, lúc buồn, lúc giận hờn hay khi thất vọng — bất cứ lúc nào bạn cần một nơi để được chia sẻ, được lắng nghe, được bày tỏ những điều khó nói.',
+    loi: LOI_PHONG,
     linkCoSo: '/co-so/lien-cap-go-vap',
   },
   {
     ma: 'A.504B',
     coSo: 'Cơ sở Bình Tân',
     diaChi: 'Số 7 Đường 38A, Phường Tân Tạo, TP.HCM',
-    loi: 'Ở phòng có trò chơi để giải trí, có kẹo bánh để nhâm nhi, có nhạc và cây xanh, có những hoạt động để thư giãn — và có một căn phòng bí mật để bạn kể ra điều mình đang giữ trong lòng.',
+    loi: LOI_PHONG,
     linkCoSo: '/co-so/lien-cap-binh-tan',
   },
 ];
@@ -82,12 +83,12 @@ const hoatDong = [
   {
     icon: '📻',
     ten: 'Phát thanh tâm lý',
-    mo: 'Một góc nhỏ trên sóng phát thanh toàn trường, nơi Phòng Tâm lý gửi tới học sinh những nhắn nhủ từ hòm thư ẩn danh, câu chuyện, thông điệp và góc nhìn tâm lý mỗi tuần.',
+    mo: 'Một góc nhỏ trên sóng phát thanh toàn trường, nơi Phòng Tâm lý gửi tới học sinh những nhắn nhủ từ biểu mẫu chia sẻ ẩn danh, câu chuyện, thông điệp và góc nhìn tâm lý mỗi tuần.',
   },
   {
     icon: '😊',
     ten: 'Check-in cảm xúc',
-    mo: '“How do you ‘phiêu’ today?” — dừng lại một chút và thử lắng nghe xem hôm nay mình đang cảm thấy thế nào. Ghé phòng tâm lý, chọn một chiếc sticker và để lại mood của bạn trong “chiếc hộp cảm xúc”.',
+    mo: '“How do you ‘phiêu’ today?” — dừng lại một chút và thử lắng nghe xem hôm nay mình đang cảm thấy thế nào. Ghé phòng tâm lý hoặc sảnh trường, chọn một chiếc sticker và để lại mood của bạn trong “chiếc hộp cảm xúc”.',
   },
 ];
 
@@ -95,11 +96,11 @@ const hoatDong = [
 const kenh = [
   {
     icon: '✉️',
-    ten: 'Hòm thư Tâm lý',
-    mo: 'Viết thư cho chuyên viên tâm lý bằng email. Thư gửi trực tiếp, không qua ai khác.',
-    nhan: EMAIL_TL,
-    href: `mailto:${EMAIL_TL}`,
-    ngoai: false,
+    ten: 'Nhắn tin cho Phòng Tâm lý',
+    mo: 'Nhắn tin trực tiếp qua fanpage chính thức của Phòng Tâm lý học đường.',
+    nhan: 'Mở Facebook của Phòng Tâm lý',
+    href: FB_TL,
+    ngoai: true,
   },
   {
     icon: '🤫',
@@ -111,11 +112,11 @@ const kenh = [
   },
   {
     icon: '📅',
-    ten: 'Đặt lịch hẹn tham vấn (dành cho giáo viên)',
-    mo: 'Thầy cô chọn khung giờ trống của chuyên viên tâm lý trên lịch hẹn trực tuyến.',
-    nhan: 'Mở lịch hẹn',
-    href: LICH_HEN_GV,
-    ngoai: true,
+    ten: 'Đặt lịch hẹn tham vấn',
+    mo: 'Học sinh đến trực tiếp Phòng Tâm lý hoặc liên hệ giáo viên chủ nhiệm để đặt lịch với chuyên viên tâm lý.',
+    nhan: '',
+    href: '',
+    ngoai: false,
   },
 ];
 
@@ -129,27 +130,27 @@ const faqs = [
   {
     id: 'faq-ai-phu-trach',
     q: 'Ai phụ trách Phòng Tâm lý học đường?',
-    a: 'Phòng Tâm lý học đường Trường Việt Anh do chuyên viên tâm lý Nguyễn Thị Ngọc phụ trách. Học sinh, phụ huynh và giáo viên có thể liên hệ trực tiếp qua hòm thư tâm lý: ngoc.nguyenthi@truongvietanh.com.',
+    a: 'Phòng Tâm lý học đường Trường Việt Anh do chuyên viên tâm lý Nguyễn Thị Ngọc phụ trách. Học sinh có thể đến trực tiếp phòng hoặc nhắn tin qua fanpage của Phòng Tâm lý; phụ huynh trao đổi thông qua giáo viên chủ nhiệm.',
   },
   {
     id: 'faq-hoc-sinh-gap-cach-nao',
     q: 'Học sinh muốn gặp chuyên viên tâm lý thì làm thế nào?',
-    a: 'Có bốn cách: ghé thẳng phòng tâm lý của cơ sở mình trong giờ ở trường, viết thư qua hòm thư tâm lý, gửi chia sẻ ẩn danh qua biểu mẫu confession, hoặc nhắn tin qua các kênh mạng xã hội của Phòng Tâm lý trên Facebook, Instagram và Threads.',
+    a: 'Có ba cách: đến trực tiếp phòng tâm lý của cơ sở mình, đặt lịch hẹn thông qua giáo viên chủ nhiệm, hoặc để lại thông tin và vấn đề mình đang gặp phải qua biểu mẫu chia sẻ ẩn danh (confession).',
   },
   {
     id: 'faq-ngai-den-phong',
     q: 'Con tôi ngại bước vào phòng tâm lý thì sao?',
-    a: 'Phòng Tâm lý nói thẳng với học sinh rằng không cần bước vào phòng ngay. Con có thể bắt đầu bằng một cú theo dõi kênh mạng xã hội của Phòng Tâm lý để làm quen dần, hoặc gửi điều mình đang giữ trong lòng qua biểu mẫu chia sẻ ẩn danh mà không phải để lại tên.',
+    a: 'Phòng Tâm lý nói thẳng với học sinh rằng không cần bước vào phòng ngay. Con có thể bắt đầu bằng một cú click theo dõi kênh mạng xã hội của Phòng Tâm lý để làm quen dần, hoặc gửi điều mình đang giữ trong lòng qua biểu mẫu chia sẻ ẩn danh mà không phải để lại tên. Ngoài ra, con có thể tham gia các hoạt động nhóm/toàn trường mà Phòng Tâm lý và CLB Tâm lý sẽ tổ chức trong năm học.',
   },
   {
     id: 'faq-hoat-dong',
     q: 'Phòng Tâm lý học đường có những hoạt động nào?',
-    a: 'Năm hoạt động: tham vấn cá nhân, tham vấn nhóm và chuyên đề nhóm, chương trình tâm lý toàn trường (workshop, minigame, hoạt động trải nghiệm), phát thanh tâm lý hằng tuần, và check-in cảm xúc bằng sticker tại phòng tâm lý. Ngoài ra còn có CLB Tâm lý dành cho học sinh muốn tham gia tổ chức hoạt động.',
+    a: 'Năm hoạt động: tham vấn cá nhân, tham vấn nhóm và chuyên đề nhóm, chương trình tâm lý toàn trường (workshop, minigame, hoạt động trải nghiệm), phát thanh tâm lý hằng tuần, và check-in cảm xúc bằng sticker tại phòng tâm lý hoặc ở sảnh trường. Ngoài ra còn có CLB Tâm lý dành cho học sinh muốn tham gia tổ chức hoạt động.',
   },
   {
     id: 'faq-giao-vien',
-    q: 'Giáo viên có được tham vấn tâm lý không?',
-    a: 'Có. Ngoài học sinh, Phòng Tâm lý học đường nhận tham vấn cho giáo viên Trường Việt Anh. Thầy cô đặt lịch hẹn trước qua trang lịch hẹn trực tuyến của Phòng Tâm lý thay vì đến phòng không hẹn.',
+    q: 'Giáo viên có được hỗ trợ tâm lý không?',
+    a: 'Có. Ngoài học sinh, Phòng Tâm lý học đường sẵn sàng hỗ trợ tâm lý cho giáo viên Trường Việt Anh. Thầy cô đặt lịch hẹn trước qua trang lịch hẹn trực tuyến hoặc đến trực tiếp Phòng Tâm lý trong giờ làm việc.',
   },
 ];
 
@@ -196,7 +197,7 @@ const structuredData = [
 ---
 
 <BaseLayout
-  title="Tâm lý học đường Trường Việt Anh — Phòng tham vấn & hòm thư"
+  title="Tâm lý học đường Trường Việt Anh — Phòng tham vấn & chia sẻ ẩn danh"
   description={description}
   keywords="tâm lý học đường, phòng tâm lý trường học, tham vấn tâm lý học sinh, sức khỏe tinh thần học sinh, CLB tâm lý, Trường Việt Anh"
   canonical={canonical}
@@ -225,21 +226,21 @@ const structuredData = [
           <p class="gi-subtitle tl-slogan">Lắng nghe — Thấu hiểu — Đồng hành</p>
           <p class="tl-hero-body">
             Một nơi trong trường để học sinh được kể ra điều khó nói. Hai phòng tâm lý ở hai cơ sở,
-            một chuyên viên tâm lý trực, năm hoạt động thường xuyên và một hòm thư cho những bạn
-            chưa sẵn sàng bước vào phòng.
+            một chuyên viên tâm lý trực, năm hoạt động thường xuyên và những kênh nhắn tin, chia sẻ
+            ẩn danh cho các bạn chưa sẵn sàng bước vào phòng.
           </p>
 
           <div class="gi-trust-badges">
             <div class="gi-badge"><strong>2 phòng tâm lý</strong> An Hội Tây &amp; Bình Tân</div>
             <div class="gi-badge"><strong>5 hoạt động</strong> Cá nhân · nhóm · toàn trường</div>
-            <div class="gi-badge"><strong>Hòm thư ẩn danh</strong> Không cần để lại tên</div>
+            <div class="gi-badge"><strong>Chia sẻ ẩn danh</strong> Không cần để lại tên</div>
           </div>
 
           <div class="tl-hero-actions">
             <a href={FORM_AN_DANH} target="_blank" rel="noopener" class="tl-btn tl-btn-primary">
               Gửi chia sẻ ẩn danh
             </a>
-            <a href={`mailto:${EMAIL_TL}`} class="tl-btn tl-btn-ghost">Viết thư cho chuyên viên tâm lý</a>
+            <a href={FB_TL} target="_blank" rel="noopener" class="tl-btn tl-btn-ghost">Nhắn tin cho Phòng Tâm lý</a>
           </div>
         </div>
       </div>
@@ -297,27 +298,27 @@ const structuredData = [
           </blockquote>
 
           <p>
-            Phòng Tâm lý học đường không phải nơi chỉ dành cho học sinh “đang có vấn đề”. Nó là một
-            phòng mở trong trường, để bất kỳ bạn nào cũng có thể bước vào nói một câu, để lại một
-            chiếc sticker cảm xúc, chơi một ván cờ, hoặc ngồi im một lát rồi đi ra.
+            Phòng Tâm lý học đường không phải nơi chỉ dành cho học sinh “có vấn đề” mà là nơi bất kỳ
+            bạn nào cũng có thể ghé thăm để chia sẻ một câu chuyện, để lại một chiếc sticker cảm xúc,
+            tham gia một trò chơi nhóm, hoặc đơn giản là ngồi thư giãn một lát rồi đi ra.
           </p>
           <p>
-            Với những bạn chưa muốn nói chuyện trực tiếp, Phòng Tâm lý mở sẵn hai cửa khác:
-            <strong> hòm thư tâm lý</strong> qua email và <strong>biểu mẫu chia sẻ ẩn danh</strong> —
-            không cần để lại tên.
+            Với những bạn chưa muốn nói chuyện trực tiếp, Phòng Tâm lý mở sẵn hai cánh cửa khác:
+            <strong>nhắn tin qua trang Facebook chính thức</strong> hoặc
+            <strong>biểu mẫu chia sẻ ẩn danh (Confession)</strong>.
           </p>
 
           <figure class="tl-figure">
             <img
-              src={IMG_GIO_TAY}
-              alt="Học sinh Trường Việt Anh giơ tay phát biểu trong buổi sinh hoạt của Phòng Tâm lý học đường"
+              src={IMG_SINH_HOAT}
+              alt="Học sinh Trường Việt Anh ngồi thành vòng tròn trong buổi sinh hoạt của Phòng Tâm lý học đường"
               width="1200"
               height="800"
               loading="lazy"
               decoding="async"
             />
             <figcaption>
-              Buổi sinh hoạt do Phòng Tâm lý học đường tổ chức tại lớp — học sinh Trường Việt Anh.
+              Buổi sinh hoạt do Phòng Tâm lý học đường tổ chức — học sinh Trường Việt Anh ngồi quây tròn chia sẻ.
             </figcaption>
           </figure>
         </section>
@@ -376,37 +377,35 @@ const structuredData = [
           <div class="tl-photos">
             <figure class="tl-figure">
               <img
-                src={IMG_CLB_BAN}
-                alt="Buổi sinh hoạt CLB Tâm lý Trường Việt Anh — màn hình chiếu ba ban: ban nội dung, ban sự kiện, ban truyền thông"
+                src={IMG_CLB_WORKSHOP}
+                alt="Workshop “Me and We” của CLB Tâm lý Trường Việt Anh — chuyên viên hướng dẫn trước màn hình chiếu"
                 width="1200"
                 height="800"
                 loading="lazy"
                 decoding="async"
               />
               <figcaption>
-                Buổi sinh hoạt CLB Tâm lý: câu lạc bộ chia thành ban nội dung, ban sự kiện và ban
-                truyền thông.
+                Workshop “Me and We” của CLB Tâm lý.
               </figcaption>
             </figure>
 
             <figure class="tl-figure">
               <img
-                src={IMG_CLB_CVTL}
-                alt="Chuyên viên tâm lý Trường Việt Anh hướng dẫn học sinh trong buổi sinh hoạt CLB Tâm lý"
+                src={IMG_CLB_NHOM}
+                alt="Các bạn CLB Tâm lý Trường Việt Anh chụp ảnh chung sau buổi workshop"
                 width="1200"
                 height="800"
                 loading="lazy"
                 decoding="async"
               />
               <figcaption>
-                Chuyên viên tâm lý đồng hành cùng học sinh trong buổi sinh hoạt của câu lạc bộ.
+                Các bạn CLB Tâm lý cùng nhau sau buổi workshop.
               </figcaption>
             </figure>
           </div>
 
           <p>
-            Học sinh muốn tham gia CLB Tâm lý có thể nhắn cho Phòng Tâm lý qua hòm thư hoặc các kênh
-            mạng xã hội bên dưới.
+            Học sinh muốn tham gia CLB Tâm lý có thể nhắn cho Phòng Tâm lý qua fanpage bên dưới.
           </p>
         </section>
 
@@ -414,15 +413,16 @@ const structuredData = [
         <section id="ket-noi" class="gi-section">
           <h2>Kết nối với Phòng Tâm lý</h2>
           <p>
-            Nếu ngại bước vào phòng tâm lý ngay, bạn có thể bắt đầu bằng một cú theo dõi để gặp nhau
-            thường xuyên hơn — rồi khi nào sẵn sàng thì ghé.
+            Hãy bắt đầu bằng một cú click theo dõi để gặp nhau thường xuyên hơn nhé!
           </p>
 
           <div class="tl-channels">
-            {kenh.map((k) => (
-              <a
+            {kenh.map((k) => {
+              const Tag = k.href ? 'a' : 'div';
+              return (
+              <Tag
                 class="tl-channel"
-                href={k.href}
+                href={k.href || undefined}
                 target={k.ngoai ? '_blank' : undefined}
                 rel={k.ngoai ? 'noopener' : undefined}
               >
@@ -430,20 +430,20 @@ const structuredData = [
                 <span class="tl-channel-body">
                   <span class="tl-channel-ten">{k.ten}</span>
                   <span class="tl-channel-mo">{k.mo}</span>
-                  <span class="tl-channel-nhan">{k.nhan}</span>
+                  {k.nhan && <span class="tl-channel-nhan">{k.nhan}</span>}
                 </span>
-              </a>
-            ))}
+              </Tag>
+              );
+            })}
           </div>
 
           <h3>Phòng Tâm lý trên mạng xã hội</h3>
           <div class="tl-socials">
             <a href={FB_TL} target="_blank" rel="noopener" class="tl-social">Facebook</a>
             <a href={IG_TL} target="_blank" rel="noopener" class="tl-social">Instagram</a>
-            <a href={THREADS_TL} target="_blank" rel="noopener" class="tl-social">Threads</a>
           </div>
           <p class="tl-note">
-            Ba kênh trên do chính Phòng Tâm lý học đường vận hành, đăng những câu chuyện và góc nhìn
+            Hai kênh trên do chính Phòng Tâm lý học đường vận hành, đăng những câu chuyện và góc nhìn
             tâm lý dành cho học sinh.
           </p>
         </section>
@@ -457,9 +457,9 @@ const structuredData = [
             mẹ — ở ngay trong trường, gặp con mỗi ngày.
           </p>
           <p>
-            Ba mẹ muốn trao đổi về con có thể viết thư trực tiếp cho chuyên viên tâm lý qua
-            <a href={`mailto:${EMAIL_TL}`}> {EMAIL_TL}</a>, hoặc gọi hotline nhà trường
-            <a href={`tel:${HOTLINE.replace(/\s/g, '')}`}> {HOTLINE}</a> để được kết nối.
+            Theo nguyên tắc của Phòng Tâm lý, chuyên viên tâm lý không liên hệ trực tiếp với phụ
+            huynh mà trao đổi thông qua giáo viên chủ nhiệm. Ba mẹ muốn đặt lịch tham vấn cho con
+            có thể liên hệ giáo viên chủ nhiệm của con để được sắp xếp.
           </p>
 
           <div class="gi-next-step">

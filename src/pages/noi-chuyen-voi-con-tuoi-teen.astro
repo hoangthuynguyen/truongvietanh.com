@@ -6,8 +6,9 @@
 // Giao file   : GHL gửi PDF qua email marketing theo tag bên dưới — trang KHÔNG cho tải trực tiếp.
 // Gate        : mở câu mở đầu 1–2, câu 3 chỉ lộ tiêu đề rồi mờ dần vào khung khoá (.peek); câu 4–5 KHÔNG lộ chữ.
 //               Mở 2 câu đóng cửa, khoá phần còn lại và phần "giữ im lặng đúng lúc".
-//               Ảnh mockup/OG dùng bản "-mo": câu 3–5 đã làm mờ ngay trong file ảnh — đừng làm mờ bằng CSS.
+//               Ảnh mockup dùng bản "-mo2", OG bản "-mo": câu 3–5 đã làm mờ ngay trong file ảnh — đừng làm mờ bằng CSS.
 import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+import MockupLock from '../components/MockupLock.astro';
 
 const openCau = [
   {
@@ -52,8 +53,9 @@ const trongPdf = [
   pills={['5 câu mở đầu', '5 câu nên tránh', 'Cách giữ im lặng đúng lúc']}
   ctaLabel="Nhận tài liệu miễn phí"
   micro={['📄 2 trang A4', '⏱️ Điền 20 giây', '🔒 Không spam']}
-  mockup="mockup-noi-chuyen-voi-con-tuoi-teen-mo"
+  mockup="mockup-noi-chuyen-voi-con-tuoi-teen-mo2"
   mockupAlt="Trang 1 tài liệu nói chuyện với con tuổi teen, ba câu mở đầu cuối được che mờ"
+  mockupLock={{ at: 47, title: 'Còn 3 câu mở đầu Ba Mẹ chưa xem…' }}
   mockupCap="Trang 1 của tài liệu — 3 câu cuối nằm trong bản PDF"
   finalTitle="Tối nay thử một câu thôi"
   finalSub="Mỗi lần một câu. Nếu con không đáp, đừng hỏi lại câu thứ hai trong cùng buổi tối — đó cũng là một chỉ dẫn trong tài liệu."
@@ -188,10 +190,11 @@ const trongPdf = [
       <div class="mockup">
         <div class="mockup__frame">
           <picture>
-            <source srcset="/mockup-noi-chuyen-voi-con-tuoi-teen-mo.webp" type="image/webp" />
-            <img src="/mockup-noi-chuyen-voi-con-tuoi-teen-mo.jpg" width="900" height="1274" loading="lazy" decoding="async"
+            <source srcset="/mockup-noi-chuyen-voi-con-tuoi-teen-mo2.webp" type="image/webp" />
+            <img src="/mockup-noi-chuyen-voi-con-tuoi-teen-mo2.jpg" width="900" height="1274" loading="lazy" decoding="async"
                  alt="Xem trước bản PDF nói chuyện với con tuổi teen" />
           </picture>
+          <MockupLock at={47} title="Còn 3 câu mở đầu Ba Mẹ chưa xem…" label="Nhận miễn phí bản đầy đủ" />
         </div>
       </div>
       <div>

@@ -6,9 +6,10 @@
 // Goal        : lead (email ở bước 1 → tên + SĐT ở bước 2)
 // Giao file   : GHL gửi PDF qua email marketing theo tag bên dưới — trang KHÔNG cho tải trực tiếp.
 // Gate        : mở dấu hiệu 1–2, dấu hiệu 3 chỉ lộ tiêu đề rồi mờ dần vào khung khoá; 7 dấu hiệu còn lại
-//               KHÔNG lộ chữ nào (kể cả chủ đề). Ảnh mockup/OG dùng bản "-mo": dấu hiệu 4–10 đã làm mờ
+//               KHÔNG lộ chữ nào (kể cả chủ đề). Ảnh mockup dùng bản "-mo2", OG bản "-mo": dấu hiệu 4–10 đã làm mờ
 //               ngay trong file ảnh — đừng làm mờ bằng CSS, mở thẳng URL ảnh là đọc được hết.
 import LeadMagnetLayout from '../layouts/LeadMagnetLayout.astro';
+import MockupLock from '../components/MockupLock.astro';
 
 const openSigns = [
   {
@@ -53,8 +54,9 @@ const trongPdf = [
   pills={['10 dấu hiệu, quan sát ở nhà', 'Không cần hỏi trường', 'Có bảng đọc kết quả']}
   ctaLabel="Nhận bảng tự kiểm miễn phí"
   micro={['📄 2 trang A4', '⏱️ Điền 20 giây', '🔒 Không spam']}
-  mockup="mockup-10-dau-hieu-con-vo-hinh-mo"
+  mockup="mockup-10-dau-hieu-con-vo-hinh-mo2"
   mockupAlt="Trang 1 bảng tự kiểm 10 dấu hiệu con đang vô hình trong lớp, 7 dấu hiệu cuối được che mờ"
+  mockupLock={{ at: 48, title: 'Còn 7 dấu hiệu Ba Mẹ chưa xem…' }}
   mockupCap="Trang 1 của tài liệu — 7 dấu hiệu cuối nằm trong bản PDF"
   finalTitle="Điểm số là thứ cuối cùng thay đổi"
   finalSub="Đừng chờ tới lúc bảng điểm báo động. Mười dấu hiệu này nhìn thấy được ngay ở nhà, từ tối nay."
@@ -180,10 +182,11 @@ const trongPdf = [
       <div class="mockup">
         <div class="mockup__frame">
           <picture>
-            <source srcset="/mockup-10-dau-hieu-con-vo-hinh-mo.webp" type="image/webp" />
-            <img src="/mockup-10-dau-hieu-con-vo-hinh-mo.jpg" width="900" height="1274" loading="lazy" decoding="async"
+            <source srcset="/mockup-10-dau-hieu-con-vo-hinh-mo2.webp" type="image/webp" />
+            <img src="/mockup-10-dau-hieu-con-vo-hinh-mo2.jpg" width="900" height="1274" loading="lazy" decoding="async"
                  alt="Xem trước bản PDF 10 dấu hiệu con đang vô hình trong lớp" />
           </picture>
+          <MockupLock at={48} title="Còn 7 dấu hiệu Ba Mẹ chưa xem…" label="Nhận miễn phí bản đầy đủ" />
         </div>
       </div>
       <div>

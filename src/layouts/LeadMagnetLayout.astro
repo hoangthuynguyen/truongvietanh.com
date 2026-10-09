@@ -52,6 +52,9 @@ export interface Props {
   mockupAlt: string;
   mockupCap: string;
   ribbon?: string;
+  /** Đặt nút CTA chính VÀO ảnh mockup (đè lên vùng đã làm mờ) thay cho nút ở cột trái hero.
+   *  at = % chiều cao ảnh nơi vùng mờ bắt đầu; title = dòng chữ trên nút. */
+  mockupLock?: { at: number; title: string };
 
   finalTitle: string;
   finalSub: string;
@@ -72,7 +75,7 @@ const {
   pageTitle, pageDescription, canonical, ogTitle, ogImage,
   topbarTag, topbarCta,
   badge, h1, heroSub, pills, ctaLabel, micro,
-  mockup, mockupAlt, mockupCap, ribbon = 'MIỄN PHÍ',
+  mockup, mockupAlt, mockupCap, ribbon = 'MIỄN PHÍ', mockupLock,
   finalTitle, finalSub, finalQuote, footNote,
   modalTitle, modalSub, submitLabel,
   trust = [
@@ -102,6 +105,7 @@ const FUNNEL = funnel;
 const FORM_ID = formId;
 const TAG = tag;
 const CAM_ON = camOn;
+import MockupLock from '../components/MockupLock.astro';
 ---
 
 <!doctype html>
@@ -261,6 +265,15 @@ a{color:inherit}
   padding:8px 16px;border-radius:6px;
   box-shadow:0 6px 18px rgba(38,39,93,.22);transform:rotate(2deg);
 }
+/* Nút CTA đè lên vùng mờ của ảnh mockup (component MockupLock) */
+.mockup:has(.mlock){width:100%}
+.mockup__frame:has(.mlock){container-type:inline-size}
+.mlock{position:absolute;left:0;right:0;bottom:0;z-index:2;display:flex;flex-direction:column;align-items:center;
+       justify-content:center;gap:2.6cqi;padding:0 5% 4%;text-align:center}
+.mlock__icon{color:var(--navy);opacity:.8;width:clamp(17px,5.4cqi,23px);height:auto}
+.mlock__title{font-family:'Montserrat',sans-serif;font-weight:800;font-size:clamp(13.5px,4.4cqi,17.5px);line-height:1.35;color:var(--navy);margin:0}
+.mlock .mlock__btn{font-size:clamp(12.5px,4.2cqi,15.5px);padding:clamp(10px,3.4cqi,14px) clamp(12px,4cqi,22px);gap:clamp(5px,2cqi,10px);white-space:nowrap;max-width:100%}
+.hero__grid > div:first-child .hero__micro{margin-top:0}
 .mockup__cap{
   margin-top:14px;text-align:center;font-size:13px;color:var(--muted);
   display:flex;align-items:center;justify-content:center;gap:8px;flex-wrap:wrap;
@@ -677,10 +690,12 @@ section{scroll-margin-top:70px}
           ))}
         </div>
 
-        <button type="button" class="btn btn--gold" data-open-form>
-          <span class="btn__label">{ctaLabel}</span>
-          <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
+        {!mockupLock && (
+          <button type="button" class="btn btn--gold" data-open-form>
+            <span class="btn__label">{ctaLabel}</span>
+            <svg class="btn__arrow" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        )}
 
         <div class="hero__micro">
           {micro.map((m) => <span>{m}</span>)}
@@ -699,6 +714,7 @@ section{scroll-margin-top:70px}
               fetchpriority="high" decoding="async"
             />
           </picture>
+          {mockupLock && <MockupLock at={mockupLock.at} title={mockupLock.title} label={ctaLabel} />}
         </div>
         <p class="mockup__cap">{mockupCap}</p>
       </div>

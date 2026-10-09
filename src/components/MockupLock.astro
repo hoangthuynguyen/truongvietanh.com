@@ -1,0 +1,15 @@
+---
+// Nút CTA đè lên vùng đã làm mờ của ảnh mockup lead magnet. Đặt BÊN TRONG khung ảnh
+// (phần tử position:relative, overflow:hidden). `at` = % chiều cao ảnh nơi vùng mờ bắt đầu —
+// phải khớp mốc CUT lúc làm mờ ảnh. CSS nằm ở nhóm .mlock trong LeadMagnetLayout.
+interface Props { at: number; title: string; label: string }
+const { at, title, label } = Astro.props;
+---
+<div class="mlock" style={`top:${at}%`}>
+  <svg class="mlock__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+  <p class="mlock__title">{title}</p>
+  <button type="button" class="btn btn--gold mlock__btn" data-open-form>
+    <span class="btn__label">{label}</span>
+    <svg class="btn__arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+  </button>
+</div>

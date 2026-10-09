@@ -384,6 +384,36 @@ section{scroll-margin-top:70px}
 .locked__cta{margin-top:20px;text-align:center}
 .locked__cta p{font-size:15.5px;color:var(--navy);font-weight:600;margin-bottom:14px}
 
+/* Khối xem trước kiểu "lật vài mục rồi khoá" (.peek) — mục cuối mờ dần vào khung khoá, KHÔNG lộ chữ
+   của các mục bị khoá. Dùng thay cho .locked khi cần giấu bớt nội dung. */
+.peek{max-width:760px;margin:0 auto;background:#fff;border:1px solid var(--line);border-radius:18px;
+      padding:24px 22px 0;box-shadow:0 10px 30px rgba(20,28,70,.07);overflow:hidden}
+.peek__title{font-family:'Montserrat',sans-serif;font-size:19px;font-weight:800;color:var(--navy);line-height:1.35;margin:0 0 4px}
+.peek__sub{font-size:14.5px;color:var(--muted);margin:0 0 16px}
+.peek__list{display:flex;flex-direction:column;gap:10px}
+.pk{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.pk h4{font-size:16px;font-weight:700;color:var(--navy);line-height:1.45;margin:0;display:flex;gap:9px;align-items:flex-start}
+.pk p{font-size:14.5px;color:var(--muted);margin:5px 0 0 31px;line-height:1.5}
+.pk__n{flex:none;width:22px;height:22px;border-radius:50%;background:var(--navy);color:#fff;font-size:12px;font-weight:800;
+       display:inline-flex;align-items:center;justify-content:center;margin-top:1px}
+.pk--fade{-webkit-mask-image:linear-gradient(180deg,#000 30%,transparent 100%);mask-image:linear-gradient(180deg,#000 30%,transparent 100%);
+          padding-bottom:20px;border-bottom-color:transparent}
+.peek__lock{margin:-18px -22px 0;padding:34px 22px 26px;text-align:center;
+            background:linear-gradient(180deg,rgba(248,249,252,0) 0%,#F6F7FB 40%)}
+.peek__lock svg{color:var(--navy);opacity:.75}
+.peek__lock-title{font-family:'Montserrat',sans-serif;font-size:20px;font-weight:800;color:var(--navy);margin:8px 0 6px}
+.peek__lock-sub{font-size:14.5px;color:var(--muted);margin:0 auto 18px;max-width:520px}
+.peek__btn{width:100%;max-width:560px;justify-content:center}
+@media (max-width:560px){
+  .peek{padding:18px 14px 0;border-radius:14px}
+  .peek__title{font-size:17px}
+  .pk h4{font-size:15px}
+  .pk p{margin-left:0}
+  .peek__lock{margin:-18px -14px 0;padding:30px 14px 20px}
+  .peek__lock-title{font-size:18px}
+  .peek__btn .btn__label{font-size:15px}
+}
+
 /* ═══════════════ 5 · THẺ XEM TRƯỚC ═══════════════ */
 .teasers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
 .teaser{
